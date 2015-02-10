@@ -15,9 +15,10 @@
 #       CREATED: Wednesday 05 February 2015 
 #      REVISION:  ---
 #===============================================================================
+from PyQt4 import QtCore, QtGui
+from configuration.Appconfig import Appconfig
+
 import os
-from PyQt4 import QtGui
-from PyQt4 import QtCore
 
 
 class Workspace(QtGui.QWidget):
@@ -26,9 +27,12 @@ class Workspace(QtGui.QWidget):
     """
     def __init__(self):
         super(Workspace, self).__init__()
-        #Home directory
-        self.home = os.path.expanduser("~")+"/Workspace"
         
+        #Button status lable
+        #self.status_label = QtGui.QLabel('NO')
+
+        self.obj = Appconfig()
+       
         #Initializing Workspace directory for project
         self.initWorkspace()
         
@@ -40,9 +44,9 @@ class Workspace(QtGui.QWidget):
         self.ledit = QtGui.QLineEdit(self)
             
         #Add text to text edit,label and line edit
-        self.tedit.append("Sample Text")
+        self.tedit.append(self.obj.workspace_text)
         self.label.setText("Workspace:")
-        self.ledit.setText(self.home)
+        self.ledit.setText(self.obj.home)
           
         #Buttons
         self.browsebtn = QtGui.QPushButton('Browse')
@@ -80,17 +84,33 @@ class Workspace(QtGui.QWidget):
         self.setGeometry(QtCore.QRect(200,200,400,400))
         self.setWindowTitle("Workspace Launcher")
         #self.setWindowIcon(QtGui.QIcon('logo.png'))
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.tedit.setReadOnly(True)
         self.show()
         
            
     def defaultWorkspace(self):
         print "Default location selected" 
-        
+        self.close()
+               
     def createWorkspace(self):
-        print "Create workspace is called"  
+        print "Create workspace is called"
+        self.create_workspace = str(self.ledit.text())
+               
+        if  os.path.isdir(self.create_workspace):
+            pass
+            print "Already present"
+            self.obj.default_workspace["workspace"] = self.create_workspace
+        
+        else:
+            os.mkdir(self.create_workspace)
+            self.obj.default_workspace["workspace"] = self.create_workspace
+        
         
             
     def browseLocation(self):
         print "Browse Location called"
+        self.workspace_directory = QtGui.QFileDialog.getExistingDirectory()
+        print "Path file :", self.workspace_directory
+        self.ledit.setText(self.workspace_directory)
         

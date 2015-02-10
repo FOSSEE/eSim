@@ -18,6 +18,8 @@
 
 
 from PyQt4 import QtGui
+import os
+
 
 
 class Appconfig(QtGui.QWidget):
@@ -36,6 +38,12 @@ class Appconfig(QtGui.QWidget):
             self.app_ypos = 100
             self.app_width = 600
             self.app_heigth = 400
+            
+            #Workspace detail
+            self.workspace_text = '''ecSim stores your project in a folder called a workspace. You can choose a different workspace folder to use for this session.'''
+            #Home directory
+            self.home = os.path.expanduser("~")+"/ecSim-Workspace"
+            self.default_workspace = {"workspace":self.home}
             
             
             
