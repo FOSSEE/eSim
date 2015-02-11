@@ -18,12 +18,12 @@
 #===============================================================================
 
 
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 import ViewManagement
 import Workspace
 import sys 
-
+import time
 
 class Application(QtGui.QMainWindow):
     """
@@ -111,26 +111,38 @@ def main(args):
     """
     It is main function of the module.It starts the application
     """
-    app = QtGui.QApplication(args)
+    print "Hello Main"
+    app = QtGui.QApplication(sys.argv)
+   
+    splash_pix = QtGui.QPixmap('../images/FreeEDAlogo.jpg')
+    splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
+    progressBar = QtGui.QProgressBar(splash)
+    splash.setMask(splash_pix.mask())
+    splash.show()
+    
+    for i in range(0, 100):
+        progressBar.setValue(i)
+        t = time.time()
+        while time.time() < t + 0.1:
+            app.processEvents()
+    
+    time.sleep(2)
+    
+    appView = Application()
+    appView.show()
+    splash.finish(appView)
+    sys.exit(app.exec_())
+    """
     appView = Application()
     appView.show()
     sys.exit(app.exec_())
-    """
-    while 1:
-        print work_space.status_label.text() 
-        if work_space.status_label.text() == 'OK':
-            print "OK"
-            appView.show()
-            break
-        else:
-            pass     
-             
     """
     
 
 
 # Call main function
 if __name__ == '__main__':
+    # Create and display the splash screen
     main(sys.argv)
     
 

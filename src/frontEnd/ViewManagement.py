@@ -68,6 +68,17 @@ class ViewManagement(QtGui.QSplitter):
         self.ngspice_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.ngspice_btn.setIconSize(QtCore.QSize(50,50))
         self.grid.addWidget(self.ngspice_btn,0,2)
+        
+        self.footprint_btn = QtGui.QPushButton()
+        self.footprint_btn.setIcon(QtGui.QIcon('../images/default.png'))
+        self.footprint_btn.setIconSize(QtCore.QSize(50,50))
+        self.grid.addWidget(self.footprint_btn,1,0)
+        
+        self.pcb_btn = QtGui.QPushButton()
+        self.pcb_btn.setIcon(QtGui.QIcon('../images/default.png'))
+        self.pcb_btn.setIconSize(QtCore.QSize(50,50))
+        self.grid.addWidget(self.pcb_btn,1,1)
+        
     
         
              

@@ -39,14 +39,14 @@ class Workspace(QtGui.QWidget):
             
     def initWorkspace(self):
         print "Calling workspace"
-        self.tedit = QtGui.QTextEdit(self)
-        self.label = QtGui.QLabel(self)
-        self.ledit = QtGui.QLineEdit(self)
+        self.note = QtGui.QTextEdit(self)
+        self.workspace_label = QtGui.QLabel(self)
+        self.worspace_loc = QtGui.QLineEdit(self)
             
         #Add text to text edit,label and line edit
-        self.tedit.append(self.obj.workspace_text)
-        self.label.setText("Workspace:")
-        self.ledit.setText(self.obj.home)
+        self.note.append(self.obj.workspace_text)
+        self.workspace_label.setText("Workspace:")
+        self.worspace_loc.setText(self.obj.home)
           
         #Buttons
         self.browsebtn = QtGui.QPushButton('Browse')
@@ -57,9 +57,9 @@ class Workspace(QtGui.QWidget):
         self.cancelbtn.clicked.connect(self.defaultWorkspace)
             
         #Set Geometry
-        self.tedit.setGeometry(QtCore.QRect(0, 0, 400, 100))
-        self.label.setGeometry(QtCore.QRect(10, 130, 81, 17))
-        self.ledit.setGeometry(QtCore.QRect(100, 150, 200, 100))
+        self.note.setGeometry(QtCore.QRect(0, 0, 400, 100))
+        self.workspace_label.setGeometry(QtCore.QRect(10, 130, 81, 17))
+        self.worspace_loc.setGeometry(QtCore.QRect(100, 150, 200, 100))
         self.browsebtn.setGeometry(QtCore.QRect(290, 120, 98, 27))
         self.okbtn.setGeometry(QtCore.QRect(290, 250, 98, 27))
         self.cancelbtn.setGeometry(QtCore.QRect(180, 250, 98, 27))
@@ -68,14 +68,14 @@ class Workspace(QtGui.QWidget):
             
         #Layout
         self.hbox = QtGui.QHBoxLayout()
-        self.hbox.addWidget(self.tedit)
+        self.hbox.addWidget(self.note)
             
         self.grid = QtGui.QGridLayout()
         self.grid.addChildLayout(self.hbox)
          
             
-        self.grid.addWidget(self.label,2,0)
-        self.grid.addWidget(self.ledit, 2, 1)
+        self.grid.addWidget(self.workspace_label,2,0)
+        self.grid.addWidget(self.worspace_loc, 2, 1)
         self.grid.addWidget(self.browsebtn, 2, 2)
         self.grid.addWidget(self.okbtn,3,2)
         self.grid.addWidget(self.cancelbtn,3,3)
@@ -85,7 +85,7 @@ class Workspace(QtGui.QWidget):
         self.setWindowTitle("Workspace Launcher")
         #self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.tedit.setReadOnly(True)
+        self.note.setReadOnly(True)
         self.show()
         
            
@@ -95,7 +95,7 @@ class Workspace(QtGui.QWidget):
                
     def createWorkspace(self):
         print "Create workspace is called"
-        self.create_workspace = str(self.ledit.text())
+        self.create_workspace = str(self.worspace_loc.text())
                
         if  os.path.isdir(self.create_workspace):
             pass
@@ -105,6 +105,7 @@ class Workspace(QtGui.QWidget):
         else:
             os.mkdir(self.create_workspace)
             self.obj.default_workspace["workspace"] = self.create_workspace
+        self.close()
         
         
             
@@ -112,5 +113,5 @@ class Workspace(QtGui.QWidget):
         print "Browse Location called"
         self.workspace_directory = QtGui.QFileDialog.getExistingDirectory()
         print "Path file :", self.workspace_directory
-        self.ledit.setText(self.workspace_directory)
+        self.worspace_loc.setText(self.workspace_directory)
         
