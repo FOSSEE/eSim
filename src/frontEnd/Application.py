@@ -20,16 +20,18 @@
 
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
+from projManagement.openProject import ProjectInfo
+import os
 import ViewManagement
 import Workspace
 import sys 
 import time
 
+
 class Application(QtGui.QMainWindow):
     """
     Its our main window of application
     """
-
     def __init__(self,*args):
         """
         Initialize main Application window
@@ -39,19 +41,15 @@ class Application(QtGui.QMainWindow):
         
         
         #Creating Application configuration object
-        
         self.confObj = Appconfig() 
-        
-        self.setGeometry(self.confObj.app_xpos,
-                         self.confObj.app_ypos,
-                         self.confObj.app_width,
-                         self.confObj.app_heigth)
+        self.setGeometry(self.confObj._app_xpos,
+                         self.confObj._app_ypos,
+                         self.confObj._app_width,
+                         self.confObj._app_heigth)
         self.setWindowTitle(self.confObj._APPLICATION) 
         #Init Workspace
         self.work_space = Workspace.Workspace()
-        
-        
-                
+      
         #Init necessary components in sequence
         self.initActions()
         self.initView()
@@ -95,15 +93,20 @@ class Application(QtGui.QMainWindow):
         
     def new_project(self):
         print "New Project called"
+        
     
     def open_project(self):
         print "Open Project called"
+        self.project = ProjectInfo()
+        self.project.body()
         
     def exit_project(self):
         print "Exit Project called"
+        self.close()
         
     def help_project(self):
         print "Help is called"
+        
    
       
 
@@ -114,6 +117,7 @@ def main(args):
     print "Hello Main"
     app = QtGui.QApplication(sys.argv)
    
+    """
     splash_pix = QtGui.QPixmap('../images/FreeEDAlogo.jpg')
     splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
     progressBar = QtGui.QProgressBar(splash)
@@ -136,7 +140,7 @@ def main(args):
     appView = Application()
     appView.show()
     sys.exit(app.exec_())
-    """
+    
     
 
 

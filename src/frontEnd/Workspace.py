@@ -27,12 +27,9 @@ class Workspace(QtGui.QWidget):
     """
     def __init__(self):
         super(Workspace, self).__init__()
-        
-        #Button status lable
-        #self.status_label = QtGui.QLabel('NO')
-
+           
         self.obj = Appconfig()
-       
+        
         #Initializing Workspace directory for project
         self.initWorkspace()
         

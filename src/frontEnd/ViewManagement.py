@@ -38,9 +38,9 @@ class ViewManagement(QtGui.QSplitter):
         
     def createView(self):
         #Adding view into views dictionary
-        self.addView(QtGui.QTextEdit, 'Project Explorer')
-        self.addView(QtGui.QTextEdit, 'test2')
-        self.addView(QtGui.QTextEdit, 'test3')
+        self.addView(QtGui.QTextEdit, 'ProjectExplorer')
+        self.addView(QtGui.QTextEdit, 'ProjectToolbar')
+        self.addView(QtGui.QTextEdit, 'CurrentProject')
         
     def setupView(self):
         #setup views to define various areas, such as placement of individual views 
@@ -78,19 +78,17 @@ class ViewManagement(QtGui.QSplitter):
         self.pcb_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.pcb_btn.setIconSize(QtCore.QSize(50,50))
         self.grid.addWidget(self.pcb_btn,1,1)
-        
-    
-        
-             
+              
         
         # bind the top level views into the framework
-        self.views['Project Explorer'].setParent(self)
+        self.views['ProjectExplorer'].setParent(self)
         
-        self.views['test2'].setParent(self.right)
-        self.views['test2'].setLayout(self.grid)
-        self.views['test2'].setReadOnly(True)
+        self.views['ProjectToolbar'].setParent(self.right)
+        self.views['ProjectToolbar'].setLayout(self.grid)
+        self.views['ProjectToolbar'].setReadOnly(True)
         
-        self.views['test3'].setParent(self.right)
+        self.views['CurrentProject'].setParent(self.right)
+        self.views['CurrentProject'].setReadOnly(True)
         
         self.right.setParent(self)
         self.right.setSizes([20, 5])

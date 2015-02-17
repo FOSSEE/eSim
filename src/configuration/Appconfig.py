@@ -26,6 +26,14 @@ class Appconfig(QtGui.QWidget):
         """
         All configuration goes here
         """
+        #Home directory
+        home = os.path.expanduser("~")+"/ecSim-Workspace"
+        default_workspace = {"workspace":home}
+        #Current Project detail
+        current_project = {"ProjectName":"None"}
+        #Workspace detail
+        workspace_text = '''ecSim stores your project in a folder called a workspace. You can choose a different workspace folder to use for this session.'''
+        
         def __init__(self):
             super(Appconfig, self).__init__()
             #Application Details
@@ -33,17 +41,18 @@ class Appconfig(QtGui.QWidget):
             self._VERSION = 'v1.1'
             self._AUTHOR = 'Fahim'
         
-            #Application setting
-            self.app_xpos = 100
-            self.app_ypos = 100
-            self.app_width = 600
-            self.app_heigth = 400
+            #Application geometry setting
+            self._app_xpos = 100
+            self._app_ypos = 100
+            self._app_width = 600
+            self._app_heigth = 400
             
-            #Workspace detail
-            self.workspace_text = '''ecSim stores your project in a folder called a workspace. You can choose a different workspace folder to use for this session.'''
-            #Home directory
-            self.home = os.path.expanduser("~")+"/ecSim-Workspace"
-            self.default_workspace = {"workspace":self.home}
+         
+             
+            
+           
+            
+         
             
             
             
