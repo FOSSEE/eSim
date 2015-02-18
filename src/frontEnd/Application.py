@@ -57,19 +57,19 @@ class Application(QtGui.QMainWindow):
         
     def initActions(self):
      
-        self.newproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'New Project',self)
+        self.newproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
         
-        self.openproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'Open Project',self)
+        self.openproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
         
-        self.exitproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'Exit',self)
+        self.exitproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Exit</b>',self)
         self.exitproj.setShortcut('Ctrl+X')
         self.exitproj.triggered.connect(self.exit_project)
         
-        self.helpfile = QtGui.QAction(QtGui.QIcon('../images/default.png'),'Help',self)
+        self.helpfile = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
         
@@ -86,11 +86,7 @@ class Application(QtGui.QMainWindow):
         """
         self.view = ViewManagement.ViewManagement()
         self.setCentralWidget(self.view)
-   
-    
-    def testfn(self):
-        print "Success hit :"
-        
+          
     def new_project(self):
         print "New Project called"
         
@@ -106,6 +102,9 @@ class Application(QtGui.QMainWindow):
         
     def help_project(self):
         print "Help is called"
+        
+    def testing(self):
+        print "Sucess hit kicad button"
         
    
       

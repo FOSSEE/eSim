@@ -25,9 +25,9 @@ class Validation:
     
     def validateOpenproj(self,proj_directory):
         print "Valid open Proj called"
-        tempStr = proj_directory.split('/')
-        projName = tempStr[len(tempStr)-1]  
-        if os.path.exists(proj_directory+"/"+projName+".proj"):
+        projName = os.path.basename(str(proj_directory))
+        lookProj = os.path.join(str(proj_directory),projName+".proj")
+        if os.path.exists(lookProj):
             return True
         else:
             return False

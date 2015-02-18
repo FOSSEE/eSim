@@ -21,6 +21,7 @@
 
 from PyQt4 import QtCore
 from PyQt4 import QtGui
+from projManagement.openKicad import Kicad
 
 
 class ViewManagement(QtGui.QSplitter):
@@ -30,6 +31,10 @@ class ViewManagement(QtGui.QSplitter):
         QtGui.QSplitter.__init__(self, *args)
         # Creating dictionary which hold all the views
         self.views = {}
+        
+        #Creating object of openKicad.py
+        
+        self.obj_kicad = Kicad()
         
         # define the basic framework of view areas for the
         # application
@@ -56,27 +61,35 @@ class ViewManagement(QtGui.QSplitter):
         self.kicad_btn = QtGui.QPushButton()
         self.kicad_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.kicad_btn.setIconSize(QtCore.QSize(50,50))
+        self.kicad_btn.setToolTip('<b>Open Schematic</b>')
+        self.kicad_btn.clicked.connect(self.obj_kicad.openSchematic)
         self.grid.addWidget(self.kicad_btn,0,0)
         
         self.conversion_btn = QtGui.QPushButton()
         self.conversion_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.conversion_btn.setIconSize(QtCore.QSize(50,50))
+        self.conversion_btn.setToolTip('<b>Convert Kicad to Ngspice</b>')
         self.grid.addWidget(self.conversion_btn,0,1)
         
         
         self.ngspice_btn = QtGui.QPushButton()
         self.ngspice_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.ngspice_btn.setIconSize(QtCore.QSize(50,50))
+        self.ngspice_btn.setToolTip('<b>Simulation</b>')
         self.grid.addWidget(self.ngspice_btn,0,2)
         
         self.footprint_btn = QtGui.QPushButton()
         self.footprint_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.footprint_btn.setIconSize(QtCore.QSize(50,50))
+        self.footprint_btn.setToolTip('<b>Footprint Editor</b>')
+        self.footprint_btn.clicked.connect(self.obj_kicad.openFootprint)
         self.grid.addWidget(self.footprint_btn,1,0)
         
         self.pcb_btn = QtGui.QPushButton()
         self.pcb_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.pcb_btn.setIconSize(QtCore.QSize(50,50))
+        self.pcb_btn.setToolTip('<b>PCB Layout</b>')
+        self.pcb_btn.clicked.connect(self.obj_kicad.openLayout)
         self.grid.addWidget(self.pcb_btn,1,1)
               
         
@@ -104,7 +117,7 @@ class ViewManagement(QtGui.QSplitter):
         self.views[name] = settype()
         
         
-    
+
 
     
     
