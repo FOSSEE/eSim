@@ -58,15 +58,15 @@ class Application(QtGui.QMainWindow):
         
     def initActions(self):
      
-        self.newproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>New Project</b>',self)
+        self.newproj = QtGui.QAction(QtGui.QIcon('../images/newProject.svg'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
         
-        self.openproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Open Project</b>',self)
+        self.openproj = QtGui.QAction(QtGui.QIcon('../images/openProject.svg'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
         
-        self.exitproj = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Exit</b>',self)
+        self.exitproj = QtGui.QAction(QtGui.QIcon('../images/closeProject.svg'),'<b>Exit</b>',self)
         self.exitproj.setShortcut('Ctrl+X')
         self.exitproj.triggered.connect(self.exit_project)
         

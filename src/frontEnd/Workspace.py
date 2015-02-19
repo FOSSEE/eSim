@@ -96,7 +96,6 @@ class Workspace(QtGui.QWidget):
         self.create_workspace = str(self.worspace_loc.text())
                
         if  os.path.isdir(self.create_workspace):
-            pass
             print "Already present"
             self.obj.default_workspace["workspace"] = self.create_workspace
         

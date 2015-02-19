@@ -17,7 +17,9 @@
 #      REVISION:  ---
 #===============================================================================
 from PyQt4 import QtGui,QtCore
-
+from Validation import Validation
+from configuration.Appconfig import Appconfig
+import os
 
 class NewProjectInfo(QtGui.QWidget):
     """
@@ -26,6 +28,8 @@ class NewProjectInfo(QtGui.QWidget):
     
     def __init__(self):
         super(NewProjectInfo, self).__init__()
+        self.obj_validation = Validation()
+        self.obj_appconfig = Appconfig()
         
     
     def body(self):
@@ -79,6 +83,29 @@ class NewProjectInfo(QtGui.QWidget):
         
     def createProject(self):
         print "Create Project Called"
+        self.workspace = self.obj_appconfig.default_workspace['workspace']
+        self.projName = self.projEdit.text()
+        self.projName = str(self.projName).rstrip().lstrip()  #Remove leading and trailing space
+        
+        self.project_dir = os.path.join(self.workspace,str(self.projName))
+        
+        self.reply = self.obj_validation.validateNewproj(str(self.project_dir))
+        
+        if self.reply == "VALID":
+            print "Validated : Creating project directory"
+            #create project directory
+            print "Check : ",self.project_dir
+            try:
+                os.mkdir(self.project_dir)
+                self.close()
+            except:
+                print "Some Thing Wrong"
+            
+        elif self.reply == "CHECKEXIST":
+            print "Project already exist"
+            
+        elif self.reply == "CHECKNAME":
+            print "Name is not proper"
         
     def cancelProject(self):
         self.close()
