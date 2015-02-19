@@ -54,6 +54,7 @@ class Workspace(QtGui.QWidget):
         self.cancelbtn.clicked.connect(self.defaultWorkspace)
             
         #Set Geometry
+        #Need to set Geometry properly
         self.note.setGeometry(QtCore.QRect(0, 0, 400, 100))
         self.workspace_label.setGeometry(QtCore.QRect(10, 130, 81, 17))
         self.worspace_loc.setGeometry(QtCore.QRect(100, 150, 200, 100))

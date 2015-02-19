@@ -21,6 +21,7 @@
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement.openProject import ProjectInfo
+from projManagement.newProject import NewProjectInfo
 import os
 import ViewManagement
 import Workspace
@@ -89,6 +90,8 @@ class Application(QtGui.QMainWindow):
           
     def new_project(self):
         print "New Project called"
+        self.project = NewProjectInfo()
+        self.project.body()
         
     
     def open_project(self):

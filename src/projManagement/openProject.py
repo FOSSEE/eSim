@@ -32,7 +32,6 @@ class ProjectInfo:
         pass
               
     def body(self):
-        print "Create Dialog box"
         self.proj_directory = QtGui.QFileDialog.getExistingDirectory()
         self.obj_validation = Validation()
         
