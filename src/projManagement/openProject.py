@@ -23,22 +23,22 @@ from configuration.Appconfig import Appconfig
 
 
 
-class ProjectInfo(QtGui.QWidget):
+class OpenProjectInfo(QtGui.QWidget):
     """
     Class ProjectInfo accept model information from user
     
     """
     def __init__(self):
-        super(ProjectInfo, self).__init__()
+        super(OpenProjectInfo, self).__init__()
         self.obj_validation = Validation()
               
     def body(self):
-        self.proj_directory = QtGui.QFileDialog.getExistingDirectory()
+        self.projDir = QtGui.QFileDialog.getExistingDirectory()
                
-        if self.obj_validation.validateOpenproj(self.proj_directory) == True:
+        if self.obj_validation.validateOpenproj(self.projDir) == True:
             print "Pass open project test"
             self.obj_Appconfig = Appconfig()
-            self.obj_Appconfig.current_project['ProjectName'] = self.proj_directory
+            self.obj_Appconfig.current_project['ProjectName'] = str(self.projDir)
             
             
         else:

@@ -30,7 +30,7 @@ class Appconfig(QtGui.QWidget):
         home = os.path.join(os.path.expanduser("~"),"ecSim-Workspace")
         default_workspace = {"workspace":home}
         #Current Project detail
-        current_project = {"ProjectName":"None"}
+        current_project = {"ProjectName":None}
         #Workspace detail
         workspace_text = '''ecSim stores your project in a folder called a workspace. You can choose a different workspace folder to use for this session.'''
         

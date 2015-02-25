@@ -28,7 +28,7 @@ class Workspace(QtGui.QWidget):
     def __init__(self):
         super(Workspace, self).__init__()
            
-        self.obj = Appconfig()
+        self.obj_appconfig = Appconfig()
         
         #Initializing Workspace directory for project
         self.initWorkspace()
@@ -41,9 +41,9 @@ class Workspace(QtGui.QWidget):
         self.worspace_loc = QtGui.QLineEdit(self)
             
         #Add text to text edit,label and line edit
-        self.note.append(self.obj.workspace_text)
+        self.note.append(self.obj_appconfig.workspace_text)
         self.workspace_label.setText("Workspace:")
-        self.worspace_loc.setText(self.obj.home)
+        self.worspace_loc.setText(self.obj_appconfig.home)
           
         #Buttons
         self.browsebtn = QtGui.QPushButton('Browse')
@@ -94,14 +94,14 @@ class Workspace(QtGui.QWidget):
     def createWorkspace(self):
         print "Create workspace is called"
         self.create_workspace = str(self.worspace_loc.text())
-               
+        #Checking if Workspace already exist or not       
         if  os.path.isdir(self.create_workspace):
             print "Already present"
-            self.obj.default_workspace["workspace"] = self.create_workspace
+            self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
         
         else:
             os.mkdir(self.create_workspace)
-            self.obj.default_workspace["workspace"] = self.create_workspace
+            self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
         self.close()
         
         

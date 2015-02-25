@@ -21,7 +21,7 @@
 
 from PyQt4 import QtCore
 from PyQt4 import QtGui
-from projManagement.openKicad import Kicad
+from projManagement.Kicad import Kicad
 
 
 class ViewManagement(QtGui.QSplitter):
@@ -32,8 +32,7 @@ class ViewManagement(QtGui.QSplitter):
         # Creating dictionary which hold all the views
         self.views = {}
         
-        #Creating object of openKicad.py
-        
+        #Creating object of Kicad.py
         self.obj_kicad = Kicad()
         
         # define the basic framework of view areas for the
@@ -57,7 +56,7 @@ class ViewManagement(QtGui.QSplitter):
         self.grid = QtGui.QGridLayout()
         
         
-        #Button for QFrame
+        #Button for Project Tool Bar
         self.kicad_btn = QtGui.QPushButton()
         self.kicad_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.kicad_btn.setIconSize(QtCore.QSize(50,50))

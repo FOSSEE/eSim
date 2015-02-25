@@ -20,7 +20,7 @@
 
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
-from projManagement.openProject import ProjectInfo
+from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 import os
 import ViewManagement
@@ -42,14 +42,14 @@ class Application(QtGui.QMainWindow):
         
         
         #Creating Application configuration object
-        self.confObj = Appconfig() 
-        self.setGeometry(self.confObj._app_xpos,
-                         self.confObj._app_ypos,
-                         self.confObj._app_width,
-                         self.confObj._app_heigth)
-        self.setWindowTitle(self.confObj._APPLICATION) 
+        self.obj_appconfig = Appconfig() 
+        self.setGeometry(self.obj_appconfig._app_xpos,
+                         self.obj_appconfig._app_ypos,
+                         self.obj_appconfig._app_width,
+                         self.obj_appconfig._app_heigth)
+        self.setWindowTitle(self.obj_appconfig._APPLICATION) 
         #Init Workspace
-        self.work_space = Workspace.Workspace()
+        self.obj_workspace = Workspace.Workspace()
       
         #Init necessary components in sequence
         self.initActions()
@@ -96,7 +96,7 @@ class Application(QtGui.QMainWindow):
     
     def open_project(self):
         print "Open Project called"
-        self.project = ProjectInfo()
+        self.project = OpenProjectInfo()
         self.project.body()
         
     def exit_project(self):
@@ -105,6 +105,7 @@ class Application(QtGui.QMainWindow):
         
     def help_project(self):
         print "Help is called"
+        print "Current Project : ",self.obj_appconfig.current_project
         
     def testing(self):
         print "Sucess hit kicad button"

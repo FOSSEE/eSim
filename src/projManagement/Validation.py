@@ -24,10 +24,10 @@ class Validation:
     def __init__(self):
         pass
     
-    def validateOpenproj(self,proj_directory):
+    def validateOpenproj(self,projDir):
         print "Validate openProj called"
-        projName = os.path.basename(str(proj_directory))
-        lookProj = os.path.join(str(proj_directory),projName+".proj")
+        projName = os.path.basename(str(projDir))
+        lookProj = os.path.join(str(projDir),projName+".proj")
         #Check existence of project
         if os.path.exists(lookProj):
             return True
@@ -37,21 +37,28 @@ class Validation:
        
         
     
-    def validateNewproj(self,project_dir):
+    def validateNewproj(self,projDir):
         print "Validate newProj called"
-        print "Project Directory : ",project_dir
+        print "Project Directory : ",projDir
         #Checking existence of project with same name
         
-        if os.path.exists(project_dir):
+        if os.path.exists(projDir):
             return "CHECKEXIST" #Project with name already exist
         else:
                                    
             #Check Proper name for project. It should not have space
             
-            if re.search(r"\s",project_dir ):
+            if re.search(r"\s",projDir ):
                 return "CHECKNAME"
             else:
                 return "VALID"
+            
+    def validateKicad(self,projDir):
+        print "Validation for Kicad components"
+        if projDir == None:
+            return False
+        else:
+            return True
         
         
 

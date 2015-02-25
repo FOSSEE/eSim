@@ -57,29 +57,7 @@ class NewProjectInfo(QtGui.QWidget):
         self.setWindowTitle("New Project")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.show()
-        
-        
-        '''
-        self.LEGroup = QtGui.QGroupBox()
-        self.LElayout = QtGui.QHBoxLayout()
-        self.LElayout.addWidget(self.projLabel)
-        self.LElayout.addWidget(self.projEdit)
-        self.LEGroup.setLayout(self.LElayout)
-        
-        self.BtnGroup = QtGui.QGroupBox()
-        self.Btnlayout = QtGui.QVBoxLayout()
-        self.Btnlayout.addWidget(self.okbtn)
-        self.Btnlayout.addWidget(self.cancelbtn)
-        self.BtnGroup.setLayout(self.Btnlayout)
-        
-        self.mainlayout = QtGui.QHBoxLayout()
-        self.mainlayout.addWidget(self.LEGroup)
-        self.mainlayout.addWidget(self.BtnGroup)
-        self.mainlayout.addStretch(1)
-        
-        self.setLayout(self.mainlayout)
-        '''
-        self.show()
+      
         
     def createProject(self):
         print "Create Project Called"
@@ -87,25 +65,43 @@ class NewProjectInfo(QtGui.QWidget):
         self.projName = self.projEdit.text()
         self.projName = str(self.projName).rstrip().lstrip()  #Remove leading and trailing space
         
-        self.project_dir = os.path.join(self.workspace,str(self.projName))
+        self.projDir = os.path.join(self.workspace,str(self.projName))
         
-        self.reply = self.obj_validation.validateNewproj(str(self.project_dir))
+               
+        #Validation for newProject
+        self.reply = self.obj_validation.validateNewproj(str(self.projDir))
         
         if self.reply == "VALID":
             print "Validated : Creating project directory"
             #create project directory
-            print "Check : ",self.project_dir
             try:
-                os.mkdir(self.project_dir)
+                os.mkdir(self.projDir)
                 self.close()
+                self.projFile = os.path.join(self.projDir,self.projName+".proj")
+                f = open(self.projFile,"w")
             except:
                 print "Some Thing Wrong"
+                self.msg = QtGui.QErrorMessage(self)
+                self.msg.showMessage('Unable to create project. Please make sure you have write permission on '+self.workspace)
+                self.msg.setWindowTitle("Error Message")
+            f.write("schematicFile " + self.projName+".sch\n")
+            f.close()
+            
+            #Now Change the current working project
+            self.obj_appconfig.current_project['ProjectName'] = self.projDir 
             
         elif self.reply == "CHECKEXIST":
             print "Project already exist"
+            self.msg = QtGui.QErrorMessage(self)
+            self.msg.showMessage('The project "'+self.projName+'" already exist.Please select the different name or delete existing project')
+            self.msg.setWindowTitle("Error Message")
+            
             
         elif self.reply == "CHECKNAME":
             print "Name is not proper"
+            self.msg = QtGui.QErrorMessage(self)
+            self.msg.showMessage('The project name should not contain space between them')
+            self.msg.setWindowTitle("Error Message")
         
     def cancelProject(self):
         self.close()
