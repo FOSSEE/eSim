@@ -12,7 +12,7 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#  ORGANIZATION: ecSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 12 February 2015 
 #      REVISION:  ---
 #===============================================================================

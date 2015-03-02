@@ -11,7 +11,7 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#  ORGANIZATION: ecSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 04 February 2015 
 #      REVISION:  ---
 #===============================================================================
@@ -37,7 +37,7 @@ class Appconfig(QtGui.QWidget):
         def __init__(self):
             super(Appconfig, self).__init__()
             #Application Details
-            self._APPLICATION = 'ecSim'
+            self._APPLICATION = 'eSim'
             self._VERSION = 'v1.1'
             self._AUTHOR = 'Fahim'
         

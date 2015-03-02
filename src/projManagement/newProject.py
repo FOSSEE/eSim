@@ -12,7 +12,7 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#  ORGANIZATION: ecSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 12 February 2015 
 #      REVISION:  ---
 #===============================================================================
@@ -67,10 +67,14 @@ class NewProjectInfo(QtGui.QWidget):
         
         self.projDir = os.path.join(self.workspace,str(self.projName))
         
-               
+        print "Project Name:",self.projName       
         #Validation for newProject
-        self.reply = self.obj_validation.validateNewproj(str(self.projDir))
+        if self.projName == "":
+            self.reply = "NONE"
+        else:
+            self.reply = self.obj_validation.validateNewproj(str(self.projDir))
         
+        #Checking Validations Response
         if self.reply == "VALID":
             print "Validated : Creating project directory"
             #create project directory
@@ -101,6 +105,12 @@ class NewProjectInfo(QtGui.QWidget):
             print "Name is not proper"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage('The project name should not contain space between them')
+            self.msg.setWindowTitle("Error Message")
+        
+        elif self.reply == "NONE":
+            print "Empyt Project Name"
+            self.msg = QtGui.QErrorMessage(self)
+            self.msg.showMessage('The project name cannot be empty')
             self.msg.setWindowTitle("Error Message")
         
     def cancelProject(self):
