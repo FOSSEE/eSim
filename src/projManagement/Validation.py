@@ -58,6 +58,16 @@ class Validation:
         else:
             return True
         
+    def validateCir(self,projDir):
+        print "Checking if .cir file is present or not"
+        projName = os.path.basename(str(projDir))
+        lookCir = os.path.join(str(projDir),projName+".cir")
+        #Check existence of project
+        if os.path.exists(lookCir):
+            return True
+        else:
+            return False
+        
         
 
 

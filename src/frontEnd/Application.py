@@ -141,6 +141,7 @@ def main(args):
     sys.exit(app.exec_())
     """
     appView = Application()
+    #QtGui.QApplication.setStyle(QtGui.QStyleFactory.create("Cleanlooks"))
     appView.show()
     sys.exit(app.exec_())
     

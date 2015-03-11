@@ -27,7 +27,7 @@ class Appconfig(QtGui.QWidget):
         All configuration goes here
         """
         #Home directory
-        home = os.path.join(os.path.expanduser("~"),"ecSim-Workspace")
+        home = os.path.join(os.path.expanduser("~"),"eSim-Workspace")
         default_workspace = {"workspace":home}
         #Current Project detail
         current_project = {"ProjectName":None}

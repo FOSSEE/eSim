@@ -22,6 +22,7 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 from projManagement.Kicad import Kicad
+from kicadtoNgspice.KicadtoNgspice import *
 
 
 class ViewManagement(QtGui.QSplitter):
@@ -68,6 +69,7 @@ class ViewManagement(QtGui.QSplitter):
         self.conversion_btn.setIcon(QtGui.QIcon('../images/default.png'))
         self.conversion_btn.setIconSize(QtCore.QSize(50,50))
         self.conversion_btn.setToolTip('<b>Convert Kicad to Ngspice</b>')
+        self.conversion_btn.clicked.connect(self.obj_kicad.openKicadToNgspice)
         self.grid.addWidget(self.conversion_btn,0,1)
         
         

@@ -90,4 +90,24 @@ class Kicad:
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
-            self.msg.setWindowTitle("Error Message")        
+            self.msg.setWindowTitle("Error Message")     
+            
+    def openKicadToNgspice(self):
+        print "Open Kicad to Ngspice Conversion"
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        #Validating if current project is available or not
+        if self.obj_validation.validateKicad(self.projDir):
+            print "Project is present"
+            #Cheking if project has .cir file or not
+            if self.obj_validation.validateCir(self.projDir):
+                print "CIR file present"
+            else:
+                self.msg = QtGui.QErrorMessage(None)
+                self.msg.showMessage('Your project do not contain any Kicad netlist file for conversion')
+                self.msg.setWindowTitle("Error Message")  
+           
+        else:
+            self.msg = QtGui.QErrorMessage(None)
+            self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
+            self.msg.setWindowTitle("Error Message")  
+             
