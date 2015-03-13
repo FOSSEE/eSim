@@ -20,57 +20,48 @@ from PyQt4 import QtGui
 import TabbedWidget
 import Analysis
 
-class MainWindow(QtGui.QMainWindow):
+class MainWindow(QtGui.QWidget):
     def __init__(self):
-        QtGui.QMainWindow.__init__(self)
+        QtGui.QWidget.__init__(self)
         print "Init Kicad to Ngspice"
+             
+        self.grid = QtGui.QGridLayout(self)
+        self.grid.addWidget(self.createConvertWidget(),0,0)
+        self.setGeometry(500, 500, 600, 600)
+        self.setLayout(self.grid)
+        self.show()
+          
+    def createConvertWidget(self):
+        self.convertbox = QtGui.QGroupBox()
+        self.convertgrid = QtGui.QGridLayout()
         
-        '''
-        self.analysisTab = QtGui.QWidget()
-        self.sourceTab = QtGui.QWidget()
-        self.modelTab = QtGui.QWidget()
-        '''
+        self.convertbtn = QtGui.QPushButton("Convert")
+        self.cancelbtn = QtGui.QPushButton("Cancel")
+        
         self.analysisTab = Analysis.Analysis()
         self.sourceTab = QtGui.QWidget()
         self.modelTab = QtGui.QWidget()
-        
         
         self.td = TabbedWidget.TabbedWidget()
         self.td.addTab(self.analysisTab, 'Analysis Inserter')
         self.td.addTab(self.sourceTab, 'Source Detail')
         self.td.addTab(self.modelTab, 'Model Detail')
-        self.td.show()
-        
-        '''
-        self.tabs = QtGui.QTabWidget()
-        self.testpushBTN = QtGui.QPushButton("QPushButton 1")
-           
-        
-        self.vbox = QtGui.QVBoxLayout()
-        self.vbox.addWidget(self.testpushBTN)
-        
-
-        #Resize width and height
-        self.tabs.resize(600, 600)
-    
-        #Move QTabWidget to x:300,y:300
-        self.tabs.move(300, 300)
-    
-        #Set Layout for Third Tab Page
-        self.modelTab.setLayout(self.vbox)   
-    
-        self.tabs.addTab(self.analysisTab,"Analysis Inserter")
-        self.tabs.addTab(self.sourceTab,"Source Detail")
-        self.tabs.addTab(self.modelTab,"Model Details")
-    
-        self.tabs.setWindowTitle('Kicad to Ngspice Conversion')
-        self.tabs.show()
-        '''
+      
         
         
-
-
-
+        #self.td.show()
+        
+        self.convertgrid.addWidget(self.td,0,0)
+        self.convertgrid.addWidget(self.convertbtn,1,1)
+        self.convertgrid.addWidget(self.cancelbtn,1,2)
+        
+        self.convertbox.setLayout(self.convertgrid)
+                    
+        return self.convertbox
+        
+        
+        
+        
 def main():
     print "=================================="
     print "Kicad to Ngspice netlist converter "
