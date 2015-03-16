@@ -17,7 +17,6 @@
 #===============================================================================
 import sys
 from PyQt4 import QtGui
-import TabbedWidget
 import Analysis
 
 class MainWindow(QtGui.QWidget):
@@ -26,41 +25,47 @@ class MainWindow(QtGui.QWidget):
         print "Init Kicad to Ngspice"
              
         self.grid = QtGui.QGridLayout(self)
-        self.grid.addWidget(self.createConvertWidget(),0,0)
+        self.convertbtn = QtGui.QPushButton("Convert")
+        self.cancelbtn = QtGui.QPushButton("Cancel")
+        self.grid.addWidget(self.createcreateConvertWidget(),0,0)
+        self.grid.addWidget(self.convertbtn,1,1)
+        self.grid.addWidget(self.cancelbtn,1,2)
         self.setGeometry(500, 500, 600, 600)
         self.setLayout(self.grid)
         self.show()
           
-    def createConvertWidget(self):
-        self.convertbox = QtGui.QGroupBox()
-        self.convertgrid = QtGui.QGridLayout()
+    
+    def createcreateConvertWidget(self):
+        self.convertWindow = QtGui.QWidget()
+                      
+        self.analysisTab = QtGui.QScrollArea()
+        self.analysisTab.setWidget(Analysis.Analysis())
+        self.analysisTabLayout = QtGui.QVBoxLayout(self.analysisTab.widget())
+        self.analysisTab.setWidgetResizable(True)
         
-        self.convertbtn = QtGui.QPushButton("Convert")
-        self.cancelbtn = QtGui.QPushButton("Cancel")
+        self.sourceTab = QtGui.QScrollArea()
+        self.sourceTab.setWidget(QtGui.QWidget())
+        self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
+        self.sourceTab.setWidgetResizable(True)
         
-        self.analysisTab = Analysis.Analysis()
-        self.sourceTab = QtGui.QWidget()
-        self.modelTab = QtGui.QWidget()
+        self.modelTab = QtGui.QScrollArea()
+        self.modelTab.setWidget(QtGui.QWidget())
+        self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
+        self.modelTab.setWidgetResizable(True)
+
+        self.tabWidget = QtGui.QTabWidget()
+        self.tabWidget.addTab(self.analysisTab,"Analysis Tab")
+        self.tabWidget.addTab(self.sourceTab,"Source Tab")
+        self.tabWidget.addTab(self.modelTab,"Model Tab")
+        self.mainLayout = QtGui.QVBoxLayout()
+        self.mainLayout.addWidget(self.tabWidget)
+        #self.mainLayout.addStretch(1)
+        self.convertWindow.setLayout(self.mainLayout)
+        self.convertWindow.show()
+    
         
-        self.td = TabbedWidget.TabbedWidget()
-        self.td.addTab(self.analysisTab, 'Analysis Inserter')
-        self.td.addTab(self.sourceTab, 'Source Detail')
-        self.td.addTab(self.modelTab, 'Model Detail')
-      
-        
-        
-        #self.td.show()
-        
-        self.convertgrid.addWidget(self.td,0,0)
-        self.convertgrid.addWidget(self.convertbtn,1,1)
-        self.convertgrid.addWidget(self.cancelbtn,1,2)
-        
-        self.convertbox.setLayout(self.convertgrid)
-                    
-        return self.convertbox
-        
-        
-        
+        return self.convertWindow 
+    
         
 def main():
     print "=================================="

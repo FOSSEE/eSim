@@ -6,12 +6,23 @@ class Analysis(QtGui.QWidget):
     def __init__(self):
         QtGui.QWidget.__init__(self)
         
-        #elf.scrollArea = QtGui.QScrollArea()
-        #self.scrollArea.setWidgetResizable(True)
-        #self.scrollAreaWidgetContents = QtGui.QWidget()
-        #self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 100, 100))
-        #self.hlayout = QtGui.QHBoxLayout(self.scrollAreaWidgetContents)
-          
+        '''
+        self.scrolllayout = QtGui.QVBoxLayout()
+        self.scrollwidget = QtGui.QWidget()
+        self.scrollwidget.setLayout(self.scrolllayout)
+
+        self.scroll = QtGui.QScrollArea()
+        self.scroll.setWidgetResizable(True)  # Set to make the inner widget resize with scroll area
+        self.scroll.setWidget(self.scrollwidget)
+               
+        self.hlayout = QtGui.QHBoxLayout()
+        self.hlayout.addWidget(self.scroll)
+        self.hlayout.addWidget(self.createACgroup())
+        self.hlayout.addWidget(self.createDCgroup())
+        self.hlayout.addWidget(self.createTRANgroup())
+        self.setLayout(self.hlayout)
+        '''
+   
         self.grid = QtGui.QGridLayout()
         self.grid.addWidget(self.createACgroup(),0,0)
         self.grid.addWidget(self.createDCgroup(),1,0)
@@ -39,9 +50,6 @@ class Analysis(QtGui.QWidget):
         '''
         
         self.setLayout(self.grid)
-        
-     
-        
         self.show()
         
         
