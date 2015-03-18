@@ -5,28 +5,21 @@ from PyQt4 import QtGui,QtCore
 class Analysis(QtGui.QWidget):
     def __init__(self):
         QtGui.QWidget.__init__(self)
+        self.createAnalysisWidget()
+    
+     
         
-        '''
-        self.scrolllayout = QtGui.QVBoxLayout()
-        self.scrollwidget = QtGui.QWidget()
-        self.scrollwidget.setLayout(self.scrolllayout)
-
-        self.scroll = QtGui.QScrollArea()
-        self.scroll.setWidgetResizable(True)  # Set to make the inner widget resize with scroll area
-        self.scroll.setWidget(self.scrollwidget)
-               
-        self.hlayout = QtGui.QHBoxLayout()
-        self.hlayout.addWidget(self.scroll)
-        self.hlayout.addWidget(self.createACgroup())
-        self.hlayout.addWidget(self.createDCgroup())
-        self.hlayout.addWidget(self.createTRANgroup())
-        self.setLayout(self.hlayout)
-        '''
-   
+    def createAnalysisWidget(self):
+        
         self.grid = QtGui.QGridLayout()
-        self.grid.addWidget(self.createACgroup(),0,0)
-        self.grid.addWidget(self.createDCgroup(),1,0)
-        self.grid.addWidget(self.createTRANgroup(),2,0)
+        
+            
+        self.grid.addWidget(self.createCheckBobx(),0,0)
+        self.grid.addWidget(self.createACgroup(),1,0)
+        self.grid.addWidget(self.createDCgroup(),2,0)
+        self.grid.addWidget(self.createTRANgroup(),3,0)
+        
+        
         
         '''
         self.grid.addWidget(self.createTRANgroup(),3,0)
@@ -52,6 +45,54 @@ class Analysis(QtGui.QWidget):
         self.setLayout(self.grid)
         self.show()
         
+    
+    def createCheckBobx(self):
+        self.checkbox = QtGui.QGroupBox()
+        self.checkbox.setTitle("Select Analysis Type")
+        self.checkgrid = QtGui.QGridLayout()
+        
+        self.checkgroupbtn = QtGui.QButtonGroup()
+        self.checkAC = QtGui.QCheckBox("AC")
+        self.checkDC = QtGui.QCheckBox("DC")
+        self.checkTRAN = QtGui.QCheckBox("TRANSIENT")
+        self.checkgroupbtn.addButton(self.checkAC)
+        self.checkgroupbtn.addButton(self.checkDC)
+        self.checkgroupbtn.addButton(self.checkTRAN)
+        self.checkgroupbtn.setExclusive(True)
+        self.checkgroupbtn.buttonClicked.connect(self.enableBox)
+        
+        self.checkgrid.addWidget(self.checkAC,0,0)
+        self.checkgrid.addWidget(self.checkDC,0,1)
+        self.checkgrid.addWidget(self.checkTRAN,0,2)
+        
+        self.checkbox.setLayout(self.checkgrid)
+        
+        
+        #CSS
+        '''
+        self.checkbox.setStyleSheet(" \
+        QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+        QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+        ")
+        '''
+              
+        return self.checkbox
+        #return self.checkgroupbtn
+    
+    def enableBox(self):
+        if self.checkAC.isChecked():
+            self.acbox.setDisabled(False)
+            self.dcbox.setDisabled(True)
+            self.trbox.setDisabled(True)
+        elif self.checkDC.isChecked():
+            self.dcbox.setDisabled(False)
+            self.acbox.setDisabled(True)
+            self.trbox.setDisabled(True)
+            
+        elif self.checkTRAN.isChecked():
+            self.trbox.setDisabled(False)
+            self.acbox.setDisabled(True)
+            self.dcbox.setDisabled(True)
         
                 
     def createACgroup(self):
@@ -63,17 +104,15 @@ class Analysis(QtGui.QWidget):
         self.btn2 = QtGui.QRadioButton("Radio button 2")
         self.acgrid.addWidget(self.btn1,0,0)
         self.acgrid.addWidget(self.btn2,0,1)
-       
-             
+        self.acbox.setDisabled(True)
+        self.acbox.setLayout(self.acgrid)
+        
+        #CSS     
         self.acbox.setStyleSheet(" \
         QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
         QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
         ")
-        
-      
-         
-        self.acbox.setLayout(self.acgrid)
-        
+             
         return self.acbox
     
     def createDCgroup(self):
@@ -85,13 +124,15 @@ class Analysis(QtGui.QWidget):
         self.btn4 = QtGui.QRadioButton("Radio button 4")
         self.dcgrid.addWidget(self.btn3,0,0)
         self.dcgrid.addWidget(self.btn4,0,1)
+        self.dcbox.setDisabled(True)
+        self.dcbox.setLayout(self.dcgrid)
         
+        #CSS
         self.dcbox.setStyleSheet(" \
         QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
         QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
         ")
-        
-        self.dcbox.setLayout(self.dcgrid)
+              
         
         return self.dcbox
     
@@ -104,12 +145,14 @@ class Analysis(QtGui.QWidget):
         self.btn6 = QtGui.QRadioButton("Radio button 6")
         self.trgrid.addWidget(self.btn5,0,0)
         self.trgrid.addWidget(self.btn6,0,1)
+        self.trbox.setDisabled(True)
+        self.trbox.setLayout(self.trgrid)
         
+        #CSS
         self.trbox.setStyleSheet(" \
         QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
         QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
         ")
-        
-        self.trbox.setLayout(self.trgrid)
+              
         
         return self.trbox

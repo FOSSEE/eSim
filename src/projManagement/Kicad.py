@@ -101,6 +101,14 @@ class Kicad:
             #Cheking if project has .cir file or not
             if self.obj_validation.validateCir(self.projDir):
                 print "CIR file present"
+                self.projName = os.path.basename(self.projDir)
+                self.project = os.path.join(self.projDir,self.projName)
+            
+                #Creating a command to run
+                self.cmd = "python  /home/fahim/Workspace/eSim/src/kicadtoNgspice/KicadtoNgspice.py "+self.project+".cir "
+                self.obj_workThread = Worker.WorkerThread(self.cmd)
+                self.obj_workThread.start()
+                
             else:
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage('Your project do not contain any Kicad netlist file for conversion')

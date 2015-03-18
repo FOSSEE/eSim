@@ -20,20 +20,27 @@ from PyQt4 import QtGui
 import Analysis
 
 class MainWindow(QtGui.QWidget):
+    netList = []
     def __init__(self):
         QtGui.QWidget.__init__(self)
         print "Init Kicad to Ngspice"
              
+        #Creating Objects for Analysis,Source and model
+        
+        #self.obj_analysis = Analysis.Analysis()
+        
+        #Creating GUI for kicadtoNgspice window
         self.grid = QtGui.QGridLayout(self)
         self.convertbtn = QtGui.QPushButton("Convert")
         self.cancelbtn = QtGui.QPushButton("Cancel")
+        self.cancelbtn.clicked.connect(self.close)
         self.grid.addWidget(self.createcreateConvertWidget(),0,0)
         self.grid.addWidget(self.convertbtn,1,1)
         self.grid.addWidget(self.cancelbtn,1,2)
         self.setGeometry(500, 500, 600, 600)
         self.setLayout(self.grid)
         self.show()
-          
+             
     
     def createcreateConvertWidget(self):
         self.convertWindow = QtGui.QWidget()
@@ -66,23 +73,28 @@ class MainWindow(QtGui.QWidget):
         
         return self.convertWindow 
     
+    
+    
         
-def main():
+def main(args):
     print "=================================="
     print "Kicad to Ngspice netlist converter "
     print "=================================="
     
-    #kicadNetlist = sys.argv[1]
+    #print "The passed netlist file is ",sys.argv[1]
     
-  
+    app = QtGui.QApplication(sys.argv)
+    #app.setApplicationName("KicadToNgspice")
+    #app.setQuitOnLastWindowClosed(True)
+    kingWindow = MainWindow()
+    kingWindow.show()
+    sys.exit(app.exec_())
+    
     
 if __name__ == '__main__':
-    app = QtGui.QApplication(sys.argv)
-    app.setApplicationName("KicadToNgspice")
-    app.setQuitOnLastWindowClosed(True)
-    window = MainWindow()
-    main()
-    sys.exit(app.exec_())
+    main(sys.argv)
+    
+  
     
     
         
