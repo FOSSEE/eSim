@@ -118,7 +118,7 @@ def main(args):
     It is main function of the module.It starts the application
     """
     print "Hello Main"
-    app = QtGui.QApplication(sys.argv)
+    app = QtGui.QApplication(args)
    
     """
     splash_pix = QtGui.QPixmap('../images/FreeEDAlogo.jpg')

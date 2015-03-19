@@ -16,19 +16,19 @@
 #      REVISION:  ---
 #===============================================================================
 import sys
+import os
 from PyQt4 import QtGui
 import Analysis
+import Source
 
 class MainWindow(QtGui.QWidget):
-    netList = []
     def __init__(self):
         QtGui.QWidget.__init__(self)
+        #self.kicadfile = sys.argv[1] 
+        self.kicadfile = "/home/fahim/eSim-Workspace/BJT_amplifier/BJT_amplifier.cir"
         print "Init Kicad to Ngspice"
-             
-        #Creating Objects for Analysis,Source and model
-        
-        #self.obj_analysis = Analysis.Analysis()
-        
+               
+            
         #Creating GUI for kicadtoNgspice window
         self.grid = QtGui.QGridLayout(self)
         self.convertbtn = QtGui.QPushButton("Convert")
@@ -51,7 +51,7 @@ class MainWindow(QtGui.QWidget):
         self.analysisTab.setWidgetResizable(True)
         
         self.sourceTab = QtGui.QScrollArea()
-        self.sourceTab.setWidget(QtGui.QWidget())
+        self.sourceTab.setWidget(Source.Source(self.kicadfile))
         self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
         self.sourceTab.setWidgetResizable(True)
         
@@ -72,8 +72,7 @@ class MainWindow(QtGui.QWidget):
     
         
         return self.convertWindow 
-    
-    
+ 
     
         
 def main(args):
@@ -83,7 +82,7 @@ def main(args):
     
     #print "The passed netlist file is ",sys.argv[1]
     
-    app = QtGui.QApplication(sys.argv)
+    app = QtGui.QApplication(args)
     #app.setApplicationName("KicadToNgspice")
     #app.setQuitOnLastWindowClosed(True)
     kingWindow = MainWindow()
@@ -93,6 +92,7 @@ def main(args):
     
 if __name__ == '__main__':
     main(sys.argv)
+    
     
   
     

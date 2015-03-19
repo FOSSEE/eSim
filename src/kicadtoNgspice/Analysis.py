@@ -10,17 +10,12 @@ class Analysis(QtGui.QWidget):
      
         
     def createAnalysisWidget(self):
-        
         self.grid = QtGui.QGridLayout()
-        
-            
         self.grid.addWidget(self.createCheckBobx(),0,0)
         self.grid.addWidget(self.createACgroup(),1,0)
         self.grid.addWidget(self.createDCgroup(),2,0)
         self.grid.addWidget(self.createTRANgroup(),3,0)
-        
-        
-        
+            
         '''
         self.grid.addWidget(self.createTRANgroup(),3,0)
         self.grid.addWidget(self.createTRANgroup(),4,0)
@@ -107,7 +102,7 @@ class Analysis(QtGui.QWidget):
         self.acbox.setDisabled(True)
         self.acbox.setLayout(self.acgrid)
         
-        #CSS     
+        #CSS   
         self.acbox.setStyleSheet(" \
         QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
         QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
