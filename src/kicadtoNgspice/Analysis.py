@@ -94,12 +94,61 @@ class Analysis(QtGui.QWidget):
         self.acbox.setTitle("AC Analysis")
         self.acgrid = QtGui.QGridLayout()
         
-        self.btn1 = QtGui.QRadioButton("Radio button 1")
-        self.btn2 = QtGui.QRadioButton("Radio button 2")
-        self.acgrid.addWidget(self.btn1,0,0)
-        self.acgrid.addWidget(self.btn2,0,1)
+        self.Lin = QtGui.QRadioButton("Lin")
+        self.Dec = QtGui.QRadioButton("Dec")
+        self.Oct = QtGui.QRadioButton("Oct")
+        self.acgrid.addWidget(self.Lin,1,1)
+        self.acgrid.addWidget(self.Dec,1,2)
+        self.acgrid.addWidget(self.Oct,1,3)
         self.acbox.setDisabled(True)
         self.acbox.setLayout(self.acgrid)
+        
+        self.Scale = QtGui.QLabel("Scale")
+        self.Start_Frequency = QtGui.QLabel("Start Frequency")
+        self.Stop_Frequency = QtGui.QLabel("Stop Frequency")
+        self.No_of_Points = QtGui.QLabel("No.of Points")
+        #self.Scale.setMaximumWidth(150)
+        #self.Start_Frequency.setMaximumWidth(150)
+        #self.Stop_Frequency.setMaximumWidth(150)
+        #self.No_of_Points.setMaximumWidth(150)
+        self.acgrid.addWidget(self.Scale,1,0)
+        self.acgrid.addWidget(self.Start_Frequency,2,0)
+        self.acgrid.addWidget(self.Stop_Frequency,3,0)
+        self.acgrid.addWidget(self.No_of_Points,4,0)
+        
+        self.Start_Frequency = QtGui.QLineEdit(self)
+        self.Stop_Frequency = QtGui.QLineEdit()
+        self.No_of_Points = QtGui.QLineEdit()
+        self.acgrid.addWidget(self.Start_Frequency,2,1)
+        self.acgrid.addWidget(self.Stop_Frequency,3,1)
+        self.acgrid.addWidget(self.No_of_Points,4,1)
+        self.Start_Frequency.setMaximumWidth(150)
+        self.Stop_Frequency.setMaximumWidth(150)
+        self.No_of_Points.setMaximumWidth(150)
+        
+        #self.lineEdit1.setGeometry()
+        
+        self.Start_Frequency = QtGui.QComboBox()
+        self.Start_Frequency.addItem("Hz",)
+        self.Start_Frequency.addItem("KHz")
+        self.Start_Frequency.addItem("MHz")
+        self.Start_Frequency.addItem("GHz")
+        self.Start_Frequency.addItem("THz")
+        #self.Start_Frequency.setMaximumWidth(150)
+        self.acgrid.addWidget(self.Start_Frequency,2,2)
+        self.Stop_Frequency = QtGui.QComboBox()
+        self.Stop_Frequency.addItem("Hz")
+        self.Stop_Frequency.addItem("KHz")
+        self.Stop_Frequency.addItem("MHz")
+        self.Stop_Frequency.addItem("GHz")
+        self.Stop_Frequency.addItem("THz")
+        self.Stop_Frequency.setMaximumWidth(150)
+        self.acgrid.addWidget(self.Stop_Frequency,3,2)
+        
+        
+        
+
+        
         
         #CSS   
         self.acbox.setStyleSheet(" \
@@ -199,12 +248,53 @@ class Analysis(QtGui.QWidget):
         self.trbox.setTitle("Transient Analysis")
         self.trgrid = QtGui.QGridLayout()
         
-        self.btn5 = QtGui.QRadioButton("Radio button 5")
-        self.btn6 = QtGui.QRadioButton("Radio button 6")
-        self.trgrid.addWidget(self.btn5,0,0)
-        self.trgrid.addWidget(self.btn6,0,1)
+        #self.btn5 = QtGui.QRadioButton("Radio button 5")
+        #self.btn6 = QtGui.QRadioButton("Radio button 6")
+        #self.trgrid.addWidget(self.btn5,0,0)
+        #self.trgrid.addWidget(self.btn6,0,1)
         self.trbox.setDisabled(True)
         self.trbox.setLayout(self.trgrid)
+        
+        self.Start_Time = QtGui.QLabel("Start Time")
+        self.Step_Time = QtGui.QLabel("Step Time")
+        self.Stop_Time = QtGui.QLabel("Stop Time")
+        self.trgrid.addWidget(self.Start_Time,1,0)
+        self.trgrid.addWidget(self.Step_Time,2,0)
+        self.trgrid.addWidget(self.Stop_Time,3,0)
+        
+        self.Start_Time = QtGui.QLineEdit()
+        self.Step_Time = QtGui.QLineEdit()
+        self.Stop_Time = QtGui.QLineEdit()
+        self.trgrid.addWidget(self.Start_Time,1,1)
+        self.trgrid.addWidget(self.Step_Time,2,1)
+        self.trgrid.addWidget(self.Stop_Time,3,1)
+        
+        self.Start_Time = QtGui.QComboBox()
+        self.Start_Time.addItem("Sec")
+        self.Start_Time.addItem("ms")
+        self.Start_Time.addItem("us")
+        self.Start_Time.addItem("ns")
+        self.Start_Time.addItem("ps")
+        self.trgrid.addWidget(self.Start_Time,1,2)
+        
+        self.Step_Time = QtGui.QComboBox()
+        self.Step_Time.addItem("Sec")
+        self.Step_Time.addItem("ms")
+        self.Step_Time.addItem("us")
+        self.Step_Time.addItem("ns")
+        self.Step_Time.addItem("ps")
+        self.trgrid.addWidget(self.Step_Time,2,2)
+        
+        self.Stop_Time = QtGui.QComboBox()
+        self.Stop_Time.addItem("Sec")
+        self.Stop_Time.addItem("ms")
+        self.Stop_Time.addItem("us")
+        self.Stop_Time.addItem("ns")
+        self.Stop_Time.addItem("ps")
+        self.trgrid.addWidget(self.Stop_Time,3,2)
+        
+        
+        
         
         #CSS
         self.trbox.setStyleSheet(" \
