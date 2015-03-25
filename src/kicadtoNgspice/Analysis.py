@@ -6,9 +6,7 @@ class Analysis(QtGui.QWidget):
     def __init__(self):
         QtGui.QWidget.__init__(self)
         self.createAnalysisWidget()
-    
-     
-        
+         
     def createAnalysisWidget(self):
         self.grid = QtGui.QGridLayout()
         self.grid.addWidget(self.createCheckBobx(),0,0)
@@ -59,7 +57,6 @@ class Analysis(QtGui.QWidget):
         self.checkgrid.addWidget(self.checkAC,0,0)
         self.checkgrid.addWidget(self.checkDC,0,1)
         self.checkgrid.addWidget(self.checkTRAN,0,2)
-        
         self.checkbox.setLayout(self.checkgrid)
         
         

@@ -106,6 +106,7 @@ class Application(QtGui.QMainWindow):
     def help_project(self):
         print "Help is called"
         print "Current Project : ",self.obj_appconfig.current_project
+        print "Sourcelist track : ",self.obj_appconfig.sourcelisttrack
         
     def testing(self):
         print "Sucess hit kicad button"
