@@ -21,8 +21,10 @@ from PyQt4 import QtGui,QtCore
 from Processing import PrcocessNetlist
 import Analysis
 import Source
+import Model
 import Convert
 import TrackWidget
+
 
 
 class MainWindow(QtGui.QWidget):
@@ -51,20 +53,19 @@ class MainWindow(QtGui.QWidget):
     def createcreateConvertWidget(self):
         
         self.convertWindow = QtGui.QWidget()
-                      
         self.analysisTab = QtGui.QScrollArea()
         self.analysisTab.setWidget(Analysis.Analysis())
-        self.analysisTabLayout = QtGui.QVBoxLayout(self.analysisTab.widget())
+        #self.analysisTabLayout = QtGui.QVBoxLayout(self.analysisTab.widget())
         self.analysisTab.setWidgetResizable(True)
         
         self.sourceTab = QtGui.QScrollArea()
         self.sourceTab.setWidget(Source.Source(sourcelist,sourcelisttrack))
-        self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
+        #self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
         self.sourceTab.setWidgetResizable(True)
         
         self.modelTab = QtGui.QScrollArea()
-        self.modelTab.setWidget(QtGui.QWidget())
-        self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
+        self.modelTab.setWidget(Model.Model())
+        #self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
         self.modelTab.setWidgetResizable(True)
 
         self.tabWidget = QtGui.QTabWidget()
@@ -86,11 +87,12 @@ class MainWindow(QtGui.QWidget):
         """
         global schematicInfo
         self.obj_convert = Convert.Convert(self.obj_track.sourcelisttrack["ITEMS"],
-                                           self.obj_track.entry_var["ITEMS"],
+                                           self.obj_track.source_entry_var["ITEMS"],
                                            schematicInfo)
         
         #Adding Source Value to Schematic Info
         schematicInfo = self.obj_convert.addSourceParameter()
+        
         
  
     

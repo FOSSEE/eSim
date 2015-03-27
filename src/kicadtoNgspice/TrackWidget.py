@@ -4,4 +4,6 @@ class TrackWidget:
     module in the form of list
     """
     sourcelisttrack = {"ITEMS":"None"}
-    entry_var = {"ITEMS":"None"}
+    source_entry_var = {"ITEMS":"None"}
+    analysis_entry_var = {"ITEMS":"NONE"}
+    analysis_type = {"ITEMS":"NONE"}

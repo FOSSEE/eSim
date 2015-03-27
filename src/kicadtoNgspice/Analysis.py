@@ -1,8 +1,6 @@
 
-from PyQt4 import QtGui,QtCore
-from numpy import partition
-from PyQt4.Qt import QRect
-#import GroupBox
+from PyQt4 import QtGui
+
 
 class Analysis(QtGui.QWidget):
     def __init__(self):
@@ -162,15 +160,7 @@ class Analysis(QtGui.QWidget):
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
         self.dcgrid = QtGui.QGridLayout()
-        #self.dcgrid.setGeometry(self, QRect)
-        #self.partition= QtGui.QHBoxLayout()
-        #self.dcgrid.addWidget(partition,0,0)
-        #self.dcgrid.setHorizontalSpacing(60)
-                
-        #self.btn3 = QtGui.QRadioButton("Radio button 3")
-        #self.simulation_button = QtGui.QPushButton("Add Simulation Data")
-        #self.dcgrid.addWidget(self.btn3,0,0)
-        #self.dcgrid.addWidget(self.btn4,0,1)
+        
         self.dcbox.setDisabled(True)
         self.dcbox.setLayout(self.dcgrid)
         
@@ -247,11 +237,7 @@ class Analysis(QtGui.QWidget):
         self.trbox = QtGui.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
         self.trgrid = QtGui.QGridLayout()
-        
-        #self.btn5 = QtGui.QRadioButton("Radio button 5")
-        #self.btn6 = QtGui.QRadioButton("Radio button 6")
-        #self.trgrid.addWidget(self.btn5,0,0)
-        #self.trgrid.addWidget(self.btn6,0,1)
+       
         self.trbox.setDisabled(True)
         self.trbox.setLayout(self.trgrid)
         

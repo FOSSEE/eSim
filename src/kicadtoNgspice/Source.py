@@ -138,7 +138,7 @@ class Source(QtGui.QWidget):
     
         
         self.obj_track.sourcelisttrack["ITEMS"] = sourcelisttrack
-        self.obj_track.entry_var["ITEMS"] = self.entry_var
+        self.obj_track.source_entry_var["ITEMS"] = self.entry_var
         self.show()
         
         

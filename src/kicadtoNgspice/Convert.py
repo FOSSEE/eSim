@@ -1,12 +1,14 @@
 
 
 class Convert:
-    def __init__(self,sourcelisttrack,entry_var,schematicInfo):
+    def __init__(self,sourcelisttrack,source_entry_var,schematicInfo):
         print "Start Conversion"
         self.sourcelisttrack = sourcelisttrack
         self.schematicInfo = schematicInfo
-        self.entry_var = entry_var
+        self.entry_var = source_entry_var
         self.sourcelistvalue = []
+        
+        self.analysisInserter()
         
     def addSourceParameter(self):
         print "Adding Source parameter"
@@ -103,4 +105,7 @@ class Convert:
             del self.schematicInfo[item[0]]
             self.schematicInfo.insert(item[0],item[1])   
             
-        return self.schematicInfo 
+        return self.schematicInfo
+    
+    def analysisInserter(self):
+        print "Adding Analysis" 
