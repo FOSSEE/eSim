@@ -41,7 +41,6 @@ class NewProjectInfo(QtGui.QWidget):
         self.okbtn.clicked.connect(self.createProject)
         
         self.cancelbtn = QtGui.QPushButton("Cancel")
-        self.cancelbtn = QtGui.QPushButton('Cancel')
         self.cancelbtn.clicked.connect(self.cancelProject)
         
         

@@ -23,16 +23,22 @@ class WorkerThread(QtCore.QThread):
     def __init__(self,args):
         QtCore.QThread.__init__(self)
         self.args = args
-    
+    '''
+    #Not Required
     def __del__(self):
         self.wait()
         
+    '''    
     def run(self):
         print "Calling :",self.args
         self.call_system(self.args)
         
     def call_system(self,command):
         print "System called"
-        os.system(command)
+        try:
+            os.system(command)
+            print "PID",os.getpid()
+        except:
+            print "Unable to run the command"
     
     

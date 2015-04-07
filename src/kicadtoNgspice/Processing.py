@@ -1,8 +1,14 @@
+import sys
+import os
+from xml.etree import ElementTree as ET
+
+
 
 class PrcocessNetlist:
+    modelxmlDIR = '../modelParamXML'
     def __init__(self):
         pass
-    
+      
     def readNetlist(self,filename):
         f = open(filename)
         data=f.read()
@@ -92,13 +98,18 @@ class PrcocessNetlist:
                 modelName=words[4]
                 index=schematicInfo.index(eachline)
                 schematicInfo.remove(eachline)
+                '''
                 width=raw_input('  Enter width of mosfet '+words[0]+'(default=100u):')
                 length=raw_input('  Enter length of mosfet '+words[0]+'(default=100u):')
                 multiplicative_factor=raw_input('  Enter multiplicative factor of mosfet '+words[0]+'(default=1):')
+              
                 if width=="": width="100u"
                 if multiplicative_factor=="": multiplicative_factor="100u"
                 if length=="": length="100u"
                 schematicInfo.insert(index,words[0]+" "+words[1]+" "+words[2]+" "+words[3]+" "+words[3]+" "+words[4]+" "+'M='+multiplicative_factor+" "+'L='+length+" "+'W='+width)
+                '''
+                
+                schematicInfo.insert(index,words[0]+" "+words[1]+" "+words[2]+" "+words[3]+" "+words[3]+" "+words[4])
                 if modelName in modelList:
                     continue
                 modelList.append(modelName)
@@ -191,4 +202,89 @@ class PrcocessNetlist:
         return schematicInfo,sourcelist
     
     
+    def convertICintoBasicBlocks(self,schematicInfo,outputOption,modelList):
+        #Insert details of Ngspice model
+        unknownModelList = []
+        multipleModelList = []
+        k = 1
+        for compline in schematicInfo:
+            words = compline.split()
+            compName = words[0]
+            # Find the IC from schematic 
+            if compName[0]=='u':
+                # Find the component from the circuit
+                index=schematicInfo.index(compline)
+                compType=words[len(words)-1];
+                schematicInfo.remove(compline)
+                print "Compline",compline 
+                print "CompType",compType
+                print "Words",words
+                print "compName",compName
+                #Looking if model file is present
+                xmlfile = compType+".xml"   #XML Model File
+                count = 0 #Check if model of same name is present
+                modelPath = []
+                all_dir = [x[0] for x in os.walk(PrcocessNetlist.modelxmlDIR)]
+                for each_dir in all_dir:
+                    all_file = os.listdir(each_dir)
+                    if xmlfile in all_file:
+                        count += 1
+                        modelPath.append(os.path.join(each_dir,xmlfile))
+                        
+                if count > 1:
+                    multipleModelList.append(modelPath)
+                elif count == 0:
+                    unknownModelList.append(compType)
+                elif count == 1:
+                    try:
+                        tree = ET.parse(modelPath[0])
+                        #root = parsemodel.getroot()
+                        for child in tree.iter():
+                            print "Child Item",child
+                            #print "Tag",child.tag
+                            #print "Tag Value",child.text
+                        
+                    except:
+                        print  "Unable to parse the model, Please check your your xml file"
+                        sys.exit(2)
+                        
+                #print "Count",count
+                #print "UnknownModelList",unknownModelList
+                #print "MultipleModelList",multipleModelList  
+                '''
+                if compType=="gain":
+                    schematicInfo.append("a"+str(k)+" "+words[1]+" "+words[2]+" "+compName)
+                    k=k+1
+                    #Insert comment at remove line
+                    schematicInfo.insert(index,"* "+compline)
+                    print "-----------------------------------------------------------\n"
+                    print "Adding Gain"
+                    Comment='* Gain '+compType
+                    Title='Add parameters for Gain '+compName
+                    in_offset='  Enter offset for input (default=0.0): '
+                    gain='  Enter gain (default=1.0): '
+                    out_offset='  Enter offset for output (default=0.0): '
+                    print "-----------------------------------------------------------"
+                    modelList.append([index,compline,compType,compName,Comment,Title,in_offset,gain,out_offset])
+                elif compType=="summer":
+                    schematicInfo.append("a"+str(k)+" ["+words[1]+" "+words[2]+"] "+words[3]+" "+compName)
+                    k=k+1
+                    #Insert comment at remove line
+                    schematicInfo.insert(index,"* "+compline)
+                    print "-----------------------------------------------------------\n"
+                    print "Adding summer"
+                    Comment='* Summer '+compType
+                    Title='Add parameters for Summer '+compName
+                    in1_offset='  Enter offset for input 1 (default=0.0): '
+                    in2_offset='  Enter offset for input 2 (default=0.0): '
+                    in1_gain='  Enter gain for input 1 (default=1.0): '
+                    in2_gain='  Enter gain for input 2 (default=1.0): '
+                    out_gain='  Enter gain for output (default=1.0): '
+                    out_offset='  Enter offset for output (default=0.0): '
+                    print "-----------------------------------------------------------"
+                    modelList.append([index,compline,compType,compName,Comment,Title,in1_offset,in2_offset,in1_gain,in2_gain,out_gain,out_offset])
+                '''
+        return schematicInfo,outputOption,modelList,unknownModelList,multipleModelList
+        
+        
             

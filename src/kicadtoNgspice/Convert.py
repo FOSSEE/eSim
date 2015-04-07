@@ -8,13 +8,12 @@ class Convert:
         self.entry_var = source_entry_var
         self.sourcelistvalue = []
         
-        self.analysisInserter()
-        
+              
     def addSourceParameter(self):
         print "Adding Source parameter"
-        print "SourceListTrack : ",self.sourcelisttrack
-        print "Schematic Info ",self.schematicInfo
-        print "Entry Var",self.entry_var
+        #print "SourceListTrack : ",self.sourcelisttrack
+        #print "Schematic Info ",self.schematicInfo
+        #print "Entry Var",self.entry_var
         self.start = 0
         self.end = 0
         
@@ -107,5 +106,5 @@ class Convert:
             
         return self.schematicInfo
     
-    def analysisInserter(self):
-        print "Adding Analysis" 
+    def addModelParameter(self,schematicInfo):
+        print "Schematic info after adding source detail",schematicInfo

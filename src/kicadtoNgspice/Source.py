@@ -16,6 +16,7 @@ class Source(QtGui.QWidget):
         self.end = 0
         self.row = 0
         self.entry_var = {}
+        #self.font = QtGui.QFont("Times",20,QtGui.QFont.Bold,True)
         
         #Creating Source Widget
         self.createSourceWidget(sourcelist,sourcelisttrack)
@@ -41,6 +42,7 @@ class Source(QtGui.QWidget):
                     label=QtGui.QLabel(line[4])
                     self.grid.addWidget(label,self.row,0)
                     self.entry_var[self.count]=QtGui.QLineEdit()
+                    self.entry_var[self.count].setMaximumWidth(150)
                     self.grid.addWidget(self.entry_var[self.count],self.row,1)
                     #Value Need to check previuouse value
                     self.entry_var[self.count].setText("")
@@ -57,6 +59,7 @@ class Source(QtGui.QWidget):
                     label=QtGui.QLabel(line[4])
                     self.grid.addWidget(label,self.row,0)
                     self.entry_var[self.count]=QtGui.QLineEdit()
+                    self.entry_var[self.count].setMaximumWidth(150)
                     self.grid.addWidget(self.entry_var[self.count],self.row,1)
                     self.entry_var[self.count].setText("")
                     self.row=self.row+1
@@ -74,6 +77,7 @@ class Source(QtGui.QWidget):
                         label=QtGui.QLabel(line[it])
                         self.grid.addWidget(label,self.row,0)
                         self.entry_var[self.count]=QtGui.QLineEdit()
+                        self.entry_var[self.count].setMaximumWidth(150)
                         self.grid.addWidget(self.entry_var[self.count],self.row,1)
                         self.entry_var[self.count].setText("")     
                         self.row=self.row+1
@@ -90,6 +94,7 @@ class Source(QtGui.QWidget):
                         label=QtGui.QLabel(line[it])
                         self.grid.addWidget(label,self.row,0)
                         self.entry_var[self.count]=QtGui.QLineEdit()
+                        self.entry_var[self.count].setMaximumWidth(150)
                         self.grid.addWidget(self.entry_var[self.count],self.row,1)
                         self.entry_var[self.count].setText("")
                         self.row=self.row+1
@@ -105,6 +110,7 @@ class Source(QtGui.QWidget):
                     label=QtGui.QLabel(line[4])
                     self.grid.addWidget(label,self.row,0)
                     self.entry_var[self.count]=QtGui.QLineEdit()
+                    self.entry_var[self.count].setMaximumWidth(150)
                     self.grid.addWidget(self.entry_var[self.count],self.row,1)
                     self.entry_var[self.count].setText("");
                     self.row=self.row+1
@@ -121,6 +127,7 @@ class Source(QtGui.QWidget):
                         label=QtGui.QLabel(line[it])
                         self.grid.addWidget(label,self.row,0)
                         self.entry_var[self.count]=QtGui.QLineEdit()
+                        self.entry_var[self.count].setMaximumWidth(150)
                         self.grid.addWidget(self.entry_var[self.count],self.row,1)
                         self.entry_var[self.count].setText("")
                         self.row=self.row+1

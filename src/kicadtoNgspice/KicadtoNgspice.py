@@ -16,7 +16,6 @@
 #      REVISION:  ---
 #===============================================================================
 import sys
-import os
 from PyQt4 import QtGui,QtCore
 from Processing import PrcocessNetlist
 import Analysis
@@ -32,8 +31,10 @@ class MainWindow(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
         #Create object of track widget
         self.obj_track = TrackWidget.TrackWidget()
-              
+         
         print "Init Kicad to Ngspice"             
+        #print "Current Project",sys.argv[1]
+        
             
         #Creating GUI for kicadtoNgspice window
         self.grid = QtGui.QGridLayout(self)
@@ -92,7 +93,9 @@ class MainWindow(QtGui.QWidget):
         
         #Adding Source Value to Schematic Info
         schematicInfo = self.obj_convert.addSourceParameter()
-        
+        #print "Schematic After adding source parameter",schematicInfo
+        schematicInfo = self.obj_convert.addModelParameter(schematicInfo)
+          
         
  
     
@@ -102,8 +105,8 @@ def main(args):
     print "Kicad to Ngspice netlist converter "
     print "=================================="
     global kicadFile,kicadNetlist,schematicInfo
-    kicadFile = "/home/fahim/eSim-Workspace/BJT_amplifier/BJT_amplifier.cir"
-    #kicadFile = sys.argv[1]
+    #kicadFile = "/home/fahim/eSim-Workspace/BJT_amplifier/BJT_amplifier.cir"
+    kicadFile = sys.argv[1]
     
     #Object of Processing
     obj_proc = PrcocessNetlist()
@@ -127,32 +130,54 @@ def main(args):
     print "SCHEMATICINFO",schematicInfo
     
     #Getting model and subckt list
-    modelList=[]
+    devicemodelList=[]
     subcktList=[]
-    modelList,subcktList = obj_proc.getModelSubcktList(schematicInfo,modelList,subcktList)
+    devicemodelList,subcktList = obj_proc.getModelSubcktList(schematicInfo,devicemodelList,subcktList)
     
-    print "MODEL LIST ",modelList
+    print "MODEL LIST ",devicemodelList
     print "SUBCKT ",subcktList
         
     #List for storing source and its value
     global sourcelist, sourcelisttrack
     sourcelist=[]
     sourcelisttrack=[]
-    schematicInfo,sourcelist=obj_proc.insertSpecialSourceParam(schematicInfo,sourcelist)
+    schematicInfo,sourcelist = obj_proc.insertSpecialSourceParam(schematicInfo,sourcelist)
     
     print "SOURCELIST",sourcelist
     print "SCHEMATICINFO",schematicInfo
-      
     
-      
+    #List storing model detail
+    global modelList,outputOption
+    modelList = [] 
+    outputOption = []
+    schematicInfo,outputOption,modelList,unknownModelList,multipleModelList = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList)
+    print "Unknown Model List",unknownModelList  
+    print "Multple Model List",multipleModelList
+    
+
+    
+    #Checking for unknown Model List and Multiple Model List
+    if unknownModelList:
+        print "ErrorMessage : These Models are not available.Please check it",unknownModelList
+        sys.exit(2)
+    else:
+        if multipleModelList:
+            print "ErrorMessage: There are multiple model for same name. Please check it",multipleModelList
+            sys.exit(2)
+        else:
+            pass
+    
     app = QtGui.QApplication(args)
     #app.setApplicationName("KicadToNgspice")
     #app.setQuitOnLastWindowClosed(True)
     kingWindow = MainWindow()
     kingWindow.show()
     sys.exit(app.exec_())
+      
     
     
+
+   
 if __name__ == '__main__':
     main(sys.argv)
     

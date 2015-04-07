@@ -34,7 +34,7 @@ class Appconfig(QtGui.QWidget):
         #Workspace detail
         workspace_text = '''ecSim stores your project in a folder called a workspace. You can choose a different workspace folder to use for this session.'''
     
-        
+              
         
         def __init__(self):
             super(Appconfig, self).__init__()

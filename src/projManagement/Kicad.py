@@ -21,7 +21,7 @@ import Validation
 from configuration.Appconfig import Appconfig
 import Worker
 from PyQt4 import QtGui
-
+import time
 class Kicad:
     """
     Class Kicad open Schematic,PCB and Layout
@@ -109,6 +109,7 @@ class Kicad:
                 self.cmd = "python  ../kicadtoNgspice/KicadtoNgspice.py "+self.project+".cir "
                 self.obj_workThread = Worker.WorkerThread(self.cmd)
                 self.obj_workThread.start()
+         
                 
             else:
                 self.msg = QtGui.QErrorMessage(None)
