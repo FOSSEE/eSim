@@ -26,7 +26,8 @@ class Source(QtGui.QWidget):
                 
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
-        
+        print ("source list /---------")
+        print sourcelist
         if sourcelist:
             for line in sourcelist:
                 #print "Voltage source line index: ",line[0]

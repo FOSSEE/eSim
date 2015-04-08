@@ -190,5 +190,5 @@ class PrcocessNetlist:
         #print schematicInfo
         return schematicInfo,sourcelist
     
-    
-            
+    #def analysisproc(self):
+        #fileread= open()

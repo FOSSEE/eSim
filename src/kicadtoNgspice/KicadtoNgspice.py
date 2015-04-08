@@ -85,22 +85,28 @@ class MainWindow(QtGui.QWidget):
         Calling Convert Class Constructor
         """
         global schematicInfo
+        global analysisoutput
         self.obj_convert = Convert.Convert(self.obj_track.sourcelisttrack["ITEMS"],
                                            self.obj_track.entry_var["ITEMS"],
                                            schematicInfo)
-        
         #Adding Source Value to Schematic Info
         schematicInfo = self.obj_convert.addSourceParameter()
+        analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
+                                           self.obj_track.DC_entry_var["ITEMS"],
+                                           self.obj_track.TRAN_entry_var["ITEMS"],
+                                           self.obj_track.set_CheckBox["ITEMS"],
+                                           self.obj_track.AC_Parameter["ITEMS"],
+                                           self.obj_track.DC_Parameter["ITEMS"],
+                                           self.obj_track.TRAN_Parameter["ITEMS"],
+                                           self.obj_track.AC_type["ITEMS"])
         
- 
-    
         
 def main(args):
     print "=================================="
     print "Kicad to Ngspice netlist converter "
     print "=================================="
     global kicadFile,kicadNetlist,schematicInfo
-    kicadFile = "/home/fahim/eSim-Workspace/BJT_amplifier/BJT_amplifier.cir"
+    kicadFile = "/home/fossee/workspace/FreeEDA/Examples/BJT_amplifier/BJT_amplifier.cir"
     #kicadFile = sys.argv[1]
     
     #Object of Processing

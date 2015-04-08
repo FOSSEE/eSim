@@ -1,4 +1,4 @@
-
+import os
 
 class Convert:
     def __init__(self,sourcelisttrack,entry_var,schematicInfo):
@@ -7,6 +7,7 @@ class Convert:
         self.schematicInfo = schematicInfo
         self.entry_var = entry_var
         self.sourcelistvalue = []
+        
         
     def addSourceParameter(self):
         print "Adding Source parameter"
@@ -101,6 +102,52 @@ class Convert:
         #Updating Schematic with source value
         for item in self.sourcelistvalue:
             del self.schematicInfo[item[0]]
-            self.schematicInfo.insert(item[0],item[1])   
-            
+            self.schematicInfo.insert(item[0],item[1])
         return self.schematicInfo 
+    
+    def analysisInsertor(self,ac_entry_var,dc_entry_var, tran_entry_var,set_checkbox,ac_parameter,dc_parameter,tran_parameter,ac_type):
+        print ("HI THIS IS A ANALYSIS INSERTOR FUNCTION")
+        self.ac_entry_var = ac_entry_var
+        self.dc_entry_var = dc_entry_var
+        self.tran_entry_var = tran_entry_var
+        self.set_checkbox = set_checkbox
+        self.ac_parameter= ac_parameter
+        self.dc_parameter= dc_parameter
+        self.trans_parameter = tran_parameter
+        self.ac_type= ac_type
+        self.no=0
+        
+        self.variable=self.set_checkbox
+        self.direct="/home/fossee/workspace/FreeEDA/Examples/BJT_amplifier/"
+        self.FileName = os.path.join(self.direct, "analysis")  
+        self.writefile= open(self.FileName,"w")
+       
+        if self.variable== 'AC':
+            self.no=0
+            self.writefile.write(".ac " + self.ac_type + ' ' + str(self.ac_entry_var[self.no].text()) + ' ' + self.ac_parameter[self.no]+ ' ' + str(self.ac_entry_var[self.no+1].text()) + ' '+ self.ac_parameter[self.no+1] + ' ' + str(self.ac_entry_var[self.no+2].text()))        
+
+        elif self.variable=='DC':
+            self.no=0 
+            self.writefile.write(".dc " + str(self.dc_entry_var[self.no+1].text())+ ' ' + self.converttosciform(self.dc_parameter[self.no]) + ' '+ str(self.dc_entry_var[self.no+2].text())+ ' ' + self.converttosciform(self.dc_parameter[self.no+1]) + ' '+ str(self.dc_entry_var[self.no+3].text())+ ' ' + self.converttosciform(self.dc_parameter[self.no+2]))
+
+        elif self.variable == 'TRAN':
+            self.no= 0
+            self.writefile.write(".tran " + str(self.tran_entry_var[self.no].text())+ ' ' + self.converttosciform(self.trans_parameter[self.no]) + ' ' + str(self.tran_entry_var[self.no+1].text()) + ' ' + self.converttosciform(self.trans_parameter[self.no+1]) + ' ' + str(self.tran_entry_var[self.no+2].text()) + ' '+ self.converttosciform(self.trans_parameter[self.no+2]))
+
+        else:
+            pass
+        self.writefile.close()
+        
+    def converttosciform(self, string_obj):
+        self.string_obj = string_obj
+        if self.string_obj[0] == 'm':
+            return "e-03"
+        elif self.string_obj[0] == 'u':
+            return "e-06"
+        elif self.string_obj[0] == 'n':
+            return "e-09"
+        elif self.string_obj[0] == 'p':
+            return "e-12"
+        else:
+            return "e-00"
+        
