@@ -100,7 +100,7 @@ def main(args):
     print "Kicad to Ngspice netlist converter "
     print "=================================="
     global kicadFile,kicadNetlist,schematicInfo
-    kicadFile = "/home/fahim/eSim-Workspace/BJT_amplifier/BJT_amplifier.cir"
+    kicadFile = "/home/gaurav/workspace/FreeEDA/Examples/BJT_amplifier/BJT_amplifier.cir"
     #kicadFile = sys.argv[1]
     
     #Object of Processing
