@@ -16,6 +16,7 @@
 #      REVISION:  ---
 #===============================================================================
 import sys
+import os
 from PyQt4 import QtGui,QtCore
 from Processing import PrcocessNetlist
 import Analysis
@@ -31,7 +32,7 @@ class MainWindow(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
         #Create object of track widget
         self.obj_track = TrackWidget.TrackWidget()
-         
+              
         print "Init Kicad to Ngspice"             
         #print "Current Project",sys.argv[1]
         
@@ -87,6 +88,7 @@ class MainWindow(QtGui.QWidget):
         Calling Convert Class Constructor
         """
         global schematicInfo
+        global analysisoutput
         self.obj_convert = Convert.Convert(self.obj_track.sourcelisttrack["ITEMS"],
                                            self.obj_track.source_entry_var["ITEMS"],
                                            schematicInfo)
@@ -95,6 +97,16 @@ class MainWindow(QtGui.QWidget):
         schematicInfo = self.obj_convert.addSourceParameter()
         #print "Schematic After adding source parameter",schematicInfo
         schematicInfo = self.obj_convert.addModelParameter(schematicInfo)
+        
+        analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
+                                                           self.obj_track.DC_entry_var["ITEMS"],
+                                                           self.obj_track.TRAN_entry_var["ITEMS"],
+                                                           self.obj_track.set_CheckBox["ITEMS"],
+                                                           self.obj_track.AC_Parameter["ITEMS"],
+                                                           self.obj_track.DC_Parameter["ITEMS"],
+                                                           self.obj_track.TRAN_Parameter["ITEMS"],
+                                                           self.obj_track.AC_type["ITEMS"])
+        
           
         
  
@@ -153,6 +165,7 @@ def main(args):
     schematicInfo,outputOption,modelList,unknownModelList,multipleModelList = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList)
     print "Unknown Model List",unknownModelList  
     print "Multple Model List",multipleModelList
+    print "Model List",modelList
     
 
     

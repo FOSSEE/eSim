@@ -46,6 +46,8 @@ class ViewManagement(QtGui.QSplitter):
         self.addView(QtGui.QTextEdit, 'ProjectExplorer')
         self.addView(QtGui.QTextEdit, 'ProjectToolbar')
         self.addView(QtGui.QTextEdit, 'CurrentProject')
+        self.addView(QtGui.QTextEdit, 'Browser')
+        
         
     def setupView(self):
         #setup views to define various areas, such as placement of individual views 
@@ -93,6 +95,8 @@ class ViewManagement(QtGui.QSplitter):
         self.pcb_btn.clicked.connect(self.obj_kicad.openLayout)
         self.grid.addWidget(self.pcb_btn,1,1)
               
+        #self.temp = QtGui.QSplitter()
+        #self.temp.setOrientation(QtCore.Qt.Vertical)
         
         # bind the top level views into the framework
         self.views['ProjectExplorer'].setParent(self)
@@ -104,9 +108,12 @@ class ViewManagement(QtGui.QSplitter):
         self.views['CurrentProject'].setParent(self.right)
         self.views['CurrentProject'].setReadOnly(True)
         
+        #self.views['Browser'].setParent(self.right)
+        #self.views['Browser'].setReadOnly(True)
+        
         self.right.setParent(self)
         self.right.setSizes([20, 5])
-        self.setSizes([5, 20])
+        #self.setSizes([5, 20])
         
     def addView(self, settype, name):
         
