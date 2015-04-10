@@ -20,7 +20,8 @@
 from PyQt4 import QtGui
 import os
 
-
+global procThread_list                  # keeps tracking all the processes called
+procThread_list = []
 
 class Appconfig(QtGui.QWidget):
         """
@@ -33,8 +34,7 @@ class Appconfig(QtGui.QWidget):
         current_project = {"ProjectName":None}
         #Workspace detail
         workspace_text = '''ecSim stores your project in a folder called a workspace. You can choose a different workspace folder to use for this session.'''
-    
-              
+        procThread_list = []
         
         def __init__(self):
             super(Appconfig, self).__init__()
