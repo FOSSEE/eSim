@@ -62,6 +62,7 @@ class Analysis(QtGui.QWidget):
         self.checkgroupbtn.addButton(self.checkDC)
         self.checkgroupbtn.addButton(self.checkTRAN)
         self.checkgroupbtn.setExclusive(True)
+        self.checkAC.setChecked(True)
         self.checkgroupbtn.buttonClicked.connect(self.enableBox)
         
         self.checkgrid.addWidget(self.checkAC,0,0)
@@ -103,7 +104,8 @@ class Analysis(QtGui.QWidget):
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acgrid = QtGui.QGridLayout()
-        
+        self.acbox.setDisabled(False)
+        self.track_obj.set_CheckBox["ITEMS"]="AC"
         self.radiobuttongroup= QtGui.QButtonGroup()
         self.Lin = QtGui.QRadioButton("Lin")
         self.Dec = QtGui.QRadioButton("Dec")
@@ -112,11 +114,13 @@ class Analysis(QtGui.QWidget):
         self.radiobuttongroup.addButton(self.Dec)
         self.radiobuttongroup.addButton(self.Oct)
         self.radiobuttongroup.setExclusive(True)
+        self.Lin.setChecked(True)
+        self.track_obj.AC_type["ITEMS"]="lin"
         self.radiobuttongroup.buttonClicked.connect(self.set_ac_type)
         self.acgrid.addWidget(self.Lin,1,1)
         self.acgrid.addWidget(self.Dec,1,2)
         self.acgrid.addWidget(self.Oct,1,3)
-        self.acbox.setDisabled(True)
+        #self.acbox.setDisabled(True)
         self.acbox.setLayout(self.acgrid)
             
         self.scale = QtGui.QLabel("Scale")
