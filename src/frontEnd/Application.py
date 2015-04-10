@@ -27,6 +27,7 @@ import ViewManagement
 import Workspace
 import sys 
 import time
+import subprocess
 
 
 class Application(QtGui.QMainWindow):
@@ -57,21 +58,20 @@ class Application(QtGui.QMainWindow):
         
         
     def initActions(self):
-        
-        self.newproj = QtGui.QAction(QtGui.QIcon('../images/newProject.png'),'<b>New Project</b>',self)
+     
+        self.newproj = QtGui.QAction(QtGui.QIcon('../images/newProject.svg'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
         
-        
-        self.openproj = QtGui.QAction(QtGui.QIcon('../images/openProject.png'),'<b>Open Project</b>',self)
+        self.openproj = QtGui.QAction(QtGui.QIcon('../images/openProject.svg'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
         
-        self.exitproj = QtGui.QAction(QtGui.QIcon('../images/closeProject.png'),'<b>Exit</b>',self)
+        self.exitproj = QtGui.QAction(QtGui.QIcon('../images/closeProject.svg'),'<b>Exit</b>',self)
         self.exitproj.setShortcut('Ctrl+X')
         self.exitproj.triggered.connect(self.exit_project)
         
-        self.helpfile = QtGui.QAction(QtGui.QIcon('../images/helpProject.png'),'<b>Help</b>',self)
+        self.helpfile = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
         
@@ -106,7 +106,13 @@ class Application(QtGui.QMainWindow):
         
     def exit_project(self):
         print "Exit Project called"
-        self.destroy()
+        for proc in self.obj_appconfig.procThread_list:
+                try:
+                        proc.terminate()
+                except:
+                        pass
+        self.project.close()
+        self.close()
         
     def help_project(self):
         print "Help is called"
@@ -125,7 +131,7 @@ def main(args):
     It is main function of the module.It starts the application
     """
     print "Hello Main"
-    app = QtGui.QApplication(args)
+    app = QtGui.QApplication(sys.argv)
    
     """
     splash_pix = QtGui.QPixmap('../images/FreeEDAlogo.jpg')

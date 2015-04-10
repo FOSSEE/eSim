@@ -16,15 +16,15 @@
 #      REVISION:  ---
 #===============================================================================
 from PyQt4 import QtCore
-import os
+import subprocess
+from configuration.Appconfig import Appconfig
 
 
 class WorkerThread(QtCore.QThread):
     def __init__(self,args):
         QtCore.QThread.__init__(self)
         self.args = args
-    '''
-    #Not Required
+    
     def __del__(self):
         self.wait()
         
@@ -35,10 +35,8 @@ class WorkerThread(QtCore.QThread):
         
     def call_system(self,command):
         print "System called"
-        try:
-            os.system(command)
-            print "PID",os.getpid()
-        except:
-            print "Unable to run the command"
+        procThread = Appconfig()
+        proc = subprocess.Popen(command)
+        procThread.procThread_list.append(proc)
     
     
