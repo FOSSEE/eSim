@@ -95,8 +95,9 @@ class ViewManagement(QtGui.QSplitter):
         self.pcb_btn.clicked.connect(self.obj_kicad.openLayout)
         self.grid.addWidget(self.pcb_btn,1,1)
               
-        #self.temp = QtGui.QSplitter()
-        #self.temp.setOrientation(QtCore.Qt.Vertical)
+        #Adding one more splitter
+        self.browser = QtGui.QSplitter()
+        self.browser.setOrientation(QtCore.Qt.Vertical)
         
         # bind the top level views into the framework
         self.views['ProjectExplorer'].setParent(self)
@@ -108,10 +109,11 @@ class ViewManagement(QtGui.QSplitter):
         self.views['CurrentProject'].setParent(self.right)
         self.views['CurrentProject'].setReadOnly(True)
         
-        #self.views['Browser'].setParent(self.right)
-        #self.views['Browser'].setReadOnly(True)
+        self.views['Browser'].setParent(self.browser)
+        self.views['Browser'].setReadOnly(True)
         
         self.right.setParent(self)
+        self.browser.setParent(self)
         self.right.setSizes([20, 5])
         #self.setSizes([5, 20])
         

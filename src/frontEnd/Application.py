@@ -112,7 +112,12 @@ class Application(QtGui.QMainWindow):
                         proc.terminate()
                 except:
                         pass
-        self.project.close()
+        ##Just checking if open and New window is open. If yes just close it when application is closed
+        try:
+            self.project.close()
+        except:
+            pass
+        
         self.close()
         
     def help_project(self):
