@@ -36,7 +36,7 @@ class WorkerThread(QtCore.QThread):
     def call_system(self,command):
         print "System called"
         procThread = Appconfig()
-        proc = subprocess.Popen(command)
+        proc = subprocess.Popen(command.split())
         procThread.procThread_list.append(proc)
     
     
