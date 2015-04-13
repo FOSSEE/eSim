@@ -28,7 +28,7 @@ class WorkerThread(QtCore.QThread):
     def __del__(self):
         self.wait()
         
-    '''    
+        
     def run(self):
         print "Calling :",self.args
         self.call_system(self.args)

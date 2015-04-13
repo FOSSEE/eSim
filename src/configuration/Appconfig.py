@@ -20,8 +20,6 @@
 from PyQt4 import QtGui
 import os
 
-global procThread_list                  # keeps tracking all the processes called
-procThread_list = []
 
 class Appconfig(QtGui.QWidget):
         """
