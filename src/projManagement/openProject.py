@@ -33,8 +33,10 @@ class OpenProjectInfo(QtGui.QWidget):
         self.obj_validation = Validation()
               
     def body(self):
-        self.projDir = QtGui.QFileDialog.getExistingDirectory()
-               
+        self.obj_Appconfig = Appconfig()
+        self.openDir = self.obj_Appconfig.default_workspace["workspace"]
+        #print "default workspace is now 1", self.openDir
+        self.projDir=QtGui.QFileDialog.getExistingDirectory(self,"open",self.openDir)
         if self.obj_validation.validateOpenproj(self.projDir) == True:
             print "Pass open project test"
             self.obj_Appconfig = Appconfig()
