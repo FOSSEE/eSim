@@ -108,7 +108,7 @@ class Workspace(QtGui.QWidget):
             
     def browseLocation(self):
         print "Browse Location called"
-        self.workspace_directory = QtGui.QFileDialog.getExistingDirectory()
+        self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(self, "open","/home")
         print "Path file :", self.workspace_directory
         self.worspace_loc.setText(self.workspace_directory)
         
