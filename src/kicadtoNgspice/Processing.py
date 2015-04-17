@@ -264,7 +264,23 @@ class PrcocessNetlist:
                             for item in param:
                                 #print "Tags ",item.tag
                                 #print "Value",item.text
-                                paramDict[item.tag] = item.text
+                                if 'vector'in item.attrib:
+                                    print "Tag having vector attribute",item.tag,item.attrib['vector']
+                                    temp_count = 1
+                                    temp_list = []
+                                    for i in range(0,int(item.attrib['vector'])):
+                                        temp_list.append(item.text+" "+str(temp_count))
+                                        temp_count += 1
+                                    if 'default' in item.attrib:
+                                        paramDict[item.tag+":"+item.attrib['default']] = temp_list
+                                    else:
+                                        paramDict[item.tag] = item.text
+                                                                    
+                                else:
+                                    if 'default' in item.attrib:
+                                        paramDict[item.tag+":"+item.attrib['default']] = item.text
+                                    else:
+                                        paramDict[item.tag] = item.text
                                 
                             
                         print "Number of Nodes : ",num_of_nodes

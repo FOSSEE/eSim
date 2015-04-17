@@ -66,7 +66,7 @@ class MainWindow(QtGui.QWidget):
         self.sourceTab.setWidgetResizable(True)
         
         self.modelTab = QtGui.QScrollArea()
-        self.modelTab.setWidget(Model.Model())
+        self.modelTab.setWidget(Model.Model(schematicInfo,modelList))
         #self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
         self.modelTab.setWidgetResizable(True)
 
@@ -93,23 +93,31 @@ class MainWindow(QtGui.QWidget):
                                            self.obj_track.source_entry_var["ITEMS"],
                                            schematicInfo)
         
-        #Adding Source Value to Schematic Info
-        schematicInfo = self.obj_convert.addSourceParameter()
-        #print "Schematic After adding source parameter",schematicInfo
-        schematicInfo = self.obj_convert.addModelParameter(schematicInfo)
-        
-        analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
-                                                           self.obj_track.DC_entry_var["ITEMS"],
-                                                           self.obj_track.TRAN_entry_var["ITEMS"],
-                                                           self.obj_track.set_CheckBox["ITEMS"],
-                                                           self.obj_track.AC_Parameter["ITEMS"],
-                                                           self.obj_track.DC_Parameter["ITEMS"],
-                                                           self.obj_track.TRAN_Parameter["ITEMS"],
-                                                           self.obj_track.AC_type["ITEMS"])
-        
-          
-        
- 
+        try:
+            #Adding Source Value to Schematic Info
+            schematicInfo = self.obj_convert.addSourceParameter()
+            
+            #Adding Model Value to schematic Info
+            schematicInfo = self.obj_convert.addModelParameter(schematicInfo)
+            
+            analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
+                                                               self.obj_track.DC_entry_var["ITEMS"],
+                                                               self.obj_track.TRAN_entry_var["ITEMS"],
+                                                               self.obj_track.set_CheckBox["ITEMS"],
+                                                               self.obj_track.AC_Parameter["ITEMS"],
+                                                               self.obj_track.DC_Parameter["ITEMS"],
+                                                               self.obj_track.TRAN_Parameter["ITEMS"],
+                                                               self.obj_track.AC_type["ITEMS"])
+            print "SchematicInfo after adding Model Details",schematicInfo
+            self.msg = "The Kicad to Ngspice Conversion completed successfully!!!!!!"
+            QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
+            self.close()         
+        except Exception as e:
+            print "Exception Message: ",e
+            print "SchematicInfo after adding Model Details",schematicInfo
+            print "There was error while converting kicad to ngspice"
+            self.close()
+            
     
         
 def main(args):
@@ -164,7 +172,7 @@ def main(args):
     outputOption = []
     schematicInfo,outputOption,modelList,unknownModelList,multipleModelList = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList)
     print "Unknown Model List",unknownModelList  
-    print "Multple Model List",multipleModelList
+    print "Multiple Model List",multipleModelList
     print "Model List",modelList
     
 
@@ -175,7 +183,7 @@ def main(args):
         sys.exit(2)
     else:
         if multipleModelList:
-            print "ErrorMessage: There are multiple model for same name. Please check it",multipleModelList
+            print "ErrorMessage: There are multiple model of same name. Please check it",multipleModelList
             sys.exit(2)
         else:
             pass
@@ -186,8 +194,7 @@ def main(args):
     kingWindow = MainWindow()
     kingWindow.show()
     sys.exit(app.exec_())
-      
-    
+     
     
 
    

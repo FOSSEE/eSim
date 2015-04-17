@@ -1,6 +1,9 @@
 import os
 import sys
 
+import TrackWidget
+
+
 class Convert:
     def __init__(self,sourcelisttrack,source_entry_var,schematicInfo):
         print "Start Conversion"
@@ -107,9 +110,7 @@ class Convert:
             
         return self.schematicInfo
     
-    def addModelParameter(self,schematicInfo):
-        print "Schematic info after adding source detail",schematicInfo
-    
+       
     def analysisInsertor(self,ac_entry_var,dc_entry_var, tran_entry_var,set_checkbox,ac_parameter,dc_parameter,tran_parameter,ac_type):
         self.ac_entry_var = ac_entry_var
         self.dc_entry_var = dc_entry_var
@@ -155,4 +156,99 @@ class Convert:
             return "e-12"
         else:
             return "e-00"
+    
+    
+    def addModelParameter(self,schematicInfo):
+        print "Schematic info after adding source detail",schematicInfo
         
+        #Create object of TrackWidget
+        self.obj_track = TrackWidget.TrackWidget()
+        
+        #List to store model line
+        addmodelLine = []
+        modelParamValue = []
+        
+        for line in self.obj_track.modelTrack:
+            print "Model Track :",line
+            if line[2] == 'transfo':
+                try:
+                    start=line[5]
+                    end=line[6]
+                    num_turns=str(self.obj_track.model_entry_var[start].text())
+                    if num_turns=="": num_turns="310"    
+                    h_array= "H_array = [ "
+                    b_array = "B_array = [ "
+                    h1=str(self.obj_track.model_entry_var[start+1].text())
+                    b1=str(self.obj_track.model_entry_var[start+2].text())
+                    if len(h1)!=0 and len(b1)!=0:
+                        h_array=h_array+h1+" "
+                        b_array=b_array+b1+" "
+                        bh_array = h_array+" ] " + b_array+" ]"
+                    else:
+                        bh_array = "H_array = [-1000 -500 -375 -250 -188 -125 -63 0 63 125 188 250 375 500 1000] B_array = [-3.13e-3 -2.63e-3 -2.33e-3 -1.93e-3 -1.5e-3 -6.25e-4 -2.5e-4 0 2.5e-4 6.25e-4 1.5e-3 1.93e-3 2.33e-3 2.63e-3 3.13e-3]"
+                    area=str(self.obj_track.model_entry_var[start+3].text())
+                    length=str(self.obj_track.model_entry_var[start+4].text())
+                    if area=="": area="1"
+                    if length=="":length="0.01"
+                    num_turns2=str(self.obj_track.model_entry_var[start+5].text())
+                    if num_turns2=="": num_turns2="620"
+                    addmodelLine=".model "+line[3]+"_primary lcouple (num_turns= "+num_turns+")"
+                    modelParamValue.append([line[0],addmodelLine,line[4]])
+                    addmodelLine=".model "+line[3]+"_iron_core core ("+bh_array+" area = "+area+" length ="+length +")"
+                    modelParamValue.append([line[0],addmodelLine,line[4]])
+                    addmodelLine=".model "+line[3]+"_secondary lcouple (num_turns ="+num_turns2+ ")"    
+                    modelParamValue.append([line[0],addmodelLine,line[4]])    
+                except:
+                    print "Caught an exception in transfo model ",line[1]
+            
+            else:
+                try:
+                    start = line[5]
+                    end = line[6]
+                    addmodelLine=".model "+ line[3]+" "+line[2]+"("
+                    for key,value in line[9].iteritems():
+                        print "Tags: ",key
+                        print "Value: ",value
+                        #Checking for default value and accordingly assign param and default.
+                        if ':' in key:
+                            key = key.split(':')
+                            param = key[0]
+                            default = key[1]
+                        else:
+                            param = key
+                            default = 0
+                        #Cheking if value is iterable.its for vector
+                        if hasattr(value, '__iter__'):
+                            addmodelLine += param+"=["
+                            for lineVar in value:
+                                if  str(self.obj_track.model_entry_var[lineVar].text()) == "":
+                                    paramVal = default
+                                else:
+                                    paramVal = str(self.obj_track.model_entry_var[lineVar].text())
+                                addmodelLine += paramVal+" "
+                            addmodelLine += "] "
+                        else:
+                            if  str(self.obj_track.model_entry_var[value].text()) == "":
+                                paramVal = default
+                            else:
+                                paramVal = str(self.obj_track.model_entry_var[value].text())
+                            
+                            addmodelLine += param+"="+paramVal+" "
+                                    
+                        
+                        
+                                          
+                    addmodelLine += ") "
+                    modelParamValue.append([line[0],addmodelLine,line[4]]) 
+                except:
+                    print "Caught an exception in gain model ",line[1]        
+        
+        
+        #Adding it to schematic
+        for item in modelParamValue:
+            schematicInfo.append(item[2]) #Adding Comment
+            schematicInfo.append(item[1]) #Adding model line
+            
+            
+        return schematicInfo
+                
