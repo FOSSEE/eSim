@@ -130,15 +130,15 @@ class Convert:
        
         if self.variable== 'AC':
             self.no=0
-            self.writefile.write(".ac " + self.ac_type + ' ' + str(self.ac_entry_var[self.no].text()) + ' ' + self.ac_parameter[self.no]+ ' ' + str(self.ac_entry_var[self.no+1].text()) + ' '+ self.ac_parameter[self.no+1] + ' ' + str(self.ac_entry_var[self.no+2].text()))        
+            self.writefile.write(".ac"+' ' + self.ac_type + ' '+ str(self.defaultvalue(self.ac_entry_var[self.no+2].text()))+' ' + str(self.defaultvalue(self.ac_entry_var[self.no].text())) + self.ac_parameter[self.no]+ ' ' + str(self.defaultvalue(self.ac_entry_var[self.no+1].text())) + self.ac_parameter[self.no+1] )        
 
         elif self.variable=='DC':
             self.no=0 
-            self.writefile.write(".dc " + str(self.dc_entry_var[self.no+1].text())+ ' ' + self.converttosciform(self.dc_parameter[self.no]) + ' '+ str(self.dc_entry_var[self.no+2].text())+ ' ' + self.converttosciform(self.dc_parameter[self.no+1]) + ' '+ str(self.dc_entry_var[self.no+3].text())+ ' ' + self.converttosciform(self.dc_parameter[self.no+2]))
+            self.writefile.write(".dc" +' '+ str(self.dc_entry_var[self.no].text())+ ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+1].text())) + self.converttosciform(self.dc_parameter[self.no]) + ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+3].text()))+ self.converttosciform(self.dc_parameter[self.no+2]) + ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+2].text())) + self.converttosciform(self.dc_parameter[self.no+1]))
 
         elif self.variable == 'TRAN':
             self.no= 0
-            self.writefile.write(".tran " + str(self.tran_entry_var[self.no].text())+ ' ' + self.converttosciform(self.trans_parameter[self.no]) + ' ' + str(self.tran_entry_var[self.no+1].text()) + ' ' + self.converttosciform(self.trans_parameter[self.no+1]) + ' ' + str(self.tran_entry_var[self.no+2].text()) + ' '+ self.converttosciform(self.trans_parameter[self.no+2]))
+            self.writefile.write(".tran" + ' '+ str(self.defaultvalue(self.tran_entry_var[self.no+1].text())) + self.converttosciform(self.trans_parameter[self.no+1]) + ' ' + str(self.defaultvalue(self.tran_entry_var[self.no+2].text())) + self.converttosciform(self.trans_parameter[self.no+2])+' '+ str(self.defaultvalue(self.tran_entry_var[self.no].text()))+ self.converttosciform(self.trans_parameter[self.no]))
 
         else:
             pass
@@ -156,6 +156,13 @@ class Convert:
             return "e-12"
         else:
             return "e-00"
+        
+    def defaultvalue(self, value):
+        self.value= value
+        if self.value == '':
+            return 0
+        else:
+            pass
     
     
     def addModelParameter(self,schematicInfo):
@@ -251,4 +258,6 @@ class Convert:
             
             
         return schematicInfo
+
+	
                 

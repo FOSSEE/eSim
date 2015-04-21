@@ -133,15 +133,15 @@ class Analysis(QtGui.QWidget):
         self.acgrid.addWidget(self.no_of_points,4,0)
         
         self.count=0
-        self.ac_entry_var[self.count] = QtGui.QLineEdit()
+        self.ac_entry_var[self.count] = QtGui.QLineEdit()#start
         self.acgrid.addWidget(self.ac_entry_var[self.count],2,1)
         self.ac_entry_var[self.count].setMaximumWidth(150)
         self.count= self.count+1
-        self.ac_entry_var[self.count] = QtGui.QLineEdit()
+        self.ac_entry_var[self.count] = QtGui.QLineEdit()#stop
         self.acgrid.addWidget(self.ac_entry_var[self.count],3,1)
         self.ac_entry_var[self.count].setMaximumWidth(150)
         self.count= self.count+1
-        self.ac_entry_var[self.count] = QtGui.QLineEdit()
+        self.ac_entry_var[self.count] = QtGui.QLineEdit()#no of pts
         self.acgrid.addWidget(self.ac_entry_var[self.count],4,1)
         self.ac_entry_var[self.count].setMaximumWidth(150)
         
@@ -221,19 +221,19 @@ class Analysis(QtGui.QWidget):
         self.dcgrid.addWidget(self.stop,4,0)        
         
         self.count=0
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()
+        self.dc_entry_var[self.count] = QtGui.QLineEdit()#source
         self.dcgrid.addWidget(self.dc_entry_var[self.count],1,1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count= self.count+1
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()
+        self.dc_entry_var[self.count] = QtGui.QLineEdit()#start
         self.dcgrid.addWidget(self.dc_entry_var[self.count],2,1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count= self.count+1
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()
+        self.dc_entry_var[self.count] = QtGui.QLineEdit()#increment
         self.dcgrid.addWidget(self.dc_entry_var[self.count],3,1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count= self.count+1
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()
+        self.dc_entry_var[self.count] = QtGui.QLineEdit()#stop
         self.dcgrid.addWidget(self.dc_entry_var[self.count],4,1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
 

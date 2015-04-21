@@ -109,6 +109,8 @@ class MainWindow(QtGui.QWidget):
                                                                self.obj_track.TRAN_Parameter["ITEMS"],
                                                                self.obj_track.AC_type["ITEMS"])
             print "SchematicInfo after adding Model Details",schematicInfo
+            #Calling netlist file generation function
+            self.createNetlistFile()
             self.msg = "The Kicad to Ngspice Conversion completed successfully!!!!!!"
             QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
             self.close()         
@@ -119,12 +121,116 @@ class MainWindow(QtGui.QWidget):
             self.close()
             
     
+      
+    
+    def createNetlistFile(self):
+        print "Creating Final netlist"
+        print "INFOLINE",infoline
+        print "OPTIONINFO",optionInfo
+        print "Device MODEL LIST ",devicemodelList
+        print "SUBCKT ",subcktList
+        print "OUTPUTOPTION",outputOption
+        print "KicadfIle",kicadFile
+        
+        #checking if analysis files is present
+        (filepath,filename) = os.path.split(kicadFile)
+        analysisFileLoc = os.path.join(filepath,"analysis")
+        print "FilePath",filepath
+        print "FileName",filename
+        print "Analysis File Location",analysisFileLoc
+        if os.path.exists(analysisFileLoc):
+            try:
+                f = open(analysisFileLoc)
+                #Read data
+                data = f.read()
+                # Close the file
+                f.close()
+
+            except :
+                print "Error While opening Project Analysis file. Please check it"
+                sys.exit()
+        else:
+            print analysisFileLoc + " does not exist"
+            sys.exit()
+            
+        #Adding analysis file info to optionInfo
+        analysisData=data.splitlines()
+        for eachline in analysisData:
+            eachline=eachline.strip()
+            if len(eachline)>1:
+                if eachline[0]=='.':
+                    optionInfo.append(eachline)
+                else:
+                    pass
+                
+        print "Option Info",optionInfo
+        analysisOption = []
+        initialCondOption=[]
+        simulatorOption =[]
+        includeOption=[]  #Don't know why to use it
+        model = []      #Don't know why to use it
+        
+        for eachline in optionInfo:
+            words=eachline.split()
+            option=words[0]
+            if (option=='.ac' or option=='.dc' or option=='.disto' or option=='.noise' or
+                option=='.op' or option=='.pz' or option=='.sens' or option=='.tf' or
+                option=='.tran'):
+                analysisOption.append(eachline+'\n')
+                
+            elif (option=='.save' or option=='.print' or option=='.plot' or option=='.four'):
+                eachline=eachline.strip('.')
+                outputOption.append(eachline+'\n')
+            elif (option=='.nodeset' or option=='.ic'):  
+                initialCondOption.append(eachline+'\n')
+            elif option=='.option':  
+                simulatorOption.append(eachline+'\n')
+            elif (option=='.include' or option=='.lib'):
+                includeOption.append(eachline+'\n')
+            elif (option=='.model'):
+                model.append(eachline+'\n')
+            elif option=='.end':
+                continue;
+            
+            
+        #Start creating final netlist cir.out file
+        outfile = kicadFile+".out"
+        out=open(outfile,"w")
+        out.writelines(infoline)
+        out.writelines('\n')
+        sections=[simulatorOption, initialCondOption, schematicInfo, analysisOption]
+        print "SECTIONS",sections
+        for section in sections:
+            if len(section) == 0:
+                continue
+            else:
+                for line in section:
+                    out.writelines('\n') 
+                    out.writelines(line)
+        
+        out.writelines('\n* Control Statements \n')
+        out.writelines('.control\n')
+        out.writelines('run\n')
+        #out.writelines(outputOption)
+        out.writelines('print allv > plot_data_v.txt\n')
+        out.writelines('print alli > plot_data_i.txt\n')
+        out.writelines('.endc\n')
+        out.writelines('.end\n')
+        
+        out.close()
+        
+   
+        
+                
+            
+    
         
 def main(args):
     print "=================================="
     print "Kicad to Ngspice netlist converter "
     print "=================================="
     global kicadFile,kicadNetlist,schematicInfo
+    global infoline,optionInfo
     #kicadFile = "/home/fahim/eSim-Workspace/BJT_amplifier/BJT_amplifier.cir"
     kicadFile = sys.argv[1]
     
@@ -135,26 +241,27 @@ def main(args):
     kicadNetlist = obj_proc.readNetlist(kicadFile)
     
     # Construct parameter information
-    param=obj_proc.readParamInfo(kicadNetlist)
+    param = obj_proc.readParamInfo(kicadNetlist)
     
     # Replace parameter with values
-    netlist,infoline=obj_proc.preprocessNetlist(kicadNetlist,param)
+    netlist,infoline = obj_proc.preprocessNetlist(kicadNetlist,param)
     
     print "NETLIST ",netlist
     print "INFOLINE",infoline
     
     # Separate option and schematic information
-    optionInfo, schematicInfo=obj_proc.separateNetlistInfo(netlist)
+    optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
     
     print "OPTIONINFO",optionInfo
     print "SCHEMATICINFO",schematicInfo
     
     #Getting model and subckt list
-    devicemodelList=[]
-    subcktList=[]
+    global devicemodelList,subcktList
+    devicemodelList = []
+    subcktList = []
     devicemodelList,subcktList = obj_proc.getModelSubcktList(schematicInfo,devicemodelList,subcktList)
     
-    print "MODEL LIST ",devicemodelList
+    print "Device MODEL LIST ",devicemodelList
     print "SUBCKT ",subcktList
         
     #List for storing source and its value
@@ -187,6 +294,9 @@ def main(args):
             sys.exit(2)
         else:
             pass
+        
+    
+    
     
     app = QtGui.QApplication(args)
     #app.setApplicationName("KicadToNgspice")
