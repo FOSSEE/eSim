@@ -5,6 +5,10 @@ from xml.etree import ElementTree as ET
 
 
 class PrcocessNetlist:
+    """
+    This class include all the function required for pre-proccessing of netlist 
+    before converting to Ngspice Netlist.
+    """
     modelxmlDIR = '../modelParamXML'
     def __init__(self):
         pass
@@ -75,62 +79,7 @@ class PrcocessNetlist:
                 schematicInfo.append(eachline)
         return optionInfo,schematicInfo
     
-    def getModelSubcktList(self,schematicInfo,modelList,subcktList):
-        #Processing Netlist for modellist and subcktlist details
-        for eachline in schematicInfo:
-            words = eachline.split()
-            if eachline[0]=='d':
-                modelName=words[3]
-                if modelName in modelList:
-                    continue
-                else:
-                    modelList.append(modelName)
-            elif eachline[0]=='q':
-                modelName=words[4]
-                index=schematicInfo.index(eachline)
-                schematicInfo.remove(eachline)
-                schematicInfo.insert(index,words[0]+" "+words[3]+" "+words[2]+" "+words[1]+" "+words[4])
-                if modelName in modelList:
-                    continue
-                else:
-                    modelList.append(modelName)
-            elif eachline[0]=='m':
-                modelName=words[4]
-                index=schematicInfo.index(eachline)
-                schematicInfo.remove(eachline)
-                '''
-                width=raw_input('  Enter width of mosfet '+words[0]+'(default=100u):')
-                length=raw_input('  Enter length of mosfet '+words[0]+'(default=100u):')
-                multiplicative_factor=raw_input('  Enter multiplicative factor of mosfet '+words[0]+'(default=1):')
-              
-                if width=="": width="100u"
-                if multiplicative_factor=="": multiplicative_factor="100u"
-                if length=="": length="100u"
-                schematicInfo.insert(index,words[0]+" "+words[1]+" "+words[2]+" "+words[3]+" "+words[3]+" "+words[4]+" "+'M='+multiplicative_factor+" "+'L='+length+" "+'W='+width)
-                '''
-                
-                schematicInfo.insert(index,words[0]+" "+words[1]+" "+words[2]+" "+words[3]+" "+words[3]+" "+words[4])
-                if modelName in modelList:
-                    continue
-                modelList.append(modelName)
-            elif eachline[0]=='j':
-                modelName=words[4]
-                index=schematicInfo.index(eachline)
-                schematicInfo.remove(eachline)
-                schematicInfo.insert(index,words[0]+" "+words[1]+" "+words[2]+" "+words[3]+" "+words[4])
-                if modelName in modelList:
-                    continue
-                else:
-                    modelList.append(modelName)
-            elif eachline[0]=='x':
-                subcktName=words[len(words)-1]
-                if subcktName in subcktList:
-                    continue
-                else:
-                    subcktList.append(subcktName)
         
-        return modelList,subcktList
-    
     def insertSpecialSourceParam(self,schematicInfo,sourcelist):
         #Inser Special source parameter
         schematicInfo1=[]
@@ -337,39 +286,7 @@ class PrcocessNetlist:
                 #print "Count",count
                 #print "UnknownModelList",unknownModelList
                 #print "MultipleModelList",multipleModelList  
-                '''
-                if compType=="gain":
-                    schematicInfo.append("a"+str(k)+" "+words[1]+" "+words[2]+" "+compName)
-                    k=k+1
-                    #Insert comment at remove line
-                    schematicInfo.insert(index,"* "+compline)
-                    print "-----------------------------------------------------------\n"
-                    print "Adding Gain"
-                    Comment='* Gain '+compType
-                    Title='Add parameters for Gain '+compName
-                    in_offset='  Enter offset for input (default=0.0): '
-                    gain='  Enter gain (default=1.0): '
-                    out_offset='  Enter offset for output (default=0.0): '
-                    print "-----------------------------------------------------------"
-                    modelList.append([index,compline,compType,compName,Comment,Title,in_offset,gain,out_offset])
-                elif compType=="summer":
-                    schematicInfo.append("a"+str(k)+" ["+words[1]+" "+words[2]+"] "+words[3]+" "+compName)
-                    k=k+1
-                    #Insert comment at remove line
-                    schematicInfo.insert(index,"* "+compline)
-                    print "-----------------------------------------------------------\n"
-                    print "Adding summer"
-                    Comment='* Summer '+compType
-                    Title='Add parameters for Summer '+compName
-                    in1_offset='  Enter offset for input 1 (default=0.0): '
-                    in2_offset='  Enter offset for input 2 (default=0.0): '
-                    in1_gain='  Enter gain for input 1 (default=1.0): '
-                    in2_gain='  Enter gain for input 2 (default=1.0): '
-                    out_gain='  Enter gain for output (default=1.0): '
-                    out_offset='  Enter offset for output (default=0.0): '
-                    print "-----------------------------------------------------------"
-                    modelList.append([index,compline,compType,compName,Comment,Title,in1_offset,in2_offset,in1_gain,in2_gain,out_gain,out_offset])
-                '''
+                
         return schematicInfo,outputOption,modelList,unknownModelList,multipleModelList
         
         

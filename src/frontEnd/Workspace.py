@@ -23,7 +23,7 @@ import os
 
 class Workspace(QtGui.QWidget):
     """
-    Start workspace gui
+    This class creates Workspace GUI.
     """
     def __init__(self):
         super(Workspace, self).__init__()
@@ -35,7 +35,7 @@ class Workspace(QtGui.QWidget):
         
             
     def initWorkspace(self):
-        print "Calling workspace"
+        #print "Calling workspace"
         self.note = QtGui.QTextEdit(self)
         self.workspace_label = QtGui.QLabel(self)
         self.worspace_loc = QtGui.QLineEdit(self)
@@ -108,7 +108,7 @@ class Workspace(QtGui.QWidget):
             
     def browseLocation(self):
         print "Browse Location called"
-        self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(self, "open","/home")
+        self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(self, "Browse Location",os.path.expanduser("~"))
         print "Path file :", self.workspace_directory
         self.worspace_loc.setText(self.workspace_directory)
         

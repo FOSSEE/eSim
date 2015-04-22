@@ -21,11 +21,19 @@ import re
 
 
 class Validation:
+    """
+    This is Validation class use for validating Project.
+    e.g if .proj is present in project directory
+    or if new project name is already exist in workspace etc
+    """
     def __init__(self):
         pass
     
     def validateOpenproj(self,projDir):
-        print "Validate openProj called"
+        """
+        This function validate Open Project Information.
+        """
+        print "Validating Open Project Information"
         projName = os.path.basename(str(projDir))
         lookProj = os.path.join(str(projDir),projName+".proj")
         #Check existence of project
@@ -33,13 +41,14 @@ class Validation:
             return True
         else:
             return False
-        
        
         
     
     def validateNewproj(self,projDir):
-        print "Validate newProj called"
-        print "Project Directory : ",projDir
+        """This Project Validate New Project Information
+        """
+        print "Validating New Project Information"
+        #print "Project Directory : ",projDir
         #Checking existence of project with same name
         
         if os.path.exists(projDir):
@@ -52,6 +61,9 @@ class Validation:
                 return "VALID"
             
     def validateKicad(self,projDir):
+        """
+        This function validate if Kicad components are present
+        """
         print "Validation for Kicad components"
         if projDir == None:
             return False
@@ -59,7 +71,10 @@ class Validation:
             return True
         
     def validateCir(self,projDir):
-        print "Checking if .cir file is present or not"
+        """
+        This function checks if ".cir" file is present.
+        """
+        #print "Checking if .cir file is present or not"
         projName = os.path.basename(str(projDir))
         lookCir = os.path.join(str(projDir),projName+".cir")
         #Check existence of project

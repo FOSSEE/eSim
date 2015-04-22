@@ -5,6 +5,9 @@ import TrackWidget
 
 
 class Source(QtGui.QWidget):
+    """
+    This class create Source Tab of KicadtoNgSpice Window.
+    """
         
     def __init__(self,sourcelist,sourcelisttrack):
         QtGui.QWidget.__init__(self)
@@ -24,6 +27,9 @@ class Source(QtGui.QWidget):
            
         
     def createSourceWidget(self,sourcelist,sourcelisttrack):
+        """
+        This function dynamically create source widget in the Source tab of KicadtoNgSpice window
+        """
                 
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
@@ -33,7 +39,7 @@ class Source(QtGui.QWidget):
                 #print "Voltage source line index: ",line[0]
                 #print "SourceList line Test: ",line
                 track_id=line[0]
-                print "track_id is ",track_id
+                #print "track_id is ",track_id
                 if line[2]=='ac':
                     label=QtGui.QLabel(line[3])
                     self.grid.addWidget(label,self.row,1)
@@ -143,7 +149,7 @@ class Source(QtGui.QWidget):
             print "No source is present in your circuit"
         
     
-        
+        #This is used to keep the track of dynamically created widget
         self.obj_track.sourcelisttrack["ITEMS"] = sourcelisttrack
         self.obj_track.source_entry_var["ITEMS"] = self.entry_var
         self.show()

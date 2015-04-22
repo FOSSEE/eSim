@@ -23,7 +23,8 @@ import os
 
 class Appconfig(QtGui.QWidget):
         """
-        All configuration goes here
+        All configuration goes here.
+        May change in future for code optimization.
         """
         #Home directory
         home = os.path.join(os.path.expanduser("~"),"eSim-Workspace")

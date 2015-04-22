@@ -21,6 +21,9 @@ from configuration.Appconfig import Appconfig
 
 
 class WorkerThread(QtCore.QThread):
+    """
+    This is Thread class use to run the command
+    """
     def __init__(self,args):
         QtCore.QThread.__init__(self)
         self.args = args
@@ -30,13 +33,13 @@ class WorkerThread(QtCore.QThread):
         
         
     def run(self):
-        print "Calling :",self.args
+        print "Calling Command:",self.args
         self.call_system(self.args)
         
     def call_system(self,command):
-        print "System called"
         procThread = Appconfig()
         proc = subprocess.Popen(command.split())
         procThread.procThread_list.append(proc)
+        
     
     

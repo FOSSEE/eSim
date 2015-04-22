@@ -5,12 +5,16 @@ import TrackWidget
 
 
 class Model(QtGui.QWidget):
+    """
+    This class creates Model Tab of KicadtoNgspice window. 
+    The widgets are created dynamically in the Model Tab.
+    """
     
     def __init__(self,schematicInfo,modelList):
         QtGui.QWidget.__init__(self)
-        print "Start Ngspice Modelling"
-        print "Schematic Info in Model Widget",schematicInfo
-        print "Model List",modelList
+        #print "Start Ngspice Modelling"
+        #print "Schematic Info in Model Widget",schematicInfo
+        #print "Model List",modelList
         
         #Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()
@@ -28,7 +32,7 @@ class Model(QtGui.QWidget):
         self.setLayout(self.grid)
         
         for line in modelList:
-            print "ModelList Item:",line
+            #print "ModelList Item:",line
             #Adding title label for model
             #Key: Tag name,Value:Entry widget number
             tag_dict = {} 
@@ -38,8 +42,8 @@ class Model(QtGui.QWidget):
             self.nextrow=self.nextrow+1
             #line[7] is parameter dictionary holding parameter tags.
             for key,value in line[7].iteritems():
-                print "Key : ",key
-                print "Value : ",value
+                #print "Key : ",key
+                #print "Value : ",value
                 #Check if value is iterable
                 if hasattr(value, '__iter__'):
                     #For tag having vector value
@@ -73,6 +77,8 @@ class Model(QtGui.QWidget):
             line[6] = type i.e analog or digital
             Now adding start,end and tag_dict which will be line[7],line[8] and line[9] respectively
             '''
+            
+            #This keeps the track of Model Tab Widget
             self.obj_trac.modelTrack.append([line[0],line[1],line[2],line[3],line[4],line[5],line[6],self.start,self.end,tag_dict])
             
             print "The tag dictionary : ",tag_dict

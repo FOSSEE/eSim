@@ -22,12 +22,17 @@ from Processing import PrcocessNetlist
 import Analysis
 import Source
 import Model
+import DeviceModel
 import Convert
 import TrackWidget
 
 
 
 class MainWindow(QtGui.QWidget):
+    """
+    This class craete KicadtoNgspice window. 
+    And Call Convert function if convert button is pressed. 
+    """
     def __init__(self):
         QtGui.QWidget.__init__(self)
         #Create object of track widget
@@ -69,11 +74,18 @@ class MainWindow(QtGui.QWidget):
         self.modelTab.setWidget(Model.Model(schematicInfo,modelList))
         #self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
         self.modelTab.setWidgetResizable(True)
+        
+        self.deviceModelTab = QtGui.QScrollArea()
+        self.deviceModelTab.setWidget(DeviceModel.DeviceModel(schematicInfo))
+        self.deviceModelTab.setWidgetResizable(True)
+        
+        
 
         self.tabWidget = QtGui.QTabWidget()
-        self.tabWidget.addTab(self.analysisTab,"Analysis Tab")
-        self.tabWidget.addTab(self.sourceTab,"Source Tab")
-        self.tabWidget.addTab(self.modelTab,"Model Tab")
+        self.tabWidget.addTab(self.analysisTab,"Analysis")
+        self.tabWidget.addTab(self.sourceTab,"Source Details")
+        self.tabWidget.addTab(self.modelTab,"NgSpice Model")
+        self.tabWidget.addTab(self.deviceModelTab,"Device Modeling")
         self.mainLayout = QtGui.QVBoxLayout()
         self.mainLayout.addWidget(self.tabWidget)
         #self.mainLayout.addStretch(1)
@@ -97,8 +109,13 @@ class MainWindow(QtGui.QWidget):
             #Adding Source Value to Schematic Info
             schematicInfo = self.obj_convert.addSourceParameter()
             
-            #Adding Model Value to schematic Info
+            #Adding Model Value to schematicInfo
             schematicInfo = self.obj_convert.addModelParameter(schematicInfo)
+            
+            #Adding Device Library to SchematicInfo
+            schematicInfo = self.obj_convert.addDeviceLibrary(schematicInfo,kicadFile)
+            
+            
             
             analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
                                                                self.obj_track.DC_entry_var["ITEMS"],
@@ -108,36 +125,35 @@ class MainWindow(QtGui.QWidget):
                                                                self.obj_track.DC_Parameter["ITEMS"],
                                                                self.obj_track.TRAN_Parameter["ITEMS"],
                                                                self.obj_track.AC_type["ITEMS"])
-            print "SchematicInfo after adding Model Details",schematicInfo
+            #print "SchematicInfo after adding Model Details",schematicInfo
+            
             #Calling netlist file generation function
-            self.createNetlistFile()
+            self.createNetlistFile(schematicInfo)
+            
             self.msg = "The Kicad to Ngspice Conversion completed successfully!!!!!!"
             QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
             self.close()         
         except Exception as e:
             print "Exception Message: ",e
-            print "SchematicInfo after adding Model Details",schematicInfo
             print "There was error while converting kicad to ngspice"
             self.close()
             
     
       
     
-    def createNetlistFile(self):
+    def createNetlistFile(self,schematicInfo):
         print "Creating Final netlist"
-        print "INFOLINE",infoline
-        print "OPTIONINFO",optionInfo
-        print "Device MODEL LIST ",devicemodelList
-        print "SUBCKT ",subcktList
-        print "OUTPUTOPTION",outputOption
-        print "KicadfIle",kicadFile
+        #print "INFOLINE",infoline
+        #print "OPTIONINFO",optionInfo
+        #print "Device MODEL LIST ",devicemodelList
+        #print "SUBCKT ",subcktList
+        #print "OUTPUTOPTION",outputOption
+        #print "KicadfIle",kicadFile
         
         #checking if analysis files is present
-        (filepath,filename) = os.path.split(kicadFile)
-        analysisFileLoc = os.path.join(filepath,"analysis")
-        print "FilePath",filepath
-        print "FileName",filename
-        print "Analysis File Location",analysisFileLoc
+        (projpath,filename) = os.path.split(kicadFile)
+        analysisFileLoc = os.path.join(projpath,"analysis")
+        #print "Analysis File Location",analysisFileLoc
         if os.path.exists(analysisFileLoc):
             try:
                 f = open(analysisFileLoc)
@@ -163,7 +179,7 @@ class MainWindow(QtGui.QWidget):
                 else:
                     pass
                 
-        print "Option Info",optionInfo
+        #print "Option Info",optionInfo
         analysisOption = []
         initialCondOption=[]
         simulatorOption =[]
@@ -255,15 +271,7 @@ def main(args):
     print "OPTIONINFO",optionInfo
     print "SCHEMATICINFO",schematicInfo
     
-    #Getting model and subckt list
-    global devicemodelList,subcktList
-    devicemodelList = []
-    subcktList = []
-    devicemodelList,subcktList = obj_proc.getModelSubcktList(schematicInfo,devicemodelList,subcktList)
-    
-    print "Device MODEL LIST ",devicemodelList
-    print "SUBCKT ",subcktList
-        
+           
     #List for storing source and its value
     global sourcelist, sourcelisttrack
     sourcelist=[]

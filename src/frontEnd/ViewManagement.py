@@ -26,6 +26,9 @@ from kicadtoNgspice.KicadtoNgspice import *
 
 
 class ViewManagement(QtGui.QSplitter):
+    """
+    This class creates View on FrontWindow 
+    """
     
     def __init__(self, *args):
         # call init method of superclass

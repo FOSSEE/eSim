@@ -21,10 +21,10 @@ import Validation
 from configuration.Appconfig import Appconfig
 import Worker
 from PyQt4 import QtGui
-import time
+
 class Kicad:
     """
-    Class Kicad open Schematic,PCB and Layout
+    This class called the Kicad Schematic,KicadtoNgspice Converter,Layout editor and Footprint Editor
     """
     def __init__(self):
         self.obj_validation = Validation.Validation()
@@ -32,12 +32,15 @@ class Kicad:
         
     
     def openSchematic(self):
+        """
+        This function create command to open Kicad schematic
+        """
         print "Kicad Schematic is called"
         self.projDir = self.obj_appconfig.current_project["ProjectName"]       
         #Validating if current project is available or not
         
         if self.obj_validation.validateKicad(self.projDir):
-            print "calling Kicad schematic ",self.projDir
+            #print "calling Kicad schematic ",self.projDir
             self.projName = os.path.basename(self.projDir)
             self.project = os.path.join(self.projDir,self.projName)
             
@@ -54,12 +57,15 @@ class Kicad:
         
         
     def openFootprint(self):
+        """
+        This function create command to open Footprint editor 
+        """
         print "Kicad Foot print Editor called"
         self.projDir = self.obj_appconfig.current_project["ProjectName"]       
         #Validating if current project is available or not
         
         if self.obj_validation.validateKicad(self.projDir):
-            print "calling Kicad FootPrint Editor ",self.projDir
+            #print "calling Kicad FootPrint Editor ",self.projDir
             self.projName = os.path.basename(self.projDir)
             self.project = os.path.join(self.projDir,self.projName)
             
@@ -74,6 +80,9 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
         
     def openLayout(self):
+        """
+        This function create command to open Layout editor
+        """
         print "Kicad Layout is called"
         self.projDir = self.obj_appconfig.current_project["ProjectName"]       
         #Validating if current project is available or not
@@ -88,24 +97,26 @@ class Kicad:
             self.obj_workThread.start()
             
         else:
-            self.msg = QtGui.QErrorMessage(None)
+            self.msg = QtGui.QErrorMessage(None)   
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")     
             
     def openKicadToNgspice(self):
+        """
+        This function create command to call kicad to Ngspice converter.
+        """
         print "Open Kicad to Ngspice Conversion"
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         #Validating if current project is available or not
         if self.obj_validation.validateKicad(self.projDir):
-            print "Project is present"
+            #print "Project is present"
             #Cheking if project has .cir file or not
             if self.obj_validation.validateCir(self.projDir):
-                print "CIR file present"
+                #print "CIR file present"
                 self.projName = os.path.basename(self.projDir)
                 self.project = os.path.join(self.projDir,self.projName)
                             
                 #Creating a command to run
-                #self.cmd = "python  /home/fahim/Workspace/eSim/src/kicadtoNgspice/KicadtoNgspice.py "+self.project+".cir "
                 self.cmd = "python  ../kicadtoNgspice/KicadtoNgspice.py "+self.project+".cir "
                 self.obj_workThread = Worker.WorkerThread(self.cmd)
                 self.obj_workThread.start()
@@ -120,4 +131,4 @@ class Kicad:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")  
-             
+            

@@ -82,25 +82,30 @@ class Application(QtGui.QMainWindow):
         self.mainToolbar.addAction(self.exitproj)
         self.mainToolbar.addAction(self.helpfile)
         
-        #self.test = self.addToolBar("Temp")
-        
+            
         
               
       
     def initView(self):
         """
-        Create gui from the class Views and initialize it
+        Create GUI from the class Views and initialize it
         """
         self.view = ViewManagement.ViewManagement()
         self.setCentralWidget(self.view)
           
     def new_project(self):
+        """
+        This function call New Project Info class.
+        """
         print "New Project called"
         self.project = NewProjectInfo()
         self.project.body()
         
     
     def open_project(self):
+        """
+        This project call Open Project Info class
+        """
         print "Open Project called"
         self.project = OpenProjectInfo()
         self.project.body()
@@ -127,7 +132,7 @@ class Application(QtGui.QMainWindow):
         
         
     def testing(self):
-        print "Sucess hit kicad button"
+        print "Success hit kicad button"
         
    
       
@@ -136,7 +141,7 @@ def main(args):
     """
     It is main function of the module.It starts the application
     """
-    print "Hello Main"
+    print "Starting eSim......"
     app = QtGui.QApplication(args)
    
     """
@@ -150,7 +155,7 @@ def main(args):
         progressBar.setValue(i)
         t = time.time()
         while time.time() < t + 0.1:
-            app.processEvents()
+            app.processEvents()    
     
     time.sleep(2)
     

@@ -4,6 +4,9 @@ from PyQt4.Qt import QRect
 import TrackWidget
 
 class Analysis(QtGui.QWidget):
+    """
+    This class create Analysis Tab in KicadtoNgspice Window.
+    """
     def __init__(self):
         QtGui.QWidget.__init__(self)
         self.track_obj= TrackWidget.TrackWidget()
@@ -25,27 +28,7 @@ class Analysis(QtGui.QWidget):
         self.grid.addWidget(self.createDCgroup(),2,0)
         self.grid.addWidget(self.createTRANgroup(),3,0)
             
-        '''
-        self.grid.addWidget(self.createTRANgroup(),3,0)
-        self.grid.addWidget(self.createTRANgroup(),4,0)
-        self.grid.addWidget(self.createTRANgroup(),5,0)
-        self.grid.addWidget(self.createTRANgroup(),6,0)
-        self.grid.addWidget(self.createTRANgroup(),7,0)
-        self.grid.addWidget(self.createTRANgroup(),8,0)
-        self.grid.addWidget(self.createTRANgroup(),9,0)
-        self.grid.addWidget(self.createTRANgroup(),10,0)
-        self.grid.addWidget(self.createTRANgroup(),11,0)
-        self.grid.addWidget(self.createTRANgroup(),12,0)
-        self.grid.addWidget(self.createTRANgroup(),13,0)
-        self.grid.addWidget(self.createTRANgroup(),14,0)
-        self.grid.addWidget(self.createTRANgroup(),15,0)
-        self.grid.addWidget(self.createTRANgroup(),16,0)
-        self.grid.addWidget(self.createTRANgroup(),17,0)
-        self.grid.addWidget(self.createTRANgroup(),18,0)
-        self.grid.addWidget(self.createTRANgroup(),19,0)
-        self.grid.addWidget(self.createTRANgroup(),20,0)
-        '''
-        
+         
         self.setLayout(self.grid)
         self.show()
              

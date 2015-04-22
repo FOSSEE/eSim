@@ -1,10 +1,13 @@
 import os
 import sys
-
+import shutil
 import TrackWidget
 
 
 class Convert:
+    """
+    This class has all the necessary function required to convert kicad netlist to ngspice netlist.
+    """
     def __init__(self,sourcelisttrack,source_entry_var,schematicInfo):
         print "Start Conversion"
         self.sourcelisttrack = sourcelisttrack
@@ -14,6 +17,9 @@ class Convert:
         
               
     def addSourceParameter(self):
+        """
+        This function add the source details to schematicInfo
+        """
         print "Adding Source parameter"
         #print "SourceListTrack : ",self.sourcelisttrack
         #print "Schematic Info ",self.schematicInfo
@@ -112,6 +118,9 @@ class Convert:
     
        
     def analysisInsertor(self,ac_entry_var,dc_entry_var, tran_entry_var,set_checkbox,ac_parameter,dc_parameter,tran_parameter,ac_type):
+        """
+        This function creates an analysis file in current project
+        """
         self.ac_entry_var = ac_entry_var
         self.dc_entry_var = dc_entry_var
         self.tran_entry_var = tran_entry_var
@@ -145,6 +154,9 @@ class Convert:
         self.writefile.close()
         
     def converttosciform(self, string_obj):
+        """
+        This function is used for scientific conversion.
+        """
         self.string_obj = string_obj
         if self.string_obj[0] == 'm':
             return "e-03"
@@ -158,6 +170,9 @@ class Convert:
             return "e-00"
         
     def defaultvalue(self, value):
+        """
+        This function select default value as 0 if Analysis widget do not hold any value.
+        """
         self.value= value
         if self.value == '':
             return 0
@@ -166,7 +181,9 @@ class Convert:
     
     
     def addModelParameter(self,schematicInfo):
-        print "Schematic info after adding source detail",schematicInfo
+        """
+        This function add the Ngspice Model details to schematicInfo
+        """
         
         #Create object of TrackWidget
         self.obj_track = TrackWidget.TrackWidget()
@@ -176,7 +193,7 @@ class Convert:
         modelParamValue = []
         
         for line in self.obj_track.modelTrack:
-            print "Model Track :",line
+            #print "Model Track :",line
             if line[2] == 'transfo':
                 try:
                     start=line[5]
@@ -214,8 +231,8 @@ class Convert:
                     end = line[6]
                     addmodelLine=".model "+ line[3]+" "+line[2]+"("
                     for key,value in line[9].iteritems():
-                        print "Tags: ",key
-                        print "Value: ",value
+                        #print "Tags: ",key
+                        #print "Value: ",value
                         #Checking for default value and accordingly assign param and default.
                         if ':' in key:
                             key = key.split(':')
@@ -258,6 +275,78 @@ class Convert:
             
             
         return schematicInfo
-
-	
+    
+    def addDeviceLibrary(self,schematicInfo,kicadFile):
+        """
+        This function add the library details to schematicInfo
+        """
+        print "Adding Device library to Schematic info file"
+        
+        (projpath,filename) = os.path.split(kicadFile)
+        
+        print "Project Path",projpath
                 
+        deviceLibList = self.obj_track.deviceModelTrack
+        deviceLine = {} #Key:Index, Value:with its updated line in the form of list 
+        includeLine = [] #All .include line list
+        
+        if not deviceLibList:
+            print "No Library Added in the schematic"
+            pass
+        else:
+            for eachline in schematicInfo:
+                words = eachline.split()
+                if words[0] in deviceLibList:
+                    print "Found Library line"
+                    index = schematicInfo.index(eachline)
+                    completeLibPath = deviceLibList[words[0]]
+                    (libpath,libname) = os.path.split(completeLibPath)
+                    print "Library Path :",libpath                                      
+                    #Copying library from devicemodelLibrary to Project Path
+                    #Special case for MOSFET
+                    if eachline[0] == 'm':
+                        #For mosfet library name come along with MOSFET dimension information
+                        tempStr = libname.split(':')
+                        libname = tempStr[0]
+                        dimension = tempStr[1]
+                        #Replace last word with library name
+                        words[-1] = libname.split('.')[0]
+                        #Appending Dimension of MOSFET
+                        words.append(dimension)
+                        deviceLine[index] = words                    
+                        includeLine.append(".include "+libname)
+                        
+                        src = completeLibPath.split(':')[0]
+                        dst = projpath
+                        shutil.copy2(src, dst)
+                    else:
+                        #Replace last word with library name
+                        words[-1] = libname.split('.')[0]
+                        deviceLine[index] = words                    
+                        includeLine.append(".include "+libname)
+                        
+                        src = completeLibPath
+                        dst = projpath
+                        shutil.copy2(src,dst)
+                    
+                else:
+                    pass
+            
+            
+            #Adding device line to schematicInfo
+            for index,value in deviceLine.iteritems():
+                #Update the device line
+                strLine = " ".join(str(item) for item in value)
+                schematicInfo[index] = strLine
+            
+            #This has to be second i.e after deviceLine details
+            #Adding .include line to Schematic Info at the start of line
+            for item in list(set(includeLine)):
+                schematicInfo.insert(0,item)
+        
+            
+                
+            
+                
+        return schematicInfo
+        

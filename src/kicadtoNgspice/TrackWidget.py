@@ -1,7 +1,6 @@
 class TrackWidget:
     """
-    This Class track the widget of Kicad to NgSpice converter 
-    module.
+    This Class track the dynamically created widget of KicadtoNgSpice Window.
     """
     #Track widget list for Source details
     sourcelisttrack = {"ITEMS":"None"}
@@ -17,6 +16,9 @@ class TrackWidget:
     set_CheckBox = {"ITEMS":"None"}
     AC_type = {"ITEMS":"None"}
     
-    #Track widget for Model details
+    #Track widget for Model detail
     modelTrack = []
     model_entry_var = {}
+    
+    #Track Widget for Device Model detail
+    deviceModelTrack = {}

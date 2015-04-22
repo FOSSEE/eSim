@@ -23,7 +23,7 @@ import os
 
 class NewProjectInfo(QtGui.QWidget):
     """
-    Class ProjectInfo accept model information from user
+    This class is called when User create new Project.
     """
     
     def __init__(self):
@@ -33,7 +33,10 @@ class NewProjectInfo(QtGui.QWidget):
         
     
     def body(self):
-        print "Calling NewProjectInfo"
+        """
+        This function create gui for New Project Info
+        """
+        #print "Calling NewProjectInfo"
         self.projLabel = QtGui.QLabel("Enter Project Name :")
         self.projEdit = QtGui.QLineEdit()
                 
@@ -59,14 +62,17 @@ class NewProjectInfo(QtGui.QWidget):
       
         
     def createProject(self):
-        print "Create Project Called"
+        """
+        This function create Project related directories and files
+        """
+        #print "Create Project Called"
         self.workspace = self.obj_appconfig.default_workspace['workspace']
         self.projName = self.projEdit.text()
         self.projName = str(self.projName).rstrip().lstrip()  #Remove leading and trailing space
         
         self.projDir = os.path.join(self.workspace,str(self.projName))
         
-        print "Project Name:",self.projName       
+               
         #Validation for newProject
         if self.projName == "":
             self.reply = "NONE"
@@ -83,7 +89,7 @@ class NewProjectInfo(QtGui.QWidget):
                 self.projFile = os.path.join(self.projDir,self.projName+".proj")
                 f = open(self.projFile,"w")
             except:
-                print "Some Thing Wrong"
+                #print "Some Thing Went Wrong"
                 self.msg = QtGui.QErrorMessage(self)
                 self.msg.showMessage('Unable to create project. Please make sure you have write permission on '+self.workspace)
                 self.msg.setWindowTitle("Error Message")
@@ -94,20 +100,20 @@ class NewProjectInfo(QtGui.QWidget):
             self.obj_appconfig.current_project['ProjectName'] = self.projDir 
             
         elif self.reply == "CHECKEXIST":
-            print "Project already exist"
+            #print "Project already exist"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage('The project "'+self.projName+'" already exist.Please select the different name or delete existing project')
             self.msg.setWindowTitle("Error Message")
             
             
         elif self.reply == "CHECKNAME":
-            print "Name is not proper"
+            #print "Name is not proper"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage('The project name should not contain space between them')
             self.msg.setWindowTitle("Error Message")
         
         elif self.reply == "NONE":
-            print "Empyt Project Name"
+            #print "Empty Project Name"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage('The project name cannot be empty')
             self.msg.setWindowTitle("Error Message")
