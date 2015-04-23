@@ -183,8 +183,8 @@ class MainWindow(QtGui.QWidget):
         analysisOption = []
         initialCondOption=[]
         simulatorOption =[]
-        includeOption=[]  #Don't know why to use it
-        model = []      #Don't know why to use it
+        #includeOption=[]  #Don't know why to use it
+        #model = []      #Don't know why to use it
         
         for eachline in optionInfo:
             words=eachline.split()
@@ -201,10 +201,10 @@ class MainWindow(QtGui.QWidget):
                 initialCondOption.append(eachline+'\n')
             elif option=='.option':  
                 simulatorOption.append(eachline+'\n')
-            elif (option=='.include' or option=='.lib'):
-                includeOption.append(eachline+'\n')
-            elif (option=='.model'):
-                model.append(eachline+'\n')
+            #elif (option=='.include' or option=='.lib'):
+            #    includeOption.append(eachline+'\n')
+            #elif (option=='.model'):
+            #    model.append(eachline+'\n')
             elif option=='.end':
                 continue;
             
@@ -239,7 +239,7 @@ class MainWindow(QtGui.QWidget):
         
                 
             
-    
+#Main Function
         
 def main(args):
     print "=================================="
@@ -313,7 +313,6 @@ def main(args):
     kingWindow.show()
     sys.exit(app.exec_())
      
-    
 
    
 if __name__ == '__main__':

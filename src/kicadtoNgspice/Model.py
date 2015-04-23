@@ -70,7 +70,7 @@ class Model(QtGui.QWidget):
             Listing all 
             line[0] = index
             line[1] = compLine
-            line[2] = compType
+            line[2] = modelname  #Change from compType to modelname
             line[3] = compName
             line[4] = comment
             line[5] = title

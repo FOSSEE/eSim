@@ -166,6 +166,9 @@ class PrcocessNetlist:
                 compType=words[len(words)-1];
                 schematicInfo.remove(compline)
                 paramDict = {}
+                #e.g compLine : u1 1 2 gain 
+                #compType : gain
+                #compName : u1
                 print "Compline",compline 
                 print "CompType",compType
                 print "Words",words
@@ -205,9 +208,6 @@ class PrcocessNetlist:
                             elif child.tag == 'split':
                                 splitDetail = child.text
                                 
-                            #print "Child Item",child
-                            #print "Tag",child.tag
-                            #print "Tag Value",child.text
                             
                         for param in tree.findall('param'):
                             for item in param:
@@ -274,13 +274,14 @@ class PrcocessNetlist:
                             k=k+1
                         except Exception as e:
                             print "Error while appending ModelLine ",modelLine
-                            print "Excpetion Message : ",str(e)
+                            print "Exception Message : ",str(e)
                         #Insert comment at remove line
                         schematicInfo.insert(index,"* "+compline)
-                        comment = "* "+modelname+" "+compType
-                        modelList.append([index,compline,compType,compName,comment,title,type,paramDict])
+                        comment = "* Schematic Name: "+compType+", NgSpice Name: "+modelname
+                        #Here instead of adding compType(use for XML), added modelName(Unique Model Name)
+                        modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
                     except:
-                        print  "Unable to parse the model, Please check your your xml file"
+                        print  "Unable to parse the model, Please check your your XML file"
                         sys.exit(2)
                         
                 #print "Count",count
