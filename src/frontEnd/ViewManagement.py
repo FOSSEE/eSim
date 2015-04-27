@@ -22,7 +22,7 @@
 from PyQt4 import QtCore
 from PyQt4 import QtGui
 from projManagement.Kicad import Kicad
-from kicadtoNgspice.KicadtoNgspice import *
+from ProjectExplorer import ProjectExplorer
 
 
 class ViewManagement(QtGui.QSplitter):
@@ -46,10 +46,11 @@ class ViewManagement(QtGui.QSplitter):
         
     def createView(self):
         #Adding view into views dictionary
-        self.addView(QtGui.QTextEdit, 'ProjectExplorer')
-        self.addView(QtGui.QTextEdit, 'ProjectToolbar')
-        self.addView(QtGui.QTextEdit, 'CurrentProject')
+        self.addView(ProjectExplorer, 'ProjectExplorer')
+        self.addView(QtGui.QTextEdit, 'MainArea')
+        self.addView(QtGui.QTextEdit, 'Plotting')
         self.addView(QtGui.QTextEdit, 'Browser')
+        
         
         
     def setupView(self):
@@ -63,54 +64,41 @@ class ViewManagement(QtGui.QSplitter):
         
         
         #Button for Project Tool Bar
-        self.kicad_btn = QtGui.QPushButton()
-        self.kicad_btn.setIcon(QtGui.QIcon('../images/default.png'))
-        self.kicad_btn.setIconSize(QtCore.QSize(50,50))
-        self.kicad_btn.setToolTip('<b>Open Schematic</b>')
-        self.kicad_btn.clicked.connect(self.obj_kicad.openSchematic)
-        self.grid.addWidget(self.kicad_btn,0,0)
+        self.kicad = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Open Schematic</b>',self)
+        self.kicad.triggered.connect(self.obj_kicad.openSchematic)
         
-        self.conversion_btn = QtGui.QPushButton()
-        self.conversion_btn.setIcon(QtGui.QIcon('../images/default.png'))
-        self.conversion_btn.setIconSize(QtCore.QSize(50,50))
-        self.conversion_btn.setToolTip('<b>Convert Kicad to Ngspice</b>')
-        self.conversion_btn.clicked.connect(self.obj_kicad.openKicadToNgspice)
-        self.grid.addWidget(self.conversion_btn,0,1)
+        self.conversion = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Convert Kicad to Ngspice</b>',self)
+        self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
         
         
-        self.ngspice_btn = QtGui.QPushButton()
-        self.ngspice_btn.setIcon(QtGui.QIcon('../images/default.png'))
-        self.ngspice_btn.setIconSize(QtCore.QSize(50,50))
-        self.ngspice_btn.setToolTip('<b>Simulation</b>')
-        self.grid.addWidget(self.ngspice_btn,0,2)
+        self.ngspice = QtGui.QAction(QtGui.QIcon('../images/default.png'), '<b>Simulation</b>', self)
         
-        self.footprint_btn = QtGui.QPushButton()
-        self.footprint_btn.setIcon(QtGui.QIcon('../images/default.png'))
-        self.footprint_btn.setIconSize(QtCore.QSize(50,50))
-        self.footprint_btn.setToolTip('<b>Footprint Editor</b>')
-        self.footprint_btn.clicked.connect(self.obj_kicad.openFootprint)
-        self.grid.addWidget(self.footprint_btn,1,0)
+        self.footprint = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Footprint Editor</b>',self)
+        self.footprint.triggered.connect(self.obj_kicad.openFootprint)
         
-        self.pcb_btn = QtGui.QPushButton()
-        self.pcb_btn.setIcon(QtGui.QIcon('../images/default.png'))
-        self.pcb_btn.setIconSize(QtCore.QSize(50,50))
-        self.pcb_btn.setToolTip('<b>PCB Layout</b>')
-        self.pcb_btn.clicked.connect(self.obj_kicad.openLayout)
-        self.grid.addWidget(self.pcb_btn,1,1)
+        self.pcb = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>PCB Layout</b>',self)
+        self.pcb.triggered.connect(self.obj_kicad.openLayout)
               
+        self.lefttoolbar= QtGui.QToolBar()
+        self.lefttoolbar.addAction(self.kicad)
+        self.lefttoolbar.addAction(self.conversion)
+        self.lefttoolbar.addAction(self.ngspice)
+        self.lefttoolbar.addAction(self.footprint)
+        self.lefttoolbar.addAction(self.pcb)
         #Adding one more splitter
         self.browser = QtGui.QSplitter()
         self.browser.setOrientation(QtCore.Qt.Vertical)
         
         # bind the top level views into the framework
+        
+        self.lefttoolbar.setParent(self)
+        self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.views['ProjectExplorer'].setParent(self)
         
-        self.views['ProjectToolbar'].setParent(self.right)
-        self.views['ProjectToolbar'].setLayout(self.grid)
-        self.views['ProjectToolbar'].setReadOnly(True)
+        self.views['MainArea'].setParent(self.right)
         
-        self.views['CurrentProject'].setParent(self.right)
-        self.views['CurrentProject'].setReadOnly(True)
+        self.views['Plotting'].setParent(self.right)
+        self.views['Plotting'].setReadOnly(True)
         
         self.views['Browser'].setParent(self.browser)
         self.views['Browser'].setReadOnly(True)
