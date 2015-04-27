@@ -1,0 +1,11 @@
+<model>
+<name>d_source</name>
+<type>Digital</type>
+<node_number>1</node_number>
+<title>Add Parameters for Digital Source</title>
+<split>4-V</split>
+<param>
+	<input_file default ="source.txt">Enter Input File (default=source.txt)</input_file>
+	<input_load default ="1.0e-12">Enter Input Load</input_load>
+</param>
+</model>
