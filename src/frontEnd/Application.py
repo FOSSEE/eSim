@@ -22,12 +22,14 @@ from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
+from projManagement.Kicad import Kicad
 import os
 import ViewManagement
 import Workspace
 import sys 
 import time
 import subprocess
+import TestView
 
 
 class Application(QtGui.QMainWindow):
@@ -41,6 +43,11 @@ class Application(QtGui.QMainWindow):
         #Calling __init__ of super class
         QtGui.QMainWindow.__init__(self,*args)
         
+        #Init Workspace
+        self.obj_workspace = Workspace.Workspace()
+        
+        #Creating object of Kicad.py
+        self.obj_kicad = Kicad()
         
         #Creating Application configuration object
         self.obj_appconfig = Appconfig() 
@@ -49,21 +56,62 @@ class Application(QtGui.QMainWindow):
                          self.obj_appconfig._app_width,
                          self.obj_appconfig._app_heigth)
         self.setWindowTitle(self.obj_appconfig._APPLICATION) 
-        #Init Workspace
-        self.obj_workspace = Workspace.Workspace()
-      
+        
+           
         #Init necessary components in sequence
-        self.initActions()
-        self.initView()
+        self.initToolBar()
+        #self.initView()
+        self.setCentralWidget(self.initMainView())
+        
+    
+      
+    def initMainView(self):
+        
+        self.mainWidget = QtGui.QWidget()
+        
+        self.leftSplit = QtGui.QSplitter()
+        self.middleSplit = QtGui.QSplitter()
+        self.rightSplit = QtGui.QSplitter()  #Will be use in future for Browser
+        
+        self.projectExplorer = QtGui.QTextEdit()
+        self.mainArea = QtGui.QTextEdit()
+        self.noteArea = QtGui.QTextEdit()
+        self.browserArea = QtGui.QTextEdit()
+        
+        self.mainLayout = QtGui.QVBoxLayout()
+        
+        #Intermediate Widget
+        self.middleContainer = QtGui.QWidget()
+        self.middleContainerLayout = QtGui.QVBoxLayout()
+        
+        #Adding content to middle Split whichis vertical
+        self.middleSplit.setOrientation(QtCore.Qt.Vertical)
+        self.middleSplit.addWidget(self.mainArea)
+        self.middleSplit.addWidget(self.noteArea)
+        #Adding middle split to Middle Container Widget
+        self.middleContainerLayout.addWidget(self.middleSplit)
+        self.middleContainer.setLayout(self.middleContainerLayout)
+        
+        #Adding content ot left split
+        self.leftSplit.addWidget(self.projectExplorer)
+        self.leftSplit.addWidget(self.middleContainer)
         
         
-    def initActions(self):
+        #Adding to main Layout
+        self.mainLayout.addWidget(self.leftSplit)
+        self.mainWidget.setLayout(self.mainLayout)
+                
+        return self.mainWidget
+    
         
+        
+    def initToolBar(self):
+        
+        #Top Tool bar
         self.newproj = QtGui.QAction(QtGui.QIcon('../images/newProject.png'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
-        
-        
+               
         self.openproj = QtGui.QAction(QtGui.QIcon('../images/openProject.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
@@ -76,23 +124,44 @@ class Application(QtGui.QMainWindow):
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
         
-        self.mainToolbar = self.addToolBar('Top Navigation')
-        self.mainToolbar.addAction(self.newproj)
-        self.mainToolbar.addAction(self.openproj)
-        self.mainToolbar.addAction(self.exitproj)
-        self.mainToolbar.addAction(self.helpfile)
+        self.topToolbar = self.addToolBar('Top Tool Bar')
+        self.topToolbar.addAction(self.newproj)
+        self.topToolbar.addAction(self.openproj)
+        self.topToolbar.addAction(self.exitproj)
+        self.topToolbar.addAction(self.helpfile)
+                
+        #Left Tool bar Start
+        self.kicad = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Open Schematic</b>',self)
+        self.kicad.triggered.connect(self.obj_kicad.openSchematic)
         
-            
+        self.conversion = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Convert Kicad to Ngspice</b>',self)
+        self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
+               
+        self.ngspice = QtGui.QAction(QtGui.QIcon('../images/default.png'), '<b>Simulation</b>', self)
         
+        self.footprint = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Footprint Editor</b>',self)
+        self.footprint.triggered.connect(self.obj_kicad.openFootprint)
+        
+        self.pcb = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>PCB Layout</b>',self)
+        self.pcb.triggered.connect(self.obj_kicad.openLayout)
               
-      
+        
+        self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
+        self.addToolBar(QtCore.Qt.LeftToolBarArea, self.lefttoolbar)
+        self.lefttoolbar.addAction(self.kicad)
+        self.lefttoolbar.addAction(self.conversion)
+        self.lefttoolbar.addAction(self.ngspice)
+        self.lefttoolbar.addAction(self.footprint)
+        self.lefttoolbar.addAction(self.pcb)
+        self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
+        
     def initView(self):
         """
         Create GUI from the class Views and initialize it
         """
         self.view = ViewManagement.ViewManagement()
         self.setCentralWidget(self.view)
-          
+        
     def new_project(self):
         """
         This function call New Project Info class.
@@ -100,7 +169,7 @@ class Application(QtGui.QMainWindow):
         print "New Project called"
         self.project = NewProjectInfo()
         self.project.body()
-        
+                  
     
     def open_project(self):
         """
@@ -128,14 +197,11 @@ class Application(QtGui.QMainWindow):
     def help_project(self):
         print "Help is called"
         print "Current Project : ",self.obj_appconfig.current_project
-              
-        
+                
         
     def testing(self):
         print "Success hit kicad button"
-        
-   
-      
+              
 
 def main(args):
     """

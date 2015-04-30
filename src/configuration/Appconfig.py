@@ -26,14 +26,16 @@ class Appconfig(QtGui.QWidget):
         All configuration goes here.
         May change in future for code optimization.
         """
+        
         #Home directory
         home = os.path.join(os.path.expanduser("~"),"eSim-Workspace")
         default_workspace = {"workspace":home}
         #Current Project detail
         current_project = {"ProjectName":None}
         #Workspace detail
-        workspace_text = '''ecSim stores your project in a folder called a workspace. You can choose a different workspace folder to use for this session.'''
+        workspace_text = '''eSim stores your project in a folder called a eSim-Workspace. You can choose a different workspace folder to use for this session.'''
         procThread_list = []
+              
         
         def __init__(self):
             super(Appconfig, self).__init__()
