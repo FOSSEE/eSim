@@ -23,6 +23,7 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 from projManagement.Kicad import Kicad
 from ProjectExplorer import ProjectExplorer
+from Plotting import Plotting
 
 
 class ViewManagement(QtGui.QSplitter):
@@ -48,10 +49,10 @@ class ViewManagement(QtGui.QSplitter):
         #Adding view into views dictionary
         self.addView(ProjectExplorer, 'ProjectExplorer')
         self.addView(QtGui.QTextEdit, 'MainArea')
-        self.addView(QtGui.QTextEdit, 'Plotting')
+        self.addView(Plotting, 'Plotting')
         self.addView(QtGui.QTextEdit, 'Browser')
         
-        
+          
         
     def setupView(self):
         #setup views to define various areas, such as placement of individual views 
@@ -59,10 +60,7 @@ class ViewManagement(QtGui.QSplitter):
         self.right = QtGui.QSplitter()
         self.right.setOrientation(QtCore.Qt.Vertical)
         
-        #Layout
-        self.grid = QtGui.QGridLayout()
-        
-        
+               
         #Button for Project Tool Bar
         self.kicad = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Open Schematic</b>',self)
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
@@ -93,13 +91,11 @@ class ViewManagement(QtGui.QSplitter):
         
         self.lefttoolbar.setParent(self)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
+        
         self.views['ProjectExplorer'].setParent(self)
-        
         self.views['MainArea'].setParent(self.right)
-        
         self.views['Plotting'].setParent(self.right)
-        self.views['Plotting'].setReadOnly(True)
-        
+        #self.views['Plotting'].setReadOnly(True)
         self.views['Browser'].setParent(self.browser)
         self.views['Browser'].setReadOnly(True)
         
