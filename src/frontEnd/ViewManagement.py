@@ -23,7 +23,7 @@ from PyQt4 import QtCore
 from PyQt4 import QtGui
 from projManagement.Kicad import Kicad
 from ProjectExplorer import ProjectExplorer
-from Plotting import Plotting
+
 
 
 class ViewManagement(QtGui.QSplitter):

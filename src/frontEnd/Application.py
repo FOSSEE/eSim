@@ -29,7 +29,6 @@ import Workspace
 import sys 
 import time
 import subprocess
-import TestView
 
 
 class Application(QtGui.QMainWindow):
