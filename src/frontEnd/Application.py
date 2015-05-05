@@ -29,6 +29,8 @@ import Workspace
 import sys 
 import time
 import subprocess
+from frontEnd import ProjectExplorer
+
 
 
 class Application(QtGui.QMainWindow):
@@ -72,7 +74,7 @@ class Application(QtGui.QMainWindow):
         self.middleSplit = QtGui.QSplitter()
         self.rightSplit = QtGui.QSplitter()  #Will be use in future for Browser
         
-        self.projectExplorer = QtGui.QTextEdit()
+        self.projectExplorer = ProjectExplorer.ProjectExplorer()
         self.mainArea = QtGui.QTextEdit()
         self.noteArea = QtGui.QTextEdit()
         self.browserArea = QtGui.QTextEdit()
@@ -92,7 +94,7 @@ class Application(QtGui.QMainWindow):
         self.middleContainer.setLayout(self.middleContainerLayout)
         
         #Adding content ot left split
-        self.leftSplit.addWidget(self.projectExplorer)
+        self.leftSplit.addWidget(self.projectExplorer.maketree())
         self.leftSplit.addWidget(self.middleContainer)
         
         
@@ -166,9 +168,14 @@ class Application(QtGui.QMainWindow):
         This function call New Project Info class.
         """
         print "New Project called"
+        text, ok = QtGui.QInputDialog.getText(self, 'Input Dialog', 
+            'Enter Project Name:')
+        if ok:
+            self.projname = (str(text))
+    
         self.project = NewProjectInfo()
-        self.project.body()
-                  
+        self.project.createProject(self.projname)
+        self.setCentralWidget(self.initMainView())
     
     def open_project(self):
         """
@@ -177,6 +184,10 @@ class Application(QtGui.QMainWindow):
         print "Open Project called"
         self.project = OpenProjectInfo()
         self.project.body()
+        print "init main view in open proj"
+        
+        self.setCentralWidget(self.initMainView())
+
         
     def exit_project(self):
         print "Exit Project called"
@@ -195,8 +206,7 @@ class Application(QtGui.QMainWindow):
         
     def help_project(self):
         print "Help is called"
-        print "Current Project : ",self.obj_appconfig.current_project
-                
+        print "Current Project : ",self.obj_appconfig.current_project  
         
     def testing(self):
         print "Success hit kicad button"
