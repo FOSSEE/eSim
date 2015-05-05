@@ -2,7 +2,7 @@
 <name>gain</name>
 <type>Analog</type>
 <node_number>2</node_number>
-<title>Add Parameter for model gain</title>
+<title>Add Parameters for model Gain</title>
 <split>None</split>
 <param>
 	<in_offset default="0.0">Enter offset for input (default=0.0)</in_offset>

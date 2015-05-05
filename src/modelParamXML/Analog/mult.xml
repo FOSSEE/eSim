@@ -1,8 +1,8 @@
 <model>
-<name>summer</name>
+<name>mult</name>
 <type>Analog</type>
 <node_number>3</node_number>
-<title>Add Parameters for Summer</title>
+<title>Add Parameters for Multiplier</title>
 <split>2-V:1-NV</split>
 <param>
 	<in_offset vector="2" default="0.0">Enter offset for input (default=0.0)</in_offset>
