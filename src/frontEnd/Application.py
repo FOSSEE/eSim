@@ -30,7 +30,7 @@ import sys
 import time
 import subprocess
 from frontEnd import ProjectExplorer
-
+import DockArea
 
 
 class Application(QtGui.QMainWindow):
@@ -49,6 +49,9 @@ class Application(QtGui.QMainWindow):
         
         #Creating object of Kicad.py
         self.obj_kicad = Kicad()
+        
+        #Creating object of DockArea
+        self.obj_dockarea = DockArea.DockArea() 
         
         #Creating Application configuration object
         self.obj_appconfig = Appconfig() 
@@ -77,7 +80,7 @@ class Application(QtGui.QMainWindow):
         self.projectExplorer = ProjectExplorer.ProjectExplorer()
         self.mainArea = QtGui.QTextEdit()
         self.noteArea = QtGui.QTextEdit()
-        self.browserArea = QtGui.QTextEdit()
+
         
         self.mainLayout = QtGui.QVBoxLayout()
         
@@ -85,9 +88,9 @@ class Application(QtGui.QMainWindow):
         self.middleContainer = QtGui.QWidget()
         self.middleContainerLayout = QtGui.QVBoxLayout()
         
-        #Adding content to middle Split whichis vertical
+        #Adding content to vertical middle Split. 
         self.middleSplit.setOrientation(QtCore.Qt.Vertical)
-        self.middleSplit.addWidget(self.mainArea)
+        self.middleSplit.addWidget(self.obj_dockarea.createDockArea())
         self.middleSplit.addWidget(self.noteArea)
         #Adding middle split to Middle Container Widget
         self.middleContainerLayout.addWidget(self.middleSplit)
@@ -131,7 +134,7 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.exitproj)
         self.topToolbar.addAction(self.helpfile)
                 
-        #Left Tool bar Start
+        #Left Tool bar 
         self.kicad = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Open Schematic</b>',self)
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
         
@@ -167,15 +170,13 @@ class Application(QtGui.QMainWindow):
         """
         This function call New Project Info class.
         """
-        print "New Project called"
-        text, ok = QtGui.QInputDialog.getText(self, 'Input Dialog', 
-            'Enter Project Name:')
+        text, ok = QtGui.QInputDialog.getText(self, 'New Project Info','Enter Project Name:')
         if ok:
             self.projname = (str(text))
-    
         self.project = NewProjectInfo()
         self.project.createProject(self.projname)
         self.setCentralWidget(self.initMainView())
+                  
     
     def open_project(self):
         """

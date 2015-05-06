@@ -80,16 +80,7 @@ class SceneGraphModel(QtCore.QAbstractItemModel):
             else:
                 return node.typeInfo()
             
-        if role == QtCore.Qt.DecorationRole:
-            if index.column() == 0:
-                typeInfo = node.typeInfo()
-                
-                if typeInfo == "DIRECTORY":
-                    return QtGui.QIcon(QtGui.QPixmap("../images/default.png"))
-                
-                if typeInfo == "FILE":
-                    return QtGui.QIcon(QtGui.QPixmap("../images/default.png"))
-    
+          
 
     """INPUTS: QModelIndex, QVariant, int (flag)"""
     def setData(self, index, value, role=QtCore.Qt.EditRole):
