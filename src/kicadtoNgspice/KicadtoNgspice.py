@@ -82,6 +82,7 @@ class MainWindow(QtGui.QWidget):
         
 
         self.tabWidget = QtGui.QTabWidget()
+        #self.tabWidget.TabShape(QtGui.QTabWidget.Rounded)
         self.tabWidget.addTab(self.analysisTab,"Analysis")
         self.tabWidget.addTab(self.sourceTab,"Source Details")
         self.tabWidget.addTab(self.modelTab,"NgSpice Model")

@@ -44,70 +44,24 @@ class Application(QtGui.QMainWindow):
         #Calling __init__ of super class
         QtGui.QMainWindow.__init__(self,*args)
         
-        #Init Workspace
+        #Creating require Object
         self.obj_workspace = Workspace.Workspace()
-        
-        #Creating object of Kicad.py
         self.obj_kicad = Kicad()
-        
-        #Creating object of DockArea
-        self.obj_dockarea = DockArea.DockArea() 
-        
-        #Creating Application configuration object
+        self.obj_Mainview = MainView()
         self.obj_appconfig = Appconfig() 
+        
+        
+        #Initialize all widget
+        self.setCentralWidget(self.obj_Mainview)
+        self.initToolBar()
+        
         self.setGeometry(self.obj_appconfig._app_xpos,
                          self.obj_appconfig._app_ypos,
                          self.obj_appconfig._app_width,
                          self.obj_appconfig._app_heigth)
         self.setWindowTitle(self.obj_appconfig._APPLICATION) 
-        
-           
-        #Init necessary components in sequence
-        self.initToolBar()
-        #self.initView()
-        self.setCentralWidget(self.initMainView())
-        
-    
-      
-    def initMainView(self):
-        
-        self.mainWidget = QtGui.QWidget()
-        
-        self.leftSplit = QtGui.QSplitter()
-        self.middleSplit = QtGui.QSplitter()
-        self.rightSplit = QtGui.QSplitter()  #Will be use in future for Browser
-        
-        self.projectExplorer = ProjectExplorer.ProjectExplorer()
-        self.mainArea = QtGui.QTextEdit()
-        self.noteArea = QtGui.QTextEdit()
-
-        
-        self.mainLayout = QtGui.QVBoxLayout()
-        
-        #Intermediate Widget
-        self.middleContainer = QtGui.QWidget()
-        self.middleContainerLayout = QtGui.QVBoxLayout()
-        
-        #Adding content to vertical middle Split. 
-        self.middleSplit.setOrientation(QtCore.Qt.Vertical)
-        self.middleSplit.addWidget(self.obj_dockarea.createDockArea())
-        self.middleSplit.addWidget(self.noteArea)
-        #Adding middle split to Middle Container Widget
-        self.middleContainerLayout.addWidget(self.middleSplit)
-        self.middleContainer.setLayout(self.middleContainerLayout)
-        
-        #Adding content ot left split
-        self.leftSplit.addWidget(self.projectExplorer.maketree())
-        self.leftSplit.addWidget(self.middleContainer)
-        
-        
-        #Adding to main Layout
-        self.mainLayout.addWidget(self.leftSplit)
-        self.mainWidget.setLayout(self.mainLayout)
-                
-        return self.mainWidget
-    
-        
+        self.show()
+              
         
     def initToolBar(self):
         
@@ -115,6 +69,7 @@ class Application(QtGui.QMainWindow):
         self.newproj = QtGui.QAction(QtGui.QIcon('../images/newProject.png'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
+        #self.newproj.connect(self.newproj,QtCore.SIGNAL('triggered()'),self,QtCore.SLOT(self.new_project()))
                
         self.openproj = QtGui.QAction(QtGui.QIcon('../images/openProject.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
@@ -173,11 +128,13 @@ class Application(QtGui.QMainWindow):
         text, ok = QtGui.QInputDialog.getText(self, 'New Project Info','Enter Project Name:')
         if ok:
             self.projname = (str(text))
-        self.project = NewProjectInfo()
-        self.project.createProject(self.projname)
-        self.setCentralWidget(self.initMainView())
-                  
-    
+            self.project = NewProjectInfo()
+            self.project.createProject(self.projname)
+            #self.setCentralWidget(self.obj_Mainview)
+        else:
+            print "No project created"
+            
+   
     def open_project(self):
         """
         This project call Open Project Info class
@@ -186,9 +143,8 @@ class Application(QtGui.QMainWindow):
         self.project = OpenProjectInfo()
         self.project.body()
         print "init main view in open proj"
+        #self.setCentralWidget(self.obj_Mainview)
         
-        self.setCentralWidget(self.initMainView())
-
         
     def exit_project(self):
         print "Exit Project called"
@@ -208,10 +164,51 @@ class Application(QtGui.QMainWindow):
     def help_project(self):
         print "Help is called"
         print "Current Project : ",self.obj_appconfig.current_project  
+        self.obj_Mainview.obj_dockarea.createTestEditor()
+    
+        
         
     def testing(self):
         print "Success hit kicad button"
-              
+        
+
+class MainView(QtGui.QWidget):
+    def __init__(self, *args):
+        # call init method of superclass
+        QtGui.QWidget.__init__(self, *args)
+        
+        self.leftSplit = QtGui.QSplitter()
+        self.middleSplit = QtGui.QSplitter()
+        
+        self.mainLayout = QtGui.QVBoxLayout()
+        #Intermediate Widget
+        self.middleContainer = QtGui.QWidget()
+        self.middleContainerLayout = QtGui.QVBoxLayout()
+        
+        #Area to be included in MainView
+        self.noteArea = QtGui.QTextEdit()
+        self.obj_dockarea = DockArea.DockArea() 
+        self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()
+        self.projectExplorer = self.obj_projectExplorer.maketree()
+                
+        #Adding content to vertical middle Split. 
+        self.middleSplit.setOrientation(QtCore.Qt.Vertical)
+        self.middleSplit.addWidget(self.obj_dockarea)
+        self.middleSplit.addWidget(self.noteArea)
+        
+        #Adding middle split to Middle Container Widget
+        self.middleContainerLayout.addWidget(self.middleSplit)
+        self.middleContainer.setLayout(self.middleContainerLayout)
+        
+        #Adding content of left split
+        self.leftSplit.addWidget(self.projectExplorer)
+        self.leftSplit.addWidget(self.middleContainer)
+        
+        
+        #Adding to main Layout
+        self.mainLayout.addWidget(self.leftSplit)
+        self.setLayout(self.mainLayout)
+     
 
 def main(args):
     """
