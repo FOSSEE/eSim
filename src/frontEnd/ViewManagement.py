@@ -49,7 +49,6 @@ class ViewManagement(QtGui.QSplitter):
         #Adding view into views dictionary
         self.addView(ProjectExplorer, 'ProjectExplorer')
         self.addView(QtGui.QTextEdit, 'MainArea')
-        self.addView(Plotting, 'Plotting')
         self.addView(QtGui.QTextEdit, 'Browser')
         
           

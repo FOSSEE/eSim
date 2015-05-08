@@ -36,7 +36,7 @@ class Appconfig(QtGui.QWidget):
         #Workspace detail
         workspace_text = '''eSim stores your project in a folder called a eSim-Workspace. You can choose a different workspace folder to use for this session.'''
         procThread_list = []
-        dictPath = os.path.join(home, ".text.txt")
+        dictPath = os.path.join(os.path.expanduser("~"), ".projectExplorer.txt")
         try:
             project_explorer = json.load(open(dictPath))
         except:

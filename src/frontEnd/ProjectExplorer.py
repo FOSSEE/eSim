@@ -80,16 +80,7 @@ class SceneGraphModel(QtCore.QAbstractItemModel):
             else:
                 return node.typeInfo()
             
-        if role == QtCore.Qt.DecorationRole:
-            if index.column() == 0:
-                typeInfo = node.typeInfo()
-                
-                if typeInfo == "DIRECTORY":
-                    return QtGui.QIcon(QtGui.QPixmap("../images/default.png"))
-                
-                if typeInfo == "FILE":
-                    return QtGui.QIcon(QtGui.QPixmap("../images/default.png"))
-    
+          
 
     """INPUTS: QModelIndex, QVariant, int (flag)"""
     def setData(self, index, value, role=QtCore.Qt.EditRole):
@@ -243,6 +234,7 @@ class ProjectExplorer(QtGui.QWidget):
         
         self.textwindow = QtGui.QWidget()
         self.textwindow.setMinimumSize(600, 500)
+        self.textwindow.setWindowTitle(filename)
         self.text = QtGui.QTextEdit()
         #self.text.setMaximumSize(580, 450)
         self.save = QtGui.QPushButton('Save and Exit')
