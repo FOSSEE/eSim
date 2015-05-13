@@ -137,8 +137,9 @@ class Analysis(QtGui.QWidget):
         self.start_fre_combo.addItem("THz")
         self.start_fre_combo.setMaximumWidth(150)
         self.acgrid.addWidget(self.start_fre_combo,2,2)
-        self.ac_parameter[self.parameter_cnt]= self.start_fre_combo.currentText()
+        self.ac_parameter[0]= "Hz"
         self.start_fre_combo.activated[str].connect(self.start_combovalue)
+        
         
         self.parameter_cnt=self.parameter_cnt + 1
         self.stop_fre_combo = QtGui.QComboBox()
@@ -149,9 +150,10 @@ class Analysis(QtGui.QWidget):
         self.stop_fre_combo.addItem("THz")
         self.stop_fre_combo.setMaximumWidth(150)
         self.acgrid.addWidget(self.stop_fre_combo,3,2)
-        self.ac_parameter[self.parameter_cnt]= self.stop_fre_combo.currentText()
+        self.ac_parameter[1]= "Hz"
         self.stop_fre_combo.activated[str].connect(self.stop_combovalue)
-        
+            
+            
         self.track_obj.AC_entry_var["ITEMS"]=self.ac_entry_var
         self.track_obj.AC_Parameter["ITEMS"]=self.ac_parameter
         
@@ -163,10 +165,10 @@ class Analysis(QtGui.QWidget):
         return self.acbox
     
     def start_combovalue(self, text):
-        self.ac_parameter[self.parameter_cnt]= str(text)
+        self.ac_parameter[0]= str(text)
     
     def stop_combovalue(self, text):
-        self.ac_parameter[self.parameter_cnt+1]= str(text)
+        self.ac_parameter[1]= str(text)
     
     def set_ac_type(self):
         self.parameter_cnt=0
@@ -178,7 +180,6 @@ class Analysis(QtGui.QWidget):
             self.track_obj.AC_type["ITEMS"]="oct"
         else:
             pass  
-        print "AC type is ", self.Lin.isChecked
     
     def createDCgroup(self):
         self.dcbox = QtGui.QGroupBox()
@@ -229,10 +230,10 @@ class Analysis(QtGui.QWidget):
         self.start_combo.addItem("nV or nA")
         self.start_combo.addItem("pV or pA")
         self.dcgrid.addWidget(self.start_combo,2,2)
-        self.dc_parameter[self.parameter_cnt]= self.start_combo.currentText()
+        self.dc_parameter[self.parameter_cnt]= "volts or Amperes"
         self.start_combo.activated[str].connect(self.start_changecombo)
         self.parameter_cnt= self.parameter_cnt+1
-        
+         
         self.increment_combo=QtGui.QComboBox(self)
         self.increment_combo.setMaximumWidth(150)
         self.increment_combo.addItem("volts or Amperes")
@@ -241,7 +242,7 @@ class Analysis(QtGui.QWidget):
         self.increment_combo.addItem("nV or nA")
         self.increment_combo.addItem("pV or pA")
         self.dcgrid.addWidget(self.increment_combo,3,2)
-        self.dc_parameter[self.parameter_cnt]= str(self.increment_combo.currentText())
+        self.dc_parameter[self.parameter_cnt]= "volts or Amperes"
         self.increment_combo.activated[str].connect(self.increment_changecombo)
         self.parameter_cnt= self.parameter_cnt+1
         
@@ -254,7 +255,7 @@ class Analysis(QtGui.QWidget):
         self.stop_combo.addItem("pV or pA")  
         self.dcgrid.addWidget(self.stop_combo,4,2)
         self.stop_combo.activated[str].connect(self.stop_changecombo)
-        self.dc_parameter[self.parameter_cnt]= str(self.stop_combo.currentText())
+        self.dc_parameter[self.parameter_cnt]= "volts or Amperes"
         self.parameter_cnt= self.parameter_cnt+1
         
         self.check=QtGui.QCheckBox('Operating Point Analysis',self)
@@ -277,14 +278,13 @@ class Analysis(QtGui.QWidget):
         return self.dcbox
     
     def start_changecombo(self,text):
-        self.parameter_cnt=0
-        self.dc_parameter[self.parameter_cnt]=text
+        self.dc_parameter[0]=str(text)
     
     def increment_changecombo(self,text):
-        self.dc_parameter[self.parameter_cnt+1]=text
+        self.dc_parameter[1]=str(text)
         
     def stop_changecombo(self,text):
-        self.dc_parameter[self.parameter_cnt+2]=text
+        self.dc_parameter[2]=str(text)
     
     def createTRANgroup(self):
         self.trbox = QtGui.QGroupBox()
@@ -323,7 +323,7 @@ class Analysis(QtGui.QWidget):
         self.start_combobox.addItem("ns")
         self.start_combobox.addItem("ps")
         self.trgrid.addWidget(self.start_combobox,1,3)
-        self.tran_parameter[self.parameter_cnt]=self.start_combobox.currentText()
+        self.tran_parameter[self.parameter_cnt]= "Sec"
         self.start_combobox.activated[str].connect(self.start_combo_change)
         self.parameter_cnt= self.parameter_cnt+1
         
@@ -334,7 +334,7 @@ class Analysis(QtGui.QWidget):
         self.step_combobox.addItem("ns")
         self.step_combobox.addItem("ps")
         self.trgrid.addWidget(self.step_combobox,2,3)
-        self.tran_parameter[self.parameter_cnt]=self.step_combobox.currentText()
+        self.tran_parameter[self.parameter_cnt]= "Sec"
         self.step_combobox.activated[str].connect(self.step_combo_change)
         self.parameter_cnt= self.parameter_cnt+1
         
@@ -345,7 +345,7 @@ class Analysis(QtGui.QWidget):
         self.stop_combobox.addItem("ns")
         self.stop_combobox.addItem("ps")
         self.trgrid.addWidget(self.stop_combobox,3,3)
-        self.tran_parameter[self.parameter_cnt]=self.stop_combobox.currentText()
+        self.tran_parameter[self.parameter_cnt]= "Sec"
         self.stop_combobox.activated[str].connect(self.stop_combo_change)
         self.parameter_cnt= self.parameter_cnt+1
         
@@ -362,11 +362,10 @@ class Analysis(QtGui.QWidget):
         return self.trbox    
     
     def start_combo_change(self,text):
-        self.parameter_cnt=0
-        self.tran_parameter[self.parameter_cnt]=text
+        self.tran_parameter[0]=str(text)
         
     def step_combo_change(self,text):
-        self.tran_parameter[self.parameter_cnt+1]=text
+        self.tran_parameter[1]=str(text)
         
     def stop_combo_change(self,text):
-        self.tran_parameter[self.parameter_cnt+2]=text
+        self.tran_parameter[3]=str(text)

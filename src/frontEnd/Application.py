@@ -29,9 +29,8 @@ import Workspace
 import sys 
 import time
 import subprocess
-from frontEnd import ProjectExplorer
 import DockArea
-
+from frontEnd import ProjectExplorer
 
 class Application(QtGui.QMainWindow):
     """
@@ -69,6 +68,7 @@ class Application(QtGui.QMainWindow):
         self.newproj = QtGui.QAction(QtGui.QIcon('../images/newProject.png'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
+        
         #self.newproj.connect(self.newproj,QtCore.SIGNAL('triggered()'),self,QtCore.SLOT(self.new_project()))
                
         self.openproj = QtGui.QAction(QtGui.QIcon('../images/openProject.png'),'<b>Open Project</b>',self)
@@ -129,8 +129,10 @@ class Application(QtGui.QMainWindow):
         if ok:
             self.projname = (str(text))
             self.project = NewProjectInfo()
-            self.project.createProject(self.projname)
-            #self.setCentralWidget(self.obj_Mainview)
+            directory, filelist =self.project.createProject(self.projname)
+    
+            self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
+            #self.setCentralWidget(self.obj_Mainview.obj_projectExplorer)
         else:
             print "No project created"
             
@@ -141,8 +143,12 @@ class Application(QtGui.QMainWindow):
         """
         print "Open Project called"
         self.project = OpenProjectInfo()
-        self.project.body()
-        print "init main view in open proj"
+        
+        try:
+            directory, filelist = self.project.body()
+            self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
+        except:
+            pass
         #self.setCentralWidget(self.obj_Mainview)
         
         
@@ -167,7 +173,6 @@ class Application(QtGui.QMainWindow):
         self.obj_Mainview.obj_dockarea.createTestEditor()
     
         
-        
     def testing(self):
         print "Success hit kicad button"
         
@@ -189,7 +194,7 @@ class MainView(QtGui.QWidget):
         self.noteArea = QtGui.QTextEdit()
         self.obj_dockarea = DockArea.DockArea() 
         self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()
-        self.projectExplorer = self.obj_projectExplorer.maketree()
+
                 
         #Adding content to vertical middle Split. 
         self.middleSplit.setOrientation(QtCore.Qt.Vertical)
@@ -201,9 +206,9 @@ class MainView(QtGui.QWidget):
         self.middleContainer.setLayout(self.middleContainerLayout)
         
         #Adding content of left split
-        self.leftSplit.addWidget(self.projectExplorer)
+        self.leftSplit.addWidget(self.obj_projectExplorer)
         self.leftSplit.addWidget(self.middleContainer)
-        
+    
         
         #Adding to main Layout
         self.mainLayout.addWidget(self.leftSplit)
