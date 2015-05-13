@@ -136,7 +136,6 @@ class Convert:
         (filepath, filemname)= os.path.split(self.direct)
         self.Fileopen = os.path.join(filepath, "analysis")  
         self.writefile= open(self.Fileopen,"w")
-       
         if self.variable== 'AC':
             self.no=0
             self.writefile.write(".ac"+' ' + self.ac_type + ' '+ str(self.defaultvalue(self.ac_entry_var[self.no+2].text()))+' ' + str(self.defaultvalue(self.ac_entry_var[self.no].text())) + self.ac_parameter[self.no]+ ' ' + str(self.defaultvalue(self.ac_entry_var[self.no+1].text())) + self.ac_parameter[self.no+1] )        
