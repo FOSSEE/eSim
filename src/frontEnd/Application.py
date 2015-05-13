@@ -59,6 +59,7 @@ class Application(QtGui.QMainWindow):
                          self.obj_appconfig._app_width,
                          self.obj_appconfig._app_heigth)
         self.setWindowTitle(self.obj_appconfig._APPLICATION) 
+        self.showMaximized()
         self.show()
               
         
@@ -170,7 +171,7 @@ class Application(QtGui.QMainWindow):
     def help_project(self):
         print "Help is called"
         print "Current Project : ",self.obj_appconfig.current_project  
-        self.obj_Mainview.obj_dockarea.createTestEditor()
+        self.obj_Mainview.obj_dockarea.plottingEditor()
     
         
     def testing(self):
