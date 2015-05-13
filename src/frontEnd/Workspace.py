@@ -36,14 +36,19 @@ class Workspace(QtGui.QWidget):
             
     def initWorkspace(self):
         #print "Calling workspace"
+        
+        self.mainwindow = QtGui.QVBoxLayout()
+        self.split = QtGui.QSplitter()
+        self.split.setOrientation(QtCore.Qt.Vertical)
+        
+        self.grid = QtGui.QGridLayout()
         self.note = QtGui.QTextEdit(self)
         self.workspace_label = QtGui.QLabel(self)
-        self.worspace_loc = QtGui.QLineEdit(self)
-            
-        #Add text to text edit,label and line edit
+        self.workspace_loc = QtGui.QLineEdit(self)
+    
         self.note.append(self.obj_appconfig.workspace_text)
         self.workspace_label.setText("Workspace:")
-        self.worspace_loc.setText(self.obj_appconfig.home)
+        self.workspace_loc.setText(self.obj_appconfig.home)
           
         #Buttons
         self.browsebtn = QtGui.QPushButton('Browse')
@@ -52,38 +57,21 @@ class Workspace(QtGui.QWidget):
         self.okbtn.clicked.connect(self.createWorkspace)
         self.cancelbtn = QtGui.QPushButton('Cancel')
         self.cancelbtn.clicked.connect(self.defaultWorkspace)
-            
-        #Set Geometry
-        #Need to set Geometry properly
-        self.note.setGeometry(QtCore.QRect(0, 0, 400, 100))
-        self.workspace_label.setGeometry(QtCore.QRect(10, 130, 81, 17))
-        self.worspace_loc.setGeometry(QtCore.QRect(100, 150, 200, 100))
-        self.browsebtn.setGeometry(QtCore.QRect(290, 120, 98, 27))
-        self.okbtn.setGeometry(QtCore.QRect(290, 250, 98, 27))
-        self.cancelbtn.setGeometry(QtCore.QRect(180, 250, 98, 27))
-              
-            
-            
         #Layout
-        self.hbox = QtGui.QHBoxLayout()
-        self.hbox.addWidget(self.note)
-            
-        self.grid = QtGui.QGridLayout()
-        self.grid.addChildLayout(self.hbox)
-         
-            
-        self.grid.addWidget(self.workspace_label,2,0)
-        self.grid.addWidget(self.worspace_loc, 2, 1)
-        self.grid.addWidget(self.browsebtn, 2, 2)
-        self.grid.addWidget(self.okbtn,3,2)
-        self.grid.addWidget(self.cancelbtn,3,3)
-        self.setLayout(self.grid)
-                     
-        self.setGeometry(QtCore.QRect(200,200,400,400))
+        self.grid.addWidget(self.note, 0,0,1,15)
+        self.grid.addWidget(self.workspace_label, 2,1)
+        self.grid.addWidget(self.workspace_loc,2,2,2,12)
+        self.grid.addWidget(self.browsebtn, 2,14)
+        self.grid.addWidget(self.okbtn, 4,13)
+        self.grid.addWidget(self.cancelbtn, 4,14)
+    
+        self.setGeometry(QtCore.QRect(400,200,400,400))
+        self.setMaximumSize(4000, 200)
         self.setWindowTitle("Workspace Launcher")
         #self.setWindowIcon(QtGui.QIcon('logo.png'))
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.note.setReadOnly(True)
+        self.setLayout(self.grid)
         self.show()
         
            
@@ -93,7 +81,7 @@ class Workspace(QtGui.QWidget):
                
     def createWorkspace(self):
         print "Create workspace is called"
-        self.create_workspace = str(self.worspace_loc.text())
+        self.create_workspace = str(self.workspace_loc.text())
         #Checking if Workspace already exist or not       
         if  os.path.isdir(self.create_workspace):
             print "Already present"
@@ -102,13 +90,11 @@ class Workspace(QtGui.QWidget):
         else:
             os.mkdir(self.create_workspace)
             self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
-        self.close()
-        
-        
+        self.close()       
             
     def browseLocation(self):
         print "Browse Location called"
         self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(self, "Browse Location",os.path.expanduser("~"))
         print "Path file :", self.workspace_directory
-        self.worspace_loc.setText(self.workspace_directory)
+        self.workspace_loc.setText(self.workspace_directory)
         
