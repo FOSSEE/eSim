@@ -1,7 +1,7 @@
 from PyQt4 import QtGui,QtCore
 from ngspiceSimulation.pythonPlotting import plotWindow
-#from configuration.Appconfig import Appconfig
-
+from configuration.Appconfig import Appconfig
+import os
 
 dockList = ['Blank']
 count = 1 
@@ -12,7 +12,8 @@ class DockArea(QtGui.QMainWindow):
     
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
-        
+        self.obj_appconfig = Appconfig()
+                
         for dockName in dockList:
             dock[dockName] = QtGui.QDockWidget(dockName)
             dock[dockName].setWidget(QtGui.QTextEdit())
@@ -51,14 +52,16 @@ class DockArea(QtGui.QMainWindow):
         """
         This function create widget for Library Editor
         """
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        self.projName = os.path.basename(self.projDir)
+        self.project = os.path.join(self.projDir,self.projName)
+        
+        
         global count
         self.plottingWidget = QtGui.QWidget()
-        #self.plottingArea = QtGui.QTextEdit()
-        
-        
+                
         self.plottingLayout = QtGui.QVBoxLayout()
-        #self.plottingLayout.addWidget(self.plottingArea)
-        self.plottingLayout.addWidget(plotWindow())
+        self.plottingLayout.addWidget(plotWindow(self.project,self.projName))
         
         #Adding to main Layout
         self.plottingWidget.setLayout(self.plottingLayout)

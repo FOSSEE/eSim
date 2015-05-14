@@ -63,9 +63,10 @@ class ProjectExplorer(QtGui.QWidget):
         
         self.textwindow = QtGui.QWidget()
         self.textwindow.setMinimumSize(600, 500)
+        self.textwindow.setGeometry(QtCore.QRect(400,150,400,400))
         self.textwindow.setWindowTitle(filename)
+        
         self.text = QtGui.QTextEdit()
-        #self.text.setMaximumSize(580, 450)
         self.save = QtGui.QPushButton('Save and Exit')
         self.save.setDisabled(True)
         self.windowgrid = QtGui.QGridLayout()

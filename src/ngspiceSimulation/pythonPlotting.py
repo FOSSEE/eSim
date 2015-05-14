@@ -9,15 +9,13 @@ from matplotlib.figure import Figure
 import tkMessageBox
 
 
-from configuration.Appconfig import Appconfig
-
 class plotWindow(QtGui.QMainWindow):
-    def __init__(self):
+    def __init__(self,fpath,projectName):
         QtGui.QMainWindow.__init__(self)
-        #Creating App config object
-        #self.obj_appconfig = Appconfig()
-        self.fpath = "/home/fahim/Installed-Software/FreeEDA/Examples/RC"
-        self.projName = "RC"
+        self.fpath = fpath+".cir.out"
+        self.projName = projectName
+        print "File Path",self.fpath
+        print "Project Name",self.projName
         self.createMainFrame()
         self.combo = []
         self.combo1 = []

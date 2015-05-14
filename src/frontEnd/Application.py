@@ -98,6 +98,7 @@ class Application(QtGui.QMainWindow):
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
                
         self.ngspice = QtGui.QAction(QtGui.QIcon('../images/default.png'), '<b>Simulation</b>', self)
+        self.ngspice.triggered.connect(self.obj_kicad.openNgspice)
         
         self.footprint = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Footprint Editor</b>',self)
         self.footprint.triggered.connect(self.obj_kicad.openFootprint)
@@ -213,6 +214,8 @@ class MainView(QtGui.QWidget):
         
         #Adding to main Layout
         self.mainLayout.addWidget(self.leftSplit)
+        self.leftSplit.setSizes([self.width()/4.5,self.height()])
+        self.middleSplit.setSizes([self.width(),self.height()/2])
         self.setLayout(self.mainLayout)
      
 

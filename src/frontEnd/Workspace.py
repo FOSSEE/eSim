@@ -65,7 +65,7 @@ class Workspace(QtGui.QWidget):
         self.grid.addWidget(self.okbtn, 4,13)
         self.grid.addWidget(self.cancelbtn, 4,14)
     
-        self.setGeometry(QtCore.QRect(400,200,400,400))
+        self.setGeometry(QtCore.QRect(500,250,400,400))
         self.setMaximumSize(4000, 200)
         self.setWindowTitle("Workspace Launcher")
         #self.setWindowIcon(QtGui.QIcon('logo.png'))
