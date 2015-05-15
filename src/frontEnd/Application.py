@@ -98,7 +98,7 @@ class Application(QtGui.QMainWindow):
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
                
         self.ngspice = QtGui.QAction(QtGui.QIcon('../images/default.png'), '<b>Simulation</b>', self)
-        self.ngspice.triggered.connect(self.obj_kicad.openNgspice)
+        self.ngspice.triggered.connect(self.open_ngspice)
         
         self.footprint = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Footprint Editor</b>',self)
         self.footprint.triggered.connect(self.obj_kicad.openFootprint)
@@ -151,7 +151,19 @@ class Application(QtGui.QMainWindow):
             self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
         except:
             pass
-        #self.setCentralWidget(self.obj_Mainview)
+    
+    def open_ngspice(self):
+        """
+        This Function execute ngspice on current project
+        """
+        
+        ret_val = self.obj_kicad.openNgspice()
+        
+        if ret_val:
+            self.obj_Mainview.obj_dockarea.plottingEditor()        
+            
+        else:
+            print "Return False"
         
         
     def exit_project(self):
