@@ -1,8 +1,6 @@
 from __future__ import division         # Used for decimal division eg 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
-import sys, os
-from PyQt4 import QtGui, uic, QtCore
-from decimal import *
-import matplotlib
+from PyQt4 import QtGui, QtCore
+from decimal import Decimal
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
 from matplotlib.figure import Figure
@@ -12,8 +10,6 @@ import tkMessageBox
 class plotWindow(QtGui.QMainWindow):
     def __init__(self,fpath,projectName):
         QtGui.QMainWindow.__init__(self)
-        print "Path : ",fpath
-        print "Project :",projectName
         self.fpath = fpath
         self.projName = projectName
         self.createMainFrame()
@@ -24,9 +20,13 @@ class plotWindow(QtGui.QMainWindow):
     def createMainFrame(self):
         self.main_frame = QtGui.QWidget()
         self.dpi = 100
+        #Creating Figure Canvas
         self.fig = Figure((7.0, 7.0), dpi=self.dpi)
         self.canvas = FigureCanvas(self.fig)
         self.canvas.setParent(self.main_frame)
+        self.canvas.setSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+        self.canvas.updateGeometry()
+        
         self.axes = self.fig.add_subplot(111)
         self.mpl_toolbar = NavigationToolbar(self.canvas, self.main_frame)
     
@@ -37,10 +37,11 @@ class plotWindow(QtGui.QMainWindow):
         right_vbox = QtGui.QVBoxLayout()
         right_grid = QtGui.QGridLayout()
         top_grid = QtGui.QGridLayout()
-
+        
+        ##Processing data file to extract data in proper format
         self.fobj = File_data()
         plot_type = self.fobj.openFile(self.fpath)
-        #print "hi:",plot_type
+        print "Plot Type :",plot_type
         self.fobj.computeAxes()
         self.chkbox=[]
         self.a = self.fobj.numVals()
@@ -113,7 +114,7 @@ class plotWindow(QtGui.QMainWindow):
         right_grid.addWidget(self.Note2,4,1)
     
         right_vbox.addLayout(right_grid)
-
+        '''
         netlist = QtGui.QTextEdit()
         with open (self.fpath+"/"+self.projName+'.cir.out') as f2:
             fdata = f2.read()
@@ -122,7 +123,7 @@ class plotWindow(QtGui.QMainWindow):
 
     
         left_vbox.addWidget(netlist)
-        
+        '''
         hbox = QtGui.QHBoxLayout()
         hbox.addLayout(left_vbox)
         hbox.addLayout(right_vbox)

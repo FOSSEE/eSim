@@ -30,19 +30,42 @@ import TrackWidget
 
 class MainWindow(QtGui.QWidget):
     """
-    This class craete KicadtoNgspice window. 
-    And Call Convert function if convert button is pressed. 
+    This class create KicadtoNgspice window. 
+    And Call Convert function if convert button is pressed.
+    The convert function takes all the value entered by user and create a final netlist "*.cir.out".
+    This final netlist is compatible with NgSpice.  
     """
     def __init__(self):
         QtGui.QWidget.__init__(self)
         #Create object of track widget
         self.obj_track = TrackWidget.TrackWidget()
-              
-        print "Init Kicad to Ngspice"             
-        #print "Current Project",sys.argv[1]
-        
+        """
+        Checking if any unknown model is used in schematic which is not recognized by NgSpice.
+        Also if the two model of same name is present under modelParamXML directory
+        """           
+        if unknownModelList:
+            print "Unknown Model List is : ",unknownModelList
+            self.msg = QtGui.QErrorMessage()
+            self.content = "Your schematic contain unknown model "+', '.join(unknownModelList)
+            self.msg.showMessage(self.content)
+            self.msg.setWindowTitle("Unknown Models")
             
-        #Creating GUI for kicadtoNgspice window
+        elif multipleModelList:
+            print "Multiple Model List is : ",multipleModelList
+            self.msg = QtGui.QErrorMessage()
+            self.mcontent = "Look like you have duplicate model in modelParamXML directory "+', '.join(multipleModelList[0])
+            self.msg.showMessage(self.mcontent)
+            self.msg.setWindowTitle("Multiple Models")
+                
+        else:
+            self.createMainWindow()
+           
+             
+    def createMainWindow(self):
+        """
+        This function create main window of Kicad to Ngspice converter
+        """
+        
         self.grid = QtGui.QGridLayout(self)
         self.convertbtn = QtGui.QPushButton("Convert")
         self.convertbtn.clicked.connect(self.callConvert)
@@ -51,11 +74,11 @@ class MainWindow(QtGui.QWidget):
         self.grid.addWidget(self.createcreateConvertWidget(),0,0)
         self.grid.addWidget(self.convertbtn,1,1)
         self.grid.addWidget(self.cancelbtn,1,2)
-        #self.setGeometry(800, 800, 1000, 1000)
         self.setWindowState(QtCore.Qt.WindowMaximized)
         self.setLayout(self.grid)
+        self.setWindowTitle("Kicad To NgSpice Converter")
         self.show()
-             
+          
     
     def createcreateConvertWidget(self):
         
@@ -237,8 +260,7 @@ class MainWindow(QtGui.QWidget):
         out.close()
         
    
-        
-                
+                   
             
 #Main Function
         
@@ -248,7 +270,6 @@ def main(args):
     print "=================================="
     global kicadFile,kicadNetlist,schematicInfo
     global infoline,optionInfo
-    #kicadFile = "/home/fahim/eSim-Workspace/BJT_amplifier/BJT_amplifier.cir"
     kicadFile = sys.argv[1]
     
     #Object of Processing
@@ -283,7 +304,8 @@ def main(args):
     print "SCHEMATICINFO",schematicInfo
     
     #List storing model detail
-    global modelList,outputOption
+    global modelList,outputOption,unknownModelList,multipleModelList
+      
     modelList = [] 
     outputOption = []
     schematicInfo,outputOption,modelList,unknownModelList,multipleModelList = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList)
@@ -291,27 +313,10 @@ def main(args):
     print "Multiple Model List",multipleModelList
     print "Model List",modelList
     
-
-    
-    #Checking for unknown Model List and Multiple Model List
-    if unknownModelList:
-        print "ErrorMessage : These Models are not available.Please check it",unknownModelList
-        sys.exit(2)
-    else:
-        if multipleModelList:
-            print "ErrorMessage: There are multiple model of same name. Please check it",multipleModelList
-            sys.exit(2)
-        else:
-            pass
-        
-    
-    
-    
+   
     app = QtGui.QApplication(args)
-    #app.setApplicationName("KicadToNgspice")
-    #app.setQuitOnLastWindowClosed(True)
     kingWindow = MainWindow()
-    kingWindow.show()
+    #kingWindow.show()  #No need to call show as we are doing it in createMainWindow
     sys.exit(app.exec_())
      
 
