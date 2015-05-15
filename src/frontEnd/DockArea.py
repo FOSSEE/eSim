@@ -54,14 +54,14 @@ class DockArea(QtGui.QMainWindow):
         """
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.projName = os.path.basename(self.projDir)
-        self.project = os.path.join(self.projDir,self.projName)
+        #self.project = os.path.join(self.projDir,self.projName)
         
         
         global count
         self.plottingWidget = QtGui.QWidget()
                 
         self.plottingLayout = QtGui.QVBoxLayout()
-        self.plottingLayout.addWidget(plotWindow(self.project,self.projName))
+        self.plottingLayout.addWidget(plotWindow(self.projDir,self.projName))
         
         #Adding to main Layout
         self.plottingWidget.setLayout(self.plottingLayout)

@@ -14,7 +14,7 @@ class plotWindow(QtGui.QMainWindow):
         QtGui.QMainWindow.__init__(self)
         print "Path : ",fpath
         print "Project :",projectName
-        self.fpath = fpath+".cir.out"
+        self.fpath = fpath
         self.projName = projectName
         self.createMainFrame()
         self.combo = []
@@ -481,9 +481,10 @@ class File_data:
             with open (fpath+"/plot_data_v.txt") as f1:
                 idata = f1.read()
 
-        except:
+        except Exception as e:
             tkMessageBox.showinfo("Warning!!", "Click on KI->Ng button before simulation ")
-            exit(1)
+            print "Excpetion MSG :",str(e)
+            #exit(1)
     
         try:
             for l in I[3].split(" "):
