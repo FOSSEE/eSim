@@ -148,19 +148,28 @@ class Kicad:
             self.cmd = "xterm -e ngspice "+self.project+".cir.out"
             
             proc = subprocess.Popen(self.cmd.split())
-            proc.communicate()[0]
+            self.obj_appconfig.procThread_list.append(proc)
             
-            #Moving plot_data_i.txt and plot_data_v.txt to project directory
-            shutil.copy2("plot_data_i.txt", self.projDir)
-            shutil.copy2("plot_data_v.txt", self.projDir)
-            #Deleting this file from current directory
-            os.remove("plot_data_i.txt")
-            os.remove("plot_data_v.txt")
+            sleep(2)  #Need permanent solution       
             
+            try:
+                #Moving plot_data_i.txt and plot_data_v.txt to project directory
+                shutil.copy2("plot_data_i.txt", self.projDir)
+                shutil.copy2("plot_data_v.txt", self.projDir)
+                #Deleting this file from current directory
+                os.remove("plot_data_i.txt")
+                os.remove("plot_data_v.txt")
+            except Exception as e:
+                self.msg = QtGui.QErrorMessage(None)
+                self.msg.showMessage('Unable to copy plot data file to project directory.')
+                print "Exception:",str(e)
+                self.msg.setWindowTitle("Error Message")  
+                return False
+                                  
             return True
             
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")  
-            return False
+            #return False

@@ -134,7 +134,7 @@ class Application(QtGui.QMainWindow):
             directory, filelist =self.project.createProject(self.projname)
     
             self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
-            #self.setCentralWidget(self.obj_Mainview.obj_projectExplorer)
+            
         else:
             print "No project created"
             
@@ -163,7 +163,8 @@ class Application(QtGui.QMainWindow):
             self.obj_Mainview.obj_dockarea.plottingEditor()        
             
         else:
-            print "Return False"
+            print "Unable to open NgSpice"
+                        
         
         
     def exit_project(self):
