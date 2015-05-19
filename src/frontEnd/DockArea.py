@@ -1,9 +1,10 @@
 from PyQt4 import QtGui,QtCore
 from ngspiceSimulation.pythonPlotting import plotWindow
+from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
 import os
 
-dockList = ['Blank']
+dockList = ['Welcome']
 count = 1 
 dock = {}
 
@@ -40,7 +41,7 @@ class DockArea(QtGui.QMainWindow):
         dock['Tips-'+str(count)] = QtGui.QDockWidget('Tips-'+str(count))
         dock['Tips-'+str(count)].setWidget(self.testWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Tips-'+str(count)])  
-        self.tabifyDockWidget(dock['Blank'],dock['Tips-'+str(count)])
+        self.tabifyDockWidget(dock['Welcome'],dock['Tips-'+str(count)])
         
         dock['Tips-'+str(count)].setVisible(True)
         dock['Tips-'+str(count)].setFocus()
@@ -50,7 +51,7 @@ class DockArea(QtGui.QMainWindow):
         
     def plottingEditor(self):
         """
-        This function create widget for Library Editor
+        This function create widget for interactive PythonPlotting
         """
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.projName = os.path.basename(self.projDir)
@@ -68,11 +69,42 @@ class DockArea(QtGui.QMainWindow):
         dock['Plotting-'+str(count)] = QtGui.QDockWidget('Plotting-'+str(count))
         dock['Plotting-'+str(count)].setWidget(self.plottingWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Plotting-'+str(count)])  
-        self.tabifyDockWidget(dock['Blank'],dock['Plotting-'+str(count)])
+        self.tabifyDockWidget(dock['Welcome'],dock['Plotting-'+str(count)])
         
         dock['Plotting-'+str(count)].setVisible(True)
         dock['Plotting-'+str(count)].setFocus()
         dock['Plotting-'+str(count)].raise_()
+        
+        count = count + 1
+        
+    def ngspiceEditor(self,projDir):
+        """
+        This function creates widget for NgSpice window
+        """
+        
+        
+        self.projDir = projDir
+        self.projName = os.path.basename(self.projDir)
+        self.ngspiceNetlist = os.path.join(self.projDir,self.projName+".cir.out")
+        
+               
+        
+        global count
+        self.ngspiceWidget = QtGui.QWidget()
+                
+        self.ngspiceLayout = QtGui.QVBoxLayout()
+        self.ngspiceLayout.addWidget(NgspiceWidget(self.ngspiceNetlist))
+        
+        #Adding to main Layout
+        self.ngspiceWidget.setLayout(self.ngspiceLayout)
+        dock['NgSpice-'+str(count)] = QtGui.QDockWidget('NgSpice-'+str(count))
+        dock['NgSpice-'+str(count)].setWidget(self.ngspiceWidget)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['NgSpice-'+str(count)])  
+        self.tabifyDockWidget(dock['Welcome'],dock['NgSpice-'+str(count)])
+        
+        dock['NgSpice-'+str(count)].setVisible(True)
+        dock['NgSpice-'+str(count)].setFocus()
+        dock['NgSpice-'+str(count)].raise_()
         
         count = count + 1
         

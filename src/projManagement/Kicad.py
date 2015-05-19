@@ -20,10 +20,7 @@ import os
 import Validation
 from configuration.Appconfig import Appconfig
 import Worker
-from PyQt4 import QtGui, QtCore
-import shutil
-from gevent.hub import sleep
-import subprocess
+from PyQt4 import QtGui
 
 class Kicad:
     """
@@ -134,42 +131,5 @@ class Kicad:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")  
-            
-    def openNgspice(self):
-        """
-        This function call ngspice simulator
-        """
-        self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        #Validating if current project is available or not
-        if self.obj_validation.validateKicad(self.projDir):
-            self.projName = os.path.basename(self.projDir)
-            self.project = os.path.join(self.projDir,self.projName)
-            #Creating ngspice command
-            self.cmd = "xterm -e ngspice "+self.project+".cir.out"
-            
-            proc = subprocess.Popen(self.cmd.split())
-            self.obj_appconfig.procThread_list.append(proc)
-            
-            sleep(2)  #Need permanent solution       
-            
-            try:
-                #Moving plot_data_i.txt and plot_data_v.txt to project directory
-                shutil.copy2("plot_data_i.txt", self.projDir)
-                shutil.copy2("plot_data_v.txt", self.projDir)
-                #Deleting this file from current directory
-                os.remove("plot_data_i.txt")
-                os.remove("plot_data_v.txt")
-            except Exception as e:
-                self.msg = QtGui.QErrorMessage(None)
-                self.msg.showMessage('Unable to copy plot data file to project directory.')
-                print "Exception:",str(e)
-                self.msg.setWindowTitle("Error Message")  
-                return False
-                                  
-            return True
-            
-        else:
-            self.msg = QtGui.QErrorMessage(None)
-            self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
-            self.msg.setWindowTitle("Error Message")  
-            #return False
+           
+    

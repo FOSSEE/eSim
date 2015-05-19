@@ -23,14 +23,15 @@ from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
-import os
-import ViewManagement
+from frontEnd import ProjectExplorer
 import Workspace
+import DockArea
+
+import os
 import sys 
 import time
-import subprocess
-import DockArea
-from frontEnd import ProjectExplorer
+import shutil
+
 
 class Application(QtGui.QMainWindow):
     """
@@ -49,7 +50,6 @@ class Application(QtGui.QMainWindow):
         self.obj_Mainview = MainView()
         self.obj_appconfig = Appconfig() 
         
-        
         #Initialize all widget
         self.setCentralWidget(self.obj_Mainview)
         self.initToolBar()
@@ -64,12 +64,13 @@ class Application(QtGui.QMainWindow):
               
         
     def initToolBar(self):
-        
+        """
+        This function initialize Tool Bar
+        """
         #Top Tool bar
         self.newproj = QtGui.QAction(QtGui.QIcon('../images/newProject.png'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
-        
         #self.newproj.connect(self.newproj,QtCore.SIGNAL('triggered()'),self,QtCore.SLOT(self.new_project()))
                
         self.openproj = QtGui.QAction(QtGui.QIcon('../images/openProject.png'),'<b>Open Project</b>',self)
@@ -90,7 +91,7 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.exitproj)
         self.topToolbar.addAction(self.helpfile)
                 
-        #Left Tool bar 
+        #Left Tool bar Action Widget 
         self.kicad = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Open Schematic</b>',self)
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
         
@@ -105,8 +106,8 @@ class Application(QtGui.QMainWindow):
         
         self.pcb = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>PCB Layout</b>',self)
         self.pcb.triggered.connect(self.obj_kicad.openLayout)
-              
         
+        #Adding Action Widget to tool bar   
         self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
         self.addToolBar(QtCore.Qt.LeftToolBarArea, self.lefttoolbar)
         self.lefttoolbar.addAction(self.kicad)
@@ -115,14 +116,7 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.footprint)
         self.lefttoolbar.addAction(self.pcb)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
-        
-    def initView(self):
-        """
-        Create GUI from the class Views and initialize it
-        """
-        self.view = ViewManagement.ViewManagement()
-        self.setCentralWidget(self.view)
-        
+     
     def new_project(self):
         """
         This function call New Project Info class.
@@ -157,15 +151,32 @@ class Application(QtGui.QMainWindow):
         This Function execute ngspice on current project
         """
         
-        ret_val = self.obj_kicad.openNgspice()
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
         
-        if ret_val:
-            self.obj_Mainview.obj_dockarea.plottingEditor()        
+        if self.projDir != None:
+            self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
+            time.sleep(2)  #Need permanent solution 
+            try:
+                #Moving plot_data_i.txt and plot_data_v.txt to project directory
+                shutil.copy2("plot_data_i.txt", self.projDir)
+                shutil.copy2("plot_data_v.txt", self.projDir)
+                #Deleting this file from current directory
+                os.remove("plot_data_i.txt")
+                os.remove("plot_data_v.txt")
+                #Calling Python Plotting
+                self.obj_Mainview.obj_dockarea.plottingEditor()
+            except Exception as e:
+                self.msg = QtGui.QErrorMessage(None)
+                self.msg.showMessage('Unable to copy plot data file to project directory.')
+                print "Exception:",str(e)
+                self.msg.setWindowTitle("Error Message")
+            
             
         else:
-            print "Unable to open NgSpice"
-                        
-        
+            self.msg = QtGui.QErrorMessage()
+            self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
+            self.msg.setWindowTitle("Error Message")
+                    
         
     def exit_project(self):
         print "Exit Project called"
@@ -185,14 +196,13 @@ class Application(QtGui.QMainWindow):
     def help_project(self):
         print "Help is called"
         print "Current Project : ",self.obj_appconfig.current_project  
-        self.obj_Mainview.obj_dockarea.plottingEditor()
+        #self.obj_Mainview.obj_dockarea.plottingEditor()
     
-        
-    def testing(self):
-        print "Success hit kicad button"
-        
 
 class MainView(QtGui.QWidget):
+    """
+    This class initialize the Main View of Application
+    """
     def __init__(self, *args):
         # call init method of superclass
         QtGui.QWidget.__init__(self, *args)
@@ -209,8 +219,7 @@ class MainView(QtGui.QWidget):
         self.noteArea = QtGui.QTextEdit()
         self.obj_dockarea = DockArea.DockArea() 
         self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()
-
-                
+               
         #Adding content to vertical middle Split. 
         self.middleSplit.setOrientation(QtCore.Qt.Vertical)
         self.middleSplit.addWidget(self.obj_dockarea)
