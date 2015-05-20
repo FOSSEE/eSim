@@ -2,6 +2,7 @@ from PyQt4 import QtGui,QtCore
 import os
 import json
 from configuration.Appconfig import Appconfig
+from lxml.etree import tostring
 
 class ProjectExplorer(QtGui.QWidget):
     def __init__(self):
@@ -50,6 +51,8 @@ class ProjectExplorer(QtGui.QWidget):
         if level == 0:
             deleteproject = menu.addAction(self.tr("Remove Project"))
             deleteproject.triggered.connect(self.removeProject)
+            refreshproject= menu.addAction(self.tr("Refresh"))
+            refreshproject.triggered.connect(self.refreshProject)
         elif level == 1:
             openfile = menu.addAction(self.tr("Open"))
             openfile.triggered.connect(self.openProject)
@@ -108,4 +111,21 @@ class ProjectExplorer(QtGui.QWidget):
             self.obj_appconfig.current_project["ProjectName"] = None 
             
         del self.obj_appconfig.project_explorer[str(self.filePath)]
+        json.dump(self.obj_appconfig.project_explorer, open(self.obj_appconfig.dictPath,'w'))
+        
+    def refreshProject(self):
+        self.indexItem =self.treewidget.currentIndex()
+        filename= self.indexItem.data().toString()
+        self.filePath= str(self.indexItem.sibling(self.indexItem.row(), 1).data().toString())
+        filelistnew= os.listdir(os.path.join(self.filePath))
+        print filelistnew
+        parentnode = self.treewidget.currentItem()
+        count = parentnode.childCount()
+        for i in range(count):
+            for items in self.treewidget.selectedItems():
+                items.removeChild(items.child(0))
+        for files in filelistnew:
+            childnode= QtGui.QTreeWidgetItem(parentnode, [files, self.filePath+ '/'+ files])
+        
+        self.obj_appconfig.project_explorer[self.filePath]= filelistnew
         json.dump(self.obj_appconfig.project_explorer, open(self.obj_appconfig.dictPath,'w'))

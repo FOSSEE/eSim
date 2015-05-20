@@ -1,5 +1,5 @@
 from PyQt4 import QtGui,QtCore
-
+from configuration.Appconfig import Appconfig
 
 class NgspiceWidget(QtGui.QWidget):
     """
@@ -7,6 +7,7 @@ class NgspiceWidget(QtGui.QWidget):
     """
     def __init__(self,command):
         QtGui.QWidget.__init__(self)
+        self.obj_appconfig = Appconfig()
         self.command = "ngspice "+command
         
         self.process = QtCore.QProcess(self)
@@ -17,7 +18,9 @@ class NgspiceWidget(QtGui.QWidget):
         #Creating argument for process
         self.args = ['-into', str(self.terminal.winId()),'-hold','-e', self.command]
         self.process.start('xterm', self.args)
-        
+        print "Children ",self.process       
+        #Adding PID
+        #self.obj_appconfig.procThread_list.append(self.process.pid())
         
         
         

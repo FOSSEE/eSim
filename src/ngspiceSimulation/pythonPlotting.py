@@ -46,6 +46,8 @@ class plotWindow(QtGui.QMainWindow):
         self.chkbox=[]
         self.a = self.fobj.numVals()
 
+        print "A :",self.a
+        
         ########### Generating list of colours :
         self.full_colors = ['r','b','g','y','c','m','k']#,(0.4,0.5,0.2),(0.1,0.4,0.9),(0.4,0.9,0.2),(0.9,0.4,0.9)]
         self.color = []
@@ -114,16 +116,6 @@ class plotWindow(QtGui.QMainWindow):
         right_grid.addWidget(self.Note2,4,1)
     
         right_vbox.addLayout(right_grid)
-        '''
-        netlist = QtGui.QTextEdit()
-        with open (self.fpath+"/"+self.projName+'.cir.out') as f2:
-            fdata = f2.read()
-        netlist.setText(fdata)
-        netlist.setReadOnly(True)
-
-    
-        left_vbox.addWidget(netlist)
-        '''
         hbox = QtGui.QHBoxLayout()
         hbox.addLayout(left_vbox)
         hbox.addLayout(right_vbox)
@@ -172,7 +164,7 @@ class plotWindow(QtGui.QMainWindow):
         else:
             self.setWindowTitle('DC Analysis')
             self.connect(self.btn,QtCore.SIGNAL('clicked()'), self.onPush_dc)
-    
+        
         self.setCentralWidget(self.main_frame)    
     
 
@@ -227,7 +219,7 @@ class plotWindow(QtGui.QMainWindow):
         if self.parts[1] == 'vs':
             if len(self.parts) > 3:
                 self.Note.setText("Enter two operands only!!")
-                QtGui.QMessageBox.about(self, "Warning!!", "Recheck the expression syntax!")
+                QtGui.QMessageBox.about(self, "Warning!!", "Re-check the expression syntax!")
             else:
                 self.axes.cla()
                 #print "plotting wait"
