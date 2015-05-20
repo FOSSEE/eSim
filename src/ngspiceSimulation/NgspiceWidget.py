@@ -15,7 +15,7 @@ class NgspiceWidget(QtGui.QWidget):
         self.layout.addWidget(self.terminal)
         
         #Creating argument for process
-        self.args = ['-into', str(self.terminal.winId()),'-e', self.command]
+        self.args = ['-into', str(self.terminal.winId()),'-hold','-e', self.command]
         self.process.start('xterm', self.args)
         
         
