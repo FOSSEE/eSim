@@ -18,7 +18,7 @@ class NgspiceWidget(QtGui.QWidget):
         #Creating argument for process
         self.args = ['-into', str(self.terminal.winId()),'-hold','-e', self.command]
         self.process.start('xterm', self.args)
-        print "Children ",self.process       
+               
         #Adding PID
         #self.obj_appconfig.procThread_list.append(self.process.pid())
         

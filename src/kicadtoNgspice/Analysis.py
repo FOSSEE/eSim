@@ -1,6 +1,5 @@
 
 from PyQt4 import QtGui,QtCore
-from PyQt4.Qt import QRect
 import TrackWidget
 
 class Analysis(QtGui.QWidget):

@@ -92,19 +92,19 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.helpfile)
                 
         #Left Tool bar Action Widget 
-        self.kicad = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Open Schematic</b>',self)
+        self.kicad = QtGui.QAction(QtGui.QIcon('../images/kicad.png'),'<b>Open Schematic</b>',self)
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
         
-        self.conversion = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Convert Kicad to Ngspice</b>',self)
+        self.conversion = QtGui.QAction(QtGui.QIcon('../images/ki-ng.png'),'<b>Convert Kicad to Ngspice</b>',self)
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
                
-        self.ngspice = QtGui.QAction(QtGui.QIcon('../images/default.png'), '<b>Simulation</b>', self)
+        self.ngspice = QtGui.QAction(QtGui.QIcon('../images/ngspice.png'), '<b>Simulation</b>', self)
         self.ngspice.triggered.connect(self.open_ngspice)
         
-        self.footprint = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>Footprint Editor</b>',self)
+        self.footprint = QtGui.QAction(QtGui.QIcon('../images/footprint.png'),'<b>Footprint Editor</b>',self)
         self.footprint.triggered.connect(self.obj_kicad.openFootprint)
         
-        self.pcb = QtGui.QAction(QtGui.QIcon('../images/default.png'),'<b>PCB Layout</b>',self)
+        self.pcb = QtGui.QAction(QtGui.QIcon('../images/pcb.png'),'<b>PCB Layout</b>',self)
         self.pcb.triggered.connect(self.obj_kicad.openLayout)
         
         #Adding Action Widget to tool bar   
@@ -164,7 +164,14 @@ class Application(QtGui.QMainWindow):
                 os.remove("plot_data_i.txt")
                 os.remove("plot_data_v.txt")
                 #Calling Python Plotting
-                self.obj_Mainview.obj_dockarea.plottingEditor()
+                try:
+                    self.obj_Mainview.obj_dockarea.plottingEditor()
+                except Exception as e:
+                    self.msg = QtGui.QErrorMessage(None)
+                    self.msg.showMessage('Error while opening python plotting.')
+                    print "Exception:",str(e)
+                    self.msg.setWindowTitle("Error Message")
+                    
             except Exception as e:
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage('Unable to copy plot data file to project directory.')
