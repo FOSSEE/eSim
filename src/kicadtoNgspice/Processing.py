@@ -133,7 +133,7 @@ class PrcocessNetlist:
 
                 elif words[3]=="dc":
                     Title="Add parameters for DC source "+compName
-                    v1='  Enter value(Volts/Amps): '
+                    v1='  Enter value (Volts/Amps):          '
                     v2='  Enter zero frequency: '
                     sourcelist.append([index,compline,words[3],Title,v1,v2])
                 

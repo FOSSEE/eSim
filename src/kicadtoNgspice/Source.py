@@ -41,104 +41,194 @@ class Source(QtGui.QWidget):
                 track_id=line[0]
                 #print "track_id is ",track_id
                 if line[2]=='ac':
+                    acbox=QtGui.QGroupBox()
+                    acbox.setTitle(line[3])
+                    acgrid=QtGui.QGridLayout()
+                    """
                     label=QtGui.QLabel(line[3])
                     self.grid.addWidget(label,self.row,1)
                     self.row=self.row+1
                     self.start=self.count
+                    """
                     label=QtGui.QLabel(line[4])
-                    self.grid.addWidget(label,self.row,0)
+                    acgrid.addWidget(label,self.row,0)
                     self.entry_var[self.count]=QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
-                    self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                    acgrid.addWidget(self.entry_var[self.count],self.row,1)
                     #Value Need to check previuouse value
                     self.entry_var[self.count].setText("")
                     self.row=self.row+1
                     self.end=self.count
                     self.count=self.count+1
+                    
+                    acbox.setLayout(acgrid)
+                    
+                    #CSS
+                    acbox.setStyleSheet(" \
+                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    ")
+                    
+                    self.grid.addWidget(acbox)
                     sourcelisttrack.append([track_id,'ac',self.start,self.end])
                     
                 elif line[2]=='dc':
+                    dcbox=QtGui.QGroupBox()
+                    dcbox.setTitle(line[3])
+                    dcgrid=QtGui.QGridLayout()
+                    """
                     label=QtGui.QLabel(line[3])
                     self.grid.addWidget(label,self.row,1)
                     self.row=self.row+1
                     self.start=self.count
+                    """
                     label=QtGui.QLabel(line[4])
-                    self.grid.addWidget(label,self.row,0)
+                    dcgrid.addWidget(label,self.row,0)
                     self.entry_var[self.count]=QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
-                    self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                    dcgrid.addWidget(self.entry_var[self.count],self.row,1)
                     self.entry_var[self.count].setText("")
                     self.row=self.row+1
                     self.end=self.count
                     self.count=self.count+1
+                    
+                    dcbox.setLayout(dcgrid)
+                    
+                    #CSS
+                    dcbox.setStyleSheet(" \
+                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    ")
+                    
+                    self.grid.addWidget(dcbox)
                     sourcelisttrack.append([track_id,'dc',self.start,self.end])
                     
                 elif line[2]=='sine':
+                    sinebox=QtGui.QGroupBox()
+                    sinebox.setTitle(line[3])
+                    sinegrid=QtGui.QGridLayout()
+                    """
                     label=QtGui.QLabel(line[3])
-                    self.grid.addWidget(label,self.row,1)
+                    sinegrid.addWidget(label,self.row,1)
                     self.row=self.row+1
                     self.start=self.count
+                    """
                     
                     for it in range(4,9):
                         label=QtGui.QLabel(line[it])
-                        self.grid.addWidget(label,self.row,0)
+                        sinegrid.addWidget(label,self.row,0)
                         self.entry_var[self.count]=QtGui.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
-                        self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                        sinegrid.addWidget(self.entry_var[self.count],self.row,1)
                         self.entry_var[self.count].setText("")     
                         self.row=self.row+1
                         self.count=self.count+1  
                     self.end=self.count-1
+                    
+                    sinebox.setLayout(sinegrid)
+                    
+                    #CSS
+                    sinebox.setStyleSheet(" \
+                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    ")
+                    
+                    self.grid.addWidget(sinebox)
                     sourcelisttrack.append([track_id,'sine',self.start,self.end])
                     
                 elif line[2]=='pulse':
+                    pulsebox=QtGui.QGroupBox()
+                    pulsebox.setTitle(line[3])
+                    pulsegrid=QtGui.QGridLayout()
+                    """
                     label=QtGui.QLabel(line[3])
-                    self.grid.addWidget(label,self.row,1)
+                    pulsegrid.addWidget(label,self.row,1)
                     self.row=self.row+1
                     self.start=self.count
+                    """
                     for it in range(4,11):
                         label=QtGui.QLabel(line[it])
-                        self.grid.addWidget(label,self.row,0)
+                        pulsegrid.addWidget(label,self.row,0)
                         self.entry_var[self.count]=QtGui.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
-                        self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                        pulsegrid.addWidget(self.entry_var[self.count],self.row,1)
                         self.entry_var[self.count].setText("")
                         self.row=self.row+1
                         self.count=self.count+1
                     self.end=self.count-1
+                    
+                    pulsebox.setLayout(pulsegrid)
+                    
+                    #CSS
+                    pulsebox.setStyleSheet(" \
+                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    ")
+                    
+                    self.grid.addWidget(pulsebox)
                     sourcelisttrack.append([track_id,'pulse',self.start,self.end])
                 
                 elif line[2]=='pwl':
+                    pwlbox=QtGui.QGroupBox()
+                    pwlbox.setTitle(line[3])
+                    pwlgrid=QtGui.QGridLayout()
+                    """
                     label=QtGui.QLabel(line[3])
                     self.grid.addWidget(label,self.row,1)
                     self.row=self.row+1
                     self.start=self.count
+                    """
                     label=QtGui.QLabel(line[4])
-                    self.grid.addWidget(label,self.row,0)
+                    pwlgrid.addWidget(label,self.row,0)
                     self.entry_var[self.count]=QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
-                    self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                    pwlgrid.addWidget(self.entry_var[self.count],self.row,1)
                     self.entry_var[self.count].setText("");
                     self.row=self.row+1
                     self.end=self.count
                     self.count=self.count+1
+                    
+                    pwlbox.setLayout(pwlgrid)
+                    
+                    #CSS
+                    pwlbox.setStyleSheet(" \
+                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    ")
+                    
+                    self.grid.addWidget(pwlbox)
                     sourcelisttrack.append([track_id,'pwl',self.start,self.end])
                     
                 elif line[2]=='exp':
+                    expbox=QtGui.QGroupBox()
+                    expbox.setTitle(line[3])
+                    expgrid=QtGui.QGridLayout()
+                    """
                     label=QtGui.QLabel(line[3])
                     self.grid.addWidget(label,self.row,1)
                     self.row=self.row+1
                     self.start=self.count
+                    """
                     for it in range(4,10):
                         label=QtGui.QLabel(line[it])
-                        self.grid.addWidget(label,self.row,0)
+                        expgrid.addWidget(label,self.row,0)
                         self.entry_var[self.count]=QtGui.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
-                        self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                        expgrid.addWidget(self.entry_var[self.count],self.row,1)
                         self.entry_var[self.count].setText("")
                         self.row=self.row+1
                         self.count=self.count+1
                     self.end=self.count-1
+                    print "End",self.end
+                    expbox.setLayout(expgrid)
+                    
+                    #CSS
+                    expbox.setStyleSheet(" \
+                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    ")
+                    
+                    self.grid.addWidget(expbox)
                     sourcelisttrack.append([track_id,'exp',self.start,self.end])
                     
                     
@@ -148,7 +238,7 @@ class Source(QtGui.QWidget):
         else:
             print "No source is present in your circuit"
         
-    
+        
         #This is used to keep the track of dynamically created widget
         self.obj_track.sourcelisttrack["ITEMS"] = sourcelisttrack
         self.obj_track.source_entry_var["ITEMS"] = self.entry_var

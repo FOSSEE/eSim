@@ -96,7 +96,9 @@ class ProjectExplorer(QtGui.QWidget):
         
     def save_data(self):
         self.fopen=open(self.filePath, 'w')
-        self.fopen.write(self.text.toPlainText())
+        lines = str(self.text.toPlainText()).split('\n')
+        lines=[i+'\r' for i in lines]
+        self.fopen.writelines(lines)
         self.fopen.close()
         self.textwindow.close()
         
