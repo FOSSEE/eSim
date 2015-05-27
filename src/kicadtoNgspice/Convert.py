@@ -20,7 +20,7 @@ class Convert:
         """
         This function add the source details to schematicInfo
         """
-        print "Adding Source parameter"
+        #print "Adding Source parameter"
         #print "SourceListTrack : ",self.sourcelisttrack
         #print "Schematic Info ",self.schematicInfo
         #print "Entry Var",self.entry_var

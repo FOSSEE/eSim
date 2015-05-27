@@ -11,8 +11,7 @@ class DeviceModel(QtGui.QWidget):
     
     def __init__(self,schematicInfo):
         QtGui.QWidget.__init__(self)
-        #print "Starting Device Modeling"
-              
+                     
         #Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()
         

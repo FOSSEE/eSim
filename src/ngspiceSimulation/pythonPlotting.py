@@ -45,12 +45,7 @@ class plotWindow(QtGui.QMainWindow):
         
         self.obj_dataext.computeAxes()
         self.a = self.obj_dataext.numVals()
-                
-        #Hard coded to be remove
-        #self.a = [4,2]
-        #self.plotType = [1,0]
-        
-        
+                        
         self.chkbox=[]
         
         ########### Generating list of colors :
@@ -215,8 +210,7 @@ class plotWindow(QtGui.QMainWindow):
         for i in a:
             self.comboAll.append(self.obj_dataext.y[i])
             
-        #print "ComboAll : ",self.comboAll
-        
+               
         for i in range(len(a)):
             
             if a[i] == len(self.obj_dataext.NBList):
@@ -395,8 +389,7 @@ class DataExtraction:
             self.analysisInfo = f3.read()
         self.analysisInfo = self.analysisInfo.split(" ")
         
-        #print "Analysis :",analysisInfo
-        
+              
         #Reading data file for voltage
         with open(os.path.join(fpath,"plot_data_v.txt")) as f2:
             self.voltData = f2.read()

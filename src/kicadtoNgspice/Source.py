@@ -11,7 +11,6 @@ class Source(QtGui.QWidget):
         
     def __init__(self,sourcelist,sourcelisttrack):
         QtGui.QWidget.__init__(self)
-        print "My Net List ",sourcelist
         self.obj_track = TrackWidget.TrackWidget()     
         #Variable
         self.count = 1
