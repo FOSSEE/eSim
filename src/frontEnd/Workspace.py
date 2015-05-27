@@ -27,7 +27,7 @@ class Workspace(QtGui.QWidget):
     """
     def __init__(self):
         super(Workspace, self).__init__()
-           
+          
         self.obj_appconfig = Appconfig()
         
         #Initializing Workspace directory for project
@@ -67,10 +67,10 @@ class Workspace(QtGui.QWidget):
     
         self.setGeometry(QtCore.QRect(500,250,400,400))
         self.setMaximumSize(4000, 200)
-        self.setWindowTitle("Workspace Launcher")
-        #self.setWindowIcon(QtGui.QIcon('logo.png'))
+        self.setWindowTitle("eSim")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.note.setReadOnly(True)
+        self.setWindowIcon(QtGui.QIcon('../images/logo.png'))
         self.setLayout(self.grid)
         self.show()
         
