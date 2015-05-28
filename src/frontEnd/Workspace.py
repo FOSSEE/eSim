@@ -25,9 +25,8 @@ class Workspace(QtGui.QWidget):
     """
     This class creates Workspace GUI.
     """
-    def __init__(self):
+    def __init__(self,parent=None):
         super(Workspace, self).__init__()
-          
         self.obj_appconfig = Appconfig()
         
         #Initializing Workspace directory for project
