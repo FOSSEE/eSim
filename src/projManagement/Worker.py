@@ -18,7 +18,7 @@
 from PyQt4 import QtCore
 import subprocess
 from configuration.Appconfig import Appconfig
-
+import os
 
 class WorkerThread(QtCore.QThread):
     """
@@ -27,10 +27,12 @@ class WorkerThread(QtCore.QThread):
     def __init__(self,args):
         QtCore.QThread.__init__(self)
         self.args = args
+        
     
     def __del__(self):
         self.wait()
         
+            
         
     def run(self):
         print "Calling Command:",self.args
@@ -40,6 +42,7 @@ class WorkerThread(QtCore.QThread):
         procThread = Appconfig()
         proc = subprocess.Popen(command.split())
         procThread.procThread_list.append(proc)
+        
         
     
     

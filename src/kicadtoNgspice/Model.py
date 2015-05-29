@@ -12,10 +12,6 @@ class Model(QtGui.QWidget):
     
     def __init__(self,schematicInfo,modelList):
         QtGui.QWidget.__init__(self)
-        #print "Start Ngspice Modelling"
-        #print "Schematic Info in Model Widget",schematicInfo
-        #print "Model List",modelList
-        
         #Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()
         

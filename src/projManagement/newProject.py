@@ -20,6 +20,7 @@ from PyQt4 import QtGui,QtCore
 from Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
+import json
 
 class NewProjectInfo(QtGui.QWidget):
     """
@@ -30,44 +31,16 @@ class NewProjectInfo(QtGui.QWidget):
         super(NewProjectInfo, self).__init__()
         self.obj_validation = Validation()
         self.obj_appconfig = Appconfig()
+
         
-    
-    def body(self):
-        """
-        This function create gui for New Project Info
-        """
-        #print "Calling NewProjectInfo"
-        self.projLabel = QtGui.QLabel("Enter Project Name :")
-        self.projEdit = QtGui.QLineEdit()
-                
-        self.okbtn = QtGui.QPushButton("OK")
-        self.okbtn.clicked.connect(self.createProject)
-        
-        self.cancelbtn = QtGui.QPushButton("Cancel")
-        self.cancelbtn.clicked.connect(self.cancelProject)
-        
-        
-        #Layout
-        self.grid = QtGui.QGridLayout()
-        self.grid.addWidget(self.projLabel,2,0)
-        self.grid.addWidget(self.projEdit, 2,1,1,5)
-        self.grid.addWidget(self.okbtn,3,1)
-        self.grid.addWidget(self.cancelbtn,3,2)
-        self.setLayout(self.grid)
-                     
-        self.setGeometry(QtCore.QRect(80,80,80,80))
-        self.setWindowTitle("New Project")
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.show()
-      
-        
-    def createProject(self):
+    def createProject(self,projName):
         """
         This function create Project related directories and files
         """
         #print "Create Project Called"
+        self.projName= projName
         self.workspace = self.obj_appconfig.default_workspace['workspace']
-        self.projName = self.projEdit.text()
+        #self.projName = self.projEdit.text()
         self.projName = str(self.projName).rstrip().lstrip()  #Remove leading and trailing space
         
         self.projDir = os.path.join(self.workspace,str(self.projName))
@@ -97,7 +70,14 @@ class NewProjectInfo(QtGui.QWidget):
             f.close()
             
             #Now Change the current working project
+            newprojlist = []
+            #self.obj_appconfig = Appconfig()
             self.obj_appconfig.current_project['ProjectName'] = self.projDir 
+            newprojlist.append(self.projName+'.proj')
+            self.obj_appconfig.project_explorer[self.projDir] = newprojlist
+            
+            json.dump(self.obj_appconfig.project_explorer, open(self.obj_appconfig.dictPath,'w'))
+            return self.projDir, newprojlist
             
         elif self.reply == "CHECKEXIST":
             #print "Project already exist"

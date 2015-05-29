@@ -20,7 +20,8 @@
 from PyQt4 import QtGui
 from Validation import Validation
 from configuration.Appconfig import Appconfig
-
+import os
+import json
 
 
 class OpenProjectInfo(QtGui.QWidget):
@@ -40,7 +41,15 @@ class OpenProjectInfo(QtGui.QWidget):
             #print "Pass open project test"
             self.obj_Appconfig = Appconfig()
             self.obj_Appconfig.current_project['ProjectName'] = str(self.projDir)
-            
+            if os.path.isdir(self.projDir):
+                print "true"
+        
+            for dirs, subdirs, filelist in os.walk(self.obj_Appconfig.current_project["ProjectName"]):
+                directory = dirs
+                files = filelist
+            self.obj_Appconfig.project_explorer[dirs] = filelist
+            json.dump(self.obj_Appconfig.project_explorer, open(self.obj_Appconfig.dictPath,'w'))
+            return dirs, filelist
             
         else:
             #print "Failed open project test"

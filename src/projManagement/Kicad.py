@@ -124,11 +124,12 @@ class Kicad:
                 
             else:
                 self.msg = QtGui.QErrorMessage(None)
-                self.msg.showMessage('Your project do not contain any Kicad netlist file for conversion')
+                self.msg.showMessage('The project does not contain any Kicad netlist file for conversion.')
                 self.msg.setWindowTitle("Error Message")  
            
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")  
-            
+           
+    
