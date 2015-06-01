@@ -26,7 +26,6 @@ from projManagement.Kicad import Kicad
 from frontEnd import ProjectExplorer
 import Workspace
 import DockArea
-
 import os
 import sys 
 import time
@@ -106,6 +105,9 @@ class Application(QtGui.QMainWindow):
         
         self.pcb = QtGui.QAction(QtGui.QIcon('../images/pcb.png'),'<b>PCB Layout</b>',self)
         self.pcb.triggered.connect(self.obj_kicad.openLayout)
+              
+        self.model = QtGui.QAction(QtGui.QIcon('../images/model.png'),'<b>Model Editor</b>',self)
+        self.model.triggered.connect(self.open_modelEditor) 
         
         #Adding Action Widget to tool bar   
         self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
@@ -115,6 +117,7 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.ngspice)
         self.lefttoolbar.addAction(self.footprint)
         self.lefttoolbar.addAction(self.pcb)
+        self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
      
     def new_project(self):
@@ -205,6 +208,14 @@ class Application(QtGui.QMainWindow):
         print "Current Project : ",self.obj_appconfig.current_project  
         #self.obj_Mainview.obj_dockarea.plottingEditor()
     
+        
+    def open_modelEditor(self):
+        print "model editor is called"
+        self.obj_Mainview.obj_dockarea.modelEditor()
+        
+    def testing(self):
+        print "Success hit kicad button"
+        
 
 class MainView(QtGui.QWidget):
     """

@@ -2,6 +2,7 @@ from PyQt4 import QtGui,QtCore
 from ngspiceSimulation.pythonPlotting import plotWindow
 from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
+from modelEditor.ModelEditor import ModelEditorclass
 import os
 
 dockList = ['Welcome']
@@ -107,6 +108,28 @@ class DockArea(QtGui.QMainWindow):
         dock['NgSpice-'+str(count)].raise_()
         
         count = count + 1
+
+    def modelEditor(self):    
+            print"in model editor"
+            global count
+            self.modelwidget = QtGui.QWidget() 
+            
+            self.modellayout = QtGui.QVBoxLayout()
+            self.modellayout.addWidget(ModelEditorclass())
+            
+            #Adding to main Layout
+            self.modelwidget.setLayout(self.modellayout)
+            
+            dock['Model Editor-'+str(count)] = QtGui.QDockWidget('Model Editor-'+str(count))
+            dock['Model Editor-'+str(count)].setWidget(self.modelwidget)
+            self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Model Editor-'+str(count)])  
+            self.tabifyDockWidget(dock['Welcome'],dock['Model Editor-'+str(count)])
+            
+            dock['Model Editor-'+str(count)].setVisible(True)
+            dock['Model Editor-'+str(count)].setFocus()
+            dock['Model Editor-'+str(count)].raise_()
+        
+            count = count + 1
         
         
         
