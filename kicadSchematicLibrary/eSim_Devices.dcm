@@ -1,0 +1,13 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP NJF
+D Transistor N-JFET (general)
+K njfet n-jfet transistor
+$ENDCMP
+#
+$CMP PJF
+D Transistor P-JFET (general)
+K pjfet p-jfet transistor
+$ENDCMP
+#
+#End Doc Library
