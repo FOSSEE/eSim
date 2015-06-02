@@ -2,7 +2,7 @@ from PyQt4 import QtGui,QtCore
 import os
 import json
 from configuration.Appconfig import Appconfig
-from lxml.etree import tostring
+
 
 class ProjectExplorer(QtGui.QWidget):
     def __init__(self):
@@ -32,7 +32,7 @@ class ProjectExplorer(QtGui.QWidget):
                 pathlist= parents.split(os.sep)
                 parentnode = QtGui.QTreeWidgetItem(self.treewidget, [pathlist[-1],parents])
                 for files in children:
-                    childnode = QtGui.QTreeWidgetItem(parentnode, [files, parents+ '/'+ files])
+                    childnode = QtGui.QTreeWidgetItem(parentnode, [files, os.path.join(parents,files)])
         self.window.addWidget(self.treewidget)
         
         self.treewidget.doubleClicked.connect(self.openProject)
@@ -46,7 +46,7 @@ class ProjectExplorer(QtGui.QWidget):
         pathlist= parents.split(os.sep)
         parentnode = QtGui.QTreeWidgetItem(self.treewidget, [pathlist[-1], parents])
         for files in children:
-            childnode= QtGui.QTreeWidgetItem(parentnode, [files, parents+ '/'+ files])
+            childnode = QtGui.QTreeWidgetItem(parentnode, [files, os.path.join(parents,files)])
             
     def openMenu(self, position):
     
@@ -139,7 +139,7 @@ class ProjectExplorer(QtGui.QWidget):
             for items in self.treewidget.selectedItems():
                 items.removeChild(items.child(0))
         for files in filelistnew:
-            childnode= QtGui.QTreeWidgetItem(parentnode, [files, self.filePath+ '/'+ files])
+            childnode= QtGui.QTreeWidgetItem(parentnode, [files, os.path.join(self.filePath,files)])
         
         self.obj_appconfig.project_explorer[self.filePath]= filelistnew
         json.dump(self.obj_appconfig.project_explorer, open(self.obj_appconfig.dictPath,'w'))
