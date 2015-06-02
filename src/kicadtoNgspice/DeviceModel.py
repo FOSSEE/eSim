@@ -193,7 +193,7 @@ class DeviceModel(QtGui.QWidget):
         #print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
         
-        self.libfile = str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary"))
+        self.libfile = str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
         #print "Selected Library File :",self.libfile
         
         #Setting Library to Text Edit Line
