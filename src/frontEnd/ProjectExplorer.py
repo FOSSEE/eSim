@@ -109,7 +109,7 @@ class ProjectExplorer(QtGui.QWidget):
     def save_data(self):
         self.fopen=open(self.filePath, 'w')
         lines = str(self.text.toPlainText()).split('\n')
-        lines=[i+'\r' for i in lines]
+        lines=[i+'\r' if i in lines[:-1] else i for i in lines]
         self.fopen.writelines(lines)
         self.fopen.close()
         self.textwindow.close()
