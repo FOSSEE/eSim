@@ -37,15 +37,25 @@ class DeviceModel(QtGui.QWidget):
             words = eachline.split()
             if eachline[0] == 'q':
                 print "Words ",words[0]
-                self.label = QtGui.QLabel("Add library for Transistor "+words[0]+" : "+words[4])
-                self.grid.addWidget(self.label,self.row,0)
+                transbox=QtGui.QGroupBox()
+                transgrid=QtGui.QGridLayout()
+                transbox.setTitle("Add library for Transistor "+words[0]+" : "+words[4])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                transgrid.addWidget(self.entry_var[self.count],self.row,1)
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
-                self.grid.addWidget(self.addbtn,self.row,2)
+                transgrid.addWidget(self.addbtn,self.row,2)
+                transbox.setLayout(transgrid)
+                
+                #CSS
+                transbox.setStyleSheet(" \
+                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                ")
+                
+                self.grid.addWidget(transbox)
                 
                 #Adding Device Details
                 self.deviceDetail[self.count] = words[0]
@@ -56,15 +66,25 @@ class DeviceModel(QtGui.QWidget):
                 
             elif eachline[0] == 'd':
                 print "Words",words[0]
-                self.label = QtGui.QLabel("Add library for Diode "+words[0]+" : "+words[3])
-                self.grid.addWidget(self.label,self.row,0)
+                diodebox=QtGui.QGroupBox()
+                diodegrid=QtGui.QGridLayout()
+                diodebox.setTitle("Add library for Diode "+words[0]+" : "+words[3])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                diodegrid.addWidget(self.entry_var[self.count],self.row,1)
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
-                self.grid.addWidget(self.addbtn,self.row,2)
+                diodegrid.addWidget(self.addbtn,self.row,2)
+                diodebox.setLayout(diodegrid)
+                
+                #CSS
+                diodebox.setStyleSheet(" \
+                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                ")
+                
+                self.grid.addWidget(diodebox)
                 
                 #Adding Device Details
                 self.deviceDetail[self.count] = words[0]
@@ -75,15 +95,25 @@ class DeviceModel(QtGui.QWidget):
                 
             elif eachline[0] == 'j':
                 print "Words",words[0]
-                self.label = QtGui.QLabel("Add library for JFET "+words[0]+" : "+words[4])
-                self.grid.addWidget(self.label,self.row,0)
+                jfetbox=QtGui.QGroupBox()
+                jfetgrid=QtGui.QGridLayout()
+                jfetbox.setTitle("Add library for JFET "+words[0]+" : "+words[4])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                jfetgrid.addWidget(self.entry_var[self.count],self.row,1)
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
-                self.grid.addWidget(self.addbtn,self.row,2)
+                jfetgrid.addWidget(self.addbtn,self.row,2)
+                jfetbox.setLayout(jfetgrid)
+                
+                #CSS
+                jfetbox.setStyleSheet(" \
+                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                ")
+                
+                self.grid.addWidget(jfetbox)
                 
                 #Adding Device Details
                 self.deviceDetail[self.count] = words[0]
@@ -95,15 +125,16 @@ class DeviceModel(QtGui.QWidget):
                        
                 
             elif eachline[0] == 'm':
-                self.label = QtGui.QLabel("Add library for MOSFET "+words[0]+" : "+words[5])
-                self.grid.addWidget(self.label,self.row,0)
+                mosfetbox=QtGui.QGroupBox()
+                mosfetgrid=QtGui.QGridLayout()
+                mosfetbox.setTitle("Add library for MOSFET "+words[0]+" : "+words[5])
                 self.entry_var[self.count] =QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                mosfetgrid.addWidget(self.entry_var[self.count],self.row,1)
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
-                self.grid.addWidget(self.addbtn,self.row,2)
+                mosfetgrid.addWidget(self.addbtn,self.row,2)
                 
                 #Adding Device Details
                 self.deviceDetail[self.count] = words[0]
@@ -114,33 +145,41 @@ class DeviceModel(QtGui.QWidget):
                 
                 #Adding to get MOSFET dimension                
                 self.widthLabel[self.count] = QtGui.QLabel("Enter width of MOSFET "+words[0]+"(default=100u):")
-                self.grid.addWidget(self.widthLabel[self.count],self.row,0)
+                mosfetgrid.addWidget(self.widthLabel[self.count],self.row,0)
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
                 self.entry_var[self.count].setMaximumWidth(150)
-                self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                mosfetgrid.addWidget(self.entry_var[self.count],self.row,1)
                 self.row = self.row + 1
                 self.count = self.count+1
                 
                 self.lengthLabel[self.count] = QtGui.QLabel("Enter length of MOSFET "+words[0]+"(default=100u):")
-                self.grid.addWidget(self.lengthLabel[self.count],self.row,0)
+                mosfetgrid.addWidget(self.lengthLabel[self.count],self.row,0)
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
                 self.entry_var[self.count].setMaximumWidth(150)
-                self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                mosfetgrid.addWidget(self.entry_var[self.count],self.row,1)
                 self.row = self.row + 1
                 self.count = self.count+1
                 
                 
                 self.multifactorLable[self.count] = QtGui.QLabel("Enter multiplicative factor of MOSFET "+words[0]+"(default=1):")
-                self.grid.addWidget(self.multifactorLable[self.count],self.row,0)
+                mosfetgrid.addWidget(self.multifactorLable[self.count],self.row,0)
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
                 self.entry_var[self.count].setMaximumWidth(150)
-                self.grid.addWidget(self.entry_var[self.count],self.row,1)
+                mosfetgrid.addWidget(self.entry_var[self.count],self.row,1)
                 self.row = self.row + 1
                 self.count = self.count+1
+                mosfetbox.setLayout(mosfetgrid)
                 
+                #CSS
+                mosfetbox.setStyleSheet(" \
+                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                ")
+                
+                self.grid.addWidget(mosfetbox)
                    
             self.show()
         

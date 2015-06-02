@@ -32,10 +32,10 @@ class Model(QtGui.QWidget):
             #Adding title label for model
             #Key: Tag name,Value:Entry widget number
             tag_dict = {} 
-            titleLable = QtGui.QLabel(line[5])
-            self.grid.addWidget(titleLable,self.nextrow,1)
-            self.start = self.nextcount
-            self.nextrow=self.nextrow+1
+            modelbox=QtGui.QGroupBox()
+            modelgrid=QtGui.QGridLayout()
+            modelbox.setTitle(line[5])
+            self.start=self.nextcount
             #line[7] is parameter dictionary holding parameter tags.
             for key,value in line[7].iteritems():
                 #print "Key : ",key
@@ -46,22 +46,33 @@ class Model(QtGui.QWidget):
                     temp_tag = []
                     for item in value:
                         paramLabel = QtGui.QLabel(item)
-                        self.grid.addWidget(paramLabel,self.nextrow,0)
+                        modelgrid.addWidget(paramLabel,self.nextrow,0)
                         self.obj_trac.model_entry_var[self.nextcount]= QtGui.QLineEdit()
-                        self.grid.addWidget(self.obj_trac.model_entry_var[self.nextcount],self.nextrow,1)
+                        modelgrid.addWidget(self.obj_trac.model_entry_var[self.nextcount],self.nextrow,1)
                         temp_tag.append(self.nextcount)
                         self.nextcount = self.nextcount+1
                         self.nextrow = self.nextrow+1
                     tag_dict[key] = temp_tag
                 else:
                     paramLabel = QtGui.QLabel(value)
-                    self.grid.addWidget(paramLabel,self.nextrow,0)
+                    modelgrid.addWidget(paramLabel,self.nextrow,0)
                     self.obj_trac.model_entry_var[self.nextcount]= QtGui.QLineEdit()
-                    self.grid.addWidget(self.obj_trac.model_entry_var[self.nextcount],self.nextrow,1)
+                    modelgrid.addWidget(self.obj_trac.model_entry_var[self.nextcount],self.nextrow,1)
                     tag_dict[key] = self.nextcount
                     self.nextcount = self.nextcount+1
                     self.nextrow = self.nextrow+1
             self.end= self.nextcount-1
+            print "End",self.end
+            modelbox.setLayout(modelgrid)
+            
+            #CSS
+            modelbox.setStyleSheet(" \
+            QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
+            QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+            ")
+            
+            self.grid.addWidget(modelbox)
+            
             '''
             Listing all 
             line[0] = index

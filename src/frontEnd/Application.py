@@ -30,7 +30,7 @@ import os
 import sys 
 import time
 import shutil
-
+from PyQt4.Qt import QSize
 
 class Application(QtGui.QMainWindow):
     """
@@ -119,6 +119,8 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.pcb)
         self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
+        self.lefttoolbar.setIconSize(QSize(40,40))
+     
      
     def new_project(self):
         """
@@ -235,7 +237,13 @@ class MainView(QtGui.QWidget):
         
         #Area to be included in MainView
         self.noteArea = QtGui.QTextEdit()
-        self.obj_dockarea = DockArea.DockArea() 
+        #CSS
+        
+        self.noteArea.setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; } \
+        ")
+        
+        self.obj_dockarea = DockArea.DockArea()
         self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()
                
         #Adding content to vertical middle Split. 

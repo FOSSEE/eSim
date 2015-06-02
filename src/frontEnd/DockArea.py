@@ -19,7 +19,10 @@ class DockArea(QtGui.QMainWindow):
         for dockName in dockList:
             dock[dockName] = QtGui.QDockWidget(dockName)
             dock[dockName].setWidget(QtGui.QTextEdit())
-                        
+            #CSS
+            dock[dockName].setStyleSheet(" \
+            QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+            ")            
             self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName])  
                     
         #self.tabifyDockWidget(dock['Notes'],dock['Blank'])
@@ -43,6 +46,13 @@ class DockArea(QtGui.QMainWindow):
         dock['Tips-'+str(count)].setWidget(self.testWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Tips-'+str(count)])  
         self.tabifyDockWidget(dock['Welcome'],dock['Tips-'+str(count)])
+        
+        """
+        #CSS
+        dock['Tips-'+str(count)].setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        ")
+        """
         
         dock['Tips-'+str(count)].setVisible(True)
         dock['Tips-'+str(count)].setFocus()
@@ -72,6 +82,12 @@ class DockArea(QtGui.QMainWindow):
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Plotting-'+str(count)])  
         self.tabifyDockWidget(dock['Welcome'],dock['Plotting-'+str(count)])
         
+        """
+        #CSS
+        dock['Plotting-'+str(count)].setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        ")
+        """
         dock['Plotting-'+str(count)].setVisible(True)
         dock['Plotting-'+str(count)].setFocus()
         dock['Plotting-'+str(count)].raise_()
@@ -103,6 +119,12 @@ class DockArea(QtGui.QMainWindow):
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['NgSpice-'+str(count)])  
         self.tabifyDockWidget(dock['Welcome'],dock['NgSpice-'+str(count)])
         
+        """
+        #CSS
+        dock['NgSpice-'+str(count)].setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px; width: 200px; height: 150px;  } \
+        ")
+        """
         dock['NgSpice-'+str(count)].setVisible(True)
         dock['NgSpice-'+str(count)].setFocus()
         dock['NgSpice-'+str(count)].raise_()
