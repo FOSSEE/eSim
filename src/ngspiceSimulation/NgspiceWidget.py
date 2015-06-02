@@ -5,11 +5,10 @@ class NgspiceWidget(QtGui.QWidget):
     """
     This Class creates NgSpice Window
     """
-    def __init__(self,command):
+    def __init__(self,command,projPath):
         QtGui.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
-        self.command = "ngspice "+command
-        
+        self.command = "cd "+projPath+";ngspice "+command
         self.process = QtCore.QProcess(self)
         self.terminal = QtGui.QWidget(self)
         self.layout = QtGui.QVBoxLayout(self)

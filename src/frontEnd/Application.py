@@ -161,29 +161,16 @@ class Application(QtGui.QMainWindow):
         if self.projDir != None:
             self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
             time.sleep(2)  #Need permanent solution 
+            #Calling Python Plotting
+                
             try:
-                #Moving plot_data_i.txt and plot_data_v.txt to project directory
-                shutil.copy2("plot_data_i.txt", self.projDir)
-                shutil.copy2("plot_data_v.txt", self.projDir)
-                #Deleting this file from current directory
-                os.remove("plot_data_i.txt")
-                os.remove("plot_data_v.txt")
-                #Calling Python Plotting
-                try:
-                    self.obj_Mainview.obj_dockarea.plottingEditor()
-                except Exception as e:
-                    self.msg = QtGui.QErrorMessage(None)
-                    self.msg.showMessage('Error while opening python plotting.')
-                    print "Exception:",str(e)
-                    self.msg.setWindowTitle("Error Message")
-                    
+                self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
                 self.msg = QtGui.QErrorMessage(None)
-                self.msg.showMessage('Unable to copy plot data file to project directory.')
+                self.msg.showMessage('Error while opening python plotting Editor.')
                 print "Exception:",str(e)
                 self.msg.setWindowTitle("Error Message")
-            
-            
+                        
         else:
             self.msg = QtGui.QErrorMessage()
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
