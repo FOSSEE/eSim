@@ -176,7 +176,7 @@ class Convert:
         if self.value == '':
             return 0
         else:
-            self.value
+            return self.value
     
     
     def addModelParameter(self,schematicInfo):
