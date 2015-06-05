@@ -152,7 +152,7 @@ class Analysis(QtGui.QWidget):
         self.start_fre_combo = QtGui.QComboBox()
         self.start_fre_combo.addItem("Hz",)
         self.start_fre_combo.addItem("KHz")
-        self.start_fre_combo.addItem("MHz")
+        self.start_fre_combo.addItem("Meg")
         self.start_fre_combo.addItem("GHz")
         self.start_fre_combo.addItem("THz")
         self.start_fre_combo.setMaximumWidth(150)
@@ -165,7 +165,7 @@ class Analysis(QtGui.QWidget):
         self.stop_fre_combo = QtGui.QComboBox()
         self.stop_fre_combo.addItem("Hz")
         self.stop_fre_combo.addItem("KHz")
-        self.stop_fre_combo.addItem("MHz")
+        self.stop_fre_combo.addItem("Meg")
         self.stop_fre_combo.addItem("GHz")
         self.stop_fre_combo.addItem("THz")
         self.stop_fre_combo.setMaximumWidth(150)
@@ -254,11 +254,11 @@ class Analysis(QtGui.QWidget):
         
         self.source_name= QtGui.QLabel('Enter Source Name',self)
         self.source_name.setMaximumWidth(150)
-        self.start= QtGui.QLabel('start', self)
+        self.start= QtGui.QLabel('Start', self)
         self.start.setMaximumWidth(150)
         self.increment=QtGui.QLabel('Increment',self)
         self.increment.setMaximumWidth(150)
-        self.stop=QtGui.QLabel('stop',self)
+        self.stop=QtGui.QLabel('Stop',self)
         self.stop.setMaximumWidth(150)
 
         
@@ -287,38 +287,38 @@ class Analysis(QtGui.QWidget):
         self.parameter_cnt=0
         self.start_combo=QtGui.QComboBox(self)
         self.start_combo.setMaximumWidth(150)
-        self.start_combo.addItem('volts or Amperes')
+        self.start_combo.addItem('Volts or Amperes')
         self.start_combo.addItem('mV or mA')
         self.start_combo.addItem('uV or uA')
         self.start_combo.addItem("nV or nA")
         self.start_combo.addItem("pV or pA")
         self.dcgrid.addWidget(self.start_combo,2,2)
-        self.dc_parameter[self.parameter_cnt]= "volts or Amperes"
+        self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
         self.start_combo.activated[str].connect(self.start_changecombo)
         self.parameter_cnt= self.parameter_cnt+1
-         
+        
         self.increment_combo=QtGui.QComboBox(self)
         self.increment_combo.setMaximumWidth(150)
-        self.increment_combo.addItem("volts or Amperes")
+        self.increment_combo.addItem("Volts or Amperes")
         self.increment_combo.addItem("mV or mA")
         self.increment_combo.addItem("uV or uA")
         self.increment_combo.addItem("nV or nA")
         self.increment_combo.addItem("pV or pA")
         self.dcgrid.addWidget(self.increment_combo,3,2)
-        self.dc_parameter[self.parameter_cnt]= "volts or Amperes"
+        self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
         self.increment_combo.activated[str].connect(self.increment_changecombo)
         self.parameter_cnt= self.parameter_cnt+1
         
         self.stop_combo=QtGui.QComboBox(self)
         self.stop_combo.setMaximumWidth(150)
-        self.stop_combo.addItem("volts or Amperes")
+        self.stop_combo.addItem("Volts or Amperes")
         self.stop_combo.addItem("mV or mA")
         self.stop_combo.addItem("uV or uA")
         self.stop_combo.addItem("nV or nA")
         self.stop_combo.addItem("pV or pA")  
         self.dcgrid.addWidget(self.stop_combo,4,2)
         self.stop_combo.activated[str].connect(self.stop_changecombo)
-        self.dc_parameter[self.parameter_cnt]= "volts or Amperes"
+        self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
         self.parameter_cnt= self.parameter_cnt+1
         
         self.check=QtGui.QCheckBox('Operating Point Analysis',self)
@@ -391,9 +391,9 @@ class Analysis(QtGui.QWidget):
         self.trbox.setDisabled(True)
         self.trbox.setLayout(self.trgrid)
         
-        self.start = QtGui.QLabel("start Time")
+        self.start = QtGui.QLabel("Start Time")
         self.step = QtGui.QLabel("Step Time")
-        self.stop = QtGui.QLabel("stop Time")
+        self.stop = QtGui.QLabel("Stop Time")
         self.trgrid.addWidget(self.start,1,0)
         self.trgrid.addWidget(self.step,2,0)
         self.trgrid.addWidget(self.stop,3,0)
