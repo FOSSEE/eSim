@@ -1,6 +1,6 @@
 <library>
 <model_name>NJF</model_name>
-<refrence>J2N3819</refrence>
+<ref_model>J2N3819</ref_model>
 <param>
 <Beta>1.304m</Beta>
 <Betatce>-.5</Betatce>

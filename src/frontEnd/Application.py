@@ -29,7 +29,6 @@ import DockArea
 import os
 import sys 
 import time
-import shutil
 from PyQt4.Qt import QSize
 
 class Application(QtGui.QMainWindow):

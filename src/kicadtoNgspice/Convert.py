@@ -356,7 +356,7 @@ class Convert:
         #Extracting Value from XML
         libtree = ET.parse(library)
         for child in libtree.iter():
-            if child.tag == 'refrence':
+            if child.tag == 'ref_model':
                 retVal = child.text
             else:
                 pass

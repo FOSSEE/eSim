@@ -1,6 +1,6 @@
 <library>
 <model_name>NMOS</model_name>
-<refrence>CMOSN</refrence>
+<ref_model>CMOSN</ref_model>
 <param>
 <LEVEL>8 </LEVEL>
 <VERSION>3.2 </VERSION>

@@ -1,6 +1,6 @@
 <library>
 <model_name>D</model_name>
-<refrence>D1N750</refrence>
+<ref_model>D1N750</ref_model>
 <param>
 	<Is>880.5E-18</Is>
 	<Rs>.25</Rs>

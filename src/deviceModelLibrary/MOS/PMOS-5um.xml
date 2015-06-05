@@ -1,6 +1,6 @@
 <library>
 <model_name>PMOS</model_name>
-<refrence>mos_p</refrence>
+<ref_model>mos_p</ref_model>
 <param>
 <Cgso>0.4n </Cgso>
 <Tox>85n </Tox>

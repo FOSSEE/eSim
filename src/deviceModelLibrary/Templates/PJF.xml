@@ -1,6 +1,6 @@
 <library>
 <model_name>PJF</model_name>
-<refrence>J2N3820</refrence>
+<ref_model>J2N3820</ref_model>
 <param>
 <Beta>1.304m </Beta>
 <Betatce>-.5</Betatce> 

@@ -1,6 +1,6 @@
 <library>
 <model_name>NMOS</model_name>
-<refrence>mos_n</refrence>
+<ref_model>mos_n</ref_model>
 <param>
 <TPG>1</TPG>
 <TOX>9.5n </TOX>

@@ -1,6 +1,6 @@
 <library>
 <model_name>PMOS</model_name>
-<refrence>CMOSP</refrence>
+<ref_model>CMOSP</ref_model>
 <param>
 <LEVEL>8 </LEVEL>
 <VERSION>3.2 </VERSION>

@@ -1,12 +1,4 @@
 <library>
 <model_name>Core</model_name>
-<refrence>K3019PL_3C8</refrence>
-<param>
-<MS>415.2K</MS>
-<A>44.82 </A>
-<C>.4112</C>
-<K>25.74</K>
-<Area>1.38</Area>
-<Path>4.52</Path>
-</param>
-</library>
+<ref_model>K3019PL_3C8</ref_model>
+<param><A>44.82 </A><C>.4112</C><abc>123</abc><Area>1.38</Area><K>25.74</K><MS>415.2K</MS><Path>4.52</Path></param></library>

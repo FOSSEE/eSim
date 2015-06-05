@@ -1,6 +1,6 @@
 <library>
 <model_name>NPN</model_name>
-<refrence>Q2N2222</refrence>
+<ref_model>Q2N2222</ref_model>
 <param>
 <Is>14.34f </Is>
 <Xti>3 </Xti>

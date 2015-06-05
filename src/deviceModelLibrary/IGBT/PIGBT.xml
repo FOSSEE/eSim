@@ -1,6 +1,6 @@
 <library>
 <model_name>PIGBT</model_name>
-<refrence>IXGH40N60</refrence>
+<ref_model>IXGH40N60</ref_model>
 <param>
 <TAU>287.56E-9</TAU>
 <KP>50.034</KP>
