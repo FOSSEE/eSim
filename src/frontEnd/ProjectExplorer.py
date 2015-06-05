@@ -87,9 +87,8 @@ class ProjectExplorer(QtGui.QWidget):
         self.windowgrid = QtGui.QGridLayout()
         if (os.path.isfile(str(self.filePath)))== True:
             self.fopen = open(str(self.filePath), 'r')
-            lines = self.fopen.readlines()
-            for line in lines:
-                self.text.append(line)
+            lines = self.fopen.read()
+            self.text.setText(lines)
     
             QtCore.QObject.connect(self.text,QtCore.SIGNAL("textChanged()"), self.enable_save)        
             
@@ -108,9 +107,7 @@ class ProjectExplorer(QtGui.QWidget):
         
     def save_data(self):
         self.fopen=open(self.filePath, 'w')
-        lines = str(self.text.toPlainText()).split('\n')
-        lines=[i+'\r' if i in lines[:-1] else i for i in lines]
-        self.fopen.writelines(lines)
+        self.fopen.write(self.text.toPlainText())
         self.fopen.close()
         self.textwindow.close()
         

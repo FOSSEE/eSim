@@ -1,6 +1,10 @@
 
 from PyQt4 import QtGui,QtCore
+from PyQt4.Qt import QRect
 import TrackWidget
+import os
+import sys
+from xml.etree import ElementTree as ET
 
 class Analysis(QtGui.QWidget):
     """
@@ -83,6 +87,23 @@ class Analysis(QtGui.QWidget):
             self.track_obj.set_CheckBox["ITEMS"]="TRAN"
                  
     def createACgroup(self):
+        kicadFile = sys.argv[1]
+        (projpath,filename)=os.path.split(kicadFile)
+        project_name=projpath.split("/")
+        project_name=project_name[len(project_name)-1]
+        print "PROJECT NAME---------",project_name
+        check=1
+        try:
+            f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
+            tree=ET.parse(f)
+            parent_root=tree.getroot()
+            for child in parent_root:
+                if child.tag=="analysis":
+                    root=child
+        except:
+            check=0
+            print "Empty XML"
+            
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acgrid = QtGui.QGridLayout()
@@ -160,7 +181,33 @@ class Analysis(QtGui.QWidget):
         self.acbox.setStyleSheet(" \
         QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
         QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
-        ") 
+        ")
+        if check:
+            try:
+                if root[0][0].text=="true":
+                    self.Lin.setChecked(True)
+                    self.Dec.setChecked(False)
+                    self.Oct.setChecked(False)
+                elif root[0][1].text=="true":
+                    self.Lin.setChecked(False)
+                    self.Dec.setChecked(True)
+                    self.Oct.setChecked(False)
+                elif root[0][2].text=="true":
+                    self.Lin.setChecked(False)
+                    self.Dec.setChecked(False)
+                    self.Oct.setChecked(True)
+                else:
+                    pass
+                self.ac_entry_var[0].setText(root[0][3].text)
+                self.ac_entry_var[1].setText(root[0][4].text)
+                self.ac_entry_var[2].setText(root[0][5].text)
+                index=self.start_fre_combo.findText(root[0][6].text)
+                self.start_fre_combo.setCurrentIndex(index)
+                index=self.stop_fre_combo.findText(root[0][7].text)
+                self.stop_fre_combo.setCurrentIndex(index)
+            except:
+                print "XML Parse Error"
+                
         return self.acbox
     
     def start_combovalue(self, text):
@@ -181,6 +228,23 @@ class Analysis(QtGui.QWidget):
             pass  
     
     def createDCgroup(self):
+        kicadFile = sys.argv[1]
+        (projpath,filename)=os.path.split(kicadFile)
+        project_name=projpath.split("/")
+        project_name=project_name[len(project_name)-1]
+        print "PROJECT NAME---------",project_name
+        check=1
+        try:
+            f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
+            tree=ET.parse(f)
+            parent_root=tree.getroot()
+            for child in parent_root:
+                if child.tag=="analysis":
+                    root=child
+        except:
+            check=0
+            print "Empty XML"
+
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
         self.dcgrid = QtGui.QGridLayout()
@@ -272,7 +336,24 @@ class Analysis(QtGui.QWidget):
         QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
         QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
         ")
-              
+        if check:
+            try:
+                self.dc_entry_var[0].setText(root[1][0].text)
+                self.dc_entry_var[1].setText(root[1][1].text)
+                self.dc_entry_var[2].setText(root[1][2].text)
+                self.dc_entry_var[3].setText(root[1][3].text)
+                index=self.start_combo.findText(root[1][5].text)
+                self.start_combo.setCurrentIndex(index)
+                index=self.increment_combo.findText(root[1][6].text)
+                self.increment_combo.setCurrentIndex(index)
+                index=self.stop_combo.findText(root[1][7].text)
+                self.stop_combo.setCurrentIndex(index)
+                if root[1][4].text:
+                    self.check.setCheckState(True)
+                else:
+                    self.check.setCheckedState(False)
+            except:
+                print "XML Parse Error"
         
         return self.dcbox
     
@@ -286,6 +367,23 @@ class Analysis(QtGui.QWidget):
         self.dc_parameter[2]=str(text)
     
     def createTRANgroup(self):
+        kicadFile = sys.argv[1]
+        (projpath,filename)=os.path.split(kicadFile)
+        project_name=projpath.split("/")
+        project_name=project_name[len(project_name)-1]
+        print "PROJECT NAME---------",project_name
+        check=1
+        try:
+            f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
+            tree=ET.parse(f)
+            parent_root=tree.getroot()
+            for child in parent_root:
+                if child.tag=="analysis":
+                    root=child
+        except:
+            check=0
+            print "Empty XML"
+            
         self.trbox = QtGui.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
         self.trgrid = QtGui.QGridLayout()
@@ -356,8 +454,22 @@ class Analysis(QtGui.QWidget):
         QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
         QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
         ")
-              
-        
+        if check:
+            try:
+                self.tran_entry_var[0].setText(root[2][0].text)
+                self.tran_entry_var[1].setText(root[2][1].text)
+                self.tran_entry_var[2].setText(root[2][2].text)
+                index=self.start_combobox.findText(root[2][3].text)
+                self.start_combobox.setCurrentIndex(index)
+                index=self.step_combobox.findText(root[2][4].text)
+                self.step_combobox.setCurrentIndex(index)
+                
+                index=self.stop_combobox.findText(root[2][5].text)
+                self.stop_combobox.setCurrentIndex(index)
+            except:
+                print "XML Parse Error"
+
+
         return self.trbox    
     
     def start_combo_change(self,text):
@@ -367,4 +479,4 @@ class Analysis(QtGui.QWidget):
         self.tran_parameter[1]=str(text)
         
     def stop_combo_change(self,text):
-        self.tran_parameter[3]=str(text)
+        self.tran_parameter[2]=str(text)

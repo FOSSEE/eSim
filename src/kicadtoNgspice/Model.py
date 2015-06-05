@@ -2,6 +2,9 @@
 from PyQt4 import QtGui
 
 import TrackWidget
+from xml.etree import ElementTree as ET
+import sys
+import os
 
 
 class Model(QtGui.QWidget):
@@ -11,6 +14,26 @@ class Model(QtGui.QWidget):
     """
     
     def __init__(self,schematicInfo,modelList):
+        
+        
+        kicadFile = sys.argv[1]
+        (projpath,filename)=os.path.split(kicadFile)
+        project_name=projpath.split("/")
+        project_name=project_name[len(project_name)-1]
+        #print "PROJECT NAME---------",project_name
+        check=1
+        try:
+            f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
+            tree=ET.parse(f)
+            parent_root=tree.getroot()
+            for child in parent_root:
+                if child.tag=="model":
+                    root=child
+        except:
+            check=0
+            print "Empty XML"
+        
+        
         QtGui.QWidget.__init__(self)
         #Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()
@@ -37,6 +60,7 @@ class Model(QtGui.QWidget):
             modelbox.setTitle(line[5])
             self.start=self.nextcount
             #line[7] is parameter dictionary holding parameter tags.
+            i=0
             for key,value in line[7].iteritems():
                 #print "Key : ",key
                 #print "Value : ",value
@@ -49,6 +73,13 @@ class Model(QtGui.QWidget):
                         modelgrid.addWidget(paramLabel,self.nextrow,0)
                         self.obj_trac.model_entry_var[self.nextcount]= QtGui.QLineEdit()
                         modelgrid.addWidget(self.obj_trac.model_entry_var[self.nextcount],self.nextrow,1)
+                        try:
+                            for child in root:
+                                if child.text==line[2] and child.tag==line[3]:
+                                    self.obj_trac.model_entry_var[self.nextcount].setText(child[i].text)
+                                    i=i+1
+                        except:
+                            pass
                         temp_tag.append(self.nextcount)
                         self.nextcount = self.nextcount+1
                         self.nextrow = self.nextrow+1
@@ -58,6 +89,13 @@ class Model(QtGui.QWidget):
                     modelgrid.addWidget(paramLabel,self.nextrow,0)
                     self.obj_trac.model_entry_var[self.nextcount]= QtGui.QLineEdit()
                     modelgrid.addWidget(self.obj_trac.model_entry_var[self.nextcount],self.nextrow,1)
+                    try:
+                        for child in root:
+                            if child.text==line[2] and child.tag==line[3]:
+                                self.obj_trac.model_entry_var[self.nextcount].setText(child[i].text)
+                                i=i+1
+                    except:
+                            pass
                     tag_dict[key] = self.nextcount
                     self.nextcount = self.nextcount+1
                     self.nextrow = self.nextrow+1

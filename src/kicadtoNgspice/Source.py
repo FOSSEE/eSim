@@ -1,7 +1,10 @@
-
+import sys
+import os
 from PyQt4 import QtGui
 from Processing import PrcocessNetlist
 import TrackWidget
+from xml.etree import ElementTree as ET
+
 
 
 class Source(QtGui.QWidget):
@@ -29,10 +32,32 @@ class Source(QtGui.QWidget):
         """
         This function dynamically create source widget in the Source tab of KicadtoNgSpice window
         """
-                
+        kicadFile = sys.argv[1]
+        (projpath,filename)=os.path.split(kicadFile)
+        project_name=projpath.split("/")
+        project_name=project_name[len(project_name)-1]
+        print "PROJECT NAME---------",project_name
+        check=1
+        try:
+            f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
+            tree=ET.parse(f)
+            parent_root=tree.getroot()
+            for child in parent_root:
+                if child.tag=="source":
+                    root=child
+        except:
+            check=0
+            print "Empty XML"
+        
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
-        
+        xml_num=0
+        """self.ac_check=0
+        self.dc_check=0
+        self.sine_check=0
+        self.pulse_check=0
+        self.pwl_check=0
+        self.exp_check=0"""
         if sourcelist:
             for line in sourcelist:
                 #print "Voltage source line index: ",line[0]
@@ -51,6 +76,17 @@ class Source(QtGui.QWidget):
                     acgrid.addWidget(self.entry_var[self.count],self.row,1)
                     #Value Need to check previuouse value
                     self.entry_var[self.count].setText("")
+                    try:
+                        for child in root:
+                            templist1=line[1]
+                            templist2=templist1.split(' ')
+                        
+                            if child.tag==templist2[0] and child.text==line[2]:
+                                self.entry_var[self.count].setText(child[0].text)
+                    except:
+                        pass
+                    #Value Need to check previuouse value
+                    #self.entry_var[self.count].setText("")
                     self.row=self.row+1
                     self.end=self.count
                     self.count=self.count+1
@@ -69,6 +105,7 @@ class Source(QtGui.QWidget):
                     dcbox=QtGui.QGroupBox()
                     dcbox.setTitle(line[3])
                     dcgrid=QtGui.QGridLayout()
+                    self.row=self.row+1
                     self.start=self.count
                     label=QtGui.QLabel(line[4])
                     dcgrid.addWidget(label,self.row,0)
@@ -76,6 +113,16 @@ class Source(QtGui.QWidget):
                     self.entry_var[self.count].setMaximumWidth(150)
                     dcgrid.addWidget(self.entry_var[self.count],self.row,1)
                     self.entry_var[self.count].setText("")
+                    try:
+                        for child in root:
+                            templist1=line[1]
+                            templist2=templist1.split(' ')
+                        
+                            if child.tag==templist2[0] and child.text==line[2]:
+                                self.entry_var[self.count].setText(child[0].text)
+                    except:
+                        pass
+                    
                     self.row=self.row+1
                     self.end=self.count
                     self.count=self.count+1
@@ -94,6 +141,7 @@ class Source(QtGui.QWidget):
                     sinebox=QtGui.QGroupBox()
                     sinebox.setTitle(line[3])
                     sinegrid=QtGui.QGridLayout()
+                    self.row=self.row+1
                     self.start=self.count
                     
                     for it in range(4,9):
@@ -102,7 +150,17 @@ class Source(QtGui.QWidget):
                         self.entry_var[self.count]=QtGui.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
                         sinegrid.addWidget(self.entry_var[self.count],self.row,1)
-                        self.entry_var[self.count].setText("")     
+                        self.entry_var[self.count].setText("")
+                        try:
+                            for child in root:
+                                templist1=line[1]
+                                templist2=templist1.split(' ')
+                                if child.tag==templist2[0] and child.text==line[2]:
+                                    self.entry_var[self.count].setText(child[it-4].text)
+                        except:
+                            pass
+                        
+                        
                         self.row=self.row+1
                         self.count=self.count+1  
                     self.end=self.count-1
@@ -129,6 +187,17 @@ class Source(QtGui.QWidget):
                         self.entry_var[self.count].setMaximumWidth(150)
                         pulsegrid.addWidget(self.entry_var[self.count],self.row,1)
                         self.entry_var[self.count].setText("")
+                        
+                        try:
+                            for child in root:
+                                templist1=line[1]
+                                templist2=templist1.split(' ')
+                                if child.tag==templist2[0] and child.text==line[2]:
+                                    self.entry_var[self.count].setText(child[it-4].text)
+                        except:
+                            pass
+                        
+                        
                         self.row=self.row+1
                         self.count=self.count+1
                     self.end=self.count-1
@@ -146,6 +215,7 @@ class Source(QtGui.QWidget):
                 elif line[2]=='pwl':
                     pwlbox=QtGui.QGroupBox()
                     pwlbox.setTitle(line[3])
+                    self.start=self.count
                     pwlgrid=QtGui.QGridLayout()
                     self.start=self.count
                     label=QtGui.QLabel(line[4])
@@ -153,7 +223,18 @@ class Source(QtGui.QWidget):
                     self.entry_var[self.count]=QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
                     pwlgrid.addWidget(self.entry_var[self.count],self.row,1)
-                    self.entry_var[self.count].setText("");
+                    self.entry_var[self.count].setText("")
+                    
+                    try:
+                        for child in root:
+                            templist1=line[1]
+                            templist2=templist1.split(' ')
+                            if child.tag==templist2[0] and child.text==line[2]:
+                                self.entry_var[self.count].setText(child[0].text)
+                    except:
+                        pass
+                    
+                    
                     self.row=self.row+1
                     self.end=self.count
                     self.count=self.count+1
@@ -180,6 +261,17 @@ class Source(QtGui.QWidget):
                         self.entry_var[self.count].setMaximumWidth(150)
                         expgrid.addWidget(self.entry_var[self.count],self.row,1)
                         self.entry_var[self.count].setText("")
+                        
+                        try:
+                            for child in root:
+                                templist1=line[1]
+                                templist2=templist1.split(' ')
+                                if child.tag==templist2[0] and child.text==line[2]:
+                                    self.entry_var[self.count].setText(child[it-4].text)
+                        except:
+                            pass
+                        
+                        
                         self.row=self.row+1
                         self.count=self.count+1
                     self.end=self.count-1
@@ -197,6 +289,7 @@ class Source(QtGui.QWidget):
                     
                     
                 self.count=self.count+1
+                xml_num=xml_num+1
                           
                 
         else:
