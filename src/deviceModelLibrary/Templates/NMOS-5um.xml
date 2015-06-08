@@ -1,0 +1,24 @@
+<library>
+<model_name>NMOS</model_name>
+<ref_model>mos_n</ref_model>
+<param>
+<Cgso>0.4n</Cgso>
+<Tox>85n</Tox> 
+<Vto>1</Vto>
+<phi>0.7</phi> 
+<Level>1</Level>
+<Mj>.5</Mj>
+<UO>750</UO>
+<Cgdo>0.4n</Cgdo>
+<Gamma>1.4</Gamma>
+<LAMBDA>0.01 </LAMBDA>
+<LD>0.7u </LD>
+<JS>1u </JS>
+<CJ>0.4m</CJ>
+<CJSW>0.8n</CJSW>
+<MJSW>0.5 </MJSW>
+<PB>0.7</PB>
+<CGBO>0.2n</CGBO>
+
+</param>
+</library>

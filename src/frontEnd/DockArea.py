@@ -2,6 +2,7 @@ from PyQt4 import QtGui,QtCore
 from ngspiceSimulation.pythonPlotting import plotWindow
 from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
+from modelEditor.ModelEditor import ModelEditorclass
 import os
 
 dockList = ['Welcome']
@@ -18,7 +19,10 @@ class DockArea(QtGui.QMainWindow):
         for dockName in dockList:
             dock[dockName] = QtGui.QDockWidget(dockName)
             dock[dockName].setWidget(QtGui.QTextEdit())
-                        
+            #CSS
+            dock[dockName].setStyleSheet(" \
+            QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+            ")            
             self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName])  
                     
         #self.tabifyDockWidget(dock['Notes'],dock['Blank'])
@@ -42,6 +46,13 @@ class DockArea(QtGui.QMainWindow):
         dock['Tips-'+str(count)].setWidget(self.testWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Tips-'+str(count)])  
         self.tabifyDockWidget(dock['Welcome'],dock['Tips-'+str(count)])
+        
+        """
+        #CSS
+        dock['Tips-'+str(count)].setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        ")
+        """
         
         dock['Tips-'+str(count)].setVisible(True)
         dock['Tips-'+str(count)].setFocus()
@@ -71,6 +82,12 @@ class DockArea(QtGui.QMainWindow):
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Plotting-'+str(count)])  
         self.tabifyDockWidget(dock['Welcome'],dock['Plotting-'+str(count)])
         
+        """
+        #CSS
+        dock['Plotting-'+str(count)].setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        ")
+        """
         dock['Plotting-'+str(count)].setVisible(True)
         dock['Plotting-'+str(count)].setFocus()
         dock['Plotting-'+str(count)].raise_()
@@ -93,7 +110,7 @@ class DockArea(QtGui.QMainWindow):
         self.ngspiceWidget = QtGui.QWidget()
                 
         self.ngspiceLayout = QtGui.QVBoxLayout()
-        self.ngspiceLayout.addWidget(NgspiceWidget(self.ngspiceNetlist))
+        self.ngspiceLayout.addWidget(NgspiceWidget(self.ngspiceNetlist,self.projDir))
         
         #Adding to main Layout
         self.ngspiceWidget.setLayout(self.ngspiceLayout)
@@ -102,11 +119,39 @@ class DockArea(QtGui.QMainWindow):
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['NgSpice-'+str(count)])  
         self.tabifyDockWidget(dock['Welcome'],dock['NgSpice-'+str(count)])
         
+        """
+        #CSS
+        dock['NgSpice-'+str(count)].setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px; width: 200px; height: 150px;  } \
+        ")
+        """
         dock['NgSpice-'+str(count)].setVisible(True)
         dock['NgSpice-'+str(count)].setFocus()
         dock['NgSpice-'+str(count)].raise_()
         
         count = count + 1
+
+    def modelEditor(self):    
+            print"in model editor"
+            global count
+            self.modelwidget = QtGui.QWidget() 
+            
+            self.modellayout = QtGui.QVBoxLayout()
+            self.modellayout.addWidget(ModelEditorclass())
+            
+            #Adding to main Layout
+            self.modelwidget.setLayout(self.modellayout)
+            
+            dock['Model Editor-'+str(count)] = QtGui.QDockWidget('Model Editor-'+str(count))
+            dock['Model Editor-'+str(count)].setWidget(self.modelwidget)
+            self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Model Editor-'+str(count)])  
+            self.tabifyDockWidget(dock['Welcome'],dock['Model Editor-'+str(count)])
+            
+            dock['Model Editor-'+str(count)].setVisible(True)
+            dock['Model Editor-'+str(count)].setFocus()
+            dock['Model Editor-'+str(count)].raise_()
+        
+            count = count + 1
         
         
         

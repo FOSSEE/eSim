@@ -26,6 +26,8 @@ import DeviceModel
 import Convert
 import TrackWidget
 
+from xml.etree import ElementTree as ET
+
 
 
 class MainWindow(QtGui.QWidget):
@@ -81,25 +83,29 @@ class MainWindow(QtGui.QWidget):
           
     
     def createcreateConvertWidget(self):
-        
+        global obj_analysis
         self.convertWindow = QtGui.QWidget()
         self.analysisTab = QtGui.QScrollArea()
-        self.analysisTab.setWidget(Analysis.Analysis())
+        obj_analysis=Analysis.Analysis()
+        self.analysisTab.setWidget(obj_analysis)
         #self.analysisTabLayout = QtGui.QVBoxLayout(self.analysisTab.widget())
         self.analysisTab.setWidgetResizable(True)
-        
+        global obj_source
         self.sourceTab = QtGui.QScrollArea()
-        self.sourceTab.setWidget(Source.Source(sourcelist,sourcelisttrack))
+        obj_source=Source.Source(sourcelist,sourcelisttrack)
+        self.sourceTab.setWidget(obj_source)
         #self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
         self.sourceTab.setWidgetResizable(True)
-        
+        global obj_model
         self.modelTab = QtGui.QScrollArea()
-        self.modelTab.setWidget(Model.Model(schematicInfo,modelList))
+        obj_model=Model.Model(schematicInfo,modelList)
+        self.modelTab.setWidget(obj_model)
         #self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
         self.modelTab.setWidgetResizable(True)
-        
+        global obj_devicemodel
         self.deviceModelTab = QtGui.QScrollArea()
-        self.deviceModelTab.setWidget(DeviceModel.DeviceModel(schematicInfo))
+        obj_devicemodel=DeviceModel.DeviceModel(schematicInfo)
+        self.deviceModelTab.setWidget(obj_devicemodel)
         self.deviceModelTab.setWidgetResizable(True)
         
         
@@ -125,6 +131,250 @@ class MainWindow(QtGui.QWidget):
         """
         global schematicInfo
         global analysisoutput
+        kicadFile = sys.argv[1]
+        (projpath,filename)=os.path.split(kicadFile)
+        project_name=projpath.split("/")
+        project_name=project_name[len(project_name)-1]
+        print "PROJ PATH---",projpath
+        
+        
+        check=1
+        try:
+            fr=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
+            temp_tree=ET.parse(fr)
+            temp_root=temp_tree.getroot()
+        except:
+            check=0
+            
+        
+        
+        fw=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'w')
+        if check==0:
+            attr_parent=ET.Element("KicadtoNgspice")
+        if check==1:
+            attr_parent=temp_root  
+        
+        for child in attr_parent:
+            if child.tag=="analysis":
+                attr_parent.remove(child)
+        
+        attr_analysis=ET.SubElement(attr_parent,"analysis")
+        attr_ac=ET.SubElement(attr_analysis,"ac")
+        if obj_analysis.Lin.isChecked():
+            ET.SubElement(attr_ac,"field1",name="Lin").text="true"
+            ET.SubElement(attr_ac,"field2",name="Dec").text="false"
+            ET.SubElement(attr_ac,"field3",name="Oct").text="false"
+        elif obj_analysis.Dec.isChecked():
+            ET.SubElement(attr_ac,"field1",name="Lin").text="false"
+            ET.SubElement(attr_ac,"field2",name="Dec").text="true"
+            ET.SubElement(attr_ac,"field3",name="Oct").text="false"
+        if obj_analysis.Oct.isChecked():
+            ET.SubElement(attr_ac,"field1",name="Lin").text="false"
+            ET.SubElement(attr_ac,"field2",name="Dec").text="false"
+            ET.SubElement(attr_ac,"field3",name="Oct").text="true"
+        else:
+            pass
+        ET.SubElement(attr_ac,"field4",name="Start Frequency").text= str(obj_analysis.ac_entry_var[0].text())
+        ET.SubElement(attr_ac,"field5",name="Stop Frequency").text= str(obj_analysis.ac_entry_var[1].text())
+        ET.SubElement(attr_ac,"field6",name="No. of points").text= str(obj_analysis.ac_entry_var[2].text())
+        ET.SubElement(attr_ac,"field7",name="Start Fre Combo").text= obj_analysis.ac_parameter[0]
+        ET.SubElement(attr_ac,"field8",name="Stop Fre Combo").text= obj_analysis.ac_parameter[1]
+        attr_dc=ET.SubElement(attr_analysis,"dc")
+        ET.SubElement(attr_dc,"field1",name="Source Name").text= str(obj_analysis.dc_entry_var[0].text())
+        ET.SubElement(attr_dc,"field2",name="Start").text= str(obj_analysis.dc_entry_var[1].text())
+        ET.SubElement(attr_dc,"field3",name="Increment").text= str(obj_analysis.dc_entry_var[2].text())
+        ET.SubElement(attr_dc,"field4",name="Stop").text= str(obj_analysis.dc_entry_var[3].text())
+        ET.SubElement(attr_dc,"field5",name="Operating Point").text=str(obj_analysis.check.isChecked()) 		
+        print "OBJ_ANALYSIS.CHECK -----",obj_analysis.check.isChecked()
+        ET.SubElement(attr_dc,"field6",name="Start Combo").text= obj_analysis.dc_parameter[0]
+        ET.SubElement(attr_dc,"field7",name="Increment Combo").text=obj_analysis.dc_parameter[1]
+        ET.SubElement(attr_dc,"field8",name="Stop Combo").text= obj_analysis.dc_parameter[2]
+        attr_tran=ET.SubElement(attr_analysis,"tran")
+        ET.SubElement(attr_tran,"field1",name="Start Time").text= str(obj_analysis.tran_entry_var[0].text())
+        ET.SubElement(attr_tran,"field2",name="Step Time").text= str(obj_analysis.tran_entry_var[1].text())
+        ET.SubElement(attr_tran,"field3",name="Stop Time").text= str(obj_analysis.tran_entry_var[2].text())
+        ET.SubElement(attr_tran,"field4",name="Start Combo").text= obj_analysis.tran_parameter[0]
+        ET.SubElement(attr_tran,"field5",name="Step Combo").text= obj_analysis.tran_parameter[1]
+        ET.SubElement(attr_tran,"field6",name="Stop Combo").text= obj_analysis.tran_parameter[2]
+        print "TRAN PARAMETER 2-----",obj_analysis.tran_parameter[2]
+        
+        #tree=ET.ElementTree(attr_analysis)
+        #tree.write(f)
+        
+        
+        if check==0:
+            attr_source=ET.SubElement(attr_parent,"source")
+        if check==1:
+            for child in attr_parent:
+                if child.tag=="source":
+                    attr_source=child  
+        count=1
+        grand_child_count=1
+        #global tmp_check
+        #tmp_check=0
+        for i in schematicInfo:
+            tmp_check=0
+            words=i.split(' ')
+            wordv=words[0]
+            for child in attr_source:
+                if child.tag==wordv and child.text==words[len(words)-1]:
+                    tmp_check=1
+                    for grand_child in child:
+                        grand_child.text=str(obj_source.entry_var[grand_child_count].text())
+                        grand_child_count=grand_child_count+1
+                    grand_child_count=grand_child_count+1
+            if tmp_check==0:        
+                words=i.split(' ')
+                wordv=words[0]
+                if wordv[0]=="v":
+                    attr_var=ET.SubElement(attr_source,words[0],name="Source type")
+                    attr_var.text=words[len(words)-1]
+                    #ET.SubElement(attr_ac,"field1",name="Lin").text="true"    
+                if words[len(words)-1]=="ac":
+                    #attr_ac=ET.SubElement(attr_var,"ac")
+                    ET.SubElement(attr_var,"field1",name="Amplitude").text=str(obj_source.entry_var[count].text())
+                    count=count+2
+                elif words[len(words)-1]=="dc":
+                    #attr_dc=ET.SubElement(attr_var,"dc")
+                    ET.SubElement(attr_var,"field1",name="Value").text=str(obj_source.entry_var[count].text())
+                    count=count+2
+                elif words[len(words)-1]=="sine":
+                    #attr_sine=ET.SubElement(attr_var,"sine")
+                    ET.SubElement(attr_var,"field1",name="Offset Value").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field2",name="Amplitude").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field3",name="Frequency").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field4",name="Delay Time").text=str(obj_source.entry_var[count].text())    
+                    count=count+1
+                    ET.SubElement(attr_var,"field5",name="Damping Factor").text=str(obj_source.entry_var[count].text())
+                    count=count+2
+                elif words[len(words)-1]=="pulse":
+                    #attr_pulse=ET.SubElement(attr_var,"pulse")
+                    ET.SubElement(attr_var,"field1",name="Initial Value").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field2",name="Pulse Value").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field3",name="Delay Time").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field4",name="Rise Time").text=str(obj_source.entry_var[count].text())    
+                    count=count+1
+                    ET.SubElement(attr_var,"field5",name="Fall Time").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field5",name="Pulse width").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field5",name="Period").text=str(obj_source.entry_var[count].text())
+                    count=count+2
+                elif words[len(words)-1]=="pwl":
+                    #attr_pwl=ET.SubElement(attr_var,"pwl")
+                    ET.SubElement(attr_var,"field1",name="Enter in pwl format").text=str(obj_source.entry_var[count].text())
+                    count=count+2
+                elif words[len(words)-1]=="exp":
+                    #attr_exp=ET.SubElement(attr_var,"exp")
+                    ET.SubElement(attr_var,"field1",name="Initial Value").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field2",name="Pulsed Value").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field3",name="Rise Delay Time").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field4",name="Rise Time Constant").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field5",name="Fall TIme").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var,"field6",name="Fall Time Constant").text=str(obj_source.entry_var[count].text())
+                    count=count+2
+                else:
+                    pass
+                
+        #tree=ET.ElementTree(attr_source)
+        #tree.write(f1)
+        
+        
+        
+        if check==0:
+            attr_model=ET.SubElement(attr_parent,"model")
+        if check==1:
+            for child in attr_parent:
+                if child.tag=="model":
+                    attr_model=child
+        i=0    
+        #tmp_check is a variable to check for duplicates in the xml file
+        tmp_check=0
+        #tmp_i is the iterator in case duplicates are there; then in that case we need to replace only the child node and not create a new parent node
+        
+        for line in modelList:
+            print "i for each line in model List------",i
+            tmp_check=0
+            for rand_itr in obj_model.obj_trac.modelTrack:
+                if rand_itr[2]==line[2] and rand_itr[3]==line[3]:
+                    start=rand_itr[7]
+                    end=rand_itr[8]
+            i=start
+            for child in attr_model:
+                if child.text==line[2] and child.tag==line[3]:
+                    for grand_child in child:
+                        if i<=end:
+                            grand_child.text=str(obj_model.obj_trac.model_entry_var[i].text())
+                            print "STR OF MODEL----",str(obj_model.obj_trac.model_entry_var[i].text())
+                            i=i+1
+                            print "i incremented to ",i
+                        else:
+                            pass
+                    tmp_check=1    
+                        
+            if tmp_check==0:
+                attr_ui=ET.SubElement(attr_model,line[3],name="type")
+                attr_ui.text=line[2]    
+                for key,value in line[7].iteritems():
+                    if hasattr(value, '__iter__') and i<=end:
+                        for item in value:
+                            ET.SubElement(attr_ui,"field"+str(i+1),name=item).text=str(obj_model.obj_trac.model_entry_var[i].text())
+                            print "STR OF MODEL----",str(obj_model.obj_trac.model_entry_var[i].text())
+                            i=i+1
+                            print "i incremented to ",i
+                    else:
+                        ET.SubElement(attr_ui,"field"+str(i+1),name=value).text=str(obj_model.obj_trac.model_entry_var[i].text())
+                        print "STR OF MODEL----",str(obj_model.obj_trac.model_entry_var[i].text())
+                        i=i+1
+                        print "i incremented to ",i
+        #################################################################################################################
+        if check==0:
+            attr_devicemodel=ET.SubElement(attr_parent,"devicemodel")
+        if check==1:
+            for child in attr_parent:
+                if child.tag=="devicemodel":
+                    attr_devicemodel=child
+        print "Device model dict",obj_devicemodel.devicemodel_dict_beg
+        print "Device model dict end",obj_devicemodel.devicemodel_dict_end
+        ##########################              
+        for i in obj_devicemodel.devicemodel_dict_beg:
+            attr_var=ET.SubElement(attr_devicemodel,i)
+            it=obj_devicemodel.devicemodel_dict_beg[i]
+            end=obj_devicemodel.devicemodel_dict_end[i]
+            while it<=end:
+                ET.SubElement(attr_var,"field").text=str(obj_devicemodel.entry_var[it].text())
+                it=it+1
+        #####################################    
+             
+        """keys=obj_devicemodel.devicemodel_dict.keys()
+        n=len(keys)
+        for i in range(n):
+            thisKey=keys[i]
+            nextKey=keys[(i+1)%n]
+            nextValue=obj_devicemodel.devicemodel_dict[nextKey]
+            attr_var=ET.SubElement(attr_devicemodel,thisKey)
+            it=obj_devicemodel.devicemodel_dict[thisKey]
+            while it<=nextValue:
+                ET.SubElement(attr_var,"field").text=obj_devicemodel.entry_var[it]"""
+                
+        ###################################################################################################################   
+        
+        
+        tree=ET.ElementTree(attr_parent)
+        tree.write(fw)
+        
+                    
         self.obj_convert = Convert.Convert(self.obj_track.sourcelisttrack["ITEMS"],
                                            self.obj_track.source_entry_var["ITEMS"],
                                            schematicInfo)
@@ -139,8 +389,7 @@ class MainWindow(QtGui.QWidget):
             #Adding Device Library to SchematicInfo
             schematicInfo = self.obj_convert.addDeviceLibrary(schematicInfo,kicadFile)
             
-            
-            
+              
             analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
                                                                self.obj_track.DC_entry_var["ITEMS"],
                                                                self.obj_track.TRAN_entry_var["ITEMS"],

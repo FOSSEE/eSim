@@ -26,12 +26,10 @@ from projManagement.Kicad import Kicad
 from frontEnd import ProjectExplorer
 import Workspace
 import DockArea
-
 import os
 import sys 
 import time
-import shutil
-
+from PyQt4.Qt import QSize
 
 class Application(QtGui.QMainWindow):
     """
@@ -106,6 +104,9 @@ class Application(QtGui.QMainWindow):
         
         self.pcb = QtGui.QAction(QtGui.QIcon('../images/pcb.png'),'<b>PCB Layout</b>',self)
         self.pcb.triggered.connect(self.obj_kicad.openLayout)
+              
+        self.model = QtGui.QAction(QtGui.QIcon('../images/model.png'),'<b>Model Editor</b>',self)
+        self.model.triggered.connect(self.open_modelEditor) 
         
         #Adding Action Widget to tool bar   
         self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
@@ -115,7 +116,10 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.ngspice)
         self.lefttoolbar.addAction(self.footprint)
         self.lefttoolbar.addAction(self.pcb)
+        self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
+        self.lefttoolbar.setIconSize(QSize(40,40))
+     
      
     def new_project(self):
         """
@@ -156,29 +160,16 @@ class Application(QtGui.QMainWindow):
         if self.projDir != None:
             self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
             time.sleep(2)  #Need permanent solution 
+            #Calling Python Plotting
+                
             try:
-                #Moving plot_data_i.txt and plot_data_v.txt to project directory
-                shutil.copy2("plot_data_i.txt", self.projDir)
-                shutil.copy2("plot_data_v.txt", self.projDir)
-                #Deleting this file from current directory
-                os.remove("plot_data_i.txt")
-                os.remove("plot_data_v.txt")
-                #Calling Python Plotting
-                try:
-                    self.obj_Mainview.obj_dockarea.plottingEditor()
-                except Exception as e:
-                    self.msg = QtGui.QErrorMessage(None)
-                    self.msg.showMessage('Error while opening python plotting.')
-                    print "Exception:",str(e)
-                    self.msg.setWindowTitle("Error Message")
-                    
+                self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
                 self.msg = QtGui.QErrorMessage(None)
-                self.msg.showMessage('Unable to copy plot data file to project directory.')
+                self.msg.showMessage('Error while opening python plotting Editor.')
                 print "Exception:",str(e)
                 self.msg.setWindowTitle("Error Message")
-            
-            
+                        
         else:
             self.msg = QtGui.QErrorMessage()
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
@@ -205,6 +196,14 @@ class Application(QtGui.QMainWindow):
         print "Current Project : ",self.obj_appconfig.current_project  
         #self.obj_Mainview.obj_dockarea.plottingEditor()
     
+        
+    def open_modelEditor(self):
+        print "model editor is called"
+        self.obj_Mainview.obj_dockarea.modelEditor()
+        
+    def testing(self):
+        print "Success hit kicad button"
+        
 
 class MainView(QtGui.QWidget):
     """
@@ -224,7 +223,13 @@ class MainView(QtGui.QWidget):
         
         #Area to be included in MainView
         self.noteArea = QtGui.QTextEdit()
-        self.obj_dockarea = DockArea.DockArea() 
+        #CSS
+        
+        self.noteArea.setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; } \
+        ")
+        
+        self.obj_dockarea = DockArea.DockArea()
         self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()
                
         #Adding content to vertical middle Split. 

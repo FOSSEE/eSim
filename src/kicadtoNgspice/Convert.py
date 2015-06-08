@@ -2,7 +2,7 @@ import os
 import sys
 import shutil
 import TrackWidget
-
+from xml.etree import ElementTree as ET
 
 class Convert:
     """
@@ -176,7 +176,7 @@ class Convert:
         if self.value == '':
             return 0
         else:
-            pass
+            return self.value
     
     
     def addModelParameter(self,schematicInfo):
@@ -309,7 +309,8 @@ class Convert:
                         libname = tempStr[0]
                         dimension = tempStr[1]
                         #Replace last word with library name
-                        words[-1] = libname.split('.')[0]
+                        #words[-1] = libname.split('.')[0]
+                        words[-1] = self.getRefrenceName(libname,libpath)
                         #Appending Dimension of MOSFET
                         words.append(dimension)
                         deviceLine[index] = words                    
@@ -320,7 +321,8 @@ class Convert:
                         shutil.copy2(src, dst)
                     else:
                         #Replace last word with library name
-                        words[-1] = libname.split('.')[0]
+                        #words[-1] = libname.split('.')[0]
+                        words[-1] = self.getRefrenceName(libname,libpath)
                         deviceLine[index] = words                    
                         includeLine.append(".include "+libname)
                         
@@ -342,10 +344,23 @@ class Convert:
             #Adding .include line to Schematic Info at the start of line
             for item in list(set(includeLine)):
                 schematicInfo.insert(0,item)
-        
-            
-                
+              
             
                 
         return schematicInfo
+    
+    def getRefrenceName(self,libname,libpath):
+        libname = libname.replace('.lib','.xml')
+        library = os.path.join(libpath,libname)
+                
+        #Extracting Value from XML
+        libtree = ET.parse(library)
+        for child in libtree.iter():
+            if child.tag == 'ref_model':
+                retVal = child.text
+            else:
+                pass
+        return retVal
+        
+        
         

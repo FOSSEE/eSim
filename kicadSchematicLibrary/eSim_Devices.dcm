@@ -1,0 +1,37 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP D
+D Diode
+$ENDCMP
+#
+$CMP MOS_N
+D Transistor N-MOSFET, collector connected to mounting plane (general)
+K nmos n-mos n-mosfet transistor
+$ENDCMP
+#
+$CMP MOS_P
+D Transistor P-MOSFET, collector connected to mounting plane (general)
+K pmos p-mos p-mosfet transistor
+$ENDCMP
+#
+$CMP NJF
+D Transistor N-JFET (general)
+K njfet n-jfet transistor
+$ENDCMP
+#
+$CMP NPN
+D Transistor NPN (general)
+K npn transistor
+$ENDCMP
+#
+$CMP PJF
+D Transistor P-JFET (general)
+K pjfet p-jfet transistor
+$ENDCMP
+#
+$CMP PNP
+D Transistor PNP (general)
+K pnp transistor
+$ENDCMP
+#
+#End Doc Library
