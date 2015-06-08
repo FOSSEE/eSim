@@ -160,7 +160,7 @@ class ModelEditorclass(QtGui.QWidget):
         self.types.addItem('Magnetic Core')
         filetype = str(self.types.currentText())
         self.types.activated[str].connect(self.setfiletype)
-    '''
+        '''
     def setfiletype(self,text):
         self.filetype = str(text)
         self.openfiletype(self.filetype)
@@ -230,10 +230,10 @@ class ModelEditorclass(QtGui.QWidget):
         self.igbt.setDisabled(True)
         self.bjt.setDisabled(True)
         self.magnetic.setDisabled(True)
-        self.editfile=str(QtGui.QFileDialog.getOpenFileName(self))
+        self.editfile=str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
         self.createtable(self.editfile)
         
-    '''Creates the model table by parsinf th .xml file '''
+    '''Creates the model table by parsing th .xml file '''
     def createtable(self, modelfile):
         self.savebtn.setDisabled(False)
         self.addbtn.setHidden(False)
@@ -246,7 +246,14 @@ class ModelEditorclass(QtGui.QWidget):
         self.modeltable.resizeRowsToContents()
         self.modeltable.resize(200,200)
         self.grid.addWidget(self.modeltable, 3,2,8,2)
-        
+        filepath, filename = os.path.split(self.modelfile)
+        print"file selected is",filename
+        print filepath
+        base, ext= os.path.splitext(filename)      
+        print base
+        print ext
+        self.modelfile = os.path.join(filepath, base+'.xml')
+        print"modelfile",self.modelfile
         self.tree = ET.parse(self.modelfile)
         self.root= self.tree.getroot()
         for elem in self.tree.iter(tag='ref_model'):
@@ -433,7 +440,7 @@ class ModelEditorclass(QtGui.QWidget):
         self.modeltable.setHidden(True)
         model_dict = {}
         stringof = []
-        self.libfile = str(QtGui.QFileDialog.getOpenFileName(self))
+        self.libfile = str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
         libopen = open(self.libfile)
         filedata = libopen.read().split()
         modelcount=0
@@ -494,12 +501,6 @@ class ModelEditorclass(QtGui.QWidget):
                 pass
         listoflist =[]
         listofname2 = [el.replace('\t', '').replace('\n', ' ').replace('+', '').replace(')', '').replace('=', '') for el in listofname]
-        '''
-        listofname = [el.replace('\n', ' ') for el in listofname2]
-        listofname2 = [el.replace('+', '') for el in listofname]
-        listofname = [el.replace(')', '') for el in listofname2]
-        listofname2 = [el.replace('=', '') for el in listofname]
-        '''
         listofname=[]
         for item in listofname2:
             listofname.append(item.rstrip().lstrip())

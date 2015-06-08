@@ -31,6 +31,7 @@ import sys
 import time
 from PyQt4.Qt import QSize
 
+
 class Application(QtGui.QMainWindow):
     """
     Its our main window of application
