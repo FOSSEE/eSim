@@ -75,6 +75,7 @@ class ProjectExplorer(QtGui.QWidget):
         self.indexItem =self.treewidget.currentIndex()
         filename= self.indexItem.data().toString()
         self.filePath= self.indexItem.sibling(self.indexItem.row(), 1).data().toString()
+        self.obj_appconfig.print_info('The current project is ' + self.filePath)
         
         self.textwindow = QtGui.QWidget()
         self.textwindow.setMinimumSize(600, 500)

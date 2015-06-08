@@ -37,6 +37,7 @@ class Appconfig(QtGui.QWidget):
         workspace_text = '''eSim stores your project in a folder called a eSim-Workspace. You can choose a different workspace folder to use for this session.'''
         procThread_list = []
         dictPath = os.path.join(os.path.expanduser("~"), ".projectExplorer.txt")
+        noteArea = {}
         try:
             project_explorer = json.load(open(dictPath))
         except:
@@ -56,11 +57,19 @@ class Appconfig(QtGui.QWidget):
             self._app_heigth = 400
             
          
-             
+        def print_info(self, str):
             
+            self.noteArea['Note'].append('[INFO]: ' + str)
+            
+            
+        def print_warning(self, str):
+            
+            self.noteArea['Note'].append('[WARNING]: ' + str)
            
             
-         
+        def print_error(self, str):
+             
+            self.noteArea['Note'].append('[ERROR]: ' + str)
             
             
             

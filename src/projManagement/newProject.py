@@ -76,6 +76,9 @@ class NewProjectInfo(QtGui.QWidget):
             newprojlist.append(self.projName+'.proj')
             self.obj_appconfig.project_explorer[self.projDir] = newprojlist
             
+            self.obj_appconfig.print_info('New project created : ' + self.projName)
+            self.obj_appconfig.print_info('Current project is : ' + self.projDir)
+            
             json.dump(self.obj_appconfig.project_explorer, open(self.obj_appconfig.dictPath,'w'))
             return self.projDir, newprojlist
             

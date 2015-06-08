@@ -1,6 +1,7 @@
 from PyQt4 import QtGui, QtCore
 from PyQt4.Qt import QTableWidgetItem
 import xml.etree.ElementTree as ET
+from configuration.Appconfig import Appconfig
 import os
 
 
@@ -8,6 +9,7 @@ class ModelEditorclass(QtGui.QWidget):
     def __init__(self):
         QtGui.QWidget.__init__(self)
         self.savepathtest = '../deviceModelLibrary'
+        self.obj_appconfig = Appconfig()
         self.newflag=0
         self.layout = QtGui.QVBoxLayout()
         self.splitter= QtGui.QSplitter()
@@ -330,6 +332,7 @@ class ModelEditorclass(QtGui.QWidget):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
+            self.obj_appconfig.print_info('New ' + self.modelname + ' ' + self.model_name + ' library created at ' + os.getcwd())
         if self.mos.isChecked():
             savepath = os.path.join(self.savepath, 'MOS')  
             os.chdir(savepath)
@@ -339,6 +342,7 @@ class ModelEditorclass(QtGui.QWidget):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
+            self.obj_appconfig.print_info('New ' + self.modelname + ' ' + self.model_name + ' library created at ' + os.getcwd())
         if self.jfet.isChecked():
             savepath = os.path.join(self.savepath, 'JFET')  
             os.chdir(savepath)
@@ -348,6 +352,7 @@ class ModelEditorclass(QtGui.QWidget):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
+            self.obj_appconfig.print_info('New ' + self.modelname + ' ' + self.model_name + ' library created at ' + os.getcwd())
         if self.igbt.isChecked():
             savepath = os.path.join(self.savepath, 'IGBT')  
             os.chdir(savepath)
@@ -357,6 +362,7 @@ class ModelEditorclass(QtGui.QWidget):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
+            self.obj_appconfig.print_info('New ' + self.modelname + ' ' + self.model_name + ' library created at ' + os.getcwd())
         if self.magnetic.isChecked():
             savepath = os.path.join(self.savepath, 'Misc')  
             os.chdir(savepath)
@@ -366,6 +372,7 @@ class ModelEditorclass(QtGui.QWidget):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
+            self.obj_appconfig.print_info('New ' + self.modelname + ' ' + self.model_name + ' library created at ' + os.getcwd())
         if self.bjt.isChecked():
             savepath = os.path.join(self.savepath, 'Transistor')  
             os.chdir(savepath)
@@ -375,6 +382,7 @@ class ModelEditorclass(QtGui.QWidget):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
+            self.obj_appconfig.print_info('New ' + self.modelname + ' ' + self.model_name + ' library created at ' + os.getcwd())
         txtfile.close()
         os.chdir(defaultcwd)
         
@@ -408,6 +416,7 @@ class ModelEditorclass(QtGui.QWidget):
         for tags, text in self.modeldict.items():
             ET.SubElement(param, tags).text = text
         self.tree.write(editfile)
+        self.obj_appconfig.print_info('Updated library ' + libpath)
         
     def removeparameter(self):
         self.savebtn.setDisabled(False)

@@ -5,14 +5,18 @@ from decimal import Decimal
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
 from matplotlib.figure import Figure
+from configuration.Appconfig import Appconfig
 
 class plotWindow(QtGui.QMainWindow):
     def __init__(self,fpath,projectName):
         QtGui.QMainWindow.__init__(self)
         self.fpath = fpath#+".cir.out"
         self.projectName = projectName
+        self.obj_appconfig = Appconfig()
         print "Path : ",self.fpath
         print "Project Name : ",self.projectName
+        self.obj_appconfig.print_info('Ngspice simulation is called : ' + self.fpath)
+        self.obj_appconfig.print_info('PythonPlotting is called : ' + self.fpath)
         self.combo = []
         self.combo1 = []
         self.combo1_rev = []
@@ -377,6 +381,7 @@ class plotWindow(QtGui.QMainWindow):
 
 class DataExtraction:
     def __init__(self):
+        self.obj_appconfig = Appconfig()
         print "Initialization"
         self.data=[]     #consists of all the columns of data belonging to nodes and branches
         self.y=[]        #stores y-axis data
@@ -495,6 +500,7 @@ class DataExtraction:
 
         except Exception as e:
             print "Exception Message : ",str(e)
+            self.obj_appconfig.print_error('Exception Message :' + str(e))
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Unable to open plot data files.')
             self.msg.setWindowTitle("Error Message:openFile")
@@ -508,6 +514,7 @@ class DataExtraction:
             #print "NBILIST : ",self.NBIList
         except Exception as e:
             print "Exception Message : ",str(e)
+            self.obj_appconfig.print_error('Exception Message :' + str(e))
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Error in Analysis File.')
             self.msg.setWindowTitle("Error Message:openFile")
