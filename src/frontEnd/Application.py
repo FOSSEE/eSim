@@ -135,8 +135,11 @@ class Application(QtGui.QMainWindow):
             
         else:
             print "No project created"
-            
-   
+            self.obj_appconfig.print_info('No new project created')
+            try:
+                self.obj_appconfig.print_info('Current project is : ' + self.obj_appconfig.current_project["ProjectName"])
+            except:
+                pass
     def open_project(self):
         """
         This project call Open Project Info class
@@ -168,6 +171,7 @@ class Application(QtGui.QMainWindow):
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage('Error while opening python plotting Editor.')
                 print "Exception:",str(e)
+                self.obj_appconfig.print_error('Exception generated : ' + str(e))
                 self.msg.setWindowTitle("Error Message")
                         
         else:
@@ -193,12 +197,15 @@ class Application(QtGui.QMainWindow):
         
     def help_project(self):
         print "Help is called"
-        print "Current Project : ",self.obj_appconfig.current_project  
+        self.obj_appconfig.print_info('Help is called')
+        print "Current Project : ",self.obj_appconfig.current_project
+        #self.obj_appconfig.print_info('Current Project : ' + self.obj_appconfig.current_project['ProjectName'])  
         #self.obj_Mainview.obj_dockarea.plottingEditor()
     
         
     def open_modelEditor(self):
         print "model editor is called"
+        self.obj_appconfig.print_info('model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
         
     def testing(self):
@@ -213,6 +220,8 @@ class MainView(QtGui.QWidget):
         # call init method of superclass
         QtGui.QWidget.__init__(self, *args)
         
+        self.obj_appconfig = Appconfig()
+        
         self.leftSplit = QtGui.QSplitter()
         self.middleSplit = QtGui.QSplitter()
         
@@ -223,6 +232,10 @@ class MainView(QtGui.QWidget):
         
         #Area to be included in MainView
         self.noteArea = QtGui.QTextEdit()
+        self.obj_appconfig.noteArea['Note'] = self.noteArea
+        self.obj_appconfig.noteArea['Note'].append('        eSim Started......')
+        self.obj_appconfig.noteArea['Note'].append('Project Selected : None')
+        self.obj_appconfig.noteArea['Note'].append('\n')
         #CSS
         
         self.noteArea.setStyleSheet(" \

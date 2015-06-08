@@ -75,12 +75,14 @@ class Workspace(QtGui.QWidget):
         
            
     def defaultWorkspace(self):
-        print "Default location selected" 
+        print "Default location selected"
+        self.obj_appconfig.print_info('Default workspace selected : ' + self.obj_appconfig.default_workspace["workspace"]) 
         self.close()
                
     def createWorkspace(self):
         print "Create workspace is called"
         self.create_workspace = str(self.workspace_loc.text())
+        self.obj_appconfig.print_info('Workspace : ' + self.create_workspace)
         #Checking if Workspace already exist or not       
         if  os.path.isdir(self.create_workspace):
             print "Already present"

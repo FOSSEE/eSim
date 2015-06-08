@@ -36,7 +36,11 @@ class Kicad:
         This function create command to open Kicad schematic
         """
         print "Kicad Schematic is called"
-        self.projDir = self.obj_appconfig.current_project["ProjectName"]       
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        try:
+            self.obj_appconfig.print_info('Kicad Schematic is called for project ' + self.projDir)
+        except:
+            pass              
         #Validating if current project is available or not
         
         if self.obj_validation.validateKicad(self.projDir):
@@ -52,6 +56,7 @@ class Kicad:
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
+            self.obj_appconfig.print_warning('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")
         
         
@@ -61,7 +66,11 @@ class Kicad:
         This function create command to open Footprint editor 
         """
         print "Kicad Foot print Editor called"
-        self.projDir = self.obj_appconfig.current_project["ProjectName"]       
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        try: 
+            self.obj_appconfig.print_info('Kicad Footprint Editor is called for project : ' + self.projDir)      
+        except:
+            pass
         #Validating if current project is available or not
         
         if self.obj_validation.validateKicad(self.projDir):
@@ -77,6 +86,7 @@ class Kicad:
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
+            self.obj_appconfig.print_warning('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")
         
     def openLayout(self):
@@ -84,7 +94,11 @@ class Kicad:
         This function create command to open Layout editor
         """
         print "Kicad Layout is called"
-        self.projDir = self.obj_appconfig.current_project["ProjectName"]       
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        try:
+            self.obj_appconfig.print_info('PCB Layout is called for project : ' + self.projDir)
+        except:
+            pass       
         #Validating if current project is available or not
         if self.obj_validation.validateKicad(self.projDir):
             print "calling Kicad schematic ",self.projDir
@@ -99,6 +113,7 @@ class Kicad:
         else:
             self.msg = QtGui.QErrorMessage(None)   
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
+            self.obj_appconfig.print_warning('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")     
             
     def openKicadToNgspice(self):
@@ -106,7 +121,13 @@ class Kicad:
         This function create command to call kicad to Ngspice converter.
         """
         print "Open Kicad to Ngspice Conversion"
+        
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        try:
+            self.obj_appconfig.print_info('Kicad to Ngspice Conversion is called')
+            self.obj_appconfig.print_info('Current Project is ' + self.projDir)
+        except:
+            pass
         #Validating if current project is available or not
         if self.obj_validation.validateKicad(self.projDir):
             #print "Project is present"
@@ -125,11 +146,13 @@ class Kicad:
             else:
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage('The project does not contain any Kicad netlist file for conversion.')
+                self.obj_appconfig.print_error('The project does not contain any Kicad netlist file for conversion.')
                 self.msg.setWindowTitle("Error Message")  
            
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
+            self.obj_appconfig.print_warning('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")  
            
     
