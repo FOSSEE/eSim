@@ -322,11 +322,11 @@ class Analysis(QtGui.QWidget):
         self.parameter_cnt= self.parameter_cnt+1
         
         self.check=QtGui.QCheckBox('Operating Point Analysis',self)
-        if(self.check.isChecked()):
-            self.flagcheck = 1
-            
-        else:
-            self.flagcheck= 2
+        self.track_obj.op_check.append(0)
+        #QtCore.QObject.connect(check,SIGNAL("stateChanged()"),check,SLOT("checkedSlot"))
+        self.check.stateChanged.connect(self.setflag)
+        #self.flagcheck = 1
+        #self.flagcheck= 2
         self.dcgrid.addWidget(self.check,5,1,5,2)
         self.track_obj.DC_entry_var["ITEMS"]=self.dc_entry_var
         self.track_obj.DC_Parameter["ITEMS"]=self.dc_parameter
@@ -365,7 +365,13 @@ class Analysis(QtGui.QWidget):
         
     def stop_changecombo(self,text):
         self.dc_parameter[2]=str(text)
-    
+        
+    def setflag(self):
+        if self.check.isChecked():
+            self.track_obj.op_check.append(1)
+        else:
+            self.track_obj.op_check.append(0)
+           
     def createTRANgroup(self):
         kicadFile = sys.argv[1]
         (projpath,filename)=os.path.split(kicadFile)

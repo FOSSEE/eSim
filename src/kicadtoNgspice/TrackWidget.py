@@ -15,7 +15,7 @@ class TrackWidget:
     TRAN_Parameter = {"ITEMS":"None"}
     set_CheckBox = {"ITEMS":"None"}
     AC_type = {"ITEMS":"None"}
-    
+    op_check = []
     #Track widget for Model detail
     modelTrack = []
     model_entry_var = {}

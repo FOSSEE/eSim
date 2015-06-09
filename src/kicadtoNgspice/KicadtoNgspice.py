@@ -397,7 +397,8 @@ class MainWindow(QtGui.QWidget):
                                                                self.obj_track.AC_Parameter["ITEMS"],
                                                                self.obj_track.DC_Parameter["ITEMS"],
                                                                self.obj_track.TRAN_Parameter["ITEMS"],
-                                                               self.obj_track.AC_type["ITEMS"])
+                                                               self.obj_track.AC_type["ITEMS"],
+                                                               self.obj_track.op_check)
             #print "SchematicInfo after adding Model Details",schematicInfo
             
             #Calling netlist file generation function
