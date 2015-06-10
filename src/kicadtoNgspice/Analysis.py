@@ -1,6 +1,5 @@
 
-from PyQt4 import QtGui,QtCore
-from PyQt4.Qt import QRect
+from PyQt4 import QtGui
 import TrackWidget
 import os
 import sys

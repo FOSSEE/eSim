@@ -1,6 +1,6 @@
 <library>
 <model_name>PNP</model_name>
-<refrence>Q2N2907A</refrence>
+<ref_model>Q2N2907A</ref_model>
 <param>
 <Is>650.6E-18</Is> 
 <Xti>3 </Xti>

@@ -320,7 +320,11 @@ class Convert:
                         deviceLine[index] = words                    
                         includeLine.append(".include "+libname)
                         
-                        src = completeLibPath.split(':')[0]
+                        #src = completeLibPath.split(':')[0] # <----- Not working in Windows
+                        
+                        (src_path,src_lib) = os.path.split(completeLibPath)
+                        src_lib = src_lib.split(':')[0]
+                        src = os.path.join(src_path,src_lib)
                         dst = projpath
                         shutil.copy2(src, dst)
                     else:
