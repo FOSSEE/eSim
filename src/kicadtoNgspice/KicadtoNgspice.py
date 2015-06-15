@@ -133,8 +133,7 @@ class MainWindow(QtGui.QWidget):
         global analysisoutput
         kicadFile = sys.argv[1]
         (projpath,filename)=os.path.split(kicadFile)
-        project_name=projpath.split("/")
-        project_name=project_name[len(project_name)-1]
+        project_name=os.path.basename(projpath)
         print "PROJ PATH---",projpath
         
         

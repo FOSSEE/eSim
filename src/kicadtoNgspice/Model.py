@@ -18,8 +18,7 @@ class Model(QtGui.QWidget):
         
         kicadFile = sys.argv[1]
         (projpath,filename)=os.path.split(kicadFile)
-        project_name=projpath.split("/")
-        project_name=project_name[len(project_name)-1]
+        project_name=os.path.basename(projpath)
         #print "PROJECT NAME---------",project_name
         check=1
         try:
