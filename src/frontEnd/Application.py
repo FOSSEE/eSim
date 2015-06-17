@@ -24,8 +24,8 @@ from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from frontEnd import ProjectExplorer
-import Workspace
-import DockArea
+from frontEnd import Workspace
+from frontEnd import DockArea
 import os
 import sys 
 import time
@@ -67,20 +67,20 @@ class Application(QtGui.QMainWindow):
         This function initialize Tool Bar
         """
         #Top Tool bar
-        self.newproj = QtGui.QAction(QtGui.QIcon('../images/newProject.png'),'<b>New Project</b>',self)
+        self.newproj = QtGui.QAction(QtGui.QIcon('../../images/newProject.png'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
         #self.newproj.connect(self.newproj,QtCore.SIGNAL('triggered()'),self,QtCore.SLOT(self.new_project()))
                
-        self.openproj = QtGui.QAction(QtGui.QIcon('../images/openProject.png'),'<b>Open Project</b>',self)
+        self.openproj = QtGui.QAction(QtGui.QIcon('../../images/openProject.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
         
-        self.exitproj = QtGui.QAction(QtGui.QIcon('../images/closeProject.png'),'<b>Exit</b>',self)
+        self.exitproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Exit</b>',self)
         self.exitproj.setShortcut('Ctrl+X')
         self.exitproj.triggered.connect(self.exit_project)
         
-        self.helpfile = QtGui.QAction(QtGui.QIcon('../images/helpProject.png'),'<b>Help</b>',self)
+        self.helpfile = QtGui.QAction(QtGui.QIcon('../../images/helpProject.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
         
@@ -91,22 +91,22 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.helpfile)
                 
         #Left Tool bar Action Widget 
-        self.kicad = QtGui.QAction(QtGui.QIcon('../images/kicad.png'),'<b>Open Schematic</b>',self)
+        self.kicad = QtGui.QAction(QtGui.QIcon('../../images/kicad.png'),'<b>Open Schematic</b>',self)
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
         
-        self.conversion = QtGui.QAction(QtGui.QIcon('../images/ki-ng.png'),'<b>Convert Kicad to Ngspice</b>',self)
+        self.conversion = QtGui.QAction(QtGui.QIcon('../../images/ki-ng.png'),'<b>Convert Kicad to Ngspice</b>',self)
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
                
-        self.ngspice = QtGui.QAction(QtGui.QIcon('../images/ngspice.png'), '<b>Simulation</b>', self)
+        self.ngspice = QtGui.QAction(QtGui.QIcon('../../images/ngspice.png'), '<b>Simulation</b>', self)
         self.ngspice.triggered.connect(self.open_ngspice)
         
-        self.footprint = QtGui.QAction(QtGui.QIcon('../images/footprint.png'),'<b>Footprint Editor</b>',self)
+        self.footprint = QtGui.QAction(QtGui.QIcon('../../images/footprint.png'),'<b>Footprint Editor</b>',self)
         self.footprint.triggered.connect(self.obj_kicad.openFootprint)
         
-        self.pcb = QtGui.QAction(QtGui.QIcon('../images/pcb.png'),'<b>PCB Layout</b>',self)
+        self.pcb = QtGui.QAction(QtGui.QIcon('../../images/pcb.png'),'<b>PCB Layout</b>',self)
         self.pcb.triggered.connect(self.obj_kicad.openLayout)
               
-        self.model = QtGui.QAction(QtGui.QIcon('../images/model.png'),'<b>Model Editor</b>',self)
+        self.model = QtGui.QAction(QtGui.QIcon('../../images/model.png'),'<b>Model Editor</b>',self)
         self.model.triggered.connect(self.open_modelEditor) 
         
         #Adding Action Widget to tool bar   
