@@ -84,6 +84,7 @@ class ModelEditorclass(QtGui.QWidget):
     def opennew(self):
         self.addbtn.setHidden(True)
         try:
+            self.removebtn.setHidden(True)
             self.modeltable.setHidden(True)
         except:
             pass
@@ -230,8 +231,12 @@ class ModelEditorclass(QtGui.QWidget):
         self.igbt.setDisabled(True)
         self.bjt.setDisabled(True)
         self.magnetic.setDisabled(True)
-        self.editfile=str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
-        self.createtable(self.editfile)
+        try:
+            self.editfile=str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
+            self.createtable(self.editfile)
+        except:
+            print"no file selected"
+            pass
         
     '''Creates the model table by parsing th .xml file '''
     def createtable(self, modelfile):
