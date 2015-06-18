@@ -1,6 +1,7 @@
 from PyQt4 import QtGui,QtCore
 from configuration.Appconfig import Appconfig
 import platform
+import os
 
 class NgspiceWidget(QtGui.QWidget):
     """
@@ -21,7 +22,11 @@ class NgspiceWidget(QtGui.QWidget):
             self.process.start('xterm', self.args)
                      
         elif platform.system() == 'Windows':
+            tempdir= os.getcwd()
+            projPath = self.obj_appconfig.current_project["ProjectName"]
+            os.chdir(projPath)
             self.command = "ngspice "+command
             self.process.start(self.command)
+            os.chdir(tempdir)
     
 
