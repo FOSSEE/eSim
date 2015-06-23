@@ -348,9 +348,10 @@ class MainWindow(QtGui.QWidget):
         if check==1:
             for child in attr_parent:
                 if child.tag=="devicemodel":
+                    del child[:]
                     attr_devicemodel=child
-        print "Device model dict",obj_devicemodel.devicemodel_dict_beg
-        print "Device model dict end",obj_devicemodel.devicemodel_dict_end
+        #print "Device model dict",obj_devicemodel.devicemodel_dict_beg
+        #print "Device model dict end",obj_devicemodel.devicemodel_dict_end
         ##########################              
         for i in obj_devicemodel.devicemodel_dict_beg:
             attr_var=ET.SubElement(attr_devicemodel,i)
@@ -374,6 +375,23 @@ class MainWindow(QtGui.QWidget):
                 
         ###################################################################################################################   
         
+        if check==0:
+            attr_subcircuit=ET.SubElement(attr_parent,"subcircuit")
+        if check==1:
+            for child in attr_parent:
+                if child.tag=="subcircuit":
+                    del child[:]
+                    attr_subcircuit=child
+        ##########################              
+        for i in obj_subcircuitTab.subcircuit_dict_beg:
+            attr_var=ET.SubElement(attr_subcircuit,i)
+            it=obj_subcircuitTab.subcircuit_dict_beg[i]
+            end=obj_subcircuitTab.subcircuit_dict_end[i]
+
+            while it<=end:
+                ET.SubElement(attr_var,"field").text=str(obj_subcircuitTab.entry_var[it].text())
+                it=it+1
+
         
         tree=ET.ElementTree(attr_parent)
         tree.write(fw)

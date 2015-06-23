@@ -2,6 +2,10 @@ from PyQt4 import QtGui
 
 import TrackWidget
 from projManagement import Validation
+import os
+import sys
+from xml.etree import ElementTree as ET
+
 
 
 class SubcircuitTab(QtGui.QWidget):
@@ -11,6 +15,23 @@ class SubcircuitTab(QtGui.QWidget):
     """
     
     def __init__(self,schematicInfo):
+
+        kicadFile = sys.argv[1]
+        (projpath,filename)=os.path.split(kicadFile)
+        project_name=os.path.basename(projpath)
+        print "PROJECT NAME---------",project_name
+        check=1
+        try:
+            f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
+            tree=ET.parse(f)
+            parent_root=tree.getroot()
+            for child in parent_root:
+                if child.tag=="subcircuit":
+                    root=child
+        except:
+            check=0
+            print "Empty XML"
+
         QtGui.QWidget.__init__(self)
                      
         #Creating track widget object
@@ -22,8 +43,9 @@ class SubcircuitTab(QtGui.QWidget):
         self.row = 0
         self.count = 1  #Entry count
         self.entry_var = {}
-        
-        #List to hold information about device
+        self.subcircuit_dict_beg={}   
+        self.subcircuit_dict_end={}  
+        #List to hold information about subcircuit
         self.subDetail = {}
         
         #Stores the number of ports in each subcircuit
@@ -38,11 +60,31 @@ class SubcircuitTab(QtGui.QWidget):
             if eachline[0] == 'x':
                 print "Words",words[0]
                 self.obj_trac.subcircuitList.append(words)
+                self.subcircuit_dict_beg[words[0]]=self.count
                 subbox=QtGui.QGroupBox()
                 subgrid=QtGui.QGridLayout()
                 subbox.setTitle("Add subcircuit for "+words[len(words)-1])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
+
+                global path_name
+                try:
+                    print "ROOT ----===-=-",root
+                    for child in root:
+                        if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
+                            print "Subcircuit MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                            try:
+                                if os.path.exists(child[0].text):
+                                    self.entry_var[self.count].setText(child[0].text)
+                                    path_name=child[0].text
+                                else:
+                                    self.entry_var[self.count].setText("")
+                            except:
+                                print "ERROR WHEN SET TEXT"
+                except:
+                    print "ERROR BEFORE Subcircuit"
+
+
                 subgrid.addWidget(self.entry_var[self.count],self.row,1)
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
@@ -62,10 +104,17 @@ class SubcircuitTab(QtGui.QWidget):
                 
                 self.grid.addWidget(subbox)
                 
-                #Adding Device Details
+                #Adding Subcircuit Details
                 self.subDetail[self.count] = words[0]
-                                
+                
                 #Increment row and widget count
+
+                if self.entry_var[self.count].text()=="":
+                    pass
+                else:
+                    self.trackSubcircuitWithoutButton(self.count,path_name)
+
+                self.subcircuit_dict_end[words[0]]=self.count
                 self.row = self.row+1
                 self.count = self.count+1
                    
@@ -74,7 +123,7 @@ class SubcircuitTab(QtGui.QWidget):
                   
     def trackSubcircuit(self):
         """
-        This function is use to keep track of all Device Model widget
+        This function is use to keep track of all Subcircuit widget
         """
         print "Calling Track Subcircuit function"
         sending_btn = self.sender()
@@ -82,6 +131,31 @@ class SubcircuitTab(QtGui.QWidget):
         self.widgetObjCount = int(sending_btn.objectName())
         
         self.subfile = str(QtGui.QFileDialog.getExistingDirectory(self,"Open Subcircuit","../SubcircuitLibrary"))
+        self.reply = self.obj_validation.validateSub(self.subfile,self.numPorts[self.widgetObjCount - 1])
+        if self.reply == "True":
+            #Setting Library to Text Edit Line
+            self.entry_var[self.widgetObjCount].setText(self.subfile)
+            self.subName = self.subDetail[self.widgetObjCount]
+            
+            #Storing to track it during conversion
+            
+            self.obj_trac.subcircuitTrack[self.subName] = self.subfile
+        elif self.reply == "PORT":
+            self.msg = QtGui.QErrorMessage(self)
+            self.msg.showMessage("Please select a Subcircuit with correct number of ports.")
+            self.msg.setWindowTitle("Error Message")
+            self.msg.show()
+        elif self.reply == "DIREC":
+            self.msg = QtGui.QErrorMessage(self)
+            self.msg.showMessage("Please select a valid Subcircuit directory (Containing '.sub' file).")
+            self.msg.setWindowTitle("Error Message")
+            self.msg.show()
+
+    def trackSubcircuitWithoutButton(self,iter_value,path_value):
+        
+        self.widgetObjCount = iter_value
+        
+        self.subfile = path_value
         self.reply = self.obj_validation.validateSub(self.subfile,self.numPorts[self.widgetObjCount - 1])
         if self.reply == "True":
             #Setting Library to Text Edit Line
