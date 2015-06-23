@@ -23,6 +23,7 @@ import Analysis
 import Source
 import Model
 import DeviceModel
+import SubcircuitTab
 import Convert
 import TrackWidget
 
@@ -107,8 +108,11 @@ class MainWindow(QtGui.QWidget):
         obj_devicemodel=DeviceModel.DeviceModel(schematicInfo)
         self.deviceModelTab.setWidget(obj_devicemodel)
         self.deviceModelTab.setWidgetResizable(True)
-        
-        
+        global obj_subcircuitTab
+        self.subcircuitTab = QtGui.QScrollArea()
+        obj_subcircuitTab = SubcircuitTab.SubcircuitTab(schematicInfo)
+        self.subcircuitTab.setWidget(obj_subcircuitTab)
+        self.subcircuitTab.setWidgetResizable(True)
 
         self.tabWidget = QtGui.QTabWidget()
         #self.tabWidget.TabShape(QtGui.QTabWidget.Rounded)
@@ -116,6 +120,7 @@ class MainWindow(QtGui.QWidget):
         self.tabWidget.addTab(self.sourceTab,"Source Details")
         self.tabWidget.addTab(self.modelTab,"NgSpice Model")
         self.tabWidget.addTab(self.deviceModelTab,"Device Modeling")
+        self.tabWidget.addTab(self.subcircuitTab,"Subcircuits")
         self.mainLayout = QtGui.QVBoxLayout()
         self.mainLayout.addWidget(self.tabWidget)
         #self.mainLayout.addStretch(1)
@@ -388,7 +393,9 @@ class MainWindow(QtGui.QWidget):
             #Adding Device Library to SchematicInfo
             schematicInfo = self.obj_convert.addDeviceLibrary(schematicInfo,kicadFile)
             
-              
+            #Adding Subcircuit Library to SchematicInfo
+            schematicInfo = self.obj_convert.addSubcircuit(schematicInfo, kicadFile)
+            
             analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
                                                                self.obj_track.DC_entry_var["ITEMS"],
                                                                self.obj_track.TRAN_entry_var["ITEMS"],
@@ -411,8 +418,12 @@ class MainWindow(QtGui.QWidget):
             print "There was error while converting kicad to ngspice"
             self.close()
             
-    
-      
+        # Generate .sub file from .cir.out file if it is a subcircuit
+        subPath = os.path.splitext(kicadFile)[0]
+            
+        if len(sys.argv)>2:
+            if sys.argv[2] == "sub":
+                self.createSubFile(subPath)
     
     def createNetlistFile(self,schematicInfo):
         print "Creating Final netlist"
@@ -508,7 +519,63 @@ class MainWindow(QtGui.QWidget):
         
         out.close()
         
-   
+    def createSubFile(self,subPath):
+        self.project = subPath
+        self.projName = os.path.basename(self.project)
+        if os.path.exists(self.project+".cir.out"):
+            try:
+                f = open(self.project+".cir.out")
+            except :
+                print("Error in opening circuit file.")
+        else:
+            print self.projName + ".cir.out does not exist. Please create a spice netlist."
+          
+        # Read the data from file
+        data=f.read()
+        # Close the file
+         
+        f.close()
+        newNetlist=[]
+        netlist=iter(data.splitlines())
+        for eachline in netlist:
+            eachline=eachline.strip()
+            if len(eachline)<1:
+                continue
+            words=eachline.split()
+            if eachline[2] == 'u':
+                if words[len(words)-1] == "port":
+                    subcktInfo = ".subckt "+self.projName+" "
+                    for i in range(2,len(words)-1):
+                        subcktInfo+=words[i]+" "
+                    continue
+            if words[0] == ".end" or words[0] == ".ac" or words[0] == ".dc" or words[0] == ".tran" or words[0] == '.disto' or words[0] == '.noise' or words[0] == '.op' or words[0] == '.pz' or words[0] == '.sens' or words[0] == '.tf':
+                continue
+            elif words[0] == ".control":
+                while words[0] != ".endc":
+                    eachline=netlist.next()
+                    eachline=eachline.strip()
+                    if len(eachline)<1:
+                        continue
+                    words=eachline.split()
+            else:
+                newNetlist.append(eachline)
+         
+        outfile=self.project+".sub"
+        out=open(outfile,"w")
+        out.writelines("* Subcircuit " + self.projName)
+        out.writelines('\n')
+        out.writelines(subcktInfo)
+        out.writelines('\n')
+         
+        for i in range(len(newNetlist),0,-1):
+            newNetlist.insert(i,'\n')
+         
+        out.writelines(newNetlist)
+        out.writelines('\n') 
+         
+        out.writelines('.ends ' + self.projName)
+        print "The subcircuit has been written in "+self.projName+".sub"
+
                    
             
 #Main Function

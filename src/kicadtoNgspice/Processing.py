@@ -174,116 +174,118 @@ class PrcocessNetlist:
                 print "Words",words
                 print "compName",compName
                 #Looking if model file is present
-                xmlfile = compType+".xml"   #XML Model File
-                count = 0 #Check if model of same name is present
-                modelPath = []
-                all_dir = [x[0] for x in os.walk(PrcocessNetlist.modelxmlDIR)]
-                for each_dir in all_dir:
-                    all_file = os.listdir(each_dir)
-                    if xmlfile in all_file:
-                        count += 1
-                        modelPath.append(os.path.join(each_dir,xmlfile))
-                      
-                if count > 1:
-                    multipleModelList.append(modelPath)
-                elif count == 0:
-                    unknownModelList.append(compType)
-                elif count == 1:
-                    try:
-                        print "Start Parsing :",modelPath  
-                        tree = ET.parse(modelPath[0])
-                        
-                        root = tree.getroot()
-                        #Getting number of nodes for model and title
-                        for child in tree.iter():
-                            if child.tag == 'node_number':
-                                num_of_nodes = int(child.text)
-                            elif child.tag == 'title':
-                                title = child.text+" "+compName
-                            elif child.tag == 'name':
-                                modelname = child.text
-                            elif child.tag == 'type':
-                                #Checking for Analog and Digital
-                                type = child.text
-                            elif child.tag == 'split':
-                                splitDetail = child.text
-                                
-                            
-                        for param in tree.findall('param'):
-                            for item in param:
-                                #print "Tags ",item.tag
-                                #print "Value",item.text
-                                if 'vector'in item.attrib:
-                                    print "Tag having vector attribute",item.tag,item.attrib['vector']
-                                    temp_count = 1
-                                    temp_list = []
-                                    for i in range(0,int(item.attrib['vector'])):
-                                        temp_list.append(item.text+" "+str(temp_count))
-                                        temp_count += 1
-                                    if 'default' in item.attrib:
-                                        paramDict[item.tag+":"+item.attrib['default']] = temp_list
-                                    else:
-                                        paramDict[item.tag] = item.text
-                                                                    
-                                else:
-                                    if 'default' in item.attrib:
-                                        paramDict[item.tag+":"+item.attrib['default']] = item.text
-                                    else:
-                                        paramDict[item.tag] = item.text
-                                
-                            
-                        print "Number of Nodes : ",num_of_nodes
-                        print "Title : ",title
-                        print "Parameters",paramDict
-                        #Creating line for adding model line in schematic
-                        if splitDetail == 'None':
-                            modelLine = "a"+str(k)+" "
-                            for i in range(1,num_of_nodes+1):
-                                modelLine += words[i]+" "
-                            modelLine += compName
-                            
-                        else:
-                            print "Split Details :",splitDetail
-                            modelLine = "a"+str(k)+" "
-                            vectorDetail = splitDetail.split(':')
-                            print "Vector Details",vectorDetail
-                            pos = 1 #Node position
-                            for item in vectorDetail:
-                                try:
-                                    if item.split("-")[1] == 'V':
-                                        print "Vector"
-                                        modelLine += "["
-                                        for i in range(0,int(item.split("-")[0])):
-                                            modelLine += words[pos]+" "
-                                            pos += 1
-                                        modelLine += "] "
-                                    elif item.split("-")[1] == 'NV':
-                                        print "Non Vector"  
-                                        for i in range(0,int(item.split("-")[0])):
-                                            modelLine += words[pos]+" "
-                                            pos += 1
-                                
-                                except:
-                                    print  "There is error while processing Vector Details"
-                                    sys.exit(2)
-                            modelLine += compName        
-                            
-                        print "Final Model Line :",modelLine
+                if compType != "port":
+                    xmlfile = compType+".xml"   #XML Model File
+                    count = 0 #Check if model of same name is present
+                    modelPath = []
+                    all_dir = [x[0] for x in os.walk(PrcocessNetlist.modelxmlDIR)]
+                    for each_dir in all_dir:
+                        all_file = os.listdir(each_dir)
+                        if xmlfile in all_file:
+                            count += 1
+                            modelPath.append(os.path.join(each_dir,xmlfile))
+                          
+                    if count > 1:
+                        multipleModelList.append(modelPath)
+                    elif count == 0:
+                        unknownModelList.append(compType)
+                    elif count == 1:
                         try:
-                            schematicInfo.append(modelLine)
-                            k=k+1
-                        except Exception as e:
-                            print "Error while appending ModelLine ",modelLine
-                            print "Exception Message : ",str(e)
-                        #Insert comment at remove line
-                        schematicInfo.insert(index,"* "+compline)
-                        comment = "* Schematic Name: "+compType+", NgSpice Name: "+modelname
-                        #Here instead of adding compType(use for XML), added modelName(Unique Model Name)
-                        modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
-                    except:
-                        print  "Unable to parse the model, Please check your your XML file"
-                        sys.exit(2)
-                        
+                            print "Start Parsing :",modelPath  
+                            tree = ET.parse(modelPath[0])
+                            
+                            root = tree.getroot()
+                            #Getting number of nodes for model and title
+                            for child in tree.iter():
+                                if child.tag == 'node_number':
+                                    num_of_nodes = int(child.text)
+                                elif child.tag == 'title':
+                                    title = child.text+" "+compName
+                                elif child.tag == 'name':
+                                    modelname = child.text
+                                elif child.tag == 'type':
+                                    #Checking for Analog and Digital
+                                    type = child.text
+                                elif child.tag == 'split':
+                                    splitDetail = child.text
+                                    
+                                
+                            for param in tree.findall('param'):
+                                for item in param:
+                                    #print "Tags ",item.tag
+                                    #print "Value",item.text
+                                    if 'vector'in item.attrib:
+                                        print "Tag having vector attribute",item.tag,item.attrib['vector']
+                                        temp_count = 1
+                                        temp_list = []
+                                        for i in range(0,int(item.attrib['vector'])):
+                                            temp_list.append(item.text+" "+str(temp_count))
+                                            temp_count += 1
+                                        if 'default' in item.attrib:
+                                            paramDict[item.tag+":"+item.attrib['default']] = temp_list
+                                        else:
+                                            paramDict[item.tag] = item.text
+                                                                        
+                                    else:
+                                        if 'default' in item.attrib:
+                                            paramDict[item.tag+":"+item.attrib['default']] = item.text
+                                        else:
+                                            paramDict[item.tag] = item.text
+                                    
+                                
+                            print "Number of Nodes : ",num_of_nodes
+                            print "Title : ",title
+                            print "Parameters",paramDict
+                            #Creating line for adding model line in schematic
+                            if splitDetail == 'None':
+                                modelLine = "a"+str(k)+" "
+                                for i in range(1,num_of_nodes+1):
+                                    modelLine += words[i]+" "
+                                modelLine += compName
+                                
+                            else:
+                                print "Split Details :",splitDetail
+                                modelLine = "a"+str(k)+" "
+                                vectorDetail = splitDetail.split(':')
+                                print "Vector Details",vectorDetail
+                                pos = 1 #Node position
+                                for item in vectorDetail:
+                                    try:
+                                        if item.split("-")[1] == 'V':
+                                            print "Vector"
+                                            modelLine += "["
+                                            for i in range(0,int(item.split("-")[0])):
+                                                modelLine += words[pos]+" "
+                                                pos += 1
+                                            modelLine += "] "
+                                        elif item.split("-")[1] == 'NV':
+                                            print "Non Vector"  
+                                            for i in range(0,int(item.split("-")[0])):
+                                                modelLine += words[pos]+" "
+                                                pos += 1
+                                    
+                                    except:
+                                        print  "There is error while processing Vector Details"
+                                        sys.exit(2)
+                                modelLine += compName        
+                                
+                            print "Final Model Line :",modelLine
+                            try:
+                                schematicInfo.append(modelLine)
+                                k=k+1
+                            except Exception as e:
+                                print "Error while appending ModelLine ",modelLine
+                                print "Exception Message : ",str(e)
+                            #Insert comment at remove line
+                            schematicInfo.insert(index,"* "+compline)
+                            comment = "* Schematic Name: "+compType+", NgSpice Name: "+modelname
+                            #Here instead of adding compType(use for XML), added modelName(Unique Model Name)
+                            modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
+                        except:
+                            print  "Unable to parse the model, Please check your your XML file"
+                            sys.exit(2)
+                else:
+                    schematicInfo.insert(index,"* "+compline)
                 #print "Count",count
                 #print "UnknownModelList",unknownModelList
                 #print "MultipleModelList",multipleModelList  

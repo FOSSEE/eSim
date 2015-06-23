@@ -1,0 +1,30 @@
+* eeschema netlist version 1.1 (spice format) creation date: monday 17 december 2012 10:57:49 am ist
+
+* u5  5 21 d_inverter
+* u6  1 4 5 21 21 8 10 d_srlatch
+e2  18 0 23 14 10000
+r8  9 2 1500
+q1  22 2 3 qnom
+r7  18 20 25
+r6  17 19 25
+e1  17 0 16 15 10000
+r4  16 15 2e6
+r5  23 14 2e6
+r3  23 22 5000
+r2  15 23 5000
+r1  13 15 5000
+a1 5 21 u5
+a2 1 4 5 21 21 8 10 u6
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u5 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_srlatch, NgSpice Name: d_srlatch
+.model u6 d_srlatch(ic=0 sr_load=1.0e-12 set_delay=1.0e-9 set_load=1.0e-12 sr_delay=1.0e-9 reset_load=1.0e-12 enable_delay=1.0e-9 reset_delay=1.0e-9 rise_delay=1.0e-9 fall_delay=1.0e-9 enable_load=1.0e-12 ) 
+.ac lin 0 0Hz 0Hz
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

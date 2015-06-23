@@ -109,6 +109,9 @@ class Application(QtGui.QMainWindow):
         self.model = QtGui.QAction(QtGui.QIcon('../../images/model.png'),'<b>Model Editor</b>',self)
         self.model.triggered.connect(self.open_modelEditor) 
         
+        self.subcircuit=QtGui.QAction(QtGui.QIcon('../../images/subckt.png'),'<b>Subcircuit</b>',self)
+        self.subcircuit.triggered.connect(self.open_subcircuit)
+        
         #Adding Action Widget to tool bar   
         self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
         self.addToolBar(QtCore.Qt.LeftToolBarArea, self.lefttoolbar)
@@ -118,6 +121,7 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.footprint)
         self.lefttoolbar.addAction(self.pcb)
         self.lefttoolbar.addAction(self.model)
+        self.lefttoolbar.addAction(self.subcircuit)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40,40))
      
@@ -179,6 +183,11 @@ class Application(QtGui.QMainWindow):
             self.msg = QtGui.QErrorMessage()
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")
+            
+    def open_subcircuit(self):
+        print "Subcircuit editor is called"
+        self.obj_appconfig.print_info('Subcircuit editor is called')
+        self.obj_Mainview.obj_dockarea.subcircuiteditor()
                     
         
     def exit_project(self):

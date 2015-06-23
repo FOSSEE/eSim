@@ -83,7 +83,31 @@ class Validation:
         else:
             return False
         
-        
-
-
-    
+    def validateSub(self,subDir,givenNum):
+        """
+        This function checks if ".sub" file is present.
+        """
+        subName = os.path.basename(str(subDir))
+        lookSub = os.path.join(str(subDir),subName+".sub")
+        #Check existence of project
+        if os.path.exists(lookSub):
+            f = open(lookSub)
+            data=f.read()
+            f.close()
+            netlist=data.splitlines()
+            for eachline in netlist:
+                eachline=eachline.strip()
+                if len(eachline)<1:
+                    continue
+                words=eachline.split()
+                if words[0] == '.subckt':
+                    #The number of ports is specified in this line
+                    #eg. '.subckt ua741 6 7 3' has 3 ports (6, 7 and 3).
+                    numPorts = len(words) - 2
+                    print "Looksub",lookSub,givenNum,numPorts
+                    if numPorts != givenNum:
+                        return "PORT"
+                    else:
+                        return "True"
+        else:
+            return "DIREC"
