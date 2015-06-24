@@ -1,3 +1,5 @@
+from PyQt4 import QtGui
+
 import os
 import sys
 import shutil
@@ -352,10 +354,68 @@ class Convert:
             #Adding .include line to Schematic Info at the start of line
             for item in list(set(includeLine)):
                 schematicInfo.insert(0,item)
-              
-            
-                
+                    
         return schematicInfo
+    
+    def addSubcircuit(self,schematicInfo,kicadFile):
+        """
+        This function add the subcircuit to schematicInfo
+        """
+        print "Adding Subcircuit to Schematic info file"
+        
+        (projpath,filename) = os.path.split(kicadFile)
+                
+        subList = self.obj_track.subcircuitTrack
+        subLine = {} #Key:Index, Value:with its updated line in the form of list 
+        includeLine = [] #All .include line list
+        if len(self.obj_track.subcircuitList) != len(self.obj_track.subcircuitTrack):
+            self.msg = QtGui.QErrorMessage()
+            self.msg.showMessage("Conversion failed. Please add all Subcircuits.")
+            self.msg.setWindowTitle("Error Message")
+            self.msg.show()
+            raise Exception('All subcircuit directories need to be specified.')
+        elif not subList:
+            print "No Subcircuit Added in the schematic"
+            pass
+        else:
+            for eachline in schematicInfo:
+                words = eachline.split()
+                if words[0] in subList:
+                    print "Found Subcircuit line"
+                    index = schematicInfo.index(eachline)
+                    completeSubPath = subList[words[0]]
+                    (subpath,subname) = os.path.split(completeSubPath)
+                    print "Library Path :",subpath                                      
+                    #Copying library from devicemodelLibrary to Project Path
+                
+                    #Replace last word with library name
+                    words[-1] = subname.split('.')[0]
+                    subLine[index] = words                    
+                    includeLine.append(".include "+subname+".sub")
+                    
+                    src = completeSubPath
+                    dst = projpath
+                    print os.listdir(src)
+                    for files in os.listdir(src):
+                        if os.path.isfile(os.path.join(src,files)):
+                            if files != "analysis":
+                                shutil.copy2(os.path.join(src,files),dst)
+                else:
+                    pass
+            
+            
+            #Adding subcircuit line to schematicInfo
+            for index,value in subLine.iteritems():
+                #Update the subcircuit line
+                strLine = " ".join(str(item) for item in value)
+                schematicInfo[index] = strLine
+            
+            #This has to be second i.e after subcircuitLine details
+            #Adding .include line to Schematic Info at the start of line
+            for item in list(set(includeLine)):
+                schematicInfo.insert(0,item)
+                    
+        return schematicInfo   
     
     def getRefrenceName(self,libname,libpath):
         libname = libname.replace('.lib','.xml')

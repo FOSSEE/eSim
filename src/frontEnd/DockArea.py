@@ -3,6 +3,7 @@ from ngspiceSimulation.pythonPlotting import plotWindow
 from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
 from modelEditor.ModelEditor import ModelEditorclass
+from subcircuit.Subcircuit import Subcircuit
 import os
 
 dockList = ['Welcome']
@@ -153,9 +154,29 @@ class DockArea(QtGui.QMainWindow):
         
             count = count + 1
         
+    def subcircuiteditor(self):
+        """
+        This function creates a widget for different subcircuit options
+        """
         
+        global count
+        self.subcktWidget=QtGui.QWidget()
+        self.subcktLayout=QtGui.QVBoxLayout()
+        self.subcktLayout.addWidget(Subcircuit())
         
-                
+        self.subcktWidget.setLayout(self.subcktLayout)
+        dock['Subcircuit-'+str(count)] = QtGui.QDockWidget('Subcircuit-'+str(count))
+        dock['Subcircuit-'+str(count)].setWidget(self.subcktWidget)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Subcircuit-'+str(count)])  
+        self.tabifyDockWidget(dock['Welcome'],dock['Subcircuit-'+str(count)])
+        """
+        #CSS
+        dock['Plotting-'+str(count)].setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        ")
+        """
+        dock['Subcircuit-'+str(count)].setVisible(True)
+        dock['Subcircuit-'+str(count)].setFocus()
+        dock['Subcircuit-'+str(count)].raise_()
         
-                     
-        
+        count = count + 1

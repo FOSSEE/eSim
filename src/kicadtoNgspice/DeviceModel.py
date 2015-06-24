@@ -64,12 +64,17 @@ class DeviceModel(QtGui.QWidget):
                 transbox.setTitle("Add library for Transistor "+words[0]+" : "+words[4])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
+                global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
                             #print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
                             try:
-                                self.entry_var[self.count].setText(child[0].text)
+                                if os.path.exists(child[0].text):
+                                    self.entry_var[self.count].setText(child[0].text)
+                                    path_name=child[0].text
+                                else:
+                                    self.entry_var[self.count].setText("")
                             except:
                                 print "ERROR WHEN SET TEXT"
                 except:
@@ -78,6 +83,11 @@ class DeviceModel(QtGui.QWidget):
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
+                self.deviceDetail[self.count] = words[0]
+                if self.entry_var[self.count].text()=="":
+                    pass
+                else:
+                    self.trackLibraryWithourButton(self.count,path_name)
                 transgrid.addWidget(self.addbtn,self.row,2)
                 transbox.setLayout(transgrid)
                 
@@ -90,7 +100,7 @@ class DeviceModel(QtGui.QWidget):
                 self.grid.addWidget(transbox)
                 
                 #Adding Device Details
-                self.deviceDetail[self.count] = words[0]
+                
                                 
                 #Increment row and widget count
                 self.row = self.row+1
@@ -105,12 +115,17 @@ class DeviceModel(QtGui.QWidget):
                 diodebox.setTitle("Add library for Diode "+words[0]+" : "+words[3])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
+                global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
                             print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
                             try:
-                                self.entry_var[self.count].setText(child[0].text)
+                                if os.path.exists(child[0].text):
+                                    path_name=child[0].text
+                                    self.entry_var[self.count].setText(child[0].text)
+                                else:
+                                    self.entry_var[self.count].setText("")
                             except:
                                 print "ERROR WHEN SET TEXT"
                 except:
@@ -119,6 +134,11 @@ class DeviceModel(QtGui.QWidget):
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
+                self.deviceDetail[self.count] = words[0]
+                if self.entry_var[self.count].text()=="":
+                    pass
+                else:
+                    self.trackLibraryWithoutButton(self.count,path_name)
                 diodegrid.addWidget(self.addbtn,self.row,2)
                 diodebox.setLayout(diodegrid)
                 
@@ -131,7 +151,7 @@ class DeviceModel(QtGui.QWidget):
                 self.grid.addWidget(diodebox)
                 
                 #Adding Device Details
-                self.deviceDetail[self.count] = words[0]
+                
                                 
                 #Increment row and widget count
                 self.row = self.row+1
@@ -146,12 +166,17 @@ class DeviceModel(QtGui.QWidget):
                 jfetbox.setTitle("Add library for JFET "+words[0]+" : "+words[4])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
+                global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
                             print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
                             try:
-                                self.entry_var[self.count].setText(child[0].text)
+                                if os.path.exists(child[0].text):
+                                    self.entry_var[self.count].setText(child[0].text)
+                                    path_name=child[0].text
+                                else:
+                                    self.entry_var[self.count].setText("")
                             except:
                                 print "ERROR WHEN SET TEXT"
                 except:
@@ -160,6 +185,11 @@ class DeviceModel(QtGui.QWidget):
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
+                self.deviceDetail[self.count] = words[0]
+                if self.entry_var[self.count].text()=="":
+                    pass
+                else:
+                    self.trackLibraryWithoutButton(self.count,path_name)
                 jfetgrid.addWidget(self.addbtn,self.row,2)
                 jfetbox.setLayout(jfetgrid)
                 
@@ -172,7 +202,7 @@ class DeviceModel(QtGui.QWidget):
                 self.grid.addWidget(jfetbox)
                 
                 #Adding Device Details
-                self.deviceDetail[self.count] = words[0]
+                
                                 
                 #Increment row and widget count
                 self.row = self.row+1
@@ -234,12 +264,19 @@ class DeviceModel(QtGui.QWidget):
                 self.devicemodel_dict_end[words[0]]=self.count
                 self.count = self.count+1
                 mosfetbox.setLayout(mosfetgrid)
+                global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
                             print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
                             while i<=end:
                                 self.entry_var[i].setText(child[i-beg].text)
+                                if (i-beg)==0:
+                                    if os.path.exists(child[0].text):
+                                        self.entry_var[i].setText(child[i-beg].text)
+                                        path_name=child[i-beg].text
+                                    else:
+                                        self.entry_var[i].setText("")
                                 i=i+1
                 except:
                     pass
@@ -248,7 +285,10 @@ class DeviceModel(QtGui.QWidget):
                 QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
                 QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
                 ")
-                
+                if self.entry_var[beg].text()=="":
+                    pass
+                else:
+                    self.trackLibraryWithoutButton(beg,path_name)
                 self.grid.addWidget(mosfetbox)
                 
                    
@@ -286,6 +326,34 @@ class DeviceModel(QtGui.QWidget):
             
         else:
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
-        
-        
-        
+    def trackLibraryWithoutButton(self,iter_value,path_value):
+        """
+        This function is use to keep track of all Device Model widget
+        """
+        print "Calling Track Library funtion"
+                #print "Object Called is ",sending_btn.objectName()
+        self.widgetObjCount = iter_value
+        print "self.widgetObjCount-----",self.widgetObjCount
+        self.libfile = path_value
+        #print "Selected Library File :",self.libfile
+
+        #Setting Library to Text Edit Line
+        self.entry_var[self.widgetObjCount].setText(self.libfile)
+        self.deviceName = self.deviceDetail[self.widgetObjCount]
+
+        #Storing to track it during conversion
+
+
+        if self.deviceName[0] == 'm':
+            width = str(self.entry_var[self.widgetObjCount+1].text())
+            length = str(self.entry_var[self.widgetObjCount+2].text())
+            multifactor = str(self.entry_var[self.widgetObjCount+3].text())
+            if width == "" : width="100u"
+            if length == "": length="100u"
+            if multifactor == "": multifactor="1"
+
+            self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile+":"+"W="+width+" L="+length+" M="+multifactor
+
+        else:
+            self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
+    

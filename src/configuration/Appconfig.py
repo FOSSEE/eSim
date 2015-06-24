@@ -33,6 +33,8 @@ class Appconfig(QtGui.QWidget):
         default_workspace = {"workspace":home}
         #Current Project detail
         current_project = {"ProjectName":None}
+        #Current Subcircuit detail
+        current_subcircuit = {"SubcircuitName":None}
         #Workspace detail
         workspace_text = '''eSim stores your project in a folder called a eSim-Workspace. You can choose a different workspace folder to use for this session.'''
         procThread_list = []
