@@ -18,7 +18,7 @@ class NgspiceWidget(QtGui.QWidget):
         if platform.system() == 'Linux':
             self.command = "cd "+projPath+";ngspice "+command
             #Creating argument for process
-            self.args = ['-into', str(self.terminal.winId()),'-hold','-e', self.command]
+            self.args = ['-geometry','200x200','-into', str(self.terminal.winId()),'-hold','-e', self.command]
             self.process.start('xterm', self.args)
                      
         elif platform.system() == 'Windows':

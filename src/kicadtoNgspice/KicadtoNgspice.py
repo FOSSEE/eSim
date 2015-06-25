@@ -544,7 +544,7 @@ class MainWindow(QtGui.QWidget):
             try:
                 f = open(self.project+".cir.out")
             except :
-                print("Error in opening circuit file.")
+                print("Error in opening .cir.out file.")
         else:
             print self.projName + ".cir.out does not exist. Please create a spice netlist."
           
