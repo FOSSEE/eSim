@@ -227,8 +227,24 @@ class Convert:
                     modelParamValue.append([line[0],addmodelLine,line[4]])
                     addmodelLine=".model "+line[3]+"_secondary lcouple (num_turns ="+num_turns2+ ")"    
                     modelParamValue.append([line[0],addmodelLine,line[4]])    
-                except:
+                except Exception as e:
                     print "Caught an exception in transfo model ",line[1]
+                    print "Exception Message : ",str(e)
+                    
+            elif line[2] == 'ic':
+                try:
+                    start=line[5]
+                    end=line[6]
+                    for key,value in line[9].iteritems():
+                        initVal = str(self.obj_track.model_entry_var[value].text())
+                        if initVal=="":initVal="0"
+                        node = line[1].split()[1] #Extracting node from model line
+                        addmodelLine = ".ic v("+node+")="+initVal
+                        modelParamValue.append([line[0],addmodelLine,line[4]])
+                except Exception as e:
+                    print "Caught an exception in initial condition ",line[1]
+                    print "Exception Message : ",str(e)
+                
             
             else:
                 try:
@@ -264,21 +280,24 @@ class Convert:
                             
                             addmodelLine += param+"="+paramVal+" "
                                     
-                        
-                        
-                                          
+                                                             
                     addmodelLine += ") "
                     modelParamValue.append([line[0],addmodelLine,line[4]]) 
-                except:
-                    print "Caught an exception in gain model ",line[1]        
+                except Exception as e:
+                    print "Caught an exception in model ",line[1]
+                    print "Exception Message : ",str(e)        
         
         
         #Adding it to schematic
         for item in modelParamValue:
-            schematicInfo.append(item[2]) #Adding Comment
-            schematicInfo.append(item[1]) #Adding model line
+            if ".ic" in item[1]:
+                schematicInfo.insert(0,item[1])
+                schematicInfo.insert(0,item[2])
+            else:
+                schematicInfo.append(item[2]) #Adding Comment
+                schematicInfo.append(item[1]) #Adding model line
             
-            
+        print "MYSCH------->",schematicInfo    
         return schematicInfo
     
     def addDeviceLibrary(self,schematicInfo,kicadFile):
