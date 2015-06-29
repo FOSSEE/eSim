@@ -48,7 +48,9 @@ class Workspace(QtGui.QWidget):
         self.note.append(self.obj_appconfig.workspace_text)
         self.workspace_label.setText("Workspace:")
         self.workspace_loc.setText(self.obj_appconfig.home)
-          
+        self.imp_var=0  
+        self.close_var=0
+        self.window_open_close=0
         #Buttons
         self.browsebtn = QtGui.QPushButton('Browse')
         self.browsebtn.clicked.connect(self.browseLocation)
@@ -76,8 +78,38 @@ class Workspace(QtGui.QWidget):
            
     def defaultWorkspace(self):
         print "Default location selected"
+        self.imp_var=1
         self.obj_appconfig.print_info('Default workspace selected : ' + self.obj_appconfig.default_workspace["workspace"]) 
         self.close()
+        var_appView.show()
+    def calledFromApplicationToAssignSysAndApp(self,sys,app):
+        global var_sys,var_app
+        var_sys=sys
+        var_app=app
+
+
+    #var_sys.exit(var_app.exec_())
+    """def closeEvent(self, event):
+        if self.imp_var==0:
+            self.close_var=1
+            self.destroy()
+            event.accept()
+            self.window_open_close=1"""
+
+        
+    def close(self, *args, **kwargs):
+        self.window_open_close=1
+        self.close_var=1
+        #with var_cond:
+         #   var_cond.notify()
+        return QtGui.QWidget.close(self, *args, **kwargs)
+
+
+    def returnWhetherClickedOrNot(self,appView):
+        global var_appView
+        var_appView=appView
+
+        
                
     def createWorkspace(self):
         print "Create workspace is called"
@@ -91,7 +123,13 @@ class Workspace(QtGui.QWidget):
         else:
             os.mkdir(self.create_workspace)
             self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
-        self.close()       
+        self.imp_var=1
+        self.close()  
+        var_appView.show()
+        """var_appView.obj_Mainview.setVisible(True)
+        var_appView.obj_appconfig.setVisible(True)
+        super.topToolbar.setVisible(True)
+        super.lefttoolbar.setVisible(True)"""     
             
     def browseLocation(self):
         print "Browse Location called"
