@@ -17,7 +17,7 @@
 #===============================================================================
 from PyQt4 import QtCore, QtGui
 from configuration.Appconfig import Appconfig
-
+import time
 import os
 
 
@@ -80,6 +80,7 @@ class Workspace(QtGui.QWidget):
         self.obj_appconfig.print_info('Default workspace selected : ' + self.obj_appconfig.default_workspace["workspace"]) 
         self.close()
         var_appView.show()
+        time.sleep(1)
         var_appView.splash.close()
  
 
@@ -114,6 +115,7 @@ class Workspace(QtGui.QWidget):
         self.imp_var=1
         self.close()  
         var_appView.show()
+        time.sleep(1)
         var_appView.splash.close()
         
             

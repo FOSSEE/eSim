@@ -60,6 +60,7 @@ class Application(QtGui.QMainWindow):
                          self.obj_appconfig._app_heigth)
         self.setWindowTitle(self.obj_appconfig._APPLICATION) 
         self.showMaximized()
+        self.setWindowIcon(QtGui.QIcon('../../images/logo.png'))
         #self.show()
               
         
