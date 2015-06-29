@@ -299,7 +299,6 @@ def main(args):
     splash.show()
     #QtGui.QApplication.setStyle(QtGui.QStyleFactory.create("Cleanlooks"))
     appView = Application()
-    appView.spl=splash
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
     appView.hide()
     appView.obj_workspace.show() 

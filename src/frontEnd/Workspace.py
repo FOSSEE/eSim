@@ -48,9 +48,7 @@ class Workspace(QtGui.QWidget):
         self.note.append(self.obj_appconfig.workspace_text)
         self.workspace_label.setText("Workspace:")
         self.workspace_loc.setText(self.obj_appconfig.home)
-        self.imp_var=0  
-        self.close_var=0
-        self.window_open_close=0
+        
         #Buttons
         self.browsebtn = QtGui.QPushButton('Browse')
         self.browsebtn.clicked.connect(self.browseLocation)
@@ -82,19 +80,8 @@ class Workspace(QtGui.QWidget):
         self.obj_appconfig.print_info('Default workspace selected : ' + self.obj_appconfig.default_workspace["workspace"]) 
         self.close()
         var_appView.show()
-    def calledFromApplicationToAssignSysAndApp(self,sys,app):
-        global var_sys,var_app
-        var_sys=sys
-        var_app=app
+ 
 
-
-    #var_sys.exit(var_app.exec_())
-    """def closeEvent(self, event):
-        if self.imp_var==0:
-            self.close_var=1
-            self.destroy()
-            event.accept()
-            self.window_open_close=1"""
 
         
     def close(self, *args, **kwargs):
@@ -126,10 +113,7 @@ class Workspace(QtGui.QWidget):
         self.imp_var=1
         self.close()  
         var_appView.show()
-        """var_appView.obj_Mainview.setVisible(True)
-        var_appView.obj_appconfig.setVisible(True)
-        super.topToolbar.setVisible(True)
-        super.lefttoolbar.setVisible(True)"""     
+        
             
     def browseLocation(self):
         print "Browse Location called"
