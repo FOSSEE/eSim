@@ -80,6 +80,7 @@ class Workspace(QtGui.QWidget):
         self.obj_appconfig.print_info('Default workspace selected : ' + self.obj_appconfig.default_workspace["workspace"]) 
         self.close()
         var_appView.show()
+        var_appView.splash.close()
  
 
 
@@ -113,6 +114,7 @@ class Workspace(QtGui.QWidget):
         self.imp_var=1
         self.close()  
         var_appView.show()
+        var_appView.splash.close()
         
             
     def browseLocation(self):
