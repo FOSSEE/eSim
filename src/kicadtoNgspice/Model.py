@@ -15,7 +15,9 @@ class Model(QtGui.QWidget):
     
     def __init__(self,schematicInfo,modelList):
         
+        QtGui.QWidget.__init__(self)
         
+        #Processing for getting previous values
         kicadFile = sys.argv[1]
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
@@ -33,7 +35,7 @@ class Model(QtGui.QWidget):
             print "Empty XML"
         
         
-        QtGui.QWidget.__init__(self)
+        
         #Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()
         
@@ -124,7 +126,7 @@ class Model(QtGui.QWidget):
             
             #This keeps the track of Model Tab Widget
             self.obj_trac.modelTrack.append([line[0],line[1],line[2],line[3],line[4],line[5],line[6],self.start,self.end,tag_dict])
-            
+                        
             print "The tag dictionary : ",tag_dict
         
             

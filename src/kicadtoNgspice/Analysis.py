@@ -422,7 +422,10 @@ class Analysis(QtGui.QWidget):
         self.start_combobox.addItem("ns")
         self.start_combobox.addItem("ps")
         self.trgrid.addWidget(self.start_combobox,1,3)
-        self.tran_parameter[self.parameter_cnt]= "Sec"
+        try:
+            self.tran_parameter[self.parameter_cnt]= str(root[2][3].text)
+        except:
+            self.tran_parameter[self.parameter_cnt]= "Sec"
         self.start_combobox.activated[str].connect(self.start_combo_change)
         self.parameter_cnt= self.parameter_cnt+1
         
@@ -433,7 +436,10 @@ class Analysis(QtGui.QWidget):
         self.step_combobox.addItem("ns")
         self.step_combobox.addItem("ps")
         self.trgrid.addWidget(self.step_combobox,2,3)
-        self.tran_parameter[self.parameter_cnt]= "Sec"
+        try:
+            self.tran_parameter[self.parameter_cnt]= str(root[2][4].text)
+        except:
+            self.tran_parameter[self.parameter_cnt]= "Sec"
         self.step_combobox.activated[str].connect(self.step_combo_change)
         self.parameter_cnt= self.parameter_cnt+1
         
@@ -444,7 +450,10 @@ class Analysis(QtGui.QWidget):
         self.stop_combobox.addItem("ns")
         self.stop_combobox.addItem("ps")
         self.trgrid.addWidget(self.stop_combobox,3,3)
-        self.tran_parameter[self.parameter_cnt]= "Sec"
+        try:
+            self.tran_parameter[self.parameter_cnt]= str(root[2][5].text)
+        except:
+            self.tran_parameter[self.parameter_cnt]= "Sec"
         self.stop_combobox.activated[str].connect(self.stop_combo_change)
         self.parameter_cnt= self.parameter_cnt+1
         

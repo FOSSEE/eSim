@@ -51,7 +51,7 @@ class DockArea(QtGui.QMainWindow):
         """
         #CSS
         dock['Tips-'+str(count)].setStyleSheet(" \
-        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
         ")
         """
         
@@ -86,7 +86,7 @@ class DockArea(QtGui.QMainWindow):
         """
         #CSS
         dock['Plotting-'+str(count)].setStyleSheet(" \
-        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
         ")
         """
         dock['Plotting-'+str(count)].setVisible(True)
@@ -119,13 +119,12 @@ class DockArea(QtGui.QMainWindow):
         dock['NgSpice-'+str(count)].setWidget(self.ngspiceWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['NgSpice-'+str(count)])  
         self.tabifyDockWidget(dock['Welcome'],dock['NgSpice-'+str(count)])
-        
-        """
+
         #CSS
         dock['NgSpice-'+str(count)].setStyleSheet(" \
-        QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px; width: 200px; height: 150px;  } \
         ")
-        """
+        
         dock['NgSpice-'+str(count)].setVisible(True)
         dock['NgSpice-'+str(count)].setFocus()
         dock['NgSpice-'+str(count)].raise_()
@@ -148,6 +147,11 @@ class DockArea(QtGui.QMainWindow):
             self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Model Editor-'+str(count)])  
             self.tabifyDockWidget(dock['Welcome'],dock['Model Editor-'+str(count)])
             
+            #CSS
+            dock['Model Editor-'+str(count)].setStyleSheet(" \
+            .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+            ")
+            
             dock['Model Editor-'+str(count)].setVisible(True)
             dock['Model Editor-'+str(count)].setFocus()
             dock['Model Editor-'+str(count)].raise_()
@@ -169,12 +173,12 @@ class DockArea(QtGui.QMainWindow):
         dock['Subcircuit-'+str(count)].setWidget(self.subcktWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Subcircuit-'+str(count)])  
         self.tabifyDockWidget(dock['Welcome'],dock['Subcircuit-'+str(count)])
-        """
+        
         #CSS
-        dock['Plotting-'+str(count)].setStyleSheet(" \
-        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        dock['Subcircuit-'+str(count)].setStyleSheet(" \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
         ")
-        """
+        
         dock['Subcircuit-'+str(count)].setVisible(True)
         dock['Subcircuit-'+str(count)].setFocus()
         dock['Subcircuit-'+str(count)].raise_()

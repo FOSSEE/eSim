@@ -17,7 +17,7 @@
 #===============================================================================
 from PyQt4 import QtCore, QtGui
 from configuration.Appconfig import Appconfig
-
+import time
 import os
 
 
@@ -48,7 +48,7 @@ class Workspace(QtGui.QWidget):
         self.note.append(self.obj_appconfig.workspace_text)
         self.workspace_label.setText("Workspace:")
         self.workspace_loc.setText(self.obj_appconfig.home)
-          
+        
         #Buttons
         self.browsebtn = QtGui.QPushButton('Browse')
         self.browsebtn.clicked.connect(self.browseLocation)
@@ -76,8 +76,29 @@ class Workspace(QtGui.QWidget):
            
     def defaultWorkspace(self):
         print "Default location selected"
+        self.imp_var=1
         self.obj_appconfig.print_info('Default workspace selected : ' + self.obj_appconfig.default_workspace["workspace"]) 
         self.close()
+        var_appView.show()
+        time.sleep(1)
+        var_appView.splash.close()
+ 
+
+
+        
+    def close(self, *args, **kwargs):
+        self.window_open_close=1
+        self.close_var=1
+        #with var_cond:
+         #   var_cond.notify()
+        return QtGui.QWidget.close(self, *args, **kwargs)
+
+
+    def returnWhetherClickedOrNot(self,appView):
+        global var_appView
+        var_appView=appView
+
+        
                
     def createWorkspace(self):
         print "Create workspace is called"
@@ -91,7 +112,12 @@ class Workspace(QtGui.QWidget):
         else:
             os.mkdir(self.create_workspace)
             self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
-        self.close()       
+        self.imp_var=1
+        self.close()  
+        var_appView.show()
+        time.sleep(1)
+        var_appView.splash.close()
+        
             
     def browseLocation(self):
         print "Browse Location called"

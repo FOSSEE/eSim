@@ -159,8 +159,10 @@ class PrcocessNetlist:
         for compline in schematicInfo:
             words = compline.split()
             compName = words[0]
+            print "Compline----------------->",compline
+            print "compName-------------->",compName
             # Find the IC from schematic 
-            if compName[0]=='u':
+            if compName[0]=='u' or compName[0] == 'U':
                 # Find the component from the circuit
                 index=schematicInfo.index(compline)
                 compType=words[len(words)-1];
@@ -174,7 +176,7 @@ class PrcocessNetlist:
                 print "Words",words
                 print "compName",compName
                 #Looking if model file is present
-                if compType != "port":
+                if compType != "port" and compType != "ic":
                     xmlfile = compType+".xml"   #XML Model File
                     count = 0 #Check if model of same name is present
                     modelPath = []
@@ -281,11 +283,22 @@ class PrcocessNetlist:
                             comment = "* Schematic Name: "+compType+", NgSpice Name: "+modelname
                             #Here instead of adding compType(use for XML), added modelName(Unique Model Name)
                             modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
-                        except:
+                        except Exception as e:
                             print  "Unable to parse the model, Please check your your XML file"
+                            print "Exception Message : ",str(e)
                             sys.exit(2)
+                elif compType == "ic":
+                    schematicInfo.insert(index,"* "+compline)
+                    modelname = "ic"
+                    comment = "* "+compline
+                    title = "Initial Condition for "+compName
+                    type = "NA" #Its is not model 
+                    text = "Enter initial voltage at node for "+compline
+                    paramDict[title] = text
+                    modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
                 else:
                     schematicInfo.insert(index,"* "+compline)
+                    
                 #print "Count",count
                 #print "UnknownModelList",unknownModelList
                 #print "MultipleModelList",multipleModelList  

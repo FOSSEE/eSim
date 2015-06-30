@@ -33,6 +33,7 @@ from PyQt4.Qt import QSize
 
 
 class Application(QtGui.QMainWindow):
+    global project_name	
     """
     Its our main window of application
     """
@@ -59,7 +60,8 @@ class Application(QtGui.QMainWindow):
                          self.obj_appconfig._app_heigth)
         self.setWindowTitle(self.obj_appconfig._APPLICATION) 
         self.showMaximized()
-        self.show()
+        self.setWindowIcon(QtGui.QIcon('../../images/logo.png'))
+        #self.show()
               
         
     def initToolBar(self):
@@ -89,7 +91,16 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.openproj)
         self.topToolbar.addAction(self.exitproj)
         self.topToolbar.addAction(self.helpfile)
-                
+        
+        self.spacer = QtGui.QWidget()
+        self.spacer.setSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
+        self.topToolbar.addWidget(self.spacer)
+        self.logo = QtGui.QLabel()
+        self.logopic = QtGui.QPixmap(os.path.join(os.path.abspath('../..'),'images','fosseeLogo.png'))
+        self.logopic = self.logopic.scaled(QSize(150,150),QtCore.Qt.KeepAspectRatio)
+        self.logo.setPixmap(self.logopic)
+        self.topToolbar.addWidget(self.logo)
+             
         #Left Tool bar Action Widget 
         self.kicad = QtGui.QAction(QtGui.QIcon('../../images/kicad.png'),'<b>Open Schematic</b>',self)
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
@@ -246,8 +257,8 @@ class MainView(QtGui.QWidget):
         self.obj_appconfig.noteArea['Note'].append('        eSim Started......')
         self.obj_appconfig.noteArea['Note'].append('Project Selected : None')
         self.obj_appconfig.noteArea['Note'].append('\n')
-        #CSS
         
+        #CSS
         self.noteArea.setStyleSheet(" \
         QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; } \
         ")
@@ -282,32 +293,61 @@ def main(args):
     """
     print "Starting eSim......"
     app = QtGui.QApplication(args)
-   
-    """
-    splash_pix = QtGui.QPixmap('../images/FreeEDAlogo.jpg')
+    
+    splash_pix = QtGui.QPixmap('../../images/splash_screen_esim.png')
     splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
-    progressBar = QtGui.QProgressBar(splash)
+    splash.setMask(splash_pix.mask())
+    splash.show()
+    #QtGui.QApplication.setStyle(QtGui.QStyleFactory.create("Cleanlooks"))
+    appView = Application()
+    appView.splash=splash
+    appView.obj_workspace.returnWhetherClickedOrNot(appView)
+    appView.hide()
+    appView.obj_workspace.show() 
+    sys.exit(app.exec_())
+    #appView.hide()
+    ########################################################################################################################################
+    
+    """splash_pix = QtGui.QPixmap('../images/splash_screen_esim.png')
+    splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
+    progressBar = QtGui.QProgressBar(splash) 
+    progressBar.setGeometry(0,470,1004,20)
     splash.setMask(splash_pix.mask())
     splash.show()
     
     for i in range(0, 100):
         progressBar.setValue(i)
-        t = time.time()
+        #cond=threading.Condition()
+        if i==50:
+            
+            appView = Application()
+            appView.hide()
+            #appView.obj_workspace.returnWhetherClickedOrNot(appView)
+            appView.obj_workspace.show()            
+            #appView.obj_workspace.show()
+            appView.obj_workspace.calledFromApplicationToAssignSysAndApp(sys,app)#`11    ,cond)
+            #with cond:
+                #cond.wait()
+        
+        t = time.time() 
         while time.time() < t + 0.1:
             app.processEvents()    
     
-    time.sleep(2)
+    #time.sleep(2)
     
-    appView = Application()
-    appView.show()
+    #appView = Application()
+    #appView.hide()
     splash.finish(appView)
-    sys.exit(app.exec_())
-    """
-    appView = Application()
-    #QtGui.QApplication.setStyle(QtGui.QStyleFactory.create("Cleanlooks"))
-    appView.show()
-    sys.exit(app.exec_())
+    #sys.exit(app.exec_())
     
+    #QtGui.QApplication.setStyle(QtGui.QStyleFactory.create("Cleanlooks"))
+    #appView.obj_workspace.returnWhetherClickedOrNot(appView)
+    #appView.obj_workspace.show() 
+    #appView.hide()
+    
+    appView.show()
+    sys.exit(app.exec_())"""
+######################################################################################################################################################    
     
 
 

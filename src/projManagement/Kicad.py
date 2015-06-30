@@ -138,7 +138,7 @@ class Kicad:
                 self.project = os.path.join(self.projDir,self.projName)
                             
                 #Creating a command to run
-                self.cmd = "python  ../kicadtoNgspice/KicadtoNgspice.py "+self.project+".cir "
+                self.cmd = "python  ../kicadtoNgspice/KicadtoNgspice.py " +self.project+".cir "
                 self.obj_workThread = Worker.WorkerThread(self.cmd)
                 self.obj_workThread.start()
          
