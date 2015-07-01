@@ -1,6 +1,21 @@
 EESchema-LIBRARY Version 2.3
 #encoding utf-8
 #
+# aswitch
+#
+DEF aswitch U 0 40 Y Y 1 F N
+F0 "U" 450 300 60 H V C CNN
+F1 "aswitch" 450 200 60 H V C CNN
+F2 "" 450 100 60 H V C CNN
+F3 "" 450 100 60 H V C CNN
+DRAW
+S 200 250 650 100 0 1 0 N
+X ~ 2 0 150 200 R 50 50 1 1 O
+X ~ 3 850 150 200 L 50 50 1 1 O
+X ~ 1_IN 450 -100 200 U 50 20 1 1 I
+ENDDRAW
+ENDDEF
+#
 # climit
 #
 DEF climit U 0 40 Y Y 1 F N
