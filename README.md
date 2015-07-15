@@ -28,18 +28,15 @@ eSim has been successfully ported to low cost FOSSEE laptop (http://laptop.fosse
 ##How to run eSim ?
 1. Using command line or terminal go to location eSim/src/frontEnd
 2. Type below command to open eSim
-        `python Application.py`
+    - `python Application.py`
 
 
 ##How to install latest version of kicad in Ubuntu ?
-1.Add PPA to your repository
-    `sudo add-apt-repository ppa:js-reynaud/ppa-kicad`
+1. `sudo add-apt-repository ppa:js-reynaud/ppa-kicad`
 
-2. Update your repo
-    `sudo apt-get update`
+2. `sudo apt-get update`
 
-3. Install kicad
-    `sudo apt-get install kicad`
+3. `sudo apt-get install kicad`
 
 
 ##How to install ngspice in Ubuntu?
