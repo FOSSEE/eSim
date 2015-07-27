@@ -99,6 +99,7 @@ class Application(QtGui.QMainWindow):
         self.logopic = QtGui.QPixmap(os.path.join(os.path.abspath('../..'),'images','fosseeLogo.png'))
         self.logopic = self.logopic.scaled(QSize(150,150),QtCore.Qt.KeepAspectRatio)
         self.logo.setPixmap(self.logopic)
+        self.logo.setStyleSheet("padding:0 15px 0 0;")
         self.topToolbar.addWidget(self.logo)
              
         #Left Tool bar Action Widget 

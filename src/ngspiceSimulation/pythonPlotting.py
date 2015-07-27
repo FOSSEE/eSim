@@ -87,11 +87,19 @@ class plotWindow(QtGui.QMainWindow):
             self.chkbox[i].setStyleSheet('color')
             self.chkbox[i].setToolTip('<b>Check To Plot</b>' )
             self.top_grid.addWidget(self.chkbox[i],i+2,0)
+            self.colorLab = QtGui.QLabel()
+            self.colorLab.setText('____')
+            self.colorLab.setStyleSheet(self.colorName(self.color[i])+'; font-weight = bold;')
+            self.top_grid.addWidget(self.colorLab,i+2,1)
 
         for i in range(self.a[1],self.a[0]-1):#a[0]-1
             self.chkbox.append(QtGui.QCheckBox(self.obj_dataext.NBList[i]))
             self.chkbox[i].setToolTip('<b>Check To Plot</b>' )
             self.top_grid.addWidget(self.chkbox[i],i+3,0)
+            self.colorLab = QtGui.QLabel()
+            self.colorLab.setText('____')
+            self.colorLab.setStyleSheet(self.colorName(self.color[i])+'; font-weight = bold;')
+            self.top_grid.addWidget(self.colorLab,i+3,1)
     
         self.clear = QtGui.QPushButton("Clear")
         self.warnning = QtGui.QLabel()
@@ -375,9 +383,17 @@ class plotWindow(QtGui.QMainWindow):
         if boxCheck == 0:
             QtGui.QMessageBox.about(self,"Warning!!", "Please select atleast one Node OR Branch")
         self.canvas.draw() 
-
         
-    
+    def colorName(self,letter):
+        return {
+                'r':'color:red',
+                'b':'color:blue',
+                'g':'color:green',
+                'y':'color:yellow',
+                'c':'color:cyan',
+                'm':'color:magenta',
+                'k':'color:black'
+        }[letter]
     
 
 class DataExtraction:
@@ -414,7 +430,7 @@ class DataExtraction:
         #Finding totla number of voltage node
         for i in self.voltData[3:]:
             #it has possible names of voltage nodes in NgSpice
-            if "V(" in i or "x1" in i or "u3" in i:
+            if "Index" in i:#"V(" in i or "x1" in i or "u3" in i:
                 vnumber+=1    
         
         #print "Voltage Number :",vnumber
@@ -536,7 +552,7 @@ class DataExtraction:
                 self.NBList.append(l)
         self.NBList=self.NBList[2:]
         len_NBList = len(self.NBList)
-        #print "NBLIST",self.NBList
+        print "NBLIST",self.NBList
         
         ivals=[]
         inum = len(allv[5].split("\t"))
