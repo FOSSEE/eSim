@@ -10,12 +10,13 @@ class Convert:
     """
     This class has all the necessary function required to convert kicad netlist to ngspice netlist.
     """
-    def __init__(self,sourcelisttrack,source_entry_var,schematicInfo):
+    def __init__(self,sourcelisttrack,source_entry_var,schematicInfo,clarg1):
         print "Start Conversion"
         self.sourcelisttrack = sourcelisttrack
         self.schematicInfo = schematicInfo
         self.entry_var = source_entry_var
         self.sourcelistvalue = []
+        self.clarg1=clarg1
         
               
     def addSourceParameter(self):
@@ -135,7 +136,7 @@ class Convert:
         self.no=0
         
         self.variable=self.set_checkbox
-        self.direct= sys.argv[1]
+        self.direct= self.clarg1
         (filepath, filemname)= os.path.split(self.direct)
         self.Fileopen = os.path.join(filepath, "analysis")  
         self.writefile= open(self.Fileopen,"w")
@@ -387,6 +388,8 @@ class Convert:
         subList = self.obj_track.subcircuitTrack
         subLine = {} #Key:Index, Value:with its updated line in the form of list 
         includeLine = [] #All .include line list
+        print "self.obj_track.subcircuitList--->",self.obj_track.subcircuitList
+        print "self.obj_track.subcircuitTrack--->",self.obj_track.subcircuitTrack
         if len(self.obj_track.subcircuitList) != len(self.obj_track.subcircuitTrack):
             self.msg = QtGui.QErrorMessage()
             self.msg.showMessage("Conversion failed. Please add all Subcircuits.")

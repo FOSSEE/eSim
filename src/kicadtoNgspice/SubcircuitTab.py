@@ -14,9 +14,9 @@ class SubcircuitTab(QtGui.QWidget):
     It dynamically creates the widget for subcircuits.
     """
     
-    def __init__(self,schematicInfo):
+    def __init__(self,schematicInfo,clarg1):
 
-        kicadFile = sys.argv[1]
+        kicadFile = clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
         print "PROJECT NAME---------",project_name
@@ -59,7 +59,7 @@ class SubcircuitTab(QtGui.QWidget):
             words = eachline.split()
             if eachline[0] == 'x':
                 print "Words",words[0]
-                self.obj_trac.subcircuitList.append(words)
+                self.obj_trac.subcircuitList[project_name+words[0]]=words
                 self.subcircuit_dict_beg[words[0]]=self.count
                 subbox=QtGui.QGroupBox()
                 subgrid=QtGui.QGridLayout()

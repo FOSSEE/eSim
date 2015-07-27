@@ -12,11 +12,12 @@ class Source(QtGui.QWidget):
     This class create Source Tab of KicadtoNgSpice Window.
     """
         
-    def __init__(self,sourcelist,sourcelisttrack):
+    def __init__(self,sourcelist,sourcelisttrack,clarg1):
         QtGui.QWidget.__init__(self)
         self.obj_track = TrackWidget.TrackWidget()     
         #Variable
         self.count = 1
+        self.clarg1=clarg1
         self.start = 0
         self.end = 0
         self.row = 0
@@ -32,7 +33,7 @@ class Source(QtGui.QWidget):
         """
         This function dynamically create source widget in the Source tab of KicadtoNgSpice window
         """
-        kicadFile = sys.argv[1]
+        kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
         print "PROJECT NAME---------",project_name

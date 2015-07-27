@@ -9,10 +9,11 @@ class convertSub(QtGui.QWidget):
     This class is called when User create new Project.
     """
     
-    def __init__(self):
+    def __init__(self,dockarea):
         super(convertSub, self).__init__()
         self.obj_validation = Validation()
         self.obj_appconfig=Appconfig()
+        self.obj_dockarea=dockarea
     
     def createSub(self):
         """
@@ -30,8 +31,12 @@ class convertSub(QtGui.QWidget):
                 self.project = os.path.join(self.projDir,self.projName)
                 
                 #Creating a command to run
-                self.cmd = "python  ../kicadtoNgspice/KicadtoNgspice.py "+self.project+".cir "+"sub"
-                os.system(self.cmd)
+                #self.cmd = "python  ../kicadtoNgspice/KicadtoNgspice.py "+self.project+".cir "+"sub"
+                #os.system(self.cmd)
+                
+                var1=self.project+".cir"
+                var2="sub"
+                self.obj_dockarea.kicadToNgspiceEditor(var1,var2)
 #                 self.obj_workThread = Worker.WorkerThread(self.cmd)
 #                 self.obj_workThread.start()
             else:

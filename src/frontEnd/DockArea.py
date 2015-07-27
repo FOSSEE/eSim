@@ -4,6 +4,7 @@ from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
 from modelEditor.ModelEditor import ModelEditorclass
 from subcircuit.Subcircuit import Subcircuit
+from kicadtoNgspice.KicadtoNgspice import MainWindow
 import os
 
 dockList = ['Welcome']
@@ -57,6 +58,11 @@ class DockArea(QtGui.QMainWindow):
         
         dock['Tips-'+str(count)].setVisible(True)
         dock['Tips-'+str(count)].setFocus()
+        """
+        dock['Tips-'+str(count)].setStyleSheet(" \
+        :hover { background-color: yellow;  } \
+        ")
+        """
         dock['Tips-'+str(count)].raise_()
         
         count = count + 1
@@ -157,6 +163,30 @@ class DockArea(QtGui.QMainWindow):
             dock['Model Editor-'+str(count)].raise_()
         
             count = count + 1
+    
+    def kicadToNgspiceEditor(self,clarg1,clarg2=None):
+        global count
+        self.kicadToNgspiceWidget=QtGui.QWidget()
+        self.kicadToNgspiceLayout=QtGui.QVBoxLayout()
+        self.kicadToNgspiceLayout.addWidget(MainWindow(clarg1,clarg2))
+        
+        self.kicadToNgspiceWidget.setLayout(self.kicadToNgspiceLayout)
+        dock['kicadToNgspice-'+str(count)] = QtGui.QDockWidget('kicadToNgspice-'+str(count))
+        dock['kicadToNgspice-'+str(count)].setWidget(self.kicadToNgspiceWidget)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['kicadToNgspice-'+str(count)])  
+        self.tabifyDockWidget(dock['Welcome'],dock['kicadToNgspice-'+str(count)])
+        
+        #CSS
+        dock['kicadToNgspice-'+str(count)].setStyleSheet(" \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        ")
+        
+        dock['kicadToNgspice-'+str(count)].setVisible(True)
+        dock['kicadToNgspice-'+str(count)].setFocus()
+        dock['kicadToNgspice-'+str(count)].raise_()
+        
+        count = count + 1
+        
         
     def subcircuiteditor(self):
         """
@@ -166,7 +196,7 @@ class DockArea(QtGui.QMainWindow):
         global count
         self.subcktWidget=QtGui.QWidget()
         self.subcktLayout=QtGui.QVBoxLayout()
-        self.subcktLayout.addWidget(Subcircuit())
+        self.subcktLayout.addWidget(Subcircuit(self))
         
         self.subcktWidget.setLayout(self.subcktLayout)
         dock['Subcircuit-'+str(count)] = QtGui.QDockWidget('Subcircuit-'+str(count))

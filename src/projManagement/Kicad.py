@@ -26,10 +26,10 @@ class Kicad:
     """
     This class called the Kicad Schematic,KicadtoNgspice Converter,Layout editor and Footprint Editor
     """
-    def __init__(self):
+    def __init__(self,dockarea):
         self.obj_validation = Validation.Validation()
         self.obj_appconfig = Appconfig()
-        
+        self.obj_dockarea=dockarea
     
     def openSchematic(self):
         """
@@ -138,9 +138,14 @@ class Kicad:
                 self.project = os.path.join(self.projDir,self.projName)
                             
                 #Creating a command to run
+                """
                 self.cmd = "python  ../kicadtoNgspice/KicadtoNgspice.py " +self.project+".cir "
                 self.obj_workThread = Worker.WorkerThread(self.cmd)
                 self.obj_workThread.start()
+                """
+                var=self.project+".cir"
+                self.obj_dockarea.kicadToNgspiceEditor(var)
+                
          
                 
             else:

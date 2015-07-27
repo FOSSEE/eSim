@@ -9,7 +9,8 @@ class Analysis(QtGui.QWidget):
     """
     This class create Analysis Tab in KicadtoNgspice Window.
     """
-    def __init__(self):
+    def __init__(self,clarg1):
+        self.clarg1=clarg1
         QtGui.QWidget.__init__(self)
         self.track_obj= TrackWidget.TrackWidget()
         self.count =0
@@ -21,6 +22,7 @@ class Analysis(QtGui.QWidget):
         self.dc_parameter={}
         self.tran_parameter= {}
         self.createAnalysisWidget()
+        
        
                  
     def createAnalysisWidget(self):
@@ -86,7 +88,7 @@ class Analysis(QtGui.QWidget):
             self.track_obj.set_CheckBox["ITEMS"]="TRAN"
                  
     def createACgroup(self):
-        kicadFile = sys.argv[1]
+        kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
         print "PROJECT NAME---------",project_name
@@ -226,7 +228,7 @@ class Analysis(QtGui.QWidget):
             pass  
     
     def createDCgroup(self):
-        kicadFile = sys.argv[1]
+        kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
         print "PROJECT NAME---------",project_name
@@ -370,7 +372,7 @@ class Analysis(QtGui.QWidget):
             self.track_obj.op_check.append(0)
            
     def createTRANgroup(self):
-        kicadFile = sys.argv[1]
+        kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
         print "PROJECT NAME---------",project_name

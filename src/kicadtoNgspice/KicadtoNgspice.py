@@ -38,8 +38,66 @@ class MainWindow(QtGui.QWidget):
     The convert function takes all the value entered by user and create a final netlist "*.cir.out".
     This final netlist is compatible with NgSpice.  
     """
-    def __init__(self):
+    def __init__(self,clarg1,clarg2=None):
+        
+        
+        
         QtGui.QWidget.__init__(self)
+        
+        print "=================================="
+        print "Kicad to Ngspice netlist converter "
+        print "=================================="
+        global kicadNetlist,schematicInfo
+        global infoline,optionInfo
+        self.kicadFile = clarg1
+        self.clarg1=clarg1
+        self.clarg2=clarg2
+        #Object of Processing
+        obj_proc = PrcocessNetlist()
+        
+        # Read the netlist
+        kicadNetlist = obj_proc.readNetlist(self.kicadFile)
+        
+        # Construct parameter information
+        param = obj_proc.readParamInfo(kicadNetlist)
+        
+        # Replace parameter with values
+        netlist,infoline = obj_proc.preprocessNetlist(kicadNetlist,param)
+        
+        print "NETLIST ",netlist
+        print "INFOLINE",infoline
+        
+        # Separate option and schematic information
+        optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
+        
+        print "OPTIONINFO",optionInfo
+        print "SCHEMATICINFO",schematicInfo
+        
+               
+        #List for storing source and its value
+        global sourcelist, sourcelisttrack
+        sourcelist=[]
+        sourcelisttrack=[]
+        schematicInfo,sourcelist = obj_proc.insertSpecialSourceParam(schematicInfo,sourcelist)
+        
+        print "SOURCELIST",sourcelist
+        print "SCHEMATICINFO",schematicInfo
+        
+        #List storing model detail
+        global modelList,outputOption,unknownModelList,multipleModelList
+          
+        modelList = [] 
+        outputOption = []
+        schematicInfo,outputOption,modelList,unknownModelList,multipleModelList = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList)
+        print "Unknown Model List",unknownModelList  
+        print "Multiple Model List",multipleModelList
+        print "Model List",modelList
+        """
+        args=[clarg1,clarg2]
+        app = QtGui.QApplication(args)
+        kingWindow = MainWindow()
+        sys.exit(app.exec_())    
+        """
         #Create object of track widget
         self.obj_track = TrackWidget.TrackWidget()
         """
@@ -69,48 +127,59 @@ class MainWindow(QtGui.QWidget):
         This function create main window of Kicad to Ngspice converter
         """
         
-        self.grid = QtGui.QGridLayout(self)
+        self.vbox = QtGui.QVBoxLayout(self)
+        self.hbox=QtGui.QHBoxLayout(self)
+        self.hbox.addStretch(1)
         self.convertbtn = QtGui.QPushButton("Convert")
         self.convertbtn.clicked.connect(self.callConvert)
-        self.cancelbtn = QtGui.QPushButton("Cancel")
-        self.cancelbtn.clicked.connect(self.close)
-        self.grid.addWidget(self.createcreateConvertWidget(),0,0)
-        self.grid.addWidget(self.convertbtn,1,1)
-        self.grid.addWidget(self.cancelbtn,1,2)
-        self.setWindowState(QtCore.Qt.WindowMaximized)
-        self.setLayout(self.grid)
+        #self.cancelbtn = QtGui.QPushButton("Cancel")
+        #self.cancelbtn.clicked.connect(self.closeCancel)
+        self.hbox.addWidget(self.convertbtn)
+        self.vbox.addWidget(self.createcreateConvertWidget())
+        self.vbox.addLayout(self.hbox)
+        
+        #self.grid.addWidget(self.cancelbtn,1,1)
+        
+        #self.setWindowState(QtCore.Qt.WindowMaximized)
+        self.setLayout(self.vbox)
         self.setWindowTitle("Kicad To NgSpice Converter")
         self.show()
-          
+         
+    """      
+    def closeCancel(self):
+        self.obj_track.modelTrack[:]=[]
+        self.obj_track.subcircuitList[:]=[]
+        self.close()
+    """
     
     def createcreateConvertWidget(self):
         global obj_analysis
         self.convertWindow = QtGui.QWidget()
         self.analysisTab = QtGui.QScrollArea()
-        obj_analysis=Analysis.Analysis()
+        obj_analysis=Analysis.Analysis(self.clarg1)
         self.analysisTab.setWidget(obj_analysis)
         #self.analysisTabLayout = QtGui.QVBoxLayout(self.analysisTab.widget())
         self.analysisTab.setWidgetResizable(True)
         global obj_source
         self.sourceTab = QtGui.QScrollArea()
-        obj_source=Source.Source(sourcelist,sourcelisttrack)
+        obj_source=Source.Source(sourcelist,sourcelisttrack,self.clarg1)
         self.sourceTab.setWidget(obj_source)
         #self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
         self.sourceTab.setWidgetResizable(True)
         global obj_model
         self.modelTab = QtGui.QScrollArea()
-        obj_model=Model.Model(schematicInfo,modelList)
+        obj_model=Model.Model(schematicInfo,modelList,self.clarg1)
         self.modelTab.setWidget(obj_model)
         #self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
         self.modelTab.setWidgetResizable(True)
         global obj_devicemodel
         self.deviceModelTab = QtGui.QScrollArea()
-        obj_devicemodel=DeviceModel.DeviceModel(schematicInfo)
+        obj_devicemodel=DeviceModel.DeviceModel(schematicInfo,self.clarg1)
         self.deviceModelTab.setWidget(obj_devicemodel)
         self.deviceModelTab.setWidgetResizable(True)
         global obj_subcircuitTab
         self.subcircuitTab = QtGui.QScrollArea()
-        obj_subcircuitTab = SubcircuitTab.SubcircuitTab(schematicInfo)
+        obj_subcircuitTab = SubcircuitTab.SubcircuitTab(schematicInfo,self.clarg1)
         self.subcircuitTab.setWidget(obj_subcircuitTab)
         self.subcircuitTab.setWidgetResizable(True)
 
@@ -136,8 +205,8 @@ class MainWindow(QtGui.QWidget):
         """
         global schematicInfo
         global analysisoutput
-        kicadFile = sys.argv[1]
-        (projpath,filename)=os.path.split(kicadFile)
+        global kicad
+        (projpath,filename)=os.path.split(self.kicadFile)
         project_name=os.path.basename(projpath)
         print "PROJ PATH---",projpath
         
@@ -399,7 +468,7 @@ class MainWindow(QtGui.QWidget):
                     
         self.obj_convert = Convert.Convert(self.obj_track.sourcelisttrack["ITEMS"],
                                            self.obj_track.source_entry_var["ITEMS"],
-                                           schematicInfo)
+                                           schematicInfo,self.clarg1)
         
         try:
             #Adding Source Value to Schematic Info
@@ -409,10 +478,10 @@ class MainWindow(QtGui.QWidget):
             schematicInfo = self.obj_convert.addModelParameter(schematicInfo)
             
             #Adding Device Library to SchematicInfo
-            schematicInfo = self.obj_convert.addDeviceLibrary(schematicInfo,kicadFile)
+            schematicInfo = self.obj_convert.addDeviceLibrary(schematicInfo,self.kicadFile)
             
             #Adding Subcircuit Library to SchematicInfo
-            schematicInfo = self.obj_convert.addSubcircuit(schematicInfo, kicadFile)
+            schematicInfo = self.obj_convert.addSubcircuit(schematicInfo, self.kicadFile)
             
             analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
                                                                self.obj_track.DC_entry_var["ITEMS"],
@@ -424,24 +493,25 @@ class MainWindow(QtGui.QWidget):
                                                                self.obj_track.AC_type["ITEMS"],
                                                                self.obj_track.op_check)
             #print "SchematicInfo after adding Model Details",schematicInfo
-            
+           
             #Calling netlist file generation function
             self.createNetlistFile(schematicInfo)
             
             self.msg = "The Kicad to Ngspice Conversion completed successfully!!!!!!"
             QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
-            self.close()         
+            #self.obj_track.subcircuitList[:]=[]
+            #self.obj_track.modelTrack[:]=[]
+            #self.close()         
         except Exception as e:
             print "Exception Message: ",e
             print "There was error while converting kicad to ngspice"
             self.close()
             
         # Generate .sub file from .cir.out file if it is a subcircuit
-        subPath = os.path.splitext(kicadFile)[0]
+        subPath = os.path.splitext(self.kicadFile)[0]
             
-        if len(sys.argv)>2:
-            if sys.argv[2] == "sub":
-                self.createSubFile(subPath)
+        if self.clarg2 == "sub":
+            self.createSubFile(subPath)
     
     def createNetlistFile(self,schematicInfo):
         print "Creating Final netlist"
@@ -453,7 +523,7 @@ class MainWindow(QtGui.QWidget):
         #print "KicadfIle",kicadFile
         
         #checking if analysis files is present
-        (projpath,filename) = os.path.split(kicadFile)
+        (projpath,filename) = os.path.split(self.kicadFile)
         analysisFileLoc = os.path.join(projpath,"analysis")
         #print "Analysis File Location",analysisFileLoc
         if os.path.exists(analysisFileLoc):
@@ -512,7 +582,7 @@ class MainWindow(QtGui.QWidget):
             
             
         #Start creating final netlist cir.out file
-        outfile = kicadFile+".out"
+        outfile = self.kicadFile+".out"
         out=open(outfile,"w")
         out.writelines(infoline)
         out.writelines('\n')
@@ -594,69 +664,7 @@ class MainWindow(QtGui.QWidget):
         out.writelines('.ends ' + self.projName)
         print "The subcircuit has been written in "+self.projName+".sub"
 
-                   
             
-#Main Function
-        
-def main(args):
-    print "=================================="
-    print "Kicad to Ngspice netlist converter "
-    print "=================================="
-    global kicadFile,kicadNetlist,schematicInfo
-    global infoline,optionInfo
-    kicadFile = sys.argv[1]
-    
-    #Object of Processing
-    obj_proc = PrcocessNetlist()
-    
-    # Read the netlist
-    kicadNetlist = obj_proc.readNetlist(kicadFile)
-    
-    # Construct parameter information
-    param = obj_proc.readParamInfo(kicadNetlist)
-    
-    # Replace parameter with values
-    netlist,infoline = obj_proc.preprocessNetlist(kicadNetlist,param)
-    
-    print "NETLIST ",netlist
-    print "INFOLINE",infoline
-    
-    # Separate option and schematic information
-    optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
-    
-    print "OPTIONINFO",optionInfo
-    print "SCHEMATICINFO",schematicInfo
-    
-           
-    #List for storing source and its value
-    global sourcelist, sourcelisttrack
-    sourcelist=[]
-    sourcelisttrack=[]
-    schematicInfo,sourcelist = obj_proc.insertSpecialSourceParam(schematicInfo,sourcelist)
-    
-    print "SOURCELIST",sourcelist
-    print "SCHEMATICINFO",schematicInfo
-    
-    #List storing model detail
-    global modelList,outputOption,unknownModelList,multipleModelList
-      
-    modelList = [] 
-    outputOption = []
-    schematicInfo,outputOption,modelList,unknownModelList,multipleModelList = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList)
-    print "Unknown Model List",unknownModelList  
-    print "Multiple Model List",multipleModelList
-    print "Model List",modelList
-    
-   
-    app = QtGui.QApplication(args)
-    kingWindow = MainWindow()
-    #kingWindow.show()  #No need to call show as we are doing it in createMainWindow
-    sys.exit(app.exec_())
-     
-
-   
-if __name__ == '__main__':
-    main(sys.argv)
     
     
   

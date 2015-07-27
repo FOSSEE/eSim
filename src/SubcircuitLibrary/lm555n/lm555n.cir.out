@@ -20,7 +20,7 @@ a2 1 4 5 21 21 8 10 u6
 .model u5 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
 * Schematic Name: d_srlatch, NgSpice Name: d_srlatch
 .model u6 d_srlatch(ic=0 sr_load=1.0e-12 set_delay=1.0e-9 set_load=1.0e-12 sr_delay=1.0e-9 reset_load=1.0e-12 enable_delay=1.0e-9 reset_delay=1.0e-9 rise_delay=1.0e-9 fall_delay=1.0e-9 enable_load=1.0e-12 ) 
-.ac lin 0 0Hz 0Hz
+.ac oct 897897 kjadsfhHz jhdsakjHz
 
 * Control Statements 
 .control

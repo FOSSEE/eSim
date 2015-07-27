@@ -26,4 +26,4 @@ class TrackWidget:
     #Track Widget for Subcircuits where directory has been selected
     subcircuitTrack = {}
     #Track subcircuits which are specified in .cir file
-    subcircuitList = []
+    subcircuitList = {}

@@ -13,12 +13,12 @@ class Model(QtGui.QWidget):
     The widgets are created dynamically in the Model Tab.
     """
     
-    def __init__(self,schematicInfo,modelList):
+    def __init__(self,schematicInfo,modelList,clarg1):
         
         QtGui.QWidget.__init__(self)
         
         #Processing for getting previous values
-        kicadFile = sys.argv[1]
+        kicadFile = clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
         #print "PROJECT NAME---------",project_name
@@ -125,7 +125,14 @@ class Model(QtGui.QWidget):
             '''
             
             #This keeps the track of Model Tab Widget
-            self.obj_trac.modelTrack.append([line[0],line[1],line[2],line[3],line[4],line[5],line[6],self.start,self.end,tag_dict])
+            lst=[line[0],line[1],line[2],line[3],line[4],line[5],line[6],self.start,self.end,tag_dict]
+            check=0
+            for itr in self.obj_trac.modelTrack:
+                if itr==lst:
+                    check=1 
+            
+            if check==0: 
+                self.obj_trac.modelTrack.append(lst)
                         
             print "The tag dictionary : ",tag_dict
         
