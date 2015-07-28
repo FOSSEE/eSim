@@ -14,7 +14,7 @@ class Subcircuit(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
         self.obj_appconfig=Appconfig()
         self.obj_validation=Validation()
-        
+        self.obj_dockarea=parent
         self.layout = QtGui.QVBoxLayout()
         self.splitter= QtGui.QSplitter()
         self.splitter.setOrientation(QtCore.Qt.Vertical)
@@ -58,5 +58,5 @@ class Subcircuit(QtGui.QWidget):
         self.obj_opensubcircuit.body()
         
     def convertsch(self):
-        self.obj_convertsubcircuit = convertSub()
+        self.obj_convertsubcircuit = convertSub(self.obj_dockarea)
         self.obj_convertsubcircuit.createSub()

@@ -12,9 +12,11 @@ class DeviceModel(QtGui.QWidget):
     It dynamically creates the widget for device like diode,mosfet,transistor and jfet.
     """
     
-    def __init__(self,schematicInfo):
+    def __init__(self,schematicInfo,clarg1):
         
-        kicadFile = sys.argv[1]
+        
+        self.clarg1=clarg1
+        kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
         print "PROJECT NAME---------",project_name

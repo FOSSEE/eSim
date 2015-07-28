@@ -84,6 +84,7 @@ class plotWindow(QtGui.QMainWindow):
         self.top_grid.addWidget(self.listBranch,self.a[1]+2,0)
         for i in range(0,self.a[1]):#a[0]-1
             self.chkbox.append(QtGui.QCheckBox(self.obj_dataext.NBList[i]))
+            self.chkbox[i].setStyleSheet('color')
             self.chkbox[i].setToolTip('<b>Check To Plot</b>' )
             self.top_grid.addWidget(self.chkbox[i],i+2,0)
             self.colorLab = QtGui.QLabel()

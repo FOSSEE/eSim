@@ -46,8 +46,8 @@ class Application(QtGui.QMainWindow):
         
         #Creating require Object
         self.obj_workspace = Workspace.Workspace()
-        self.obj_kicad = Kicad()
         self.obj_Mainview = MainView()
+        self.obj_kicad = Kicad(self.obj_Mainview.obj_dockarea)
         self.obj_appconfig = Appconfig() 
         
         #Initialize all widget
@@ -229,6 +229,13 @@ class Application(QtGui.QMainWindow):
         print "model editor is called"
         self.obj_appconfig.print_info('model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
+    """    
+    def open_kicadToNgspice(self):
+        print "kicadToNgspice is called"
+        self.obj_appconfig.print_info('kicadToNgspice is called')
+        self.obj_Mainview.obj_dockarea.kicadToNgspiceEditor()"""
+        
+        
         
     def testing(self):
         print "Success hit kicad button"
