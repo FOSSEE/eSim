@@ -14,7 +14,6 @@ class DeviceModel(QtGui.QWidget):
     
     def __init__(self,schematicInfo,clarg1):
         
-        
         self.clarg1=clarg1
         kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
@@ -66,7 +65,7 @@ class DeviceModel(QtGui.QWidget):
                 transbox.setTitle("Add library for Transistor "+words[0]+" : "+words[4])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                global path_name
+                #global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
@@ -266,7 +265,7 @@ class DeviceModel(QtGui.QWidget):
                 self.devicemodel_dict_end[words[0]]=self.count
                 self.count = self.count+1
                 mosfetbox.setLayout(mosfetgrid)
-                global path_name
+                #global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
@@ -333,7 +332,7 @@ class DeviceModel(QtGui.QWidget):
         This function is use to keep track of all Device Model widget
         """
         print "Calling Track Library funtion"
-                #print "Object Called is ",sending_btn.objectName()
+        #print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = iter_value
         print "self.widgetObjCount-----",self.widgetObjCount
         self.libfile = path_value

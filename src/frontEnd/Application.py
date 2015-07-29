@@ -261,6 +261,7 @@ class MainView(QtGui.QWidget):
         
         #Area to be included in MainView
         self.noteArea = QtGui.QTextEdit()
+        self.noteArea.setReadOnly(True)
         self.obj_appconfig.noteArea['Note'] = self.noteArea
         self.obj_appconfig.noteArea['Note'].append('        eSim Started......')
         self.obj_appconfig.noteArea['Note'].append('Project Selected : None')

@@ -20,7 +20,9 @@ class DockArea(QtGui.QMainWindow):
                 
         for dockName in dockList:
             dock[dockName] = QtGui.QDockWidget(dockName)
-            dock[dockName].setWidget(QtGui.QTextEdit())
+            self.welcome = QtGui.QTextEdit()
+            self.welcome.setReadOnly(True)
+            dock[dockName].setWidget(self.welcome)
             #CSS
             dock[dockName].setStyleSheet(" \
             QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
