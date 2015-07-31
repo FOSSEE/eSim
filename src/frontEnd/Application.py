@@ -224,7 +224,7 @@ class Application(QtGui.QMainWindow):
         print "Help is called"
         self.obj_appconfig.print_info('Help is called')
         print "Current Project : ",self.obj_appconfig.current_project
-        self.obj_Mainview.obj_dockarea.createTestEditor()
+        self.obj_Mainview.obj_dockarea.usermanual()
     
         
     def open_modelEditor(self):

@@ -6,6 +6,7 @@ from modelEditor.ModelEditor import ModelEditorclass
 from subcircuit.Subcircuit import Subcircuit
 from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
+from browser.UserManual import UserManual
 import os
 
 dockList = ['Welcome']
@@ -237,5 +238,32 @@ class DockArea(QtGui.QMainWindow):
         dock['Subcircuit-'+str(count)].setVisible(True)
         dock['Subcircuit-'+str(count)].setFocus()
         dock['Subcircuit-'+str(count)].raise_()
+        
+        count = count + 1
+    
+    def usermanual(self):
+        """
+        This function creates a widget for different subcircuit options
+        """
+        
+        global count
+        self.usermanualWidget=QtGui.QWidget()
+        self.usermanualLayout=QtGui.QVBoxLayout()
+        self.usermanualLayout.addWidget(UserManual())
+        
+        self.usermanualWidget.setLayout(self.usermanualLayout)
+        dock['User Manual-'+str(count)] = QtGui.QDockWidget('User Manual-'+str(count))
+        dock['User Manual-'+str(count)].setWidget(self.usermanualWidget)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['User Manual-'+str(count)])  
+        self.tabifyDockWidget(dock['Welcome'],dock['User Manual-'+str(count)])
+        
+        #CSS
+        dock['User Manual-'+str(count)].setStyleSheet(" \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        ")
+        
+        dock['User Manual-'+str(count)].setVisible(True)
+        dock['User Manual-'+str(count)].setFocus()
+        dock['User Manual-'+str(count)].raise_()
         
         count = count + 1
