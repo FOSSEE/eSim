@@ -5,6 +5,7 @@ from configuration.Appconfig import Appconfig
 from modelEditor.ModelEditor import ModelEditorclass
 from subcircuit.Subcircuit import Subcircuit
 from kicadtoNgspice.KicadtoNgspice import MainWindow
+from browser.Welcome import Welcome
 import os
 
 dockList = ['Welcome']
@@ -13,7 +14,29 @@ dock = {}
 
 class DockArea(QtGui.QMainWindow):
     
+    def __init__(self):
+        QtGui.QMainWindow.__init__(self)
+        self.obj_appconfig = Appconfig()
+         
+        for dockName in dockList:
+            dock[dockName] = QtGui.QDockWidget(dockName)
+            self.welcomeWidget = QtGui.QWidget()
+            self.welcomeLayout = QtGui.QVBoxLayout()
+            self.welcomeLayout.addWidget(Welcome())  ##Call browser
+            
+            #Adding to main Layout
+            self.welcomeWidget.setLayout(self.welcomeLayout)
+            dock[dockName].setWidget(self.welcomeWidget)
+            #CSS
+            dock[dockName].setStyleSheet(" \
+            QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+            ")            
+            self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName])  
+                    
+        #self.tabifyDockWidget(dock['Notes'],dock['Blank'])
+        self.show()
     
+    '''
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
@@ -31,7 +54,7 @@ class DockArea(QtGui.QMainWindow):
                     
         #self.tabifyDockWidget(dock['Notes'],dock['Blank'])
         self.show()
-    
+    '''
              
     def createTestEditor(self):
         """

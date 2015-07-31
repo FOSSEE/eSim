@@ -16,7 +16,12 @@
 #       CREATED: Wednesday 21 January 2015 
 #      REVISION:  ---
 #===============================================================================
-
+import os
+import sys
+#Setting PYTHONPATH
+cwd = os.getcwd()
+(setPath,fronEnd) = os.path.split(cwd) 
+sys.path.append(setPath)
 
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
@@ -26,8 +31,6 @@ from projManagement.Kicad import Kicad
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
-import os
-import sys 
 import time
 from PyQt4.Qt import QSize
 
@@ -221,8 +224,7 @@ class Application(QtGui.QMainWindow):
         print "Help is called"
         self.obj_appconfig.print_info('Help is called')
         print "Current Project : ",self.obj_appconfig.current_project
-        #self.obj_appconfig.print_info('Current Project : ' + self.obj_appconfig.current_project['ProjectName'])  
-        #self.obj_Mainview.obj_dockarea.plottingEditor()
+        self.obj_Mainview.obj_dockarea.createTestEditor()
     
         
     def open_modelEditor(self):
