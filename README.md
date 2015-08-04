@@ -44,4 +44,5 @@ eSim has been successfully ported to low cost FOSSEE laptop (http://laptop.fosse
     `sudo apt-get install ngspice`
 
 
-
+##Simple way to install eSim in Ubuntu.
+Please read INSTALL for more information on how to install eSim with single script.

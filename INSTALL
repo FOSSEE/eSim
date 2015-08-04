@@ -1,0 +1,38 @@
+
+eSim installation instructions
+=================================
+
+Table of contents
+
+    1. eSim installation in Ubuntu (LINUX)
+        1.1 Prerequisites
+        1.2 Install from tarball (e.g. ngspice-26.tar.gz)
+   
+    2. eSim installation in Windows
+
+
+
+1. eSim installation in Ubuntu.
+    
+   After downloading the zip file from https://github.com/FOSSEE/eSim to a local directory unpack it using: 
+  
+   $ unzip eSim.zip
+
+   Now change directories in to the top-level source directory (where this INSTALL file can be found).
+
+   To install eSim and other dependecies run the following command.
+
+   $ ../install-linux.sh --install
+
+   Above script will install eSim along with dependencies.
+
+   eSim will be installed to /opt/eSim
+    
+   To run eSim you can directly run it from terminal as
+   $ esim
+    
+   or you can double click on eSim icon created on desktop after installation.
+
+2. eSim installation in Windows
+
+
