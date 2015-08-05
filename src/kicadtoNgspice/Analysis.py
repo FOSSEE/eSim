@@ -31,7 +31,50 @@ class Analysis(QtGui.QWidget):
         self.grid.addWidget(self.createACgroup(),1,0)
         self.grid.addWidget(self.createDCgroup(),2,0)
         self.grid.addWidget(self.createTRANgroup(),3,0)
-            
+         
+        try:
+            kicadFile = self.clarg1
+            (projpath,filename)=os.path.split(kicadFile)
+            if os.path.isfile(os.path.join(projpath, 'analysis')):
+                print "analysis present"
+            analysisfile = open(os.path.join(projpath,'analysis'))
+            content = analysisfile.readline()
+            print "content", content
+            contentlist= content.split() 
+            print "contenlist", contentlist
+            if contentlist[0]== '.ac':
+                self.checkAC.setChecked(True)
+                self.acbox.setDisabled(False)
+                self.dcbox.setDisabled(True)
+                self.trbox.setDisabled(True)
+                self.track_obj.set_CheckBox["ITEMS"]="AC"
+                
+            elif contentlist[0]== '.dc':
+                self.checkDC.setChecked(True)
+                self.dcbox.setDisabled(False)
+                self.acbox.setDisabled(True)
+                self.trbox.setDisabled(True)
+                self.track_obj.set_CheckBox["ITEMS"]="DC"
+                #self.enableBox()
+                
+            elif contentlist[0]== '.tran':
+                self.checkTRAN.setChecked(True)
+                self.trbox.setDisabled(False)
+                self.acbox.setDisabled(True)
+                self.dcbox.setDisabled(True)
+                self.track_obj.set_CheckBox["ITEMS"]="TRAN"
+                
+            elif contentlist[0]== '.op':
+                self.checkDC.setChecked(True)
+                self.dcbox.setDisabled(False)
+                self.acbox.setDisabled(True)
+                self.trbox.setDisabled(True)
+                self.check.setChecked(True)
+        except:
+            self.checkTRAN.setChecked(True)
+            #self.trbox.setDisabled(False)
+            self.track_obj.set_CheckBox["ITEMS"]="TRAN"
+         
          
         self.setLayout(self.grid)
         self.show()
@@ -49,7 +92,7 @@ class Analysis(QtGui.QWidget):
         self.checkgroupbtn.addButton(self.checkDC)
         self.checkgroupbtn.addButton(self.checkTRAN)
         self.checkgroupbtn.setExclusive(True)
-        self.checkAC.setChecked(True)
+        #self.checkAC.setChecked(True)
         self.checkgroupbtn.buttonClicked.connect(self.enableBox)
         
         self.checkgrid.addWidget(self.checkAC,0,0)
@@ -107,8 +150,6 @@ class Analysis(QtGui.QWidget):
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acgrid = QtGui.QGridLayout()
-        self.acbox.setDisabled(False)
-        self.track_obj.set_CheckBox["ITEMS"]="AC"
         self.radiobuttongroup= QtGui.QButtonGroup()
         self.Lin = QtGui.QRadioButton("Lin")
         self.Dec = QtGui.QRadioButton("Dec")
@@ -247,8 +288,6 @@ class Analysis(QtGui.QWidget):
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
         self.dcgrid = QtGui.QGridLayout()
-        
-        self.dcbox.setDisabled(True)
         self.dcbox.setLayout(self.dcgrid)
         
         self.source_name= QtGui.QLabel('Enter Source Name',self)
@@ -390,9 +429,7 @@ class Analysis(QtGui.QWidget):
             
         self.trbox = QtGui.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
-        self.trgrid = QtGui.QGridLayout()
-        
-        self.trbox.setDisabled(True)
+        self.trgrid = QtGui.QGridLayout()    
         self.trbox.setLayout(self.trgrid)
         
         self.start = QtGui.QLabel("Start Time")
