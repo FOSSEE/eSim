@@ -1,0 +1,6 @@
+.model npn NPN( Vtf=4 Cjc=3.638p Nc=2 Tr=239.5n Ne=1.259 
++ Cje=4.493p Vjc=.75 Xtb=1.5 Rb=10 Rc=1 
++ Tf=301.2p Xti=3 Ikr=0 Bf=416.4 Fc=.5 
++ Ikf=66.78m Br=.7371 Mje=.2593 Mjc=.3085 Vaf=74.03 
++ Isc=0 Ise=6.734f Xtf=2 Vje=.75 Is=6.734f 
++ Itf=.4 Eg=1.11 )

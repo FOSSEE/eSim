@@ -1,0 +1,347 @@
+EESchema Schematic File Version 2  date Sunday 09 December 2012 08:37:05 AM IST
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:special
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:analogSpice
+LIBS:converterSpice
+LIBS:digitalSpice
+LIBS:linearSpice
+LIBS:measurementSpice
+LIBS:portSpice
+LIBS:sourcesSpice
+LIBS:BasicGates-cache
+EELAYER 25  0
+EELAYER END
+$Descr A4 11700 8267
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "9 dec 2012"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L VPLOT8_1 U1
+U 3 1 50C3FFE2
+P 9700 2500
+F 0 "U1" H 9550 2600 50  0000 C CNN
+F 1 "VPLOT8_1" H 9850 2600 50  0000 C CNN
+	3    9700 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L VPLOT8_1 U1
+U 2 1 50C3FFDB
+P 2400 3300
+F 0 "U1" H 2250 3400 50  0000 C CNN
+F 1 "VPLOT8_1" H 2550 3400 50  0000 C CNN
+	2    2400 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L VPLOT8_1 U1
+U 1 1 50C3FFD3
+P 2400 1250
+F 0 "U1" H 2250 1350 50  0000 C CNN
+F 1 "VPLOT8_1" H 2550 1350 50  0000 C CNN
+	1    2400 1250
+	1    0    0    -1  
+$EndComp
+Connection ~ 9700 3000
+Wire Wire Line
+	9700 3000 9700 2800
+Wire Wire Line
+	9900 3100 9900 3000
+Wire Wire Line
+	9900 3000 9100 3000
+Wire Wire Line
+	1700 3800 3750 3800
+Wire Wire Line
+	7900 3100 7850 3100
+Wire Wire Line
+	7850 3100 7850 3400
+Wire Wire Line
+	7850 3400 7750 3400
+Connection ~ 5300 2300
+Wire Wire Line
+	5300 2300 5300 3300
+Wire Wire Line
+	5300 3300 5500 3300
+Wire Wire Line
+	5100 3500 5500 3500
+Wire Wire Line
+	7900 2900 7350 2900
+Wire Wire Line
+	7350 2900 7350 2400
+Wire Wire Line
+	7350 2400 7000 2400
+Connection ~ 3750 2200
+Wire Wire Line
+	3900 3400 3750 3400
+Wire Wire Line
+	3750 3400 3750 2200
+Wire Wire Line
+	3850 2200 3650 2200
+Wire Wire Line
+	3650 2200 3650 1700
+Connection ~ 2400 1700
+Wire Wire Line
+	2400 1700 2400 1550
+Connection ~ 2250 1700
+Connection ~ 2000 2900
+Wire Wire Line
+	2000 2900 2000 2700
+Wire Wire Line
+	2250 3800 2250 4150
+Wire Wire Line
+	1700 3800 1700 3950
+Wire Wire Line
+	2250 2500 2250 2900
+Wire Wire Line
+	2250 2900 1750 2900
+Connection ~ 1700 5050
+Wire Wire Line
+	1700 5050 2250 5050
+Wire Wire Line
+	2250 5050 2250 4650
+Wire Wire Line
+	1700 4850 1700 5200
+Wire Wire Line
+	1750 1800 1750 1700
+Wire Wire Line
+	2250 1700 2250 2000
+Wire Wire Line
+	1750 3150 1750 2700
+Connection ~ 1750 2900
+Connection ~ 2250 3800
+Wire Wire Line
+	2400 3800 2400 3600
+Connection ~ 2400 3800
+Wire Wire Line
+	3900 3600 3750 3600
+Wire Wire Line
+	3750 3600 3750 3800
+Wire Wire Line
+	3500 3800 3500 2400
+Wire Wire Line
+	3500 2400 3850 2400
+Connection ~ 3500 3800
+Wire Wire Line
+	5050 2300 5800 2300
+Wire Wire Line
+	6200 2200 6200 1900
+Wire Wire Line
+	5800 2500 5200 2500
+Wire Wire Line
+	5200 2500 5200 3500
+Connection ~ 5200 3500
+Wire Wire Line
+	6700 3400 6850 3400
+Wire Wire Line
+	1750 1700 3650 1700
+Wire Wire Line
+	9900 3600 9900 3900
+Text Notes 9150 2850 0    60   ~ 0
+~A.B
+Text Notes 9050 2850 0    60   ~ 0
++
+Text Notes 8900 2850 0    60   ~ 0
+A.B
+Text Notes 8000 2300 0    60   ~ 0
+~B
+Text Notes 7900 2300 0    60   ~ 0
++
+Text Notes 7750 2300 0    60   ~ 0
+=~A
+Text Notes 7900 3650 0    60   ~ 0
+=A+B
+Text Notes 7850 3500 0    60   ~ 0
+A.B+A+B
+Text Notes 6450 3600 0    60   ~ 0
+~((A.B)+(A+B))
+Text Notes 7100 2300 0    60   ~ 0
+~((A.B).(A+B))
+$Comp
+L 74HC86 U12
+U 1 1 507253B2
+P 8500 3000
+F 0 "U12" H 8550 3050 50  0000 C CNN
+F 1 "74HC86" H 8550 2950 40  0000 C CNN
+	1    8500 3000
+	1    0    0    -1  
+$EndComp
+Text Notes 5150 3650 0    60   ~ 0
+A+B
+Text Notes 5100 2250 0    60   ~ 0
+A.B
+Text Notes 3600 3950 0    60   ~ 0
+B
+Text Notes 3500 1650 0    60   ~ 0
+A
+$Comp
+L 74LS32 U8
+U 1 1 50725446
+P 4500 3500
+F 0 "U8" H 4500 3550 60  0000 C CNN
+F 1 "74LS32" H 4500 3450 60  0000 C CNN
+	1    4500 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74LS08 U7
+U 1 1 50725428
+P 4450 2300
+F 0 "U7" H 4450 2350 60  0000 C CNN
+F 1 "74LS08" H 4450 2250 60  0000 C CNN
+	1    4450 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74HC02 U9
+U 1 1 50725415
+P 6100 3400
+F 0 "U9" H 6100 3450 60  0000 C CNN
+F 1 "74HC02" H 6150 3350 60  0000 C CNN
+	1    6100 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L 74HC04 U11
+U 1 1 507253DF
+P 7300 3400
+F 0 "U11" H 7450 3500 40  0000 C CNN
+F 1 "74HC04" H 7500 3300 40  0000 C CNN
+	1    7300 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L 7400 U10
+U 1 1 5072539F
+P 6400 2400
+F 0 "U10" H 6400 2450 60  0000 C CNN
+F 1 "7400" H 6400 2300 60  0000 C CNN
+	1    6400 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR01
+U 1 1 5072534B
+P 9900 3900
+F 0 "#PWR01" H 9900 3900 30  0001 C CNN
+F 1 "GND" H 9900 3830 30  0001 C CNN
+	1    9900 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG02
+U 1 1 507251F2
+P 2000 2700
+F 0 "#FLG02" H 2000 2970 30  0001 C CNN
+F 1 "PWR_FLAG" H 2000 2930 30  0000 C CNN
+	1    2000 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR03
+U 1 1 507251E5
+P 1750 3150
+F 0 "#PWR03" H 1750 3150 30  0001 C CNN
+F 1 "GND" H 1750 3080 30  0001 C CNN
+	1    1750 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R3
+U 1 1 507251A7
+P 2250 2250
+F 0 "R3" V 2330 2250 50  0000 C CNN
+F 1 "1000" V 2250 2250 50  0000 C CNN
+	1    2250 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L PULSE v2
+U 1 1 50725192
+P 1750 2250
+F 0 "v2" H 1550 2350 60  0000 C CNN
+F 1 "PULSE" H 1550 2200 60  0000 C CNN
+	1    1750 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG04
+U 1 1 50653022
+P 6200 1900
+F 0 "#FLG04" H 6200 2170 30  0001 C CNN
+F 1 "PWR_FLAG" H 6200 2130 30  0000 C CNN
+	1    6200 1900
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R2
+U 1 1 50652FB6
+P 9900 3350
+F 0 "R2" V 9980 3350 50  0000 C CNN
+F 1 "1000" V 9900 3350 50  0000 C CNN
+	1    9900 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R1
+U 1 1 505C9F25
+P 2250 4400
+F 0 "R1" V 2330 4400 50  0000 C CNN
+F 1 "1000" V 2250 4400 50  0000 C CNN
+	1    2250 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR05
+U 1 1 505C9EE8
+P 1700 5200
+F 0 "#PWR05" H 1700 5200 30  0001 C CNN
+F 1 "GND" H 1700 5130 30  0001 C CNN
+	1    1700 5200
+	1    0    0    -1  
+$EndComp
+$Comp
+L PULSE v1
+U 1 1 505C9ECF
+P 1700 4400
+F 0 "v1" H 1500 4500 60  0000 C CNN
+F 1 "PULSE" H 1500 4350 60  0000 C CNN
+	1    1700 4400
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

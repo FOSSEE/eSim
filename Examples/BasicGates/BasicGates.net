@@ -1,0 +1,112 @@
+# EESchema Netlist Version 1.1 created  Monday 22 October 2012 05:06:15 PM IST
+(
+ ( /505C9F25 R3 R1 1000
+  ( 1 N-000006 )
+  ( 2 GND )
+ )
+ ( /50652FB6 R3 R2 1000
+  ( 1 N-000007 )
+  ( 2 GND )
+ )
+ ( /507251A7 R3 R3 1000
+  ( 1 N-000009 )
+  ( 2 GND )
+ )
+ ( /505FD8A0 $noname$ U3 ADC
+  ( 1 N-000006 )
+  ( 2 N-000005 )
+ )
+ ( /505FDC21 $noname$ U4 DAC
+  ( 1 N-000008 )
+  ( 2 N-000007 )
+ )
+ ( /50725212 $noname$ U6 ADC
+  ( 1 N-000009 )
+  ( 2 N-000011 )
+ )
+ ( /50725428 $noname$ U7 74LS08
+  ( 1 N-000011 )
+  ( 2 N-000005 )
+  ( 3 N-000003 )
+  ( 7 GND )
+  ( 14 VCC )
+ )
+ ( /50725446 $noname$ U8 74LS32
+  ( 1 N-000011 )
+  ( 2 N-000005 )
+  ( 3 N-000013 )
+  ( 7 GND )
+  ( 14 VCC )
+ )
+ ( /50725415 $noname$ U9 74HC02
+  ( 1 N-000004 )
+  ( 2 N-000003 )
+  ( 3 N-000013 )
+  ( 7 GND )
+  ( 14 VCC )
+ )
+ ( /5072539F $noname$ U10 7400
+  ( 1 N-000003 )
+  ( 2 N-000013 )
+  ( 3 N-000010 )
+  ( 7 GND )
+  ( 14 VCC )
+ )
+ ( /507253DF $noname$ U11 74HC04
+  ( 1 N-000004 )
+  ( 2 N-000012 )
+  ( 7 GND )
+  ( 14 VCC )
+ )
+ ( /507253B2 $noname$ U12 74HC86
+  ( 1 N-000010 )
+  ( 2 N-000012 )
+  ( 3 N-000008 )
+  ( 7 GND )
+  ( 14 VCC )
+ )
+ ( /505C9ECF $noname$ v1 PULSE
+  ( 1 N-000006 )
+  ( 2 GND )
+ )
+ ( /50725192 $noname$ v2 PULSE
+  ( 1 N-000009 )
+  ( 2 GND )
+ )
+)
+*
+{ Allowed footprints by component:
+$component R1
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R2
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component R3
+ R?
+ SM0603
+ SM0805
+ R?-*
+$endlist
+$component U9
+ SO14*
+ 14DIP*
+$endlist
+$component U10
+ 14DIP300*
+ SO14*
+$endlist
+$component v1
+ 1_pin
+$endlist
+$component v2
+ 1_pin
+$endlist
+$endfootprintlist
+}

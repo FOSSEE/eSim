@@ -1,0 +1,26 @@
+* eeschema netlist version 1.1 (spice format) creation date: wed jun 24 12:29:51 2015
+
+.include full_adder.sub
+x1 4 3 2 1 8 full_adder
+* u1  10 11 9 4 3 2 adc_bridge_3
+* u2  1 8 7 5 dac_bridge_2
+r1  0 7 1k
+r2  0 5 1k
+v3 10 0  dc 5
+v1 11 0  dc 0
+v2 9 0  dc 5
+a1 [10 11 9 ] [4 3 2 ] u1
+a2 [1 8 ] [7 5 ] u2
+* Schematic Name: adc_bridge_3, NgSpice Name: adc_bridge
+.model u1 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: dac_bridge_2, NgSpice Name: dac_bridge
+.model u2 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

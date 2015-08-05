@@ -1,0 +1,25 @@
+* eeschema netlist version 1.1 (spice format) creation date: wednesday 29 may 2013 04:04:50 pm ist
+.include npn.lib
+
+v1  6 0 dc 10
+* Plotting option vplot8_1
+v2  2 0 ac 0.5
+r1  3 2 50
+r2  6 8 200k
+c1  3 8 40u
+r3  8 0 50k
+r6  4 0 1k
+c2  0 5 100u
+c3  4 7 40u
+r5  6 7 2k
+r4  5 0 1.5k
+q1 7 8 5 npn
+
+.ac dec 100 100Hz 10KHz
+
+* Control Statements 
+.control
+run
+plot v(4) 
+.endc
+.end

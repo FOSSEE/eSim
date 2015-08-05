@@ -1,0 +1,101 @@
+Cmp-Mod V01 Created by CvPCB (2011-05-25)-stable date = Monday 22 October 2012 05:06:15 PM IST
+
+BeginCmp
+TimeStamp = /505C9F25;
+Reference = R1;
+ValeurCmp = 1000;
+IdModule  = R3;
+EndCmp
+
+BeginCmp
+TimeStamp = /50652FB6;
+Reference = R2;
+ValeurCmp = 1000;
+IdModule  = R3;
+EndCmp
+
+BeginCmp
+TimeStamp = /507251A7;
+Reference = R3;
+ValeurCmp = 1000;
+IdModule  = R3;
+EndCmp
+
+BeginCmp
+TimeStamp = /505FD8A0;
+Reference = U3;
+ValeurCmp = ADC;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /505FDC21;
+Reference = U4;
+ValeurCmp = DAC;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /50725212;
+Reference = U6;
+ValeurCmp = ADC;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /50725428;
+Reference = U7;
+ValeurCmp = 74LS08;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /50725446;
+Reference = U8;
+ValeurCmp = 74LS32;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /50725415;
+Reference = U9;
+ValeurCmp = 74HC02;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /5072539F;
+Reference = U10;
+ValeurCmp = 7400;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /507253DF;
+Reference = U11;
+ValeurCmp = 74HC04;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /507253B2;
+Reference = U12;
+ValeurCmp = 74HC86;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /505C9ECF;
+Reference = v1;
+ValeurCmp = PULSE;
+IdModule  = ;
+EndCmp
+
+BeginCmp
+TimeStamp = /50725192;
+Reference = v2;
+ValeurCmp = PULSE;
+IdModule  = ;
+EndCmp
+
+EndListe

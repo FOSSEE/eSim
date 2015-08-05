@@ -1,0 +1,2 @@
+v1 in gnd  dc 5
+v2 vcc gnd  dc 5

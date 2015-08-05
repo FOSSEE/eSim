@@ -1,0 +1,27 @@
+* eeschema netlist version 1.1 (spice format) creation date: thu jun  4 14:46:46 2015
+
+r3  5 6 4.7k
+r4  7 0 1k
+r1  1 3 10k
+c1  8 1 0.01u
+r2  0 8 1meg
+c2  0 8 5p
+c3  8 7 4p
+c4  8 6 2p
+c5  6 7 0.5p
+c6  7 0 2u
+c7  6 2 5u
+c8  2 0 6p
+r5  2 0 2.2k
+v2 5 0  dc 0
+v1 3 0  ac 0
+j1  6 8 7 njf
+.dc  0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
