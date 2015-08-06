@@ -13,36 +13,5 @@ eSim has been successfully ported to low cost FOSSEE laptop (http://laptop.fosse
 4. NgSpice 
 5. Kicad (Latest Version build on July-14)
 
-## Installing and setting PATH for eSim
-1. Clone this repository or download it as zip file.
-2. set PYTHONPATH
-    - For Linux :
-        Open .bashrc file and add this line.
-
-        `export PYTHONPATH=$PYTHONPATH:/path-to-your-downloaded-folder/eSim/src`
-
-    - For Window :
-        set environment variable `PYHTONPATH` with complete path to your eSim/src
-
-
-## How to run eSim ?
-1. Using command line or terminal go to location eSim/src/frontEnd
-2. Type below command to open eSim
-    - `python Application.py`
-
-
-## How to install latest version of kicad in Ubuntu ?
-1. `sudo add-apt-repository ppa:js-reynaud/ppa-kicad`
-
-2. `sudo apt-get update`
-
-3. `sudo apt-get install kicad`
-
-
-## How to install ngspice in Ubuntu?
-
-    `sudo apt-get install ngspice`
-
-
-##Simple way to install eSim in Ubuntu.
-Please read INSTALL for more information on how to install eSim with single script.
+## eSim Installation Ubuntu
+Refer INSTALL file for eSim installation on Ubuntu.
