@@ -1,7 +1,7 @@
 [Desktop Entry]
 Version=0.9
 Name=eSim
-Comment=Open Source CAD
+Comment=EDA Tools
 GenericName=eSim
 Keywords=eda-tools
 Exec=esim %u
