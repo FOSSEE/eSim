@@ -374,7 +374,8 @@ class Convert:
             #Adding .include line to Schematic Info at the start of line
             for item in list(set(includeLine)):
                 schematicInfo.insert(0,item)
-                    
+        
+                            
         return schematicInfo
     
     def addSubcircuit(self,schematicInfo,kicadFile):

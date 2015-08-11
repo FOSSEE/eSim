@@ -120,7 +120,9 @@ class MainWindow(QtGui.QWidget):
                 
         else:
             self.createMainWindow()
-           
+            
+        print "Init Schematic Info",schematicInfo
+        initial_schematicInfo = schematicInfo
              
     def createMainWindow(self):
         """
@@ -206,10 +208,11 @@ class MainWindow(QtGui.QWidget):
         global schematicInfo
         global analysisoutput
         global kicad
+        store_schematicInfo = list(schematicInfo)
         (projpath,filename)=os.path.split(self.kicadFile)
         project_name=os.path.basename(projpath)
         print "PROJ PATH---",projpath
-        
+          
         
         check=1
         try:
@@ -219,8 +222,7 @@ class MainWindow(QtGui.QWidget):
         except:
             check=0
             
-        
-        
+                
         fw=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'w')
         if check==0:
             attr_parent=ET.Element("KicadtoNgspice")
@@ -285,7 +287,7 @@ class MainWindow(QtGui.QWidget):
         grand_child_count=1
         #global tmp_check
         #tmp_check=0
-        for i in schematicInfo:
+        for i in store_schematicInfo:
             tmp_check=0
             words=i.split(' ')
             wordv=words[0]
@@ -465,23 +467,23 @@ class MainWindow(QtGui.QWidget):
         tree=ET.ElementTree(attr_parent)
         tree.write(fw)
         
-                    
+                     
         self.obj_convert = Convert.Convert(self.obj_track.sourcelisttrack["ITEMS"],
                                            self.obj_track.source_entry_var["ITEMS"],
-                                           schematicInfo,self.clarg1)
+                                           store_schematicInfo,self.clarg1)
         
         try:
             #Adding Source Value to Schematic Info
-            schematicInfo = self.obj_convert.addSourceParameter()
+            store_schematicInfo = self.obj_convert.addSourceParameter()
             
-            #Adding Model Value to schematicInfo
-            schematicInfo = self.obj_convert.addModelParameter(schematicInfo)
+            #Adding Model Value to store_schematicInfo
+            store_schematicInfo = self.obj_convert.addModelParameter(store_schematicInfo)
             
             #Adding Device Library to SchematicInfo
-            schematicInfo = self.obj_convert.addDeviceLibrary(schematicInfo,self.kicadFile)
+            store_schematicInfo = self.obj_convert.addDeviceLibrary(store_schematicInfo,self.kicadFile)
             
             #Adding Subcircuit Library to SchematicInfo
-            schematicInfo = self.obj_convert.addSubcircuit(schematicInfo, self.kicadFile)
+            store_schematicInfo = self.obj_convert.addSubcircuit(store_schematicInfo, self.kicadFile)
             
             analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
                                                                self.obj_track.DC_entry_var["ITEMS"],
@@ -493,9 +495,11 @@ class MainWindow(QtGui.QWidget):
                                                                self.obj_track.AC_type["ITEMS"],
                                                                self.obj_track.op_check)
             #print "SchematicInfo after adding Model Details",schematicInfo
+            
+            print "Analysis OutPut------>",analysisoutput
            
             #Calling netlist file generation function
-            self.createNetlistFile(schematicInfo)
+            self.createNetlistFile(store_schematicInfo)
             
             self.msg = "The Kicad to Ngspice Conversion completed successfully!!!!!!"
             QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
@@ -513,7 +517,7 @@ class MainWindow(QtGui.QWidget):
         if self.clarg2 == "sub":
             self.createSubFile(subPath)
     
-    def createNetlistFile(self,schematicInfo):
+    def createNetlistFile(self,store_schematicInfo):
         print "Creating Final netlist"
         #print "INFOLINE",infoline
         #print "OPTIONINFO",optionInfo
@@ -521,7 +525,8 @@ class MainWindow(QtGui.QWidget):
         #print "SUBCKT ",subcktList
         #print "OUTPUTOPTION",outputOption
         #print "KicadfIle",kicadFile
-        
+        store_optionInfo = list(optionInfo) #To avoid writing optionInfo twice in final netlist
+                
         #checking if analysis files is present
         (projpath,filename) = os.path.split(self.kicadFile)
         analysisFileLoc = os.path.join(projpath,"analysis")
@@ -547,7 +552,7 @@ class MainWindow(QtGui.QWidget):
             eachline=eachline.strip()
             if len(eachline)>1:
                 if eachline[0]=='.':
-                    optionInfo.append(eachline)
+                    store_optionInfo.append(eachline)
                 else:
                     pass
                 
@@ -558,7 +563,7 @@ class MainWindow(QtGui.QWidget):
         #includeOption=[]  #Don't know why to use it
         #model = []      #Don't know why to use it
         
-        for eachline in optionInfo:
+        for eachline in store_optionInfo:
             words=eachline.split()
             option=words[0]
             if (option=='.ac' or option=='.dc' or option=='.disto' or option=='.noise' or
@@ -586,7 +591,7 @@ class MainWindow(QtGui.QWidget):
         out=open(outfile,"w")
         out.writelines(infoline)
         out.writelines('\n')
-        sections=[simulatorOption, initialCondOption, schematicInfo, analysisOption]
+        sections=[simulatorOption, initialCondOption, store_schematicInfo, analysisOption]
         print "SECTIONS",sections
         for section in sections:
             if len(section) == 0:
@@ -604,9 +609,10 @@ class MainWindow(QtGui.QWidget):
         out.writelines('print alli > plot_data_i.txt\n')
         out.writelines('.endc\n')
         out.writelines('.end\n')
-        
         out.close()
         
+              
+             
     def createSubFile(self,subPath):
         self.project = subPath
         self.projName = os.path.basename(self.project)
