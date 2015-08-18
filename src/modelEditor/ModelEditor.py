@@ -422,14 +422,19 @@ class ModelEditorclass(QtGui.QWidget):
             libfile.write('+  ' + tags + '=' + text +'\n')
         libfile.write(')')
         libfile.close()
-        for params in self.tree.findall('param'):
-            self.root.remove(params)
-        param = ET.SubElement(self.root,'param') 
+       
+        root = ET.Element("library")
+        ET.SubElement(root, "model_name").text = self.model_name
+        ET.SubElement(root, "ref_model").text = self.ref_model
+        param = ET.SubElement(root, "param")
         for tags, text in self.modeldict.items():
             ET.SubElement(param, tags).text = text
-        self.tree.write(editfile)
-        self.obj_appconfig.print_info('Updated library ' + libpath)
+        tree = ET.ElementTree(root)
         
+        tree.write(os.path.join(xmlpath,filename +".xml"))
+        
+        self.obj_appconfig.print_info('Updated library ' + libpath)
+
     def removeparameter(self):
         self.savebtn.setDisabled(False)
         index = self.modeltable.currentIndex()
