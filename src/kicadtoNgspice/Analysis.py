@@ -48,6 +48,15 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(True)
                 self.trbox.setDisabled(True)
                 self.track_obj.set_CheckBox["ITEMS"]="AC"
+                if contentlist[1]== 'lin':
+                    self.Lin.setChecked(True)
+                    self.track_obj.AC_type["ITEMS"]="lin"
+                elif contentlist[1]== 'dec':
+                    self.Dec.setChecked(True)
+                    self.track_obj.AC_type["ITEMS"]="dec"
+                elif contentlist[1]== 'oct':
+                    self.Oct.setChecked(True)
+                    self.track_obj.AC_type["ITEMS"]="oct"
                 
             elif contentlist[0]== '.dc':
                 self.checkDC.setChecked(True)
@@ -149,6 +158,7 @@ class Analysis(QtGui.QWidget):
             
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
+        self.acbox.setDisabled(True)
         self.acgrid = QtGui.QGridLayout()
         self.radiobuttongroup= QtGui.QButtonGroup()
         self.Lin = QtGui.QRadioButton("Lin")
@@ -199,6 +209,10 @@ class Analysis(QtGui.QWidget):
         self.start_fre_combo.setMaximumWidth(150)
         self.acgrid.addWidget(self.start_fre_combo,2,2)
         self.ac_parameter[0]= "Hz"
+        try:
+            self.ac_parameter[self.parameter_cnt]= str(root[0][6].text)
+        except:
+            self.ac_parameter[self.parameter_cnt]= "Hz"
         self.start_fre_combo.activated[str].connect(self.start_combovalue)
         
         
@@ -212,6 +226,10 @@ class Analysis(QtGui.QWidget):
         self.stop_fre_combo.setMaximumWidth(150)
         self.acgrid.addWidget(self.stop_fre_combo,3,2)
         self.ac_parameter[1]= "Hz"
+        try:
+            self.ac_parameter[self.parameter_cnt]= str(root[0][7].text)
+        except:
+            self.ac_parameter[self.parameter_cnt]= "Hz"
         self.stop_fre_combo.activated[str].connect(self.stop_combovalue)
             
             
@@ -287,6 +305,7 @@ class Analysis(QtGui.QWidget):
 
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
+        self.dcbox.setDisabled(True)
         self.dcgrid = QtGui.QGridLayout()
         self.dcbox.setLayout(self.dcgrid)
         
@@ -331,7 +350,10 @@ class Analysis(QtGui.QWidget):
         self.start_combo.addItem("nV or nA")
         self.start_combo.addItem("pV or pA")
         self.dcgrid.addWidget(self.start_combo,2,2)
-        self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
+        try:
+            self.dc_parameter[self.parameter_cnt]= str(root[1][5].text)
+        except:
+            self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
         self.start_combo.activated[str].connect(self.start_changecombo)
         self.parameter_cnt= self.parameter_cnt+1
         
@@ -343,7 +365,10 @@ class Analysis(QtGui.QWidget):
         self.increment_combo.addItem("nV or nA")
         self.increment_combo.addItem("pV or pA")
         self.dcgrid.addWidget(self.increment_combo,3,2)
-        self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
+        try:
+            self.dc_parameter[self.parameter_cnt]= str(root[1][6].text)
+        except:
+            self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
         self.increment_combo.activated[str].connect(self.increment_changecombo)
         self.parameter_cnt= self.parameter_cnt+1
         
@@ -355,12 +380,18 @@ class Analysis(QtGui.QWidget):
         self.stop_combo.addItem("nV or nA")
         self.stop_combo.addItem("pV or pA")  
         self.dcgrid.addWidget(self.stop_combo,4,2)
+        try:
+            self.dc_parameter[self.parameter_cnt]= str(root[1][7].text)
+        except:
+            self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
         self.stop_combo.activated[str].connect(self.stop_changecombo)
-        self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
         self.parameter_cnt= self.parameter_cnt+1
         
         self.check=QtGui.QCheckBox('Operating Point Analysis',self)
-        self.track_obj.op_check.append(0)
+        try:
+            self.track_obj.op_check.append(str(root[1][4].text()))
+        except:
+            self.track_obj.op_check.append(0)
         #QtCore.QObject.connect(check,SIGNAL("stateChanged()"),check,SLOT("checkedSlot"))
         self.check.stateChanged.connect(self.setflag)
         #self.flagcheck = 1
@@ -386,10 +417,10 @@ class Analysis(QtGui.QWidget):
                 self.increment_combo.setCurrentIndex(index)
                 index=self.stop_combo.findText(root[1][7].text)
                 self.stop_combo.setCurrentIndex(index)
-                if root[1][4].text:
-                    self.check.setCheckState(True)
+                if root[1][4].text== 1:
+                    self.check.setChecked(True)
                 else:
-                    self.check.setCheckedState(False)
+                    self.check.setChecked(False)
             except:
                 print "XML Parse Error"
         
@@ -429,6 +460,7 @@ class Analysis(QtGui.QWidget):
             
         self.trbox = QtGui.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
+        #self.trbox.setDisabled(True)
         self.trgrid = QtGui.QGridLayout()    
         self.trbox.setLayout(self.trgrid)
         

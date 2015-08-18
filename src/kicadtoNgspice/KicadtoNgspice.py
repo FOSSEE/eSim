@@ -259,8 +259,8 @@ class MainWindow(QtGui.QWidget):
         ET.SubElement(attr_dc,"field2",name="Start").text= str(obj_analysis.dc_entry_var[1].text())
         ET.SubElement(attr_dc,"field3",name="Increment").text= str(obj_analysis.dc_entry_var[2].text())
         ET.SubElement(attr_dc,"field4",name="Stop").text= str(obj_analysis.dc_entry_var[3].text())
-        ET.SubElement(attr_dc,"field5",name="Operating Point").text=str(obj_analysis.check.isChecked()) 		
-        print "OBJ_ANALYSIS.CHECK -----",obj_analysis.check.isChecked()
+        ET.SubElement(attr_dc,"field5",name="Operating Point").text=str(self.obj_track.op_check[-1]) 		
+        print "OBJ_ANALYSIS.CHECK -----",self.obj_track.op_check[-1]
         ET.SubElement(attr_dc,"field6",name="Start Combo").text= obj_analysis.dc_parameter[0]
         ET.SubElement(attr_dc,"field7",name="Increment Combo").text=obj_analysis.dc_parameter[1]
         ET.SubElement(attr_dc,"field8",name="Stop Combo").text= obj_analysis.dc_parameter[2]
