@@ -1,14 +1,16 @@
-* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Jun 17 14:53:06 2015
+* /home/fossee/Downloads/eSim-master/Examples/bridgerectifier/bridgerectifier.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Aug 19 14:04:36 2015
 
 * To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
 * To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
 
-*Sheet Name:/
-D1  Net-_D1-Pad1_ Net-_D1-Pad2_ D		
-D3  Net-_D3-Pad1_ Net-_D1-Pad2_ D		
-D4  GND Net-_D3-Pad1_ D		
-D2  GND Net-_D1-Pad1_ D		
-R1  Net-_D1-Pad2_ GND 1000		
-v1  Net-_D1-Pad1_ Net-_D3-Pad1_ sine		
+* Sheet Name: /
+D1  in1 out D		
+D3  in2 out D		
+D4  GND in2 D		
+D2  GND in1 D		
+v1  in1 in2 sine		
+R1  out GND 1k		
 
 .end

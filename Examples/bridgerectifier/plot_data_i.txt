@@ -1,5 +1,5 @@
-* eeschema netlist version 1.1 (spice format) creation date: wed jun 17 14:53:06 2015
-Transient Analysis  Wed Jul  1 14:20:12  2015
+* /home/fossee/downloads/esim-master/examples/bridgerectifier/bridgerectifier.cir
+Transient Analysis  Wed Aug 19 15:40:51  2015
 --------------------------------------------------------------------------------
 Index   time            alli            
 --------------------------------------------------------------------------------

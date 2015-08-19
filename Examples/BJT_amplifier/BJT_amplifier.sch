@@ -1,4 +1,13 @@
 EESchema Schematic File Version 2
+LIBS:BJT_amplifier-rescue
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +19,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,11 +37,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Devices
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:eSim_Sources
 LIBS:BJT_amplifier-cache
 EELAYER 25 0
 EELAYER END
@@ -128,7 +131,7 @@ F 3 "" H 5650 4450 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR02
+L GND-RESCUE-BJT_amplifier #PWR02
 U 1 1 51A47FCD
 P 5650 4850
 F 0 "#PWR02" H 5650 4850 30  0001 C CNN
@@ -139,7 +142,7 @@ F 3 "" H 5650 4850 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-BJT_amplifier R1
 U 1 1 51A47FBC
 P 4050 3600
 F 0 "R1" V 4130 3600 50  0000 C CNN
@@ -150,7 +153,7 @@ F 3 "" H 4050 3600 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R2
+L R-RESCUE-BJT_amplifier R2
 U 1 1 51A47FAB
 P 5100 3050
 F 0 "R2" V 5180 3050 50  0000 C CNN
@@ -172,7 +175,7 @@ F 3 "" H 4750 3600 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R3
+L R-RESCUE-BJT_amplifier R3
 U 1 1 51A47F97
 P 5100 4200
 F 0 "R3" V 5180 4200 50  0000 C CNN
@@ -183,7 +186,7 @@ F 3 "" H 5100 4200 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R6
+L R-RESCUE-BJT_amplifier R6
 U 1 1 51A47F8B
 P 7050 4200
 F 0 "R6" V 7130 4200 50  0000 C CNN
@@ -216,7 +219,7 @@ F 3 "" H 6500 3300 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R5
+L R-RESCUE-BJT_amplifier R5
 U 1 1 51A47F5C
 P 6100 3050
 F 0 "R5" V 6180 3050 50  0000 C CNN
@@ -227,7 +230,7 @@ F 3 "" H 6100 3050 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R4
+L R-RESCUE-BJT_amplifier R4
 U 1 1 51A47F50
 P 5850 4200
 F 0 "R4" V 5930 4200 50  0000 C CNN
@@ -260,4 +263,11 @@ Wire Wire Line
 	7050 4350 7050 4450
 Wire Wire Line
 	5100 2900 5100 2800
+Text GLabel 7000 3250 2    60   Input ~ 0
+out
+Wire Wire Line
+	7000 3250 6950 3250
+Wire Wire Line
+	6950 3250 6950 3300
+Connection ~ 6950 3300
 $EndSCHEMATC

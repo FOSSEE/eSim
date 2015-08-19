@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:BasicGates-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +11,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -78,7 +78,7 @@ B
 Text Notes 3500 1650 0    60   ~ 0
 A
 $Comp
-L GND #PWR01
+L GND-RESCUE-BasicGates #PWR01
 U 1 1 5072534B
 P 10850 3900
 F 0 "#PWR01" H 10850 3900 30  0001 C CNN
@@ -100,7 +100,7 @@ F 3 "" H 1800 1700 60  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L GND #PWR03
+L GND-RESCUE-BasicGates #PWR03
 U 1 1 507251E5
 P 2050 1250
 F 0 "#PWR03" H 2050 1250 30  0001 C CNN
@@ -144,7 +144,7 @@ F 3 "" H 2200 5100 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR04
+L GND-RESCUE-BasicGates #PWR04
 U 1 1 505C9EE8
 P 1650 5900
 F 0 "#PWR04" H 1650 5900 30  0001 C CNN
@@ -264,6 +264,10 @@ F 3 "" H 1650 5100 60  0000 C CNN
 	1    1650 5100
 	1    0    0    -1  
 $EndComp
+Text GLabel 2200 2950 2    60   Input ~ 0
+IN2
+Text GLabel 2250 3450 2    60   Input ~ 0
+IN1
 Wire Wire Line
 	1650 4500 2200 4500
 Wire Wire Line
@@ -404,4 +408,15 @@ Wire Wire Line
 	10350 3000 10850 3000
 Wire Wire Line
 	10850 3000 10850 3200
+Wire Wire Line
+	2200 2950 2050 2950
+Connection ~ 2050 2950
+Wire Wire Line
+	2250 3450 2050 3450
+Connection ~ 2050 3450
+Text GLabel 10700 2800 1    60   Input ~ 0
+OUT
+Wire Wire Line
+	10700 2800 10700 3000
+Connection ~ 10700 3000
 $EndSCHEMATC

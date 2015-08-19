@@ -1,4 +1,13 @@
 EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:CMOS_Inverter-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +19,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,12 +37,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:sourcesSpice
-LIBS:eSim_Analog
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:eSim_Devices
-LIBS:pspice
 LIBS:CMOS_Inverter-cache
 EELAYER 25 0
 EELAYER END
@@ -114,7 +116,7 @@ F 3 "" H 2900 3100 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR02
+L GND-RESCUE-CMOS_Inverter #PWR02
 U 1 1 54F86DBA
 P 2900 3550
 F 0 "#PWR02" H 2900 3550 30  0001 C CNN
@@ -227,7 +229,7 @@ F 3 "" H 5800 4700 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR07
+L GND-RESCUE-CMOS_Inverter #PWR07
 U 1 1 557ACF98
 P 5950 1300
 F 0 "#PWR07" H 5950 1300 30  0001 C CNN

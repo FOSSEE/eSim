@@ -1,5 +1,5 @@
-* eeschema netlist version 1.1 (spice format) creation date: mon jun  8 14:38:19 2015
-Transient Analysis  Fri Jun 26 11:22:20  2015
+    * /home/fossee/downloads/esim-master/examples/basicgates/basicgates.cir
+    Transient Analysis  Wed Aug 19 15:40:07  2015
 --------------------------------------------------------------------------------
 Index   time            a7#branch_1_0   v1#branch       v2#branch       
 --------------------------------------------------------------------------------

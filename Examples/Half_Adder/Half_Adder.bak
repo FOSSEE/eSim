@@ -1,4 +1,13 @@
 EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:Half_Adder-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +19,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,12 +37,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Devices
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:eSim_Sources
-LIBS:eSim_Subckt
+LIBS:Half_Adder-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -105,7 +108,7 @@ F 3 "" H 3450 3800 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR01
+L GND-RESCUE-Half_Adder #PWR01
 U 1 1 558A93BB
 P 2950 4000
 F 0 "#PWR01" H 2950 4000 30  0001 C CNN
@@ -116,7 +119,7 @@ F 3 "" H 2950 4000 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR02
+L GND-RESCUE-Half_Adder #PWR02
 U 1 1 558A93D7
 P 2950 3250
 F 0 "#PWR02" H 2950 3250 30  0001 C CNN
@@ -149,7 +152,7 @@ F 3 "" H 7850 3550 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR03
+L GND-RESCUE-Half_Adder #PWR03
 U 1 1 558A9480
 P 8350 3650
 F 0 "#PWR03" H 8350 3650 30  0001 C CNN
@@ -236,14 +239,6 @@ Text GLabel 4050 3150 2    60   Input ~ 0
 A
 Text GLabel 4100 3750 2    60   Input ~ 0
 B
-Text GLabel 5200 3250 0    60   Input ~ 0
-1
-Text GLabel 5200 3700 0    60   Input ~ 0
-2
-Text GLabel 6550 3250 2    60   Input ~ 0
-3
-Text GLabel 6550 3650 2    60   Input ~ 0
-4
 Wire Wire Line
 	4050 3150 4050 3250
 Wire Wire Line
@@ -253,25 +248,13 @@ Wire Wire Line
 	4100 3750 3950 3750
 Connection ~ 3950 3750
 Wire Wire Line
-	5200 3700 5300 3700
-Connection ~ 5300 3700
-Wire Wire Line
-	5200 3250 5250 3250
-Wire Wire Line
-	5250 3250 5250 3450
-Connection ~ 5250 3450
-Wire Wire Line
-	6550 3250 6450 3250
-Connection ~ 6450 3250
-Wire Wire Line
-	6550 3650 6450 3650
-Connection ~ 6450 3650
-Wire Wire Line
 	7600 3750 7650 3750
 Wire Wire Line
 	7650 3750 7650 3550
 Connection ~ 7650 3550
 Wire Wire Line
-	7600 3150 7600 3350
-Connection ~ 7600 3350
+	7600 3150 7650 3150
+Wire Wire Line
+	7650 3150 7650 3300
+Connection ~ 7650 3300
 $EndSCHEMATC

@@ -1,26 +1,26 @@
-* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Jun  4 14:46:46 2015
+* /home/fossee/Downloads/eSim-master/Examples/FrequencyResponse_JFET/FrequencyResponse_JFET.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Aug 19 14:31:08 2015
 
 * To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
 * To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
 
-*Sheet Name:/
-R3  5 6 4.7k		
-R4  7 0 1k		
-R1  1 3 10k		
-C1  8 1 0.01u		
-R2  0 8 1Meg		
-C2  0 8 5p		
-C3  8 7 4p		
-C4  8 6 2p		
-C5  6 7 0.5p		
-C6  7 0 2u		
-C7  6 2 5u		
-C8  2 0 6p		
-R5  2 0 2.2k		
-v2  5 0 dc		
-*U1  3 vplot8_1		
-*U2  2 vplot8_1		
-v1  3 0 AC		
-J1  6 8 7 NJF		
+* Sheet Name: /
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 0.01u		
+C2  GND Net-_C1-Pad1_ 5p		
+C3  Net-_C1-Pad1_ Net-_C3-Pad2_ 4p		
+C4  Net-_C1-Pad1_ Net-_C4-Pad2_ 2p		
+C5  Net-_C4-Pad2_ Net-_C3-Pad2_ 0.5p		
+C6  Net-_C3-Pad2_ GND 2u		
+C7  Net-_C4-Pad2_ Out 5u		
+C8  Out GND 6p		
+v2  Net-_R3-Pad1_ GND dc		
+v1  in GND AC		
+J1  Net-_C4-Pad2_ Net-_C1-Pad1_ Net-_C3-Pad2_ NJF		
+R3  Net-_R3-Pad1_ Net-_C4-Pad2_ 4.7k		
+R1  in Net-_C1-Pad2_ 10k		
+R2  GND Net-_C1-Pad1_ 1Meg		
+R4  GND Net-_C3-Pad2_ 1k		
+R5  GND Out 2.2k		
 
 .end

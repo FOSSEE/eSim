@@ -1,5 +1,5 @@
-* eeschema netlist version 1.1 (spice format) creation date: wed jun 24 15:44:17 2015
-Transient Analysis  Wed Jul  1 11:38:38  2015
+    * /home/fossee/downloads/esim-master/examples/half_adder/half_adder.cir
+    Transient Analysis  Wed Aug 19 15:40:43  2015
 --------------------------------------------------------------------------------
 Index   time            a               b               cout            
 --------------------------------------------------------------------------------
@@ -66,8 +66,8 @@ Index   time            a               b               cout
 57	9.856000e-02	5.000000e+00	0.000000e+00	0.000000e+00	
 58	1.000000e-01	5.000000e+00	0.000000e+00	0.000000e+00	
 
-* eeschema netlist version 1.1 (spice format) creation date: wed jun 24 15:44:17 2015
-Transient Analysis  Wed Jul  1 11:38:38  2015
+    * /home/fossee/downloads/esim-master/examples/half_adder/half_adder.cir
+    Transient Analysis  Wed Aug 19 15:40:43  2015
 --------------------------------------------------------------------------------
 Index   time            sum             
 --------------------------------------------------------------------------------

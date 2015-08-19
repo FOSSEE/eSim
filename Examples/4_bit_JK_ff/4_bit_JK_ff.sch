@@ -1,4 +1,13 @@
 EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:4_bit_JK_ff-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +19,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,11 +37,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:measurementSpice
-LIBS:sourcesSpice
 LIBS:4_bit_JK_ff-cache
 EELAYER 25 0
 EELAYER END
@@ -83,7 +86,7 @@ F 3 "" H 1100 6800 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L GND #PWR01
+L GND-RESCUE-4_bit_JK_ff #PWR01
 U 1 1 5548E561
 P 650 7300
 F 0 "#PWR01" H 650 7050 50  0001 C CNN
@@ -103,17 +106,6 @@ F 2 "R1" H 3250 5950 60  0000 C CNN
 F 3 "" H 3550 5950 60  0000 C CNN
 	1    3550 5950
 	0    1    1    0   
-$EndComp
-$Comp
-L GND #PWR02
-U 1 1 554A0D14
-P 1250 5400
-F 0 "#PWR02" H 1250 5150 50  0001 C CNN
-F 1 "GND" H 1250 5250 50  0000 C CNN
-F 2 "" H 1250 5400 60  0000 C CNN
-F 3 "" H 1250 5400 60  0000 C CNN
-	1    1250 5400
-	1    0    0    -1  
 $EndComp
 $Comp
 L pulse v2
@@ -280,6 +272,74 @@ F 3 "" H 2150 700 60  0000 C CNN
 	1    2150 700 
 	0    1    1    0   
 $EndComp
+$Comp
+L adc_bridge_3 U1
+U 1 1 554B96E5
+P 2050 5150
+F 0 "U1" H 2050 5150 60  0000 C CNN
+F 1 "adc_bridge_3" H 2050 5300 60  0000 C CNN
+F 2 "" H 2050 5150 60  0000 C CNN
+F 3 "" H 2050 5150 60  0000 C CNN
+	1    2050 5150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L dac_bridge_4 U9
+U 1 1 554BA2AA
+P 8550 2150
+F 0 "U9" H 8550 2150 60  0000 C CNN
+F 1 "dac_bridge_4" H 8550 2450 60  0000 C CNN
+F 2 "" H 8550 2150 60  0000 C CNN
+F 3 "" H 8550 2150 60  0000 C CNN
+	1    8550 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND-RESCUE-4_bit_JK_ff #PWR02
+U 1 1 554B90FC
+P 10450 2400
+F 0 "#PWR02" H 10450 2150 50  0001 C CNN
+F 1 "GND" H 10450 2250 50  0000 C CNN
+F 2 "" H 10450 2400 60  0000 C CNN
+F 3 "" H 10450 2400 60  0000 C CNN
+	1    10450 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND-RESCUE-4_bit_JK_ff #PWR03
+U 1 1 554B95B8
+P 2800 7050
+F 0 "#PWR03" H 2800 6800 50  0001 C CNN
+F 1 "GND" H 2800 6900 50  0000 C CNN
+F 2 "" H 2800 7050 60  0000 C CNN
+F 3 "" H 2800 7050 60  0000 C CNN
+	1    2800 7050
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND-RESCUE-4_bit_JK_ff #PWR04
+U 1 1 554B9C35
+P 1400 2200
+F 0 "#PWR04" H 1400 1950 50  0001 C CNN
+F 1 "GND" H 1400 2050 50  0000 C CNN
+F 2 "" H 1400 2200 60  0000 C CNN
+F 3 "" H 1400 2200 60  0000 C CNN
+	1    1400 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND-RESCUE-4_bit_JK_ff #PWR05
+U 1 1 554BA1F1
+P 10650 5500
+F 0 "#PWR05" H 10650 5250 50  0001 C CNN
+F 1 "GND" H 10650 5350 50  0000 C CNN
+F 2 "" H 10650 5500 60  0000 C CNN
+F 3 "" H 10650 5500 60  0000 C CNN
+	1    10650 5500
+	1    0    0    -1  
+$EndComp
+Text GLabel 1650 6150 1    60   Input ~ 0
+IN
 Wire Wire Line
 	650  5600 550  5600
 Wire Wire Line
@@ -294,8 +354,6 @@ Connection ~ 550  6300
 Wire Wire Line
 	650  6800 550  6800
 Connection ~ 550  6800
-Wire Wire Line
-	1250 5300 1250 5400
 Wire Wire Line
 	5950 4100 6050 4100
 Wire Wire Line
@@ -428,17 +486,6 @@ Wire Wire Line
 	4100 1200 9650 1200
 Wire Wire Line
 	9650 1200 9650 2900
-$Comp
-L adc_bridge_3 U1
-U 1 1 554B96E5
-P 2050 5150
-F 0 "U1" H 2050 5150 60  0000 C CNN
-F 1 "adc_bridge_3" H 2050 5300 60  0000 C CNN
-F 2 "" H 2050 5150 60  0000 C CNN
-F 3 "" H 2050 5150 60  0000 C CNN
-	1    2050 5150
-	0    -1   -1   0   
-$EndComp
 Wire Wire Line
 	2100 4600 2100 4450
 Wire Wire Line
@@ -494,17 +541,6 @@ Wire Wire Line
 	1800 4350 1800 4100
 Wire Wire Line
 	1800 4100 1950 4100
-$Comp
-L dac_bridge_4 U9
-U 1 1 554BA2AA
-P 8550 2150
-F 0 "U9" H 8550 2150 60  0000 C CNN
-F 1 "dac_bridge_4" H 8550 2450 60  0000 C CNN
-F 2 "" H 8550 2150 60  0000 C CNN
-F 3 "" H 8550 2150 60  0000 C CNN
-	1    8550 2150
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	3550 3250 3850 3250
 Wire Wire Line
@@ -533,50 +569,6 @@ Wire Wire Line
 	7800 2650 7800 2250
 Wire Wire Line
 	7800 2250 8000 2250
-$Comp
-L R R2
-U 1 1 554B8B2B
-P 9950 1950
-F 0 "R2" V 10030 1950 50  0000 C CNN
-F 1 "1k" V 9950 1950 50  0000 C CNN
-F 2 "" V 9880 1950 30  0000 C CNN
-F 3 "" H 9950 1950 30  0000 C CNN
-	1    9950 1950
-	0    1    1    0   
-$EndComp
-$Comp
-L R R3
-U 1 1 554B8C79
-P 9950 2100
-F 0 "R3" V 10030 2100 50  0000 C CNN
-F 1 "1k" V 9950 2100 50  0000 C CNN
-F 2 "" V 9880 2100 30  0000 C CNN
-F 3 "" H 9950 2100 30  0000 C CNN
-	1    9950 2100
-	0    1    1    0   
-$EndComp
-$Comp
-L R R4
-U 1 1 554B8CE6
-P 9950 2250
-F 0 "R4" V 10030 2250 50  0000 C CNN
-F 1 "1k" V 9950 2250 50  0000 C CNN
-F 2 "" V 9880 2250 30  0000 C CNN
-F 3 "" H 9950 2250 30  0000 C CNN
-	1    9950 2250
-	0    1    1    0   
-$EndComp
-$Comp
-L R R1
-U 1 1 554B8D36
-P 9950 1800
-F 0 "R1" V 10030 1800 50  0000 C CNN
-F 1 "1k" V 9950 1800 50  0000 C CNN
-F 2 "" V 9880 1800 30  0000 C CNN
-F 3 "" H 9950 1800 30  0000 C CNN
-	1    9950 1800
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	9100 1950 9300 1950
 Wire Wire Line
@@ -597,17 +589,6 @@ Wire Wire Line
 	9700 2100 9800 2100
 Wire Wire Line
 	9100 2250 9800 2250
-$Comp
-L GND #PWR03
-U 1 1 554B90FC
-P 10450 2400
-F 0 "#PWR03" H 10450 2150 50  0001 C CNN
-F 1 "GND" H 10450 2250 50  0000 C CNN
-F 2 "" H 10450 2400 60  0000 C CNN
-F 3 "" H 10450 2400 60  0000 C CNN
-	1    10450 2400
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	10100 1800 10450 1800
 Wire Wire Line
@@ -621,17 +602,6 @@ Connection ~ 10450 2100
 Wire Wire Line
 	10100 2250 10450 2250
 Connection ~ 10450 2250
-$Comp
-L GND #PWR04
-U 1 1 554B95B8
-P 2800 7050
-F 0 "#PWR04" H 2800 6800 50  0001 C CNN
-F 1 "GND" H 2800 6900 50  0000 C CNN
-F 2 "" H 2800 7050 60  0000 C CNN
-F 3 "" H 2800 7050 60  0000 C CNN
-	1    2800 7050
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	3050 5450 2800 5450
 Wire Wire Line
@@ -645,17 +615,6 @@ Connection ~ 2800 6400
 Wire Wire Line
 	3050 6700 2800 6700
 Connection ~ 2800 6700
-$Comp
-L GND #PWR05
-U 1 1 554B9C35
-P 1400 2200
-F 0 "#PWR05" H 1400 1950 50  0001 C CNN
-F 1 "GND" H 1400 2050 50  0000 C CNN
-F 2 "" H 1400 2200 60  0000 C CNN
-F 3 "" H 1400 2200 60  0000 C CNN
-	1    1400 2200
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1700 700  1400 700 
 Wire Wire Line
@@ -669,19 +628,88 @@ Connection ~ 1400 1650
 Wire Wire Line
 	1750 1200 1400 1200
 Connection ~ 1400 1200
-$Comp
-L GND #PWR06
-U 1 1 554BA1F1
-P 10650 4200
-F 0 "#PWR06" H 10650 3950 50  0001 C CNN
-F 1 "GND" H 10650 4050 50  0000 C CNN
-F 2 "" H 10650 4200 60  0000 C CNN
-F 3 "" H 10650 4200 60  0000 C CNN
-	1    10650 4200
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	10450 4100 10650 4100
 Wire Wire Line
 	10650 4100 10650 4200
+Wire Wire Line
+	1650 6150 1650 6300
+Connection ~ 1650 6300
+Text GLabel 9150 1800 1    60   Input ~ 0
+D1
+Text GLabel 9400 2000 1    60   Input ~ 0
+D2
+Text GLabel 9200 2100 1    60   Input ~ 0
+D3
+Text GLabel 9400 2300 3    60   Input ~ 0
+D4
+Wire Wire Line
+	9150 1800 9150 1950
+Connection ~ 9150 1950
+Wire Wire Line
+	9400 2000 9400 2050
+Connection ~ 9400 2050
+Wire Wire Line
+	9200 2100 9200 2150
+Connection ~ 9200 2150
+Wire Wire Line
+	9400 2300 9400 2250
+Connection ~ 9400 2250
+$Comp
+L R R1
+U 1 1 55D466F5
+P 9900 1850
+F 0 "R1" H 9950 1980 50  0000 C CNN
+F 1 "1k" H 9950 1900 50  0000 C CNN
+F 2 "" H 9950 1830 30  0000 C CNN
+F 3 "" V 9950 1900 30  0000 C CNN
+	1    9900 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R2
+U 1 1 55D46764
+P 9900 2000
+F 0 "R2" H 9950 2130 50  0000 C CNN
+F 1 "1k" H 9950 2050 50  0000 C CNN
+F 2 "" H 9950 1980 30  0000 C CNN
+F 3 "" V 9950 2050 30  0000 C CNN
+	1    9900 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R3
+U 1 1 55D467C3
+P 9900 2150
+F 0 "R3" H 9950 2280 50  0000 C CNN
+F 1 "1k" H 9950 2200 50  0000 C CNN
+F 2 "" H 9950 2130 30  0000 C CNN
+F 3 "" V 9950 2200 30  0000 C CNN
+	1    9900 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R4
+U 1 1 55D4681D
+P 9900 2300
+F 0 "R4" H 9950 2430 50  0000 C CNN
+F 1 "1k" H 9950 2350 50  0000 C CNN
+F 2 "" H 9950 2280 30  0000 C CNN
+F 3 "" V 9950 2350 30  0000 C CNN
+	1    9900 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L dac_bridge_1 U11
+U 1 1 55D45D81
+P 10600 4800
+F 0 "U11" H 10600 4800 60  0000 C CNN
+F 1 "dac_bridge_1" H 10600 4950 60  0000 C CNN
+F 2 "" H 10600 4800 60  0000 C CNN
+F 3 "" H 10600 4800 60  0000 C CNN
+	1    10600 4800
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	10650 5350 10650 5500
 $EndSCHEMATC

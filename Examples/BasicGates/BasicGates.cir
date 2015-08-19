@@ -1,21 +1,23 @@
-* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Jun  8 14:38:19 2015
+* /home/fossee/Downloads/eSim-master/Examples/BasicGates/BasicGates.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Aug 17 14:29:17 2015
 
 * To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
 * To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
 
-*Sheet Name:/
-R3  8 0 1000		
-R2  3 0 1000		
-R1  7 0 1000		
-U2  12 6 5 d_and		
-U3  12 6 10 d_or		
-U4  5 10 1 d_nor		
-U5  5 10 9 d_nand		
-U6  1 11 d_inverter		
-U7  9 11 4 d_xor		
-U8  4 3 dac_bridge_1		
-U1  8 7 12 6 adc_bridge_2		
-v2  8 0 pulse		
-v1  7 0 pulse		
+* Sheet Name: /
+R3  IN2 GND 1000		
+R2  OUT GND 1000		
+R1  IN1 GND 1000		
+U2  Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U2-Pad3_ d_and		
+U3  Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U3-Pad3_ d_or		
+U4  Net-_U2-Pad3_ Net-_U3-Pad3_ Net-_U4-Pad3_ d_nor		
+U5  Net-_U2-Pad3_ Net-_U3-Pad3_ Net-_U5-Pad3_ d_nand		
+U6  Net-_U4-Pad3_ Net-_U6-Pad2_ d_inverter		
+U7  Net-_U5-Pad3_ Net-_U6-Pad2_ Net-_U7-Pad3_ d_xor		
+U8  Net-_U7-Pad3_ OUT dac_bridge_1		
+U1  IN2 IN1 Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2		
+v2  IN2 GND pulse		
+v1  IN1 GND pulse		
 
 .end

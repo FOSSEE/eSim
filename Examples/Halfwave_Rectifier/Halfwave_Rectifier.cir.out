@@ -1,4 +1,4 @@
-* eeschema netlist version 1.1 (spice format) creation date: wed jul  1 11:15:52 2015
+* /home/fossee/downloads/esim-master/examples/halfwave_rectifier/halfwave_rectifier.cir
 
 .include D.lib
 d1 in out D1N750

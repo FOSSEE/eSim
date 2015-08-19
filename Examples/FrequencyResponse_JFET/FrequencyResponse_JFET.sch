@@ -1,4 +1,12 @@
 EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +18,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,12 +36,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Devices
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:sourcesSpice
-LIBS:measurementSpice
 LIBS:FrequencyResponse_JFET-cache
 EELAYER 25 0
 EELAYER END
@@ -51,39 +52,6 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L R R3
-U 1 1 554CCD03
-P 6300 2600
-F 0 "R3" V 6380 2600 50  0000 C CNN
-F 1 "4.7k" V 6300 2600 50  0000 C CNN
-F 2 "" V 6230 2600 30  0000 C CNN
-F 3 "" H 6300 2600 30  0000 C CNN
-	1    6300 2600
-	1    0    0    -1  
-$EndComp
-$Comp
-L R R4
-U 1 1 554CCD26
-P 6300 4400
-F 0 "R4" V 6380 4400 50  0000 C CNN
-F 1 "1k" V 6300 4400 50  0000 C CNN
-F 2 "" V 6230 4400 30  0000 C CNN
-F 3 "" H 6300 4400 30  0000 C CNN
-	1    6300 4400
-	1    0    0    -1  
-$EndComp
-$Comp
-L R R1
-U 1 1 554CCD86
-P 4100 3500
-F 0 "R1" V 4180 3500 50  0000 C CNN
-F 1 "10k" V 4100 3500 50  0000 C CNN
-F 2 "" V 4030 3500 30  0000 C CNN
-F 3 "" H 4100 3500 30  0000 C CNN
-	1    4100 3500
-	0    1    1    0   
-$EndComp
-$Comp
 L C C1
 U 1 1 554CCDF0
 P 4650 3500
@@ -93,17 +61,6 @@ F 2 "" H 4688 3350 30  0000 C CNN
 F 3 "" H 4650 3500 60  0000 C CNN
 	1    4650 3500
 	0    1    1    0   
-$EndComp
-$Comp
-L R R2
-U 1 1 554CCF0B
-P 5150 4300
-F 0 "R2" V 5230 4300 50  0000 C CNN
-F 1 "1Meg" V 5150 4300 50  0000 C CNN
-F 2 "" V 5080 4300 30  0000 C CNN
-F 3 "" H 5150 4300 30  0000 C CNN
-	1    5150 4300
-	-1   0    0    1   
 $EndComp
 $Comp
 L C C2
@@ -183,17 +140,6 @@ F 3 "" H 8200 3700 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R5
-U 1 1 554CD260
-P 8600 3750
-F 0 "R5" V 8680 3750 50  0000 C CNN
-F 1 "2.2k" V 8600 3750 50  0000 C CNN
-F 2 "" V 8530 3750 30  0000 C CNN
-F 3 "" H 8600 3750 30  0000 C CNN
-	1    8600 3750
-	1    0    0    -1  
-$EndComp
-$Comp
 L GND #PWR01
 U 1 1 554CD6B0
 P 6300 4850
@@ -227,9 +173,9 @@ F 3 "" H 6750 1350 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	6300 3300 6300 2750
+	6300 2750 6300 3300
 Wire Wire Line
-	6300 4250 6300 3700
+	6300 3700 6300 4250
 Wire Wire Line
 	4800 3500 6000 3500
 Wire Wire Line
@@ -303,28 +249,6 @@ Wire Wire Line
 Wire Wire Line
 	3550 4750 3550 4800
 Connection ~ 5150 4800
-$Comp
-L vplot8_1 U1
-U 1 1 554CE506
-P 3550 3100
-F 0 "U1" H 3400 3200 50  0000 C CNN
-F 1 "vplot8_1" H 3700 3200 50  0000 C CNN
-F 2 "" H 3550 3100 60  0000 C CNN
-F 3 "" H 3550 3100 60  0000 C CNN
-	1    3550 3100
-	1    0    0    -1  
-$EndComp
-$Comp
-L vplot8_1 U2
-U 2 1 554CE5B6
-P 8500 2750
-F 0 "U2" H 8350 2850 50  0000 C CNN
-F 1 "vplot8_1" H 8650 2850 50  0000 C CNN
-F 2 "" H 8500 2750 60  0000 C CNN
-F 3 "" H 8500 2750 60  0000 C CNN
-	2    8500 2750
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	8500 3050 8500 3100
 Connection ~ 8500 3100
@@ -365,4 +289,63 @@ F 3 "" H 6200 3500 60  0000 C CNN
 	1    6200 3500
 	1    0    0    -1  
 $EndComp
+$Comp
+L R R3
+U 1 1 55D44D80
+P 6250 2550
+F 0 "R3" H 6300 2680 50  0000 C CNN
+F 1 "4.7k" H 6300 2600 50  0000 C CNN
+F 2 "" H 6300 2530 30  0000 C CNN
+F 3 "" V 6300 2600 30  0000 C CNN
+	1    6250 2550
+	0    1    1    0   
+$EndComp
+$Comp
+L R R1
+U 1 1 55D44DE3
+P 4050 3550
+F 0 "R1" H 4100 3680 50  0000 C CNN
+F 1 "10k" H 4100 3600 50  0000 C CNN
+F 2 "" H 4100 3530 30  0000 C CNN
+F 3 "" V 4100 3600 30  0000 C CNN
+	1    4050 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R2
+U 1 1 55D44EE5
+P 5200 4350
+F 0 "R2" H 5250 4480 50  0000 C CNN
+F 1 "1Meg" H 5250 4400 50  0000 C CNN
+F 2 "" H 5250 4330 30  0000 C CNN
+F 3 "" V 5250 4400 30  0000 C CNN
+	1    5200 4350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R4
+U 1 1 55D44F9D
+P 6350 4450
+F 0 "R4" H 6400 4580 50  0000 C CNN
+F 1 "1k" H 6400 4500 50  0000 C CNN
+F 2 "" H 6400 4430 30  0000 C CNN
+F 3 "" V 6400 4500 30  0000 C CNN
+	1    6350 4450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R5
+U 1 1 55D45045
+P 8650 3800
+F 0 "R5" H 8700 3930 50  0000 C CNN
+F 1 "2.2k" H 8700 3850 50  0000 C CNN
+F 2 "" H 8700 3780 30  0000 C CNN
+F 3 "" V 8700 3850 30  0000 C CNN
+	1    8650 3800
+	0    -1   -1   0   
+$EndComp
+Text GLabel 8500 3050 1    60   Input ~ 0
+Out
+Text GLabel 3550 3400 1    60   Input ~ 0
+in
 $EndSCHEMATC

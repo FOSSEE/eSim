@@ -1,4 +1,13 @@
 EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:Inverting_Amplifier-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +19,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,12 +37,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Devices
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:eSim_Sources
-LIBS:eSim_Subckt
+LIBS:Inverting_Amplifier-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -61,29 +64,7 @@ F 3 "" H 5500 3400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R2
-U 1 1 558821D4
-P 5050 3300
-F 0 "R2" V 5130 3300 50  0000 C CNN
-F 1 "1k" V 5050 3300 50  0000 C CNN
-F 2 "" V 4980 3300 30  0000 C CNN
-F 3 "" H 5050 3300 30  0000 C CNN
-	1    5050 3300
-	0    1    1    0   
-$EndComp
-$Comp
-L R R3
-U 1 1 558821F0
-P 6450 3400
-F 0 "R3" V 6530 3400 50  0000 C CNN
-F 1 "1k" V 6450 3400 50  0000 C CNN
-F 2 "" V 6380 3400 30  0000 C CNN
-F 3 "" H 6450 3400 30  0000 C CNN
-	1    6450 3400
-	0    1    1    0   
-$EndComp
-$Comp
-L GND #PWR01
+L GND-RESCUE-Inverting_Amplifier #PWR01
 U 1 1 5588243E
 P 3550 3950
 F 0 "#PWR01" H 3550 3950 30  0001 C CNN
@@ -94,7 +75,7 @@ F 3 "" H 3550 3950 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR02
+L GND-RESCUE-Inverting_Amplifier #PWR02
 U 1 1 558824A7
 P 6800 3450
 F 0 "#PWR02" H 6800 3450 30  0001 C CNN
@@ -106,7 +87,7 @@ F 3 "" H 6800 3450 60  0000 C CNN
 $EndComp
 Text GLabel 6200 3250 0    60   Input ~ 0
 Out
-Text GLabel 5250 3650 0    60   Input ~ 0
+Text GLabel 4750 3700 0    60   Input ~ 0
 In
 $Comp
 L PWR_FLAG #FLG03
@@ -120,18 +101,7 @@ F 3 "" H 6750 3300 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R5
-U 1 1 558828E5
-P 5800 4050
-F 0 "R5" V 5880 4050 50  0000 C CNN
-F 1 "1k" V 5800 4050 50  0000 C CNN
-F 2 "" V 5730 4050 30  0000 C CNN
-F 3 "" H 5800 4050 30  0000 C CNN
-	1    5800 4050
-	0    1    1    0   
-$EndComp
-$Comp
-L GND #PWR04
+L GND-RESCUE-Inverting_Amplifier #PWR04
 U 1 1 55882C4B
 P 4700 3300
 F 0 "#PWR04" H 4700 3300 30  0001 C CNN
@@ -152,17 +122,6 @@ F 3 "" H 4100 3700 60  0000 C CNN
 	1    4100 3700
 	0    1    1    0   
 $EndComp
-$Comp
-L R R1
-U 1 1 55882CF2
-P 4850 3500
-F 0 "R1" V 4930 3500 50  0000 C CNN
-F 1 "1k" V 4850 3500 50  0000 C CNN
-F 2 "" V 4780 3500 30  0000 C CNN
-F 3 "" H 4850 3500 30  0000 C CNN
-	1    4850 3500
-	0    1    1    0   
-$EndComp
 Wire Wire Line
 	4550 3500 4550 3700
 Wire Wire Line
@@ -175,13 +134,7 @@ Wire Wire Line
 	3650 3700 3550 3700
 Wire Wire Line
 	3550 3700 3550 3950
-Wire Wire Line
-	5250 3650 5250 3550
-Wire Wire Line
-	5250 3550 5200 3550
-Wire Wire Line
-	5200 3550 5200 3500
-Connection ~ 5200 3500
+Connection ~ 4600 3500
 Wire Wire Line
 	6200 3250 6200 3400
 Connection ~ 6200 3400
@@ -206,4 +159,54 @@ Wire Wire Line
 	4700 3500 4550 3500
 Wire Wire Line
 	5000 3500 5300 3500
+$Comp
+L R R2
+U 1 1 55D44FCE
+P 5000 3350
+F 0 "R2" H 5050 3480 50  0000 C CNN
+F 1 "1k" H 5050 3400 50  0000 C CNN
+F 2 "" H 5050 3330 30  0000 C CNN
+F 3 "" V 5050 3400 30  0000 C CNN
+	1    5000 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R1
+U 1 1 55D45007
+P 4800 3550
+F 0 "R1" H 4850 3680 50  0000 C CNN
+F 1 "1k" H 4850 3600 50  0000 C CNN
+F 2 "" H 4850 3530 30  0000 C CNN
+F 3 "" V 4850 3600 30  0000 C CNN
+	1    4800 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R5
+U 1 1 55D450F9
+P 5750 4100
+F 0 "R5" H 5800 4230 50  0000 C CNN
+F 1 "2k" H 5800 4150 50  0000 C CNN
+F 2 "" H 5800 4080 30  0000 C CNN
+F 3 "" V 5800 4150 30  0000 C CNN
+	1    5750 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R3
+U 1 1 55D4519D
+P 6400 3450
+F 0 "R3" H 6450 3580 50  0000 C CNN
+F 1 "1k" H 6450 3500 50  0000 C CNN
+F 2 "" H 6450 3430 30  0000 C CNN
+F 3 "" V 6450 3500 30  0000 C CNN
+	1    6400 3450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4600 3500 4600 3600
+Wire Wire Line
+	4600 3600 4750 3600
+Wire Wire Line
+	4750 3600 4750 3700
 $EndSCHEMATC

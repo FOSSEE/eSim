@@ -1,11 +1,13 @@
-* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Jun 11 10:11:01 2015
+* /home/fossee/Downloads/eSim-master/Examples/rc/rc.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Aug 17 14:25:12 2015
 
 * To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
 * To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
 
-*Sheet Name:/
-R1  1 4 1k		
-C1  1 2 1u		
-v1  4 2 sine		
+* Sheet Name: /
+R1  out in 1k		
+C1  out GND 1u		
+v1  in GND sine		
 
 .end

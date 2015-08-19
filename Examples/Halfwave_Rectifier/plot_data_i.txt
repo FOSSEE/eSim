@@ -1,5 +1,5 @@
-* eeschema netlist version 1.1 (spice format) creation date: wed jul  1 11:15:52 2015
-Transient Analysis  Wed Jul  1 11:18:15  2015
+* /home/fossee/downloads/esim-master/examples/halfwave_rectifier/halfwave_rectifier.cir
+Transient Analysis  Wed Aug 19 15:41:02  2015
 --------------------------------------------------------------------------------
 Index   time            alli            
 --------------------------------------------------------------------------------

@@ -1,12 +1,13 @@
 EESchema Schematic File Version 2
-LIBS:eSim_Subckt
-LIBS:eSim_Sources
-LIBS:eSim_Hybrid
-LIBS:eSim_Digital
-LIBS:eSim_Devices
 LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
 LIBS:eSim_User
+LIBS:Halfwave_Rectifier-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -63,7 +64,7 @@ F 3 "" H 5700 2900 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-Halfwave_Rectifier R1
 U 1 1 5593CC2C
 P 6300 3350
 F 0 "R1" V 6380 3350 50  0000 C CNN

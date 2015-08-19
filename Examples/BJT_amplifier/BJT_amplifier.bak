@@ -1,4 +1,13 @@
 EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:BJT_amplifier-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +19,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,11 +37,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Devices
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:eSim_Sources
 LIBS:BJT_amplifier-cache
 EELAYER 25 0
 EELAYER END
@@ -128,7 +131,7 @@ F 3 "" H 5650 4450 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR02
+L GND-RESCUE-BJT_amplifier #PWR02
 U 1 1 51A47FCD
 P 5650 4850
 F 0 "#PWR02" H 5650 4850 30  0001 C CNN
@@ -260,4 +263,11 @@ Wire Wire Line
 	7050 4350 7050 4450
 Wire Wire Line
 	5100 2900 5100 2800
+Text GLabel 7000 3250 2    60   Input ~ 0
+out
+Wire Wire Line
+	7000 3250 6950 3250
+Wire Wire Line
+	6950 3250 6950 3300
+Connection ~ 6950 3300
 $EndSCHEMATC

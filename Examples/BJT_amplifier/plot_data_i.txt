@@ -1,5 +1,5 @@
-* eeschema netlist version 1.1 (spice format) creation date: mon jun  8 12:02:52 2015
-AC Analysis  Wed Jul  1 14:20:43  2015
+ * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
+ AC Analysis  Wed Aug 19 15:39:21  2015
 --------------------------------------------------------------------------------
 Index   frequency       v1#branch                       
 --------------------------------------------------------------------------------
@@ -214,8 +214,8 @@ Index   frequency       v1#branch
 199	9.772372e+03	-5.02835e-03,	-2.09254e-05	
 200	1.000000e+04	-5.02835e-03,	-2.03142e-05	
 
-* eeschema netlist version 1.1 (spice format) creation date: mon jun  8 12:02:52 2015
-AC Analysis  Wed Jul  1 14:20:43  2015
+ * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
+ AC Analysis  Wed Aug 19 15:39:21  2015
 --------------------------------------------------------------------------------
 Index   frequency       v2#branch                       
 --------------------------------------------------------------------------------

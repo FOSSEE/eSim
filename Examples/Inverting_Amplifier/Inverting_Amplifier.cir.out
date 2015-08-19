@@ -1,12 +1,12 @@
-* eeschema netlist version 1.1 (spice format) creation date: mon jun 22 15:31:09 2015
+* /home/fossee/downloads/esim-master/examples/inverting_amplifier/inverting_amplifier.cir
 
 .include ua741.sub
-x1 net-_r2-pad1_ in out ua741
-r2  net-_r2-pad1_ gnd 1k
-r3  gnd out 1k
-r5  out in 1k
-v1  net-_r1-pad2_ gnd sine(0 2 50 0 0)
+x1 net-_r2-pad2_ net-_r1-pad2_ out ua741
+v1  in gnd sine(0 2 50 0 0)
+r2  gnd net-_r2-pad2_ 1k
 r1  in net-_r1-pad2_ 1k
+r5  net-_r1-pad2_ out 2k
+r3  out gnd 1k
 .tran 10e-03 100e-03 0e-03
 
 * Control Statements 

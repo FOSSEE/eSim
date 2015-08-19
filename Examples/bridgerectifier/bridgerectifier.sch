@@ -1,4 +1,13 @@
 EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:bridgerectifier-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -28,11 +37,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Devices
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:eSim_Sources
 LIBS:bridgerectifier-cache
 EELAYER 25 0
 EELAYER END
@@ -49,7 +53,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L D D1
+L D-RESCUE-bridgerectifier D1
 U 1 1 557F721F
 P 4000 3000
 F 0 "D1" H 4000 3100 50  0000 C CNN
@@ -60,7 +64,7 @@ F 3 "" H 4000 3000 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D3
+L D-RESCUE-bridgerectifier D3
 U 1 1 557F72FE
 P 4950 3000
 F 0 "D3" H 4950 3100 50  0000 C CNN
@@ -71,7 +75,7 @@ F 3 "" H 4950 3000 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D4
+L D-RESCUE-bridgerectifier D4
 U 1 1 557F7345
 P 4950 4400
 F 0 "D4" H 4950 4500 50  0000 C CNN
@@ -82,7 +86,7 @@ F 3 "" H 4950 4400 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D2
+L D-RESCUE-bridgerectifier D2
 U 1 1 557F745E
 P 4000 4400
 F 0 "D2" H 4000 4500 50  0000 C CNN
@@ -93,18 +97,7 @@ F 3 "" H 4000 4400 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R1
-U 1 1 557F76BB
-P 5550 3600
-F 0 "R1" V 5630 3600 50  0000 C CNN
-F 1 "1000" V 5550 3600 50  0000 C CNN
-F 2 "" V 5480 3600 30  0000 C CNN
-F 3 "" H 5550 3600 30  0000 C CNN
-	1    5550 3600
-	1    0    0    -1  
-$EndComp
-$Comp
-L GND #PWR01
+L GND-RESCUE-bridgerectifier #PWR01
 U 1 1 557F76F4
 P 5400 5300
 F 0 "#PWR01" H 5400 5050 50  0001 C CNN
@@ -132,7 +125,6 @@ Wire Wire Line
 Connection ~ 4950 4750
 Wire Wire Line
 	4000 4750 5550 4750
-Connection ~ 5400 5300
 Connection ~ 5400 4750
 Wire Wire Line
 	5400 4750 5400 5300
@@ -179,4 +171,30 @@ F 3 "" H 3400 3600 60  0000 C CNN
 	1    3400 3600
 	1    0    0    -1  
 $EndComp
+$Comp
+L R R1
+U 1 1 55D44082
+P 5500 3550
+F 0 "R1" H 5550 3680 50  0000 C CNN
+F 1 "1k" H 5550 3600 50  0000 C CNN
+F 2 "" H 5550 3530 30  0000 C CNN
+F 3 "" V 5550 3600 30  0000 C CNN
+	1    5500 3550
+	0    1    1    0   
+$EndComp
+Text GLabel 5700 2850 2    60   Input ~ 0
+out
+Text GLabel 3550 3000 1    60   Input ~ 0
+in1
+Text GLabel 3850 3900 3    60   Input ~ 0
+in2
+Wire Wire Line
+	3550 3000 3550 3150
+Connection ~ 3550 3150
+Wire Wire Line
+	3850 3900 3850 3750
+Connection ~ 3850 3750
+Wire Wire Line
+	5700 2850 5550 2850
+Connection ~ 5550 2850
 $EndSCHEMATC

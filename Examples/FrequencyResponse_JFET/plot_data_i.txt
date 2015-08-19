@@ -1,5 +1,5 @@
-* eeschema netlist version 1.1 (spice format) creation date: thu jun  4 14:46:46 2015
-AC Analysis  Mon Jun 22 12:00:29  2015
+* /home/fossee/downloads/esim-master/examples/frequencyresponse_jfet/frequencyresponse_jfet.cir
+AC Analysis  Wed Aug 19 15:40:36  2015
 --------------------------------------------------------------------------------
 Index   frequency       v1#branch                       
 --------------------------------------------------------------------------------
@@ -107,8 +107,8 @@ Index   frequency       v1#branch
 98	9.898990e+06	-9.71853e-09,	-7.22892e-10	
 99	1.000000e+07	-9.72005e-09,	-7.17342e-10	
 
-* eeschema netlist version 1.1 (spice format) creation date: thu jun  4 14:46:46 2015
-AC Analysis  Mon Jun 22 12:00:29  2015
+* /home/fossee/downloads/esim-master/examples/frequencyresponse_jfet/frequencyresponse_jfet.cir
+AC Analysis  Wed Aug 19 15:40:36  2015
 --------------------------------------------------------------------------------
 Index   frequency       v2#branch                       
 --------------------------------------------------------------------------------

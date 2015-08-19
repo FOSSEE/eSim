@@ -1,4 +1,13 @@
 EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:rc-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -10,7 +19,6 @@ LIBS:cmos4000
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
-LIBS:special
 LIBS:microcontrollers
 LIBS:dsp
 LIBS:microchip
@@ -29,11 +37,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Devices
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:eSim_Sources
 LIBS:rc-cache
 EELAYER 25 0
 EELAYER END
@@ -50,7 +53,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L R R1
+L R-RESCUE-rc R1
 U 1 1 556C372A
 P 5100 2300
 F 0 "R1" V 5180 2300 50  0000 C CNN
@@ -82,8 +85,6 @@ F 3 "" H 4650 2850 60  0000 C CNN
 	1    4650 2850
 	1    0    0    -1  
 $EndComp
-Text GLabel 5050 3400 0    60   Input ~ 0
-gnd
 Wire Wire Line
 	4650 2400 4650 2300
 Wire Wire Line
@@ -95,13 +96,6 @@ Wire Wire Line
 Wire Wire Line
 	5600 3300 4650 3300
 Connection ~ 5150 3300
-Wire Wire Line
-	5050 3400 5100 3400
-Wire Wire Line
-	5100 3400 5100 3350
-Wire Wire Line
-	5100 3350 5150 3350
-Connection ~ 5150 3350
 Wire Wire Line
 	5600 2300 5600 2500
 $Comp
@@ -116,10 +110,10 @@ F 3 "" H 5150 3300 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND #PWR?
+L GND-RESCUE-rc #PWR02
 U 1 1 55796439
 P 5150 3400
-F 0 "#PWR?" H 5150 3400 30  0001 C CNN
+F 0 "#PWR02" H 5150 3400 30  0001 C CNN
 F 1 "GND" H 5150 3330 30  0001 C CNN
 F 2 "" H 5150 3400 60  0000 C CNN
 F 3 "" H 5150 3400 60  0000 C CNN
@@ -128,4 +122,18 @@ F 3 "" H 5150 3400 60  0000 C CNN
 $EndComp
 Wire Wire Line
 	5150 3300 5150 3400
+Text GLabel 4600 2250 0    60   Input ~ 0
+in
+Text GLabel 5600 2200 2    60   Input ~ 0
+out
+Wire Wire Line
+	5600 2200 5550 2200
+Wire Wire Line
+	5550 2200 5550 2300
+Connection ~ 5550 2300
+Wire Wire Line
+	4600 2250 4700 2250
+Wire Wire Line
+	4700 2250 4700 2300
+Connection ~ 4700 2300
 $EndSCHEMATC
