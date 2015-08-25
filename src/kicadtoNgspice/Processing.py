@@ -119,7 +119,8 @@ class PrcocessNetlist:
                 elif words[3]=="ac":
                     Title="Add parameters for ac source "+compName
                     v_a='  Enter amplitude (Volts/Amps): '
-                    sourcelist.append([index,compline,words[3],Title,v_a])
+                    p_a ='  Enter Phase Shift: '
+                    sourcelist.append([index,compline,words[3],Title,v_a,p_a])
 
                 elif words[3]=="exp":
                     Title="Add parameters for exponential source "+compName

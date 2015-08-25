@@ -79,8 +79,9 @@ class Convert:
                     self.start = compline[2]
                     self.end = compline[3]
                     va_val=str(self.entry_var[self.start].text()) if len(str(self.entry_var[self.start].text())) > 0 else '0'
+                    ph_val=str(self.entry_var[self.start+1].text()) if len(str(self.entry_var[self.start+1].text())) > 0 else '0'
                     self.addline = ' '.join(self.addline.split())
-                    self.addline = self.addline.partition('ac')[0] +" "+'ac'+" "+ va_val
+                    self.addline = self.addline.partition('ac')[0] +" "+'ac'+" "+ va_val+" "+ph_val
                     self.sourcelistvalue.append([self.index,self.addline]) 
                 except:
                     print "Caught an exception in ac voltage source ",self.addline

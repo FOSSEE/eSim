@@ -69,13 +69,18 @@ class Source(QtGui.QWidget):
                     acbox.setTitle(line[3])
                     acgrid=QtGui.QGridLayout()
                     self.start=self.count
-                    label=QtGui.QLabel(line[4])
-                    acgrid.addWidget(label,self.row,0)
+                    label1=QtGui.QLabel(line[4])
+                    label2 = QtGui.QLabel(line[5])
+                    acgrid.addWidget(label1,self.row,0)
+                    acgrid.addWidget(label2, self.row+1, 0)
                     self.entry_var[self.count]=QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
                     acgrid.addWidget(self.entry_var[self.count],self.row,1)
-                    #Value Need to check previuouse value
+                    self.entry_var[self.count+1]=QtGui.QLineEdit()
+                    self.entry_var[self.count+1].setMaximumWidth(150)
+                    acgrid.addWidget(self.entry_var[self.count+1],self.row+1,1)
                     self.entry_var[self.count].setText("")
+                    self.entry_var[self.count+1].setText("")
                     try:
                         for child in root:
                             templist1=line[1]
@@ -83,12 +88,13 @@ class Source(QtGui.QWidget):
                         
                             if child.tag==templist2[0] and child.text==line[2]:
                                 self.entry_var[self.count].setText(child[0].text)
+                                self.entry_var[self.count+1].setText(child[1].text)
                     except:
                         pass
                     #Value Need to check previuouse value
                     #self.entry_var[self.count].setText("")
                     self.row=self.row+1
-                    self.end=self.count
+                    self.end=self.count+1
                     self.count=self.count+1
                     acbox.setLayout(acgrid)
                     
@@ -100,7 +106,8 @@ class Source(QtGui.QWidget):
                     
                     self.grid.addWidget(acbox)
                     sourcelisttrack.append([track_id,'ac',self.start,self.end])
-                    
+         
+                
                 elif line[2]=='dc':
                     dcbox=QtGui.QGroupBox()
                     dcbox.setTitle(line[3])
