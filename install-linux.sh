@@ -32,13 +32,13 @@ function installDependency
 {
 
 echo "Installing Kicad............"
-sudo apt-get install kicad
+sudo apt-get install -y kicad
 echo "Installing ngspice.........."
-sudo apt-get install ngspice
+sudo apt-get install -y ngspice
 echo "Installing PyQt4............"
-sudo apt-get install python-qt4
+sudo apt-get install -y python-qt4
 echo "Installing Matplotlib......."
-sudo apt-get install python-matplotlib
+sudo apt-get install -y python-matplotlib
 
 }
 
