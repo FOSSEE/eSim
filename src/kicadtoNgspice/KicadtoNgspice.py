@@ -308,6 +308,8 @@ class MainWindow(QtGui.QWidget):
                 if words[len(words)-1]=="ac":
                     #attr_ac=ET.SubElement(attr_var,"ac")
                     ET.SubElement(attr_var,"field1",name="Amplitude").text=str(obj_source.entry_var[count].text())
+                    count=count+1
+                    ET.SubElement(attr_var, "field2", name = "Phase").text = str(obj_source.entry_var[count].text())
                     count=count+2
                 elif words[len(words)-1]=="dc":
                     #attr_dc=ET.SubElement(attr_var,"dc")
