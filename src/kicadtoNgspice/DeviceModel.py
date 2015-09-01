@@ -65,7 +65,7 @@ class DeviceModel(QtGui.QWidget):
                 transbox.setTitle("Add library for Transistor "+words[0]+" : "+words[4])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                #global path_name
+                global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
@@ -88,7 +88,7 @@ class DeviceModel(QtGui.QWidget):
                 if self.entry_var[self.count].text()=="":
                     pass
                 else:
-                    self.trackLibraryWithourButton(self.count,path_name)
+                    self.trackLibraryWithoutButton(self.count,path_name)
                 transgrid.addWidget(self.addbtn,self.row,2)
                 transbox.setLayout(transgrid)
                 
@@ -116,7 +116,7 @@ class DeviceModel(QtGui.QWidget):
                 diodebox.setTitle("Add library for Diode "+words[0]+" : "+words[3])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                global path_name
+                #global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
@@ -167,7 +167,7 @@ class DeviceModel(QtGui.QWidget):
                 jfetbox.setTitle("Add library for JFET "+words[0]+" : "+words[4])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                global path_name
+                #global path_name
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
