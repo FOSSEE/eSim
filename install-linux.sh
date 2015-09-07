@@ -19,41 +19,7 @@
 #      REVISION:  ---
 #===============================================================================
 
-ngspiceFlag=0
-
 ##All Functions goes here
-
-function installNghdl
-{
-echo -n "Do you want to install nghdl? (y/n): "
-read getNghdl
-
-if [ $getNghdl == "y" -o $getNghdl == "Y" ];then
-    echo "Downloading nghdl"
-    wget https://github.com/FOSSEE/nghdl/archive/master.zip
-    unzip master.zip
-    mv nghdl-master nghdl
-    rm master.zip
-
-    echo "Installing nghdl"
-    cd nghdl/
-    ./install-nghdl.sh
-    
-    if [ $? -ne 0 ];then
-        echo -e "\n\n\nNghdl ERROR: Error while installing nghdl\n\n"
-        exit 0
-    else
-        ngspiceFlag=1
-        cd ..
-    fi
-elif [ $getNghdl == "n" -o $getNghdl == "N" ];then
-    echo "Proceeding without installing nghdl"
-else
-    echo "Please select the right option"
-    exit 0
-fi
-}
-
 function addKicadPPA
 {
 echo "Adding Kicad PPA to install latest Kicad version"
@@ -67,12 +33,8 @@ function installDependency
 
 echo "Installing Kicad............"
 sudo apt-get install -y kicad
-if [ $ngspiceFlag -ne 1 ];then
-    echo "Installing ngspice.........."
-    sudo apt-get install -y ngspice
-else
-    echo "ngspice already installed......"
-fi
+echo "Installing ngspice.........."
+sudo apt-get install -y ngspice
 echo "Installing PyQt4............"
 sudo apt-get install -y python-qt4
 echo "Installing Matplotlib......."
@@ -153,7 +115,7 @@ sudo chmod -R 777 "$esim_loc"
 }
 
 
-###Checking if file is passsed as argument to script
+###Checking if file is passsed as arguement to script
 
 if [ "$#" -eq 1 ];then
     option=$1
@@ -200,7 +162,6 @@ if [ $option == "--install" ];then
 
             echo "Install with proxy"
             #Calling functions
-            installNghdl
             addKicadPPA
             installDependency
             copyKicadLibrary
@@ -210,7 +171,6 @@ if [ $option == "--install" ];then
             echo "Install without proxy"
             
             #Calling functions
-            installNghdl
             addKicadPPA
             installDependency
             copyKicadLibrary
