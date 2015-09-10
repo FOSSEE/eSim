@@ -28,6 +28,7 @@ from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
+from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
@@ -126,6 +127,9 @@ class Application(QtGui.QMainWindow):
         
         self.subcircuit=QtGui.QAction(QtGui.QIcon('../../images/subckt.png'),'<b>Subcircuit</b>',self)
         self.subcircuit.triggered.connect(self.open_subcircuit)
+
+        self.nghdl = QtGui.QAction(QtGui.QIcon('../../images/nghdl.png'), '<b><Nghdl</b>', self)
+        self.nghdl.triggered.connect(self.open_nghdl)
         
         #Adding Action Widget to tool bar   
         self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
@@ -137,6 +141,7 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.pcb)
         self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.addAction(self.subcircuit)
+        self.lefttoolbar.addAction(self.nghdl)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40,40))
      
@@ -203,6 +208,22 @@ class Application(QtGui.QMainWindow):
         print "Subcircuit editor is called"
         self.obj_appconfig.print_info('Subcircuit editor is called')
         self.obj_Mainview.obj_dockarea.subcircuiteditor()
+
+    def open_nghdl(self):
+        print "Nghdl is called"
+        self.obj_appconfig.print_info('Nghdl is called')
+
+        try:
+            self.cmd = 'nghdl'
+            self.obj_workThread = Worker.WorkerThread(self.cmd)
+            self.obj_workThread.start()
+
+        except Exception as e:
+            self.msg = QtGui.QErrorMessage(None)
+            self.msg.showMessage('Error while opening nghdl' + str(e))
+            self.obj_appconfig.print_error('Error while opening nghdl' + str(e))
+            self.msg.setWindowTitle("Error Message")
+            
                     
         
     def exit_project(self):
