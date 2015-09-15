@@ -52,6 +52,14 @@ class MainWindow(QtGui.QWidget):
         self.kicadFile = clarg1
         self.clarg1=clarg1
         self.clarg2=clarg2
+        
+        #Create object of track widget
+        self.obj_track = TrackWidget.TrackWidget()
+        
+        #Clear dictionary item of sub circuit
+        self.obj_track.subcircuitList.clear()
+        self.obj_track.subcircuitTrack.clear()
+        
         #Object of Processing
         obj_proc = PrcocessNetlist()
         
@@ -60,7 +68,7 @@ class MainWindow(QtGui.QWidget):
         
         # Construct parameter information
         param = obj_proc.readParamInfo(kicadNetlist)
-        
+                
         # Replace parameter with values
         netlist,infoline = obj_proc.preprocessNetlist(kicadNetlist,param)
         
@@ -92,14 +100,7 @@ class MainWindow(QtGui.QWidget):
         print "Unknown Model List",unknownModelList  
         print "Multiple Model List",multipleModelList
         print "Model List",modelList
-        """
-        args=[clarg1,clarg2]
-        app = QtGui.QApplication(args)
-        kingWindow = MainWindow()
-        sys.exit(app.exec_())    
-        """
-        #Create object of track widget
-        self.obj_track = TrackWidget.TrackWidget()
+                     
         """
         Checking if any unknown model is used in schematic which is not recognized by NgSpice.
         Also if the two model of same name is present under modelParamXML directory
@@ -146,14 +147,7 @@ class MainWindow(QtGui.QWidget):
         self.setLayout(self.vbox)
         self.setWindowTitle("Kicad To NgSpice Converter")
         self.show()
-         
-    """      
-    def closeCancel(self):
-        self.obj_track.modelTrack[:]=[]
-        self.obj_track.subcircuitList[:]=[]
-        self.close()
-    """
-    
+        
     def createcreateConvertWidget(self):
         global obj_analysis
         self.convertWindow = QtGui.QWidget()
