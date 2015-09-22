@@ -242,6 +242,15 @@ class Application(QtGui.QMainWindow):
                         proc.terminate()
                 except:
                         pass
+              
+        try :       
+            for process_object in self.obj_appconfig.process_obj:
+                try:
+                    process_object.close()
+                except:
+                        pass
+        except:
+            pass
         ##Just checking if open and New window is open. If yes just close it when application is closed
         try:
             self.project.close()

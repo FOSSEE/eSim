@@ -44,6 +44,7 @@ class Appconfig(QtGui.QWidget):
             project_explorer = json.load(open(dictPath))
         except:
             project_explorer= {}
+        process_obj = []
         
         def __init__(self):
             super(Appconfig, self).__init__()
