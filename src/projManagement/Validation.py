@@ -111,3 +111,16 @@ class Validation:
                         return "True"
         else:
             return "DIREC"
+        
+    def validateCirOut(self,projDir):
+        """
+        This function checks if ".cir.out" file is present.
+        """
+        projName = os.path.basename(str(projDir))
+        lookCirOut = os.path.join(str(projDir),projName+".cir.out")
+        #Check existence of project
+        if os.path.exists(lookCirOut):
+            return True
+        else:
+            return False
+            

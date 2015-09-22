@@ -28,6 +28,7 @@ from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
+from projManagement.Validation import Validation
 from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
@@ -53,7 +54,7 @@ class Application(QtGui.QMainWindow):
         self.obj_Mainview = MainView()
         self.obj_kicad = Kicad(self.obj_Mainview.obj_dockarea)
         self.obj_appconfig = Appconfig() 
-        
+        self.obj_validation = Validation()
         #Initialize all widget
         self.setCentralWidget(self.obj_Mainview)
         self.initToolBar()
@@ -131,6 +132,12 @@ class Application(QtGui.QMainWindow):
         self.nghdl = QtGui.QAction(QtGui.QIcon('../../images/nghdl.png'), '<b><Nghdl</b>', self)
         self.nghdl.triggered.connect(self.open_nghdl)
         
+        self.omedit = QtGui.QAction(QtGui.QIcon('../../images/omedit.png'),'<b>Modelica Converter</b>',self)
+        self.omedit.triggered.connect(self.open_OMedit) 
+        
+        self.omoptim=QtGui.QAction(QtGui.QIcon('../../images/omoptim.png'),'<b>OM Optimisation</b>',self)
+        self.omoptim.triggered.connect(self.open_OMoptim)
+        
         #Adding Action Widget to tool bar   
         self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
         self.addToolBar(QtCore.Qt.LeftToolBarArea, self.lefttoolbar)
@@ -142,6 +149,8 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.addAction(self.subcircuit)
         self.lefttoolbar.addAction(self.nghdl)
+        self.lefttoolbar.addAction(self.omedit)
+        self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40,40))
      
@@ -252,13 +261,61 @@ class Application(QtGui.QMainWindow):
         print "model editor is called"
         self.obj_appconfig.print_info('model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
-    """    
-    def open_kicadToNgspice(self):
-        print "kicadToNgspice is called"
-        self.obj_appconfig.print_info('kicadToNgspice is called')
-        self.obj_Mainview.obj_dockarea.kicadToNgspiceEditor()"""
+
+    
+    def open_OMedit(self):
+        """
+        This function call ngspice to OM edit converter and then launch OM edit.
+        """
+        self.obj_appconfig.print_info('OM edit is called')
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
         
+        if self.projDir != None:
+            if self.obj_validation.validateCirOut(self.projDir):
+                self.projName = os.path.basename(self.projDir)
+                self.ngspiceNetlist = os.path.join(self.projDir,self.projName+".cir.out")
+                self.modelicaNetlist = os.path.join(self.projDir,self.projName+".mo")
+                
+                try:
+                    #Creating a command for Ngspice to Modelica converter
+                    self.cmd1 = "python ../ngspicetoModelica/NgspicetoModelica.py "+self.ngspiceNetlist
+                    self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
+                    self.obj_workThread1.start()
+                    
+                    try:
+                        #Creating command to run OMEdit
+                        self.cmd2 = "OMEdit "+self.modelicaNetlist
+                        self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
+                        self.obj_workThread2.start()
+                    except Exception as e:
+                        self.msg = QtGui.QErrorMessage()
+                        self.msg.showMessage('There was error while opening OMEdit :'+str(e))
+                        self.msg.setWindowTitle("Error Message")
+                        self.obj_appconfig.print_error(str(e))
+                                  
+                except Exception as e:
+                    self.msg = QtGui.QErrorMessage()
+                    self.msg.showMessage('Unable to convert NgSpice netlist to Modelica netlist :'+str(e))
+                    self.msg.setWindowTitle("Ngspice to Modelica conversion error")
+                    self.obj_appconfig.print_error(str(e))
+                    
+            else:
+                self.msg = QtGui.QErrorMessage()
+                self.msg.showMessage('Current project does not contain any ngspice file. Please create ngspice file with extension .cir.out')
+                self.msg.setWindowTitle("Missing Ngspice netlist")
+        else:
+            self.msg = QtGui.QErrorMessage()
+            self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
+            self.msg.setWindowTitle("Error Message")
         
+    
+    def open_OMoptim(self):
+        print "OM Optim is called"    
+        self.obj_appconfig.print_info('OM Optim is called')
+        #Creating a command to run
+        self.cmd = "OMOptim"
+        self.obj_workThread = Worker.WorkerThread(self.cmd)
+        self.obj_workThread.start()
         
     def testing(self):
         print "Success hit kicad button"
