@@ -222,16 +222,16 @@ class Application(QtGui.QMainWindow):
         print "Nghdl is called"
         self.obj_appconfig.print_info('Nghdl is called')
 
-        try:
+        if self.obj_validation.validateTool('nghdl'):
             self.cmd = 'nghdl'
             self.obj_workThread = Worker.WorkerThread(self.cmd)
             self.obj_workThread.start()
 
-        except Exception as e:
+        else:
             self.msg = QtGui.QErrorMessage(None)
-            self.msg.showMessage('Error while opening nghdl' + str(e))
-            self.obj_appconfig.print_error('Error while opening nghdl' + str(e))
-            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage('Error while opening nghdl. Please make sure nghdl is installed')
+            self.obj_appconfig.print_error('Error while opening nghdl. Please make sure nghdl is installed')
+            self.msg.setWindowTitle('nghdl Error Message')
             
                     
         
@@ -291,16 +291,23 @@ class Application(QtGui.QMainWindow):
                     self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
                     self.obj_workThread1.start()
                     
-                    try:
+                    
+                    if self.obj_validation.validateTool("OMEdit"):
                         #Creating command to run OMEdit
                         self.cmd2 = "OMEdit "+self.modelicaNetlist
                         self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
                         self.obj_workThread2.start()
-                    except Exception as e:
-                        self.msg = QtGui.QErrorMessage()
-                        self.msg.showMessage('There was error while opening OMEdit :'+str(e))
+                    else:
+                        self.msg = QtGui.QMessageBox()
+                        self.msgContent = "There was an error while opening OMEdit.<br/>\
+                        Please make sure OpenModelica is installed in your system. <br/>\
+                        To install it on Linux : Go to <a href=https://www.openmodelica.org/download/download-linux>OpenModelica Linux</a> and install nigthly build release.<br/>\
+                        To install it on Windows : Go to <a href=https://www.openmodelica.org/download/download-windows>OpenModelica Windows</a> and install latest version.<br/>"
+                        self.msg.setTextFormat(QtCore.Qt.RichText)
+                        self.msg.setText(self.msgContent)
                         self.msg.setWindowTitle("Error Message")
-                        self.obj_appconfig.print_error(str(e))
+                        self.obj_appconfig.print_info(self.msgContent)
+                        self.msg.exec_()
                                   
                 except Exception as e:
                     self.msg = QtGui.QErrorMessage()
@@ -321,14 +328,23 @@ class Application(QtGui.QMainWindow):
     def open_OMoptim(self):
         print "OM Optim is called"    
         self.obj_appconfig.print_info('OM Optim is called')
-        #Creating a command to run
-        self.cmd = "OMOptim"
-        self.obj_workThread = Worker.WorkerThread(self.cmd)
-        self.obj_workThread.start()
-        
-    def testing(self):
-        print "Success hit kicad button"
-        
+        #Check if OMOptim is installed 
+        if self.obj_validation.validateTool("OMOptim"):
+            #Creating a command to run
+            self.cmd = "OMOptim"
+            self.obj_workThread = Worker.WorkerThread(self.cmd)
+            self.obj_workThread.start()
+        else:
+            self.msg = QtGui.QMessageBox()
+            self.msgContent = "There was an error while opening OMOptim.<br/>\
+            Please make sure OpenModelica is installed in your system. <br/>\
+            To install it on Linux : Go to <a href=https://www.openmodelica.org/download/download-linux>OpenModelica Linux</a> and install nigthly build release.<br/>\
+            To install it on Windows : Go to <a href=https://www.openmodelica.org/download/download-windows>OpenModelica Windows</a> and install latest version.<br/>"
+            self.msg.setTextFormat(QtCore.Qt.RichText)
+            self.msg.setText(self.msgContent)
+            self.msg.setWindowTitle("Error Message")
+            self.obj_appconfig.print_info(self.msgContent)
+            self.msg.exec_()
 
 class MainView(QtGui.QWidget):
     """

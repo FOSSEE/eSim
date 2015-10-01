@@ -18,6 +18,7 @@
 #===============================================================================
 import os
 import re 
+import distutils.spawn
 
 
 class Validation:
@@ -124,3 +125,9 @@ class Validation:
         else:
             return False
             
+    def validateTool(self,toolName):
+        """
+        This function check if tool is present in the system
+        """
+        return distutils.spawn.find_executable(toolName) is not None
+    
