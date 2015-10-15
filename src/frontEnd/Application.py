@@ -282,7 +282,7 @@ class Application(QtGui.QMainWindow):
         self.obj_appconfig.print_info('Nghdl is called')
 
         if self.obj_validation.validateTool('nghdl'):
-            self.cmd = 'nghdl'
+            self.cmd = 'nghdl -e'
             self.obj_workThread = Worker.WorkerThread(self.cmd)
             self.obj_workThread.start()
 
