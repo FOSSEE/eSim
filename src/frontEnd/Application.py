@@ -140,7 +140,7 @@ class Application(QtGui.QMainWindow):
         self.subcircuit=QtGui.QAction(QtGui.QIcon('../../images/subckt.png'),'<b>Subcircuit</b>',self)
         self.subcircuit.triggered.connect(self.open_subcircuit)
 
-        self.nghdl = QtGui.QAction(QtGui.QIcon('../../images/nghdl.png'), '<b><Nghdl</b>', self)
+        self.nghdl = QtGui.QAction(QtGui.QIcon('../../images/nghdl.png'), '<b>Nghdl</b>', self)
         self.nghdl.triggered.connect(self.open_nghdl)
         
         self.omedit = QtGui.QAction(QtGui.QIcon('../../images/omedit.png'),'<b>Modelica Converter</b>',self)
