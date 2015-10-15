@@ -17,9 +17,35 @@ class ImportPspiceLibrary(QtGui.QWidget):
         self.obj_Appconfig.print_info('File selected : '+self.libLocation)
         
         #Create command to run
-        self.cmd = "../pspicetoKicad/libConverter "+self.libLocation
-        os.system(str(self.cmd))
+                
+        if platform.system() == 'Linux':
+            #Check for 32 or 64 bit
+            if platform.architecture()[0] == '64bit':
+                self.cmd = "../pspicetoKicad/libConverter64 "+self.libLocation
+            else:
+                self.cmd = "../pspicetoKicad/libConverter32 "+self.libLocation
+                          
+        elif platform.system() == 'Windows':
+            print "Needs to include for Windows"
+            
         
+        self.status =  os.system(str(self.cmd))
+        
+               
+        if self.status == 0:
+            self.msg = QtGui.QMessageBox()
+            self.msgContent = "Successfully imported and converted PSPICE library to Kicad library.<br/>"
+            self.msg.setTextFormat(QtCore.Qt.RichText)
+            self.msg.setText(self.msgContent)
+            self.msg.setWindowTitle("Message")
+            self.obj_Appconfig.print_info(self.msgContent)
+            self.msg.exec_()
+            
+        else:
+            self.msg = QtGui.QErrorMessage(None)
+            self.msg.showMessage('Error while converting PSPICE library to Kicad library')
+            self.obj_Appconfig.print_error('Error while converting PSPICE library to Kicad library')
+            self.msg.setWindowTitle("Error Message")
     
     
 class ConvertPspiceKicad(QtGui.QWidget):
