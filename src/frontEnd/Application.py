@@ -33,6 +33,7 @@ from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
+from pspicetoKicad.ImportPspice import ImportPspiceLibrary,ConvertPspiceKicad
 import time
 from PyQt4.Qt import QSize
 
@@ -87,6 +88,14 @@ class Application(QtGui.QMainWindow):
         self.exitproj.setShortcut('Ctrl+X')
         self.exitproj.triggered.connect(self.exit_project)
         
+        self.importPspiceLib = QtGui.QAction(QtGui.QIcon('../../images/import_icon.png'),'<b>Import PSPICE Library</b>',self)
+        self.importPspiceLib.setShortcut('Ctrl+X')
+        self.importPspiceLib.triggered.connect(self.import_pspice_lib)
+        
+        self.convertPspiceKicad = QtGui.QAction(QtGui.QIcon('../../images/Ps2Ki.png'),'<b>Convert PSPICE to KICAD</b>',self)
+        self.convertPspiceKicad.setShortcut('Ctrl+X')
+        self.convertPspiceKicad.triggered.connect(self.convert_pspice_kicad)
+        
         self.helpfile = QtGui.QAction(QtGui.QIcon('../../images/helpProject.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
@@ -95,6 +104,8 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
         self.topToolbar.addAction(self.exitproj)
+        self.topToolbar.addAction(self.importPspiceLib)
+        self.topToolbar.addAction(self.convertPspiceKicad)
         self.topToolbar.addAction(self.helpfile)
         
         self.spacer = QtGui.QWidget()
@@ -174,6 +185,7 @@ class Application(QtGui.QMainWindow):
                 self.obj_appconfig.print_info('Current project is : ' + self.obj_appconfig.current_project["ProjectName"])
             except:
                 pass
+        
     def open_project(self):
         """
         This project call Open Project Info class
@@ -186,6 +198,53 @@ class Application(QtGui.QMainWindow):
             self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
         except:
             pass
+    
+    def exit_project(self):
+        print "Exit Project called"
+        for proc in self.obj_appconfig.procThread_list:
+                try:
+                        proc.terminate()
+                except:
+                        pass
+              
+        try :       
+            for process_object in self.obj_appconfig.process_obj:
+                try:
+                    process_object.close()
+                except:
+                        pass
+        except:
+            pass
+        ##Just checking if open and New window is open. If yes just close it when application is closed
+        try:
+            self.project.close()
+        except:
+            pass
+        
+        self.close()
+    
+    def import_pspice_lib(self):
+        print "Import Pspice Library is called"
+        self.obj_appconfig.print_info('Import Pspice Library is called')
+        
+        self.obj_import_pspice = ImportPspiceLibrary()
+        
+        self.obj_import_pspice.imortLib()
+        
+    def convert_pspice_kicad(self):
+        print "PSPICE to KICAD converter is called"
+        self.obj_appconfig.print_info('PSPICE to KICAD converter is called')
+        
+        self.obj_run_converter = ConvertPspiceKicad()
+        
+        self.obj_run_converter.runConverter()
+        
+    def help_project(self):
+        print "Help is called"
+        self.obj_appconfig.print_info('Help is called')
+        print "Current Project : ",self.obj_appconfig.current_project
+        self.obj_Mainview.obj_dockarea.usermanual()    
+    
     
     def open_ngspice(self):
         """
@@ -235,35 +294,7 @@ class Application(QtGui.QMainWindow):
             
                     
         
-    def exit_project(self):
-        print "Exit Project called"
-        for proc in self.obj_appconfig.procThread_list:
-                try:
-                        proc.terminate()
-                except:
-                        pass
-              
-        try :       
-            for process_object in self.obj_appconfig.process_obj:
-                try:
-                    process_object.close()
-                except:
-                        pass
-        except:
-            pass
-        ##Just checking if open and New window is open. If yes just close it when application is closed
-        try:
-            self.project.close()
-        except:
-            pass
-        
-        self.close()
-        
-    def help_project(self):
-        print "Help is called"
-        self.obj_appconfig.print_info('Help is called')
-        print "Current Project : ",self.obj_appconfig.current_project
-        self.obj_Mainview.obj_dockarea.usermanual()
+
     
         
     def open_modelEditor(self):
@@ -305,7 +336,7 @@ class Application(QtGui.QMainWindow):
                         To install it on Windows : Go to <a href=https://www.openmodelica.org/download/download-windows>OpenModelica Windows</a> and install latest version.<br/>"
                         self.msg.setTextFormat(QtCore.Qt.RichText)
                         self.msg.setText(self.msgContent)
-                        self.msg.setWindowTitle("Error Message")
+                        self.msg.setWindowTitle("Missing OpenModelica")
                         self.obj_appconfig.print_info(self.msgContent)
                         self.msg.exec_()
                                   
