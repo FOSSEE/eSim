@@ -1,5 +1,5 @@
 * /home/fossee/downloads/esim-master/examples/inverting_amplifier/inverting_amplifier.cir
-Transient Analysis  Wed Aug 19 15:39:56  2015
+Transient Analysis  Fri Oct 16 16:57:07  2015
 --------------------------------------------------------------------------------
 Index   time            in              net-_r1-pad2_   net-_r2-pad2_   
 --------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ Index   time            in              net-_r1-pad2_   net-_r2-pad2_
 58	1.000000e-01	-2.44929e-15	-2.23950e-04	-1.11919e-07	
 
 * /home/fossee/downloads/esim-master/examples/inverting_amplifier/inverting_amplifier.cir
-Transient Analysis  Wed Aug 19 15:39:56  2015
+Transient Analysis  Fri Oct 16 16:57:07  2015
 --------------------------------------------------------------------------------
 Index   time            out             x1.1            x1.2            
 --------------------------------------------------------------------------------
@@ -135,7 +135,7 @@ Index   time            out             x1.1            x1.2
 58	1.000000e-01	-6.72074e-04	-7.39285e-04	-7.39285e-04	
 
 * /home/fossee/downloads/esim-master/examples/inverting_amplifier/inverting_amplifier.cir
-Transient Analysis  Wed Aug 19 15:39:56  2015
+Transient Analysis  Fri Oct 16 16:57:07  2015
 --------------------------------------------------------------------------------
 Index   time            x1.4            
 --------------------------------------------------------------------------------

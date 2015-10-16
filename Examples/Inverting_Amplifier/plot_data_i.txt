@@ -1,5 +1,5 @@
 * /home/fossee/downloads/esim-master/examples/inverting_amplifier/inverting_amplifier.cir
-Transient Analysis  Wed Aug 19 15:39:56  2015
+Transient Analysis  Fri Oct 16 16:57:07  2015
 --------------------------------------------------------------------------------
 Index   time            e.x1.ein1#branc e.x1.eout1#bran v1#branch       
 --------------------------------------------------------------------------------

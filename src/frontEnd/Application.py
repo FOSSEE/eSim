@@ -83,11 +83,7 @@ class Application(QtGui.QMainWindow):
         self.openproj = QtGui.QAction(QtGui.QIcon('../../images/openProject.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
-        
-        self.exitproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Exit</b>',self)
-        self.exitproj.setShortcut('Ctrl+X')
-        self.exitproj.triggered.connect(self.exit_project)
-        
+                       
         self.importPspiceLib = QtGui.QAction(QtGui.QIcon('../../images/import_icon.png'),'<b>Import PSPICE Library</b>',self)
         self.importPspiceLib.setShortcut('Ctrl+X')
         self.importPspiceLib.triggered.connect(self.import_pspice_lib)
@@ -96,6 +92,10 @@ class Application(QtGui.QMainWindow):
         self.convertPspiceKicad.setShortcut('Ctrl+X')
         self.convertPspiceKicad.triggered.connect(self.convert_pspice_kicad)
         
+        self.exitproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Exit</b>',self)
+        self.exitproj.setShortcut('Ctrl+X')
+        self.exitproj.triggered.connect(self.exit_project)
+        
         self.helpfile = QtGui.QAction(QtGui.QIcon('../../images/helpProject.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
@@ -103,9 +103,9 @@ class Application(QtGui.QMainWindow):
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
-        self.topToolbar.addAction(self.exitproj)
         self.topToolbar.addAction(self.importPspiceLib)
         self.topToolbar.addAction(self.convertPspiceKicad)
+        self.topToolbar.addAction(self.exitproj)
         self.topToolbar.addAction(self.helpfile)
         
         self.spacer = QtGui.QWidget()
