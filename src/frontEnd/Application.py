@@ -292,11 +292,7 @@ class Application(QtGui.QMainWindow):
             self.obj_appconfig.print_error('Error while opening nghdl. Please make sure nghdl is installed')
             self.msg.setWindowTitle('nghdl Error Message')
             
-                    
-        
-
-    
-        
+      
     def open_modelEditor(self):
         print "model editor is called"
         self.obj_appconfig.print_info('model editor is called')
