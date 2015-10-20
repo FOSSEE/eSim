@@ -129,13 +129,19 @@ class ConvertPspiceKicad(QtGui.QWidget):
         print "Create Project File is called"
         print "Schematic File Location---------->",pspiceSchFileLoc
         print "Output Directory-------------->",outputDir
+        
+        self.arg1 = pspiceSchFileLoc
+        self.arg2 = os.path.join(outputDir,os.path.basename(str(pspiceSchFileLoc)))
+        
+        #print "Arg1----------->",self.arg1
+        #print "Arg2----------->",self.arg2 
         #Create command to be run
         if platform.system() == 'Linux':
             #Check for 32 or 64 bit
             if platform.architecture()[0] == '64bit':
-                self.cmd = "../pspicetoKicad/schConverter64 "+pspiceSchFileLoc+" "+outputDir
+                self.cmd = "../pspicetoKicad/schConverter64 "+self.arg1+" "+self.arg2
             else:
-                self.cmd = "../pspicetoKicad/schConverter32 "+pspiceSchFileLoc+" "+outputDir
+                self.cmd = "../pspicetoKicad/schConverter32 "+self.arg1+" "+self.arg2
         elif platform.system() == 'Windows':
             print "Needs to include for Windows"
                
