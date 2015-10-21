@@ -12,7 +12,7 @@ class ImportPspiceLibrary(QtGui.QWidget):
     def __init__(self):
         super(ImportPspiceLibrary, self).__init__()
         self.obj_Appconfig = Appconfig()
-        
+          
     def imortLib(self):
         self.home = os.path.expanduser("~")
         self.worspace_loc = self.obj_Appconfig.default_workspace['workspace']
@@ -34,7 +34,7 @@ class ImportPspiceLibrary(QtGui.QWidget):
                 else:
                     self.cmd = "../pspicetoKicad/libConverter32 "+self.arg
             elif platform.system() == 'Windows':
-                print "Needs to include for Windows"
+                self.cmd = os.path.join(os.path.split(os.path.realpath(__file__))[0],'libConverter.exe')
                 
             self.status =  os.system(str(self.cmd))
             
@@ -144,6 +144,7 @@ class ConvertPspiceKicad(QtGui.QWidget):
                 self.cmd = "../pspicetoKicad/schConverter32 "+self.arg1+" "+self.arg2
         elif platform.system() == 'Windows':
             print "Needs to include for Windows"
+            self.cmd = os.path.join(os.path.split(os.path.realpath(__file__))[0],'converter.exe')+" "+self.arg1+" "+self.arg2
                
         #Running command
         self.status = os.system(str(self.cmd))
