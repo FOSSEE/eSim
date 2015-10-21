@@ -117,9 +117,15 @@ class NgMoConverter:
         modelicaParam = []
         for eachline in paramInfo:
             eachline = eachline.split('.param')
-            stat = 'parameter Real ' + eachline[1] + ';'
+            #Include ',' in between parameter
+            #Removing leading and trailing space
+            line = eachline[1].strip()
+            line = line.split()
+            final_line = ','.join(line)
+            stat = 'parameter Real ' + final_line + ';'
             stat = stat.translate(maketrans('{}', '  '))
             modelicaParam.append(stat)
+        print "Modelica Parameter----------->",modelicaParam
         return modelicaParam
     
     
