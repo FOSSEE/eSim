@@ -166,9 +166,12 @@ class NgMoConverter:
         """
         Split the number k,u,p,t,g etc into powers e3,e-6 etc
         """
+        print "Val------------->",val   
         for i in range(0,len(val),1):
+            print "Val[i]----------------->",val[i]
             if val[i] in ['k','u','p','t','g','m','n','f']:
                 newval = val.split(val[i])
+                print "new Value------------>",newval
                 if val[i] == 'k':
                     value = newval[0] + 'e3'
                 if val[i] == 'u':

@@ -1,3 +1,2 @@
-.model D1N750	D( Is=880.5E-18 Rs=.25 Ikf=0 N=1 Xti=3 Eg=1.11 Cjo=175p M=.5516 
-+ Vj=.75 Fc=.5 Isr=1.859n Nr=2 Bv=8.1 Ibv=20.245m Nbv=1.6989 Ibvl=1.9556m 
-+ Nbvl=14.976 Tbv1=-21.277u) 
+.model 1n4148 D(is=2.495E-09 rs=4.755E-01 n=1.679E+00 tt=3.030E-09 cjo=1.700E-12 vj=1 m=1.959E-01 bv=1.000E+02 ibv=1.000E-04)
+
