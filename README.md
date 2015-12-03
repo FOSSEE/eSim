@@ -15,3 +15,14 @@ eSim has been successfully ported to low cost FOSSEE laptop (http://laptop.fosse
 
 ## eSim Installation Ubuntu
 Refer INSTALL file for eSim installation on Ubuntu.
+
+## How to get the openModelica and Pspice to Kicad converter changes in windows.
+This changes is not available in the current windows installer. However you can get those changes manually after replacing eSim folder with new folder eSim folder which contains the changes.
+Please follow the steps
+1. Download and install eSim on windows from eSim website.
+2. Download the latest eSim code from https://github.com/FOSSEE/eSim/archive/develop.zip
+3. Extract the zip and copy only the src and images directory
+4. Now go to the location where eSim on windows is installed (By default it is in C:) And then just replace src and image directory with the one you just copied.
+
+
+
