@@ -34,7 +34,7 @@ class ImportPspiceLibrary(QtGui.QWidget):
                 else:
                     self.cmd = "../pspicetoKicad/libConverter32 "+self.arg
             elif platform.system() == 'Windows':
-                self.cmd = os.path.join(os.path.split(os.path.realpath(__file__))[0],'libConverter.exe')
+                self.cmd = os.path.join(os.path.split(os.path.realpath(__file__))[0],'libConverter32.exe')
                 
             self.status =  os.system(str(self.cmd))
             
@@ -144,7 +144,7 @@ class ConvertPspiceKicad(QtGui.QWidget):
                 self.cmd = "../pspicetoKicad/schConverter32 "+self.arg1+" "+self.arg2
         elif platform.system() == 'Windows':
             print "Needs to include for Windows"
-            self.cmd = os.path.join(os.path.split(os.path.realpath(__file__))[0],'converter.exe')+" "+self.arg1+" "+self.arg2
+            self.cmd = os.path.join(os.path.split(os.path.realpath(__file__))[0],'schConverter32.exe')+" "+self.arg1+" "+self.arg2
                
         #Running command
         self.status = os.system(str(self.cmd))
