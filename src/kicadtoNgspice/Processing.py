@@ -256,11 +256,18 @@ class PrcocessNetlist:
                                     try:
                                         if item.split("-")[1] == 'V':
                                             print "Vector"
-                                            modelLine += "["
-                                            for i in range(0,int(item.split("-")[0])):
-                                                modelLine += words[pos]+" "
-                                                pos += 1
-                                            modelLine += "] "
+                                            if compType == "aswitch":
+                                                modelLine += "("
+                                                for i in range(0,int(item.split("-")[0])):
+                                                    modelLine += words[pos]+" "
+                                                    pos += 1
+                                                modelLine += ") "
+                                            else:
+                                                modelLine += "["
+                                                for i in range(0,int(item.split("-")[0])):
+                                                    modelLine += words[pos]+" "
+                                                    pos += 1
+                                                modelLine += "] "    
                                         elif item.split("-")[1] == 'NV':
                                             print "Non Vector"  
                                             for i in range(0,int(item.split("-")[0])):
