@@ -1,0 +1,14 @@
+* /home/fossee/Downloads/powercktexamples/hwr6/hwr6.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Dec 15 11:57:49 2015
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+x3  GND pulse r1 SCR		
+v1  in GND sine		
+v2  pulse GND pulse		
+R1  in r1 100		
+
+.end

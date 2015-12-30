@@ -1,0 +1,16 @@
+* /home/fossee/downloads/powercktexamples/hwr6/hwr6.cir
+
+.include scr.sub
+x3 in pulse out scr
+v1  in gnd sine(0 100 50 0 0)
+v2  pulse gnd pulse(0 5 14m 0 0 1m 20m)
+r2  out gnd 1k
+.tran 2e-03 50e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,24 @@
+* /opt/esim/src/subcircuitlibrary/diac/diac.cir
+
+* u3  1 2 port
+* u1  1 1 2 aswitch
+* u2  1 1 2 aswitch
+a1 1 [1 2 ] u1
+a2 1 [1 2 ] u2
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u1 aswitch(log=TRUE cntl_off=0.1 cntl_on=25 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u2 aswitch(log=TRUE cntl_off=-0.1 cntl_on=-25 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u1 aswitch(log=TRUE cntl_off=0.1 cntl_on=25 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u2 aswitch(log=TRUE cntl_off=-0.1 cntl_on=-25 r_on=0.0125 r_off=1000000 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
