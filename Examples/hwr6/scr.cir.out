@@ -1,0 +1,29 @@
+* /opt/esim/src/subcircuitlibrary/scr/scr.cir
+
+.include PowerDiode.lib
+* u2  3 7 1 port
+* f2
+d1 5 2 PowerDiode
+c1  3 9 10u
+* f1
+v1 8 4  dc 0
+v2 6 5  dc 0
+* u1  9 1 6 aswitch
+r1  7 8 50
+r2  3 9 1
+Vf2 2 3 0
+f2 3 9 Vf2 100
+Vf1 4 3 0
+f1 3 9 Vf1 10
+a1 9 (1 6)  u1
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u1 aswitch(log=TRUE cntl_off=0.0 cntl_on=1.0 r_on=1.0 r_off=1.0e12 ) 
+.tran 0e-12 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

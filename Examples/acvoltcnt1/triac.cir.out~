@@ -1,0 +1,41 @@
+* /opt/esim/src/subcircuitlibrary/triac/triac.cir
+
+.include PowerDiode.lib
+* u3  8 11 10 port
+* f3
+v3 7 2  dc 0
+* f2
+v2 6 3  dc 0
+c1  8 9 10u
+* f1
+v1 10 4  dc 0
+* u1  9 11 6 aswitch
+* u2  9 2 11 aswitch
+r1  8 9 1
+d1 5 8 PowerDiode
+d2 1 7 PowerDiode
+Vf3 1 8 0
+f3 8 9 Vf3 10
+Vf2 3 5 0
+f2 8 9 Vf2 10
+Vf1 4 8 0
+f1 8 9 Vf1 100
+a1 9 [11 6 ] u1
+a2 9 [2 11 ] u2
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u1 aswitch(log=TRUE cntl_off=0.1 cntl_on=1 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u2 aswitch(log=TRUE cntl_off=-0.1 cntl_on=-1 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u1 aswitch(log=TRUE cntl_off=0.1 cntl_on=1 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u2 aswitch(log=TRUE cntl_off=-0.1 cntl_on=-1 r_on=0.0125 r_off=1000000 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

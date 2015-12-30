@@ -1,0 +1,29 @@
+* /home/fossee/downloads/powercktexamples/acvoltcnt1/acvoltcnt1.cir
+
+.include triac.sub
+.include diac.sub
+c2  net-_c2-pad1_ gnd 0.1u
+c1  net-_c1-pad1_ gnd 0.1u
+r3  net-_c1-pad1_ net-_c2-pad1_ 250
+r2  in net-_c1-pad1_ 10k
+r1  in out 100
+v1  in gnd sine(0 100 100 0 0)
+x2 gnd out net-_x1-pad2_ triac
+x1 net-_c2-pad1_ net-_x1-pad2_ diac
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u1 aswitch(log=TRUE cntl_off=0.1 cntl_on=25 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u2 aswitch(log=TRUE cntl_off=-0.1 cntl_on=-25 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u1 aswitch(log=TRUE cntl_off=0.1 cntl_on=25 r_on=0.0125 r_off=1000000 ) 
+* Schematic Name: aswitch, NgSpice Name: aswitch
+.model u2 aswitch(log=TRUE cntl_off=-0.1 cntl_on=-25 r_on=0.0125 r_off=1000000 ) 
+.tran 20e-06 20e-03 0e-12
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

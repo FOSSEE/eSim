@@ -1,0 +1,20 @@
+* /opt/eSim/src/SubcircuitLibrary/scr/scr.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Fri Dec  4 15:10:34 2015
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U2  3 5 1 PORT		
+F2  3 4 2 3 100		
+D1  8 2 D		
+C1  3 4 10u		
+R2  3 4 1		
+F1  3 4 7 3 10		
+R1  5 6 50		
+v1  6 7 dc		
+v2  9 8 dc		
+U1  4 1 9 aswitch		
+
+.end
