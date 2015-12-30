@@ -20,7 +20,7 @@ Table of contents
 
    To install eSim and other dependecies run the following command.
 
-   $ ../install-linux.sh --install
+   $ ./install-linux.sh --install
 
    Above script will install eSim along with dependencies.
 
