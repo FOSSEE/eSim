@@ -57,7 +57,9 @@ fi
 function addKicadPPA
 {
     echo "Adding Kicad PPA to install latest Kicad version"
-    sudo add-apt-repository ppa:js-reynaud/ppa-kicad
+    #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
+    ##Updating to Kicad-4
+    sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
     sudo apt-get update
 
 }

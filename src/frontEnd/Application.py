@@ -128,11 +128,14 @@ class Application(QtGui.QMainWindow):
         self.ngspice = QtGui.QAction(QtGui.QIcon('../../images/ngspice.png'), '<b>Simulation</b>', self)
         self.ngspice.triggered.connect(self.open_ngspice)
         
+        """
+        #Removing PCB and Footprint Editor as it will start from eeschema
         self.footprint = QtGui.QAction(QtGui.QIcon('../../images/footprint.png'),'<b>Footprint Editor</b>',self)
         self.footprint.triggered.connect(self.obj_kicad.openFootprint)
         
         self.pcb = QtGui.QAction(QtGui.QIcon('../../images/pcb.png'),'<b>PCB Layout</b>',self)
         self.pcb.triggered.connect(self.obj_kicad.openLayout)
+        """
               
         self.model = QtGui.QAction(QtGui.QIcon('../../images/model.png'),'<b>Model Editor</b>',self)
         self.model.triggered.connect(self.open_modelEditor) 
@@ -155,8 +158,10 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.kicad)
         self.lefttoolbar.addAction(self.conversion)
         self.lefttoolbar.addAction(self.ngspice)
+        """
         self.lefttoolbar.addAction(self.footprint)
         self.lefttoolbar.addAction(self.pcb)
+        """
         self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.addAction(self.subcircuit)
         self.lefttoolbar.addAction(self.nghdl)
