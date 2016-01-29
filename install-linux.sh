@@ -124,6 +124,7 @@ function copySourceCode
         sudo cp -rvp src/browser/* "$esim_loc/src/browser"
         sudo cp -rvp src/frontEnd/* "$esim_loc/src/frontEnd"
         sudo cp -rvp src/ngspicetoModelica/* "$esim_loc/src/ngspicetoModelica"
+        sudp cp -rvp src/pspicetoKicad/* "$esim_loc/src/pspicetoKicad"
         sudo cp -rvp kicadSchematicLibrary "$esim_loc"
         sudo cp -rvp images "$esim_loc"
     else
