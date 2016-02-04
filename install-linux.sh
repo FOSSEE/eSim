@@ -158,7 +158,6 @@ function createDesktopStartScript
 
     #Generating esim.desktop file
     echo "[Desktop Entry]" > esim.desktop
-            ocopySourcsional Condenser Sound Microphone With Stand Code
     getVersion=`tail -1 VERSION`
     echo "Version=$getVersion" >> esim.desktop
     echo "Name=eSim" >> esim.desktop
