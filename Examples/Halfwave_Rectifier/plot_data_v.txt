@@ -1,5 +1,5 @@
 * /home/fossee/downloads/esim-master/examples/halfwave_rectifier/halfwave_rectifier.cir
-Transient Analysis  Wed Aug 19 15:41:02  2015
+Transient Analysis  Wed Feb  3 18:37:24  2016
 --------------------------------------------------------------------------------
 Index   time            in              out             
 --------------------------------------------------------------------------------
