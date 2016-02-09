@@ -152,10 +152,12 @@ class PrcocessNetlist:
         return schematicInfo,sourcelist
     
     
-    def convertICintoBasicBlocks(self,schematicInfo,outputOption,modelList):
+    def convertICintoBasicBlocks(self,schematicInfo,outputOption,modelList,plotText):
         #Insert details of Ngspice model
         unknownModelList = []
         multipleModelList = []
+        plotList = ['plot_v1','plot_v2','plot_i2','plot_log','plot_db']
+        
         k = 1
         for compline in schematicInfo:
             words = compline.split()
@@ -177,7 +179,7 @@ class PrcocessNetlist:
                 print "Words",words
                 print "compName",compName
                 #Looking if model file is present
-                if compType != "port" and compType != "ic":
+                if compType != "port" and compType != "ic" and compType not in plotList:
                     xmlfile = compType+".xml"   #XML Model File
                     count = 0 #Check if model of same name is present
                     modelPath = []
@@ -304,14 +306,38 @@ class PrcocessNetlist:
                     text = "Enter initial voltage at node for "+compline
                     paramDict[title] = text
                     modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
+                
+                elif compType in plotList:
+                    print "Plot Data---------->"
+                    schematicInfo.insert(index,"* "+compline)
+                    if compType == 'plot_v1':
+                        words = compline.split()
+                        plotText.append("plot v("+words[1]+")")
+                    elif compType == 'plot_v2':
+                        words = compline.split()
+                        plotText.append("plot v("+words[1]+","+words[2]+")")
+                    elif compType == 'plot_i2':
+                        words = compline.split()
+                        #Adding zero voltage source to netlist
+                        schematicInfo.append("v_"+words[0]+" "+words[1]+" "+words[2]+" "+"0")
+                        plotText.append("plot i(v_"+words[0]+")")
+                    elif compType == 'plot_log':
+                        words = compline.split()
+                        plotText.append("plot log("+words[1]+")")
+                    elif compType == 'plot_db':
+                        words = compline.split()
+                        plotText.append("plot db("+words[1]+")")
+                
                 else:
                     schematicInfo.insert(index,"* "+compline)
                     
+                
+                
                 #print "Count",count
                 #print "UnknownModelList",unknownModelList
                 #print "MultipleModelList",multipleModelList  
                 
-        return schematicInfo,outputOption,modelList,unknownModelList,multipleModelList
+        return schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText
         
         
             
