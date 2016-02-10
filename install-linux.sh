@@ -176,13 +176,14 @@ function createDesktopStartScript
     echo "Actions=NewWindow;NewPrivateWindow;" >> esim.desktop
 
 
-    
+    #Make esim.desktop file executable
+    sudo chmod 755 esim.desktop
     #Copy desktop icon file to Desktop
     cp -vp esim.desktop $HOME/Desktop/eSim
 
 
     #Copying logo.png to .esim directory to access as icon
-    cp images/logo.png $config_dir
+    cp -vp images/logo.png $config_dir
 }
 
 ####################################################################
