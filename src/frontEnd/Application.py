@@ -33,7 +33,7 @@ from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
-from pspicetoKicad.ImportPspice import ImportPspiceLibrary,ConvertPspiceKicad
+#from pspicetoKicad.ImportPspice import ImportPspiceLibrary,ConvertPspiceKicad
 import time
 from PyQt4.Qt import QSize
 
@@ -83,7 +83,8 @@ class Application(QtGui.QMainWindow):
         self.openproj = QtGui.QAction(QtGui.QIcon('../../images/openProject.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
-                       
+        '''
+        #Removing as it no longer required               
         self.importPspiceLib = QtGui.QAction(QtGui.QIcon('../../images/import_icon.png'),'<b>Import PSPICE Library</b>',self)
         self.importPspiceLib.setShortcut('Ctrl+X')
         self.importPspiceLib.triggered.connect(self.import_pspice_lib)
@@ -91,7 +92,7 @@ class Application(QtGui.QMainWindow):
         self.convertPspiceKicad = QtGui.QAction(QtGui.QIcon('../../images/Ps2Ki.png'),'<b>Convert PSPICE to KICAD</b>',self)
         self.convertPspiceKicad.setShortcut('Ctrl+X')
         self.convertPspiceKicad.triggered.connect(self.convert_pspice_kicad)
-        
+        '''
         self.exitproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Exit</b>',self)
         self.exitproj.setShortcut('Ctrl+X')
         self.exitproj.triggered.connect(self.exit_project)
@@ -103,8 +104,11 @@ class Application(QtGui.QMainWindow):
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
+        '''
+        #Removing as it is no longer require
         self.topToolbar.addAction(self.importPspiceLib)
         self.topToolbar.addAction(self.convertPspiceKicad)
+        '''
         self.topToolbar.addAction(self.exitproj)
         self.topToolbar.addAction(self.helpfile)
         
@@ -227,6 +231,8 @@ class Application(QtGui.QMainWindow):
             pass
         
         self.close()
+        
+    '''
     
     def import_pspice_lib(self):
         print "Import Pspice Library is called"
@@ -243,7 +249,7 @@ class Application(QtGui.QMainWindow):
         self.obj_run_converter = ConvertPspiceKicad()
         
         self.obj_run_converter.runConverter()
-        
+    ''' 
     def help_project(self):
         print "Help is called"
         self.obj_appconfig.print_info('Help is called')
