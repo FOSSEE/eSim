@@ -179,7 +179,7 @@ function createDesktopStartScript
     #Make esim.desktop file executable
     sudo chmod 755 esim.desktop
     #Copy desktop icon file to Desktop
-    cp -vp esim.desktop $HOME/Desktop/eSim
+    cp -vp esim.desktop $HOME/Desktop/
 
 
     #Copying logo.png to .esim directory to access as icon
@@ -272,7 +272,7 @@ elif [ $option == "--uninstall" ];then
     echo -n "Are you sure ? As it will remove complete eSim including your subcircuit and model library packages(y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
-        sudo rm -rf $HOME/.esim $HOME/Desktop/eSim esim-start.sh esim.desktop /usr/bin/esim
+        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
         if [ $? -eq 0 ];then
             echo "Uninstalled successfully"
         else
