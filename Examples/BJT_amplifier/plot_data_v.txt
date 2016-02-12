@@ -1,5 +1,5 @@
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       net-_c1-pad1_                   
 --------------------------------------------------------------------------------
@@ -215,7 +215,7 @@ Index   frequency       net-_c1-pad1_
 200	1.000000e+04	4.959885e-01,	-2.02010e-04	
 
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       net-_c1-pad2_                   
 --------------------------------------------------------------------------------
@@ -431,7 +431,7 @@ Index   frequency       net-_c1-pad2_
 200	1.000000e+04	4.959869e-01,	-1.70087e-04	
 
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       net-_c2-pad2_                   
 --------------------------------------------------------------------------------
@@ -647,7 +647,7 @@ Index   frequency       net-_c2-pad2_
 200	1.000000e+04	1.123580e-05,	-2.41284e-03	
 
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       net-_c3-pad2_                   
 --------------------------------------------------------------------------------
@@ -863,7 +863,7 @@ Index   frequency       net-_c3-pad2_
 200	1.000000e+04	-1.00617e+01,	-4.06268e-02	
 
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       net-_r1-pad2_                   
 --------------------------------------------------------------------------------
@@ -1079,7 +1079,7 @@ Index   frequency       net-_r1-pad2_
 200	1.000000e+04	5.000000e-01,	0.000000e+00	
 
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       net-_r2-pad1_                   
 --------------------------------------------------------------------------------
@@ -1295,7 +1295,7 @@ Index   frequency       net-_r2-pad1_
 200	1.000000e+04	0.000000e+00,	0.000000e+00	
 
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       out                             
 --------------------------------------------------------------------------------

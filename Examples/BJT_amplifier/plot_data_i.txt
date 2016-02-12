@@ -1,5 +1,5 @@
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       v1#branch                       
 --------------------------------------------------------------------------------
@@ -215,7 +215,7 @@ Index   frequency       v1#branch
 200	1.000000e+04	-5.02835e-03,	-2.03142e-05	
 
  * /home/fossee/downloads/esim-master/examples/bjt_amplifier/bjt_amplifier.cir
- AC Analysis  Thu Feb  4 15:28:47  2016
+ AC Analysis  Fri Feb 12 15:10:17  2016
 --------------------------------------------------------------------------------
 Index   frequency       v2#branch                       
 --------------------------------------------------------------------------------

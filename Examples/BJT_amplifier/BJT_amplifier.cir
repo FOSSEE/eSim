@@ -17,6 +17,9 @@ C2  GND Net-_C2-Pad2_ 100u
 C3  out Net-_C3-Pad2_ 40u		
 R5  Net-_R2-Pad1_ Net-_C3-Pad2_ 2k		
 R4  Net-_C2-Pad2_ GND 1.5k		
-Q1  Net-_C3-Pad2_ Net-_C1-Pad2_ Net-_C2-Pad2_ NPN		
+Q1  Net-_C3-Pad2_ Net-_C1-Pad2_ Net-_C2-Pad2_ NPN	
+
+U1 out plot_phase
+U2 out plot_log	
 
 .end

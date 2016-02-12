@@ -156,7 +156,7 @@ class PrcocessNetlist:
         #Insert details of Ngspice model
         unknownModelList = []
         multipleModelList = []
-        plotList = ['plot_v1','plot_v2','plot_i2','plot_log','plot_db']
+        plotList = ['plot_v1','plot_v2','plot_i2','plot_log','plot_db','plot_phase']
         
         k = 1
         for compline in schematicInfo:
@@ -327,6 +327,9 @@ class PrcocessNetlist:
                     elif compType == 'plot_db':
                         words = compline.split()
                         plotText.append("plot db("+words[1]+")")
+                    elif compType == 'plot_phase':
+                        words = compline.split()
+                        plotText.append("plot phase("+words[1]+")")
                 
                 else:
                     schematicInfo.insert(index,"* "+compline)
