@@ -90,7 +90,7 @@ class Workspace(QtGui.QWidget):
         self.window_open_close=1
         self.close_var=1
         #with var_cond:
-         #   var_cond.notify()
+        #   var_cond.notify()
         return QtGui.QWidget.close(self, *args, **kwargs)
 
 

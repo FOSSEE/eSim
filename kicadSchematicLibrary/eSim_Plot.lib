@@ -1,0 +1,84 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# plot_db
+#
+DEF plot_db U 0 40 Y Y 1 F N
+F0 "U" 0 500 60 H V C CNN
+F1 "plot_db" 200 350 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+C 0 500 100 0 1 0 N
+X ~ ~ 0 200 200 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# plot_i2
+#
+DEF plot_i2 U 0 40 Y Y 1 F N
+F0 "U" 0 400 60 H V C CNN
+F1 "plot_i2" 0 100 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+C 0 250 100 0 1 0 N
+X + 1 -300 250 200 R 50 50 1 1 I
+X - 2 300 250 200 L 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# plot_log
+#
+DEF plot_log U 0 40 Y Y 1 F N
+F0 "U" 0 500 60 H V C CNN
+F1 "plot_log" 200 350 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+C 0 500 100 0 1 0 N
+X ~ ~ 0 200 200 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# plot_phase
+#
+DEF plot_phase U 0 40 Y Y 1 F N
+F0 "U" 0 500 60 H V C CNN
+F1 "plot_phase" 250 350 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+C 0 500 100 0 1 0 N
+X ~ ~ 0 200 200 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# plot_v1
+#
+DEF plot_v1 U 0 40 Y Y 1 F N
+F0 "U" 0 500 60 H V C CNN
+F1 "plot_v1" 200 350 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+C 0 500 100 0 1 0 N
+X ~ ~ 0 200 200 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# plot_v2
+#
+DEF plot_v2 U 0 40 Y Y 1 F N
+F0 "U" 0 400 60 H V C CNN
+F1 "plot_v2" 0 100 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+C 0 250 100 0 1 0 N
+X + 1 -300 250 200 R 50 50 1 1 I
+X - 2 300 250 200 L 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+#End Library

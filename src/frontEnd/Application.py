@@ -28,9 +28,12 @@ from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
+from projManagement.Validation import Validation
+from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
+#from pspicetoKicad.ImportPspice import ImportPspiceLibrary,ConvertPspiceKicad
 import time
 from PyQt4.Qt import QSize
 
@@ -52,7 +55,7 @@ class Application(QtGui.QMainWindow):
         self.obj_Mainview = MainView()
         self.obj_kicad = Kicad(self.obj_Mainview.obj_dockarea)
         self.obj_appconfig = Appconfig() 
-        
+        self.obj_validation = Validation()
         #Initialize all widget
         self.setCentralWidget(self.obj_Mainview)
         self.initToolBar()
@@ -80,7 +83,16 @@ class Application(QtGui.QMainWindow):
         self.openproj = QtGui.QAction(QtGui.QIcon('../../images/openProject.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
+        '''
+        #Removing as it no longer required               
+        self.importPspiceLib = QtGui.QAction(QtGui.QIcon('../../images/import_icon.png'),'<b>Import PSPICE Library</b>',self)
+        self.importPspiceLib.setShortcut('Ctrl+X')
+        self.importPspiceLib.triggered.connect(self.import_pspice_lib)
         
+        self.convertPspiceKicad = QtGui.QAction(QtGui.QIcon('../../images/Ps2Ki.png'),'<b>Convert PSPICE to KICAD</b>',self)
+        self.convertPspiceKicad.setShortcut('Ctrl+X')
+        self.convertPspiceKicad.triggered.connect(self.convert_pspice_kicad)
+        '''
         self.exitproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Exit</b>',self)
         self.exitproj.setShortcut('Ctrl+X')
         self.exitproj.triggered.connect(self.exit_project)
@@ -92,6 +104,11 @@ class Application(QtGui.QMainWindow):
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
+        '''
+        #Removing as it is no longer require
+        self.topToolbar.addAction(self.importPspiceLib)
+        self.topToolbar.addAction(self.convertPspiceKicad)
+        '''
         self.topToolbar.addAction(self.exitproj)
         self.topToolbar.addAction(self.helpfile)
         
@@ -115,17 +132,29 @@ class Application(QtGui.QMainWindow):
         self.ngspice = QtGui.QAction(QtGui.QIcon('../../images/ngspice.png'), '<b>Simulation</b>', self)
         self.ngspice.triggered.connect(self.open_ngspice)
         
+        """
+        #Removing PCB and Footprint Editor as it will start from eeschema
         self.footprint = QtGui.QAction(QtGui.QIcon('../../images/footprint.png'),'<b>Footprint Editor</b>',self)
         self.footprint.triggered.connect(self.obj_kicad.openFootprint)
         
         self.pcb = QtGui.QAction(QtGui.QIcon('../../images/pcb.png'),'<b>PCB Layout</b>',self)
         self.pcb.triggered.connect(self.obj_kicad.openLayout)
+        """
               
         self.model = QtGui.QAction(QtGui.QIcon('../../images/model.png'),'<b>Model Editor</b>',self)
         self.model.triggered.connect(self.open_modelEditor) 
         
         self.subcircuit=QtGui.QAction(QtGui.QIcon('../../images/subckt.png'),'<b>Subcircuit</b>',self)
         self.subcircuit.triggered.connect(self.open_subcircuit)
+
+        self.nghdl = QtGui.QAction(QtGui.QIcon('../../images/nghdl.png'), '<b>Nghdl</b>', self)
+        self.nghdl.triggered.connect(self.open_nghdl)
+        
+        self.omedit = QtGui.QAction(QtGui.QIcon('../../images/omedit.png'),'<b>Modelica Converter</b>',self)
+        self.omedit.triggered.connect(self.open_OMedit) 
+        
+        self.omoptim=QtGui.QAction(QtGui.QIcon('../../images/omoptim.png'),'<b>OM Optimisation</b>',self)
+        self.omoptim.triggered.connect(self.open_OMoptim)
         
         #Adding Action Widget to tool bar   
         self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
@@ -133,10 +162,15 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.kicad)
         self.lefttoolbar.addAction(self.conversion)
         self.lefttoolbar.addAction(self.ngspice)
+        """
         self.lefttoolbar.addAction(self.footprint)
         self.lefttoolbar.addAction(self.pcb)
+        """
         self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.addAction(self.subcircuit)
+        self.lefttoolbar.addAction(self.nghdl)
+        self.lefttoolbar.addAction(self.omedit)
+        self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40,40))
      
@@ -160,6 +194,7 @@ class Application(QtGui.QMainWindow):
                 self.obj_appconfig.print_info('Current project is : ' + self.obj_appconfig.current_project["ProjectName"])
             except:
                 pass
+        
     def open_project(self):
         """
         This project call Open Project Info class
@@ -172,6 +207,55 @@ class Application(QtGui.QMainWindow):
             self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
         except:
             pass
+    
+    def exit_project(self):
+        print "Exit Project called"
+        for proc in self.obj_appconfig.procThread_list:
+                try:
+                        proc.terminate()
+                except:
+                        pass
+              
+        try :       
+            for process_object in self.obj_appconfig.process_obj:
+                try:
+                    process_object.close()
+                except:
+                        pass
+        except:
+            pass
+        ##Just checking if open and New window is open. If yes just close it when application is closed
+        try:
+            self.project.close()
+        except:
+            pass
+        
+        self.close()
+        
+    '''
+    
+    def import_pspice_lib(self):
+        print "Import Pspice Library is called"
+        self.obj_appconfig.print_info('Import Pspice Library is called')
+        
+        self.obj_import_pspice = ImportPspiceLibrary()
+        
+        self.obj_import_pspice.imortLib()
+        
+    def convert_pspice_kicad(self):
+        print "PSPICE to KICAD converter is called"
+        self.obj_appconfig.print_info('PSPICE to KICAD converter is called')
+        
+        self.obj_run_converter = ConvertPspiceKicad()
+        
+        self.obj_run_converter.runConverter()
+    ''' 
+    def help_project(self):
+        print "Help is called"
+        self.obj_appconfig.print_info('Help is called')
+        print "Current Project : ",self.obj_appconfig.current_project
+        self.obj_Mainview.obj_dockarea.usermanual()    
+    
     
     def open_ngspice(self):
         """
@@ -203,45 +287,102 @@ class Application(QtGui.QMainWindow):
         print "Subcircuit editor is called"
         self.obj_appconfig.print_info('Subcircuit editor is called')
         self.obj_Mainview.obj_dockarea.subcircuiteditor()
-                    
-        
-    def exit_project(self):
-        print "Exit Project called"
-        for proc in self.obj_appconfig.procThread_list:
-                try:
-                        proc.terminate()
-                except:
-                        pass
-        ##Just checking if open and New window is open. If yes just close it when application is closed
-        try:
-            self.project.close()
-        except:
-            pass
-        
-        self.close()
-        
-    def help_project(self):
-        print "Help is called"
-        self.obj_appconfig.print_info('Help is called')
-        print "Current Project : ",self.obj_appconfig.current_project
-        self.obj_Mainview.obj_dockarea.usermanual()
-    
-        
+
+    def open_nghdl(self):
+        print "Nghdl is called"
+        self.obj_appconfig.print_info('Nghdl is called')
+
+        if self.obj_validation.validateTool('nghdl'):
+            self.cmd = 'nghdl -e'
+            self.obj_workThread = Worker.WorkerThread(self.cmd)
+            self.obj_workThread.start()
+
+        else:
+            self.msg = QtGui.QErrorMessage(None)
+            self.msg.showMessage('Error while opening nghdl. Please make sure nghdl is installed')
+            self.obj_appconfig.print_error('Error while opening nghdl. Please make sure nghdl is installed')
+            self.msg.setWindowTitle('nghdl Error Message')
+            
+      
     def open_modelEditor(self):
         print "model editor is called"
         self.obj_appconfig.print_info('model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
-    """    
-    def open_kicadToNgspice(self):
-        print "kicadToNgspice is called"
-        self.obj_appconfig.print_info('kicadToNgspice is called')
-        self.obj_Mainview.obj_dockarea.kicadToNgspiceEditor()"""
+
+    
+    def open_OMedit(self):
+        """
+        This function call ngspice to OM edit converter and then launch OM edit.
+        """
+        self.obj_appconfig.print_info('OM edit is called')
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
         
+        if self.projDir != None:
+            if self.obj_validation.validateCirOut(self.projDir):
+                self.projName = os.path.basename(self.projDir)
+                self.ngspiceNetlist = os.path.join(self.projDir,self.projName+".cir.out")
+                self.modelicaNetlist = os.path.join(self.projDir,self.projName+".mo")
+                
+                try:
+                    #Creating a command for Ngspice to Modelica converter
+                    self.cmd1 = "python ../ngspicetoModelica/NgspicetoModelica.py "+self.ngspiceNetlist
+                    self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
+                    self.obj_workThread1.start()
+                    
+                    
+                    if self.obj_validation.validateTool("OMEdit"):
+                        #Creating command to run OMEdit
+                        self.cmd2 = "OMEdit "+self.modelicaNetlist
+                        self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
+                        self.obj_workThread2.start()
+                    else:
+                        self.msg = QtGui.QMessageBox()
+                        self.msgContent = "There was an error while opening OMEdit.<br/>\
+                        Please make sure OpenModelica is installed in your system. <br/>\
+                        To install it on Linux : Go to <a href=https://www.openmodelica.org/download/download-linux>OpenModelica Linux</a> and install nigthly build release.<br/>\
+                        To install it on Windows : Go to <a href=https://www.openmodelica.org/download/download-windows>OpenModelica Windows</a> and install latest version.<br/>"
+                        self.msg.setTextFormat(QtCore.Qt.RichText)
+                        self.msg.setText(self.msgContent)
+                        self.msg.setWindowTitle("Missing OpenModelica")
+                        self.obj_appconfig.print_info(self.msgContent)
+                        self.msg.exec_()
+                                  
+                except Exception as e:
+                    self.msg = QtGui.QErrorMessage()
+                    self.msg.showMessage('Unable to convert NgSpice netlist to Modelica netlist :'+str(e))
+                    self.msg.setWindowTitle("Ngspice to Modelica conversion error")
+                    self.obj_appconfig.print_error(str(e))
+                    
+            else:
+                self.msg = QtGui.QErrorMessage()
+                self.msg.showMessage('Current project does not contain any ngspice file. Please create ngspice file with extension .cir.out')
+                self.msg.setWindowTitle("Missing Ngspice netlist")
+        else:
+            self.msg = QtGui.QErrorMessage()
+            self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
+            self.msg.setWindowTitle("Error Message")
         
-        
-    def testing(self):
-        print "Success hit kicad button"
-        
+    
+    def open_OMoptim(self):
+        print "OM Optim is called"    
+        self.obj_appconfig.print_info('OM Optim is called')
+        #Check if OMOptim is installed 
+        if self.obj_validation.validateTool("OMOptim"):
+            #Creating a command to run
+            self.cmd = "OMOptim"
+            self.obj_workThread = Worker.WorkerThread(self.cmd)
+            self.obj_workThread.start()
+        else:
+            self.msg = QtGui.QMessageBox()
+            self.msgContent = "There was an error while opening OMOptim.<br/>\
+            Please make sure OpenModelica is installed in your system. <br/>\
+            To install it on Linux : Go to <a href=https://www.openmodelica.org/download/download-linux>OpenModelica Linux</a> and install nigthly build release.<br/>\
+            To install it on Windows : Go to <a href=https://www.openmodelica.org/download/download-windows>OpenModelica Windows</a> and install latest version.<br/>"
+            self.msg.setTextFormat(QtCore.Qt.RichText)
+            self.msg.setText(self.msgContent)
+            self.msg.setWindowTitle("Error Message")
+            self.obj_appconfig.print_info(self.msgContent)
+            self.msg.exec_()
 
 class MainView(QtGui.QWidget):
     """

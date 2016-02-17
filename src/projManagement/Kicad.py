@@ -29,7 +29,7 @@ class Kicad:
     def __init__(self,dockarea):
         self.obj_validation = Validation.Validation()
         self.obj_appconfig = Appconfig()
-        self.obj_dockarea=dockarea
+        self.obj_dockarea= dockarea
     
     def openSchematic(self):
         """
@@ -60,7 +60,8 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
         
         
-        
+    '''
+    #Commenting as it is no longer needed as PBC and Layout will open from eeschema 
     def openFootprint(self):
         """
         This function create command to open Footprint editor 
@@ -115,6 +116,8 @@ class Kicad:
             self.msg.showMessage('Please select the project first. You can either create new project or open existing project')
             self.obj_appconfig.print_warning('Please select the project first. You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")     
+    
+    '''
             
     def openKicadToNgspice(self):
         """

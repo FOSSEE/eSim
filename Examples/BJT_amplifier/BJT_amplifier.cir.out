@@ -2,7 +2,7 @@
 
 .include NPN.lib
 v1 net-_r2-pad1_ gnd  dc 10
-v2 net-_r1-pad2_ gnd  ac 0.5
+v2 net-_r1-pad2_ gnd  ac 0.5 0
 r1  net-_c1-pad1_ net-_r1-pad2_ 50
 r2  net-_r2-pad1_ net-_c1-pad2_ 200k
 c1  net-_c1-pad1_ net-_c1-pad2_ 40u
@@ -13,6 +13,8 @@ c3  out net-_c3-pad2_ 40u
 r5  net-_r2-pad1_ net-_c3-pad2_ 2k
 r4  net-_c2-pad2_ gnd 1.5k
 q1 net-_c3-pad2_ net-_c1-pad2_ net-_c2-pad2_ Q2N2222
+* u1 out plot_phase
+* u2 out plot_log
 .ac dec 100 100Hz 10KHz
 
 * Control Statements 
@@ -20,5 +22,7 @@ q1 net-_c3-pad2_ net-_c1-pad2_ net-_c2-pad2_ Q2N2222
 run
 print allv > plot_data_v.txt
 print alli > plot_data_i.txt
+plot phase(out)
+plot log(out)
 .endc
 .end

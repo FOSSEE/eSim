@@ -92,11 +92,12 @@ class MainWindow(QtGui.QWidget):
         print "SCHEMATICINFO",schematicInfo
         
         #List storing model detail
-        global modelList,outputOption,unknownModelList,multipleModelList
+        global modelList,outputOption,unknownModelList,multipleModelList,plotText
           
         modelList = [] 
         outputOption = []
-        schematicInfo,outputOption,modelList,unknownModelList,multipleModelList = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList)
+        plotText = []
+        schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList,plotText)
         print "Unknown Model List",unknownModelList  
         print "Multiple Model List",multipleModelList
         print "Model List",modelList
@@ -495,7 +496,7 @@ class MainWindow(QtGui.QWidget):
             print "Analysis OutPut------>",analysisoutput
            
             #Calling netlist file generation function
-            self.createNetlistFile(store_schematicInfo)
+            self.createNetlistFile(store_schematicInfo,plotText)
             
             self.msg = "The Kicad to Ngspice Conversion completed successfully!!!!!!"
             QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
@@ -513,7 +514,7 @@ class MainWindow(QtGui.QWidget):
         if self.clarg2 == "sub":
             self.createSubFile(subPath)
     
-    def createNetlistFile(self,store_schematicInfo):
+    def createNetlistFile(self,store_schematicInfo,plotText):
         print "Creating Final netlist"
         #print "INFOLINE",infoline
         #print "OPTIONINFO",optionInfo
@@ -603,6 +604,8 @@ class MainWindow(QtGui.QWidget):
         #out.writelines(outputOption)
         out.writelines('print allv > plot_data_v.txt\n')
         out.writelines('print alli > plot_data_i.txt\n')
+        for item in plotText:
+            out.writelines(item+'\n')
         out.writelines('.endc\n')
         out.writelines('.end\n')
         out.close()

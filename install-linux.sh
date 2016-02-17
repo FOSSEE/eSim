@@ -19,103 +19,180 @@
 #      REVISION:  ---
 #===============================================================================
 
+#All variables goes here
+config_dir="$HOME/.esim"
+config_file="config.ini"
+eSim_Home=`pwd`
+ngspiceFlag=0
+
 ##All Functions goes here
+
+
+function createConfigFile
+{
+    #Creating config.ini file and adding configuration information
+    #Check if config file is present
+    if [ -d $config_dir ];then
+        rm $config_dir/$config_file && touch $config_dir/$config_file
+    else
+        mkdir $config_dir && touch $config_dir/$config_file
+    fi
+    
+    echo "[eSim]" >> $config_dir/$config_file
+    echo "eSim_HOME = $eSim_Home" >> $config_dir/$config_file
+    echo "LICENSE = %(eSim_HOME)s/LICENSE" >> $config_dir/$config_file
+    echo "KicadLib = %(eSim_HOME)s/kicadSchematicLibrary" >> $config_dir/$config_file
+    echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
+    echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
+    
+
+}
+
+
+function installNghdl
+{
+echo -n "Do you want to install nghdl? (y/n): "
+read getNghdl
+
+if [ $getNghdl == "y" -o $getNghdl == "Y" ];then
+    echo "Downloading nghdl"
+    wget https://github.com/FOSSEE/nghdl/archive/master.zip
+    unzip master.zip
+    mv nghdl-master nghdl
+    rm master.zip
+
+    echo "Installing nghdl"
+    cd nghdl/
+    ./install-nghdl.sh
+    
+    if [ $? -ne 0 ];then
+        echo -e "\n\n\nNghdl ERROR: Error while installing nghdl\n\n"
+        exit 0
+    else
+        ngspiceFlag=1
+        cd ..
+    fi
+    #Creating empty eSim_kicad.lib in home directory
+    if [ -f $HOME/eSim_kicad.lib ];then
+        echo "eSim_kicad.lib is already available"
+    else
+        touch $HOME/eSim_kicad.lib
+    fi
+
+elif [ $getNghdl == "n" -o $getNghdl == "N" ];then
+    echo "Proceeding without installing nghdl"
+else
+    echo "Please select the right option"
+    exit 0
+fi
+}
+
 function addKicadPPA
 {
-echo "Adding Kicad PPA to install latest Kicad version"
-sudo add-apt-repository ppa:js-reynaud/ppa-kicad
-sudo apt-get update
-
+    #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
+    kicadppa="reynaud/kicad-4"
+    #Checking if ghdl ppa is already exist
+    grep -h "^deb.*$kicadppa*" /etc/apt/sources.list.d/* > /dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        echo "Adding kicad-4 PPA to install latest ghdl version"
+        sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
+        sudo apt-get update
+    else
+        echo "Kicad-4 is available in synaptic"
+    fi
 }
 
 function installDependency
 {
 
-echo "Installing Kicad............"
-sudo apt-get install -y kicad
-echo "Installing ngspice.........."
-sudo apt-get install -y ngspice
-echo "Installing PyQt4............"
-sudo apt-get install -y python-qt4
-echo "Installing Matplotlib......."
-sudo apt-get install -y python-matplotlib
+    echo "Installing Kicad............"
+    sudo apt-get install -y kicad
+    if [ $ngspiceFlag -ne 1 ];then
+        echo "Installing ngspice.........."
+        sudo apt-get install -y ngspice
+    else
+        echo "ngspice already installed......"
+    fi
+    echo "Installing PyQt4............"
+    sudo apt-get install -y python-qt4
+    echo "Installing Matplotlib......."
+    sudo apt-get install -y python-matplotlib
 
 }
 
 function copyKicadLibrary
 {
 
-#Copy Kicad library made for eSim
-sudo cp -r kicadSchematicLibrary/*.lib /usr/share/kicad/library/
-sudo cp -r kicadSchematicLibrary/*.dcm /usr/share/kicad/library/
+    #Copy Kicad library made for eSim
+    sudo cp -r kicadSchematicLibrary/*.lib /usr/share/kicad/library/
+    sudo cp -r kicadSchematicLibrary/*.dcm /usr/share/kicad/library/
 
-# Full path of 'kicad.pro file'[Verified for Ubuntu 12.04]                  
-KICAD_PRO="/usr/share/kicad/template/kicad.pro"
-KICAD_ORIGINAL="/usr/share/kicad/template/kicad.pro.original"  
+    # Full path of 'kicad.pro file'[Verified for Ubuntu 12.04]                  
+    KICAD_PRO="/usr/share/kicad/template/kicad.pro"
+    KICAD_ORIGINAL="/usr/share/kicad/template/kicad.pro.original"  
 
-if [ -f "$KICAD_ORIGINAL" ];then
-    echo "kicad.pro.original file found....."
-    sudo cp -rv kicadSchematicLibrary/kicad.pro ${KICAD_PRO}
-else 
-    echo "Making copy of original file"
-    sudo cp -rv ${KICAD_PRO}{,.original}                                             
-    sudo cp -rv kicadSchematicLibrary/kicad.pro ${KICAD_PRO}
-fi
+    if [ -f "$KICAD_ORIGINAL" ];then
+        echo "kicad.pro.original file found....."
+        sudo cp -rv kicadSchematicLibrary/kicad.pro ${KICAD_PRO}
+    else 
+        echo "Making copy of original file"
+        sudo cp -rv ${KICAD_PRO}{,.original}                                             
+        sudo cp -rv kicadSchematicLibrary/kicad.pro ${KICAD_PRO}
+    fi
 
 }
 
-function copySourceCode
+function createDesktopStartScript
 {
+    
+    #Generating new esim-start.sh
+    echo "#!/bin/bash" > esim-start.sh
+    echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
+    echo "python Application.py" >> esim-start.sh
+    
+    #Make it executable
+    sudo chmod 755 esim-start.sh
+    #Copy esim start script
+    sudo cp -vp esim-start.sh /usr/bin/esim
 
-#Creating eSim directory
-esim_loc="/opt/eSim"
-
-if [ -d "$esim_loc" ];then
-    #sudo rm -r "$esim_loc"
-    #sudo mkdir -v "$esim_loc"
-
-    #Copy source code to eSim directory
-    sudo cp -rvp src/configuration/* "$esim_loc/src/configuration"
-    sudo cp -rvp src/modelParamXML/* "$esim_loc/src/modelParamXML"
-    sudo cp -rvp src/modelEditor/* "$esim_loc/src/modelEditor"
-    sudo cp -rvp src/projManagement/* "$esim_loc/src/projManagement"
-    sudo cp -rvp src/ngspiceSimulation/* "$esim_loc/src/ngspiceSimulation"
-    sudo cp -rvp src/kicadtoNgspice/* "$esim_loc/src/kicadtoNgspice"
-    sudo cp -rvp src/browser/* "$esim_loc/src/browser"
-    sudo cp -rvp src/frontEnd/* "$esim_loc/src/frontEnd"
-    sudo cp -rvp kicadSchematicLibrary "$esim_loc"
-    sudo cp -rvp images "$esim_loc"
-else
-    sudo mkdir -v "$esim_loc"
-    #Copy source code to eSim directory
-    sudo cp -rvp src "$esim_loc"
-    sudo cp -rvp kicadSchematicLibrary "$esim_loc"
-    sudo cp -rvp images "$esim_loc"
-fi
-
-if [ "$?" -eq 1 ];then
-    echo "Unable to create /opt/eSim "
-    exit 1;
-else
-    echo "Created /opt/eSim"
-fi
+    #Generating esim.desktop file
+    echo "[Desktop Entry]" > esim.desktop
+    getVersion=`tail -1 VERSION`
+    echo "Version=$getVersion" >> esim.desktop
+    echo "Name=eSim" >> esim.desktop
+    echo "Comment=EDA Tools" >> esim.desktop
+    echo "GenericName=eSim" >> esim.desktop
+    echo "Keywords=eda-tools" >> esim.desktop
+    echo "Exec=esim %u" >> esim.desktop
+    echo "Terminal=false" >> esim.desktop
+    echo "X-MultipleArgs=false" >> esim.desktop
+    echo "Type=Application" >> esim.desktop
+    getIcon="$config_dir/logo.png"
+    echo "Icon=$getIcon" >> esim.desktop
+    echo "Categories=Development;" >> esim.desktop
+    echo "MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;" >> esim.desktop
+    echo "StartupNotify=true" >> esim.desktop
+    echo "Actions=NewWindow;NewPrivateWindow;" >> esim.desktop
 
 
-#Copy desktop icon file to Desktop
-cp -vp esim.desktop $HOME/Desktop/
-
-#Copy esim start script
-sudo cp -vp esim-start.sh /usr/bin/esim
-
-#Change mode of eSim directory
-sudo chmod -R 777 "$esim_loc"
+    #Make esim.desktop file executable
+    sudo chmod 755 esim.desktop
+    #Copy desktop icon file to Desktop
+    cp -vp esim.desktop $HOME/Desktop/
 
 
-
+    #Copying logo.png to .esim directory to access as icon
+    cp -vp images/logo.png $config_dir
 }
 
+####################################################################
+#                   MAIN START FROM HERE                           #
+####################################################################
 
-###Checking if file is passsed as arguement to script
+
+
+###Checking if file is passsed as argument to script
 
 if [ "$#" -eq 1 ];then
     option=$1
@@ -162,19 +239,23 @@ if [ $option == "--install" ];then
 
             echo "Install with proxy"
             #Calling functions
+            createConfigFile
+            installNghdl
             addKicadPPA
             installDependency
             copyKicadLibrary
-            copySourceCode
+            createDesktopStartScript
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
             
             #Calling functions
+            createConfigFile
+            installNghdl
             addKicadPPA
             installDependency
             copyKicadLibrary
-            copySourceCode
+            createDesktopStartScript
 
             if [ $? -ne 0 ];then
                 echo -e "\n\n\nFreeEDA ERROR: Unable to install required packages. Please check your internet connection.\n\n"
@@ -191,7 +272,12 @@ elif [ $option == "--uninstall" ];then
     echo -n "Are you sure ? As it will remove complete eSim including your subcircuit and model library packages(y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
-        sudo rm -rf /opt/eSim/
+        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
+        if [ $? -eq 0 ];then
+            echo "Uninstalled successfully"
+        else
+            echo "Error while removing some file/directory.Please remove it manually"
+        fi
     elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
         exit 0
     else 

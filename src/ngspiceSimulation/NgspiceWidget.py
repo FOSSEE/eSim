@@ -15,11 +15,14 @@ class NgspiceWidget(QtGui.QWidget):
         self.layout = QtGui.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
         print"command-------->", command
+        
         if platform.system() == 'Linux':
             self.command = "cd "+projPath+";ngspice "+command
             #Creating argument for process
-            self.args = ['-into', str(self.terminal.winId()),'-hold','-e', self.command]
+            #self.args = ['-into', str(self.terminal.winId()),'-hold','-e', self.command]
+            self.args = ['-hold','-e', self.command]
             self.process.start('xterm', self.args)
+            self.obj_appconfig.process_obj.append(self.process)
                      
         elif platform.system() == 'Windows':
             tempdir= os.getcwd()
