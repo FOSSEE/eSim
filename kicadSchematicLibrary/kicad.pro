@@ -40,7 +40,6 @@ LibName6=eSim_Power
 LibName7=eSim_Sources
 LibName8=eSim_Subckt
 LibName9=eSim_User
-<<<<<<< HEAD
 LibName10=adc-dac
 LibName11=memory
 LibName12=xilinx
@@ -99,4 +98,3 @@ LibName35=linear
 LibName36=regul
 LibName37=74xx
 LibName38=cmos4000
->>>>>>> develop
