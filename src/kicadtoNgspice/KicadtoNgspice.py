@@ -296,7 +296,7 @@ class MainWindow(QtGui.QWidget):
             if tmp_check==0:        
                 words=i.split(' ')
                 wordv=words[0]
-                if wordv[0]=="v":
+                if wordv[0]=="v" or wordv[0]=="i":
                     attr_var=ET.SubElement(attr_source,words[0],name="Source type")
                     attr_var.text=words[len(words)-1]
                     #ET.SubElement(attr_ac,"field1",name="Lin").text="true"    
@@ -428,21 +428,7 @@ class MainWindow(QtGui.QWidget):
             while it<=end:
                 ET.SubElement(attr_var,"field").text=str(obj_devicemodel.entry_var[it].text())
                 it=it+1
-        #####################################    
-             
-        """keys=obj_devicemodel.devicemodel_dict.keys()
-        n=len(keys)
-        for i in range(n):
-            thisKey=keys[i]
-            nextKey=keys[(i+1)%n]
-            nextValue=obj_devicemodel.devicemodel_dict[nextKey]
-            attr_var=ET.SubElement(attr_devicemodel,thisKey)
-            it=obj_devicemodel.devicemodel_dict[thisKey]
-            while it<=nextValue:
-                ET.SubElement(attr_var,"field").text=obj_devicemodel.entry_var[it]"""
                 
-        ###################################################################################################################   
-        
         if check==0:
             attr_subcircuit=ET.SubElement(attr_parent,"subcircuit")
         if check==1:

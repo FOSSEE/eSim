@@ -52,16 +52,11 @@ class Source(QtGui.QWidget):
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
         xml_num=0
-        """self.ac_check=0
-        self.dc_check=0
-        self.sine_check=0
-        self.pulse_check=0
-        self.pwl_check=0
-        self.exp_check=0"""
+        
         if sourcelist:
             for line in sourcelist:
                 #print "Voltage source line index: ",line[0]
-                #print "SourceList line Test: ",line
+                print "SourceList line Test: ",line
                 track_id=line[0]
                 #print "track_id is ",track_id
                 if line[2]=='ac':

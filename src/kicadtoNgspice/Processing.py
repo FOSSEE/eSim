@@ -88,7 +88,7 @@ class PrcocessNetlist:
             words=compline.split()
             compName=words[0]
             # Ask for parameters of source
-            if compName[0]=='v' or compName=='i':
+            if compName[0]=='v' or compName[0]=='i':
                 # Find the index component from circuit
                 index=schematicInfo.index(compline)
                 if words[3]=="pulse":
