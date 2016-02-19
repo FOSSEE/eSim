@@ -33,7 +33,6 @@ from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
-#from pspicetoKicad.ImportPspice import ImportPspiceLibrary,ConvertPspiceKicad
 import time
 from PyQt4.Qt import QSize
 
@@ -68,8 +67,11 @@ class Application(QtGui.QMainWindow):
         self.showMaximized()
         self.setWindowIcon(QtGui.QIcon('../../images/logo.png'))
         #self.show()
-              
-        
+        self.systemTrayIcon = QtGui.QSystemTrayIcon(self)
+        self.systemTrayIcon.setIcon(QtGui.QIcon('../../images/logo.png'))
+        self.systemTrayIcon.setVisible(True)
+    
+           
     def initToolBar(self):
         """
         This function initialize Tool Bar
@@ -83,19 +85,10 @@ class Application(QtGui.QMainWindow):
         self.openproj = QtGui.QAction(QtGui.QIcon('../../images/openProject.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
-        '''
-        #Removing as it no longer required               
-        self.importPspiceLib = QtGui.QAction(QtGui.QIcon('../../images/import_icon.png'),'<b>Import PSPICE Library</b>',self)
-        self.importPspiceLib.setShortcut('Ctrl+X')
-        self.importPspiceLib.triggered.connect(self.import_pspice_lib)
         
-        self.convertPspiceKicad = QtGui.QAction(QtGui.QIcon('../../images/Ps2Ki.png'),'<b>Convert PSPICE to KICAD</b>',self)
-        self.convertPspiceKicad.setShortcut('Ctrl+X')
-        self.convertPspiceKicad.triggered.connect(self.convert_pspice_kicad)
-        '''
-        self.exitproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Exit</b>',self)
-        self.exitproj.setShortcut('Ctrl+X')
-        self.exitproj.triggered.connect(self.exit_project)
+        self.closeproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Exit</b>',self)
+        self.closeproj.setShortcut('Ctrl+X')
+        self.closeproj.triggered.connect(self.close_project)
         
         self.helpfile = QtGui.QAction(QtGui.QIcon('../../images/helpProject.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
@@ -104,12 +97,8 @@ class Application(QtGui.QMainWindow):
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
-        '''
-        #Removing as it is no longer require
-        self.topToolbar.addAction(self.importPspiceLib)
-        self.topToolbar.addAction(self.convertPspiceKicad)
-        '''
-        self.topToolbar.addAction(self.exitproj)
+        
+        self.topToolbar.addAction(self.closeproj)
         self.topToolbar.addAction(self.helpfile)
         
         self.spacer = QtGui.QWidget()
@@ -132,15 +121,6 @@ class Application(QtGui.QMainWindow):
         self.ngspice = QtGui.QAction(QtGui.QIcon('../../images/ngspice.png'), '<b>Simulation</b>', self)
         self.ngspice.triggered.connect(self.open_ngspice)
         
-        """
-        #Removing PCB and Footprint Editor as it will start from eeschema
-        self.footprint = QtGui.QAction(QtGui.QIcon('../../images/footprint.png'),'<b>Footprint Editor</b>',self)
-        self.footprint.triggered.connect(self.obj_kicad.openFootprint)
-        
-        self.pcb = QtGui.QAction(QtGui.QIcon('../../images/pcb.png'),'<b>PCB Layout</b>',self)
-        self.pcb.triggered.connect(self.obj_kicad.openLayout)
-        """
-              
         self.model = QtGui.QAction(QtGui.QIcon('../../images/model.png'),'<b>Model Editor</b>',self)
         self.model.triggered.connect(self.open_modelEditor) 
         
@@ -162,10 +142,6 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.kicad)
         self.lefttoolbar.addAction(self.conversion)
         self.lefttoolbar.addAction(self.ngspice)
-        """
-        self.lefttoolbar.addAction(self.footprint)
-        self.lefttoolbar.addAction(self.pcb)
-        """
         self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.addAction(self.subcircuit)
         self.lefttoolbar.addAction(self.nghdl)
@@ -173,8 +149,42 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40,40))
+    
+    def closeEvent(self, event):
+        exit_msg = "Are you sure you want to exit the program ? All unsaved data will be lost."
+        reply = QtGui.QMessageBox.question(self, 'Message',
+                                           exit_msg, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+        
+        if reply == QtGui.QMessageBox.Yes:   
+            for proc in self.obj_appconfig.procThread_list:
+                    try:
+                            proc.terminate()
+                    except:
+                            pass
+            try:       
+                for process_object in self.obj_appconfig.process_obj:
+                    try:
+                        process_object.close()
+                    except:
+                            pass
+            except:
+                pass
+            ##Just checking if open project and New project window is open. If yes just close it when application is closed
+            try:
+                self.project.close()
+            except:
+                pass
+            event.accept()
+            self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
+        
+        elif reply == QtGui.QMessageBox.No:
+            event.ignore()
+    
      
-     
+    def close_project(self):
+        print "Close Project is called"
+        self.systemTrayIcon.showMessage('Close', 'Current project is Closed.')
+    
     def new_project(self):
         """
         This function call New Project Info class.
@@ -208,48 +218,9 @@ class Application(QtGui.QMainWindow):
         except:
             pass
     
-    def exit_project(self):
-        print "Exit Project called"
-        for proc in self.obj_appconfig.procThread_list:
-                try:
-                        proc.terminate()
-                except:
-                        pass
-              
-        try :       
-            for process_object in self.obj_appconfig.process_obj:
-                try:
-                    process_object.close()
-                except:
-                        pass
-        except:
-            pass
-        ##Just checking if open and New window is open. If yes just close it when application is closed
-        try:
-            self.project.close()
-        except:
-            pass
-        
-        self.close()
-        
-    '''
+               
     
-    def import_pspice_lib(self):
-        print "Import Pspice Library is called"
-        self.obj_appconfig.print_info('Import Pspice Library is called')
-        
-        self.obj_import_pspice = ImportPspiceLibrary()
-        
-        self.obj_import_pspice.imortLib()
-        
-    def convert_pspice_kicad(self):
-        print "PSPICE to KICAD converter is called"
-        self.obj_appconfig.print_info('PSPICE to KICAD converter is called')
-        
-        self.obj_run_converter = ConvertPspiceKicad()
-        
-        self.obj_run_converter.runConverter()
-    ''' 
+            
     def help_project(self):
         print "Help is called"
         self.obj_appconfig.print_info('Help is called')
@@ -422,7 +393,7 @@ class MainView(QtGui.QWidget):
         self.middleSplit.setOrientation(QtCore.Qt.Vertical)
         self.middleSplit.addWidget(self.obj_dockarea)
         self.middleSplit.addWidget(self.noteArea)
-        
+                
         #Adding middle split to Middle Container Widget
         self.middleContainerLayout.addWidget(self.middleSplit)
         self.middleContainer.setLayout(self.middleContainerLayout)
@@ -450,59 +421,15 @@ def main(args):
     splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
     splash.setMask(splash_pix.mask())
     splash.show()
-    #QtGui.QApplication.setStyle(QtGui.QStyleFactory.create("Cleanlooks"))
     appView = Application()
     appView.splash=splash
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
     appView.hide()
     appView.obj_workspace.show() 
     sys.exit(app.exec_())
-    #appView.hide()
-    ########################################################################################################################################
-    
-    """splash_pix = QtGui.QPixmap('../images/splash_screen_esim.png')
-    splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
-    progressBar = QtGui.QProgressBar(splash) 
-    progressBar.setGeometry(0,470,1004,20)
-    splash.setMask(splash_pix.mask())
-    splash.show()
-    
-    for i in range(0, 100):
-        progressBar.setValue(i)
-        #cond=threading.Condition()
-        if i==50:
-            
-            appView = Application()
-            appView.hide()
-            #appView.obj_workspace.returnWhetherClickedOrNot(appView)
-            appView.obj_workspace.show()            
-            #appView.obj_workspace.show()
-            appView.obj_workspace.calledFromApplicationToAssignSysAndApp(sys,app)#`11    ,cond)
-            #with cond:
-                #cond.wait()
         
-        t = time.time() 
-        while time.time() < t + 0.1:
-            app.processEvents()    
     
-    #time.sleep(2)
-    
-    #appView = Application()
-    #appView.hide()
-    splash.finish(appView)
-    #sys.exit(app.exec_())
-    
-    #QtGui.QApplication.setStyle(QtGui.QStyleFactory.create("Cleanlooks"))
-    #appView.obj_workspace.returnWhetherClickedOrNot(appView)
-    #appView.obj_workspace.show() 
-    #appView.hide()
-    
-    appView.show()
-    sys.exit(app.exec_())"""
-######################################################################################################################################################    
-    
-
-
+        
 # Call main function
 if __name__ == '__main__':
     # Create and display the splash screen
