@@ -1,11 +1,12 @@
 from __future__ import division         # Used for decimal division eg 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
 import os
 from PyQt4 import QtGui, QtCore
-from decimal import Decimal
+from decimal import Decimal,getcontext
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 from configuration.Appconfig import Appconfig
+import numpy as np
 
 class plotWindow(QtGui.QMainWindow):
     def __init__(self,fpath,projectName):
@@ -108,6 +109,8 @@ class plotWindow(QtGui.QMainWindow):
     
         self.plotbtn = QtGui.QPushButton("Plot")
         self.plotbtn.setToolTip('<b>Press</b> to Plot' )
+        self.multimeterbtn = QtGui.QPushButton("Multimeter")
+        self.multimeterbtn.setToolTip('<b>Press</b> to get Multimeter' )
         self.text = QtGui.QLineEdit()
         self.funcLabel = QtGui.QLabel()
         self.palette1 = QtGui.QPalette()
@@ -122,6 +125,7 @@ class plotWindow(QtGui.QMainWindow):
 
         self.right_vbox.addLayout(self.top_grid)
         self.right_vbox.addWidget(self.plotbtn)
+        self.right_vbox.addWidget(self.multimeterbtn)
     
         self.right_grid.addWidget(self.funcLabel,1,0)
         self.right_grid.addWidget(self.text,1,1)
@@ -158,6 +162,8 @@ class plotWindow(QtGui.QMainWindow):
         #Connecting to plot and clear function
         self.connect(self.clear,QtCore.SIGNAL('clicked()'),self.pushedClear)
         self.connect(self.plotfuncbtn,QtCore.SIGNAL('clicked()'), self.pushedPlotFunc)
+        self.connect(self.multimeterbtn,QtCore.SIGNAL('clicked()'), self.multiMeter)
+        
 
         if self.plotType[0]==0:
             self.analysisType.setText("<b>AC Analysis</b>")
@@ -394,7 +400,53 @@ class plotWindow(QtGui.QMainWindow):
                 'm':'color:magenta',
                 'k':'color:black'
         }[letter]
+        
+    def multiMeter(self):
+        print "MultiMeter is called"
+        self.obj = {}
+        boxCheck = 0
+        loc_x = 300
+        loc_y = 300
+        for i,j in zip(self.chkbox,range(len(self.chkbox))):
+            if i.isChecked():
+                print "Check box",self.obj_dataext.NBList[j]
+                boxCheck += 1
+                #Initializing Multimeter
+                self.obj[j] = MultimeterWidgetClass(self.obj_dataext.NBList[j],self.getRMSValue(self.obj_dataext.y[j]),loc_x,loc_y)
+                loc_x += 50
+                loc_y += 50
+                       
+        if boxCheck == 0:
+            QtGui.QMessageBox.about(self, "Warning!!","Please select at least one Node OR Branch")
+        
     
+    def getRMSValue(self,dataPoints):
+        getcontext().prec = 5
+        return np.sqrt(np.mean(np.square(dataPoints)))
+    
+class MultimeterWidgetClass(QtGui.QWidget):
+    def __init__(self,node_branch,rmsValue,loc_x,loc_y):
+        QtGui.QWidget.__init__(self)
+        
+        self.multimeter = QtGui.QWidget(self)
+        self.node_branchLabel = QtGui.QLabel("Node/Branch")
+        self.rmsLabel = QtGui.QLabel("RMS Value")
+        
+        self.nodeBranchValue = QtGui.QLabel(str(node_branch))
+        self.rmsValue = QtGui.QLabel(str(rmsValue))
+        
+        self.layout = QtGui.QGridLayout(self)
+        self.layout.addWidget(self.node_branchLabel,0,0)
+        self.layout.addWidget(self.rmsLabel,0,1)
+        self.layout.addWidget(self.nodeBranchValue,1,0)
+        self.layout.addWidget(self.rmsValue,1,1)
+        
+        self.multimeter.setLayout(self.layout)
+        self.setGeometry(loc_x,loc_y,180,100)
+        self.setWindowTitle("MultiMeter")
+        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        self.show()
+        
 
 class DataExtraction:
     def __init__(self):

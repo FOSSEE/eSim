@@ -183,7 +183,13 @@ class Application(QtGui.QMainWindow):
      
     def close_project(self):
         print "Close Project is called"
-        self.systemTrayIcon.showMessage('Close', 'Current project is Closed.')
+        #current_project = {"ProjectName":None}
+        current_project = self.obj_appconfig.current_project['ProjectName']
+        if current_project==None:
+            pass
+        else:
+            self.obj_appconfig.current_project['ProjectName'] = None
+            self.systemTrayIcon.showMessage('Close', 'Current project '+os.path.basename(current_project)+' is Closed.')
     
     def new_project(self):
         """
