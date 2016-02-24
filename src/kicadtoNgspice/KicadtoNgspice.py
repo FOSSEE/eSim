@@ -250,15 +250,24 @@ class MainWindow(QtGui.QWidget):
         ET.SubElement(attr_ac,"field7",name="Start Fre Combo").text= obj_analysis.ac_parameter[0]
         ET.SubElement(attr_ac,"field8",name="Stop Fre Combo").text= obj_analysis.ac_parameter[1]
         attr_dc=ET.SubElement(attr_analysis,"dc")
-        ET.SubElement(attr_dc,"field1",name="Source Name").text= str(obj_analysis.dc_entry_var[0].text())
+        ET.SubElement(attr_dc,"field1",name="Source 1").text= str(obj_analysis.dc_entry_var[0].text())
         ET.SubElement(attr_dc,"field2",name="Start").text= str(obj_analysis.dc_entry_var[1].text())
         ET.SubElement(attr_dc,"field3",name="Increment").text= str(obj_analysis.dc_entry_var[2].text())
         ET.SubElement(attr_dc,"field4",name="Stop").text= str(obj_analysis.dc_entry_var[3].text())
-        ET.SubElement(attr_dc,"field5",name="Operating Point").text=str(self.obj_track.op_check[-1]) 		
         print "OBJ_ANALYSIS.CHECK -----",self.obj_track.op_check[-1]
+        ET.SubElement(attr_dc,"field5",name="Operating Point").text=str(self.obj_track.op_check[-1])
         ET.SubElement(attr_dc,"field6",name="Start Combo").text= obj_analysis.dc_parameter[0]
         ET.SubElement(attr_dc,"field7",name="Increment Combo").text=obj_analysis.dc_parameter[1]
         ET.SubElement(attr_dc,"field8",name="Stop Combo").text= obj_analysis.dc_parameter[2]
+        ET.SubElement(attr_dc,"field9",name="Source 2").text= str(obj_analysis.dc_entry_var[4].text())
+        ET.SubElement(attr_dc,"field10",name="Start").text= str(obj_analysis.dc_entry_var[5].text())
+        ET.SubElement(attr_dc,"field11",name="Increment").text= str(obj_analysis.dc_entry_var[6].text())
+        ET.SubElement(attr_dc,"field12",name="Stop").text= str(obj_analysis.dc_entry_var[7].text())
+        ET.SubElement(attr_dc,"field13",name="Start Combo").text= obj_analysis.dc_parameter[3]
+        ET.SubElement(attr_dc,"field14",name="Increment Combo").text=obj_analysis.dc_parameter[4]
+        ET.SubElement(attr_dc,"field15",name="Stop Combo").text= obj_analysis.dc_parameter[5]
+
+
         attr_tran=ET.SubElement(attr_analysis,"tran")
         ET.SubElement(attr_tran,"field1",name="Start Time").text= str(obj_analysis.tran_entry_var[0].text())
         ET.SubElement(attr_tran,"field2",name="Step Time").text= str(obj_analysis.tran_entry_var[1].text())

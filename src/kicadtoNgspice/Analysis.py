@@ -309,7 +309,7 @@ class Analysis(QtGui.QWidget):
         self.dcgrid = QtGui.QGridLayout()
         self.dcbox.setLayout(self.dcgrid)
         
-        self.source_name= QtGui.QLabel('Enter Source Name',self)
+        self.source_name= QtGui.QLabel('Enter Source 1',self)
         self.source_name.setMaximumWidth(150)
         self.start= QtGui.QLabel('Start', self)
         self.start.setMaximumWidth(150)
@@ -317,12 +317,25 @@ class Analysis(QtGui.QWidget):
         self.increment.setMaximumWidth(150)
         self.stop=QtGui.QLabel('Stop',self)
         self.stop.setMaximumWidth(150)
-
+        
+        self.source_name2= QtGui.QLabel('Enter Source 2',self)
+        self.source_name2.setMaximumWidth(150)
+        self.start2= QtGui.QLabel('Start', self)
+        self.start2.setMaximumWidth(150)
+        self.increment2=QtGui.QLabel('Increment',self)
+        self.increment2.setMaximumWidth(150)
+        self.stop2=QtGui.QLabel('Stop',self)
+        self.stop2.setMaximumWidth(150)
         
         self.dcgrid.addWidget(self.source_name,1,0) 
         self.dcgrid.addWidget(self.start,2,0)
         self.dcgrid.addWidget(self.increment,3,0)
-        self.dcgrid.addWidget(self.stop,4,0)        
+        self.dcgrid.addWidget(self.stop,4,0) 
+
+        self.dcgrid.addWidget(self.source_name2,5,0) 
+        self.dcgrid.addWidget(self.start2,6,0)
+        self.dcgrid.addWidget(self.increment2,7,0)
+        self.dcgrid.addWidget(self.stop2,8,0)
         
         self.count=0
         self.dc_entry_var[self.count] = QtGui.QLineEdit()#source
@@ -340,6 +353,24 @@ class Analysis(QtGui.QWidget):
         self.dc_entry_var[self.count] = QtGui.QLineEdit()#stop
         self.dcgrid.addWidget(self.dc_entry_var[self.count],4,1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
+        self.count=self.count+1
+
+        self.dc_entry_var[self.count] = QtGui.QLineEdit()#source
+        self.dcgrid.addWidget(self.dc_entry_var[self.count],5,1)
+        self.dc_entry_var[self.count].setMaximumWidth(150)
+        self.count= self.count+1
+        self.dc_entry_var[self.count] = QtGui.QLineEdit()#start
+        self.dcgrid.addWidget(self.dc_entry_var[self.count],6,1)
+        self.dc_entry_var[self.count].setMaximumWidth(150)
+        self.count= self.count+1
+        self.dc_entry_var[self.count] = QtGui.QLineEdit()#increment
+        self.dcgrid.addWidget(self.dc_entry_var[self.count],7,1)
+        self.dc_entry_var[self.count].setMaximumWidth(150)
+        self.count= self.count+1
+        self.dc_entry_var[self.count] = QtGui.QLineEdit()#stop
+        self.dcgrid.addWidget(self.dc_entry_var[self.count],8,1)
+        self.dc_entry_var[self.count].setMaximumWidth(150)
+
 
         self.parameter_cnt=0
         self.start_combo=QtGui.QComboBox(self)
@@ -387,6 +418,53 @@ class Analysis(QtGui.QWidget):
         self.stop_combo.activated[str].connect(self.stop_changecombo)
         self.parameter_cnt= self.parameter_cnt+1
         
+        self.start_combo2=QtGui.QComboBox(self)
+        self.start_combo2.setMaximumWidth(150)
+        self.start_combo2.addItem('Volts or Amperes')
+        self.start_combo2.addItem('mV or mA')
+        self.start_combo2.addItem('uV or uA')
+        self.start_combo2.addItem("nV or nA")
+        self.start_combo2.addItem("pV or pA")
+        self.dcgrid.addWidget(self.start_combo2,6,2)
+        try:
+            self.dc_parameter[self.parameter_cnt]= str(root[1][12].text)
+        except:
+            self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
+        self.start_combo2.activated[str].connect(self.start_changecombo2)
+        self.parameter_cnt= self.parameter_cnt+1
+
+        self.increment_combo2=QtGui.QComboBox(self)
+        self.increment_combo2.setMaximumWidth(150)
+        self.increment_combo2.addItem("Volts or Amperes")
+        self.increment_combo2.addItem("mV or mA")
+        self.increment_combo2.addItem("uV or uA")
+        self.increment_combo2.addItem("nV or nA")
+        self.increment_combo2.addItem("pV or pA")
+        self.dcgrid.addWidget(self.increment_combo2,7,2)
+        try:
+            self.dc_parameter[self.parameter_cnt]= str(root[1][13].text)
+        except:
+            self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
+        self.increment_combo2.activated[str].connect(self.increment_changecombo2)
+        self.parameter_cnt= self.parameter_cnt+1
+
+        self.stop_combo2=QtGui.QComboBox(self)
+        self.stop_combo2.setMaximumWidth(150)
+        self.stop_combo2.addItem("Volts or Amperes")
+        self.stop_combo2.addItem("mV or mA")
+        self.stop_combo2.addItem("uV or uA")
+        self.stop_combo2.addItem("nV or nA")
+        self.stop_combo2.addItem("pV or pA")
+        self.dcgrid.addWidget(self.stop_combo2,8,2)
+        try:
+            self.dc_parameter[self.parameter_cnt]= str(root[1][14].text)
+
+        except:
+            self.dc_parameter[self.parameter_cnt]= "Volts or Amperes"
+        self.stop_combo2.activated[str].connect(self.stop_changecombo2)
+        self.parameter_cnt= self.parameter_cnt+1
+
+
         self.check=QtGui.QCheckBox('Operating Point Analysis',self)
         try:
             self.track_obj.op_check.append(str(root[1][4].text()))
@@ -396,7 +474,7 @@ class Analysis(QtGui.QWidget):
         self.check.stateChanged.connect(self.setflag)
         #self.flagcheck = 1
         #self.flagcheck= 2
-        self.dcgrid.addWidget(self.check,5,1,5,2)
+        self.dcgrid.addWidget(self.check,9,1,9,2)
         self.track_obj.DC_entry_var["ITEMS"]=self.dc_entry_var
         self.track_obj.DC_Parameter["ITEMS"]=self.dc_parameter
         
@@ -417,6 +495,17 @@ class Analysis(QtGui.QWidget):
                 self.increment_combo.setCurrentIndex(index)
                 index=self.stop_combo.findText(root[1][7].text)
                 self.stop_combo.setCurrentIndex(index)
+                self.dc_entry_var[4].setText(root[1][8].text)
+                self.dc_entry_var[5].setText(root[1][9].text)
+                self.dc_entry_var[6].setText(root[1][10].text)
+                self.dc_entry_var[7].setText(root[1][11].text)
+                index=self.start_combo2.findText(root[1][12].text)
+                self.start_combo2.setCurrentIndex(index)
+                index=self.increment_combo2.findText(root[1][13].text)
+                self.increment_combo2.setCurrentIndex(index)
+                index=self.stop_combo2.findText(root[1][14].text)
+                self.stop_combo2.setCurrentIndex(index)
+
                 if root[1][4].text== 1:
                     self.check.setChecked(True)
                 else:
@@ -425,7 +514,7 @@ class Analysis(QtGui.QWidget):
                 print "XML Parse Error"
         
         return self.dcbox
-    
+   
     def start_changecombo(self,text):
         self.dc_parameter[0]=str(text)
     
@@ -435,6 +524,15 @@ class Analysis(QtGui.QWidget):
     def stop_changecombo(self,text):
         self.dc_parameter[2]=str(text)
         
+    def start_changecombo2(self,text):
+        self.dc_parameter[3]=str(text)
+
+    def increment_changecombo2(self,text):
+        self.dc_parameter[4]=str(text)
+
+    def stop_changecombo2(self,text):
+        self.dc_parameter[5]=str(text)	
+
     def setflag(self):
         if self.check.isChecked():
             self.track_obj.op_check.append(1)

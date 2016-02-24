@@ -152,6 +152,10 @@ class Convert:
             elif self.op_check[-1] == 0:
                 self.no=0 
                 self.writefile.write(".dc" +' '+ str(self.dc_entry_var[self.no].text())+ ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+1].text())) + self.converttosciform(self.dc_parameter[self.no]) + ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+3].text()))+ self.converttosciform(self.dc_parameter[self.no+2]) + ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+2].text())) + self.converttosciform(self.dc_parameter[self.no+1]))
+                
+                if self.dc_entry_var[self.no+4].text():
+                    self.writefile.write(' '+ str(self.defaultvalue(self.dc_entry_var[self.no+4].text()))+ ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+5].text())) + self.converttosciform(self.dc_parameter[self.no+3])+ ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+7].text()))+ self.converttosciform(self.dc_parameter[self.no+5])+ ' ' + str(self.defaultvalue(self.dc_entry_var[self.no+6].text()))+ self.converttosciform(self.dc_parameter[self.no+4]))
+
         elif self.variable == 'TRAN':
             self.no= 0
             self.writefile.write(".tran" + ' '+ str(self.defaultvalue(self.tran_entry_var[self.no+1].text())) + self.converttosciform(self.trans_parameter[self.no+1]) + ' ' + str(self.defaultvalue(self.tran_entry_var[self.no+2].text())) + self.converttosciform(self.trans_parameter[self.no+2])+' '+ str(self.defaultvalue(self.tran_entry_var[self.no].text()))+ self.converttosciform(self.trans_parameter[self.no]))
