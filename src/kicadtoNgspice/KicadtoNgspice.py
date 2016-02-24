@@ -56,9 +56,13 @@ class MainWindow(QtGui.QWidget):
         #Create object of track widget
         self.obj_track = TrackWidget.TrackWidget()
         
-        #Clear dictionary item of sub circuit
+        #Clear Dictionary/List item of sub circuit and ngspice model
+        #Dictionary
         self.obj_track.subcircuitList.clear()
         self.obj_track.subcircuitTrack.clear()
+        self.obj_track.model_entry_var.clear()
+        #List
+        self.obj_track.modelTrack[:]=[]
         
         #Object of Processing
         obj_proc = PrcocessNetlist()
