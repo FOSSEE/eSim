@@ -39,9 +39,6 @@ class MainWindow(QtGui.QWidget):
     This final netlist is compatible with NgSpice.  
     """
     def __init__(self,clarg1,clarg2=None):
-        
-        
-        
         QtGui.QWidget.__init__(self)
         
         print "=================================="

@@ -179,7 +179,7 @@ class PrcocessNetlist:
                 print "Words",words
                 print "compName",compName
                 #Looking if model file is present
-                if compType != "port" and compType != "ic" and compType not in plotList:
+                if compType != "port" and compType != "ic" and compType not in plotList and compType != 'transfo':
                     xmlfile = compType+".xml"   #XML Model File
                     count = 0 #Check if model of same name is present
                     modelPath = []
@@ -330,6 +330,20 @@ class PrcocessNetlist:
                     elif compType == 'plot_phase':
                         words = compline.split()
                         plotText.append("plot phase("+words[1]+")")
+                
+                elif compType == 'transfo':
+                    schematicInfo.insert(index,"* "+compline)
+                    modelname = "transfo"
+                    comment = "* "+compline
+                    title = "Transformer details for model "+compName
+                    type = "NA" #It is model but do not load from xml and lib file
+                    paramDict['primary_turns'] = "Enter the primary number of turns "
+                    paramDict['h1_array'] = "Enter the H1 array "
+                    paramDict['b1_array'] = "Enter the B1 array "
+                    paramDict['area'] = "Enter iron core area "
+                    paramDict['length'] = "Enter iron core length"
+                    paramDict['secondar_turns'] = "Enter the secondary number of turns"
+                    modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
                 
                 else:
                     schematicInfo.insert(index,"* "+compline)

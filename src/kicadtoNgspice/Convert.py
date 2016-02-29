@@ -207,14 +207,18 @@ class Convert:
             #print "Model Track :",line
             if line[2] == 'transfo':
                 try:
-                    start=line[5]
-                    end=line[6]
+                    print "Transformer-------------->"
+                    print "Line ---------->",line
+                    start=line[7]
+                    end=line[8]
                     num_turns=str(self.obj_track.model_entry_var[start].text())
+                    
                     if num_turns=="": num_turns="310"    
                     h_array= "H_array = [ "
                     b_array = "B_array = [ "
                     h1=str(self.obj_track.model_entry_var[start+1].text())
                     b1=str(self.obj_track.model_entry_var[start+2].text())
+                    
                     if len(h1)!=0 and len(b1)!=0:
                         h_array=h_array+h1+" "
                         b_array=b_array+b1+" "
@@ -239,8 +243,8 @@ class Convert:
                     
             elif line[2] == 'ic':
                 try:
-                    start=line[5]
-                    end=line[6]
+                    start=line[7]
+                    end=line[8]
                     for key,value in line[9].iteritems():
                         initVal = str(self.obj_track.model_entry_var[value].text())
                         if initVal=="":initVal="0"
@@ -254,8 +258,8 @@ class Convert:
             
             else:
                 try:
-                    start = line[5]
-                    end = line[6]
+                    start = line[7]
+                    end = line[8]
                     addmodelLine=".model "+ line[3]+" "+line[2]+"("
                     for key,value in line[9].iteritems():
                         #print "Tags: ",key
@@ -303,7 +307,8 @@ class Convert:
                 schematicInfo.append(item[2]) #Adding Comment
                 schematicInfo.append(item[1]) #Adding model line
             
-        print "MYSCH------->",schematicInfo    
+        print "Schematic Info after ngspice Model------->",schematicInfo
+        print "Model Parameter Value ",modelParamValue    
         return schematicInfo
     
     def addDeviceLibrary(self,schematicInfo,kicadFile):

@@ -12,7 +12,7 @@ Table of contents
 
 1. eSim installation in Ubuntu.
     
-   After downloading the zip file from https://github.com/FOSSEE/eSim to a local directory unpack it using: 
+   After downloading eSim, extract it using: 
   
    $ unzip eSim.zip
 
@@ -24,13 +24,25 @@ Table of contents
 
    Above script will install eSim along with dependencies.
 
-   eSim will be installed to /opt/eSim
-    
-   To run eSim you can directly run it from terminal as
+   Please report any eSim installation related issue/error at forums.fossee.in
+
+   How to Run eSim
+   =================
+   
+   A. Through Terminal
    $ esim
-    
-   or you can double click on eSim icon created on desktop after installation.
+
+   B. Double click eSim desktop icon
+
+   C. From command line : Do `cd src/fronEnd` and type `python Application.py` to open eSim.
+
 
 2. eSim installation in Windows
+
+   After downloading eSim for Windows from esim.fossee.in , extract it.
+
+   Now right click the `Setup.exe` and `run it as Administrator`. And then follow the instruction.
+
+   Note : Please make you run it as administrator otherwise it won't set the environment variable properly.
 
 
