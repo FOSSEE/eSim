@@ -130,7 +130,6 @@ class ProjectExplorer(QtGui.QWidget):
         filename= self.indexItem.data().toString()
         self.filePath= str(self.indexItem.sibling(self.indexItem.row(), 1).data().toString())
         filelistnew= os.listdir(os.path.join(self.filePath))
-        print filelistnew
         parentnode = self.treewidget.currentItem()
         count = parentnode.childCount()
         for i in range(count):

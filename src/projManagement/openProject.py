@@ -35,11 +35,9 @@ class OpenProjectInfo(QtGui.QWidget):
     def body(self):
         self.obj_Appconfig = Appconfig()
         self.openDir = self.obj_Appconfig.default_workspace["workspace"]
-        #print "default workspace is now 1", self.openDir
         self.projDir=QtGui.QFileDialog.getExistingDirectory(self,"open",self.openDir)
+        
         if self.obj_validation.validateOpenproj(self.projDir) == True:
-            #print "Pass open project test"
-            #self.obj_Appconfig = Appconfig()
             self.obj_Appconfig.current_project['ProjectName'] = str(self.projDir)
             if os.path.isdir(self.projDir):
                 print "true"
@@ -54,7 +52,6 @@ class OpenProjectInfo(QtGui.QWidget):
             return dirs, filelist
             
         else:
-            #print "Failed open project test"
             self.obj_Appconfig.print_error("The project doesn't contain .proj file. Please select the proper directory else you won't be able to perform any operation")
             reply = QtGui.QMessageBox.critical(None, "Error Message",'''<b> Error: The project doesn't contain .proj file.</b><br/>
                     <b>Please select the proper project directory else you won't be able to perform any operation</b>''',QtGui.QMessageBox.Ok|QtGui.QMessageBox.Cancel)

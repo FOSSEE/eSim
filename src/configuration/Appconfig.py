@@ -60,19 +60,16 @@ class Appconfig(QtGui.QWidget):
             self._app_heigth = 400
             
          
-        def print_info(self, str):
+        def print_info(self, info):
+            self.noteArea['Note'].append('[INFO]: ' + info)
             
-            self.noteArea['Note'].append('[INFO]: ' + str)
             
-            
-        def print_warning(self, str):
-            
-            self.noteArea['Note'].append('[WARNING]: ' + str)
+        def print_warning(self, warning):
+            self.noteArea['Note'].append('[WARNING]: ' + warning)
            
             
-        def print_error(self, str):
-             
-            self.noteArea['Note'].append('[ERROR]: ' + str)
+        def print_error(self, error):
+            self.noteArea['Note'].append('[ERROR]: ' + error)
             
             
             

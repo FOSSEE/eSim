@@ -75,7 +75,7 @@ class Workspace(QtGui.QWidget):
         
            
     def defaultWorkspace(self):
-        print "Default location selected"
+        print "Default workspace selected : "+self.obj_appconfig.default_workspace["workspace"]
         self.imp_var=1
         self.obj_appconfig.print_info('Default workspace selected : ' + self.obj_appconfig.default_workspace["workspace"]) 
         self.close()
@@ -89,8 +89,6 @@ class Workspace(QtGui.QWidget):
     def close(self, *args, **kwargs):
         self.window_open_close=1
         self.close_var=1
-        #with var_cond:
-        #   var_cond.notify()
         return QtGui.QWidget.close(self, *args, **kwargs)
 
 
@@ -98,17 +96,14 @@ class Workspace(QtGui.QWidget):
         global var_appView
         var_appView=appView
 
-        
-               
+                   
     def createWorkspace(self):
-        print "Create workspace is called"
+        print "Function : Create workspace"
         self.create_workspace = str(self.workspace_loc.text())
         self.obj_appconfig.print_info('Workspace : ' + self.create_workspace)
         #Checking if Workspace already exist or not       
         if  os.path.isdir(self.create_workspace):
-            print "Already present"
             self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
-        
         else:
             os.mkdir(self.create_workspace)
             self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
@@ -120,8 +115,7 @@ class Workspace(QtGui.QWidget):
         
             
     def browseLocation(self):
-        print "Browse Location called"
+        print "Function : Browse Location"
         self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(self, "Browse Location",os.path.expanduser("~"))
-        print "Path file :", self.workspace_directory
         self.workspace_loc.setText(self.workspace_directory)
         

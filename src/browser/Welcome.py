@@ -12,9 +12,7 @@ class Welcome(QtGui.QWidget):
         self.browser = QtGui.QTextBrowser()
         self.browser.setSource(QtCore.QUrl("../browser/pages/welcome.html"))
         self.browser.setOpenExternalLinks(True)
-        #self.setSource(QtCore.QUrl("../browser/pages/welcome.html"))
-        #self.setOpenExternalLinks(True)
-        
+                
         self.vlayout.addWidget(self.browser)  
         self.setLayout(self.vlayout)
         self.show()

@@ -16,7 +16,7 @@
 #       CREATED: Wednesday 12 February 2015 
 #      REVISION:  ---
 #===============================================================================
-from PyQt4 import QtGui,QtCore
+from PyQt4 import QtGui
 from Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
@@ -54,7 +54,6 @@ class NewProjectInfo(QtGui.QWidget):
         
         #Checking Validations Response
         if self.reply == "VALID":
-            print "Validated : Creating project directory"
             #create project directory
             try:
                 os.mkdir(self.projDir)

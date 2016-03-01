@@ -107,12 +107,7 @@ class ModelEditorclass(QtGui.QWidget):
     def diode_click(self):
         self.openfiletype('Diode')
         self.types.setHidden(True)
-        '''
-        self.types.clear()
-        self.types.addItem('Diode')
-        filetype = str(self.types.currentText())
-        self.types.activated[str].connect(self.setfiletype)
-    '''
+ 
     def bjt_click(self):
         self.types.setHidden(False)
         self.types.clear()
@@ -156,18 +151,15 @@ class ModelEditorclass(QtGui.QWidget):
     def magnetic_click(self):
         self.openfiletype('Magnetic Core')
         self.types.setHidden(True)
-        '''
-        self.types.clear()
-        self.types.addItem('Magnetic Core')
-        filetype = str(self.types.currentText())
-        self.types.activated[str].connect(self.setfiletype)
-        '''
+        
     def setfiletype(self,text):
         self.filetype = str(text)
         self.openfiletype(self.filetype)
     
-    '''Select the path of the file to be opened depending upon selected file type '''
     def openfiletype(self,filetype):
+        '''
+        Select the path of the file to be opened depending upon selected file type 
+        '''
         self.path = '../deviceModelLibrary/Templates'
         if self.diode.isChecked():
             if filetype == 'Diode':
@@ -235,11 +227,13 @@ class ModelEditorclass(QtGui.QWidget):
             self.editfile=str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
             self.createtable(self.editfile)
         except:
-            print"no file selected"
+            print"No File selected for edit"
             pass
         
-    '''Creates the model table by parsing th .xml file '''
     def createtable(self, modelfile):
+        '''
+        This function Creates the model table by parsing the .xml file
+        '''
         self.savebtn.setDisabled(False)
         self.addbtn.setHidden(False)
         self.removebtn.setHidden(False)
@@ -252,13 +246,9 @@ class ModelEditorclass(QtGui.QWidget):
         self.modeltable.resize(200,200)
         self.grid.addWidget(self.modeltable, 3,2,8,2)
         filepath, filename = os.path.split(self.modelfile)
-        print"file selected is",filename
-        print filepath
         base, ext= os.path.splitext(filename)      
-        print base
-        print ext
         self.modelfile = os.path.join(filepath, base+'.xml')
-        print"modelfile",self.modelfile
+        print"Model File used for creating table : ",self.modelfile
         self.tree = ET.parse(self.modelfile)
         self.root= self.tree.getroot()
         for elem in self.tree.iter(tag='ref_model'):
@@ -296,8 +286,11 @@ class ModelEditorclass(QtGui.QWidget):
         except:
             pass
         
-    ''' new parameters can be added in the table '''
+    
     def addparameters(self):
+        '''
+        This function is used to add new parameter in the table
+        '''
         text1, ok = QtGui.QInputDialog.getText(self, 'Parameter','Enter Parameter')
         if ok:
             if text1 in self.modeldict.keys():
@@ -324,8 +317,11 @@ class ModelEditorclass(QtGui.QWidget):
         else:
             self.savethefile(self.editfile)
         
-    '''creates an .xml an .lib files from the model table'''  
+     
     def createXML(self,model_name):
+        '''
+        This function creates .xml and .lib files from the model table
+        '''
         root = ET.Element("library")
         ET.SubElement(root, "model_name").text = model_name
         ET.SubElement(root, "ref_model").text = self.modelname
@@ -398,8 +394,11 @@ class ModelEditorclass(QtGui.QWidget):
         txtfile.close()
         os.chdir(defaultcwd)
         
-    '''Checks if the file with the name already exists'''
+    
     def validation(self,text):
+        '''
+        This function checks if the file with the name already exists
+        '''
         newfilename = text+'.xml'
         
         all_dir = [x[0] for x in os.walk(self.savepathtest)]
@@ -410,9 +409,11 @@ class ModelEditorclass(QtGui.QWidget):
                 self.msg.showMessage('The file with name ' + text+ ' already exists.')
                 self.msg.setWindowTitle("Error Message")
 
-    '''save the editing in the model table '''
+    
     def savethefile(self,editfile):
-        
+        '''
+        This function save the editing in the model table
+        '''
         xmlpath, file = os.path.split(editfile)
         filename = os.path.splitext(file)[0]
         libpath = os.path.join(xmlpath,filename+'.lib')
@@ -457,7 +458,6 @@ class ModelEditorclass(QtGui.QWidget):
         for words in filedata:
             modelcount= modelcount +1
             if words.lower() == '.model':
-                print "model found"
                 break
         ref_model = filedata[modelcount]
         model_name = filedata[modelcount+1]
@@ -534,8 +534,6 @@ class ModelEditorclass(QtGui.QWidget):
         defaultcwd = os.getcwd()
         savepath = os.path.join(self.savepathtest, 'User Libraries')  
         savefilepath= os.path.join(savepath, model_name +".xml")
-        #self.obj_valid.validateNewproj(savepath)
-        #self.reply = self.obj_valid.validateNewproj(savefilepath)
         os.chdir(savepath)
         text, ok1 = QtGui.QInputDialog.getText(self, 'Model Name','Enter Model Library Name')
         if ok1:

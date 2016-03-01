@@ -2,7 +2,6 @@
 from PyQt4 import QtGui
 import TrackWidget
 import os
-import sys
 from xml.etree import ElementTree as ET
 
 class Analysis(QtGui.QWidget):
@@ -36,12 +35,11 @@ class Analysis(QtGui.QWidget):
             kicadFile = self.clarg1
             (projpath,filename)=os.path.split(kicadFile)
             if os.path.isfile(os.path.join(projpath, 'analysis')):
-                print "analysis present"
+                print "Analysis file is present"
             analysisfile = open(os.path.join(projpath,'analysis'))
             content = analysisfile.readline()
-            print "content", content
+            print "Content of Analysis file :", content
             contentlist= content.split() 
-            print "contenlist", contentlist
             if contentlist[0]== '.ac':
                 self.checkAC.setChecked(True)
                 self.acbox.setDisabled(False)
@@ -64,7 +62,6 @@ class Analysis(QtGui.QWidget):
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
                 self.track_obj.set_CheckBox["ITEMS"]="DC"
-                #self.enableBox()
                 
             elif contentlist[0]== '.tran':
                 self.checkTRAN.setChecked(True)
@@ -81,10 +78,8 @@ class Analysis(QtGui.QWidget):
                 self.check.setChecked(True)
         except:
             self.checkTRAN.setChecked(True)
-            #self.trbox.setDisabled(False)
             self.track_obj.set_CheckBox["ITEMS"]="TRAN"
-         
-         
+               
         self.setLayout(self.grid)
         self.show()
              
@@ -101,24 +96,15 @@ class Analysis(QtGui.QWidget):
         self.checkgroupbtn.addButton(self.checkDC)
         self.checkgroupbtn.addButton(self.checkTRAN)
         self.checkgroupbtn.setExclusive(True)
-        #self.checkAC.setChecked(True)
         self.checkgroupbtn.buttonClicked.connect(self.enableBox)
         
         self.checkgrid.addWidget(self.checkAC,0,0)
         self.checkgrid.addWidget(self.checkDC,0,1)
         self.checkgrid.addWidget(self.checkTRAN,0,2)
         self.checkbox.setLayout(self.checkgrid)
-
-        #CSS
-        '''
-        self.checkbox.setStyleSheet(" \
-        QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-        QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
-        ")
-        '''
-              
+                      
         return self.checkbox
-        #return self.checkgroupbtn
+        
     
     def enableBox(self):
         if self.checkAC.isChecked():
@@ -143,7 +129,6 @@ class Analysis(QtGui.QWidget):
         kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
-        print "PROJECT NAME---------",project_name
         check=1
         try:
             f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
@@ -154,7 +139,7 @@ class Analysis(QtGui.QWidget):
                     root=child
         except:
             check=0
-            print "Empty XML"
+            print "AC Previous Values XML is Empty"
             
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
@@ -174,7 +159,6 @@ class Analysis(QtGui.QWidget):
         self.acgrid.addWidget(self.Lin,1,1)
         self.acgrid.addWidget(self.Dec,1,2)
         self.acgrid.addWidget(self.Oct,1,3)
-        #self.acbox.setDisabled(True)
         self.acbox.setLayout(self.acgrid)
             
         self.scale = QtGui.QLabel("Scale")
@@ -214,8 +198,7 @@ class Analysis(QtGui.QWidget):
         except:
             self.ac_parameter[self.parameter_cnt]= "Hz"
         self.start_fre_combo.activated[str].connect(self.start_combovalue)
-        
-        
+                
         self.parameter_cnt=self.parameter_cnt + 1
         self.stop_fre_combo = QtGui.QComboBox()
         self.stop_fre_combo.addItem("Hz")
@@ -265,7 +248,7 @@ class Analysis(QtGui.QWidget):
                 index=self.stop_fre_combo.findText(root[0][7].text)
                 self.stop_fre_combo.setCurrentIndex(index)
             except:
-                print "XML Parse Error"
+                print "AC Analysis XML Parse Error"
                 
         return self.acbox
     
@@ -290,7 +273,6 @@ class Analysis(QtGui.QWidget):
         kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
-        print "PROJECT NAME---------",project_name
         check=1
         try:
             f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
@@ -301,7 +283,7 @@ class Analysis(QtGui.QWidget):
                     root=child
         except:
             check=0
-            print "Empty XML"
+            print "DC Previous Values XML is empty"
 
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
@@ -370,7 +352,6 @@ class Analysis(QtGui.QWidget):
         self.dc_entry_var[self.count] = QtGui.QLineEdit()#stop
         self.dcgrid.addWidget(self.dc_entry_var[self.count],8,1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
-
 
         self.parameter_cnt=0
         self.start_combo=QtGui.QComboBox(self)
@@ -464,7 +445,6 @@ class Analysis(QtGui.QWidget):
         self.stop_combo2.activated[str].connect(self.stop_changecombo2)
         self.parameter_cnt= self.parameter_cnt+1
 
-
         self.check=QtGui.QCheckBox('Operating Point Analysis',self)
         try:
             self.track_obj.op_check.append(str(root[1][4].text()))
@@ -511,7 +491,7 @@ class Analysis(QtGui.QWidget):
                 else:
                     self.check.setChecked(False)
             except:
-                print "XML Parse Error"
+                print "DC Analysis XML Parse Error"
         
         return self.dcbox
    
@@ -543,7 +523,6 @@ class Analysis(QtGui.QWidget):
         kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
-        print "PROJECT NAME---------",project_name
         check=1
         try:
             f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
@@ -554,7 +533,7 @@ class Analysis(QtGui.QWidget):
                     root=child
         except:
             check=0
-            print "Empty XML"
+            print "Transient Previous Values XML is Empty"
             
         self.trbox = QtGui.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
@@ -647,7 +626,7 @@ class Analysis(QtGui.QWidget):
                 index=self.stop_combobox.findText(root[2][5].text)
                 self.stop_combobox.setCurrentIndex(index)
             except:
-                print "XML Parse Error"
+                print "Transient Analysis XML Parse Error"
 
 
         return self.trbox    

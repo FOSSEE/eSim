@@ -1,11 +1,7 @@
-import sys
 import os
 from PyQt4 import QtGui
-from Processing import PrcocessNetlist
 import TrackWidget
 from xml.etree import ElementTree as ET
-
-
 
 class Source(QtGui.QWidget):
     """
@@ -36,7 +32,6 @@ class Source(QtGui.QWidget):
         kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
-        print "PROJECT NAME---------",project_name
         check=1
         try:
             f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
@@ -47,7 +42,7 @@ class Source(QtGui.QWidget):
                     root=child
         except:
             check=0
-            print "Empty XML"
+            print "Source Previous Values XML is Empty"
         
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
@@ -56,7 +51,7 @@ class Source(QtGui.QWidget):
         if sourcelist:
             for line in sourcelist:
                 #print "Voltage source line index: ",line[0]
-                print "SourceList line Test: ",line
+                print "SourceList line: ",line
                 track_id=line[0]
                 #print "track_id is ",track_id
                 if line[2]=='ac':
@@ -277,7 +272,6 @@ class Source(QtGui.QWidget):
                         self.row=self.row+1
                         self.count=self.count+1
                     self.end=self.count-1
-                    print "End",self.end
                     expbox.setLayout(expgrid)
                     
                     #CSS

@@ -1,5 +1,4 @@
 from PyQt4 import QtGui
-import sys
 import os
 from xml.etree import ElementTree as ET
 
@@ -18,7 +17,6 @@ class DeviceModel(QtGui.QWidget):
         kicadFile = self.clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
-        print "PROJECT NAME---------",project_name
         check=1
         try:
             f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
@@ -29,7 +27,7 @@ class DeviceModel(QtGui.QWidget):
                     root=child
         except:
             check=0
-            print "Empty XML"
+            print "Device Model Previous XML is Empty"
         
         
         QtGui.QWidget.__init__(self)
@@ -54,11 +52,12 @@ class DeviceModel(QtGui.QWidget):
         #Set Layout
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
+        print "Reading Device model details from Schematic"
         
         for eachline in schematicInfo:
             words = eachline.split()
             if eachline[0] == 'q':
-                print "Words ",words[0]
+                print "Device Model Transistor: ",words[0]
                 self.devicemodel_dict_beg[words[0]]=self.count
                 transbox=QtGui.QGroupBox()
                 transgrid=QtGui.QGridLayout()
@@ -77,7 +76,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
-                                print "ERROR WHEN SET TEXT"
+                                print "Error when set text of device model transistor"
                 except:
                     pass
                 transgrid.addWidget(self.entry_var[self.count],self.row,1)
@@ -109,7 +108,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count+1
                 
             elif eachline[0] == 'd':
-                print "Words",words[0]
+                print "Device Model Diode:",words[0]
                 self.devicemodel_dict_beg[words[0]]=self.count
                 diodebox=QtGui.QGroupBox()
                 diodegrid=QtGui.QGridLayout()
@@ -120,7 +119,7 @@ class DeviceModel(QtGui.QWidget):
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
-                            print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                            #print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
                             try:
                                 if os.path.exists(child[0].text):
                                     path_name=child[0].text
@@ -128,7 +127,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
-                                print "ERROR WHEN SET TEXT"
+                                print "Error when set text of device model diode"
                 except:
                     pass
                 diodegrid.addWidget(self.entry_var[self.count],self.row,1)
@@ -160,7 +159,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count+1
                 
             elif eachline[0] == 'j':
-                print "Words",words[0]
+                print "Device Model JFET:",words[0]
                 self.devicemodel_dict_beg[words[0]]=self.count
                 jfetbox=QtGui.QGroupBox()
                 jfetgrid=QtGui.QGridLayout()
@@ -171,7 +170,7 @@ class DeviceModel(QtGui.QWidget):
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
-                            print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                            #print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
                             try:
                                 if os.path.exists(child[0].text):
                                     self.entry_var[self.count].setText(child[0].text)
@@ -179,7 +178,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
-                                print "ERROR WHEN SET TEXT"
+                                print "Error when set text of Device Model JFET "
                 except:
                     pass
                 jfetgrid.addWidget(self.entry_var[self.count],self.row,1)
@@ -269,7 +268,7 @@ class DeviceModel(QtGui.QWidget):
                 try:
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
-                            print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                            #print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
                             while i<=end:
                                 self.entry_var[i].setText(child[i-beg].text)
                                 if (i-beg)==0:
@@ -300,7 +299,7 @@ class DeviceModel(QtGui.QWidget):
         """
         This function is use to keep track of all Device Model widget
         """
-        print "Calling Track Library funtion"
+        print "Calling Track Device Model Library funtion"
         sending_btn = self.sender()
         #print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
@@ -331,7 +330,7 @@ class DeviceModel(QtGui.QWidget):
         """
         This function is use to keep track of all Device Model widget
         """
-        print "Calling Track Library funtion"
+        print "Calling Track Library function Without Button"
         #print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = iter_value
         print "self.widgetObjCount-----",self.widgetObjCount
@@ -352,9 +351,7 @@ class DeviceModel(QtGui.QWidget):
             if width == "" : width="100u"
             if length == "": length="100u"
             if multifactor == "": multifactor="1"
-
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile+":"+"W="+width+" L="+length+" M="+multifactor
-
         else:
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
     

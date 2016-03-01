@@ -84,6 +84,8 @@ class PrcocessNetlist:
         #Inser Special source parameter
         schematicInfo1=[]
         
+        print "Reading schematic info for source details"
+        
         for compline in schematicInfo:
             words=compline.split()
             compName=words[0]
@@ -147,12 +149,13 @@ class PrcocessNetlist:
                 schematicInfo1.append(compName+" "+words[1]+" "+words[2]+" "+"V"+compName+" "+words[5])
                 
         schematicInfo=schematicInfo+schematicInfo1
-        #print sourcelist
+        print "Source List : ",sourcelist
         #print schematicInfo
         return schematicInfo,sourcelist
     
     
     def convertICintoBasicBlocks(self,schematicInfo,outputOption,modelList,plotText):
+        print "Reading Schematic info for Model"
         #Insert details of Ngspice model
         unknownModelList = []
         multipleModelList = []
@@ -162,8 +165,8 @@ class PrcocessNetlist:
         for compline in schematicInfo:
             words = compline.split()
             compName = words[0]
-            print "Compline----------------->",compline
-            print "compName-------------->",compName
+            #print "Compline----------------->",compline
+            #print "compName-------------->",compName
             # Find the IC from schematic 
             if compName[0]=='u' or compName[0] == 'U':
                 # Find the component from the circuit
@@ -174,10 +177,10 @@ class PrcocessNetlist:
                 #e.g compLine : u1 1 2 gain 
                 #compType : gain
                 #compName : u1
-                print "Compline",compline 
-                print "CompType",compType
-                print "Words",words
-                print "compName",compName
+                #print "Compline",compline 
+                #print "CompType",compType
+                #print "Words",words
+                #print "compName",compName
                 #Looking if model file is present
                 if compType != "port" and compType != "ic" and compType not in plotList and compType != 'transfo':
                     xmlfile = compType+".xml"   #XML Model File
@@ -196,7 +199,7 @@ class PrcocessNetlist:
                         unknownModelList.append(compType)
                     elif count == 1:
                         try:
-                            print "Start Parsing :",modelPath  
+                            print "Start Parsing Previous Values XML for ngspice model :",modelPath  
                             tree = ET.parse(modelPath[0])
                             
                             root = tree.getroot()
@@ -220,7 +223,7 @@ class PrcocessNetlist:
                                     #print "Tags ",item.tag
                                     #print "Value",item.text
                                     if 'vector'in item.attrib:
-                                        print "Tag having vector attribute",item.tag,item.attrib['vector']
+                                        #print "Tag having vector attribute",item.tag,item.attrib['vector']
                                         temp_count = 1
                                         temp_list = []
                                         for i in range(0,int(item.attrib['vector'])):
@@ -238,9 +241,9 @@ class PrcocessNetlist:
                                             paramDict[item.tag] = item.text
                                     
                                 
-                            print "Number of Nodes : ",num_of_nodes
-                            print "Title : ",title
-                            print "Parameters",paramDict
+                            #print "Number of Nodes : ",num_of_nodes
+                            #print "Title : ",title
+                            #print "Parameters",paramDict
                             #Creating line for adding model line in schematic
                             if splitDetail == 'None':
                                 modelLine = "a"+str(k)+" "
@@ -252,12 +255,12 @@ class PrcocessNetlist:
                                 print "Split Details :",splitDetail
                                 modelLine = "a"+str(k)+" "
                                 vectorDetail = splitDetail.split(':')
-                                print "Vector Details",vectorDetail
+                                #print "Vector Details",vectorDetail
                                 pos = 1 #Node position
                                 for item in vectorDetail:
                                     try:
                                         if item.split("-")[1] == 'V':
-                                            print "Vector"
+                                            #print "Vector"
                                             if compType == "aswitch":
                                                 modelLine += "("
                                                 for i in range(0,int(item.split("-")[0])):
@@ -271,7 +274,7 @@ class PrcocessNetlist:
                                                     pos += 1
                                                 modelLine += "] "    
                                         elif item.split("-")[1] == 'NV':
-                                            print "Non Vector"  
+                                            #print "Non Vector"  
                                             for i in range(0,int(item.split("-")[0])):
                                                 modelLine += words[pos]+" "
                                                 pos += 1
@@ -281,7 +284,7 @@ class PrcocessNetlist:
                                         sys.exit(2)
                                 modelLine += compName        
                                 
-                            print "Final Model Line :",modelLine
+                            #print "Final Model Line :",modelLine
                             try:
                                 schematicInfo.append(modelLine)
                                 k=k+1
@@ -348,11 +351,9 @@ class PrcocessNetlist:
                 else:
                     schematicInfo.insert(index,"* "+compline)
                     
-                
-                
-                #print "Count",count
-                #print "UnknownModelList",unknownModelList
-                #print "MultipleModelList",multipleModelList  
+                print "UnknownModelList Used in the Schematic",unknownModelList
+                print "Multiple Model XML file with same name ",multipleModelList
+                print "Model List Details : ",modelList  
                 
         return schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText
         

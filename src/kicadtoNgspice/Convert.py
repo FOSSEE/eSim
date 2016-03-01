@@ -1,7 +1,6 @@
 from PyQt4 import QtGui
 
 import os
-import sys
 import shutil
 import TrackWidget
 from xml.etree import ElementTree as ET
@@ -11,7 +10,6 @@ class Convert:
     This class has all the necessary function required to convert kicad netlist to ngspice netlist.
     """
     def __init__(self,sourcelisttrack,source_entry_var,schematicInfo,clarg1):
-        print "Start Conversion"
         self.sourcelisttrack = sourcelisttrack
         self.schematicInfo = schematicInfo
         self.entry_var = source_entry_var
@@ -23,10 +21,7 @@ class Convert:
         """
         This function add the source details to schematicInfo
         """
-        #print "Adding Source parameter"
-        #print "SourceListTrack : ",self.sourcelisttrack
-        #print "Schematic Info ",self.schematicInfo
-        #print "Entry Var",self.entry_var
+        
         self.start = 0
         self.end = 0
         
@@ -207,8 +202,6 @@ class Convert:
             #print "Model Track :",line
             if line[2] == 'transfo':
                 try:
-                    print "Transformer-------------->"
-                    print "Line ---------->",line
                     start=line[7]
                     end=line[8]
                     num_turns=str(self.obj_track.model_entry_var[start].text())
@@ -307,20 +300,16 @@ class Convert:
                 schematicInfo.append(item[2]) #Adding Comment
                 schematicInfo.append(item[1]) #Adding model line
             
-        print "Schematic Info after ngspice Model------->",schematicInfo
-        print "Model Parameter Value ",modelParamValue    
         return schematicInfo
     
     def addDeviceLibrary(self,schematicInfo,kicadFile):
         """
         This function add the library details to schematicInfo
         """
-        print "Adding Device library to Schematic info file"
-        
+                
         (projpath,filename) = os.path.split(kicadFile)
         
-        print "Project Path",projpath
-                
+                        
         deviceLibList = self.obj_track.deviceModelTrack
         deviceLine = {} #Key:Index, Value:with its updated line in the form of list 
         includeLine = [] #All .include line list
@@ -392,15 +381,13 @@ class Convert:
         """
         This function add the subcircuit to schematicInfo
         """
-        print "Adding Subcircuit to Schematic info file"
-        
+             
         (projpath,filename) = os.path.split(kicadFile)
                 
         subList = self.obj_track.subcircuitTrack
         subLine = {} #Key:Index, Value:with its updated line in the form of list 
         includeLine = [] #All .include line list
-        print "self.obj_track.subcircuitList--->",self.obj_track.subcircuitList
-        print "self.obj_track.subcircuitTrack--->",self.obj_track.subcircuitTrack
+        
         if len(self.obj_track.subcircuitList) != len(self.obj_track.subcircuitTrack):
             self.msg = QtGui.QErrorMessage()
             self.msg.showMessage("Conversion failed. Please add all Subcircuits.")

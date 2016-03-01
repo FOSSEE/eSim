@@ -11,10 +11,10 @@ import numpy as np
 class plotWindow(QtGui.QMainWindow):
     def __init__(self,fpath,projectName):
         QtGui.QMainWindow.__init__(self)
-        self.fpath = fpath#+".cir.out"
+        self.fpath = fpath
         self.projectName = projectName
         self.obj_appconfig = Appconfig()
-        print "Path : ",self.fpath
+        print "Complete Project Path : ",self.fpath
         print "Project Name : ",self.projectName
         self.obj_appconfig.print_info('Ngspice simulation is called : ' + self.fpath)
         self.obj_appconfig.print_info('PythonPlotting is called : ' + self.fpath)
@@ -183,18 +183,15 @@ class plotWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.mainFrame)    
         
     def pushedClear(self):
-        #print "Calling Clear Canvas function"
         self.text.clear()
         self.axes.cla()
         self.canvas.draw()
         QtCore.SLOT('quit()')
         
     def pushedPlotFunc(self):
-        #print "Calling Plot function"
         self.parts = str(self.text.text())
         self.parts = self.parts.split(" ")
-        #print "Parts :",self.parts
-        
+                
         if self.parts[len(self.parts)-1] == '':
             self.parts = self.parts[0:-1]
         
@@ -335,7 +332,6 @@ class plotWindow(QtGui.QMainWindow):
 
         
     def onPush_ac(self):
-        #print "Calling on push ac"
         self.axes.cla()
         boxCheck = 0
         for i,j in zip(self.chkbox,range(len(self.chkbox))):
@@ -353,7 +349,6 @@ class plotWindow(QtGui.QMainWindow):
         self.canvas.draw()
         
     def onPush_trans(self):
-        #print "Calling on push trans"
         self.axes.cla()
         boxCheck = 0
         for i,j in zip(self.chkbox,range(len(self.chkbox))):
@@ -372,7 +367,6 @@ class plotWindow(QtGui.QMainWindow):
         
         
     def onPush_dc(self):
-        #print "Calling on push dc"
         boxCheck = 0
         self.axes.cla()    
         for i,j in zip(self.chkbox,range(len(self.chkbox))):
@@ -402,7 +396,7 @@ class plotWindow(QtGui.QMainWindow):
         }[letter]
         
     def multiMeter(self):
-        print "MultiMeter is called"
+        print "Function : MultiMeter"
         self.obj = {}
         boxCheck = 0
         loc_x = 300
@@ -451,7 +445,6 @@ class MultimeterWidgetClass(QtGui.QWidget):
 class DataExtraction:
     def __init__(self):
         self.obj_appconfig = Appconfig()
-        print "Initialization"
         self.data=[]     #consists of all the columns of data belonging to nodes and branches
         self.y=[]        #stores y-axis data
         self.x=[]        #stores x-axis data
@@ -555,8 +548,6 @@ class DataExtraction:
         return p
     
     def openFile(self,fpath):
-        #print "Calling Open File"
-        
         try:
             with open (os.path.join(fpath,"plot_data_i.txt")) as f2:
                 alli = f2.read()

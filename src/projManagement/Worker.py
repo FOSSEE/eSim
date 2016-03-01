@@ -18,7 +18,6 @@
 from PyQt4 import QtCore
 import subprocess
 from configuration.Appconfig import Appconfig
-import os
 
 class WorkerThread(QtCore.QThread):
     """
@@ -31,11 +30,9 @@ class WorkerThread(QtCore.QThread):
     
     def __del__(self):
         self.wait()
-        
-            
-        
+          
     def run(self):
-        print "Calling Command:",self.args
+        print "Worker Thread Calling Command :",self.args
         self.call_system(self.args)
         
     def call_system(self,command):

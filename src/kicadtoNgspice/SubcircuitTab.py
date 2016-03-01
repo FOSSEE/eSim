@@ -3,10 +3,7 @@ from PyQt4 import QtGui
 import TrackWidget
 from projManagement import Validation
 import os
-import sys
 from xml.etree import ElementTree as ET
-
-
 
 class SubcircuitTab(QtGui.QWidget):
     """
@@ -15,11 +12,9 @@ class SubcircuitTab(QtGui.QWidget):
     """
     
     def __init__(self,schematicInfo,clarg1):
-
         kicadFile = clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
-        print "PROJECT NAME---------",project_name
         check=1
         try:
             f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
@@ -30,7 +25,7 @@ class SubcircuitTab(QtGui.QWidget):
                     root=child
         except:
             check=0
-            print "Empty XML"
+            print "Subcircuit Previous values XML is Empty"
 
         QtGui.QWidget.__init__(self)
                      
@@ -58,7 +53,7 @@ class SubcircuitTab(QtGui.QWidget):
         for eachline in schematicInfo:
             words = eachline.split()
             if eachline[0] == 'x':
-                print "Words",words[0]
+                print "Subcircuit : Words",words[0]
                 self.obj_trac.subcircuitList[project_name+words[0]]=words
                 self.subcircuit_dict_beg[words[0]]=self.count
                 subbox=QtGui.QGroupBox()
@@ -69,7 +64,6 @@ class SubcircuitTab(QtGui.QWidget):
 
                 global path_name
                 try:
-                    print "ROOT ----===-=-",root
                     for child in root:
                         if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
                             print "Subcircuit MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
@@ -80,9 +74,9 @@ class SubcircuitTab(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
-                                print "ERROR WHEN SET TEXT"
+                                print "Error when set text of subcircuit"
                 except:
-                    print "ERROR BEFORE Subcircuit"
+                    print "Error before subcircuit"
 
 
                 subgrid.addWidget(self.entry_var[self.count],self.row,1)
@@ -91,7 +85,7 @@ class SubcircuitTab(QtGui.QWidget):
                 #Send the number of ports specified with the given subcircuit for verification.
                 #eg. If the line is 'x1 4 0 3 ua741', there are 3 ports(4, 0 and 3).
                 self.numPorts.append(len(words)-2)
-                print "NUMPORTS",self.numPorts
+                print "Number of ports of sub circuit : ",self.numPorts
                 self.addbtn.clicked.connect(self.trackSubcircuit)
                 subgrid.addWidget(self.addbtn,self.row,2)
                 subbox.setLayout(subgrid)
@@ -125,7 +119,6 @@ class SubcircuitTab(QtGui.QWidget):
         """
         This function is use to keep track of all Subcircuit widget
         """
-        print "Calling Track Subcircuit function"
         sending_btn = self.sender()
         #print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())

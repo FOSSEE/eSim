@@ -182,8 +182,7 @@ class Application(QtGui.QMainWindow):
     
      
     def close_project(self):
-        print "Close Project is called"
-        #current_project = {"ProjectName":None}
+        print "Function : Close Project"
         current_project = self.obj_appconfig.current_project['ProjectName']
         if current_project==None:
             pass
@@ -204,7 +203,7 @@ class Application(QtGui.QMainWindow):
             self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
             
         else:
-            print "No project created"
+            print "No new project created"
             self.obj_appconfig.print_info('No new project created')
             try:
                 self.obj_appconfig.print_info('Current project is : ' + self.obj_appconfig.current_project["ProjectName"])
@@ -215,7 +214,7 @@ class Application(QtGui.QMainWindow):
         """
         This project call Open Project Info class
         """
-        print "Open Project called"
+        print "Function : Open Project"
         self.project = OpenProjectInfo()
         
         try:
@@ -228,9 +227,9 @@ class Application(QtGui.QMainWindow):
     
             
     def help_project(self):
-        print "Help is called"
+        print "Function : Help"
         self.obj_appconfig.print_info('Help is called')
-        print "Current Project : ",self.obj_appconfig.current_project
+        print "Current Project is : ",self.obj_appconfig.current_project
         self.obj_Mainview.obj_dockarea.usermanual()    
     
     
@@ -250,9 +249,10 @@ class Application(QtGui.QMainWindow):
                 self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
                 self.msg = QtGui.QErrorMessage(None)
-                self.msg.showMessage('Error while opening python plotting Editor.')
-                print "Exception:",str(e)
-                self.obj_appconfig.print_error('Exception generated : ' + str(e))
+                self.msg.showMessage('Error while opening python plotting Editor.\
+                Please look at console for more details ')
+                print "Exception Message:",str(e)
+                self.obj_appconfig.print_error('Exception Message : ' + str(e))
                 self.msg.setWindowTitle("Error Message")
                         
         else:
@@ -261,12 +261,12 @@ class Application(QtGui.QMainWindow):
             self.msg.setWindowTitle("Error Message")
             
     def open_subcircuit(self):
-        print "Subcircuit editor is called"
+        print "Function : Subcircuit editor"
         self.obj_appconfig.print_info('Subcircuit editor is called')
         self.obj_Mainview.obj_dockarea.subcircuiteditor()
 
     def open_nghdl(self):
-        print "Nghdl is called"
+        print "Function : Nghdl"
         self.obj_appconfig.print_info('Nghdl is called')
 
         if self.obj_validation.validateTool('nghdl'):
@@ -282,8 +282,8 @@ class Application(QtGui.QMainWindow):
             
       
     def open_modelEditor(self):
-        print "model editor is called"
-        self.obj_appconfig.print_info('model editor is called')
+        print "Function : Model editor"
+        self.obj_appconfig.print_info('Model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
 
     
@@ -341,7 +341,7 @@ class Application(QtGui.QMainWindow):
         
     
     def open_OMoptim(self):
-        print "OM Optim is called"    
+        print "Function : OM Optim"    
         self.obj_appconfig.print_info('OM Optim is called')
         #Check if OMOptim is installed 
         if self.obj_validation.validateTool("OMOptim"):

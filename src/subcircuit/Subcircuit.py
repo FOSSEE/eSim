@@ -50,8 +50,8 @@ class Subcircuit(QtGui.QWidget):
             self.subcircuit.createSubcircuit(self.schematic_name)
             
         else:
-            print "No subcircuit created"
-            
+            print "Sub circuit creation cancelled"
+        
         
     def editsch(self):
         self.obj_opensubcircuit = openSub()

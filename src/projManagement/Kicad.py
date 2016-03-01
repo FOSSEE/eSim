@@ -35,7 +35,7 @@ class Kicad:
         """
         This function create command to open Kicad schematic
         """
-        print "Kicad Schematic is called"
+        print "Function : Open Kicad Schematic"
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         try:
             self.obj_appconfig.print_info('Kicad Schematic is called for project ' + self.projDir)
@@ -123,7 +123,7 @@ class Kicad:
         """
         This function create command to call kicad to Ngspice converter.
         """
-        print "Open Kicad to Ngspice Conversion"
+        print "Function: Open Kicad to Ngspice Converter"
         
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         try:
@@ -133,10 +133,8 @@ class Kicad:
             pass
         #Validating if current project is available or not
         if self.obj_validation.validateKicad(self.projDir):
-            #print "Project is present"
             #Cheking if project has .cir file or not
             if self.obj_validation.validateCir(self.projDir):
-                #print "CIR file present"
                 self.projName = os.path.basename(self.projDir)
                 self.project = os.path.join(self.projDir,self.projName)
                             

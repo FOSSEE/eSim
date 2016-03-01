@@ -3,7 +3,6 @@ from PyQt4 import QtGui
 
 import TrackWidget
 from xml.etree import ElementTree as ET
-import sys
 import os
 
 
@@ -21,7 +20,6 @@ class Model(QtGui.QWidget):
         kicadFile = clarg1
         (projpath,filename)=os.path.split(kicadFile)
         project_name=os.path.basename(projpath)
-        #print "PROJECT NAME---------",project_name
         check=1
         try:
             f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
@@ -32,7 +30,7 @@ class Model(QtGui.QWidget):
                     root=child
         except:
             check=0
-            print "Empty XML"
+            print "Model Previous Values XML is Empty"
         
         
         
@@ -101,7 +99,7 @@ class Model(QtGui.QWidget):
                     self.nextcount = self.nextcount+1
                     self.nextrow = self.nextrow+1
             self.end= self.nextcount-1
-            print "End",self.end
+            #print "End",self.end
             modelbox.setLayout(modelgrid)
             
             #CSS
@@ -134,7 +132,7 @@ class Model(QtGui.QWidget):
             if check==0: 
                 self.obj_trac.modelTrack.append(lst)
                         
-            print "The tag dictionary : ",tag_dict
+            #print "The tag dictionary : ",tag_dict
         
             
             

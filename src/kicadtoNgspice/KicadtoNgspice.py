@@ -17,7 +17,7 @@
 #===============================================================================
 import sys
 import os
-from PyQt4 import QtGui,QtCore
+from PyQt4 import QtGui
 from Processing import PrcocessNetlist
 import Analysis
 import Source
@@ -49,7 +49,7 @@ class MainWindow(QtGui.QWidget):
         self.kicadFile = clarg1
         self.clarg1=clarg1
         self.clarg2=clarg2
-        
+                
         #Create object of track widget
         self.obj_track = TrackWidget.TrackWidget()
         
@@ -67,31 +67,28 @@ class MainWindow(QtGui.QWidget):
         # Read the netlist
         kicadNetlist = obj_proc.readNetlist(self.kicadFile)
         
+        print "Given Kicad Schematic Netlist Info :",kicadNetlist
+        
         # Construct parameter information
         param = obj_proc.readParamInfo(kicadNetlist)
-                
+        
         # Replace parameter with values
         netlist,infoline = obj_proc.preprocessNetlist(kicadNetlist,param)
         
-        print "NETLIST ",netlist
-        print "INFOLINE",infoline
+        print "Schematic Info after processing Kicad Netlist: ",netlist
+        #print "INFOLINE",infoline
         
         # Separate option and schematic information
         optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
         
-        print "OPTIONINFO",optionInfo
-        print "SCHEMATICINFO",schematicInfo
-        
-               
+        print "OPTIONINFO in the Netlist",optionInfo
+                       
         #List for storing source and its value
         global sourcelist, sourcelisttrack
         sourcelist=[]
         sourcelisttrack=[]
         schematicInfo,sourcelist = obj_proc.insertSpecialSourceParam(schematicInfo,sourcelist)
-        
-        print "SOURCELIST",sourcelist
-        print "SCHEMATICINFO",schematicInfo
-        
+                
         #List storing model detail
         global modelList,outputOption,unknownModelList,multipleModelList,plotText
           
@@ -99,10 +96,9 @@ class MainWindow(QtGui.QWidget):
         outputOption = []
         plotText = []
         schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList,plotText)
-        print "Unknown Model List",unknownModelList  
-        print "Multiple Model List",multipleModelList
-        print "Model List",modelList
-                     
+        
+        print "Model available in the Schematic :",modelList
+                             
         """
         Checking if any unknown model is used in schematic which is not recognized by NgSpice.
         Also if the two model of same name is present under modelParamXML directory
@@ -115,7 +111,6 @@ class MainWindow(QtGui.QWidget):
             self.msg.setWindowTitle("Unknown Models")
             
         elif multipleModelList:
-            print "Multiple Model List is : ",multipleModelList
             self.msg = QtGui.QErrorMessage()
             self.mcontent = "Look like you have duplicate model in modelParamXML directory "+', '.join(multipleModelList[0])
             self.msg.showMessage(self.mcontent)
@@ -124,8 +119,6 @@ class MainWindow(QtGui.QWidget):
         else:
             self.createMainWindow()
             
-        print "Init Schematic Info",schematicInfo
-        initial_schematicInfo = schematicInfo
              
     def createMainWindow(self):
         """
@@ -137,15 +130,10 @@ class MainWindow(QtGui.QWidget):
         self.hbox.addStretch(1)
         self.convertbtn = QtGui.QPushButton("Convert")
         self.convertbtn.clicked.connect(self.callConvert)
-        #self.cancelbtn = QtGui.QPushButton("Cancel")
-        #self.cancelbtn.clicked.connect(self.closeCancel)
         self.hbox.addWidget(self.convertbtn)
         self.vbox.addWidget(self.createcreateConvertWidget())
         self.vbox.addLayout(self.hbox)
         
-        #self.grid.addWidget(self.cancelbtn,1,1)
-        
-        #self.setWindowState(QtCore.Qt.WindowMaximized)
         self.setLayout(self.vbox)
         self.setWindowTitle("Kicad To NgSpice Converter")
         self.show()
@@ -194,7 +182,6 @@ class MainWindow(QtGui.QWidget):
         self.convertWindow.setLayout(self.mainLayout)
         self.convertWindow.show()
     
-        
         return self.convertWindow 
     
     def callConvert(self):
@@ -207,9 +194,7 @@ class MainWindow(QtGui.QWidget):
         store_schematicInfo = list(schematicInfo)
         (projpath,filename)=os.path.split(self.kicadFile)
         project_name=os.path.basename(projpath)
-        print "PROJ PATH---",projpath
-          
-        
+             
         check=1
         try:
             fr=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
@@ -255,7 +240,7 @@ class MainWindow(QtGui.QWidget):
         ET.SubElement(attr_dc,"field2",name="Start").text= str(obj_analysis.dc_entry_var[1].text())
         ET.SubElement(attr_dc,"field3",name="Increment").text= str(obj_analysis.dc_entry_var[2].text())
         ET.SubElement(attr_dc,"field4",name="Stop").text= str(obj_analysis.dc_entry_var[3].text())
-        print "OBJ_ANALYSIS.CHECK -----",self.obj_track.op_check[-1]
+        #print "OBJ_ANALYSIS.CHECK -----",self.obj_track.op_check[-1]
         ET.SubElement(attr_dc,"field5",name="Operating Point").text=str(self.obj_track.op_check[-1])
         ET.SubElement(attr_dc,"field6",name="Start Combo").text= obj_analysis.dc_parameter[0]
         ET.SubElement(attr_dc,"field7",name="Increment Combo").text=obj_analysis.dc_parameter[1]
@@ -276,12 +261,8 @@ class MainWindow(QtGui.QWidget):
         ET.SubElement(attr_tran,"field4",name="Start Combo").text= obj_analysis.tran_parameter[0]
         ET.SubElement(attr_tran,"field5",name="Step Combo").text= obj_analysis.tran_parameter[1]
         ET.SubElement(attr_tran,"field6",name="Stop Combo").text= obj_analysis.tran_parameter[2]
-        print "TRAN PARAMETER 2-----",obj_analysis.tran_parameter[2]
-        
-        #tree=ET.ElementTree(attr_analysis)
-        #tree.write(f)
-        
-        
+        #print "TRAN PARAMETER 2-----",obj_analysis.tran_parameter[2]
+                     
         if check==0:
             attr_source=ET.SubElement(attr_parent,"source")
         if check==1:
@@ -290,8 +271,7 @@ class MainWindow(QtGui.QWidget):
                     attr_source=child  
         count=1
         grand_child_count=1
-        #global tmp_check
-        #tmp_check=0
+        
         for i in store_schematicInfo:
             tmp_check=0
             words=i.split(' ')
@@ -369,11 +349,7 @@ class MainWindow(QtGui.QWidget):
                 else:
                     pass
                 
-        #tree=ET.ElementTree(attr_source)
-        #tree.write(f1)
-        
-        
-        
+                
         if check==0:
             attr_model=ET.SubElement(attr_parent,"model")
         if check==1:
@@ -386,7 +362,6 @@ class MainWindow(QtGui.QWidget):
         #tmp_i is the iterator in case duplicates are there; then in that case we need to replace only the child node and not create a new parent node
         
         for line in modelList:
-            print "i for each line in model List------",i
             tmp_check=0
             for rand_itr in obj_model.obj_trac.modelTrack:
                 if rand_itr[2]==line[2] and rand_itr[3]==line[3]:
@@ -398,9 +373,7 @@ class MainWindow(QtGui.QWidget):
                     for grand_child in child:
                         if i<=end:
                             grand_child.text=str(obj_model.obj_trac.model_entry_var[i].text())
-                            print "STR OF MODEL----",str(obj_model.obj_trac.model_entry_var[i].text())
                             i=i+1
-                            print "i incremented to ",i
                         else:
                             pass
                     tmp_check=1    
@@ -412,15 +385,13 @@ class MainWindow(QtGui.QWidget):
                     if hasattr(value, '__iter__') and i<=end:
                         for item in value:
                             ET.SubElement(attr_ui,"field"+str(i+1),name=item).text=str(obj_model.obj_trac.model_entry_var[i].text())
-                            print "STR OF MODEL----",str(obj_model.obj_trac.model_entry_var[i].text())
                             i=i+1
-                            print "i incremented to ",i
+                            
                     else:
                         ET.SubElement(attr_ui,"field"+str(i+1),name=value).text=str(obj_model.obj_trac.model_entry_var[i].text())
-                        print "STR OF MODEL----",str(obj_model.obj_trac.model_entry_var[i].text())
+                        
                         i=i+1
-                        print "i incremented to ",i
-        #################################################################################################################
+                        
         if check==0:
             attr_devicemodel=ET.SubElement(attr_parent,"devicemodel")
         if check==1:
@@ -428,9 +399,8 @@ class MainWindow(QtGui.QWidget):
                 if child.tag=="devicemodel":
                     del child[:]
                     attr_devicemodel=child
-        #print "Device model dict",obj_devicemodel.devicemodel_dict_beg
-        #print "Device model dict end",obj_devicemodel.devicemodel_dict_end
-        ##########################              
+        
+                     
         for i in obj_devicemodel.devicemodel_dict_beg:
             attr_var=ET.SubElement(attr_devicemodel,i)
             it=obj_devicemodel.devicemodel_dict_beg[i]
@@ -446,7 +416,7 @@ class MainWindow(QtGui.QWidget):
                 if child.tag=="subcircuit":
                     del child[:]
                     attr_subcircuit=child
-        ##########################              
+                      
         for i in obj_subcircuitTab.subcircuit_dict_beg:
             attr_var=ET.SubElement(attr_subcircuit,i)
             it=obj_subcircuitTab.subcircuit_dict_beg[i]
@@ -468,15 +438,19 @@ class MainWindow(QtGui.QWidget):
         try:
             #Adding Source Value to Schematic Info
             store_schematicInfo = self.obj_convert.addSourceParameter()
+            print "Netlist After Adding Source details :",store_schematicInfo
             
             #Adding Model Value to store_schematicInfo
             store_schematicInfo = self.obj_convert.addModelParameter(store_schematicInfo)
-            
+            print "Netlist After Adding Ngspice Model :",store_schematicInfo
+                        
             #Adding Device Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addDeviceLibrary(store_schematicInfo,self.kicadFile)
+            print "Netlist After Adding Device Model Library :",store_schematicInfo
             
             #Adding Subcircuit Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addSubcircuit(store_schematicInfo, self.kicadFile)
+            print "Netlist After Adding subcircuits :",store_schematicInfo
             
             analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
                                                                self.obj_track.DC_entry_var["ITEMS"],
@@ -487,18 +461,15 @@ class MainWindow(QtGui.QWidget):
                                                                self.obj_track.TRAN_Parameter["ITEMS"],
                                                                self.obj_track.AC_type["ITEMS"],
                                                                self.obj_track.op_check)
-            #print "SchematicInfo after adding Model Details",schematicInfo
-            
-            print "Analysis OutPut------>",analysisoutput
+                       
+            print "Analysis OutPut ",analysisoutput
            
             #Calling netlist file generation function
             self.createNetlistFile(store_schematicInfo,plotText)
             
             self.msg = "The Kicad to Ngspice Conversion completed successfully!!!!!!"
             QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
-            #self.obj_track.subcircuitList[:]=[]
-            #self.obj_track.modelTrack[:]=[]
-            #self.close()         
+                     
         except Exception as e:
             print "Exception Message: ",e
             print "There was error while converting kicad to ngspice"
@@ -585,7 +556,7 @@ class MainWindow(QtGui.QWidget):
         out.writelines(infoline)
         out.writelines('\n')
         sections=[simulatorOption, initialCondOption, store_schematicInfo, analysisOption]
-        print "SECTIONS",sections
+        
         for section in sections:
             if len(section) == 0:
                 continue
