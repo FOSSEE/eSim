@@ -160,7 +160,7 @@ class PrcocessNetlist:
         unknownModelList = []
         multipleModelList = []
         plotList = ['plot_v1','plot_v2','plot_i2','plot_log','plot_db','plot_phase']
-        
+        interMediateNodeCount=1
         k = 1
         for compline in schematicInfo:
             words = compline.split()
@@ -336,6 +336,24 @@ class PrcocessNetlist:
                 
                 elif compType == 'transfo':
                     schematicInfo.insert(index,"* "+compline)
+                    
+                    #For Primary Couple
+                    modelLine = "a"+str(k)+" ("+words[1]+" "+words[2]+") (interNode_"+str(interMediateNodeCount)+" "+words[3]+") "
+                    modelLine += compName+"_primary"
+                    schematicInfo.append(modelLine)
+                    k=k+1
+                    #For iron core
+                    modelLine = "a"+str(k)+" ("+words[4]+" "+words[2]+") (interNode_"+str(interMediateNodeCount+1)+" "+words[3]+") "
+                    modelLine += compName+"_secondary"
+                    schematicInfo.append(modelLine)
+                    k=k+1
+                    #For Secondary Couple
+                    modelLine = "a"+str(k)+" (interNode_"+str(interMediateNodeCount)+" interNode_"+str(interMediateNodeCount+1)+") "
+                    modelLine += compName+"_iron_core"
+                    schematicInfo.append(modelLine)
+                    k=k+1
+                    interMediateNodeCount += 2
+                    
                     modelname = "transfo"
                     comment = "* "+compline
                     title = "Transformer details for model "+compName

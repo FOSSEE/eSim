@@ -225,11 +225,11 @@ class Convert:
                     num_turns2=str(self.obj_track.model_entry_var[start+5].text())
                     if num_turns2=="": num_turns2="620"
                     addmodelLine=".model "+line[3]+"_primary lcouple (num_turns= "+num_turns+")"
-                    modelParamValue.append([line[0],addmodelLine,line[4]])
+                    modelParamValue.append([line[0],addmodelLine,"*primary lcouple"])
                     addmodelLine=".model "+line[3]+"_iron_core core ("+bh_array+" area = "+area+" length ="+length +")"
-                    modelParamValue.append([line[0],addmodelLine,line[4]])
+                    modelParamValue.append([line[0],addmodelLine,"*iron core"])
                     addmodelLine=".model "+line[3]+"_secondary lcouple (num_turns ="+num_turns2+ ")"    
-                    modelParamValue.append([line[0],addmodelLine,line[4]])    
+                    modelParamValue.append([line[0],addmodelLine,"*secondary lcouple"])    
                 except Exception as e:
                     print "Caught an exception in transfo model ",line[1]
                     print "Exception Message : ",str(e)
