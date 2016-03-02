@@ -311,7 +311,6 @@ class PrcocessNetlist:
                     modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
                 
                 elif compType in plotList:
-                    print "Plot Data---------->"
                     schematicInfo.insert(index,"* "+compline)
                     if compType == 'plot_v1':
                         words = compline.split()
@@ -358,12 +357,14 @@ class PrcocessNetlist:
                     comment = "* "+compline
                     title = "Transformer details for model "+compName
                     type = "NA" #It is model but do not load from xml and lib file
-                    paramDict['primary_turns'] = "Enter the primary number of turns "
                     paramDict['h1_array'] = "Enter the H1 array "
+                    paramDict['primary_turns'] = "Enter the primary number of turns (default=310) "
+                    paramDict['area'] = "Enter iron core area (default=1)"
+                    paramDict['secondar_turns'] = "Enter the secondary number of turns (default=620)"
+                    paramDict['length'] = "Enter iron core length (default=0.01)"
                     paramDict['b1_array'] = "Enter the B1 array "
-                    paramDict['area'] = "Enter iron core area "
-                    paramDict['length'] = "Enter iron core length"
-                    paramDict['secondar_turns'] = "Enter the secondary number of turns"
+                                        
+                    
                     modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
                 
                 else:
