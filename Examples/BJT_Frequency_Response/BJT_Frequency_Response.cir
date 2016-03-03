@@ -1,0 +1,25 @@
+* /home/fossee/eSim-Workspace/BJT_Frequency_Response/BJT_Frequency_Response.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Feb 29 20:25:51 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  Net-_R2-Pad1_ GND DC		
+v2  in GND AC		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 40u		
+C2  GND Net-_C2-Pad2_ 100u		
+C3  out Net-_C3-Pad2_ 40u		
+Q1  Net-_C3-Pad2_ Net-_C1-Pad2_ Net-_C2-Pad2_ NPN		
+R3  Net-_C1-Pad2_ GND 50k		
+R4  Net-_C2-Pad2_ GND 1.5k		
+R6  out GND 1k		
+R5  Net-_R2-Pad1_ Net-_C3-Pad2_ 2k		
+R2  Net-_R2-Pad1_ Net-_C1-Pad2_ 200k		
+R1  Net-_C1-Pad1_ in 50		
+U3  out plot_log		
+U2  out plot_phase		
+U1  in plot_v1		
+
+.end

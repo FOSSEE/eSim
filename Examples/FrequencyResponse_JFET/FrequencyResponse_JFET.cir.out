@@ -1,28 +1,28 @@
-* /home/fossee/downloads/esim-master/examples/frequencyresponse_jfet/frequencyresponse_jfet.cir
+* /home/fossee/updatedexamples/frequencyresponse_jfet/frequencyresponse_jfet.cir
 
 .include NJF.lib
-c1  net-_c1-pad1_ net-_c1-pad2_ 0.01u
-c2  gnd net-_c1-pad1_ 5p
-c3  net-_c1-pad1_ net-_c3-pad2_ 4p
-c4  net-_c1-pad1_ net-_c4-pad2_ 2p
-c5  net-_c4-pad2_ net-_c3-pad2_ 0.5p
-c6  net-_c3-pad2_ gnd 2u
-c7  net-_c4-pad2_ out 5u
-c8  out gnd 6p
+c1  net-_c1-pad1_ in 1u
+c6  net-_c6-pad1_ gnd 0.1u
 v2 net-_r3-pad1_ gnd  dc 20
-v1 in gnd  ac 0.1m
-j1 net-_c4-pad2_ net-_c1-pad1_ net-_c3-pad2_ J2N3819
-r3  net-_r3-pad1_ net-_c4-pad2_ 4.7k
-r1  in net-_c1-pad2_ 10k
+j1 out net-_c1-pad1_ net-_c6-pad1_ J2N3819
+r3  net-_r3-pad1_ out 3k
 r2  gnd net-_c1-pad1_ 1meg
-r4  gnd net-_c3-pad2_ 1k
-r5  gnd out 2.2k
-.ac lin 100 10Hz 10Meg
+r4  gnd net-_c6-pad1_ 470
+* u1  in plot_v1
+v1 in gnd  ac 0.1m 0
+* u3  out plot_log
+* u2  out plot_phase
+* u4  out plot_db
+.ac dec 100 10KHz 100Meg
 
 * Control Statements 
 .control
 run
 print allv > plot_data_v.txt
 print alli > plot_data_i.txt
+plot v(in)
+plot log(out)
+plot phase(out)
+plot db(out)
 .endc
 .end

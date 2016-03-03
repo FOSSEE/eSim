@@ -1,14 +1,13 @@
-* /home/fossee/Downloads/eSim-master/Examples/BJT_amplifier/BJT_amplifier.cir
+* /home/fossee/eSim-Workspace/BJT_amplifier/BJT_amplifier.cir
 
-* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Aug 17 14:35:23 2015
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Feb 29 20:24:30 2016
 
 * To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
 * To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
 
 * Sheet Name: /
 v1  Net-_R2-Pad1_ GND DC		
-v2  Net-_R1-Pad2_ GND AC		
-R1  Net-_C1-Pad1_ Net-_R1-Pad2_ 50		
+R1  Net-_C1-Pad1_ in 50		
 R2  Net-_R2-Pad1_ Net-_C1-Pad2_ 200k		
 C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 40u		
 R3  Net-_C1-Pad2_ GND 50k		
@@ -17,9 +16,9 @@ C2  GND Net-_C2-Pad2_ 100u
 C3  out Net-_C3-Pad2_ 40u		
 R5  Net-_R2-Pad1_ Net-_C3-Pad2_ 2k		
 R4  Net-_C2-Pad2_ GND 1.5k		
-Q1  Net-_C3-Pad2_ Net-_C1-Pad2_ Net-_C2-Pad2_ NPN	
-
-U1 out plot_phase
-U2 out plot_log	
+Q1  Net-_C3-Pad2_ Net-_C1-Pad2_ Net-_C2-Pad2_ NPN		
+U1  in plot_v1		
+U2  out plot_v1		
+v2  in GND sine		
 
 .end

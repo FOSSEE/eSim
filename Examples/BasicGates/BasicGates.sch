@@ -1,5 +1,15 @@
 EESchema Schematic File Version 2
 LIBS:BasicGates-rescue
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Plot
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -29,11 +39,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:eSim_Analog
-LIBS:eSim_Devices
-LIBS:eSim_Digital
-LIBS:eSim_Hybrid
-LIBS:eSim_Sources
 LIBS:BasicGates-cache
 EELAYER 25 0
 EELAYER END
@@ -111,7 +116,7 @@ F 3 "" H 2050 1250 60  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R3
+L R-RESCUE-BasicGates R3
 U 1 1 507251A7
 P 1400 2200
 F 0 "R3" V 1480 2200 50  0000 C CNN
@@ -122,7 +127,7 @@ F 3 "" H 1400 2200 60  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L R R2
+L R-RESCUE-BasicGates R2
 U 1 1 50652FB6
 P 10850 3350
 F 0 "R2" V 10930 3350 50  0000 C CNN
@@ -133,7 +138,7 @@ F 3 "" H 10850 3350 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-BasicGates R1
 U 1 1 505C9F25
 P 2200 5100
 F 0 "R1" V 2280 5100 50  0000 C CNN
@@ -251,7 +256,7 @@ F 1 "pulse" H 1850 2100 60  0000 C CNN
 F 2 "R1" H 1750 2150 60  0000 C CNN
 F 3 "" H 2050 2150 60  0000 C CNN
 	1    2050 2150
-	-1   0    0    1   
+	1    0    0    1   
 $EndComp
 $Comp
 L pulse v1
@@ -265,9 +270,9 @@ F 3 "" H 1650 5100 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 Text GLabel 2200 2950 2    60   Input ~ 0
-IN2
+A
 Text GLabel 2250 3450 2    60   Input ~ 0
-IN1
+B
 Wire Wire Line
 	1650 4500 2200 4500
 Wire Wire Line
@@ -300,7 +305,6 @@ Wire Wire Line
 	3650 2200 3850 2200
 Wire Wire Line
 	3650 1700 3650 2200
-Connection ~ 1400 2750
 Connection ~ 1800 1500
 Wire Wire Line
 	1800 1500 1800 1700
@@ -357,7 +361,7 @@ Wire Wire Line
 Wire Wire Line
 	2050 3150 2250 3150
 Wire Wire Line
-	1400 2750 2050 2750
+	1400 2750 2350 2750
 Connection ~ 2050 2750
 Wire Wire Line
 	2250 3250 2050 3250
@@ -414,9 +418,50 @@ Connection ~ 2050 2950
 Wire Wire Line
 	2250 3450 2050 3450
 Connection ~ 2050 3450
-Text GLabel 10700 2800 1    60   Input ~ 0
+Text GLabel 10850 2800 2    60   Input ~ 0
 OUT
 Wire Wire Line
-	10700 2800 10700 3000
+	10700 2700 10700 3000
 Connection ~ 10700 3000
+$Comp
+L plot_v1 U9
+U 1 1 56D473A0
+P 2350 2900
+F 0 "U9" H 2350 3400 60  0000 C CNN
+F 1 "plot_v1" H 2550 3250 60  0000 C CNN
+F 2 "" H 2350 2900 60  0000 C CNN
+F 3 "" H 2350 2900 60  0000 C CNN
+	1    2350 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U10
+U 1 1 56D4742D
+P 2350 4400
+F 0 "U10" H 2350 4900 60  0000 C CNN
+F 1 "plot_v1" H 2550 4750 60  0000 C CNN
+F 2 "" H 2350 4400 60  0000 C CNN
+F 3 "" H 2350 4400 60  0000 C CNN
+	1    2350 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U11
+U 1 1 56D47776
+P 10700 2900
+F 0 "U11" H 10700 3400 60  0000 C CNN
+F 1 "plot_v1" H 10900 3250 60  0000 C CNN
+F 2 "" H 10700 2900 60  0000 C CNN
+F 3 "" H 10700 2900 60  0000 C CNN
+	1    10700 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2350 2750 2350 2700
+Wire Wire Line
+	2350 4200 2050 4200
+Connection ~ 2050 4200
+Wire Wire Line
+	10850 2800 10700 2800
+Connection ~ 10700 2800
 $EndSCHEMATC

@@ -1,0 +1,21 @@
+* /home/fossee/UpdatedExamples/Diac_Triac/Diac_Triac.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 18:23:44 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+C2  Net-_C2-Pad1_ GND 0.1u		
+C1  Net-_C1-Pad1_ GND 0.1u		
+R3  Net-_C1-Pad1_ Net-_C2-Pad1_ 250		
+R2  IN Net-_C1-Pad1_ 10k		
+R1  IN OUT 100		
+v1  IN GND sine		
+X2  GND OUT Net-_X1-Pad2_ TRIAC		
+X1  Net-_C2-Pad1_ Net-_X1-Pad2_ DIAC		
+U1  IN plot_v1		
+U2  OUT plot_v1		
+U3  IN OUT plot_v2		
+
+.end

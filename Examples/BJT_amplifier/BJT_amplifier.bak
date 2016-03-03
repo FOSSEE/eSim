@@ -1,13 +1,15 @@
 EESchema Schematic File Version 2
+LIBS:BJT_amplifier-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
 LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
+LIBS:eSim_Plot
+LIBS:eSim_Power
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
-LIBS:BJT_amplifier-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -109,17 +111,6 @@ F 3 "" H 7600 3600 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L AC v2
-U 1 1 51A486A5
-P 3700 4050
-F 0 "v2" H 3500 4150 60  0000 C CNN
-F 1 "AC" H 3500 4000 60  0000 C CNN
-F 2 "R1" H 3400 4050 60  0000 C CNN
-F 3 "" H 3700 4050 60  0001 C CNN
-	1    3700 4050
-	1    0    0    -1  
-$EndComp
-$Comp
 L PWR_FLAG #FLG01
 U 1 1 51A48298
 P 5650 4450
@@ -142,7 +133,7 @@ F 3 "" H 5650 4850 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-BJT_amplifier R1
 U 1 1 51A47FBC
 P 4050 3600
 F 0 "R1" V 4130 3600 50  0000 C CNN
@@ -153,7 +144,7 @@ F 3 "" H 4050 3600 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R2
+L R-RESCUE-BJT_amplifier R2
 U 1 1 51A47FAB
 P 5100 3050
 F 0 "R2" V 5180 3050 50  0000 C CNN
@@ -175,7 +166,7 @@ F 3 "" H 4750 3600 60  0001 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R3
+L R-RESCUE-BJT_amplifier R3
 U 1 1 51A47F97
 P 5100 4200
 F 0 "R3" V 5180 4200 50  0000 C CNN
@@ -186,7 +177,7 @@ F 3 "" H 5100 4200 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R6
+L R-RESCUE-BJT_amplifier R6
 U 1 1 51A47F8B
 P 7050 4200
 F 0 "R6" V 7130 4200 50  0000 C CNN
@@ -219,7 +210,7 @@ F 3 "" H 6500 3300 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R5
+L R-RESCUE-BJT_amplifier R5
 U 1 1 51A47F5C
 P 6100 3050
 F 0 "R5" V 6180 3050 50  0000 C CNN
@@ -230,7 +221,7 @@ F 3 "" H 6100 3050 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R4
+L R-RESCUE-BJT_amplifier R4
 U 1 1 51A47F50
 P 5850 4200
 F 0 "R4" V 5930 4200 50  0000 C CNN
@@ -268,6 +259,48 @@ out
 Wire Wire Line
 	7000 3250 6950 3250
 Wire Wire Line
-	6950 3250 6950 3300
+	6950 3200 6950 3300
 Connection ~ 6950 3300
+Text GLabel 3700 3450 0    60   Input ~ 0
+in
+Wire Wire Line
+	3700 3450 3800 3450
+Wire Wire Line
+	3800 3350 3800 3600
+Connection ~ 3800 3600
+$Comp
+L plot_v1 U1
+U 1 1 56D444F7
+P 3800 3550
+F 0 "U1" H 3800 4050 60  0000 C CNN
+F 1 "plot_v1" H 4000 3900 60  0000 C CNN
+F 2 "" H 3800 3550 60  0000 C CNN
+F 3 "" H 3800 3550 60  0000 C CNN
+	1    3800 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U2
+U 1 1 56D4460A
+P 6950 3400
+F 0 "U2" H 6950 3900 60  0000 C CNN
+F 1 "plot_v1" H 7150 3750 60  0000 C CNN
+F 2 "" H 6950 3400 60  0000 C CNN
+F 3 "" H 6950 3400 60  0000 C CNN
+	1    6950 3400
+	1    0    0    -1  
+$EndComp
+Connection ~ 6950 3250
+Connection ~ 3800 3450
+$Comp
+L sine v2
+U 1 1 56D44890
+P 3700 4050
+F 0 "v2" H 3500 4150 60  0000 C CNN
+F 1 "sine" H 3500 4000 60  0000 C CNN
+F 2 "R1" H 3400 4050 60  0000 C CNN
+F 3 "" H 3700 4050 60  0000 C CNN
+	1    3700 4050
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

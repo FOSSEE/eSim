@@ -1,14 +1,14 @@
-* /home/fossee/Downloads/eSim-master/Examples/4_bit_JK_ff/4_bit_JK_ff.cir
+* /home/fossee/UpdatedExamples/4_bit_JK_ff/4_bit_JK_ff.cir
 
-* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Aug 19 15:36:59 2015
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 18:13:51 2016
 
 * To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
 * To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
 
 * Sheet Name: /
 U3  Net-_U1-Pad4_ Net-_U1-Pad6_ Net-_U1-Pad5_ Net-_U2-Pad8_ Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ d_jkff		
-v1  Net-_U1-Pad1_ GND dc		
-v3  Net-_U1-Pad3_ GND dc		
+v1  Net-_U1-Pad1_ GND DC		
+v3  Net-_U1-Pad3_ GND DC		
 v4  Net-_U4-Pad2_ GND 0		
 v2  IN GND pulse		
 U5  Net-_U3-Pad7_ Net-_U3-Pad7_ Net-_U1-Pad5_ Net-_U2-Pad7_ Net-_U4-Pad6_ Net-_U5-Pad6_ Net-_U5-Pad7_ d_jkff		
@@ -32,5 +32,9 @@ R2  D2 GND 1k
 R3  D3 GND 1k		
 R4  D4 GND 1k		
 U11  Net-_U10-Pad7_ GND dac_bridge_1		
+U12  D1 plot_v1		
+U14  D4 plot_v1		
+U15  D3 plot_v1		
+U13  D2 plot_v1		
 
 .end

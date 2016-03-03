@@ -4,6 +4,8 @@ LIBS:eSim_Devices
 LIBS:eSim_Digital
 LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
+LIBS:eSim_Plot
+LIBS:eSim_Power
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
@@ -96,6 +98,43 @@ F 3 "" H 5700 4050 60  0000 C CNN
 	1    5700 4050
 	1    0    0    -1  
 $EndComp
+$Comp
+L PWR_FLAG #FLG02
+U 1 1 5593CD49
+P 5700 3800
+F 0 "#FLG02" H 5700 3895 50  0001 C CNN
+F 1 "PWR_FLAG" H 5700 3980 50  0000 C CNN
+F 2 "" H 5700 3800 60  0000 C CNN
+F 3 "" H 5700 3800 60  0000 C CNN
+	1    5700 3800
+	1    0    0    -1  
+$EndComp
+Text GLabel 5000 2750 0    60   Input ~ 0
+IN
+Text GLabel 6400 2800 2    60   Input ~ 0
+OUT
+$Comp
+L plot_v1 U2
+U 1 1 56D86A9A
+P 5100 2900
+F 0 "U2" H 5100 3400 60  0000 C CNN
+F 1 "plot_v1" H 5300 3250 60  0000 C CNN
+F 2 "" H 5100 2900 60  0000 C CNN
+F 3 "" H 5100 2900 60  0000 C CNN
+	1    5100 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U3
+U 1 1 56D86ADF
+P 6300 2950
+F 0 "U3" H 6300 3450 60  0000 C CNN
+F 1 "plot_v1" H 6500 3300 60  0000 C CNN
+F 2 "" H 6300 2950 60  0000 C CNN
+F 3 "" H 6300 2950 60  0000 C CNN
+	1    6300 2950
+	1    0    0    -1  
+$EndComp
 Wire Wire Line
 	5050 2950 5050 2900
 Wire Wire Line
@@ -113,29 +152,20 @@ Wire Wire Line
 Wire Wire Line
 	5700 3800 5700 4050
 Connection ~ 5700 3900
-$Comp
-L PWR_FLAG #FLG02
-U 1 1 5593CD49
-P 5700 3800
-F 0 "#FLG02" H 5700 3895 50  0001 C CNN
-F 1 "PWR_FLAG" H 5700 3980 50  0000 C CNN
-F 2 "" H 5700 3800 60  0000 C CNN
-F 3 "" H 5700 3800 60  0000 C CNN
-	1    5700 3800
-	1    0    0    -1  
-$EndComp
-Text GLabel 5200 2750 0    60   Input ~ 0
-IN
-Text GLabel 6200 2800 2    60   Input ~ 0
-OUT
 Wire Wire Line
-	5200 2750 5250 2750
+	5000 2750 5250 2750
 Wire Wire Line
 	5250 2750 5250 2900
 Connection ~ 5250 2900
 Wire Wire Line
-	6200 2800 6100 2800
+	6100 2800 6400 2800
 Wire Wire Line
 	6100 2800 6100 2900
 Connection ~ 6100 2900
+Wire Wire Line
+	5100 2700 5100 2750
+Connection ~ 5100 2750
+Wire Wire Line
+	6300 2750 6300 2800
+Connection ~ 6300 2800
 $EndSCHEMATC

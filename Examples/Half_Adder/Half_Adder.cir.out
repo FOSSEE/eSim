@@ -1,14 +1,18 @@
-* /home/fossee/downloads/esim-master/examples/half_adder/half_adder.cir
+* /home/fossee/updatedexamples/half_adder/half_adder.cir
 
 .include half_adder.sub
 x1 net-_u1-pad3_ net-_u1-pad4_ net-_u2-pad1_ net-_u2-pad2_ half_adder
-* u1  a b net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
+* u1  in1 in2 net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
 * u2  net-_u2-pad1_ net-_u2-pad2_ sum cout dac_bridge_2
-v1 a gnd  dc 5
-v2 b gnd  dc 0
+v1 in1 gnd  dc 5
+v2 in2 gnd  dc 0
 r1  sum gnd 1k
 r2  cout gnd 1k
-a1 [a b ] [net-_u1-pad3_ net-_u1-pad4_ ] u1
+* u3  in1 plot_v1
+* u4  in2 plot_v1
+* u5  sum plot_v1
+* u6  cout plot_v1
+a1 [in1 in2 ] [net-_u1-pad3_ net-_u1-pad4_ ] u1
 a2 [net-_u2-pad1_ net-_u2-pad2_ ] [sum cout ] u2
 * Schematic Name: adc_bridge_2, NgSpice Name: adc_bridge
 .model u1 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
@@ -21,5 +25,9 @@ a2 [net-_u2-pad1_ net-_u2-pad2_ ] [sum cout ] u2
 run
 print allv > plot_data_v.txt
 print alli > plot_data_i.txt
+plot v(in1)
+plot v(in2)
+plot v(sum)
+plot v(cout)
 .endc
 .end

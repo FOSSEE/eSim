@@ -1,13 +1,15 @@
 EESchema Schematic File Version 2
+LIBS:CMOS_Inverter-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
 LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
+LIBS:eSim_Plot
+LIBS:eSim_Power
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
-LIBS:CMOS_Inverter-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -52,58 +54,12 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
-Connection ~ 5800 2400
-Wire Wire Line
-	5900 2400 5800 2400
-Connection ~ 4200 3350
-Wire Wire Line
-	4200 3200 4200 3350
-Wire Wire Line
-	6550 3300 6550 3550
-Wire Wire Line
-	5800 1150 5800 1400
-Wire Wire Line
-	5800 2500 5800 2300
-Connection ~ 2900 3350
-Wire Wire Line
-	2900 3100 2900 3550
-Wire Wire Line
-	3100 3350 2900 3350
-Wire Wire Line
-	5800 3650 5800 2900
-Wire Wire Line
-	5050 2700 5500 2700
-Wire Wire Line
-	5050 2700 5050 3850
-Wire Wire Line
-	5050 3850 5500 3850
-Wire Wire Line
-	4000 3350 5050 3350
-Connection ~ 5050 3350
-Connection ~ 5800 3300
-Wire Wire Line
-	6550 3850 6550 4400
-Wire Wire Line
-	6550 4400 5800 4400
-Connection ~ 5800 4400
-Connection ~ 6300 3300
 Text GLabel 5900 2400 2    60   Input ~ 0
 vcc
-Text GLabel 6300 3150 1    60   Input ~ 0
+Text GLabel 6500 3150 2    60   Input ~ 0
 out
-Text GLabel 4200 3200 1    60   Input ~ 0
+Text GLabel 4350 3150 2    60   Input ~ 0
 in
-$Comp
-L C C1
-U 1 1 551BDFAE
-P 6550 3700
-F 0 "C1" H 6600 3800 50  0000 L CNN
-F 1 "1u" H 6600 3600 50  0000 L CNN
-F 2 "" H 6550 3700 60  0001 C CNN
-F 3 "" H 6550 3700 60  0001 C CNN
-	1    6550 3700
-	1    0    0    -1  
-$EndComp
 $Comp
 L PWR_FLAG #FLG01
 U 1 1 54F86E05
@@ -116,29 +72,7 @@ F 3 "" H 2900 3100 60  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND-RESCUE-CMOS_Inverter #PWR02
-U 1 1 54F86DBA
-P 2900 3550
-F 0 "#PWR02" H 2900 3550 30  0001 C CNN
-F 1 "GND" H 2900 3480 30  0001 C CNN
-F 2 "" H 2900 3550 60  0001 C CNN
-F 3 "" H 2900 3550 60  0001 C CNN
-	1    2900 3550
-	1    0    0    -1  
-$EndComp
-$Comp
-L dc v1
-U 1 1 556C4B7E
-P 3550 3350
-F 0 "v1" H 3350 3450 60  0000 C CNN
-F 1 "dc" H 3350 3300 60  0000 C CNN
-F 2 "R1" H 3250 3350 60  0000 C CNN
-F 3 "" H 3550 3350 60  0000 C CNN
-	1    3550 3350
-	0    1    1    0   
-$EndComp
-$Comp
-L dc v2
+L dc-RESCUE-CMOS_Inverter v2
 U 1 1 556C4BA7
 P 5800 1850
 F 0 "v2" H 5600 1950 60  0000 C CNN
@@ -148,10 +82,6 @@ F 3 "" H 5800 1850 60  0000 C CNN
 	1    5800 1850
 	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	6300 3150 6300 3300
-Wire Wire Line
-	5800 3300 6550 3300
 $Comp
 L MOS_N M1
 U 1 1 556F0E6F
@@ -174,78 +104,154 @@ F 3 "" H 5700 2700 60  0000 C CNN
 	1    5650 2700
 	1    0    0    1   
 $EndComp
-Wire Wire Line
-	5800 4050 5800 4700
-Wire Wire Line
-	5900 4150 5800 4150
-Connection ~ 5800 4150
-Connection ~ 5800 2450
-Wire Wire Line
-	5900 4000 5900 4150
-Wire Wire Line
-	5900 2550 5900 2450
-Wire Wire Line
-	5900 2450 5800 2450
 $Comp
-L PWR_FLAG #FLG03
+L PWR_FLAG #FLG02
 U 1 1 557AB7F7
 P 5600 4500
-F 0 "#FLG03" H 5600 4595 50  0001 C CNN
+F 0 "#FLG02" H 5600 4595 50  0001 C CNN
 F 1 "PWR_FLAG" H 5600 4680 50  0000 C CNN
 F 2 "" H 5600 4500 60  0000 C CNN
 F 3 "" H 5600 4500 60  0000 C CNN
 	1    5600 4500
 	1    0    0    -1  
 $EndComp
-Connection ~ 5800 1300
-Wire Wire Line
-	5600 4500 5600 4550
-Wire Wire Line
-	5600 4550 5800 4550
-Connection ~ 5800 4550
-Wire Wire Line
-	6550 4300 6550 4350
-Connection ~ 6550 4350
 $Comp
-L 0 #GND05
-U 1 1 557ACE40
-P 5800 1150
-F 0 "#GND05" H 5800 1050 40  0001 C CNN
-F 1 "0" H 5800 1080 40  0000 C CNN
-F 2 "" H 5800 1150 60  0000 C CNN
-F 3 "" H 5800 1150 60  0000 C CNN
-	1    5800 1150
+L plot_v1 U1
+U 1 1 56D852DA
+P 4200 3200
+F 0 "U1" H 4200 3700 60  0000 C CNN
+F 1 "plot_v1" H 4400 3550 60  0000 C CNN
+F 2 "" H 4200 3200 60  0000 C CNN
+F 3 "" H 4200 3200 60  0000 C CNN
+	1    4200 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U2
+U 1 1 56D853D9
+P 6300 3250
+F 0 "U2" H 6300 3750 60  0000 C CNN
+F 1 "plot_v1" H 6500 3600 60  0000 C CNN
+F 2 "" H 6300 3250 60  0000 C CNN
+F 3 "" H 6300 3250 60  0000 C CNN
+	1    6300 3250
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR03
+U 1 1 56D85765
+P 5800 1300
+F 0 "#PWR03" H 5800 1050 50  0001 C CNN
+F 1 "GND" H 5800 1150 50  0000 C CNN
+F 2 "" H 5800 1300 50  0000 C CNN
+F 3 "" H 5800 1300 50  0000 C CNN
+	1    5800 1300
 	-1   0    0    1   
 $EndComp
 $Comp
-L 0 #GND06
-U 1 1 557ACE67
+L GND #PWR04
+U 1 1 56D857A1
 P 5800 4700
-F 0 "#GND06" H 5800 4600 40  0001 C CNN
-F 1 "0" H 5800 4630 40  0000 C CNN
-F 2 "" H 5800 4700 60  0000 C CNN
-F 3 "" H 5800 4700 60  0000 C CNN
+F 0 "#PWR04" H 5800 4450 50  0001 C CNN
+F 1 "GND" H 5800 4550 50  0000 C CNN
+F 2 "" H 5800 4700 50  0000 C CNN
+F 3 "" H 5800 4700 50  0000 C CNN
 	1    5800 4700
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND-RESCUE-CMOS_Inverter #PWR07
-U 1 1 557ACF98
-P 5950 1300
-F 0 "#PWR07" H 5950 1300 30  0001 C CNN
-F 1 "GND" H 5950 1230 30  0001 C CNN
-F 2 "" H 5950 1300 60  0000 C CNN
-F 3 "" H 5950 1300 60  0000 C CNN
-F 4 "0" H 5950 1300 60  0001 C CNN "Value"
-	1    5950 1300
+L GND #PWR05
+U 1 1 56D8585B
+P 2900 3550
+F 0 "#PWR05" H 2900 3300 50  0001 C CNN
+F 1 "GND" H 2900 3400 50  0000 C CNN
+F 2 "" H 2900 3550 50  0000 C CNN
+F 3 "" H 2900 3550 50  0000 C CNN
+	1    2900 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L C C1
+U 1 1 551BDFAE
+P 6550 3700
+F 0 "C1" H 6600 3800 50  0000 L CNN
+F 1 "1u" H 6600 3600 50  0000 L CNN
+F 2 "" H 6550 3700 60  0001 C CNN
+F 3 "" H 6550 3700 60  0001 C CNN
+	1    6550 3700
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	5850 1300 5850 1250
+	6550 3850 6550 4400
 Wire Wire Line
-	5850 1250 5950 1250
+	5800 1300 5800 1400
+Connection ~ 4200 3150
 Wire Wire Line
-	5950 1250 5950 1300
+	4350 3150 4200 3150
+Connection ~ 6300 3150
 Wire Wire Line
-	5850 1300 5800 1300
+	6500 3150 6300 3150
+Connection ~ 5800 4550
+Wire Wire Line
+	5600 4550 5800 4550
+Wire Wire Line
+	5600 4500 5600 4550
+Wire Wire Line
+	5900 2450 5800 2450
+Wire Wire Line
+	5900 2550 5900 2450
+Wire Wire Line
+	5900 4000 5900 4150
+Connection ~ 5800 2450
+Connection ~ 5800 4150
+Wire Wire Line
+	5900 4150 5800 4150
+Wire Wire Line
+	5800 4050 5800 4700
+Wire Wire Line
+	5800 3300 6550 3300
+Wire Wire Line
+	6300 3050 6300 3300
+Connection ~ 6300 3300
+Connection ~ 5800 4400
+Wire Wire Line
+	6550 4400 5800 4400
+Connection ~ 5800 3300
+Connection ~ 5050 3350
+Wire Wire Line
+	4000 3350 5050 3350
+Wire Wire Line
+	5050 3850 5500 3850
+Wire Wire Line
+	5050 2700 5050 3850
+Wire Wire Line
+	5050 2700 5500 2700
+Wire Wire Line
+	5800 3650 5800 2900
+Wire Wire Line
+	3100 3350 2900 3350
+Wire Wire Line
+	2900 3100 2900 3550
+Connection ~ 2900 3350
+Wire Wire Line
+	5800 2500 5800 2300
+Wire Wire Line
+	6550 3300 6550 3550
+Wire Wire Line
+	4200 3000 4200 3350
+Connection ~ 4200 3350
+Wire Wire Line
+	5900 2400 5800 2400
+Connection ~ 5800 2400
+$Comp
+L pwl v1
+U 1 1 56D85AAB
+P 3550 3350
+F 0 "v1" H 3350 3450 60  0000 C CNN
+F 1 "pwl" H 3300 3300 60  0000 C CNN
+F 2 "R1" H 3250 3350 60  0000 C CNN
+F 3 "" H 3550 3350 60  0000 C CNN
+	1    3550 3350
+	0    1    1    0   
+$EndComp
 $EndSCHEMATC

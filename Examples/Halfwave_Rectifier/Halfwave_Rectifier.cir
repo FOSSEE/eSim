@@ -1,6 +1,6 @@
-* /home/fossee/Downloads/eSim-master/Examples/Halfwave_Rectifier/Halfwave_Rectifier.cir
+* /home/fossee/UpdatedExamples/Halfwave_Rectifier/Halfwave_Rectifier.cir
 
-* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Aug 19 15:22:23 2015
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 22:27:06 2016
 
 * To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
 * To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
@@ -9,5 +9,7 @@
 D1  IN OUT D		
 R1  OUT GND 1k		
 v1  IN GND sine		
+U2  IN plot_v1		
+U3  OUT plot_v1		
 
 .end

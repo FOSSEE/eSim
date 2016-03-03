@@ -5,6 +5,8 @@ LIBS:eSim_Devices
 LIBS:eSim_Digital
 LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
+LIBS:eSim_Plot
+LIBS:eSim_Power
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
@@ -106,17 +108,6 @@ F 1 "DC" H 7400 3550 60  0000 C CNN
 F 2 "R1" H 7300 3600 60  0000 C CNN
 F 3 "" H 7600 3600 60  0001 C CNN
 	1    7600 3600
-	1    0    0    -1  
-$EndComp
-$Comp
-L AC v2
-U 1 1 51A486A5
-P 3700 4050
-F 0 "v2" H 3500 4150 60  0000 C CNN
-F 1 "AC" H 3500 4000 60  0000 C CNN
-F 2 "R1" H 3400 4050 60  0000 C CNN
-F 3 "" H 3700 4050 60  0001 C CNN
-	1    3700 4050
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -268,6 +259,48 @@ out
 Wire Wire Line
 	7000 3250 6950 3250
 Wire Wire Line
-	6950 3250 6950 3300
+	6950 3200 6950 3300
 Connection ~ 6950 3300
+Text GLabel 3700 3450 0    60   Input ~ 0
+in
+Wire Wire Line
+	3700 3450 3800 3450
+Wire Wire Line
+	3800 3350 3800 3600
+Connection ~ 3800 3600
+$Comp
+L plot_v1 U1
+U 1 1 56D444F7
+P 3800 3550
+F 0 "U1" H 3800 4050 60  0000 C CNN
+F 1 "plot_v1" H 4000 3900 60  0000 C CNN
+F 2 "" H 3800 3550 60  0000 C CNN
+F 3 "" H 3800 3550 60  0000 C CNN
+	1    3800 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U2
+U 1 1 56D4460A
+P 6950 3400
+F 0 "U2" H 6950 3900 60  0000 C CNN
+F 1 "plot_v1" H 7150 3750 60  0000 C CNN
+F 2 "" H 6950 3400 60  0000 C CNN
+F 3 "" H 6950 3400 60  0000 C CNN
+	1    6950 3400
+	1    0    0    -1  
+$EndComp
+Connection ~ 6950 3250
+Connection ~ 3800 3450
+$Comp
+L sine v2
+U 1 1 56D44890
+P 3700 4050
+F 0 "v2" H 3500 4150 60  0000 C CNN
+F 1 "sine" H 3500 4000 60  0000 C CNN
+F 2 "R1" H 3400 4050 60  0000 C CNN
+F 3 "" H 3700 4050 60  0000 C CNN
+	1    3700 4050
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
