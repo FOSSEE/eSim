@@ -86,7 +86,7 @@ class Application(QtGui.QMainWindow):
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
         
-        self.closeproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Exit</b>',self)
+        self.closeproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Close Project</b>',self)
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
         
