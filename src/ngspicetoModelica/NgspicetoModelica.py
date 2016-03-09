@@ -40,9 +40,13 @@ class NgMoConverter:
                 if eachline[0]=='*':
                     continue
                 elif eachline[0]=='.':
-                    optionInfo.append(eachline.lower())
+                    optionInfo.append(eachline)
+                    ##No need of making it lower case as netlist is already converted to ngspice
+                    #optionInfo.append(eachline.lower())
                 else:
-                    schematicInfo.append(eachline.lower())
+                    schematicInfo.append(eachline)
+                    ##No need of making it lower case as netlist is already converted to ngspice
+                    #schematicInfo.append(eachline.lower())
         return optionInfo,schematicInfo
     
     def addModel(self,optionInfo):
@@ -104,7 +108,7 @@ class NgMoConverter:
                     for eachitem in info:
                         modelInfo[eachmodel][info[0]] = info[1] #dic within a dic
             #modelInfo[eachmodel] = modelInfo[eachmodel].split()    
-            # modelInfo[eachmodel] = modelInfo[eachmodel].lower()
+            #modelInfo[eachmodel] = modelInfo[eachmodel].lower()
             f.close()
                   
         
@@ -168,7 +172,6 @@ class NgMoConverter:
         """
         print "Val------------->",val   
         for i in range(0,len(val),1):
-            print "Val[i]----------------->",val[i]
             if val[i] in ['k','u','p','t','g','m','n','f']:
                 newval = val.split(val[i])
                 print "new Value------------>",newval
@@ -672,22 +675,22 @@ def main(args):
     #Getting all the require information
     lines = obj_NgMoConverter.readNetlist(filename)
     #print "Complete Lines of Ngspice netlist :lines ---------------->",lines
-    optionInfo, schematicInfo=obj_NgMoConverter.separateNetlistInfo(lines)
+    optionInfo, schematicInfo = obj_NgMoConverter.separateNetlistInfo(lines)
     #print "All option details like analysis,subckt,.ic,.model  : OptionInfo------------------->",optionInfo
     #print "Schematic connection info :schematicInfo",schematicInfo
     modelName, modelInfo, subcktName, paramInfo, inbuiltmodelName, inbuiltmodelInfo = obj_NgMoConverter.addModel(optionInfo)
     print "Name of Model : modelName-------------------->",modelName
     print "Model Information :modelInfo--------------------->",modelInfo
-    print "Subcircuit Name :subcktName------------------------>",subcktName
-    print "Parameter Information :paramInfo---------------------->",paramInfo
-    print "Ngspice inbuiltmodelName :inbuiltmodelName---------------------->",inbuiltmodelName
-    print "Ngspice inbuiltmodelInfo :inbuiltmodelInfo----------------------->",inbuiltmodelInfo
+    #print "Subcircuit Name :subcktName------------------------>",subcktName
+    #print "Parameter Information :paramInfo---------------------->",paramInfo
+    #print "Ngspice inbuiltmodelName :inbuiltmodelName---------------------->",inbuiltmodelName
+    #print "Ngspice inbuiltmodelInfo :inbuiltmodelInfo----------------------->",inbuiltmodelInfo
     
     
     modelicaParamInit = obj_NgMoConverter.processParam(paramInfo)
     #print "Make modelicaParamInit from paramInfo  :processParamInit------------->",modelicaParamInit 
     compInfo, plotInfo = obj_NgMoConverter.separatePlot(schematicInfo)
-    #print "Info like run etc  : CompInfo----------------->",compInfo
+    print "Info like run etc  : CompInfo----------------->",compInfo
     #print "Plot info like plot,print etc :plotInfo",plotInfo
     IfMOS = '0'
     
