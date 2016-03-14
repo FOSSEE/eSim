@@ -84,6 +84,7 @@ class NgMoConverter:
                  
         
         #Adding details of model(external) and subckt into modelInfo and subcktInfo
+        print "Model Name ------------ >",modelName
         for eachmodel in modelName:
             filename = eachmodel + '.lib'
             if os.path.exists(filename):
@@ -96,19 +97,19 @@ class NgMoConverter:
                 print filename + " does not exist"
                 sys.exit()
             data = f.read()
-            data = data.lower()
+            #data = data.lower() #No need to make it lower case    
             newdata = data.split('(')
-            newdata = newdata[1].split()
-            modelInfo[eachmodel] = {}
+            refModelName = newdata[0].split()[1]
+            modelParameter = newdata[1].split()
+             
+            modelInfo[refModelName] = {}
             
-            for eachline in newdata:
+            for eachline in modelParameter:
                 if len(eachline) > 1:
                     info = eachline.split('=')
                     # modelInfo[eachmodel][info[0]] = {}
                     for eachitem in info:
-                        modelInfo[eachmodel][info[0]] = info[1] #dic within a dic
-            #modelInfo[eachmodel] = modelInfo[eachmodel].split()    
-            #modelInfo[eachmodel] = modelInfo[eachmodel].lower()
+                        modelInfo[refModelName][info[0]] = info[1] #dic within a dic
             f.close()
                   
         
@@ -202,7 +203,7 @@ class NgMoConverter:
     
     def compInit(self,compInfo, node, modelInfo, subcktName):
         """
-        For each component in the netlist initialise it acc to Modelica format
+        For each component in the netlist initialize it according to Modelica format
         """
         print "CompInfo inside compInit function : compInit",compInfo
         #### initial processing to check if MOs is present. If so, library to be used is BondLib
@@ -253,6 +254,8 @@ class NgMoConverter:
                 modelicaCompInit.append(stat)
             elif eachline[0] == 'd':
                 if len(words) > 3:
+                    print words[3]
+                    print "ModelInfo",modelInfo
                     n = float(modelInfo[words[3]]['n'])
                     vt_temp = 0.025*n
                     vt = str(vt_temp)
@@ -413,8 +416,7 @@ class NgMoConverter:
         for i in range(0,len(compInfo),1):
             compInfo[i] = compInfo[i].replace("[","").replace("]","")
         
-        
-        
+                
         for eachline in compInfo:
             words = eachline.split()
             if eachline[0] in ['m', 'e', 'g', 't']:
@@ -719,8 +721,8 @@ def main(args):
     node, nodeDic, pinInit, pinProtectedInit = obj_NgMoConverter.nodeSeparate(compInfo, '0', [], subcktName,[])
     print "All nodes in the netlist :node---------------->",node
     print "NodeDic which will be used for modelica : nodeDic------------->",nodeDic
-    print "PinInit-------------->",pinInit
-    print "pinProtectedInit----------->",pinProtectedInit
+    #print "PinInit-------------->",pinInit
+    #print "pinProtectedInit----------->",pinProtectedInit
     
     modelicaCompInit, numNodesSub  = obj_NgMoConverter.compInit(compInfo,node, modelInfo, subcktName)
     print "ModelicaComponents : modelicaCompInit----------->",modelicaCompInit
@@ -728,7 +730,7 @@ def main(args):
     
     connInfo = obj_NgMoConverter.connectInfo(compInfo, node, nodeDic, numNodesSub,subcktName)
     
-    print "ConnInfo------------------>",connInfo
+    #print "ConnInfo------------------>",connInfo
     
     
     ###After Sub Ckt Func
