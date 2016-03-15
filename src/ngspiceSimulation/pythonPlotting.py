@@ -110,7 +110,7 @@ class plotWindow(QtGui.QMainWindow):
         self.plotbtn = QtGui.QPushButton("Plot")
         self.plotbtn.setToolTip('<b>Press</b> to Plot' )
         self.multimeterbtn = QtGui.QPushButton("Multimeter")
-        self.multimeterbtn.setToolTip('<b>Press</b> to get Multimeter' )
+        self.multimeterbtn.setToolTip('<b>Press</b> to get multimeter' )
         self.text = QtGui.QLineEdit()
         self.funcLabel = QtGui.QLabel()
         self.palette1 = QtGui.QPalette()
@@ -424,7 +424,7 @@ class MultimeterWidgetClass(QtGui.QWidget):
         
         self.multimeter = QtGui.QWidget(self)
         self.node_branchLabel = QtGui.QLabel("Node/Branch")
-        self.rmsLabel = QtGui.QLabel("RMS Value")
+        self.rmsLabel = QtGui.QLabel("RMS Value (Volts/Amperes)")
         
         self.nodeBranchValue = QtGui.QLabel(str(node_branch))
         self.rmsValue = QtGui.QLabel(str(rmsValue))
@@ -436,7 +436,7 @@ class MultimeterWidgetClass(QtGui.QWidget):
         self.layout.addWidget(self.rmsValue,1,1)
         
         self.multimeter.setLayout(self.layout)
-        self.setGeometry(loc_x,loc_y,180,100)
+        self.setGeometry(loc_x,loc_y,300,100)
         self.setWindowTitle("MultiMeter")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.show()

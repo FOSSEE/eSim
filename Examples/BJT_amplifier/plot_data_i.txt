@@ -1,5 +1,5 @@
          * /home/fossee/esim-workspace/bjt_amplifier/bjt_amplifier.cir
-         Transient Analysis  Thu Mar  3 18:28:39  2016
+         Transient Analysis  Tue Mar 15 15:18:49  2016
 --------------------------------------------------------------------------------
 Index   time            v1#branch       v2#branch       
 --------------------------------------------------------------------------------
