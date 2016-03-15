@@ -110,7 +110,7 @@ class plotWindow(QtGui.QMainWindow):
         self.plotbtn = QtGui.QPushButton("Plot")
         self.plotbtn.setToolTip('<b>Press</b> to Plot' )
         self.multimeterbtn = QtGui.QPushButton("Multimeter")
-        self.multimeterbtn.setToolTip('<b>Press</b> to get multimeter' )
+        self.multimeterbtn.setToolTip('<b>RMS</b> value of the current and voltage is displayed' )
         self.text = QtGui.QLineEdit()
         self.funcLabel = QtGui.QLabel()
         self.palette1 = QtGui.QPalette()
