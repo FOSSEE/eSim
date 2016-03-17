@@ -155,9 +155,9 @@ class plotWindow(QtGui.QMainWindow):
         self.listNode.setText("<font color='indigo'>List of Nodes:</font>")
         self.listBranch.setText("<font color='indigo'>List of Branches:</font>")    
         self.funcLabel.setText("<font color='indigo'>Function:</font>")
-        self.funcName.setText("<font color='indigo'>Examples:</font>\
+        self.funcName.setText("<font color='indigo'>Standard functions</font>\
                 <br><br>Addition:<br>Subtraction:<br>Multiplication:<br>Division:<br>Comparison:")
-        self.funcExample.setText("\n\nV(1) + V(2)\nV(1) - V(2)\nV(1) * V(2)\nV(1) / V(2)\nV(1) vs V(2)")
+        self.funcExample.setText("\n\nNode1 + Node2\nNode1 - Node2\nNode1 * Node2\nNode1 / Node2\nNode1 vs Node2")
 
         #Connecting to plot and clear function
         self.connect(self.clear,QtCore.SIGNAL('clicked()'),self.pushedClear)
