@@ -47,6 +47,7 @@ class ProjectExplorer(QtGui.QWidget):
         parentnode = QtGui.QTreeWidgetItem(self.treewidget, [pathlist[-1], parents])
         for files in children:
             childnode = QtGui.QTreeWidgetItem(parentnode, [files, os.path.join(parents,files)])
+	self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']] = []
             
     def openMenu(self, position):
     
@@ -102,6 +103,7 @@ class ProjectExplorer(QtGui.QWidget):
             self.textwindow.show()
         else:
             self.obj_appconfig.current_project["ProjectName"]= str(self.filePath)
+	    self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']] = []
         
     def enable_save(self):
         self.save.setEnabled(True)
