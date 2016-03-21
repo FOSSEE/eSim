@@ -97,9 +97,11 @@ class NgMoConverter:
                 print filename + " does not exist"
                 sys.exit()
             data = f.read()
-            #data = data.lower() #No need to make it lower case    
-            newdata = data.split('(')
+            #data = data.lower() #Won't work if Reference model name is Upper Case     
+            newdata = data.split('(') 
+            #First fetch the refModelName and then lower case its parameter
             refModelName = newdata[0].split()[1]
+            newdata[1] = newdata[1].lower()
             modelParameter = newdata[1].split()
              
             modelInfo[refModelName] = {}
@@ -255,7 +257,7 @@ class NgMoConverter:
             elif eachline[0] == 'd':
                 if len(words) > 3:
                     print words[3]
-                    print "ModelInfo",modelInfo
+                    print "ModelInfo----------->",modelInfo
                     n = float(modelInfo[words[3]]['n'])
                     vt_temp = 0.025*n
                     vt = str(vt_temp)
