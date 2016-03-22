@@ -90,7 +90,8 @@ class DockArea(QtGui.QMainWindow):
         ")
         """
         dock['Tips-'+str(count)].raise_()
-        
+
+        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(dock['Tips-'+str(count)])
         count = count + 1
         
     def plottingEditor(self):
@@ -124,7 +125,8 @@ class DockArea(QtGui.QMainWindow):
         dock['Plotting-'+str(count)].setVisible(True)
         dock['Plotting-'+str(count)].setFocus()
         dock['Plotting-'+str(count)].raise_()
-        
+
+        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(dock['Plotting-'+str(count)])
         count = count + 1
         
     def ngspiceEditor(self,projDir):
@@ -160,7 +162,7 @@ class DockArea(QtGui.QMainWindow):
         dock['NgSpice-'+str(count)].setVisible(True)
         dock['NgSpice-'+str(count)].setFocus()
         dock['NgSpice-'+str(count)].raise_()
-        
+        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(dock['NgSpice-'+str(count)])
         count = count + 1
 
     def modelEditor(self):    
@@ -187,7 +189,8 @@ class DockArea(QtGui.QMainWindow):
             dock['Model Editor-'+str(count)].setVisible(True)
             dock['Model Editor-'+str(count)].setFocus()
             dock['Model Editor-'+str(count)].raise_()
-        
+
+            self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(dock['Model Editor-'+str(count)])
             count = count + 1
     
     def kicadToNgspiceEditor(self,clarg1,clarg2=None):
@@ -210,7 +213,8 @@ class DockArea(QtGui.QMainWindow):
         dock['kicadToNgspice-'+str(count)].setVisible(True)
         dock['kicadToNgspice-'+str(count)].setFocus()
         dock['kicadToNgspice-'+str(count)].raise_()
-        
+
+        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(dock['kicadToNgspice-'+str(count)])
         count = count + 1
         
         
@@ -238,7 +242,8 @@ class DockArea(QtGui.QMainWindow):
         dock['Subcircuit-'+str(count)].setVisible(True)
         dock['Subcircuit-'+str(count)].setFocus()
         dock['Subcircuit-'+str(count)].raise_()
-        
+
+        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(dock['Subcircuit-'+str(count)])
         count = count + 1
     
     def usermanual(self):
@@ -267,3 +272,7 @@ class DockArea(QtGui.QMainWindow):
         dock['User Manual-'+str(count)].raise_()
         
         count = count + 1
+
+    def closeDock   (self):
+        for dockwidget in self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']]:
+            dockwidget.close()

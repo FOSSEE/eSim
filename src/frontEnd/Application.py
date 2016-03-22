@@ -187,10 +187,9 @@ class Application(QtGui.QMainWindow):
         if current_project==None:
             pass
         else:
-	    for pid in self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']]:
-		print pid
-	    for pid in self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']]:
-		os.kill(pid, 9)
+            for pid in self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']]:
+                os.kill(pid, 9)
+            self.obj_Mainview.obj_dockarea.closeDock()
             self.obj_appconfig.current_project['ProjectName'] = None
             self.systemTrayIcon.showMessage('Close', 'Current project '+os.path.basename(current_project)+' is Closed.')
     

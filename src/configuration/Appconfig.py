@@ -38,7 +38,8 @@ class Appconfig(QtGui.QWidget):
         #Workspace detail
         workspace_text = '''eSim stores your project in a folder called a eSim-Workspace. You can choose a different workspace folder to use for this session.'''
         procThread_list = []
-	proc_dict={}
+        proc_dict={}	#holds the pids of all external windows corresponds to the current project
+        dock_dict={}	#holds all dockwidgets
         dictPath = os.path.join(os.path.expanduser("~"), ".projectExplorer.txt")
         noteArea = {}
         try:
