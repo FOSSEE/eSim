@@ -1,11 +1,17 @@
 import sys
 import os
 import re 
+import json
 from string import maketrans
 
 class NgMoConverter:
+    ifMOS = False
+    
     def __init__(self):
-        pass
+        #Loading JSON file which hold the mapping information between ngspice and Modelica.
+        with open('Mapping.json') as mappingFile:
+            self.mappingData = json.load(mappingFile)
+            
 
     def readNetlist(self,filename):
         """
@@ -43,6 +49,10 @@ class NgMoConverter:
                     optionInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
                     #optionInfo.append(eachline.lower())
+                elif eachline[0]=='m':
+                    ifMOS = True
+                    print "Mos is present ",ifMOS
+                    schematicInfo.append(eachline) 
                 else:
                     schematicInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
@@ -203,6 +213,24 @@ class NgMoConverter:
                 value = val
         return value
     
+    def getUnitVal(self,compValue):
+        print "Received compValue--------> ",compValue
+        regExp = re.compile("([0-9]+)([a-zA-Z]+)")
+        matchString = regExp.match(str(compValue))  #separating number and string
+        try:
+            numValue = matchString.group(1)
+            unitValue = matchString.group(2)
+            #print "Num Value---------->",numValue
+            #print "Unit Value------->",unitValue
+            #print "Converted Unit ------->",self.mappingData["Units"][unitValue]
+            modifiedcompValue = numValue+self.mappingData["Units"][unitValue]
+            return modifiedcompValue
+        except:
+            return compValue
+            
+    def getModelicaComponent(self):
+        print "Get Modelica Component"
+    
     def compInit(self,compInfo, node, modelInfo, subcktName):
         """
         For each component in the netlist initialize it according to Modelica format
@@ -233,6 +261,7 @@ class NgMoConverter:
             words = eachline.split()
             val = words[3]
             value = self.splitIntoVal(val)
+            _value = self.getUnitVal(words[-1])
             if eachline[0] == 'r':
                 stat = 'Analog.Basic.Resistor ' + words[0] + '(R = ' + value + ');'
                 modelicaCompInit.append(stat)
