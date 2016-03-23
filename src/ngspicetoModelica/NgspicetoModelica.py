@@ -259,9 +259,9 @@ class NgMoConverter:
                         break
         for eachline in compInfo:
             words = eachline.split()
-            val = words[3]
-            value = self.splitIntoVal(val)
-            _value = self.getUnitVal(words[-1])
+            #val = words[3]
+            #value = self.splitIntoVal(val)
+            value = self.getUnitVal(words[-1])
             if eachline[0] == 'r':
                 stat = 'Analog.Basic.Resistor ' + words[0] + '(R = ' + value + ');'
                 modelicaCompInit.append(stat)
@@ -384,7 +384,7 @@ class NgMoConverter:
             else:
                 continue
             
-        if '0' in node:
+        if '0' or 'gnd' in node:
             modelicaCompInit.append('Analog.Basic.Ground g;')
         return modelicaCompInit, numNodesSub
     
