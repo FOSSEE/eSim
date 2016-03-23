@@ -5,12 +5,17 @@ import json
 from string import maketrans
 
 class NgMoConverter:
-    ifMOS = False
     
+        
     def __init__(self):
         #Loading JSON file which hold the mapping information between ngspice and Modelica.
         with open('Mapping.json') as mappingFile:
             self.mappingData = json.load(mappingFile)
+            
+        self.ifMOS = False
+        self.sourceDetail = []
+        self.deviceDetail = []
+        self.deviceList = ['d','D','j','J','q','Q'] #MOSFET is excluded as it has special case
             
 
     def readNetlist(self,filename):
@@ -39,6 +44,7 @@ class NgMoConverter:
         """
         optionInfo = []
         schematicInfo = []
+        
         for eachline in data:
             if len(eachline) > 1:
                 #if eachline[0] == '+':
@@ -49,10 +55,14 @@ class NgMoConverter:
                     optionInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
                     #optionInfo.append(eachline.lower())
-                elif eachline[0]=='m':
-                    ifMOS = True
-                    print "Mos is present ",ifMOS
-                    schematicInfo.append(eachline) 
+                elif eachline[0] in self.deviceList:
+                    if eachline[0]=='m' or eachline[0]=='M':
+                        self.ifMOS = True
+                    schematicInfo.append(eachline)
+                    self.deviceDetail.append(eachline)
+                elif eachline[0]=='v' or eachline[0]=='V':
+                    #schematicInfo.append(eachline)
+                    self.sourceDetail.append(eachline)    
                 else:
                     schematicInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
@@ -220,22 +230,17 @@ class NgMoConverter:
         try:
             numValue = matchString.group(1)
             unitValue = matchString.group(2)
-            #print "Num Value---------->",numValue
-            #print "Unit Value------->",unitValue
-            #print "Converted Unit ------->",self.mappingData["Units"][unitValue]
             modifiedcompValue = numValue+self.mappingData["Units"][unitValue]
             return modifiedcompValue
         except:
             return compValue
             
-    def getModelicaComponent(self):
-        print "Get Modelica Component"
-    
+        
     def compInit(self,compInfo, node, modelInfo, subcktName):
         """
         For each component in the netlist initialize it according to Modelica format
         """
-        print "CompInfo inside compInit function : compInit",compInfo
+        print "CompInfo inside compInit function : compInit------->",compInfo
         #### initial processing to check if MOs is present. If so, library to be used is BondLib
         modelicaCompInit = []
         numNodesSub = {} 
@@ -257,6 +262,57 @@ class NgMoConverter:
                     if eachline[0] == 'm':
                         IfMOS = '1'
                         break
+        
+        #Lets Start with Source details
+        for eachline in self.sourceDetail:
+            eachline = eachline.lower()
+            words = eachline.split()
+            typ = words[3].split('(')
+            if typ[0] == "pulse":
+                per = words[9].split(')')
+                stat = self.mappingData["Sources"][typ[0]]+' '+words[0]+'(rising = '+words[6]+', V = '+words[4]\
+                +', width = '+words[8]+', period = '+per[0]+', offset = '+typ[1]+', startTime = '+words[5]+', falling = '+words[7]+');'                                                                                                                                                                             
+                modelicaCompInit.append(stat)
+            if typ[0] == "sine":
+                theta = words[7].split(')')
+                stat = self.mappingData["Sources"][typ[0]]+' '+words[0]+'(offset = '+typ[1]+', V = '+words[4]+', freqHz = '+words[5]+', startTime = '+words[6]+', phase = '+theta[0]+');'
+                modelicaCompInit.append(stat)
+            if typ[0] == "pwl":
+                keyw = self.mappingData["Sources"][typ[0]]+' '
+                stat = keyw + words[0] + '(table = [' + typ[1] + ',' + words[4] + ';'
+                length = len(words);
+                for i in range(6,length,2):
+                    if i == length-2:
+                        w = words[i].split(')')
+                        stat = stat + words[i-1] + ',' + w[0] 
+                    else:
+                        stat = stat + words[i-1] + ',' + words[i] + ';'
+                stat = stat + ']);'
+                modelicaCompInit.append(stat) 
+            if typ[0] == words[3] and typ[0] != "dc":
+                #It is DC constant but no dc keyword
+                val_temp = typ[0].split('v')
+                stat = self.mappingData["Sources"]["dc"]+' ' + words[0] + '(V = ' + val_temp[0] + ');' 
+                modelicaCompInit.append(stat)
+            elif typ[0] == words[3] and typ[0] == "dc":
+                stat = self.mappingData["Sources"][typ[0]]+' ' + words[0] + '(V = ' + words[4] + ');'    ### check this
+                modelicaCompInit.append(stat)
+                
+        #Lets start for device
+        for eachline in self.deviceDetail:
+            words=eachline.split()
+            if eachline[0]=='d' or eachline[0]=='D':
+                if len(words)>3:
+                    if modelInfo[words[3]].has_key('n'):
+                        n = float(modelInfo[words[3]]['n'])
+                    else:
+                        n = 1.0
+                    vt = str(float(0.025*n))
+                    stat = self.mappingData["Devices"][eachline[0]]+' '+ words[0] + '(Ids = ' + modelInfo[words[3]]['is'] + ', Vt = ' + vt + ', R = 1e12' +');'
+                else:
+                    stat = self.mappingData["Devices"][eachline[0]]+' '+ words[0] +';'
+                modelicaCompInit.append(stat)
+        
         for eachline in compInfo:
             words = eachline.split()
             #val = words[3]
@@ -283,17 +339,7 @@ class NgMoConverter:
             elif eachline[0] == 'h':
                 stat = 'Analog.Basic.CCV ' + words[0] + '(transResistance = ' + self.splitIntoVal(words[4]) + ');'
                 modelicaCompInit.append(stat)
-            elif eachline[0] == 'd':
-                if len(words) > 3:
-                    print words[3]
-                    print "ModelInfo----------->",modelInfo
-                    n = float(modelInfo[words[3]]['n'])
-                    vt_temp = 0.025*n
-                    vt = str(vt_temp)
-                    stat = 'Analog.Semiconductors.Diode ' + words[0] + '(Ids = ' + modelInfo[words[3]]['is'] + ', Vt = ' + vt + ', R = 1e12' +');'
-                else:
-                    stat = 'Analog.Semiconductors.Diode ' + words[0] +';'
-                modelicaCompInit.append(stat)
+                    
             elif eachline[0] == 'm':
                 line_l = words[7].split('=')
                 line_w = words[8].split('=')
@@ -319,52 +365,7 @@ class NgMoConverter:
                         + line_pd[1] + ', PS = ' + line_pd[1] + ');'
                 stat = stat.translate(maketrans('{}', '  '))
                 modelicaCompInit.append(stat)
-            elif eachline[0] == 'v':
-                typ = words[3].split('(')
-                if typ[0] == "pulse":
-                    per = words[9].split(')')
-                    #if IfMOS == '0':
-                        #stat = 'Spice3.Sources.V_pulse '+words[0]+'(TR = '+words[6]+', V2 = '+words[4]+', PW = '+words[8]+', PER = '+per[0]+', V1 = '+typ[1]+', TD = '+words[5]+', TF = '+words[7]+');'
-                    #elif IfMOS == '1':
-                    stat = 'Analog.Sources.TrapezoidVoltage '+words[0]+'(rising = '+words[6]+', V = '+words[4]\
-                    +', width = '+words[8]+', period = '+per[0]+', offset = '+typ[1]+', startTime = '+words[5]+', falling = '+words[7]+');'                                                                                                                                                                             
-                    modelicaCompInit.append(stat)
-                if typ[0] == "sine":
-                    theta = words[7].split(')')
-                    #if IfMOS == '0':
-                    #stat = 'Spice3.Sources.V_sin '+words[0]+'(VO = '+typ[1]+', VA = '+words[4]+', FREQ = '+words[5]+', TD = '+words[6]+', THETA = '+theta[0]+');'
-                    #elif IfMOS == '1':
-                    stat = 'Analog.Sources.SineVoltage '+words[0]+'(offset = '+typ[1]+', V = '+words[4]+', freqHz = '+words[5]+', startTime = '+words[6]+', phase = '+theta[0]+');'
-                    modelicaCompInit.append(stat)
-                if typ[0] == "pwl":
-                    #if IfMOS == '0':
-                    #keyw = 'Spice3.Sources.V_pwl '
-                    #elif IfMOS == '1':
-                    keyw = 'Analog.Sources.TableVoltage '
-                    stat = keyw + words[0] + '(table = [' + typ[1] + ',' + words[4] + ';'
-                    length = len(words);
-                    for i in range(6,length,2):
-                        if i == length-2:
-                            w = words[i].split(')')
-                            stat = stat + words[i-1] + ',' + w[0] 
-                        else:
-                            stat = stat + words[i-1] + ',' + words[i] + ';'
-                    stat = stat + ']);'
-                    modelicaCompInit.append(stat) 
-                if typ[0] == words[3] and typ[0] != "dc":
-                    val_temp = typ[0].split('v')
-                    #if IfMOS  == '0':
-                    stat = 'Analog.Sources.ConstantVoltage ' + words[0] + '(V = ' + val_temp[0] + ');'
-                    #elif IfMOS == '1':
-                    #stat = 'Analog.Sources.ConstantVoltage ' + words[0] + '(V = ' + val_temp[0] + ');'
-                    modelicaCompInit.append(stat)
-                elif typ[0] == words[3] and typ[0] == "dc":
-                    #if IfMOS  == '0':
-                        #stat = 'Spice3.Sources.V_constant ' + words[0] + '(V = ' + words[4] + ');'    ### check this
-                    #elif IfMOS == '1':
-                    stat = 'Analog.Sources.ConstantVoltage ' + words[0] + '(V = ' + words[4] + ');'    ### check this
-                    modelicaCompInit.append(stat)
-            
+                                   
             elif eachline[0] == 'x':
                 temp_line = eachline.split()
                 temp = temp_line[0].split('x')
