@@ -19,7 +19,15 @@
 		},
 	"Devices":{
 		"d" : "Analog.Semiconductors.Diode",
-		"D" : "Analog.Semiconductors.Diode"
+		"D" : "Analog.Semiconductors.Diode",
+		"M" :"BondLib.Electrical.Analog.Spice",
+		"m" : "BondLib.Electrical.Analog.Spice",
+		"Q": "Analog.Semiconductors",
+		"q": "Analog.Semiconductors"
+		},
+	"Parameters":{
+		"Diode":"List Of Diode Param",
+		"Mosfet":"List of Mosfet Param"
 		},
 
 	"Units":{
