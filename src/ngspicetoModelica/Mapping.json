@@ -1,0 +1,38 @@
+{
+	"Components":{
+				"R" : "Analog.Basic.Resistor",
+				"C" : "Analog.Basic.Capacitor",
+				"L" : "Analog.Basic.Inductor",
+				"e" : "Analog.Basic.VCV",
+				"g" : "Analog.Basic.VCC",
+				"f" : "Analog.Basic.CCC",
+				"h" : "Analog.Basic.CCV",
+				"0" : "Analog.Basic.Ground",
+				"gnd" : "Analog.Basic.Ground"
+
+		},
+	"Sources":{
+		"pulse":"Analog.Sources.TrapezoidVoltage",
+		"sine":"Analog.Sources.SineVoltage",
+		"pwl" : "Analog.Sources.TableVoltage",
+		"dc" : "Analog.Sources.ConstantVoltage"
+		},
+	"Devices":{
+		"d" : "Analog.Semiconductors.Diode",
+		"D" : "Analog.Semiconductors.Diode"
+		},
+
+	"Units":{
+		"k":"e3",
+		"u":"e-6",
+		"p":"e-12",
+		"t":"e12",
+		"g":"e9",
+		"m":"e-3",
+		"me":"e6",
+		"n":"e-9",
+		"f":"e-15"
+
+	}
+	
+}
