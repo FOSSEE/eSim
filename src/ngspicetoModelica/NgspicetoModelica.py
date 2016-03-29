@@ -71,7 +71,11 @@ class NgMoConverter:
                     self.subCktDetail.append(eachline)
                 elif eachline[0]=='v' or eachline[0]=='V':
                     #schematicInfo.append(eachline)
-                    self.sourceDetail.append(eachline)    
+                    #Removing zero voltage source as it is not require in Modelica
+                    if eachline.split()[-1]=='0':
+                        continue
+                    else:
+                        self.sourceDetail.append(eachline)    
                 else:
                     schematicInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
@@ -526,7 +530,7 @@ class NgMoConverter:
             nodesInfoLine = intLine[0:newindex]
         return nodesInfoLine
     
-    def getSubParamLine(self,subname, numNodesSub, subParamInfo):
+    def getSubParamLine(self,subname, numNodesSub, subParamInfo,dir_name):
         """
         Take subcircuit name and give the info related to parameters in the first line and initislise it in
         """
@@ -534,10 +538,10 @@ class NgMoConverter:
         subOptionInfo_p = []
         subSchemInfo_p = []
         filename_t = subname + '.sub'
+        filename_t = os.path.join(dir_name, filename_t)
         data_p = self.readNetlist(filename_t)
         subOptionInfo_p, subSchemInfo_p = self.separateNetlistInfo(data_p)
-        print "subOptionInfo_p------------------------->",subOptionInfo_p
-        print "subSchemInfo_p----------------------------->",subSchemInfo_p
+        
         if len(subOptionInfo_p) > 0:
             newline = subOptionInfo_p[0]
             newline = newline.split('.subckt '+ subname)       
@@ -571,16 +575,16 @@ class NgMoConverter:
                 
         for eachline in compInfo:
             words = eachline.split()
-            if eachline[0] in ['m', 'e', 'g', 't']:
+            if eachline[0] in ['m', 'e', 'g', 't','M','E','G','T']:
                 nodeTemp.append(words[1])
                 nodeTemp.append(words[2])
                 nodeTemp.append(words[3])
                 nodeTemp.append(words[4])
-            elif eachline[0] in ['q', 'j']:
+            elif eachline[0] in ['q', 'j','J','Q']:
                 nodeTemp.append(words[1])
                 nodeTemp.append(words[2])
                 nodeTemp.append(words[3])
-            elif eachline[0] == 'x':
+            elif eachline[0]=='x' or eachline[0]=='X':
                 templine = eachline.split()
                 for i in range(0,len(templine),1):
                     if templine[i] in subcktName:
@@ -632,12 +636,13 @@ class NgMoConverter:
         sourcesInfo = self.separateSource(compInfo)
         for eachline in compInfo:
             words = eachline.split()
-            if eachline[0] == 'r' or eachline[0] == 'c' or eachline[0] == 'd' or eachline[0] == 'l' or eachline[0] == 'v':
+            if eachline[0]=='r' or eachline[0]=='R' or eachline[0]=='c' or eachline[0]=='C' or eachline[0]=='d' or eachline[0]=='D' \
+            or eachline[0]=='l' or eachline[0]=='L' or eachline[0]=='v' or eachline[0]=='V':
                 conn = 'connect(' + words[0] + '.p,' + nodeDic[words[1]] + ');'
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.n,' + nodeDic[words[2]] + ');'
                 connInfo.append(conn)
-            elif eachline[0] == 'm':
+            elif eachline[0]=='m' or eachline[0]=='M':
                 conn = 'connect(' + words[0] + '.D,' + nodeDic[words[1]] + ');'
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.G,' + nodeDic[words[2]] + ');'
@@ -646,7 +651,7 @@ class NgMoConverter:
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.B,' + nodeDic[words[4]] + ');'
                 connInfo.append(conn)
-            elif eachline[0] in ['f','h']:
+            elif eachline[0] in ['f','h','F','H']:
                 vsource = words[3]
                 sourceNodes = sourcesInfo[vsource]
                 sourceNodes = sourceNodes.split()
@@ -658,7 +663,7 @@ class NgMoConverter:
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.n2,'+ nodeDic[words[2]] + ');'
                 connInfo.append(conn)
-            elif eachline[0] in ['g','e']:
+            elif eachline[0] in ['g','e','G','E']:
                 conn = 'connect(' + words[0] + '.p1,'+ nodeDic[words[3]] + ');'
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.n1,'+ nodeDic[words[4]] + ');'
@@ -667,7 +672,16 @@ class NgMoConverter:
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.n2,'+ nodeDic[words[2]] + ');'
                 connInfo.append(conn)
-            elif eachline[0] == 'x':
+            elif eachline[0] in ['g','e','G','E']:
+                conn = 'connect(' + words[0] + '.p1,'+ nodeDic[words[3]] + ');'
+                connInfo.append(conn)
+                conn = 'connect(' + words[0] + '.n1,'+ nodeDic[words[4]] + ');'
+                connInfo.append(conn)
+                conn = 'connect(' + words[0] + '.p2,'+ nodeDic[words[1]] + ');'
+                connInfo.append(conn)
+                conn = 'connect(' + words[0] + '.n2,'+ nodeDic[words[2]] + ');'
+                connInfo.append(conn)
+            elif eachline[0]=='x' or eachline[0]=='X':
                 templine = eachline.split()
                 temp = templine[0].split('x')
                 index = temp[1]
@@ -681,14 +695,14 @@ class NgMoConverter:
                     connInfo.append(conn)
             else:
                 continue
-        if '0' in node:
+        if '0' or 'gnd' in node:
             conn = 'connect(g.p,n0);'
             connInfo.append(conn)
          
         return connInfo
     
     
-    def procesSubckt(self,subcktName,numNodesSub):
+    def procesSubckt(self,subcktName,numNodesSub,dir_name):
         
         #Process the subcircuit file .sub in the project folder
         
@@ -699,8 +713,8 @@ class NgMoConverter:
         subModelInfo = {}
         subsubName = [] 
         subParamInfo = []
-        subinbuiltmodelName = []
-        subinbuiltmodelInfo = {}
+        #subinbuiltmodelName = []
+        #subinbuiltmodelInfo = {}
         nodeSubInterface = []
         nodeSub = []
         nodeDicSub = {}
@@ -762,7 +776,7 @@ class NgMoConverter:
                 modelicaSubCompInit, numNodesSubsub = self.compInit(subSchemInfo, nodeSub, subModelInfo, subsubName)
                 print "modelicaSubCompInit--------------------->",modelicaSubCompInit
                 print "numNodesSubsub-------------------------->",numNodesSubsub
-                modelicaSubParamNew = self.getSubParamLine(eachsub, numNodesSub, modelicaSubParam)     ###Ask Manas
+                modelicaSubParamNew = self.getSubParamLine(eachsub, numNodesSub, modelicaSubParam,dir_name)     ###Ask Manas
                 print "modelicaSubParamNew----------------->",modelicaSubParamNew
                 connSubInfo = self.connectInfo(subSchemInfo, nodeSub, nodeDicSub, numNodesSubsub,subcktName)
                 newname = filename.split('.')
@@ -889,7 +903,7 @@ def main(args):
     ###After Sub Ckt Func
     if len(subcktName) > 0:
         data, subOptionInfo, subSchemInfo, subModel, subModelInfo, subsubName,subParamInfo, modelicaSubCompInit, modelicaSubParam,\
-        nodeSubInterface,nodeSub, nodeDicSub, pinInitSub, connSubInfo = obj_NgMoConverter.procesSubckt(subcktName,numNodesSub) #Adding 'numNodesSub' by Fahim
+        nodeSubInterface,nodeSub, nodeDicSub, pinInitSub, connSubInfo = obj_NgMoConverter.procesSubckt(subcktName,numNodesSub,dir_name) #Adding 'numNodesSub' by Fahim
     
     #Creating Final Output file
     newfile = filename.split('.')
