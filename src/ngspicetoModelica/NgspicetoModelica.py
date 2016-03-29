@@ -3,7 +3,6 @@ import os
 import re 
 import json
 from string import maketrans
-from lepl.matchers.derived import Star
 
 class NgMoConverter:
     
