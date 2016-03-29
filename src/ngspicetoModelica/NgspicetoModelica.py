@@ -16,6 +16,7 @@ class NgMoConverter:
         self.ifMOS = False
         self.sourceDetail = []
         self.deviceDetail = []
+        self.subCktDetail = []
         self.deviceList = ['d','D','j','J','q','Q'] #MOSFET is excluded as it has special case
             
 
@@ -66,6 +67,8 @@ class NgMoConverter:
                         self.ifMOS = True
                     #schematicInfo.append(eachline)
                     self.deviceDetail.append(eachline)
+                elif eachline[0]=='x' or eachline[0]=='X':
+                    self.subCktDetail.append(eachline)
                 elif eachline[0]=='v' or eachline[0]=='V':
                     #schematicInfo.append(eachline)
                     self.sourceDetail.append(eachline)    
@@ -451,6 +454,25 @@ class NgMoConverter:
                 stat = start + words[0] + '(Tnom = 300, VT0 = ' + vto + ', GAMMA = ' + gam + ', PHI = ' + phi + ', LD = ' +ld+ ', U0 = ' + str(float(uo)*0.0001) + ', LAMBDA = ' + lam + ', TOX = ' +tox+ ', PB = ' + pb + ', CJ = ' +cj+ ', CJSW = ' +cjsw+ ', MJ = ' + mj + ', MJSW = ' + mjsw + ', CGD0 = ' +cgdo+ ', JS = ' +js+ ', CGB0 = ' +cgbo+ ', CGS0 = ' +cgso+ ', L = ' +l+ ', W = ' + w + ', Level = 1' + ', AD = ' + ad + ', AS = ' + As + ', PD = ' + pd + ', PS = ' + ps + ');'
                 stat = stat.translate(maketrans('{}', '  '))
                 modelicaCompInit.append(stat)
+                
+        #Lets start for Subcircuit
+        for eachline in self.subCktDetail:
+            temp_line = eachline.split()
+            temp = temp_line[0].split('x')
+            index = temp[1]
+            for i in range(0,len(temp_line),1):
+                if temp_line[i] in subcktName:
+                    subname = temp_line[i]
+                    numNodesSub[subname] = i - 1
+                    point = i
+            if len(temp_line) > point + 1:
+                rem = temp_line[point+1:len(temp_line)]
+                rem_new = ','.join(rem)
+                stat = subname + ' ' + subname +'_instance' + index + '(' +  rem_new + ');'
+            else:
+                stat = subname + ' ' + subname +'_instance' + index + ';'
+            modelicaCompInit.append(stat)
+            
                                  
         
         for eachline in compInfo:
@@ -480,22 +502,6 @@ class NgMoConverter:
                 stat = 'Analog.Basic.CCV ' + words[0] + '(transResistance = ' + self.splitIntoVal(words[4]) + ');'
                 modelicaCompInit.append(stat)
                                  
-            elif eachline[0] == 'x':
-                temp_line = eachline.split()
-                temp = temp_line[0].split('x')
-                index = temp[1]
-                for i in range(0,len(temp_line),1):
-                    if temp_line[i] in subcktName:
-                        subname = temp_line[i]
-                        numNodesSub[subname] = i - 1
-                        point = i
-                if len(temp_line) > point + 1:
-                    rem = temp_line[point+1:len(temp_line)]
-                    rem_new = ','.join(rem)
-                    stat = subname + ' ' + subname +'_instance' + index + '(' +  rem_new + ');'
-                else:
-                    stat = subname + ' ' + subname +'_instance' + index + ';'
-                modelicaCompInit.append(stat)
             else:
                 continue
             
