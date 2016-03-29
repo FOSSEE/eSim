@@ -64,7 +64,7 @@ class NgMoConverter:
                 elif eachline[0] in self.deviceList:
                     if eachline[0]=='m' or eachline[0]=='M':
                         self.ifMOS = True
-                    schematicInfo.append(eachline)
+                    #schematicInfo.append(eachline)
                     self.deviceDetail.append(eachline)
                 elif eachline[0]=='v' or eachline[0]=='V':
                     #schematicInfo.append(eachline)
@@ -291,7 +291,7 @@ class NgMoConverter:
         return keyval
             
         
-    def compInit(self,compInfo, node, modelInfo, subcktName,dir_name):
+    def compInit(self,compInfo, node, modelInfo, subcktName,dir_name,transInfo):
         """
         For each component in the netlist initialize it according to Modelica format
         """
@@ -299,6 +299,7 @@ class NgMoConverter:
         #### initial processing to check if MOs is present. If so, library to be used is BondLib
         modelicaCompInit = []
         numNodesSub = {} 
+        mosInfo = {}
         IfMOS = '0'
         for eachline in compInfo:
             #words = eachline.split()
@@ -371,7 +372,6 @@ class NgMoConverter:
                 modelicaCompInit.append(stat)
                 
             elif eachline[0]=='q' or eachline[0]=='Q':
-                print "Starting Transistor"
                 if words[4]=='npn':
                     start = 'Analog.Semiconductors.NPN '
                 elif words[4]=='pnp':
@@ -393,6 +393,63 @@ class NgMoConverter:
                 vjc = self.tryExists(modelInfo,words,4, 'vjc', 0.8)
                 mjc = self.tryExists(modelInfo,words,4, 'mjc', 0.333)
                 stat = start + words[0] +'(Bf = ' + bf + ', Br = ' + br + ', Is = ' +Is+ ', Vak = ' + vak + ', Tauf = ' +tf+ ', Taur = ' +tr+ ', Ccs = ' +cjs+ ', Cje = ' +cje+ ', Cjc = ' +cjc+ ', Phie = ' + vje + ', Me = ' + mje + ', Phic = ' + vjc + ', Mc = ' + mjc + ');'
+                modelicaCompInit.append(stat)
+                
+            elif eachline[0]=='m' or eachline[0]=="M":
+                print "Starting Mosfet"
+                eachline = eachline.split(words[5])
+                eachline = eachline[1]
+                eachline = eachline.strip()
+                eachline = eachline.replace(' = ', '=').replace('= ','=').replace(' =','=').replace(' * ', '*').replace(' + ', '+').replace(' { ', '').replace(' } ', '')
+                eachline = eachline.split()
+                mosInfo[words[0]] = {}
+                for each in eachline:
+                    if len(each) > 1:
+                        each  = each.split('=')
+                        mosInfo[words[0]][each[0]] = each[1]
+                trans = transInfo[words[5]]
+                if trans == 'nmos':
+                    start = 'BondLib.Electrical.Analog.Spice.Mn '
+                else:
+                    start = 'BondLib.Electrical.Analog.Spice.Mp '
+                vto = self.tryExists(modelInfo,words,5,'vto',0)
+                gam = self.tryExists(modelInfo,words,5,'gamma',0)
+                phi = self.tryExists(modelInfo,words,5, 'phi', 0)
+                ld = self.tryExists(modelInfo,words,5,'ld',0)
+                uo = self.tryExists(modelInfo,words,5,'uo',0)
+                lam  = self.tryExists(modelInfo,words,5,'lambda',0)
+                tox = self.tryExists(modelInfo,words,5,'tox',3e-9)
+                pb = self.tryExists(modelInfo,words,5, 'pb',0.8)
+                cj = self.tryExists(modelInfo,words,5, 'cj',0)
+                cjsw = self.tryExists(modelInfo,words,5, 'cjsw',1e-9)
+                mj = self.tryExists(modelInfo,words,5, 'mj',0.33)
+                mjsw = self.tryExists(modelInfo,words,5, 'mjsw',0.33)
+                cgdo = self.tryExists(modelInfo,words,5, 'cgdo',0)
+                js = self.tryExists(modelInfo,words,5, 'js',0)
+                cgbo = self.tryExists(modelInfo,words,5, 'cgbo',0)
+                cgso = self.tryExists(modelInfo,words,5,'cgso',0)
+                try:
+                    l = mosInfo[words[0]]['l']
+                except KeyError:
+                    l = '1e-6'
+                try:
+                    w = mosInfo[words[0]]['w']
+                except KeyError:
+                    w = '100e-6'
+                try:
+                    As = mosInfo[words[0]]['as']
+                    ad = mosInfo[words[0]]['ad']
+                except KeyError:
+                    As = '0'
+                    ad = '0'
+                try:
+                    ps = mosInfo[words[0]]['ps']
+                    pd = mosInfo[words[0]]['pd']
+                except KeyError:
+                    ps = '0'
+                    pd = '0'
+                stat = start + words[0] + '(Tnom = 300, VT0 = ' + vto + ', GAMMA = ' + gam + ', PHI = ' + phi + ', LD = ' +ld+ ', U0 = ' + str(float(uo)*0.0001) + ', LAMBDA = ' + lam + ', TOX = ' +tox+ ', PB = ' + pb + ', CJ = ' +cj+ ', CJSW = ' +cjsw+ ', MJ = ' + mj + ', MJSW = ' + mjsw + ', CGD0 = ' +cgdo+ ', JS = ' +js+ ', CGB0 = ' +cgbo+ ', CGS0 = ' +cgso+ ', L = ' +l+ ', W = ' + w + ', Level = 1' + ', AD = ' + ad + ', AS = ' + As + ', PD = ' + pd + ', PS = ' + ps + ');'
+                stat = stat.translate(maketrans('{}', '  '))
                 modelicaCompInit.append(stat)
                                  
         
@@ -422,33 +479,7 @@ class NgMoConverter:
             elif eachline[0] == 'h':
                 stat = 'Analog.Basic.CCV ' + words[0] + '(transResistance = ' + self.splitIntoVal(words[4]) + ');'
                 modelicaCompInit.append(stat)
-                    
-            elif eachline[0] == 'm':
-                line_l = words[7].split('=')
-                line_w = words[8].split('=')
-                line_pd = words[9].split('=')
-                line_ps = words[10].split('=')
-                line_ad = words[11].split('=')
-                line_as = words[12].split('=')
-                if words[5] == "mos_n" or words[5] == "mosfet_n":
-                    start = 'BondLib.Electrical.Analog.Spice.Mn '
-                if words[5] == "mos_p" or words[5] == "mosfet_p":
-                    start = 'BondLib.Electrical.Analog.Spice.Mp '
-                stat = start + words[0] + '(Tnom = 300, VT0 = ' + modelInfo[\
-                       words[5]]['vto'] + ', GAMMA = ' + modelInfo[words[5]]['gamma'] +\
-                       ', PHI = ' + modelInfo[words[5]]['phi'] + ', LD = ' + self.splitIntoVal(modelInfo[words[5]]['ld'])\
-                        + ', U0 = ' + str(float(self.splitIntoVal(modelInfo[words[5]]['uo']))*0.0001) + ', LAMBDA = ' \
-                        + modelInfo[words[5]]['lambda'] + ', TOX = ' + self.splitIntoVal(modelInfo[words[5]]['tox']) \
-                        + ', PB = ' + modelInfo[words[5]]['pb'] + ', CJ = ' + self.splitIntoVal(modelInfo[words[5]]['cj']) \
-                        + ', CJSW = ' + self.splitIntoVal(modelInfo[words[5]]['cjsw']) + ', MJ = ' + modelInfo[words[5]]['mj'] \
-                        + ', MJSW = ' + modelInfo[words[5]]['mjsw'] + ', CGD0 = ' + self.splitIntoVal(modelInfo[words[5]]['cgdo']) \
-                        + ', JS = ' + self.splitIntoVal(modelInfo[words[5]]['js']) + ', CGB0 = ' + self.splitIntoVal(modelInfo[words[5]]['cgbo']) \
-                        + ', CGS0 = ' + self.splitIntoVal(modelInfo[words[5]]['cgso']) + ', L = ' + self.splitIntoVal(line_l[1]) + ', W = ' \
-                        + line_w[1] + ', Level = 1' + ', AD = ' + line_ad[1] + ', AS = ' + line_as[1] + ', PD = ' \
-                        + line_pd[1] + ', PS = ' + line_pd[1] + ');'
-                stat = stat.translate(maketrans('{}', '  '))
-                modelicaCompInit.append(stat)
-                                   
+                                 
             elif eachline[0] == 'x':
                 temp_line = eachline.split()
                 temp = temp_line[0].split('x')
@@ -840,7 +871,7 @@ def main(args):
     #print "PinInit-------------->",pinInit
     #print "pinProtectedInit----------->",pinProtectedInit
     
-    modelicaCompInit, numNodesSub  = obj_NgMoConverter.compInit(compInfo,node, modelInfo, subcktName,dir_name)
+    modelicaCompInit, numNodesSub  = obj_NgMoConverter.compInit(compInfo,node, modelInfo, subcktName,dir_name,transInfo)
     print "ModelicaComponents : modelicaCompInit----------->",modelicaCompInit
     print "SubcktNumNodes : numNodesSub---------------->",numNodesSub
     
