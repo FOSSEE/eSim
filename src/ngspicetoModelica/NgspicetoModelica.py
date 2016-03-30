@@ -121,18 +121,6 @@ class NgMoConverter:
                         iteminfo = eachitem.split('=')
                         for each in iteminfo:
                             modelInfo[model][iteminfo[0]] = iteminfo[1]
-               
-                """
-                name = words[1]+':'+words[2].split('(')[0]  #model_ref_name:actual_model_name
-                modelName.append(name)
-                modelInfo[name] = {}
-                #Get all the data with () of .model line
-                paramData = re.compile("\((.*)\)" ).search(eachline).group(1)
-                info = paramData.split()
-                for eachitem in info:
-                    eachitem =  eachitem.split('=')
-                    modelInfo[name][eachitem[0]] = eachitem[1]
-                """
         
         #Adding details of model(external) and subckt into modelInfo and subcktInfo
         print "Model Name ------------ >",modelName
@@ -170,22 +158,6 @@ class NgMoConverter:
                     for eachitem in info:
                         modelInfo[refModelName][info[0]] = info[1] 
             f.close()
-            '''
-            #First fetch the refModelName and then lower case its parameter
-            refModelName = newdata[0].split()[1]
-            newdata[1] = newdata[1].lower()
-            modelParameter = newdata[1].split()
-             
-            modelInfo[refModelName] = {}
-            
-            for eachline in modelParameter:
-                if len(eachline) > 1:
-                    info = eachline.split('=')
-                    # modelInfo[eachmodel][info[0]] = {}
-                    for eachitem in info:
-                        modelInfo[refModelName][info[0]] = info[1] #dic within a dic
-            f.close()
-            '''      
         
         return modelName, modelInfo, subcktName, paramInfo ,transInfo
     
@@ -239,38 +211,6 @@ class NgMoConverter:
                 if words_s[0] in source:
                     sourceInfo[words_s[0]] = words_s[1:3]
         return sourceInfo
-    
-    def splitIntoVal(self,val):
-        """
-        Split the number k,u,p,t,g etc into powers e3,e-6 etc
-        """
-        for i in range(0,len(val),1):
-            if val[i] in ['k','u','p','t','g','m','n','f']:
-                newval = val.split(val[i])
-                if val[i] == 'k':
-                    value = newval[0] + 'e3'
-                if val[i] == 'u':
-                    value = newval[0] + 'e-6'
-                if val[i] == 'p':
-                    value = newval[0] + 'e-12'
-                if val[i] == 't':  
-                    value = newval[0] + 'e12'
-                if val[i] == 'g':
-                    value = newval[0] + 'e9'
-                if val[i] == 'm':
-                    if i != len(val)-1:
-                        if val[i+1] == 'e':
-                            value = newval[0] + 'e6'
-                    else:
-                        value = newval[0] +'e-3'
-                if val[i] == 'n':
-                    value = newval[0] + 'e-9'       
-                if val[i] == 'f':
-                    value = newval[0] +'e-15'
-                
-            else:
-                value = val
-        return value
     
     def getUnitVal(self,compValue):
         print "Received compValue--------> ",compValue
@@ -493,16 +433,16 @@ class NgMoConverter:
                 stat = 'Analog.Basic.Inductor ' + words[0] + '(L = ' + value + ');'
                 modelicaCompInit.append(stat) 
             elif eachline[0] == 'e':
-                stat = 'Analog.Basic.VCV ' + words[0] + '(gain = ' + self.splitIntoVal(words[5]) + ');'
+                stat = 'Analog.Basic.VCV ' + words[0] + '(gain = ' + self.getUnitVal(words[5]) + ');'
                 modelicaCompInit.append(stat) 
             elif eachline[0] == 'g':
-                stat = 'Analog.Basic.VCC ' + words[0] + '(transConductance = ' + self.splitIntoVal(words[5]) + ');'
+                stat = 'Analog.Basic.VCC ' + words[0] + '(transConductance = ' + self.getUnitVal(words[5]) + ');'
                 modelicaCompInit.append(stat) 
             elif eachline[0] == 'f':
-                stat = 'Analog.Basic.CCC ' + words[0] + '(gain = ' + self.splitIntoVal(words[4]) + ');'
+                stat = 'Analog.Basic.CCC ' + words[0] + '(gain = ' + self.getUnitVal(words[4]) + ');'
                 modelicaCompInit.append(stat) 
             elif eachline[0] == 'h':
-                stat = 'Analog.Basic.CCV ' + words[0] + '(transResistance = ' + self.splitIntoVal(words[4]) + ');'
+                stat = 'Analog.Basic.CCV ' + words[0] + '(transResistance = ' + self.getUnitVal(words[4]) + ');'
                 modelicaCompInit.append(stat)
                                  
             else:
