@@ -214,12 +214,17 @@ class NgMoConverter:
     
     def getUnitVal(self,compValue):
         print "Received compValue--------> ",compValue
-        regExp = re.compile("([0-9]+)([a-zA-Z]+)")
+        #regExp = re.compile("([0-9]+)([a-zA-Z]+)")
+        regExp = re.compile("([0-9]+)\.?([0-9]+)?([a-zA-Z])?")
         matchString = regExp.match(str(compValue))  #separating number and string
         try:
-            numValue = matchString.group(1)
-            unitValue = matchString.group(2)
-            modifiedcompValue = numValue+self.mappingData["Units"][unitValue]
+            valBeforeDecimal = matchString.group(1)
+            valAfterDecimal = matchString.group(2)
+            unitValue = matchString.group(3)
+            if str(valAfterDecimal)=='None':
+                modifiedcompValue = valBeforeDecimal+self.mappingData["Units"][unitValue]
+            else:
+                modifiedcompValue = valBeforeDecimal+'.'+valAfterDecimal+self.mappingData["Units"][unitValue]
             return modifiedcompValue
         except:
             return compValue
