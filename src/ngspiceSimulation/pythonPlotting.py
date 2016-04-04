@@ -401,8 +401,7 @@ class plotWindow(QtGui.QMainWindow):
         boxCheck = 0
         loc_x = 300
         loc_y = 300
-        print "My NBList---->",self.obj_dataext.NBList
-        print "My NBIList------->",self.obj_dataext.NBIList
+        
         for i,j in zip(self.chkbox,range(len(self.chkbox))):
             if i.isChecked():
                 print "Check box",self.obj_dataext.NBList[j]
@@ -429,18 +428,13 @@ class MultimeterWidgetClass(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
         
         self.multimeter = QtGui.QWidget(self)
-<<<<<<< HEAD
         if voltFlag:
             self.node_branchLabel = QtGui.QLabel("Node")
             self.rmsValue = QtGui.QLabel(str(rmsValue)+" Volts")
         else:
             self.node_branchLabel = QtGui.QLabel("Branch")
             self.rmsValue = QtGui.QLabel(str(rmsValue)+" Amp")
-=======
-        self.node_branchLabel = QtGui.QLabel("Node/Branch")
-        self.rmsLabel = QtGui.QLabel("RMS Value (Volts/Amperes)")
->>>>>>> modification
-        
+                
         self.rmsLabel = QtGui.QLabel("RMS Value")
         self.nodeBranchValue = QtGui.QLabel(str(node_branch))
         
@@ -452,11 +446,8 @@ class MultimeterWidgetClass(QtGui.QWidget):
         self.layout.addWidget(self.rmsValue,1,1)
         
         self.multimeter.setLayout(self.layout)
-<<<<<<< HEAD
         self.setGeometry(loc_x,loc_y,200,100)
-=======
         self.setGeometry(loc_x,loc_y,300,100)
->>>>>>> modification
         self.setWindowTitle("MultiMeter")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.show()
