@@ -401,12 +401,17 @@ class plotWindow(QtGui.QMainWindow):
         boxCheck = 0
         loc_x = 300
         loc_y = 300
+        
         for i,j in zip(self.chkbox,range(len(self.chkbox))):
             if i.isChecked():
                 print "Check box",self.obj_dataext.NBList[j]
                 boxCheck += 1
+                if self.obj_dataext.NBList[j] in self.obj_dataext.NBIList:
+                    voltFlag = False
+                else:
+                    voltFlag = True
                 #Initializing Multimeter
-                self.obj[j] = MultimeterWidgetClass(self.obj_dataext.NBList[j],self.getRMSValue(self.obj_dataext.y[j]),loc_x,loc_y)
+                self.obj[j] = MultimeterWidgetClass(self.obj_dataext.NBList[j],self.getRMSValue(self.obj_dataext.y[j]),loc_x,loc_y,voltFlag)
                 loc_x += 50
                 loc_y += 50
                        
@@ -419,15 +424,20 @@ class plotWindow(QtGui.QMainWindow):
         return np.sqrt(np.mean(np.square(dataPoints)))
     
 class MultimeterWidgetClass(QtGui.QWidget):
-    def __init__(self,node_branch,rmsValue,loc_x,loc_y):
+    def __init__(self,node_branch,rmsValue,loc_x,loc_y,voltFlag):
         QtGui.QWidget.__init__(self)
         
         self.multimeter = QtGui.QWidget(self)
-        self.node_branchLabel = QtGui.QLabel("Node/Branch")
-        self.rmsLabel = QtGui.QLabel("RMS Value (Volts/Amperes)")
-        
+        if voltFlag:
+            self.node_branchLabel = QtGui.QLabel("Node")
+            self.rmsValue = QtGui.QLabel(str(rmsValue)+" Volts")
+        else:
+            self.node_branchLabel = QtGui.QLabel("Branch")
+            self.rmsValue = QtGui.QLabel(str(rmsValue)+" Amp")
+                
+        self.rmsLabel = QtGui.QLabel("RMS Value")
         self.nodeBranchValue = QtGui.QLabel(str(node_branch))
-        self.rmsValue = QtGui.QLabel(str(rmsValue))
+        
         
         self.layout = QtGui.QGridLayout(self)
         self.layout.addWidget(self.node_branchLabel,0,0)
@@ -436,6 +446,7 @@ class MultimeterWidgetClass(QtGui.QWidget):
         self.layout.addWidget(self.rmsValue,1,1)
         
         self.multimeter.setLayout(self.layout)
+        self.setGeometry(loc_x,loc_y,200,100)
         self.setGeometry(loc_x,loc_y,300,100)
         self.setWindowTitle("MultiMeter")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
