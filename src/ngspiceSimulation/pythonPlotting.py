@@ -110,7 +110,7 @@ class plotWindow(QtGui.QMainWindow):
         self.plotbtn = QtGui.QPushButton("Plot")
         self.plotbtn.setToolTip('<b>Press</b> to Plot' )
         self.multimeterbtn = QtGui.QPushButton("Multimeter")
-        self.multimeterbtn.setToolTip('<b>Press</b> to get Multimeter' )
+        self.multimeterbtn.setToolTip('<b>RMS</b> value of the current and voltage is displayed' )
         self.text = QtGui.QLineEdit()
         self.funcLabel = QtGui.QLabel()
         self.palette1 = QtGui.QPalette()
@@ -155,9 +155,9 @@ class plotWindow(QtGui.QMainWindow):
         self.listNode.setText("<font color='indigo'>List of Nodes:</font>")
         self.listBranch.setText("<font color='indigo'>List of Branches:</font>")    
         self.funcLabel.setText("<font color='indigo'>Function:</font>")
-        self.funcName.setText("<font color='indigo'>Examples:</font>\
+        self.funcName.setText("<font color='indigo'>Standard functions</font>\
                 <br><br>Addition:<br>Subtraction:<br>Multiplication:<br>Division:<br>Comparison:")
-        self.funcExample.setText("\n\nV(1) + V(2)\nV(1) - V(2)\nV(1) * V(2)\nV(1) / V(2)\nV(1) vs V(2)")
+        self.funcExample.setText("\n\nNode1 + Node2\nNode1 - Node2\nNode1 * Node2\nNode1 / Node2\nNode1 vs Node2")
 
         #Connecting to plot and clear function
         self.connect(self.clear,QtCore.SIGNAL('clicked()'),self.pushedClear)
@@ -429,12 +429,17 @@ class MultimeterWidgetClass(QtGui.QWidget):
         QtGui.QWidget.__init__(self)
         
         self.multimeter = QtGui.QWidget(self)
+<<<<<<< HEAD
         if voltFlag:
             self.node_branchLabel = QtGui.QLabel("Node")
             self.rmsValue = QtGui.QLabel(str(rmsValue)+" Volts")
         else:
             self.node_branchLabel = QtGui.QLabel("Branch")
             self.rmsValue = QtGui.QLabel(str(rmsValue)+" Amp")
+=======
+        self.node_branchLabel = QtGui.QLabel("Node/Branch")
+        self.rmsLabel = QtGui.QLabel("RMS Value (Volts/Amperes)")
+>>>>>>> modification
         
         self.rmsLabel = QtGui.QLabel("RMS Value")
         self.nodeBranchValue = QtGui.QLabel(str(node_branch))
@@ -447,7 +452,11 @@ class MultimeterWidgetClass(QtGui.QWidget):
         self.layout.addWidget(self.rmsValue,1,1)
         
         self.multimeter.setLayout(self.layout)
+<<<<<<< HEAD
         self.setGeometry(loc_x,loc_y,200,100)
+=======
+        self.setGeometry(loc_x,loc_y,300,100)
+>>>>>>> modification
         self.setWindowTitle("MultiMeter")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.show()
