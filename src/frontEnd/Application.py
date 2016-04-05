@@ -188,7 +188,10 @@ class Application(QtGui.QMainWindow):
             pass
         else:
             for pid in self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']]:
-                os.kill(pid, 9)
+                try:
+                    os.kill(pid, 9)
+                except:
+                    pass
             self.obj_Mainview.obj_dockarea.closeDock()
             self.obj_appconfig.current_project['ProjectName'] = None
             self.systemTrayIcon.showMessage('Close', 'Current project '+os.path.basename(current_project)+' is Closed.')
