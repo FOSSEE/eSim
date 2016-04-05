@@ -405,6 +405,9 @@ class NgMoConverter:
                 
         #Lets start for Subcircuit
         for eachline in self.subCktDetail:
+            print "each Line-------->",eachline
+            global point
+            global subname
             temp_line = eachline.split()
             temp = temp_line[0].split('x')
             index = temp[1]
@@ -717,7 +720,7 @@ class NgMoConverter:
                 print "NodeDicSub-------------------------->",nodeDicSub
                 print "PinInitSub-------------------------->",pinInitSub
                 print "PinProtectedInitSub------------------->",pinProtectedInitSub
-                modelicaSubCompInit, numNodesSubsub = self.compInit(subSchemInfo, nodeSub, subModelInfo, subsubName)
+                modelicaSubCompInit, numNodesSubsub = self.compInit(subSchemInfo, nodeSub, subModelInfo, subsubName,dir_name,transInfo)
                 print "modelicaSubCompInit--------------------->",modelicaSubCompInit
                 print "numNodesSubsub-------------------------->",numNodesSubsub
                 modelicaSubParamNew = self.getSubParamLine(eachsub, numNodesSub, modelicaSubParam,dir_name)     ###Ask Manas
