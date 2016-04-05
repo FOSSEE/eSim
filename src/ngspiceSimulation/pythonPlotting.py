@@ -414,6 +414,8 @@ class plotWindow(QtGui.QMainWindow):
                 self.obj[j] = MultimeterWidgetClass(self.obj_dataext.NBList[j],self.getRMSValue(self.obj_dataext.y[j]),loc_x,loc_y,voltFlag)
                 loc_x += 50
                 loc_y += 50
+                ## Adding object of multimeter to dictionary
+                self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(self.obj[j])
                        
         if boxCheck == 0:
             QtGui.QMessageBox.about(self, "Warning!!","Please select at least one Node OR Branch")
