@@ -64,12 +64,12 @@ class NgMoConverter:
                 elif eachline[0] in self.deviceList:
                     if eachline[0]=='m' or eachline[0]=='M':
                         self.ifMOS = True
-                    #schematicInfo.append(eachline)
+                    schematicInfo.append(eachline)
                     self.deviceDetail.append(eachline)
                 elif eachline[0]=='x' or eachline[0]=='X':
                     self.subCktDetail.append(eachline)
                 elif eachline[0]=='v' or eachline[0]=='V':
-                    #schematicInfo.append(eachline)
+                    schematicInfo.append(eachline)
                     #Removing zero voltage source as it is not require in Modelica
                     if eachline.split()[-1]=='0':
                         continue
@@ -236,7 +236,6 @@ class NgMoConverter:
         try:
             keyval = modelInfo[words[wordNo]][key]
             keyval = self.getUnitVal(keyval)
-            print "Key------->",modelInfo
         except KeyError:
             keyval = str(default)
         return keyval
@@ -423,8 +422,7 @@ class NgMoConverter:
             else:
                 stat = subname + ' ' + subname +'_instance' + index + ';'
             modelicaCompInit.append(stat)
-            
-                                 
+                                         
         
         for eachline in compInfo:
             words = eachline.split()
@@ -572,6 +570,10 @@ class NgMoConverter:
                         pinInit = pinInit + nodeDic[protectedNode[i]]
         pinInit = pinInit + ';'
         pinProtectedInit = pinProtectedInit + ';'
+        print "Node---->",node
+        print "nodeDic----->",nodeDic
+        print "PinInit----->",pinInit
+        print "pinProtectedinit--->",pinProtectedInit
         return node, nodeDic, pinInit, pinProtectedInit
     
     
@@ -580,14 +582,26 @@ class NgMoConverter:
         Make node connections in the modelica netlist
         """
         connInfo = []
+        print "compinfo-------->",compInfo
         sourcesInfo = self.separateSource(compInfo)
         for eachline in compInfo:
             words = eachline.split()
+            print "eachline----->",eachline
+            print "eachline[0]------->",eachline[0]
             if eachline[0]=='r' or eachline[0]=='R' or eachline[0]=='c' or eachline[0]=='C' or eachline[0]=='d' or eachline[0]=='D' \
             or eachline[0]=='l' or eachline[0]=='L' or eachline[0]=='v' or eachline[0]=='V':
                 conn = 'connect(' + words[0] + '.p,' + nodeDic[words[1]] + ');'
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.n,' + nodeDic[words[2]] + ');'
+                connInfo.append(conn)
+            elif eachline[0]=='q' or eachline[0]=='Q':
+                print "Inside Transistor--->"
+                print "Node Dict------>",nodeDic
+                conn = 'connect(' + words[0] + '.C,' + nodeDic[words[1]] + ');'
+                connInfo.append(conn)
+                conn = 'connect(' + words[0] + '.B,' + nodeDic[words[2]] + ');'
+                connInfo.append(conn)
+                conn = 'connect(' + words[0] + '.E,' + nodeDic[words[3]] + ');'
                 connInfo.append(conn)
             elif eachline[0]=='m' or eachline[0]=='M':
                 conn = 'connect(' + words[0] + '.D,' + nodeDic[words[1]] + ');'
