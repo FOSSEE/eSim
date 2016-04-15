@@ -633,15 +633,6 @@ class NgMoConverter:
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.n2,'+ nodeDic[words[2]] + ');'
                 connInfo.append(conn)
-            elif eachline[0] in ['g','e','G','E']:
-                conn = 'connect(' + words[0] + '.p1,'+ nodeDic[words[3]] + ');'
-                connInfo.append(conn)
-                conn = 'connect(' + words[0] + '.n1,'+ nodeDic[words[4]] + ');'
-                connInfo.append(conn)
-                conn = 'connect(' + words[0] + '.p2,'+ nodeDic[words[1]] + ');'
-                connInfo.append(conn)
-                conn = 'connect(' + words[0] + '.n2,'+ nodeDic[words[2]] + ');'
-                connInfo.append(conn)
             elif eachline[0]=='x' or eachline[0]=='X':
                 templine = eachline.split()
                 temp = templine[0].split('x')
