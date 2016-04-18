@@ -70,11 +70,7 @@ class NgMoConverter:
                     self.subCktDetail.append(eachline)
                 elif eachline[0]=='v' or eachline[0]=='V':
                     schematicInfo.append(eachline)
-                    #Removing zero voltage source as it is not require in Modelica
-                    if eachline.split()[-1]=='0':
-                        continue
-                    else:
-                        self.sourceDetail.append(eachline)    
+                    self.sourceDetail.append(eachline)    
                 else:
                     schematicInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
