@@ -454,7 +454,7 @@ class NgMoConverter:
             else:
                 continue
             
-        if '0' in node:
+        if '0' or 'gnd' in node:
             modelicaCompInit.append('Analog.Basic.Ground g;')
         return modelicaCompInit, numNodesSub
     
@@ -649,6 +649,9 @@ class NgMoConverter:
                 continue
         if '0' in node:
             conn = 'connect(g.p,n0);'
+            connInfo.append(conn)
+        elif 'gnd' in node:
+            conn = 'connect(g.p,ngnd);'
             connInfo.append(conn)
          
         return connInfo
