@@ -269,8 +269,12 @@ class NgMoConverter:
         
         #Lets Start with Source details
         for eachline in self.sourceDetail:
-            #eachline = eachline.lower()
             words = eachline.split()
+            #Preserve component name from lower case function
+            compName = words[0]
+            #Now Lower case all other
+            words = eachline.lower().split()
+            words[0] = compName
             typ = words[3].split('(')
             if typ[0] == "pulse":
                 per = words[9].split(')')
