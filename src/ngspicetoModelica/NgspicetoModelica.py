@@ -278,16 +278,16 @@ class NgMoConverter:
             typ = words[3].split('(')
             if typ[0] == "pulse":
                 per = words[9].split(')')
-                stat = self.mappingData["Sources"][typ[0]]+' '+words[0]+'(rising = '+words[6]+', V = '+words[4]\
-                +', width = '+words[8]+', period = '+per[0]+', offset = '+typ[1]+', startTime = '+words[5]+', falling = '+words[7]+');'                                                                                                                                                                             
+                stat = self.mappingData["Sources"][typ[0]]+' '+words[0]+'(rising = '+self.getUnitVal(words[6])+', V = '+self.getUnitVal(words[4])\
+                +', width = '+self.getUnitVal(words[8])+', period = '+self.getUnitVal(per[0])+', offset = '+self.getUnitVal(typ[1])+', startTime = '+self.getUnitVal(words[5])+', falling = '+self.getUnitVal(words[7])+');'                                                                                                                                                                             
                 modelicaCompInit.append(stat)
             if typ[0] == "sine":
                 theta = words[7].split(')')
-                stat = self.mappingData["Sources"][typ[0]]+' '+words[0]+'(offset = '+typ[1]+', V = '+words[4]+', freqHz = '+words[5]+', startTime = '+words[6]+', phase = '+theta[0]+');'
+                stat = self.mappingData["Sources"][typ[0]]+' '+words[0]+'(offset = '+self.getUnitVal(typ[1])+', V = '+self.getUnitVal(words[4])+', freqHz = '+self.getUnitVal(words[5])+', startTime = '+self.getUnitVal(words[6])+', phase = '+self.getUnitVal(theta[0])+');'
                 modelicaCompInit.append(stat)
             if typ[0] == "pwl":
                 keyw = self.mappingData["Sources"][typ[0]]+' '
-                stat = keyw + words[0] + '(table = [' + typ[1] + ',' + words[4] + ';'
+                stat = keyw + words[0] + '(table = [' + self.getUnitVal(typ[1]) + ',' + self.getUnitVal(words[4]) + ';'
                 length = len(words);
                 for i in range(6,length,2):
                     if i == length-2:
@@ -300,10 +300,10 @@ class NgMoConverter:
             if typ[0] == words[3] and typ[0] != "dc":
                 #It is DC constant but no dc keyword
                 val_temp = typ[0].split('v')
-                stat = self.mappingData["Sources"]["dc"]+' ' + words[0] + '(V = ' + val_temp[0] + ');' 
+                stat = self.mappingData["Sources"]["dc"]+' ' + words[0] + '(V = ' + self.getUnitVal(val_temp[0]) + ');' 
                 modelicaCompInit.append(stat)
             elif typ[0] == words[3] and typ[0] == "dc":
-                stat = self.mappingData["Sources"][typ[0]]+' ' + words[0] + '(V = ' + words[4] + ');'    ### check this
+                stat = self.mappingData["Sources"][typ[0]]+' ' + words[0] + '(V = ' + self.getUnitVal(words[4]) + ');'    ### check this
                 modelicaCompInit.append(stat)
                 
         #Lets start for device
