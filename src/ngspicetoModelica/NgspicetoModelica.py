@@ -269,7 +269,7 @@ class NgMoConverter:
         
         #Lets Start with Source details
         for eachline in self.sourceDetail:
-            eachline = eachline.lower()
+            #eachline = eachline.lower()
             words = eachline.split()
             typ = words[3].split('(')
             if typ[0] == "pulse":
