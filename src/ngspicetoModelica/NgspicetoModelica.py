@@ -558,6 +558,8 @@ class NgMoConverter:
         #Removing '[' and ']' from compInfo for Digital node
         for i in range(0,len(compInfo),1):
             compInfo[i] = compInfo[i].replace("[","").replace("]","")
+            #Remove "-" from node as it does not work in modelica
+            compInfo[i] = compInfo[i].replace("-","")
         
                 
         for eachline in compInfo:
@@ -583,7 +585,8 @@ class NgMoConverter:
         for i in nodeTemp:
             if i not in node:
                 node.append(i)
-      
+        
+            
         for i in range(0, len(node),1):
             nodeDic[node[i]] = 'n' + node[i]
             if ifSub == '0':
