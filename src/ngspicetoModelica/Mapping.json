@@ -25,15 +25,31 @@
 		"Q": "Analog.Semiconductors",
 		"q": "Analog.Semiconductors"
 		},
-	"Parameters":{
-		"Diode":"List Of Diode Param",
-		"Mosfet":"List of Mosfet Param"
-		},
+	
 
 	"Models":{
-		
-	},
+		"zener":{
+			"import":"Analog.Semiconductors.ZDiode",
+			"mapping":{
+				"v_breakdown":"Bv",
+				"i_breakdown":"Ibv",
+				"i_sat":"Ids",
+				"n_forward":"Nbv"
 
+			},
+			"default":{
+				"Ids":"880.5e-18",
+				"Vt":"0.025",
+				"R":"1e12",
+				"Bv":"8.1",
+				"Ibv":"0.020245",
+				"Nbv":"1.6989"
+
+			}
+
+		}
+	},
+	
 	"Units":{
 		"k":"e3",
 		"u":"e-6",

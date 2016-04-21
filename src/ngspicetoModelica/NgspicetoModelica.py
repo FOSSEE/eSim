@@ -18,7 +18,7 @@ class NgMoConverter:
         self.subCktDetail = []
         self.inbuiltModelDetail = []
         self.deviceList = ['d','D','j','J','q','Q'] #MOSFET is excluded as it has special case
-        self.inbuiltModelList = {}
+        self.inbuiltModelDict = {}
             
 
     def readNetlist(self,filename):
@@ -113,6 +113,8 @@ class NgMoConverter:
                 transInfo[trans] = []
                 if templine[2] in ['npn', 'pnp', 'pmos', 'nmos']:
                     transInfo[trans] = templine[2]
+                else:
+                    self.inbuiltModelDict[model]=templine[2]
                 eachline[1] = eachline[1].lower()
                 eachline = eachline[1].split()
                 
@@ -407,9 +409,45 @@ class NgMoConverter:
         
         #Lets start for inbuilt model of ngspice
         for eachline in self.inbuiltModelDetail:
-            print "each line of inbuilt Model------->",eachline
-            print "Model Info--------->",modelInfo
+            words=eachline.split()
+            userModelParamList = []
+            #print "Model Info--------->",modelInfo
+            #print "Inbuilt Model Mapped to ref---------->",self.inbuiltModelDict
+            refName = words[-1]
+            print "Reference Model Name------->",refName
+            actualModelName = self.inbuiltModelDict[refName]
+            print "Actual Model Name------->",actualModelName
+            start = self.mappingData["Models"][actualModelName]["import"]
+            print "Import Statement-------->",start
+            stat = start +" "+ words[0]+"("
+            tempstatList=[]
+            print "Start Stat-------->",stat
+            for key in modelInfo[refName]:
+                #If parameter is not mapped then it will just pass 
+                try:
+                    actualModelicaParam = self.mappingData["Models"][actualModelName]["mapping"][key]
+                    tempstatList.append(actualModelicaParam+"="+modelInfo[refName][actualModelicaParam]+" ")
+                    userModelParamList.append(str(actualModelicaParam))
+                except:
+                    pass
                 
+            print "User Model list---->",userModelParamList
+            
+            #Running loop over default parameter of OpenModelica
+            for default in self.mappingData["Models"][actualModelName]["default"]:
+                if default in userModelParamList:
+                    continue
+                else:
+                    defaultValue = self.mappingData["Models"][actualModelName]["default"][default]
+                    tempstatList.append(default+"="+defaultValue+" ")
+                    
+            #print "My Stat------------>",stat
+            #print "Temp Stat List--------->",tempstatList  
+            stat += ",".join(str(item) for item in tempstatList)+");"
+            print "End Stat---------->",stat
+            modelicaCompInit.append(stat)  
+        
+        
         #Lets start for Subcircuit
         for eachline in self.subCktDetail:
             global point
