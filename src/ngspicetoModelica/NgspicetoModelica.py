@@ -17,7 +17,7 @@ class NgMoConverter:
         self.deviceDetail = []
         self.subCktDetail = []
         self.inbuiltModelDetail = []
-        self.deviceList = ['d','D','j','J','q','Q'] #MOSFET is excluded as it has special case
+        self.deviceList = ['d','D','j','J','q','Q','m','M']
         self.inbuiltModelDict = {}
             
 
@@ -363,6 +363,7 @@ class NgMoConverter:
                         each  = each.split('=')
                         mosInfo[words[0]][each[0]] = each[1]
                 trans = transInfo[words[5]]
+                print "trans------------>",trans
                 if trans == 'nmos':
                     start = 'BondLib.Electrical.Analog.Spice.Mn '
                 else:
@@ -404,7 +405,7 @@ class NgMoConverter:
                     ps = '0'
                     pd = '0'
                 stat = start + words[0] + '(Tnom = 300, VT0 = ' + vto + ', GAMMA = ' + gam + ', PHI = ' + phi + ', LD = ' +ld+ ', U0 = ' + str(float(uo)*0.0001) + ', LAMBDA = ' + lam + ', TOX = ' +tox+ ', PB = ' + pb + ', CJ = ' +cj+ ', CJSW = ' +cjsw+ ', MJ = ' + mj + ', MJSW = ' + mjsw + ', CGD0 = ' +cgdo+ ', JS = ' +js+ ', CGB0 = ' +cgbo+ ', CGS0 = ' +cgso+ ', L = ' +l+ ', W = ' + w + ', Level = 1' + ', AD = ' + ad + ', AS = ' + As + ', PD = ' + pd + ', PS = ' + ps + ');'
-                stat = stat.translate(maketrans('{}', '  '))
+                #stat = stat.translate(maketrans('{}', '  ')) #Not required
                 modelicaCompInit.append(stat)
         
         #Lets start for inbuilt model of ngspice
