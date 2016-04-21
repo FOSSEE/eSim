@@ -16,7 +16,9 @@ class NgMoConverter:
         self.sourceDetail = []
         self.deviceDetail = []
         self.subCktDetail = []
+        self.inbuiltModelDetail = []
         self.deviceList = ['d','D','j','J','q','Q'] #MOSFET is excluded as it has special case
+        self.inbuiltModelList = {}
             
 
     def readNetlist(self,filename):
@@ -70,7 +72,10 @@ class NgMoConverter:
                     self.subCktDetail.append(eachline)
                 elif eachline[0]=='v' or eachline[0]=='V':
                     schematicInfo.append(eachline)
-                    self.sourceDetail.append(eachline)    
+                    self.sourceDetail.append(eachline)
+                elif eachline[0]=='a' or eachline[0]=='A':
+                    schematicInfo.append(eachline)
+                    self.inbuiltModelDetail.append(eachline)    
                 else:
                     schematicInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
@@ -119,7 +124,6 @@ class NgMoConverter:
                             modelInfo[model][iteminfo[0]] = iteminfo[1]
         
         #Adding details of model(external) and subckt into modelInfo and subcktInfo
-        print "Model Name ------------ >",modelName
         for eachmodel in modelName:
             filename = eachmodel + '.lib'
             if os.path.exists(filename):
@@ -209,7 +213,6 @@ class NgMoConverter:
         return sourceInfo
     
     def getUnitVal(self,compValue):
-        print "Received compValue--------> ",compValue
         #regExp = re.compile("([0-9]+)([a-zA-Z]+)")
         regExp = re.compile("([0-9]+)\.?([0-9]+)?([a-zA-Z])?")
         matchString = regExp.match(str(compValue))  #separating number and string
@@ -247,6 +250,7 @@ class NgMoConverter:
         numNodesSub = {} 
         mosInfo = {}
         IfMOS = '0'
+        
         for eachline in compInfo:
             #words = eachline.split()
             if eachline[0] == 'm':
@@ -324,7 +328,7 @@ class NgMoConverter:
             elif eachline[0]=='q' or eachline[0]=='Q':
                 if words[4]=='npn':
                     start = 'Analog.Semiconductors.NPN '
-                elif words[4]=='pnp':
+                else:
                     start = 'Analog.Semiconductors.PNP '
                     
                 inv_vak = float(self.tryExists(modelInfo,words,4, 'vaf', 50))
@@ -346,7 +350,6 @@ class NgMoConverter:
                 modelicaCompInit.append(stat)
                 
             elif eachline[0]=='m' or eachline[0]=="M":
-                print "Starting Mosfet"
                 eachline = eachline.split(words[5])
                 eachline = eachline[1]
                 eachline = eachline.strip()
@@ -401,10 +404,14 @@ class NgMoConverter:
                 stat = start + words[0] + '(Tnom = 300, VT0 = ' + vto + ', GAMMA = ' + gam + ', PHI = ' + phi + ', LD = ' +ld+ ', U0 = ' + str(float(uo)*0.0001) + ', LAMBDA = ' + lam + ', TOX = ' +tox+ ', PB = ' + pb + ', CJ = ' +cj+ ', CJSW = ' +cjsw+ ', MJ = ' + mj + ', MJSW = ' + mjsw + ', CGD0 = ' +cgdo+ ', JS = ' +js+ ', CGB0 = ' +cgbo+ ', CGS0 = ' +cgso+ ', L = ' +l+ ', W = ' + w + ', Level = 1' + ', AD = ' + ad + ', AS = ' + As + ', PD = ' + pd + ', PS = ' + ps + ');'
                 stat = stat.translate(maketrans('{}', '  '))
                 modelicaCompInit.append(stat)
+        
+        #Lets start for inbuilt model of ngspice
+        for eachline in self.inbuiltModelDetail:
+            print "each line of inbuilt Model------->",eachline
+            print "Model Info--------->",modelInfo
                 
         #Lets start for Subcircuit
         for eachline in self.subCktDetail:
-            print "each Line-------->",eachline
             global point
             global subname
             temp_line = eachline.split()
@@ -491,7 +498,6 @@ class NgMoConverter:
             newline = subOptionInfo_p[0]
             newline = newline.split('.subckt '+ subname)       
             intLine = newline[1].split()
-            print "numNodesSub Index---------->",numNodesSub
             newindex = numNodesSub[subname]
             appen_line = intLine[newindex:len(intLine)]
             appen_param = ','.join(appen_line)
@@ -511,7 +517,7 @@ class NgMoConverter:
         pinInit = 'Modelica.Electrical.Analog.Interfaces.Pin '
         pinProtectedInit = 'Modelica.Electrical.Analog.Interfaces.Pin '
         protectedNode = []
-        print "CompInfo coming to nodeSeparate function: compInfo",compInfo
+        #print "CompInfo coming to nodeSeparate function: compInfo",compInfo
         
         #Removing '[' and ']' from compInfo for Digital node
         for i in range(0,len(compInfo),1):
@@ -586,8 +592,8 @@ class NgMoConverter:
         sourcesInfo = self.separateSource(compInfo)
         for eachline in compInfo:
             words = eachline.split()
-            print "eachline----->",eachline
-            print "eachline[0]------->",eachline[0]
+            #print "eachline----->",eachline
+            #print "eachline[0]------->",eachline[0]
             if eachline[0]=='r' or eachline[0]=='R' or eachline[0]=='c' or eachline[0]=='C' or eachline[0]=='d' or eachline[0]=='D' \
             or eachline[0]=='l' or eachline[0]=='L' or eachline[0]=='v' or eachline[0]=='V':
                 conn = 'connect(' + words[0] + '.p,' + nodeDic[words[1]] + ');'

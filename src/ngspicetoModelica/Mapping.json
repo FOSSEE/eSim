@@ -30,6 +30,10 @@
 		"Mosfet":"List of Mosfet Param"
 		},
 
+	"Models":{
+		
+	},
+
 	"Units":{
 		"k":"e3",
 		"u":"e-6",
