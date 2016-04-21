@@ -411,8 +411,6 @@ class NgMoConverter:
         for eachline in self.inbuiltModelDetail:
             words=eachline.split()
             userModelParamList = []
-            #print "Model Info--------->",modelInfo
-            #print "Inbuilt Model Mapped to ref---------->",self.inbuiltModelDict
             refName = words[-1]
             print "Reference Model Name------->",refName
             actualModelName = self.inbuiltModelDict[refName]
@@ -421,17 +419,17 @@ class NgMoConverter:
             print "Import Statement-------->",start
             stat = start +" "+ words[0]+"("
             tempstatList=[]
-            print "Start Stat-------->",stat
+            print "Start of Stat-------->",stat
             for key in modelInfo[refName]:
                 #If parameter is not mapped then it will just pass 
                 try:
                     actualModelicaParam = self.mappingData["Models"][actualModelName]["mapping"][key]
-                    tempstatList.append(actualModelicaParam+"="+modelInfo[refName][actualModelicaParam]+" ")
+                    tempstatList.append(actualModelicaParam+"="+self.getUnitVal(modelInfo[refName][key])+" ")
                     userModelParamList.append(str(actualModelicaParam))
                 except:
                     pass
                 
-            print "User Model list---->",userModelParamList
+            print "User Model Parameter list---->",userModelParamList
             
             #Running loop over default parameter of OpenModelica
             for default in self.mappingData["Models"][actualModelName]["default"]:
@@ -439,7 +437,7 @@ class NgMoConverter:
                     continue
                 else:
                     defaultValue = self.mappingData["Models"][actualModelName]["default"][default]
-                    tempstatList.append(default+"="+defaultValue+" ")
+                    tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
                     
             #print "My Stat------------>",stat
             #print "Temp Stat List--------->",tempstatList  
