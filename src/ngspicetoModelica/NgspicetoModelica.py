@@ -111,6 +111,7 @@ class NgMoConverter:
                 templine = eachline[0].split()
                 trans = templine[1]
                 transInfo[trans] = []
+                templine[2] = templine[2].lower()
                 if templine[2] in ['npn', 'pnp', 'pmos', 'nmos']:
                     transInfo[trans] = templine[2]
                 else:
@@ -143,7 +144,8 @@ class NgMoConverter:
             newdata = data.split('(')
             templine_f = newdata[0].split()
             trans_f = templine_f[1]
-            transInfo[trans_f] = [] 
+            transInfo[trans_f] = []
+            templine_f[2] = templine_f[2].lower() 
             if templine_f[2] in ['npn', 'pnp', 'pmos', 'nmos']:
                 transInfo[trans_f] = templine_f[2]
             
@@ -329,6 +331,8 @@ class NgMoConverter:
                 
             elif eachline[0]=='q' or eachline[0]=='Q':
                 trans = transInfo[words[4]]
+                print "Trans---------->",trans
+                print "TransInfo---------->",transInfo
                 if trans == 'npn':
                     start = 'Analog.Semiconductors.NPN '
                 else:
