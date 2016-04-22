@@ -19,6 +19,7 @@ class NgMoConverter:
         self.inbuiltModelDetail = []
         self.deviceList = ['d','D','j','J','q','Q','m','M']
         self.inbuiltModelDict = {}
+        
             
 
     def readNetlist(self,filename):
@@ -148,7 +149,7 @@ class NgMoConverter:
             templine_f[2] = templine_f[2].lower() 
             if templine_f[2] in ['npn', 'pnp', 'pmos', 'nmos']:
                 transInfo[trans_f] = templine_f[2]
-            
+                       
             refModelName = trans_f
             newdata[1] = newdata[1].lower()
             modelParameter = newdata[1].split()
@@ -317,46 +318,86 @@ class NgMoConverter:
         #Lets start for device
         for eachline in self.deviceDetail:
             words=eachline.split()
-            if eachline[0]=='d' or eachline[0]=='D':
+            deviceName = eachline[0].lower()
+            if deviceName=='d':
                 if len(words)>3:
                     if modelInfo[words[3]].has_key('n'):
                         n = float(modelInfo[words[3]]['n'])
                     else:
                         n = 1.0
                     vt = str(float(0.025*n))
-                    stat = self.mappingData["Devices"][eachline[0]]+' '+ words[0] + '(Ids = ' + modelInfo[words[3]]['is'] + ', Vt = ' + vt + ', R = 1e12' +');'
-                else:
-                    stat = self.mappingData["Devices"][eachline[0]]+' '+ words[0] +';'
-                modelicaCompInit.append(stat)
-                
-            elif eachline[0]=='q' or eachline[0]=='Q':
-                trans = transInfo[words[4]]
-                print "Trans---------->",trans
-                print "TransInfo---------->",transInfo
-                if trans == 'npn':
-                    start = 'Analog.Semiconductors.NPN '
-                else:
-                    start = 'Analog.Semiconductors.PNP '
+                    #stat = self.mappingData["Devices"][deviceName]["import"]+' '+ words[0] + '(Ids = ' + modelInfo[words[3]]['is'] + ', Vt = ' + vt + ', R = 1e12' +');'
+                    start = self.mappingData["Devices"][deviceName]["import"]
+                    stat = start+" "+words[0]+"("
+                    tempstatList=[]
+                    userDeviceParamList=[]
+                    refName = words[-1]
+                    for key in modelInfo[refName]:
+                        #If parameter is not mapped then it will just pass                         
+                        try:
+                            actualModelicaParam = self.mappingData["Devices"][deviceName]["mapping"][key]
+                            tempstatList.append(actualModelicaParam+"="+self.getUnitVal(modelInfo[refName][key])+" ")
+                            userDeviceParamList.append(str(actualModelicaParam))
+                        except:
+                            pass
+                    #Adding Vt and R
+                    userDeviceParamList.append("Vt")
+                    tempstatList.append("Vt="+vt)
+                    #Running loop over default parameter of OpenModelica
+                    for default in self.mappingData["Devices"][deviceName]["default"]:
+                        if default in userDeviceParamList:
+                            continue
+                        else:
+                            defaultValue = self.mappingData["Devices"][deviceName]["default"][default]
+                            tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
                     
-                inv_vak = float(self.tryExists(modelInfo,words,4, 'vaf', 50))
-                vak_temp = 1/inv_vak
-                vak = str(vak_temp)
-                bf = self.tryExists(modelInfo,words,4, 'bf', 50)
-                br = self.tryExists(modelInfo,words,4, 'br', 0.1)
-                Is = self.tryExists(modelInfo,words,4, 'is', 1e-16)
-                tf = self.tryExists(modelInfo,words,4, 'tf', 1.2e-10)
-                tr = self.tryExists(modelInfo,words,4, 'tr', 5e-9)
-                cjs = self.tryExists(modelInfo,words,4, 'cjs', 1e-12)
-                cje = self.tryExists(modelInfo,words,4, 'cje', 4e-13)
-                cjc = self.tryExists(modelInfo,words,4, 'cjc', 5e-13)
-                vje = self.tryExists(modelInfo,words,4, 'vje', 0.8)
-                mje = self.tryExists(modelInfo,words,4, 'mje', 0.4)
-                vjc = self.tryExists(modelInfo,words,4, 'vjc', 0.8)
-                mjc = self.tryExists(modelInfo,words,4, 'mjc', 0.333)
-                stat = start + words[0] +'(Bf = ' + bf + ', Br = ' + br + ', Is = ' +Is+ ', Vak = ' + vak + ', Tauf = ' +tf+ ', Taur = ' +tr+ ', Ccs = ' +cjs+ ', Cje = ' +cje+ ', Cjc = ' +cjc+ ', Phie = ' + vje + ', Me = ' + mje + ', Phic = ' + vjc + ', Mc = ' + mjc + ');'
+                    stat += ",".join(str(item) for item in tempstatList)+");"   
+                                        
+                else:
+                    stat = self.mappingData["Devices"][deviceName]["import"]+" "+ words[0] +";"
                 modelicaCompInit.append(stat)
                 
-            elif eachline[0]=='m' or eachline[0]=="M":
+            elif deviceName=='q':
+                trans = transInfo[words[4]]
+                if trans == 'npn':
+                    start = self.mappingData["Devices"][deviceName]["import"]+".NPN"
+                elif trans == 'pnp':
+                    start = self.mappingData["Devices"][deviceName]["import"]+".PNP"
+                else:
+                    print "Transistor "+trans+" does not support"
+                    sys.exit(1)
+                
+                stat = start+" "+words[0]+"("
+                tempstatList=[]
+                userDeviceParamList=[]
+                refName = words[-1]
+                for key in modelInfo[refName]:
+                    #If parameter is not mapped then it will just pass                         
+                    try:
+                        if key=="vaf":
+                            inv_vak = float(self.getUnitVal(modelInfo[refName][key]))
+                            vak_temp = 1/inv_vak
+                            vak = str(vak_temp)
+                            tempstatList.append("Vak="+vak+" ")
+                            userDeviceParamList.append(str("Vak"))
+                        else:
+                            actualModelicaParam = self.mappingData["Devices"][deviceName]["mapping"][key]
+                            tempstatList.append(actualModelicaParam+"="+self.getUnitVal(modelInfo[refName][key])+" ")
+                            userDeviceParamList.append(str(actualModelicaParam))
+                    except:
+                        pass
+                #Running loop over default parameter of OpenModelica
+                for default in self.mappingData["Devices"][deviceName]["default"]:
+                    if default in userDeviceParamList:
+                        continue
+                    else:
+                        defaultValue = self.mappingData["Devices"][deviceName]["default"][default]
+                        tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
+                        
+                stat += ",".join(str(item) for item in tempstatList)+");" 
+                modelicaCompInit.append(stat)
+                
+            elif deviceName=='m':
                 eachline = eachline.split(words[5])
                 eachline = eachline[1]
                 eachline = eachline.strip()
@@ -621,10 +662,10 @@ class NgMoConverter:
                         pinInit = pinInit + nodeDic[protectedNode[i]]
         pinInit = pinInit + ';'
         pinProtectedInit = pinProtectedInit + ';'
-        print "Node---->",node
-        print "nodeDic----->",nodeDic
-        print "PinInit----->",pinInit
-        print "pinProtectedinit--->",pinProtectedInit
+        #print "Node---->",node
+        #print "nodeDic----->",nodeDic
+        #print "PinInit----->",pinInit
+        #print "pinProtectedinit--->",pinProtectedInit
         return node, nodeDic, pinInit, pinProtectedInit
     
     
@@ -646,7 +687,6 @@ class NgMoConverter:
                 conn = 'connect(' + words[0] + '.n,' + nodeDic[words[2]] + ');'
                 connInfo.append(conn)
             elif eachline[0]=='q' or eachline[0]=='Q':
-                print "Inside Transistor--->"
                 print "Node Dict------>",nodeDic
                 conn = 'connect(' + words[0] + '.C,' + nodeDic[words[1]] + ');'
                 connInfo.append(conn)

@@ -18,13 +18,62 @@
 		"dc" : "Analog.Sources.ConstantVoltage"
 		},
 	"Devices":{
-		"d" : "Analog.Semiconductors.Diode",
-		"D" : "Analog.Semiconductors.Diode",
+		"d":{
+			"import":"Analog.Semiconductors.Diode",
+			"mapping":{
+
+				"is":"Ids"
+			},
+			"default":{
+				"Ids":"880.5e-18",
+				"Vt":"0.025",
+				"R":"1e12"
+			}
+
+		},	
+		"q":{
+			"import":"Analog.Semiconductors",
+			"mapping":{
+				"bf":"Bf",
+				"br":"Br",
+				"is":"Is",
+				"vak":"Vak",
+				"tf":"Tauf",
+				"tr":"Taur",
+				"cjs":"Ccs",
+				"cje":"Cje",
+				"cjc":"Cjc",
+				"vje":"Phie",
+				"mje":"Me",
+				"vjc":"Phic",
+				"mjc":"Mc"
+			},
+			"default":{
+				"Bf":"50",
+				"Br":"0.1",
+				"Is":"1e-16",
+				"Tauf":"1.2e-10",
+				"Taur":"5e-9",
+				"Vak":"0.02",
+				"Ccs":"1e-12",
+				"Cje":"4e-12",
+				"Cjc":"5e-13",
+				"Phie":"0.8",
+				"Me":"0.4",
+				"Phic":"0.8",
+				"Mc":"0.333"
+
+			}
+
+		},	
+		"a" : "Analog.Semiconductors.Diode",
+		"b" : "Analog.Semiconductors.Diode",
 		"M" :"BondLib.Electrical.Analog.Spice",
 		"m" : "BondLib.Electrical.Analog.Spice",
-		"Q": "Analog.Semiconductors",
-		"q": "Analog.Semiconductors"
-		},
+		"Qs": "Analog.Semiconductors",
+		"qs": "Analog.Semiconductors"
+	
+	},
 	
 
 	"Models":{
@@ -57,7 +106,7 @@
 		"t":"e12",
 		"g":"e9",
 		"m":"e-3",
-		"me":"e6",
+		"meg":"e6",
 		"n":"e-9",
 		"f":"e-15"
 
