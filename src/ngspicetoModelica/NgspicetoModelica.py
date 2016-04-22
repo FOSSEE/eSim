@@ -328,7 +328,8 @@ class NgMoConverter:
                 modelicaCompInit.append(stat)
                 
             elif eachline[0]=='q' or eachline[0]=='Q':
-                if words[4]=='npn':
+                trans = transInfo[words[4]]
+                if trans == 'npn':
                     start = 'Analog.Semiconductors.NPN '
                 else:
                     start = 'Analog.Semiconductors.PNP '
