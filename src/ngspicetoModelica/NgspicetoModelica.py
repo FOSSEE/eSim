@@ -708,10 +708,9 @@ class NgMoConverter:
         sourcesInfo = self.separateSource(compInfo)
         for eachline in compInfo:
             words = eachline.split()
-            #print "eachline----->",eachline
-            #print "eachline[0]------->",eachline[0]
+            
             if eachline[0]=='r' or eachline[0]=='R' or eachline[0]=='c' or eachline[0]=='C' or eachline[0]=='d' or eachline[0]=='D' \
-            or eachline[0]=='l' or eachline[0]=='L' or eachline[0]=='v' or eachline[0]=='V':
+            or eachline[0]=='l' or eachline[0]=='L' or eachline[0]=='v' or eachline[0]=='V' or eachline[0]=='i' or eachline[0]=='I':
                 conn = 'connect(' + words[0] + '.p,' + nodeDic[words[1]] + ');'
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.n,' + nodeDic[words[2]] + ');'
