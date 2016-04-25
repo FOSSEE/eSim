@@ -30,6 +30,53 @@
 				"R":"1e12"
 			}
 
+		},
+
+		"m":{
+			"import":"BondLib.Electrical.Analog.Spice",
+			"mapping":{
+				"tnom":"TNOM",
+				"vto":"VTO",
+				"gamma":"GAMMA",
+				"phi":"PHI",
+				"ld":"LD",
+				"uo":"U0",
+				"lambda":"LAMBDA",
+				"tox":"TOX",
+				"pb":"PB",
+				"cj":"CJ",
+				"cjsw":"CJSW",
+				"mj":"MJ",
+				"mjsw":"MJSW",
+				"cgdo":"CGDO",
+				"js":"JS",
+				"cgbo":"CGB0",
+				"cgso":"CGS0"
+				
+			
+			},
+			"default":{
+				"TNOM":"300",
+				"VTO":"0",
+				"GAMMA":"0",
+				"PHI":"0",
+				"LD":"0",
+				"U0":"0",
+				"LAMBDA":"0",
+				"TOX":"3e-9",
+				"PB":"0.8",
+				"CJ":"0",
+				"CJSW":"1e-9",
+				"MJ":"0.33",
+				"MJSW":"0.33",
+				"CGDO":"0",
+				"JS":"0",
+				"CGB0":"0",
+				"CGS0":"0"
+
+
+			}
+
 		},	
 		"q":{
 			"import":"Analog.Semiconductors",
@@ -65,13 +112,11 @@
 
 			}
 
-		},	
+		},
 		"a" : "Analog.Semiconductors.Diode",
 		"b" : "Analog.Semiconductors.Diode",
-		"M" :"BondLib.Electrical.Analog.Spice",
-		"m" : "BondLib.Electrical.Analog.Spice",
-		"Qs": "Analog.Semiconductors",
-		"qs": "Analog.Semiconductors"
+		"M" :"BondLib.Electrical.Analog.Spice"
+		
 	
 	},
 	

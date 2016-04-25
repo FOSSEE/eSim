@@ -364,13 +364,13 @@ class NgMoConverter:
                 elif trans == 'pnp':
                     start = self.mappingData["Devices"][deviceName]["import"]+".PNP"
                 else:
-                    print "Transistor "+trans+" does not support"
+                    print "Transistor "+trans+" Not found"
                     sys.exit(1)
                 
                 stat = start+" "+words[0]+"("
                 tempstatList=[]
                 userDeviceParamList=[]
-                refName = words[-1]
+                refName = words[4]
                 for key in modelInfo[refName]:
                     #If parameter is not mapped then it will just pass                         
                     try:
@@ -409,49 +409,75 @@ class NgMoConverter:
                         each  = each.split('=')
                         mosInfo[words[0]][each[0]] = each[1]
                 trans = transInfo[words[5]]
-                print "trans------------>",trans
+                
                 if trans == 'nmos':
-                    start = 'BondLib.Electrical.Analog.Spice.Mn '
+                    start = self.mappingData["Devices"][deviceName]["import"]+".Mn"
+                elif trans=='pmos' :
+                    start = self.mappingData["Devices"][deviceName]["import"]+".Mp"
                 else:
-                    start = 'BondLib.Electrical.Analog.Spice.Mp '
-                vto = self.tryExists(modelInfo,words,5,'vto',0)
-                gam = self.tryExists(modelInfo,words,5,'gamma',0)
-                phi = self.tryExists(modelInfo,words,5, 'phi', 0)
-                ld = self.tryExists(modelInfo,words,5,'ld',0)
-                uo = self.tryExists(modelInfo,words,5,'uo',0)
-                lam  = self.tryExists(modelInfo,words,5,'lambda',0)
-                tox = self.tryExists(modelInfo,words,5,'tox',3e-9)
-                pb = self.tryExists(modelInfo,words,5, 'pb',0.8)
-                cj = self.tryExists(modelInfo,words,5, 'cj',0)
-                cjsw = self.tryExists(modelInfo,words,5, 'cjsw',1e-9)
-                mj = self.tryExists(modelInfo,words,5, 'mj',0.33)
-                mjsw = self.tryExists(modelInfo,words,5, 'mjsw',0.33)
-                cgdo = self.tryExists(modelInfo,words,5, 'cgdo',0)
-                js = self.tryExists(modelInfo,words,5, 'js',0)
-                cgbo = self.tryExists(modelInfo,words,5, 'cgbo',0)
-                cgso = self.tryExists(modelInfo,words,5,'cgso',0)
+                    print "MOSFET "+trans+" not found"
+                    sys.exit(1)
+                    
+                
+                stat = start+" "+words[0]+"("
+                tempstatList=[]
+                userDeviceParamList=[]
+                refName = words[5]
+                
+                for key in modelInfo[refName]:
+                    #If parameter is not mapped then it will just pass                   
+                    try:
+                        if key=="uo":
+                            U0 = str(float(self.getUnitVal(modelInfo[refName][key]))*0.0001)
+                            tempstatList.append("U0="+U0+" ")
+                            userDeviceParamList.append(str("U0"))
+                        else:
+                            actualModelicaParam = self.mappingData["Devices"][deviceName]["mapping"][key]
+                            tempstatList.append(actualModelicaParam+"="+self.getUnitVal(modelInfo[refName][key])+" ")
+                            userDeviceParamList.append(str(actualModelicaParam))
+                    except Exception as err:
+                        print str(err)
+                
+                #Running loop over default parameter of OpenModelica
+                for default in self.mappingData["Devices"][deviceName]["default"]:
+                    if default in userDeviceParamList:
+                        continue
+                    else:
+                        defaultValue = self.mappingData["Devices"][deviceName]["default"][default]
+                        tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
+                        
+                               
+                #Adding LEVEL(This is constant not the device levele)
+                tempstatList.append("LEVEL=1"+" ")
+                
                 try:
                     l = mosInfo[words[0]]['l']
+                    tempstatList.append("L="+self.getUnitVal(l)+" ")
                 except KeyError:
-                    l = '1e-6'
+                    tempstatList.append("L=1e-6"+" ")
                 try:
                     w = mosInfo[words[0]]['w']
+                    tempstatList.append("W="+self.getUnitVal(w)+" ")
                 except KeyError:
-                    w = '100e-6'
+                    tempstatList.append("W=100e-6"+" ")
                 try:
                     As = mosInfo[words[0]]['as']
                     ad = mosInfo[words[0]]['ad']
+                    tempstatList.append("AS="+self.getUnitVal(As)+" ")
+                    tempstatList.append("AD="+self.getUnitVal(ad)+" ")
                 except KeyError:
-                    As = '0'
-                    ad = '0'
+                    tempstatList.append("AS=0"+" ")
+                    tempstatList.append("AD=0"+" ")
                 try:
                     ps = mosInfo[words[0]]['ps']
                     pd = mosInfo[words[0]]['pd']
+                    tempstatList.append("PS="+self.getUnitVal(ps)+" ")
+                    tempstatList.append("PD="+self.getUnitVal(pd)+" ")
                 except KeyError:
-                    ps = '0'
-                    pd = '0'
-                stat = start + words[0] + '(Tnom = 300, VT0 = ' + vto + ', GAMMA = ' + gam + ', PHI = ' + phi + ', LD = ' +ld+ ', U0 = ' + str(float(uo)*0.0001) + ', LAMBDA = ' + lam + ', TOX = ' +tox+ ', PB = ' + pb + ', CJ = ' +cj+ ', CJSW = ' +cjsw+ ', MJ = ' + mj + ', MJSW = ' + mjsw + ', CGD0 = ' +cgdo+ ', JS = ' +js+ ', CGB0 = ' +cgbo+ ', CGS0 = ' +cgso+ ', L = ' +l+ ', W = ' + w + ', Level = 1' + ', AD = ' + ad + ', AS = ' + As + ', PD = ' + pd + ', PS = ' + ps + ');'
-                #stat = stat.translate(maketrans('{}', '  ')) #Not required
+                    tempstatList.append("PS=0"+" ")
+                    tempstatList.append("PD=0"+" ")
+                                
+                stat += ",".join(str(item) for item in tempstatList)+");" 
                 modelicaCompInit.append(stat)
         
         #Lets start for inbuilt model of ngspice
@@ -459,14 +485,12 @@ class NgMoConverter:
             words=eachline.split()
             userModelParamList = []
             refName = words[-1]
-            print "Reference Model Name------->",refName
             actualModelName = self.inbuiltModelDict[refName]
-            print "Actual Model Name------->",actualModelName
+            
             start = self.mappingData["Models"][actualModelName]["import"]
-            print "Import Statement-------->",start
             stat = start +" "+ words[0]+"("
             tempstatList=[]
-            print "Start of Stat-------->",stat
+            
             for key in modelInfo[refName]:
                 #If parameter is not mapped then it will just pass 
                 try:
@@ -476,8 +500,6 @@ class NgMoConverter:
                 except:
                     pass
                 
-            print "User Model Parameter list---->",userModelParamList
-            
             #Running loop over default parameter of OpenModelica
             for default in self.mappingData["Models"][actualModelName]["default"]:
                 if default in userModelParamList:
@@ -486,10 +508,7 @@ class NgMoConverter:
                     defaultValue = self.mappingData["Models"][actualModelName]["default"][default]
                     tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
                     
-            #print "My Stat------------>",stat
-            #print "Temp Stat List--------->",tempstatList  
             stat += ",".join(str(item) for item in tempstatList)+");"
-            print "End Stat---------->",stat
             modelicaCompInit.append(stat)  
         
         
