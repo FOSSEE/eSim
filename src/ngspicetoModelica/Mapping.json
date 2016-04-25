@@ -12,10 +12,17 @@
 
 		},
 	"Sources":{
-		"pulse":"Analog.Sources.TrapezoidVoltage",
-		"sine":"Analog.Sources.SineVoltage",
-		"pwl" : "Analog.Sources.TableVoltage",
-		"dc" : "Analog.Sources.ConstantVoltage"
+		"v":{
+			"pulse":"Analog.Sources.TrapezoidVoltage",
+			"sine":"Analog.Sources.SineVoltage",
+			"pwl" : "Analog.Sources.TableVoltage",
+			"dc" : "Analog.Sources.ConstantVoltage"
+		},
+
+		"i":{
+			"dc":"Analog.Sources.ConstantCurrent"
+		}
+		
 		},
 	"Devices":{
 		"d":{
@@ -153,7 +160,8 @@
 		"m":"e-3",
 		"meg":"e6",
 		"n":"e-9",
-		"f":"e-15"
+		"f":"e-15",
+		"ma":"e-3"
 
 	}
 	

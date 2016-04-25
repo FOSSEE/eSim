@@ -18,6 +18,7 @@ class NgMoConverter:
         self.subCktDetail = []
         self.inbuiltModelDetail = []
         self.deviceList = ['d','D','j','J','q','Q','m','M']
+        self.sourceList = ['v','V','i','I']
         self.inbuiltModelDict = {}
         
             
@@ -71,7 +72,7 @@ class NgMoConverter:
                     self.deviceDetail.append(eachline)
                 elif eachline[0]=='x' or eachline[0]=='X':
                     self.subCktDetail.append(eachline)
-                elif eachline[0]=='v' or eachline[0]=='V':
+                elif eachline[0] in self.sourceList:
                     schematicInfo.append(eachline)
                     self.sourceDetail.append(eachline)
                 elif eachline[0]=='a' or eachline[0]=='A':
@@ -285,35 +286,45 @@ class NgMoConverter:
             words = eachline.lower().split()
             words[0] = compName
             typ = words[3].split('(')
-            if typ[0] == "pulse":
-                per = words[9].split(')')
-                stat = self.mappingData["Sources"][typ[0]]+' '+words[0]+'(rising = '+self.getUnitVal(words[6])+', V = '+self.getUnitVal(words[4])\
-                +', width = '+self.getUnitVal(words[8])+', period = '+self.getUnitVal(per[0])+', offset = '+self.getUnitVal(typ[1])+', startTime = '+self.getUnitVal(words[5])+', falling = '+self.getUnitVal(words[7])+');'                                                                                                                                                                             
+            
+            sourceType = compName[0].lower()
+            
+            if sourceType == 'v':
+                if typ[0] == "pulse":
+                    per = words[9].split(')')
+                    stat = self.mappingData["Sources"][sourceType][typ[0]]+' '+compName+'(rising = '+self.getUnitVal(words[6])+', V = '+self.getUnitVal(words[4])\
+                    +', width = '+self.getUnitVal(words[8])+', period = '+self.getUnitVal(per[0])+', offset = '+self.getUnitVal(typ[1])+', startTime = '+self.getUnitVal(words[5])+', falling = '+self.getUnitVal(words[7])+');'                                                                                                                                                                             
+                    modelicaCompInit.append(stat)
+                if typ[0] == "sine":
+                    theta = words[7].split(')')
+                    stat = self.mappingData["Sources"][sourceType][typ[0]]+' '+compName+'(offset = '+self.getUnitVal(typ[1])+', V = '+self.getUnitVal(words[4])+', freqHz = '+self.getUnitVal(words[5])+', startTime = '+self.getUnitVal(words[6])+', phase = '+self.getUnitVal(theta[0])+');'
+                    modelicaCompInit.append(stat)
+                if typ[0] == "pwl":
+                    keyw = self.mappingData["Sources"][sourceType][typ[0]]+' '
+                    stat = keyw + compName + '(table = [' + self.getUnitVal(typ[1]) + ',' + self.getUnitVal(words[4]) + ';'
+                    length = len(words);
+                    for i in range(6,length,2):
+                        if i == length-2:
+                            w = words[i].split(')')
+                            stat = stat + words[i-1] + ',' + w[0] 
+                        else:
+                            stat = stat + words[i-1] + ',' + words[i] + ';'
+                    stat = stat + ']);'
+                    modelicaCompInit.append(stat) 
+                if typ[0] == words[3] and typ[0] != "dc":
+                    #It is DC constant but no dc keyword
+                    val_temp = typ[0].split('v')
+                    stat = self.mappingData["Sources"][sourceType]["dc"]+' ' + compName + '(V = ' + self.getUnitVal(val_temp[0]) + ');' 
+                    modelicaCompInit.append(stat)
+                elif typ[0] == words[3] and typ[0] == "dc":
+                    stat = self.mappingData["Sources"][sourceType][typ[0]]+' ' + compName + '(V = ' + self.getUnitVal(words[4]) + ');'    ### check this
+                    modelicaCompInit.append(stat)
+                    
+            elif sourceType=='i':
+                print "Word---------------->",words[3]
+                stat = self.mappingData["Sources"][sourceType]["dc"]+' '+compName+'(I='+self.getUnitVal(words[3])+');'
                 modelicaCompInit.append(stat)
-            if typ[0] == "sine":
-                theta = words[7].split(')')
-                stat = self.mappingData["Sources"][typ[0]]+' '+words[0]+'(offset = '+self.getUnitVal(typ[1])+', V = '+self.getUnitVal(words[4])+', freqHz = '+self.getUnitVal(words[5])+', startTime = '+self.getUnitVal(words[6])+', phase = '+self.getUnitVal(theta[0])+');'
-                modelicaCompInit.append(stat)
-            if typ[0] == "pwl":
-                keyw = self.mappingData["Sources"][typ[0]]+' '
-                stat = keyw + words[0] + '(table = [' + self.getUnitVal(typ[1]) + ',' + self.getUnitVal(words[4]) + ';'
-                length = len(words);
-                for i in range(6,length,2):
-                    if i == length-2:
-                        w = words[i].split(')')
-                        stat = stat + words[i-1] + ',' + w[0] 
-                    else:
-                        stat = stat + words[i-1] + ',' + words[i] + ';'
-                stat = stat + ']);'
-                modelicaCompInit.append(stat) 
-            if typ[0] == words[3] and typ[0] != "dc":
-                #It is DC constant but no dc keyword
-                val_temp = typ[0].split('v')
-                stat = self.mappingData["Sources"]["dc"]+' ' + words[0] + '(V = ' + self.getUnitVal(val_temp[0]) + ');' 
-                modelicaCompInit.append(stat)
-            elif typ[0] == words[3] and typ[0] == "dc":
-                stat = self.mappingData["Sources"][typ[0]]+' ' + words[0] + '(V = ' + self.getUnitVal(words[4]) + ');'    ### check this
-                modelicaCompInit.append(stat)
+                
                 
         #Lets start for device
         for eachline in self.deviceDetail:
