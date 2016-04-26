@@ -306,9 +306,9 @@ class NgMoConverter:
                     for i in range(6,length,2):
                         if i == length-2:
                             w = words[i].split(')')
-                            stat = stat + words[i-1] + ',' + w[0] 
+                            stat = stat + self.getUnitVal(words[i-1]) + ',' + self.getUnitVal(w[0]) 
                         else:
-                            stat = stat + words[i-1] + ',' + words[i] + ';'
+                            stat = stat + self.getUnitVal(words[i-1]) + ',' + self.getUnitVal(words[i]) + ';'
                     stat = stat + ']);'
                     modelicaCompInit.append(stat) 
                 if typ[0] == words[3] and typ[0] != "dc":
@@ -321,7 +321,6 @@ class NgMoConverter:
                     modelicaCompInit.append(stat)
                     
             elif sourceType=='i':
-                print "Word---------------->",words[3]
                 stat = self.mappingData["Sources"][sourceType]["dc"]+' '+compName+'(I='+self.getUnitVal(words[3])+');'
                 modelicaCompInit.append(stat)
                 
