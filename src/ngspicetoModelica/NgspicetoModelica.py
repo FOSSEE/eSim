@@ -220,20 +220,38 @@ class NgMoConverter:
     
     def getUnitVal(self,compValue):
         #regExp = re.compile("([0-9]+)([a-zA-Z]+)")
-        regExp = re.compile("([0-9]+)\.?([0-9]+)?([a-zA-Z])?")
+        #Remove '(' and ')' if any
+        compValue = compValue.replace('(','').replace(')','')
+        regExp = re.compile("([-])?([0-9]+)\.?([0-9]+)?([a-zA-Z])?")
         matchString = regExp.match(str(compValue))  #separating number and string
         try:
-            valBeforeDecimal = matchString.group(1)
-            valAfterDecimal = matchString.group(2)
-            unitValue = matchString.group(3)
-            if str(valAfterDecimal)=='None':
-                modifiedcompValue = valBeforeDecimal+self.mappingData["Units"][unitValue]
+            signVal = matchString.group(1)
+            valBeforeDecimal = matchString.group(2)
+            valAfterDecimal = matchString.group(3)
+            unitValue = matchString.group(4)
+            modifiedcompValue = ""
+            
+            if str(signVal)=='None':
+                pass
             else:
-                modifiedcompValue = valBeforeDecimal+'.'+valAfterDecimal+self.mappingData["Units"][unitValue]
+                modifiedcompValue += signVal
+            
+            modifiedcompValue += valBeforeDecimal
+                       
+            if str(valAfterDecimal)=='None':
+                pass
+            else:
+                modifiedcompValue += valAfterDecimal 
+            
+            if str(unitValue)=='None':
+                pass
+            else:
+                modifiedcompValue += self.mappingData["Units"][unitValue]
+            
             return modifiedcompValue
         except:
             return compValue
-    
+        
     def tryExists(self,modelInfo,words,wordNo, key,default):
         """ 
         checks if entry for key exists in dictionary, else returns default
@@ -634,12 +652,11 @@ class NgMoConverter:
         #Removing '[' and ']' from compInfo for Digital node
         for i in range(0,len(compInfo),1):
             compInfo[i] = compInfo[i].replace("[","").replace("]","")
-            #Remove "-" from node as it does not work in modelica
-            compInfo[i] = compInfo[i].replace("-","")
-        
+                   
                 
         for eachline in compInfo:
             words = eachline.split()
+            
             if eachline[0] in ['m', 'e', 'g', 't','M','E','G','T']:
                 nodeTemp.append(words[1])
                 nodeTemp.append(words[2])
@@ -658,8 +675,11 @@ class NgMoConverter:
             else:
                 nodeTemp.append(words[1])
                 nodeTemp.append(words[2])
+        
+        #Replace hyphen '-' from node
         for i in nodeTemp:
             if i not in node:
+                i = i.replace("-","")
                 node.append(i)
         
             
@@ -703,10 +723,13 @@ class NgMoConverter:
         Make node connections in the modelica netlist
         """
         connInfo = []
-        print "compinfo-------->",compInfo
         sourcesInfo = self.separateSource(compInfo)
         for eachline in compInfo:
             words = eachline.split()
+            
+            #Remove '-' from compInfo  
+            for i in range(0,len(words),1):
+                words[i] = words[i].replace("-","")
             
             if eachline[0]=='r' or eachline[0]=='R' or eachline[0]=='c' or eachline[0]=='C' or eachline[0]=='d' or eachline[0]=='D' \
             or eachline[0]=='l' or eachline[0]=='L' or eachline[0]=='v' or eachline[0]=='V' or eachline[0]=='i' or eachline[0]=='I':
@@ -715,7 +738,6 @@ class NgMoConverter:
                 conn = 'connect(' + words[0] + '.n,' + nodeDic[words[2]] + ');'
                 connInfo.append(conn)
             elif eachline[0]=='q' or eachline[0]=='Q':
-                print "Node Dict------>",nodeDic
                 conn = 'connect(' + words[0] + '.C,' + nodeDic[words[1]] + ');'
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.B,' + nodeDic[words[2]] + ');'
@@ -757,11 +779,10 @@ class NgMoConverter:
                 temp = templine[0].split('x')
                 index = temp[1]
                 for i in range(0,len(templine),1):
-                    if templine[i] in subcktName:   #Ask Manas Added subcktName in function Call
+                    if templine[i] in subcktName:   
                         subname = templine[i]
                 nodeNumInfo = self.getSubInterface(subname, numNodesSub)
                 for i in range(0, numNodesSub[subname], 1):
-                    #conn = 'connect(' + subname + '_instance' + index + '.' + nodeDic[nodeNumInfo[i]] + ',' + nodeDic[words[i+1]] + ');'
                     conn = 'connect(' + subname + '_instance' + index + '.' + 'n'+ nodeNumInfo[i] + ',' + nodeDic[words[i+1]] + ');'
                     connInfo.append(conn)
             else:
@@ -772,6 +793,13 @@ class NgMoConverter:
         elif 'gnd' in node:
             conn = 'connect(g.p,ngnd);'
             connInfo.append(conn)
+        
+        print "Connection Information--------->",connInfo
+        
+                    
+        # Removing hypen from netlist as it is not supported in modelica
+        #for i in range(0,len(connInfo),1):
+        #    connInfo[i] = connInfo[i].replace("-","")
          
         return connInfo
     
@@ -933,7 +961,6 @@ def main(args):
     modelicaParamInit = obj_NgMoConverter.processParam(paramInfo)
     #print "Make modelicaParamInit from paramInfo  :processParamInit------------->",modelicaParamInit 
     compInfo, plotInfo = obj_NgMoConverter.separatePlot(schematicInfo)
-    print "Info like run etc  : CompInfo----------------->",compInfo
     #print "Plot info like plot,print etc :plotInfo",plotInfo
     IfMOS = '0'
     
