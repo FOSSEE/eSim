@@ -52,7 +52,13 @@ class plotWindow(QtGui.QMainWindow):
         self.a = self.obj_dataext.numVals()
                         
         self.chkbox=[]
-        
+
+        self.val_dict = {}
+
+        for i in range(0,self.a[0]-1):
+            self.val_dict[self.obj_dataext.NBList[i]] = self.obj_dataext.y[i]
+        self.val_dict['x-axis'] = self.obj_dataext.x
+ 
         ########### Generating list of colors :
         self.full_colors = ['r','b','g','y','c','m','k']#,(0.4,0.5,0.2),(0.1,0.4,0.9),(0.4,0.9,0.2),(0.9,0.4,0.9)]
         self.color = []
