@@ -756,7 +756,9 @@ class NgMoConverter:
             elif eachline[0] in ['f','h','F','H']:
                 vsource = words[3]
                 sourceNodes = sourcesInfo[vsource]
-                sourceNodes = sourceNodes.split()
+                #print "Source Nodes------>",sourceNodes
+                #print "Source Info------->",sourcesInfo
+                #sourceNodes = sourceNodes.split() #No need to split as it is in the form of list
                 conn = 'connect(' + words[0] + '.p1,'+ nodeDic[sourceNodes[0]] + ');'
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.n1,'+ nodeDic[sourceNodes[1]] + ');'
