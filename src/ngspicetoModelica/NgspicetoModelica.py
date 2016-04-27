@@ -48,7 +48,9 @@ class NgMoConverter:
                 if eachline[0]=='+':
                     netlist.append(netlist.pop()+eachline.replace('+',' ',1))
                 else:
+                    print "EachLine------------>",eachline
                     netlist.append(eachline)  
+        print "Netlist.............>",netlist
         return netlist
     
     def separateNetlistInfo(self,netlist):
@@ -58,7 +60,10 @@ class NgMoConverter:
         optionInfo = []
         schematicInfo = []
         
+       
+        
         for eachline in netlist:
+            
             if len(eachline) > 1:
                 if eachline[0]=='*':
                     continue
@@ -71,6 +76,7 @@ class NgMoConverter:
                     schematicInfo.append(eachline)
                     self.deviceDetail.append(eachline)
                 elif eachline[0]=='x' or eachline[0]=='X':
+                    schematicInfo.append(eachline)
                     self.subCktDetail.append(eachline)
                 elif eachline[0] in self.sourceList:
                     schematicInfo.append(eachline)
@@ -82,6 +88,8 @@ class NgMoConverter:
                     schematicInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
                     #schematicInfo.append(eachline.lower())
+        
+        print "Subcircuit------->",self.subCktDetail
         return optionInfo,schematicInfo
     
     def addModel(self,optionInfo):
@@ -222,7 +230,8 @@ class NgMoConverter:
         #regExp = re.compile("([0-9]+)([a-zA-Z]+)")
         #Remove '(' and ')' if any
         compValue = compValue.replace('(','').replace(')','')
-        regExp = re.compile("([-])?([0-9]+)\.?([0-9]+)?([a-zA-Z])?")
+        #regExp = re.compile("([-])?([0-9]+)\.?([0-9]+)?([a-zA-Z])?")
+        regExp = re.compile("([-])?([0-9]+)\.?([0-9]+)?(\w+)?")
         matchString = regExp.match(str(compValue))  #separating number and string
         try:
             signVal = matchString.group(1)
@@ -230,7 +239,6 @@ class NgMoConverter:
             valAfterDecimal = matchString.group(3)
             unitValue = matchString.group(4)
             modifiedcompValue = ""
-            
             if str(signVal)=='None':
                 pass
             else:
@@ -568,7 +576,9 @@ class NgMoConverter:
             else:
                 stat = subname + ' ' + subname +'_instance' + index + ';'
             modelicaCompInit.append(stat)
-                                         
+        
+        #Empty Sub Circuit Detail
+        self.subCktDetail[:] = []                                 
         
         for eachline in compInfo:
             words = eachline.split()
@@ -677,13 +687,18 @@ class NgMoConverter:
                 nodeTemp.append(words[3])
             elif eachline[0]=='x' or eachline[0]=='X':
                 templine = eachline.split()
+                print "TempLine------------>",templine
+                print "Subckt Name---------->",subcktName
                 for i in range(0,len(templine),1):
                     if templine[i] in subcktName:
                         point = i   
+                print "Added in node----->",words[1:point]
                 nodeTemp.extend(words[1:point])
             else:
                 nodeTemp.append(words[1])
                 nodeTemp.append(words[2])
+                
+        
         
         #Replace hyphen '-' from node
         for i in nodeTemp:
@@ -994,12 +1009,12 @@ def main(args):
                 if eachline[0] == 'm':
                     IfMOS = '1'
                     break
-    #print "Subcircuit OptionInfo : subOptionInfo------------------->",subOptionInfo
-    #print "Subcircuit Schematic Info :subSchemInfo-------------------->",subSchemInfo
+    print "Subcircuit OptionInfo : subOptionInfo------------------->",subOptionInfo
+    print "Subcircuit Schematic Info :subSchemInfo-------------------->",subSchemInfo
                 
     node, nodeDic, pinInit, pinProtectedInit = obj_NgMoConverter.nodeSeparate(compInfo, '0', [], subcktName,[])
-    print "All nodes in the netlist :node---------------->",node
-    print "NodeDic which will be used for modelica : nodeDic------------->",nodeDic
+    #print "All nodes in the netlist :node---------------->",node
+    #print "NodeDic which will be used for modelica : nodeDic------------->",nodeDic
     #print "PinInit-------------->",pinInit
     #print "pinProtectedInit----------->",pinProtectedInit
     
