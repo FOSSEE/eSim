@@ -241,7 +241,7 @@ class NgMoConverter:
             if str(valAfterDecimal)=='None':
                 pass
             else:
-                modifiedcompValue += valAfterDecimal 
+                modifiedcompValue += '.'+valAfterDecimal 
             
             if str(unitValue)=='None':
                 pass
@@ -342,6 +342,10 @@ class NgMoConverter:
                 stat = self.mappingData["Sources"][sourceType]["dc"]+' '+compName+'(I='+self.getUnitVal(words[3])+');'
                 modelicaCompInit.append(stat)
                 
+        #Now empty the source list as it may be used by subcircuit
+        self.sourceDetail[:] = []
+        
+        print "Source Detail after processing-------->",self.sourceDetail
                 
         #Lets start for device
         for eachline in self.deviceDetail:
@@ -508,6 +512,9 @@ class NgMoConverter:
                 stat += ",".join(str(item) for item in tempstatList)+");" 
                 modelicaCompInit.append(stat)
         
+        #Empty device details as well
+        self.deviceDetail[:]=[]
+        
         #Lets start for inbuilt model of ngspice
         for eachline in self.inbuiltModelDetail:
             words=eachline.split()
@@ -539,6 +546,8 @@ class NgMoConverter:
             stat += ",".join(str(item) for item in tempstatList)+");"
             modelicaCompInit.append(stat)  
         
+        #Empty inbuilt Model
+        self.inbuiltModelDetail[:] = []
         
         #Lets start for Subcircuit
         for eachline in self.subCktDetail:
