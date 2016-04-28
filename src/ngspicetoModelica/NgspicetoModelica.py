@@ -910,11 +910,12 @@ class NgMoConverter:
                 #print "modelicaSubParamNew----------------->",modelicaSubParamNew
                 connSubInfo = self.connectInfo(subSchemInfo, nodeSub, nodeDicSub, numNodesSubsub,subcktName)
                 #print "connSubInfo----------------->",connSubInfo
-                newname = filename.split('.')
+                newname = basename.split('.')
                 newfilename = newname[0]
                 outfilename = newfilename+ ".mo"
+                outfilename = os.path.join(dir_name, outfilename)
                 out = open(outfilename,"w")
-                out.writelines('model ' + os.path.basename(newfilename))
+                out.writelines('model ' + newfilename)
                 out.writelines('\n')
                 if IfMOSsub == '0':
                     out.writelines('import Modelica.Electrical.*;')
@@ -949,7 +950,7 @@ class NgMoConverter:
                     else:
                         out.writelines(eachline)
                         out.writelines('\n')
-                out.writelines('end '+ os.path.basename(newfilename) + ';')
+                out.writelines('end '+ newfilename + ';')
                 out.writelines('\n')
                 out.close()
             
