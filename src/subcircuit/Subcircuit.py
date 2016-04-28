@@ -20,12 +20,15 @@ class Subcircuit(QtGui.QWidget):
         self.splitter.setOrientation(QtCore.Qt.Vertical)
 
         self.newbtn = QtGui.QPushButton('New Subcircuit Schematic')
+        self.newbtn.setToolTip('<b>To create new Subcircuit Schematic</b>')
         self.newbtn.setFixedSize(200,40)
         self.newbtn.clicked.connect(self.newsch)
         self.editbtn = QtGui.QPushButton('Edit Subcircuit Schematic')
+        self.editbtn.setToolTip('<b>To edit existing Subcircuit Schematic</b>')
         self.editbtn.setFixedSize(200,40)
         self.editbtn.clicked.connect(self.editsch)
         self.convertbtn = QtGui.QPushButton('Convert Kicad to Ngspice')
+        self.convertbtn.setToolTip('<b>To convert Subcircuit Kicad Netlist to Ngspice Netlist</b>')
         self.convertbtn.setFixedSize(200,40)
         self.convertbtn.clicked.connect(self.convertsch)
 
