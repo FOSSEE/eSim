@@ -229,6 +229,7 @@ class NgMoConverter:
         #regExp = re.compile("([0-9]+)([a-zA-Z]+)")
         #Remove '(' and ')' if any
         compValue = compValue.replace('(','').replace(')','')
+        compValue = compValue.lower()
         #regExp = re.compile("([-])?([0-9]+)\.?([0-9]+)?([a-zA-Z])?")
         regExp = re.compile("([-])?([0-9]+)\.?([0-9]+)?(\w+)?")
         matchString = regExp.match(str(compValue))  #separating number and string
