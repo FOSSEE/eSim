@@ -488,7 +488,7 @@ class NgMoConverter:
                         
                                
                 #Adding LEVEL(This is constant not the device levele)
-                tempstatList.append("LEVEL=1"+" ")
+                tempstatList.append("level=1"+" ")
                 
                 try:
                     l = mosInfo[words[0]]['l']

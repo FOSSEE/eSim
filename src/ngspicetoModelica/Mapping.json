@@ -42,8 +42,8 @@
 		"m":{
 			"import":"BondLib.Electrical.Analog.Spice",
 			"mapping":{
-				"tnom":"TNOM",
-				"vto":"VTO",
+				"tnom":"Tnom",
+				"vto":"VT0",
 				"gamma":"GAMMA",
 				"phi":"PHI",
 				"ld":"LD",
@@ -55,7 +55,7 @@
 				"cjsw":"CJSW",
 				"mj":"MJ",
 				"mjsw":"MJSW",
-				"cgdo":"CGDO",
+				"cgdo":"CGD0",
 				"js":"JS",
 				"cgbo":"CGB0",
 				"cgso":"CGS0"
@@ -63,8 +63,8 @@
 			
 			},
 			"default":{
-				"TNOM":"300",
-				"VTO":"0",
+				"Tnom":"300",
+				"VT0":"0",
 				"GAMMA":"0",
 				"PHI":"0",
 				"LD":"0",
@@ -76,7 +76,7 @@
 				"CJSW":"1e-9",
 				"MJ":"0.33",
 				"MJSW":"0.33",
-				"CGDO":"0",
+				"CGD0":"0",
 				"JS":"0",
 				"CGB0":"0",
 				"CGS0":"0"
