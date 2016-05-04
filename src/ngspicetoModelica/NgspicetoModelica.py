@@ -16,10 +16,10 @@ class NgMoConverter:
         self.sourceDetail = []
         self.deviceDetail = []
         self.subCktDetail = []
-        self.inbuiltModelDetail = []
         self.deviceList = ['d','D','j','J','q','Q','m','M']
         self.sourceList = ['v','V','i','I']
-        self.inbuiltModelDict = {}
+        
+        
         
             
 
@@ -49,7 +49,7 @@ class NgMoConverter:
                     netlist.append(netlist.pop()+eachline.replace('+',' ',1))
                 else:
                     netlist.append(eachline)  
-        #print "Netlist.............>",netlist
+        
         return netlist
     
     def separateNetlistInfo(self,netlist):
@@ -81,14 +81,13 @@ class NgMoConverter:
                     schematicInfo.append(eachline)
                     self.sourceDetail.append(eachline)
                 elif eachline[0]=='a' or eachline[0]=='A':
-                    schematicInfo.append(eachline)
-                    self.inbuiltModelDetail.append(eachline)    
+                    schematicInfo.append(eachline)                       
                 else:
                     schematicInfo.append(eachline)
                     ##No need of making it lower case as netlist is already converted to ngspice
                     #schematicInfo.append(eachline.lower())
         
-        #print "Subcircuit------->",self.subCktDetail
+        
         return optionInfo,schematicInfo
     
     def addModel(self,optionInfo):
@@ -101,6 +100,7 @@ class NgMoConverter:
         subcktName = []
         paramInfo = []
         transInfo = {}
+        inbuiltModelDict = {}
         
         for eachline in optionInfo:
             words = eachline.split()
@@ -124,10 +124,9 @@ class NgMoConverter:
                 if templine[2] in ['npn', 'pnp', 'pmos', 'nmos']:
                     transInfo[trans] = templine[2]
                 else:
-                    self.inbuiltModelDict[model]=templine[2]
+                    inbuiltModelDict[model]=templine[2]
                 eachline[1] = eachline[1].lower()
                 eachline = eachline[1].split()
-                
                 for eachitem in eachline:
                     if len(eachitem) > 1:
                         eachitem = eachitem.replace(')','')
@@ -171,8 +170,9 @@ class NgMoConverter:
                     for eachitem in info:
                         modelInfo[refModelName][info[0]] = info[1] 
             f.close()
-        
-        return modelName, modelInfo, subcktName, paramInfo ,transInfo
+            
+                
+        return modelName, modelInfo, subcktName, paramInfo ,transInfo,inbuiltModelDict
     
     def processParam(self,paramInfo):
         """
@@ -259,20 +259,9 @@ class NgMoConverter:
             return modifiedcompValue
         except:
             return compValue
+           
         
-    def tryExists(self,modelInfo,words,wordNo, key,default):
-        """ 
-        checks if entry for key exists in dictionary, else returns default
-        """
-        try:
-            keyval = modelInfo[words[wordNo]][key]
-            keyval = self.getUnitVal(keyval)
-        except KeyError:
-            keyval = str(default)
-        return keyval
-            
-        
-    def compInit(self,compInfo, node, modelInfo, subcktName,dir_name,transInfo):
+    def compInit(self,compInfo, node, modelInfo, subcktName,dir_name,transInfo,inbuiltModelDict):
         """
         For each component in the netlist initialize it according to Modelica format
         """
@@ -522,41 +511,7 @@ class NgMoConverter:
         
         #Empty device details as well
         self.deviceDetail[:]=[]
-        
-        #Lets start for inbuilt model of ngspice
-        for eachline in self.inbuiltModelDetail:
-            words=eachline.split()
-            userModelParamList = []
-            refName = words[-1]
-            actualModelName = self.inbuiltModelDict[refName]
-            
-            start = self.mappingData["Models"][actualModelName]["import"]
-            stat = start +" "+ words[0]+"("
-            tempstatList=[]
-            
-            for key in modelInfo[refName]:
-                #If parameter is not mapped then it will just pass 
-                try:
-                    actualModelicaParam = self.mappingData["Models"][actualModelName]["mapping"][key]
-                    tempstatList.append(actualModelicaParam+"="+self.getUnitVal(modelInfo[refName][key])+" ")
-                    userModelParamList.append(str(actualModelicaParam))
-                except:
-                    pass
-                
-            #Running loop over default parameter of OpenModelica
-            for default in self.mappingData["Models"][actualModelName]["default"]:
-                if default in userModelParamList:
-                    continue
-                else:
-                    defaultValue = self.mappingData["Models"][actualModelName]["default"][default]
-                    tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
-                    
-            stat += ",".join(str(item) for item in tempstatList)+");"
-            modelicaCompInit.append(stat)  
-        
-        #Empty inbuilt Model
-        self.inbuiltModelDetail[:] = []
-        
+
         #Lets start for Subcircuit
         for eachline in self.subCktDetail:
             global point
@@ -580,12 +535,40 @@ class NgMoConverter:
         #Empty Sub Circuit Detail
         self.subCktDetail[:] = []                                 
         
+        #Lets start for inbuilt model of ngspice
         for eachline in compInfo:
-            words = eachline.split()
-            #val = words[3]
-            #value = self.splitIntoVal(val)
+            words=eachline.split()
             value = self.getUnitVal(words[-1])
-            if eachline[0] == 'r':
+            if eachline[0] == 'a' or eachline[0] == 'A':
+                userModelParamList = []
+                refName = words[-1]
+                actualModelName = inbuiltModelDict[refName]
+                
+                start = self.mappingData["Models"][actualModelName]["import"]
+                stat = start +" "+ words[0]+"("
+                tempstatList=[]
+                
+                for key in modelInfo[refName]:
+                    #If parameter is not mapped then it will just pass 
+                    try:
+                        actualModelicaParam = self.mappingData["Models"][actualModelName]["mapping"][key]
+                        tempstatList.append(actualModelicaParam+"="+self.getUnitVal(modelInfo[refName][key])+" ")
+                        userModelParamList.append(str(actualModelicaParam))
+                    except:
+                        pass
+                    
+                #Running loop over default parameter of OpenModelica
+                for default in self.mappingData["Models"][actualModelName]["default"]:
+                    if default in userModelParamList:
+                        continue
+                    else:
+                        defaultValue = self.mappingData["Models"][actualModelName]["default"][default]
+                        tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
+                        
+                stat += ",".join(str(item) for item in tempstatList)+");"
+                modelicaCompInit.append(stat)  
+            
+            elif eachline[0] == 'r':
                 stat = 'Analog.Basic.Resistor ' + words[0] + '(R = ' + value + ');'
                 modelicaCompInit.append(stat)
             elif eachline[0] == 'c':
@@ -606,10 +589,10 @@ class NgMoConverter:
             elif eachline[0] == 'h':
                 stat = 'Analog.Basic.CCV ' + words[0] + '(transResistance = ' + self.getUnitVal(words[4]) + ');'
                 modelicaCompInit.append(stat)
-                                 
             else:
                 continue
-            
+        
+        
         if '0' or 'gnd' in node:
             modelicaCompInit.append('Analog.Basic.Ground g;')
         return modelicaCompInit, numNodesSub
@@ -633,7 +616,7 @@ class NgMoConverter:
     
     def getSubParamLine(self,subname, numNodesSub, subParamInfo,dir_name):
         """
-        Take subcircuit name and give the info related to parameters in the first line and initislise it in
+        Take subcircuit name and give the info related to parameters in the first line and initialize it in
         """
         #nodeSubInterface = []
         subOptionInfo_p = []
@@ -687,8 +670,6 @@ class NgMoConverter:
                 nodeTemp.append(words[3])
             elif eachline[0]=='x' or eachline[0]=='X':
                 templine = eachline.split()
-                print "TempLine------------>",templine
-                print "Subckt Name---------->",subcktName
                 for i in range(0,len(templine),1):
                     if templine[i] in subcktName:
                         point = i   
@@ -820,13 +801,9 @@ class NgMoConverter:
             conn = 'connect(g.p,ngnd);'
             connInfo.append(conn)
         
-        #print "Connection Information--------->",connInfo
-        
+             
                     
-        # Removing hypen from netlist as it is not supported in modelica
-        #for i in range(0,len(connInfo),1):
-        #    connInfo[i] = connInfo[i].replace("-","")
-         
+                
         return connInfo
     
     
@@ -841,21 +818,18 @@ class NgMoConverter:
         subModelInfo = {}
         subsubName = [] 
         subParamInfo = []
-        #subinbuiltmodelName = []
-        #subinbuiltmodelInfo = {}
         nodeSubInterface = []
         nodeSub = []
         nodeDicSub = {}
         pinInitsub = []
         connSubInfo = []
-        print "subcktName------------------>",subcktName
         if len(subcktName) > 0:
             for eachsub in subcktName:
                 filename = eachsub + '.sub'
                 basename = filename
                 filename = os.path.join(dir_name, filename)
                 data = self.readNetlist(filename)
-                print "Data-------------------->",data
+                #print "Data-------------------->",data
                 subOptionInfo, subSchemInfo = self.separateNetlistInfo(data)
                 #print "SubOptionInfo------------------->",subOptionInfo
                 #print "SubSchemInfo-------------------->",subSchemInfo
@@ -867,12 +841,14 @@ class NgMoConverter:
                     for i in range(0,len(intLine),1):
                         nodeSubInterface.append(intLine[i])
                     
-                subModel, subModelInfo, subsubName, subParamInfo,subtransInfo = self.addModel(subOptionInfo)
+                subModel, subModelInfo, subsubName, subParamInfo,subtransInfo,subInbuiltModelDict = self.addModel(subOptionInfo)
                 #print "Sub Model------------------------------------>",subModel
                 #print "SubModelInfo---------------------------------->",subModelInfo
                 #print "subsubName------------------------------------->",subsubName
                 #print "subParamInfo----------------------------------->",subParamInfo
                 #print "subtransInfo----------------------------------->",subtransInfo
+                #print "subInbuiltModel----------------------------------->",subInbuiltModelDict
+                
                 IfMOSsub = '0'
                 for eachline in subSchemInfo:
                     #words = eachline.split()
@@ -904,7 +880,7 @@ class NgMoConverter:
                 #print "NodeDicSub-------------------------->",nodeDicSub
                 #print "PinInitSub-------------------------->",pinInitSub
                 #print "PinProtectedInitSub------------------->",pinProtectedInitSub
-                modelicaSubCompInit, numNodesSubsub = self.compInit(subSchemInfo, nodeSub, subModelInfo, subsubName,dir_name,subtransInfo)
+                modelicaSubCompInit, numNodesSubsub = self.compInit(subSchemInfo, nodeSub, subModelInfo, subsubName,dir_name,subtransInfo,subInbuiltModelDict)
                 #print "modelicaSubCompInit--------------------->",modelicaSubCompInit
                 #print "numNodesSubsub-------------------------->",numNodesSubsub
                 modelicaSubParamNew = self.getSubParamLine(eachsub, numNodesSub, modelicaSubParam,dir_name)     ###Ask Manas
@@ -982,15 +958,17 @@ def main(args):
     optionInfo, schematicInfo = obj_NgMoConverter.separateNetlistInfo(lines)
     #print "All option details like analysis,subckt,.ic,.model  : OptionInfo------------------->",optionInfo
     #print "Schematic connection info :schematicInfo",schematicInfo
-    modelName, modelInfo, subcktName, paramInfo,transInfo = obj_NgMoConverter.addModel(optionInfo)
+    modelName, modelInfo, subcktName, paramInfo,transInfo,inbuiltModelDict = obj_NgMoConverter.addModel(optionInfo)
     #print "Name of Model : modelName-------------------->",modelName
     #print "Model Information :modelInfo--------------------->",modelInfo
     #print "Subcircuit Name :subcktName------------------------>",subcktName
     #print "Parameter Information :paramInfo---------------------->",paramInfo
+    #print "InBuilt Model ---------------------->",inbuiltModelDict
+    
         
     
     modelicaParamInit = obj_NgMoConverter.processParam(paramInfo)
-    #print "Make modelicaParamInit from paramInfo  :processParamInit------------->",modelicaParamInit 
+    #print "Make modelicaParamInit from paramInfo  : processParamInit------------->",modelicaParamInit 
     compInfo, plotInfo = obj_NgMoConverter.separatePlot(schematicInfo)
     #print "Plot info like plot,print etc :plotInfo",plotInfo
     IfMOS = '0'
@@ -1000,6 +978,7 @@ def main(args):
         if eachline[0] == 'm':
             IfMOS = '1'
             break
+        
     subOptionInfo = []
     subSchemInfo = []
     if len(subcktName) > 0:
@@ -1008,6 +987,7 @@ def main(args):
         for eachsub in subcktName:
             filename_temp = eachsub + '.sub'
             data = obj_NgMoConverter.readNetlist(filename_temp)
+            #print "Data---------->",data
             subOptionInfo, subSchemInfo = obj_NgMoConverter.separateNetlistInfo(data)
             for eachline in subSchemInfo:
                 words = eachline.split()
@@ -1016,14 +996,14 @@ def main(args):
                     break
     #print "Subcircuit OptionInfo : subOptionInfo------------------->",subOptionInfo
     #print "Subcircuit Schematic Info :subSchemInfo-------------------->",subSchemInfo
-                
+               
     node, nodeDic, pinInit, pinProtectedInit = obj_NgMoConverter.nodeSeparate(compInfo, '0', [], subcktName,[])
     #print "All nodes in the netlist :node---------------->",node
     #print "NodeDic which will be used for modelica : nodeDic------------->",nodeDic
     #print "PinInit-------------->",pinInit
     #print "pinProtectedInit----------->",pinProtectedInit
     
-    modelicaCompInit, numNodesSub  = obj_NgMoConverter.compInit(compInfo,node, modelInfo, subcktName,dir_name,transInfo)
+    modelicaCompInit, numNodesSub  = obj_NgMoConverter.compInit(compInfo,node, modelInfo, subcktName,dir_name,transInfo,inbuiltModelDict)
     #print "ModelicaComponents : modelicaCompInit----------->",modelicaCompInit
     #print "SubcktNumNodes : numNodesSub---------------->",numNodesSub
     
