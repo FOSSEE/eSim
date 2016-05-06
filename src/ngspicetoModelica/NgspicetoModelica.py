@@ -74,6 +74,7 @@ class NgMoConverter:
                         self.ifMOS = True
                     schematicInfo.append(eachline)
                     self.deviceDetail.append(eachline)
+                    print "Device Detail--------->",self.deviceDetail
                 elif eachline[0]=='x' or eachline[0]=='X':
                     schematicInfo.append(eachline)
                     self.subCktDetail.append(eachline)
@@ -121,7 +122,7 @@ class NgMoConverter:
                 trans = templine[1]
                 transInfo[trans] = []
                 templine[2] = templine[2].lower()
-                if templine[2] in ['npn', 'pnp', 'pmos', 'nmos']:
+                if templine[2] in ['npn', 'pnp', 'pmos', 'nmos','njf','pjf']:
                     transInfo[trans] = templine[2]
                 else:
                     inbuiltModelDict[model]=templine[2]
@@ -154,7 +155,7 @@ class NgMoConverter:
             trans_f = templine_f[1]
             transInfo[trans_f] = []
             templine_f[2] = templine_f[2].lower() 
-            if templine_f[2] in ['npn', 'pnp', 'pmos', 'nmos']:
+            if templine_f[2] in ['npn', 'pnp', 'pmos', 'nmos','njf','pjf']:
                 transInfo[trans_f] = templine_f[2]
                        
             refModelName = trans_f
@@ -170,6 +171,8 @@ class NgMoConverter:
                     for eachitem in info:
                         modelInfo[refModelName][info[0]] = info[1] 
             f.close()
+            
+            print "Model Info----->",modelInfo
             
                 
         return modelName, modelInfo, subcktName, paramInfo ,transInfo,inbuiltModelDict
@@ -393,7 +396,7 @@ class NgMoConverter:
                 elif trans == 'pnp':
                     start = self.mappingData["Devices"][deviceName]["import"]+".PNP"
                 else:
-                    print "Transistor "+trans+" Not found"
+                    print "Transistor "+str(trans)+" Not found"
                     sys.exit(1)
                 
                 stat = start+" "+words[0]+"("
@@ -444,7 +447,7 @@ class NgMoConverter:
                 elif trans=='pmos' :
                     start = self.mappingData["Devices"][deviceName]["import"]+".Mp"
                 else:
-                    print "MOSFET "+trans+" not found"
+                    print "MOSFET "+str(trans)+" not found"
                     sys.exit(1)
                     
                 
@@ -508,7 +511,43 @@ class NgMoConverter:
                                 
                 stat += ",".join(str(item) for item in tempstatList)+");" 
                 modelicaCompInit.append(stat)
-        
+            
+            elif deviceName=='j':
+                print "TransInfo---->",transInfo
+                trans = transInfo[words[4]]
+                if trans == 'njf':
+                    start = self.mappingData["Devices"][deviceName]["import"]+".NJF"
+                elif trans == 'pjf':
+                    start = self.mappingData["Devices"][deviceName]["import"]+".PJF"
+                else:
+                    print "JFET "+str(trans)+" Not found"
+                    sys.exit(1)
+                
+                stat = start+" "+words[0]+"("
+                tempstatList=[]
+                userDeviceParamList=[]
+                refName = words[4]
+                for key in modelInfo[refName]:
+                    #If parameter is not mapped then it will just pass                         
+                    try:
+                        actualModelicaParam = self.mappingData["Devices"][deviceName]["mapping"][key]
+                        tempstatList.append(actualModelicaParam+"="+self.getUnitVal(modelInfo[refName][key])+" ")
+                        userDeviceParamList.append(str(actualModelicaParam))
+                    except:
+                        pass
+                #Running loop over default parameter of OpenModelica
+                for default in self.mappingData["Devices"][deviceName]["default"]:
+                    if default in userDeviceParamList:
+                        continue
+                    else:
+                        defaultValue = self.mappingData["Devices"][deviceName]["default"][default]
+                        tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
+                        
+                stat += ",".join(str(item) for item in tempstatList)+");" 
+                modelicaCompInit.append(stat)
+                
+            
+            
         #Empty device details as well
         self.deviceDetail[:]=[]
 
