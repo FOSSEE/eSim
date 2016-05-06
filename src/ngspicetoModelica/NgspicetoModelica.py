@@ -74,7 +74,6 @@ class NgMoConverter:
                         self.ifMOS = True
                     schematicInfo.append(eachline)
                     self.deviceDetail.append(eachline)
-                    print "Device Detail--------->",self.deviceDetail
                 elif eachline[0]=='x' or eachline[0]=='X':
                     schematicInfo.append(eachline)
                     self.subCktDetail.append(eachline)
@@ -172,7 +171,7 @@ class NgMoConverter:
                         modelInfo[refModelName][info[0]] = info[1] 
             f.close()
             
-            print "Model Info----->",modelInfo
+            
             
                 
         return modelName, modelInfo, subcktName, paramInfo ,transInfo,inbuiltModelDict
@@ -513,12 +512,11 @@ class NgMoConverter:
                 modelicaCompInit.append(stat)
             
             elif deviceName=='j':
-                print "TransInfo---->",transInfo
                 trans = transInfo[words[4]]
                 if trans == 'njf':
-                    start = self.mappingData["Devices"][deviceName]["import"]+".NJF"
+                    start = self.mappingData["Devices"][deviceName]["import"]+".J_NJFJFET"
                 elif trans == 'pjf':
-                    start = self.mappingData["Devices"][deviceName]["import"]+".PJF"
+                    start = self.mappingData["Devices"][deviceName]["import"]+".J_PJFJFET"
                 else:
                     print "JFET "+str(trans)+" Not found"
                     sys.exit(1)
