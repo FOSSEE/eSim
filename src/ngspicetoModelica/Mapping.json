@@ -121,8 +121,8 @@
 
 		},
 
-		"j":{
-			"import":"Modelica.Electrical.Spice3.Semiconductors",
+		 "j":{
+			"import":"Spice3.Internal.JFET",
 			"mapping":{
 				"kf":"KF",
 				"rs":"RS",
@@ -137,9 +137,9 @@
 				"cgs":"CGS",
 				"lambda":"LAMBDA",
 			    "b" : "B"
-				
-			
+					
 			},
+
 			"default":{
 				"KF":"0",
 				"RS":"0",
@@ -157,11 +157,9 @@
 
 
 			}
-
 		}
-				
-	
-	},
+
+		},
 	
 
 	"Models":{

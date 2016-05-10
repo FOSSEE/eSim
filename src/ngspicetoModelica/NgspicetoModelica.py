@@ -513,6 +513,7 @@ class NgMoConverter:
             
             elif deviceName=='j':
                 trans = transInfo[words[4]]
+                """
                 if trans == 'njf':
                     start = self.mappingData["Devices"][deviceName]["import"]+".J_NJFJFET"
                 elif trans == 'pjf':
@@ -520,8 +521,10 @@ class NgMoConverter:
                 else:
                     print "JFET "+str(trans)+" Not found"
                     sys.exit(1)
+                """
+                start = self.mappingData["Devices"][deviceName]["import"]
                 
-                stat = start+" "+words[0]+"("
+                stat = start+" "+words[0]+"(modelcard("
                 tempstatList=[]
                 userDeviceParamList=[]
                 refName = words[4]
@@ -541,7 +544,7 @@ class NgMoConverter:
                         defaultValue = self.mappingData["Devices"][deviceName]["default"][default]
                         tempstatList.append(default+"="+self.getUnitVal(defaultValue)+" ")
                         
-                stat += ",".join(str(item) for item in tempstatList)+");" 
+                stat += ",".join(str(item) for item in tempstatList)+"));" 
                 modelicaCompInit.append(stat)
                 
             
@@ -785,6 +788,13 @@ class NgMoConverter:
                 conn = 'connect(' + words[0] + '.B,' + nodeDic[words[2]] + ');'
                 connInfo.append(conn)
                 conn = 'connect(' + words[0] + '.E,' + nodeDic[words[3]] + ');'
+                connInfo.append(conn)
+            elif eachline[0]=='j' or eachline[0]=='J':
+                conn = 'connect('+words[0]+'.D,' + nodeDic[words[1]]+');'
+                connInfo.append(conn)
+                conn = 'connect('+words[0]+'.G,' + nodeDic[words[2]]+');'
+                connInfo.append(conn)
+                conn = 'connect('+words[0]+'.S,' + nodeDic[words[3]]+');'
                 connInfo.append(conn)
             elif eachline[0]=='m' or eachline[0]=='M':
                 conn = 'connect(' + words[0] + '.D,' + nodeDic[words[1]] + ');'
