@@ -7,9 +7,9 @@ from string import maketrans
 class NgMoConverter:
     
         
-    def __init__(self):
+    def __init__(self, map_json):
         #Loading JSON file which hold the mapping information between ngspice and Modelica.
-        with open('Mapping.json') as mappingFile:
+        with open(map_json) as mappingFile:
             self.mappingData = json.load(mappingFile)
             
         self.ifMOS = False
@@ -987,8 +987,9 @@ def main(args):
     """
     It is main function of module Ngspice to Modelica converter
     """
-    if len(sys.argv) == 2:
+    if len(sys.argv) == 3:
         filename = sys.argv[1]
+        map_json = sys.argv[2]
     else:
         print "USAGE:"
         print "python NgspicetoModelica.py <filename>"
@@ -996,8 +997,11 @@ def main(args):
         
     dir_name = os.path.dirname(os.path.realpath(filename))
     file_basename = os.path.basename(filename)
+
+    cwd = os.getcwd()
+    os.chdir(dir_name)
     
-    obj_NgMoConverter = NgMoConverter()
+    obj_NgMoConverter = NgMoConverter(map_json)
     
     #Getting all the require information
     lines = obj_NgMoConverter.readNetlist(filename)
@@ -1110,6 +1114,8 @@ def main(args):
 
 
     out.close()
+
+    os.chdir(cwd)
     
 
 # Call main function

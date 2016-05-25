@@ -20,6 +20,7 @@
 from PyQt4 import QtGui
 import os
 import json
+from ConfigParser import SafeConfigParser
 
 
 class Appconfig(QtGui.QWidget):
@@ -42,6 +43,10 @@ class Appconfig(QtGui.QWidget):
         dock_dict={}	#holds all dockwidgets
         dictPath = os.path.join(os.path.expanduser("~"), ".projectExplorer.txt")
         noteArea = {}
+
+        parser_esim = SafeConfigParser()
+        parser_esim.read(os.path.join(os.path.expanduser("~"), os.path.join('.esim','config.ini')))
+        modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')        
         try:
             project_explorer = json.load(open(dictPath))
         except:

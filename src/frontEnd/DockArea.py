@@ -7,6 +7,7 @@ from subcircuit.Subcircuit import Subcircuit
 from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
 from browser.UserManual import UserManual
+from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 import os
 
 dockList = ['Welcome']
@@ -271,6 +272,35 @@ class DockArea(QtGui.QMainWindow):
         dock['User Manual-'+str(count)].setFocus()
         dock['User Manual-'+str(count)].raise_()
         
+        count = count + 1
+
+    def modelicaEditor(self, projDir):
+        """
+        This function sets up the UI for ngspice to modelica conversion
+        """
+
+        global count
+        self.modelicaWidget = QtGui.QWidget()
+        self.modelicaLayout = QtGui.QVBoxLayout()
+        self.modelicaLayout.addWidget(OpenModelicaEditor(projDir))
+
+        self.modelicaWidget.setLayout(self.modelicaLayout)
+        dock['Modelica-'+str(count)] = QtGui.QDockWidget('Modelica-'+str(count))
+        dock['Modelica-'+str(count)].setWidget(self.modelicaWidget)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock['Modelica-'+str(count)])
+        self.tabifyDockWidget(dock['Welcome'],dock['Modelica-'+str(count)])
+
+        dock['Modelica-'+str(count)].setVisible(True)
+        dock['Modelica-'+str(count)].setFocus()
+        dock['Modelica-'+str(count)].raise_()
+
+        #CSS
+        dock['Modelica-'+str(count)].setStyleSheet(" \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        ")
+
+        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(dock['Modelica-'+str(count)])
+
         count = count + 1
 
     def closeDock   (self):

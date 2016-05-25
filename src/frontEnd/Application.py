@@ -306,6 +306,7 @@ class Application(QtGui.QMainWindow):
                 self.ngspiceNetlist = os.path.join(self.projDir,self.projName+".cir.out")
                 self.modelicaNetlist = os.path.join(self.projDir,self.projName+".mo")
                 
+                """
                 try:
                     #Creating a command for Ngspice to Modelica converter
                     self.cmd1 = "python ../ngspicetoModelica/NgspicetoModelica.py "+self.ngspiceNetlist
@@ -335,6 +336,9 @@ class Application(QtGui.QMainWindow):
                     self.msg.showMessage('Unable to convert NgSpice netlist to Modelica netlist :'+str(e))
                     self.msg.setWindowTitle("Ngspice to Modelica conversion error")
                     self.obj_appconfig.print_error(str(e))
+                """
+
+                self.obj_Mainview.obj_dockarea.modelicaEditor(self.projDir)
                     
             else:
                 self.msg = QtGui.QErrorMessage()
