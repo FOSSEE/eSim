@@ -69,4 +69,5 @@ LibName35=eSim_Sources
 LibName36=eSim_Subckt
 LibName37=eSim_User
 LibName38=eSim_Plot
+LibName39=eSim_PSpice
 

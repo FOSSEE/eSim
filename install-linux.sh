@@ -44,6 +44,7 @@ function createConfigFile
     echo "KicadLib = %(eSim_HOME)s/kicadSchematicLibrary" >> $config_dir/$config_file
     echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
+    echo "MODELICA_MAP_JSON = %(eSim_HOME)s/src/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
     
 
 }
