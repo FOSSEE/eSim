@@ -1,5 +1,6 @@
 import os
 import sys
+from subprocess import Popen, PIPE, STDOUT
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement import Worker
@@ -49,13 +50,21 @@ class OpenModelicaEditor(QtGui.QWidget):
 
         try:
             self.cmd1 = "python ../ngspicetoModelica/NgspicetoModelica.py " + self.ngspiceNetlist + ' ' + self.map_json
-            self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
-            self.obj_workThread1.start()
-            self.msg = QtGui.QMessageBox()
-            self.msg.setText("Ngspice netlist successfully converted to OpenModelica netlist")
-            self.obj_appconfig.print_info("Ngspice netlist successfully converted to OpenModelica netlist")
-            if self.obj_workThread1.finished:
+            #self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
+            #self.obj_workThread1.start()
+            convert_process = Popen(self.cmd1, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+            error_code = convert_process.stdout.read()
+            if not error_code:
+                self.msg = QtGui.QMessageBox()
+                self.msg.setText("Ngspice netlist successfully converted to OpenModelica netlist")
+                self.obj_appconfig.print_info("Ngspice netlist successfully converted to OpenModelica netlist")
                 self.msg.exec_()
+
+            else:
+                self.err_msg = QtGui.QErrorMessage()
+                self.err_msg.showMessage('Unable to convert NgSpice netlist to Modelica netlist. Check the netlist :'+ error_code)
+                self.err_msg.setWindowTitle("Ngspice to Modelica conversion error")
+                self.obj_appconfig.print_error(error_code)
 
         except Exception as e:
             self.msg = QtGui.QErrorMessage()
