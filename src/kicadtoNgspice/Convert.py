@@ -219,10 +219,10 @@ class Convert:
                     else:
                         bh_array = "H_array = [-1000 -500 -375 -250 -188 -125 -63 0 63 125 188 250 375 500 1000] B_array = [-3.13e-3 -2.63e-3 -2.33e-3 -1.93e-3 -1.5e-3 -6.25e-4 -2.5e-4 0 2.5e-4 6.25e-4 1.5e-3 1.93e-3 2.33e-3 2.63e-3 3.13e-3]"
                     area=str(self.obj_track.model_entry_var[start+2].text())
-                    length=str(self.obj_track.model_entry_var[start+4].text())
+                    length=str(self.obj_track.model_entry_var[start+3].text())
                     if area=="": area="1"
                     if length=="":length="0.01"
-                    num_turns2=str(self.obj_track.model_entry_var[start+3].text())
+                    num_turns2=str(self.obj_track.model_entry_var[start+4].text())
                     if num_turns2=="": num_turns2="620"
                     addmodelLine=".model "+line[3]+"_primary lcouple (num_turns= "+num_turns+")"
                     modelParamValue.append([line[0],addmodelLine,"*primary lcouple"])
