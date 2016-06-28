@@ -1,7 +1,8 @@
 import os
 from PyQt4 import QtGui
 import TrackWidget
-from xml.etree import ElementTree as ET
+#from xml.etree import ElementTree as ET
+import json
 
 class Source(QtGui.QWidget):
     """
@@ -30,23 +31,19 @@ class Source(QtGui.QWidget):
         This function dynamically create source widget in the Source tab of KicadtoNgSpice window
         """
         kicadFile = self.clarg1
-        (projpath,filename)=os.path.split(kicadFile)
-        project_name=os.path.basename(projpath)
-        check=1
+        (projpath,filename) = os.path.split(kicadFile)
+        project_name = os.path.basename(projpath)
+
         try:
-            f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
-            tree=ET.parse(f)
-            parent_root=tree.getroot()
-            for child in parent_root:
-                if child.tag=="source":
-                    root=child
+            f = open(os.path.join(projpath,project_name+"_Previous_Values.json"),'r')
+            data = f.read()
+            json_data = json.loads(data)
+
         except:
-            check=0
-            print "Source Previous Values XML is Empty"
+            print "Source Previous Values JSON is Empty"
         
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
-        xml_num=0
         
         if sourcelist:
             for line in sourcelist:
@@ -54,38 +51,44 @@ class Source(QtGui.QWidget):
                 print "SourceList line: ",line
                 track_id=line[0]
                 #print "track_id is ",track_id
-                if line[2]=='ac':
-                    acbox=QtGui.QGroupBox()
+                if line[2] == 'ac':
+                    acbox = QtGui.QGroupBox()
                     acbox.setTitle(line[3])
-                    acgrid=QtGui.QGridLayout()
-                    self.start=self.count
-                    label1=QtGui.QLabel(line[4])
+                    acgrid = QtGui.QGridLayout()
+                    self.start = self.count
+                    label1 = QtGui.QLabel(line[4])
                     label2 = QtGui.QLabel(line[5])
-                    acgrid.addWidget(label1,self.row,0)
-                    acgrid.addWidget(label2, self.row+1, 0)
-                    self.entry_var[self.count]=QtGui.QLineEdit()
+                    acgrid.addWidget(label1, self.row, 0)
+                    acgrid.addWidget(label2, self.row + 1, 0)
+
+                    self.entry_var[self.count] = QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
-                    acgrid.addWidget(self.entry_var[self.count],self.row,1)
-                    self.entry_var[self.count+1]=QtGui.QLineEdit()
-                    self.entry_var[self.count+1].setMaximumWidth(150)
-                    acgrid.addWidget(self.entry_var[self.count+1],self.row+1,1)
+                    acgrid.addWidget(self.entry_var[self.count], self.row, 1)
                     self.entry_var[self.count].setText("")
-                    self.entry_var[self.count+1].setText("")
+                    self.count += 1
+
+                    self.entry_var[self.count] = QtGui.QLineEdit()
+                    self.entry_var[self.count].setMaximumWidth(150)
+                    acgrid.addWidget(self.entry_var[self.count], self.row + 1, 1)
+                    self.entry_var[self.count].setText("")
+                    self.count += 1
+
                     try:
-                        for child in root:
-                            templist1=line[1]
-                            templist2=templist1.split(' ')
+                        for key in json_data["source"]:
+                            templist1 = line[1]
+                            templist2 = templist1.split(' ')
                         
-                            if child.tag==templist2[0] and child.text==line[2]:
-                                self.entry_var[self.count].setText(child[0].text)
-                                self.entry_var[self.count+1].setText(child[1].text)
+                            if key==templist2[0] and json_data["source"][key]["type"]==line[2]:
+                                self.entry_var[self.count-2].setText(str(json_data["source"][key]["values"][0]["Amplitude"]))
+                                self.entry_var[self.count-1].setText(str(json_data["source"][key]["values"][1]["Phase"]))
+
                     except:
                         pass
                     #Value Need to check previuouse value
                     #self.entry_var[self.count].setText("")
-                    self.row=self.row+1
-                    self.end=self.count+1
-                    self.count=self.count+1
+                    self.row = self.row + 1
+                    self.end = self.count + 1
+                    self.count = self.count + 1
                     acbox.setLayout(acgrid)
                     
                     #CSS
@@ -95,34 +98,36 @@ class Source(QtGui.QWidget):
                     ")
                     
                     self.grid.addWidget(acbox)
-                    sourcelisttrack.append([track_id,'ac',self.start,self.end])
+                    sourcelisttrack.append([track_id, 'ac', self.start, self.end])
          
                 
-                elif line[2]=='dc':
-                    dcbox=QtGui.QGroupBox()
+                elif line[2] == 'dc':
+                    dcbox = QtGui.QGroupBox()
                     dcbox.setTitle(line[3])
-                    dcgrid=QtGui.QGridLayout()
-                    self.row=self.row+1
-                    self.start=self.count
-                    label=QtGui.QLabel(line[4])
-                    dcgrid.addWidget(label,self.row,0)
-                    self.entry_var[self.count]=QtGui.QLineEdit()
+                    dcgrid = QtGui.QGridLayout()
+                    self.start = self.count
+                    label = QtGui.QLabel(line[4])
+                    dcgrid.addWidget(label, self.row, 0)
+
+                    self.entry_var[self.count] = QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
-                    dcgrid.addWidget(self.entry_var[self.count],self.row,1)
+                    dcgrid.addWidget(self.entry_var[self.count], self.row, 1)
                     self.entry_var[self.count].setText("")
+
                     try:
-                        for child in root:
-                            templist1=line[1]
-                            templist2=templist1.split(' ')
-                        
-                            if child.tag==templist2[0] and child.text==line[2]:
-                                self.entry_var[self.count].setText(child[0].text)
+                        for key in json_data["source"]:
+                            templist1 = line[1]
+                            templist2 = templist1.split(' ')
+
+                            if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                                self.entry_var[self.count].setText(str(json_data["source"][key]["values"][0]["Value"]))
+
                     except:
                         pass
                     
-                    self.row=self.row+1
-                    self.end=self.count
-                    self.count=self.count+1
+                    self.row = self.row + 1
+                    self.end = self.count
+                    self.count = self.count + 1
                     dcbox.setLayout(dcgrid)
                     
                     #CSS
@@ -132,35 +137,36 @@ class Source(QtGui.QWidget):
                     ")
                     
                     self.grid.addWidget(dcbox)
-                    sourcelisttrack.append([track_id,'dc',self.start,self.end])
+                    sourcelisttrack.append([track_id, 'dc', self.start, self.end])
                     
-                elif line[2]=='sine':
-                    sinebox=QtGui.QGroupBox()
+                elif line[2] == 'sine':
+                    sinebox = QtGui.QGroupBox()
                     sinebox.setTitle(line[3])
-                    sinegrid=QtGui.QGridLayout()
-                    self.row=self.row+1
-                    self.start=self.count
+                    sinegrid = QtGui.QGridLayout()
+                    self.row = self.row+1
+                    self.start = self.count
                     
-                    for it in range(4,9):
-                        label=QtGui.QLabel(line[it])
-                        sinegrid.addWidget(label,self.row,0)
-                        self.entry_var[self.count]=QtGui.QLineEdit()
+                    for it in range(4, 9):
+                        label = QtGui.QLabel(line[it])
+                        sinegrid.addWidget(label, self.row, 0)
+                        self.entry_var[self.count] = QtGui.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
-                        sinegrid.addWidget(self.entry_var[self.count],self.row,1)
+                        sinegrid.addWidget(self.entry_var[self.count], self.row, 1)
                         self.entry_var[self.count].setText("")
+
                         try:
-                            for child in root:
-                                templist1=line[1]
-                                templist2=templist1.split(' ')
-                                if child.tag==templist2[0] and child.text==line[2]:
-                                    self.entry_var[self.count].setText(child[it-4].text)
+                            for key in json_data["source"]:
+                                templist1 = line[1]
+                                templist2 = templist1.split(' ')
+                                if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                                    self.entry_var[self.count].setText(str(json_data["source"][key]["values"][it-4].values()[0]))
                         except:
                             pass
                         
                         
-                        self.row=self.row+1
-                        self.count=self.count+1  
-                    self.end=self.count-1
+                        self.row = self.row + 1
+                        self.count = self.count + 1  
+                    self.end = self.count - 1
                     sinebox.setLayout(sinegrid)
                     
                     #CSS
@@ -170,34 +176,35 @@ class Source(QtGui.QWidget):
                     ")
                     
                     self.grid.addWidget(sinebox)
-                    sourcelisttrack.append([track_id,'sine',self.start,self.end])
+                    sourcelisttrack.append([track_id, 'sine', self.start, self.end])
                     
-                elif line[2]=='pulse':
-                    pulsebox=QtGui.QGroupBox()
+                elif line[2] == 'pulse':
+                    pulsebox = QtGui.QGroupBox()
                     pulsebox.setTitle(line[3])
-                    pulsegrid=QtGui.QGridLayout()
-                    self.start=self.count
-                    for it in range(4,11):
-                        label=QtGui.QLabel(line[it])
-                        pulsegrid.addWidget(label,self.row,0)
-                        self.entry_var[self.count]=QtGui.QLineEdit()
+                    pulsegrid = QtGui.QGridLayout()
+                    self.start = self.count
+
+                    for it in range(4, 11):
+                        label = QtGui.QLabel(line[it])
+                        pulsegrid.addWidget(label, self.row, 0)
+                        self.entry_var[self.count] = QtGui.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
-                        pulsegrid.addWidget(self.entry_var[self.count],self.row,1)
+                        pulsegrid.addWidget(self.entry_var[self.count], self.row, 1)
                         self.entry_var[self.count].setText("")
                         
                         try:
-                            for child in root:
-                                templist1=line[1]
-                                templist2=templist1.split(' ')
-                                if child.tag==templist2[0] and child.text==line[2]:
-                                    self.entry_var[self.count].setText(child[it-4].text)
+                            for key in json_data["source"]:
+                                templist1 = line[1]
+                                templist2 = templist1.split(' ')
+
+                                if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                                    self.entry_var[self.count].setText(str(json_data["source"][key]["values"][it-4].values()[0]))
                         except:
                             pass
                         
-                        
-                        self.row=self.row+1
-                        self.count=self.count+1
-                    self.end=self.count-1
+                        self.row = self.row + 1
+                        self.count = self.count + 1
+                    self.end = self.count - 1
                     pulsebox.setLayout(pulsegrid)
                     
                     #CSS
@@ -207,34 +214,33 @@ class Source(QtGui.QWidget):
                     ")
                     
                     self.grid.addWidget(pulsebox)
-                    sourcelisttrack.append([track_id,'pulse',self.start,self.end])
+                    sourcelisttrack.append([track_id, 'pulse', self.start, self.end])
                 
-                elif line[2]=='pwl':
-                    pwlbox=QtGui.QGroupBox()
+                elif line[2] == 'pwl':
+                    pwlbox = QtGui.QGroupBox()
                     pwlbox.setTitle(line[3])
-                    self.start=self.count
-                    pwlgrid=QtGui.QGridLayout()
-                    self.start=self.count
-                    label=QtGui.QLabel(line[4])
-                    pwlgrid.addWidget(label,self.row,0)
-                    self.entry_var[self.count]=QtGui.QLineEdit()
+                    self.start = self.count
+                    pwlgrid = QtGui.QGridLayout()
+                    label = QtGui.QLabel(line[4])
+                    pwlgrid.addWidget(label, self.row, 0)
+                    self.entry_var[self.count] = QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
-                    pwlgrid.addWidget(self.entry_var[self.count],self.row,1)
+                    pwlgrid.addWidget(self.entry_var[self.count], self.row, 1)
                     self.entry_var[self.count].setText("")
                     
                     try:
-                        for child in root:
-                            templist1=line[1]
-                            templist2=templist1.split(' ')
-                            if child.tag==templist2[0] and child.text==line[2]:
-                                self.entry_var[self.count].setText(child[0].text)
+                        for key in json_data["source"]:
+                            templist1 = line[1]
+                            templist2 = templist1.split(' ')
+                            if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                                self.entry_var[self.count].setText(str(json_data["source"][key]["values"][0]["Enter in pwl format"]))
                     except:
                         pass
                     
                     
-                    self.row=self.row+1
-                    self.end=self.count
-                    self.count=self.count+1
+                    self.row = self.row + 1
+                    self.end = self.count
+                    self.count = self.count + 1
                     pwlbox.setLayout(pwlgrid)
                     
                     #CSS
@@ -244,34 +250,35 @@ class Source(QtGui.QWidget):
                     ")
                     
                     self.grid.addWidget(pwlbox)
-                    sourcelisttrack.append([track_id,'pwl',self.start,self.end])
+                    sourcelisttrack.append([track_id, 'pwl', self.start, self.end])
                     
-                elif line[2]=='exp':
-                    expbox=QtGui.QGroupBox()
+                elif line[2] == 'exp':
+                    expbox = QtGui.QGroupBox()
                     expbox.setTitle(line[3])
-                    expgrid=QtGui.QGridLayout()
-                    self.start=self.count
+                    expgrid = QtGui.QGridLayout()
+                    self.start = self.count
+
                     for it in range(4,10):
-                        label=QtGui.QLabel(line[it])
-                        expgrid.addWidget(label,self.row,0)
-                        self.entry_var[self.count]=QtGui.QLineEdit()
+                        label = QtGui.QLabel(line[it])
+                        expgrid.addWidget(label, self.row, 0)
+                        self.entry_var[self.count] = QtGui.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
-                        expgrid.addWidget(self.entry_var[self.count],self.row,1)
+                        expgrid.addWidget(self.entry_var[self.count], self.row, 1)
                         self.entry_var[self.count].setText("")
                         
                         try:
-                            for child in root:
-                                templist1=line[1]
-                                templist2=templist1.split(' ')
-                                if child.tag==templist2[0] and child.text==line[2]:
-                                    self.entry_var[self.count].setText(child[it-4].text)
+                            for key in json_data["source"]:
+                                templist1 = line[1]
+                                templist2 = templist1.split(' ')
+                                if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                                    self.entry_var[self.count].setText(str(json_data["source"][key]["values"][it-4].values()[0]))
                         except:
                             pass
                         
                         
-                        self.row=self.row+1
-                        self.count=self.count+1
-                    self.end=self.count-1
+                        self.row = self.row + 1
+                        self.count = self.count + 1
+                    self.end = self.count - 1
                     expbox.setLayout(expgrid)
                     
                     #CSS
@@ -281,12 +288,7 @@ class Source(QtGui.QWidget):
                     ")
                     
                     self.grid.addWidget(expbox)
-                    sourcelisttrack.append([track_id,'exp',self.start,self.end])
-                    
-                    
-                self.count=self.count+1
-                xml_num=xml_num+1
-                          
+                    sourcelisttrack.append([track_id, 'exp', self.start, self.end])                          
                 
         else:
             print "No source is present in your circuit"

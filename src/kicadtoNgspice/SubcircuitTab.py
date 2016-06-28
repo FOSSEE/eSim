@@ -1,9 +1,9 @@
 from PyQt4 import QtGui
-
+import json
 import TrackWidget
 from projManagement import Validation
 import os
-from xml.etree import ElementTree as ET
+#from xml.etree import ElementTree as ET
 
 class SubcircuitTab(QtGui.QWidget):
     """
@@ -11,21 +11,17 @@ class SubcircuitTab(QtGui.QWidget):
     It dynamically creates the widget for subcircuits.
     """
     
-    def __init__(self,schematicInfo,clarg1):
+    def __init__(self, schematicInfo, clarg1):
         kicadFile = clarg1
-        (projpath,filename)=os.path.split(kicadFile)
-        project_name=os.path.basename(projpath)
-        check=1
+        (projpath,filename) = os.path.split(kicadFile)
+        project_name = os.path.basename(projpath)
+
         try:
-            f=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
-            tree=ET.parse(f)
-            parent_root=tree.getroot()
-            for child in parent_root:
-                if child.tag=="subcircuit":
-                    root=child
+            f = open(os.path.join(projpath,project_name+"_Previous_Values.json"),'r')
+            data = f.read()
+            json_data = json.loads(data)
         except:
-            check=0
-            print "Subcircuit Previous values XML is Empty"
+            print "Subcircuit Previous values JSON is Empty"
 
         QtGui.QWidget.__init__(self)
                      
@@ -38,8 +34,8 @@ class SubcircuitTab(QtGui.QWidget):
         self.row = 0
         self.count = 1  #Entry count
         self.entry_var = {}
-        self.subcircuit_dict_beg={}   
-        self.subcircuit_dict_end={}  
+        self.subcircuit_dict_beg = {}   
+        self.subcircuit_dict_end = {}  
         #List to hold information about subcircuit
         self.subDetail = {}
         
@@ -54,23 +50,23 @@ class SubcircuitTab(QtGui.QWidget):
             words = eachline.split()
             if eachline[0] == 'x':
                 print "Subcircuit : Words",words[0]
-                self.obj_trac.subcircuitList[project_name+words[0]]=words
-                self.subcircuit_dict_beg[words[0]]=self.count
-                subbox=QtGui.QGroupBox()
-                subgrid=QtGui.QGridLayout()
+                self.obj_trac.subcircuitList[project_name+words[0]] = words
+                self.subcircuit_dict_beg[words[0]] = self.count
+                subbox = QtGui.QGroupBox()
+                subgrid = QtGui.QGridLayout()
                 subbox.setTitle("Add subcircuit for "+words[len(words)-1])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
 
                 global path_name
                 try:
-                    for child in root:
-                        if child.tag[0]==eachline[0] and child.tag[1]==eachline[1]:
-                            print "Subcircuit MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                    for key in json_data["subcircuit"]:
+                        if key[0] == eachline[0] and key[1] == eachline[1]:
+                            #print "Subcircuit MATCHING---",child.tag[0], child.tag[1], eachline[0], eachline[1]
                             try:
-                                if os.path.exists(child[0].text):
-                                    self.entry_var[self.count].setText(child[0].text)
-                                    path_name=child[0].text
+                                if os.path.exists(json_data["subcircuit"][key][0]):
+                                    self.entry_var[self.count].setText(json_data["subcircuit"][key][0])
+                                    path_name = json_data["subcircuit"][key][0]
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
@@ -79,7 +75,7 @@ class SubcircuitTab(QtGui.QWidget):
                     print "Error before subcircuit"
 
 
-                subgrid.addWidget(self.entry_var[self.count],self.row,1)
+                subgrid.addWidget(self.entry_var[self.count], self.row, 1)
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" %self.count)
                 #Send the number of ports specified with the given subcircuit for verification.
@@ -87,7 +83,7 @@ class SubcircuitTab(QtGui.QWidget):
                 self.numPorts.append(len(words)-2)
                 print "Number of ports of sub circuit : ",self.numPorts
                 self.addbtn.clicked.connect(self.trackSubcircuit)
-                subgrid.addWidget(self.addbtn,self.row,2)
+                subgrid.addWidget(self.addbtn, self.row, 2)
                 subbox.setLayout(subgrid)
                 
                 #CSS
@@ -103,14 +99,14 @@ class SubcircuitTab(QtGui.QWidget):
                 
                 #Increment row and widget count
 
-                if self.entry_var[self.count].text()=="":
+                if self.entry_var[self.count].text() == "":
                     pass
                 else:
-                    self.trackSubcircuitWithoutButton(self.count,path_name)
+                    self.trackSubcircuitWithoutButton(self.count, path_name)
 
-                self.subcircuit_dict_end[words[0]]=self.count
-                self.row = self.row+1
-                self.count = self.count+1
+                self.subcircuit_dict_end[words[0]] = self.count
+                self.row = self.row + 1
+                self.count = self.count + 1
                    
             self.show()
         

@@ -26,8 +26,9 @@ import DeviceModel
 import SubcircuitTab
 import Convert
 import TrackWidget
+import json
 
-from xml.etree import ElementTree as ET
+#from xml.etree import ElementTree as ET
 
 
 
@@ -98,6 +99,7 @@ class MainWindow(QtGui.QWidget):
         schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList,plotText)
         
         print "Model available in the Schematic :",modelList
+
                              
         """
         Checking if any unknown model is used in schematic which is not recognized by NgSpice.
@@ -192,243 +194,241 @@ class MainWindow(QtGui.QWidget):
         global analysisoutput
         global kicad
         store_schematicInfo = list(schematicInfo)
-        (projpath,filename)=os.path.split(self.kicadFile)
-        project_name=os.path.basename(projpath)
-             
-        check=1
-        try:
-            fr=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'r')
-            temp_tree=ET.parse(fr)
-            temp_root=temp_tree.getroot()
-        except:
-            check=0
+        (projpath,filename) = os.path.split(self.kicadFile)
+        project_name = os.path.basename(projpath)
             
                 
-        fw=open(os.path.join(projpath,project_name+"_Previous_Values.xml"),'w')
-        if check==0:
-            attr_parent=ET.Element("KicadtoNgspice")
-        if check==1:
-            attr_parent=temp_root  
+        fw = open(os.path.join(projpath,project_name+"_Previous_Values.json"),'w')
+        json_data = {}
+
+
+        """
+        Writing Analysis values
+        """
+
+        json_data["analysis"] = {}
         
-        for child in attr_parent:
-            if child.tag=="analysis":
-                attr_parent.remove(child)
-        
-        attr_analysis=ET.SubElement(attr_parent,"analysis")
-        attr_ac=ET.SubElement(attr_analysis,"ac")
+        json_data["analysis"]["ac"] = {}
         if obj_analysis.Lin.isChecked():
-            ET.SubElement(attr_ac,"field1",name="Lin").text="true"
-            ET.SubElement(attr_ac,"field2",name="Dec").text="false"
-            ET.SubElement(attr_ac,"field3",name="Oct").text="false"
+            json_data["analysis"]["ac"]["Lin"] = "true"
+            json_data["analysis"]["ac"]["Dec"] = "false"
+            json_data["analysis"]["ac"]["Oct"] = "false"
         elif obj_analysis.Dec.isChecked():
-            ET.SubElement(attr_ac,"field1",name="Lin").text="false"
-            ET.SubElement(attr_ac,"field2",name="Dec").text="true"
-            ET.SubElement(attr_ac,"field3",name="Oct").text="false"
+            json_data["analysis"]["ac"]["Lin"] = "false"
+            json_data["analysis"]["ac"]["Dec"] = "true"
+            json_data["analysis"]["ac"]["Oct"] = "false"
         if obj_analysis.Oct.isChecked():
-            ET.SubElement(attr_ac,"field1",name="Lin").text="false"
-            ET.SubElement(attr_ac,"field2",name="Dec").text="false"
-            ET.SubElement(attr_ac,"field3",name="Oct").text="true"
+            json_data["analysis"]["ac"]["Lin"] = "false"
+            json_data["analysis"]["ac"]["Dec"] = "false"
+            json_data["analysis"]["ac"]["Oct"] = "true"
         else:
             pass
-        ET.SubElement(attr_ac,"field4",name="Start Frequency").text= str(obj_analysis.ac_entry_var[0].text())
-        ET.SubElement(attr_ac,"field5",name="Stop Frequency").text= str(obj_analysis.ac_entry_var[1].text())
-        ET.SubElement(attr_ac,"field6",name="No. of points").text= str(obj_analysis.ac_entry_var[2].text())
-        ET.SubElement(attr_ac,"field7",name="Start Fre Combo").text= obj_analysis.ac_parameter[0]
-        ET.SubElement(attr_ac,"field8",name="Stop Fre Combo").text= obj_analysis.ac_parameter[1]
-        attr_dc=ET.SubElement(attr_analysis,"dc")
-        ET.SubElement(attr_dc,"field1",name="Source 1").text= str(obj_analysis.dc_entry_var[0].text())
-        ET.SubElement(attr_dc,"field2",name="Start").text= str(obj_analysis.dc_entry_var[1].text())
-        ET.SubElement(attr_dc,"field3",name="Increment").text= str(obj_analysis.dc_entry_var[2].text())
-        ET.SubElement(attr_dc,"field4",name="Stop").text= str(obj_analysis.dc_entry_var[3].text())
-        #print "OBJ_ANALYSIS.CHECK -----",self.obj_track.op_check[-1]
-        ET.SubElement(attr_dc,"field5",name="Operating Point").text=str(self.obj_track.op_check[-1])
-        ET.SubElement(attr_dc,"field6",name="Start Combo").text= obj_analysis.dc_parameter[0]
-        ET.SubElement(attr_dc,"field7",name="Increment Combo").text=obj_analysis.dc_parameter[1]
-        ET.SubElement(attr_dc,"field8",name="Stop Combo").text= obj_analysis.dc_parameter[2]
-        ET.SubElement(attr_dc,"field9",name="Source 2").text= str(obj_analysis.dc_entry_var[4].text())
-        ET.SubElement(attr_dc,"field10",name="Start").text= str(obj_analysis.dc_entry_var[5].text())
-        ET.SubElement(attr_dc,"field11",name="Increment").text= str(obj_analysis.dc_entry_var[6].text())
-        ET.SubElement(attr_dc,"field12",name="Stop").text= str(obj_analysis.dc_entry_var[7].text())
-        ET.SubElement(attr_dc,"field13",name="Start Combo").text= obj_analysis.dc_parameter[3]
-        ET.SubElement(attr_dc,"field14",name="Increment Combo").text=obj_analysis.dc_parameter[4]
-        ET.SubElement(attr_dc,"field15",name="Stop Combo").text= obj_analysis.dc_parameter[5]
+            
+        json_data["analysis"]["ac"]["Start Frequency"] = str(obj_analysis.ac_entry_var[0].text())
+        json_data["analysis"]["ac"]["Stop Frequency"] = str(obj_analysis.ac_entry_var[1].text())
+        json_data["analysis"]["ac"]["No. of points"] = str(obj_analysis.ac_entry_var[2].text())
+        json_data["analysis"]["ac"]["Start Fre Combo"] = obj_analysis.ac_parameter[0]
+        json_data["analysis"]["ac"]["Stop Fre Combo"] = obj_analysis.ac_parameter[1]
+
+        json_data["analysis"]["dc"] = {}
+        json_data["analysis"]["dc"]["Source 1"] = str(obj_analysis.dc_entry_var[0].text())
+        json_data["analysis"]["dc"]["Start"] = str(obj_analysis.dc_entry_var[1].text())
+        json_data["analysis"]["dc"]["Increment"] = str(obj_analysis.dc_entry_var[2].text())
+        json_data["analysis"]["dc"]["Stop"] = str(obj_analysis.dc_entry_var[3].text())
+        json_data["analysis"]["dc"]["Operating Point"] = str(self.obj_track.op_check[-1])
+        json_data["analysis"]["dc"]["Start Combo"] = obj_analysis.dc_parameter[0]
+        json_data["analysis"]["dc"]["Increment Combo"] = obj_analysis.dc_parameter[1]
+        json_data["analysis"]["dc"]["Stop Combo"] = obj_analysis.dc_parameter[2]
+        json_data["analysis"]["dc"]["Source 2"] = str(obj_analysis.dc_entry_var[4].text())
+        json_data["analysis"]["dc"]["Start2"] = str(obj_analysis.dc_entry_var[5].text())
+        json_data["analysis"]["dc"]["Increment2"] = str(obj_analysis.dc_entry_var[6].text())
+        json_data["analysis"]["dc"]["Stop2"] = str(obj_analysis.dc_entry_var[7].text())
+        json_data["analysis"]["dc"]["Start Combo2"] = obj_analysis.dc_parameter[3]
+        json_data["analysis"]["dc"]["Increment Combo2"] = obj_analysis.dc_parameter[4]
+        json_data["analysis"]["dc"]["Stop Combo2"] = obj_analysis.dc_parameter[5]
+
+        json_data["analysis"]["tran"] = {}
+        json_data["analysis"]["tran"]["Start Time"] = str(obj_analysis.tran_entry_var[0].text())
+        json_data["analysis"]["tran"]["Step Time"] = str(obj_analysis.tran_entry_var[1].text())
+        json_data["analysis"]["tran"]["Stop Time"] = str(obj_analysis.tran_entry_var[2].text())
+        json_data["analysis"]["tran"]["Start Combo"] = obj_analysis.tran_parameter[0]
+        json_data["analysis"]["tran"]["Step Combo"] = obj_analysis.tran_parameter[1]
+        json_data["analysis"]["tran"]["Stop Combo"] = obj_analysis.tran_parameter[2]
 
 
-        attr_tran=ET.SubElement(attr_analysis,"tran")
-        ET.SubElement(attr_tran,"field1",name="Start Time").text= str(obj_analysis.tran_entry_var[0].text())
-        ET.SubElement(attr_tran,"field2",name="Step Time").text= str(obj_analysis.tran_entry_var[1].text())
-        ET.SubElement(attr_tran,"field3",name="Stop Time").text= str(obj_analysis.tran_entry_var[2].text())
-        ET.SubElement(attr_tran,"field4",name="Start Combo").text= obj_analysis.tran_parameter[0]
-        ET.SubElement(attr_tran,"field5",name="Step Combo").text= obj_analysis.tran_parameter[1]
-        ET.SubElement(attr_tran,"field6",name="Stop Combo").text= obj_analysis.tran_parameter[2]
-        #print "TRAN PARAMETER 2-----",obj_analysis.tran_parameter[2]
-                     
-        if check==0:
-            attr_source=ET.SubElement(attr_parent,"source")
-        if check==1:
-            for child in attr_parent:
-                if child.tag=="source":
-                    attr_source=child  
-        count=1
-        grand_child_count=1
-        
-        for i in store_schematicInfo:
-            tmp_check=0
-            words=i.split(' ')
-            wordv=words[0]
-            for child in attr_source:
-                if child.tag==wordv and child.text==words[len(words)-1]:
-                    tmp_check=1
-                    for grand_child in child:
-                        grand_child.text=str(obj_source.entry_var[grand_child_count].text())
-                        grand_child_count=grand_child_count+1
-                    grand_child_count=grand_child_count+1
-            if tmp_check==0:        
-                words=i.split(' ')
-                wordv=words[0]
-                if wordv[0]=="v" or wordv[0]=="i":
-                    attr_var=ET.SubElement(attr_source,words[0],name="Source type")
-                    attr_var.text=words[len(words)-1]
-                    #ET.SubElement(attr_ac,"field1",name="Lin").text="true"    
-                if words[len(words)-1]=="ac":
-                    #attr_ac=ET.SubElement(attr_var,"ac")
-                    ET.SubElement(attr_var,"field1",name="Amplitude").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var, "field2", name = "Phase").text = str(obj_source.entry_var[count].text())
-                    count=count+2
-                elif words[len(words)-1]=="dc":
-                    #attr_dc=ET.SubElement(attr_var,"dc")
-                    ET.SubElement(attr_var,"field1",name="Value").text=str(obj_source.entry_var[count].text())
-                    count=count+2
-                elif words[len(words)-1]=="sine":
-                    #attr_sine=ET.SubElement(attr_var,"sine")
-                    ET.SubElement(attr_var,"field1",name="Offset Value").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field2",name="Amplitude").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field3",name="Frequency").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field4",name="Delay Time").text=str(obj_source.entry_var[count].text())    
-                    count=count+1
-                    ET.SubElement(attr_var,"field5",name="Damping Factor").text=str(obj_source.entry_var[count].text())
-                    count=count+2
-                elif words[len(words)-1]=="pulse":
-                    #attr_pulse=ET.SubElement(attr_var,"pulse")
-                    ET.SubElement(attr_var,"field1",name="Initial Value").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field2",name="Pulse Value").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field3",name="Delay Time").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field4",name="Rise Time").text=str(obj_source.entry_var[count].text())    
-                    count=count+1
-                    ET.SubElement(attr_var,"field5",name="Fall Time").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field5",name="Pulse width").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field5",name="Period").text=str(obj_source.entry_var[count].text())
-                    count=count+2
-                elif words[len(words)-1]=="pwl":
-                    #attr_pwl=ET.SubElement(attr_var,"pwl")
-                    ET.SubElement(attr_var,"field1",name="Enter in pwl format").text=str(obj_source.entry_var[count].text())
-                    count=count+2
-                elif words[len(words)-1]=="exp":
-                    #attr_exp=ET.SubElement(attr_var,"exp")
-                    ET.SubElement(attr_var,"field1",name="Initial Value").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field2",name="Pulsed Value").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field3",name="Rise Delay Time").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field4",name="Rise Time Constant").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field5",name="Fall TIme").text=str(obj_source.entry_var[count].text())
-                    count=count+1
-                    ET.SubElement(attr_var,"field6",name="Fall Time Constant").text=str(obj_source.entry_var[count].text())
-                    count=count+2
-                else:
-                    pass
-                
-                
-        if check==0:
-            attr_model=ET.SubElement(attr_parent,"model")
-        if check==1:
-            for child in attr_parent:
-                if child.tag=="model":
-                    attr_model=child
-        i=0    
-        #tmp_check is a variable to check for duplicates in the xml file
-        tmp_check=0
-        #tmp_i is the iterator in case duplicates are there; then in that case we need to replace only the child node and not create a new parent node
-        
+        """
+        Writing Source values
+        """
+
+        json_data["source"] = {}       
+        count = 1
+
+        for line in store_schematicInfo:
+            words = line.split(' ')
+            wordv = words[0]
+
+            if wordv[0] == "v" or wordv[0] == "i":
+                json_data["source"][wordv] = {}
+                json_data["source"][wordv]["type"] = words[len(words)-1]
+                json_data["source"][wordv]["values"] = []
+
+            if words[len(words)-1] == "ac":
+                amp = {"Amplitude": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(amp)
+
+                phase = {"Phase": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(phase)
+
+            elif words[len(words)-1] == "dc":
+                value = {"Value": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(value)
+
+            elif words[len(words)-1] == "sine":
+                offset = {"Offset Value": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(offset)
+
+                amp = {"Amplitude": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(amp)
+
+                freq = {"Freuency": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(freq)
+
+                delay = {"Delay Time": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(delay)
+
+                damp = {"Damping Factor": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(damp)
+
+            elif words[len(words)-1] == "pulse":
+                initial = {"Initial Value": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(initial)
+
+                pulse = {"Pulse Value": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(pulse)
+
+                delay = {"Delay Time": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(delay)
+
+                rise = {"Rise Time": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(rise)
+
+                fall = {"Fall Time": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(fall)
+
+                width = {"Pulse width": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(width)
+
+                period = {"Period": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(period)
+
+            elif words[len(words)-1]=="pwl":
+                pwl = {"Enter in pwl format": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(pwl)
+
+            elif words[len(words)-1]=="exp":
+                initial = {"Initial Value": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(initial)
+
+                pulsed = {"Pulsed Value": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(pulsed)
+
+                rise = {"Rise Delay Time": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(rise)
+
+                fall = {"Fall Time": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(fall)
+
+                fallConstant = {"Fall Time Constant": str(obj_source.entry_var[count].text())}
+                count += 1
+                json_data["source"][wordv]["values"].append(fallConstant)
+
+            else:
+                pass
+
+
+        """
+        Writing Model values
+        """
+
+        i = 0    
+        json_data["model"] = {}
+
         for line in modelList:
-            tmp_check=0
             for rand_itr in obj_model.obj_trac.modelTrack:
-                if rand_itr[2]==line[2] and rand_itr[3]==line[3]:
-                    start=rand_itr[7]
-                    end=rand_itr[8]
-            i=start
-            for child in attr_model:
-                if child.text==line[2] and child.tag==line[3]:
-                    for grand_child in child:
-                        if i<=end:
-                            grand_child.text=str(obj_model.obj_trac.model_entry_var[i].text())
-                            i=i+1
-                        else:
-                            pass
-                    tmp_check=1    
-                        
-            if tmp_check==0:
-                attr_ui=ET.SubElement(attr_model,line[3],name="type")
-                attr_ui.text=line[2]    
-                for key,value in line[7].iteritems():
-                    if hasattr(value, '__iter__') and i<=end:
-                        for item in value:
-                            ET.SubElement(attr_ui,"field"+str(i+1),name=item).text=str(obj_model.obj_trac.model_entry_var[i].text())
-                            i=i+1
+                if rand_itr[2] == line[2] and rand_itr[3] == line[3]:
+                    start = rand_itr[7]
+                    end = rand_itr[8]
+            i = start   
+            
+            json_data["model"][line[3]] = {}
+            json_data["model"][line[3]]["type"] = line[2]
+            json_data["model"][line[3]]["values"] = []           
+    
+            for key, value in line[7].iteritems():
+                if hasattr(value, '__iter__') and i <= end:
+                    for item in value:
+                        fields = {item: str(obj_model.obj_trac.model_entry_var[i].text())}
+                        json_data["model"][line[3]]["values"].append(fields)
+                        i = i + 1
                             
-                    else:
-                        ET.SubElement(attr_ui,"field"+str(i+1),name=value).text=str(obj_model.obj_trac.model_entry_var[i].text())
-                        
-                        i=i+1
-                        
-        if check==0:
-            attr_devicemodel=ET.SubElement(attr_parent,"devicemodel")
-        if check==1:
-            for child in attr_parent:
-                if child.tag=="devicemodel":
-                    del child[:]
-                    attr_devicemodel=child
-        
+                else:
+                    fields = {value: str(obj_model.obj_trac.model_entry_var[i].text())}
+                    json_data["model"][line[3]]["values"].append(fields)
+                    i = i + 1
+
+
+        """
+        Writing Device Model values
+        """
+
+        json_data["deviceModel"] = {}        
                      
-        for i in obj_devicemodel.devicemodel_dict_beg:
-            attr_var=ET.SubElement(attr_devicemodel,i)
-            it=obj_devicemodel.devicemodel_dict_beg[i]
-            end=obj_devicemodel.devicemodel_dict_end[i]
-            while it<=end:
-                ET.SubElement(attr_var,"field").text=str(obj_devicemodel.entry_var[it].text())
-                it=it+1
-                
-        if check==0:
-            attr_subcircuit=ET.SubElement(attr_parent,"subcircuit")
-        if check==1:
-            for child in attr_parent:
-                if child.tag=="subcircuit":
-                    del child[:]
-                    attr_subcircuit=child
-                      
-        for i in obj_subcircuitTab.subcircuit_dict_beg:
-            attr_var=ET.SubElement(attr_subcircuit,i)
-            it=obj_subcircuitTab.subcircuit_dict_beg[i]
-            end=obj_subcircuitTab.subcircuit_dict_end[i]
+        for device in obj_devicemodel.devicemodel_dict_beg:
+            json_data["deviceModel"][device] = []
+            it = obj_devicemodel.devicemodel_dict_beg[device]
+            end = obj_devicemodel.devicemodel_dict_end[device]
 
-            while it<=end:
-                ET.SubElement(attr_var,"field").text=str(obj_subcircuitTab.entry_var[it].text())
-                it=it+1
+            while it <= end:
+                json_data["deviceModel"][device].append(str(obj_devicemodel.entry_var[it].text()))
+                it = it + 1
 
-        
-        tree=ET.ElementTree(attr_parent)
-        tree.write(fw)
+
+        """
+        Writing Subcircuit values
+        """
+
+        json_data["subcircuit"] = {}                      
+        for subckt in obj_subcircuitTab.subcircuit_dict_beg:
+            json_data["subcircuit"][subckt] = []
+            it = obj_subcircuitTab.subcircuit_dict_beg[subckt]
+            end = obj_subcircuitTab.subcircuit_dict_end[subckt]
+
+            while it <= end:
+                json_data["subcircuit"][subckt].append(str(obj_subcircuitTab.entry_var[it].text()))
+                it = it + 1
+
+        write_data = json.dumps(json_data)
+        fw.write(write_data)
         
                      
         self.obj_convert = Convert.Convert(self.obj_track.sourcelisttrack["ITEMS"],
