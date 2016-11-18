@@ -24,7 +24,6 @@ class Model(QtGui.QWidget):
             f = open(os.path.join(projpath,project_name+"_Previous_Values.json"),'r')
             data = f.read()
             json_data = json.loads(data)
-            print "------------------------------", json_data["model"]
         except:
             print "Model Previous Values JSON is Empty"
         
