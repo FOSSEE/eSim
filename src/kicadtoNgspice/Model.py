@@ -24,6 +24,7 @@ class Model(QtGui.QWidget):
             f = open(os.path.join(projpath,project_name+"_Previous_Values.json"),'r')
             data = f.read()
             json_data = json.loads(data)
+            print "------------------------------", json_data["model"]
         except:
             print "Model Previous Values JSON is Empty"
         
@@ -69,9 +70,9 @@ class Model(QtGui.QWidget):
                         modelgrid.addWidget(self.obj_trac.model_entry_var[self.nextcount], self.nextrow, 1)
 
                         try:
-                            for key in json_data["model"]:
-                                if json_data["model"][key]["type"] == line[2] and key == line[3]:
-                                    self.obj_trac.model_entry_var[self.nextcount].setText(str(json_data["model"][key]["values"][i].values()[0]))
+                            for mod in json_data["model"]:
+                                if json_data["model"][mod]["type"] == line[2] and mod == line[3]:
+                                    self.obj_trac.model_entry_var[self.nextcount].setText(str(json_data["model"][mod]["values"][i].values()[0]))
                                     i = i + 1
                         except:
                             pass
@@ -88,9 +89,9 @@ class Model(QtGui.QWidget):
                     modelgrid.addWidget(self.obj_trac.model_entry_var[self.nextcount], self.nextrow, 1)
 
                     try:
-                        for key in json_data["model"]:
-                            if json_data["model"][key]["type"] == line[2] and key == line[3]:
-                                self.obj_trac.model_entry_var[self.nextcount].setText(str(json_data["model"][key]["values"][i].values()[0]))
+                        for mod in json_data["model"]:
+                            if json_data["model"][mod]["type"] == line[2] and mod == line[3]:
+                                self.obj_trac.model_entry_var[self.nextcount].setText(str(json_data["model"][mod]["values"][i].values()[0]))
                                 i = i + 1
                     except:
                             pass
