@@ -48,7 +48,7 @@ class ProjectExplorer(QtGui.QWidget):
         for files in children:
             childnode = QtGui.QTreeWidgetItem(parentnode, [files, os.path.join(parents,files)])
 	    self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']] = []
-	    self.oj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']] = []
+	    self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']] = []
             
     def openMenu(self, position):
     
