@@ -471,7 +471,8 @@ class Analysis(QtGui.QWidget):
         try:
             self.track_obj.op_check.append(str(json_data["analysis"]["dc"]["Operating Point"]))
         except:
-            self.track_obj.op_check.append(0)
+            self.track_obj.op_check.append('0')
+            
         #QtCore.QObject.connect(check,SIGNAL("stateChanged()"),check,SLOT("checkedSlot"))
         self.check.stateChanged.connect(self.setflag)
         #self.flagcheck = 1
