@@ -467,7 +467,7 @@ class MainWindow(QtGui.QWidget):
             #Calling netlist file generation function
             self.createNetlistFile(store_schematicInfo,plotText)
             
-            self.msg = "The Kicad to Ngspice Conversion completed successfully!!!!!!"
+            self.msg = "The Kicad to Ngspice Conversion completed successfully!"
             QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
                      
         except Exception as e:
