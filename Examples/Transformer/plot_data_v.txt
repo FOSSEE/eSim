@@ -1,5 +1,5 @@
            * /home/fossee/esim-workspace/transformer/transformer.cir
-           Transient Analysis  Thu Mar  3 23:14:49  2016
+           Transient Analysis  Fri Sep  1 14:50:31  2017
 --------------------------------------------------------------------------------
 Index   time            in              internode_1     internode_2     
 --------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ Index   time            in              internode_1     internode_2
 58	1.000000e-01	1.680263e-02	-5.20882e-03	2.083526e-02	
 
            * /home/fossee/esim-workspace/transformer/transformer.cir
-           Transient Analysis  Thu Mar  3 23:14:49  2016
+           Transient Analysis  Fri Sep  1 14:50:31  2017
 --------------------------------------------------------------------------------
 Index   time            net-_r2-pad2_   out             
 --------------------------------------------------------------------------------

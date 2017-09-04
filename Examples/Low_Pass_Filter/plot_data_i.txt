@@ -1,5 +1,5 @@
        * /home/fossee/esim-workspace/low_pass_filter/low_pass_filter.cir
-       AC Analysis  Thu Mar  3 22:38:42  2016
+       AC Analysis  Wed Aug 30 14:47:19  2017
 --------------------------------------------------------------------------------
 Index   frequency       alli                            
 --------------------------------------------------------------------------------

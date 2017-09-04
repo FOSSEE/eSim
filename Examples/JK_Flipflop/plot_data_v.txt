@@ -1,5 +1,5 @@
            * /home/fossee/esim-workspace/jk_flipflop/jk_flipflop.cir
-           Transient Analysis  Thu Mar  3 22:37:38  2016
+           Transient Analysis  Wed Aug 30 14:55:25  2017
 --------------------------------------------------------------------------------
 Index   time            clk             j               k               
 --------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ Index   time            clk             j               k
 176	1.000000e+02	5.000000e+00	5.000000e+00	0.000000e+00	
 
            * /home/fossee/esim-workspace/jk_flipflop/jk_flipflop.cir
-           Transient Analysis  Thu Mar  3 22:37:38  2016
+           Transient Analysis  Wed Aug 30 14:55:25  2017
 --------------------------------------------------------------------------------
 Index   time            net-_u8-pad1_   net-_u10-pad1_  nout            
 --------------------------------------------------------------------------------
@@ -383,7 +383,7 @@ Index   time            net-_u8-pad1_   net-_u10-pad1_  nout
 176	1.000000e+02	0.000000e+00	0.000000e+00	0.000000e+00	
 
            * /home/fossee/esim-workspace/jk_flipflop/jk_flipflop.cir
-           Transient Analysis  Thu Mar  3 22:37:38  2016
+           Transient Analysis  Wed Aug 30 14:55:25  2017
 --------------------------------------------------------------------------------
 Index   time            out             
 --------------------------------------------------------------------------------

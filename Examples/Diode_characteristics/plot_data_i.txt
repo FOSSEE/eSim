@@ -1,5 +1,5 @@
  * /home/fossee/esim-workspace/diode_characteristics/diode_characteristics.cir
- DC transfer characteristic  Thu Mar  3 20:54:14  2016
+ DC transfer characteristic  Tue Aug 29 19:55:06  2017
 --------------------------------------------------------------------------------
 Index   v-sweep         v1#branch       v_u1#branch     
 --------------------------------------------------------------------------------

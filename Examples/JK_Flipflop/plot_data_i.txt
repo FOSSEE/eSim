@@ -1,5 +1,5 @@
            * /home/fossee/esim-workspace/jk_flipflop/jk_flipflop.cir
-           Transient Analysis  Thu Mar  3 22:37:38  2016
+           Transient Analysis  Wed Aug 30 14:55:25  2017
 --------------------------------------------------------------------------------
 Index   time            a2#branch_1_0   a2#branch_1_1   v1#branch       
 --------------------------------------------------------------------------------
@@ -191,7 +191,7 @@ Index   time            a2#branch_1_0   a2#branch_1_1   v1#branch
 176	1.000000e+02	-5.00000e-03	0.000000e+00	0.000000e+00	
 
            * /home/fossee/esim-workspace/jk_flipflop/jk_flipflop.cir
-           Transient Analysis  Thu Mar  3 22:37:38  2016
+           Transient Analysis  Wed Aug 30 14:55:25  2017
 --------------------------------------------------------------------------------
 Index   time            v2#branch       v3#branch       v4#branch       
 --------------------------------------------------------------------------------
@@ -383,7 +383,7 @@ Index   time            v2#branch       v3#branch       v4#branch
 176	1.000000e+02	0.000000e+00	0.000000e+00	0.000000e+00	
 
            * /home/fossee/esim-workspace/jk_flipflop/jk_flipflop.cir
-           Transient Analysis  Thu Mar  3 22:37:38  2016
+           Transient Analysis  Wed Aug 30 14:55:25  2017
 --------------------------------------------------------------------------------
 Index   time            v5#branch       
 --------------------------------------------------------------------------------

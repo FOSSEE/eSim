@@ -1,5 +1,5 @@
             * /home/fossee/esim-workspace/integrator/integrator.cir
-            Transient Analysis  Thu Mar  3 22:35:55  2016
+            Transient Analysis  Wed Aug 30 12:03:05  2017
 --------------------------------------------------------------------------------
 Index   time            e.x1.ein1#branc e.x1.eout1#bran v1#branch       
 --------------------------------------------------------------------------------

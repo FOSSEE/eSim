@@ -1,5 +1,5 @@
       * /home/fossee/updatedexamples/series_resonance/series_resonance.cir
-      AC Analysis  Thu Mar  3 22:50:03  2016
+      AC Analysis  Fri Sep  1 14:52:43  2017
 --------------------------------------------------------------------------------
 Index   frequency       in                              
 --------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ Index   frequency       in
 19	2.500000e+02	1.000000e+00,	0.000000e+00	
 
       * /home/fossee/updatedexamples/series_resonance/series_resonance.cir
-      AC Analysis  Thu Mar  3 22:50:03  2016
+      AC Analysis  Fri Sep  1 14:52:43  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_c1-pad2_                   
 --------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ Index   frequency       net-_c1-pad2_
 19	2.500000e+02	9.998854e-01,	1.070339e-02	
 
       * /home/fossee/updatedexamples/series_resonance/series_resonance.cir
-      AC Analysis  Thu Mar  3 22:50:03  2016
+      AC Analysis  Fri Sep  1 14:52:43  2017
 --------------------------------------------------------------------------------
 Index   frequency       out                             
 --------------------------------------------------------------------------------

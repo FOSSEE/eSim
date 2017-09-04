@@ -1,5 +1,5 @@
             * /home/fossee/esim-workspace/integrator/integrator.cir
-            Transient Analysis  Thu Mar  3 22:35:55  2016
+            Transient Analysis  Wed Aug 30 12:03:05  2017
 --------------------------------------------------------------------------------
 Index   time            in              net-_c1-pad2_   net-_r2-pad1_   
 --------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ Index   time            in              net-_c1-pad2_   net-_r2-pad1_
 92	1.000000e-01	-5.00000e+00	5.873327e-04	2.935196e-07	
 
             * /home/fossee/esim-workspace/integrator/integrator.cir
-            Transient Analysis  Thu Mar  3 22:35:55  2016
+            Transient Analysis  Wed Aug 30 12:03:05  2017
 --------------------------------------------------------------------------------
 Index   time            out             x1.1            x1.2            
 --------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ Index   time            out             x1.1            x1.2
 92	1.000000e-01	4.228155e+01	4.549017e+01	4.549017e+01	
 
             * /home/fossee/esim-workspace/integrator/integrator.cir
-            Transient Analysis  Thu Mar  3 22:35:55  2016
+            Transient Analysis  Wed Aug 30 12:03:05  2017
 --------------------------------------------------------------------------------
 Index   time            x1.4            
 --------------------------------------------------------------------------------

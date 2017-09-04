@@ -1,5 +1,5 @@
     * /home/fossee/updatedexamples/halfwave_rectifier/halfwave_rectifier.cir
-    Transient Analysis  Thu Mar  3 22:27:20  2016
+    Transient Analysis  Wed Aug 30 12:10:05  2017
 --------------------------------------------------------------------------------
 Index   time            in              out             
 --------------------------------------------------------------------------------

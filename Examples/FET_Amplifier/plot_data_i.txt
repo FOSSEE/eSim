@@ -1,5 +1,5 @@
          * /home/fossee/updatedexamples/fet_amplifier/fet_amplifier.cir
-         Transient Analysis  Thu Mar  3 21:01:51  2016
+         Transient Analysis  Fri Sep  1 12:21:07  2017
 --------------------------------------------------------------------------------
 Index   time            v1#branch       v2#branch       
 --------------------------------------------------------------------------------

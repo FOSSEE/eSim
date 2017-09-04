@@ -1,5 +1,5 @@
 * /home/fossee/updatedexamples/fullwavebridgerectifier/fullwavebridgerectifier.cir
-Transient Analysis  Thu Mar  3 21:24:22  2016
+Transient Analysis  Wed Aug 30 11:20:06  2017
 --------------------------------------------------------------------------------
 Index   time            alli            
 --------------------------------------------------------------------------------

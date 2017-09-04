@@ -1,5 +1,5 @@
        * /home/fossee/esim-workspace/bjt_biascircuit/bjt_biascircuit.cir
-       DC transfer characteristic  Thu Mar  3 18:29:19  2016
+       DC transfer characteristic  Fri Sep  1 10:23:24  2017
 --------------------------------------------------------------------------------
 Index   i-sweep         ib              net-_q1-pad1_   net-_q1-pad2_   
 --------------------------------------------------------------------------------
@@ -1271,7 +1271,7 @@ Index   i-sweep         ib              net-_q1-pad1_   net-_q1-pad2_
 1205	1.000000e+01	-2.49999e+09	7.500014e+00	-2.49999e+09	
 
        * /home/fossee/esim-workspace/bjt_biascircuit/bjt_biascircuit.cir
-       DC transfer characteristic  Thu Mar  3 18:29:19  2016
+       DC transfer characteristic  Fri Sep  1 10:23:24  2017
 --------------------------------------------------------------------------------
 Index   i-sweep         net-_r1-pad1_   vce             
 --------------------------------------------------------------------------------

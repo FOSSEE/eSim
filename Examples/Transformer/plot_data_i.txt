@@ -1,5 +1,5 @@
            * /home/fossee/esim-workspace/transformer/transformer.cir
-           Transient Analysis  Thu Mar  3 23:14:49  2016
+           Transient Analysis  Fri Sep  1 14:50:31  2017
 --------------------------------------------------------------------------------
 Index   time            a1#branch_0_0   a1#branch_1_0   a2#branch_0_0   
 --------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ Index   time            a1#branch_0_0   a1#branch_1_0   a2#branch_0_0
 58	1.000000e-01	-1.68026e-05	1.033495e-05	3.360526e-05	
 
            * /home/fossee/esim-workspace/transformer/transformer.cir
-           Transient Analysis  Thu Mar  3 23:14:49  2016
+           Transient Analysis  Fri Sep  1 14:50:31  2017
 --------------------------------------------------------------------------------
 Index   time            a2#branch_1_0   v1#branch       
 --------------------------------------------------------------------------------

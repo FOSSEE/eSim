@@ -1,5 +1,5 @@
          * /home/fossee/updatedexamples/bjt_ce_config/bjt_ce_config.cir
-         DC transfer characteristic  Thu Mar  3 18:34:30  2016
+         DC transfer characteristic  Fri Sep  1 10:35:44  2017
 --------------------------------------------------------------------------------
 Index   i-sweep         ib              net-_q1-pad1_   net-_q1-pad2_   
 --------------------------------------------------------------------------------
@@ -641,7 +641,7 @@ Index   i-sweep         ib              net-_q1-pad1_   net-_q1-pad2_
 605	5.000000e+00	-2.49999e+09	2.500014e+00	-2.49999e+09	
 
          * /home/fossee/updatedexamples/bjt_ce_config/bjt_ce_config.cir
-         DC transfer characteristic  Thu Mar  3 18:34:30  2016
+         DC transfer characteristic  Fri Sep  1 10:35:44  2017
 --------------------------------------------------------------------------------
 Index   i-sweep         net-_r1-pad1_   vce             
 --------------------------------------------------------------------------------

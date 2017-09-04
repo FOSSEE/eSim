@@ -1,5 +1,5 @@
   * /home/fossee/esim-workspace/zener_characteristic/zener_characteristic.cir
-  DC transfer characteristic  Thu Mar  3 22:40:04  2016
+  DC transfer characteristic  Mon Sep  4 14:10:25  2017
 --------------------------------------------------------------------------------
 Index   v-sweep         v1#branch       v_u2#branch     
 --------------------------------------------------------------------------------

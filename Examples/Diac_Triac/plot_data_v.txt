@@ -1,5 +1,5 @@
             * /home/fossee/updatedexamples/diac_triac/diac_triac.cir
-            Transient Analysis  Thu Mar  3 18:25:52  2016
+            Transient Analysis  Fri Sep  1 12:14:21  2017
 --------------------------------------------------------------------------------
 Index   time            in              net-_c1-pad1_   net-_c2-pad1_   
 --------------------------------------------------------------------------------
@@ -1236,7 +1236,7 @@ Index   time            in              net-_c1-pad1_   net-_c2-pad1_
 1170	2.000000e-02	-4.89859e-14	-6.35530e+00	-6.34490e+00	
 
             * /home/fossee/updatedexamples/diac_triac/diac_triac.cir
-            Transient Analysis  Thu Mar  3 18:25:52  2016
+            Transient Analysis  Fri Sep  1 12:14:21  2017
 --------------------------------------------------------------------------------
 Index   time            net-_x1-pad2_   out             x2.1            
 --------------------------------------------------------------------------------
@@ -2473,7 +2473,7 @@ Index   time            net-_x1-pad2_   out             x2.1
 1170	2.000000e-02	0.000000e+00	-1.63874e-04	0.000000e+00	
 
             * /home/fossee/updatedexamples/diac_triac/diac_triac.cir
-            Transient Analysis  Thu Mar  3 18:25:52  2016
+            Transient Analysis  Fri Sep  1 12:14:21  2017
 --------------------------------------------------------------------------------
 Index   time            x2.2            x2.3            x2.4            
 --------------------------------------------------------------------------------
@@ -3710,7 +3710,7 @@ Index   time            x2.2            x2.3            x2.4
 1170	2.000000e-02	-4.80949e-01	-3.87824e+01	0.000000e+00	
 
             * /home/fossee/updatedexamples/diac_triac/diac_triac.cir
-            Transient Analysis  Thu Mar  3 18:25:52  2016
+            Transient Analysis  Fri Sep  1 12:14:21  2017
 --------------------------------------------------------------------------------
 Index   time            x2.5            x2.6            x2.7            
 --------------------------------------------------------------------------------
@@ -4947,7 +4947,7 @@ Index   time            x2.5            x2.6            x2.7
 1170	2.000000e-02	-3.87824e+01	-3.87824e+01	-4.80949e-01	
 
             * /home/fossee/updatedexamples/diac_triac/diac_triac.cir
-            Transient Analysis  Thu Mar  3 18:25:52  2016
+            Transient Analysis  Fri Sep  1 12:14:21  2017
 --------------------------------------------------------------------------------
 Index   time            x2.9            
 --------------------------------------------------------------------------------

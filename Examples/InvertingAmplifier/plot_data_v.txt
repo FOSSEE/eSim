@@ -1,5 +1,5 @@
     * /home/fossee/updatedexamples/invertingamplifier/invertingamplifier.cir
-    Transient Analysis  Thu Mar  3 22:37:21  2016
+    Transient Analysis  Wed Aug 30 14:59:16  2017
 --------------------------------------------------------------------------------
 Index   time            in              net-_r1-pad2_   net-_r4-pad1_   
 --------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ Index   time            in              net-_r1-pad2_   net-_r4-pad1_
 59	1.000000e-01	-2.44929e-15	-6.12305e-04	-3.05999e-07	
 
     * /home/fossee/updatedexamples/invertingamplifier/invertingamplifier.cir
-    Transient Analysis  Thu Mar  3 22:37:21  2016
+    Transient Analysis  Wed Aug 30 14:59:16  2017
 --------------------------------------------------------------------------------
 Index   time            out             x1.1            x1.2            
 --------------------------------------------------------------------------------
@@ -137,7 +137,7 @@ Index   time            out             x1.1            x1.2
 59	1.000000e-01	-3.67536e-03	-3.99696e-03	-3.99696e-03	
 
     * /home/fossee/updatedexamples/invertingamplifier/invertingamplifier.cir
-    Transient Analysis  Thu Mar  3 22:37:21  2016
+    Transient Analysis  Wed Aug 30 14:59:16  2017
 --------------------------------------------------------------------------------
 Index   time            x1.4            
 --------------------------------------------------------------------------------

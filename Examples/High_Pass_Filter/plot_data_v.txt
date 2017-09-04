@@ -1,5 +1,5 @@
       * /home/fossee/esim-workspace/high_pass_filter/high_pass_filter.cir
-      AC Analysis  Thu Mar  3 22:27:42  2016
+      AC Analysis  Wed Aug 30 12:06:43  2017
 --------------------------------------------------------------------------------
 Index   frequency       in                              
 --------------------------------------------------------------------------------
@@ -132,7 +132,7 @@ Index   frequency       in
 120	1.000000e+06	1.000000e+01,	0.000000e+00	
 
       * /home/fossee/esim-workspace/high_pass_filter/high_pass_filter.cir
-      AC Analysis  Thu Mar  3 22:27:42  2016
+      AC Analysis  Wed Aug 30 12:06:43  2017
 --------------------------------------------------------------------------------
 Index   frequency       out                             
 --------------------------------------------------------------------------------

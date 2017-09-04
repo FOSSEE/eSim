@@ -1,5 +1,5 @@
              * /home/fossee/esim-workspace/fulladder/fulladder.cir
-             Transient Analysis  Thu Mar  3 21:20:17  2016
+             Transient Analysis  Tue Aug 29 20:04:13  2017
 --------------------------------------------------------------------------------
 Index   time            cin             cout            in1             
 --------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ Index   time            cin             cout            in1
 58	1.000000e+02	5.000000e+00	5.000000e+00	5.000000e+00	
 
              * /home/fossee/esim-workspace/fulladder/fulladder.cir
-             Transient Analysis  Thu Mar  3 21:20:17  2016
+             Transient Analysis  Tue Aug 29 20:04:13  2017
 --------------------------------------------------------------------------------
 Index   time            in2             sum             
 --------------------------------------------------------------------------------

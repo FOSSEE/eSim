@@ -1,5 +1,5 @@
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       v1#branch                       
 --------------------------------------------------------------------------------
@@ -742,7 +742,7 @@ Index   frequency       v1#branch
 700	1.000000e+08	2.653872e-04,	7.841899e-04	
 
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       v2#branch                       
 --------------------------------------------------------------------------------

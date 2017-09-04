@@ -1,5 +1,5 @@
       * /home/fossee/updatedexamples/series_resonance/series_resonance.cir
-      AC Analysis  Thu Mar  3 22:50:03  2016
+      AC Analysis  Fri Sep  1 14:52:43  2017
 --------------------------------------------------------------------------------
 Index   frequency       l1#branch                       
 --------------------------------------------------------------------------------
@@ -25,7 +25,7 @@ Index   frequency       l1#branch
 19	2.500000e+02	1.145756e-04,	-1.07034e-02	
 
       * /home/fossee/updatedexamples/series_resonance/series_resonance.cir
-      AC Analysis  Thu Mar  3 22:50:03  2016
+      AC Analysis  Fri Sep  1 14:52:43  2017
 --------------------------------------------------------------------------------
 Index   frequency       v1#branch                       
 --------------------------------------------------------------------------------

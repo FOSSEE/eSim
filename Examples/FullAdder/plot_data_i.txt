@@ -1,5 +1,5 @@
              * /home/fossee/esim-workspace/fulladder/fulladder.cir
-             Transient Analysis  Thu Mar  3 21:20:17  2016
+             Transient Analysis  Tue Aug 29 20:04:13  2017
 --------------------------------------------------------------------------------
 Index   time            a2#branch_1_0   a2#branch_1_1   v1#branch       
 --------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ Index   time            a2#branch_1_0   a2#branch_1_1   v1#branch
 58	1.000000e+02	0.000000e+00	-5.00000e-03	0.000000e+00	
 
              * /home/fossee/esim-workspace/fulladder/fulladder.cir
-             Transient Analysis  Thu Mar  3 21:20:17  2016
+             Transient Analysis  Tue Aug 29 20:04:13  2017
 --------------------------------------------------------------------------------
 Index   time            v2#branch       v3#branch       
 --------------------------------------------------------------------------------

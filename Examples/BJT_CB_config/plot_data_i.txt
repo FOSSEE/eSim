@@ -1,5 +1,5 @@
          * /home/fossee/updatedexamples/bjt_cb_config/bjt_cb_config.cir
-         DC transfer characteristic  Thu Mar 17 15:55:49  2016
+         DC transfer characteristic  Fri Sep  1 10:28:21  2017
 --------------------------------------------------------------------------------
 Index   i-sweep         v1#branch       v_u_ic1#branch  
 --------------------------------------------------------------------------------

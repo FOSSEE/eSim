@@ -1,5 +1,5 @@
         * /home/fossee/esim-workspace/clampercircuit/clampercircuit.cir
-        Transient Analysis  Thu Mar  3 20:30:13  2016
+        Transient Analysis  Tue Aug 29 19:47:49  2017
 --------------------------------------------------------------------------------
 Index   time            in_neg          in_pos          out_neg         
 --------------------------------------------------------------------------------
@@ -76,7 +76,7 @@ Index   time            in_neg          in_pos          out_neg
 67	1.000000e-01	-6.12323e-15	-6.12323e-15	-4.85266e+00	
 
         * /home/fossee/esim-workspace/clampercircuit/clampercircuit.cir
-        Transient Analysis  Thu Mar  3 20:30:13  2016
+        Transient Analysis  Tue Aug 29 19:47:49  2017
 --------------------------------------------------------------------------------
 Index   time            out_pos         
 --------------------------------------------------------------------------------

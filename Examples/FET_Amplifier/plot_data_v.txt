@@ -1,5 +1,5 @@
          * /home/fossee/updatedexamples/fet_amplifier/fet_amplifier.cir
-         Transient Analysis  Thu Mar  3 21:01:51  2016
+         Transient Analysis  Fri Sep  1 12:21:07  2017
 --------------------------------------------------------------------------------
 Index   time            in              net-_c1-pad1_   net-_c6-pad1_   
 --------------------------------------------------------------------------------
@@ -1064,7 +1064,7 @@ Index   time            in              net-_c1-pad1_   net-_c6-pad1_
 1007	1.000000e-02	-2.44929e-17	3.337343e-06	1.252846e+00	
 
          * /home/fossee/updatedexamples/fet_amplifier/fet_amplifier.cir
-         Transient Analysis  Thu Mar  3 21:01:51  2016
+         Transient Analysis  Fri Sep  1 12:21:07  2017
 --------------------------------------------------------------------------------
 Index   time            net-_r3-pad1_   out             
 --------------------------------------------------------------------------------

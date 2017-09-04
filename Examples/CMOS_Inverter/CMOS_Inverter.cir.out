@@ -1,10 +1,10 @@
 * /home/fossee/updatedexamples/cmos_inverter/cmos_inverter.cir
 
-.include NMOS-180nm.lib
-.include PMOS-180nm.lib
+.include PMOS-0.5um.lib
+.include NMOS-0.5um.lib
 v2  vcc gnd 5
-m1 out in gnd gnd CMOSN W=100u L=100u M=1
-m2 out in vcc vcc CMOSP W=100u L=100u M=1
+m1 out in gnd gnd mos_n W=100u L=100u M=1
+m2 out in vcc vcc mos_p W=100u L=100u M=1
 * u1  in plot_v1
 * u2  out plot_v1
 c1  out gnd 1u
