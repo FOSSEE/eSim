@@ -81,7 +81,7 @@ class Analysis(QtGui.QWidget):
 
         except:
             self.checkTRAN.setChecked(True)
-            self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
+            self.track_obj.set_CheckBox["ITEMS"]="TRAN"
                
         self.setLayout(self.grid)
         self.show()
