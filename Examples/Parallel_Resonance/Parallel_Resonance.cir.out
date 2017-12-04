@@ -3,7 +3,7 @@
 r1  out gnd 100
 l1  out gnd 100m
 c1  gnd out 10u
-v1 in gnd  ac 1 0
+v1 in gnd  ac 10 0
 r2  out in 1000
 * u1  in plot_v1
 * u3  out plot_v1

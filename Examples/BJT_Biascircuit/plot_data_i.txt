@@ -1,5 +1,5 @@
        * /home/fossee/esim-workspace/bjt_biascircuit/bjt_biascircuit.cir
-       DC transfer characteristic  Thu Mar  3 18:29:19  2016
+       DC transfer characteristic  Fri Sep  1 10:23:24  2017
 --------------------------------------------------------------------------------
 Index   i-sweep         v1#branch       v_u1#branch     
 --------------------------------------------------------------------------------

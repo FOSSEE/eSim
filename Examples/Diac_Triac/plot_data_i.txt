@@ -1,5 +1,5 @@
             * /home/fossee/updatedexamples/diac_triac/diac_triac.cir
-            Transient Analysis  Thu Mar  3 18:25:52  2016
+            Transient Analysis  Fri Sep  1 12:14:21  2017
 --------------------------------------------------------------------------------
 Index   time            v.x2.v1#branch  v.x2.v2#branch  v.x2.v3#branch  
 --------------------------------------------------------------------------------
@@ -1236,7 +1236,7 @@ Index   time            v.x2.v1#branch  v.x2.v2#branch  v.x2.v3#branch
 1170	2.000000e-02	-6.08913e-04	1.406328e-06	-2.32410e-07	
 
             * /home/fossee/updatedexamples/diac_triac/diac_triac.cir
-            Transient Analysis  Thu Mar  3 18:25:52  2016
+            Transient Analysis  Fri Sep  1 12:14:21  2017
 --------------------------------------------------------------------------------
 Index   time            v.x2.vf1#branch v.x2.vf2#branch v.x2.vf3#branch 
 --------------------------------------------------------------------------------
@@ -2473,7 +2473,7 @@ Index   time            v.x2.vf1#branch v.x2.vf2#branch v.x2.vf3#branch
 1170	2.000000e-02	-6.08913e-04	1.406328e-06	2.324101e-07	
 
             * /home/fossee/updatedexamples/diac_triac/diac_triac.cir
-            Transient Analysis  Thu Mar  3 18:25:52  2016
+            Transient Analysis  Fri Sep  1 12:14:21  2017
 --------------------------------------------------------------------------------
 Index   time            v1#branch       
 --------------------------------------------------------------------------------

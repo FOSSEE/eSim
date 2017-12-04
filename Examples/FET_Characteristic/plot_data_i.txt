@@ -1,5 +1,5 @@
     * /home/fossee/updatedexamples/fet_characteristic/fet_characteristic.cir
-    DC transfer characteristic  Thu Mar  3 21:08:44  2016
+    DC transfer characteristic  Fri Sep  1 12:24:24  2017
 --------------------------------------------------------------------------------
 Index   v-sweep         v_u_id1#branch  vds1#branch     vgs1#branch     
 --------------------------------------------------------------------------------

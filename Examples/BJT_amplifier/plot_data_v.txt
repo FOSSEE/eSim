@@ -1,5 +1,5 @@
          * /home/fossee/esim-workspace/bjt_amplifier/bjt_amplifier.cir
-         Transient Analysis  Thu Mar 17 16:00:09  2016
+         Transient Analysis  Fri Sep  1 10:41:41  2017
 --------------------------------------------------------------------------------
 Index   time            in              net-_c1-pad1_   net-_c1-pad2_   
 --------------------------------------------------------------------------------
@@ -1064,7 +1064,7 @@ Index   time            in              net-_c1-pad1_   net-_c1-pad2_
 1007	1.000000e-02	-2.44929e-17	2.336157e-06	1.837271e+00	
 
          * /home/fossee/esim-workspace/bjt_amplifier/bjt_amplifier.cir
-         Transient Analysis  Thu Mar 17 16:00:09  2016
+         Transient Analysis  Fri Sep  1 10:41:41  2017
 --------------------------------------------------------------------------------
 Index   time            net-_c2-pad2_   net-_c3-pad2_   net-_r2-pad1_   
 --------------------------------------------------------------------------------
@@ -2129,7 +2129,7 @@ Index   time            net-_c2-pad2_   net-_c3-pad2_   net-_r2-pad1_
 1007	1.000000e-02	1.199900e+00	8.416406e+00	1.000000e+01	
 
          * /home/fossee/esim-workspace/bjt_amplifier/bjt_amplifier.cir
-         Transient Analysis  Thu Mar 17 16:00:09  2016
+         Transient Analysis  Fri Sep  1 10:41:41  2017
 --------------------------------------------------------------------------------
 Index   time            out             
 --------------------------------------------------------------------------------

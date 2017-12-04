@@ -1,5 +1,5 @@
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       in                              
 --------------------------------------------------------------------------------
@@ -742,7 +742,7 @@ Index   frequency       in
 700	1.000000e+08	5.000000e-01,	0.000000e+00	
 
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_c1-pad1_                   
 --------------------------------------------------------------------------------
@@ -1485,7 +1485,7 @@ Index   frequency       net-_c1-pad1_
 700	1.000000e+08	1.577557e-01,	-8.95915e-02	
 
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_c1-pad2_                   
 --------------------------------------------------------------------------------
@@ -2228,7 +2228,7 @@ Index   frequency       net-_c1-pad2_
 700	1.000000e+08	1.577556e-01,	-8.95913e-02	
 
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_c2-pad2_                   
 --------------------------------------------------------------------------------
@@ -2971,7 +2971,7 @@ Index   frequency       net-_c2-pad2_
 700	1.000000e+08	-8.91018e-09,	-9.62433e-08	
 
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_c3-pad2_                   
 --------------------------------------------------------------------------------
@@ -3714,7 +3714,7 @@ Index   frequency       net-_c3-pad2_
 700	1.000000e+08	5.291968e-01,	1.569276e+00	
 
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_r2-pad1_                   
 --------------------------------------------------------------------------------
@@ -4457,7 +4457,7 @@ Index   frequency       net-_r2-pad1_
 700	1.000000e+08	0.000000e+00,	0.000000e+00	
 
 * /home/fossee/esim-workspace/bjt_frequency_response/bjt_frequency_response.cir
-AC Analysis  Thu Mar  3 18:37:14  2016
+AC Analysis  Fri Sep  1 10:32:22  2017
 --------------------------------------------------------------------------------
 Index   frequency       out                             
 --------------------------------------------------------------------------------

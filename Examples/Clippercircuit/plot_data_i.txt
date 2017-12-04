@@ -1,5 +1,5 @@
         * /home/fossee/esim-workspace/clippercircuit/clippercircuit.cir
-        Transient Analysis  Thu Mar  3 20:30:48  2016
+        Transient Analysis  Tue Aug 29 19:51:35  2017
 --------------------------------------------------------------------------------
 Index   time            alli            
 --------------------------------------------------------------------------------

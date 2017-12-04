@@ -144,7 +144,7 @@ class Convert:
             if self.op_check[-1] == 1:
                 self.no=0 
                 self.writefile.write(".op")
-            elif self.op_check[-1] == 0:
+            elif self.op_check[-1] == 0 or self.op_check[-1] == '0':
                 self.no=0 
                 self.writefile.write(".dc" +' '+ str(self.dc_entry_var[self.no].text())+ ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+1].text())) + self.converttosciform(self.dc_parameter[self.no]) + ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+3].text()))+ self.converttosciform(self.dc_parameter[self.no+2]) + ' '+ str(self.defaultvalue(self.dc_entry_var[self.no+2].text())) + self.converttosciform(self.dc_parameter[self.no+1]))
                 

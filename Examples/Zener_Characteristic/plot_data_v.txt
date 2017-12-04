@@ -1,5 +1,5 @@
   * /home/fossee/esim-workspace/zener_characteristic/zener_characteristic.cir
-  DC transfer characteristic  Thu Mar  3 22:40:04  2016
+  DC transfer characteristic  Mon Sep  4 14:10:25  2017
 --------------------------------------------------------------------------------
 Index   v-sweep         in              net-_r1-pad2_   out             
 --------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ Index   v-sweep         in              net-_r1-pad2_   out
 160	8.000000e+00	8.000000e+00	5.557938e+00	5.557938e+00	
 
   * /home/fossee/esim-workspace/zener_characteristic/zener_characteristic.cir
-  DC transfer characteristic  Thu Mar  3 22:40:04  2016
+  DC transfer characteristic  Mon Sep  4 14:10:25  2017
 --------------------------------------------------------------------------------
 Index   v-sweep         
 --------------------------------------------------------------------------------

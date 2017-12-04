@@ -1,5 +1,5 @@
 * /home/fossee/updatedexamples/frequencyresponse_jfet/frequencyresponse_jfet.cir
-AC Analysis  Thu Mar  3 21:19:34  2016
+AC Analysis  Fri Sep  1 12:17:40  2017
 --------------------------------------------------------------------------------
 Index   frequency       in                              
 --------------------------------------------------------------------------------
@@ -424,7 +424,7 @@ Index   frequency       in
 400	1.000000e+08	1.000000e-04,	0.000000e+00	
 
 * /home/fossee/updatedexamples/frequencyresponse_jfet/frequencyresponse_jfet.cir
-AC Analysis  Thu Mar  3 21:19:34  2016
+AC Analysis  Fri Sep  1 12:17:40  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_c1-pad1_                   
 --------------------------------------------------------------------------------
@@ -849,7 +849,7 @@ Index   frequency       net-_c1-pad1_
 400	1.000000e+08	9.999950e-05,	3.007833e-10	
 
 * /home/fossee/updatedexamples/frequencyresponse_jfet/frequencyresponse_jfet.cir
-AC Analysis  Thu Mar  3 21:19:34  2016
+AC Analysis  Fri Sep  1 12:17:40  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_c6-pad1_                   
 --------------------------------------------------------------------------------
@@ -1274,7 +1274,7 @@ Index   frequency       net-_c6-pad1_
 400	1.000000e+08	1.594330e-09,	-6.39079e-09	
 
 * /home/fossee/updatedexamples/frequencyresponse_jfet/frequencyresponse_jfet.cir
-AC Analysis  Thu Mar  3 21:19:34  2016
+AC Analysis  Fri Sep  1 12:17:40  2017
 --------------------------------------------------------------------------------
 Index   frequency       net-_r3-pad1_                   
 --------------------------------------------------------------------------------
@@ -1699,7 +1699,7 @@ Index   frequency       net-_r3-pad1_
 400	1.000000e+08	0.000000e+00,	0.000000e+00	
 
 * /home/fossee/updatedexamples/frequencyresponse_jfet/frequencyresponse_jfet.cir
-AC Analysis  Thu Mar  3 21:19:34  2016
+AC Analysis  Fri Sep  1 12:17:40  2017
 --------------------------------------------------------------------------------
 Index   frequency       out                             
 --------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
             * /home/fossee/updatedexamples/half_adder/half_adder.cir
-            Transient Analysis  Thu Mar  3 21:35:49  2016
+            Transient Analysis  Tue Aug 29 19:58:36  2017
 --------------------------------------------------------------------------------
 Index   time            cout            in1             in2             
 --------------------------------------------------------------------------------
@@ -67,7 +67,7 @@ Index   time            cout            in1             in2
 58	1.000000e-01	0.000000e+00	5.000000e+00	0.000000e+00	
 
             * /home/fossee/updatedexamples/half_adder/half_adder.cir
-            Transient Analysis  Thu Mar  3 21:35:49  2016
+            Transient Analysis  Tue Aug 29 19:58:36  2017
 --------------------------------------------------------------------------------
 Index   time            sum             
 --------------------------------------------------------------------------------

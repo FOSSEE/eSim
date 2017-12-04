@@ -1,5 +1,5 @@
            * /home/fossee/updatedexamples/4_bit_jk_ff/4_bit_jk_ff.cir
-           Transient Analysis  Thu Mar  3 18:14:13  2016
+           Transient Analysis  Wed Aug 30 15:05:22  2017
 --------------------------------------------------------------------------------
 Index   time            d1              d2              d3              
 --------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ Index   time            d1              d2              d3
 188	1.000000e-01	5.000000e+00	0.000000e+00	5.000000e+00	
 
            * /home/fossee/updatedexamples/4_bit_jk_ff/4_bit_jk_ff.cir
-           Transient Analysis  Thu Mar  3 18:14:13  2016
+           Transient Analysis  Wed Aug 30 15:05:22  2017
 --------------------------------------------------------------------------------
 Index   time            d4              gnd             in              
 --------------------------------------------------------------------------------
@@ -407,7 +407,7 @@ Index   time            d4              gnd             in
 188	1.000000e-01	5.000000e+00	0.000000e+00	5.000000e+00	
 
            * /home/fossee/updatedexamples/4_bit_jk_ff/4_bit_jk_ff.cir
-           Transient Analysis  Thu Mar  3 18:14:13  2016
+           Transient Analysis  Wed Aug 30 15:05:22  2017
 --------------------------------------------------------------------------------
 Index   time            net-_u1-pad1_   net-_u1-pad3_   net-_u2-pad1_   
 --------------------------------------------------------------------------------
@@ -611,7 +611,7 @@ Index   time            net-_u1-pad1_   net-_u1-pad3_   net-_u2-pad1_
 188	1.000000e-01	5.000000e+00	5.000000e+00	0.000000e+00	
 
            * /home/fossee/updatedexamples/4_bit_jk_ff/4_bit_jk_ff.cir
-           Transient Analysis  Thu Mar  3 18:14:13  2016
+           Transient Analysis  Wed Aug 30 15:05:22  2017
 --------------------------------------------------------------------------------
 Index   time            net-_u2-pad2_   net-_u2-pad3_   net-_u2-pad4_   
 --------------------------------------------------------------------------------
@@ -815,7 +815,7 @@ Index   time            net-_u2-pad2_   net-_u2-pad3_   net-_u2-pad4_
 188	1.000000e-01	0.000000e+00	0.000000e+00	0.000000e+00	
 
            * /home/fossee/updatedexamples/4_bit_jk_ff/4_bit_jk_ff.cir
-           Transient Analysis  Thu Mar  3 18:14:13  2016
+           Transient Analysis  Wed Aug 30 15:05:22  2017
 --------------------------------------------------------------------------------
 Index   time            net-_u4-pad1_   net-_u4-pad2_   net-_u4-pad3_   
 --------------------------------------------------------------------------------
@@ -1019,7 +1019,7 @@ Index   time            net-_u4-pad1_   net-_u4-pad2_   net-_u4-pad3_
 188	1.000000e-01	0.000000e+00	0.000000e+00	0.000000e+00	
 
            * /home/fossee/updatedexamples/4_bit_jk_ff/4_bit_jk_ff.cir
-           Transient Analysis  Thu Mar  3 18:14:13  2016
+           Transient Analysis  Wed Aug 30 15:05:22  2017
 --------------------------------------------------------------------------------
 Index   time            net-_u4-pad4_   
 --------------------------------------------------------------------------------

@@ -1,5 +1,5 @@
         * /home/fossee/esim-workspace/differentiator/differentiator.cir
-        Transient Analysis  Thu Mar  3 20:53:54  2016
+        Transient Analysis  Wed Aug 30 11:14:52  2017
 --------------------------------------------------------------------------------
 Index   time            e.x1.ein1#branc e.x1.eout1#bran v1#branch       
 --------------------------------------------------------------------------------

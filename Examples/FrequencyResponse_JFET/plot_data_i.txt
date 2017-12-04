@@ -1,5 +1,5 @@
 * /home/fossee/updatedexamples/frequencyresponse_jfet/frequencyresponse_jfet.cir
-AC Analysis  Thu Mar  3 21:19:34  2016
+AC Analysis  Fri Sep  1 12:17:40  2017
 --------------------------------------------------------------------------------
 Index   frequency       v1#branch                       
 --------------------------------------------------------------------------------
@@ -424,7 +424,7 @@ Index   frequency       v1#branch
 400	1.000000e+08	-1.88988e-07,	-3.13660e-07	
 
 * /home/fossee/updatedexamples/frequencyresponse_jfet/frequencyresponse_jfet.cir
-AC Analysis  Thu Mar  3 21:19:34  2016
+AC Analysis  Fri Sep  1 12:17:40  2017
 --------------------------------------------------------------------------------
 Index   frequency       v2#branch                       
 --------------------------------------------------------------------------------
