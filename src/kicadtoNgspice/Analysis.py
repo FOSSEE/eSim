@@ -78,6 +78,7 @@ class Analysis(QtGui.QWidget):
                 self.trbox.setDisabled(True)
                 self.check.setChecked(True)
                 self.track_obj.set_CheckBox["ITEMS"] ="DC"
+
         except:
             self.checkTRAN.setChecked(True)
             self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
