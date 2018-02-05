@@ -573,6 +573,8 @@ class MainWindow(QtGui.QWidget):
         out.writelines('print alli > plot_data_i.txt\n')
         for item in plotText:
             out.writelines(item+'\n')
+        out.writelines('set filetype=ascii\n')
+        out.writelines('write ' + str(os.path.basename(projpath)) + '.raw\n')
         out.writelines('.endc\n')
         out.writelines('.end\n')
         out.close()

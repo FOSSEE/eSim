@@ -47,7 +47,7 @@ class plotWindow(QtGui.QMainWindow):
         #Get DataExtraction Details
         self.obj_dataext = DataExtraction()
         self.plotType = self.obj_dataext.openFile(self.fpath)
-        
+       
         self.obj_dataext.computeAxes()
         self.a = self.obj_dataext.numVals()
                         
@@ -163,7 +163,7 @@ class plotWindow(QtGui.QMainWindow):
         self.connect(self.clear,QtCore.SIGNAL('clicked()'),self.pushedClear)
         self.connect(self.plotfuncbtn,QtCore.SIGNAL('clicked()'), self.pushedPlotFunc)
         self.connect(self.multimeterbtn,QtCore.SIGNAL('clicked()'), self.multiMeter)
-        
+
 
         if self.plotType[0]==0:
             self.analysisType.setText("<b>AC Analysis</b>")
@@ -180,7 +180,8 @@ class plotWindow(QtGui.QMainWindow):
             self.analysisType.setText("<b>DC Analysis</b>")
             self.connect(self.plotbtn, QtCore.SIGNAL('clicked()'), self.onPush_dc)
 
-        self.setCentralWidget(self.mainFrame)    
+        self.setCentralWidget(self.mainFrame)
+
         
     def pushedClear(self):
         self.text.clear()
@@ -458,11 +459,11 @@ class MultimeterWidgetClass(QtGui.QWidget):
 class DataExtraction:
     def __init__(self):
         self.obj_appconfig = Appconfig()
-        self.data=[]     #consists of all the columns of data belonging to nodes and branches
-        self.y=[]        #stores y-axis data
-        self.x=[]        #stores x-axis data
+        self.data = []     #consists of all the columns of data belonging to nodes and branches
+        self.y = []        #stores y-axis data
+        self.x = []        #stores x-axis data
                 
-        
+    """        
     def numberFinder(self,fpath):
         #Opening ANalysis file
         with open(os.path.join(fpath,"analysis")) as f3:
@@ -485,7 +486,7 @@ class DataExtraction:
         p = l = vnumber = inumber = 0
         #print "VoltsData : ",self.voltData
         
-        #Finding totla number of voltage node
+        #Finding total number of voltage node
         for i in self.voltData[3:]:
             #it has possible names of voltage nodes in NgSpice
             if "Index" in i:#"V(" in i or "x1" in i or "u3" in i:
@@ -556,10 +557,10 @@ class DataExtraction:
         #print "VoltNumber",vnumber
         #print "CurrentNumber",inumber
         
-        p=[p,vnumber,self.analysisType,self.dec,inumber]
+        p = [p, vnumber, self.analysisType, self.dec, inumber]
         
         return p
-    
+   
     def openFile(self,fpath):
         try:
             with open (os.path.join(fpath,"plot_data_i.txt")) as f2:
@@ -608,7 +609,7 @@ class DataExtraction:
                 self.NBList.append(l)
         self.NBList=self.NBList[2:]
         len_NBList = len(self.NBList)
-        print "NBLIST",self.NBList
+        #print "NBLIST",self.NBList
         
         ivals=[]
         inum = len(allv[5].split("\t"))
@@ -636,13 +637,13 @@ class DataExtraction:
                 self.NBIList.pop(len_NBIList)
                 len_NBIList = len(self.NBIList)
             
-            p=0
+            p = 0
             k = 0
-            m=0
+            m = 0
             
             for i in alli[5:d1-1]:
-                if len(i.split("\t"))==inum_i:
-                    j2=i.split("\t")
+                if len(i.split("\t")) == inum_i:
+                    j2 = i.split("\t")
                     #print j2
                     j2.pop(0)
                     j2.pop(0)
@@ -651,7 +652,7 @@ class DataExtraction:
                         j2.pop()
                     #print j2
                     
-                    for l in range(1,d4):
+                    for l in range(1, d4):
                         j3 = alli[5+l*d1+k].split("\t")
                         j3.pop(0)
                         j3.pop(0)
@@ -670,7 +671,7 @@ class DataExtraction:
 
             
             for i in allv[5:d1-1]:
-                if len(i.split("\t"))==inum:
+                if len(i.split("\t")) == inum:
                     j=i.split("\t")
                     j.pop()
                     if d3==0:
@@ -704,10 +705,106 @@ class DataExtraction:
         self.NBList = self.NBList + self.NBIList
          
     
-        print dec    
-        return dec
-    
-    
+        #print dec    
+        print self.NBIList
+        print self.NBList
+        return dec    
+    """
+
+    def openFile(self, fpath):
+        self.getAnalysisType(fpath)
+        self.data = self.getData(fpath)
+        return [self.analysisType, self.dec]
+
+    def getAnalysisType(self, fpath):
+        with open(os.path.join(fpath, "analysis")) as f:
+            analysisInfo = f.read().split(" ")
+        
+        self.dec = 0
+        if analysisInfo[0][-3:] == ".ac":
+            self.analysisType = 0
+            if "dec" in analysisInfo:
+                self.dec += 1
+
+        elif ".tran" in analysisInfo:
+            self.analysisType = 1
+        else:
+            self.analysisType = 2
+
+
+    def getLists(self, fpath):
+        with open(os.path.join(fpath, os.path.basename(fpath) + ".raw")) as f:
+            info = f.readlines()
+
+        for line in info:
+            if 'No. Variables' in line.split(':'):
+                num = int(line.split(':')[1].strip())
+                break
+
+        for line in info:
+            index = 0
+            if line.split(':')[0] == 'Variables':
+                index = info.index('Variables:\n')
+                ls = info[(index+1):(index+num+1)]
+                break
+
+        self.NBList = []
+        self.NBIList = []
+        v_order = []
+        i_order = []
+
+        v_order.append(0)
+
+        for x in ls[1:]:
+            item = x.strip().split('\t')
+            if 'voltage' in item:
+                self.NBList.append(item[1])
+                v_order.append(ls.index(x))
+            elif 'current' in item:
+                self.NBIList.append(item[1])
+                i_order.append(ls.index(x))
+
+        self.volts_length = len(self.NBList)
+        self.NBList += self.NBIList
+        return v_order + i_order
+
+    def getNumVars(self, fpath):
+        with open(os.path.join(fpath, os.path.basename(fpath) + ".raw")) as f:
+            info = f.readlines()
+
+        for line in info:
+            if 'No. Points' in line.split(':'):
+                return line.split(':')[1].strip()
+
+    def getData(self, fpath):
+        index = self.getLists(fpath)
+        print "index", index
+        total = len(index)
+
+        rawfile = os.path.basename(fpath) + ".raw"
+        with open(os.path.join(fpath, rawfile)) as f:
+            info = f.readlines()
+            ind = info.index('Values:\n') + 1
+            info = info[ind:]
+
+            self.data = []
+            sublist = []
+            num_vars = int(self.getNumVars(fpath))
+            for x in xrange(num_vars):
+                for i in index:
+                    val = info[i]
+                    sublist.append(val.split('\t')[-1].strip().split(',')[0])
+
+                string = '\t'.join(sublist)
+                self.data.append(string)
+                sublist = []
+                info = info[(total+1):]
+
+        print self.data
+        print "nb", self.NBList
+        print "nbi", self.NBIList
+        return self.data
+
     def numVals(self):
         a = self.volts_length        # No of voltage nodes
         b = len(self.data[0].split("\t"))
