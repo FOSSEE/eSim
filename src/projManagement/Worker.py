@@ -37,7 +37,7 @@ class WorkerThread(QtCore.QThread):
         
     def call_system(self,command):
         procThread = Appconfig()
-        proc = subprocess.Popen(command.split())
+        proc = subprocess.Popen(command.split(), shell=True)
         procThread.procThread_list.append(proc)
 	procThread.proc_dict[procThread.current_project['ProjectName']].append(proc.pid)
         
