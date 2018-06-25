@@ -138,7 +138,7 @@ class DockArea(QtGui.QMainWindow):
         
         self.projDir = projDir
         self.projName = os.path.basename(self.projDir)
-        self.ngspiceNetlist = os.path.join(self.projDir,self.projName+".cir.out")
+        self.ngspiceNetlist = os.path.join(self.projName+".cir.out")
         
                
         
