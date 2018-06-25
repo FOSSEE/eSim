@@ -106,13 +106,20 @@ class MainWindow(QtGui.QWidget):
         Also if the two model of same name is present under modelParamXML directory
         """           
         if unknownModelList:
-            print "Unknown Model List is : ",unknownModelList
-            self.msg = QtGui.QErrorMessage()
-            self.content = "Your schematic contain unknown model "+', '.join(unknownModelList)
-            self.msg.showMessage(self.content)
-            self.msg.setWindowTitle("Unknown Models")
+            for comp_line in kicadNetlist:
+                if any(s.upper() in comp_line.upper() for s in unknownModelList):
+                    schematicInfo.append("X" + comp_line.strip())
+                    continue
+
+            unknownModelList = []
+            print schematicInfo
+
+            self.messageBox = QtGui.QMessageBox()
+            self.messageBox.setText("You will need to add sub circuits for several components!")
+            self.messageBox.setIcon(QtGui.QMessageBox.Information)
+            self.messageBox.exec_()
             
-        elif multipleModelList:
+        if multipleModelList:
             self.msg = QtGui.QErrorMessage()
             self.mcontent = "Look like you have duplicate model in modelParamXML directory "+', '.join(multipleModelList[0])
             self.msg.showMessage(self.mcontent)
