@@ -16,14 +16,10 @@ class NgspiceWidget(QtGui.QWidget):
         self.layout.addWidget(self.terminal)
         
         print "Argument to ngspice command : ",command        
-        
+        print "\nngspice simulation starts : \n"
         if platform.system() == 'Linux':
-            self.command = "cd "+projPath+";ngspice "+command
-            #Creating argument for process
-            #self.args = ['-into', str(self.terminal.winId()),'-hold','-e', self.command]
-            self.args = ['-hold','-e', self.command]
-            self.process.start('xterm', self.args)
-            self.obj_appconfig.process_obj.append(self.process)
+            self.command = "cd "+projPath+" && ngspice "+command
+            os.system(self.command)
 	    self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']].append(self.process.pid())
                      
         elif platform.system() == 'Windows':
@@ -33,5 +29,5 @@ class NgspiceWidget(QtGui.QWidget):
             self.command = "ngspice "+command
             self.process.start(self.command)
             os.chdir(tempdir)
-    
+        print "\n simulation finished"    
 

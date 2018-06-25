@@ -248,7 +248,7 @@ class Application(QtGui.QMainWindow):
         
         if self.projDir != None:
             self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
-            time.sleep(2)  #Need permanent solution 
+             
             #Calling Python Plotting
                 
             try:
