@@ -580,6 +580,7 @@ class MainWindow(QtGui.QWidget):
         out.writelines('print alli > plot_data_i.txt\n')
         for item in plotText:
             out.writelines(item+'\n')
+        out .writelines('quit 0\n')
         out.writelines('.endc\n')
         out.writelines('.end\n')
         out.close()
