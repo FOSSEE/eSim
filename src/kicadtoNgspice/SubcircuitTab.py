@@ -48,7 +48,7 @@ class SubcircuitTab(QtGui.QWidget):
         
         for eachline in schematicInfo:
             words = eachline.split()
-            if eachline[0] == 'x':
+            if eachline[0].lower() == 'x':
                 print "Subcircuit : Words",words[0]
                 self.obj_trac.subcircuitList[project_name+words[0]] = words
                 self.subcircuit_dict_beg[words[0]] = self.count
