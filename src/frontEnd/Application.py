@@ -89,6 +89,10 @@ class Application(QtGui.QMainWindow):
         self.closeproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Close Project</b>',self)
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
+
+        self.wrkspc = QtGui.QAction(QtGui.QIcon('../../images/workspace.ico'),'<b>Change Workspace</b>',self)
+        self.wrkspc.setShortcut('Ctrl+W')
+        self.wrkspc.triggered.connect(self.wrkspc_change)
         
         self.helpfile = QtGui.QAction(QtGui.QIcon('../../images/helpProject.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
@@ -99,6 +103,7 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.openproj)
         
         self.topToolbar.addAction(self.closeproj)
+        self.topToolbar.addAction(self.wrkspc)
         self.topToolbar.addAction(self.helpfile)
         
         self.spacer = QtGui.QWidget()
@@ -218,7 +223,7 @@ class Application(QtGui.QMainWindow):
         
     def open_project(self):
         """
-        This project call Open Project Info class
+        This function call Open Project Info class
         """
         print "Function : Open Project"
         self.project = OpenProjectInfo()
@@ -230,8 +235,16 @@ class Application(QtGui.QMainWindow):
             pass
     
                
-    
-            
+    def wrkspc_change(self):
+        """
+        This function call Change workspace
+        """
+        print "Function : Change Workspace"
+        self.obj_workspace.returnWhetherClickedOrNot(self)
+        self.hide()
+        self.obj_workspace.show()
+         
+
     def help_project(self):
         print "Function : Help"
         self.obj_appconfig.print_info('Help is called')
@@ -440,8 +453,15 @@ def main(args):
     appView = Application()
     appView.splash=splash
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
-    appView.hide()
-    appView.obj_workspace.show() 
+
+    file = open (os.path.join(os.path.expanduser("~"),".esim/workspace.txt"), 'r')
+    wrk= int(file.read(1))
+    file.close
+    if wrk is not 0:
+        appView.obj_workspace.defaultWorkspace()
+    else:
+        appView.hide()
+        appView.obj_workspace.show()
     sys.exit(app.exec_())
         
     
