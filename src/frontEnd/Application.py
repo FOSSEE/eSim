@@ -243,7 +243,7 @@ class Application(QtGui.QMainWindow):
         self.obj_workspace.returnWhetherClickedOrNot(self)
         self.hide()
         self.obj_workspace.show()
-         
+
 
     def help_project(self):
         print "Function : Help"
@@ -454,9 +454,12 @@ def main(args):
     appView.splash=splash
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
 
-    file = open (os.path.join(os.path.expanduser("~"),".esim/workspace.txt"), 'r')
-    wrk= int(file.read(1))
-    file.close
+    try:
+        file = open (os.path.join(os.path.expanduser("~"),".esim/workspace.txt"), 'r')
+        wrk= int(file.read(1))
+        file.close
+    except IOError:
+        wrk=0
     if wrk is not 0:
         appView.obj_workspace.defaultWorkspace()
     else:

@@ -49,7 +49,8 @@ class Appconfig(QtGui.QWidget):
         procThread_list = []
         proc_dict={}	#holds the pids of all external windows corresponds to the current project
         dock_dict={}	#holds all dockwidgets
-        dictPath = os.path.join(os.path.expanduser("~"), ".projectExplorer.txt")
+        dictPath = os.path.join(default_workspace["workspace"], ".projectExplorer.txt")
+        print "dictpath : " + dictPath 
         noteArea = {"Note":[]}
 
         parser_esim = SafeConfigParser()

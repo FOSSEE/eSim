@@ -19,6 +19,7 @@ from PyQt4 import QtCore, QtGui
 from configuration.Appconfig import Appconfig
 import time
 import os
+import json
 
 
 class Workspace(QtGui.QWidget):
@@ -28,7 +29,7 @@ class Workspace(QtGui.QWidget):
     def __init__(self,parent=None):
         super(Workspace, self).__init__()
         self.obj_appconfig = Appconfig()
-        
+
         #Initializing Workspace directory for project
         self.initWorkspace()
         
@@ -97,7 +98,7 @@ class Workspace(QtGui.QWidget):
 
     def returnWhetherClickedOrNot(self,appView):
         global var_appView
-        var_appView=appView  
+        var_appView=appView
 
 
     def createWorkspace(self):
@@ -120,11 +121,24 @@ class Workspace(QtGui.QWidget):
             self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
         self.imp_var=1
         self.close()  
+
+        self.obj_appconfig.dictPath = os.path.join(self.obj_appconfig.default_workspace["workspace"], ".projectExplorer.txt")
+        try:
+            self.obj_appconfig.project_explorer = json.load(open(self.obj_appconfig.dictPath))
+            print ".projectExplorer content : "
+            print self.obj_appconfig.project_explorer
+        except:
+            self.obj_appconfig.project_explorer= {}
+        
+        var_appView.obj_Mainview.obj_projectExplorer.treewidget.clear()
+        for parent, children in self.obj_appconfig.project_explorer.items():
+            var_appView.obj_Mainview.obj_projectExplorer.addTreeNode(parent, children)
+
         var_appView.show()
         time.sleep(1)
         var_appView.splash.close()
-        
-            
+
+
     def browseLocation(self):
         print "Function : Browse Location"
         self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(self, "Browse Location",os.path.expanduser("~"))
