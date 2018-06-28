@@ -30,7 +30,14 @@ class Appconfig(QtGui.QWidget):
         """
         
         #Home directory
-        home = os.path.join(os.path.expanduser("~"),"eSim-Workspace")
+        try:
+            file = open (os.path.join(os.path.expanduser("~"),".esim/workspace.txt"), 'r')
+            workspace_check, home = file.readline().split(' ',1)
+            file.close
+        except IOError:
+            home = os.path.join(os.path.expanduser("~"),"eSim-Workspace")
+            workspace_check = 0
+
         default_workspace = {"workspace":home}
         #Current Project detail
         current_project = {"ProjectName":None}
@@ -38,11 +45,13 @@ class Appconfig(QtGui.QWidget):
         current_subcircuit = {"SubcircuitName":None}
         #Workspace detail
         workspace_text = '''eSim stores your project in a folder called a eSim-Workspace. You can choose a different workspace folder to use for this session.'''
+
         procThread_list = []
         proc_dict={}	#holds the pids of all external windows corresponds to the current project
         dock_dict={}	#holds all dockwidgets
-        dictPath = os.path.join(os.path.expanduser("~"), ".projectExplorer.txt")
-        noteArea = {}
+        dictPath = os.path.join(default_workspace["workspace"], ".projectExplorer.txt")
+        print "dictpath : " + dictPath 
+        noteArea = {"Note":[]}
 
         parser_esim = SafeConfigParser()
         parser_esim.read(os.path.join(os.path.expanduser("~"), os.path.join('.esim','config.ini')))
