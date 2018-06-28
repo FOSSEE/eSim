@@ -27,12 +27,7 @@ class ProjectExplorer(QtGui.QWidget):
         ")
         
         for parents, children in self.obj_appconfig.project_explorer.items():
-            os.path.join(parents)
-            if os.path.exists(parents):
-                pathlist= parents.split(os.sep)
-                parentnode = QtGui.QTreeWidgetItem(self.treewidget, [pathlist[-1],parents])
-                for files in children:
-                    childnode = QtGui.QTreeWidgetItem(parentnode, [files, os.path.join(parents,files)])
+            self.addTreeNode(parents, children)
         self.window.addWidget(self.treewidget)
         
         self.treewidget.doubleClicked.connect(self.openProject)
@@ -63,6 +58,8 @@ class ProjectExplorer(QtGui.QWidget):
         
         menu = QtGui.QMenu()
         if level == 0:
+            renameProject = menu.addAction(self.tr("Rename Project"))
+            renameProject.triggered.connect(self.renameProject)
             deleteproject = menu.addAction(self.tr("Remove Project"))
             deleteproject.triggered.connect(self.removeProject)
             refreshproject= menu.addAction(self.tr("Refresh"))
@@ -117,6 +114,45 @@ class ProjectExplorer(QtGui.QWidget):
         self.fopen.close()
         self.textwindow.close()
         
+    def renameProject(self):
+        indexItem = self.treewidget.currentIndex()
+        baseFileName = str(indexItem.data().toString())
+        newBaseFileName, ok = QtGui.QInputDialog.getText(self, 'Rename Project', 'Project Name:',
+                                                            QtGui.QLineEdit.Normal, baseFileName)
+        if ok and newBaseFileName:
+            newBaseFileName = str(newBaseFileName)
+            projectPath, projectFiles = self.obj_appconfig.project_explorer.items()[indexItem.row()]
+            updatedProjectFiles = []
+
+            # rename files matching project name
+            for projectFile in projectFiles:
+                if baseFileName in projectFile:
+                    oldFilePath = os.path.join(projectPath, projectFile)
+                    projectFile = projectFile.replace(baseFileName, newBaseFileName, 1)
+                    newFilePath = os.path.join(projectPath, projectFile)
+                    print "Renaming " + oldFilePath + " to " + newFilePath
+                    os.rename(oldFilePath, newFilePath)
+   
+                updatedProjectFiles.append(projectFile)
+
+            # rename project folder
+            updatedProjectPath = newBaseFileName.join(projectPath.rsplit(baseFileName, 1))
+            print "Renaming " + projectPath + " to " + updatedProjectPath
+            os.rename(projectPath, updatedProjectPath)
+
+            # update project_explorer dictionary
+            del self.obj_appconfig.project_explorer[projectPath]
+            self.obj_appconfig.project_explorer[updatedProjectPath] = updatedProjectFiles
+
+            # save project_explorer dictionary on disk
+            json.dump(self.obj_appconfig.project_explorer, open(self.obj_appconfig.dictPath,'w'))
+
+            # recreate project explorer tree
+            self.treewidget.clear()
+            for parent, children in self.obj_appconfig.project_explorer.items():
+                self.addTreeNode(parent, children)
+
+
     def removeProject(self):
         self.indexItem =self.treewidget.currentIndex()
         filename= self.indexItem.data().toString()
