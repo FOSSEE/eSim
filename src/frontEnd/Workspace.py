@@ -74,7 +74,7 @@ class Workspace(QtGui.QWidget):
         self.setWindowTitle("eSim")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.note.setReadOnly(True)
-        self.setWindowIcon(QtGui.QIcon('../../images/logo.png'))
+        self.setWindowIcon(QtGui.QIcon('res/images/logo.png'))
         self.setLayout(self.grid)
 
    

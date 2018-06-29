@@ -2,3 +2,5 @@
 esim-start.sh
 esim.desktop
 nghdl
+build/
+dist/

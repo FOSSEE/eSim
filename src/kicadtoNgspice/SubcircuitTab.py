@@ -119,7 +119,7 @@ class SubcircuitTab(QtGui.QWidget):
         #print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
         
-        self.subfile = str(QtGui.QFileDialog.getExistingDirectory(self,"Open Subcircuit","../SubcircuitLibrary"))
+        self.subfile = str(QtGui.QFileDialog.getExistingDirectory(self,"Open Subcircuit","res/SubcircuitLibrary"))
         self.reply = self.obj_validation.validateSub(self.subfile,self.numPorts[self.widgetObjCount - 1])
         if self.reply == "True":
             #Setting Library to Text Edit Line

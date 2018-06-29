@@ -8,7 +8,7 @@ import os
 class ModelEditorclass(QtGui.QWidget):
     def __init__(self):
         QtGui.QWidget.__init__(self)
-        self.savepathtest = '../deviceModelLibrary'
+        self.savepathtest = 'res/deviceModelLibrary'
         self.obj_appconfig = Appconfig()
         self.newflag=0
         self.layout = QtGui.QVBoxLayout()
@@ -164,7 +164,7 @@ class ModelEditorclass(QtGui.QWidget):
         '''
         Select the path of the file to be opened depending upon selected file type 
         '''
-        self.path = '../deviceModelLibrary/Templates'
+        self.path = 'res/deviceModelLibrary/Templates'
         if self.diode.isChecked():
             if filetype == 'Diode':
                 path = os.path.join(self.path,'D.xml')
@@ -228,7 +228,7 @@ class ModelEditorclass(QtGui.QWidget):
         self.bjt.setDisabled(True)
         self.magnetic.setDisabled(True)
         try:
-            self.editfile=str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
+            self.editfile=str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","res/deviceModelLibrary","*.lib"))
             self.createtable(self.editfile)
         except:
             print"No File selected for edit"
@@ -334,7 +334,7 @@ class ModelEditorclass(QtGui.QWidget):
             ET.SubElement(param, tags).text = text
         tree = ET.ElementTree(root)
         defaultcwd = os.getcwd()
-        self.savepath = '../deviceModelLibrary'
+        self.savepath = 'res/deviceModelLibrary'
         if self.diode.isChecked():
             savepath = os.path.join(self.savepath, 'Diode')  
             os.chdir(savepath)
@@ -455,7 +455,7 @@ class ModelEditorclass(QtGui.QWidget):
         self.modeltable.setHidden(True)
         model_dict = {}
         stringof = []
-        self.libfile = str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
+        self.libfile = str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","res/deviceModelLibrary","*.lib"))
         libopen = open(self.libfile)
         filedata = libopen.read().split()
         modelcount=0

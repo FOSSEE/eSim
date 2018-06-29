@@ -18,10 +18,10 @@
 #===============================================================================
 import os
 import sys
-#Setting PYTHONPATH
-cwd = os.getcwd()
-(setPath,fronEnd) = os.path.split(cwd) 
-sys.path.append(setPath)
+# Setting PYTHONPATH
+# cwd = os.getcwd()
+# (setPath,fronEnd) = os.path.split(cwd) 
+# sys.path.append(setPath)
 
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
@@ -33,7 +33,6 @@ from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
-import time
 from PyQt4.Qt import QSize
 
 
@@ -65,10 +64,10 @@ class Application(QtGui.QMainWindow):
                          self.obj_appconfig._app_heigth)
         self.setWindowTitle(self.obj_appconfig._APPLICATION) 
         self.showMaximized()
-        self.setWindowIcon(QtGui.QIcon('../../images/logo.png'))
+        self.setWindowIcon(QtGui.QIcon('res/images/logo.png'))
         #self.show()
         self.systemTrayIcon = QtGui.QSystemTrayIcon(self)
-        self.systemTrayIcon.setIcon(QtGui.QIcon('../../images/logo.png'))
+        self.systemTrayIcon.setIcon(QtGui.QIcon('res/images/logo.png'))
         self.systemTrayIcon.setVisible(True)
     
            
@@ -77,24 +76,24 @@ class Application(QtGui.QMainWindow):
         This function initialize Tool Bar
         """
         #Top Tool bar
-        self.newproj = QtGui.QAction(QtGui.QIcon('../../images/newProject.png'),'<b>New Project</b>',self)
+        self.newproj = QtGui.QAction(QtGui.QIcon('res/images/newProject.png'),'<b>New Project</b>',self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
         #self.newproj.connect(self.newproj,QtCore.SIGNAL('triggered()'),self,QtCore.SLOT(self.new_project()))
                
-        self.openproj = QtGui.QAction(QtGui.QIcon('../../images/openProject.png'),'<b>Open Project</b>',self)
+        self.openproj = QtGui.QAction(QtGui.QIcon('res/images/openProject.png'),'<b>Open Project</b>',self)
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
         
-        self.closeproj = QtGui.QAction(QtGui.QIcon('../../images/closeProject.png'),'<b>Close Project</b>',self)
+        self.closeproj = QtGui.QAction(QtGui.QIcon('res/images/closeProject.png'),'<b>Close Project</b>',self)
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
 
-        self.wrkspc = QtGui.QAction(QtGui.QIcon('../../images/workspace.ico'),'<b>Change Workspace</b>',self)
+        self.wrkspc = QtGui.QAction(QtGui.QIcon('res/images/workspace.ico'),'<b>Change Workspace</b>',self)
         self.wrkspc.setShortcut('Ctrl+W')
         self.wrkspc.triggered.connect(self.wrkspc_change)
         
-        self.helpfile = QtGui.QAction(QtGui.QIcon('../../images/helpProject.png'),'<b>Help</b>',self)
+        self.helpfile = QtGui.QAction(QtGui.QIcon('res/images/helpProject.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
         
@@ -110,35 +109,35 @@ class Application(QtGui.QMainWindow):
         self.spacer.setSizePolicy(QtGui.QSizePolicy.Expanding,QtGui.QSizePolicy.Expanding)
         self.topToolbar.addWidget(self.spacer)
         self.logo = QtGui.QLabel()
-        self.logopic = QtGui.QPixmap(os.path.join(os.path.abspath('../..'),'images','fosseeLogo.png'))
+        self.logopic = QtGui.QPixmap(os.path.join('res/images','fosseeLogo.png'))
         self.logopic = self.logopic.scaled(QSize(150,150),QtCore.Qt.KeepAspectRatio)
         self.logo.setPixmap(self.logopic)
         self.logo.setStyleSheet("padding:0 15px 0 0;")
         self.topToolbar.addWidget(self.logo)
              
         #Left Tool bar Action Widget 
-        self.kicad = QtGui.QAction(QtGui.QIcon('../../images/kicad.png'),'<b>Open Schematic</b>',self)
+        self.kicad = QtGui.QAction(QtGui.QIcon('res/images/kicad.png'),'<b>Open Schematic</b>',self)
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
         
-        self.conversion = QtGui.QAction(QtGui.QIcon('../../images/ki-ng.png'),'<b>Convert Kicad to Ngspice</b>',self)
+        self.conversion = QtGui.QAction(QtGui.QIcon('res/images/ki-ng.png'),'<b>Convert Kicad to Ngspice</b>',self)
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
                
-        self.ngspice = QtGui.QAction(QtGui.QIcon('../../images/ngspice.png'), '<b>Simulation</b>', self)
+        self.ngspice = QtGui.QAction(QtGui.QIcon('res/images/ngspice.png'), '<b>Simulation</b>', self)
         self.ngspice.triggered.connect(self.open_ngspice)
         
-        self.model = QtGui.QAction(QtGui.QIcon('../../images/model.png'),'<b>Model Editor</b>',self)
+        self.model = QtGui.QAction(QtGui.QIcon('res/images/model.png'),'<b>Model Editor</b>',self)
         self.model.triggered.connect(self.open_modelEditor) 
         
-        self.subcircuit=QtGui.QAction(QtGui.QIcon('../../images/subckt.png'),'<b>Subcircuit</b>',self)
+        self.subcircuit=QtGui.QAction(QtGui.QIcon('res/images/subckt.png'),'<b>Subcircuit</b>',self)
         self.subcircuit.triggered.connect(self.open_subcircuit)
 
-        self.nghdl = QtGui.QAction(QtGui.QIcon('../../images/nghdl.png'), '<b>Nghdl</b>', self)
+        self.nghdl = QtGui.QAction(QtGui.QIcon('res/images/nghdl.png'), '<b>Nghdl</b>', self)
         self.nghdl.triggered.connect(self.open_nghdl)
         
-        self.omedit = QtGui.QAction(QtGui.QIcon('../../images/omedit.png'),'<b>Modelica Converter</b>',self)
+        self.omedit = QtGui.QAction(QtGui.QIcon('res/images/omedit.png'),'<b>Modelica Converter</b>',self)
         self.omedit.triggered.connect(self.open_OMedit) 
         
-        self.omoptim=QtGui.QAction(QtGui.QIcon('../../images/omoptim.png'),'<b>OM Optimisation</b>',self)
+        self.omoptim=QtGui.QAction(QtGui.QIcon('res/images/omoptim.png'),'<b>OM Optimisation</b>',self)
         self.omoptim.triggered.connect(self.open_OMoptim)
         
         #Adding Action Widget to tool bar   
@@ -446,7 +445,7 @@ def main(args):
     print "Starting eSim......"
     app = QtGui.QApplication(args)
     
-    splash_pix = QtGui.QPixmap('../../images/splash_screen_esim.png')
+    splash_pix = QtGui.QPixmap('res/images/splash_screen_esim.png')
     splash = QtGui.QSplashScreen(splash_pix,QtCore.Qt.WindowStaysOnTopHint)
     splash.setMask(splash_pix.mask())
     splash.show()

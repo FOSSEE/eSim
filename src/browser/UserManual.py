@@ -10,8 +10,8 @@ class UserManual(QtGui.QWidget):
         
         self.vlayout = QtGui.QVBoxLayout()
                
-        self.url = "../browser/pages/User-Manual/eSim.html"
-        self.test = webbrowser.open("../browser/pages/User-Manual/eSim.html",new=2)
+        self.url = "res/browser/pages/User-Manual/eSim.html"
+        self.test = webbrowser.open("res/browser/pages/User-Manual/eSim.html",new=2)
                 
         self.setLayout(self.vlayout)
         self.show()

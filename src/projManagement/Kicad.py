@@ -137,7 +137,8 @@ class Kicad:
             if self.obj_validation.validateCir(self.projDir):
                 self.projName = os.path.basename(self.projDir)
                 self.project = os.path.join(self.projDir,self.projName)
-                            
+                
+                ## TODO
                 #Creating a command to run
                 """
                 self.cmd = "python  ../kicadtoNgspice/KicadtoNgspice.py " +self.project+".cir "
