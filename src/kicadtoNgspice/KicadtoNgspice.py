@@ -106,6 +106,7 @@ class MainWindow(QtGui.QWidget):
         Also if the two model of same name is present under modelParamXML directory
         """           
         if unknownModelList:
+            # Assume that user is willing to provide subcircuits for all unknown models
             for comp_line in kicadNetlist:
                 if any(s.upper() in comp_line.upper() for s in unknownModelList):
                     schematicInfo.append("X" + comp_line.strip())

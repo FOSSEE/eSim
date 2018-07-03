@@ -109,7 +109,7 @@ class Workspace(QtGui.QWidget):
         file = open (os.path.join(os.path.expanduser("~"),".esim/workspace.txt"), 'w')
         
         file.writelines(str(self.obj_appconfig.workspace_check) + " " + self.workspace_loc.text())
-        file.close
+        file.close()
 
         self.create_workspace = str(self.workspace_loc.text())
         self.obj_appconfig.print_info('Workspace : ' + self.create_workspace)
