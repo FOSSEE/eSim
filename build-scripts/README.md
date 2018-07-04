@@ -22,4 +22,11 @@
 - [InnoSetup](https://github.com/jrsoftware/issrc)
 
 ### Steps for building installation package
-_TODO_
+- Navigate to `eSim/build-scripts` directory from command prompt or power shell
+- Run `pyinstaller --clean -y esim-pyinstaller.spec`
+- eSim binary will be built into `./dist/eSim` directory
+- Open `esim-setup-win.iss` file using InnoSetup and compile script
+- eSim windows setup will be built into `./dist` directory
+
+#### Note:
+`./win-extras` contains kicad and ngspice which will be used while building eSim setup
