@@ -9,7 +9,7 @@ class PrcocessNetlist:
     This class include all the function required for pre-proccessing of netlist 
     before converting to Ngspice Netlist.
     """
-    modelxmlDIR = '../modelParamXML'
+    modelxmlDIR = 'res/modelParamXML'
     def __init__(self):
         pass
       

@@ -1,0 +1,9 @@
+* eeschema netlist version 1.1 (spice format) creation date: 09/22/14 16:36:23
+
+u3  1 2 port
+* Analog Switch analogswitch
+* Analog Switch analogswitch
+a1 1 (1 2) u2
+.model u2 aswitch(cntl_on=-25 cntl_off=-0.1 r_on=0.0125 r_off=1000000)
+a2 1 (1 2) u1
+.model u1 aswitch(cntl_on=25 cntl_off=0.1 r_on=0.0125 r_off=1000000)

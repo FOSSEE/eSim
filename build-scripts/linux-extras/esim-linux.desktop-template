@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.2.1
+Name=eSim
+GenericName=Electronic Circuit Simulator
+Comment=EDA and Circuit Simulation Tools
+Exec=esim
+Icon=/opt/esim/res/images/logo.png
+Terminal=false
+Keywords=eda-tools
+Categories=Development;Electronics;
+StartupNotify=true
+StartupWMClass=esim;eSim

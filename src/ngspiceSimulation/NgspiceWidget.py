@@ -21,7 +21,8 @@ class NgspiceWidget(QtGui.QWidget):
     
         if platform.system() == 'Linux':
             self.command = "cd "+projPath+" && ngspice "+command
-            os.system(self.command)
+            console_output = os.popen(self.command).read()
+            self.obj_appconfig.print_info("NgSpice output: " + console_output)
 	    self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']].append(self.process.pid())
                      
         elif platform.system() == 'Windows':

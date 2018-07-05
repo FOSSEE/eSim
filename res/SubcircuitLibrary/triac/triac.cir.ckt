@@ -1,0 +1,26 @@
+* eeschema netlist version 1.1 (spice format) creation date: 09/20/14 11:23:24
+.include diode.lib
+
+u3  7 4 5 port
+* f3
+d2  3 2 diode
+v3  2 1 dc 0
+* Analog Switch analogswitch
+d1  11 7 diode
+* f2
+v2  8 10 dc 0
+* Analog Switch analogswitch
+c1  7 9 10u
+r1  7 9 1
+* f1
+v1  5 6 dc 0
+Vf3 3 7 0
+f3 7 9 Vf3 10
+Vf2 10 11 0
+f2 7 9 Vf2 10
+Vf1 6 7 0
+f1 7 9 Vf1 100
+a1 9 (1 4) u2
+.model u2 aswitch(cntl_on=-1 cntl_off=-0.1 r_on=0.0125 r_off=1000000)
+a2 9 (4 8) u1
+.model u1 aswitch(cntl_on=1 cntl_off=0.1 r_on=0.0125 r_off=1000000)

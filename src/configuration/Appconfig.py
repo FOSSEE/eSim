@@ -20,7 +20,6 @@
 from PyQt4 import QtGui
 import os
 import json
-from ConfigParser import SafeConfigParser
 
 
 class Appconfig(QtGui.QWidget):
@@ -29,11 +28,16 @@ class Appconfig(QtGui.QWidget):
         May change in future for code optimization.
         """
         
+        config_dir = os.path.join(os.path.expanduser("~"), ".esim")
         #Home directory
         try:
-            file = open (os.path.join(os.path.expanduser("~"),".esim/workspace.txt"), 'r')
+            # create config dir if it doesn't exist
+            if not os.path.exists(config_dir):
+                os.mkdir(os.path.join(config_dir))
+            # try to read most recently opened workspace's path and if it is set to default
+            file = open (os.path.join(config_dir, "workspace.txt"), 'r')
             workspace_check, home = file.readline().split(' ',1)
-            file.close
+            file.close()
         except IOError:
             home = os.path.join(os.path.expanduser("~"),"eSim-Workspace")
             workspace_check = 0
@@ -53,9 +57,7 @@ class Appconfig(QtGui.QWidget):
         print "dictpath : " + dictPath 
         noteArea = {"Note":[]}
 
-        parser_esim = SafeConfigParser()
-        parser_esim.read(os.path.join(os.path.expanduser("~"), os.path.join('.esim','config.ini')))
-        modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')        
+        modelica_map_json = 'res/ngspicetoModelica/Mapping.json'
         try:
             project_explorer = json.load(open(dictPath))
         except:
