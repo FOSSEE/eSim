@@ -116,9 +116,9 @@ function installDependency
         echo "ngspice already installed......"
     fi
     echo "Installing PyQt4............"
-    sudo apt-get install -y python-qt4
+    sudo apt-get install -y python3-pyqt4
     echo "Installing Matplotlib......."
-    sudo apt-get install -y python-matplotlib
+    sudo apt-get install -y python3-matplotlib
 
 }
 
