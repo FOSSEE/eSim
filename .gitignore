@@ -1,4 +1,11 @@
+*.bak
+*.cir.ckt
+*.log
+*.net
 *.pyc
+_saved_*
+*.swp
+*~
 esim-start.sh
 esim.desktop
 nghdl
