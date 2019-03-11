@@ -8,7 +8,7 @@ LIBS:eSim_Plot
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
-LIBS:Half_Adder-rescue
+LIBS:HalfAdder-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -39,7 +39,7 @@ LIBS:atmel
 LIBS:contrib
 LIBS:valves
 LIBS:eSim_Power
-LIBS:Half_Adder-cache
+LIBS:HalfAdder-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -110,7 +110,7 @@ F 3 "" H 3450 3800 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L GND-RESCUE-Half_Adder #PWR01
+L GND-RESCUE-HalfAdder #PWR01
 U 1 1 558A93BB
 P 2950 4000
 F 0 "#PWR01" H 2950 4000 30  0001 C CNN
@@ -121,7 +121,7 @@ F 3 "" H 2950 4000 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND-RESCUE-Half_Adder #PWR02
+L GND-RESCUE-HalfAdder #PWR02
 U 1 1 558A93D7
 P 2950 3250
 F 0 "#PWR02" H 2950 3250 30  0001 C CNN
@@ -132,7 +132,7 @@ F 3 "" H 2950 3250 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L GND-RESCUE-Half_Adder #PWR03
+L GND-RESCUE-HalfAdder #PWR03
 U 1 1 558A9480
 P 8350 3650
 F 0 "#PWR03" H 8350 3650 30  0001 C CNN

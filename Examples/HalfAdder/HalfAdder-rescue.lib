@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.3
 #encoding utf-8
 #
-# GND-RESCUE-Half_Adder
+# GND-RESCUE-HalfAdder
 #
-DEF ~GND-RESCUE-Half_Adder #PWR 0 0 Y Y 1 F P
+DEF ~GND-RESCUE-HalfAdder #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 0 30 H I C CNN
-F1 "GND-RESCUE-Half_Adder" 0 -70 30 H I C CNN
+F1 "GND-RESCUE-HalfAdder" 0 -70 30 H I C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW
