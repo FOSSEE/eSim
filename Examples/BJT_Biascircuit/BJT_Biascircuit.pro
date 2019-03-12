@@ -68,4 +68,4 @@ LibName34=linear
 LibName35=regul
 LibName36=74xx
 LibName37=cmos4000
-LibName38=/home/fossee/library/eSim_Plot
+LibName38=eSim_Plot
