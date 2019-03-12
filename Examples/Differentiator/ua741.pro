@@ -2,7 +2,7 @@ update=Monday 17 December 2012 06:14:06 PM IST
 last_client=eeschema
 [eeschema]
 version=1
-LibDir=/home/yogesh/FreeEDA/library
+LibDir=
 NetFmt=1
 HPGLSpd=20
 HPGLDm=15
