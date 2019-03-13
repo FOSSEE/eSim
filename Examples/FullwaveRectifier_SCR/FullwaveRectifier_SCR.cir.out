@@ -1,7 +1,7 @@
 * /home/fossee/updatedexamples/fullwaverectifier_scr/fullwaverectifier_scr.cir
 
 .include scr.sub
-.include D.lib
+.include userDiode.lib
 x1 gnd pulse out2 scr
 v1  in1 in2 sine(0 200 100 0 0)
 v2  pulse gnd pulse(0 5 2m 0 0 1m 5m)
