@@ -53,7 +53,7 @@ class Subcircuit(QtGui.QWidget):
             self.subcircuit.createSubcircuit(self.schematic_name)
             
         else:
-            print "Sub circuit creation cancelled"
+            print("Sub circuit creation cancelled")
         
         
     def editsch(self):

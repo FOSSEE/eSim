@@ -18,14 +18,14 @@
 import sys
 import os
 from PyQt4 import QtGui
-from Processing import PrcocessNetlist
-import Analysis
-import Source
-import Model
-import DeviceModel
-import SubcircuitTab
-import Convert
-import TrackWidget
+from .Processing import PrcocessNetlist
+from . import Analysis
+from . import Source
+from . import Model
+from . import DeviceModel
+from . import SubcircuitTab
+from . import Convert
+from . import TrackWidget
 import json
 
 #from xml.etree import ElementTree as ET
@@ -42,9 +42,9 @@ class MainWindow(QtGui.QWidget):
     def __init__(self,clarg1,clarg2=None):
         QtGui.QWidget.__init__(self)
         
-        print "=================================="
-        print "Kicad to Ngspice netlist converter "
-        print "=================================="
+        print("==================================")
+        print("Kicad to Ngspice netlist converter ")
+        print("==================================")
         global kicadNetlist,schematicInfo
         global infoline,optionInfo
         self.kicadFile = clarg1
@@ -68,7 +68,7 @@ class MainWindow(QtGui.QWidget):
         # Read the netlist
         kicadNetlist = obj_proc.readNetlist(self.kicadFile)
         
-        print "Given Kicad Schematic Netlist Info :",kicadNetlist
+        print("Given Kicad Schematic Netlist Info :",kicadNetlist)
         
         # Construct parameter information
         param = obj_proc.readParamInfo(kicadNetlist)
@@ -76,13 +76,13 @@ class MainWindow(QtGui.QWidget):
         # Replace parameter with values
         netlist,infoline = obj_proc.preprocessNetlist(kicadNetlist,param)
         
-        print "Schematic Info after processing Kicad Netlist: ",netlist
+        print("Schematic Info after processing Kicad Netlist: ",netlist)
         #print "INFOLINE",infoline
         
         # Separate option and schematic information
         optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
         
-        print "OPTIONINFO in the Netlist",optionInfo
+        print("OPTIONINFO in the Netlist",optionInfo)
                        
         #List for storing source and its value
         global sourcelist, sourcelisttrack
@@ -98,7 +98,7 @@ class MainWindow(QtGui.QWidget):
         plotText = []
         schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList,plotText)
         
-        print "Model available in the Schematic :",modelList
+        print("Model available in the Schematic :",modelList)
 
                              
         """
@@ -106,7 +106,7 @@ class MainWindow(QtGui.QWidget):
         Also if the two model of same name is present under modelParamXML directory
         """           
         if unknownModelList:
-            print "Unknown Model List is : ",unknownModelList
+            print("Unknown Model List is : ",unknownModelList)
             self.msg = QtGui.QErrorMessage()
             self.content = "Your schematic contain unknown model "+', '.join(unknownModelList)
             self.msg.showMessage(self.content)
@@ -384,7 +384,7 @@ class MainWindow(QtGui.QWidget):
             json_data["model"][line[3]]["type"] = line[2]
             json_data["model"][line[3]]["values"] = []           
     
-            for key, value in line[7].iteritems():
+            for key, value in line[7].items():
                 if hasattr(value, '__iter__') and i <= end:
                     for item in value:
                         fields = {item: str(obj_model.obj_trac.model_entry_var[i].text())}
@@ -438,19 +438,19 @@ class MainWindow(QtGui.QWidget):
         try:
             #Adding Source Value to Schematic Info
             store_schematicInfo = self.obj_convert.addSourceParameter()
-            print "Netlist After Adding Source details :",store_schematicInfo
+            print("Netlist After Adding Source details :",store_schematicInfo)
             
             #Adding Model Value to store_schematicInfo
             store_schematicInfo = self.obj_convert.addModelParameter(store_schematicInfo)
-            print "Netlist After Adding Ngspice Model :",store_schematicInfo
+            print("Netlist After Adding Ngspice Model :",store_schematicInfo)
                         
             #Adding Device Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addDeviceLibrary(store_schematicInfo,self.kicadFile)
-            print "Netlist After Adding Device Model Library :",store_schematicInfo
+            print("Netlist After Adding Device Model Library :",store_schematicInfo)
             
             #Adding Subcircuit Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addSubcircuit(store_schematicInfo, self.kicadFile)
-            print "Netlist After Adding subcircuits :",store_schematicInfo
+            print("Netlist After Adding subcircuits :",store_schematicInfo)
             
             analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
                                                                self.obj_track.DC_entry_var["ITEMS"],
@@ -462,7 +462,7 @@ class MainWindow(QtGui.QWidget):
                                                                self.obj_track.AC_type["ITEMS"],
                                                                self.obj_track.op_check)
                        
-            print "Analysis OutPut ",analysisoutput
+            print("Analysis OutPut ",analysisoutput)
            
             #Calling netlist file generation function
             self.createNetlistFile(store_schematicInfo,plotText)
@@ -471,8 +471,8 @@ class MainWindow(QtGui.QWidget):
             QtGui.QMessageBox.information(self, "Information", self.msg, QtGui.QMessageBox.Ok)
                      
         except Exception as e:
-            print "Exception Message: ",e
-            print "There was error while converting kicad to ngspice"
+            print("Exception Message: ",e)
+            print("There was error while converting kicad to ngspice")
             self.close()
             
         # Generate .sub file from .cir.out file if it is a subcircuit
@@ -482,7 +482,7 @@ class MainWindow(QtGui.QWidget):
             self.createSubFile(subPath)
     
     def createNetlistFile(self,store_schematicInfo,plotText):
-        print "Creating Final netlist"
+        print("Creating Final netlist")
         #print "INFOLINE",infoline
         #print "OPTIONINFO",optionInfo
         #print "Device MODEL LIST ",devicemodelList
@@ -504,10 +504,10 @@ class MainWindow(QtGui.QWidget):
                 f.close()
 
             except :
-                print "Error While opening Project Analysis file. Please check it"
+                print("Error While opening Project Analysis file. Please check it")
                 sys.exit()
         else:
-            print analysisFileLoc + " does not exist"
+            print(analysisFileLoc + " does not exist")
             sys.exit()
             
         #Adding analysis file info to optionInfo
@@ -588,7 +588,7 @@ class MainWindow(QtGui.QWidget):
             except :
                 print("Error in opening .cir.out file.")
         else:
-            print self.projName + ".cir.out does not exist. Please create a spice netlist."
+            print(self.projName + ".cir.out does not exist. Please create a spice netlist.")
           
         # Read the data from file
         data=f.read()
@@ -612,7 +612,7 @@ class MainWindow(QtGui.QWidget):
                 continue
             elif words[0] == ".control":
                 while words[0] != ".endc":
-                    eachline=netlist.next()
+                    eachline=next(netlist)
                     eachline=eachline.strip()
                     if len(eachline)<1:
                         continue
@@ -634,7 +634,7 @@ class MainWindow(QtGui.QWidget):
         out.writelines('\n') 
          
         out.writelines('.ends ' + self.projName)
-        print "The subcircuit has been written in "+self.projName+".sub"
+        print("The subcircuit has been written in "+self.projName+".sub")
 
             
     

@@ -1,6 +1,6 @@
 
 from PyQt4 import QtGui
-import TrackWidget
+from . import TrackWidget
 import os
 #from xml.etree import ElementTree as ET
 import json
@@ -34,11 +34,11 @@ class Analysis(QtGui.QWidget):
             kicadFile = self.clarg1
             (projpath,filename) = os.path.split(kicadFile)
             if os.path.isfile(os.path.join(projpath, 'analysis')):
-                print "Analysis file is present"
+                print("Analysis file is present")
                 
             analysisfile = open(os.path.join(projpath,'analysis'))
             content = analysisfile.readline()
-            print "Content of Analysis file :", content
+            print("Content of Analysis file :", content)
             contentlist= content.split()
 
             if contentlist[0] == '.ac':
@@ -140,7 +140,7 @@ class Analysis(QtGui.QWidget):
             json_data = json.loads(data)
         except:
             check = 0
-            print "AC Previous Values JSON is Empty"
+            print("AC Previous Values JSON is Empty")
             
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
@@ -254,7 +254,7 @@ class Analysis(QtGui.QWidget):
                 self.stop_fre_combo.setCurrentIndex(index)
 
             except:
-                print "AC Analysis JSON Parse Error"
+                print("AC Analysis JSON Parse Error")
                 
         return self.acbox
     
@@ -288,7 +288,7 @@ class Analysis(QtGui.QWidget):
             json_data = json.loads(data)
         except:
             check = 0
-            print "DC Previous Values JSON is empty"
+            print("DC Previous Values JSON is empty")
 
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
@@ -515,7 +515,7 @@ class Analysis(QtGui.QWidget):
                 else:
                     self.check.setChecked(False)
             except:
-                print "DC Analysis JSON Parse Error"
+                print("DC Analysis JSON Parse Error")
         
         return self.dcbox
    
@@ -555,7 +555,7 @@ class Analysis(QtGui.QWidget):
             json_data = json.loads(data)
         except:
             check = 0
-            print "Transient Previous Values JSON is Empty"
+            print("Transient Previous Values JSON is Empty")
             
         self.trbox = QtGui.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
@@ -653,7 +653,7 @@ class Analysis(QtGui.QWidget):
                 index = self.stop_combobox.findText(json_data["analysis"]["tran"]["Stop Combo"])
                 self.stop_combobox.setCurrentIndex(index)
             except:
-                print "Transient Analysis JSON Parse Error"
+                print("Transient Analysis JSON Parse Error")
 
 
         return self.trbox    

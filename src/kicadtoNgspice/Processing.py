@@ -23,7 +23,7 @@ class PrcocessNetlist:
         """Read Parameter information and store it into dictionary"""
         param={}
         for eachline in kicadNetlis:
-            print eachline
+            print(eachline)
             eachline=eachline.strip()
             if len(eachline)>1:
                 words=eachline.split()
@@ -51,8 +51,8 @@ class PrcocessNetlist:
                     if key in param:
                         eachline=eachline.replace('{'+key+'}',param[key])
                     else:
-                        print "Parameter " + key +" does not exists"
-                        value=raw_input('Enter parameter value: ')
+                        print("Parameter " + key +" does not exists")
+                        value=input('Enter parameter value: ')
                         eachline=eachline.replace('{'+key+'}',value)
             #Convert netlist into lower case letter     
             eachline=eachline.lower()
@@ -84,7 +84,7 @@ class PrcocessNetlist:
         #Inser Special source parameter
         schematicInfo1=[]
         
-        print "Reading schematic info for source details"
+        print("Reading schematic info for source details")
         
         for compline in schematicInfo:
             words=compline.split()
@@ -149,13 +149,13 @@ class PrcocessNetlist:
                 schematicInfo1.append(compName+" "+words[1]+" "+words[2]+" "+"V"+compName+" "+words[5])
                 
         schematicInfo=schematicInfo+schematicInfo1
-        print "Source List : ",sourcelist
+        print("Source List : ",sourcelist)
         #print schematicInfo
         return schematicInfo,sourcelist
     
     
     def convertICintoBasicBlocks(self,schematicInfo,outputOption,modelList,plotText):
-        print "Reading Schematic info for Model"
+        print("Reading Schematic info for Model")
         #Insert details of Ngspice model
         unknownModelList = []
         multipleModelList = []
@@ -199,7 +199,7 @@ class PrcocessNetlist:
                         unknownModelList.append(compType)
                     elif count == 1:
                         try:
-                            print "Start Parsing Previous Values XML for ngspice model :",modelPath  
+                            print("Start Parsing Previous Values XML for ngspice model :",modelPath)  
                             tree = ET.parse(modelPath[0])
                             
                             root = tree.getroot()
@@ -252,7 +252,7 @@ class PrcocessNetlist:
                                 modelLine += compName
                                 
                             else:
-                                print "Split Details :",splitDetail
+                                print("Split Details :",splitDetail)
                                 modelLine = "a"+str(k)+" "
                                 vectorDetail = splitDetail.split(':')
                                 #print "Vector Details",vectorDetail
@@ -280,7 +280,7 @@ class PrcocessNetlist:
                                                 pos += 1
                                     
                                     except:
-                                        print  "There is error while processing Vector Details"
+                                        print("There is error while processing Vector Details")
                                         sys.exit(2)
                                 modelLine += compName        
                                 
@@ -289,16 +289,16 @@ class PrcocessNetlist:
                                 schematicInfo.append(modelLine)
                                 k=k+1
                             except Exception as e:
-                                print "Error while appending ModelLine ",modelLine
-                                print "Exception Message : ",str(e)
+                                print("Error while appending ModelLine ",modelLine)
+                                print("Exception Message : ",str(e))
                             #Insert comment at remove line
                             schematicInfo.insert(index,"* "+compline)
                             comment = "* Schematic Name: "+compType+", NgSpice Name: "+modelname
                             #Here instead of adding compType(use for XML), added modelName(Unique Model Name)
                             modelList.append([index,compline,modelname,compName,comment,title,type,paramDict])
                         except Exception as e:
-                            print  "Unable to parse the model, Please check your your XML file"
-                            print "Exception Message : ",str(e)
+                            print("Unable to parse the model, Please check your your XML file")
+                            print("Exception Message : ",str(e))
                             sys.exit(2)
                 elif compType == "ic":
                     schematicInfo.insert(index,"* "+compline)
@@ -370,9 +370,9 @@ class PrcocessNetlist:
                 else:
                     schematicInfo.insert(index,"* "+compline)
                     
-                print "UnknownModelList Used in the Schematic",unknownModelList
-                print "Multiple Model XML file with same name ",multipleModelList
-                print "Model List Details : ",modelList  
+                print("UnknownModelList Used in the Schematic",unknownModelList)
+                print("Multiple Model XML file with same name ",multipleModelList)
+                print("Model List Details : ",modelList)  
                 
         return schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText
         

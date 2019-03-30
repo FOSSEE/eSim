@@ -34,7 +34,7 @@ class Validation:
         """
         This function validate Open Project Information.
         """
-        print "Function: Validating Open Project Information"
+        print("Function: Validating Open Project Information")
         projName = os.path.basename(str(projDir))
         lookProj = os.path.join(str(projDir),projName+".proj")
         #Check existence of project
@@ -49,7 +49,7 @@ class Validation:
         """
         This Project Validate New Project Information
         """
-        print "Function: Validating New Project Information"
+        print("Function: Validating New Project Information")
                 
         #Checking existence of project with same name
         if os.path.exists(projDir):
@@ -65,7 +65,7 @@ class Validation:
         """
         This function validate if Kicad components are present
         """
-        print "FUnction : Validating for Kicad components"
+        print("FUnction : Validating for Kicad components")
         if projDir == None:
             return False
         else:
@@ -104,9 +104,9 @@ class Validation:
                     #The number of ports is specified in this line
                     #eg. '.subckt ua741 6 7 3' has 3 ports (6, 7 and 3).
                     numPorts = len(words) - 2
-                    print "Looksub : ",lookSub
-                    print "Given Number of ports : ",givenNum
-                    print "Actual Number of ports :",numPorts
+                    print("Looksub : ",lookSub)
+                    print("Given Number of ports : ",givenNum)
+                    print("Actual Number of ports :",numPorts)
                     if numPorts != givenNum:
                         return "PORT"
                     else:

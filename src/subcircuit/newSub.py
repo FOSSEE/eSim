@@ -31,7 +31,7 @@ class NewSub(QtGui.QWidget):
         
         #Checking Validations Response
         if self.reply == "VALID":
-            print "Validated : Creating subcircuit directory"
+            print("Validated : Creating subcircuit directory")
             try:
                 os.mkdir(self.schematic_path)
                 self.schematic = os.path.join(self.schematic_path,self.create_schematic)

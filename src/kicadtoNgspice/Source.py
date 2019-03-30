@@ -1,6 +1,6 @@
 import os
 from PyQt4 import QtGui
-import TrackWidget
+from . import TrackWidget
 #from xml.etree import ElementTree as ET
 import json
 
@@ -40,7 +40,7 @@ class Source(QtGui.QWidget):
             json_data = json.loads(data)
 
         except:
-            print "Source Previous Values JSON is Empty"
+            print("Source Previous Values JSON is Empty")
         
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
@@ -48,7 +48,7 @@ class Source(QtGui.QWidget):
         if sourcelist:
             for line in sourcelist:
                 #print "Voltage source line index: ",line[0]
-                print "SourceList line: ",line
+                print("SourceList line: ",line)
                 track_id=line[0]
                 #print "track_id is ",track_id
                 if line[2] == 'ac':
@@ -159,7 +159,7 @@ class Source(QtGui.QWidget):
                                 templist1 = line[1]
                                 templist2 = templist1.split(' ')
                                 if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
-                                    self.entry_var[self.count].setText(str(json_data["source"][key]["values"][it-4].values()[0]))
+                                    self.entry_var[self.count].setText(str(list(json_data["source"][key]["values"][it-4].values())[0]))
                         except:
                             pass
                         
@@ -198,7 +198,7 @@ class Source(QtGui.QWidget):
                                 templist2 = templist1.split(' ')
 
                                 if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
-                                    self.entry_var[self.count].setText(str(json_data["source"][key]["values"][it-4].values()[0]))
+                                    self.entry_var[self.count].setText(str(list(json_data["source"][key]["values"][it-4].values())[0]))
                         except:
                             pass
                         
@@ -271,7 +271,7 @@ class Source(QtGui.QWidget):
                                 templist1 = line[1]
                                 templist2 = templist1.split(' ')
                                 if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
-                                    self.entry_var[self.count].setText(str(json_data["source"][key]["values"][it-4].values()[0]))
+                                    self.entry_var[self.count].setText(str(list(json_data["source"][key]["values"][it-4].values())[0]))
                         except:
                             pass
                         
@@ -291,7 +291,7 @@ class Source(QtGui.QWidget):
                     sourcelisttrack.append([track_id, 'exp', self.start, self.end])                          
                 
         else:
-            print "No source is present in your circuit"
+            print("No source is present in your circuit")
         
     
         #This is used to keep the track of dynamically created widget

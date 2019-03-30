@@ -1,4 +1,4 @@
-from __future__ import division         # Used for decimal division eg 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
+         # Used for decimal division eg 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
 import os
 from PyQt4 import QtGui, QtCore
 from decimal import Decimal,getcontext
@@ -14,8 +14,8 @@ class plotWindow(QtGui.QMainWindow):
         self.fpath = fpath
         self.projectName = projectName
         self.obj_appconfig = Appconfig()
-        print "Complete Project Path : ",self.fpath
-        print "Project Name : ",self.projectName
+        print("Complete Project Path : ",self.fpath)
+        print("Project Name : ",self.projectName)
         self.obj_appconfig.print_info('Ngspice simulation is called : ' + self.fpath)
         self.obj_appconfig.print_info('PythonPlotting is called : ' + self.fpath)
         self.combo = []
@@ -315,7 +315,7 @@ class plotWindow(QtGui.QMainWindow):
         boxCheck = 0
         self.axes.cla()
 
-        for i,j in zip(self.chkbox,range(len(self.chkbox))):
+        for i,j in zip(self.chkbox,list(range(len(self.chkbox)))):
             if i.isChecked():
                 boxCheck += 1
                 self.axes.semilogx(self.obj_dataext.x,self.obj_dataext.y[j],c=self.color[j],label=str(j+1))
@@ -334,7 +334,7 @@ class plotWindow(QtGui.QMainWindow):
     def onPush_ac(self):
         self.axes.cla()
         boxCheck = 0
-        for i,j in zip(self.chkbox,range(len(self.chkbox))):
+        for i,j in zip(self.chkbox,list(range(len(self.chkbox)))):
             if i.isChecked():
                 boxCheck += 1
                 self.axes.plot(self.obj_dataext.x,self.obj_dataext.y[j],c=self.color[j],label=str(j+1))
@@ -351,7 +351,7 @@ class plotWindow(QtGui.QMainWindow):
     def onPush_trans(self):
         self.axes.cla()
         boxCheck = 0
-        for i,j in zip(self.chkbox,range(len(self.chkbox))):
+        for i,j in zip(self.chkbox,list(range(len(self.chkbox)))):
             if i.isChecked():
                 boxCheck += 1
                 self.axes.plot(self.obj_dataext.x,self.obj_dataext.y[j],c=self.color[j],label=str(j+1))
@@ -369,7 +369,7 @@ class plotWindow(QtGui.QMainWindow):
     def onPush_dc(self):
         boxCheck = 0
         self.axes.cla()    
-        for i,j in zip(self.chkbox,range(len(self.chkbox))):
+        for i,j in zip(self.chkbox,list(range(len(self.chkbox)))):
             if i.isChecked():
                 boxCheck += 1
                 self.axes.plot(self.obj_dataext.x,self.obj_dataext.y[j],c=self.color[j],label=str(j+1))
@@ -396,15 +396,15 @@ class plotWindow(QtGui.QMainWindow):
         }[letter]
         
     def multiMeter(self):
-        print "Function : MultiMeter"
+        print("Function : MultiMeter")
         self.obj = {}
         boxCheck = 0
         loc_x = 300
         loc_y = 300
         
-        for i,j in zip(self.chkbox,range(len(self.chkbox))):
+        for i,j in zip(self.chkbox,list(range(len(self.chkbox)))):
             if i.isChecked():
-                print "Check box",self.obj_dataext.NBList[j]
+                print("Check box",self.obj_dataext.NBList[j])
                 boxCheck += 1
                 if self.obj_dataext.NBList[j] in self.obj_dataext.NBIList:
                     voltFlag = False
@@ -572,7 +572,7 @@ class DataExtraction:
                 allv = f1.read()
 
         except Exception as e:
-            print "Exception Message : ",str(e)
+            print("Exception Message : ",str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Unable to open plot data files.')
@@ -586,7 +586,7 @@ class DataExtraction:
             len_NBIList = len(self.NBIList)
             #print "NBILIST : ",self.NBIList
         except Exception as e:
-            print "Exception Message : ",str(e)
+            print("Exception Message : ",str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Error in Analysis File.')
@@ -608,7 +608,7 @@ class DataExtraction:
                 self.NBList.append(l)
         self.NBList=self.NBList[2:]
         len_NBList = len(self.NBList)
-        print "NBLIST",self.NBList
+        print("NBLIST",self.NBList)
         
         ivals=[]
         inum = len(allv[5].split("\t"))
@@ -704,7 +704,7 @@ class DataExtraction:
         self.NBList = self.NBList + self.NBIList
          
     
-        print dec    
+        print(dec)    
         return dec
     
     

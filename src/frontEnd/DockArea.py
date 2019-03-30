@@ -167,7 +167,7 @@ class DockArea(QtGui.QMainWindow):
         count = count + 1
 
     def modelEditor(self):    
-            print"in model editor"
+            print("in model editor")
             global count
             self.modelwidget = QtGui.QWidget() 
             

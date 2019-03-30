@@ -17,9 +17,9 @@
 #===============================================================================
 
 import os
-import Validation
+from . import Validation
 from configuration.Appconfig import Appconfig
-import Worker
+from . import Worker
 from PyQt4 import QtGui
 
 class Kicad:
@@ -35,7 +35,7 @@ class Kicad:
         """
         This function create command to open Kicad schematic
         """
-        print "Function : Open Kicad Schematic"
+        print("Function : Open Kicad Schematic")
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         try:
             self.obj_appconfig.print_info('Kicad Schematic is called for project ' + self.projDir)
@@ -123,7 +123,7 @@ class Kicad:
         """
         This function create command to call kicad to Ngspice converter.
         """
-        print "Function: Open Kicad to Ngspice Converter"
+        print("Function: Open Kicad to Ngspice Converter")
         
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         try:

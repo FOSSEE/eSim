@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 import json
-import TrackWidget
+from . import TrackWidget
 from projManagement import Validation
 import os
 #from xml.etree import ElementTree as ET
@@ -21,7 +21,7 @@ class SubcircuitTab(QtGui.QWidget):
             data = f.read()
             json_data = json.loads(data)
         except:
-            print "Subcircuit Previous values JSON is Empty"
+            print("Subcircuit Previous values JSON is Empty")
 
         QtGui.QWidget.__init__(self)
                      
@@ -49,7 +49,7 @@ class SubcircuitTab(QtGui.QWidget):
         for eachline in schematicInfo:
             words = eachline.split()
             if eachline[0] == 'x':
-                print "Subcircuit : Words",words[0]
+                print("Subcircuit : Words",words[0])
                 self.obj_trac.subcircuitList[project_name+words[0]] = words
                 self.subcircuit_dict_beg[words[0]] = self.count
                 subbox = QtGui.QGroupBox()
@@ -70,9 +70,9 @@ class SubcircuitTab(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
-                                print "Error when set text of subcircuit"
+                                print("Error when set text of subcircuit")
                 except:
-                    print "Error before subcircuit"
+                    print("Error before subcircuit")
 
 
                 subgrid.addWidget(self.entry_var[self.count], self.row, 1)
@@ -81,7 +81,7 @@ class SubcircuitTab(QtGui.QWidget):
                 #Send the number of ports specified with the given subcircuit for verification.
                 #eg. If the line is 'x1 4 0 3 ua741', there are 3 ports(4, 0 and 3).
                 self.numPorts.append(len(words)-2)
-                print "Number of ports of sub circuit : ",self.numPorts
+                print("Number of ports of sub circuit : ",self.numPorts)
                 self.addbtn.clicked.connect(self.trackSubcircuit)
                 subgrid.addWidget(self.addbtn, self.row, 2)
                 subbox.setLayout(subgrid)

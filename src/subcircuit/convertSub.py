@@ -18,7 +18,7 @@ class convertSub(QtGui.QWidget):
         """
         This function create command to call kicad to Ngspice converter.
         """
-        print "Openinig Kicad-to-Ngspice converter from Subcircuit Module"
+        print("Openinig Kicad-to-Ngspice converter from Subcircuit Module")
         self.projDir = self.obj_appconfig.current_subcircuit["SubcircuitName"]
         #Validating if current project is available or not
         if self.obj_validation.validateKicad(self.projDir):

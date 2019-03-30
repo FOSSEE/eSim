@@ -20,7 +20,7 @@
 from PyQt4 import QtGui
 import os
 import json
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 
 
 class Appconfig(QtGui.QWidget):

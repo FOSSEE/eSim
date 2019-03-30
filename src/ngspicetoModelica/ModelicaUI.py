@@ -78,7 +78,7 @@ class OpenModelicaEditor(QtGui.QWidget):
             self.cmd2 = "OMEdit " + self.modelicaNetlist
             self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
             self.obj_workThread2.start()
-            print "OMEdit called"
+            print("OMEdit called")
             self.obj_appconfig.print_info("OMEdit called")
 
         else:

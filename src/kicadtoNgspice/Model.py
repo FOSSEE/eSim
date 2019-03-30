@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 import json
-import TrackWidget
+from . import TrackWidget
 #from xml.etree import ElementTree as ET
 import os
 
@@ -25,7 +25,7 @@ class Model(QtGui.QWidget):
             data = f.read()
             json_data = json.loads(data)
         except:
-            print "Model Previous Values JSON is Empty"
+            print("Model Previous Values JSON is Empty")
         
         
         
@@ -55,7 +55,7 @@ class Model(QtGui.QWidget):
             self.start = self.nextcount
             #line[7] is parameter dictionary holding parameter tags.
             i = 0
-            for key,value in line[7].iteritems():
+            for key,value in line[7].items():
                 #print "Key : ",key
                 #print "Value : ",value
                 #Check if value is iterable
@@ -71,7 +71,7 @@ class Model(QtGui.QWidget):
                         try:
                             for mod in json_data["model"]:
                                 if json_data["model"][mod]["type"] == line[2] and mod == line[3]:
-                                    self.obj_trac.model_entry_var[self.nextcount].setText(str(json_data["model"][mod]["values"][i].values()[0]))
+                                    self.obj_trac.model_entry_var[self.nextcount].setText(str(list(json_data["model"][mod]["values"][i].values())[0]))
                                     i = i + 1
                         except:
                             pass
@@ -90,7 +90,7 @@ class Model(QtGui.QWidget):
                     try:
                         for mod in json_data["model"]:
                             if json_data["model"][mod]["type"] == line[2] and mod == line[3]:
-                                self.obj_trac.model_entry_var[self.nextcount].setText(str(json_data["model"][mod]["values"][i].values()[0]))
+                                self.obj_trac.model_entry_var[self.nextcount].setText(str(list(json_data["model"][mod]["values"][i].values())[0]))
                                 i = i + 1
                     except:
                             pass

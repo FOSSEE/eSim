@@ -182,7 +182,7 @@ class Application(QtGui.QMainWindow):
     
      
     def close_project(self):
-        print "Function : Close Project"
+        print("Function : Close Project")
         current_project = self.obj_appconfig.current_project['ProjectName']
         if current_project==None:
             pass
@@ -209,7 +209,7 @@ class Application(QtGui.QMainWindow):
             self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
             
         else:
-            print "No new project created"
+            print("No new project created")
             self.obj_appconfig.print_info('No new project created')
             try:
                 self.obj_appconfig.print_info('Current project is : ' + self.obj_appconfig.current_project["ProjectName"])
@@ -220,7 +220,7 @@ class Application(QtGui.QMainWindow):
         """
         This project call Open Project Info class
         """
-        print "Function : Open Project"
+        print("Function : Open Project")
         self.project = OpenProjectInfo()
         
         try:
@@ -233,9 +233,9 @@ class Application(QtGui.QMainWindow):
     
             
     def help_project(self):
-        print "Function : Help"
+        print("Function : Help")
         self.obj_appconfig.print_info('Help is called')
-        print "Current Project is : ",self.obj_appconfig.current_project
+        print("Current Project is : ",self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()    
     
     
@@ -257,7 +257,7 @@ class Application(QtGui.QMainWindow):
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage('Error while opening python plotting Editor.\
                 Please look at console for more details ')
-                print "Exception Message:",str(e)
+                print("Exception Message:",str(e))
                 self.obj_appconfig.print_error('Exception Message : ' + str(e))
                 self.msg.setWindowTitle("Error Message")
                         
@@ -267,12 +267,12 @@ class Application(QtGui.QMainWindow):
             self.msg.setWindowTitle("Error Message")
             
     def open_subcircuit(self):
-        print "Function : Subcircuit editor"
+        print("Function : Subcircuit editor")
         self.obj_appconfig.print_info('Subcircuit editor is called')
         self.obj_Mainview.obj_dockarea.subcircuiteditor()
 
     def open_nghdl(self):
-        print "Function : Nghdl"
+        print("Function : Nghdl")
         self.obj_appconfig.print_info('Nghdl is called')
 
         if self.obj_validation.validateTool('nghdl'):
@@ -288,7 +288,7 @@ class Application(QtGui.QMainWindow):
             
       
     def open_modelEditor(self):
-        print "Function : Model editor"
+        print("Function : Model editor")
         self.obj_appconfig.print_info('Model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
 
@@ -351,7 +351,7 @@ class Application(QtGui.QMainWindow):
         
     
     def open_OMoptim(self):
-        print "Function : OM Optim"    
+        print("Function : OM Optim")    
         self.obj_appconfig.print_info('OM Optim is called')
         #Check if OMOptim is installed 
         if self.obj_validation.validateTool("OMOptim"):
@@ -430,7 +430,7 @@ def main(args):
     """
     It is main function of the module.It starts the application
     """
-    print "Starting eSim......"
+    print("Starting eSim......")
     app = QtGui.QApplication(args)
     
     splash_pix = QtGui.QPixmap('../../images/splash_screen_esim.png')

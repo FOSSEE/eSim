@@ -17,7 +17,7 @@
 #      REVISION:  ---
 #===============================================================================
 from PyQt4 import QtGui
-from Validation import Validation
+from .Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
 import json

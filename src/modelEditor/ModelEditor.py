@@ -231,7 +231,7 @@ class ModelEditorclass(QtGui.QWidget):
             self.editfile=str(QtGui.QFileDialog.getOpenFileName(self,"Open Library Directory","../deviceModelLibrary","*.lib"))
             self.createtable(self.editfile)
         except:
-            print"No File selected for edit"
+            print("No File selected for edit")
             pass
         
     def createtable(self, modelfile):
@@ -252,7 +252,7 @@ class ModelEditorclass(QtGui.QWidget):
         filepath, filename = os.path.split(self.modelfile)
         base, ext= os.path.splitext(filename)      
         self.modelfile = os.path.join(filepath, base+'.xml')
-        print"Model File used for creating table : ",self.modelfile
+        print("Model File used for creating table : ",self.modelfile)
         self.tree = ET.parse(self.modelfile)
         self.root= self.tree.getroot()
         for elem in self.tree.iter(tag='ref_model'):
@@ -266,7 +266,7 @@ class ModelEditorclass(QtGui.QWidget):
                 row= row+1
         self.modeltable.setRowCount(row)
         count =0
-        for tags, values in self.modeldict.items():
+        for tags, values in list(self.modeldict.items()):
             self.modeltable.setItem(count,0, QTableWidgetItem(tags))
             try:
                 valueitem = QTableWidgetItem(values)
@@ -282,10 +282,10 @@ class ModelEditorclass(QtGui.QWidget):
         self.savebtn.setDisabled(False)
         try:
             indexitem = self.modeltable.currentItem()
-            name = str(indexitem.data(0).toString())
+            name = str(indexitem.data(0))
             rowno = indexitem.row()
             para = self.modeltable.item(rowno,0)
-            val = str(para.data(0).toString())
+            val = str(para.data(0))
             self.modeldict[val]= name
         except:
             pass
@@ -297,7 +297,7 @@ class ModelEditorclass(QtGui.QWidget):
         '''
         text1, ok = QtGui.QInputDialog.getText(self, 'Parameter','Enter Parameter')
         if ok:
-            if text1 in self.modeldict.keys():
+            if text1 in list(self.modeldict.keys()):
                 self.msg = QtGui.QErrorMessage(self)
                 self.msg.showMessage("The paramaeter " + text1 + " is already in the list")
                 self.msg.setWindowTitle("Error Message")
@@ -330,7 +330,7 @@ class ModelEditorclass(QtGui.QWidget):
         ET.SubElement(root, "model_name").text = model_name
         ET.SubElement(root, "ref_model").text = self.modelname
         param = ET.SubElement(root, "param")
-        for tags, text in self.modeldict.items():
+        for tags, text in list(self.modeldict.items()):
             ET.SubElement(param, tags).text = text
         tree = ET.ElementTree(root)
         defaultcwd = os.getcwd()
@@ -340,7 +340,7 @@ class ModelEditorclass(QtGui.QWidget):
             os.chdir(savepath)
             txtfile = open(self.modelname+'.lib', 'w')
             txtfile.write('.MODEL ' + self.modelname +' ' + self.model_name + '(\n' )
-            for tags, text in self.modeldict.items():
+            for tags, text in list(self.modeldict.items()):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
@@ -350,7 +350,7 @@ class ModelEditorclass(QtGui.QWidget):
             os.chdir(savepath)
             txtfile = open(self.modelname+'.lib', 'w')
             txtfile.write('.MODEL ' + self.modelname +' ' + self.model_name + '(\n' )
-            for tags, text in self.modeldict.items():
+            for tags, text in list(self.modeldict.items()):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
@@ -360,7 +360,7 @@ class ModelEditorclass(QtGui.QWidget):
             os.chdir(savepath)
             txtfile = open(self.modelname+'.lib', 'w')
             txtfile.write('.MODEL ' + self.modelname +' ' + self.model_name + '(\n' )
-            for tags, text in self.modeldict.items():
+            for tags, text in list(self.modeldict.items()):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
@@ -370,7 +370,7 @@ class ModelEditorclass(QtGui.QWidget):
             os.chdir(savepath)
             txtfile = open(self.modelname+'.lib', 'w')
             txtfile.write('.MODEL ' + self.modelname +' ' + self.model_name + '(\n' )
-            for tags, text in self.modeldict.items():
+            for tags, text in list(self.modeldict.items()):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
@@ -380,7 +380,7 @@ class ModelEditorclass(QtGui.QWidget):
             os.chdir(savepath)
             txtfile = open(self.modelname+'.lib', 'w')
             txtfile.write('.MODEL ' + self.modelname +' ' + self.model_name + '(\n' )
-            for tags, text in self.modeldict.items():
+            for tags, text in list(self.modeldict.items()):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
@@ -390,7 +390,7 @@ class ModelEditorclass(QtGui.QWidget):
             os.chdir(savepath)
             txtfile = open(self.modelname+'.lib', 'w')
             txtfile.write('.MODEL ' + self.modelname +' ' + self.model_name + '(\n' )
-            for tags, text in self.modeldict.items():
+            for tags, text in list(self.modeldict.items()):
                 txtfile.write('+ ' + tags + '=' + text +'\n')
             txtfile.write(')')
             tree.write(self.modelname +".xml")
@@ -423,7 +423,7 @@ class ModelEditorclass(QtGui.QWidget):
         libpath = os.path.join(xmlpath,filename+'.lib')
         libfile = open(libpath, 'w')
         libfile.write('.MODEL ' + self.ref_model +' ' + self.model_name + '(\n' )
-        for tags, text in self.modeldict.items():
+        for tags, text in list(self.modeldict.items()):
             libfile.write('+  ' + tags + '=' + text +'\n')
         libfile.write(')')
         libfile.close()
@@ -432,7 +432,7 @@ class ModelEditorclass(QtGui.QWidget):
         ET.SubElement(root, "model_name").text = self.model_name
         ET.SubElement(root, "ref_model").text = self.ref_model
         param = ET.SubElement(root, "param")
-        for tags, text in self.modeldict.items():
+        for tags, text in list(self.modeldict.items()):
             ET.SubElement(param, tags).text = text
         tree = ET.ElementTree(root)
         
@@ -443,7 +443,7 @@ class ModelEditorclass(QtGui.QWidget):
     def removeparameter(self):
         self.savebtn.setDisabled(False)
         index = self.modeltable.currentIndex()
-        param = index.data().toString()
+        param = index.data()
         remove_item = self.modeltable.item(index.row(),0).text()
         self.modeltable.removeRow(index.row())
         del self.modeldict[str(remove_item)]
@@ -531,7 +531,7 @@ class ModelEditorclass(QtGui.QWidget):
         ET.SubElement(root, "model_name").text = model_name
         ET.SubElement(root, "ref_model").text = ref_model
         param = ET.SubElement(root, "param")
-        for tags, text in model_dict.items():
+        for tags, text in list(model_dict.items()):
             ET.SubElement(param, tags).text = text
         tree = ET.ElementTree(root)
 

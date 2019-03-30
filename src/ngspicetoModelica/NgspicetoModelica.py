@@ -33,10 +33,10 @@ class NgMoConverter:
                 f = open(filename)
             except Exception as e:
                 print("Error in opening file")
-                print(str(e))
+                print((str(e)))
                 sys.exit()
         else:
-            print filename + " does not exist"
+            print(filename + " does not exist")
             sys.exit()
 
         data = f.read()
@@ -144,7 +144,7 @@ class NgMoConverter:
                     print("Error in opening file")
                     sys.exit()
             else:
-                print filename + " does not exist"
+                print(filename + " does not exist")
                 sys.exit()
             data = f.read()
             data = data.replace('+', '').replace('\n','').replace(' = ','=').replace('= ','=').replace(' =','=')
@@ -352,7 +352,7 @@ class NgMoConverter:
             deviceName = eachline[0].lower()
             if deviceName=='d':
                 if len(words)>3:
-                    if modelInfo[words[3]].has_key('n'):
+                    if 'n' in modelInfo[words[3]]:
                         n = float(modelInfo[words[3]]['n'])
                     else:
                         n = 1.0
@@ -395,7 +395,7 @@ class NgMoConverter:
                 elif trans == 'pnp':
                     start = self.mappingData["Devices"][deviceName]["import"]+".PNP"
                 else:
-                    print "Transistor "+str(trans)+" Not found"
+                    print("Transistor "+str(trans)+" Not found")
                     sys.exit(1)
                 
                 stat = start+" "+words[0]+"("
@@ -446,7 +446,7 @@ class NgMoConverter:
                 elif trans=='pmos' :
                     start = self.mappingData["Devices"][deviceName]["import"]+".Mp"
                 else:
-                    print "MOSFET "+str(trans)+" not found"
+                    print("MOSFET "+str(trans)+" not found")
                     sys.exit(1)
                     
                 
@@ -467,7 +467,7 @@ class NgMoConverter:
                             tempstatList.append(actualModelicaParam+"="+self.getUnitVal(modelInfo[refName][key])+" ")
                             userDeviceParamList.append(str(actualModelicaParam))
                     except Exception as err:
-                        print str(err)
+                        print(str(err))
                 
                 #Running loop over default parameter of OpenModelica
                 for default in self.mappingData["Devices"][deviceName]["default"]:
@@ -991,8 +991,8 @@ def main(args):
         filename = sys.argv[1]
         map_json = sys.argv[2]
     else:
-        print "USAGE:"
-        print "python NgspicetoModelica.py <filename>"
+        print("USAGE:")
+        print("python NgspicetoModelica.py <filename>")
         sys.exit()
         
     dir_name = os.path.dirname(os.path.realpath(filename))

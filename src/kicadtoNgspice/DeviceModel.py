@@ -2,7 +2,7 @@ from PyQt4 import QtGui
 import os
 #from xml.etree import ElementTree as ET
 import json
-import TrackWidget
+from . import TrackWidget
 
 
 class DeviceModel(QtGui.QWidget):
@@ -23,7 +23,7 @@ class DeviceModel(QtGui.QWidget):
             data = f.read()
             json_data = json.loads(data)
         except:
-            print "Device Model Previous JSON is Empty"
+            print("Device Model Previous JSON is Empty")
         
         
         QtGui.QWidget.__init__(self)
@@ -48,12 +48,12 @@ class DeviceModel(QtGui.QWidget):
         #Set Layout
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
-        print "Reading Device model details from Schematic"
+        print("Reading Device model details from Schematic")
         
         for eachline in schematicInfo:
             words = eachline.split()
             if eachline[0] == 'q':
-                print "Device Model Transistor: ",words[0]
+                print("Device Model Transistor: ",words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 transbox=QtGui.QGroupBox()
                 transgrid=QtGui.QGridLayout()
@@ -73,7 +73,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
-                                print "Error when set text of device model transistor"
+                                print("Error when set text of device model transistor")
                 except:
                     pass
 
@@ -108,7 +108,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count + 1
                 
             elif eachline[0] == 'd':
-                print "Device Model Diode:",words[0]
+                print("Device Model Diode:",words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 diodebox = QtGui.QGroupBox()
                 diodegrid = QtGui.QGridLayout()
@@ -127,7 +127,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
-                                print "Error when set text of device model diode"
+                                print("Error when set text of device model diode")
                 except:
                     pass
 
@@ -162,7 +162,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count + 1
                 
             elif eachline[0] == 'j':
-                print "Device Model JFET:",words[0]
+                print("Device Model JFET:",words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 jfetbox = QtGui.QGroupBox()
                 jfetgrid = QtGui.QGridLayout()
@@ -181,7 +181,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except:
-                                print "Error when set text of Device Model JFET "
+                                print("Error when set text of Device Model JFET ")
                 except:
                     pass
 
@@ -301,7 +301,7 @@ class DeviceModel(QtGui.QWidget):
         """
         This function is use to keep track of all Device Model widget
         """
-        print "Calling Track Device Model Library funtion"
+        print("Calling Track Device Model Library funtion")
         sending_btn = self.sender()
         #print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
@@ -332,10 +332,10 @@ class DeviceModel(QtGui.QWidget):
         """
         This function is use to keep track of all Device Model widget
         """
-        print "Calling Track Library function Without Button"
+        print("Calling Track Library function Without Button")
         #print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = iter_value
-        print "self.widgetObjCount-----",self.widgetObjCount
+        print("self.widgetObjCount-----",self.widgetObjCount)
         self.libfile = path_value
         #print "Selected Library File :",self.libfile
 
