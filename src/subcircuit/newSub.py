@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtCore
+from PyQt4 import QtGui, QtCore  # noqa
 from projManagement.Validation import Validation
 from configuration.Appconfig import Appconfig
 from projManagement import Worker
@@ -46,26 +46,29 @@ class NewSub(QtGui.QWidget):
                 self.obj_workThread.start()
                 self.close()
             except BaseException:
-                #print "Some Thing Went Wrong"
+                # print "Some Thing Went Wrong"
                 self.msg = QtGui.QErrorMessage(self)
                 self.msg.showMessage(
-                    'Unable to create subcircuit. Please make sure you have write permission on ' +
+                    'Unable to create subcircuit. Please make sure\
+                     you have write permission on ' +
                     self.schematic_path)
                 self.msg.setWindowTitle("Error Message")
 
-            self.obj_appconfig.current_subcircuit['SubcircuitName'] = self.schematic_path
+            self.obj_appconfig.current_subcircuit['SubcircuitName'] \
+                = self.schematic_path
 
         elif self.reply == "CHECKEXIST":
-            #print "Project already exist"
+            # print "Project already exist"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
                 'The subcircuit "' +
                 self.create_schematic +
-                '" already exist.Please select the different name or delete existing subcircuit')
+                '" already exist.Please select the different name or delete'
+                + 'existing subcircuit')
             self.msg.setWindowTitle("Error Message")
 
         elif self.reply == "CHECKNAME":
-            #print "Name is not proper"
+            # print "Name is not proper"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
                 'The subcircuit name should not contain space between them')

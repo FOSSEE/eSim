@@ -1,11 +1,12 @@
 
-#=========================================================================
+# =========================================================================
 #
 #          FILE: Validation.py
 #
 #         USAGE: ---
 #
-#   DESCRIPTION: This module is use to create validation for openProject,newProject and other activity.
+#   DESCRIPTION: This module is use to create validation for openProject,
+#                newProject and other activity.
 #
 #       OPTIONS: ---
 #  REQUIREMENTS: ---
@@ -15,7 +16,7 @@
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 12 February 2015
 #      REVISION:  ---
-#=========================================================================
+# =========================================================================
 import os
 import re
 import distutils.spawn

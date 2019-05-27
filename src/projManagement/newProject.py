@@ -1,5 +1,5 @@
 
-#=========================================================================
+# =========================================================================
 #
 #          FILE: newProject.py
 #
@@ -15,7 +15,7 @@
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 12 February 2015
 #      REVISION:  ---
-#=========================================================================
+# =========================================================================
 from PyQt4 import QtGui
 from .Validation import Validation
 from configuration.Appconfig import Appconfig
@@ -37,10 +37,10 @@ class NewProjectInfo(QtGui.QWidget):
         """
         This function create Project related directories and files
         """
-        #print "Create Project Called"
+        # print "Create Project Called"
         self.projName = projName
         self.workspace = self.obj_appconfig.default_workspace['workspace']
-        #self.projName = self.projEdit.text()
+        # self.projName = self.projEdit.text()
         # Remove leading and trailing space
         self.projName = str(self.projName).rstrip().lstrip()
 
@@ -62,18 +62,19 @@ class NewProjectInfo(QtGui.QWidget):
                     self.projDir, self.projName + ".proj")
                 f = open(self.projFile, "w")
             except BaseException:
-                #print "Some Thing Went Wrong"
+                # print "Some Thing Went Wrong"
                 self.msg = QtGui.QErrorMessage(self)
                 self.msg.showMessage(
-                    'Unable to create project. Please make sure you have write permission on ' +
-                    self.workspace)
+                    'Unable to create project. Please make sure you have'
+                    + 'write permission on '
+                    + self.workspace)
                 self.msg.setWindowTitle("Error Message")
             f.write("schematicFile " + self.projName + ".sch\n")
             f.close()
 
             # Now Change the current working project
             newprojlist = []
-            #self.obj_appconfig = Appconfig()
+            # self.obj_appconfig = Appconfig()
             self.obj_appconfig.current_project['ProjectName'] = self.projDir
             newprojlist.append(self.projName + '.proj')
             self.obj_appconfig.project_explorer[self.projDir] = newprojlist
@@ -89,23 +90,24 @@ class NewProjectInfo(QtGui.QWidget):
             return self.projDir, newprojlist
 
         elif self.reply == "CHECKEXIST":
-            #print "Project already exist"
+            # print "Project already exist"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
-                'The project "' +
-                self.projName +
-                '" already exist.Please select the different name or delete existing project')
+                'The project "'
+                + self.projName
+                + '" already exist.Please select the different name or delete'
+                + ' existing project')
             self.msg.setWindowTitle("Error Message")
 
         elif self.reply == "CHECKNAME":
-            #print "Name is not proper"
+            # print "Name is not proper"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
                 'The project name should not contain space between them')
             self.msg.setWindowTitle("Error Message")
 
         elif self.reply == "NONE":
-            #print "Empty Project Name"
+            # print "Empty Project Name"
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage('The project name cannot be empty')
             self.msg.setWindowTitle("Error Message")

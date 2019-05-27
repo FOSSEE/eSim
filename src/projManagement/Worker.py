@@ -1,4 +1,4 @@
-#=========================================================================
+# =========================================================================
 #
 #          FILE: WorkerThread.py
 #
@@ -14,7 +14,7 @@
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Tuesday 24 Feb 2015
 #      REVISION:  ---
-#=========================================================================
+# =========================================================================
 from PyQt4 import QtCore
 import subprocess
 from configuration.Appconfig import Appconfig
