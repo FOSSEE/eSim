@@ -8,6 +8,7 @@ from projManagement.Validation import Validation
 
 BROWSE_LOCATION = '/home'
 
+
 class OpenModelicaEditor(QtGui.QWidget):
 
     def __init__(self, dir=None):
@@ -16,8 +17,10 @@ class OpenModelicaEditor(QtGui.QWidget):
         self.obj_appconfig = Appconfig()
         self.projDir = dir
         self.projName = os.path.basename(self.projDir)
-        self.ngspiceNetlist = os.path.join(self.projDir,self.projName+".cir.out")
-        self.modelicaNetlist = os.path.join(self.projDir,self.projName+".mo")
+        self.ngspiceNetlist = os.path.join(
+            self.projDir, self.projName + ".cir.out")
+        self.modelicaNetlist = os.path.join(
+            self.projDir, self.projName + ".mo")
         self.map_json = Appconfig.modelica_map_json
 
         self.grid = QtGui.QGridLayout()
@@ -43,34 +46,48 @@ class OpenModelicaEditor(QtGui.QWidget):
 
     def browseFile(self):
 
-        self.ngspiceNetlist = QtGui.QFileDialog.getOpenFileName(self, 'Open Ngspice file', BROWSE_LOCATION)
+        self.ngspiceNetlist = QtGui.QFileDialog.getOpenFileName(
+            self, 'Open Ngspice file', BROWSE_LOCATION)
         self.FileEdit.setText(self.ngspiceNetlist)
 
     def callConverter(self):
 
         try:
-            self.cmd1 = "python ../ngspicetoModelica/NgspicetoModelica.py " + self.ngspiceNetlist + ' ' + self.map_json
+            self.cmd1 = "python ../ngspicetoModelica/NgspicetoModelica.py " + \
+                self.ngspiceNetlist + ' ' + self.map_json
             #self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
-            #self.obj_workThread1.start()
-            convert_process = Popen(self.cmd1, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+            # self.obj_workThread1.start()
+            convert_process = Popen(
+                self.cmd1,
+                shell=True,
+                stdin=PIPE,
+                stdout=PIPE,
+                stderr=STDOUT,
+                close_fds=True)
             error_code = convert_process.stdout.read()
             if not error_code:
                 self.msg = QtGui.QMessageBox()
-                self.msg.setText("Ngspice netlist successfully converted to OpenModelica netlist")
-                self.obj_appconfig.print_info("Ngspice netlist successfully converted to OpenModelica netlist")
+                self.msg.setText(
+                    "Ngspice netlist successfully converted to OpenModelica netlist")
+                self.obj_appconfig.print_info(
+                    "Ngspice netlist successfully converted to OpenModelica netlist")
                 self.msg.exec_()
 
             else:
                 self.err_msg = QtGui.QErrorMessage()
-                self.err_msg.showMessage('Unable to convert NgSpice netlist to Modelica netlist. Check the netlist :'+ error_code)
-                self.err_msg.setWindowTitle("Ngspice to Modelica conversion error")
+                self.err_msg.showMessage(
+                    'Unable to convert NgSpice netlist to Modelica netlist. Check the netlist :' +
+                    error_code)
+                self.err_msg.setWindowTitle(
+                    "Ngspice to Modelica conversion error")
                 self.obj_appconfig.print_error(error_code)
 
         except Exception as e:
             self.msg = QtGui.QErrorMessage()
-            self.msg.showMessage('Unable to convert NgSpice netlist to Modelica netlist. Check the netlist :'+str(e))
+            self.msg.showMessage(
+                'Unable to convert NgSpice netlist to Modelica netlist. Check the netlist :' +
+                str(e))
             self.msg.setWindowTitle("Ngspice to Modelica conversion error")
-
 
     def callOMEdit(self):
 
@@ -92,4 +109,3 @@ class OpenModelicaEditor(QtGui.QWidget):
             self.msg.setWindowTitle("Missing OpenModelica")
             self.obj_appconfig.print_info(self.msgContent)
             self.msg.exec_()
-
