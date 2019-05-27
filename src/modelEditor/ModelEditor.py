@@ -165,7 +165,8 @@ class ModelEditorclass(QtGui.QWidget):
 
     def openfiletype(self, filetype):
         '''
-        Select the path of the file to be opened depending upon selected file type 
+        Select the path of the file to be opened \
+        depending upon selected file type
         '''
         self.path = '../deviceModelLibrary/Templates'
         if self.diode.isChecked():
@@ -522,7 +523,7 @@ class ModelEditorclass(QtGui.QWidget):
     def removeparameter(self):
         self.savebtn.setDisabled(False)
         index = self.modeltable.currentIndex()
-        param = str(index.data())
+        param = str(index.data())  # noqa
         remove_item = self.modeltable.item(index.row(), 0).text()
         self.modeltable.removeRow(index.row())
         del self.modeldict[str(remove_item)]
@@ -633,7 +634,7 @@ class ModelEditorclass(QtGui.QWidget):
 
         defaultcwd = os.getcwd()
         savepath = os.path.join(self.savepathtest, 'User Libraries')
-        savefilepath = os.path.join(savepath, model_name + ".xml")
+        savefilepath = os.path.join(savepath, model_name + ".xml")  # noqa
         os.chdir(savepath)
         text, ok1 = QtGui.QInputDialog.getText(
             self, 'Model Name', 'Enter Model Library Name')
