@@ -3,7 +3,7 @@ import json
 from . import TrackWidget
 from projManagement import Validation
 import os
-#from xml.etree import ElementTree as ET
+# from xml.etree import ElementTree as ET
 
 
 class SubcircuitTab(QtGui.QWidget):
@@ -68,7 +68,8 @@ class SubcircuitTab(QtGui.QWidget):
                 try:
                     for key in json_data["subcircuit"]:
                         if key[0] == eachline[0] and key[1] == eachline[1]:
-                            #print "Subcircuit MATCHING---",child.tag[0], child.tag[1], eachline[0], eachline[1]
+                            # print "Subcircuit MATCHING---",child.tag[0], \
+                            # child.tag[1], eachline[0], eachline[1]
                             try:
                                 if os.path.exists(
                                         json_data["subcircuit"][key][0]):
@@ -85,7 +86,8 @@ class SubcircuitTab(QtGui.QWidget):
                 subgrid.addWidget(self.entry_var[self.count], self.row, 1)
                 self.addbtn = QtGui.QPushButton("Add")
                 self.addbtn.setObjectName("%d" % self.count)
-                # Send the number of ports specified with the given subcircuit for verification.
+                # Send the number of ports specified with the given\
+                # subcircuit for verification.
                 # eg. If the line is 'x1 4 0 3 ua741', there are 3 ports(4, 0
                 # and 3).
                 self.numPorts.append(len(words) - 2)
@@ -96,8 +98,10 @@ class SubcircuitTab(QtGui.QWidget):
 
                 # CSS
                 subbox.setStyleSheet(" \
-                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                QGroupBox { border: 1px solid gray; border-radius:\
+                 9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left:\
+                 10px; padding: 0 3px 0 3px; } \
                 ")
 
                 self.grid.addWidget(subbox)
@@ -123,7 +127,7 @@ class SubcircuitTab(QtGui.QWidget):
         This function is use to keep track of all Subcircuit widget
         """
         sending_btn = self.sender()
-        #print "Object Called is ",sending_btn.objectName()
+        # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
 
         self.subfile = str(
@@ -150,7 +154,8 @@ class SubcircuitTab(QtGui.QWidget):
         elif self.reply == "DIREC":
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
-                "Please select a valid Subcircuit directory (Containing '.sub' file).")
+                "Please select a valid Subcircuit directory \
+                (Containing '.sub' file).")
             self.msg.setWindowTitle("Error Message")
             self.msg.show()
 
@@ -178,6 +183,7 @@ class SubcircuitTab(QtGui.QWidget):
         elif self.reply == "DIREC":
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
-                "Please select a valid Subcircuit directory (Containing '.sub' file).")
+                "Please select a valid Subcircuit directory \
+                (Containing '.sub' file).")
             self.msg.setWindowTitle("Error Message")
             self.msg.show()

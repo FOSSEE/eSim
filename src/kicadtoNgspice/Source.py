@@ -1,7 +1,7 @@
 import os
 from PyQt4 import QtGui
 from . import TrackWidget
-#from xml.etree import ElementTree as ET
+# from xml.etree import ElementTree as ET
 import json
 
 
@@ -20,14 +20,15 @@ class Source(QtGui.QWidget):
         self.end = 0
         self.row = 0
         self.entry_var = {}
-        #self.font = QtGui.QFont("Times",20,QtGui.QFont.Bold,True)
+        # self.font = QtGui.QFont("Times",20,QtGui.QFont.Bold,True)
 
         # Creating Source Widget
         self.createSourceWidget(sourcelist, sourcelisttrack)
 
     def createSourceWidget(self, sourcelist, sourcelisttrack):
         """
-        This function dynamically create source widget in the Source tab of KicadtoNgSpice window
+        This function dynamically create source widget in the
+        Source tab of KicadtoNgSpice window
         """
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
@@ -51,10 +52,10 @@ class Source(QtGui.QWidget):
 
         if sourcelist:
             for line in sourcelist:
-                #print "Voltage source line index: ",line[0]
+                # print "Voltage source line index: ",line[0]
                 print("SourceList line: ", line)
                 track_id = line[0]
-                #print "track_id is ",track_id
+                # print "track_id is ",track_id
                 if line[2] == 'ac':
                     acbox = QtGui.QGroupBox()
                     acbox.setTitle(line[3])
@@ -83,11 +84,18 @@ class Source(QtGui.QWidget):
                             templist1 = line[1]
                             templist2 = templist1.split(' ')
 
-                            if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                            if key == templist2[0] and \
+                                    json_data["source"][key]["type"]\
+                                    == line[2]:
                                 self.entry_var[self.count - 2].setText(
-                                    str(json_data["source"][key]["values"][0]["Amplitude"]))
+                                    str(
+                                        json_data
+                                        ["source"][key]["values"][0]
+                                        ["Amplitude"]))
                                 self.entry_var[self.count - 1].setText(
-                                    str(json_data["source"][key]["values"][1]["Phase"]))
+                                    str(
+                                        json_data["source"][key]
+                                        ["values"][1]["Phase"]))
 
                     except BaseException:
                         pass
@@ -100,8 +108,10 @@ class Source(QtGui.QWidget):
 
                     # CSS
                     acbox.setStyleSheet(" \
-                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    QGroupBox { border: 1px solid gray; border-radius:\
+                     9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left:\
+                     10px; padding: 0 3px 0 3px; } \
                     ")
 
                     self.grid.addWidget(acbox)
@@ -126,9 +136,13 @@ class Source(QtGui.QWidget):
                             templist1 = line[1]
                             templist2 = templist1.split(' ')
 
-                            if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                            if key == templist2[0] and \
+                                    json_data["source"][key]["type"]\
+                                    == line[2]:
                                 self.entry_var[self.count].setText(
-                                    str(json_data["source"][key]["values"][0]["Value"]))
+                                    str(
+                                        json_data["source"][key]
+                                        ["values"][0]["Value"]))
 
                     except BaseException:
                         pass
@@ -140,8 +154,10 @@ class Source(QtGui.QWidget):
 
                     # CSS
                     dcbox.setStyleSheet(" \
-                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    QGroupBox { border: 1px solid gray; border-radius:\
+                     9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left:\
+                     10px; padding: 0 3px 0 3px; } \
                     ")
 
                     self.grid.addWidget(dcbox)
@@ -168,9 +184,14 @@ class Source(QtGui.QWidget):
                             for key in json_data["source"]:
                                 templist1 = line[1]
                                 templist2 = templist1.split(' ')
-                                if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                                if key == templist2[0] and \
+                                        json_data["source"][key]["type"]\
+                                        == line[2]:
                                     self.entry_var[self.count].setText(
-                                        str(list(json_data["source"][key]["values"][it - 4].values())[0]))
+                                        str(
+                                            list(json_data["source"]
+                                                 [key]["values"]
+                                                 [it - 4].values())[0]))
                         except BaseException:
                             pass
 
@@ -181,8 +202,10 @@ class Source(QtGui.QWidget):
 
                     # CSS
                     sinebox.setStyleSheet(" \
-                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    QGroupBox { border: 1px solid gray; border-radius: \
+                    9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: \
+                    10px; padding: 0 3px 0 3px; } \
                     ")
 
                     self.grid.addWidget(sinebox)
@@ -209,9 +232,13 @@ class Source(QtGui.QWidget):
                                 templist1 = line[1]
                                 templist2 = templist1.split(' ')
 
-                                if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                                if key == templist2[0] and \
+                                        json_data["source"][key]["type"]\
+                                        == line[2]:
                                     self.entry_var[self.count].setText(
-                                        str(list(json_data["source"][key]["values"][it - 4].values())[0]))
+                                        str(list(
+                                            json_data["source"][key]
+                                            ["values"][it - 4].values())[0]))
                         except BaseException:
                             pass
 
@@ -222,8 +249,10 @@ class Source(QtGui.QWidget):
 
                     # CSS
                     pulsebox.setStyleSheet(" \
-                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    QGroupBox { border: 1px solid gray; border-radius: \
+                    9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: \
+                    10px; padding: 0 3px 0 3px; } \
                     ")
 
                     self.grid.addWidget(pulsebox)
@@ -246,9 +275,12 @@ class Source(QtGui.QWidget):
                         for key in json_data["source"]:
                             templist1 = line[1]
                             templist2 = templist1.split(' ')
-                            if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                            if key == templist2[0] and \
+                                    json_data["source"][key]["type"] \
+                                    == line[2]:
                                 self.entry_var[self.count].setText(
-                                    str(json_data["source"][key]["values"][0]["Enter in pwl format"]))
+                                    str(json_data["source"][key]
+                                        ["values"][0]["Enter in pwl format"]))
                     except BaseException:
                         pass
 
@@ -259,8 +291,10 @@ class Source(QtGui.QWidget):
 
                     # CSS
                     pwlbox.setStyleSheet(" \
-                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    QGroupBox { border: 1px solid gray; border-radius: \
+                    9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: \
+                    10px; padding: 0 3px 0 3px; } \
                     ")
 
                     self.grid.addWidget(pwlbox)
@@ -286,9 +320,16 @@ class Source(QtGui.QWidget):
                             for key in json_data["source"]:
                                 templist1 = line[1]
                                 templist2 = templist1.split(' ')
-                                if key == templist2[0] and json_data["source"][key]["type"] == line[2]:
+                                if key == templist2[0] and \
+                                        json_data["source"][key]["type"]\
+                                        == line[2]:
                                     self.entry_var[self.count].setText(
-                                        str(list(json_data["source"][key]["values"][it - 4].values())[0]))
+                                        str(
+                                            list(
+                                                json_data["source"][key]
+                                                ["values"][it - 4].values())[0]
+                                                )
+                                                )
                         except BaseException:
                             pass
 
@@ -299,8 +340,10 @@ class Source(QtGui.QWidget):
 
                     # CSS
                     expbox.setStyleSheet(" \
-                    QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                    QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                    QGroupBox { border: 1px solid gray; border-radius:\
+                     9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left: \
+                    10px; padding: 0 3px 0 3px; } \
                     ")
 
                     self.grid.addWidget(expbox)

@@ -2,7 +2,7 @@
 from PyQt4 import QtGui
 from . import TrackWidget
 import os
-#from xml.etree import ElementTree as ET
+# from xml.etree import ElementTree as ET
 import json
 
 
@@ -234,8 +234,10 @@ class Analysis(QtGui.QWidget):
 
         # CSS
         self.acbox.setStyleSheet(" \
-        QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-        QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+        QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: \
+        0.5em; } \
+        QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: \
+        0 3px 0 3px; } \
         ")
         if check:
             try:
@@ -503,16 +505,18 @@ class Analysis(QtGui.QWidget):
 
         # QtCore.QObject.connect(check,SIGNAL("stateChanged()"),check,SLOT("checkedSlot"))
         self.check.stateChanged.connect(self.setflag)
-        #self.flagcheck = 1
-        #self.flagcheck= 2
+        # self.flagcheck = 1
+        # self.flagcheck= 2
         self.dcgrid.addWidget(self.check, 9, 1, 9, 2)
         self.track_obj.DC_entry_var["ITEMS"] = self.dc_entry_var
         self.track_obj.DC_Parameter["ITEMS"] = self.dc_parameter
 
         # CSS
         self.dcbox.setStyleSheet(" \
-        QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-        QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+        QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: \
+        0.5em; } \
+        QGroupBox::title { subcontrol-origin: margin; left: \
+        10px; padding: 0 3px 0 3px; } \
         ")
         if check:
             try:
@@ -687,8 +691,10 @@ class Analysis(QtGui.QWidget):
 
         # CSS
         self.trbox.setStyleSheet(" \
-        QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-        QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+        QGroupBox { border: 1px solid gray; border-radius: \
+        9px; margin-top: 0.5em; } \
+        QGroupBox::title { subcontrol-origin: margin; left: \
+         10px; padding: 0 3px 0 3px; } \
         ")
         if check:
             try:

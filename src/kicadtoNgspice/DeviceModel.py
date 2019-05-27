@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 import os
-#from xml.etree import ElementTree as ET
+# from xml.etree import ElementTree as ET
 import json
 from . import TrackWidget
 
@@ -8,7 +8,8 @@ from . import TrackWidget
 class DeviceModel(QtGui.QWidget):
     """
     This class creates Device Library  Tab in KicadtoNgspice Window
-    It dynamically creates the widget for device like diode,mosfet,transistor and jfet.
+    It dynamically creates the widget for device like diode,mosfet,
+    transistor and jfet.
     """
 
     def __init__(self, schematicInfo, clarg1):
@@ -73,18 +74,21 @@ class DeviceModel(QtGui.QWidget):
                 try:
                     for key in json_data["deviceModel"]:
                         if key[0] == eachline[0] and key[1] == eachline[1]:
-                            #print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                            # print "DEVICE MODEL MATCHING---",child.tag[0],\
+                            # child.tag[1],eachline[0],eachline[1]
                             try:
                                 if os.path.exists(
                                         json_data["deviceModel"][key][0]):
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
-                                    path_name = json_data["deviceModel"][key][0]
+                                    path_name = json_data
+                                    ["deviceModel"][key][0]
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
                                 print(
-                                    "Error when set text of device model transistor")
+                                    "Error when set text of device\
+                                     model transistor")
                 except BaseException:
                     pass
 
@@ -104,8 +108,10 @@ class DeviceModel(QtGui.QWidget):
 
                 # CSS
                 transbox.setStyleSheet(" \
-                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                QGroupBox { border: 1px solid gray; border-radius: \
+                9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left:\
+                 10px; padding: 0 3px 0 3px; } \
                 ")
 
                 self.grid.addWidget(transbox)
@@ -129,21 +135,24 @@ class DeviceModel(QtGui.QWidget):
                     words[3])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                #global path_name
+                # global path_name
                 try:
                     for key in json_data["deviceModel"]:
                         if key[0] == eachline[0] and key[1] == eachline[1]:
-                            #print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                            # print "DEVICE MODEL MATCHING---",child.tag[0],\
+                            # child.tag[1],eachline[0],eachline[1]
                             try:
                                 if os.path.exists(
                                         json_data["deviceModel"][key][0]):
-                                    path_name = json_data["deviceModel"][key][0]
+                                    path_name = json_data
+                                    ["deviceModel"][key][0]
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
-                                print("Error when set text of device model diode")
+                                print("Error when set text of device\
+                                 model diode")
                 except BaseException:
                     pass
 
@@ -163,8 +172,10 @@ class DeviceModel(QtGui.QWidget):
 
                 # CSS
                 diodebox.setStyleSheet(" \
-                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                QGroupBox { border: 1px solid gray; border-radius: \
+                9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left:\
+                 10px; padding: 0 3px 0 3px; } \
                 ")
 
                 self.grid.addWidget(diodebox)
@@ -188,21 +199,24 @@ class DeviceModel(QtGui.QWidget):
                     words[4])
                 self.entry_var[self.count] = QtGui.QLineEdit()
                 self.entry_var[self.count].setText("")
-                #global path_name
+                # global path_name
                 try:
                     for key in json_data["deviceModel"]:
                         if key[0] == eachline[0] and key[1] == eachline[1]:
-                            #print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                            # print "DEVICE MODEL MATCHING---",child.tag[0],\
+                            # child.tag[1],eachline[0],eachline[1]
                             try:
                                 if os.path.exists(
                                         json_data["deviceModel"][key][0]):
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
-                                    path_name = json_data["deviceModel"][key][0]
+                                    path_name = json_data
+                                    ["deviceModel"][key][0]
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
-                                print("Error when set text of Device Model JFET ")
+                                print("Error when set text of Device\
+                                 Model JFET ")
                 except BaseException:
                     pass
 
@@ -222,8 +236,10 @@ class DeviceModel(QtGui.QWidget):
 
                 # CSS
                 jfetbox.setStyleSheet(" \
-                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                QGroupBox { border: 1px solid gray; border-radius:\
+                 9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left:\
+                 10px; padding: 0 3px 0 3px; } \
                 ")
 
                 self.grid.addWidget(jfetbox)
@@ -282,7 +298,8 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count + 1
 
                 self.multifactorLable[self.count] = QtGui.QLabel(
-                    "Enter multiplicative factor of MOSFET " + words[0] + "(default=1):")
+                    "Enter multiplicative factor of MOSFET " +
+                    words[0] + "(default=1):")
                 mosfetgrid.addWidget(
                     self.multifactorLable[self.count], self.row, 0)
                 self.entry_var[self.count] = QtGui.QLineEdit()
@@ -294,18 +311,20 @@ class DeviceModel(QtGui.QWidget):
                 self.devicemodel_dict_end[words[0]] = self.count
                 self.count = self.count + 1
                 mosfetbox.setLayout(mosfetgrid)
-                #global path_name
+                # global path_name
                 try:
                     for key in json_data["deviceModel"]:
                         if key[0] == eachline[0] and key[1] == eachline[1]:
-                            #print "DEVICE MODEL MATCHING---",child.tag[0],child.tag[1],eachline[0],eachline[1]
+                            # print "DEVICE MODEL MATCHING---",child.tag[0],\
+                            # child.tag[1],eachline[0],eachline[1]
                             while i <= end:
                                 self.entry_var[i].setText(
                                     json_data["deviceModel"][key][i - beg])
                                 if (i - beg) == 0:
                                     if os.path.exists(
                                             json_data["deviceModel"][key][0]):
-                                        path_name = json_data["deviceModel"][key][0]
+                                        path_name = json_data
+                                        ["deviceModel"][key][0]
                                     else:
                                         self.entry_var[i].setText("")
                                 i = i + 1
@@ -313,8 +332,10 @@ class DeviceModel(QtGui.QWidget):
                     pass
                 # CSS
                 mosfetbox.setStyleSheet(" \
-                QGroupBox { border: 1px solid gray; border-radius: 9px; margin-top: 0.5em; } \
-                QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 3px 0 3px; } \
+                QGroupBox { border: 1px solid gray; border-radius:\
+                 9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left: \
+                10px; padding: 0 3px 0 3px; } \
                 ")
                 if self.entry_var[beg].text() == "":
                     pass
@@ -331,7 +352,7 @@ class DeviceModel(QtGui.QWidget):
         """
         print("Calling Track Device Model Library funtion")
         sending_btn = self.sender()
-        #print "Object Called is ",sending_btn.objectName()
+        # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
 
         self.libfile = str(
@@ -340,7 +361,7 @@ class DeviceModel(QtGui.QWidget):
                 "Open Library Directory",
                 "../deviceModelLibrary",
                 "*.lib"))
-        #print "Selected Library File :",self.libfile
+        # print "Selected Library File :",self.libfile
 
         # Setting Library to Text Edit Line
         self.entry_var[self.widgetObjCount].setText(self.libfile)
@@ -370,11 +391,11 @@ class DeviceModel(QtGui.QWidget):
         This function is use to keep track of all Device Model widget
         """
         print("Calling Track Library function Without Button")
-        #print "Object Called is ",sending_btn.objectName()
+        # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = iter_value
         print("self.widgetObjCount-----", self.widgetObjCount)
         self.libfile = path_value
-        #print "Selected Library File :",self.libfile
+        # print "Selected Library File :",self.libfile
 
         # Setting Library to Text Edit Line
         self.entry_var[self.widgetObjCount].setText(self.libfile)

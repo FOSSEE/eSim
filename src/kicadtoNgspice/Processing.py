@@ -103,7 +103,8 @@ class PrcocessNetlist:
                     pw = '  Enter pulse width (seconds): '
                     tp = '  Enter period (seconds): '
                     sourcelist.append(
-                        [index, compline, words[3], Title, v1, v2, td, tr, tf, pw, tp])
+                        [index, compline, words[3],
+                         Title, v1, v2, td, tr, tf, pw, tp])
 
                 elif words[3] == "sine":
                     Title = "Add parameters for sine source " + compName
@@ -113,11 +114,13 @@ class PrcocessNetlist:
                     td = '  Enter delay time (seconds): '
                     theta = '  Enter damping factor (1/seconds): '
                     sourcelist.append(
-                        [index, compline, words[3], Title, vo, va, freq, td, theta])
+                        [index, compline, words[3],
+                         Title, vo, va, freq, td, theta])
 
                 elif words[3] == "pwl":
                     Title = "Add parameters for pwl source " + compName
-                    t_v = ' Enter in pwl format without bracket i.e t1 v1 t2 v2.... '
+                    t_v = ' Enter in pwl format without bracket\
+                     i.e t1 v1 t2 v2.... '
                     sourcelist.append([index, compline, words[3], Title, t_v])
 
                 elif words[3] == "ac":
@@ -136,7 +139,8 @@ class PrcocessNetlist:
                     td2 = '  Enter fall time (seconds): '
                     tau2 = '  Enter fall time constant (seconds): '
                     sourcelist.append(
-                        [index, compline, words[3], Title, v1, v2, td1, tau1, td2, tau2])
+                        [index, compline, words[3],
+                         Title, v1, v2, td1, tau1, td2, tau2])
 
                 elif words[3] == "dc":
                     Title = "Add parameters for DC source " + compName
@@ -166,7 +170,7 @@ class PrcocessNetlist:
 
         schematicInfo = schematicInfo + schematicInfo1
         print("Source List : ", sourcelist)
-        #print schematicInfo
+        # print schematicInfo
         return schematicInfo, sourcelist
 
     def convertICintoBasicBlocks(
@@ -187,8 +191,8 @@ class PrcocessNetlist:
         for compline in schematicInfo:
             words = compline.split()
             compName = words[0]
-            #print "Compline----------------->",compline
-            #print "compName-------------->",compName
+            # print "Compline----------------->",compline
+            # print "compName-------------->",compName
             # Find the IC from schematic
             if compName[0] == 'u' or compName[0] == 'U':
                 # Find the component from the circuit
@@ -199,12 +203,14 @@ class PrcocessNetlist:
                 # e.g compLine : u1 1 2 gain
                 # compType : gain
                 # compName : u1
-                #print "Compline",compline
-                #print "CompType",compType
-                #print "Words",words
-                #print "compName",compName
+                # print "Compline",compline
+                # print "CompType",compType
+                # print "Words",words
+                # print "compName",compName
                 # Looking if model file is present
-                if compType != "port" and compType != "ic" and compType not in plotList and compType != 'transfo':
+                if compType != "port" and compType != "ic" and \
+                        compType not in plotList and \
+                        compType != 'transfo':
                     xmlfile = compType + ".xml"  # XML Model File
                     count = 0  # Check if model of same name is present
                     modelPath = []
@@ -223,10 +229,11 @@ class PrcocessNetlist:
                     elif count == 1:
                         try:
                             print(
-                                "Start Parsing Previous Values XML for ngspice model :", modelPath)
+                                "Start Parsing Previous Values XML\
+                                 for ngspice model :", modelPath)
                             tree = ET.parse(modelPath[0])
 
-                            root = tree.getroot()
+                            root = tree.getroot()  # noqa
                             # Getting number of nodes for model and title
                             for child in tree.iter():
                                 if child.tag == 'node_number':
@@ -243,33 +250,37 @@ class PrcocessNetlist:
 
                             for param in tree.findall('param'):
                                 for item in param:
-                                    #print "Tags ",item.tag
-                                    #print "Value",item.text
+                                    # print "Tags ",item.tag
+                                    # print "Value",item.text
                                     if 'vector'in item.attrib:
-                                        #print "Tag having vector attribute",item.tag,item.attrib['vector']
+                                        # print "Tag having vector attribute",\
+                                        # item.tag,item.attrib['vector']
                                         temp_count = 1
                                         temp_list = []
                                         for i in range(0, int(
                                                 item.attrib['vector'])):
                                             temp_list.append(
-                                                item.text + " " + str(temp_count))
+                                                item.text + " " + str(
+                                                    temp_count))
                                             temp_count += 1
                                         if 'default' in item.attrib:
                                             paramDict[item.tag + ":" +
-                                                      item.attrib['default']] = temp_list
+                                                      item.attrib['default']] \
+                                                      = temp_list
                                         else:
                                             paramDict[item.tag] = item.text
 
                                     else:
                                         if 'default' in item.attrib:
                                             paramDict[item.tag + ":" +
-                                                      item.attrib['default']] = item.text
+                                                      item.attrib['default']]\
+                                                       = item.text
                                         else:
                                             paramDict[item.tag] = item.text
 
-                            #print "Number of Nodes : ",num_of_nodes
-                            #print "Title : ",title
-                            #print "Parameters",paramDict
+                            # print "Number of Nodes : ",num_of_nodes
+                            # print "Title : ",title
+                            # print "Parameters",paramDict
                             # Creating line for adding model line in schematic
                             if splitDetail == 'None':
                                 modelLine = "a" + str(k) + " "
@@ -281,28 +292,30 @@ class PrcocessNetlist:
                                 print("Split Details :", splitDetail)
                                 modelLine = "a" + str(k) + " "
                                 vectorDetail = splitDetail.split(':')
-                                #print "Vector Details",vectorDetail
+                                # print "Vector Details",vectorDetail
                                 pos = 1  # Node position
                                 for item in vectorDetail:
                                     try:
                                         if item.split("-")[1] == 'V':
-                                            #print "Vector"
+                                            # print "Vector"
                                             if compType == "aswitch":
                                                 modelLine += "("
                                                 for i in range(0, int(
                                                         item.split("-")[0])):
-                                                    modelLine += words[pos] + " "
+                                                    modelLine += words[pos] +\
+                                                     " "
                                                     pos += 1
                                                 modelLine += ") "
                                             else:
                                                 modelLine += "["
                                                 for i in range(0, int(
                                                         item.split("-")[0])):
-                                                    modelLine += words[pos] + " "
+                                                    modelLine += words[pos] + \
+                                                     " "
                                                     pos += 1
                                                 modelLine += "] "
                                         elif item.split("-")[1] == 'NV':
-                                            #print "Non Vector"
+                                            # print "Non Vector"
                                             for i in range(0, int(
                                                     item.split("-")[0])):
                                                 modelLine += words[pos] + " "
@@ -310,28 +323,33 @@ class PrcocessNetlist:
 
                                     except BaseException:
                                         print(
-                                            "There is error while processing Vector Details")
+                                            "There is error while processing\
+                                             Vector Details")
                                         sys.exit(2)
                                 modelLine += compName
 
-                            #print "Final Model Line :",modelLine
+                            # print "Final Model Line :",modelLine
                             try:
                                 schematicInfo.append(modelLine)
                                 k = k + 1
                             except Exception as e:
                                 print(
-                                    "Error while appending ModelLine ", modelLine)
+                                    "Error while appending \
+                                    ModelLine ", modelLine)
                                 print("Exception Message : ", str(e))
                             # Insert comment at remove line
                             schematicInfo.insert(index, "* " + compline)
-                            comment = "* Schematic Name: " + compType + ", NgSpice Name: " + modelname
+                            comment = "* Schematic Name:\
+                             " + compType + ", NgSpice Name: " + modelname
                             # Here instead of adding compType(use for XML),
                             # added modelName(Unique Model Name)
                             modelList.append(
-                                [index, compline, modelname, compName, comment, title, type, paramDict])
+                                [index, compline, modelname, compName,
+                                 comment, title, type, paramDict])
                         except Exception as e:
                             print(
-                                "Unable to parse the model, Please check your your XML file")
+                                "Unable to parse the model, \
+                                Please check your your XML file")
                             print("Exception Message : ", str(e))
                             sys.exit(2)
                 elif compType == "ic":
@@ -343,7 +361,8 @@ class PrcocessNetlist:
                     text = "Enter initial voltage at node for " + compline
                     paramDict[title] = text
                     modelList.append(
-                        [index, compline, modelname, compName, comment, title, type, paramDict])
+                        [index, compline, modelname, compName,
+                         comment, title, type, paramDict])
 
                 elif compType in plotList:
                     schematicInfo.insert(index, "* " + compline)
@@ -358,7 +377,8 @@ class PrcocessNetlist:
                         words = compline.split()
                         # Adding zero voltage source to netlist
                         schematicInfo.append(
-                            "v_" + words[0] + " " + words[1] + " " + words[2] + " " + "0")
+                            "v_" + words[0] + " "
+                            + words[1] + " " + words[2] + " " + "0")
                         plotText.append("plot i(v_" + words[0] + ")")
                     elif compType == 'plot_log':
                         words = compline.split()
@@ -374,20 +394,23 @@ class PrcocessNetlist:
                     schematicInfo.insert(index, "* " + compline)
 
                     # For Primary Couple
-                    modelLine = "a" + str(k) + " (" + words[1] + " " + words[2] + ") (interNode_" + str(
+                    modelLine = "a" + str(k)
+                    + " (" + words[1] + " " + words[2] + ") (interNode_" + str(
                         interMediateNodeCount) + " " + words[3] + ") "
                     modelLine += compName + "_primary"
                     schematicInfo.append(modelLine)
                     k = k + 1
                     # For iron core
-                    modelLine = "a" + str(k) + " (" + words[4] + " " + words[2] + ") (interNode_" + str(
+                    modelLine = "a" + str(k) + " (" + words[4] + " " + words[2] + ") \
+                    (interNode_" + str(
                         interMediateNodeCount + 1) + " " + words[3] + ") "
                     modelLine += compName + "_secondary"
                     schematicInfo.append(modelLine)
                     k = k + 1
                     # For Secondary Couple
                     modelLine = "a" + str(k) + " (interNode_" + str(
-                        interMediateNodeCount) + " interNode_" + str(interMediateNodeCount + 1) + ") "
+                        interMediateNodeCount) + " interNode_" + \
+                        str(interMediateNodeCount + 1) + ") "
                     modelLine += compName + "_iron_core"
                     schematicInfo.append(modelLine)
                     k = k + 1
@@ -396,16 +419,21 @@ class PrcocessNetlist:
                     modelname = "transfo"
                     comment = "* " + compline
                     title = "Transformer details for model " + compName
-                    type = "NA"  # It is model but do not load from xml and lib file
+                    type = "NA"
+                    # It is model but do not load from xml and lib file
                     paramDict['h1_array'] = "Enter the H1 array "
-                    paramDict['primary_turns'] = "Enter the primary number of turns (default=310) "
+                    paramDict['primary_turns'] = "Enter the primary number \
+                    of turns (default=310) "
                     paramDict['area'] = "Enter iron core area (default=1)"
-                    paramDict['secondar_turns'] = "Enter the secondary number of turns (default=620)"
-                    paramDict['length'] = "Enter iron core length (default=0.01)"
+                    paramDict['secondar_turns'] = "Enter the secondary number\
+                     of turns (default=620)"
+                    paramDict['length'] = "Enter iron core length \
+                    (default=0.01)"
                     paramDict['b1_array'] = "Enter the B1 array "
 
                     modelList.append(
-                        [index, compline, modelname, compName, comment, title, type, paramDict])
+                        [index, compline, modelname, compName,
+                         comment, title, type, paramDict])
 
                 else:
                     schematicInfo.insert(index, "* " + compline)
@@ -418,4 +446,7 @@ class PrcocessNetlist:
                     multipleModelList)
                 print("Model List Details : ", modelList)
 
-        return schematicInfo, outputOption, modelList, unknownModelList, multipleModelList, plotText
+        return (
+            schematicInfo, outputOption, modelList, unknownModelList,
+            multipleModelList, plotText
+            )

@@ -1,4 +1,4 @@
-#=========================================================================
+# =========================================================================
 #
 #          FILE: kicadtoNgspice.py
 #
@@ -14,7 +14,7 @@
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 04 March 2015
 #      REVISION:  ---
-#=========================================================================
+# =========================================================================
 import sys
 import os
 from PyQt4 import QtGui
@@ -28,20 +28,20 @@ from . import Convert
 from . import TrackWidget
 import json
 
-#from xml.etree import ElementTree as ET
+# from xml.etree import ElementTree as ET
 
 
 class MainWindow(QtGui.QWidget):
     """
     This class create KicadtoNgspice window.
     And Call Convert function if convert button is pressed.
-    The convert function takes all the value entered by user and create a final netlist "*.cir.out".
+    The convert function takes all the value entered by user and create
+    a final netlist "*.cir.out".
     This final netlist is compatible with NgSpice.
     """
 
     def __init__(self, clarg1, clarg2=None):
         QtGui.QWidget.__init__(self)
-
         print("==================================")
         print("Kicad to Ngspice netlist converter ")
         print("==================================")
@@ -77,7 +77,7 @@ class MainWindow(QtGui.QWidget):
         netlist, infoline = obj_proc.preprocessNetlist(kicadNetlist, param)
 
         print("Schematic Info after processing Kicad Netlist: ", netlist)
-        #print "INFOLINE",infoline
+        # print "INFOLINE",infoline
 
         # Separate option and schematic information
         optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
@@ -92,19 +92,23 @@ class MainWindow(QtGui.QWidget):
             schematicInfo, sourcelist)
 
         # List storing model detail
-        global modelList, outputOption, unknownModelList, multipleModelList, plotText
+        global modelList, outputOption, unknownModelList, \
+            multipleModelList, plotText
 
         modelList = []
         outputOption = []
         plotText = []
-        schematicInfo, outputOption, modelList, unknownModelList, multipleModelList, plotText = obj_proc.convertICintoBasicBlocks(
+        schematicInfo, outputOption, modelList, unknownModelList,
+        multipleModelList, plotText = obj_proc.convertICintoBasicBlocks(
             schematicInfo, outputOption, modelList, plotText)
 
         print("Model available in the Schematic :", modelList)
 
         """
-        Checking if any unknown model is used in schematic which is not recognized by NgSpice.
-        Also if the two model of same name is present under modelParamXML directory
+        Checking if any unknown model is used in schematic which is not
+        recognized by NgSpice.
+        Also if the two model of same name is present under
+        modelParamXML directory
         """
         if unknownModelList:
             print("Unknown Model List is : ", unknownModelList)
@@ -116,7 +120,8 @@ class MainWindow(QtGui.QWidget):
 
         elif multipleModelList:
             self.msg = QtGui.QErrorMessage()
-            self.mcontent = "Look like you have duplicate model in modelParamXML directory " + \
+            self.mcontent = "Look like you have duplicate model in \
+            modelParamXML directory " + \
                 ', '.join(multipleModelList[0])
             self.msg.showMessage(self.mcontent)
             self.msg.setWindowTitle("Multiple Models")
@@ -148,19 +153,19 @@ class MainWindow(QtGui.QWidget):
         self.analysisTab = QtGui.QScrollArea()
         obj_analysis = Analysis.Analysis(self.clarg1)
         self.analysisTab.setWidget(obj_analysis)
-        #self.analysisTabLayout = QtGui.QVBoxLayout(self.analysisTab.widget())
+        # self.analysisTabLayout = QtGui.QVBoxLayout(self.analysisTab.widget())
         self.analysisTab.setWidgetResizable(True)
         global obj_source
         self.sourceTab = QtGui.QScrollArea()
         obj_source = Source.Source(sourcelist, sourcelisttrack, self.clarg1)
         self.sourceTab.setWidget(obj_source)
-        #self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
+        # self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
         self.sourceTab.setWidgetResizable(True)
         global obj_model
         self.modelTab = QtGui.QScrollArea()
         obj_model = Model.Model(schematicInfo, modelList, self.clarg1)
         self.modelTab.setWidget(obj_model)
-        #self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
+        # self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
         self.modelTab.setWidgetResizable(True)
         global obj_devicemodel
         self.deviceModelTab = QtGui.QScrollArea()
@@ -236,8 +241,10 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.ac_entry_var[1].text())
         json_data["analysis"]["ac"]["No. of points"] = str(
             obj_analysis.ac_entry_var[2].text())
-        json_data["analysis"]["ac"]["Start Fre Combo"] = obj_analysis.ac_parameter[0]
-        json_data["analysis"]["ac"]["Stop Fre Combo"] = obj_analysis.ac_parameter[1]
+        json_data
+        ["analysis"]["ac"]["Start Fre Combo"] = obj_analysis.ac_parameter[0]
+        json_data
+        ["analysis"]["ac"]["Stop Fre Combo"] = obj_analysis.ac_parameter[1]
 
         json_data["analysis"]["dc"] = {}
         json_data["analysis"]["dc"]["Source 1"] = str(
@@ -250,9 +257,12 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.dc_entry_var[3].text())
         json_data["analysis"]["dc"]["Operating Point"] = str(
             self.obj_track.op_check[-1])
-        json_data["analysis"]["dc"]["Start Combo"] = obj_analysis.dc_parameter[0]
-        json_data["analysis"]["dc"]["Increment Combo"] = obj_analysis.dc_parameter[1]
-        json_data["analysis"]["dc"]["Stop Combo"] = obj_analysis.dc_parameter[2]
+        json_data
+        ["analysis"]["dc"]["Start Combo"] = obj_analysis.dc_parameter[0]
+        json_data
+        ["analysis"]["dc"]["Increment Combo"] = obj_analysis.dc_parameter[1]
+        json_data
+        ["analysis"]["dc"]["Stop Combo"] = obj_analysis.dc_parameter[2]
         json_data["analysis"]["dc"]["Source 2"] = str(
             obj_analysis.dc_entry_var[4].text())
         json_data["analysis"]["dc"]["Start2"] = str(
@@ -261,9 +271,12 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.dc_entry_var[6].text())
         json_data["analysis"]["dc"]["Stop2"] = str(
             obj_analysis.dc_entry_var[7].text())
-        json_data["analysis"]["dc"]["Start Combo2"] = obj_analysis.dc_parameter[3]
-        json_data["analysis"]["dc"]["Increment Combo2"] = obj_analysis.dc_parameter[4]
-        json_data["analysis"]["dc"]["Stop Combo2"] = obj_analysis.dc_parameter[5]
+        json_data
+        ["analysis"]["dc"]["Start Combo2"] = obj_analysis.dc_parameter[3]
+        json_data
+        ["analysis"]["dc"]["Increment Combo2"] = obj_analysis.dc_parameter[4]
+        json_data
+        ["analysis"]["dc"]["Stop Combo2"] = obj_analysis.dc_parameter[5]
 
         json_data["analysis"]["tran"] = {}
         json_data["analysis"]["tran"]["Start Time"] = str(
@@ -272,9 +285,12 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.tran_entry_var[1].text())
         json_data["analysis"]["tran"]["Stop Time"] = str(
             obj_analysis.tran_entry_var[2].text())
-        json_data["analysis"]["tran"]["Start Combo"] = obj_analysis.tran_parameter[0]
-        json_data["analysis"]["tran"]["Step Combo"] = obj_analysis.tran_parameter[1]
-        json_data["analysis"]["tran"]["Stop Combo"] = obj_analysis.tran_parameter[2]
+        json_data
+        ["analysis"]["tran"]["Start Combo"] = obj_analysis.tran_parameter[0]
+        json_data
+        ["analysis"]["tran"]["Step Combo"] = obj_analysis.tran_parameter[1]
+        json_data
+        ["analysis"]["tran"]["Stop Combo"] = obj_analysis.tran_parameter[2]
 
         """
         Writing Source values
@@ -514,7 +530,8 @@ class MainWindow(QtGui.QWidget):
             # Calling netlist file generation function
             self.createNetlistFile(store_schematicInfo, plotText)
 
-            self.msg = "The Kicad to Ngspice Conversion completed successfully!"
+            self.msg = "The Kicad to Ngspice Conversion completed\
+            successfully!"
             QtGui.QMessageBox.information(
                 self, "Information", self.msg, QtGui.QMessageBox.Ok)
 
@@ -531,19 +548,19 @@ class MainWindow(QtGui.QWidget):
 
     def createNetlistFile(self, store_schematicInfo, plotText):
         print("Creating Final netlist")
-        #print "INFOLINE",infoline
-        #print "OPTIONINFO",optionInfo
-        #print "Device MODEL LIST ",devicemodelList
-        #print "SUBCKT ",subcktList
-        #print "OUTPUTOPTION",outputOption
-        #print "KicadfIle",kicadFile
+        # print "INFOLINE",infoline
+        # print "OPTIONINFO",optionInfo
+        # print "Device MODEL LIST ",devicemodelList
+        # print "SUBCKT ",subcktList
+        # print "OUTPUTOPTION",outputOption
+        # print "KicadfIle",kicadFile
         # To avoid writing optionInfo twice in final netlist
         store_optionInfo = list(optionInfo)
 
         # checking if analysis files is present
         (projpath, filename) = os.path.split(self.kicadFile)
         analysisFileLoc = os.path.join(projpath, "analysis")
-        #print "Analysis File Location",analysisFileLoc
+        # print "Analysis File Location",analysisFileLoc
         if os.path.exists(analysisFileLoc):
             try:
                 f = open(analysisFileLoc)
@@ -553,7 +570,8 @@ class MainWindow(QtGui.QWidget):
                 f.close()
 
             except BaseException:
-                print("Error While opening Project Analysis file. Please check it")
+                print("Error While opening Project Analysis file.\
+                 Please check it")
                 sys.exit()
         else:
             print(analysisFileLoc + " does not exist")
@@ -569,22 +587,25 @@ class MainWindow(QtGui.QWidget):
                 else:
                     pass
 
-        #print "Option Info",optionInfo
+        # print "Option Info",optionInfo
         analysisOption = []
         initialCondOption = []
         simulatorOption = []
-        # includeOption=[]  #Don't know why to use it
-        # model = []      #Don't know why to use it
+        # includeOption=[]  # Don't know why to use it
+        # model = []      # Don't know why to use it
 
         for eachline in store_optionInfo:
             words = eachline.split()
             option = words[0]
-            if (option == '.ac' or option == '.dc' or option == '.disto' or option == '.noise' or
-                option == '.op' or option == '.pz' or option == '.sens' or option == '.tf' or
+            if (option == '.ac' or option == '.dc' or option ==
+                '.disto' or option == '.noise' or
+                option == '.op' or option == '.pz' or option ==
+                '.sens' or option == '.tf' or
                     option == '.tran'):
                 analysisOption.append(eachline + '\n')
 
-            elif (option == '.save' or option == '.print' or option == '.plot' or option == '.four'):
+            elif (option == '.save' or option == '.print' or option ==
+                    '.plot' or option == '.four'):
                 eachline = eachline.strip('.')
                 outputOption.append(eachline + '\n')
             elif (option == '.nodeset' or option == '.ic'):
@@ -661,7 +682,8 @@ class MainWindow(QtGui.QWidget):
                         subcktInfo += words[i] + " "
                     continue
             if words[0] == ".end" or words[0] == ".ac" or words[0] == ".dc" or words[0] == ".tran" or words[0] == '.disto' or words[
-                    0] == '.noise' or words[0] == '.op' or words[0] == '.pz' or words[0] == '.sens' or words[0] == '.tf':
+                    0] == '.noise' or words[0] == '.op' or words[0] ==\
+                    '.pz' or words[0] == '.sens' or words[0] == '.tf':
                 continue
             elif words[0] == ".control":
                 while words[0] != ".endc":
