@@ -16,14 +16,20 @@ class ProjectExplorer(QtGui.QWidget):
 
         # CSS
         self.treewidget.setStyleSheet(" \
-        QTreeView { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
-        QTreeView::branch:has-siblings:!adjoins-item { border-image: url(../../images/vline.png) 0; } \
-        QTreeView::branch:has-siblings:adjoins-item { border-image: url(../../images/branch-more.png) 0; } \
-        QTreeView::branch:!has-children:!has-siblings:adjoins-item { border-image: url(../../images/branch-end.png) 0; } \
+        QTreeView { border-radius: 15px; border: 1px solid gray; padding: \
+        5px; width: 200px; height: 150px;  } \
+        QTreeView::branch:has-siblings:!adjoins-item { border-image:\
+         url(../../images/vline.png) 0; } \
+        QTreeView::branch:has-siblings:adjoins-item { border-image:\
+         url(../../images/branch-more.png) 0; } \
+        QTreeView::branch:!has-children:!has-siblings:\
+        adjoins-item { border-image: url(../../images/branch-end.png) 0; } \
         QTreeView::branch:has-children:!has-siblings:closed, \
-        QTreeView::branch:closed:has-children:has-siblings { border-image: none; image: url(../../images/branch-closed.png); } \
+        QTreeView::branch:closed:has-children:has-siblings { border-image:\
+         none; image: url(../../images/branch-closed.png); } \
         QTreeView::branch:open:has-children:!has-siblings, \
-        QTreeView::branch:open:has-children:has-siblings { border-image: none; image: url(../../images/branch-open.png); } \
+        QTreeView::branch:open:has-children:has-siblings { border-image: \
+        none; image: url(../../images/branch-open.png); } \
         ")
 
         for parents, children in list(
@@ -34,7 +40,7 @@ class ProjectExplorer(QtGui.QWidget):
                 parentnode = QtGui.QTreeWidgetItem(
                     self.treewidget, [pathlist[-1], parents])
                 for files in children:
-                    childnode = QtGui.QTreeWidgetItem(
+                    childnode = QtGui.QTreeWidgetItem(  # noqa
                         parentnode, [files, os.path.join(parents, files)])
         self.window.addWidget(self.treewidget)
 
@@ -50,11 +56,13 @@ class ProjectExplorer(QtGui.QWidget):
         parentnode = QtGui.QTreeWidgetItem(
             self.treewidget, [pathlist[-1], parents])
         for files in children:
-            childnode = QtGui.QTreeWidgetItem(
+            childnode = QtGui.QTreeWidgetItem(  # noqa
                 parentnode, [files, os.path.join(parents, files)])
-        self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']] = [
+        self.obj_appconfig.proc_dict
+        [self.obj_appconfig.current_project['ProjectName']] = [
         ]
-        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']] = [
+        self.obj_appconfig.dock_dict
+        [self.obj_appconfig.current_project['ProjectName']] = [
         ]
 
     def openMenu(self, position):
@@ -99,7 +107,8 @@ class ProjectExplorer(QtGui.QWidget):
         self.save = QtGui.QPushButton('Save and Exit')
         self.save.setDisabled(True)
         self.windowgrid = QtGui.QGridLayout()
-        if (os.path.isfile(str(self.filePath))) == True:
+        # if (os.path.isfile(str(self.filePath))) == True:
+        if (os.path.isfile(str(self.filePath))):
             self.fopen = open(str(self.filePath), 'r')
             lines = self.fopen.read()
             self.text.setText(lines)
@@ -113,16 +122,19 @@ class ProjectExplorer(QtGui.QWidget):
             vbox_main.addWidget(self.text)
             vbox_main.addWidget(self.save)
             self.save.clicked.connect(self.save_data)
-            #self.connect(exit,QtCore.SIGNAL('close()'), self.onQuit)
+            # self.connect(exit,QtCore.SIGNAL('close()'), self.onQuit)
 
             self.textwindow.show()
         else:
             self.obj_appconfig.current_project["ProjectName"] = str(
                 self.filePath)
-            self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']] = [
+            self.obj_appconfig.proc_dict
+            [self.obj_appconfig.current_project['ProjectName']] = [
             ]
-            if self.obj_appconfig.current_project['ProjectName'] not in self.obj_appconfig.dock_dict:
-                self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']] = [
+            if self.obj_appconfig.current_project['ProjectName'] \
+                    not in self.obj_appconfig.dock_dict:
+                self.obj_appconfig.dock_dict
+                [self.obj_appconfig.current_project['ProjectName']] = [
                 ]
 
     def enable_save(self):
@@ -136,7 +148,7 @@ class ProjectExplorer(QtGui.QWidget):
 
     def removeProject(self):
         self.indexItem = self.treewidget.currentIndex()
-        filename = str(self.indexItem.data())
+        filename = str(self.indexItem.data())  # noqa
         self.filePath = str(
             self.indexItem.sibling(
                 self.indexItem.row(),
@@ -153,7 +165,7 @@ class ProjectExplorer(QtGui.QWidget):
 
     def refreshProject(self):
         self.indexItem = self.treewidget.currentIndex()
-        filename = str(self.indexItem.data())
+        filename = str(self.indexItem.data())  # noqa
         self.filePath = str(
             self.indexItem.sibling(
                 self.indexItem.row(),
@@ -165,7 +177,7 @@ class ProjectExplorer(QtGui.QWidget):
             for items in self.treewidget.selectedItems():
                 items.removeChild(items.child(0))
         for files in filelistnew:
-            childnode = QtGui.QTreeWidgetItem(
+            childnode = QtGui.QTreeWidgetItem(  # noqa
                 parentnode, [
                     files, os.path.join(
                         self.filePath, files)])

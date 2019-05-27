@@ -1,4 +1,4 @@
-#=========================================================================
+# =========================================================================
 #
 #          FILE: Workspace.py
 #
@@ -14,7 +14,7 @@
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 05 February 2015
 #      REVISION:  ---
-#=========================================================================
+# =========================================================================
 from PyQt4 import QtCore, QtGui
 from configuration.Appconfig import Appconfig
 import time
@@ -34,7 +34,7 @@ class Workspace(QtGui.QWidget):
         self.initWorkspace()
 
     def initWorkspace(self):
-        #print "Calling workspace"
+        # print "Calling workspace"
 
         self.mainwindow = QtGui.QVBoxLayout()
         self.split = QtGui.QSplitter()
@@ -100,10 +100,12 @@ class Workspace(QtGui.QWidget):
         self.obj_appconfig.print_info('Workspace : ' + self.create_workspace)
         # Checking if Workspace already exist or not
         if os.path.isdir(self.create_workspace):
-            self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
+            self.obj_appconfig.default_workspace["workspace"] \
+                = self.create_workspace
         else:
             os.mkdir(self.create_workspace)
-            self.obj_appconfig.default_workspace["workspace"] = self.create_workspace
+            self.obj_appconfig.default_workspace["workspace"] \
+                = self.create_workspace
         self.imp_var = 1
         self.close()
         var_appView.show()

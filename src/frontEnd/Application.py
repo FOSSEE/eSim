@@ -1,5 +1,4 @@
-
-#=========================================================================
+# =========================================================================
 #
 #          FILE: Application.py
 #
@@ -15,14 +14,8 @@
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 21 January 2015
 #      REVISION:  ---
-#=========================================================================
-import os
-import sys
-# Setting PYTHONPATH
-cwd = os.getcwd()
-(setPath, fronEnd) = os.path.split(cwd)
-sys.path.append(setPath)
-
+# =========================================================================
+import pathmagic  # noqa
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
@@ -35,6 +28,8 @@ from frontEnd import Workspace
 from frontEnd import DockArea
 import time
 from PyQt4.Qt import QSize
+import sys
+import os
 
 
 class Application(QtGui.QMainWindow):
@@ -192,9 +187,11 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.setIconSize(QSize(40, 40))
 
     def closeEvent(self, event):
-        exit_msg = "Are you sure you want to exit the program ? All unsaved data will be lost."
-        reply = QtGui.QMessageBox.question(self, 'Message',
-                                           exit_msg, QtGui.QMessageBox.Yes, QtGui.QMessageBox.No)
+        exit_msg = "Are you sure you want to exit the program\
+            ? All unsaved data will be lost."
+        reply = QtGui.QMessageBox.question(
+            self, 'Message', exit_msg, QtGui.QMessageBox.Yes,
+            QtGui.QMessageBox.No)
 
         if reply == QtGui.QMessageBox.Yes:
             for proc in self.obj_appconfig.procThread_list:
@@ -228,7 +225,8 @@ class Application(QtGui.QMainWindow):
         if current_project is None:
             pass
         else:
-            for pid in self.obj_appconfig.proc_dict[self.obj_appconfig.current_project['ProjectName']]:
+            temp = self.obj_appconfig.current_project['ProjectName']
+            for pid in self.obj_appconfig.proc_dict[temp]:
                 try:
                     os.kill(pid, 9)
                 except BaseException:
@@ -309,8 +307,8 @@ class Application(QtGui.QMainWindow):
 
         else:
             self.msg = QtGui.QErrorMessage()
-            self.msg.showMessage(
-                'Please select the project first. You can either create new project or open existing project')
+            self.msg.showMessage('Please select the project first. You can either\
+                create new project or open existing project')
             self.msg.setWindowTitle("Error Message")
 
     def open_subcircuit(self):
@@ -329,10 +327,10 @@ class Application(QtGui.QMainWindow):
 
         else:
             self.msg = QtGui.QErrorMessage(None)
-            self.msg.showMessage(
-                'Error while opening nghdl. Please make sure nghdl is installed')
-            self.obj_appconfig.print_error(
-                'Error while opening nghdl. Please make sure nghdl is installed')
+            self.msg.showMessage('Error while opening nghdl.\
+                Please make sure nghdl is installed')
+            self.obj_appconfig.print_error('Error while opening nghdl.\
+                Please make sure nghdl is installed')
             self.msg.setWindowTitle('nghdl Error Message')
 
     def open_modelEditor(self):
@@ -342,7 +340,8 @@ class Application(QtGui.QMainWindow):
 
     def open_OMedit(self):
         """
-        This function call ngspice to OM edit converter and then launch OM edit.
+        This function call ngspice to OM edit converter
+        and then launch OM edit.
         """
         self.obj_appconfig.print_info('OM edit is called')
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
@@ -357,23 +356,33 @@ class Application(QtGui.QMainWindow):
 
                 """
                 try:
-                    #Creating a command for Ngspice to Modelica converter
-                    self.cmd1 = "python ../ngspicetoModelica/NgspicetoModelica.py "+self.ngspiceNetlist
+                    # Creating a command for Ngspice to Modelica converter
+                    self.cmd1 = "
+                        python ../ngspicetoModelica/NgspicetoModelica.py "\
+                            +self.ngspiceNetlist
                     self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
                     self.obj_workThread1.start()
 
 
                     if self.obj_validation.validateTool("OMEdit"):
-                        #Creating command to run OMEdit
+                        # Creating command to run OMEdit
                         self.cmd2 = "OMEdit "+self.modelicaNetlist
                         self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
                         self.obj_workThread2.start()
                     else:
                         self.msg = QtGui.QMessageBox()
-                        self.msgContent = "There was an error while opening OMEdit.<br/>\
-                        Please make sure OpenModelica is installed in your system. <br/>\
-                        To install it on Linux : Go to <a href=https://www.openmodelica.org/download/download-linux>OpenModelica Linux</a> and install nigthly build release.<br/>\
-                        To install it on Windows : Go to <a href=https://www.openmodelica.org/download/download-windows>OpenModelica Windows</a> and install latest version.<br/>"
+                        self.msgContent = "There was an error while
+                            opening OMEdit.<br/>\
+                        Please make sure OpenModelica is installed in your\
+                            system. <br/>\
+                        To install it on Linux : Go to\
+                            <a href=https://www.openmodelica.org/download/\
+                                download-linux>OpenModelica Linux</a> and  \
+                                    install nigthly build release.<br/>\
+                        To install it on Windows : Go to\
+                         <a href=https://www.openmodelica.org/download/\
+                        download-windows>OpenModelica Windows</a>\
+                         and install latest version.<br/>"
                         self.msg.setTextFormat(QtCore.Qt.RichText)
                         self.msg.setText(self.msgContent)
                         self.msg.setWindowTitle("Missing OpenModelica")
@@ -382,8 +391,11 @@ class Application(QtGui.QMainWindow):
 
                 except Exception as e:
                     self.msg = QtGui.QErrorMessage()
-                    self.msg.showMessage('Unable to convert NgSpice netlist to Modelica netlist :'+str(e))
-                    self.msg.setWindowTitle("Ngspice to Modelica conversion error")
+                    self.msg.showMessage(
+                        'Unable to convert NgSpice netlist to\
+                            Modelica netlist :'+str(e))
+                    self.msg.setWindowTitle(
+                        "Ngspice to Modelica conversion error")
                     self.obj_appconfig.print_error(str(e))
                 """
 
@@ -392,12 +404,15 @@ class Application(QtGui.QMainWindow):
             else:
                 self.msg = QtGui.QErrorMessage()
                 self.msg.showMessage(
-                    'Current project does not contain any ngspice file. Please create ngspice file with extension .cir.out')
+                    'Current project does not contain any ngspice file.\
+                        Please create ngspice file with extension .cir.out')
                 self.msg.setWindowTitle("Missing Ngspice netlist")
         else:
             self.msg = QtGui.QErrorMessage()
             self.msg.showMessage(
-                'Please select the project first. You can either create new project or open existing project')
+                'Please select the project first.\
+                    You can either create new project\
+                        or open existing project')
             self.msg.setWindowTitle("Error Message")
 
     def open_OMoptim(self):
@@ -413,8 +428,12 @@ class Application(QtGui.QMainWindow):
             self.msg = QtGui.QMessageBox()
             self.msgContent = "There was an error while opening OMOptim.<br/>\
             Please make sure OpenModelica is installed in your system. <br/>\
-            To install it on Linux : Go to <a href=https://www.openmodelica.org/download/download-linux>OpenModelica Linux</a> and install nigthly build release.<br/>\
-            To install it on Windows : Go to <a href=https://www.openmodelica.org/download/download-windows>OpenModelica Windows</a> and install latest version.<br/>"
+            To install it on Linux : Go to <a href=https://www.openmodelica\
+                .org/download/download-linux>OpenModelica Linux</a> and \
+                    install nigthly build release.<br/>\
+            To install it on Windows : Go to <a href=https://www.openmodelica.\
+                org/download/download-windows>OpenModelica Windows</a> and \
+                    install latest version.<br/>"
             self.msg.setTextFormat(QtCore.Qt.RichText)
             self.msg.setText(self.msgContent)
             self.msg.setWindowTitle("Error Message")
@@ -449,10 +468,10 @@ class MainView(QtGui.QWidget):
             '        eSim Started......')
         self.obj_appconfig.noteArea['Note'].append('Project Selected : None')
         self.obj_appconfig.noteArea['Note'].append('\n')
-
         # CSS
         self.noteArea.setStyleSheet(" \
-        QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; } \
+        QWidget { border-radius: 15px; border: 1px \
+            solid gray; padding: 5px; } \
         ")
 
         self.obj_dockarea = DockArea.DockArea()
@@ -497,8 +516,9 @@ def main(args):
     sys.exit(app.exec_())
 
 
-
 # Call main function
+
+
 if __name__ == '__main__':
     # Create and display the splash screen
     main(sys.argv)

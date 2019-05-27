@@ -32,7 +32,8 @@ class DockArea(QtGui.QMainWindow):
             dock[dockName].setWidget(self.welcomeWidget)
             # CSS
             dock[dockName].setStyleSheet(" \
-            QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+            QWidget { border-radius: 15px; border: 1px solid gray;\
+                padding: 5px; width: 200px; height: 150px;  } \
             ")
             self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName])
 
@@ -51,10 +52,11 @@ class DockArea(QtGui.QMainWindow):
             dock[dockName].setWidget(self.welcome)
             #CSS
             dock[dockName].setStyleSheet(" \
-            QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
-            ")            
-            self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName])  
-                    
+            QWidget { border-radius: 15px; border: 1px solid gray;\
+                 padding: 5px; width: 200px; height: 150px;  } \
+            ")
+            self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName])
+
         #self.tabifyDockWidget(dock['Notes'],dock['Blank'])
         self.show()
     '''
@@ -76,12 +78,14 @@ class DockArea(QtGui.QMainWindow):
         dock['Tips-' + str(count)].setWidget(self.testWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
                            dock['Tips-' + str(count)])
-        self.tabifyDockWidget(dock['Welcome'], dock['Tips-' + str(count)])
+        self.tabifyDockWidget(
+            dock['Welcome'], dock['Tips-' + str(count)])
 
         """
         #CSS
         dock['Tips-'+str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px;\
+            width: 200px; height: 150px;  } \
         ")
         """
 
@@ -94,7 +98,8 @@ class DockArea(QtGui.QMainWindow):
         """
         dock['Tips-' + str(count)].raise_()
 
-        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(
+        temp = self.obj_appconfig.current_project['ProjectName']
+        self.obj_appconfig.dock_dict[temp].append(
             dock['Tips-' + str(count)])
         count = count + 1
         
@@ -104,7 +109,8 @@ class DockArea(QtGui.QMainWindow):
         """
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.projName = os.path.basename(self.projDir)
-        #self.project = os.path.join(self.projDir,self.projName)
+        # self.project = os.path.join(self.projDir,self.projName)
+
         global count
         self.plottingWidget = QtGui.QWidget()
                 
@@ -123,14 +129,16 @@ class DockArea(QtGui.QMainWindow):
         """
         #CSS
         dock['Plotting-'+str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px;\
+            width: 200px; height: 150px;  } \
         ")
         """
         dock['Plotting-' + str(count)].setVisible(True)
         dock['Plotting-' + str(count)].setFocus()
         dock['Plotting-' + str(count)].raise_()
 
-        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(
+        temp = self.obj_appconfig.current_project['ProjectName']
+        self.obj_appconfig.dock_dict[temp].append(
             dock['Plotting-' + str(count)])
         count = count + 1
 
@@ -164,13 +172,15 @@ class DockArea(QtGui.QMainWindow):
 
         # CSS
         dock['NgSpice-' + str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px;\
+            width: 200px; height: 150px;  } \
         ")
 
         dock['NgSpice-' + str(count)].setVisible(True)
         dock['NgSpice-' + str(count)].setFocus()
         dock['NgSpice-' + str(count)].raise_()
-        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(
+        temp = self.obj_appconfig.current_project['ProjectName']
+        self.obj_appconfig.dock_dict[temp].append(
             dock['NgSpice-' + str(count)])
         count = count + 1
 
@@ -195,14 +205,16 @@ class DockArea(QtGui.QMainWindow):
 
         # CSS
         dock['Model Editor-' + str(count)].setStyleSheet(" \
-            .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+            .QWidget { border-radius: 15px; border: 1px solid gray; \
+                padding: 5px; width: 200px; height: 150px;  } \
             ")
 
         dock['Model Editor-' + str(count)].setVisible(True)
         dock['Model Editor-' + str(count)].setFocus()
         dock['Model Editor-' + str(count)].raise_()
 
-        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(
+        temp = self.obj_appconfig.current_project['ProjectName']
+        self.obj_appconfig.dock_dict[temp].append(
             dock['Model Editor-' + str(count)])
         count = count + 1
 
@@ -224,14 +236,16 @@ class DockArea(QtGui.QMainWindow):
 
         # CSS
         dock['kicadToNgspice-' + str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray;\
+            padding: 5px; width: 200px; height: 150px;  } \
         ")
 
         dock['kicadToNgspice-' + str(count)].setVisible(True)
         dock['kicadToNgspice-' + str(count)].setFocus()
         dock['kicadToNgspice-' + str(count)].raise_()
 
-        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(
+        temp = self.obj_appconfig.current_project['ProjectName']
+        self.obj_appconfig.dock_dict[temp].append(
             dock['kicadToNgspice-' + str(count)])
         count = count + 1
     def subcircuiteditor(self):
@@ -255,14 +269,16 @@ class DockArea(QtGui.QMainWindow):
 
         # CSS
         dock['Subcircuit-' + str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray;\
+            padding: 5px; width: 200px; height: 150px;  } \
         ")
 
         dock['Subcircuit-' + str(count)].setVisible(True)
         dock['Subcircuit-' + str(count)].setFocus()
         dock['Subcircuit-' + str(count)].raise_()
 
-        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(
+        temp = self.obj_appconfig.current_project['ProjectName']
+        self.obj_appconfig.dock_dict[temp].append(
             dock['Subcircuit-' + str(count)])
         count = count + 1
     
@@ -287,7 +303,8 @@ class DockArea(QtGui.QMainWindow):
 
         # CSS
         dock['User Manual-' + str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray;\
+            padding: 5px; width: 200px; height: 150px;  } \
         ")
 
         dock['User Manual-' + str(count)].setVisible(True)
@@ -320,14 +337,16 @@ class DockArea(QtGui.QMainWindow):
 
         # CSS
         dock['Modelica-' + str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px; width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray;\
+            padding: 5px; width: 200px; height: 150px;  } \
         ")
-
-        self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(
+        temp = self.obj_appconfig.current_project['ProjectName']
+        self.obj_appconfig.dock_dict[temp].append(
             dock['Modelica-' + str(count)])
 
         count = count + 1
 
     def closeDock(self):
-        for dockwidget in self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']]:
+        temp = self.obj_appconfig.current_project['ProjectName']
+        for dockwidget in self.obj_appconfig.dock_dict[temp]:
             dockwidget.close()
