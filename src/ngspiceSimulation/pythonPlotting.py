@@ -2,8 +2,10 @@
 import os
 from PyQt4 import QtGui, QtCore
 from decimal import Decimal, getcontext
-from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qt4agg\
+    import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt4agg\
+    import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 from configuration.Appconfig import Appconfig
 import numpy as np
@@ -167,10 +169,14 @@ class plotWindow(QtGui.QMainWindow):
         self.listBranch.setText(
             "<font color='indigo'>List of Branches:</font>")
         self.funcLabel.setText("<font color='indigo'>Function:</font>")
-        self.funcName.setText("<font color='indigo'>Standard functions</font>\
-                <br><br>Addition:<br>Subtraction:<br>Multiplication:<br>Division:<br>Comparison:")
+        self.funcName.setText(
+                "<font color='indigo'>Standard functions</font>\
+                <br><br>Addition:<br>Subtraction:<br>\
+                Multiplication:<br>Division:<br>Comparison:"
+                )
         self.funcExample.setText(
-            "\n\nNode1 + Node2\nNode1 - Node2\nNode1 * Node2\nNode1 / Node2\nNode1 vs Node2")
+            "\n\nNode1 + Node2\nNode1 - Node2\nNode1 * Node2\nNode1 / Node2\
+                \nNode1 vs Node2")
 
         # Connecting to plot and clear function
         self.connect(self.clear, QtCore.SIGNAL('clicked()'), self.pushedClear)
@@ -234,28 +240,30 @@ class plotWindow(QtGui.QMainWindow):
         if len(self.parts) <= 2:
             self.warnning.setText("Too few arguments!\nRefer syntax below!")
             QtGui.QMessageBox.about(
-                self, "Warning!!", "Too Few Arguments/SYNTAX Error!\n Refer Examples")
+                self, "Warning!!", "Too Few Arguments/SYNTAX Error!\
+                    \n Refer Examples")
         else:
             self.warnning.setText("")
 
         a = []
         finalResult = []
-        p = 0
-        
+        # p = 0
+
         for i in range(len(self.parts)):
-            #print "I",i
+            # print "I",i
             if i % 2 == 0:
-                #print "I'm in:"
+                # print "I'm in:"
                 for j in range(len(self.obj_dataext.NBList)):
                     if self.parts[i] == self.obj_dataext.NBList[j]:
-                        #print "I got you:",self.parts[i]
+                        # print "I got you:",self.parts[i]
                         a.append(j)
 
         if len(a) != len(self.parts) // 2 + 1:
             QtGui.QMessageBox.about(
                 self,
                 "Warning!!",
-                "One of the operands doesn't belong to the above list of Nodes!!")
+                "One of the operands doesn't belong to\
+                    the above list of Nodes!!")
 
         for i in a:
             self.comboAll.append(self.obj_dataext.y[i])
@@ -264,9 +272,11 @@ class plotWindow(QtGui.QMainWindow):
             
             if a[i] == len(self.obj_dataext.NBList):
                 QtGui.QMessageBox.about(
-                    self, "Warning!!", "One of the operands doesn't belong to the above list!!")
+                    self, "Warning!!", "One of the operands doesn't belong\
+                        to the above list!!")
                 self.warnning.setText(
-                    "<font color='red'>To Err Is Human!<br>One of the operands doesn't belong to the above list!!</font>")
+                    "<font color='red'>To Err Is Human!<br>One of the operands\
+                        doesn't belong to the above list!!</font>")
 
         if self.parts[1] == 'vs':
             if len(self.parts) > 3:
@@ -311,7 +321,7 @@ class plotWindow(QtGui.QMainWindow):
                         self, "Warning!!", "Dividing by zero!!")
 
             if self.plotType2[0] == 0:
-                #self.setWindowTitle('AC Analysis')
+                # self.setWindowTitle('AC Analysis')
                 if self.plotType2[1] == 1:
                     self.axes.semilogx(
                         self.obj_dataext.x,
@@ -333,7 +343,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Current(I)-->')
 
             elif self.plotType2[0] == 1:
-                #self.setWindowTitle('Transient Analysis')
+                # self.setWindowTitle('Transient Analysis')
                 self.axes.plot(
                     self.obj_dataext.x,
                     finalResult,
@@ -346,7 +356,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Current(I)-->')
                     
             else:
-                #self.setWindowTitle('DC Analysis')
+                # self.setWindowTitle('DC Analysis')
                 self.axes.plot(
                     self.obj_dataext.x,
                     finalResult,
@@ -363,7 +373,7 @@ class plotWindow(QtGui.QMainWindow):
         self.combo1 = []
         self.combo1_rev = []
     def onPush_decade(self):
-        #print "Calling on push Decade"
+        # print "Calling on push Decade"
         boxCheck = 0
         self.axes.cla()
 
@@ -491,8 +501,11 @@ class plotWindow(QtGui.QMainWindow):
                 loc_x += 50
                 loc_y += 50
                 # Adding object of multimeter to dictionary
-                self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(
-                    self.obj[j])
+                (
+                    self.obj_appconfig.dock_dict
+                    [self.obj_appconfig.current_project['ProjectName']].append(
+                        self.obj[j])
+                )
 
         if boxCheck == 0:
             QtGui.QMessageBox.about(
@@ -535,7 +548,8 @@ class MultimeterWidgetClass(QtGui.QWidget):
 class DataExtraction:
     def __init__(self):
         self.obj_appconfig = Appconfig()
-        self.data = []  # consists of all the columns of data belonging to nodes and branches
+        self.data = []
+        # consists of all the columns of data belonging to nodes and branches
         self.y = []  # stores y-axis data
         self.x = []  # stores x-axis data
 
@@ -552,13 +566,13 @@ class DataExtraction:
         self.voltData = self.voltData.split("\n")
 
         # Initializing variable
-        #'p' gives no. of lines of data for each node/branch
+        # 'p' gives no. of lines of data for each node/branch
         # 'l' gives the no of partitions for a single voltage node
-        #'vnumber' gives total number of voltage
-        #'inumber' gives total number of current   
-        
+        # 'vnumber' gives total number of voltage
+        # 'inumber' gives total number of current
+
         p = l = vnumber = inumber = 0
-        #print "VoltsData : ",self.voltData
+        # print "VoltsData : ",self.voltData
 
         # Finding totla number of voltage node
         for i in self.voltData[3:]:
@@ -566,21 +580,21 @@ class DataExtraction:
             if "Index" in i:  # "V(" in i or "x1" in i or "u3" in i:
                 vnumber += 1
 
-        #print "Voltage Number :",vnumber
+        # print "Voltage Number :",vnumber
 
         # Reading Current Source Data
         with open(os.path.join(fpath, "plot_data_i.txt")) as f1:
             self.currentData = f1.read()
         self.currentData = self.currentData.split("\n")
 
-        #print "CurrentData : ",self.currentData
+        # print "CurrentData : ",self.currentData
 
         # Finding Number of Branch
         for i in self.currentData[3:]:
             if "#branch" in i:
                 inumber += 1
 
-        #print "Current Number :",inumber
+        # print "Current Number :",inumber
 
         self.dec = 0
 
@@ -593,8 +607,9 @@ class DataExtraction:
             for i in self.voltData[3:]:
                 p += 1  # 'p' gives no. of lines of data for each node/branch
                 if "Index" in i:
-                    l += 1        # 'l' gives the no of partitions for a single voltage node
-                #print "l:",l
+                    l += 1
+                    # 'l' gives the no of partitions for a single voltage node
+                # print "l:",l
                 if "AC" in i:  # DC for dc files and AC for ac ones
                     break
         
@@ -603,8 +618,9 @@ class DataExtraction:
             for i in self.voltData[3:]:
                 p += 1
                 if "Index" in i:
-                    l += 1        # 'l' gives the no of partitions for a single voltage node
-                #print "l:",l
+                    l += 1
+                    # 'l' gives the no of partitions for a single voltage node
+                # print "l:",l
                 if "Transient" in i:  # DC for dc files and AC for ac ones
                     break
 
@@ -614,19 +630,20 @@ class DataExtraction:
             for i in self.voltData[3:]:
                 p += 1
                 if "Index" in i:
-                    l += 1        # 'l' gives the no of partitions for a single voltage node
-                #print "l:",l
+                    l += 1
+                    # 'l' gives the no of partitions for a single voltage node
+                # print "l:",l
                 if "DC" in i:  # DC for dc files and AC for ac ones
                     break
         
 
-        #print "VoltNumber",vnumber
-        #print "CurrentNumber",inumber
+        # print "VoltNumber",vnumber
+        # print "CurrentNumber",inumber
         vnumber = vnumber // l  # vnumber gives the no of voltage nodes
         inumber = inumber // l  # inumber gives the no of branches
 
-        #print "VoltNumber",vnumber
-        #print "CurrentNumber",inumber
+        # print "VoltNumber",vnumber
+        # print "CurrentNumber",inumber
 
         p = [p, vnumber, self.analysisType, self.dec, inumber]
 
@@ -656,7 +673,7 @@ class DataExtraction:
                     self.NBIList.append(l)
             self.NBIList = self.NBIList[2:]
             len_NBIList = len(self.NBIList)
-            #print "NBILIST : ",self.NBIList
+            # print "NBILIST : ",self.NBIList
         except Exception as e:
             print("Exception Message : ", str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
@@ -670,7 +687,7 @@ class DataExtraction:
         d4 = d[4]
 
         dec = [d3, d[3]]
-        #print "No. of Nodes:", d2
+        # print "No. of Nodes:", d2
         self.NBList = []
         allv = allv.split("\n")
         for l in allv[3].split(" "):
@@ -711,13 +728,13 @@ class DataExtraction:
             for i in alli[5:d1 - 1]:
                 if len(i.split("\t")) == inum_i:
                     j2 = i.split("\t")
-                    #print j2
+                    # print j2
                     j2.pop(0)
                     j2.pop(0)
                     j2.pop()
                     if d3 == 0:  # not in trans
                         j2.pop()
-                    #print j2
+                    # print j2
 
                     for l in range(1, d4):
                         j3 = alli[5 + l * d1 + k].split("\t")
@@ -727,13 +744,13 @@ class DataExtraction:
                             j3.pop()  # not required for dc
                         j3.pop()
                         j2 = j2 + j3
-                        #print j2
+                        # print j2
 
                     full_data.append(j2)
 
                 k += 1
 
-            #print "FULL DATA :",full_data
+            # print "FULL DATA :",full_data
 
             for i in allv[5:d1 - 1]:
                 if len(i.split("\t")) == inum:
@@ -754,9 +771,9 @@ class DataExtraction:
                         j1.pop()
                         j = j + j1 
                     j = j + full_data[m]
-                    #print j
+                    # print j
                     m += 1
-                    #print j[:20]
+                    # print j[:20]
                     j = "\t".join(j[1:])
                     j = j.replace(",", "")
                     ivals.append(j)
@@ -764,8 +781,8 @@ class DataExtraction:
                 p += 1
 
             self.data = ivals
-        
-        #print "volts:",self.butnames
+
+        # print "volts:",self.butnames
         self.volts_length = len(self.NBList)
         self.NBList = self.NBList + self.NBIList
 
@@ -775,12 +792,12 @@ class DataExtraction:
     def numVals(self):
         a = self.volts_length        # No of voltage nodes
         b = len(self.data[0].split("\t"))
-        #print "numvals:",b
+        # print "numvals:",b
         return [b, a]
 
     def computeAxes(self):
         nums = len(self.data[0].split("\t"))
-        #print "i'm nums:",nums
+        # print "i'm nums:",nums
         self.y = []
         var = self.data[0].split("\t")
         for i in range(1, nums):

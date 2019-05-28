@@ -489,9 +489,11 @@ class MainWindow(QtGui.QWidget):
         write_data = json.dumps(json_data)
         fw.write(write_data)
 
-        self.obj_convert = Convert.Convert(self.obj_track.sourcelisttrack["ITEMS"],
-                                           self.obj_track.source_entry_var["ITEMS"],
-                                           store_schematicInfo, self.clarg1)
+        self.obj_convert = Convert.Convert(
+            self.obj_track.sourcelisttrack["ITEMS"],
+            self.obj_track.source_entry_var["ITEMS"],
+            store_schematicInfo, self.clarg1
+            )
 
         try:
             # Adding Source Value to Schematic Info
@@ -515,15 +517,17 @@ class MainWindow(QtGui.QWidget):
                 store_schematicInfo, self.kicadFile)
             print("Netlist After Adding subcircuits :", store_schematicInfo)
 
-            analysisoutput = self.obj_convert.analysisInsertor(self.obj_track.AC_entry_var["ITEMS"],
-                                                               self.obj_track.DC_entry_var["ITEMS"],
-                                                               self.obj_track.TRAN_entry_var["ITEMS"],
-                                                               self.obj_track.set_CheckBox["ITEMS"],
-                                                               self.obj_track.AC_Parameter["ITEMS"],
-                                                               self.obj_track.DC_Parameter["ITEMS"],
-                                                               self.obj_track.TRAN_Parameter["ITEMS"],
-                                                               self.obj_track.AC_type["ITEMS"],
-                                                               self.obj_track.op_check)
+            analysisoutput = self.obj_convert.analysisInsertor(
+                self.obj_track.AC_entry_var["ITEMS"],
+                self.obj_track.DC_entry_var["ITEMS"],
+                self.obj_track.TRAN_entry_var["ITEMS"],
+                self.obj_track.set_CheckBox["ITEMS"],
+                self.obj_track.AC_Parameter["ITEMS"],
+                self.obj_track.DC_Parameter["ITEMS"],
+                self.obj_track.TRAN_Parameter["ITEMS"],
+                self.obj_track.AC_type["ITEMS"],
+                self.obj_track.op_check
+            )
 
             print("Analysis OutPut ", analysisoutput)
 
@@ -681,9 +685,18 @@ class MainWindow(QtGui.QWidget):
                     for i in range(2, len(words) - 1):
                         subcktInfo += words[i] + " "
                     continue
-            if words[0] == ".end" or words[0] == ".ac" or words[0] == ".dc" or words[0] == ".tran" or words[0] == '.disto' or words[
-                    0] == '.noise' or words[0] == '.op' or words[0] ==\
-                    '.pz' or words[0] == '.sens' or words[0] == '.tf':
+            if(
+                words[0] == ".end" or
+                words[0] == ".ac" or
+                words[0] == ".dc" or
+                words[0] == ".tran" or
+                words[0] == '.disto' or
+                words[0] == '.noise' or
+                words[0] == '.op' or
+                words[0] == '.pz' or
+                words[0] == '.sens' or
+                words[0] == '.tf'
+            ):
                 continue
             elif words[0] == ".control":
                 while words[0] != ".endc":
