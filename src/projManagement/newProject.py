@@ -22,17 +22,29 @@ from configuration.Appconfig import Appconfig
 import os
 import json
 
+"""
+This class is called when User create new Project.
+"""
+
 
 class NewProjectInfo(QtGui.QWidget):
-    """
-    This class is called when User create new Project.
-    """
 
     def __init__(self):
         super(NewProjectInfo, self).__init__()
         self.obj_validation = Validation()
         self.obj_appconfig = Appconfig()
 
+    """
+    This function create Project related directories and files
+
+    @params
+        :projName   => name of the project created passed from
+                       frontEnd/Application new_project()
+
+    @return
+        :dirs        => The directories inside the project folder
+        :filelist    => The files inside the project folder
+    """
     def createProject(self, projName):
         """
         This function create Project related directories and files

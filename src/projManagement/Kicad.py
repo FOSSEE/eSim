@@ -22,11 +22,22 @@ from configuration.Appconfig import Appconfig
 from . import Worker
 from PyQt4 import QtGui
 
+"""
+This class called the Kicad Schematic,KicadtoNgspice Converter,Layout
+editor and Footprint Editor
+"""
+
 
 class Kicad:
+
     """
-    This class called the Kicad Schematic,KicadtoNgspice Converter,Layout
-    editor and Footprint Editor
+        Initialise validation, appconfig and dockarea
+
+        @params
+            :dockarea   => passed from DockArea in frontEnd folder, consists
+                           of all functions for dockarea
+
+        @return
     """
 
     def __init__(self, dockarea):
@@ -34,10 +45,15 @@ class Kicad:
         self.obj_appconfig = Appconfig()
         self.obj_dockarea = dockarea
 
+    """
+    This function create command to open Kicad schematic after
+    appropriate validation checks
+
+    @params
+
+    @return
+    """
     def openSchematic(self):
-        """
-        This function create command to open Kicad schematic
-        """
         print("Function : Open Kicad Schematic")
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         try:
@@ -134,7 +150,14 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
 
     '''
+    """
+    This function create command to validate and then call
+    KicadToNgSPice converter from DockArea file
 
+    @params
+
+    @return
+    """
     def openKicadToNgspice(self):
         """
         This function create command to call kicad to Ngspice converter.

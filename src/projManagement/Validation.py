@@ -21,14 +21,27 @@ import os
 import re
 import distutils.spawn
 
+"""
+This is Validation class use for validating Project.
+e.g if .proj is present in project directory
+or if new project name is already exist in workspace etc
+"""
+
 
 class Validation:
-    """
-    This is Validation class use for validating Project.
-    e.g if .proj is present in project directory
-    or if new project name is already exist in workspace etc
-    """
 
+    """
+    Takes as input the path of the project and checks if
+    projName.proj file exists
+    projName is same as the folder selected
+
+    @params
+        :projDir    => contains the path of the project folder selected to open
+
+    @return
+        True        => If the folder contains the projName.proj file
+        False       => If the folder doesn't contain projName.proj file
+    """
     def __init__(self):
         pass
 
@@ -45,6 +58,17 @@ class Validation:
         else:
             return False
 
+    """
+    Validate new project created
+
+    @params
+        :projDir        => Contains path of the new projDir created
+
+    @return
+        :"CHECKEXIST"   => If smae project name folder exists
+        :"CHECKNAME"    => If space is there in name
+        :"VALID"        => If valid project name given
+    """
     def validateNewproj(self, projDir):
         """
         This Project Validate New Project Information
@@ -61,6 +85,18 @@ class Validation:
             else:
                 return "VALID"
 
+    """
+    Validate if projDir is set appropriately in the function calling file
+    and if Kicad components are present
+
+    @params
+        :projDir    => the path of the project directory, passed from
+                       the calling function
+
+    @return
+        True
+        False
+    """
     def validateKicad(self, projDir):
         """
         This function validate if Kicad components are present
@@ -71,6 +107,17 @@ class Validation:
         else:
             return True
 
+    """
+    Validate if cir file present in the directory with the appropriate .cir
+    file name, same as the project directory base
+
+    @params
+        :projDir    => the path to the project diretory
+
+    @return
+        True
+        False
+    """
     def validateCir(self, projDir):
         """
         This function checks if ".cir" file is present.

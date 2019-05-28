@@ -23,16 +23,26 @@ from configuration.Appconfig import Appconfig
 import os
 import json
 
+"""
+This class is called when User click on Open Project Button
+"""
+
 
 class OpenProjectInfo(QtGui.QWidget):
-    """
-    This class is called when User click on Open Project Button
-    """
-
     def __init__(self):
         super(OpenProjectInfo, self).__init__()
         self.obj_validation = Validation()
 
+    """
+    Open a project directory using Qt GUI and validate
+    if .proj file present in it
+
+    @params
+
+    @return
+        :dirs        => The directories inside the project folder
+        :filelist    => The files inside the project folder
+    """
     def body(self):
         self.obj_Appconfig = Appconfig()
         self.openDir = self.obj_Appconfig.default_workspace["workspace"]
