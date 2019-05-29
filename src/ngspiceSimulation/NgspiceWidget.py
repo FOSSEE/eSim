@@ -4,9 +4,11 @@ import platform
 import os
 
 
+# This Class creates NgSpice Window
 class NgspiceWidget(QtGui.QWidget):
     """
-    This Class creates NgSpice Window
+    Includes functions that checks whether OS is linux or windows
+    and creates NgSpice window accordingly.
     """
 
     def __init__(self, command, projPath):
@@ -18,12 +20,10 @@ class NgspiceWidget(QtGui.QWidget):
         self.layout.addWidget(self.terminal)
 
         print("Argument to ngspice command : ", command)
-
+        # For Linux OS
         if platform.system() == 'Linux':
             self.command = "cd " + projPath + ";ngspice " + command
             # Creating argument for process
-            # self.args = ['-into', str(self.terminal.winId()),\
-            # '-hold','-e', self.command]
             self.args = ['-hold', '-e', self.command]
             self.process.start('xterm', self.args)
             self.obj_appconfig.process_obj.append(self.process)
@@ -34,6 +34,7 @@ class NgspiceWidget(QtGui.QWidget):
                         self.process.pid())
             )
 
+        # For Windows OS
         elif platform.system() == 'Windows':
             tempdir = os.getcwd()
             projPath = self.obj_appconfig.current_project["ProjectName"]
