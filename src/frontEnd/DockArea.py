@@ -14,9 +14,9 @@ dockList = ['Welcome']
 count = 1 
 dock = {}
 
-
+#
 class DockArea(QtGui.QMainWindow):
-    
+    """ """
     def __init__(self):
         QtGui.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
@@ -39,32 +39,10 @@ class DockArea(QtGui.QMainWindow):
 
         # self.tabifyDockWidget(dock['Notes'],dock['Blank'])
         self.show()
-    
-    '''
-    def __init__(self):
-        QtGui.QMainWindow.__init__(self)
-        self.obj_appconfig = Appconfig()
-                
-        for dockName in dockList:
-            dock[dockName] = QtGui.QDockWidget(dockName)
-            self.welcome = QtGui.QTextEdit()
-            self.welcome.setReadOnly(True)
-            dock[dockName].setWidget(self.welcome)
-            #CSS
-            dock[dockName].setStyleSheet(" \
-            QWidget { border-radius: 15px; border: 1px solid gray;\
-                 padding: 5px; width: 200px; height: 150px;  } \
-            ")
-            self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName])
 
-        #self.tabifyDockWidget(dock['Notes'],dock['Blank'])
-        self.show()
-    '''
-             
+    # This function create widget for Library Editor
     def createTestEditor(self):
-        """
-        This function create widget for Library Editor
-        """
+        """ """
         global count
                 
         self.testWidget = QtGui.QWidget()
@@ -81,32 +59,19 @@ class DockArea(QtGui.QMainWindow):
         self.tabifyDockWidget(
             dock['Welcome'], dock['Tips-' + str(count)])
 
-        """
-        #CSS
-        dock['Tips-'+str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px;\
-            width: 200px; height: 150px;  } \
-        ")
-        """
-
         dock['Tips-' + str(count)].setVisible(True)
         dock['Tips-' + str(count)].setFocus()
-        """
-        dock['Tips-'+str(count)].setStyleSheet(" \
-        :hover { background-color: yellow;  } \
-        ")
-        """
+
         dock['Tips-' + str(count)].raise_()
 
         temp = self.obj_appconfig.current_project['ProjectName']
         self.obj_appconfig.dock_dict[temp].append(
             dock['Tips-' + str(count)])
         count = count + 1
-        
+
+    # This function create widget for interactive PythonPlotting
     def plottingEditor(self):
-        """
-        This function create widget for interactive PythonPlotting
-        """
+        """ """
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.projName = os.path.basename(self.projDir)
         # self.project = os.path.join(self.projDir,self.projName)
@@ -126,13 +91,6 @@ class DockArea(QtGui.QMainWindow):
                            dock['Plotting-' + str(count)])
         self.tabifyDockWidget(dock['Welcome'], dock['Plotting-' + str(count)])
 
-        """
-        #CSS
-        dock['Plotting-'+str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 5px;\
-            width: 200px; height: 150px;  } \
-        ")
-        """
         dock['Plotting-' + str(count)].setVisible(True)
         dock['Plotting-' + str(count)].setFocus()
         dock['Plotting-' + str(count)].raise_()
@@ -143,9 +101,7 @@ class DockArea(QtGui.QMainWindow):
         count = count + 1
 
     def ngspiceEditor(self, projDir):
-        """
-        This function creates widget for NgSpice window
-        """
+        """This function creates widget for NgSpice window."""
 
         self.projDir = projDir
         self.projName = os.path.basename(self.projDir)
@@ -314,9 +270,7 @@ class DockArea(QtGui.QMainWindow):
         count = count + 1
 
     def modelicaEditor(self, projDir):
-        """
-        This function sets up the UI for ngspice to modelica conversion
-        """
+        """This function sets up the UI for ngspice to modelica conversion."""
 
         global count
         self.modelicaWidget = QtGui.QWidget()

@@ -20,10 +20,10 @@ from configuration.Appconfig import Appconfig
 import time
 import os
 
-
+# This class creates Workspace GUI.
 class Workspace(QtGui.QWidget):
     """
-    This class creates Workspace GUI.
+
     """
 
     def __init__(self, parent=None):
