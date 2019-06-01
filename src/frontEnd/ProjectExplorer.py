@@ -11,7 +11,7 @@ class ProjectExplorer(QtGui.QWidget):
     def __init__(self):
         """
         This method is doing following tasks:
-            a)initializing objects used in full program.
+            a)Working as a constructor for class ProjectExplorer.
             b)view of project explorer area.
         """
         QtGui.QWidget.__init__(self)

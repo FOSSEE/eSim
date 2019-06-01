@@ -6,12 +6,13 @@ import os
 
 # This Class creates NgSpice Window
 class NgspiceWidget(QtGui.QWidget):
-    """
-    Includes functions that checks whether OS is linux or windows
-    and creates NgSpice window accordingly.
-    """
-
+    
     def __init__(self, command, projPath):
+        """
+        1)Creates constructor for NgspiceWidget class.
+        2)Checks whether OS is linux or windows
+        and creates NgSpice window accordingly.
+        """
         QtGui.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
         self.process = QtCore.QProcess(self)

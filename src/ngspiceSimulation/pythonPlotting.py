@@ -1,4 +1,5 @@
-         # Used for decimal division eg 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
+from __future__ import division  # Used for decimal division eg
+# 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
 import os
 from PyQt4 import QtGui, QtCore
 from decimal import Decimal, getcontext
@@ -19,6 +20,7 @@ class plotWindow(QtGui.QMainWindow):
     '''
 
     def __init__(self, fpath, projectName):
+        """This create constructor for plotWindow class."""
         QtGui.QMainWindow.__init__(self)
         self.fpath = fpath
         self.projectName = projectName
