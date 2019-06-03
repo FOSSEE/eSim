@@ -385,7 +385,8 @@ class ModelEditorclass(QtGui.QWidget):
             self.modeltable.setItem(count, 1, valueitem)
             count = count + 1
         self.modeltable.setHorizontalHeaderLabels(
-            QtCore.QString("Parameters;Values").split(";"))
+            ("Parameters;Values").split(";")
+            )
         self.modeltable.show()
         self.modeltable.itemChanged.connect(self.edit_modeltable)
 
