@@ -1,11 +1,11 @@
-from PyQt4 import QtGui,QtCore
+from PyQt4 import QtGui, QtCore
 
 
 class Welcome(QtGui.QWidget):
-    """
-    This class creates Welcome page of eSim.
-    """
+    """This class creates Welcome page of eSim."""
+
     def __init__(self):
+        """Sdf."""
         QtGui.QWidget.__init__(self)
         self.vlayout = QtGui.QVBoxLayout()
 
