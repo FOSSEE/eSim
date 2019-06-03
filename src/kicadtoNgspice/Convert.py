@@ -10,6 +10,14 @@ class Convert:
     """
     - This class has all the necessary function required to convert
     kicad netlist to ngspice netlist.
+    - Method List -
+    - - addDeviceLibrary
+    - - addModelParameter
+    - - addSourceParameter
+    - - addSubcircuit
+    - - analysisInsertor
+    - - converttosciform
+    - - defaultvalue
     """
 
     def __init__(self, sourcelisttrack, source_entry_var,
@@ -22,7 +30,15 @@ class Convert:
 
     def addSourceParameter(self):
         """
-        - This function add the source details to schematicInfo
+        - This function extracts the source details to schematicInfo
+        - keywords recognised and parsed -
+        - - sine
+        - - pulse
+        - - pwl
+        - - ac
+        - - dc
+        - - exp
+        - Return updated schematic
         """
 
         self.start = 0

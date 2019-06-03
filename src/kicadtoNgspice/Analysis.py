@@ -8,17 +8,22 @@ import json
 
 class Analysis(QtGui.QWidget):
     """
-    - This class create Analysis Tab in KicadtoNgspice Window.
-    - Set  various track widget options here
-    - AC_entry_var
-    - AC_Parameter
-    - DC_entry_var
-    - DC_Parameter
-    - TRAN_entry_var
-    - TRAN_Parameter
-    - set_Checkbox
-    - AC_type
-    - op_check
+    - This class create Analysis Tab in KicadtoNgspice Window. 4 sections -
+    - - Select Analysis Type
+    - - AC Analysis
+    - - DC Analysis
+    - - Transient Analysis
+    - Set various track widget options here, for tracking purposes across\
+    different functions and modules -
+    - - AC_entry_var
+    - - AC_Parameter
+    - - DC_entry_var
+    - - DC_Parameter
+    - - TRAN_entry_var
+    - - TRAN_Parameter
+    - - set_Checkbox
+    - - AC_type
+    - - op_check
     """
 
     def __init__(self, clarg1):
@@ -39,10 +44,11 @@ class Analysis(QtGui.QWidget):
         """
         - Create the main anaylsis widget overwiew
         - - Checkbox for analysis type
-        - - Respective analysis type group, AC, DC, TRAN...
+        - - Place, `AC`, `DC` and `TRANSIENT` analysis tab
+        - - `self.acbox`, `self.dcbox`,`self.trbox`...
         - Check for `analysis` file, if any in projDir, extract data from it
         - Else set the default checkbox to `TRAN`
-        - Accordingly set state for track widget options
+        - Accordingly set state for track widget options, as `TRAN`, `AC` ...
         """
         self.grid = QtGui.QGridLayout()
         self.grid.addWidget(self.createCheckBox(), 0, 0)
@@ -138,7 +144,7 @@ class Analysis(QtGui.QWidget):
 
     def enableBox(self):
         """
-        - Activate deactive analysis areas according to type
+        - Activate analysis areas according to checkBox marked
         - Add analysis data to track_obj from TrackWidget
         """
         if self.checkAC.isChecked():
@@ -336,7 +342,7 @@ class Analysis(QtGui.QWidget):
         self.ac_parameter[1] = str(text)
 
     def set_ac_type(self):
-        """S
+        """
         - Set track object for AC, according to the type of radio box selected
         """
         self.parameter_cnt = 0
@@ -634,21 +640,27 @@ class Analysis(QtGui.QWidget):
 
     # Below 6 functions to handle combo boxes for the DC group
     def start_changecombo(self, text):
+        """Handle start combo box, ie. units, as mV, V..."""
         self.dc_parameter[0] = str(text)
 
     def increment_changecombo(self, text):
+        """Handle increment combo box, ie. units, as mV, V..."""
         self.dc_parameter[1] = str(text)
 
     def stop_changecombo(self, text):
+        """Handle stop combo box, ie. units, as mV, V..."""
         self.dc_parameter[2] = str(text)
 
     def start_changecombo2(self, text):
+        """Handle second start combo box, ie. units, as mV, V..."""
         self.dc_parameter[3] = str(text)
 
     def increment_changecombo2(self, text):
+        """Handle second increment combo box, ie. units, as mV, V..."""
         self.dc_parameter[4] = str(text)
 
     def stop_changecombo2(self, text):
+        """Handle second stop combo box, ie. units, as mV, V..."""
         self.dc_parameter[5] = str(text)
 
     def setflag(self):
@@ -668,7 +680,7 @@ class Analysis(QtGui.QWidget):
         - - Step time
         - - Stop time
         - Input boxes for values, combo boxes for unit
-        - Accordingly also event handleres for combo boxes, creates 3 functions
+        - Accordingly also event handlers for combo boxes, creates 3 functions
         """
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
@@ -803,10 +815,13 @@ class Analysis(QtGui.QWidget):
     '''
 
     def start_combo_change(self, text):
+        """Handle start combo box, ie. units, as second, ms"""
         self.tran_parameter[0] = str(text)
 
     def step_combo_change(self, text):
+        """Handle step combo box, ie. units, as second, ms..."""
         self.tran_parameter[1] = str(text)
 
     def stop_combo_change(self, text):
+        """Handle stop combo box, ie. units, as second, ms..."""
         self.tran_parameter[2] = str(text)

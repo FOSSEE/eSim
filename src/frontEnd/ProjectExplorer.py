@@ -55,7 +55,7 @@ class ProjectExplorer(QtGui.QWidget):
                 pathlist = parents.split(os.sep)
                 parentnode = QtGui.QTreeWidgetItem(
                     self.treewidget, [pathlist[-1], parents]
-                )
+                    )
                 for files in children:
                     QtGui.QTreeWidgetItem(
                         parentnode, [files, os.path.join(parents, files)])

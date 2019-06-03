@@ -41,7 +41,6 @@ class MainWindow(QtGui.QWidget):
     - clarg1 is the path to the .cir file
     - clarg2 is either None or "sub" depending on the analysis type
     """
-
     def __init__(self, clarg1, clarg2=None):
         QtGui.QWidget.__init__(self)
         print("==================================")

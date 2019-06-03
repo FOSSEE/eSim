@@ -7,7 +7,7 @@ from . import TrackWidget
 
 class DeviceModel(QtGui.QWidget):
     """
-    - This class creates Device Library  Tab in KicadtoNgspice Window
+    - This class creates Device Library Tab in KicadtoNgspice Window
       It dynamically creates the widget for device like diode,mosfet,
       transistor and jfet.
     - Same function as the subCircuit file, except for
