@@ -8,8 +8,14 @@ import os
 
 class SubcircuitTab(QtGui.QWidget):
     """
-    This class creates Subcircuit Tab in KicadtoNgspice Window
-    It dynamically creates the widget for subcircuits.
+    - This class creates Subcircuit Tab in KicadtoNgspice Window
+    - It dynamically creates the widget for subcircuits,
+      according to the .cir file
+    - Creates `lineEdit` and `Add` button, which triggers `fileSelector`
+    - Also, checks `Previous_value.json` for previous subcircuit value
+      to autofill, the `lineEdit`
+    - Add button is bind to `trackSubcircuit`
+    - Also `trackSubcircuit` without button is triggered if `lineEdit` filled
     """
 
     def __init__(self, schematicInfo, clarg1):
@@ -124,7 +130,13 @@ class SubcircuitTab(QtGui.QWidget):
 
     def trackSubcircuit(self):
         """
-        This function is use to keep track of all Subcircuit widget
+        - This function is use to keep track of all Subcircuit widget
+        - Here the number of ports is tracked using the numPorts
+          and `Add` button objectName property, which is refered using `sender`
+        - Once a file is selected using the `QFileDialog` validate it
+        - Pass the path of subciruit and the number of ports
+        - According to validation state take further steps
+        - If validated correctly, add to TrackWidget
         """
         sending_btn = self.sender()
         # print "Object Called is ",sending_btn.objectName()
@@ -160,6 +172,11 @@ class SubcircuitTab(QtGui.QWidget):
             self.msg.show()
 
     def trackSubcircuitWithoutButton(self, iter_value, path_value):
+        """
+        - Same as trackSubcircuit, but here the count value is passed directly
+          without using any button as in `Add`
+        - This is triggered only once, initally
+        """
 
         self.widgetObjCount = iter_value
 

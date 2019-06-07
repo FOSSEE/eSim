@@ -5,8 +5,8 @@ from xml.etree import ElementTree as ET
 
 class PrcocessNetlist:
     """
-    This class include all the function required for pre-proccessing of netlist
-    before converting to Ngspice Netlist.
+    - This class include all the function required for pre-proccessing of
+      netlist before converting to Ngspice Netlist.
     """
     modelxmlDIR = '../modelParamXML'
 
@@ -16,7 +16,6 @@ class PrcocessNetlist:
     """
     - Read the circuit file and return splitted lines
     """
-
     def readNetlist(self, filename):
         f = open(filename)
         data = f.read()
@@ -32,7 +31,6 @@ class PrcocessNetlist:
     - Read Parameter information and store it into dictionary
     - kicadNetlis is the .cir file content
     """
-
     def readParamInfo(self, kicadNetlis):
         param = {}
         print("=========================KICADNETLIST========================")
@@ -55,8 +53,8 @@ class PrcocessNetlist:
 
     """
     - Preprocess netlist (replace parameters)
+    - Separate infoline (first line) from the rest of netlist
     """
-
     def preprocessNetlist(self, kicadNetlis, param):
         netlist = []
         for eachline in kicadNetlis:
@@ -97,6 +95,13 @@ class PrcocessNetlist:
         return netlist, infoline
 
     def separateNetlistInfo(self, netlist):
+        """
+        - Remove the options such as .end, .param, starting wtih "."
+          from the netlist file
+        - This is stored as option info, whereas rest is stored as
+          schematicInfo
+        - Rest from the `* Sheet Name:` line stored as schematicInfo
+        """
         optionInfo = []
         schematicInfo = []
         for eachline in netlist:
@@ -116,9 +121,10 @@ class PrcocessNetlist:
 
     """
     - Insert Special source parameter
-    - As per the parameters passed create source list
+    - As per the parameters passed create source list, start with v or i
+    - Then check for type whether ac, dc, sine, etc...
+    - Handle starting with h and f as well
     """
-
     def insertSpecialSourceParam(self, schematicInfo, sourcelist):
         schematicInfo1 = []
         print("=============================================================")
@@ -219,6 +225,16 @@ class PrcocessNetlist:
 
     def convertICintoBasicBlocks(
             self, schematicInfo, outputOption, modelList, plotText):
+        """
+        - Parses the schematicInfo and returns
+        - - SchematicInfo
+        - - Output Option
+        - - Model List
+        - - Unkown Model List
+        - - Multiple Model List
+        - - Plot text
+        - Parsing info is provided below
+        """
         print("=============================================================")
         print("Reading Schematic info for Model")
         # Insert details of Ngspice model
@@ -425,8 +441,8 @@ class PrcocessNetlist:
                         words = compline.split()
                         # Adding zero voltage source to netlist
                         schematicInfo.append(
-                            "v_" + words[0] + " "
-                            + words[1] + " " + words[2] + " " + "0")
+                            "v_" + words[0] + " " +
+                            words[1] + " " + words[2] + " " + "0")
                         plotText.append("plot i(v_" + words[0] + ")")
                     elif compType == 'plot_log':
                         words = compline.split()
@@ -442,9 +458,11 @@ class PrcocessNetlist:
                     schematicInfo.insert(index, "* " + compline)
 
                     # For Primary Couple
-                    modelLine = "a" + str(k)
-                    + " (" + words[1] + " " + words[2] + ") (interNode_" + str(
-                        interMediateNodeCount) + " " + words[3] + ") "
+                    modelLine = (
+                        "a" + str(k) + " (" + words[1] + " " +
+                        words[2] + ") (interNode_" +
+                        str(interMediateNodeCount) + " " + words[3] + ") "
+                        )
                     modelLine += compName + "_primary"
                     schematicInfo.append(modelLine)
                     k = k + 1

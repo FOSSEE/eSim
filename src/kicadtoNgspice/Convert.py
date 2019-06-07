@@ -8,7 +8,7 @@ from xml.etree import ElementTree as ET
 
 class Convert:
     """
-    This class has all the necessary function required to convert
+    - This class has all the necessary function required to convert
     kicad netlist to ngspice netlist.
     """
 
@@ -22,7 +22,7 @@ class Convert:
 
     def addSourceParameter(self):
         """
-        This function add the source details to schematicInfo
+        - This function add the source details to schematicInfo
         """
 
         self.start = 0
@@ -205,6 +205,8 @@ class Convert:
         self.direct = self.clarg1
         (filepath, filemname) = os.path.split(self.direct)
         self.Fileopen = os.path.join(filepath, "analysis")
+        print("======================================================")
+        print("FILEOPEN CONVERT ANALYS", self.Fileopen)
         self.writefile = open(self.Fileopen, "w")
         if self.variable == 'AC':
             self.no = 0
@@ -441,8 +443,8 @@ class Convert:
                             default = 0
                         # Cheking if value is iterable.its for vector
                         if (
-                            hasattr(value, '__iter__')
-                            and type(value) is not str
+                            hasattr(value, '__iter__') and
+                            type(value) is not str
                         ):
                             addmodelLine += param + "=["
                             for lineVar in value:

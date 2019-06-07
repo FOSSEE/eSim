@@ -7,9 +7,18 @@ from . import TrackWidget
 
 class DeviceModel(QtGui.QWidget):
     """
-    This class creates Device Library  Tab in KicadtoNgspice Window
-    It dynamically creates the widget for device like diode,mosfet,
-    transistor and jfet.
+    - This class creates Device Library  Tab in KicadtoNgspice Window
+      It dynamically creates the widget for device like diode,mosfet,
+      transistor and jfet.
+    - Same function as the subCircuit file, except for
+      this takes different parameters in the if block
+    - - q   TRANSISTOR
+    - - d   DIODE
+    - - j   JFET
+    - - m   MOSFET
+    - Other 2 functions same as the ones in subCircuit
+    - - trackLibrary
+    - - trackLibraryWithoutButton
     """
 
     def __init__(self, schematicInfo, clarg1):

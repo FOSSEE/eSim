@@ -79,11 +79,14 @@ class Model(QtGui.QWidget):
                             for mod in json_data["model"]:
                                 if json_data["model"][mod]["type"] ==\
                                         line[2] and mod == line[3]:
-                                    self.obj_trac.model_entry_var
-                                    [self.nextcount].setText(
-                                        str(list(
-                                            json_data["model"][mod]["values"]
-                                            [i].values())[0]))
+                                    (
+                                        self.obj_trac.model_entry_var
+                                        [self.nextcount].setText(
+                                            str(list(
+                                                json_data
+                                                ["model"][mod]["values"]
+                                                [i].values())[0]))
+                                    )
                                     i = i + 1
                         except BaseException:
                             pass
@@ -108,11 +111,13 @@ class Model(QtGui.QWidget):
                         for mod in json_data["model"]:
                             if json_data["model"][mod]["type"] ==\
                                     line[2] and mod == line[3]:
-                                self.obj_trac.model_entry_var
-                                [self.nextcount].setText(
-                                    str(list(json_data
-                                             ["model"][mod]["values"]
-                                             [i].values())[0]))
+                                (
+                                    self.obj_trac.model_entry_var
+                                    [self.nextcount].setText(
+                                        str(list(json_data
+                                            ["model"][mod]["values"]
+                                            [i].values())[0]))
+                                )
                                 i = i + 1
                     except BaseException:
                         pass
