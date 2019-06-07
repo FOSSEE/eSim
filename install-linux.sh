@@ -150,7 +150,7 @@ function createDesktopStartScript
     #Generating new esim-start.sh
     echo "#!/bin/bash" > esim-start.sh
     echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
-    echo "python Application.py" >> esim-start.sh
+    echo "python3 Application.py" >> esim-start.sh
     
     #Make it executable
     sudo chmod 755 esim-start.sh

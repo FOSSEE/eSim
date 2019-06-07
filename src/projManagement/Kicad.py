@@ -180,7 +180,7 @@ class Kicad:
 
                 # Creating a command to run
                 """
-                self.cmd = ("python  ../kicadtoNgspice/KicadtoNgspice.py "
+                self.cmd = ("python3  ../kicadtoNgspice/KicadtoNgspice.py "
                 + "self.project+".cir ")
                 self.obj_workThread = Worker.WorkerThread(self.cmd)
                 self.obj_workThread.start()

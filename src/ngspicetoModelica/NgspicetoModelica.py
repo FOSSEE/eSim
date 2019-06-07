@@ -1268,7 +1268,7 @@ def main(args):
         map_json = sys.argv[2]
     else:
         print("USAGE:")
-        print("python NgspicetoModelica.py <filename>")
+        print("python3 NgspicetoModelica.py <filename>")
         sys.exit()
 
     dir_name = os.path.dirname(os.path.realpath(filename))
