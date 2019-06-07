@@ -27,10 +27,11 @@ class NgspiceWidget(QtGui.QWidget):
             self.args = ['-hold', '-e', self.command]
             self.process.start('xterm', self.args)
             self.obj_appconfig.process_obj.append(self.process)
+            print(self.obj_appconfig.proc_dict)
             (
                 self.obj_appconfig.proc_dict
                 [self.obj_appconfig.current_project['ProjectName']].append(
-                    self.process.pid())
+                        self.process.pid())
             )
 
         elif platform.system() == 'Windows':

@@ -501,11 +501,7 @@ class plotWindow(QtGui.QMainWindow):
                 loc_x += 50
                 loc_y += 50
                 # Adding object of multimeter to dictionary
-                (
-                    self.obj_appconfig.dock_dict
-                    [self.obj_appconfig.current_project['ProjectName']].append(
-                        self.obj[j])
-                )
+                self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(self.obj[j])
 
         if boxCheck == 0:
             QtGui.QMessageBox.about(
