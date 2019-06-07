@@ -484,8 +484,7 @@ class MainWindow(QtGui.QWidget):
             for key, value in line[7].items():
                 if(
                     hasattr(value, '__iter__') and
-                    i <= end and type(value) is not
-                    str
+                    i <= end and not isinstance(value, str)
                 ):
                     for item in value:
                         fields = {

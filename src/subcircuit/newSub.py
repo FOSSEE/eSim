@@ -1,4 +1,4 @@
-from PyQt4 import QtGui 
+from PyQt4 import QtGui
 from projManagement.Validation import Validation
 from configuration.Appconfig import Appconfig
 from projManagement import Worker

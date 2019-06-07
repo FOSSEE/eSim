@@ -339,7 +339,7 @@ class DeviceModel(QtGui.QWidget):
                                             json_data["deviceModel"][key][0]):
                                         path_name = (
                                             json_data["deviceModel"][key][0]
-                                            )
+                                        )
                                     else:
                                         self.entry_var[i].setText("")
                                 i = i + 1

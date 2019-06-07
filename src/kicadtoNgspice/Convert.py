@@ -443,7 +443,7 @@ class Convert:
                             default = 0
                         # Cheking if value is iterable.its for vector
                         if (
-                            type(value) is not str and
+                            not isinstance(value, str) and
                             hasattr(value, '__iter__')
                         ):
                             addmodelLine += param + "=["

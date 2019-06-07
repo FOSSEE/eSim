@@ -62,7 +62,7 @@ class Model(QtGui.QWidget):
                 # print "Key : ",key
                 # print "Value : ",value
                 # Check if value is iterable
-                if type(value) is not str and hasattr(value, '__iter__'):
+                if not isinstance(value, str) and hasattr(value, '__iter__'):
                     # For tag having vector value
                     temp_tag = []
                     for item in value:

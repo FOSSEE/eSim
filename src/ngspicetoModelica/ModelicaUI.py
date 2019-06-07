@@ -52,8 +52,11 @@ class OpenModelicaEditor(QtGui.QWidget):
     def callConverter(self):
 
         try:
-            self.cmd1 = "python3 ../ngspicetoModelica/NgspicetoModelica.py " + \
-                self.ngspiceNetlist + ' ' + self.map_json
+            self.cmd1 = (
+                "python3 ../ngspicetoModelica/NgspicetoModelica.py " +
+                self.ngspiceNetlist + ' ' +
+                self.map_json
+            )
             # self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
             # self.obj_workThread1.start()
             convert_process = Popen(

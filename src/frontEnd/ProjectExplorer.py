@@ -73,9 +73,9 @@ class ProjectExplorer(QtGui.QWidget):
         parentnode = QtGui.QTreeWidgetItem(
             self.treewidget, [pathlist[-1], parents])
         for files in children:
-            QtGui.QTreeWidgetItem(  
+            QtGui.QTreeWidgetItem(
                 parentnode, [files, os.path.join(parents, files)]
-                )
+            )
 
         (
             self.obj_appconfig.
@@ -216,7 +216,7 @@ class ProjectExplorer(QtGui.QWidget):
             for items in self.treewidget.selectedItems():
                 items.removeChild(items.child(0))
         for files in filelistnew:
-            QtGui.QTreeWidgetItem(  
+            QtGui.QTreeWidgetItem(
                 parentnode, [
                     files, os.path.join(
                         self.filePath, files)])
@@ -229,12 +229,14 @@ class ProjectExplorer(QtGui.QWidget):
     def renameProject(self):
         indexItem = self.treewidget.currentIndex()
         baseFileName = str(indexItem.data())
-        newBaseFileName, ok = QtGui.QInputDialog.getText(self, 'Rename Project', 'Project Name:',
-                                                         QtGui.QLineEdit.Normal, baseFileName)
+        newBaseFileName, ok = QtGui.QInputDialog.getText(
+            self, 'Rename Project', 'Project Name:',
+            QtGui.QLineEdit.Normal, baseFileName
+        )
         if ok and newBaseFileName:
             newBaseFileName = str(newBaseFileName)
-            projectPath, projectFiles = list(self.obj_appconfig.project_explorer.items())[
-                indexItem.row()]
+            projectPath, projectFiles = list(
+                self.obj_appconfig.project_explorer.items())[indexItem.row()]
             updatedProjectFiles = []
 
             # rename files matching project name
@@ -257,7 +259,9 @@ class ProjectExplorer(QtGui.QWidget):
 
             # update project_explorer dictionary
             del self.obj_appconfig.project_explorer[projectPath]
-            self.obj_appconfig.project_explorer[updatedProjectPath] = updatedProjectFiles
+            self.obj_appconfig.project_explorer[updatedProjectPath] = (
+                updatedProjectFiles
+            )
 
             # save project_explorer dictionary on disk
             json.dump(self.obj_appconfig.project_explorer,
@@ -265,6 +269,8 @@ class ProjectExplorer(QtGui.QWidget):
 
             # recreate project explorer tree
             self.treewidget.clear()
-            for parent, children in self.obj_appconfig.project_explorer.items():
+            for parent, children in (
+                self.obj_appconfig.project_explorer.items()
+            ):
                 self.addTreeNode(parent, children)
         # """
