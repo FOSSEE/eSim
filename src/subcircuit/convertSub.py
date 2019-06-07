@@ -4,9 +4,12 @@ from configuration.Appconfig import Appconfig
 import os
 
 
+# This class is called when User create new Project and contains \
+# functions to convert kicad to Ngspice.
 class convertSub(QtGui.QWidget):
     """
-    This class is called when User create new Project.
+    Contains functions that checks project present for conversion and
+    also function to convert Kicad to Ngspice.
     """
 
     def __init__(self, dockarea):
