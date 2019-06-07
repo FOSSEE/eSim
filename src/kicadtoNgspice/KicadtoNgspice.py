@@ -92,15 +92,14 @@ class MainWindow(QtGui.QWidget):
             schematicInfo, sourcelist)
 
         # List storing model detail
-        global modelList, outputOption, unknownModelList, \
-            multipleModelList, plotText
+        global modelList, outputOption, unknownModelList, multipleModelList, plotText
 
         modelList = []
         outputOption = []
         plotText = []
-        schematicInfo, outputOption, modelList, unknownModelList,
-        multipleModelList, plotText = obj_proc.convertICintoBasicBlocks(
-            schematicInfo, outputOption, modelList, plotText)
+        schematicInfo, outputOption, modelList, unknownModelList, multipleModelList, plotText = obj_proc.convertICintoBasicBlocks(
+                schematicInfo, outputOption, modelList, plotText
+                )
 
         print("Model available in the Schematic :", modelList)
 
@@ -241,10 +240,12 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.ac_entry_var[1].text())
         json_data["analysis"]["ac"]["No. of points"] = str(
             obj_analysis.ac_entry_var[2].text())
-        json_data
-        ["analysis"]["ac"]["Start Fre Combo"] = obj_analysis.ac_parameter[0]
-        json_data
-        ["analysis"]["ac"]["Stop Fre Combo"] = obj_analysis.ac_parameter[1]
+        json_data["analysis"]["ac"]["Start Fre Combo"] = (
+            obj_analysis.ac_parameter[0]
+        )
+        json_data["analysis"]["ac"]["Stop Fre Combo"] = (
+            obj_analysis.ac_parameter[1]
+        )
 
         json_data["analysis"]["dc"] = {}
         json_data["analysis"]["dc"]["Source 1"] = str(
@@ -257,12 +258,15 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.dc_entry_var[3].text())
         json_data["analysis"]["dc"]["Operating Point"] = str(
             self.obj_track.op_check[-1])
-        json_data
-        ["analysis"]["dc"]["Start Combo"] = obj_analysis.dc_parameter[0]
-        json_data
-        ["analysis"]["dc"]["Increment Combo"] = obj_analysis.dc_parameter[1]
-        json_data
-        ["analysis"]["dc"]["Stop Combo"] = obj_analysis.dc_parameter[2]
+        json_data["analysis"]["dc"]["Start Combo"] = (
+            obj_analysis.dc_parameter[0]
+        )
+        json_data["analysis"]["dc"]["Increment Combo"] = (
+            obj_analysis.dc_parameter[1]
+        )
+        json_data["analysis"]["dc"]["Stop Combo"] = (
+            obj_analysis.dc_parameter[2]
+        )
         json_data["analysis"]["dc"]["Source 2"] = str(
             obj_analysis.dc_entry_var[4].text())
         json_data["analysis"]["dc"]["Start2"] = str(
@@ -271,12 +275,15 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.dc_entry_var[6].text())
         json_data["analysis"]["dc"]["Stop2"] = str(
             obj_analysis.dc_entry_var[7].text())
-        json_data
-        ["analysis"]["dc"]["Start Combo2"] = obj_analysis.dc_parameter[3]
-        json_data
-        ["analysis"]["dc"]["Increment Combo2"] = obj_analysis.dc_parameter[4]
-        json_data
-        ["analysis"]["dc"]["Stop Combo2"] = obj_analysis.dc_parameter[5]
+        json_data["analysis"]["dc"]["Start Combo2"] = (
+            obj_analysis.dc_parameter[3]
+        )
+        json_data["analysis"]["dc"]["Increment Combo2"] = (
+            obj_analysis.dc_parameter[4]
+        )
+        json_data["analysis"]["dc"]["Stop Combo2"] = (
+            obj_analysis.dc_parameter[5]
+        )
 
         json_data["analysis"]["tran"] = {}
         json_data["analysis"]["tran"]["Start Time"] = str(
@@ -285,12 +292,15 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.tran_entry_var[1].text())
         json_data["analysis"]["tran"]["Stop Time"] = str(
             obj_analysis.tran_entry_var[2].text())
-        json_data
-        ["analysis"]["tran"]["Start Combo"] = obj_analysis.tran_parameter[0]
-        json_data
-        ["analysis"]["tran"]["Step Combo"] = obj_analysis.tran_parameter[1]
-        json_data
-        ["analysis"]["tran"]["Stop Combo"] = obj_analysis.tran_parameter[2]
+        json_data["analysis"]["tran"]["Start Combo"] = (
+            obj_analysis.tran_parameter[0]
+        )
+        json_data["analysis"]["tran"]["Step Combo"] = (
+            obj_analysis.tran_parameter[1]
+        )
+        json_data["analysis"]["tran"]["Stop Combo"] = (
+            obj_analysis.tran_parameter[2]
+        )
 
         """
         Writing Source values

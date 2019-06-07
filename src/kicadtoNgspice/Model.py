@@ -68,8 +68,8 @@ class Model(QtGui.QWidget):
                     for item in value:
                         paramLabel = QtGui.QLabel(item)
                         modelgrid.addWidget(paramLabel, self.nextrow, 0)
-                        self.obj_trac.model_entry_var
-                        [self.nextcount] = QtGui.QLineEdit(
+                        self.obj_trac.model_entry_var[self.nextcount] = (
+                            QtGui.QLineEdit()
                         )
                         modelgrid.addWidget(
                             self.obj_trac.model_entry_var
