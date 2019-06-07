@@ -31,7 +31,7 @@ class NgspiceWidget(QtGui.QWidget):
             (
                 self.obj_appconfig.proc_dict
                 [self.obj_appconfig.current_project['ProjectName']].append(
-                        self.process.pid())
+                    self.process.pid())
             )
 
         # For Windows OS

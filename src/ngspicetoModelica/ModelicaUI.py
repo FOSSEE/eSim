@@ -52,7 +52,7 @@ class OpenModelicaEditor(QtGui.QWidget):
     def callConverter(self):
 
         try:
-            self.cmd1 = "python3 ../ngspicetoModelica/NgspicetoModelica.py " + \
+            self.cmd1 = "python3 ../ngspicetoModelica/NgspicetoModelica.py" + \
                 self.ngspiceNetlist + ' ' + self.map_json
             # self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
             # self.obj_workThread1.start()
@@ -72,7 +72,7 @@ class OpenModelicaEditor(QtGui.QWidget):
                 self.obj_appconfig.print_info(
                     "Ngspice netlist successfully converted to OpenModelica" +
                     "netlist"
-                    )
+                )
                 self.msg.exec_()
 
             else:

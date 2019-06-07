@@ -39,7 +39,7 @@ class Convert:
                         str(self.entry_var[self.start].text())) > 0 else '0'
                     va_val = str(
                         self.entry_var[self.start + 1].text()
-                        ) if len(
+                    ) if len(
                         str(self.entry_var[self.start + 1].text())) \
                         > 0 else '0'
                     freq_val = str(self.entry_var[self.start + 2].text()) \
@@ -440,7 +440,10 @@ class Convert:
                             param = key
                             default = 0
                         # Cheking if value is iterable.its for vector
-                        if hasattr(value, '__iter__'):
+                        if (
+                            hasattr(value, '__iter__')
+                            and type(value) is not str
+                        ):
                             addmodelLine += param + "=["
                             for lineVar in value:
                                 if str(

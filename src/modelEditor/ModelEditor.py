@@ -37,12 +37,8 @@ class ModelEditorclass(QtGui.QWidget):
         self.splitter = QtGui.QSplitter()
         self.grid = QtGui.QGridLayout()
         self.splitter.setOrientation(QtCore.Qt.Vertical)
-<<<<<<< HEAD
-        
-=======
 
         # Initialise the table view
->>>>>>> 357fd69... pep8 done, model editor documentation
         self.modeltable = QtGui.QTableWidget()
 
         self.newbtn = QtGui.QPushButton('New')
@@ -112,18 +108,12 @@ class ModelEditorclass(QtGui.QWidget):
         self.grid.addWidget(self.magnetic, 8, 1)
         self.setLayout(self.grid)
         self.show()
-<<<<<<< HEAD
-    
-    '''To create New Model file '''
-
-=======
 
     '''
     - To create New Model file
     - Change state of other buttons accordingly, ex. enable diode, bjt, ...
     - Validate filename created, to check if one already exists
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def opennew(self):
         self.addbtn.setHidden(True)
         try:
@@ -146,15 +136,7 @@ class ModelEditorclass(QtGui.QWidget):
             self.modelname = (str(text))
         else:
             pass
-<<<<<<< HEAD
-        
-        self.validation(text)
-            
-    def diode_click(self):
-        self.openfiletype('Diode')
-        self.types.setHidden(True)
- 
-=======
+
         # Validate if the file created exists already or not
         # Show error accordingly
         self.validation(text)
@@ -176,7 +158,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Open the default type in the table
     - Add an event listener for type-selection event
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def bjt_click(self):
         self.types.setHidden(False)
         self.types.clear()
@@ -209,9 +190,6 @@ class ModelEditorclass(QtGui.QWidget):
         filetype = str(self.types.currentText())
         self.openfiletype(filetype)
         self.types.activated[str].connect(self.setfiletype)
-<<<<<<< HEAD
-        
-=======
 
     '''
     - Set states for other elements
@@ -221,7 +199,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Open the default type in the table
     - Add an event listener for type-selection event
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def jfet_click(self):
         self.types.setHidden(False)
         self.types.clear()
@@ -230,10 +207,8 @@ class ModelEditorclass(QtGui.QWidget):
         filetype = str(self.types.currentText())
         self.openfiletype(filetype)
         self.types.activated[str].connect(self.setfiletype)
-<<<<<<< HEAD
-        
-=======
-        '''
+    
+    '''
     - Set states for other elements
     - Initialise types combo box elements
     - - N-IGBT
@@ -241,7 +216,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Open the default type in the table
     - Add an event listener for type-selection event
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def igbt_click(self):
         self.types.setHidden(False)
         self.types.clear()
@@ -250,9 +224,7 @@ class ModelEditorclass(QtGui.QWidget):
         filetype = str(self.types.currentText())
         self.openfiletype(filetype)
         self.types.activated[str].connect(self.setfiletype)
-<<<<<<< HEAD
-        
-=======
+
     '''
     - Set states for other elements
     - Initialise types combo box elements
@@ -260,7 +232,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Add an event listener for type-selection event
     - No types here, only one view
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def magnetic_click(self):
         self.openfiletype('Magnetic Core')
         self.types.setHidden(True)
@@ -331,9 +302,6 @@ class ModelEditorclass(QtGui.QWidget):
                 self.createtable(path)
         else:
             pass
-<<<<<<< HEAD
-        
-=======
 
     '''
     - When `Edit` button clicked, this function called
@@ -343,7 +311,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Create table for the selected .lib file using `self.createtable(path)`
     - Handle exception of no file selected
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def openedit(self):
         os.chdir(self.savepathtest)
         self.newflag = 0
@@ -366,9 +333,6 @@ class ModelEditorclass(QtGui.QWidget):
         except BaseException:
             print("No File selected for edit")
             pass
-<<<<<<< HEAD
-        
-=======
 
     '''
     - Set states for other components
@@ -381,7 +345,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Show the extracted data in QTableWidget
     - Can edit QTable inplace, connect `edit_modeltable` function for editing
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def createtable(self, modelfile):
         self.savebtn.setDisabled(False)
         self.addbtn.setHidden(False)
@@ -425,9 +388,6 @@ class ModelEditorclass(QtGui.QWidget):
             QtCore.QString("Parameters;Values").split(";"))
         self.modeltable.show()
         self.modeltable.itemChanged.connect(self.edit_modeltable)
-<<<<<<< HEAD
-        
-=======
 
     '''
     - Called when editing model inplace in QTableWidget
@@ -436,7 +396,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Edit name and value as per needed
     - Add the val name pair in the modeldict
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def edit_modeltable(self):
         self.savebtn.setDisabled(False)
         try:
@@ -448,8 +407,6 @@ class ModelEditorclass(QtGui.QWidget):
             self.modeldict[val] = name
         except BaseException:
             pass
-<<<<<<< HEAD
-=======
 
     '''
     - Called when `Add` button clicked beside QTableWidget
@@ -458,7 +415,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Accordingly add parameter and value in modeldict as well as table
     - text1 => parameter, text2 => value
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def addparameters(self):
         text1, ok = QtGui.QInputDialog.getText(
             self, 'Parameter', 'Enter Parameter')
@@ -483,15 +439,12 @@ class ModelEditorclass(QtGui.QWidget):
                 pass
         else:
             pass
-<<<<<<< HEAD
-=======
 
     '''
     - Called when save functon clicked
     - If new file created, call `createXML` file
     - Else call `savethefile`
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def savemodelfile(self):
         if self.newflag == 1:
             self.createXML(self.model_name)
@@ -703,9 +656,6 @@ class ModelEditorclass(QtGui.QWidget):
         remove_item = self.modeltable.item(index.row(), 0).text()
         self.modeltable.removeRow(index.row())
         del self.modeldict[str(remove_item)]
-<<<<<<< HEAD
-        
-=======
 
     '''
     - Called when upload button clicked
@@ -716,7 +666,6 @@ class ModelEditorclass(QtGui.QWidget):
     - Save it in `User Libraries` with the given name,
       and input from uploaded file
     '''
->>>>>>> 357fd69... pep8 done, model editor documentation
     def converttoxml(self):
         os.chdir(self.savepathtest)
         self.addbtn.setHidden(True)

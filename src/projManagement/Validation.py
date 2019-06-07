@@ -42,6 +42,7 @@ class Validation:
         True        => If the folder contains the projName.proj file
         False       => If the folder doesn't contain projName.proj file
     """
+
     def __init__(self):
         pass
 
@@ -69,6 +70,7 @@ class Validation:
         :"CHECKNAME"    => If space is there in name
         :"VALID"        => If valid project name given
     """
+
     def validateNewproj(self, projDir):
         """
         This Project Validate New Project Information
@@ -97,6 +99,7 @@ class Validation:
         True
         False
     """
+
     def validateKicad(self, projDir):
         """
         This function validate if Kicad components are present
@@ -118,6 +121,7 @@ class Validation:
         True
         False
     """
+
     def validateCir(self, projDir):
         """
         This function checks if ".cir" file is present.

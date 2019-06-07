@@ -45,6 +45,7 @@ class NewProjectInfo(QtGui.QWidget):
         :dirs        => The directories inside the project folder
         :filelist    => The files inside the project folder
     """
+
     def createProject(self, projName):
         """
         This function create Project related directories and files

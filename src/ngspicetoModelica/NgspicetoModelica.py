@@ -421,11 +421,11 @@ class NgMoConverter:
                         # If parameter is not mapped then it will just pass
                         try:
                             actualModelicaParam = (
-                                                self.mappingData["Devices"]
-                                                [deviceName]
-                                                ["mapping"]
-                                                [key]
-                                                )
+                                self.mappingData["Devices"]
+                                [deviceName]
+                                ["mapping"]
+                                [key]
+                            )
                             tempstatList.append(
                                 actualModelicaParam +
                                 "=" +
@@ -473,13 +473,13 @@ class NgMoConverter:
                 if trans == 'npn':
                     start = (
                         self.mappingData["Devices"][deviceName]["import"]
-                            ) + ".NPN"
+                    ) + ".NPN"
                 elif trans == 'pnp':
                     start = self.mappingData(
-                                            ["Devices"]
-                                            [deviceName]
-                                            ["import"]
-                                            ) + ".PNP"
+                        ["Devices"]
+                        [deviceName]
+                        ["import"]
+                    ) + ".PNP"
                 else:
                     print("Transistor " + str(trans) + " Not found")
                     sys.exit(1)
@@ -501,12 +501,12 @@ class NgMoConverter:
                             userDeviceParamList.append(str("Vak"))
                         else:
                             actualModelicaParam = (
-                                                    self.mappingData
-                                                    ["Devices"]
-                                                    [deviceName]
-                                                    ["mapping"]
-                                                    [key]
-                                                )
+                                self.mappingData
+                                ["Devices"]
+                                [deviceName]
+                                ["mapping"]
+                                [key]
+                            )
                             tempstatList.append(
                                 actualModelicaParam +
                                 "=" +
@@ -519,21 +519,21 @@ class NgMoConverter:
                         pass
                 # Running loop over default parameter of OpenModelica
                 for default in (
-                                self.mappingData
-                                ["Devices"]
-                                [deviceName]
-                                ["default"]
-                                ):
+                    self.mappingData
+                    ["Devices"]
+                    [deviceName]
+                    ["default"]
+                ):
                     if default in userDeviceParamList:
                         continue
                     else:
                         defaultValue = (
-                                        self.mappingData
-                                        ["Devices"]
-                                        [deviceName]
-                                        ["default"]
-                                        [default]
-                                        )
+                            self.mappingData
+                            ["Devices"]
+                            [deviceName]
+                            ["default"]
+                            [default]
+                        )
                         tempstatList.append(
                             default + "=" + self.getUnitVal(defaultValue) +
                             " ")
@@ -563,18 +563,18 @@ class NgMoConverter:
 
                 if trans == 'nmos':
                     start = (
-                            self.mappingData
-                            ["Devices"]
-                            [deviceName]
-                            ["import"]
-                            ) + ".Mn"
+                        self.mappingData
+                        ["Devices"]
+                        [deviceName]
+                        ["import"]
+                    ) + ".Mn"
                 elif trans == 'pmos':
                     start = (
-                            self.mappingData
-                            ["Devices"]
-                            [deviceName]
-                            ["import"]
-                            ) + ".Mp"
+                        self.mappingData
+                        ["Devices"]
+                        [deviceName]
+                        ["import"]
+                    ) + ".Mp"
                 else:
                     print("MOSFET " + str(trans) + " not found")
                     sys.exit(1)
@@ -597,12 +597,12 @@ class NgMoConverter:
                             userDeviceParamList.append(str("U0"))
                         else:
                             actualModelicaParam = (
-                                                    self.mappingData
-                                                    ["Devices"]
-                                                    [deviceName]
-                                                    ["mapping"]
-                                                    [key]
-                                                    )
+                                self.mappingData
+                                ["Devices"]
+                                [deviceName]
+                                ["mapping"]
+                                [key]
+                            )
                             tempstatList.append(
                                 actualModelicaParam +
                                 "=" +
@@ -616,24 +616,24 @@ class NgMoConverter:
 
                 # Running loop over default parameter of OpenModelica
                 for default in (
-                                self.mappingData
-                                ["Devices"]
-                                [deviceName]
-                                ["default"]
-                                ):
+                    self.mappingData
+                    ["Devices"]
+                    [deviceName]
+                    ["default"]
+                ):
                     if default in userDeviceParamList:
                         continue
                     else:
                         defaultValue = (
-                                        self.mappingData
-                                        ["Devices"]
-                                        [deviceName]
-                                        ["default"]
-                                        [default]
-                                        )
+                            self.mappingData
+                            ["Devices"]
+                            [deviceName]
+                            ["default"]
+                            [default]
+                        )
                         tempstatList.append(
                             default + "=" + self.getUnitVal(defaultValue) + " "
-                                            )
+                        )
 
                 # Adding LEVEL(This is constant not the device level)
                 tempstatList.append("Level=1" + " ")
@@ -697,11 +697,11 @@ class NgMoConverter:
                     # If parameter is not mapped then it will just pass
                     try:
                         actualModelicaParam = self.mappingData(
-                                                            ["Devices"]
-                                                            [deviceName]
-                                                            ["mapping"]
-                                                            [key]
-                                                                )
+                            ["Devices"]
+                            [deviceName]
+                            ["mapping"]
+                            [key]
+                        )
                         tempstatList.append(
                             actualModelicaParam +
                             "=" +
@@ -713,24 +713,24 @@ class NgMoConverter:
                         pass
                 # Running loop over default parameter of OpenModelica
                 for default in (
-                                self.mappingData
-                                ["Devices"]
-                                [deviceName]
-                                ["default"]
-                                ):
+                    self.mappingData
+                    ["Devices"]
+                    [deviceName]
+                    ["default"]
+                ):
                     if default in userDeviceParamList:
                         continue
                     else:
                         defaultValue = (
-                                        self.mappingData
-                                        ["Devices"]
-                                        [deviceName]
-                                        ["default"]
-                                        [default]
-                                        )
+                            self.mappingData
+                            ["Devices"]
+                            [deviceName]
+                            ["default"]
+                            [default]
+                        )
                         tempstatList.append(
                             default + "=" + self.getUnitVal(defaultValue) + " "
-                            )
+                        )
 
                 stat += ",".join(str(item) for item in tempstatList) + "));"
                 modelicaCompInit.append(stat)
@@ -779,12 +779,12 @@ class NgMoConverter:
                     # If parameter is not mapped then it will just pass
                     try:
                         actualModelicaParam = (
-                                                self.mappingData
-                                                ["Models"]
-                                                [actualModelName]
-                                                ["mapping"]
-                                                [key]
-                                                )
+                            self.mappingData
+                            ["Models"]
+                            [actualModelName]
+                            ["mapping"]
+                            [key]
+                        )
                         tempstatList.append(
                             actualModelicaParam +
                             "=" +
@@ -797,24 +797,24 @@ class NgMoConverter:
 
                 # Running loop over default parameter of OpenModelica
                 for default in (
-                                self.mappingData
-                                ["Models"]
-                                [actualModelName]
-                                ["default"]
-                                ):
+                    self.mappingData
+                    ["Models"]
+                    [actualModelName]
+                    ["default"]
+                ):
                     if default in userModelParamList:
                         continue
                     else:
                         defaultValue = (
-                                        self.mappingData
-                                        ["Models"]
-                                        [actualModelName]
-                                        ["default"]
-                                        [default]
-                                        )
+                            self.mappingData
+                            ["Models"]
+                            [actualModelName]
+                            ["default"]
+                            [default]
+                        )
                         tempstatList.append(
                             default + "=" + self.getUnitVal(defaultValue) + " "
-                            )
+                        )
 
                 stat += ",".join(str(item) for item in tempstatList) + ");"
                 modelicaCompInit.append(stat)
@@ -1180,7 +1180,7 @@ class NgMoConverter:
                     dir_name,
                     subtransInfo,
                     subInbuiltModelDict
-                    )
+                )
                 # print "modelicaSubCompInit------------>",modelicaSubCompInit
                 # print "numNodesSubsub---------------------->",numNodesSubsub
                 modelicaSubParamNew = self.getSubParamLine(
@@ -1195,7 +1195,7 @@ class NgMoConverter:
                     nodeDicSub,
                     numNodesSubsub,
                     subcktName
-                    )
+                )
                 # print "connSubInfo----------------->",connSubInfo
                 newname = basename.split('.')
                 newfilename = newname[0]
@@ -1242,21 +1242,21 @@ class NgMoConverter:
                 out.close()
 
         return (
-                data,
-                subOptionInfo,
-                subSchemInfo,
-                subModel,
-                subModelInfo,
-                subsubName,
-                subParamInfo,
-                modelicaSubCompInit,
-                modelicaSubParam,
-                nodeSubInterface,
-                nodeSub,
-                nodeDicSub,
-                pinInitSub,
-                connSubInfo
-                )
+            data,
+            subOptionInfo,
+            subSchemInfo,
+            subModel,
+            subModelInfo,
+            subsubName,
+            subParamInfo,
+            modelicaSubCompInit,
+            modelicaSubParam,
+            nodeSubInterface,
+            nodeSub,
+            nodeDicSub,
+            pinInitSub,
+            connSubInfo
+        )
 
 
 def main(args):
@@ -1347,7 +1347,7 @@ def main(args):
         dir_name,
         transInfo,
         inbuiltModelDict
-        )
+    )
     # print "ModelicaComponents
     # : modelicaCompInit----------->",modelicaCompInit
     # print "SubcktNumNodes
@@ -1365,7 +1365,7 @@ def main(args):
             nodeSubInterface, nodeSub, nodeDicSub, pinInitSub, connSubInfo = (
                 obj_NgMoConverter.procesSubckt(
                     subcktName, numNodesSub, dir_name
-                    )
+                )
             )  # Adding 'numNodesSub' by Fahim
 
     # Creating Final Output file

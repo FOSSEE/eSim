@@ -175,10 +175,10 @@ class plotWindow(QtGui.QMainWindow):
             "<font color='indigo'>List of Branches:</font>")
         self.funcLabel.setText("<font color='indigo'>Function:</font>")
         self.funcName.setText(
-                "<font color='indigo'>Standard functions</font>\
+            "<font color='indigo'>Standard functions</font>\
                 <br><br>Addition:<br>Subtraction:<br>\
                 Multiplication:<br>Division:<br>Comparison:"
-                )
+        )
         self.funcExample.setText(
             "\n\nNode1 + Node2\nNode1 - Node2\nNode1 * Node2\nNode1 / Node2\
                 \nNode1 vs Node2")
@@ -507,7 +507,12 @@ class plotWindow(QtGui.QMainWindow):
                 loc_x += 50
                 loc_y += 50
                 # Adding object of multimeter to dictionary
-                self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(self.obj[j])
+                (
+                    self.obj_appconfig.
+                    dock_dict[
+                        self.obj_appconfig.current_project['ProjectName']].
+                    append(self.obj[j])
+                )
 
         if boxCheck == 0:
             QtGui.QMessageBox.about(

@@ -52,6 +52,7 @@ class WorkerThread(QtCore.QThread):
     @return
         None
     """
+
     def __del__(self):
         self.wait()
 
@@ -65,6 +66,7 @@ class WorkerThread(QtCore.QThread):
     @return
         None
     """
+
     def run(self):
         print("Worker Thread Calling Command :", self.args)
         self.call_system(self.args)
@@ -80,6 +82,7 @@ class WorkerThread(QtCore.QThread):
                        be executed in different child processes
                        (see subproces.Popen())
     """
+
     def call_system(self, command):
         procThread = Appconfig()
         proc = subprocess.Popen(command.split())

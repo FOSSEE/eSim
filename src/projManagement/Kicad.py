@@ -53,6 +53,7 @@ class Kicad:
 
     @return
     """
+
     def openSchematic(self):
         print("Function : Open Kicad Schematic")
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
@@ -158,6 +159,7 @@ class Kicad:
 
     @return
     """
+
     def openKicadToNgspice(self):
         """
         This function create command to call kicad to Ngspice converter.

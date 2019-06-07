@@ -43,6 +43,7 @@ class OpenProjectInfo(QtGui.QWidget):
         :dirs        => The directories inside the project folder
         :filelist    => The files inside the project folder
     """
+
     def body(self):
         self.obj_Appconfig = Appconfig()
         self.openDir = self.obj_Appconfig.default_workspace["workspace"]

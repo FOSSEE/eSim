@@ -1,6 +1,12 @@
 class TrackWidget:
     """
-    This Class track the dynamically created widget of KicadtoNgSpice Window.
+    - This Class track the dynamically created widget of KicadtoNgSpice Window.
+    - Tracks using dictionary and lists ==>
+    - - Sources
+    - - Parameters
+    - - References
+    - - Model Details
+    - - ... etc
     """
     # Track widget list for Source details
     sourcelisttrack = {"ITEMS": "None"}

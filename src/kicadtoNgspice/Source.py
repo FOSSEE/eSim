@@ -25,11 +25,23 @@ class Source(QtGui.QWidget):
         # Creating Source Widget
         self.createSourceWidget(sourcelist, sourcelisttrack)
 
+    """
+    - This function dynamically create source widget in the
+      Source tab of KicadtoNgSpice window
+    - Depending on the type of source, ac, dc, sine, pwl, etc...
+      source tab is created
+    - All the entry fields, are kept into the entry_var
+      tracked by self.count
+    - Finally after each of the sourcelist is mapped to its input component
+      we move to adding these to the track widget
+    - Also check if any default values present from previous analysis and add
+      them by default
+    """
+
     def createSourceWidget(self, sourcelist, sourcelisttrack):
-        """
-        This function dynamically create source widget in the
-        Source tab of KicadtoNgSpice window
-        """
+        print("============================================================")
+        print("SOURCELISTTRACK", sourcelisttrack)
+        print("============================================================")
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
@@ -328,8 +340,8 @@ class Source(QtGui.QWidget):
                                             list(
                                                 json_data["source"][key]
                                                 ["values"][it - 4].values())[0]
-                                                )
-                                                )
+                                        )
+                                    )
                         except BaseException:
                             pass
 
@@ -353,6 +365,7 @@ class Source(QtGui.QWidget):
         else:
             print("No source is present in your circuit")
 
+        print("============================================================")
         # This is used to keep the track of dynamically created widget
         self.obj_track.sourcelisttrack["ITEMS"] = sourcelisttrack
         self.obj_track.source_entry_var["ITEMS"] = self.entry_var
