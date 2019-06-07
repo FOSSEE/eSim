@@ -11,7 +11,7 @@ from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 import os
 
 dockList = ['Welcome']
-count = 1 
+count = 1
 dock = {}
 
 
@@ -23,7 +23,7 @@ class DockArea(QtGui.QMainWindow):
         """Sdf."""
         QtGui.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
-         
+
         for dockName in dockList:
             dock[dockName] = QtGui.QDockWidget(dockName)
             self.welcomeWidget = QtGui.QWidget()
@@ -80,7 +80,7 @@ class DockArea(QtGui.QMainWindow):
 
         global count
         self.plottingWidget = QtGui.QWidget()
-                
+
         self.plottingLayout = QtGui.QVBoxLayout()
         self.plottingLayout.addWidget(plotWindow(self.projDir, self.projName))
 
@@ -112,7 +112,7 @@ class DockArea(QtGui.QMainWindow):
 
         global count
         self.ngspiceWidget = QtGui.QWidget()
-                
+
         self.ngspiceLayout = QtGui.QVBoxLayout()
         self.ngspiceLayout.addWidget(
             NgspiceWidget(
@@ -218,7 +218,7 @@ class DockArea(QtGui.QMainWindow):
         self.subcktWidget = QtGui.QWidget()
         self.subcktLayout = QtGui.QVBoxLayout()
         self.subcktLayout.addWidget(Subcircuit(self))
-        
+
         self.subcktWidget.setLayout(self.subcktLayout)
         dock['Subcircuit-' +
              str(count)] = QtGui.QDockWidget('Subcircuit-' + str(count))
@@ -250,7 +250,7 @@ class DockArea(QtGui.QMainWindow):
         self.usermanualWidget = QtGui.QWidget()
         self.usermanualLayout = QtGui.QVBoxLayout()
         self.usermanualLayout.addWidget(UserManual())
-        
+
         self.usermanualWidget.setLayout(self.usermanualLayout)
         dock['User Manual-' +
              str(count)] = QtGui.QDockWidget('User Manual-' + str(count))

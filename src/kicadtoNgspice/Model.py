@@ -115,8 +115,8 @@ class Model(QtGui.QWidget):
                                     self.obj_trac.model_entry_var
                                     [self.nextcount].setText(
                                         str(list(json_data
-                                            ["model"][mod]["values"]
-                                            [i].values())[0]))
+                                                 ["model"][mod]["values"]
+                                                 [i].values())[0]))
                                 )
                                 i = i + 1
                     except BaseException:

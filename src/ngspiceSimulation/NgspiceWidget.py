@@ -6,7 +6,7 @@ import os
 
 # This Class creates NgSpice Window
 class NgspiceWidget(QtGui.QWidget):
-    
+
     def __init__(self, command, projPath):
         """
         1)Creates constructor for NgspiceWidget class.

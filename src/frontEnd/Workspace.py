@@ -21,6 +21,8 @@ import time
 import os
 
 # This class creates Workspace GUI.
+
+
 class Workspace(QtGui.QWidget):
     """
 
