@@ -7,7 +7,6 @@ class Welcome(QtGui.QWidget):
     """
 
     def __init__(self):
-        """Sdf."""
         QtGui.QWidget.__init__(self)
         self.vlayout = QtGui.QVBoxLayout()
 
