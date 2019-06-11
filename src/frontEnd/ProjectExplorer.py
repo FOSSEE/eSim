@@ -40,7 +40,7 @@ class ProjectExplorer(QtGui.QWidget):
                 parentnode = QtGui.QTreeWidgetItem(
                     self.treewidget, [pathlist[-1], parents])
                 for files in children:
-                    childnode = QtGui.QTreeWidgetItem(  # noqa
+                    QtGui.QTreeWidgetItem(
                         parentnode, [files, os.path.join(parents, files)])
         self.window.addWidget(self.treewidget)
 
@@ -56,14 +56,18 @@ class ProjectExplorer(QtGui.QWidget):
         parentnode = QtGui.QTreeWidgetItem(
             self.treewidget, [pathlist[-1], parents])
         for files in children:
-            childnode = QtGui.QTreeWidgetItem(  # noqa
-                parentnode, [files, os.path.join(parents, files)])
-        self.obj_appconfig.proc_dict
-        [self.obj_appconfig.current_project['ProjectName']] = [
-        ]
-        self.obj_appconfig.dock_dict
-        [self.obj_appconfig.current_project['ProjectName']] = [
-        ]
+            QtGui.QTreeWidgetItem(  
+                parentnode, [files, os.path.join(parents, files)]
+                )
+
+        (
+            self.obj_appconfig.
+            proc_dict[self.obj_appconfig.current_project['ProjectName']]
+        ) = []
+        (
+            self.obj_appconfig.
+            dock_dict[self.obj_appconfig.current_project['ProjectName']]
+        ) = []
 
     def openMenu(self, position):
 
@@ -148,7 +152,6 @@ class ProjectExplorer(QtGui.QWidget):
 
     def removeProject(self):
         self.indexItem = self.treewidget.currentIndex()
-        filename = str(self.indexItem.data())  # noqa
         self.filePath = str(
             self.indexItem.sibling(
                 self.indexItem.row(),
@@ -165,7 +168,6 @@ class ProjectExplorer(QtGui.QWidget):
 
     def refreshProject(self):
         self.indexItem = self.treewidget.currentIndex()
-        filename = str(self.indexItem.data())  # noqa
         self.filePath = str(
             self.indexItem.sibling(
                 self.indexItem.row(),
@@ -177,7 +179,7 @@ class ProjectExplorer(QtGui.QWidget):
             for items in self.treewidget.selectedItems():
                 items.removeChild(items.child(0))
         for files in filelistnew:
-            childnode = QtGui.QTreeWidgetItem(  # noqa
+            QtGui.QTreeWidgetItem(  
                 parentnode, [
                     files, os.path.join(
                         self.filePath, files)])

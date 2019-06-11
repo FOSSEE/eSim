@@ -233,7 +233,6 @@ class PrcocessNetlist:
                                  for ngspice model :", modelPath)
                             tree = ET.parse(modelPath[0])
 
-                            root = tree.getroot()  # noqa
                             # Getting number of nodes for model and title
                             for child in tree.iter():
                                 if child.tag == 'node_number':
