@@ -1,4 +1,4 @@
-Project Explorer Component
+Project Management Component
 ==========================
 
 .. toctree::
