@@ -10,7 +10,12 @@ eSim is an open source EDA tool for circuit design, simulation, analysis and PCB
 * It also has a feature of Model builder and Subcircuit builder.
 * eSim has been successfully ported to low cost FOSSEE [laptop](http://laptop.fossee.in)
 
-##Pre-requisites
+## Open-Source Software Used
+* Python.
+* KiCad.
+* Ngspice.
+
+## Pre-requisites
 1. Python 3.0+
 2. PyQt4
 3. Matplotlib
