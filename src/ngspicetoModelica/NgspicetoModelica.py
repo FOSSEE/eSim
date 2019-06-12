@@ -30,7 +30,7 @@ class NgMoConverter:
                 f = open(filename)
             except Exception as e:
                 print("Error in opening file")
-                print((str(e)))
+                print(str(e))
                 sys.exit()
         else:
             print(filename + " does not exist")

@@ -61,7 +61,7 @@ class SubcircuitTab(QtGui.QWidget):
         for eachline in schematicInfo:
             words = eachline.split()
             if eachline[0] == 'x':
-                print(("Subcircuit : Words", words[0]))
+                print("Subcircuit : Words", words[0])
                 self.obj_trac.subcircuitList[project_name + words[0]] = words
                 self.subcircuit_dict_beg[words[0]] = self.count
                 subbox = QtGui.QGroupBox()
@@ -97,7 +97,7 @@ class SubcircuitTab(QtGui.QWidget):
                 # eg. If the line is 'x1 4 0 3 ua741', there are 3 ports(4, 0
                 # and 3).
                 self.numPorts.append(len(words) - 2)
-                print(("Number of ports of sub circuit : ", self.numPorts))
+                print("Number of ports of sub circuit : ", self.numPorts)
                 self.addbtn.clicked.connect(self.trackSubcircuit)
                 subgrid.addWidget(self.addbtn, self.row, 2)
                 subbox.setLayout(subgrid)
