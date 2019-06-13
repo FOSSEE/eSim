@@ -90,8 +90,9 @@ class DeviceModel(QtGui.QWidget):
                                         json_data["deviceModel"][key][0]):
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
-                                    path_name = json_data
-                                    ["deviceModel"][key][0]
+                                    path_name = (
+                                        json_data["deviceModel"][key][0]
+                                    )
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
@@ -153,8 +154,9 @@ class DeviceModel(QtGui.QWidget):
                             try:
                                 if os.path.exists(
                                         json_data["deviceModel"][key][0]):
-                                    path_name = json_data
-                                    ["deviceModel"][key][0]
+                                    path_name = (
+                                        json_data["deviceModel"][key][0]
+                                    )
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
                                 else:
@@ -219,8 +221,9 @@ class DeviceModel(QtGui.QWidget):
                                         json_data["deviceModel"][key][0]):
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
-                                    path_name = json_data
-                                    ["deviceModel"][key][0]
+                                    path_name = (
+                                        json_data["deviceModel"][key][0]
+                                    )
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
@@ -332,8 +335,9 @@ class DeviceModel(QtGui.QWidget):
                                 if (i - beg) == 0:
                                     if os.path.exists(
                                             json_data["deviceModel"][key][0]):
-                                        path_name = json_data
-                                        ["deviceModel"][key][0]
+                                        path_name = (
+                                            json_data["deviceModel"][key][0]
+                                            )
                                     else:
                                         self.entry_var[i].setText("")
                                 i = i + 1
