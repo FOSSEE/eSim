@@ -84,7 +84,7 @@ class DeviceModel(QtGui.QWidget):
 
                 try:
                     for key in json_data["deviceModel"]:
-                        if key[0] == words[0][0] and key[1:] == words[0][1:]:
+                        if key == words[0]:
                             # print "DEVICE MODEL MATCHING---",child.tag[0],\
                             # child.tag[1],eachline[0],eachline[1]
                             try:
@@ -150,7 +150,7 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for key in json_data["deviceModel"]:
-                        if key[0] == words[0][0] and key[1:] == words[0][1:]:
+                        if key == words[0]:
                             # print "DEVICE MODEL MATCHING---",child.tag[0],\
                             # child.tag[1],eachline[0],eachline[1]
                             try:
@@ -215,7 +215,7 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for key in json_data["deviceModel"]:
-                        if key[0] == words[0][0] and key[1:] == words[0][1:]:
+                        if key == words[0]:
                             # print "DEVICE MODEL MATCHING---",child.tag[0],\
                             # child.tag[1],eachline[0],eachline[1]
                             try:
@@ -328,7 +328,7 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for key in json_data["deviceModel"]:
-                        if key[0] == words[0][0] and key[1:] == words[0][1:]:
+                        if key == words[0]:
                             # print "DEVICE MODEL MATCHING---",child.tag[0],\
                             # child.tag[1],eachline[0],eachline[1]
                             while i <= end:
