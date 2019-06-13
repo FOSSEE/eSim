@@ -7,8 +7,8 @@ import os
 
 class Model(QtGui.QWidget):
     """
-    This class creates Model Tab of KicadtoNgspice window.
-    The widgets are created dynamically in the Model Tab.
+    - This class creates Model Tab of KicadtoNgspice window.
+      The widgets are created dynamically in the Model Tab.
     """
 
     def __init__(self, schematicInfo, modelList, clarg1):
@@ -62,14 +62,14 @@ class Model(QtGui.QWidget):
                 # print "Key : ",key
                 # print "Value : ",value
                 # Check if value is iterable
-                if hasattr(value, '__iter__'):
+                if type(value) is not str and hasattr(value, '__iter__'):
                     # For tag having vector value
                     temp_tag = []
                     for item in value:
                         paramLabel = QtGui.QLabel(item)
                         modelgrid.addWidget(paramLabel, self.nextrow, 0)
-                        self.obj_trac.model_entry_var
-                        [self.nextcount] = QtGui.QLineEdit(
+                        self.obj_trac.model_entry_var[self.nextcount] = (
+                            QtGui.QLineEdit()
                         )
                         modelgrid.addWidget(
                             self.obj_trac.model_entry_var
@@ -78,12 +78,15 @@ class Model(QtGui.QWidget):
                         try:
                             for mod in json_data["model"]:
                                 if json_data["model"][mod]["type"] ==\
-                                 line[2] and mod == line[3]:
-                                    self.obj_trac.model_entry_var
-                                    [self.nextcount].setText(
-                                        str(list(
-                                            json_data["model"][mod]["values"]
-                                            [i].values())[0]))
+                                        line[2] and mod == line[3]:
+                                    (
+                                        self.obj_trac.model_entry_var
+                                        [self.nextcount].setText(
+                                            str(list(
+                                                json_data
+                                                ["model"][mod]["values"]
+                                                [i].values())[0]))
+                                    )
                                     i = i + 1
                         except BaseException:
                             pass
@@ -96,22 +99,25 @@ class Model(QtGui.QWidget):
                 else:
                     paramLabel = QtGui.QLabel(value)
                     modelgrid.addWidget(paramLabel, self.nextrow, 0)
-                    self.obj_trac.model_entry_var
-                    [self.nextcount] = QtGui.QLineEdit(
+                    self.obj_trac.model_entry_var[self.nextcount] = (
+                        QtGui.QLineEdit()
                     )
                     modelgrid.addWidget(
-                        self.obj_trac.model_entry_var
-                        [self.nextcount], self.nextrow, 1)
+                        self.obj_trac.model_entry_var[self.nextcount],
+                        self.nextrow, 1
+                    )
 
                     try:
                         for mod in json_data["model"]:
                             if json_data["model"][mod]["type"] ==\
-                             line[2] and mod == line[3]:
-                                self.obj_trac.model_entry_var
-                                [self.nextcount].setText(
-                                    str(list(json_data
-                                             ["model"][mod]["values"]
-                                             [i].values())[0]))
+                                    line[2] and mod == line[3]:
+                                (
+                                    self.obj_trac.model_entry_var
+                                    [self.nextcount].setText(
+                                        str(list(json_data
+                                            ["model"][mod]["values"]
+                                            [i].values())[0]))
+                                )
                                 i = i + 1
                     except BaseException:
                         pass

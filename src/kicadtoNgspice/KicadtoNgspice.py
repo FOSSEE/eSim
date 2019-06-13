@@ -33,13 +33,14 @@ import json
 
 class MainWindow(QtGui.QWidget):
     """
-    This class create KicadtoNgspice window.
-    And Call Convert function if convert button is pressed.
-    The convert function takes all the value entered by user and create
-    a final netlist "*.cir.out".
-    This final netlist is compatible with NgSpice.
+    - This class create KicadtoNgspice window.
+    - And Call Convert function if convert button is pressed.
+    - The convert function takes all the value entered by user and create
+      a final netlist "*.cir.out".
+    - This final netlist is compatible with NgSpice.
+    - clarg1 is the path to the .cir file
+    - clarg2 is either None or "sub" depending on the analysis type
     """
-
     def __init__(self, clarg1, clarg2=None):
         QtGui.QWidget.__init__(self)
         print("==================================")
@@ -52,6 +53,7 @@ class MainWindow(QtGui.QWidget):
         self.clarg2 = clarg2
 
         # Create object of track widget
+        # Track the dynamically created widget of KicadtoNgSpice Window
         self.obj_track = TrackWidget.TrackWidget()
 
         # Clear Dictionary/List item of sub circuit and ngspice model
@@ -65,9 +67,9 @@ class MainWindow(QtGui.QWidget):
         # Object of Processing
         obj_proc = PrcocessNetlist()
 
-        # Read the netlist
+        # Read the netlist, ie the .cir file
         kicadNetlist = obj_proc.readNetlist(self.kicadFile)
-
+        print("=============================================================")
         print("Given Kicad Schematic Netlist Info :", kicadNetlist)
 
         # Construct parameter information
@@ -75,13 +77,13 @@ class MainWindow(QtGui.QWidget):
 
         # Replace parameter with values
         netlist, infoline = obj_proc.preprocessNetlist(kicadNetlist, param)
-
+        print("=============================================================")
         print("Schematic Info after processing Kicad Netlist: ", netlist)
         # print "INFOLINE",infoline
 
         # Separate option and schematic information
         optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
-
+        print("=============================================================")
         print("OPTIONINFO in the Netlist", optionInfo)
 
         # List for storing source and its value
@@ -92,23 +94,30 @@ class MainWindow(QtGui.QWidget):
             schematicInfo, sourcelist)
 
         # List storing model detail
-        global modelList, outputOption, unknownModelList, \
-            multipleModelList, plotText
+        global modelList, outputOption,\
+            unknownModelList, multipleModelList, plotText
 
         modelList = []
         outputOption = []
         plotText = []
-        schematicInfo, outputOption, modelList, unknownModelList,
-        multipleModelList, plotText = obj_proc.convertICintoBasicBlocks(
-            schematicInfo, outputOption, modelList, plotText)
-
+        (
+            schematicInfo,
+            outputOption,
+            modelList,
+            unknownModelList,
+            multipleModelList,
+            plotText
+            ) = obj_proc.convertICintoBasicBlocks(
+            schematicInfo, outputOption, modelList, plotText
+        )
+        print("=======================================")
         print("Model available in the Schematic :", modelList)
 
         """
-        Checking if any unknown model is used in schematic which is not
-        recognized by NgSpice.
-        Also if the two model of same name is present under
-        modelParamXML directory
+        - Checking if any unknown model is used in schematic which is not
+          recognized by NgSpice.
+        - Also if the two model of same name is present under
+          modelParamXML directory
         """
         if unknownModelList:
             print("Unknown Model List is : ", unknownModelList)
@@ -131,9 +140,11 @@ class MainWindow(QtGui.QWidget):
 
     def createMainWindow(self):
         """
-        This function create main window of Kicad to Ngspice converter
+        - This function create main window of Kicad to Ngspice converter
+        - Two components
+        - - createcreateConvertWidget
+        - - Convert button => callConvert
         """
-
         self.vbox = QtGui.QVBoxLayout(self)
         self.hbox = QtGui.QHBoxLayout(self)
         self.hbox.addStretch(1)
@@ -148,6 +159,26 @@ class MainWindow(QtGui.QWidget):
         self.show()
 
     def createcreateConvertWidget(self):
+        """
+        - Contains the tabs for various convertor elements
+        - - Analysis            => obj_analysis
+            => Analysis.Analysis(`path_to_projFile`)
+
+        - - Source Details      => obj_source
+            => Source.Source(`sourcelist`,`sourcelisttrack`,`path_to_projFile`)
+
+        - - NgSpice Model       => obj_model
+            => Model.Model(`schematicInfo`,`modelList`,`path_to_projFile`)
+
+        - - Device Modelling    => obj_devicemodel
+            => DeviceModel.DeviceModel(`schematicInfo`,`path_to_projFile`)
+
+        - - Subcircuits         => obj_subcircuitTab
+            => SubcircuitTab.SubcircuitTab(`schematicInfo`,`path_to_projFile`)
+
+        - Finally pass each of these objects, to widgets
+        - convertWindow > mainLayout > tabWidgets > AnalysisTab, SourceTab ....
+        """
         global obj_analysis
         self.convertWindow = QtGui.QWidget()
         self.analysisTab = QtGui.QScrollArea()
@@ -196,7 +227,11 @@ class MainWindow(QtGui.QWidget):
 
     def callConvert(self):
         """
-        Calling Convert Class Constructor
+        - This function called when convert button clicked
+        - Extracting data from the objs created above
+        - Pushing this data to json, and dumping it finally
+        - Written to a ..._Previous_Valuse.json file in the projDirectory
+        - Finally, call createNetListFile, with the converted schematic
         """
         global schematicInfo
         global analysisoutput
@@ -205,18 +240,18 @@ class MainWindow(QtGui.QWidget):
         (projpath, filename) = os.path.split(self.kicadFile)
         project_name = os.path.basename(projpath)
 
+        # Opening previous value file pertaining to the selected project
         fw = open(
             os.path.join(
                 projpath,
                 project_name +
                 "_Previous_Values.json"),
             'w')
+
+        # Creating a dictionary to map the json data
         json_data = {}
 
-        """
-        Writing Analysis values
-        """
-
+        # Writing analysis values
         json_data["analysis"] = {}
 
         json_data["analysis"]["ac"] = {}
@@ -241,10 +276,12 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.ac_entry_var[1].text())
         json_data["analysis"]["ac"]["No. of points"] = str(
             obj_analysis.ac_entry_var[2].text())
-        json_data
-        ["analysis"]["ac"]["Start Fre Combo"] = obj_analysis.ac_parameter[0]
-        json_data
-        ["analysis"]["ac"]["Stop Fre Combo"] = obj_analysis.ac_parameter[1]
+        json_data["analysis"]["ac"]["Start Fre Combo"] = (
+            obj_analysis.ac_parameter[0]
+        )
+        json_data["analysis"]["ac"]["Stop Fre Combo"] = (
+            obj_analysis.ac_parameter[1]
+        )
 
         json_data["analysis"]["dc"] = {}
         json_data["analysis"]["dc"]["Source 1"] = str(
@@ -257,12 +294,15 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.dc_entry_var[3].text())
         json_data["analysis"]["dc"]["Operating Point"] = str(
             self.obj_track.op_check[-1])
-        json_data
-        ["analysis"]["dc"]["Start Combo"] = obj_analysis.dc_parameter[0]
-        json_data
-        ["analysis"]["dc"]["Increment Combo"] = obj_analysis.dc_parameter[1]
-        json_data
-        ["analysis"]["dc"]["Stop Combo"] = obj_analysis.dc_parameter[2]
+        json_data["analysis"]["dc"]["Start Combo"] = (
+            obj_analysis.dc_parameter[0]
+        )
+        json_data["analysis"]["dc"]["Increment Combo"] = (
+            obj_analysis.dc_parameter[1]
+        )
+        json_data["analysis"]["dc"]["Stop Combo"] = (
+            obj_analysis.dc_parameter[2]
+        )
         json_data["analysis"]["dc"]["Source 2"] = str(
             obj_analysis.dc_entry_var[4].text())
         json_data["analysis"]["dc"]["Start2"] = str(
@@ -271,12 +311,15 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.dc_entry_var[6].text())
         json_data["analysis"]["dc"]["Stop2"] = str(
             obj_analysis.dc_entry_var[7].text())
-        json_data
-        ["analysis"]["dc"]["Start Combo2"] = obj_analysis.dc_parameter[3]
-        json_data
-        ["analysis"]["dc"]["Increment Combo2"] = obj_analysis.dc_parameter[4]
-        json_data
-        ["analysis"]["dc"]["Stop Combo2"] = obj_analysis.dc_parameter[5]
+        json_data["analysis"]["dc"]["Start Combo2"] = (
+            obj_analysis.dc_parameter[3]
+        )
+        json_data["analysis"]["dc"]["Increment Combo2"] = (
+            obj_analysis.dc_parameter[4]
+        )
+        json_data["analysis"]["dc"]["Stop Combo2"] = (
+            obj_analysis.dc_parameter[5]
+        )
 
         json_data["analysis"]["tran"] = {}
         json_data["analysis"]["tran"]["Start Time"] = str(
@@ -285,17 +328,17 @@ class MainWindow(QtGui.QWidget):
             obj_analysis.tran_entry_var[1].text())
         json_data["analysis"]["tran"]["Stop Time"] = str(
             obj_analysis.tran_entry_var[2].text())
-        json_data
-        ["analysis"]["tran"]["Start Combo"] = obj_analysis.tran_parameter[0]
-        json_data
-        ["analysis"]["tran"]["Step Combo"] = obj_analysis.tran_parameter[1]
-        json_data
-        ["analysis"]["tran"]["Stop Combo"] = obj_analysis.tran_parameter[2]
+        json_data["analysis"]["tran"]["Start Combo"] = (
+            obj_analysis.tran_parameter[0]
+        )
+        json_data["analysis"]["tran"]["Step Combo"] = (
+            obj_analysis.tran_parameter[1]
+        )
+        json_data["analysis"]["tran"]["Stop Combo"] = (
+            obj_analysis.tran_parameter[2]
+        )
 
-        """
-        Writing Source values
-        """
-
+        # Writing source values
         json_data["source"] = {}
         count = 1
 
@@ -421,9 +464,7 @@ class MainWindow(QtGui.QWidget):
             else:
                 pass
 
-        """
-        Writing Model values
-        """
+        # Writing Model values
 
         i = 0
         json_data["model"] = {}
@@ -440,7 +481,11 @@ class MainWindow(QtGui.QWidget):
             json_data["model"][line[3]]["values"] = []
 
             for key, value in line[7].items():
-                if hasattr(value, '__iter__') and i <= end:
+                if(
+                    hasattr(value, '__iter__') and
+                    i <= end and type(value) is not
+                    str
+                ):
                     for item in value:
                         fields = {
                             item: str(
@@ -455,9 +500,7 @@ class MainWindow(QtGui.QWidget):
                     json_data["model"][line[3]]["values"].append(fields)
                     i = i + 1
 
-        """
-        Writing Device Model values
-        """
+        # Writing Device Model values
 
         json_data["deviceModel"] = {}
 
@@ -471,9 +514,7 @@ class MainWindow(QtGui.QWidget):
                     str(obj_devicemodel.entry_var[it].text()))
                 it = it + 1
 
-        """
-        Writing Subcircuit values
-        """
+        # Writing Subcircuit values
 
         json_data["subcircuit"] = {}
         for subckt in obj_subcircuitTab.subcircuit_dict_beg:
@@ -486,28 +527,42 @@ class MainWindow(QtGui.QWidget):
                     str(obj_subcircuitTab.entry_var[it].text()))
                 it = it + 1
 
+        # json dumped and written to previous value file for the project
         write_data = json.dumps(json_data)
         fw.write(write_data)
+
+        # Create Convert object with the source details & the schematic details
+        print("=============================================================")
+        print("SOURCE LIST TRACK")
+        print(self.obj_track.sourcelisttrack["ITEMS"])
+        print("SOURCE ENTRY VAR")
+        print(self.obj_track.source_entry_var["ITEMS"])
+        print("SCHEMATIC INFO")
+        print(store_schematicInfo)
+        print("=============================================================")
 
         self.obj_convert = Convert.Convert(
             self.obj_track.sourcelisttrack["ITEMS"],
             self.obj_track.source_entry_var["ITEMS"],
             store_schematicInfo, self.clarg1
-            )
+        )
 
         try:
             # Adding Source Value to Schematic Info
             store_schematicInfo = self.obj_convert.addSourceParameter()
+            print("=========================================================")
             print("Netlist After Adding Source details :", store_schematicInfo)
 
             # Adding Model Value to store_schematicInfo
             store_schematicInfo = self.obj_convert.addModelParameter(
                 store_schematicInfo)
+            print("=========================================================")
             print("Netlist After Adding Ngspice Model :", store_schematicInfo)
 
             # Adding Device Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addDeviceLibrary(
                 store_schematicInfo, self.kicadFile)
+            print("=========================================================")
             print(
                 "Netlist After Adding Device Model Library :",
                 store_schematicInfo)
@@ -515,6 +570,7 @@ class MainWindow(QtGui.QWidget):
             # Adding Subcircuit Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addSubcircuit(
                 store_schematicInfo, self.kicadFile)
+            print("=========================================================")
             print("Netlist After Adding subcircuits :", store_schematicInfo)
 
             analysisoutput = self.obj_convert.analysisInsertor(
@@ -528,10 +584,14 @@ class MainWindow(QtGui.QWidget):
                 self.obj_track.AC_type["ITEMS"],
                 self.obj_track.op_check
             )
-
+            print("=========================================================")
             print("Analysis OutPut ", analysisoutput)
 
             # Calling netlist file generation function
+            print("=========================================================")
+            print("STORE SCHEMATIC INFO")
+            print(store_schematicInfo)
+            print("=========================================================")
             self.createNetlistFile(store_schematicInfo, plotText)
 
             self.msg = "The Kicad to Ngspice Conversion completed\
@@ -547,10 +607,25 @@ class MainWindow(QtGui.QWidget):
         # Generate .sub file from .cir.out file if it is a subcircuit
         subPath = os.path.splitext(self.kicadFile)[0]
 
+        # If sub argument passed, create subCircuit file as well
         if self.clarg2 == "sub":
             self.createSubFile(subPath)
 
     def createNetlistFile(self, store_schematicInfo, plotText):
+        """
+        - Creating .cir.out file
+        - If analysis file present uses that and extract
+        - - Simulator
+        - - Initial
+        - - Analysis
+        - Finally add the following components to .cir.out file
+        - - SimulatorOption
+        - - InitialCondOption
+        - - Store_SchematicInfo
+        - - AnalysisOption
+        - In the end add control statements and allv, alli, end statements
+        """
+        print("=============================================================")
         print("Creating Final netlist")
         # print "INFOLINE",infoline
         # print "OPTIONINFO",optionInfo
@@ -578,6 +653,7 @@ class MainWindow(QtGui.QWidget):
                  Please check it")
                 sys.exit()
         else:
+            print("========================================================")
             print(analysisFileLoc + " does not exist")
             sys.exit()
 
@@ -655,6 +731,10 @@ class MainWindow(QtGui.QWidget):
         out.close()
 
     def createSubFile(self, subPath):
+        """
+        - To create subcircuit file
+        - Extract data from .cir.out file
+        """
         self.project = subPath
         self.projName = os.path.basename(self.project)
         if os.path.exists(self.project + ".cir.out"):
@@ -663,6 +743,7 @@ class MainWindow(QtGui.QWidget):
             except BaseException:
                 print("Error in opening .cir.out file.")
         else:
+            print("=========================================================")
             print(
                 self.projName +
                 ".cir.out does not exist. Please create a spice netlist.")
@@ -722,4 +803,5 @@ class MainWindow(QtGui.QWidget):
         out.writelines('\n')
 
         out.writelines('.ends ' + self.projName)
+        print("=============================================================")
         print("The subcircuit has been written in " + self.projName + ".sub")

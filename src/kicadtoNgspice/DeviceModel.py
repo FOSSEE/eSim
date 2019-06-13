@@ -7,9 +7,18 @@ from . import TrackWidget
 
 class DeviceModel(QtGui.QWidget):
     """
-    This class creates Device Library  Tab in KicadtoNgspice Window
-    It dynamically creates the widget for device like diode,mosfet,
-    transistor and jfet.
+    - This class creates Device Library  Tab in KicadtoNgspice Window
+      It dynamically creates the widget for device like diode,mosfet,
+      transistor and jfet.
+    - Same function as the subCircuit file, except for
+      this takes different parameters in the if block
+    - - q   TRANSISTOR
+    - - d   DIODE
+    - - j   JFET
+    - - m   MOSFET
+    - Other 2 functions same as the ones in subCircuit
+    - - trackLibrary
+    - - trackLibraryWithoutButton
     """
 
     def __init__(self, schematicInfo, clarg1):
@@ -81,8 +90,9 @@ class DeviceModel(QtGui.QWidget):
                                         json_data["deviceModel"][key][0]):
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
-                                    path_name = json_data
-                                    ["deviceModel"][key][0]
+                                    path_name = (
+                                        json_data["deviceModel"][key][0]
+                                    )
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
@@ -144,8 +154,9 @@ class DeviceModel(QtGui.QWidget):
                             try:
                                 if os.path.exists(
                                         json_data["deviceModel"][key][0]):
-                                    path_name = json_data
-                                    ["deviceModel"][key][0]
+                                    path_name = (
+                                        json_data["deviceModel"][key][0]
+                                    )
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
                                 else:
@@ -210,8 +221,9 @@ class DeviceModel(QtGui.QWidget):
                                         json_data["deviceModel"][key][0]):
                                     self.entry_var[self.count].setText(
                                         json_data["deviceModel"][key][0])
-                                    path_name = json_data
-                                    ["deviceModel"][key][0]
+                                    path_name = (
+                                        json_data["deviceModel"][key][0]
+                                    )
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
@@ -323,8 +335,9 @@ class DeviceModel(QtGui.QWidget):
                                 if (i - beg) == 0:
                                     if os.path.exists(
                                             json_data["deviceModel"][key][0]):
-                                        path_name = json_data
-                                        ["deviceModel"][key][0]
+                                        path_name = (
+                                            json_data["deviceModel"][key][0]
+                                            )
                                     else:
                                         self.entry_var[i].setText("")
                                 i = i + 1

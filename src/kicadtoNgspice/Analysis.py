@@ -8,7 +8,17 @@ import json
 
 class Analysis(QtGui.QWidget):
     """
-    This class create Analysis Tab in KicadtoNgspice Window.
+    - This class create Analysis Tab in KicadtoNgspice Window.
+    - Set  various track widget options here
+    - AC_entry_var
+    - AC_Parameter
+    - DC_entry_var
+    - DC_Parameter
+    - TRAN_entry_var
+    - TRAN_Parameter
+    - set_Checkbox
+    - AC_type
+    - op_check
     """
 
     def __init__(self, clarg1):
@@ -26,6 +36,14 @@ class Analysis(QtGui.QWidget):
         self.createAnalysisWidget()
 
     def createAnalysisWidget(self):
+        """
+        - Create the main anaylsis widget overwiew
+        - - Checkbox for analysis type
+        - - Respective analysis type group, AC, DC, TRAN...
+        - Check for `analysis` file, if any in projDir, extract data from it
+        - Else set the default checkbox to `TRAN`
+        - Accordingly set state for track widget options
+        """
         self.grid = QtGui.QGridLayout()
         self.grid.addWidget(self.createCheckBox(), 0, 0)
         self.grid.addWidget(self.createACgroup(), 1, 0)
@@ -40,7 +58,9 @@ class Analysis(QtGui.QWidget):
 
             analysisfile = open(os.path.join(projpath, 'analysis'))
             content = analysisfile.readline()
+            print("=========================================================")
             print("Content of Analysis file :", content)
+            print("=========================================================")
             contentlist = content.split()
 
             if contentlist[0] == '.ac':
@@ -89,6 +109,11 @@ class Analysis(QtGui.QWidget):
         self.show()
 
     def createCheckBox(self):
+        """
+        - Create the checkboxes for analysis type, under analysis tab
+        - checkbox > checkgrid > checkgroupbtn > checkAC | checkDC | checkTRAN
+        - Trigger enableBox on clicking
+        """
         self.checkbox = QtGui.QGroupBox()
         self.checkbox.setTitle("Select Analysis Type")
         self.checkgrid = QtGui.QGridLayout()
@@ -112,6 +137,10 @@ class Analysis(QtGui.QWidget):
         return self.checkbox
 
     def enableBox(self):
+        """
+        - Activate deactive analysis areas according to type
+        - Add analysis data to track_obj from TrackWidget
+        """
         if self.checkAC.isChecked():
             self.acbox.setDisabled(False)
             self.dcbox.setDisabled(True)
@@ -131,6 +160,13 @@ class Analysis(QtGui.QWidget):
             self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
     def createACgroup(self):
+        """
+        - Designing of AC group in analysis tab
+        - 3 radio buttons - Lin | Dec | Oct
+        - 3 input boxes, with top 2 combos\
+        - If previous values exist then fill default values from
+          previous value json file
+        """
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
@@ -202,12 +238,14 @@ class Analysis(QtGui.QWidget):
         self.acgrid.addWidget(self.start_fre_combo, 2, 2)
         self.ac_parameter[0] = "Hz"
 
+        # Try setting to default value from anaylsis file
         try:
             self.ac_parameter[self.parameter_cnt] = str(
                 json_data["analysis"]["ac"]["Start Fre Combo"])
         except BaseException:
             self.ac_parameter[self.parameter_cnt] = "Hz"
 
+        # Event listener for combo action
         self.start_fre_combo.activated[str].connect(self.start_combovalue)
 
         self.parameter_cnt = self.parameter_cnt + 1
@@ -274,13 +312,33 @@ class Analysis(QtGui.QWidget):
 
         return self.acbox
 
+    '''
+    - Below 2 functions handle combo value event listeners for
+    - - start frequency for ac
+    - - stop frequency for ac
+    - And accordingly set the ac_parameters
+    '''
+
     def start_combovalue(self, text):
+        """
+        - Handle start_fre_combo box event
+        - Check where it is Hz, MHz, etc.
+        - Accordingly set ac_parameter
+        """
         self.ac_parameter[0] = str(text)
 
     def stop_combovalue(self, text):
+        """
+        - Handle stop_fre_combo box event
+        - Check where it is Hz, MHz, etc.
+        - Accordingly set ac_parameter
+        """
         self.ac_parameter[1] = str(text)
 
     def set_ac_type(self):
+        """S
+        - Set track object for AC, according to the type of radio box selected
+        """
         self.parameter_cnt = 0
 
         if self.Lin.isChecked():
@@ -293,6 +351,16 @@ class Analysis(QtGui.QWidget):
             pass
 
     def createDCgroup(self):
+        """
+        - Create DC area under analysis tab
+        - Source 1 and 2, each having 4 input boxes as follows
+        - - Source
+        - - Start
+        - - Increment
+        - - Stop
+        - The last 3 have combo box pertaining to their unit as well
+        - Also in the end a checkbox, for operating system point analysis
+        """
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
@@ -564,6 +632,7 @@ class Analysis(QtGui.QWidget):
 
         return self.dcbox
 
+    # Below 6 functions to handle combo boxes for the DC group
     def start_changecombo(self, text):
         self.dc_parameter[0] = str(text)
 
@@ -583,12 +652,24 @@ class Analysis(QtGui.QWidget):
         self.dc_parameter[5] = str(text)
 
     def setflag(self):
+        """
+        - Handles the Operating point analysis checkbox
+        """
         if self.check.isChecked():
             self.track_obj.op_check.append(1)
         else:
             self.track_obj.op_check.append(0)
 
     def createTRANgroup(self):
+        """
+        - Creating transient group under analysis and creating it's components
+        - Contains 3 inout and combo boxes for -
+        - - Start time
+        - - Step time
+        - - Stop time
+        - Input boxes for values, combo boxes for unit
+        - Accordingly also event handleres for combo boxes, creates 3 functions
+        """
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path .basename(projpath)
@@ -717,6 +798,9 @@ class Analysis(QtGui.QWidget):
                 print("Transient Analysis JSON Parse Error")
 
         return self.trbox
+    '''
+    - Below 3 functions handle event for the combo box in transient group
+    '''
 
     def start_combo_change(self, text):
         self.tran_parameter[0] = str(text)

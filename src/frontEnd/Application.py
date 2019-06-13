@@ -32,16 +32,14 @@ import sys
 import os
 
 
+# Its our main window of application.
 class Application(QtGui.QMainWindow):
+    """This class initializes all objects used in this file(Application.py)."""
     global project_name
-    """
-    Its our main window of application
-    """
 
     def __init__(self, *args):
-        """
-        Initialize main Application window
-        """
+        """Initialize main Application window."""
+
         # Calling __init__ of super class
         QtGui.QMainWindow.__init__(self, *args)
 
@@ -67,9 +65,16 @@ class Application(QtGui.QMainWindow):
         self.systemTrayIcon.setIcon(QtGui.QIcon('../../images/logo.png'))
         self.systemTrayIcon.setVisible(True)
 
+    # This function initializes Tool Bars
     def initToolBar(self):
         """
-        This function initialize Tool Bar
+        In this function we are setting icons, short-cuts,and
+        defining functonality for:.
+            a)Top-tool-bar (New project, Open project, Close
+              project, Help option )
+            b)Left-tool-bar (Open Schematic, Convert KiCad to
+              NgSpice, Simuation, Model Editor, Subcircuit, NGHDL,
+              Modelica Converter, OM Optimisation )
         """
         # Top Tool bar
         self.newproj = QtGui.QAction(
@@ -106,6 +111,8 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.closeproj)
         self.topToolbar.addAction(self.helpfile)
 
+        # This part is setting fossee logo to the right
+        # corner in the application window.
         self.spacer = QtGui.QWidget()
         self.spacer.setSizePolicy(
             QtGui.QSizePolicy.Expanding,
@@ -186,7 +193,23 @@ class Application(QtGui.QMainWindow):
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
 
+    # This function closes the ongoing program(process).
     def closeEvent(self, event):
+        '''
+        When exit button is pressed a Message box pops out with
+        exit message and buttons 'Yes', 'No'.
+
+        1. If 'Yes' is pressed:.
+            a)it checks that program(process) in procThread_list
+              (list made in Appconfig.py):
+                a.1) if available it terminates that program
+                a.2) if the program(process) is not available,
+                     it checks for it in process_obj (list made in
+                 Appconfig.py) if found it closes the program.
+
+        2. If 'No' is pressed:
+            a)the program just continues as it was doing earlier.
+        '''
         exit_msg = "Are you sure you want to exit the program\
             ? All unsaved data will be lost."
         reply = QtGui.QMessageBox.question(
@@ -219,7 +242,16 @@ class Application(QtGui.QMainWindow):
         elif reply == QtGui.QMessageBox.No:
             event.ignore()
 
+    # This function closes the saved project.
     def close_project(self):
+        """
+        This function first checks whether project(file) is present in list.
+            a)If present:
+                 :-it first kills that process-id.
+                 :-closes that file.
+                 :-Shows message "Current project <path of file> is closed"
+            b)If not present:-  pass
+        """
         print("Function : Close Project")
         current_project = self.obj_appconfig.current_project['ProjectName']
         if current_project is None:
@@ -239,10 +271,8 @@ class Application(QtGui.QMainWindow):
                 os.path.basename(current_project) +
                 ' is Closed.')
 
+    # This function call New Project Info class.
     def new_project(self):
-        """
-        This function call New Project Info class.
-        """
         text, ok = QtGui.QInputDialog.getText(
             self, 'New Project Info', 'Enter Project Name:')
         if ok:
@@ -263,10 +293,8 @@ class Application(QtGui.QMainWindow):
             except BaseException:
                 pass
 
+    # This project call Open Project Info class
     def open_project(self):
-        """
-        This project call Open Project Info class
-        """
         print("Function : Open Project")
         self.project = OpenProjectInfo()
 
@@ -277,17 +305,21 @@ class Application(QtGui.QMainWindow):
         except BaseException:
             pass
 
+    # This page opens usermanual in dockarea.
     def help_project(self):
+        """
+        1)It prints the message ""Function : Help""
+        2)Uses print_info() method of class Appconfig
+          form Configuration/Appconfig.py file.
+        3)Call method usermanual() from ./DockArea.py.
+        """
         print("Function : Help")
         self.obj_appconfig.print_info('Help is called')
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
+    # This Function execute ngspice on current project.
     def open_ngspice(self):
-        """
-        This Function execute ngspice on current project
-        """
-
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
         if self.projDir is not None:
@@ -311,12 +343,29 @@ class Application(QtGui.QMainWindow):
                 create new project or open existing project')
             self.msg.setWindowTitle("Error Message")
 
+    # This function opens 'subcircuit' option in left-tool-bar.
     def open_subcircuit(self):
+        """
+        When 'subcircuit' icon is clicked wich is present in
+        left-tool-bar of main page:
+            a) Meassge shown on screen "Subcircuit editor is called".
+            b) 'subcircuiteditor()'' function is called using object
+               'obj_dockarea' of class 'Mainview'.
+        """
         print("Function : Subcircuit editor")
         self.obj_appconfig.print_info('Subcircuit editor is called')
         self.obj_Mainview.obj_dockarea.subcircuiteditor()
 
+    # This function calls NGHDl option in left-tool-bar.
     def open_nghdl(self):
+        """
+        This function uses validateTool() method from
+        Validation.py:
+            a) If 'nghdl' is present in executables list then
+               it adds passes command 'nghdl -e' to WorkerThread class of
+               Worker.py.
+            b) If 'nghdl' not present then it shows error message.
+        """
         print("Function : Nghdl")
         self.obj_appconfig.print_info('Nghdl is called')
 
@@ -333,16 +382,22 @@ class Application(QtGui.QMainWindow):
                 Please make sure nghdl is installed')
             self.msg.setWindowTitle('nghdl Error Message')
 
+    # This function opens model editor option in left-tool-bar.
     def open_modelEditor(self):
+        """
+        When model editor icon is clicked wich is present in
+        left-tool-bar of main page:
+            a) Meassge shown on screen "Model editor is called".
+            b) 'modeleditor()'' function is called using object
+               'obj_dockarea' of class 'Mainview'.
+        """
         print("Function : Model editor")
         self.obj_appconfig.print_info('Model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
 
+    # This function call ngspice to OM edit converter
+    # and then launch OM edit.
     def open_OMedit(self):
-        """
-        This function call ngspice to OM edit converter
-        and then launch OM edit.
-        """
         self.obj_appconfig.print_info('OM edit is called')
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
@@ -358,7 +413,7 @@ class Application(QtGui.QMainWindow):
                 try:
                     # Creating a command for Ngspice to Modelica converter
                     self.cmd1 = "
-                        python ../ngspicetoModelica/NgspicetoModelica.py "\
+                        python3 ../ngspicetoModelica/NgspicetoModelica.py "\
                             +self.ngspiceNetlist
                     self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
                     self.obj_workThread1.start()
@@ -415,7 +470,17 @@ class Application(QtGui.QMainWindow):
                         or open existing project')
             self.msg.setWindowTitle("Error Message")
 
+    # sdf
     def open_OMoptim(self):
+        """
+        This function uses validateTool() method from
+        Validation.py:
+            a) If 'OMOptim' is present in executables list then
+               it adds passes command 'OMOptim' to WorkerThread class of
+               Worker.py.
+            b) If 'OMOptim' not present then it shows error message with
+               link to download it on Linux and Windows.
+        """
         print("Function : OM Optim")
         self.obj_appconfig.print_info('OM Optim is called')
         # Check if OMOptim is installed
@@ -441,9 +506,17 @@ class Application(QtGui.QMainWindow):
             self.msg.exec_()
 
 
+# This class initialize the Main View of Application
 class MainView(QtGui.QWidget):
     """
-    This class initialize the Main View of Application
+    This class defines whole view and style of main page:
+        a)Position of tool bars:
+            :-Top tool bar.
+            :-Left tool bar.
+        b) Project explorer Area.
+        c) Dock area.
+        d)Console area.
+
     """
 
     def __init__(self, *args):
@@ -497,9 +570,11 @@ class MainView(QtGui.QWidget):
         self.setLayout(self.mainLayout)
 
 
+# It is main function of the module.It starts the application
 def main(args):
     """
-    It is main function of the module.It starts the application
+    The splash screen opened at the starting of screen is performed
+    by this function.
     """
     print("Starting eSim......")
     app = QtGui.QApplication(args)

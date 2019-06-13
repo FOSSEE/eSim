@@ -6,9 +6,11 @@ from subcircuit.openSub import openSub
 from subcircuit.convertSub import convertSub
 
 
+# This class creates Subcircuit GUI.
 class Subcircuit(QtGui.QWidget):
     """
-    This class creates Subcircuit GUI.
+    Creates buttons for New project, Edit existing project and
+    Kicad Netlist to Ngspice Netlist converter.
     """
 
     def __init__(self, parent=None):

@@ -34,7 +34,7 @@ Table of contents
 
    B. Double click eSim desktop icon
 
-   C. From command line : Do `cd src/fronEnd` and type `python Application.py` to open eSim.
+   C. From command line : Do `cd src/fronEnd` and type `python3 Application.py` to open eSim.
 
 
 2. eSim installation in Windows

@@ -5,9 +5,13 @@ from projManagement import Worker
 import os
 
 
+# This class is called when User create new Project.
 class NewSub(QtGui.QWidget):
     """
-    This class is called when User create new Project.
+    Contains funstions to check :
+    - Name of project should not be blank.
+    - Name should not contain space between them.
+    - Name does not match with existing project.
     """
 
     def __init__(self):

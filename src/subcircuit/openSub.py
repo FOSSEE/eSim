@@ -4,9 +4,11 @@ from projManagement.Worker import WorkerThread
 import os
 
 
+# This class is called when User clicks on Edit Subcircuit Button.
 class openSub(QtGui.QWidget):
     """
-    This class is called when User click on Open Project Button
+    It opens the existing subcircuit projects that are present in
+    Subcircuit Library.
     """
 
     def __init__(self):
