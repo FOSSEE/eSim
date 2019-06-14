@@ -58,9 +58,9 @@ class Appconfig(QtGui.QWidget):
     # Try catch added, since eSim cannot be accessed under parser for Win10
     try:
         modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')
-    except:
+    except BaseException:
         print("Cannot access eSim in parser")
-    
+
     try:
         project_explorer = json.load(open(dictPath))
     except BaseException:

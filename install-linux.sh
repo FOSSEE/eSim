@@ -1,5 +1,5 @@
-#!/bin/bash 
-#===============================================================================
+# !/bin/bash 
+# ===============================================================================
 #
 #          FILE: install.sh
 # 
@@ -17,21 +17,21 @@
 #  ORGANIZATION: FOSSEE at IIT Bombay.
 #       CREATED: Wednesday 15 July 2015 15:26
 #      REVISION:  ---
-#===============================================================================
+# ===============================================================================
 
-#All variables goes here
+# All variables goes here
 config_dir="$HOME/.esim"
 config_file="config.ini"
 eSim_Home=`pwd`
 ngspiceFlag=0
 
-##All Functions goes here
+## All Functions goes here
 
 
 function createConfigFile
 {
-    #Creating config.ini file and adding configuration information
-    #Check if config file is present
+    # Creating config.ini file and adding configuration information
+    # Check if config file is present
     if [ -d $config_dir ];then
         rm $config_dir/$config_file && touch $config_dir/$config_file
     else
@@ -73,7 +73,7 @@ if [ $getNghdl == "y" -o $getNghdl == "Y" ];then
         ngspiceFlag=1
         cd ..
     fi
-    #Creating empty eSim_kicad.lib in home directory
+    # Creating empty eSim_kicad.lib in home directory
     if [ -f $HOME/eSim_kicad.lib ];then
         echo "eSim_kicad.lib is already available"
     else
@@ -125,7 +125,7 @@ function installDependency
 function copyKicadLibrary
 {
 
-    #Copy Kicad library made for eSim
+    # Copy Kicad library made for eSim
     sudo cp -r kicadSchematicLibrary/*.lib /usr/share/kicad/library/
     sudo cp -r kicadSchematicLibrary/*.dcm /usr/share/kicad/library/
 
@@ -147,17 +147,17 @@ function copyKicadLibrary
 function createDesktopStartScript
 {
     
-    #Generating new esim-start.sh
+    # Generating new esim-start.sh
     echo "#!/bin/bash" > esim-start.sh
     echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
     echo "python3 Application.py" >> esim-start.sh
     
-    #Make it executable
+    # Make it executable
     sudo chmod 755 esim-start.sh
-    #Copy esim start script
+    # Copy esim start script
     sudo cp -vp esim-start.sh /usr/bin/esim
 
-    #Generating esim.desktop file
+    # Generating esim.desktop file
     echo "[Desktop Entry]" > esim.desktop
     getVersion=`tail -1 VERSION`
     echo "Version=$getVersion" >> esim.desktop
@@ -177,13 +177,13 @@ function createDesktopStartScript
     echo "Actions=NewWindow;NewPrivateWindow;" >> esim.desktop
 
 
-    #Make esim.desktop file executable
+    # Make esim.desktop file executable
     sudo chmod 755 esim.desktop
-    #Copy desktop icon file to Desktop
+    # Copy desktop icon file to Desktop
     cp -vp esim.desktop $HOME/Desktop/
 
 
-    #Copying logo.png to .esim directory to access as icon
+    # Copying logo.png to .esim directory to access as icon
     cp -vp images/logo.png $config_dir
 }
 
@@ -193,7 +193,7 @@ function createDesktopStartScript
 
 
 
-###Checking if file is passsed as argument to script
+### Checking if file is passsed as argument to script
 
 if [ "$#" -eq 1 ];then
     option=$1
@@ -203,7 +203,7 @@ else
     exit 1;
 fi
 
-##Checking flags
+## Checking flags
 
 if [ $option == "--install" ];then
     echo "Enter proxy details if you are connected to internet thorugh proxy"
@@ -239,7 +239,7 @@ if [ $option == "--install" ];then
             export FTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
 
             echo "Install with proxy"
-            #Calling functions
+            # Calling functions
             createConfigFile
             installNghdl
             addKicadPPA
@@ -250,7 +250,7 @@ if [ $option == "--install" ];then
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
             
-            #Calling functions
+            # Calling functions
             createConfigFile
             installNghdl
             addKicadPPA

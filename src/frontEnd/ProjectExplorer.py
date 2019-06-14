@@ -6,12 +6,20 @@ from configuration.Appconfig import Appconfig
 
 # This is main class for Project Explorer Area.
 class ProjectExplorer(QtGui.QWidget):
-    """ """
+    """
+    This class contains function:
+        a)One work as a constructor(__init__).
+        b)For saving data.
+        c)for renaming project.
+        d)for refreshing project.
+        e)for removing project.
+        f) for saving data.
+    """
 
     def __init__(self):
         """
         This method is doing following tasks:
-            a)initializing objects used in full program.
+            a)Working as a constructor for class ProjectExplorer.
             b)view of project explorer area.
         """
         QtGui.QWidget.__init__(self)
@@ -24,20 +32,20 @@ class ProjectExplorer(QtGui.QWidget):
 
         # CSS
         self.treewidget.setStyleSheet(" \
-        QTreeView { border-radius: 15px; border: 1px solid gray; padding: \
-        5px; width: 200px; height: 150px;  } \
-        QTreeView::branch:has-siblings:!adjoins-item { border-image:\
-         url(../../images/vline.png) 0; } \
-        QTreeView::branch:has-siblings:adjoins-item { border-image:\
-         url(../../images/branch-more.png) 0; } \
-        QTreeView::branch:!has-children:!has-siblings:\
-        adjoins-item { border-image: url(../../images/branch-end.png) 0; } \
-        QTreeView::branch:has-children:!has-siblings:closed, \
-        QTreeView::branch:closed:has-children:has-siblings { border-image:\
-         none; image: url(../../images/branch-closed.png); } \
-        QTreeView::branch:open:has-children:!has-siblings, \
-        QTreeView::branch:open:has-children:has-siblings { border-image: \
-        none; image: url(../../images/branch-open.png); } \
+            QTreeView::branch:has-siblings:!adjoins-item { \
+            border-image: url(../../images/vline.png) 0;} \
+            QTreeView::branch:has-siblings:adjoins-item { \
+            border-image: url(../../images/branch-more.png) 0; } \
+            QTreeView::branch:!has-children:!has-siblings:adjoins-item { \
+            border-image: url(../../images/branch-end.png) 0; } \
+            QTreeView::branch:has-children:!has-siblings:closed, \
+            QTreeView::branch:closed:has-children:has-siblings { \
+            border-image: none; \
+            image: url(../../images/branch-closed.png); } \
+            QTreeView::branch:open:has-children:!has-siblings, \
+            QTreeView::branch:open:has-children:has-siblings  { \
+            border-image: none; \
+            image: url(../../images/branch-open.png); } \
         ")
 
         for parents, children in list(
@@ -45,8 +53,9 @@ class ProjectExplorer(QtGui.QWidget):
             os.path.join(parents)
             if os.path.exists(parents):
                 pathlist = parents.split(os.sep)
-                parentnode = QtGui.QTreeWidgetItem(self.treewidget,
-                                                   [pathlist[-1], parents])
+                parentnode = QtGui.QTreeWidgetItem(
+                    self.treewidget, [pathlist[-1], parents]
+                )
                 for files in children:
                     QtGui.QTreeWidgetItem(
                         parentnode, [files, os.path.join(parents, files)])
@@ -64,9 +73,9 @@ class ProjectExplorer(QtGui.QWidget):
         parentnode = QtGui.QTreeWidgetItem(
             self.treewidget, [pathlist[-1], parents])
         for files in children:
-            QtGui.QTreeWidgetItem(  
+            QtGui.QTreeWidgetItem(
                 parentnode, [files, os.path.join(parents, files)]
-                )
+            )
 
         (
             self.obj_appconfig.
@@ -89,6 +98,8 @@ class ProjectExplorer(QtGui.QWidget):
 
         menu = QtGui.QMenu()
         if level == 0:
+            renameProject = menu.addAction(self.tr("Rename Project"))
+            renameProject.triggered.connect(self.renameProject)
             deleteproject = menu.addAction(self.tr("Remove Project"))
             deleteproject.triggered.connect(self.removeProject)
             refreshproject = menu.addAction(self.tr("Refresh"))
@@ -159,6 +170,10 @@ class ProjectExplorer(QtGui.QWidget):
 
     # This function is saving data before it closes the given file.
     def save_data(self):
+        """
+        This function first opens file in write-mode, when write
+        operation is performed it closes that file and then window.
+        """
         self.fopen = open(self.filePath, 'w')
         self.fopen.write(self.text.toPlainText())
         self.fopen.close()
@@ -167,7 +182,9 @@ class ProjectExplorer(QtGui.QWidget):
     # This function removes the project in explorer area by right
     # clicking on project and selecting remove option.
     def removeProject(self):
-        """ """
+        """
+
+        """
         self.indexItem = self.treewidget.currentIndex()
         self.filePath = str(
             self.indexItem.sibling(
@@ -199,7 +216,7 @@ class ProjectExplorer(QtGui.QWidget):
             for items in self.treewidget.selectedItems():
                 items.removeChild(items.child(0))
         for files in filelistnew:
-            QtGui.QTreeWidgetItem(  
+            QtGui.QTreeWidgetItem(
                 parentnode, [
                     files, os.path.join(
                         self.filePath, files)])
@@ -207,3 +224,53 @@ class ProjectExplorer(QtGui.QWidget):
         self.obj_appconfig.project_explorer[self.filePath] = filelistnew
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath, 'w'))
+
+    # """
+    def renameProject(self):
+        indexItem = self.treewidget.currentIndex()
+        baseFileName = str(indexItem.data())
+        newBaseFileName, ok = QtGui.QInputDialog.getText(
+            self, 'Rename Project', 'Project Name:',
+            QtGui.QLineEdit.Normal, baseFileName
+        )
+        if ok and newBaseFileName:
+            newBaseFileName = str(newBaseFileName)
+            projectPath, projectFiles = list(
+                self.obj_appconfig.project_explorer.items())[indexItem.row()]
+            updatedProjectFiles = []
+
+            # rename files matching project name
+            for projectFile in projectFiles:
+                if baseFileName in projectFile:
+                    oldFilePath = os.path.join(projectPath, projectFile)
+                    projectFile = projectFile.replace(
+                        baseFileName, newBaseFileName, 1)
+                    newFilePath = os.path.join(projectPath, projectFile)
+                    print ("Renaming " + oldFilePath + " to " + newFilePath)
+                    os.rename(oldFilePath, newFilePath)
+
+                    updatedProjectFiles.append(projectFile)
+
+            # rename project folder
+            updatedProjectPath = newBaseFileName.join(
+                projectPath.rsplit(baseFileName, 1))
+            print ("Renaming " + projectPath + " to " + updatedProjectPath)
+            os.rename(projectPath, updatedProjectPath)
+
+            # update project_explorer dictionary
+            del self.obj_appconfig.project_explorer[projectPath]
+            self.obj_appconfig.project_explorer[updatedProjectPath] = (
+                updatedProjectFiles
+            )
+
+            # save project_explorer dictionary on disk
+            json.dump(self.obj_appconfig.project_explorer,
+                      open(self.obj_appconfig.dictPath, 'w'))
+
+            # recreate project explorer tree
+            self.treewidget.clear()
+            for parent, children in (
+                self.obj_appconfig.project_explorer.items()
+            ):
+                self.addTreeNode(parent, children)
+        # """

@@ -65,6 +65,8 @@ class DeviceModel(QtGui.QWidget):
         print("Reading Device model details from Schematic")
 
         for eachline in schematicInfo:
+            print("=========================================")
+            print(eachline)
             words = eachline.split()
             if eachline[0] == 'q':
                 print("Device Model Transistor: ", words[0])
@@ -82,7 +84,7 @@ class DeviceModel(QtGui.QWidget):
 
                 try:
                     for key in json_data["deviceModel"]:
-                        if key[0] == eachline[0] and key[1] == eachline[1]:
+                        if key == words[0]:
                             # print "DEVICE MODEL MATCHING---",child.tag[0],\
                             # child.tag[1],eachline[0],eachline[1]
                             try:
@@ -148,7 +150,7 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for key in json_data["deviceModel"]:
-                        if key[0] == eachline[0] and key[1] == eachline[1]:
+                        if key == words[0]:
                             # print "DEVICE MODEL MATCHING---",child.tag[0],\
                             # child.tag[1],eachline[0],eachline[1]
                             try:
@@ -213,7 +215,7 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for key in json_data["deviceModel"]:
-                        if key[0] == eachline[0] and key[1] == eachline[1]:
+                        if key == words[0]:
                             # print "DEVICE MODEL MATCHING---",child.tag[0],\
                             # child.tag[1],eachline[0],eachline[1]
                             try:
@@ -326,7 +328,7 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for key in json_data["deviceModel"]:
-                        if key[0] == eachline[0] and key[1] == eachline[1]:
+                        if key == words[0]:
                             # print "DEVICE MODEL MATCHING---",child.tag[0],\
                             # child.tag[1],eachline[0],eachline[1]
                             while i <= end:
@@ -337,7 +339,7 @@ class DeviceModel(QtGui.QWidget):
                                             json_data["deviceModel"][key][0]):
                                         path_name = (
                                             json_data["deviceModel"][key][0]
-                                            )
+                                        )
                                     else:
                                         self.entry_var[i].setText("")
                                 i = i + 1
@@ -408,6 +410,7 @@ class DeviceModel(QtGui.QWidget):
         self.widgetObjCount = iter_value
         print("self.widgetObjCount-----", self.widgetObjCount)
         self.libfile = path_value
+        print("PATH VALUE", path_value)
         # print "Selected Library File :",self.libfile
 
         # Setting Library to Text Edit Line

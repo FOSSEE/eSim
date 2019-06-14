@@ -41,6 +41,7 @@ class MainWindow(QtGui.QWidget):
     - clarg1 is the path to the .cir file
     - clarg2 is either None or "sub" depending on the analysis type
     """
+
     def __init__(self, clarg1, clarg2=None):
         QtGui.QWidget.__init__(self)
         print("==================================")
@@ -107,7 +108,7 @@ class MainWindow(QtGui.QWidget):
             unknownModelList,
             multipleModelList,
             plotText
-            ) = obj_proc.convertICintoBasicBlocks(
+        ) = obj_proc.convertICintoBasicBlocks(
             schematicInfo, outputOption, modelList, plotText
         )
         print("=======================================")
@@ -483,8 +484,7 @@ class MainWindow(QtGui.QWidget):
             for key, value in line[7].items():
                 if(
                     hasattr(value, '__iter__') and
-                    i <= end and type(value) is not
-                    str
+                    i <= end and not isinstance(value, str)
                 ):
                     for item in value:
                         fields = {

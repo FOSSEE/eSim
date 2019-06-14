@@ -1,4 +1,5 @@
-         # Used for decimal division eg 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
+from __future__ import division  # Used for decimal division eg
+# 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
 import os
 from PyQt4 import QtGui, QtCore
 from decimal import Decimal, getcontext
@@ -19,6 +20,7 @@ class plotWindow(QtGui.QMainWindow):
     '''
 
     def __init__(self, fpath, projectName):
+        """This create constructor for plotWindow class."""
         QtGui.QMainWindow.__init__(self)
         self.fpath = fpath
         self.projectName = projectName
@@ -59,7 +61,7 @@ class plotWindow(QtGui.QMainWindow):
         # Get DataExtraction Details
         self.obj_dataext = DataExtraction()
         self.plotType = self.obj_dataext.openFile(self.fpath)
-        
+
         self.obj_dataext.computeAxes()
         self.a = self.obj_dataext.numVals()
 
@@ -125,7 +127,7 @@ class plotWindow(QtGui.QMainWindow):
         self.warnning = QtGui.QLabel()
         self.funcName = QtGui.QLabel()
         self.funcExample = QtGui.QLabel()
-    
+
         self.plotbtn = QtGui.QPushButton("Plot")
         self.plotbtn.setToolTip('<b>Press</b> to Plot')
         self.multimeterbtn = QtGui.QPushButton("Multimeter")
@@ -155,11 +157,11 @@ class plotWindow(QtGui.QMainWindow):
         self.right_grid.addWidget(self.funcName, 4, 0)
         self.right_grid.addWidget(self.funcExample, 4, 1)
         self.right_vbox.addLayout(self.right_grid)
-        
+
         self.hbox = QtGui.QHBoxLayout()
         self.hbox.addLayout(self.left_vbox)
         self.hbox.addLayout(self.right_vbox)
-    
+
         self.widget = QtGui.QWidget()
         self.widget.setLayout(self.hbox)  # finalvbox
         self.scrollArea = QtGui.QScrollArea()
@@ -174,7 +176,7 @@ class plotWindow(QtGui.QMainWindow):
         # Right side window frame showing list of nodes and branches.
         self.mainFrame.setLayout(self.finalhbox)
         self.showMaximized()
-    
+
         self.listNode.setText("<font color='indigo'>List of Nodes:</font>")
         self.listBranch.setText(
             "<font color='indigo'>List of Branches:</font>")
@@ -235,20 +237,20 @@ class plotWindow(QtGui.QMainWindow):
         self.axes.cla()
         self.canvas.draw()
         QtCore.SLOT('quit()')
-        
+
     def pushedPlotFunc(self):
         self.parts = str(self.text.text())
         self.parts = self.parts.split(" ")
 
         if self.parts[len(self.parts) - 1] == '':
             self.parts = self.parts[0:-1]
-        
+
         self.values = self.parts
         self.comboAll = []
-        self.axes.cla()   
-        
+        self.axes.cla()
+
         self.plotType2 = self.obj_dataext.openFile(self.fpath)
-        
+
         if len(self.parts) <= 2:
             self.warnning.setText("Too few arguments!\nRefer syntax below!")
             QtGui.QMessageBox.about(
@@ -281,7 +283,7 @@ class plotWindow(QtGui.QMainWindow):
             self.comboAll.append(self.obj_dataext.y[i])
 
         for i in range(len(a)):
-            
+
             if a[i] == len(self.obj_dataext.NBList):
                 QtGui.QMessageBox.about(
                     self, "Warning!!", "One of the operands doesn't belong\
@@ -298,9 +300,9 @@ class plotWindow(QtGui.QMainWindow):
 
             else:
                 self.axes.cla()
-            
+
                 for i in range(len(self.obj_dataext.y[a[0]])):
-                    self.combo.append(self.obj_dataext.y[a[0]][i]) 
+                    self.combo.append(self.obj_dataext.y[a[0]][i])
                     self.combo1.append(self.obj_dataext.y[a[1]][i])
 
                 self.axes.plot(
@@ -314,7 +316,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_xlabel('Voltage(V)-->')
                 else:
                     self.axes.set_ylabel('Current(I)-->')
-                    self.axes.set_ylabel('Current(I)-->')        
+                    self.axes.set_ylabel('Current(I)-->')
 
         elif max(a) >= self.volts_length and min(a) < self.volts_length:
             QtGui.QMessageBox.about(
@@ -348,7 +350,7 @@ class plotWindow(QtGui.QMainWindow):
                         label=str(1))
 
                 self.axes.set_xlabel('freq-->')
-                
+
                 if max(a) < self.volts_length:
                     self.axes.set_ylabel('Voltage(V)-->')
                 else:
@@ -366,7 +368,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Voltage(V)-->')
                 else:
                     self.axes.set_ylabel('Current(I)-->')
-                    
+
             else:
                 # self.setWindowTitle('DC Analysis')
                 self.axes.plot(
@@ -406,7 +408,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Voltage(V)-->')
                 else:
                     self.axes.set_ylabel('Current(I)-->')
-        
+
                 self.axes.grid(True)
         if boxCheck == 0:
             QtGui.QMessageBox.about(
@@ -435,7 +437,7 @@ class plotWindow(QtGui.QMainWindow):
             QtGui.QMessageBox.about(
                 self, "Warning!!", "Please select at least one Node OR Branch")
         self.canvas.draw()
-        
+
     def onPush_trans(self):
         self.axes.cla()
         boxCheck = 0
@@ -472,7 +474,7 @@ class plotWindow(QtGui.QMainWindow):
                     label=str(
                         j + 1))
                 self.axes.set_xlabel('Voltage Sweep(V)-->')
-                
+
                 if j < self.volts_length:
                     self.axes.set_ylabel('Voltage(V)-->')
                 else:
@@ -493,7 +495,7 @@ class plotWindow(QtGui.QMainWindow):
             'm': 'color:magenta',
             'k': 'color:black'
         }[letter]
-        
+
     def multiMeter(self):
         print("Function : MultiMeter")
         self.obj = {}
@@ -535,7 +537,7 @@ class plotWindow(QtGui.QMainWindow):
 class MultimeterWidgetClass(QtGui.QWidget):
     def __init__(self, node_branch, rmsValue, loc_x, loc_y, voltFlag):
         QtGui.QWidget.__init__(self)
-        
+
         self.multimeter = QtGui.QWidget(self)
         if voltFlag:
             self.node_branchLabel = QtGui.QLabel("Node")
@@ -559,7 +561,7 @@ class MultimeterWidgetClass(QtGui.QWidget):
         self.setWindowTitle("MultiMeter")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.show()
-        
+
 
 class DataExtraction:
     def __init__(self):
@@ -578,7 +580,7 @@ class DataExtraction:
         # Reading data file for voltage
         with open(os.path.join(fpath, "plot_data_v.txt")) as f2:
             self.voltData = f2.read()
-        
+
         self.voltData = self.voltData.split("\n")
 
         # Initializing variable
@@ -619,7 +621,7 @@ class DataExtraction:
             self.analysisType = 0
             if "dec" in self.analysisInfo:
                 self.dec = 1
-        
+
             for i in self.voltData[3:]:
                 p += 1  # 'p' gives no. of lines of data for each node/branch
                 if "Index" in i:
@@ -628,7 +630,7 @@ class DataExtraction:
                 # print "l:",l
                 if "AC" in i:  # DC for dc files and AC for ac ones
                     break
-        
+
         elif ".tran" in self.analysisInfo:
             self.analysisType = 1
             for i in self.voltData[3:]:
@@ -651,7 +653,6 @@ class DataExtraction:
                 # print "l:",l
                 if "DC" in i:  # DC for dc files and AC for ac ones
                     break
-        
 
         # print "VoltNumber",vnumber
         # print "CurrentNumber",inumber
@@ -669,7 +670,7 @@ class DataExtraction:
         try:
             with open(os.path.join(fpath, "plot_data_i.txt")) as f2:
                 alli = f2.read()
-                
+
             alli = alli.split("\n")
             self.NBIList = []
 
@@ -682,7 +683,7 @@ class DataExtraction:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Unable to open plot data files.')
             self.msg.setWindowTitle("Error Message:openFile")
-            
+
         try:
             for l in alli[3].split(" "):
                 if len(l) > 0:
@@ -718,7 +719,7 @@ class DataExtraction:
         inum_i = len(alli[5].split("\t"))
 
         full_data = []
-        
+
         # Creating list of data:
         if d3 < 3:
             for i in range(1, d2):
@@ -783,9 +784,9 @@ class DataExtraction:
                         if self.NBList[len(self.NBList) - 1] == 'v-sweep':
                             self.NBList.pop()
                             j1.pop()
-            
+
                         j1.pop()
-                        j = j + j1 
+                        j = j + j1
                     j = j + full_data[m]
                     # print j
                     m += 1
@@ -825,18 +826,3 @@ class DataExtraction:
         for i in self.data:
             temp = i.split("\t")
             self.x.append(Decimal(temp[0]))
-
-    
-        
-            
-        
-            
-            
-        
-            
-        
-        
-        
-        
-        
-        
