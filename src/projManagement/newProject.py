@@ -36,9 +36,11 @@ class NewProjectInfo(QtGui.QWidget):
 
     def createProject(self, projName):
         """
-        This function create Project related directories and files
+        This function create Project related directories and files.
         Before creating also validates using the `Validation` class
-        Validation codes -
+
+        Validation codes  
+
         - VALID
         - CHECKEXIST
         - CHECKNAME

@@ -1,5 +1,5 @@
 Project Management Component
-==========================
+============================
 
 .. toctree::
 	:maxdepth: 2
@@ -8,5 +8,7 @@ Project Management Component
 	projectManagement/Kicad
 	projectManagement/Validation
 	projectManagement/Worker
+	projectManagement/openProject
+	projectManagement/newProject
 
 

@@ -8,9 +8,9 @@ from xml.etree import ElementTree as ET
 
 class Convert:
     """
-    - This class has all the necessary function required to convert
+    - This class has all the necessary function required to convert \
     kicad netlist to ngspice netlist.
-    - Method List -
+    - Method List
     - - addDeviceLibrary
     - - addModelParameter
     - - addSourceParameter

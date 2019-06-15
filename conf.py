@@ -16,7 +16,8 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('./src'))
 
-autodoc_mock_imports = ['src/configuration/Appconfig']
+# added so that do not need to install them at runtime
+autodoc_mock_imports = ["PyQt4","pathmagic","matplotlib","numpy"]
 # -- Project information -----------------------------------------------------
 
 project = u'eSim'
@@ -75,7 +76,7 @@ pygments_style = None
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = "alabaster"
+html_theme = "default"
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
