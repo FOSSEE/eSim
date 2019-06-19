@@ -20,11 +20,18 @@ from configuration.Appconfig import Appconfig
 import time
 import os
 
+
 # This class creates Workspace GUI.
-
-
 class Workspace(QtGui.QWidget):
     """
+    This class creates UI for WorkSpace selection window.
+
+        This window contains text area to select location of your choice
+        or browse location for workspace area.
+
+        By default workspace is set in ~/eSim-Workspace.
+
+         This workspace area contains all the projects made by user.
 
     """
 

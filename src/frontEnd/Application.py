@@ -39,7 +39,6 @@ class Application(QtGui.QMainWindow):
 
     def __init__(self, *args):
         """Initialize main Application window."""
-
         # Calling __init__ of super class
         QtGui.QMainWindow.__init__(self, *args)
 
@@ -69,12 +68,11 @@ class Application(QtGui.QMainWindow):
     def initToolBar(self):
         """
         In this function we are setting icons, short-cuts,and
-        defining functonality for:.
-            a)Top-tool-bar (New project, Open project, Close
-              project, Help option )
-            b)Left-tool-bar (Open Schematic, Convert KiCad to
-              NgSpice, Simuation, Model Editor, Subcircuit, NGHDL,
-              Modelica Converter, OM Optimisation )
+        defining functonality for:
+
+            - Top-tool-bar (New project, Open project, Close project, Help option )
+            - Left-tool-bar (Open Schematic, Convert KiCad to NgSpice, Simuation,
+              Model Editor, Subcircuit, NGHDL, Modelica Converter, OM Optimisation )
         """
         # Top Tool bar
         self.newproj = QtGui.QAction(
@@ -199,16 +197,17 @@ class Application(QtGui.QMainWindow):
         When exit button is pressed a Message box pops out with
         exit message and buttons 'Yes', 'No'.
 
-        1. If 'Yes' is pressed:.
-            a)it checks that program(process) in procThread_list
-              (list made in Appconfig.py):
-                a.1) if available it terminates that program
-                a.2) if the program(process) is not available,
-                     it checks for it in process_obj (list made in
-                 Appconfig.py) if found it closes the program.
+            1. If 'Yes' is pressed:
+                - it checks that program(process) in procThread_list (list made in
+                    Appconfig.py):
 
-        2. If 'No' is pressed:
-            a)the program just continues as it was doing earlier.
+                    - if available it terminates that program
+                    - if the program(process) is not available, it checks for it
+                      in process_obj (list made in Appconfig.py) if found it
+                      closes the program.
+
+            2. If 'No' is pressed:
+                - the program just continues as it was doing earlier.
         '''
         exit_msg = "Are you sure you want to exit the program\
             ? All unsaved data will be lost."
@@ -246,11 +245,13 @@ class Application(QtGui.QMainWindow):
     def close_project(self):
         """
         This function first checks whether project(file) is present in list.
-            a)If present:
-                 :-it first kills that process-id.
-                 :-closes that file.
-                 :-Shows message "Current project <path of file> is closed"
-            b)If not present:-  pass
+
+            - If present:
+                - it first kills that process-id.
+                - closes that file.
+                - Shows message "Current project <path of file> is closed"
+
+            - If not present: pass
         """
         print("Function : Close Project")
         current_project = self.obj_appconfig.current_project['ProjectName']
@@ -308,10 +309,10 @@ class Application(QtGui.QMainWindow):
     # This page opens usermanual in dockarea.
     def help_project(self):
         """
-        1)It prints the message ""Function : Help""
-        2)Uses print_info() method of class Appconfig
-          form Configuration/Appconfig.py file.
-        3)Call method usermanual() from ./DockArea.py.
+        - It prints the message ""Function : Help""
+        - Uses print_info() method of class Appconfig
+          from Configuration/Appconfig.py file.
+        - Call method usermanual() from ./DockArea.py.
         """
         print("Function : Help")
         self.obj_appconfig.print_info('Help is called')
@@ -348,9 +349,10 @@ class Application(QtGui.QMainWindow):
         """
         When 'subcircuit' icon is clicked wich is present in
         left-tool-bar of main page:
-            a) Meassge shown on screen "Subcircuit editor is called".
-            b) 'subcircuiteditor()'' function is called using object
-               'obj_dockarea' of class 'Mainview'.
+
+            - Meassge shown on screen "Subcircuit editor is called".
+            - 'subcircuiteditor()' function is called using object
+              'obj_dockarea' of class 'Mainview'.
         """
         print("Function : Subcircuit editor")
         self.obj_appconfig.print_info('Subcircuit editor is called')
@@ -361,10 +363,11 @@ class Application(QtGui.QMainWindow):
         """
         This function uses validateTool() method from
         Validation.py:
-            a) If 'nghdl' is present in executables list then
-               it adds passes command 'nghdl -e' to WorkerThread class of
-               Worker.py.
-            b) If 'nghdl' not present then it shows error message.
+
+            - If 'nghdl' is present in executables list then
+              it adds passes command 'nghdl -e' to WorkerThread class of
+              Worker.py.
+            - If 'nghdl' not present then it shows error message.
         """
         print("Function : Nghdl")
         self.obj_appconfig.print_info('Nghdl is called')
@@ -385,11 +388,12 @@ class Application(QtGui.QMainWindow):
     # This function opens model editor option in left-tool-bar.
     def open_modelEditor(self):
         """
-        When model editor icon is clicked wich is present in
+        When model editor icon is clicked which is present in
         left-tool-bar of main page:
-            a) Meassge shown on screen "Model editor is called".
-            b) 'modeleditor()'' function is called using object
-               'obj_dockarea' of class 'Mainview'.
+
+            - Meassge shown on screen "Model editor is called".
+            - 'modeleditor()' function is called using object
+              'obj_dockarea' of class 'Mainview'.
         """
         print("Function : Model editor")
         self.obj_appconfig.print_info('Model editor is called')
@@ -475,11 +479,12 @@ class Application(QtGui.QMainWindow):
         """
         This function uses validateTool() method from
         Validation.py:
-            a) If 'OMOptim' is present in executables list then
-               it adds passes command 'OMOptim' to WorkerThread class of
-               Worker.py.
-            b) If 'OMOptim' not present then it shows error message with
-               link to download it on Linux and Windows.
+
+            - If 'OMOptim' is present in executables list then
+              it adds passes command 'OMOptim' to WorkerThread class of
+              Worker.py.
+            - If 'OMOptim' not present then it shows error message with
+              link to download it on Linux and Windows.
         """
         print("Function : OM Optim")
         self.obj_appconfig.print_info('OM Optim is called')
@@ -510,12 +515,15 @@ class Application(QtGui.QMainWindow):
 class MainView(QtGui.QWidget):
     """
     This class defines whole view and style of main page:
-        a)Position of tool bars:
-            :-Top tool bar.
-            :-Left tool bar.
-        b) Project explorer Area.
-        c) Dock area.
-        d)Console area.
+
+        - Position of tool bars:
+
+         - Top tool bar.
+         - Left tool bar.
+
+        - Project explorer Area.
+        - Dock area.
+        - Console area.
 
     """
 

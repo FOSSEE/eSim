@@ -17,10 +17,21 @@ dock = {}
 
 #
 class DockArea(QtGui.QMainWindow):
-    """Sdf."""
+    """
+    This class contains function for designing UI of all the editors
+    in dock area part:
+    
+        - Test Editor.
+        - Model Editor.
+        - Python Plotting.
+        - NgSpice Editor.
+        - Kicad to NgSpice Editor.
+        - Subcircuit Editor.
+        - Modelica editor.
+    """
 
     def __init__(self):
-        """Sdf."""
+        """This act as constructor for class DockArea."""
         QtGui.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
 
@@ -43,9 +54,8 @@ class DockArea(QtGui.QMainWindow):
         # self.tabifyDockWidget(dock['Notes'],dock['Blank'])
         self.show()
 
-    # This function create widget for Library Editor
     def createTestEditor(self):
-        """Sdf."""
+        """This function create widget for Library Editor."""
         global count
         self.testWidget = QtGui.QWidget()
         self.testArea = QtGui.QTextEdit()
@@ -71,9 +81,8 @@ class DockArea(QtGui.QMainWindow):
             dock['Tips-' + str(count)])
         count = count + 1
 
-    # This function create widget for interactive PythonPlotting
     def plottingEditor(self):
-        """Sdf."""
+        """This function create widget for interactive PythonPlotting"""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.projName = os.path.basename(self.projDir)
         # self.project = os.path.join(self.projDir,self.projName)
@@ -102,7 +111,6 @@ class DockArea(QtGui.QMainWindow):
             dock['Plotting-' + str(count)])
         count = count + 1
 
-    # This function creates widget for NgSpice window.
     def ngspiceEditor(self, projDir):
         """Sdf."""
         self.projDir = projDir
@@ -142,9 +150,8 @@ class DockArea(QtGui.QMainWindow):
             dock['NgSpice-' + str(count)])
         count = count + 1
 
-    # This function defines UI for model editor.
     def modelEditor(self):
-        """Sdf."""
+        """This function defines UI for model editor."""
         print("in model editor")
         global count
         self.modelwidget = QtGui.QWidget()
@@ -178,9 +185,8 @@ class DockArea(QtGui.QMainWindow):
             dock['Model Editor-' + str(count)])
         count = count + 1
 
-    # This function is creating Editor UI for Kicad to Ngspice conversion.
     def kicadToNgspiceEditor(self, clarg1, clarg2=None):
-        """Sdf."""
+        """This function is creating Editor UI for Kicad to Ngspice conversion."""
         global count
         self.kicadToNgspiceWidget = QtGui.QWidget()
         self.kicadToNgspiceLayout = QtGui.QVBoxLayout()
@@ -211,9 +217,8 @@ class DockArea(QtGui.QMainWindow):
             dock['kicadToNgspice-' + str(count)])
         count = count + 1
 
-    # This function creates a widget for different subcircuit options.
     def subcircuiteditor(self):
-        """Sdf."""
+        """This function creates a widget for different subcircuit options."""
         global count
         self.subcktWidget = QtGui.QWidget()
         self.subcktLayout = QtGui.QVBoxLayout()
@@ -243,9 +248,7 @@ class DockArea(QtGui.QMainWindow):
             dock['Subcircuit-' + str(count)])
         count = count + 1
 
-    # This function creates a widget for different subcircuit options.
     def usermanual(self):
-        """Sdf."""
         global count
         self.usermanualWidget = QtGui.QWidget()
         self.usermanualLayout = QtGui.QVBoxLayout()
@@ -272,7 +275,6 @@ class DockArea(QtGui.QMainWindow):
 
         count = count + 1
 
-    # This function sets up the UI for ngspice to modelica conversion.
     def modelicaEditor(self, projDir):
         """Dfg."""
         global count
@@ -303,9 +305,11 @@ class DockArea(QtGui.QMainWindow):
 
         count = count + 1
 
-    # This function when called closes the opened file.
     def closeDock(self):
-        """Sdf."""
+        """
+        This function checks for the project in **dock_dict**
+        and closes it.
+        """
         self.temp = self.obj_appconfig.current_project['ProjectName']
         for dockwidget in self.obj_appconfig.dock_dict[self.temp]:
             dockwidget.close()

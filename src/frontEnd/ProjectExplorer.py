@@ -8,19 +8,20 @@ from configuration.Appconfig import Appconfig
 class ProjectExplorer(QtGui.QWidget):
     """
     This class contains function:
-        a)One work as a constructor(__init__).
-        b)For saving data.
-        c)for renaming project.
-        d)for refreshing project.
-        e)for removing project.
-        f) for saving data.
+
+        - One work as a constructor(__init__).
+        - For saving data.
+        - for renaming project.
+        - for refreshing project.
+        - for removing project.
+        - for saving data.
     """
 
     def __init__(self):
         """
         This method is doing following tasks:
-            a)Working as a constructor for class ProjectExplorer.
-            b)view of project explorer area.
+            - Working as a constructor for class ProjectExplorer.
+            - view of project explorer area.
         """
         QtGui.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
@@ -55,7 +56,7 @@ class ProjectExplorer(QtGui.QWidget):
                 pathlist = parents.split(os.sep)
                 parentnode = QtGui.QTreeWidgetItem(
                     self.treewidget, [pathlist[-1], parents]
-                )
+                    )
                 for files in children:
                     QtGui.QTreeWidgetItem(
                         parentnode, [files, os.path.join(parents, files)])
@@ -172,7 +173,7 @@ class ProjectExplorer(QtGui.QWidget):
     def save_data(self):
         """
         This function first opens file in write-mode, when write
-        operation is performed it closes that file and then window.
+        operation is performed it closes that file and then it closes window.
         """
         self.fopen = open(self.filePath, 'w')
         self.fopen.write(self.text.toPlainText())
@@ -225,7 +226,6 @@ class ProjectExplorer(QtGui.QWidget):
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath, 'w'))
 
-    # """
     def renameProject(self):
         indexItem = self.treewidget.currentIndex()
         baseFileName = str(indexItem.data())
@@ -273,4 +273,3 @@ class ProjectExplorer(QtGui.QWidget):
                 self.obj_appconfig.project_explorer.items()
             ):
                 self.addTreeNode(parent, children)
-        # """
