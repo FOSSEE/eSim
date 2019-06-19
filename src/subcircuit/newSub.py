@@ -8,10 +8,7 @@ import os
 # This class is called when User create new Project.
 class NewSub(QtGui.QWidget):
     """
-    Contains funstions to check :
-    - Name of project should not be blank.
-    - Name should not contain space between them.
-    - Name does not match with existing project.
+    Contains functions to create directory and validate file names.
     """
 
     def __init__(self):
@@ -21,7 +18,11 @@ class NewSub(QtGui.QWidget):
 
     def createSubcircuit(self, subName):
         """
-        This function create Subcircuit related directories and files
+        - This function create workspace for subcircuit.
+        - It also validate file names for Subcircuits:
+            - File name should not contain space.
+            - Name can not be empty.
+            - File name already exists.
         """
         self.create_schematic = subName
         # Checking if Workspace already exist or not
