@@ -226,7 +226,7 @@ class ProjectExplorer(QtGui.QWidget):
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath, 'w'))
 
-    def renameProject(self):
+    '''def renameProject(self):
         indexItem = self.treewidget.currentIndex()
         baseFileName = str(indexItem.data())
         newBaseFileName, ok = QtGui.QInputDialog.getText(
@@ -273,3 +273,4 @@ class ProjectExplorer(QtGui.QWidget):
                 self.obj_appconfig.project_explorer.items()
             ):
                 self.addTreeNode(parent, children)
+                '''
