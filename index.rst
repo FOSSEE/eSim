@@ -8,23 +8,23 @@ Welcome to eSim's documentation!
 
 .. image:: ./images/ki-ng.png
     :width: 100px
-    :target: file:///home/neel/Projects/eSim/_build/code/kicadtoNgspice.html
+    :target: https://esim.readthedocs.io/en/latest/code/kicadtoNgspice.html
 
 .. image:: ./images/kicad.png
     :width: 100px
-    :target: file:///home/neel/Projects/eSim/_build/code/projectManagement/Kicad.html
+    :target: https://esim.readthedocs.io/en/latest/code/projectManagement/Kicad.html
 
 .. image:: ./images/model.png
     :width: 100px
-    :target: file:///home/neel/Projects/eSim/_build/code/modelEditor.html
+    :target: https://esim.readthedocs.io/en/latest/code/modelEditor.html
 
 .. image:: ./images/ngspice.png
     :width: 100px
-    :target: file:///home/neel/Projects/eSim/_build/code/ngspiceSimulation.html
+    :target: https://esim.readthedocs.io/en/latest/code/ngspiceSimulation.html
 
 .. image:: ./images/subckt.png
     :width: 100px
-    :target: file:///home/neel/Projects/eSim/_build/code/subcircuit.html
+    :target: https://esim.readthedocs.io/en/latest/code/subcircuit.html
 
 .. toctree::
    :maxdepth: 3
