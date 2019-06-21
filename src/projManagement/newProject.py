@@ -45,14 +45,6 @@ class NewProjectInfo(QtGui.QWidget):
         - CHECKNAME
         - NONE
 
-        @params
-            :projName   => name of the project created passed from
-                        frontEnd/Application new_project()
-
-        @return
-            :dirs        => The directories inside the project folder
-            :filelist    => The files inside the project folder
-
         """
         # print "Create Project Called"
         self.projName = projName
