@@ -21,7 +21,7 @@ class NewSub(QtGui.QWidget):
 
     def createSubcircuit(self, subName):
         """
-        This function create Subcircuit related directories and files
+        This function create Subcircuit related directories and file.
         """
         self.create_schematic = subName
         # Checking if Workspace already exist or not
