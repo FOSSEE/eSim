@@ -10,7 +10,12 @@ from subcircuit.convertSub import convertSub
 class Subcircuit(QtGui.QWidget):
     """
     Creates buttons for New project, Edit existing project and
-    Kicad Netlist to Ngspice Netlist converter.
+    Kicad Netlist to Ngspice Netlist converter and link them with the
+    methods defined for it in other files.
+
+        - New Project(NewSub method of newSub).
+        - Open Project(openSub method of openSub).
+        - Kicad to Ngspice convertor(convertSub of convertSub).
     """
 
     def __init__(self, parent=None):

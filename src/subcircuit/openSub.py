@@ -8,7 +8,7 @@ import os
 class openSub(QtGui.QWidget):
     """
     It opens the existing subcircuit projects that are present in
-    Subcircuit Library.
+    Subcircuit directory.
     """
 
     def __init__(self):
