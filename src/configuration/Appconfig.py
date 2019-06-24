@@ -27,6 +27,11 @@ class Appconfig(QtGui.QWidget):
     """
     All configuration goes here.
     May change in future for code optimization.
+
+    This class also contains function for
+    - Printing error.
+    - Showing warnings.
+    - Dispalying information.
     """
 
     # Home directory

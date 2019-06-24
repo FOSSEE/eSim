@@ -10,19 +10,20 @@ from projManagement.Validation import Validation
 class ProjectExplorer(QtGui.QWidget):
     """
     This class contains function:
-        a)One work as a constructor(__init__).
-        b)For saving data.
-        c)for renaming project.
-        d)for refreshing project.
-        e)for removing project.
-        f) for saving data.
+
+        - One work as a constructor(__init__).
+        - For saving data.
+        - for renaming project.
+        - for refreshing project.
+        - for removing project.
+        - for saving data.
     """
 
     def __init__(self):
         """
         This method is doing following tasks:
-            a)Working as a constructor for class ProjectExplorer.
-            b)view of project explorer area.
+            - Working as a constructor for class ProjectExplorer.
+            - view of project explorer area.
         """
         QtGui.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
@@ -56,8 +57,10 @@ class ProjectExplorer(QtGui.QWidget):
             os.path.join(parents)
             if os.path.exists(parents):
                 pathlist = parents.split(os.sep)
-                parentnode = QtGui.QTreeWidgetItem(self.treewidget,
-                                                   [pathlist[-1], parents])
+
+                parentnode = QtGui.QTreeWidgetItem(
+                    self.treewidget, [pathlist[-1], parents]
+                    )
                 for files in children:
                     QtGui.QTreeWidgetItem(
                         parentnode, [files, os.path.join(parents, files)])
@@ -174,7 +177,7 @@ class ProjectExplorer(QtGui.QWidget):
     def save_data(self):
         """
         This function first opens file in write-mode, when write
-        operation is performed it closes that file and then window.
+        operation is performed it closes that file and then it closes window.
         """
         self.fopen = open(self.filePath, 'w')
         self.fopen.write(self.text.toPlainText())
@@ -227,12 +230,11 @@ class ProjectExplorer(QtGui.QWidget):
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath, 'w'))
 
-    #"""
     def renameProject(self):
         """
         This function renames the project present in project explorer area
         it validates first:
-
+        
             - If project names is not empty.
             - Project name does not contain spaces between them.
             - Project name is different between what it was earlier.
@@ -272,8 +274,8 @@ class ProjectExplorer(QtGui.QWidget):
 
             else:
                 self.reply = self.obj_validation.validateNewproj(str(self.projDir))
-                print(self.reply)
-                print("==================")
+            
+
 
             # rename files matching project name
                 if self.reply == "VALID":
@@ -324,4 +326,5 @@ class ProjectExplorer(QtGui.QWidget):
                     msg = QtGui.QErrorMessage(self)
                     msg.showMessage(
                         'The project name should not contain space between them')
-                    msg.setWindowTitle("Error Message")
+                    msg.setWindowTitle("Error Message") 
+
