@@ -492,10 +492,10 @@ class ModelEditorclass(QtGui.QWidget):
                 self.modelname +
                 ' ' +
                 self.model_name +
-                '(\n')
+                '(')
             for tags, text in list(self.modeldict.items()):
-                txtfile.write('+ ' + tags + '=' + text + '\n')
-            txtfile.write(')')
+                txtfile.write(' ' + tags + '=' + text)
+            txtfile.write(' )')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -513,10 +513,10 @@ class ModelEditorclass(QtGui.QWidget):
                 self.modelname +
                 ' ' +
                 self.model_name +
-                '(\n')
+                '(')
             for tags, text in list(self.modeldict.items()):
-                txtfile.write('+ ' + tags + '=' + text + '\n')
-            txtfile.write(')')
+                txtfile.write(' ' + tags + '=' + text)
+            txtfile.write(' )')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -534,10 +534,10 @@ class ModelEditorclass(QtGui.QWidget):
                 self.modelname +
                 ' ' +
                 self.model_name +
-                '(\n')
+                '(')
             for tags, text in list(self.modeldict.items()):
-                txtfile.write('+ ' + tags + '=' + text + '\n')
-            txtfile.write(')')
+                txtfile.write(' ' + tags + '=' + text)
+            txtfile.write(' )')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -555,10 +555,10 @@ class ModelEditorclass(QtGui.QWidget):
                 self.modelname +
                 ' ' +
                 self.model_name +
-                '(\n')
+                '(')
             for tags, text in list(self.modeldict.items()):
-                txtfile.write('+ ' + tags + '=' + text + '\n')
-            txtfile.write(')')
+                txtfile.write(' ' + tags + '=' + text)
+            txtfile.write(' )')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -576,10 +576,10 @@ class ModelEditorclass(QtGui.QWidget):
                 self.modelname +
                 ' ' +
                 self.model_name +
-                '(\n')
+                '(')
             for tags, text in list(self.modeldict.items()):
-                txtfile.write('+ ' + tags + '=' + text + '\n')
-            txtfile.write(')')
+                txtfile.write(' ' + tags + '=' + text)
+            txtfile.write(' )')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -597,10 +597,10 @@ class ModelEditorclass(QtGui.QWidget):
                 self.modelname +
                 ' ' +
                 self.model_name +
-                '(\n')
+                '(')
             for tags, text in list(self.modeldict.items()):
-                txtfile.write('+ ' + tags + '=' + text + '\n')
-            txtfile.write(')')
+                txtfile.write(' ' + tags + '=' + text)
+            txtfile.write(' )')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -645,10 +645,10 @@ class ModelEditorclass(QtGui.QWidget):
             self.ref_model +
             ' ' +
             self.model_name +
-            '(\n')
+            '(')
         for tags, text in list(self.modeldict.items()):
-            libfile.write('+  ' + tags + '=' + text + '\n')
-        libfile.write(')')
+            libfile.write(' ' + tags + '=' + text)
+        libfile.write(' )')
         libfile.close()
 
         root = ET.Element("library")
