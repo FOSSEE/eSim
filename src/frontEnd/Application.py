@@ -31,8 +31,9 @@ from PyQt4.Qt import QSize
 import sys
 import os
 
-
 # Its our main window of application.
+
+
 class Application(QtGui.QMainWindow):
     """This class initializes all objects used in this file(Application.py)."""
     global project_name
@@ -325,9 +326,24 @@ class Application(QtGui.QMainWindow):
 
         if self.projDir is not None:
             self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
-            time.sleep(2)  # Need permanent solution
-            # Calling Python Plotting
 
+            currTime = time.time()
+            count = 0
+            while True:
+                try:
+                    st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
+                    if st.st_mtime >= currTime:
+                        break
+                except Exception:
+                    pass
+                time.sleep(0.2)
+
+                # Fail Safe ===>
+                count += 1
+                if count >= 100:
+                    raise Exception("ngspice taking too long, check netlist file")
+
+            # Calling Python Plotting
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
