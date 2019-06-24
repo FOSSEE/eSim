@@ -30,7 +30,7 @@ import time
 from PyQt4.Qt import QSize
 import sys
 import os
-
+import time
 
 # Its our main window of application.
 class Application(QtGui.QMainWindow):
@@ -324,7 +324,33 @@ class Application(QtGui.QMainWindow):
 
         if self.projDir is not None:
             self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
-            time.sleep(2)  # Need permanent solution
+
+            # Fail Safe, to never go in infinte loop -
+            '''
+            t_end = time.time() + 5*60
+            while(time.time() < t_end):
+                pass
+            '''
+            # Run the while loop for a max of 300 seconds (5 minutes)
+
+            if("plot_data_i.txt" in os.listdir(self.projDir)):
+                lastModificationTime = os.path.getmtime(self.projDir+"/plot_data_i.txt")
+                newModificationTime = os.path.getmtime(self.projDir+"/plot_data_i.txt")
+
+                while(newModificationTime == lastModificationTime):
+                    newModificationTime = os.path.getmtime(self.projDir+"/plot_data_i.txt")
+                    # Poll for data every 0.2 seconds, so system doesn't crash
+                    time.sleep(0.2)
+                
+            else:
+                files = os.listdir(self.projDir)
+                while("plot_data_i.txt" not in files):
+                    files = os.listdir(self.projDir)
+                    # Poll for data every 0.2 seconds, so system doesn't crash
+                    time.sleep(0.2)
+
+
+            # time.sleep(2)  # Need permanent solution
             # Calling Python Plotting
 
             try:
