@@ -495,7 +495,7 @@ class ModelEditorclass(QtGui.QWidget):
                 '(')
             for tags, text in list(self.modeldict.items()):
                 txtfile.write(' ' + tags + '=' + text)
-            txtfile.write(' )')
+            txtfile.write(' )\n')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -516,7 +516,7 @@ class ModelEditorclass(QtGui.QWidget):
                 '(')
             for tags, text in list(self.modeldict.items()):
                 txtfile.write(' ' + tags + '=' + text)
-            txtfile.write(' )')
+            txtfile.write(' )\n')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -537,7 +537,7 @@ class ModelEditorclass(QtGui.QWidget):
                 '(')
             for tags, text in list(self.modeldict.items()):
                 txtfile.write(' ' + tags + '=' + text)
-            txtfile.write(' )')
+            txtfile.write(' )\n')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -558,7 +558,7 @@ class ModelEditorclass(QtGui.QWidget):
                 '(')
             for tags, text in list(self.modeldict.items()):
                 txtfile.write(' ' + tags + '=' + text)
-            txtfile.write(' )')
+            txtfile.write(' )\n')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -579,7 +579,7 @@ class ModelEditorclass(QtGui.QWidget):
                 '(')
             for tags, text in list(self.modeldict.items()):
                 txtfile.write(' ' + tags + '=' + text)
-            txtfile.write(' )')
+            txtfile.write(' )\n')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -600,7 +600,7 @@ class ModelEditorclass(QtGui.QWidget):
                 '(')
             for tags, text in list(self.modeldict.items()):
                 txtfile.write(' ' + tags + '=' + text)
-            txtfile.write(' )')
+            txtfile.write(' )\n')
             tree.write(self.modelname + ".xml")
             self.obj_appconfig.print_info(
                 'New ' +
@@ -648,7 +648,7 @@ class ModelEditorclass(QtGui.QWidget):
             '(')
         for tags, text in list(self.modeldict.items()):
             libfile.write(' ' + tags + '=' + text)
-        libfile.write(' )')
+        libfile.write(' )\n')
         libfile.close()
 
         root = ET.Element("library")
