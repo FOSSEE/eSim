@@ -27,16 +27,21 @@ class Source(QtGui.QWidget):
 
     def createSourceWidget(self, sourcelist, sourcelisttrack):
         """
-        - This function dynamically create source widget in the
+        - This function dynamically create source widget in the \
         Source tab of KicadtoNgSpice window
-        - Depending on the type of source, ac, dc, sine, pwl, etc...
-        source tab is created
-        - All the entry fields, are kept into the entry_var
+        - Depending on the type of source, sourcetab is created
+        - - ac
+        - - dc
+        - - sine
+        - - pulse
+        - - pwl
+        - - exp
+        - All the entry fields, are kept into the entry_var \
         tracked by self.count
-        - Finally after each of the sourcelist is mapped to its input component
-        we move to adding these to the track widget
-        - Also check if any default values present from previous analysis & add
-        them by default
+        - Finally after each of the sourcelist is mapped to its input \
+        component we move to adding these to the track widget
+        - Also check if any default values present from previous analysis \
+        & add them by default
         - Each line in sourcelist corresponds to a source
         - According to the source type modify the source and add it to the tab
         """
