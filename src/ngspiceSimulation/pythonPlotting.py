@@ -585,11 +585,11 @@ class DataExtraction:
 
         # Initializing variable
         # 'p' gives no. of lines of data for each node/branch
-        # 'l' gives the no of partitions for a single voltage node
+        # 'npv' gives the no of partitions for a single voltage node
         # 'vnumber' gives total number of voltage
         # 'inumber' gives total number of current
 
-        p = l = vnumber = inumber = 0
+        p = npv = vnumber = inumber = 0
         # print "VoltsData : ",self.voltData
 
         # Finding totla number of voltage node
@@ -625,9 +625,9 @@ class DataExtraction:
             for i in self.voltData[3:]:
                 p += 1  # 'p' gives no. of lines of data for each node/branch
                 if "Index" in i:
-                    l += 1
-                    # 'l' gives the no of partitions for a single voltage node
-                # print "l:",l
+                    npv += 1
+                    # 'npv' gives the no of partitions for a single voltage node
+                # print("npv:", npv)
                 if "AC" in i:  # DC for dc files and AC for ac ones
                     break
 
@@ -636,9 +636,9 @@ class DataExtraction:
             for i in self.voltData[3:]:
                 p += 1
                 if "Index" in i:
-                    l += 1
-                    # 'l' gives the no of partitions for a single voltage node
-                # print "l:",l
+                    npv += 1
+                    # 'npv' gives the no of partitions for a single voltage node
+                # print("npv:", npv)
                 if "Transient" in i:  # DC for dc files and AC for ac ones
                     break
 
@@ -648,16 +648,16 @@ class DataExtraction:
             for i in self.voltData[3:]:
                 p += 1
                 if "Index" in i:
-                    l += 1
-                    # 'l' gives the no of partitions for a single voltage node
-                # print "l:",l
+                    npv += 1
+                    # 'npv' gives the no of partitions for a single voltage node
+                # print("npv:", npv)
                 if "DC" in i:  # DC for dc files and AC for ac ones
                     break
 
         # print "VoltNumber",vnumber
         # print "CurrentNumber",inumber
-        vnumber = vnumber // l  # vnumber gives the no of voltage nodes
-        inumber = inumber // l  # inumber gives the no of branches
+        vnumber = vnumber // npv  # vnumber gives the no of voltage nodes
+        inumber = inumber // npv  # inumber gives the no of branches
 
         # print "VoltNumber",vnumber
         # print "CurrentNumber",inumber

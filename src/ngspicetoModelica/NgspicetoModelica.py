@@ -639,8 +639,8 @@ class NgMoConverter:
                 tempstatList.append("Level=1" + " ")
 
                 try:
-                    l = mosInfo[words[0]]['l']
-                    tempstatList.append("L=" + self.getUnitVal(l) + " ")
+                    mwl = mosInfo[words[0]]['l']
+                    tempstatList.append("L=" + self.getUnitVal(mwl) + " ")
                 except KeyError:
                     tempstatList.append("L=1e-6" + " ")
                 try:
