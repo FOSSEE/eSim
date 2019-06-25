@@ -38,11 +38,11 @@ class UploadSub(QtGui.QWidget):
             subcircuit_path = (os.path.join(os.path.abspath('..'), 'SubcircuitLibrary', create_subcircuit))
 
             if subcircuit_path == "":
-                self.reply = "NONE"
+                reply = "NONE"
             else:
-                self.reply = self.obj_validation.validateNewproj(str(subcircuit_path))
+                reply = self.obj_validation.validateNewproj(str(subcircuit_path))
 
-            if self.reply == "VALID":
+            if reply == "VALID":
                 print("Validated: Creating subcircuit directory")
                 os.mkdir(subcircuit_path)
                 editfile = str(
@@ -81,7 +81,7 @@ class UploadSub(QtGui.QWidget):
                     print("===================")
                     os.rmdir(subcircuit_path)
 
-            elif self.reply == "CHECKEXIST":
+            elif reply == "CHECKEXIST":
                 print("Project name already exists.")
                 print("==========================")
                 msg = QtGui.QErrorMessage(self)
@@ -90,7 +90,7 @@ class UploadSub(QtGui.QWidget):
                     the different name or delete existing project")
                 msg.setWindowTitle("Error Message")
 
-            elif self.reply == "CHECKNAME":
+            elif reply == "CHECKNAME":
                 print("Name can not contain space between them")
                 print("===========================")
                 msg = QtGui.QErrorMessage(self)
