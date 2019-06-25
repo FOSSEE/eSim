@@ -227,7 +227,7 @@ class ProjectExplorer(QtGui.QWidget):
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath, 'w'))
 
-    #"""
+
     def renameProject(self):
         """
         This function renames the project present in project explorer area
@@ -242,28 +242,30 @@ class ProjectExplorer(QtGui.QWidget):
         """
         self.indexItem = self.treewidget.currentIndex()
         self.baseFileName = str(self.indexItem.data())
-        self.newBaseFileName, ok = QtGui.QInputDialog.getText(self, 'Rename Project', 'Project Name:',
+        newBaseFileName, ok = QtGui.QInputDialog.getText(self, 'Rename Project', 'Project Name:',
                                                             QtGui.QLineEdit.Normal, self.baseFileName)
-        if ok and self.newBaseFileName:
+        if ok and newBaseFileName:
             print("=================")
-            print(self.newBaseFileName)
+            print(newBaseFileName)
             print("=================")
-            self.newBaseFileName = str(self.newBaseFileName)
+            newBaseFileName = str(newBaseFileName)
             projectPath, projectFiles = list(self.obj_appconfig.project_explorer.items())[self.indexItem.row()]
+            print(projectPath)
+            print(projectFiles)
             updatedProjectFiles = []
 
             self.workspace = self.obj_appconfig.default_workspace['workspace']
-            self.newBaseFileName = str(self.newBaseFileName).rstrip().lstrip()
-            self.projDir = os.path.join(self.workspace, str(self.newBaseFileName))
+            newBaseFileName = str(newBaseFileName).rstrip().lstrip()
+            self.projDir = os.path.join(self.workspace, str(newBaseFileName))
 
-            if self.newBaseFileName == "":
+            if newBaseFileName == "":
                 print("Project name can not be empty")
                 print("==================")
                 msg = QtGui.QErrorMessage(self)
                 msg.showMessage('The project name cannot be empty')
                 msg.setWindowTitle("Error Message")
 
-            elif self.baseFileName == self.newBaseFileName:
+            elif self.baseFileName == newBaseFileName:
                 print("Project name has to be different")
                 print("==================")
                 msg = QtGui.QErrorMessage(self)
@@ -280,18 +282,17 @@ class ProjectExplorer(QtGui.QWidget):
                     for projectFile in projectFiles:
                         if self.baseFileName in projectFile:
                             oldFilePath = os.path.join(projectPath, projectFile)
-                            projectFile = projectFile.replace(self.baseFileName, self.newBaseFileName, 1)
+                            projectFile = projectFile.replace(self.baseFileName, newBaseFileName, 1)
                             newFilePath = os.path.join(projectPath, projectFile)
                             print(oldFilePath)
                             print("==================")
                             print(newFilePath)
                             print("==================")
                             print ("Renaming " + oldFilePath + " to " + newFilePath)
-                            #os.rename(oldFilePath, newFilePath)
                             updatedProjectFiles.append(projectFile)
 
                     # rename project folder
-                    updatedProjectPath = self.newBaseFileName.join(projectPath.rsplit(self.baseFileName, 1))
+                    updatedProjectPath = newBaseFileName.join(projectPath.rsplit(self.baseFileName, 1))
                     print ("Renaming " + projectPath + " to " + updatedProjectPath)
                     os.rename(projectPath, updatedProjectPath)
 
@@ -313,7 +314,7 @@ class ProjectExplorer(QtGui.QWidget):
                     msg = QtGui.QErrorMessage(self)
                     msg.showMessage(
                         'The project "'
-                        + self.newBaseFileName
+                        + newBaseFileName
                         + '" already exist.Please select the different name or'
                         + ' delete existing project')
                     msg.setWindowTitle("Error Message")
