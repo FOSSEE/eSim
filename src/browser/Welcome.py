@@ -2,10 +2,9 @@ from PyQt4 import QtGui, QtCore
 
 
 class Welcome(QtGui.QWidget):
-    """This class creates Welcome page of eSim."""
+    """This class contains content of dock area part of initial esim Window."""
 
     def __init__(self):
-        """Sdf."""
         QtGui.QWidget.__init__(self)
         self.vlayout = QtGui.QVBoxLayout()
 

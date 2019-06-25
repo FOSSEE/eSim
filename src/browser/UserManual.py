@@ -4,7 +4,8 @@ import webbrowser
 
 class UserManual(QtGui.QWidget):
     """
-    This class creates Welcome page of eSim.
+    This class opens User-Manual page in new tab of web browser
+    when help button is clicked.
     """
 
     def __init__(self):

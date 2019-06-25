@@ -9,7 +9,7 @@ import os
 class convertSub(QtGui.QWidget):
     """
     Contains functions that checks project present for conversion and
-    also function to convert Kicad to Ngspice.
+    also function to convert Kicad Netlist to Ngspice Netlist.
     """
 
     def __init__(self, dockarea):
@@ -20,7 +20,13 @@ class convertSub(QtGui.QWidget):
 
     def createSub(self):
         """
-        This function create command to call kicad to Ngspice converter.
+        This function create command to call KiCad to Ngspice converter.
+            If the netlist is not generated for selected project it will show
+            error **The subcircuit does not contain any Kicad netlist file for
+            conversion.**
+            And if no project is selected for conversion, it again show error
+            message to select a file or create a file.
+
         """
         print("Openinig Kicad-to-Ngspice converter from Subcircuit Module")
         self.projDir = self.obj_appconfig.current_subcircuit["SubcircuitName"]
@@ -39,11 +45,11 @@ class convertSub(QtGui.QWidget):
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage(
                     'The subcircuit does not contain any Kicad netlist file'
-                    + 'for conversion.')
+                    + ' for conversion.')
                 self.msg.setWindowTitle("Error Message")
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage(
                 'Please select the subcircuit first. You can either create'
-                + 'new subcircuit or open existing subcircuit')
+                + ' new subcircuit or open existing subcircuit')
             self.msg.setWindowTitle("Error Message")
