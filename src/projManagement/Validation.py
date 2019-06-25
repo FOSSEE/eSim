@@ -1,4 +1,3 @@
-
 # =========================================================================
 #
 #          FILE: Validation.py
@@ -166,9 +165,7 @@ class Validation:
             return "DIREC"
 
     def validateCirOut(self, projDir):
-        """
-        This function checks if ".cir.out" file is present.
-        """
+        """This function checks if ".cir.out" file is present."""
         projName = os.path.basename(str(projDir))
         lookCirOut = os.path.join(str(projDir), projName + ".cir.out")
         # Check existence of project
@@ -178,9 +175,7 @@ class Validation:
             return False
 
     def validateTool(self, toolName):
-        """
-        This function check if tool is present in the system
-        """
+        """This function check if tool is present in the system."""
         return distutils.spawn.find_executable(toolName) is not None
 
     def validateSubcir(self, projDir):
@@ -206,15 +201,24 @@ class Validation:
         flag1 = False
         flag2 = False
 
+        # Checks if file is empty or not.
+        if os.stat(projDir).st_size == 0:
+            print("File is empty")
+            print("===================")
+            return False
+
         for line in f:
             word = line.split(' ')
             if word[0] == "*":
                 continue
             if word[0] == ".subckt":
+                word = line.split(' ')
                 break
 
-        if word[1] == fileName:
+        if word[0] == ".subckt" and word[1] == fileName:
             flag1 = True
+        else:
+            return False
 
         with open(projDir, 'r') as m:
             lines = m.read().splitlines()
@@ -223,7 +227,7 @@ class Validation:
         if req_line == last_line:
             flag2 = True
 
-        if flag1 == True and flag2 == True:
-            return "True"
-        else:
-            return "False"
+        if flag1 is True and flag2 is True:
+            return True
+
+        return False
