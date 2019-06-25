@@ -21,6 +21,7 @@ from PyQt4 import QtGui
 import os
 import json
 from configparser import SafeConfigParser
+from utils.logger import logger
 
 
 class Appconfig(QtGui.QWidget):
@@ -64,7 +65,7 @@ class Appconfig(QtGui.QWidget):
     try:
         modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')
     except BaseException:
-        print("Cannot access eSim in parser")
+        logger.error("Cannot access eSim in parser")
 
     try:
         project_explorer = json.load(open(dictPath))

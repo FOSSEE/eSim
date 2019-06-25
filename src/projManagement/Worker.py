@@ -18,6 +18,7 @@
 from PyQt4 import QtCore
 import subprocess
 from configuration.Appconfig import Appconfig
+from utils.logger import logger
 
 
 class WorkerThread(QtCore.QThread):
@@ -64,7 +65,7 @@ class WorkerThread(QtCore.QThread):
         @return
             None
         """
-        print("Worker Thread Calling Command :", self.args)
+        logger.info("Worker Thread Calling Command :", self.args)
         self.call_system(self.args)
 
     def call_system(self, command):

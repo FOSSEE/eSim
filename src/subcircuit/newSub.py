@@ -3,9 +3,11 @@ from projManagement.Validation import Validation
 from configuration.Appconfig import Appconfig
 from projManagement import Worker
 import os
-
+from utils.logger import logger
 
 # This class is called when User create new Project.
+
+
 class NewSub(QtGui.QWidget):
     """
     Contains functions to create directory and validate file names.
@@ -41,7 +43,7 @@ class NewSub(QtGui.QWidget):
 
         # Checking Validations Response
         if self.reply == "VALID":
-            print("Validated : Creating subcircuit directory")
+            logger.info("Validated : Creating subcircuit directory")
             try:
                 os.mkdir(self.schematic_path)
                 self.schematic = os.path.join(

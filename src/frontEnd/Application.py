@@ -30,6 +30,7 @@ import time
 from PyQt4.Qt import QSize
 import sys
 import os
+from utils.logger import logger
 
 # Its our main window of application.
 
@@ -257,7 +258,7 @@ class Application(QtGui.QMainWindow):
 
             - If not present: pass
         """
-        print("Function : Close Project")
+        logger.info("Function : Close Project")
         current_project = self.obj_appconfig.current_project['ProjectName']
         if current_project is None:
             pass
@@ -289,7 +290,7 @@ class Application(QtGui.QMainWindow):
                 directory, filelist)
 
         else:
-            print("No new project created")
+            logger.info("No new project created")
             self.obj_appconfig.print_info('No new project created')
             try:
                 self.obj_appconfig.print_info(
@@ -300,7 +301,7 @@ class Application(QtGui.QMainWindow):
 
     # This project call Open Project Info class
     def open_project(self):
-        print("Function : Open Project")
+        logger.info("Function : Open Project")
         self.project = OpenProjectInfo()
 
         try:
@@ -318,9 +319,10 @@ class Application(QtGui.QMainWindow):
           from Configuration/Appconfig.py file.
         - Call method usermanual() from ./DockArea.py.
         """
-        print("Function : Help")
+        logger.info("Function : Help")
         self.obj_appconfig.print_info('Help is called')
-        print("Current Project is : ", self.obj_appconfig.current_project)
+        logger.info("Current Project is : ",
+                    self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
     # This Function execute ngspice on current project.
@@ -354,7 +356,7 @@ class Application(QtGui.QMainWindow):
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage('Error while opening python plotting Editor.\
                 Please look at console for more details ')
-                print("Exception Message:", str(e))
+                logger.info("Exception Message:", str(e))
                 self.obj_appconfig.print_error('Exception Message : ' + str(e))
                 self.msg.setWindowTitle("Error Message")
 
@@ -374,7 +376,7 @@ class Application(QtGui.QMainWindow):
             - 'subcircuiteditor()' function is called using object
               'obj_dockarea' of class 'Mainview'.
         """
-        print("Function : Subcircuit editor")
+        logger.info("Function : Subcircuit editor")
         self.obj_appconfig.print_info('Subcircuit editor is called')
         self.obj_Mainview.obj_dockarea.subcircuiteditor()
 
@@ -389,7 +391,7 @@ class Application(QtGui.QMainWindow):
               Worker.py.
             - If 'nghdl' not present then it shows error message.
         """
-        print("Function : Nghdl")
+        logger.info("Function : Nghdl")
         self.obj_appconfig.print_info('Nghdl is called')
 
         if self.obj_validation.validateTool('nghdl'):
@@ -415,7 +417,7 @@ class Application(QtGui.QMainWindow):
             - 'modeleditor()' function is called using object
               'obj_dockarea' of class 'Mainview'.
         """
-        print("Function : Model editor")
+        logger.info("Function : Model editor")
         self.obj_appconfig.print_info('Model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
 
@@ -506,7 +508,7 @@ class Application(QtGui.QMainWindow):
             - If 'OMOptim' not present then it shows error message with
               link to download it on Linux and Windows.
         """
-        print("Function : OM Optim")
+        logger.info("Function : OM Optim")
         self.obj_appconfig.print_info('OM Optim is called')
         # Check if OMOptim is installed
         if self.obj_validation.validateTool("OMOptim"):
@@ -604,7 +606,7 @@ def main(args):
     The splash screen opened at the starting of screen is performed
     by this function.
     """
-    print("Starting eSim......")
+    logger.info("Starting eSim......")
     app = QtGui.QApplication(args)
 
     splash_pix = QtGui.QPixmap('../../images/splash_screen_esim.png')

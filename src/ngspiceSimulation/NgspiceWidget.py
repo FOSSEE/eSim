@@ -2,9 +2,11 @@ from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 import platform
 import os
-
+from utils.logger import logger
 
 # This Class creates NgSpice Window
+
+
 class NgspiceWidget(QtGui.QWidget):
 
     def __init__(self, command, projPath):
@@ -20,7 +22,7 @@ class NgspiceWidget(QtGui.QWidget):
         self.layout = QtGui.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
 
-        print("Argument to ngspice command : ", command)
+        logger.info("Argument to ngspice command : ", command)
         # For Linux OS
         if platform.system() == 'Linux':
             self.command = "cd " + projPath + ";ngspice " + command
@@ -28,7 +30,7 @@ class NgspiceWidget(QtGui.QWidget):
             self.args = ['-hold', '-e', self.command]
             self.process.start('xterm', self.args)
             self.obj_appconfig.process_obj.append(self.process)
-            print(self.obj_appconfig.proc_dict)
+            logger.info(self.obj_appconfig.proc_dict)
             (
                 self.obj_appconfig.proc_dict
                 [self.obj_appconfig.current_project['ProjectName']].append(

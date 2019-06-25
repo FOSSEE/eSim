@@ -2,6 +2,7 @@ from PyQt4 import QtGui
 from projManagement.Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
+from utils.logger import logger
 
 
 # This class is called when User create new Project and contains \
@@ -28,7 +29,8 @@ class convertSub(QtGui.QWidget):
             message to select a file or create a file.
 
         """
-        print("Openinig Kicad-to-Ngspice converter from Subcircuit Module")
+        logger.info(
+            "Openinig Kicad-to-Ngspice converter from Subcircuit Module")
         self.projDir = self.obj_appconfig.current_subcircuit["SubcircuitName"]
         # Validating if current project is available or not
         if self.obj_validation.validateKicad(self.projDir):

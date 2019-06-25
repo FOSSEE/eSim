@@ -1,6 +1,7 @@
 import sys
 import os
 from xml.etree import ElementTree as ET
+from utils.logger import logger
 
 
 class PrcocessNetlist:
@@ -21,11 +22,14 @@ class PrcocessNetlist:
         f = open(filename)
         data = f.read()
         f.close()
-        print("=============================================================")
-        print("readNetList called, from Processing")
-        print("=============================================================")
-        print("NETLIST", data.splitlines())
-        print("=============================================================")
+        logger.info(
+            "=============================================================")
+        logger.info("readNetList called, from Processing")
+        logger.info(
+            "=============================================================")
+        logger.info("NETLIST", data.splitlines())
+        logger.info(
+            "=============================================================")
         return data.splitlines()
 
     """
@@ -35,9 +39,10 @@ class PrcocessNetlist:
 
     def readParamInfo(self, kicadNetlis):
         param = {}
-        print("=========================KICADNETLIST========================")
+        logger.info(
+            "=========================KICADNETLIST========================")
         for eachline in kicadNetlis:
-            print(eachline)
+            logger.info(eachline)
             eachline = eachline.strip()
             if len(eachline) > 1:
                 words = eachline.split()
@@ -46,11 +51,14 @@ class PrcocessNetlist:
                     for i in range(1, len(words), 1):
                         paramList = words[i].split('=')
                         param[paramList[0]] = paramList[1]
-        print("=============================================================")
-        print("readParamInfo called, from Processing")
-        print("=============================================================")
-        print("PARAM", param)
-        print("=============================================================")
+        logger.info(
+            "=============================================================")
+        logger.info("readParamInfo called, from Processing")
+        logger.info(
+            "=============================================================")
+        logger.info("PARAM", param)
+        logger.info(
+            "=============================================================")
         return param
 
     """
@@ -75,7 +83,7 @@ class PrcocessNetlist:
                         eachline = eachline.replace(
                             '{' + key + '}', param[key])
                     else:
-                        print("Parameter " + key + " does not exists")
+                        logger.info("Parameter " + key + " does not exists")
                         value = input('Enter parameter value: ')
                         eachline = eachline.replace('{' + key + '}', value)
             # Convert netlist into lower case letter
@@ -89,12 +97,15 @@ class PrcocessNetlist:
         # Copy information line
         infoline = netlist[0]
         netlist.remove(netlist[0])
-        print("=============================================================")
-        print("preprocessNetList called, from Processing")
-        print("=============================================================")
-        print("NETLIST", netlist)
-        print("INFOLINE", infoline)
-        print("=============================================================")
+        logger.info(
+            "=============================================================")
+        logger.info("preprocessNetList called, from Processing")
+        logger.info(
+            "=============================================================")
+        logger.info("NETLIST", netlist)
+        logger.info("INFOLINE", infoline)
+        logger.info(
+            "=============================================================")
         return netlist, infoline
 
     def separateNetlistInfo(self, netlist):
@@ -114,12 +125,15 @@ class PrcocessNetlist:
                 optionInfo.append(eachline)
             else:
                 schematicInfo.append(eachline)
-        print("=============================================================")
-        print("separateNetlistInfo called, from Processing")
-        print("=============================================================")
-        print("OPTIONINFO", optionInfo)
-        print("SCHEMATICINFO", schematicInfo)
-        print("=============================================================")
+        logger.info(
+            "=============================================================")
+        logger.info("separateNetlistInfo called, from Processing")
+        logger.info(
+            "=============================================================")
+        logger.info("OPTIONINFO", optionInfo)
+        logger.info("SCHEMATICINFO", schematicInfo)
+        logger.info(
+            "=============================================================")
         return optionInfo, schematicInfo
 
     """
@@ -131,9 +145,11 @@ class PrcocessNetlist:
 
     def insertSpecialSourceParam(self, schematicInfo, sourcelist):
         schematicInfo1 = []
-        print("=============================================================")
-        print("Reading schematic info for source details")
-        print("=============================================================")
+        logger.info(
+            "=============================================================")
+        logger.info("Reading schematic info for source details")
+        logger.info(
+            "=============================================================")
         for compline in schematicInfo:
             words = compline.split()
             compName = words[0]
@@ -217,14 +233,17 @@ class PrcocessNetlist:
                     words[5])
 
         schematicInfo = schematicInfo + schematicInfo1
-        print("Source List : ", sourcelist)
+        logger.info("Source List : ", sourcelist)
         # print schematicInfo
-        print("=============================================================")
-        print("insertSpecialSourceParam called, from Processing")
-        print("=============================================================")
-        print("SCHEMATICINFO", schematicInfo)
-        print("SOURCELIST", sourcelist)
-        print("=============================================================")
+        logger.info(
+            "=============================================================")
+        logger.info("insertSpecialSourceParam called, from Processing")
+        logger.info(
+            "=============================================================")
+        logger.info("SCHEMATICINFO", schematicInfo)
+        logger.info("SOURCELIST", sourcelist)
+        logger.info(
+            "=============================================================")
         return schematicInfo, sourcelist
 
     def convertICintoBasicBlocks(
@@ -239,8 +258,9 @@ class PrcocessNetlist:
         - - Plot text
         - Parsing info is provided below
         """
-        print("=============================================================")
-        print("Reading Schematic info for Model")
+        logger.info(
+            "=============================================================")
+        logger.info("Reading Schematic info for Model")
         # Insert details of Ngspice model
         unknownModelList = []
         multipleModelList = []
@@ -293,9 +313,9 @@ class PrcocessNetlist:
                         unknownModelList.append(compType)
                     elif count == 1:
                         try:
-                            print("==========================================\
+                            logger.info("==========================================\
                                 ===========================")
-                            print(
+                            logger.info(
                                 "Start Parsing Previous Values XML\
                                  for ngspice model :", modelPath)
                             tree = ET.parse(modelPath[0])
@@ -355,9 +375,9 @@ class PrcocessNetlist:
                                 modelLine += compName
 
                             else:
-                                print("=====================================\
+                                logger.info("=====================================\
                                     ================================")
-                                print("Split Details :", splitDetail)
+                                logger.info("Split Details :", splitDetail)
                                 modelLine = "a" + str(k) + " "
                                 vectorDetail = splitDetail.split(':')
                                 # print "Vector Details",vectorDetail
@@ -390,7 +410,7 @@ class PrcocessNetlist:
                                                 pos += 1
 
                                     except BaseException:
-                                        print(
+                                        logger.info(
                                             "There is error while processing\
                                              Vector Details")
                                         sys.exit(2)
@@ -401,10 +421,10 @@ class PrcocessNetlist:
                                 schematicInfo.append(modelLine)
                                 k = k + 1
                             except Exception as e:
-                                print(
+                                logger.info(
                                     "Error while appending \
                                     ModelLine ", modelLine)
-                                print("Exception Message : ", str(e))
+                                logger.info("Exception Message : ", str(e))
                             # Insert comment at remove line
                             schematicInfo.insert(index, "* " + compline)
                             comment = "* Schematic Name:\
@@ -415,10 +435,10 @@ class PrcocessNetlist:
                                 [index, compline, modelname, compName,
                                  comment, title, type, paramDict])
                         except Exception as e:
-                            print(
+                            logger.info(
                                 "Unable to parse the model, \
                                 Please check your your XML file")
-                            print("Exception Message : ", str(e))
+                            logger.info("Exception Message : ", str(e))
                             sys.exit(2)
                 elif compType == "ic":
                     schematicInfo.insert(index, "* " + compline)
@@ -507,26 +527,32 @@ class PrcocessNetlist:
 
                 else:
                     schematicInfo.insert(index, "* " + compline)
-                print("=====================================================")
-                print(
+                logger.info(
+                    "=====================================================")
+                logger.info(
                     "UnknownModelList Used in the Schematic",
                     unknownModelList)
-                print("=====================================================")
-                print(
+                logger.info(
+                    "=====================================================")
+                logger.info(
                     "Multiple Model XML file with same name ",
                     multipleModelList)
-                print("=====================================================")
-                print("Model List Details : ", modelList)
-        print("=============================================================")
-        print("convertICIntoBasicBlocks called, from Processing")
-        print("=============================================================")
-        print("SCHEMATICINFO", schematicInfo)
-        print("OUTPUTOPTION", outputOption)
-        print("MODELLIST", modelList)
-        print("UNKOWNMODELLIST", unknownModelList)
-        print("MULTIPLEMODELLIST", multipleModelList)
-        print("PLOTTEST", plotText)
-        print("=============================================================")
+                logger.info(
+                    "=====================================================")
+                logger.info("Model List Details : ", modelList)
+        logger.info(
+            "=============================================================")
+        logger.info("convertICIntoBasicBlocks called, from Processing")
+        logger.info(
+            "=============================================================")
+        logger.info("SCHEMATICINFO", schematicInfo)
+        logger.info("OUTPUTOPTION", outputOption)
+        logger.info("MODELLIST", modelList)
+        logger.info("UNKOWNMODELLIST", unknownModelList)
+        logger.info("MULTIPLEMODELLIST", multipleModelList)
+        logger.info("PLOTTEST", plotText)
+        logger.info(
+            "=============================================================")
         return (
             schematicInfo, outputOption, modelList, unknownModelList,
             multipleModelList, plotText

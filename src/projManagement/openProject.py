@@ -22,6 +22,7 @@ from .Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
 import json
+from utils.logger import logger
 
 
 class OpenProjectInfo(QtGui.QWidget):
@@ -53,7 +54,7 @@ class OpenProjectInfo(QtGui.QWidget):
             self.obj_Appconfig.current_project['ProjectName'] = str(
                 self.projDir)
             if os.path.isdir(self.projDir):
-                print("true")
+                logger.info("true")
 
             for dirs, subdirs, filelist in os.walk(
                     self.obj_Appconfig.current_project["ProjectName"]):

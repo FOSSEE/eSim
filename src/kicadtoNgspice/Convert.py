@@ -1,9 +1,9 @@
 from PyQt4 import QtGui
-
 import os
 import shutil
 from . import TrackWidget
 from xml.etree import ElementTree as ET
+from utils.logger import logger
 
 
 class Convert:
@@ -73,7 +73,7 @@ class Convert:
                         theta_val + ")"
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
-                    print(
+                    logger.info(
                         "Caught an exception in sine voltage source ",
                         self.addline)
 
@@ -108,7 +108,7 @@ class Convert:
                         pw_val + " " + tp_val + ")"
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
-                    print(
+                    logger.info(
                         "Caught an exception in pulse voltage source ",
                         self.addline)
 
@@ -122,7 +122,7 @@ class Convert:
                         '(')[0] + "(" + t_v_val + ")"
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
-                    print(
+                    logger.info(
                         "Caught an exception in pwl voltage source ",
                         self.addline)
 
@@ -140,7 +140,7 @@ class Convert:
                         'ac')[0] + " " + 'ac' + " " + va_val + " " + ph_val
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
-                    print(
+                    logger.info(
                         "Caught an exception in ac voltage source ",
                         self.addline)
 
@@ -155,7 +155,7 @@ class Convert:
                         'dc')[0] + " " + 'dc' + " " + v1_val
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
-                    print(
+                    logger.info(
                         "Caught an exception in dc voltage source",
                         self.addline)
 
@@ -189,7 +189,7 @@ class Convert:
                         " " + tau2_val + ")"
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
-                    print(
+                    logger.info(
                         "Caught an exception in exp voltage source ",
                         self.addline)
 
@@ -221,8 +221,8 @@ class Convert:
         self.direct = self.clarg1
         (filepath, filemname) = os.path.split(self.direct)
         self.Fileopen = os.path.join(filepath, "analysis")
-        print("======================================================")
-        print("FILEOPEN CONVERT ANALYS", self.Fileopen)
+        logger.info("======================================================")
+        logger.info("FILEOPEN CONVERT ANALYS", self.Fileopen)
         self.writefile = open(self.Fileopen, "w")
         if self.variable == 'AC':
             self.no = 0
@@ -419,8 +419,9 @@ class Convert:
                     modelParamValue.append(
                         [line[0], addmodelLine, "*secondary lcouple"])
                 except Exception as e:
-                    print("Caught an exception in transfo model ", line[1])
-                    print("Exception Message : ", str(e))
+                    logger.info(
+                        "Caught an exception in transfo model ", line[1])
+                    logger.info("Exception Message : ", str(e))
 
             elif line[2] == 'ic':
                 try:
@@ -437,8 +438,9 @@ class Convert:
                         modelParamValue.append(
                             [line[0], addmodelLine, line[4]])
                 except Exception as e:
-                    print("Caught an exception in initial condition ", line[1])
-                    print("Exception Message : ", str(e))
+                    logger.info(
+                        "Caught an exception in initial condition ", line[1])
+                    logger.info("Exception Message : ", str(e))
 
             else:
                 try:
@@ -489,8 +491,8 @@ class Convert:
                     addmodelLine += ") "
                     modelParamValue.append([line[0], addmodelLine, line[4]])
                 except Exception as e:
-                    print("Caught an exception in model ", line[1])
-                    print("Exception Message : ", str(e))
+                    logger.info("Caught an exception in model ", line[1])
+                    logger.info("Exception Message : ", str(e))
 
         # Adding it to schematic
         for item in modelParamValue:
@@ -516,17 +518,17 @@ class Convert:
         includeLine = []  # All .include line list
 
         if not deviceLibList:
-            print("No Library Added in the schematic")
+            logger.info("No Library Added in the schematic")
             pass
         else:
             for eachline in schematicInfo:
                 words = eachline.split()
                 if words[0] in deviceLibList:
-                    print("Found Library line")
+                    logger.info("Found Library line")
                     index = schematicInfo.index(eachline)
                     completeLibPath = deviceLibList[words[0]]
                     (libpath, libname) = os.path.split(completeLibPath)
-                    print("Library Path :", libpath)
+                    logger.info("Library Path :", libpath)
                     # Copying library from devicemodelLibrary to Project Path
                     # Special case for MOSFET
                     if eachline[0] == 'm':
@@ -599,17 +601,17 @@ class Convert:
             self.msg.show()
             raise Exception('All subcircuit directories need to be specified.')
         elif not subList:
-            print("No Subcircuit Added in the schematic")
+            logger.info("No Subcircuit Added in the schematic")
             pass
         else:
             for eachline in schematicInfo:
                 words = eachline.split()
                 if words[0] in subList:
-                    print("Found Subcircuit line")
+                    logger.info("Found Subcircuit line")
                     index = schematicInfo.index(eachline)
                     completeSubPath = subList[words[0]]
                     (subpath, subname) = os.path.split(completeSubPath)
-                    print("Library Path :", subpath)
+                    logger.info("Library Path :", subpath)
                     # Copying library from devicemodelLibrary to Project Path
 
                     # Replace last word with library name
@@ -619,7 +621,7 @@ class Convert:
 
                     src = completeSubPath
                     dst = projpath
-                    print(os.listdir(src))
+                    logger.info(os.listdir(src))
                     for files in os.listdir(src):
                         if os.path.isfile(os.path.join(src, files)):
                             if files != "analysis":

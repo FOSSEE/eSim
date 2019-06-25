@@ -3,6 +3,7 @@ from PyQt4 import QtGui
 from . import TrackWidget
 # from xml.etree import ElementTree as ET
 import json
+from utils.logger import logger
 
 
 class Source(QtGui.QWidget):
@@ -45,10 +46,12 @@ class Source(QtGui.QWidget):
         - Each line in sourcelist corresponds to a source
         - According to the source type modify the source and add it to the tab
         """
-        print("============================================================")
-        print("SOURCE LIST TRACK", sourcelisttrack)
-        print("SOURCE LIST", sourcelist)
-        print("============================================================")
+        logger.info(
+            "============================================================")
+        logger.info("SOURCE LIST TRACK", sourcelisttrack)
+        logger.info("SOURCE LIST", sourcelist)
+        logger.info(
+            "============================================================")
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
@@ -64,7 +67,7 @@ class Source(QtGui.QWidget):
             json_data = json.loads(data)
 
         except BaseException:
-            print("Source Previous Values JSON is Empty")
+            logger.info("Source Previous Values JSON is Empty")
 
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
@@ -72,7 +75,7 @@ class Source(QtGui.QWidget):
         if sourcelist:
             for line in sourcelist:
                 # print "Voltage source line index: ",line[0]
-                print("SourceList line: ", line)
+                logger.info("SourceList line: ", line)
                 track_id = line[0]
                 # print "track_id is ",track_id
                 if line[2] == 'ac':
@@ -370,9 +373,10 @@ class Source(QtGui.QWidget):
                         [track_id, 'exp', self.start, self.end])
 
         else:
-            print("No source is present in your circuit")
+            logger.info("No source is present in your circuit")
 
-        print("============================================================")
+        logger.info(
+            "============================================================")
         # This is used to keep the track of dynamically created widget
         self.obj_track.sourcelisttrack["ITEMS"] = sourcelisttrack
         self.obj_track.source_entry_var["ITEMS"] = self.entry_var

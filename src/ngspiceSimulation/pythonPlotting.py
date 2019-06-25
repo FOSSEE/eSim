@@ -10,6 +10,7 @@ from matplotlib.backends.backend_qt4agg\
 from matplotlib.figure import Figure
 from configuration.Appconfig import Appconfig
 import numpy as np
+from utils.logger import logger
 
 
 # This class creates Python Plotting window
@@ -25,8 +26,8 @@ class plotWindow(QtGui.QMainWindow):
         self.fpath = fpath
         self.projectName = projectName
         self.obj_appconfig = Appconfig()
-        print("Complete Project Path : ", self.fpath)
-        print("Project Name : ", self.projectName)
+        logger.info("Complete Project Path : ", self.fpath)
+        logger.info("Project Name : ", self.projectName)
         self.obj_appconfig.print_info(
             'Ngspice simulation is called : ' + self.fpath)
         self.obj_appconfig.print_info(
@@ -497,7 +498,7 @@ class plotWindow(QtGui.QMainWindow):
         }[letter]
 
     def multiMeter(self):
-        print("Function : MultiMeter")
+        logger.info("Function : MultiMeter")
         self.obj = {}
         boxCheck = 0
         loc_x = 300
@@ -505,7 +506,7 @@ class plotWindow(QtGui.QMainWindow):
 
         for i, j in zip(self.chkbox, list(range(len(self.chkbox)))):
             if i.isChecked():
-                print("Check box", self.obj_dataext.NBList[j])
+                logger.info("Check box", self.obj_dataext.NBList[j])
                 boxCheck += 1
                 if self.obj_dataext.NBList[j] in self.obj_dataext.NBIList:
                     voltFlag = False
@@ -678,7 +679,7 @@ class DataExtraction:
                 allv = f1.read()
 
         except Exception as e:
-            print("Exception Message : ", str(e))
+            logger.error("Exception Message : ", str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Unable to open plot data files.')
@@ -692,7 +693,7 @@ class DataExtraction:
             len_NBIList = len(self.NBIList)
             # print "NBILIST : ",self.NBIList
         except Exception as e:
-            print("Exception Message : ", str(e))
+            logger.error("Exception Message : ", str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Error in Analysis File.')
@@ -712,7 +713,7 @@ class DataExtraction:
                 self.NBList.append(l)
         self.NBList = self.NBList[2:]
         len_NBList = len(self.NBList)
-        print("NBLIST", self.NBList)
+        logger.info("NBLIST", self.NBList)
 
         ivals = []
         inum = len(allv[5].split("\t"))
@@ -803,7 +804,7 @@ class DataExtraction:
         self.volts_length = len(self.NBList)
         self.NBList = self.NBList + self.NBIList
 
-        print(dec)
+        logger.info(dec)
         return dec
 
     def numVals(self):

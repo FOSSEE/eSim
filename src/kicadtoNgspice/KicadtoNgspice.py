@@ -27,6 +27,7 @@ from . import SubcircuitTab
 from . import Convert
 from . import TrackWidget
 import json
+from utils.logger import logger
 
 # from xml.etree import ElementTree as ET
 
@@ -44,9 +45,9 @@ class MainWindow(QtGui.QWidget):
 
     def __init__(self, clarg1, clarg2=None):
         QtGui.QWidget.__init__(self)
-        print("==================================")
-        print("Kicad to Ngspice netlist converter ")
-        print("==================================")
+        logger.info("==================================")
+        logger.info("Kicad to Ngspice netlist converter ")
+        logger.info("==================================")
         global kicadNetlist, schematicInfo
         global infoline, optionInfo
         self.kicadFile = clarg1
@@ -70,22 +71,25 @@ class MainWindow(QtGui.QWidget):
 
         # Read the netlist, ie the .cir file
         kicadNetlist = obj_proc.readNetlist(self.kicadFile)
-        print("=============================================================")
-        print("Given Kicad Schematic Netlist Info :", kicadNetlist)
+        logger.info(
+            "=============================================================")
+        logger.info("Given Kicad Schematic Netlist Info :", kicadNetlist)
 
         # Construct parameter information
         param = obj_proc.readParamInfo(kicadNetlist)
 
         # Replace parameter with values
         netlist, infoline = obj_proc.preprocessNetlist(kicadNetlist, param)
-        print("=============================================================")
-        print("Schematic Info after processing Kicad Netlist: ", netlist)
+        logger.info(
+            "=============================================================")
+        logger.info("Schematic Info after processing Kicad Netlist: ", netlist)
         # print "INFOLINE",infoline
 
         # Separate option and schematic information
         optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
-        print("=============================================================")
-        print("OPTIONINFO in the Netlist", optionInfo)
+        logger.info(
+            "=============================================================")
+        logger.info("OPTIONINFO in the Netlist", optionInfo)
 
         # List for storing source and its value
         global sourcelist, sourcelisttrack
@@ -111,8 +115,8 @@ class MainWindow(QtGui.QWidget):
         ) = obj_proc.convertICintoBasicBlocks(
             schematicInfo, outputOption, modelList, plotText
         )
-        print("=======================================")
-        print("Model available in the Schematic :", modelList)
+        logger.info("=======================================")
+        logger.info("Model available in the Schematic :", modelList)
 
         """
         - Checking if any unknown model is used in schematic which is not
@@ -121,7 +125,7 @@ class MainWindow(QtGui.QWidget):
           modelParamXML directory
         """
         if unknownModelList:
-            print("Unknown Model List is : ", unknownModelList)
+            logger.info("Unknown Model List is : ", unknownModelList)
             self.msg = QtGui.QErrorMessage()
             self.content = "Your schematic contain unknown model " + \
                 ', '.join(unknownModelList)
@@ -532,14 +536,16 @@ class MainWindow(QtGui.QWidget):
         fw.write(write_data)
 
         # Create Convert object with the source details & the schematic details
-        print("=============================================================")
-        print("SOURCE LIST TRACK")
-        print(self.obj_track.sourcelisttrack["ITEMS"])
-        print("SOURCE ENTRY VAR")
-        print(self.obj_track.source_entry_var["ITEMS"])
-        print("SCHEMATIC INFO")
-        print(store_schematicInfo)
-        print("=============================================================")
+        logger.info(
+            "=============================================================")
+        logger.info("SOURCE LIST TRACK")
+        logger.info(self.obj_track.sourcelisttrack["ITEMS"])
+        logger.info("SOURCE ENTRY VAR")
+        logger.info(self.obj_track.source_entry_var["ITEMS"])
+        logger.info("SCHEMATIC INFO")
+        logger.info(store_schematicInfo)
+        logger.info(
+            "=============================================================")
 
         self.obj_convert = Convert.Convert(
             self.obj_track.sourcelisttrack["ITEMS"],
@@ -550,28 +556,35 @@ class MainWindow(QtGui.QWidget):
         try:
             # Adding Source Value to Schematic Info
             store_schematicInfo = self.obj_convert.addSourceParameter()
-            print("=========================================================")
-            print("Netlist After Adding Source details :", store_schematicInfo)
+            logger.info(
+                "=========================================================")
+            logger.info("Netlist After Adding Source details :",
+                        store_schematicInfo)
 
             # Adding Model Value to store_schematicInfo
             store_schematicInfo = self.obj_convert.addModelParameter(
                 store_schematicInfo)
-            print("=========================================================")
-            print("Netlist After Adding Ngspice Model :", store_schematicInfo)
+            logger.info(
+                "=========================================================")
+            logger.info("Netlist After Adding Ngspice Model :",
+                        store_schematicInfo)
 
             # Adding Device Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addDeviceLibrary(
                 store_schematicInfo, self.kicadFile)
-            print("=========================================================")
-            print(
+            logger.info(
+                "=========================================================")
+            logger.info(
                 "Netlist After Adding Device Model Library :",
                 store_schematicInfo)
 
             # Adding Subcircuit Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addSubcircuit(
                 store_schematicInfo, self.kicadFile)
-            print("=========================================================")
-            print("Netlist After Adding subcircuits :", store_schematicInfo)
+            logger.info(
+                "=========================================================")
+            logger.info("Netlist After Adding subcircuits :",
+                        store_schematicInfo)
 
             analysisoutput = self.obj_convert.analysisInsertor(
                 self.obj_track.AC_entry_var["ITEMS"],
@@ -584,14 +597,17 @@ class MainWindow(QtGui.QWidget):
                 self.obj_track.AC_type["ITEMS"],
                 self.obj_track.op_check
             )
-            print("=========================================================")
-            print("Analysis OutPut ", analysisoutput)
+            logger.info(
+                "=========================================================")
+            logger.info("Analysis OutPut ", analysisoutput)
 
             # Calling netlist file generation function
-            print("=========================================================")
-            print("STORE SCHEMATIC INFO")
-            print(store_schematicInfo)
-            print("=========================================================")
+            logger.info(
+                "=========================================================")
+            logger.info("STORE SCHEMATIC INFO")
+            logger.info(store_schematicInfo)
+            logger.info(
+                "=========================================================")
             self.createNetlistFile(store_schematicInfo, plotText)
 
             self.msg = "The Kicad to Ngspice Conversion completed\
@@ -600,8 +616,8 @@ class MainWindow(QtGui.QWidget):
                 self, "Information", self.msg, QtGui.QMessageBox.Ok)
 
         except Exception as e:
-            print("Exception Message: ", e)
-            print("There was error while converting kicad to ngspice")
+            logger.info("Exception Message: ", e)
+            logger.info("There was error while converting kicad to ngspice")
             self.close()
 
         # Generate .sub file from .cir.out file if it is a subcircuit
@@ -625,8 +641,9 @@ class MainWindow(QtGui.QWidget):
         - - AnalysisOption
         - In the end add control statements and allv, alli, end statements
         """
-        print("=============================================================")
-        print("Creating Final netlist")
+        logger.info(
+            "=============================================================")
+        logger.info("Creating Final netlist")
         # print "INFOLINE",infoline
         # print "OPTIONINFO",optionInfo
         # print "Device MODEL LIST ",devicemodelList
@@ -649,12 +666,13 @@ class MainWindow(QtGui.QWidget):
                 f.close()
 
             except BaseException:
-                print("Error While opening Project Analysis file.\
+                logger.info("Error While opening Project Analysis file.\
                  Please check it")
                 sys.exit()
         else:
-            print("========================================================")
-            print(analysisFileLoc + " does not exist")
+            logger.info(
+                "========================================================")
+            logger.info(analysisFileLoc + " does not exist")
             sys.exit()
 
         # Adding analysis file info to optionInfo
@@ -741,10 +759,11 @@ class MainWindow(QtGui.QWidget):
             try:
                 f = open(self.project + ".cir.out")
             except BaseException:
-                print("Error in opening .cir.out file.")
+                logger.info("Error in opening .cir.out file.")
         else:
-            print("=========================================================")
-            print(
+            logger.info(
+                "=========================================================")
+            logger.info(
                 self.projName +
                 ".cir.out does not exist. Please create a spice netlist.")
 
@@ -803,5 +822,7 @@ class MainWindow(QtGui.QWidget):
         out.writelines('\n')
 
         out.writelines('.ends ' + self.projName)
-        print("=============================================================")
-        print("The subcircuit has been written in " + self.projName + ".sub")
+        logger.info(
+            "=============================================================")
+        logger.info("The subcircuit has been written in " +
+                    self.projName + ".sub")

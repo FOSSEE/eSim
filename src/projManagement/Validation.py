@@ -20,6 +20,7 @@
 import os
 import re
 import distutils.spawn
+from utils.logger import logger
 
 
 class Validation:
@@ -46,7 +47,7 @@ class Validation:
             True        => If the folder contains the projName.proj file
             False       => If the folder doesn't contain projName.proj file
         """
-        print("Function: Validating Open Project Information")
+        logger.info("Function: Validating Open Project Information")
         projName = os.path.basename(str(projDir))
         lookProj = os.path.join(str(projDir), projName + ".proj")
         # Check existence of project
@@ -67,7 +68,7 @@ class Validation:
             :"CHECKNAME"    => If space is there in name
             :"VALID"        => If valid project name given
         """
-        print("Function: Validating New Project Information")
+        logger.info("Function: Validating New Project Information")
 
         # Checking existence of project with same name
         if os.path.exists(projDir):
@@ -92,7 +93,7 @@ class Validation:
             True
             False
         """
-        print("FUnction : Validating for Kicad components")
+        logger.info("FUnction : Validating for Kicad components")
         if projDir is None:
             return False
         else:
@@ -150,9 +151,9 @@ class Validation:
                     # The number of ports is specified in this line
                     # eg. '.subckt ua741 6 7 3' has 3 ports (6, 7 and 3).
                     numPorts = len(words) - 2
-                    print("Looksub : ", lookSub)
-                    print("Given Number of ports : ", givenNum)
-                    print("Actual Number of ports :", numPorts)
+                    logger.info("Looksub : ", lookSub)
+                    logger.info("Given Number of ports : ", givenNum)
+                    logger.info("Actual Number of ports :", numPorts)
                     if numPorts != givenNum:
                         return "PORT"
                     else:

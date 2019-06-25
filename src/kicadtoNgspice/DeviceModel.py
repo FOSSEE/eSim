@@ -3,6 +3,7 @@ import os
 # from xml.etree import ElementTree as ET
 import json
 from . import TrackWidget
+from utils.logger import logger
 
 
 class DeviceModel(QtGui.QWidget):
@@ -38,7 +39,7 @@ class DeviceModel(QtGui.QWidget):
             data = f.read()
             json_data = json.loads(data)
         except BaseException:
-            print("Device Model Previous JSON is Empty")
+            logger.info("Device Model Previous JSON is Empty")
 
         QtGui.QWidget.__init__(self)
 
@@ -62,14 +63,14 @@ class DeviceModel(QtGui.QWidget):
         # Set Layout
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
-        print("Reading Device model details from Schematic")
+        logger.info("Reading Device model details from Schematic")
 
         for eachline in schematicInfo:
-            print("=========================================")
-            print(eachline)
+            logger.info("=========================================")
+            logger.info(eachline)
             words = eachline.split()
             if eachline[0] == 'q':
-                print("Device Model Transistor: ", words[0])
+                logger.info("Device Model Transistor: ", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 transbox = QtGui.QGroupBox()
                 transgrid = QtGui.QGridLayout()
@@ -98,7 +99,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
-                                print(
+                                logger.info(
                                     "Error when set text of device\
                                      model transistor")
                 except BaseException:
@@ -136,7 +137,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count + 1
 
             elif eachline[0] == 'd':
-                print("Device Model Diode:", words[0])
+                logger.info("Device Model Diode:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 diodebox = QtGui.QGroupBox()
                 diodegrid = QtGui.QGridLayout()
@@ -164,7 +165,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
-                                print("Error when set text of device\
+                                logger.info("Error when set text of device\
                                  model diode")
                 except BaseException:
                     pass
@@ -201,7 +202,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count + 1
 
             elif eachline[0] == 'j':
-                print("Device Model JFET:", words[0])
+                logger.info("Device Model JFET:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 jfetbox = QtGui.QGroupBox()
                 jfetgrid = QtGui.QGridLayout()
@@ -229,7 +230,7 @@ class DeviceModel(QtGui.QWidget):
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
-                                print("Error when set text of Device\
+                                logger.info("Error when set text of Device\
                                  Model JFET ")
                 except BaseException:
                     pass
@@ -365,7 +366,7 @@ class DeviceModel(QtGui.QWidget):
         """
         This function is use to keep track of all Device Model widget
         """
-        print("Calling Track Device Model Library funtion")
+        logger.info("Calling Track Device Model Library funtion")
         sending_btn = self.sender()
         # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
@@ -405,12 +406,12 @@ class DeviceModel(QtGui.QWidget):
         """
         This function is use to keep track of all Device Model widget
         """
-        print("Calling Track Library function Without Button")
+        logger.info("Calling Track Library function Without Button")
         # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = iter_value
-        print("self.widgetObjCount-----", self.widgetObjCount)
+        logger.info("self.widgetObjCount-----", self.widgetObjCount)
         self.libfile = path_value
-        print("PATH VALUE", path_value)
+        logger.info("PATH VALUE", path_value)
         # print "Selected Library File :",self.libfile
 
         # Setting Library to Text Edit Line

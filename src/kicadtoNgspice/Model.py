@@ -3,6 +3,7 @@ import json
 from . import TrackWidget
 # from xml.etree import ElementTree as ET
 import os
+from utils.logger import logger
 
 
 class Model(QtGui.QWidget):
@@ -30,7 +31,7 @@ class Model(QtGui.QWidget):
             data = f.read()
             json_data = json.loads(data)
         except BaseException:
-            print("Model Previous Values JSON is Empty")
+            logger.info("Model Previous Values JSON is Empty")
 
         # Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()

@@ -4,6 +4,7 @@ from projManagement.Validation import Validation
 from subcircuit.newSub import NewSub
 from subcircuit.openSub import openSub
 from subcircuit.convertSub import convertSub
+from utils.logger import logger
 
 
 # This class creates Subcircuit GUI.
@@ -64,7 +65,7 @@ class Subcircuit(QtGui.QWidget):
             self.subcircuit.createSubcircuit(self.schematic_name)
 
         else:
-            print("Sub circuit creation cancelled")
+            logger.info("Sub circuit creation cancelled")
 
     def editsch(self):
         self.obj_opensubcircuit = openSub()

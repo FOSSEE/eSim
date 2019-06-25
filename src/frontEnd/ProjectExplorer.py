@@ -3,8 +3,9 @@ import os
 import json
 from configuration.Appconfig import Appconfig
 
-
 # This is main class for Project Explorer Area.
+
+
 class ProjectExplorer(QtGui.QWidget):
     """
     This class contains function:

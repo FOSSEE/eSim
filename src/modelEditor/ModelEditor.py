@@ -3,6 +3,7 @@ from PyQt4.Qt import QTableWidgetItem
 import xml.etree.ElementTree as ET
 from configuration.Appconfig import Appconfig
 import os
+from utils.logger import logger
 
 
 class ModelEditorclass(QtGui.QWidget):
@@ -333,7 +334,7 @@ class ModelEditorclass(QtGui.QWidget):
                     "*.lib"))
             self.createtable(self.editfile)
         except BaseException:
-            print("No File selected for edit")
+            logger.error("No File selected for edit")
             pass
 
     def createtable(self, modelfile):
@@ -363,7 +364,7 @@ class ModelEditorclass(QtGui.QWidget):
         filepath, filename = os.path.split(self.modelfile)
         base, ext = os.path.splitext(filename)
         self.modelfile = os.path.join(filepath, base + '.xml')
-        print("Model File used for creating table : ", self.modelfile)
+        logger.info("Model File used for creating table : ", self.modelfile)
         self.tree = ET.parse(self.modelfile)
         self.root = self.tree.getroot()
         for elem in self.tree.iter(tag='ref_model'):

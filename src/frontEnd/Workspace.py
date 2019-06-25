@@ -19,6 +19,7 @@ from PyQt4 import QtCore, QtGui
 from configuration.Appconfig import Appconfig
 import time
 import os
+from utils.logger import logger
 
 
 # This class creates Workspace GUI.
@@ -83,8 +84,8 @@ class Workspace(QtGui.QWidget):
         self.show()
 
     def defaultWorkspace(self):
-        print("Default workspace selected : " +
-              self.obj_appconfig.default_workspace["workspace"])
+        logger.info("Default workspace selected : " +
+                    self.obj_appconfig.default_workspace["workspace"])
         self.imp_var = 1
         self.obj_appconfig.print_info(
             'Default workspace selected : ' +
@@ -104,7 +105,7 @@ class Workspace(QtGui.QWidget):
         var_appView = appView
 
     def createWorkspace(self):
-        print("Function : Create workspace")
+        logger.info("Function : Create workspace")
         self.create_workspace = str(self.workspace_loc.text())
         self.obj_appconfig.print_info('Workspace : ' + self.create_workspace)
         # Checking if Workspace already exist or not
@@ -122,7 +123,7 @@ class Workspace(QtGui.QWidget):
         var_appView.splash.close()
 
     def browseLocation(self):
-        print("Function : Browse Location")
+        logger.info("Function : Browse Location")
         self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(
             self, "Browse Location", os.path.expanduser("~"))
         self.workspace_loc.setText(self.workspace_directory)

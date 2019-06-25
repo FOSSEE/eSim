@@ -21,6 +21,7 @@ from . import Validation
 from configuration.Appconfig import Appconfig
 from . import Worker
 from PyQt4 import QtGui
+from utils.logger import logger
 
 
 class Kicad:
@@ -51,7 +52,7 @@ class Kicad:
 
         @return
         """
-        print("Function : Open Kicad Schematic")
+        logger.info("Function : Open Kicad Schematic")
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         try:
             self.obj_appconfig.print_info(
@@ -157,7 +158,7 @@ class Kicad:
 
         @return
         """
-        print("Function: Open Kicad to Ngspice Converter")
+        logger.info("Function: Open Kicad to Ngspice Converter")
 
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         try:

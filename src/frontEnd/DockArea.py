@@ -9,6 +9,7 @@ from browser.Welcome import Welcome
 from browser.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 import os
+from utils.logger import logger
 
 dockList = ['Welcome']
 count = 1
@@ -152,7 +153,7 @@ class DockArea(QtGui.QMainWindow):
 
     def modelEditor(self):
         """This function defines UI for model editor."""
-        print("in model editor")
+        logger.info("Model editor called")
         global count
         self.modelwidget = QtGui.QWidget()
 
