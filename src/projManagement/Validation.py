@@ -22,8 +22,6 @@ import re
 import distutils.spawn
 
 
-
-
 class Validation:
     """
     This is Validation class use for validating Project.
@@ -41,12 +39,13 @@ class Validation:
         projName is same as the folder selected
 
         @params
-            :projDir    => contains the path of the project folder selected to open
+            :projDir    => contains the path of the project folder selected\
+                to open
 
         @return
             True        => If the folder contains the projName.proj file
             False       => If the folder doesn't contain projName.proj file
-        """ 
+        """
         print("Function: Validating Open Project Information")
         projName = os.path.basename(str(projDir))
         lookProj = os.path.join(str(projDir), projName + ".proj")
@@ -55,8 +54,6 @@ class Validation:
             return True
         else:
             return False
-
-
 
     def validateNewproj(self, projDir):
         """
@@ -69,7 +66,7 @@ class Validation:
             :"CHECKEXIST"   => If smae project name folder exists
             :"CHECKNAME"    => If space is there in name
             :"VALID"        => If valid project name given
-        """ 
+        """
         print("Function: Validating New Project Information")
 
         # Checking existence of project with same name
@@ -81,8 +78,6 @@ class Validation:
                 return "CHECKNAME"
             else:
                 return "VALID"
-
-
 
     def validateKicad(self, projDir):
         """
@@ -102,8 +97,6 @@ class Validation:
             return False
         else:
             return True
-
-
 
     def validateCir(self, projDir):
         """
@@ -132,7 +125,8 @@ class Validation:
 
         @params
             :subDir    => the path of the subcircuit directory
-            :giveNum   => the number of port calculated and passed for validation
+            :giveNum   => the number of port calculated and passed for\
+                validation
 
         @return
             True

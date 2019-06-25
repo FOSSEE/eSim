@@ -19,6 +19,7 @@ from PyQt4 import QtCore
 import subprocess
 from configuration.Appconfig import Appconfig
 
+
 class WorkerThread(QtCore.QThread):
     """
     Initialise a QThread with the passed arguments
@@ -39,8 +40,6 @@ class WorkerThread(QtCore.QThread):
         QtCore.QThread.__init__(self)
         self.args = args
 
-
-
     def __del__(self):
         """
         __del__ is a called whenever garbage collection is initialised
@@ -53,7 +52,6 @@ class WorkerThread(QtCore.QThread):
             None
         """
         self.wait()
-
 
     def run(self):
         """
@@ -77,8 +75,8 @@ class WorkerThread(QtCore.QThread):
         track processes called
 
         @params
-            :command    => (self.args) takes space separated string of comamnds to
-                        be executed in different child processes
+            :command    => (self.args) takes space separated string of\
+                        comamnds to be executed in different child processes
                         (see subproces.Popen())
         """
 

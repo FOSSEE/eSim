@@ -20,7 +20,7 @@ class DockArea(QtGui.QMainWindow):
     """
     This class contains function for designing UI of all the editors
     in dock area part:
-    
+
         - Test Editor.
         - Model Editor.
         - Python Plotting.
@@ -186,7 +186,10 @@ class DockArea(QtGui.QMainWindow):
         count = count + 1
 
     def kicadToNgspiceEditor(self, clarg1, clarg2=None):
-        """This function is creating Editor UI for Kicad to Ngspice conversion."""
+        """
+        This function is creating Editor UI for-
+        Kicad to Ngspice conversion.
+        """
         global count
         self.kicadToNgspiceWidget = QtGui.QWidget()
         self.kicadToNgspiceLayout = QtGui.QVBoxLayout()

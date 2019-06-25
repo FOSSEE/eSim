@@ -71,9 +71,11 @@ class Application(QtGui.QMainWindow):
         In this function we are setting icons, short-cuts,and
         defining functonality for:
 
-            - Top-tool-bar (New project, Open project, Close project, Help option )
-            - Left-tool-bar (Open Schematic, Convert KiCad to NgSpice, Simuation,
-              Model Editor, Subcircuit, NGHDL, Modelica Converter, OM Optimisation )
+            - Top-tool-bar (New project, Open project, Close project,\
+                Help option )
+            - Left-tool-bar (Open Schematic, Convert KiCad to NgSpice,\
+                Simuation, Model Editor, Subcircuit, NGHDL, Modelica\
+                Converter, OM Optimisation )
         """
         # Top Tool bar
         self.newproj = QtGui.QAction(
@@ -199,11 +201,12 @@ class Application(QtGui.QMainWindow):
         exit message and buttons 'Yes', 'No'.
 
             1. If 'Yes' is pressed:
-                - it checks that program(process) in procThread_list (list made in
-                    Appconfig.py):
+                - it checks that program(process) in procThread_list\
+                    (list made in Appconfig.py):
 
                     - if available it terminates that program
-                    - if the program(process) is not available, it checks for it
+                    - if the program(process) is not available,\
+                        it checks for it
                       in process_obj (list made in Appconfig.py) if found it
                       closes the program.
 
@@ -341,7 +344,8 @@ class Application(QtGui.QMainWindow):
                 # Fail Safe ===>
                 count += 1
                 if count >= 100:
-                    raise Exception("ngspice taking too long, check netlist file")
+                    raise Exception(
+                        "ngspice taking too long, check netlist file")
 
             # Calling Python Plotting
             try:

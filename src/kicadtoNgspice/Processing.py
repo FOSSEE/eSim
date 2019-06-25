@@ -16,6 +16,7 @@ class PrcocessNetlist:
     """
     - Read the circuit file and return splitted lines
     """
+
     def readNetlist(self, filename):
         f = open(filename)
         data = f.read()
@@ -31,6 +32,7 @@ class PrcocessNetlist:
     - Read Parameter information and store it into dictionary
     - kicadNetlis is the .cir file content
     """
+
     def readParamInfo(self, kicadNetlis):
         param = {}
         print("=========================KICADNETLIST========================")
@@ -55,6 +57,7 @@ class PrcocessNetlist:
     - Preprocess netlist (replace parameters)
     - Separate infoline (first line) from the rest of netlist
     """
+
     def preprocessNetlist(self, kicadNetlis, param):
         netlist = []
         for eachline in kicadNetlis:
@@ -125,6 +128,7 @@ class PrcocessNetlist:
     - Then check for type whether ac, dc, sine, etc...
     - Handle starting with h and f as well
     """
+
     def insertSpecialSourceParam(self, schematicInfo, sourcelist):
         schematicInfo1 = []
         print("=============================================================")
@@ -462,7 +466,7 @@ class PrcocessNetlist:
                         "a" + str(k) + " (" + words[1] + " " +
                         words[2] + ") (interNode_" +
                         str(interMediateNodeCount) + " " + words[3] + ") "
-                        )
+                    )
                     modelLine += compName + "_primary"
                     schematicInfo.append(modelLine)
                     k = k + 1

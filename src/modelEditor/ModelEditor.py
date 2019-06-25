@@ -143,13 +143,13 @@ class ModelEditorclass(QtGui.QWidget):
 
     def diode_click(self):
         '''
-        - Call function, openfiletype, which opens the table view for Diode specs
+        - Call function, openfiletype, which opens the table view\
+            for Diode specs
         - Set states for other elements
         - Diode has no types, so hide that
         '''
         self.openfiletype('Diode')
         self.types.setHidden(True)
-
 
     def bjt_click(self):
         '''
@@ -169,7 +169,6 @@ class ModelEditorclass(QtGui.QWidget):
         self.openfiletype(filetype)
         # When element selected from combo box, call setfiletype
         self.types.activated[str].connect(self.setfiletype)
-
 
     def mos_click(self):
         '''
@@ -193,7 +192,6 @@ class ModelEditorclass(QtGui.QWidget):
         self.openfiletype(filetype)
         self.types.activated[str].connect(self.setfiletype)
 
-
     def jfet_click(self):
         '''
         - Set states for other elements
@@ -210,7 +208,6 @@ class ModelEditorclass(QtGui.QWidget):
         filetype = str(self.types.currentText())
         self.openfiletype(filetype)
         self.types.activated[str].connect(self.setfiletype)
-    
 
     def igbt_click(self):
         '''
@@ -307,14 +304,14 @@ class ModelEditorclass(QtGui.QWidget):
         else:
             pass
 
-
     def openedit(self):
         '''
         - When `Edit` button clicked, this function called
         - Set states for other buttons accordingly
         - Open the file selector box with path as deviceModelLibrary
         and filetype set as .lib, save it in `self.editfile`
-        - Create table for the selected .lib file using `self.createtable(path)`
+        - Create table for the selected .lib file using\
+            `self.createtable(path)`
         - Handle exception of no file selected
         '''
         os.chdir(self.savepathtest)
@@ -349,7 +346,8 @@ class ModelEditorclass(QtGui.QWidget):
         - Use ET (xml.etree.ElementTree) to parse the xml file
         - Extract data from the XML and store it in `modeldict`
         - Show the extracted data in QTableWidget
-        - Can edit QTable inplace, connect `edit_modeltable` function for editing
+        - Can edit QTable inplace, connect `edit_modeltable`\
+            function for editing
         '''
         self.savebtn.setDisabled(False)
         self.addbtn.setHidden(False)
@@ -458,13 +456,14 @@ class ModelEditorclass(QtGui.QWidget):
         else:
             self.savethefile(self.editfile)
 
-
     def createXML(self, model_name):
         '''
         - Create .xml and .lib file if new model is being created
-        - Save it in the corresponding compoenent directory, example Diode, IGBT..
+        - Save it in the corresponding compoenent directory,\
+            example Diode, IGBT..
         - For each component, separate folder is there
-        - Check the contents of .lib and .xml file to understand their structure
+        - Check the contents of .lib and .xml file to\
+            understand their structure
         '''
         root = ET.Element("library")
         ET.SubElement(root, "model_name").text = model_name
@@ -604,10 +603,10 @@ class ModelEditorclass(QtGui.QWidget):
         txtfile.close()
         os.chdir(defaultcwd)
 
-
     def validation(self, text):
         '''
-        - This function checks if the file (xml type) with the name already exists
+        - This function checks if the file (xml type) with the name\
+            already exists
         - Accordingly show error message
         '''
         newfilename = text + '.xml'
@@ -620,7 +619,6 @@ class ModelEditorclass(QtGui.QWidget):
                 self.msg.showMessage(
                     'The file with name ' + text + ' already exists.')
                 self.msg.setWindowTitle("Error Message")
-
 
     def savethefile(self, editfile):
         '''
@@ -666,7 +664,6 @@ class ModelEditorclass(QtGui.QWidget):
         remove_item = self.modeltable.item(index.row(), 0).text()
         self.modeltable.removeRow(index.row())
         del self.modeldict[str(remove_item)]
-
 
     def converttoxml(self):
         '''
