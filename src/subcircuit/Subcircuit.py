@@ -52,7 +52,7 @@ class Subcircuit(QtGui.QWidget):
         self.hbox.addWidget(self.newbtn)
         self.hbox.addWidget(self.editbtn)
         self.hbox.addWidget(self.convertbtn)
-	self.hbox.addWidget(self.uploadbtn)
+        self.hbox.addWidget(self.uploadbtn)
         self.hbox.addStretch(1)
 
         self.vbox = QtGui.QVBoxLayout()
