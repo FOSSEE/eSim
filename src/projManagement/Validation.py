@@ -186,3 +186,48 @@ class Validation:
         Example, nghdl, eeschema...
         """
         return distutils.spawn.find_executable(toolName) is not None
+
+    def validateSubcir(self, projDir):
+        """
+        This function checks for valid format of .sub file.
+            Correct format of file is:
+                - File should start with **.subckt <filename>**
+                - End with **.ends <filename>**
+        Function is passed with the file of path it checks the
+        file line by line untill it get .subckt as its first word
+        and then check for second word is it <fileName> or not.
+
+        Then it checks for second last line if it is ".ends
+        <filename>" it return True if conditions satisfy else
+        return False.
+
+        """
+        projName = os.path.basename(str(projDir))
+        fileName = projName[:-4]
+        req_line = ".ends" + " " + str(fileName)
+        f = open(projDir, 'r')
+
+        flag1 = False
+        flag2 = False
+
+        for line in f:
+            word = line.split(' ')
+            if word[0] == "*":
+                continue
+            if word[0] == ".subckt":
+                break
+
+        if word[1] == fileName:
+            flag1 = True
+
+        with open(projDir, 'r') as m:
+            lines = m.read().splitlines()
+            last_line = lines[-2]
+
+        if req_line == last_line:
+            flag2 = True
+
+        if flag1 == True and flag2 == True:
+            return "True"
+        else:
+            return "False"
