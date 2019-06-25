@@ -348,9 +348,16 @@ class Application(QtGui.QMainWindow):
         """
         When 'subcircuit' icon is clicked wich is present in
         left-tool-bar of main page:
+<<<<<<< Updated upstream
             a) Meassge shown on screen "Subcircuit editor is called".
             b) 'subcircuiteditor()'' function is called using object
                'obj_dockarea' of class 'Mainview'.
+=======
+
+            - Message shown on screen "Subcircuit editor is called".
+            - 'subcircuiteditor()' function is called using object
+              'obj_dockarea' of class 'Mainview'.
+>>>>>>> Stashed changes
         """
         print("Function : Subcircuit editor")
         self.obj_appconfig.print_info('Subcircuit editor is called')
@@ -387,9 +394,16 @@ class Application(QtGui.QMainWindow):
         """
         When model editor icon is clicked wich is present in
         left-tool-bar of main page:
+<<<<<<< Updated upstream
             a) Meassge shown on screen "Model editor is called".
             b) 'modeleditor()'' function is called using object
                'obj_dockarea' of class 'Mainview'.
+=======
+
+            - Message shown on screen "Model editor is called".
+            - 'modeleditor()' function is called using object
+              'obj_dockarea' of class 'Mainview'.
+>>>>>>> Stashed changes
         """
         print("Function : Model editor")
         self.obj_appconfig.print_info('Model editor is called')
