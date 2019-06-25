@@ -255,7 +255,7 @@ class ProjectExplorer(QtGui.QWidget):
             updatedProjectFiles = []
 
             self.workspace = self.obj_appconfig.default_workspace['workspace']
-            self.newBaseFileName = str(newBaseFileName).rstrip().lstrip()
+            newBaseFileName = str(newBaseFileName).rstrip().lstrip()
             self.projDir = os.path.join(self.workspace, str(newBaseFileName))
 
             if newBaseFileName == "":
