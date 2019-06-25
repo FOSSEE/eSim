@@ -274,12 +274,12 @@ class ProjectExplorer(QtGui.QWidget):
                 msg.setWindowTitle("Error Message")
 
             else:
-                self.reply = self.obj_validation.validateNewproj(str(self.projDir))
+                reply = self.obj_validation.validateNewproj(str(self.projDir))
             
 
 
             # rename files matching project name
-                if self.reply == "VALID":
+                if reply == "VALID":
                     for projectFile in projectFiles:
                         if self.baseFileName in projectFile:
                             oldFilePath = os.path.join(projectPath, projectFile)
@@ -310,7 +310,7 @@ class ProjectExplorer(QtGui.QWidget):
                     for parent, children in self.obj_appconfig.project_explorer.items():
                         self.addTreeNode(parent, children)
 
-                elif self.reply == "CHECKEXIST":
+                elif reply == "CHECKEXIST":
                     print("Project name already exists.")
                     print("==========================")
                     msg = QtGui.QErrorMessage(self)
@@ -321,7 +321,7 @@ class ProjectExplorer(QtGui.QWidget):
                         + ' delete existing project')
                     msg.setWindowTitle("Error Message")
 
-                elif self.reply == "CHECKNAME":
+                elif reply == "CHECKNAME":
                     print("Name can not contain space between them")
                     print("===========================")
                     msg = QtGui.QErrorMessage(self)
