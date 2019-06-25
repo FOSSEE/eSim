@@ -471,9 +471,9 @@ class PrcocessNetlist:
                     schematicInfo.append(modelLine)
                     k = k + 1
                     # For iron core
-                    modelLine = "a" + str(k) + " (" + words[4] + " " + words[2] + ") \
-                    (interNode_" + str(
-                        interMediateNodeCount + 1) + " " + words[3] + ") "
+                    modelLine = "a" + str(k) + " (" + words[4] + " " + \
+                        words[2] + ") (interNode_" + \
+                        str(interMediateNodeCount + 1) + " " + words[3] + ") "
                     modelLine += compName + "_secondary"
                     schematicInfo.append(modelLine)
                     k = k + 1
