@@ -23,7 +23,6 @@ import os
 import json
 
 
-
 class NewProjectInfo(QtGui.QWidget):
     """
     This class is called when User create new Project.
@@ -39,7 +38,7 @@ class NewProjectInfo(QtGui.QWidget):
         This function create Project related directories and files.
         Before creating also validates using the `Validation` class
 
-        Validation codes  
+        Validation codes
 
         - VALID
         - CHECKEXIST

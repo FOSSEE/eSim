@@ -28,10 +28,10 @@ class OpenProjectInfo(QtGui.QWidget):
     """
     This class is called when User click on Open Project Button
     """
+
     def __init__(self):
         super(OpenProjectInfo, self).__init__()
         self.obj_validation = Validation()
-
 
     def body(self):
         """

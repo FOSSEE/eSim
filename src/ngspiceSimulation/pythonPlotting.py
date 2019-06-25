@@ -626,7 +626,7 @@ class DataExtraction:
                 p += 1  # 'p' gives no. of lines of data for each node/branch
                 if "Index" in i:
                     npv += 1
-                    # 'npv' gives the no of partitions for a single voltage node
+                # 'npv' gives the no of partitions for a single voltage node
                 # print("npv:", npv)
                 if "AC" in i:  # DC for dc files and AC for ac ones
                     break
@@ -637,7 +637,7 @@ class DataExtraction:
                 p += 1
                 if "Index" in i:
                     npv += 1
-                    # 'npv' gives the no of partitions for a single voltage node
+                # 'npv' gives the no of partitions for a single voltage node
                 # print("npv:", npv)
                 if "Transient" in i:  # DC for dc files and AC for ac ones
                     break
@@ -649,7 +649,7 @@ class DataExtraction:
                 p += 1
                 if "Index" in i:
                     npv += 1
-                    # 'npv' gives the no of partitions for a single voltage node
+                # 'npv' gives the no of partitions for a single voltage node
                 # print("npv:", npv)
                 if "DC" in i:  # DC for dc files and AC for ac ones
                     break

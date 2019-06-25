@@ -17,7 +17,7 @@ import sys
 sys.path.insert(0, os.path.abspath('./src'))
 
 # added so that do not need to install them at runtime
-autodoc_mock_imports = ["PyQt4","pathmagic","matplotlib","numpy"]
+autodoc_mock_imports = ["PyQt4", "pathmagic", "matplotlib", "numpy"]
 # -- Project information -----------------------------------------------------
 
 project = u'eSim'

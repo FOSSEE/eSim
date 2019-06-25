@@ -1,4 +1,5 @@
-from setuptools import setup, find_namespace_packages, Command  # Always prefer setuptools over distutils
+# Always prefer setuptools over distutils
+from setuptools import setup, find_namespace_packages
 
 '''
 Created for packaging and distributing of python projects

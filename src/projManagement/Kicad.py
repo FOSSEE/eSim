@@ -42,8 +42,6 @@ class Kicad:
         self.obj_appconfig = Appconfig()
         self.obj_dockarea = dockarea
 
-
-
     def openSchematic(self):
         """
         This function create command to open Kicad schematic after
