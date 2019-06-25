@@ -6,7 +6,12 @@ import shutil
 
 
 class UploadSub(QtGui.QWidget):
-    """This class contain function for """
+    """
+    This class contain function for ulaoding subcircuits
+    in Subcircuit library present in src folder.
+        A folder is created in src/SubcircuitLibrary
+    and desired file is moved to that folder.
+    """
 
     def __init__(self):
         super(UploadSub, self).__init__()
