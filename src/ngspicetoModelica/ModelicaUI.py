@@ -107,17 +107,18 @@ class OpenModelicaEditor(QtGui.QWidget):
 
         else:
             self.msg = QtGui.QMessageBox()
-            self.msgContent = "There was an error while opening OMEdit.<br/>\
-                        Please make sure OpenModelica is installed in your \
-                        system. <br/>\
-                        To install it on Linux : Go to <a href= \
-                        https://www.openmodelica.org/download/download-linux> \
-                        OpenModelica Linux</a> \
-                        and install nigthly build release.<br/> \
-                        To install it on Windows : Go to <a href= \
-                        https://www.openmodelica.org/download/download-windows>\
-                        OpenModelica Windows</a> and install latest version. \
-                        <br/>"
+            self.msgContent = (
+                "There was an error while opening OMEdit.<br/>"
+                "Please make sure OpenModelica is installed in your"
+                " system.<br/>"
+                "To install it on Linux : Go to <a href="
+                "https://www.openmodelica.org/download/download-linux"
+                ">OpenModelica Linux</a> and install nightly build"
+                " release.<br/>"
+                "To install it on Windows : Go to <a href="
+                "https://www.openmodelica.org/download/download-windows"
+                ">OpenModelica Windows</a> and install latest version.<br/>"
+                )
             self.msg.setTextFormat(QtCore.Qt.RichText)
             self.msg.setText(self.msgContent)
             self.msg.setWindowTitle("Missing OpenModelica")

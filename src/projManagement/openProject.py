@@ -74,12 +74,12 @@ class OpenProjectInfo(QtGui.QWidget):
                 "The project doesn't contain .proj file. Please select the"
                 + "proper directory else you won't be able to perform any"
                 + "operation")
-            reply = QtGui.QMessageBox.critical(None, "Error Message",
-                                               '''<b>Error: The project doesn't contain .proj file.</b><br/>
-                <b>Please select the proper project directory else you won't
-                be able to perform any operation</b>''',
-                                               QtGui.QMessageBox.Ok |
-                                               QtGui.QMessageBox.Cancel)
+            reply = QtGui.QMessageBox.critical(
+                None, "Error Message",
+                "<b>Error: The project doesn't contain .proj file.</b><br/>"
+                "<b>Please select the proper project directory else you won't"
+                " be able to perform any operation</b>",
+                QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel)
 
             if reply == QtGui.QMessageBox.Ok:
                 self.body()
