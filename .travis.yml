@@ -3,6 +3,7 @@ language: python
 cache: pip
 
 git:
+    depth: 5
     quiet: true
 
 python:
