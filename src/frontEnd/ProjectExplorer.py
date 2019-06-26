@@ -2,7 +2,6 @@ from PyQt4 import QtGui, QtCore
 import os
 import json
 from configuration.Appconfig import Appconfig
-from projManagement.newProject import NewProjectInfo
 from projManagement.Validation import Validation
 
 
@@ -244,7 +243,6 @@ class ProjectExplorer(QtGui.QWidget):
             self, 'Rename Project', 'Project Name:', QtGui.QLineEdit.Normal,
             self.baseFileName
             )
-            
         if ok and newBaseFileName:
             print("=================")
             print(newBaseFileName)
