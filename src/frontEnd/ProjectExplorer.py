@@ -248,9 +248,20 @@ class ProjectExplorer(QtGui.QWidget):
             print(newBaseFileName)
             print("=================")
             newBaseFileName = str(newBaseFileName)
-            projectPath, projectFiles = list(
-                self.obj_appconfig.project_explorer.items())[
-                    self.indexItem.row()]
+            i = 0
+            print(self.indexItem.row())
+            print("=================")
+
+            for parents, children in list(
+                    self.obj_appconfig.project_explorer.items()):
+                print(parents)
+                print("-------------------")
+                if os.path.exists(parents):
+                    i += 1
+                    if i == self.indexItem.row():
+                        projectPath, projectFiles = list(
+                            self.obj_appconfig.project_explorer.items())[i]
+
             updatedProjectFiles = []
 
             self.workspace = self.obj_appconfig.default_workspace['workspace']
@@ -273,7 +284,6 @@ class ProjectExplorer(QtGui.QWidget):
 
             else:
                 reply = self.obj_validation.validateNewproj(str(projDir))
-                print(reply)
                 print("==================")
 
             # rename files matching project name
@@ -283,7 +293,7 @@ class ProjectExplorer(QtGui.QWidget):
                             oldFilePath = os.path.join(projectPath,
                                                        projectFile)
                             projectFile = projectFile.replace(
-                                self.baseFileNam, newBaseFileName, 1)
+                                self.baseFileName, newBaseFileName, 1)
                             newFilePath = os.path.join(
                                 projectPath, projectFile)
                             print(oldFilePath)
