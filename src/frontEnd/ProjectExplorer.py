@@ -241,18 +241,18 @@ class ProjectExplorer(QtGui.QWidget):
         self.indexItem = self.treewidget.currentIndex()
         self.baseFileName = str(self.indexItem.data())
         newBaseFileName, ok = QtGui.QInputDialog.getText(
-                                                         self,
-                                                         'Rename Project',
-                                                         'Project Name:',
-                                                         QtGui.QLineEdit.Normal,
-                                                         self.baseFileName
-                                                        )
+            self, 'Rename Project', 'Project Name:', QtGui.QLineEdit.Normal,
+            self.baseFileName
+            )
+            
         if ok and newBaseFileName:
             print("=================")
             print(newBaseFileName)
             print("=================")
             newBaseFileName = str(newBaseFileName)
-            projectPath, projectFiles = list(self.obj_appconfig.project_explorer.items())[self.indexItem.row()]
+            projectPath, projectFiles = list(
+                self.obj_appconfig.project_explorer.items())[
+                    self.indexItem.row()]
             updatedProjectFiles = []
 
             self.workspace = self.obj_appconfig.default_workspace['workspace']
@@ -285,10 +285,9 @@ class ProjectExplorer(QtGui.QWidget):
                             oldFilePath = os.path.join(projectPath,
                                                        projectFile)
                             projectFile = projectFile.replace(
-                                                             self.baseFileName,
-                                                             newBaseFileName,
-                                                             1)
-                            newFilePath = os.path.join(projectPath, projectFile)
+                                self.baseFileNam, newBaseFileName, 1)
+                            newFilePath = os.path.join(
+                                projectPath, projectFile)
                             print(oldFilePath)
                             print("==================")
                             print(newFilePath)
@@ -300,7 +299,8 @@ class ProjectExplorer(QtGui.QWidget):
                             updatedProjectFiles.append(projectFile)
 
                     # rename project folder
-                    updatedProjectPath = newBaseFileName.join(projectPath.rsplit(self.baseFileName, 1))
+                    updatedProjectPath = newBaseFileName.join(
+                        projectPath.rsplit(self.baseFileName, 1))
                     print ("Renaming "
                            + projectPath
                            + " to "
@@ -309,7 +309,8 @@ class ProjectExplorer(QtGui.QWidget):
 
                     # update project_explorer dictionary
                     del self.obj_appconfig.project_explorer[projectPath]
-                    self.obj_appconfig.project_explorer[updatedProjectPath] = updatedProjectFiles
+                    self.obj_appconfig.project_explorer[updatedProjectPath] = \
+                        updatedProjectFiles
 
                     # save project_explorer dictionary on disk
                     json.dump(self.obj_appconfig.project_explorer, open(
@@ -317,7 +318,8 @@ class ProjectExplorer(QtGui.QWidget):
 
                     # recreate project explorer tree
                     self.treewidget.clear()
-                    for parent, children in self.obj_appconfig.project_explorer.items():
+                    for parent, children in \
+                            self.obj_appconfig.project_explorer.items():
                         self.addTreeNode(parent, children)
 
                 elif reply == "CHECKEXIST":
