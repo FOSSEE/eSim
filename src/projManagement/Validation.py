@@ -1,4 +1,3 @@
-
 # =========================================================================
 #
 #          FILE: Validation.py
@@ -21,12 +20,25 @@ import os
 import re
 import distutils.spawn
 
+"""
+This is Validation class use for validating Project.
+e.g if .proj is present in project directory
+or if new project name is already exist in workspace etc
+"""
+
 
 class Validation:
     """
-    This is Validation class use for validating Project.
-    e.g if .proj is present in project directory
-    or if new project name is already exist in workspace etc
+    Takes as input the path of the project and checks if
+    projName.proj file exists
+    projName is same as the folder selected
+
+    @params
+        :projDir    => contains the path of the project folder selected to open
+
+    @return
+        True        => If the folder contains the projName.proj file
+        False       => If the folder doesn't contain projName.proj file
     """
 
     def __init__(self):
@@ -34,17 +46,7 @@ class Validation:
 
     def validateOpenproj(self, projDir):
         """
-        Takes as input the path of the project and checks if
-        projName.proj file exists
-        projName is same as the folder selected
-
-        @params
-            :projDir    => contains the path of the project folder selected\
-                to open
-
-        @return
-            True        => If the folder contains the projName.proj file
-            False       => If the folder doesn't contain projName.proj file
+        This function validate Open Project Information.
         """
         print("Function: Validating Open Project Information")
         projName = os.path.basename(str(projDir))
@@ -55,17 +57,21 @@ class Validation:
         else:
             return False
 
+    """
+    Validate new project created
+
+    @params
+        :projDir        => Contains path of the new projDir created
+
+    @return
+        :"CHECKEXIST"   => If smae project name folder exists
+        :"CHECKNAME"    => If space is there in name
+        :"VALID"        => If valid project name given
+    """
+
     def validateNewproj(self, projDir):
         """
-        Validate new project created
-
-        @params
-            :projDir        => Contains path of the new projDir created
-
-        @return
-            :"CHECKEXIST"   => If smae project name folder exists
-            :"CHECKNAME"    => If space is there in name
-            :"VALID"        => If valid project name given
+        This Project Validate New Project Information
         """
         print("Function: Validating New Project Information")
 
@@ -79,18 +85,22 @@ class Validation:
             else:
                 return "VALID"
 
+    """
+    Validate if projDir is set appropriately in the function calling file
+    and if Kicad components are present
+
+    @params
+        :projDir    => the path of the project directory, passed from
+                       the calling function
+
+    @return
+        True
+        False
+    """
+
     def validateKicad(self, projDir):
         """
-        Validate if projDir is set appropriately in the function calling file
-        and if Kicad components are present
-
-        @params
-            :projDir    => the path of the project directory, passed from
-                        the calling function
-
-        @return
-            True
-            False
+        This function validate if Kicad components are present
         """
         print("FUnction : Validating for Kicad components")
         if projDir is None:
@@ -98,17 +108,21 @@ class Validation:
         else:
             return True
 
+    """
+    Validate if cir file present in the directory with the appropriate .cir
+    file name, same as the project directory base
+
+    @params
+        :projDir    => the path to the project diretory
+
+    @return
+        True
+        False
+    """
+
     def validateCir(self, projDir):
         """
-        Validate if cir file present in the directory with the appropriate .cir
-        file name, same as the project directory base
-
-        @params
-            :projDir    => the path to the project directory
-
-        @return
-            True
-            False
+        This function checks if ".cir" file is present.
         """
         projName = os.path.basename(str(projDir))
         lookCir = os.path.join(str(projDir), projName + ".cir")
@@ -161,17 +175,7 @@ class Validation:
             return "DIREC"
 
     def validateCirOut(self, projDir):
-        """
-        This function checks if ".cir.out" file is present.
-
-        @params
-            :projDir    => the path of the project directory, passed from
-                        the calling function
-
-        @return
-            True
-            False
-        """
+        """This function checks if ".cir.out" file is present."""
         projName = os.path.basename(str(projDir))
         lookCirOut = os.path.join(str(projDir), projName + ".cir.out")
         # Check existence of project
@@ -181,10 +185,7 @@ class Validation:
             return False
 
     def validateTool(self, toolName):
-        """
-        This function check if tool is present in the system,
-        Example, nghdl, eeschema...
-        """
+        """This function check if tool is present in the system."""
         return distutils.spawn.find_executable(toolName) is not None
 
     def validateSubcir(self, projDir):
@@ -210,15 +211,24 @@ class Validation:
         flag1 = False
         flag2 = False
 
+        # Checks if file is empty or not.
+        if os.stat(projDir).st_size == 0:
+            print("File is empty")
+            print("===================")
+            return False
+
         for line in f:
             word = line.split(' ')
             if word[0] == "*":
                 continue
             if word[0] == ".subckt":
+                word = line.split(' ')
                 break
 
-        if word[1] == fileName:
+        if word[0] == ".subckt" and word[1] == fileName:
             flag1 = True
+        else:
+            return False
 
         with open(projDir, 'r') as m:
             lines = m.read().splitlines()
@@ -227,7 +237,7 @@ class Validation:
         if req_line == last_line:
             flag2 = True
 
-        if flag1 == True and flag2 == True:
-            return "True"
-        else:
-            return "False"
+        if flag1 is True and flag2 is True:
+            return True
+
+        return False
