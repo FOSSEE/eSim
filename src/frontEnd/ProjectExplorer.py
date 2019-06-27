@@ -284,10 +284,8 @@ class ProjectExplorer(QtGui.QWidget):
                     # rename project folder
                     updatedProjectPath = newBaseFileName.join(
                         projectPath.rsplit(self.baseFileName, 1))
-                    print ("Renaming "
-                           + projectPath
-                           + " to "
-                           + updatedProjectPath)
+                    print("Renaming " + projectPath + " to "
+                          + updatedProjectPath)
                     os.rename(projectPath, updatedProjectPath)
 
                     # rename files matching project name
