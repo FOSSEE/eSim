@@ -28,7 +28,6 @@ or if new project name is already exist in workspace etc
 
 
 class Validation:
-
     """
     Takes as input the path of the project and checks if
     projName.proj file exists
@@ -221,8 +220,6 @@ class Validation:
                 word = line.split()
                 if len(word) == 0 or word[0][0] == "*":
                     continue
-                # print(word)
-                # print(word[0], word[1])
                 if first:
                     if word[0] == ".subckt" and word[1] == fileName:
                         first = False
