@@ -14,10 +14,10 @@ import numpy as np
 
 # This class creates Python Plotting window
 class plotWindow(QtGui.QMainWindow):
-    '''
+    """
     This class defines python plotting window, its features, buttons,
     colors, AC and DC analysis, plotting etc.
-    '''
+    """
 
     def __init__(self, fpath, projectName):
         """This create constructor for plotWindow class."""
