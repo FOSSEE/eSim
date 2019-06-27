@@ -248,7 +248,7 @@ class ProjectExplorer(QtGui.QWidget):
             print(newBaseFileName)
             print("=================")
             newBaseFileName = str(newBaseFileName)
-            i = 0
+            i = -1
             print(self.indexItem.row())
             print("=================")
 
@@ -259,8 +259,8 @@ class ProjectExplorer(QtGui.QWidget):
                 if os.path.exists(parents):
                     i += 1
                     if i == self.indexItem.row():
-                        projectPath, projectFiles = list(
-                            self.obj_appconfig.project_explorer.items())[i]
+                        projectPath, projectFiles = parents, children
+                        break
 
             updatedProjectFiles = []
 
