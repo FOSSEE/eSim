@@ -35,19 +35,22 @@ class UploadSub(QtGui.QWidget):
         if ok:
             projname = (str(text))
             create_subcircuit = projname
-            subcircuit_path = (os.path.join(os.path.abspath('..'), 'SubcircuitLibrary', create_subcircuit))
+            subcircuit_path = (os.path.join(os.path.abspath('..'),
+                               'SubcircuitLibrary', create_subcircuit))
 
             if subcircuit_path == "":
                 reply = "NONE"
             else:
-                reply = self.obj_validation.validateNewproj(str(subcircuit_path))
+                reply = self.obj_validation.validateNewproj(str(
+                    subcircuit_path))
 
             if reply == "VALID":
                 print("Validated: Creating subcircuit directory")
                 os.mkdir(subcircuit_path)
                 editfile = str(
                     QtGui.QFileDialog.getOpenFileName(
-                        None, "Upload File", os.path.expanduser("~"), (projname + ".sub")))
+                        None, "Upload File", os.path.expanduser("~"),
+                        (projname + ".sub")))
 
                 upload = os.path.basename(editfile)
                 print("===================")
@@ -64,7 +67,10 @@ class UploadSub(QtGui.QWidget):
                     subcircuit = (os.path.join(subcircuit_path, upload))
                     print("Final path of file is " + subcircuit)
                     print("===================")
-                    print("Copying file from " + editfile + " to " + subcircuit)
+                    print("Copying file from "
+                          + editfile
+                          + " to "
+                          + subcircuit)
                     print("===================")
                     shutil.copy(editfile, subcircuit)
                 else:
