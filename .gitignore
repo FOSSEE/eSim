@@ -1,5 +1,7 @@
+*.orig
 *.py.bak
 *.pyc
+*.rej
 esim-start.sh
 esim.desktop
 nghdl
