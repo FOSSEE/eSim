@@ -244,18 +244,13 @@ class ProjectExplorer(QtGui.QWidget):
             self.baseFileName
             )
         if ok and newBaseFileName:
-            print("=================")
             print(newBaseFileName)
             print("=================")
             newBaseFileName = str(newBaseFileName)
-            i = -1
-            print(self.indexItem.row())
-            print("=================")
 
+            i = -1
             for parents, children in list(
                     self.obj_appconfig.project_explorer.items()):
-                print(parents)
-                print("-------------------")
                 if os.path.exists(parents):
                     i += 1
                     if i == self.indexItem.row():
@@ -284,28 +279,8 @@ class ProjectExplorer(QtGui.QWidget):
 
             else:
                 reply = self.obj_validation.validateNewproj(str(projDir))
-                print("==================")
 
-            # rename files matching project name
                 if reply == "VALID":
-                    for projectFile in projectFiles:
-                        if self.baseFileName in projectFile:
-                            oldFilePath = os.path.join(projectPath,
-                                                       projectFile)
-                            projectFile = projectFile.replace(
-                                self.baseFileName, newBaseFileName, 1)
-                            newFilePath = os.path.join(
-                                projectPath, projectFile)
-                            print(oldFilePath)
-                            print("==================")
-                            print(newFilePath)
-                            print("==================")
-                            print ("Renaming "
-                                   + oldFilePath
-                                   + " to "
-                                   + newFilePath)
-                            updatedProjectFiles.append(projectFile)
-
                     # rename project folder
                     updatedProjectPath = newBaseFileName.join(
                         projectPath.rsplit(self.baseFileName, 1))
@@ -314,6 +289,20 @@ class ProjectExplorer(QtGui.QWidget):
                            + " to "
                            + updatedProjectPath)
                     os.rename(projectPath, updatedProjectPath)
+
+                    # rename files matching project name
+                    for projectFile in projectFiles:
+                        if self.baseFileName in projectFile:
+                            oldFilePath = os.path.join(updatedProjectPath,
+                                                       projectFile)
+                            projectFile = projectFile.replace(
+                                self.baseFileName, newBaseFileName, 1)
+                            newFilePath = os.path.join(
+                                updatedProjectPath, projectFile)
+                            print("Renaming " + oldFilePath + " to"
+                                  + newFilePath)
+                            os.rename(oldFilePath, newFilePath)
+                            updatedProjectFiles.append(projectFile)
 
                     # update project_explorer dictionary
                     del self.obj_appconfig.project_explorer[projectPath]
