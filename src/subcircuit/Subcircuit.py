@@ -41,7 +41,7 @@ class Subcircuit(QtGui.QWidget):
             '<b>To convert Subcircuit Kicad Netlist to Ngspice Netlist</b>')
         self.convertbtn.setFixedSize(200, 40)
         self.convertbtn.clicked.connect(self.convertsch)
-        
+
         self.hbox = QtGui.QHBoxLayout()
         self.hbox.addWidget(self.newbtn)
         self.hbox.addWidget(self.editbtn)
