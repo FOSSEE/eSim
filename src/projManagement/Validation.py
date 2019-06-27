@@ -28,6 +28,7 @@ or if new project name is already exist in workspace etc
 
 
 class Validation:
+
     """
     Takes as input the path of the project and checks if
     projName.proj file exists
@@ -205,11 +206,9 @@ class Validation:
         """
         projName = os.path.basename(str(projDir))
         fileName = projName[:-4]
-        req_line = ".ends" + " " + str(fileName)
-        f = open(projDir, 'r')
 
-        flag1 = False
-        flag2 = False
+        first = True
+        last_line = []
 
         # Checks if file is empty or not.
         if os.stat(projDir).st_size == 0:
@@ -217,27 +216,30 @@ class Validation:
             print("===================")
             return False
 
-        for line in f:
-            word = line.split(' ')
-            if word[0] == "*":
-                continue
-            if word[0] == ".subckt":
-                word = line.split(' ')
-                break
+        with open(projDir, 'r') as f:
+            for line in f:
+                word = line.split()
+                if len(word) == 0 or word[0][0] == "*":
+                    continue
+                # print(word)
+                # print(word[0], word[1])
+                if first:
+                    if word[0] == ".subckt" and word[1] == fileName:
+                        first = False
+                    else:
+                        print("First line not found")
+                        return False
+                else:
+                    last_line = word
 
-        if word[0] == ".subckt" and word[1] == fileName:
-            flag1 = True
-        else:
+        if first is True:
+            print("First line not found")
             return False
 
-        with open(projDir, 'r') as m:
-            lines = m.read().splitlines()
-            last_line = lines[-2]
-
-        if req_line == last_line:
-            flag2 = True
-
-        if flag1 is True and flag2 is True:
+        print(last_line)
+        if len(last_line) >= 2 and last_line[0] == ".ends" and \
+                last_line[1] == fileName:
             return True
 
+        print("Last line not found")
         return False
