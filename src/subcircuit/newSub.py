@@ -8,7 +8,7 @@ import os
 # This class is called when User create new Project.
 class NewSub(QtGui.QWidget):
     """
-    Contains funstions to check :
+    Contains functions to check :
     - Name of project should not be blank.
     - Name should not contain space between them.
     - Name does not match with existing project.
