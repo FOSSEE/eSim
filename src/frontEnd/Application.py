@@ -31,15 +31,15 @@ from PyQt4.Qt import QSize
 import sys
 import os
 
+
 # Its our main window of application.
-
-
 class Application(QtGui.QMainWindow):
     """This class initializes all objects used in this file(Application.py)."""
     global project_name
 
     def __init__(self, *args):
         """Initialize main Application window."""
+
         # Calling __init__ of super class
         QtGui.QMainWindow.__init__(self, *args)
 
@@ -349,6 +349,7 @@ class Application(QtGui.QMainWindow):
                         "ngspice taking too long, check netlist file")
 
             # Calling Python Plotting
+
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:

@@ -2,6 +2,7 @@ from PyQt4 import QtGui, QtCore
 import os
 import json
 from configuration.Appconfig import Appconfig
+from projManagement.Validation import Validation
 
 
 # This is main class for Project Explorer Area.
@@ -25,6 +26,7 @@ class ProjectExplorer(QtGui.QWidget):
         """
         QtGui.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
+        self.obj_validation = Validation()
         self.treewidget = QtGui.QTreeWidget()
         self.window = QtGui.QVBoxLayout()
         header = QtGui.QTreeWidgetItem(["Projects", "path"])
@@ -181,9 +183,6 @@ class ProjectExplorer(QtGui.QWidget):
     # This function removes the project in explorer area by right
     # clicking on project and selecting remove option.
     def removeProject(self):
-        """
-
-        """
         self.indexItem = self.treewidget.currentIndex()
         self.filePath = str(
             self.indexItem.sibling(
@@ -202,7 +201,6 @@ class ProjectExplorer(QtGui.QWidget):
     # This function refresh the project in explorer area by right
     # clicking on project and selecting refresh option.
     def refreshProject(self):
-        """ """
         self.indexItem = self.treewidget.currentIndex()
         self.filePath = str(
             self.indexItem.sibling(
@@ -224,51 +222,116 @@ class ProjectExplorer(QtGui.QWidget):
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath, 'w'))
 
-    '''def renameProject(self):
-        indexItem = self.treewidget.currentIndex()
-        baseFileName = str(indexItem.data())
+    def renameProject(self):
+        """
+        This function renames the project present in project explorer area
+        it validates first:
+
+            - If project names is not empty.
+            - Project name does not contain spaces between them.
+            - Project name is different between what it was earlier.
+            - Project name should not exist.
+
+        And after project name is changed it recreates
+        the project explorer tree.
+        """
+        self.indexItem = self.treewidget.currentIndex()
+        self.baseFileName = str(self.indexItem.data())
         newBaseFileName, ok = QtGui.QInputDialog.getText(
-            self, 'Rename Project', 'Project Name:',
-            QtGui.QLineEdit.Normal, baseFileName
-        )
+            self, 'Rename Project', 'Project Name:', QtGui.QLineEdit.Normal,
+            self.baseFileName
+            )
         if ok and newBaseFileName:
+            print(newBaseFileName)
+            print("=================")
             newBaseFileName = str(newBaseFileName)
-            projectPath, projectFiles = list(
-                self.obj_appconfig.project_explorer.items())[indexItem.row()]
+
+            i = -1
+            for parents, children in list(
+                    self.obj_appconfig.project_explorer.items()):
+                if os.path.exists(parents):
+                    i += 1
+                    if i == self.indexItem.row():
+                        projectPath, projectFiles = parents, children
+                        break
+
             updatedProjectFiles = []
 
-            # rename files matching project name
-            for projectFile in projectFiles:
-                if baseFileName in projectFile:
-                    oldFilePath = os.path.join(projectPath, projectFile)
-                    projectFile = projectFile.replace(
-                        baseFileName, newBaseFileName, 1)
-                    newFilePath = os.path.join(projectPath, projectFile)
-                    print ("Renaming " + oldFilePath + " to " + newFilePath)
-                    os.rename(oldFilePath, newFilePath)
+            self.workspace = self.obj_appconfig.default_workspace['workspace']
+            newBaseFileName = str(newBaseFileName).rstrip().lstrip()
+            projDir = os.path.join(self.workspace, str(newBaseFileName))
 
-                    updatedProjectFiles.append(projectFile)
+            if newBaseFileName == "":
+                print("Project name can not be empty")
+                print("==================")
+                msg = QtGui.QErrorMessage(self)
+                msg.showMessage('The project name cannot be empty')
+                msg.setWindowTitle("Error Message")
 
-            # rename project folder
-            updatedProjectPath = newBaseFileName.join(
-                projectPath.rsplit(baseFileName, 1))
-            print ("Renaming " + projectPath + " to " + updatedProjectPath)
-            os.rename(projectPath, updatedProjectPath)
+            elif self.baseFileName == newBaseFileName:
+                print("Project name has to be different")
+                print("==================")
+                msg = QtGui.QErrorMessage(self)
+                msg.showMessage('The project name has to be different')
+                msg.setWindowTitle("Error Message")
 
-            # update project_explorer dictionary
-            del self.obj_appconfig.project_explorer[projectPath]
-            self.obj_appconfig.project_explorer[updatedProjectPath] = (
-                updatedProjectFiles
-            )
+            else:
+                reply = self.obj_validation.validateNewproj(str(projDir))
 
-            # save project_explorer dictionary on disk
-            json.dump(self.obj_appconfig.project_explorer,
-                      open(self.obj_appconfig.dictPath, 'w'))
+                if reply == "VALID":
+                    # rename project folder
+                    updatedProjectPath = newBaseFileName.join(
+                        projectPath.rsplit(self.baseFileName, 1))
+                    print("Renaming " + projectPath + " to "
+                          + updatedProjectPath)
+                    os.rename(projectPath, updatedProjectPath)
 
-            # recreate project explorer tree
-            self.treewidget.clear()
-            for parent, children in (
-                self.obj_appconfig.project_explorer.items()
-            ):
-                self.addTreeNode(parent, children)
-                '''
+                    # rename files matching project name
+                    for projectFile in projectFiles:
+                        if self.baseFileName in projectFile:
+                            oldFilePath = os.path.join(updatedProjectPath,
+                                                       projectFile)
+                            projectFile = projectFile.replace(
+                                self.baseFileName, newBaseFileName, 1)
+                            newFilePath = os.path.join(
+                                updatedProjectPath, projectFile)
+                            print("Renaming " + oldFilePath + " to"
+                                  + newFilePath)
+                            os.rename(oldFilePath, newFilePath)
+                            updatedProjectFiles.append(projectFile)
+
+                    # update project_explorer dictionary
+                    del self.obj_appconfig.project_explorer[projectPath]
+                    self.obj_appconfig.project_explorer[updatedProjectPath] = \
+                        updatedProjectFiles
+
+                    # save project_explorer dictionary on disk
+                    json.dump(self.obj_appconfig.project_explorer, open(
+                        self.obj_appconfig.dictPath, 'w'))
+
+                    # recreate project explorer tree
+                    self.treewidget.clear()
+                    for parent, children in \
+                            self.obj_appconfig.project_explorer.items():
+                        if os.path.exists(parent):
+                            self.addTreeNode(parent, children)
+
+                elif reply == "CHECKEXIST":
+                    print("Project name already exists.")
+                    print("==========================")
+                    msg = QtGui.QErrorMessage(self)
+                    msg.showMessage(
+                        'The project "'
+                        + newBaseFileName
+                        + '" already exist.Please select the different name or'
+                        + ' delete existing project')
+                    msg.setWindowTitle("Error Message")
+
+                elif reply == "CHECKNAME":
+                    print("Name can not contain space between them")
+                    print("===========================")
+                    msg = QtGui.QErrorMessage(self)
+                    msg.showMessage(
+                        'The project name should not'
+                        + 'contain space between them')
+                    msg.setWindowTitle("Error Message")

@@ -381,6 +381,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Voltage(V)-->')
                 else:
                     self.axes.set_ylabel('Current(I)-->')
+
         self.axes.grid(True)
         self.canvas.draw()
         self.combo = []
@@ -697,6 +698,7 @@ class DataExtraction:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Error in Analysis File.')
             self.msg.setWindowTitle("Error Message:openFile")
+
         d = self.numberFinder(fpath)
         d1 = int(d[0] + 1)
         d2 = int(d[1])
