@@ -315,7 +315,8 @@ class ProjectExplorer(QtGui.QWidget):
                     self.treewidget.clear()
                     for parent, children in \
                             self.obj_appconfig.project_explorer.items():
-                        self.addTreeNode(parent, children)
+                        if os.path.exists(parent):
+                            self.addTreeNode(parent, children)
 
                 elif reply == "CHECKEXIST":
                     print("Project name already exists.")
