@@ -579,7 +579,8 @@ class Analysis(QtGui.QWidget):
         except BaseException:
             self.track_obj.op_check.append('0')
 
-        # QtCore.QObject.connect(check,SIGNAL("stateChanged()"),check,SLOT("checkedSlot"))
+        # QtCore.QObject.connect(check, SIGNAL("stateChanged()"), check,
+        #                        SLOT("checkedSlot"))
         self.check.stateChanged.connect(self.setflag)
         # self.flagcheck = 1
         # self.flagcheck= 2

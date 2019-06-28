@@ -5,6 +5,7 @@ from subcircuit.newSub import NewSub
 from subcircuit.openSub import openSub
 from subcircuit.convertSub import convertSub
 from utils.logger import logger
+from subcircuit.uploadSub import UploadSub
 
 
 # This class creates Subcircuit GUI.
@@ -42,11 +43,17 @@ class Subcircuit(QtGui.QWidget):
             '<b>To convert Subcircuit Kicad Netlist to Ngspice Netlist</b>')
         self.convertbtn.setFixedSize(200, 40)
         self.convertbtn.clicked.connect(self.convertsch)
+        self.uploadbtn = QtGui.QPushButton('Upload a Subcircuit')
+        self.uploadbtn.setToolTip(
+                '<b>To Upload a subcircuit</b>')
+        self.uploadbtn.setFixedSize(180, 38)
+        self.uploadbtn.clicked.connect(self.uploadSub)
 
         self.hbox = QtGui.QHBoxLayout()
         self.hbox.addWidget(self.newbtn)
         self.hbox.addWidget(self.editbtn)
         self.hbox.addWidget(self.convertbtn)
+        self.hbox.addWidget(self.uploadbtn)
         self.hbox.addStretch(1)
 
         self.vbox = QtGui.QVBoxLayout()
@@ -74,3 +81,7 @@ class Subcircuit(QtGui.QWidget):
     def convertsch(self):
         self.obj_convertsubcircuit = convertSub(self.obj_dockarea)
         self.obj_convertsubcircuit.createSub()
+
+    def uploadSub(self):
+        self.obj_uploadsubcircuit = UploadSub()
+        self.obj_uploadsubcircuit.upload()

@@ -10,7 +10,10 @@ from utils.logger import logger
 
 class NewSub(QtGui.QWidget):
     """
-    Contains functions to create directory and validate file names.
+    Contains functions to check :
+    - Name of project should not be blank.
+    - Name should not contain space between them.
+    - Name does not match with existing project.
     """
 
     def __init__(self):

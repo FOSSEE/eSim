@@ -46,12 +46,12 @@ class convertSub(QtGui.QWidget):
             else:
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage(
-                    'The subcircuit does not contain any Kicad netlist\
-                     file for conversion.')
+                    'The subcircuit does not contain any Kicad netlist file'
+                    + ' for conversion.')
                 self.msg.setWindowTitle("Error Message")
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage(
-                'Please select the subcircuit first. You can either create \
-                new subcircuit or open existing subcircuit')
+                'Please select the subcircuit first. You can either create'
+                + ' new subcircuit or open existing subcircuit')
             self.msg.setWindowTitle("Error Message")

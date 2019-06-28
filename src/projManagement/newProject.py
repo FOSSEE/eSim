@@ -1,4 +1,3 @@
-
 # =========================================================================
 #
 #          FILE: newProject.py
@@ -45,11 +44,17 @@ class NewProjectInfo(QtGui.QWidget):
         - CHECKNAME
         - NONE
 
-        @params
+         @params
             :projName   => name of the project created passed from
                         frontEnd/Application new_project()
+         @return
+            :dirs        => The directories inside the project folder
+            :filelist    => The files inside the project folder
 
-        @return
+         @params
+            :projName   => name of the project created passed from
+                        frontEnd/Application new_project()
+         @return
             :dirs        => The directories inside the project folder
             :filelist    => The files inside the project folder
 
@@ -83,7 +88,7 @@ class NewProjectInfo(QtGui.QWidget):
                 self.msg = QtGui.QErrorMessage(self)
                 self.msg.showMessage(
                     'Unable to create project. Please make sure you have'
-                    + 'write permission on '
+                    + ' write permission on '
                     + self.workspace)
                 self.msg.setWindowTitle("Error Message")
             f.write("schematicFile " + self.projName + ".sch\n")

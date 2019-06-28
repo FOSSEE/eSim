@@ -11,8 +11,8 @@ class NgspiceWidget(QtGui.QWidget):
 
     def __init__(self, command, projPath):
         """
-        1)Creates constructor for NgspiceWidget class.
-        2)Checks whether OS is linux or windows
+        - Creates constructor for NgspiceWidget class.
+        - Checks whether OS is linux or windows
         and creates NgSpice window accordingly.
         """
         QtGui.QWidget.__init__(self)

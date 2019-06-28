@@ -15,10 +15,10 @@ from utils.logger import logger
 
 # This class creates Python Plotting window
 class plotWindow(QtGui.QMainWindow):
-    '''
+    """
     This class defines python plotting window, its features, buttons,
     colors, AC and DC analysis, plotting etc.
-    '''
+    """
 
     def __init__(self, fpath, projectName):
         """This create constructor for plotWindow class."""
@@ -382,6 +382,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Voltage(V)-->')
                 else:
                     self.axes.set_ylabel('Current(I)-->')
+
         self.axes.grid(True)
         self.canvas.draw()
         self.combo = []
@@ -698,6 +699,7 @@ class DataExtraction:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Error in Analysis File.')
             self.msg.setWindowTitle("Error Message:openFile")
+
         d = self.numberFinder(fpath)
         d1 = int(d[0] + 1)
         d2 = int(d[1])

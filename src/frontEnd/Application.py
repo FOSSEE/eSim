@@ -32,15 +32,15 @@ import sys
 import os
 from utils.logger import logger
 
+
 # Its our main window of application.
-
-
 class Application(QtGui.QMainWindow):
     """This class initializes all objects used in this file(Application.py)."""
     global project_name
 
     def __init__(self, *args):
         """Initialize main Application window."""
+
         # Calling __init__ of super class
         QtGui.QMainWindow.__init__(self, *args)
 
@@ -85,7 +85,8 @@ class Application(QtGui.QMainWindow):
             self)
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
-        # self.newproj.connect(self.newproj,QtCore.SIGNAL('triggered()'),self,QtCore.SLOT(self.new_project()))
+        # self.newproj.connect(self.newproj, QtCore.SIGNAL('triggered()'),
+        #                      self, QtCore.SLOT(self.new_project()))
 
         self.openproj = QtGui.QAction(
             QtGui.QIcon('../../images/openProject.png'),
@@ -350,6 +351,7 @@ class Application(QtGui.QMainWindow):
                         "ngspice taking too long, check netlist file")
 
             # Calling Python Plotting
+
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
@@ -362,8 +364,9 @@ class Application(QtGui.QMainWindow):
 
         else:
             self.msg = QtGui.QErrorMessage()
-            self.msg.showMessage('Please select the project first. You can either\
-                create new project or open existing project')
+            self.msg.showMessage(
+                'Please select the project first.'
+                ' You can either create new project or open existing project')
             self.msg.setWindowTitle("Error Message")
 
     # This function opens 'subcircuit' option in left-tool-bar.
@@ -435,51 +438,6 @@ class Application(QtGui.QMainWindow):
                 self.modelicaNetlist = os.path.join(
                     self.projDir, self.projName + ".mo")
 
-                """
-                try:
-                    # Creating a command for Ngspice to Modelica converter
-                    self.cmd1 = "
-                        python3 ../ngspicetoModelica/NgspicetoModelica.py "\
-                            +self.ngspiceNetlist
-                    self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
-                    self.obj_workThread1.start()
-
-
-                    if self.obj_validation.validateTool("OMEdit"):
-                        # Creating command to run OMEdit
-                        self.cmd2 = "OMEdit "+self.modelicaNetlist
-                        self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
-                        self.obj_workThread2.start()
-                    else:
-                        self.msg = QtGui.QMessageBox()
-                        self.msgContent = "There was an error while
-                            opening OMEdit.<br/>\
-                        Please make sure OpenModelica is installed in your\
-                            system. <br/>\
-                        To install it on Linux : Go to\
-                            <a href=https://www.openmodelica.org/download/\
-                                download-linux>OpenModelica Linux</a> and  \
-                                    install nigthly build release.<br/>\
-                        To install it on Windows : Go to\
-                         <a href=https://www.openmodelica.org/download/\
-                        download-windows>OpenModelica Windows</a>\
-                         and install latest version.<br/>"
-                        self.msg.setTextFormat(QtCore.Qt.RichText)
-                        self.msg.setText(self.msgContent)
-                        self.msg.setWindowTitle("Missing OpenModelica")
-                        self.obj_appconfig.print_info(self.msgContent)
-                        self.msg.exec_()
-
-                except Exception as e:
-                    self.msg = QtGui.QErrorMessage()
-                    self.msg.showMessage(
-                        'Unable to convert NgSpice netlist to\
-                            Modelica netlist :'+str(e))
-                    self.msg.setWindowTitle(
-                        "Ngspice to Modelica conversion error")
-                    self.obj_appconfig.print_error(str(e))
-                """
-
                 self.obj_Mainview.obj_dockarea.modelicaEditor(self.projDir)
 
             else:
@@ -518,14 +476,18 @@ class Application(QtGui.QMainWindow):
             self.obj_workThread.start()
         else:
             self.msg = QtGui.QMessageBox()
-            self.msgContent = "There was an error while opening OMOptim.<br/>\
-            Please make sure OpenModelica is installed in your system. <br/>\
-            To install it on Linux : Go to <a href=https://www.openmodelica\
-                .org/download/download-linux>OpenModelica Linux</a> and \
-                    install nigthly build release.<br/>\
-            To install it on Windows : Go to <a href=https://www.openmodelica.\
-                org/download/download-windows>OpenModelica Windows</a> and \
-                    install latest version.<br/>"
+            self.msgContent = (
+                "There was an error while opening OMOptim.<br/>"
+                "Please make sure OpenModelica is installed in your"
+                " system.<br/>"
+                "To install it on Linux : Go to <a href="
+                "https://www.openmodelica.org/download/download-linux"
+                ">OpenModelica Linux</a> and install nightly build"
+                " release.<br/>"
+                "To install it on Windows : Go to <a href="
+                "https://www.openmodelica.org/download/download-windows"
+                ">OpenModelica Windows</a> and install latest version.<br/>"
+                )
             self.msg.setTextFormat(QtCore.Qt.RichText)
             self.msg.setText(self.msgContent)
             self.msg.setWindowTitle("Error Message")
