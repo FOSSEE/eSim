@@ -188,7 +188,7 @@ class Validation:
         """This function check if tool is present in the system."""
         return distutils.spawn.find_executable(toolName) is not None
 
-    def validateSubcir(self, projDir):
+    def validateSubcir(self, projDir, fileName):
         """
         This function checks for valid format of .sub file.
             Correct format of file is:
@@ -203,8 +203,6 @@ class Validation:
         return False.
 
         """
-        projName = os.path.basename(str(projDir))
-        fileName = projName[:-4]
 
         first = True
         last_line = []
@@ -212,7 +210,6 @@ class Validation:
         # Checks if file is empty or not.
         if os.stat(projDir).st_size == 0:
             print("File is empty")
-            print("===================")
             return False
 
         with open(projDir, 'r') as f:
@@ -224,7 +221,7 @@ class Validation:
                     if word[0] == ".subckt" and word[1] == fileName:
                         first = False
                     else:
-                        print("First line not found")
+                        print("First line not found:", word)
                         return False
                 else:
                     last_line = word
@@ -233,10 +230,9 @@ class Validation:
             print("First line not found")
             return False
 
-        print(last_line)
         if len(last_line) >= 2 and last_line[0] == ".ends" and \
                 last_line[1] == fileName:
             return True
 
-        print("Last line not found")
+        print("Last line not found:", last_line)
         return False
