@@ -30,6 +30,7 @@ Welcome to eSim's documentation!
    :maxdepth: 3
    :caption: Contents:
 
+   code/configuration
    code/browser
    code/frontEnd
    code/kicadtoNgspice
