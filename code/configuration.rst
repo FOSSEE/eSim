@@ -1,5 +1,5 @@
 Configuration Component
-===================
+=======================
 
 .. toctree::
 	:maxdepth: 2
