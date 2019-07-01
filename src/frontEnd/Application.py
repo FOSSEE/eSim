@@ -214,8 +214,8 @@ class Application(QtGui.QMainWindow):
             2. If 'No' is pressed:
                 - the program just continues as it was doing earlier.
         '''
-        exit_msg = "Are you sure you want to exit the program\
-            ? All unsaved data will be lost."
+        exit_msg = "Are you sure you want to exit the program?" \
+            " All unsaved data will be lost."
         reply = QtGui.QMessageBox.question(
             self, 'Message', exit_msg, QtGui.QMessageBox.Yes,
             QtGui.QMessageBox.No)

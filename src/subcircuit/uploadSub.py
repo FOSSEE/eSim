@@ -29,77 +29,65 @@ class UploadSub(QtGui.QWidget):
             the file is passed to the function **validateSub** and it returns
             true if file has valid format or else it shows an error message.
         """
-        text, ok = QtGui.QInputDialog.getText(
-            self, 'Subcircuit Info', 'Enter Subcircuit Name:')
 
-        if ok:
-            projname = (str(text))
-            create_subcircuit = projname
-            subcircuit_path = (os.path.join(os.path.abspath('..'),
-                               'SubcircuitLibrary', create_subcircuit))
+        editfile = QtGui.QFileDialog.getOpenFileName(
+            None, "Upload Subcircuit File", os.path.expanduser("~"), "*.sub")
 
-            if subcircuit_path == "":
-                reply = "NONE"
-            else:
-                reply = self.obj_validation.validateNewproj(str(
-                    subcircuit_path))
+        if editfile == '':
+            return
 
-            if reply == "VALID":
-                print("Validated: Creating subcircuit directory")
-                os.mkdir(subcircuit_path)
-                editfile = str(
-                    QtGui.QFileDialog.getOpenFileName(
-                        None, "Upload File", os.path.expanduser("~"),
-                        (projname + ".sub")))
+        upload = os.path.basename(editfile)
+        create_subcircuit, ext = os.path.splitext(upload)
 
-                upload = os.path.basename(editfile)
-                print("===================")
-                print("Current path of subcircuit file is " + editfile)
-                print("===================")
-                print("Selected file is " + upload)
-                print("===================")
-                self.valid = self.obj_validation.validateSubcir(str(editfile))
-                print("===================")
+        if ext != '.sub':
+            self.msg = QtGui.QErrorMessage(self)
+            self.msg.showMessage("Please ensure that filename ends with .sub")
+            self.msg.setWindowTitle("Error Message")
+            print("Invalid filename")
+            return
 
-                if self.valid is True:
-                    print("Right file format!!!")
-                    print("===================")
-                    subcircuit = (os.path.join(subcircuit_path, upload))
-                    print("Final path of file is " + subcircuit)
-                    print("===================")
-                    print("Copying file from "
-                          + editfile
-                          + " to "
-                          + subcircuit)
-                    print("===================")
-                    shutil.copy(editfile, subcircuit)
-                else:
-                    self.msg = QtGui.QErrorMessage(self)
-                    self.msg.showMessage(
-                        "Content of file does not meet the required format.\
-                         Please make sure file starts with * .subckt \
-                         " + upload + "** and ends with **.ends \
-                         " + upload + "**")
-                    self.msg.setWindowTitle("Error Message")
-                    print("Invalid file format")
-                    print("===================")
-                    print("Removing directory " + subcircuit_path)
-                    print("===================")
-                    os.rmdir(subcircuit_path)
+        valid = self.obj_validation.validateSubcir(editfile, create_subcircuit)
+        if not valid:
+            self.msg = QtGui.QErrorMessage(self)
+            self.msg.showMessage(
+                "Content of file does not meet the required format.\
+                 Please ensure that file starts with **.subckt \
+                 " + create_subcircuit + "** and ends with **.ends \
+                 " + create_subcircuit + "**")
+            self.msg.setWindowTitle("Error Message")
+            print("Invalid file format")
+            return
 
-            elif reply == "CHECKEXIST":
-                print("Project name already exists.")
-                print("==========================")
-                msg = QtGui.QErrorMessage(self)
-                msg.showMessage(
-                    "The project already exist. Please select  \
-                    the different name or delete existing project")
-                msg.setWindowTitle("Error Message")
+        subcircuit_path = os.path.join(
+            os.path.abspath('..'), 'SubcircuitLibrary', create_subcircuit)
 
-            elif reply == "CHECKNAME":
-                print("Name can not contain space between them")
-                print("===========================")
-                msg = QtGui.QErrorMessage(self)
-                msg.showMessage(
-                    'The project name should not contain space between them')
-                msg.setWindowTitle("Error Message")
+        reply = self.obj_validation.validateNewproj(subcircuit_path)
+
+        if reply == "VALID":
+            print("Validated: Creating subcircuit directory")
+            os.makedirs(subcircuit_path)
+            subcircuit = os.path.join(subcircuit_path, upload)
+
+            print("===================")
+            print("Current path of subcircuit file is " + editfile)
+            print("Selected file is " + upload)
+            print("Final path of file is " + subcircuit)
+            print("===================")
+            shutil.copy(editfile, subcircuit)
+
+        elif reply == "CHECKEXIST":
+            print("Project name already exists.")
+            print("==========================")
+            msg = QtGui.QErrorMessage(self)
+            msg.showMessage(
+                "The project already exist. Please select  \
+                the different name or delete existing project")
+            msg.setWindowTitle("Error Message")
+
+        elif reply == "CHECKNAME":
+            print("Name can not contain space between them")
+            print("===========================")
+            msg = QtGui.QErrorMessage(self)
+            msg.showMessage(
+                'The project name should not contain space between them')
+            msg.setWindowTitle("Error Message")
