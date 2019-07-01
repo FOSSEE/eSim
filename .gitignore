@@ -1,8 +1,16 @@
+*.bak
+*.cir.ckt
+*.log
 *.orig
-*.py.bak
+*.net
 *.pyc
 *.rej
+_saved_*
+*.swp
+*~
 esim-start.sh
 esim.desktop
 nghdl
 tags
+build/
+dist/

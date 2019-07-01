@@ -2,7 +2,7 @@ update=Mon Feb 29 21:50:04 2016
 last_client=eeschema
 [eeschema]
 version=1
-LibDir=/home/yogesh/FreeEDA/library
+LibDir=
 [eeschema/libraries]
 LibName1=BasicGates-rescue
 LibName2=eSim_Analog
