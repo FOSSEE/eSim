@@ -1,0 +1,29 @@
+.MODEL ddnpn NPN(
++  Vtf=10
++  Cjc=2p
++  Nc=2 
++  Tr=10n
++  Ne=1.5
++  Cje=5p
++  Vjc=.75 
++  Xtb=1.5 
++  Rc=0
++  Tf=1n
++  Xti=3 
++  Ikr=0 
++  Bf=400 
++  Fc=.5 
++  Ikf=0
++  Br=1
++  Mje=.3333
++  Mjc=.3333
++  Vaf=100
++  Var=100
++  Isc=0 
++  Ise=0
++  Xtf=0
++  Vje=.75 
++  Is=10f
++  Itf=1
++  Eg=1.11 
+)

@@ -1,0 +1,4 @@
+.MODEL emitter D(
++  Is=21.3P
++  N=1.8
+)
