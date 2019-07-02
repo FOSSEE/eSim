@@ -1,0 +1,57 @@
+* Subcircuit LM108
+.subckt LM108 compensationa input+ input- v- output v+ compensationb 
+* c:\esim_1\esim\src\subcircuitlibrary\lm108\lm108.cir
+.include PNP.lib
+.include NJF.lib
+.include NPN.lib
+r2  v+ net-_q2-pad3_ 20k
+q2 net-_q2-pad1_ net-_q2-pad1_ net-_q2-pad3_ Q2N2907A
+q5 net-_q13-pad1_ net-_q2-pad1_ net-_q11-pad3_ Q2N2907A
+q3 net-_q2-pad1_ net-_q14-pad1_ net-_q1-pad1_ Q2N2222
+q7 compensationa net-_q14-pad1_ net-_q7-pad3_ Q2N2222
+q9 compensationa compensationa net-_q9-pad3_ Q2N2907A
+q11 net-_q11-pad1_ compensationa net-_q11-pad3_ Q2N2907A
+r3  v+ net-_q9-pad3_ 20k
+r7  v+ net-_q11-pad3_ 10k
+q1 net-_q1-pad1_ input- net-_q1-pad3_ Q2N2222
+q4 net-_q4-pad1_ input+ input- Q2N2222
+q6 net-_q4-pad1_ input- input+ Q2N2222
+r1  net-_q1-pad3_ net-_q10-pad1_ 2k
+r5  net-_q4-pad1_ net-_q12-pad3_ 50k
+q8 net-_q7-pad3_ input+ net-_q8-pad3_ Q2N2222
+r8  v+ net-_q15-pad3_ 10k
+q15 net-_q14-pad1_ net-_j1-pad3_ net-_q15-pad3_ Q2N2907A
+r12  compensationb net-_q11-pad1_ 5.6k
+q13 net-_q13-pad1_ net-_q13-pad1_ net-_q13-pad3_ Q2N2222
+q17 net-_q11-pad1_ net-_q13-pad1_ net-_q13-pad3_ Q2N2222
+q14 net-_q14-pad1_ net-_q14-pad1_ net-_q12-pad3_ Q2N2222
+r4  net-_q8-pad3_ net-_q10-pad1_ 2k
+q12 v- net-_q10-pad1_ net-_q12-pad3_ Q2N2907A
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q18 net-_j1-pad3_ net-_j1-pad1_ net-_q18-pad3_ Q2N2222
+j1 net-_j1-pad1_ v- net-_j1-pad3_ J2N3819
+r13  net-_j1-pad1_ net-_q16-pad2_ 940
+r14  net-_q18-pad3_ net-_q24-pad2_ 20k
+q24 net-_q13-pad3_ net-_q24-pad2_ net-_q24-pad3_ Q2N2222
+r6  net-_q10-pad3_ net-_r10-pad1_ 6.4k
+r9  net-_q10-pad2_ net-_r10-pad1_ 60k
+r11  net-_q18-pad3_ net-_q19-pad3_ 20k
+r10  net-_r10-pad1_ net-_q19-pad3_ 500
+r15  net-_q19-pad3_ v- 1k
+q19 net-_q16-pad2_ net-_q18-pad3_ net-_q19-pad3_ Q2N2222
+r17  net-_q24-pad3_ v- 820
+q21 v+ net-_j1-pad3_ net-_q20-pad1_ Q2N2222
+q20 net-_q20-pad1_ net-_q11-pad1_ net-_q13-pad3_ Q2N2222
+r16  net-_j1-pad3_ net-_q23-pad1_ 2k
+q23 net-_q23-pad1_ net-_j1-pad3_ net-_q22-pad3_ Q2N2222
+q26 v+ net-_q23-pad1_ net-_q25-pad2_ Q2N2222
+q25 net-_q23-pad1_ net-_q25-pad2_ output Q2N2222
+q22 v- net-_q13-pad3_ net-_q22-pad3_ Q2N2907A
+q27 v- net-_q13-pad3_ net-_q27-pad3_ Q2N2907A
+r18  net-_q25-pad2_ net-_q27-pad3_ 240
+r19  net-_q25-pad2_ output 90
+q29 net-_j1-pad3_ net-_j1-pad3_ v+ Q2N2907A
+q16 net-_j1-pad3_ net-_q16-pad2_ net-_q10-pad2_ Q2N2222
+* Control Statements
+
+.ends LM108

@@ -1,0 +1,11 @@
+* Subcircuit IB3858
+.subckt IB3858 net-_r1-pad1_ net-_c1-pad2_ 
+* /home/bhargav/downloads/esim-1.1.2/src/subcircuitlibrary/ib3858/ib3858.cir
+r1  net-_r1-pad1_ net-_l1-pad1_ 5.2
+l1  net-_l1-pad1_ net-_c1-pad1_ 3.08m
+l2  net-_c1-pad1_ net-_c1-pad2_ 61.100458m
+c1  net-_c1-pad1_ net-_c1-pad2_ 896.8481u
+r2  net-_c1-pad1_ net-_c1-pad2_ 73.6254
+* Control Statements
+
+.ends IB3858

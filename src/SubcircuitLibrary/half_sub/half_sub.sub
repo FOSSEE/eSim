@@ -1,0 +1,18 @@
+* Subcircuit half_sub
+.subckt half_sub net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ 
+* /home/bhargav/downloads/esim-1.1.2/src/subcircuitlibrary/half_sub/half_sub.cir
+* u3  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ d_xor
+* u2  net-_u1-pad1_ net-_u2-pad2_ d_inverter
+* u4  net-_u1-pad2_ net-_u2-pad2_ net-_u1-pad4_ d_and
+a1 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u1-pad3_ u3
+a2 net-_u1-pad1_ net-_u2-pad2_ u2
+a3 [net-_u1-pad2_ net-_u2-pad2_ ] net-_u1-pad4_ u4
+* Schematic Name: d_xor, NgSpice Name: d_xor
+.model u3 d_xor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u4 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Control Statements
+
+.ends half_sub

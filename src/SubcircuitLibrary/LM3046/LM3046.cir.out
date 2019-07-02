@@ -1,0 +1,18 @@
+* /home/bhargav/downloads/esim-1.1.2/src/subcircuitlibrary/lm3046/lm3046.cir
+
+.include NPN.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_q4-pad3_ Q2N2222
+q5 net-_q5-pad1_ net-_q5-pad2_ net-_q5-pad3_ Q2N2222
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q1-pad3_ Q2N2222
+* u1  net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ net-_q3-pad2_ net-_q3-pad1_ net-_q5-pad2_ net-_q5-pad3_ net-_q5-pad1_ net-_q4-pad2_ net-_q4-pad3_ net-_q4-pad1_ net-_q2-pad2_ net-_q2-pad3_ net-_q2-pad1_ port
+.tran 10e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

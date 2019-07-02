@@ -1,0 +1,56 @@
+* /home/mallikarjuna/downloads/esim-1.1.2/src/subcircuitlibrary/csla_bec1_logic/csla_bec1_logic.cir
+
+.include LOGIC_ADDER.sub
+.include MUX.sub
+* u2  net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ d_and
+* u3  net-_u3-pad1_ net-_u2-pad3_ net-_u3-pad3_ d_and
+* u5  net-_u2-pad2_ net-_u2-pad1_ net-_u5-pad3_ d_xor
+* u6  net-_u2-pad3_ net-_u3-pad1_ net-_u6-pad3_ d_xor
+* u7  net-_u3-pad3_ net-_u7-pad2_ net-_u7-pad3_ d_xor
+* u8  net-_u3-pad3_ net-_u8-pad2_ net-_u8-pad3_ d_xor
+* u4  net-_u2-pad2_ net-_u4-pad2_ d_inverter
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ port
+x3 net-_u1-pad1_ net-_u1-pad5_ net-_u9-pad2_ net-_u2-pad2_ net-_x1-pad3_ LOGIC_ADDER
+x1 net-_u1-pad2_ net-_u1-pad6_ net-_x1-pad3_ net-_u2-pad1_ net-_x1-pad5_ LOGIC_ADDER
+x2 net-_u1-pad3_ net-_u1-pad7_ net-_x1-pad5_ net-_u3-pad1_ net-_x2-pad5_ LOGIC_ADDER
+x4 net-_u1-pad4_ net-_u1-pad8_ net-_x2-pad5_ net-_u7-pad2_ net-_u8-pad2_ LOGIC_ADDER
+x7 net-_u1-pad9_ net-_u2-pad2_ net-_u4-pad2_ net-_u1-pad10_ MUX
+x5 net-_u1-pad9_ net-_u2-pad1_ net-_u5-pad3_ net-_u1-pad11_ MUX
+x8 net-_u1-pad9_ net-_u3-pad1_ net-_u6-pad3_ net-_u1-pad12_ MUX
+x6 net-_u1-pad9_ net-_u7-pad2_ net-_u7-pad3_ net-_u1-pad13_ MUX
+x9 net-_u1-pad9_ net-_u8-pad2_ net-_u8-pad3_ net-_u1-pad14_ MUX
+v1  net-_u9-pad1_ gnd 0
+* u9  net-_u9-pad1_ net-_u9-pad2_ adc_bridge_1
+a1 [net-_u2-pad1_ net-_u2-pad2_ ] net-_u2-pad3_ u2
+a2 [net-_u3-pad1_ net-_u2-pad3_ ] net-_u3-pad3_ u3
+a3 [net-_u2-pad2_ net-_u2-pad1_ ] net-_u5-pad3_ u5
+a4 [net-_u2-pad3_ net-_u3-pad1_ ] net-_u6-pad3_ u6
+a5 [net-_u3-pad3_ net-_u7-pad2_ ] net-_u7-pad3_ u7
+a6 [net-_u3-pad3_ net-_u8-pad2_ ] net-_u8-pad3_ u8
+a7 net-_u2-pad2_ net-_u4-pad2_ u4
+a8 [net-_u9-pad1_ ] [net-_u9-pad2_ ] u9
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u2 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u3 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_xor, NgSpice Name: d_xor
+.model u5 d_xor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_xor, NgSpice Name: d_xor
+.model u6 d_xor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_xor, NgSpice Name: d_xor
+.model u7 d_xor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_xor, NgSpice Name: d_xor
+.model u8 d_xor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: adc_bridge_1, NgSpice Name: adc_bridge
+.model u9 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

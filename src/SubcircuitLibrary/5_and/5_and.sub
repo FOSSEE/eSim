@@ -1,0 +1,16 @@
+* Subcircuit 5_and
+.subckt 5_and net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ 
+* c:\users\malli\esim\src\subcircuitlibrary\5_and\5_and.cir
+.include 3_and.sub
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u3-pad1_ 3_and
+* u2  net-_u1-pad4_ net-_u1-pad5_ net-_u2-pad3_ d_and
+* u3  net-_u3-pad1_ net-_u2-pad3_ net-_u1-pad6_ d_and
+a1 [net-_u1-pad4_ net-_u1-pad5_ ] net-_u2-pad3_ u2
+a2 [net-_u3-pad1_ net-_u2-pad3_ ] net-_u1-pad6_ u3
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u2 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u3 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Control Statements
+
+.ends 5_and
