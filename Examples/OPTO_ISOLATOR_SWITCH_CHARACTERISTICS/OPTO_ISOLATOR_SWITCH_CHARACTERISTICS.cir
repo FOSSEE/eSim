@@ -1,0 +1,20 @@
+* /home/bhargav/eSim-Workspace/OPTO_ISOLATOR_SWITCH_CHARACTERISTICS/OPTO_ISOLATOR_SWITCH_CHARACTERISTICS.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Jul  2 13:12:53 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R1  Net-_F1-Pad3_ in 1000		
+F1  Net-_C1-Pad1_ out Net-_F1-Pad3_ GND 3		
+v1  Net-_U1-Pad1_ GND pulse		
+C1  Net-_C1-Pad1_ out 14n		
+R2  GND Net-_R2-Pad2_ 100		
+v2  Net-_C1-Pad1_ GND 10		
+U2  in plot_v1		
+U4  out plot_v1		
+U1  Net-_U1-Pad1_ in plot_i2		
+U3  out Net-_R2-Pad2_ plot_i2		
+
+.end

@@ -1,0 +1,175 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:eSim_Plot
+LIBS:eSim_PSpice
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L 5_and X1
+U 1 1 5D0CBD44
+P 4150 3700
+F 0 "X1" H 4200 3600 60  0000 C CNN
+F 1 "5_and" H 4250 3850 60  0000 C CNN
+F 2 "" H 4150 3700 60  0000 C CNN
+F 3 "" H 4150 3700 60  0000 C CNN
+	1    4150 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U2
+U 1 1 5D0CBD97
+P 5150 3700
+F 0 "U2" H 5150 3600 60  0000 C CNN
+F 1 "d_inverter" H 5150 3850 60  0000 C CNN
+F 2 "" H 5200 3650 60  0000 C CNN
+F 3 "" H 5200 3650 60  0000 C CNN
+	1    5150 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 5D0CBDBE
+P 2900 2900
+F 0 "U1" H 2950 3000 30  0000 C CNN
+F 1 "PORT" H 2900 2900 30  0000 C CNN
+F 2 "" H 2900 2900 60  0000 C CNN
+F 3 "" H 2900 2900 60  0000 C CNN
+	1    2900 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 5D0CBDF4
+P 2900 3150
+F 0 "U1" H 2950 3250 30  0000 C CNN
+F 1 "PORT" H 2900 3150 30  0000 C CNN
+F 2 "" H 2900 3150 60  0000 C CNN
+F 3 "" H 2900 3150 60  0000 C CNN
+	2    2900 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 5D0CBE16
+P 2900 3400
+F 0 "U1" H 2950 3500 30  0000 C CNN
+F 1 "PORT" H 2900 3400 30  0000 C CNN
+F 2 "" H 2900 3400 60  0000 C CNN
+F 3 "" H 2900 3400 60  0000 C CNN
+	3    2900 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 5D0CBE3F
+P 2900 3750
+F 0 "U1" H 2950 3850 30  0000 C CNN
+F 1 "PORT" H 2900 3750 30  0000 C CNN
+F 2 "" H 2900 3750 60  0000 C CNN
+F 3 "" H 2900 3750 60  0000 C CNN
+	4    2900 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 5D0CBE6B
+P 2900 4150
+F 0 "U1" H 2950 4250 30  0000 C CNN
+F 1 "PORT" H 2900 4150 30  0000 C CNN
+F 2 "" H 2900 4150 60  0000 C CNN
+F 3 "" H 2900 4150 60  0000 C CNN
+	5    2900 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 5D0CBE9C
+P 6200 3700
+F 0 "U1" H 6250 3800 30  0000 C CNN
+F 1 "PORT" H 6200 3700 30  0000 C CNN
+F 2 "" H 6200 3700 60  0000 C CNN
+F 3 "" H 6200 3700 60  0000 C CNN
+	6    6200 3700
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3150 2900 3700 2900
+Wire Wire Line
+	3700 2900 3700 3500
+Wire Wire Line
+	3700 3600 3500 3600
+Wire Wire Line
+	3500 3600 3500 3150
+Wire Wire Line
+	3500 3150 3150 3150
+Wire Wire Line
+	3150 3400 3350 3400
+Wire Wire Line
+	3350 3400 3350 3700
+Wire Wire Line
+	3350 3700 3700 3700
+Wire Wire Line
+	3700 3800 3250 3800
+Wire Wire Line
+	3250 3800 3250 3750
+Wire Wire Line
+	3250 3750 3150 3750
+Wire Wire Line
+	3150 4150 3350 4150
+Wire Wire Line
+	3350 4150 3350 3900
+Wire Wire Line
+	3350 3900 3700 3900
+Wire Wire Line
+	4700 3700 4850 3700
+Wire Wire Line
+	5450 3700 5950 3700
+$EndSCHEMATC

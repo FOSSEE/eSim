@@ -1,0 +1,16 @@
+* /home/mallikarjuna/eSim-Workspace/d_source_Testcircuit/d_source_Testcircuit.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Jul  2 12:55:45 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ d_source		
+U2  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ out1 out2 out3 out4 dac_bridge_4		
+U3  out1 plot_v1		
+U4  out2 plot_v1		
+U5  out3 plot_v1		
+U6  out4 plot_v1		
+
+.end

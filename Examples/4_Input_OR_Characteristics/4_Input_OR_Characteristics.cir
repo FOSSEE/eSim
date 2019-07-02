@@ -1,0 +1,34 @@
+* /home/bhargav/eSim-Workspace/4_Input_OR_Characteristics/4_Input_OR_Characteristics.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Jul  2 12:55:29 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U5  v1 v2 v3 v4 Net-_U5-Pad5_ Net-_U5-Pad6_ Net-_U5-Pad7_ Net-_U5-Pad8_ adc_bridge_4		
+U7  v8 v7 v6 v5 Net-_U7-Pad5_ Net-_U7-Pad6_ Net-_U7-Pad7_ Net-_U7-Pad8_ adc_bridge_4		
+U6  Net-_U6-Pad1_ Net-_U6-Pad2_ out1 out2 dac_bridge_2		
+R1  out1 GND 1k		
+R2  out2 GND 1k		
+U9  out1 plot_v1		
+U8  out2 plot_v1		
+U13  v8 plot_v1		
+U10  v7 plot_v1		
+U11  v6 plot_v1		
+U12  v5 plot_v1		
+v7  v7 GND DC		
+v8  v8 GND DC		
+v5  v5 GND DC		
+v6  v6 GND DC		
+U4  v4 plot_v1		
+U1  v3 plot_v1		
+U3  v2 plot_v1		
+U2  v1 plot_v1		
+v4  v4 GND DC		
+v3  v3 GND DC		
+v2  v2 GND DC		
+v1  v1 GND DC		
+X1  Net-_U6-Pad1_ Net-_U5-Pad5_ Net-_U5-Pad6_ Net-_U5-Pad7_ Net-_U5-Pad8_ ? ? ? Net-_U7-Pad5_ Net-_U7-Pad6_ Net-_U7-Pad7_ Net-_U7-Pad8_ Net-_U6-Pad2_ ? IC_4072		
+
+.end

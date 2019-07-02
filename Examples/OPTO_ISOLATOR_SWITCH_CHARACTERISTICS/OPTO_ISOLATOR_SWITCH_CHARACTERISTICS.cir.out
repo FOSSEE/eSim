@@ -1,0 +1,29 @@
+* /home/bhargav/esim-workspace/opto/opto.cir
+
+r1  net-_f1-pad3_ in 1000
+* f1
+v1  net-_u3-pad1_ gnd pulse(0 1 0 5n 5n 5m 10m)
+c1  net-_c1-pad1_ out 14n
+r2  gnd net-_r2-pad2_ 100
+v2  net-_c1-pad1_ gnd 10
+* u1  in plot_v1
+* u2  out plot_v1
+* u3  net-_u3-pad1_ in plot_i2
+* u4  out net-_r2-pad2_ plot_i2
+Vf1 net-_f1-pad3_ gnd 0
+f1 net-_c1-pad1_ out Vf1 3
+v_u3 net-_u3-pad1_ in 0
+v_u4 out net-_r2-pad2_ 0
+.tran 5e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+plot i(v_u3)
+plot i(v_u4)
+.endc
+.end

@@ -1,0 +1,32 @@
+* /home/mallikarjuna/Downloads/eSim-1.1.2/src/SubcircuitLibrary/4to16_demux/4to16_demux.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Fri Jun 21 17:01:07 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U3  Net-_U1-Pad23_ Net-_U3-Pad2_ d_inverter		
+U4  Net-_U1-Pad22_ Net-_U4-Pad2_ d_inverter		
+U5  Net-_U1-Pad21_ Net-_U5-Pad2_ d_inverter		
+U6  Net-_U1-Pad20_ Net-_U6-Pad2_ d_inverter		
+U2  Net-_U1-Pad19_ Net-_U1-Pad18_ Net-_U2-Pad3_ d_nor		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ ? Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ Net-_U1-Pad20_ Net-_U1-Pad21_ Net-_U1-Pad22_ Net-_U1-Pad23_ ? PORT		
+X1  Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_U6-Pad2_ Net-_U2-Pad3_ Net-_U1-Pad1_ 5_nand		
+X2  Net-_U1-Pad23_ Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_U6-Pad2_ Net-_U2-Pad3_ Net-_U1-Pad2_ 5_nand		
+X3  Net-_U3-Pad2_ Net-_U1-Pad22_ Net-_U5-Pad2_ Net-_U6-Pad2_ Net-_U2-Pad3_ Net-_U1-Pad3_ 5_nand		
+X4  Net-_U1-Pad23_ Net-_U1-Pad22_ Net-_U5-Pad2_ Net-_U6-Pad2_ Net-_U2-Pad3_ Net-_U1-Pad4_ 5_nand		
+X5  Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U1-Pad21_ Net-_U6-Pad2_ Net-_U2-Pad3_ Net-_U1-Pad5_ 5_nand		
+X6  Net-_U1-Pad23_ Net-_U4-Pad2_ Net-_U1-Pad21_ Net-_U6-Pad2_ Net-_U2-Pad3_ Net-_U1-Pad6_ 5_nand		
+X7  Net-_U3-Pad2_ Net-_U1-Pad22_ Net-_U1-Pad21_ Net-_U6-Pad2_ Net-_U2-Pad3_ Net-_U1-Pad7_ 5_nand		
+X8  Net-_U1-Pad23_ Net-_U1-Pad22_ Net-_U1-Pad21_ Net-_U6-Pad2_ Net-_U2-Pad3_ Net-_U1-Pad8_ 5_nand		
+X9  Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_U1-Pad20_ Net-_U2-Pad3_ Net-_U1-Pad9_ 5_nand		
+X10  Net-_U1-Pad23_ Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_U1-Pad20_ Net-_U2-Pad3_ Net-_U1-Pad10_ 5_nand		
+X11  Net-_U3-Pad2_ Net-_U1-Pad22_ Net-_U5-Pad2_ Net-_U1-Pad20_ Net-_U2-Pad3_ Net-_U1-Pad11_ 5_nand		
+X12  Net-_U1-Pad23_ Net-_U1-Pad22_ Net-_U5-Pad2_ Net-_U1-Pad20_ Net-_U2-Pad3_ Net-_U1-Pad13_ 5_nand		
+X13  Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U1-Pad21_ Net-_U1-Pad20_ Net-_U2-Pad3_ Net-_U1-Pad14_ 5_nand		
+X14  Net-_U1-Pad23_ Net-_U4-Pad2_ Net-_U1-Pad21_ Net-_U1-Pad20_ Net-_U2-Pad3_ Net-_U1-Pad15_ 5_nand		
+X15  Net-_U3-Pad2_ Net-_U1-Pad22_ Net-_U1-Pad21_ Net-_U1-Pad20_ Net-_U2-Pad3_ Net-_U1-Pad16_ 5_nand		
+X16  Net-_U1-Pad23_ Net-_U1-Pad22_ Net-_U1-Pad21_ Net-_U1-Pad20_ Net-_U2-Pad3_ Net-_U1-Pad17_ 5_nand		
+
+.end
