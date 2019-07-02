@@ -1,0 +1,29 @@
+* /home/bhargav/esim-workspace/d_pullup_pulldown_characteristics/d_pullup_pulldown_characteristics.cir
+
+* u2  /1 d_pulldown
+* u3  /1 net-_u1-pad1_ net-_u3-pad3_ d_and
+* u4  net-_u3-pad3_ o dac_bridge_1
+* u5  o plot_v1
+* u1  net-_u1-pad1_ d_pullup
+a1 /1 u2
+a2 [/1 net-_u1-pad1_ ] net-_u3-pad3_ u3
+a3 [net-_u3-pad3_ ] [o ] u4
+a4 net-_u1-pad1_ u1
+* Schematic Name: d_pulldown, NgSpice Name: d_pulldown
+.model u2 d_pulldown(load=1.0e-12 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u3 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: dac_bridge_1, NgSpice Name: dac_bridge
+.model u4 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name: d_pullup, NgSpice Name: d_pullup
+.model u1 d_pullup(load=1.0e-12 ) 
+.tran 1e-06 10e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(o)
+.endc
+.end

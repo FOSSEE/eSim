@@ -1,0 +1,13 @@
+* /home/mallikarjuna/Downloads/eSim-1.1.2/src/SubcircuitLibrary/5_nand/5_nand.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Fri Jun 21 16:57:27 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U2-Pad1_ 5_and		
+U2  Net-_U2-Pad1_ Net-_U1-Pad6_ d_inverter		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ PORT		
+
+.end

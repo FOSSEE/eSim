@@ -1,0 +1,7 @@
+*time        dout1 dout2 dout3 dout4
+0.0000e-3     1s    1s    0s    1s 
+1.0000e-3     0s    1s    1s    0s 
+5.0000e-3     0s    0s    1s    0s 
+7.0000e-3     1s    0s    1s    1s 
+8.0000e-3     1s    1s    1s    0s 
+9.0000e-3     0s    1s    1s    1s 

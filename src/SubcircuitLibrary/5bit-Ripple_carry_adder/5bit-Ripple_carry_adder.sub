@@ -1,0 +1,12 @@
+* Subcircuit 5bit-Ripple_carry_adder
+.subckt 5bit-Ripple_carry_adder net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ 
+* c:\esim\esim\src\subcircuitlibrary\5bit-ripple_carry_adder\5bit-ripple_carry_adder.cir
+.include Full-Adder.sub
+x4 net-_u1-pad1_ net-_u1-pad2_ net-_x4-pad3_ net-_u1-pad4_ ? Full-Adder
+x5 net-_u1-pad3_ net-_u1-pad5_ net-_x5-pad3_ net-_u1-pad7_ net-_x4-pad3_ Full-Adder
+x6 net-_u1-pad6_ net-_u1-pad8_ net-_x6-pad3_ net-_u1-pad10_ net-_x5-pad3_ Full-Adder
+x7 net-_u1-pad9_ net-_u1-pad11_ net-_x7-pad3_ net-_u1-pad13_ net-_x6-pad3_ Full-Adder
+x8 net-_u1-pad12_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_x7-pad3_ Full-Adder
+* Control Statements
+
+.ends 5bit-Ripple_carry_adder

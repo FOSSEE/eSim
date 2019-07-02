@@ -1,0 +1,151 @@
+EESchema Schematic File Version 2
+LIBS:power
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Plot
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:2bit-Up_counter-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L d_dff U2
+U 1 1 5D0DC6F1
+P 3900 3400
+F 0 "U2" H 3900 3400 60  0000 C CNN
+F 1 "d_dff" H 3900 3550 60  0000 C CNN
+F 2 "" H 3900 3400 60  0000 C CNN
+F 3 "" H 3900 3400 60  0000 C CNN
+	1    3900 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_dff U3
+U 1 1 5D0DC6F2
+P 5750 3400
+F 0 "U3" H 5750 3400 60  0000 C CNN
+F 1 "d_dff" H 5750 3550 60  0000 C CNN
+F 2 "" H 5750 3400 60  0000 C CNN
+F 3 "" H 5750 3400 60  0000 C CNN
+	1    5750 3400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 2750 3900 2500
+Wire Wire Line
+	3900 2500 5750 2500
+Wire Wire Line
+	5750 2500 5750 2750
+Wire Wire Line
+	3900 4000 3900 4300
+Wire Wire Line
+	3900 4300 5750 4300
+Wire Wire Line
+	5750 4300 5750 4000
+Wire Wire Line
+	4850 2500 4850 4800
+Connection ~ 4850 4300
+Connection ~ 4850 2500
+Wire Wire Line
+	4850 4800 5250 4800
+Wire Wire Line
+	3350 3700 2600 3700
+Wire Wire Line
+	3350 3050 3150 3050
+Wire Wire Line
+	3150 3050 3150 2350
+Wire Wire Line
+	3150 2350 4600 2350
+Wire Wire Line
+	4600 2350 4600 3700
+Wire Wire Line
+	4450 3700 5200 3700
+Connection ~ 4600 3700
+Wire Wire Line
+	5000 3050 5200 3050
+Wire Wire Line
+	5000 3050 5000 2350
+Wire Wire Line
+	5000 2350 6450 2350
+Wire Wire Line
+	6450 2350 6450 3700
+Wire Wire Line
+	6450 3700 6300 3700
+Wire Wire Line
+	4450 3050 4500 3050
+Wire Wire Line
+	4500 3050 4500 2600
+Wire Wire Line
+	4500 2600 6800 2600
+Wire Wire Line
+	6300 3050 7050 3050
+$Comp
+L PORT U1
+U 1 1 5D0DC6F3
+P 2350 3700
+F 0 "U1" H 2400 3800 30  0000 C CNN
+F 1 "PORT" H 2350 3700 30  0000 C CNN
+F 2 "" H 2350 3700 60  0000 C CNN
+F 3 "" H 2350 3700 60  0000 C CNN
+	1    2350 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 5D0DC6F4
+P 5500 4800
+F 0 "U1" H 5550 4900 30  0000 C CNN
+F 1 "PORT" H 5500 4800 30  0000 C CNN
+F 2 "" H 5500 4800 60  0000 C CNN
+F 3 "" H 5500 4800 60  0000 C CNN
+	2    5500 4800
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 5D0DC6F5
+P 7050 2600
+F 0 "U1" H 7100 2700 30  0000 C CNN
+F 1 "PORT" H 7050 2600 30  0000 C CNN
+F 2 "" H 7050 2600 60  0000 C CNN
+F 3 "" H 7050 2600 60  0000 C CNN
+	3    7050 2600
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 4 1 5D0DC6F6
+P 7300 3050
+F 0 "U1" H 7350 3150 30  0000 C CNN
+F 1 "PORT" H 7300 3050 30  0000 C CNN
+F 2 "" H 7300 3050 60  0000 C CNN
+F 3 "" H 7300 3050 60  0000 C CNN
+	4    7300 3050
+	-1   0    0    1   
+$EndComp
+Text Notes 2650 3650 0    60   ~ 0
+CLK
+Text Notes 6600 2550 0    60   ~ 0
+O0
+Text Notes 6800 3000 0    60   ~ 0
+O1
+Text Notes 5050 4750 0    60   ~ 0
+EN\n
+$EndSCHEMATC

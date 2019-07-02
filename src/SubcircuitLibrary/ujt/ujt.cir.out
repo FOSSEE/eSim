@@ -1,0 +1,22 @@
+* /home/bhargav/downloads/esim-1.1.2/src/subcircuitlibrary/ujt/ujt.cir
+
+.include emitter.lib
+r3  gnd 6 1000k
+c1  5 7 35p
+r1  7 2 38.15
+r2  3 5 2.518k
+* u1  1 2 3 port
+b1  5 7 i=0.00028*v(5,7)+0.00575*v(5,7)*v(6)
+d1 1 4 emitter
+* h1
+Vh1 4 5 0
+h1 6 gnd Vh1 1k
+.tran 5e-06 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

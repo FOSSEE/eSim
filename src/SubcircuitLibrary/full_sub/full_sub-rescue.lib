@@ -1,0 +1,20 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# half_sub-RESCUE-full_sub
+#
+DEF half_sub-RESCUE-full_sub X 0 40 Y Y 1 F N
+F0 "X" 0 0 60 H V C CNN
+F1 "half_sub-RESCUE-full_sub" 0 0 60 H V C CNN
+F2 "" 0 0 60 H I C CNN
+F3 "" 0 0 60 H I C CNN
+DRAW
+S -1450 850 1550 -1050 0 1 0 N
+X A 1 -1100 850 200 R 50 50 1 1 I
+X B 2 -350 850 200 R 50 50 1 1 I
+X D 3 -800 -1050 200 L 50 50 1 1 O
+X BORROW 4 0 -1050 200 L 50 50 1 1 O
+ENDDRAW
+ENDDEF
+#
+#End Library

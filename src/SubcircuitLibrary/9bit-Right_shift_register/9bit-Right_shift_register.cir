@@ -1,0 +1,56 @@
+* C:\esim\eSim\src\SubcircuitLibrary\9bit-Right_shift_register\9bit-Right_shift_register.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 03/24/19 01:43:15
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U3  Net-_U20-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U26-Pad2_ ? d_dff		
+U4  Net-_U25-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U30-Pad2_ ? d_dff		
+U6  Net-_U29-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U34-Pad2_ ? d_dff		
+U15  Net-_U15-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U15-Pad5_ ? d_dff		
+U2  Net-_U14-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U2-Pad5_ ? d_dff		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U1-Pad5_ ? d_dff		
+U18  Net-_U18-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U18-Pad5_ ? d_dff		
+U11  Net-_U11-Pad1_ Net-_U10-Pad3_ Net-_U1-Pad1_ d_or		
+U14  Net-_U14-Pad1_ Net-_U13-Pad3_ Net-_U14-Pad3_ d_or		
+U20  Net-_U20-Pad1_ Net-_U19-Pad3_ Net-_U20-Pad3_ d_or		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_and		
+U8  Net-_U7-Pad2_ Net-_U5-Pad1_ Net-_U11-Pad1_ d_and		
+U7  Net-_U10-Pad1_ Net-_U7-Pad2_ d_inverter		
+U13  Net-_U12-Pad2_ Net-_U13-Pad2_ Net-_U13-Pad3_ d_and		
+U16  Net-_U10-Pad1_ Net-_U1-Pad5_ Net-_U14-Pad1_ d_and		
+U12  Net-_U10-Pad1_ Net-_U12-Pad2_ d_inverter		
+U19  Net-_U17-Pad2_ Net-_U19-Pad2_ Net-_U19-Pad3_ d_and		
+U21  Net-_U10-Pad1_ Net-_U2-Pad5_ Net-_U20-Pad1_ d_and		
+U17  Net-_U10-Pad1_ Net-_U17-Pad2_ d_inverter		
+U25  Net-_U23-Pad3_ Net-_U25-Pad2_ Net-_U25-Pad3_ d_or		
+U23  Net-_U22-Pad2_ Net-_U23-Pad2_ Net-_U23-Pad3_ d_and		
+U26  Net-_U10-Pad1_ Net-_U26-Pad2_ Net-_U25-Pad2_ d_and		
+U22  Net-_U10-Pad1_ Net-_U22-Pad2_ d_inverter		
+U29  Net-_U28-Pad3_ Net-_U29-Pad2_ Net-_U29-Pad3_ d_or		
+U28  Net-_U27-Pad2_ Net-_U28-Pad2_ Net-_U28-Pad3_ d_and		
+U30  Net-_U10-Pad1_ Net-_U30-Pad2_ Net-_U29-Pad2_ d_and		
+U27  Net-_U10-Pad1_ Net-_U27-Pad2_ d_inverter		
+U33  Net-_U32-Pad3_ Net-_U33-Pad2_ Net-_U33-Pad3_ d_or		
+U40  Net-_U38-Pad3_ Net-_U40-Pad2_ Net-_U15-Pad1_ d_or		
+U32  Net-_U31-Pad2_ Net-_U32-Pad2_ Net-_U32-Pad3_ d_and		
+U34  Net-_U10-Pad1_ Net-_U34-Pad2_ Net-_U33-Pad2_ d_and		
+U38  Net-_U37-Pad2_ Net-_U38-Pad2_ Net-_U38-Pad3_ d_and		
+U42  Net-_U10-Pad1_ Net-_U42-Pad2_ Net-_U40-Pad2_ d_and		
+U31  Net-_U10-Pad1_ Net-_U31-Pad2_ d_inverter		
+U37  Net-_U10-Pad1_ Net-_U37-Pad2_ d_inverter		
+U39  Net-_U36-Pad3_ Net-_U39-Pad2_ Net-_U18-Pad1_ d_or		
+U36  Net-_U36-Pad1_ Net-_U35-Pad2_ Net-_U36-Pad3_ d_and		
+U41  Net-_U15-Pad5_ Net-_U10-Pad1_ Net-_U39-Pad2_ d_and		
+U9  Net-_U33-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U42-Pad2_ ? d_dff		
+U35  Net-_U10-Pad1_ Net-_U35-Pad2_ d_inverter		
+U24  Net-_U24-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U10-Pad2_ ? d_dff		
+U45  Net-_U45-Pad1_ Net-_U44-Pad3_ Net-_U24-Pad1_ d_or		
+U46  Net-_U18-Pad5_ Net-_U10-Pad1_ Net-_U45-Pad1_ d_and		
+U44  Net-_U44-Pad1_ Net-_U43-Pad2_ Net-_U44-Pad3_ d_and		
+U43  Net-_U10-Pad1_ Net-_U43-Pad2_ d_inverter		
+U5  Net-_U5-Pad1_ Net-_U1-Pad3_ Net-_U1-Pad2_ Net-_U13-Pad2_ Net-_U44-Pad1_ Net-_U19-Pad2_ Net-_U23-Pad2_ Net-_U10-Pad2_ Net-_U2-Pad5_ Net-_U30-Pad2_ Net-_U42-Pad2_ Net-_U18-Pad5_ Net-_U28-Pad2_ Net-_U1-Pad5_ Net-_U26-Pad2_ Net-_U34-Pad2_ Net-_U15-Pad5_ Net-_U36-Pad1_ Net-_U32-Pad2_ Net-_U38-Pad2_ Net-_U10-Pad1_ PORT		
+
+.end
