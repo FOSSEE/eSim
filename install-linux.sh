@@ -132,6 +132,7 @@ function copyKicadLibrary
     fi
 
     sudo cp -r src/.OfflineFiles/fp-lib-table ~/.config/kicad/
+    sudo cp -r src/.OfflineFiles/fp-lib-table-online ~/.config/kicad/
     echo "fp-lib-table copied in the directory"
     sudo cp -r src/.OfflineFiles/TerminalBlock_Altech_AK300-2_P5.00mm.kicad_mod /usr/share/kicad/modules/Connectors_Terminal_Blocks.pretty/
     sudo cp -r src/.OfflineFiles/TO-220-3_Vertical.kicad_mod /usr/share/kicad/modules/TO_SOT_Packages_THT.pretty/
@@ -308,11 +309,3 @@ else
     echo "--uninstall"
 
 fi
-
-
-
-
-
-
-
-
