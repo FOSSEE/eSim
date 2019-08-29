@@ -1,0 +1,59 @@
+* eeschema netlist version 1.1 (spice format) creation date: monday 29 december 2014 04:59:08 pm utc
+
+* Plotting option vplot8_1
+* 74hc86
+* 74ls32
+* 74ls08
+* 74hc02
+* 74hc04
+* 7400
+r3  8 0 1000
+v2  8 0 pulse(0 5 0 0 0 2 20)
+r2  9 0 1000
+r1  4 0 1000
+v1  4 0 pulse(5 0 0 0 0 2 20)
+a1 [5] [5_in]  u12adc
+a2 [6] [6_in]  u12adc
+a3 [5_in 6_in] 9_out u12
+a4 [9_out] [9]  u12dac
+.model u12 d_xor
+.model u12adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u12dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+a5 [8] [8_in]  u8adc
+a6 [4] [4_in]  u8adc
+a7 [8_in 4_in] 10_out u8
+a8 [10_out] [10]  u8dac
+.model u8 d_or
+.model u8adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u8dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+a9 [8] [8_in]  u7adc
+a10 [4] [4_in]  u7adc
+a11 [8_in 4_in] 2_out u7
+a12 [2_out] [2]  u7dac
+.model u7 d_and
+.model u7adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u7dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+a13 [2] [2_in]  u9adc
+a14 [10] [10_in]  u9adc
+a15 [2_in 10_in] 7_out u9
+a16 [7_out] [7]  u9dac
+.model u9 d_nor
+.model u9adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u9dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+a17 [7] [7_in]  u11adc
+a18 7_in 6_out u11
+a19 [6_out] [6]  u11dac
+.model u11 d_inverter
+.model u11adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u11dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+a20 [2] [2_in]  u10adc
+a21 [10] [10_in]  u10adc
+a22 [2_in 10_in] 5_out u10
+a23 [5_out] [5]  u10dac
+.model u10 d_nand
+.model u10adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u10dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+
+.tran  10e-09 1e-06 0e-00
+.plot v(8) v(4) v(9) 
+.end

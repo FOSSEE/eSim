@@ -1,0 +1,28 @@
+* /home/saurabh/installer_main_workshop/esim-1.1.2/examples/bjt_amplifier/bjt_amplifier.cir
+
+.include NPN.lib
+v1 net-_r2-pad1_ gnd  dc 10
+r1  net-_c1-pad1_ in 50
+r2  net-_r2-pad1_ net-_c1-pad2_ 200k
+c1  net-_c1-pad1_ net-_c1-pad2_ 40u
+r3  net-_c1-pad2_ gnd 50k
+r6  out gnd 1k
+c2  gnd net-_c2-pad2_ 100u
+c3  out net-_c3-pad2_ 40u
+r5  net-_r2-pad1_ net-_c3-pad2_ 2k
+r4  net-_c2-pad2_ gnd 1.5k
+* u1  in plot_v1
+* u2  out plot_v1
+v2  in gnd sine(0 10m 1k 0 0)
+q1 net-_c3-pad2_ net-_c1-pad2_ net-_c2-pad2_ Q2N2222
+.tran 10e-06 10e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

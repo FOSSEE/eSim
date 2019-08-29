@@ -1,0 +1,22 @@
+* /home/fossee/updatedexamples/invertingamplifier/invertingamplifier.cir
+
+.include ua741.sub
+x1 net-_r4-pad1_ net-_r1-pad2_ out ua741
+r1  in net-_r1-pad2_ 1k
+r2  net-_r1-pad2_ out 5k
+v1  in gnd sine(0 2 50 0 0)
+r3  out gnd 1k
+r4  net-_r4-pad1_ gnd 1k
+* u1  in plot_v1
+* u2  out plot_v1
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

@@ -1,0 +1,17 @@
+* /home/fossee/UpdatedExamples/CMOS_Inverter/CMOS_Inverter.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 20:45:21 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v2  vcc GND 5		
+M1  out in GND GND MOS_N		
+M2  out in vcc vcc MOS_P		
+U1  in plot_v1		
+U2  out plot_v1		
+C1  out GND 1u		
+v1  in GND pwl		
+
+.end

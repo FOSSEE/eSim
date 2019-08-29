@@ -1,0 +1,80 @@
+* c:\users\hp\esim-workspace\as2\as2.cir
+
+.include lm555n.sub
+.include 4017.sub
+.include D.lib
+* u2  c ic
+.ic v(c)=0
+x1 gnd c out1 net-_r1-pad2_ net-_c1-pad1_ c net-_r1-pad1_ net-_r1-pad2_ lm555n
+c1  net-_c1-pad1_ gnd 0.01u
+r3  net-_r1-pad1_ c 100k
+r1  net-_r1-pad1_ net-_r1-pad2_ 1k
+v1 net-_r1-pad2_ gnd  dc 5
+* u2  c ic
+c2  c gnd 50n
+r2  net-_r2-pad1_ out1 1k
+* u1  out1 plot_v1
+* u5  net-_r2-pad1_ net-_u5-pad2_ adc_bridge_1
+* u4  net-_r1-pad2_ net-_u4-pad2_ adc_bridge_1
+* u9  net-_u4-pad2_ net-_u9-pad2_ d_inverter
+x2 net-_u6-pad1_ net-_u6-pad2_ net-_u6-pad3_ net-_u6-pad4_ net-_u6-pad5_ net-_u7-pad1_ net-_u7-pad2_ net-_u7-pad3_ net-_u7-pad4_ net-_u7-pad5_ net-_u9-pad2_ net-_u5-pad2_ 4017
+* u6  net-_u6-pad1_ net-_u6-pad2_ net-_u6-pad3_ net-_u6-pad4_ net-_u6-pad5_ o1 o2 o3 o4 o5 dac_bridge_5
+* u7  net-_u7-pad1_ net-_u7-pad2_ net-_u7-pad3_ net-_u7-pad4_ net-_u7-pad5_ o6 o7 o8 o9 o10 dac_bridge_5
+* u10  o1 plot_v1
+* u8  o2 plot_v1
+* u3  c plot_v1
+* u16  o3 plot_v1
+* u13  o4 plot_v1
+* u17  o5 plot_v1
+* u14  o6 plot_v1
+* u18  o7 plot_v1
+* u11  o8 plot_v1
+* u15  o9 plot_v1
+* u12  o10 plot_v1
+d1 net-_d1-pad1_ o1 1N4148
+r4  gnd net-_d1-pad1_ 1k
+d2 net-_d1-pad1_ o2 1N4148
+d3 net-_d1-pad1_ o3 1N4148
+d4 net-_d1-pad1_ o4 1N4148
+d5 net-_d1-pad1_ o5 1N4148
+d6 net-_d1-pad1_ o6 1N4148
+d7 net-_d1-pad1_ o7 1N4148
+d8 net-_d1-pad1_ o8 1N4148
+d9 net-_d1-pad1_ o9 1N4148
+d10 net-_d1-pad1_ o10 1N4148
+a1 [net-_r2-pad1_ ] [net-_u5-pad2_ ] u5
+a2 [net-_r1-pad2_ ] [net-_u4-pad2_ ] u4
+a3 net-_u4-pad2_ net-_u9-pad2_ u9
+a4 [net-_u6-pad1_ net-_u6-pad2_ net-_u6-pad3_ net-_u6-pad4_ net-_u6-pad5_ ] [o1 o2 o3 o4 o5 ] u6
+a5 [net-_u7-pad1_ net-_u7-pad2_ net-_u7-pad3_ net-_u7-pad4_ net-_u7-pad5_ ] [o6 o7 o8 o9 o10 ] u7
+* Schematic Name: adc_bridge_1, NgSpice Name: adc_bridge
+.model u5 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: adc_bridge_1, NgSpice Name: adc_bridge
+.model u4 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u9 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: dac_bridge_5, NgSpice Name: dac_bridge
+.model u6 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name: dac_bridge_5, NgSpice Name: dac_bridge
+.model u7 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+.tran 5e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out1)
+plot v(o1)
+plot v(o2)
+plot v(c)
+plot v(o3)
+plot v(o4)
+plot v(o5)
+plot v(o6)
+plot v(o7)
+plot v(o8)
+plot v(o9)
+plot v(o10)
+.endc
+.end

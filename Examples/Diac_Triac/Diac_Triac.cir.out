@@ -1,0 +1,27 @@
+* /home/fossee/updatedexamples/diac_triac/diac_triac.cir
+
+.include triac.sub
+.include diac.sub
+c2  net-_c2-pad1_ gnd 0.1u
+c1  net-_c1-pad1_ gnd 0.1u
+r3  net-_c1-pad1_ net-_c2-pad1_ 250
+r2  in net-_c1-pad1_ 10k
+r1  in out 100
+v1  in gnd sine(0 100 100 0 0)
+x2 gnd out net-_x1-pad2_ triac
+x1 net-_c2-pad1_ net-_x1-pad2_ diac
+* u1  in plot_v1
+* u2  out plot_v1
+* u3  in out plot_v2
+.tran 20e-06 20e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+plot v(in,out)
+.endc
+.end

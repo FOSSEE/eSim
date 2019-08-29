@@ -1,0 +1,19 @@
+* /home/saurabh/downloads/esim-1.1.2/examples/halfwave_rectifier/halfwave_rectifier.cir
+
+.include D.lib
+d1 in out 1N4148
+r1  out gnd 1k
+v1  in gnd sine(0 20 50 0 0)
+* u2  in plot_v1
+* u3  out plot_v1
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

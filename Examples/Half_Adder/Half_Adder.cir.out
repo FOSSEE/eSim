@@ -1,0 +1,33 @@
+* /home/fossee/updatedexamples/half_adder/half_adder.cir
+
+.include half_adder.sub
+x1 net-_u1-pad3_ net-_u1-pad4_ net-_u2-pad1_ net-_u2-pad2_ half_adder
+* u1  in1 in2 net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
+* u2  net-_u2-pad1_ net-_u2-pad2_ sum cout dac_bridge_2
+v1 in1 gnd  dc 5
+v2 in2 gnd  dc 0
+r1  sum gnd 1k
+r2  cout gnd 1k
+* u3  in1 plot_v1
+* u4  in2 plot_v1
+* u5  sum plot_v1
+* u6  cout plot_v1
+a1 [in1 in2 ] [net-_u1-pad3_ net-_u1-pad4_ ] u1
+a2 [net-_u2-pad1_ net-_u2-pad2_ ] [sum cout ] u2
+* Schematic Name: adc_bridge_2, NgSpice Name: adc_bridge
+.model u1 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: dac_bridge_2, NgSpice Name: dac_bridge
+.model u2 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in1)
+plot v(in2)
+plot v(sum)
+plot v(cout)
+.endc
+.end

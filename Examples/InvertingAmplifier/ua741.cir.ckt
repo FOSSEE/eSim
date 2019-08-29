@@ -1,0 +1,9 @@
+* eeschema netlist version 1.1 (spice format) creation date: monday 17 december 2012 11:16:58 am ist
+
+u1  6 7 3 port
+rout1  3 2 75
+eout1  2 0 1 0 1
+cbw1  1 0 31.85e-9
+rbw1  1 4 0.5e6
+ein1  4 0 7 6 100e3
+rin1  7 6 2e6
