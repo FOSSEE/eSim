@@ -1,0 +1,15 @@
+<model>
+<name>d_fdiv</name>
+<type>Digital</type>
+<node_number>2</node_number>
+<title>Add Parameters for Frequency Divider</title>
+<split>None</split>
+<param>
+	<div_factor default ="2">Enter Divide Factor (default=2)</div_factor>
+	<high_cycles default ="1">Enter value for High Cycles (default=1)</high_cycles>
+	<i_count default = "0">Enter Initial Count (default=0)</i_count>
+	<rise_delay default ="1.0e-9">Enter Rise Delay (default=1.0e-9)</rise_delay>
+	<fall_delay default ="1.0e-9">Enter Fall Delay (default=1.0e-9)</fall_delay>
+	<freq_in_load default ="1.0e-12">Enter Input Load (default=1.0e-12)</freq_in_load>
+</param>
+</model>
