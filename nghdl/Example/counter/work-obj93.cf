@@ -1,4 +1,0 @@
-v 4
-file . "counter.vhdl" "849ecbdf1a2a5f5cd553b9ca6594e4a3ae1e214a" "20190710170933.911":
-  entity counter at 1( 0) + 0 on 13;
-  architecture bhv of counter at 11( 229) + 0 on 14;
