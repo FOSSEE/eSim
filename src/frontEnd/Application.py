@@ -11,10 +11,11 @@
 #  REQUIREMENTS: ---
 #          BUGS: ---
 #         NOTES: ---
-#        AUTHOR: Fahim Khan, Rahul Paknikar
+#        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in    
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
-#       CREATED: Friday 23 August 2019
-#      REVISION:  ---
+#       CREATED: Tuesday 24 Feb 2015 
+#      REVISION: Thursday 3 Oct 2019
 #===============================================================================
 import os
 import sys
@@ -272,19 +273,23 @@ class Application(QtGui.QMainWindow):
     
 
     def go_online_offline(self):
-    	if self.online_flag:
-    		os.rename("../../../../.config/kicad/fp-lib-table", "../../../../.config/kicad/fp-lib-table-online")
-    		os.rename("../../../../.config/kicad/fp-lib-table-offline", "../../../../.config/kicad/fp-lib-table")
-    		self.webConnect.setIcon(QtGui.QIcon('../../images/offline.png'))
-    		self.webConnect.setText('<b>Go Online</b>')
-    		self.online_flag = False
-    	else:
-    		os.rename("../../../../.config/kicad/fp-lib-table", "../../../../.config/kicad/fp-lib-table-offline")
-    		os.rename("../../../../.config/kicad/fp-lib-table-online", "../../../../.config/kicad/fp-lib-table")
-    		self.webConnect.setIcon(QtGui.QIcon('../../images/online.png'))
-    		self.webConnect.setText('<b>Go Offline</b>')
-    		self.online_flag = True
-    		
+        if not self.obj_kicad.check_open_schematic():
+            if self.online_flag:
+                os.rename("../../../../.config/kicad/fp-lib-table", "../../../../.config/kicad/fp-lib-table-online")
+                os.rename("../../../../.config/kicad/fp-lib-table-offline", "../../../../.config/kicad/fp-lib-table")
+                self.webConnect.setIcon(QtGui.QIcon('../../images/offline.png'))
+                self.webConnect.setText('<b>Go Online</b>')
+                self.online_flag = False
+            else:
+                os.rename("../../../../.config/kicad/fp-lib-table", "../../../../.config/kicad/fp-lib-table-offline")
+                os.rename("../../../../.config/kicad/fp-lib-table-online", "../../../../.config/kicad/fp-lib-table")
+                self.webConnect.setIcon(QtGui.QIcon('../../images/online.png'))
+                self.webConnect.setText('<b>Go Offline</b>')
+                self.online_flag = True
+        else:
+            self.msg = QtGui.QErrorMessage()
+            self.msg.showMessage('Please save and close all the Kicad Windows first, and then change the online-offline mode')
+            self.msg.setWindowTitle("Error Message")
 
 
     def open_ngspice(self):

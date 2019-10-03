@@ -11,9 +11,10 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in    
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Tuesday 24 Feb 2015 
-#      REVISION:  ---
+#      REVISION: Thursday 3 Oct 2019
 #===============================================================================
 from PyQt4 import QtCore
 import subprocess
@@ -26,10 +27,13 @@ class WorkerThread(QtCore.QThread):
     def __init__(self,args):
         QtCore.QThread.__init__(self)
         self.args = args
+        self.my_workers = []
         
-    
     def __del__(self):
         self.wait()
+
+    def get_proc_threads(self):
+        return self.my_workers
           
     def run(self):
         print "Worker Thread Calling Command :",self.args
@@ -38,6 +42,7 @@ class WorkerThread(QtCore.QThread):
     def call_system(self,command):
         procThread = Appconfig()
         proc = subprocess.Popen(command.split())
+        self.my_workers.append(proc)
         procThread.procThread_list.append(proc)
 	procThread.proc_dict[procThread.current_project['ProjectName']].append(proc.pid)
         

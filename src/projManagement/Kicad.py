@@ -11,9 +11,10 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in    
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
-#       CREATED: Tuesday 17 Feb 2015 
-#      REVISION:  ---
+#       CREATED: Tuesday 24 Feb 2015 
+#      REVISION: Thursday 3 Oct 2019
 #===============================================================================
 
 import os
@@ -30,7 +31,23 @@ class Kicad:
         self.obj_validation = Validation.Validation()
         self.obj_appconfig = Appconfig()
         self.obj_dockarea= dockarea
+        self.obj_workThread = Worker.WorkerThread(None)
     
+    def check_open_schematic(self):
+        """
+        This function checks if any of the project's schematic is open or not
+        """
+        if self.obj_workThread:
+            procList = self.obj_workThread.get_proc_threads()[:]
+            if procList:
+                for proc in procList:
+                    if proc.poll() is None:
+                        return True
+                    else:
+                        self.obj_workThread.get_proc_threads().remove(proc)
+
+        return False
+
     def openSchematic(self):
         """
         This function create command to open Kicad schematic
@@ -50,7 +67,7 @@ class Kicad:
             
             #Creating a command to run
             self.cmd = "eeschema "+self.project+".sch "
-            self.obj_workThread = Worker.WorkerThread(self.cmd)
+            self.obj_workThread.args = self.cmd
             self.obj_workThread.start()
             
         else:
