@@ -18,7 +18,7 @@ class NgspiceWidget(QtGui.QWidget):
         print "Argument to ngspice command : ",command        
         
         if platform.system() == 'Linux':
-            self.command = "cd "+projPath+";ngspice "+command
+            self.command = "ulimit -S -n 16384;cd "+projPath+";ngspice "+command
             #Creating argument for process
             #self.args = ['-into', str(self.terminal.winId()),'-hold','-e', self.command]
             self.args = ['-hold','-e', self.command]
