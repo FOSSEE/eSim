@@ -11,9 +11,9 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in    
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
-#       CREATED: Tuesday 24 Feb 2015 
+#       CREATED: Tuesday 24 Feb 2015
 #      REVISION: Thursday 3 Oct 2019
 #===============================================================================
 from PyQt4 import QtCore
