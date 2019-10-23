@@ -113,16 +113,6 @@ class Application(QtGui.QMainWindow):
         self.webConnect.setShortcut('Ctrl+G')
         self.webConnect.triggered.connect(self.go_online_offline)
                 
-        # try:
-        #     self.webConnect.setShortcut('Ctrl+G')
-        #     self.webConnect.triggered.connect(self.go_online_offline)
-        # except AttributeError as e:
-        #     self.webConnect = QtGui.QAction(QtGui.QIcon('../../images/offline.png'),'<b>Go Online</b>',self)
-        #     self.webConnect.setShortcut('Ctrl+G')
-        #     self.webConnect.triggered.connect(self.go_online_offline)
-        #     self.online_flag = False
-
-
 
         self.helpfile = QtGui.QAction(QtGui.QIcon('../../images/helpProject.png'),'<b>Help</b>',self)
         self.helpfile.setShortcut('Ctrl+H')
