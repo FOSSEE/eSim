@@ -1,11 +1,11 @@
 #!/bin/bash 
 #===============================================================================
 #
-#          FILE: install.sh
+#          FILE: install-eSim.sh
 # 
-#         USAGE: ./install.sh --install 
+#         USAGE: ./install-eSim.sh --install 
 #                 or
-#                ./install.sh --uninstall
+#                ./install-eSim.sh --uninstall
 #                
 #   DESCRIPTION: This is installation/uninstallation script for eSim
 #
@@ -15,7 +15,7 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: FOSSEE at IIT Bombay.
-#       CREATED: Wednesday 22 August 2019 16:14
+#       CREATED: Wednesday 23 October 2019 16:14
 #      REVISION:  ---
 #===============================================================================
 
@@ -45,47 +45,44 @@ function createConfigFile
     echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
     echo "MODELICA_MAP_JSON = %(eSim_HOME)s/src/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-    
-
 }
-
 
 function installNghdl
 {
-echo -n "Do you want to install nghdl? (y/n): "
-read getNghdl
+    echo -n "Do you want to install nghdl? (y/n): "
+    read getNghdl
 
-if [ $getNghdl == "y" -o $getNghdl == "Y" ];then
-    echo "Downloading nghdl"
-    wget https://github.com/FOSSEE/nghdl/archive/master.zip
-    unzip master.zip
-    mv nghdl-master nghdl
-    rm master.zip
+    if [ $getNghdl == "y" -o $getNghdl == "Y" ];then
+        echo "Downloading nghdl"
+        wget https://github.com/rahulp13/nghdl/archive/2019Fellows.zip
+        unzip nghdl-2019Fellows.zip
+        mv nghdl-2019Fellows nghdl
+        rm nghdl-2019Fellows.zip
 
-    echo "Installing nghdl"
-    cd nghdl/
-    ./install-nghdl.sh
-    
-    if [ $? -ne 0 ];then
-        echo -e "\n\n\nNghdl ERROR: Error while installing nghdl\n\n"
+        echo "Installing nghdl"
+        cd nghdl/
+        ./install-nghdl.sh --install
+        
+        if [ $? -ne 0 ];then
+            echo -e "\n\n\nNghdl ERROR: Error while installing nghdl\n\n"
+            exit 0
+        else
+            ngspiceFlag=1
+            cd ..
+        fi
+        #Creating empty eSim_Nghdl.lib in home directory
+        if [ -f /usr/share/kicad/library/eSim_Nghdl.lib ];then
+            echo "eSim_Nghdl.lib is already available"
+        else
+            touch /usr/share/kicad/library/eSim_Nghdl.lib
+        fi
+
+    elif [ $getNghdl == "n" -o $getNghdl == "N" ];then
+        echo "Proceeding without installing nghdl"
+    else
+        echo "Please select the right option"
         exit 0
-    else
-        ngspiceFlag=1
-        cd ..
     fi
-    #Creating empty eSim_kicad.lib in home directory
-    if [ -f $HOME/eSim_kicad.lib ];then
-        echo "eSim_kicad.lib is already available"
-    else
-        touch $HOME/eSim_kicad.lib
-    fi
-
-elif [ $getNghdl == "n" -o $getNghdl == "N" ];then
-    echo "Proceeding without installing nghdl"
-else
-    echo "Please select the right option"
-    exit 0
-fi
 }
 
 function addKicadPPA
@@ -207,8 +204,6 @@ function createDesktopStartScript
 #                   MAIN START FROM HERE                           #
 ####################################################################
 
-
-
 ###Checking if file is passsed as argument to script
 
 if [ "$#" -eq 1 ];then
@@ -257,22 +252,22 @@ if [ $option == "--install" ];then
             echo "Install with proxy"
             #Calling functions
             createConfigFile
-            installNghdl
             addKicadPPA
             installDependency
             copyKicadLibrary
             createDesktopStartScript
+            installNghdl
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
             
             #Calling functions
             createConfigFile
-            installNghdl
             addKicadPPA
             installDependency
             copyKicadLibrary
             createDesktopStartScript
+            installNghdl
 
             if [ $? -ne 0 ];then
                 echo -e "\n\n\nFreeEDA ERROR: Unable to install required packages. Please check your internet connection.\n\n"
@@ -286,14 +281,24 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure ? As it will remove complete eSim including your subcircuit and model library packages(y/n):"
+    echo -n "Are you sure ? As it will remove complete eSim including KiCad, Ngspice, NGHDL, your subcircuit and model library packages(y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
-        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
+        echo "Deleting Files............"
+        sudo rm -rf $HOME/.esim $HOME/.config/kicad $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
+        echo "Removing Kicad............"
+        sudo apt-get remove -y kicad
+        echo "Removing Ngspice............"
+        sudo apt-get remove -y ngspice
+        echo "Removing NGHDL............"
+        cd nghdl/
+    	./install-nghdl.sh --uninstall
+
+
         if [ $? -eq 0 ];then
             echo "Uninstalled successfully"
         else
-            echo "Error while removing some file/directory.Please remove it manually"
+            echo "Error while removing some file/directory. Please remove it manually"
         fi
     elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
         exit 0
