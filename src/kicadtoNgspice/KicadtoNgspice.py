@@ -66,22 +66,19 @@ class MainWindow(QtGui.QWidget):
         
         # Read the netlist
         kicadNetlist = obj_proc.readNetlist(self.kicadFile)
-        
-        print "Given Kicad Schematic Netlist Info :",kicadNetlist
+        # print "Given Kicad Schematic Netlist Info :",kicadNetlist
         
         # Construct parameter information
         param = obj_proc.readParamInfo(kicadNetlist)
         
         # Replace parameter with values
         netlist,infoline = obj_proc.preprocessNetlist(kicadNetlist,param)
-        
-        print "Schematic Info after processing Kicad Netlist: ",netlist
+        # print "Schematic Info after processing Kicad Netlist: ",netlist
         #print "INFOLINE",infoline
         
         # Separate option and schematic information
         optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
-        
-        print "OPTIONINFO in the Netlist",optionInfo
+        # print "OPTIONINFO in the Netlist",optionInfo
                        
         #List for storing source and its value
         global sourcelist, sourcelisttrack
@@ -95,9 +92,9 @@ class MainWindow(QtGui.QWidget):
         modelList = [] 
         outputOption = []
         plotText = []
-        schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList,plotText)
-        
-        print "Model available in the Schematic :",modelList
+        schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText = obj_proc.convertICintoBasicBlocks(schematicInfo,outputOption,modelList,plotText)     
+        # print "Model available in the Schematic :",modelList
+
                              
         """
         Checking if any unknown model is used in schematic which is not recognized by NgSpice.
@@ -124,9 +121,9 @@ class MainWindow(QtGui.QWidget):
         """
         This function create main window of Kicad to Ngspice converter
         """
-        
-        self.vbox = QtGui.QVBoxLayout(self)
-        self.hbox=QtGui.QHBoxLayout(self)
+
+        self.vbox = QtGui.QVBoxLayout()
+        self.hbox = QtGui.QHBoxLayout()
         self.hbox.addStretch(1)
         self.convertbtn = QtGui.QPushButton("Convert")
         self.convertbtn.clicked.connect(self.callConvert)
