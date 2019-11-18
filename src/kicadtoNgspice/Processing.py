@@ -23,7 +23,7 @@ class PrcocessNetlist:
         """Read Parameter information and store it into dictionary"""
         param={}
         for eachline in kicadNetlis:
-            print eachline
+            # print eachline
             eachline=eachline.strip()
             if len(eachline)>1:
                 words=eachline.split()
@@ -84,7 +84,7 @@ class PrcocessNetlist:
         #Inser Special source parameter
         schematicInfo1=[]
         
-        print "Reading schematic info for source details"
+        # print "Reading schematic info for source details"
         
         for compline in schematicInfo:
             words=compline.split()
@@ -149,13 +149,13 @@ class PrcocessNetlist:
                 schematicInfo1.append(compName+" "+words[1]+" "+words[2]+" "+"V"+compName+" "+words[5])
                 
         schematicInfo=schematicInfo+schematicInfo1
-        print "Source List : ",sourcelist
+        # print "Source List : ",sourcelist
         #print schematicInfo
         return schematicInfo,sourcelist
     
     
     def convertICintoBasicBlocks(self,schematicInfo,outputOption,modelList,plotText):
-        print "Reading Schematic info for Model"
+        # print "Reading Schematic info for Model"
         #Insert details of Ngspice model
         unknownModelList = []
         multipleModelList = []
@@ -252,7 +252,7 @@ class PrcocessNetlist:
                                 modelLine += compName
                                 
                             else:
-                                print "Split Details :",splitDetail
+                                # print "Split Details :",splitDetail
                                 modelLine = "a"+str(k)+" "
                                 vectorDetail = splitDetail.split(':')
                                 #print "Vector Details",vectorDetail
@@ -372,7 +372,7 @@ class PrcocessNetlist:
                     
                 print "UnknownModelList Used in the Schematic",unknownModelList
                 print "Multiple Model XML file with same name ",multipleModelList
-                print "Model List Details : ",modelList  
+                # print "Model List Details : ",modelList  
                 
         return schematicInfo,outputOption,modelList,unknownModelList,multipleModelList,plotText
         

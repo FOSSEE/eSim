@@ -321,11 +321,11 @@ class Convert:
             for eachline in schematicInfo:
                 words = eachline.split()
                 if words[0] in deviceLibList:
-                    print "Found Library line"
+                    # print "Found Library line"
                     index = schematicInfo.index(eachline)
                     completeLibPath = deviceLibList[words[0]]
                     (libpath,libname) = os.path.split(completeLibPath)
-                    print "Library Path :",libpath                                      
+                    # print "Library Path :",libpath                                      
                     #Copying library from devicemodelLibrary to Project Path
                     #Special case for MOSFET
                     if eachline[0] == 'm':
@@ -401,11 +401,11 @@ class Convert:
             for eachline in schematicInfo:
                 words = eachline.split()
                 if words[0] in subList:
-                    print "Found Subcircuit line"
+                    # print "Found Subcircuit line"
                     index = schematicInfo.index(eachline)
                     completeSubPath = subList[words[0]]
                     (subpath,subname) = os.path.split(completeSubPath)
-                    print "Library Path :",subpath                                      
+                    # print "Library Path :",subpath                                      
                     #Copying library from devicemodelLibrary to Project Path
                 
                     #Replace last word with library name
@@ -415,7 +415,7 @@ class Convert:
                     
                     src = completeSubPath
                     dst = projpath
-                    print os.listdir(src)
+                    # print os.listdir(src)
                     for files in os.listdir(src):
                         if os.path.isfile(os.path.join(src,files)):
                             if files != "analysis":

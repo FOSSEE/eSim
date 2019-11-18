@@ -52,12 +52,12 @@ class DeviceModel(QtGui.QWidget):
         #Set Layout
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
-        print "Reading Device model details from Schematic"
+        # print "Reading Device model details from Schematic"
         
         for eachline in schematicInfo:
             words = eachline.split()
             if eachline[0] == 'q':
-                print "Device Model Transistor: ",words[0]
+                # print "Device Model Transistor: ",words[0]
                 self.devicemodel_dict_beg[words[0]]=self.count
                 transbox=QtGui.QGroupBox()
                 transgrid=QtGui.QGridLayout()
@@ -108,7 +108,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count+1
                 
             elif eachline[0] == 'd':
-                print "Device Model Diode:",words[0]
+                # print "Device Model Diode:",words[0]
                 self.devicemodel_dict_beg[words[0]]=self.count
                 diodebox=QtGui.QGroupBox()
                 diodegrid=QtGui.QGridLayout()
@@ -159,7 +159,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count+1
                 
             elif eachline[0] == 'j':
-                print "Device Model JFET:",words[0]
+                # print "Device Model JFET:",words[0]
                 self.devicemodel_dict_beg[words[0]]=self.count
                 jfetbox=QtGui.QGroupBox()
                 jfetgrid=QtGui.QGridLayout()

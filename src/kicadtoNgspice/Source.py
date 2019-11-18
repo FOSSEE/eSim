@@ -51,7 +51,7 @@ class Source(QtGui.QWidget):
         if sourcelist:
             for line in sourcelist:
                 #print "Voltage source line index: ",line[0]
-                print "SourceList line: ",line
+                # print "SourceList line: ",line
                 track_id=line[0]
                 #print "track_id is ",track_id
                 if line[2]=='ac':
