@@ -214,6 +214,7 @@ class DockArea(QtGui.QMainWindow):
         dock['kicadToNgspice-'+str(count)].setVisible(True)
         dock['kicadToNgspice-'+str(count)].setFocus()
         dock['kicadToNgspice-'+str(count)].raise_()
+        dock['kicadToNgspice-'+str(count)].activateWindow()
 
         self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(dock['kicadToNgspice-'+str(count)])
         count = count + 1

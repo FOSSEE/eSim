@@ -1,4 +1,3 @@
-
 #===============================================================================
 #
 #          FILE: Application.py
@@ -413,6 +412,8 @@ class Application(QtGui.QMainWindow):
             self.obj_appconfig.print_info(self.msgContent)
             self.msg.exec_()
 
+
+
 class MainView(QtGui.QWidget):
     """
     This class initialize the Main View of Application
@@ -460,7 +461,6 @@ class MainView(QtGui.QWidget):
         self.leftSplit.addWidget(self.obj_projectExplorer)
         self.leftSplit.addWidget(self.middleContainer)
     
-        
         #Adding to main Layout
         self.mainLayout.addWidget(self.leftSplit)
         self.leftSplit.setSizes([self.width()/4.5,self.height()])
@@ -470,7 +470,7 @@ class MainView(QtGui.QWidget):
 
 def main(args):
     """
-    It is main function of the module.It starts the application
+    It is main function of the module. It starts the application
     """
     print "Starting eSim......"
     app = QtGui.QApplication(args)
@@ -486,7 +486,6 @@ def main(args):
     appView.obj_workspace.show() 
     sys.exit(app.exec_())
         
-    
         
 # Call main function
 if __name__ == '__main__':
