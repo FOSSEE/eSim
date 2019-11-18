@@ -1,5 +1,4 @@
-
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 import TrackWidget
 import os
 from xml.etree import ElementTree as ET
@@ -23,14 +22,15 @@ class Analysis(QtGui.QWidget):
         self.createAnalysisWidget()
         
        
-                 
     def createAnalysisWidget(self):
         self.grid = QtGui.QGridLayout()
-        self.grid.addWidget(self.createCheckBox(),0,0)
-        self.grid.addWidget(self.createACgroup(),1,0)
-        self.grid.addWidget(self.createDCgroup(),2,0)
-        self.grid.addWidget(self.createTRANgroup(),3,0)
-         
+        self.setLayout(self.grid)
+
+        self.grid.addWidget(self.createCheckBox(),0,0,QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.createACgroup(),1,0,5,0)
+        self.grid.addWidget(self.createDCgroup(),1,0,5,0)
+        self.grid.addWidget(self.createTRANgroup(),1,0,5,0)
+     
         try:
             kicadFile = self.clarg1
             (projpath,filename)=os.path.split(kicadFile)
@@ -45,6 +45,10 @@ class Analysis(QtGui.QWidget):
                 self.acbox.setDisabled(False)
                 self.dcbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.acbox.setVisible(True)
+                self.dcbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"]="AC"
                 if contentlist[1]== 'lin':
                     self.Lin.setChecked(True)
@@ -61,6 +65,10 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.dcbox.setVisible(True)
+                self.acbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"]="DC"
                 
             elif contentlist[0]== '.tran':
@@ -68,6 +76,10 @@ class Analysis(QtGui.QWidget):
                 self.trbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.dcbox.setDisabled(True)
+
+                self.trbox.setVisible(True)
+                self.dcbox.setVisible(False)
+                self.acbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"]="TRAN"
                 
             elif contentlist[0]== '.op':
@@ -75,14 +87,18 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.dcbox.setVisible(True)
+                self.acbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.check.setChecked(True)
         except:
             self.checkTRAN.setChecked(True)
             self.track_obj.set_CheckBox["ITEMS"]="TRAN"
-               
-        self.setLayout(self.grid)
+
         self.show()
              
+
     def createCheckBox(self):
         self.checkbox = QtGui.QGroupBox()
         self.checkbox.setTitle("Select Analysis Type")
@@ -111,18 +127,30 @@ class Analysis(QtGui.QWidget):
             self.acbox.setDisabled(False)
             self.dcbox.setDisabled(True)
             self.trbox.setDisabled(True)
+
+            self.acbox.setVisible(True)
+            self.dcbox.setVisible(False)
+            self.trbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"]="AC"
         
         elif self.checkDC.isChecked():
             self.dcbox.setDisabled(False)
             self.acbox.setDisabled(True)
             self.trbox.setDisabled(True)
+
+            self.dcbox.setVisible(True)
+            self.acbox.setVisible(False)
+            self.trbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"]="DC"
         
         elif self.checkTRAN.isChecked():
             self.trbox.setDisabled(False)
             self.acbox.setDisabled(True)
             self.dcbox.setDisabled(True)
+
+            self.trbox.setVisible(True)
+            self.acbox.setVisible(False)
+            self.dcbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"]="TRAN"
                  
     def createACgroup(self):
@@ -144,6 +172,7 @@ class Analysis(QtGui.QWidget):
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acbox.setDisabled(True)
+        self.acbox.setVisible(False)                
         self.acgrid = QtGui.QGridLayout()
         self.radiobuttongroup= QtGui.QButtonGroup()
         self.Lin = QtGui.QRadioButton("Lin")
@@ -288,6 +317,7 @@ class Analysis(QtGui.QWidget):
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
         self.dcbox.setDisabled(True)
+        self.dcbox.setVisible(False)
         self.dcgrid = QtGui.QGridLayout()
         self.dcbox.setLayout(self.dcgrid)
         
@@ -538,6 +568,7 @@ class Analysis(QtGui.QWidget):
         self.trbox = QtGui.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
         #self.trbox.setDisabled(True)
+        # self.trbox.setVisible(False)
         self.trgrid = QtGui.QGridLayout()    
         self.trbox.setLayout(self.trgrid)
         
@@ -552,6 +583,7 @@ class Analysis(QtGui.QWidget):
         self.tran_entry_var[self.count] = QtGui.QLineEdit()
         self.trgrid.addWidget(self.tran_entry_var[self.count],1,1)
         self.tran_entry_var[self.count].setMaximumWidth(150)
+
         self.count= self.count+1
         self.tran_entry_var[self.count] = QtGui.QLineEdit()
         self.trgrid.addWidget(self.tran_entry_var[self.count],2,1)
@@ -622,15 +654,14 @@ class Analysis(QtGui.QWidget):
                 self.start_combobox.setCurrentIndex(index)
                 index=self.step_combobox.findText(root[2][4].text)
                 self.step_combobox.setCurrentIndex(index)
-                
                 index=self.stop_combobox.findText(root[2][5].text)
                 self.stop_combobox.setCurrentIndex(index)
             except:
                 print "Transient Analysis XML Parse Error"
 
-
         return self.trbox    
-    
+
+
     def start_combo_change(self,text):
         self.tran_parameter[0]=str(text)
         
