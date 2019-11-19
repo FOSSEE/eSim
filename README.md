@@ -14,4 +14,4 @@ eSim has been successfully ported to low cost FOSSEE laptop (http://laptop.fosse
 5. Kicad (Latest Version build on July-14)
 
 ## eSim Installation
-Refer `https://spoken-tutorial.org/tutorial-search/?search_foss=eSim` folder for eSim installation on Linux and MS Windows.
+Refer `Spoken Tutorial` (https://spoken-tutorial.org/tutorial-search/?search_foss=eSim) for eSim installation on Linux and MS Windows.
