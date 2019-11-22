@@ -54,10 +54,10 @@ function installNghdl
 
     if [ $getNghdl == "y" -o $getNghdl == "Y" ];then
         echo "Downloading nghdl"
-        wget https://github.com/rahulp13/nghdl/archive/2019Fellows.zip
-        unzip nghdl-2019Fellows.zip
-        mv nghdl-2019Fellows nghdl
-        rm nghdl-2019Fellows.zip
+        wget https://github.com/FOSSEE/nghdl/archive/master.zip
+        unzip nghdl-master.zip
+        mv nghdl-master nghdl
+        rm nghdl-master.zip
 
         echo "Installing nghdl"
         cd nghdl/

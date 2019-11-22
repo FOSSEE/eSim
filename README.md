@@ -10,8 +10,8 @@ eSim has been successfully ported to low cost FOSSEE laptop (http://laptop.fosse
 1. Python 2.7
 2. PyQt4
 3. Matplotlib
-4. NgSpice 
-5. Kicad (Latest Version build on July-14)
+4. NgSpice-31
+5. Kicad 4.0.7
 
 ## eSim Installation
 Refer `Spoken Tutorial` (https://spoken-tutorial.org/tutorial-search/?search_foss=eSim) for eSim installation on Linux and MS Windows.
