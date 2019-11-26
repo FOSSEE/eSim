@@ -15,7 +15,7 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: FOSSEE at IIT Bombay.
-#       CREATED: Wednesday 23 October 2019 16:14
+#       CREATED: Wednesday 26 November 2019 16:14
 #      REVISION:  ---
 #===============================================================================
 
@@ -26,7 +26,6 @@ eSim_Home=`pwd`
 ngspiceFlag=0
 
 ##All Functions goes here
-
 
 function createConfigFile
 {
@@ -49,40 +48,32 @@ function createConfigFile
 
 function installNghdl
 {
-    echo -n "Do you want to install nghdl? (y/n): "
-    read getNghdl
 
-    if [ $getNghdl == "y" -o $getNghdl == "Y" ];then
-        echo "Downloading nghdl"
-        wget https://github.com/FOSSEE/nghdl/archive/master.zip
-        unzip nghdl-master.zip
-        mv nghdl-master nghdl
-        rm nghdl-master.zip
+    echo "Downloading nghdl..........."
+    wget -t 5 https://github.com/FOSSEE/nghdl/archive/master.zip -O nghdl-master.zip
+    unzip nghdl-master.zip
+    mv nghdl-master nghdl
+    rm nghdl-master.zip
 
-        echo "Installing nghdl"
-        cd nghdl/
-        ./install-nghdl.sh --install
+    echo "Installing nghdl............"
+    cd nghdl/
+    ./install-nghdl.sh --install
         
-        if [ $? -ne 0 ];then
-            echo -e "\n\n\nNghdl ERROR: Error while installing nghdl\n\n"
-            exit 0
-        else
-            ngspiceFlag=1
-            cd ..
-        fi
-        #Creating empty eSim_Nghdl.lib in home directory
-        if [ -f /usr/share/kicad/library/eSim_Nghdl.lib ];then
-            echo "eSim_Nghdl.lib is already available"
-        else
-            touch /usr/share/kicad/library/eSim_Nghdl.lib
-        fi
-
-    elif [ $getNghdl == "n" -o $getNghdl == "N" ];then
-        echo "Proceeding without installing nghdl"
-    else
-        echo "Please select the right option"
+    if [ $? -ne 0 ];then
+    	echo -e "\n\n\nNghdl ERROR: Error while installing nghdl\n\n"
         exit 0
+    else
+        ngspiceFlag=1
+        cd ..
     fi
+    
+    #Creating empty eSim_Nghdl.lib in home directory
+    if [ -f /usr/share/kicad/library/eSim_Nghdl.lib ];then
+        echo "eSim_Nghdl.lib is already available"
+    else
+        touch /usr/share/kicad/library/eSim_Nghdl.lib
+    fi
+
 }
 
 function addKicadPPA
@@ -106,12 +97,6 @@ function installDependency
 
     echo "Installing Kicad............"
     sudo apt-get install -y kicad
-    if [ $ngspiceFlag -ne 1 ];then
-        echo "Installing ngspice.........."
-        sudo apt-get install -y ngspice
-    else
-        echo "ngspice already installed......"
-    fi
     echo "Installing PyQt4............"
     sudo apt-get install -y python-qt4
     echo "Installing Matplotlib......."
@@ -140,9 +125,7 @@ function copyKicadLibrary
     #Change ownership from Root to the User
     sudo chown -R $USER:$USER /usr/share/kicad/library/
 
-
-
-    # Full path of 'kicad.pro file'[Verified for Ubuntu 12.04]                  
+    # Full path of 'kicad.pro file'
     KICAD_PRO="/usr/share/kicad/template/kicad.pro"
     KICAD_ORIGINAL="/usr/share/kicad/template/kicad.pro.original"  
 
@@ -194,10 +177,9 @@ function createDesktopStartScript
     sudo chmod 755 esim.desktop
     #Copy desktop icon file to Desktop
     cp -vp esim.desktop $HOME/Desktop/
-
-
     #Copying logo.png to .esim directory to access as icon
     cp -vp images/logo.png $config_dir
+
 }
 
 ####################################################################
@@ -210,12 +192,12 @@ if [ "$#" -eq 1 ];then
     option=$1
 else
     echo "USAGE : "
-    echo "./install.sh --install"
+    echo "./install-eSim.sh --install"
+    echo "./install-eSim.sh --uninstall"
     exit 1;
 fi
 
 ##Checking flags
-
 if [ $option == "--install" ];then
     echo "Enter proxy details if you are connected to internet thorugh proxy"
     
@@ -251,23 +233,23 @@ if [ $option == "--install" ];then
 
             echo "Install with proxy"
             #Calling functions
+            installNghdl
             createConfigFile
             addKicadPPA
             installDependency
             copyKicadLibrary
             createDesktopStartScript
-            installNghdl
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
             
             #Calling functions
+            installNghdl
             createConfigFile
             addKicadPPA
             installDependency
             copyKicadLibrary
             createDesktopStartScript
-            installNghdl
 
             if [ $? -ne 0 ];then
                 echo -e "\n\n\nFreeEDA ERROR: Unable to install required packages. Please check your internet connection.\n\n"
@@ -275,25 +257,25 @@ if [ $option == "--install" ];then
             fi
     
     else
-            echo "Please select the right option"
-            exit 0    
+        echo "Please select the right option"
+        exit 0    
     fi
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure ? As it will remove complete eSim including KiCad, Ngspice, NGHDL, your subcircuit and model library packages(y/n):"
+    echo -n "Are you sure?  It will remove complete eSim including KiCad, Ngspice, NGHDL, your subcircuit and model library packages(y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
-        echo "Deleting Files............"
+        echo "Deleting Files................"
         sudo rm -rf $HOME/.esim $HOME/.config/kicad $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
-        echo "Removing Kicad............"
+        echo "Removing Kicad................"
         sudo apt-get remove -y kicad
-        echo "Removing Ngspice............"
-        sudo apt-get remove -y ngspice
-        echo "Removing NGHDL............"
+        echo "Removing NGHDL................"
+        rm -rf src/modelParamXML/Nghdl/*
         cd nghdl/
     	./install-nghdl.sh --uninstall
-
+    	cd ../
+    	rm -rf nghdl
 
         if [ $? -eq 0 ];then
             echo "Uninstalled successfully"
@@ -307,10 +289,8 @@ elif [ $option == "--uninstall" ];then
         exit 0
     fi
 
-
 else 
     echo "Please select the proper operation."
     echo "--install"
     echo "--uninstall"
-
 fi
