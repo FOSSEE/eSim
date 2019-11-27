@@ -49,13 +49,9 @@ function createConfigFile
 function installNghdl
 {
 
-    echo "Downloading nghdl..........."
-    wget -t 5 https://github.com/FOSSEE/nghdl/archive/master.zip -O nghdl-master.zip
+    echo "Installing nghdl............"
     unzip nghdl-master.zip
     mv nghdl-master nghdl
-    rm nghdl-master.zip
-
-    echo "Installing nghdl............"
     cd nghdl/
     ./install-nghdl.sh --install
         
