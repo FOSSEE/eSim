@@ -251,6 +251,10 @@ if [ $option == "--install" ];then
                 echo -e "\n\n\nFreeEDA ERROR: Unable to install required packages. Please check your internet connection.\n\n"
                 exit 0
             fi
+
+            echo "-----------------eSim installed Successfully-----------------"
+            echo "Type \"esim\" in Terminal to launch it"
+            echo "or double click on \"eSim\" icon placed on Desktop"
     
     else
         echo "Please select the right option"
