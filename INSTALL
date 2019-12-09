@@ -14,13 +14,13 @@ Table of contents
     
    After downloading eSim, extract it using: 
   
-   $ unzip eSim.zip
+   $ unzip eSim-1.1.3.zip
 
    Now change directories in to the top-level source directory (where this INSTALL file can be found).
 
    To install eSim and other dependecies run the following command.
 
-   $ ./install-linux.sh --install
+   $ ./install-eSim.sh --install
 
    Above script will install eSim along with dependencies.
 
