@@ -98,7 +98,7 @@ class Application(QtGui.QMainWindow):
         
 
 
-        for file in os.listdir("../../../../.config/kicad"):
+        for file in os.listdir(os.getenv('HOME') + "/.config/kicad"):
             if file.startswith("fp-lib-table"):
                 if file.endswith("offline"):
                     self.webConnect = QtGui.QAction(QtGui.QIcon('../../images/online.png'),'<b>Go Offline</b>',self)
