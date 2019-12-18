@@ -11,9 +11,10 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
-#       CREATED: Wednesday 04 February 2015
-#      REVISION:  ---
+#       CREATED: Tuesday 24 Feb 2015
+#      REVISION: Wednesday 18 Dec 2019
 # =========================================================================
 
 
@@ -64,7 +65,7 @@ class Appconfig(QtGui.QWidget):
     try:
         modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')
     except BaseException:
-        print("Cannot access eSim in parser")
+        print("Cannot access Modelica's JSON file --- .esim folder")
 
     try:
         project_explorer = json.load(open(dictPath))
