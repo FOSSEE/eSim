@@ -437,51 +437,6 @@ class Application(QtGui.QMainWindow):
                 self.modelicaNetlist = os.path.join(
                     self.projDir, self.projName + ".mo")
 
-                """
-                try:
-                    # Creating a command for Ngspice to Modelica converter
-                    self.cmd1 = "
-                        python3 ../ngspicetoModelica/NgspicetoModelica.py "\
-                            +self.ngspiceNetlist
-                    self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
-                    self.obj_workThread1.start()
-
-
-                    if self.obj_validation.validateTool("OMEdit"):
-                        # Creating command to run OMEdit
-                        self.cmd2 = "OMEdit "+self.modelicaNetlist
-                        self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
-                        self.obj_workThread2.start()
-                    else:
-                        self.msg = QtGui.QMessageBox()
-                        self.msgContent = "There was an error while
-                            opening OMEdit.<br/>\
-                        Please make sure OpenModelica is installed in your\
-                            system. <br/>\
-                        To install it on Linux : Go to\
-                            <a href=https://www.openmodelica.org/download/\
-                                download-linux>OpenModelica Linux</a> and  \
-                                    install nigthly build release.<br/>\
-                        To install it on Windows : Go to\
-                         <a href=https://www.openmodelica.org/download/\
-                        download-windows>OpenModelica Windows</a>\
-                         and install latest version.<br/>"
-                        self.msg.setTextFormat(QtCore.Qt.RichText)
-                        self.msg.setText(self.msgContent)
-                        self.msg.setWindowTitle("Missing OpenModelica")
-                        self.obj_appconfig.print_info(self.msgContent)
-                        self.msg.exec_()
-
-                except Exception as e:
-                    self.msg = QtGui.QErrorMessage()
-                    self.msg.showMessage(
-                        'Unable to convert NgSpice netlist to\
-                            Modelica netlist :'+str(e))
-                    self.msg.setWindowTitle(
-                        "Ngspice to Modelica conversion error")
-                    self.obj_appconfig.print_error(str(e))
-                """
-
                 self.obj_Mainview.obj_dockarea.modelicaEditor(self.projDir)
 
             else:
