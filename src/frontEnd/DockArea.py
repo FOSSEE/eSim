@@ -14,8 +14,6 @@ dockList = ['Welcome']
 count = 1
 dock = {}
 
-
-#
 class DockArea(QtGui.QMainWindow):
     """
     This class contains function for designing UI of all the editors
@@ -76,9 +74,9 @@ class DockArea(QtGui.QMainWindow):
 
         dock['Tips-' + str(count)].raise_()
 
-        temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['Tips-' + str(count)])
+        # temp = self.obj_appconfig.current_project['ProjectName']
+        # self.obj_appconfig.dock_dict[temp].append(
+        #     dock['Tips-' + str(count)])
         count = count + 1
 
     def plottingEditor(self):
@@ -106,9 +104,9 @@ class DockArea(QtGui.QMainWindow):
         dock['Plotting-' + str(count)].setFocus()
         dock['Plotting-' + str(count)].raise_()
 
-        temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['Plotting-' + str(count)])
+        # temp = self.obj_appconfig.current_project['ProjectName']
+        # self.obj_appconfig.dock_dict[temp].append(
+        #     dock['Plotting-' + str(count)])
         count = count + 1
 
     def ngspiceEditor(self, projDir):
@@ -145,9 +143,9 @@ class DockArea(QtGui.QMainWindow):
         dock['NgSpice-' + str(count)].setVisible(True)
         dock['NgSpice-' + str(count)].setFocus()
         dock['NgSpice-' + str(count)].raise_()
-        temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['NgSpice-' + str(count)])
+        # temp = self.obj_appconfig.current_project['ProjectName']
+        # self.obj_appconfig.dock_dict[temp].append(
+        #     dock['NgSpice-' + str(count)])
         count = count + 1
 
     def modelEditor(self):
@@ -180,9 +178,9 @@ class DockArea(QtGui.QMainWindow):
         dock['Model Editor-' + str(count)].setFocus()
         dock['Model Editor-' + str(count)].raise_()
 
-        temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['Model Editor-' + str(count)])
+        # temp = self.obj_appconfig.current_project['ProjectName']
+        # self.obj_appconfig.dock_dict[temp].append(
+        #     dock['Model Editor-' + str(count)])
         count = count + 1
 
     def kicadToNgspiceEditor(self, clarg1, clarg2=None):
@@ -215,9 +213,9 @@ class DockArea(QtGui.QMainWindow):
         dock['kicadToNgspice-' + str(count)].setFocus()
         dock['kicadToNgspice-' + str(count)].raise_()
 
-        temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['kicadToNgspice-' + str(count)])
+        # temp = self.obj_appconfig.current_project['ProjectName']
+        # self.obj_appconfig.dock_dict[temp].append(
+        #     dock['kicadToNgspice-' + str(count)])
         count = count + 1
 
     def subcircuiteditor(self):
@@ -246,9 +244,9 @@ class DockArea(QtGui.QMainWindow):
         dock['Subcircuit-' + str(count)].setFocus()
         dock['Subcircuit-' + str(count)].raise_()
 
-        temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['Subcircuit-' + str(count)])
+        # temp = self.obj_appconfig.current_project['ProjectName']
+        # self.obj_appconfig.dock_dict[temp].append(
+        #     dock['Subcircuit-' + str(count)])
         count = count + 1
 
     def usermanual(self):
@@ -302,9 +300,9 @@ class DockArea(QtGui.QMainWindow):
         .QWidget { border-radius: 15px; border: 1px solid gray;\
             padding: 5px; width: 200px; height: 150px;  } \
         ")
-        temp = self.obj_appconfig.current_project['ProjectName']
-        self.obj_appconfig.dock_dict[temp].append(
-            dock['Modelica-' + str(count)])
+        # temp = self.obj_appconfig.current_project['ProjectName']
+        # self.obj_appconfig.dock_dict[temp].append(
+        #     dock['Modelica-' + str(count)])
 
         count = count + 1
 
