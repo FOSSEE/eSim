@@ -101,8 +101,6 @@ class ProjectExplorer(QtGui.QWidget):
 
         menu = QtGui.QMenu()
         if level == 0:
-            renameProject = menu.addAction(self.tr("Rename Project"))
-            renameProject.triggered.connect(self.renameProject)
             deleteproject = menu.addAction(self.tr("Remove Project"))
             deleteproject.triggered.connect(self.removeProject)
             refreshproject = menu.addAction(self.tr("Refresh"))
