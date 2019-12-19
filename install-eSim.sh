@@ -15,7 +15,7 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: FOSSEE at IIT Bombay.
-#       CREATED: Wednesday 26 November 2019 16:14
+#       CREATED: Wednesday 18 December 2019 16:14
 #      REVISION:  ---
 #===============================================================================
 
@@ -56,7 +56,7 @@ function installNghdl
     ./install-nghdl.sh --install
         
     if [ $? -ne 0 ];then
-    	echo -e "\n\n\nNghdl ERROR: Error while installing nghdl\n\n"
+    	echo -e "\n\nNghdl ERROR: Error while installing nghdl\n\n"
         exit 0
     else
         ngspiceFlag=1
@@ -84,19 +84,33 @@ function addKicadPPA
         sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
         sudo apt-get update
     else
-        echo "Kicad-4 is available in synaptic"
+        echo "KiCad-4 is available in synaptic"
     fi
 }
 
 function installDependency
 {
 
-    echo "Installing Kicad............"
+    echo "Installing KiCad............"
     sudo apt-get install -y kicad
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\nKiCad couldn't be installed.\nKindly resolve above APT repository errors and try again."
+        exit 1
+    fi
+
     echo "Installing PyQt4............"
     sudo apt-get install -y python-qt4
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\nPyQt-4 dependency couldn't be installed.\nKindly resolve above APT repository errors and try again."
+        exit 1
+    fi
+    
     echo "Installing Matplotlib......."
     sudo apt-get install -y python-matplotlib
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\nMatplotlib dependency couldn't be installed.\nKindly resolve above APT repository errors and try again."
+        exit 1
+    fi
 
 }
 
@@ -114,7 +128,7 @@ function copyKicadLibrary
     echo "fp-lib-table copied in the directory"
     sudo cp -r src/.OfflineFiles/TerminalBlock_Altech_AK300-2_P5.00mm.kicad_mod /usr/share/kicad/modules/Connectors_Terminal_Blocks.pretty/
     sudo cp -r src/.OfflineFiles/TO-220-3_Vertical.kicad_mod /usr/share/kicad/modules/TO_SOT_Packages_THT.pretty/
-    #Copy Kicad library made for eSim
+    #Copy KiCad library made for eSim
     sudo cp -r kicadSchematicLibrary/*.lib /usr/share/kicad/library/
     sudo cp -r kicadSchematicLibrary/*.dcm /usr/share/kicad/library/
 
@@ -268,7 +282,7 @@ elif [ $option == "--uninstall" ];then
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Deleting Files................"
         sudo rm -rf $HOME/.esim $HOME/.config/kicad $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
-        echo "Removing Kicad................"
+        echo "Removing KiCad................"
         sudo apt-get remove -y kicad
         echo "Removing NGHDL................"
         rm -rf src/modelParamXML/Nghdl/*
