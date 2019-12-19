@@ -1,10 +1,9 @@
 #!/bin/bash 
 #===============================================================================
-#
 #          FILE: install-eSim.sh
 # 
 #         USAGE: ./install-eSim.sh --install 
-#                 or
+#                            OR
 #                ./install-eSim.sh --uninstall
 #                
 #   DESCRIPTION: This is installation/uninstallation script for eSim
@@ -49,14 +48,14 @@ function createConfigFile
 function installNghdl
 {
 
-    echo "Installing nghdl............"
+    echo "Installing NGHDL............"
     unzip nghdl-master.zip
     mv nghdl-master nghdl
     cd nghdl/
     ./install-nghdl.sh --install
         
     if [ $? -ne 0 ];then
-    	echo -e "\n\nNghdl ERROR: Error while installing nghdl\n\n"
+    	echo -e "\n\nThere was some error while installing NGHDL\n\n"
         exit 0
     else
         ngspiceFlag=1
@@ -80,7 +79,7 @@ function addKicadPPA
     grep -h "^deb.*$kicadppa*" /etc/apt/sources.list.d/* > /dev/null 2>&1
     if [ $? -ne 0 ]
     then
-        echo "Adding kicad-4 PPA to install latest ghdl version"
+        echo "Adding KiCad-4 PPA to local apt-repository"
         sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
         sudo apt-get update
     else
@@ -94,21 +93,21 @@ function installDependency
     echo "Installing KiCad............"
     sudo apt-get install -y kicad
     if [ $? -ne 0 ]; then
-    	echo -e "\n\nKiCad couldn't be installed.\nKindly resolve above APT repository errors and try again."
+    	echo -e "\n\n\"KiCad\" couldn't be installed.\nKindly resolve above \"apt-get\" errors and try again."
         exit 1
     fi
 
     echo "Installing PyQt4............"
     sudo apt-get install -y python-qt4
     if [ $? -ne 0 ]; then
-    	echo -e "\n\nPyQt-4 dependency couldn't be installed.\nKindly resolve above APT repository errors and try again."
+    	echo -e "\n\n\"PyQt4\" dependency couldn't be installed.\nKindly resolve above \"apt-get\" errors and try again."
         exit 1
     fi
     
     echo "Installing Matplotlib......."
     sudo apt-get install -y python-matplotlib
     if [ $? -ne 0 ]; then
-    	echo -e "\n\nMatplotlib dependency couldn't be installed.\nKindly resolve above APT repository errors and try again."
+    	echo -e "\n\n\"Matplotlib\" dependency couldn't be installed.\nKindly resolve above \"apt-get\" errors and try again."
         exit 1
     fi
 
@@ -266,7 +265,7 @@ if [ $option == "--install" ];then
                 exit 0
             fi
 
-            echo "-----------------eSim installed Successfully-----------------"
+            echo "-----------------eSim Installed Successfully-----------------"
             echo "Type \"esim\" in Terminal to launch it"
             echo "or double click on \"eSim\" icon placed on Desktop"
     
@@ -277,7 +276,7 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure?  It will remove complete eSim including KiCad, Ngspice, NGHDL, your subcircuit and model library packages(y/n):"
+    echo -n "Are you sure?  It will remove complete eSim including KiCad, Ngspice, NGHDL and model library packages(y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Deleting Files................"
@@ -287,14 +286,17 @@ elif [ $option == "--uninstall" ];then
         echo "Removing NGHDL................"
         rm -rf src/modelParamXML/Nghdl/*
         cd nghdl/
-    	./install-nghdl.sh --uninstall
-    	cd ../
-    	rm -rf nghdl
-
         if [ $? -eq 0 ];then
-            echo "Uninstalled successfully"
+    	    ./install-nghdl.sh --uninstall
+    	    cd ../
+    	    rm -rf nghdl
+            if [ $? -eq 0 ];then
+                echo -e "----------------eSim Uninstalled Successfully----------------"
+            else
+                echo -e "\nError while removing some files/directories in \"nghdl\". Please remove it manually"
+            fi
         else
-            echo "Error while removing some file/directory. Please remove it manually"
+            echo -e "\nCannot find \"nghdl\" directory. Please remove it manually"
         fi
     elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
         exit 0
