@@ -96,8 +96,6 @@ class Application(QtGui.QMainWindow):
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
         
-
-
         for file in os.listdir(os.getenv('HOME') + "/.config/kicad"):
             if file.startswith("fp-lib-table"):
                 if file.endswith("offline"):
@@ -252,6 +250,7 @@ class Application(QtGui.QMainWindow):
             self.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
         except:
             pass
+    
                 
     def help_project(self):
         print "Function : Help"
@@ -260,18 +259,17 @@ class Application(QtGui.QMainWindow):
         self.obj_Mainview.obj_dockarea.usermanual()    
     
     
-
     def go_online_offline(self):
         if not self.obj_kicad.check_open_schematic():
             if self.online_flag:
-                os.rename("../../../../.config/kicad/fp-lib-table", "../../../../.config/kicad/fp-lib-table-online")
-                os.rename("../../../../.config/kicad/fp-lib-table-offline", "../../../../.config/kicad/fp-lib-table")
+                os.rename(os.getenv('HOME') + "/.config/kicad/fp-lib-table", os.getenv('HOME') + "/.config/kicad/fp-lib-table-online")
+                os.rename(os.getenv('HOME') + "/.config/kicad/fp-lib-table-offline", os.getenv('HOME') + "/.config/kicad/fp-lib-table")
                 self.webConnect.setIcon(QtGui.QIcon('../../images/offline.png'))
                 self.webConnect.setText('<b>Go Online</b>')
                 self.online_flag = False
             else:
-                os.rename("../../../../.config/kicad/fp-lib-table", "../../../../.config/kicad/fp-lib-table-offline")
-                os.rename("../../../../.config/kicad/fp-lib-table-online", "../../../../.config/kicad/fp-lib-table")
+                os.rename(os.getenv('HOME') + "/.config/kicad/fp-lib-table", os.getenv('HOME') + "/.config/kicad/fp-lib-table-offline")
+                os.rename(os.getenv('HOME') + "/.config/kicad/fp-lib-table-online", os.getenv('HOME') + "/.config/kicad/fp-lib-table")
                 self.webConnect.setIcon(QtGui.QIcon('../../images/online.png'))
                 self.webConnect.setText('<b>Go Offline</b>')
                 self.online_flag = True
