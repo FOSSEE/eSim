@@ -1,5 +1,6 @@
 * Subcircuit lm555n
-.subckt lm555n 22 14 7 6 15 16 3 13 
+.subckt lm555n 22 14 7 6 15 16 3 13
+.include npn_1.lib 
 * eeschema netlist version 1.1 (spice format) creation date: monday 17 december 2012 11:00:36 am ist
 * Inverter d_inverter
 * SR Latch d_srlatch
@@ -8,7 +9,7 @@ e2  18 0 23 14 10000
 * Digital to Analog converter dac8
 * Analog to Digital converter adc8
 r8  9 2 1500
-q1 3 2 22 qnom
+q1 3 2 22 npn_1
 r7  18 20 25
 r6  17 19 25
 e1  17 0 16 15 10000
@@ -33,5 +34,6 @@ a7 [11] [4] u2
 a8 [12] [1] u2
 a9 [6] [5] u2
 .model u2 adc_bridge(in_low=0.8 in_high=2.0 )
+*control statements
 
 .ends lm555n

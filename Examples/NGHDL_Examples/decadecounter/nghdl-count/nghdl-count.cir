@@ -1,0 +1,38 @@
+* /home/saurabh/eSim-Examples/Decade_Counter/nghdl-count/nghdl-count.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Dec 30 12:03:37 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  Clock GND pulse		
+v2  Rst GND pulse		
+U2  Clock plot_v1		
+U3  Rst plot_v1		
+R10  Out1 GND 1k		
+U8  Out8 plot_v1		
+U10  Out7 plot_v1		
+U11  Out6 plot_v1		
+U12  Out5 plot_v1		
+U13  Out4 plot_v1		
+U14  Out3 plot_v1		
+U15  Out2 plot_v1		
+U16  Out1 plot_v1		
+R9  Out2 GND 1k		
+R8  Out3 GND 1k		
+R7  Out4 GND 1k		
+R6  Out5 GND 1k		
+R5  Out6 GND 1k		
+R3  Out7 GND 1k		
+R1  Out8 GND 1k		
+R2  Out9 GND 1k		
+R4  Out10 GND 1k		
+U7  Out9 plot_v1		
+U9  Out10 plot_v1		
+U6  Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Out1 Out2 Out3 Out4 Out5 Out6 Out7 Out8 dac_bridge_8		
+U4  Clock Rst Net-_U1-Pad1_ Net-_U1-Pad2_ adc_bridge_2		
+U5  Net-_U1-Pad11_ Net-_U1-Pad12_ Out9 Out10 dac_bridge_2		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ decadecounter		
+
+.end
