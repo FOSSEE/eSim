@@ -1,5 +1,4 @@
 EESchema Schematic File Version 2
-LIBS:monostable555-rescue
 LIBS:adc-dac
 LIBS:memory
 LIBS:xilinx
@@ -38,7 +37,7 @@ LIBS:eSim_Sources
 LIBS:eSim_User
 LIBS:eSim_Plot
 LIBS:eSim_Subckt
-LIBS:monostable555-cache
+LIBS:Monostable555-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -69,7 +68,7 @@ L eSim_C C1
 U 1 1 5C9DFE22
 P 5150 3600
 F 0 "C1" H 5175 3700 50  0001 L CNN
-F 1 "30u" H 5175 3500 50  0000 L CNN
+F 1 "1u" H 5175 3500 50  0000 L CNN
 F 2 "" H 5188 3450 30  0000 C CNN
 F 3 "" H 5150 3600 60  0000 C CNN
 	1    5150 3600

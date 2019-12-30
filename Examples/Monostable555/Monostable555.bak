@@ -37,7 +37,7 @@ LIBS:eSim_Sources
 LIBS:eSim_User
 LIBS:eSim_Plot
 LIBS:eSim_Subckt
-LIBS:monostable555-cache
+LIBS:Monostable555-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -68,7 +68,7 @@ L eSim_C C1
 U 1 1 5C9DFE22
 P 5150 3600
 F 0 "C1" H 5175 3700 50  0001 L CNN
-F 1 "30u" H 5175 3500 50  0000 L CNN
+F 1 "1u" H 5175 3500 50  0000 L CNN
 F 2 "" H 5188 3450 30  0000 C CNN
 F 3 "" H 5150 3600 60  0000 C CNN
 	1    5150 3600
@@ -165,7 +165,7 @@ $EndComp
 Text GLabel 7350 2700 2    60   Input ~ 0
 out
 $Comp
-L DC v1
+L DC-RESCUE-monostable555 v1
 U 1 1 5C9E028E
 P 4150 3400
 F 0 "v1" H 3950 3500 60  0000 C CNN
@@ -235,9 +235,9 @@ Wire Wire Line
 Wire Wire Line
 	5350 2550 5350 3950
 Wire Wire Line
-	6850 3950 5350 3950
+	5350 3950 6850 3950
 Wire Wire Line
-	6850 2950 6850 3950
+	6850 3950 6850 2950
 Wire Wire Line
 	6850 3200 6750 3200
 Connection ~ 5150 3350
