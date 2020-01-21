@@ -1,0 +1,6 @@
+*.pyc
+Examples/*/*_i.txt
+Examples/*/*_v.txt
+esim.desktop
+esim-start.sh
+nghdl*
