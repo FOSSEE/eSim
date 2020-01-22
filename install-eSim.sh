@@ -62,13 +62,6 @@ function installNghdl
         ngspiceFlag=1
         cd ..
     fi
-    
-    #Creating empty eSim_Nghdl.lib in home directory
-    if [ -f /usr/share/kicad/library/eSim_Nghdl.lib ];then
-        echo "eSim_Nghdl.lib is already available"
-    else
-        touch /usr/share/kicad/library/eSim_Nghdl.lib
-    fi
 
 }
 
