@@ -14,7 +14,7 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: FOSSEE at IIT Bombay.
-#       CREATED: Wednesday 18 December 2019 16:14
+#       CREATED: Tuesday 21 January 2020 16:14
 #      REVISION:  ---
 #===============================================================================
 
@@ -25,9 +25,9 @@ eSim_Home=`pwd`
 ngspiceFlag=0
 
 ##All Functions goes here
-
 function createConfigFile
 {
+
     #Creating config.ini file and adding configuration information
     #Check if config file is present
     if [ -d $config_dir ];then
@@ -45,10 +45,11 @@ function createConfigFile
     echo "MODELICA_MAP_JSON = %(eSim_HOME)s/src/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
 }
 
+
 function installNghdl
 {
 
-    echo "Installing NGHDL............"
+    echo "Installing NGHDL......................."
     unzip nghdl-master.zip
     mv nghdl-master nghdl
     cd nghdl/
@@ -61,18 +62,13 @@ function installNghdl
         ngspiceFlag=1
         cd ..
     fi
-    
-    #Creating empty eSim_Nghdl.lib in home directory
-    if [ -f /usr/share/kicad/library/eSim_Nghdl.lib ];then
-        echo "eSim_Nghdl.lib is already available"
-    else
-        touch /usr/share/kicad/library/eSim_Nghdl.lib
-    fi
 
 }
 
+
 function addKicadPPA
 {
+
     #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
     kicadppa="reynaud/kicad-4"
     #Checking if ghdl ppa is already exist
@@ -81,37 +77,50 @@ function addKicadPPA
     then
         echo "Adding KiCad-4 PPA to local apt-repository"
         sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
-        sudo apt-get update
     else
         echo "KiCad-4 is available in synaptic"
     fi
+
 }
+
 
 function installDependency
 {
 
-    echo "Installing KiCad............"
-    sudo apt-get install -y kicad
+	#Update apt repository
+	echo "Updating apt index files..................."
+    sudo apt-get update
+    
+    echo "Installing Xterm..........................."
+    sudo apt install -y xterm
     if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"KiCad\" couldn't be installed.\nKindly resolve above \"apt-get\" errors and try again."
+        echo -e "\n\n\"Xterm\" dependency couldn't be installed.\nKindly resolve above errors and try again."
         exit 1
     fi
 
-    echo "Installing PyQt4............"
-    sudo apt-get install -y python-qt4
+    echo "Installing PyQt4..........................."
+    sudo apt install -y python-qt4
     if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"PyQt4\" dependency couldn't be installed.\nKindly resolve above \"apt-get\" errors and try again."
+    	echo -e "\n\n\"PyQt4\" dependency couldn't be installed.\nKindly resolve above errors and try again."
         exit 1
     fi
     
-    echo "Installing Matplotlib......."
-    sudo apt-get install -y python-matplotlib
+    echo "Installing Matplotlib......................"
+    sudo apt install -y python-matplotlib
     if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"Matplotlib\" dependency couldn't be installed.\nKindly resolve above \"apt-get\" errors and try again."
+    	echo -e "\n\n\"Matplotlib\" dependency couldn't be installed.\nKindly resolve above errors and try again."
+        exit 1
+    fi
+
+    echo "Installing KiCad..........................."
+    sudo apt install -y --no-install-recommends kicad
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\n\"KiCad\" dependency couldn't be installed.\nKindly resolve above errors and try again."
         exit 1
     fi
 
 }
+
 
 function copyKicadLibrary
 {   
@@ -122,17 +131,24 @@ function copyKicadLibrary
           mkdir ~/.config/kicad
     fi
 
-    cp -r src/.OfflineFiles/fp-lib-table ~/.config/kicad/
-    cp -r src/.OfflineFiles/fp-lib-table-online ~/.config/kicad/
+    #Copy fp-lib-table for switching modes
+    cp -r src/supportFiles/fp-lib-table ~/.config/kicad/
+    cp -r src/supportFiles/fp-lib-table-online ~/.config/kicad/
     echo "fp-lib-table copied in the directory"
-    sudo cp -r src/.OfflineFiles/TerminalBlock_Altech_AK300-2_P5.00mm.kicad_mod /usr/share/kicad/modules/Connectors_Terminal_Blocks.pretty/
-    sudo cp -r src/.OfflineFiles/TO-220-3_Vertical.kicad_mod /usr/share/kicad/modules/TO_SOT_Packages_THT.pretty/
-    #Copy KiCad library made for eSim
-    sudo cp -r kicadSchematicLibrary/*.lib /usr/share/kicad/library/
-    sudo cp -r kicadSchematicLibrary/*.dcm /usr/share/kicad/library/
+    
+    #Extract custom KiCad Library
+    tar -xJf kicadLibrary.tar.xz
 
-    #Change ownership from Root to the User
-    sudo chown -R $USER:$USER /usr/share/kicad/library/
+    #Copy KiCad libraries
+    echo "Copying KiCad libraries...................."
+
+    sudo cp -r kicadLibrary/library /usr/share/kicad/
+    sudo cp -r kicadLibrary/modules /usr/share/kicad/    
+    sudo cp -r kicadLibrary/template/* /usr/share/kicad/template/
+
+    #Copy KiCad library made for eSim
+    sudo cp -r kicadLibrary/kicad_eSim-Library/* /usr/share/kicad/library/
+
 
     # Full path of 'kicad.pro file'
     KICAD_PRO="/usr/share/kicad/template/kicad.pro"
@@ -140,14 +156,21 @@ function copyKicadLibrary
 
     if [ -f "$KICAD_ORIGINAL" ];then
         echo "kicad.pro.original file found....."
-        sudo cp -rv kicadSchematicLibrary/kicad.pro ${KICAD_PRO}
+        sudo cp -rv kicadLibrary/template/kicad.pro ${KICAD_PRO}
     else 
         echo "Making copy of original file"
         sudo cp -rv ${KICAD_PRO}{,.original}                                             
-        sudo cp -rv kicadSchematicLibrary/kicad.pro ${KICAD_PRO}
+        sudo cp -rv kicadLibrary/template/kicad.pro ${KICAD_PRO}
     fi
 
+    #remove extracted KiCad Library - not needed anymore
+    rm -rf kicadLibrary
+
+    #Change ownership from Root to the User
+    sudo chown -R $USER:$USER /usr/share/kicad/library/
+
 }
+
 
 function createDesktopStartScript
 {
@@ -181,7 +204,6 @@ function createDesktopStartScript
     echo "StartupNotify=true" >> esim.desktop
     echo "Actions=NewWindow;NewPrivateWindow;" >> esim.desktop
 
-
     #Make esim.desktop file executable
     sudo chmod 755 esim.desktop
     #Copy desktop icon file to Desktop
@@ -190,6 +212,7 @@ function createDesktopStartScript
     cp -vp images/logo.png $config_dir
 
 }
+
 
 ####################################################################
 #                   MAIN START FROM HERE                           #
@@ -242,22 +265,22 @@ if [ $option == "--install" ];then
 
             echo "Install with proxy"
             #Calling functions
-            installNghdl
             createConfigFile
             addKicadPPA
             installDependency
             copyKicadLibrary
+            installNghdl
             createDesktopStartScript
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
             
             #Calling functions
-            installNghdl
             createConfigFile
             addKicadPPA
             installDependency
             copyKicadLibrary
+            installNghdl
             createDesktopStartScript
 
             if [ $? -ne 0 ];then
@@ -279,11 +302,13 @@ elif [ $option == "--uninstall" ];then
     echo -n "Are you sure?  It will remove complete eSim including KiCad, Ngspice, NGHDL and model library packages(y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
-        echo "Deleting Files................"
-        sudo rm -rf $HOME/.esim $HOME/.config/kicad $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
-        echo "Removing KiCad................"
-        sudo apt-get remove -y kicad
-        echo "Removing NGHDL................"
+        echo "Removing eSim............................"
+        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
+        echo "Removing KiCad..........................."
+        sudo apt purge -y kicad
+        sudo rm -rf /usr/share/kicad
+        sudo rm -rf $HOME/.config/kicad
+        echo "Removing NGHDL..........................."
         rm -rf src/modelParamXML/Nghdl/*
         cd nghdl/
         if [ $? -eq 0 ];then
