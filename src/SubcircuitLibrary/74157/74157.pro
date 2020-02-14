@@ -1,4 +1,4 @@
-update=Tue Jun 25 20:59:09 2019
+update=03/28/19 22:30:06
 version=1
 last_client=eeschema
 [general]
@@ -29,16 +29,29 @@ version=1
 NetIExt=net
 [eeschema]
 version=1
-LibDir=../../../kicadSchematicLibrary
+LibDir=
 [eeschema/libraries]
-LibName1=74157-rescue
-LibName2=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Analog
-LibName3=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Devices
-LibName4=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Digital
-LibName5=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Hybrid
-LibName6=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Miscellaneous
-LibName7=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Plot
-LibName8=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Power
-LibName9=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Sources
-LibName10=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_Subckt
-LibName11=/home/mallikarjuna/Downloads/eSim-1.1.2/kicadSchematicLibrary/eSim_User
+LibName1=power
+LibName2=intel
+LibName3=audio
+LibName4=interface
+LibName5=digital-audio
+LibName6=philips
+LibName7=display
+LibName8=cypress
+LibName9=siliconi
+LibName10=opto
+LibName11=atmel
+LibName12=contrib
+LibName13=valves
+LibName14=eSim_Analog
+LibName15=eSim_Devices
+LibName16=eSim_Digital
+LibName17=eSim_Hybrid
+LibName18=eSim_Miscellaneous
+LibName19=eSim_Plot
+LibName20=eSim_Power
+LibName21=eSim_PSpice
+LibName22=eSim_Sources
+LibName23=eSim_User
+LibName24=eSim_Subckt

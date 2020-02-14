@@ -8,9 +8,11 @@
 _saved_*
 *.swp
 *~
+Examples/*/*_i.txt
+Examples/*/*_v.txt
 esim-start.sh
 esim.desktop
-nghdl
+nghdl*
 tags
 build/
 dist/

@@ -7,7 +7,6 @@ LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
 LIBS:eSim_Power
 LIBS:eSim_Sources
-LIBS:eSim_Subckt
 LIBS:eSim_User
 LIBS:adc-dac
 LIBS:memory
@@ -54,18 +53,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L NPN Q1
-U 1 1 56A86C4C
-P 5350 3200
-F 0 "Q1" H 5250 3250 50  0000 R CNN
-F 1 "NPN" H 5300 3350 50  0000 R CNN
-F 2 "" H 5550 3300 29  0000 C CNN
-F 3 "" H 5350 3200 60  0000 C CNN
-	1    5350 3200
-	1    0    0    -1  
-$EndComp
-$Comp
-L DC v1
+L DC-RESCUE-BJT_CE_config v1
 U 1 1 56A86D0E
 P 6600 3050
 F 0 "v1" H 6400 3150 60  0000 C CNN
@@ -91,7 +79,7 @@ ib
 Text GLabel 6550 2350 2    60   Input ~ 0
 vce
 $Comp
-L R R1
+L R-RESCUE-BJT_CE_config R1
 U 1 1 56C44AD7
 P 5400 2650
 F 0 "R1" H 5450 2780 50  0000 C CNN
@@ -102,7 +90,7 @@ F 3 "" V 5450 2700 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R2
+L R-RESCUE-BJT_CE_config R2
 U 1 1 56C44C4B
 P 4800 3150
 F 0 "R2" H 4850 3280 50  0000 C CNN
@@ -167,4 +155,29 @@ F 3 "" H 4150 3800 60  0000 C CNN
 	1    4150 3800
 	1    0    0    -1  
 $EndComp
+$Comp
+L eSim_NPN Q1
+U 1 1 5D5CEE49
+P 5350 3200
+F 0 "Q1" H 5250 3250 50  0000 R CNN
+F 1 "eSim_NPN" H 5300 3350 50  0000 R CNN
+F 2 "" H 5550 3300 29  0000 C CNN
+F 3 "" H 5350 3200 60  0000 C CNN
+	1    5350 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG02
+U 1 1 5D66519A
+P 5600 4100
+F 0 "#FLG02" H 5600 4175 50  0001 C CNN
+F 1 "PWR_FLAG" H 5600 4250 50  0000 C CNN
+F 2 "" H 5600 4100 50  0001 C CNN
+F 3 "" H 5600 4100 50  0001 C CNN
+	1    5600 4100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5600 4100 5600 4250
+Connection ~ 5600 4250
 $EndSCHEMATC

@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:BJT_CB_config-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -53,18 +54,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L NPN Q1
-U 1 1 56A86C4C
-P 5450 3200
-F 0 "Q1" H 5350 3250 50  0000 R CNN
-F 1 "NPN" H 5400 3350 50  0000 R CNN
-F 2 "" H 5650 3300 29  0000 C CNN
-F 3 "" H 5450 3200 60  0000 C CNN
-	1    5450 3200
-	0    1    -1   0   
-$EndComp
-$Comp
-L DC v1
+L DC-RESCUE-BJT_CB_config v1
 U 1 1 56A86D0E
 P 6600 3050
 F 0 "v1" H 6400 3150 60  0000 C CNN
@@ -90,7 +80,7 @@ ie
 Text GLabel 6750 2300 2    60   Input ~ 0
 vcb
 $Comp
-L R R1
+L R-RESCUE-BJT_CB_config R1
 U 1 1 56C44AD7
 P 5600 2750
 F 0 "R1" H 5650 2880 50  0000 C CNN
@@ -101,7 +91,7 @@ F 3 "" V 5650 2800 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R2
+L R-RESCUE-BJT_CB_config R2
 U 1 1 56C44C4B
 P 4900 3050
 F 0 "R2" H 4950 3180 50  0000 C CNN
@@ -168,4 +158,29 @@ F 3 "" H 4150 3800 60  0000 C CNN
 	1    4150 3800
 	1    0    0    -1  
 $EndComp
+$Comp
+L eSim_NPN Q1
+U 1 1 5D5CEEB2
+P 5450 3200
+F 0 "Q1" H 5350 3250 50  0000 R CNN
+F 1 "eSim_NPN" H 5400 3350 50  0000 R CNN
+F 2 "" H 5650 3300 29  0000 C CNN
+F 3 "" H 5450 3200 60  0000 C CNN
+	1    5450 3200
+	0    1    -1   0   
+$EndComp
+$Comp
+L PWR_FLAG #FLG02
+U 1 1 5D665163
+P 5600 4150
+F 0 "#FLG02" H 5600 4225 50  0001 C CNN
+F 1 "PWR_FLAG" H 5600 4300 50  0000 C CNN
+F 2 "" H 5600 4150 50  0001 C CNN
+F 3 "" H 5600 4150 50  0001 C CNN
+	1    5600 4150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5600 4150 5600 4250
+Connection ~ 5600 4250
 $EndSCHEMATC

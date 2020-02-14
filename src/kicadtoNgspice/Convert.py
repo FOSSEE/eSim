@@ -1,5 +1,4 @@
 from PyQt4 import QtGui
-
 import os
 import shutil
 from . import TrackWidget
@@ -9,15 +8,15 @@ from xml.etree import ElementTree as ET
 class Convert:
     """
     - This class has all the necessary function required to convert \
-    kicad netlist to ngspice netlist.
+      kicad netlist to ngspice netlist.
     - Method List
-    - - addDeviceLibrary
-    - - addModelParameter
-    - - addSourceParameter
-    - - addSubcircuit
-    - - analysisInsertor
-    - - converttosciform
-    - - defaultvalue
+        - addDeviceLibrary
+        - addModelParameter
+        - addSourceParameter
+        - addSubcircuit
+        - analysisInsertor
+        - converttosciform
+        - defaultvalue
     """
 
     def __init__(self, sourcelisttrack, source_entry_var,
@@ -32,12 +31,12 @@ class Convert:
         """
         - This function extracts the source details to schematicInfo
         - keywords recognised and parsed -
-        - - sine
-        - - pulse
-        - - pwl
-        - - ac
-        - - dc
-        - - exp
+            - sine
+            - pulse
+            - pwl
+            - ac
+            - dc
+            - exp
         - Return updated schematic
         """
 
@@ -355,7 +354,7 @@ class Convert:
 
     def addModelParameter(self, schematicInfo):
         """
-        This function add the Ngspice Model details to schematicInfo
+        This function adds the Ngspice Model details to schematicInfo
         """
 
         # Create object of TrackWidget
@@ -446,8 +445,6 @@ class Convert:
                     # end = line[8]
                     addmodelLine = ".model " + line[3] + " " + line[2] + "("
                     for key, value in line[9].items():
-                        # print "Tags: ",key
-                        # print "Value: ",value
                         # Checking for default value and accordingly assign
                         # param and default.
                         if ':' in key:
@@ -457,7 +454,7 @@ class Convert:
                         else:
                             param = key
                             default = 0
-                        # Cheking if value is iterable.its for vector
+                        # Checking if value is iterable.its for vector
                         if (
                             not isinstance(value, str) and
                             hasattr(value, '__iter__')
@@ -516,17 +513,16 @@ class Convert:
         includeLine = []  # All .include line list
 
         if not deviceLibList:
-            print("No Library Added in the schematic")
-            pass
+            print("No library added in the schematic")
         else:
             for eachline in schematicInfo:
                 words = eachline.split()
                 if words[0] in deviceLibList:
-                    print("Found Library line")
+                    # print("Found Library line")
                     index = schematicInfo.index(eachline)
                     completeLibPath = deviceLibList[words[0]]
                     (libpath, libname) = os.path.split(completeLibPath)
-                    print("Library Path :", libpath)
+                    # print("Library Path :", libpath)
                     # Copying library from devicemodelLibrary to Project Path
                     # Special case for MOSFET
                     if eachline[0] == 'm':
@@ -562,9 +558,6 @@ class Convert:
                         dst = projpath
                         shutil.copy2(src, dst)
 
-                else:
-                    pass
-
             # Adding device line to schematicInfo
             for index, value in deviceLine.items():
                 # Update the device line
@@ -582,7 +575,6 @@ class Convert:
         """
         This function add the subcircuit to schematicInfo
         """
-
         (projpath, filename) = os.path.split(kicadFile)
 
         subList = self.obj_track.subcircuitTrack
@@ -600,7 +592,6 @@ class Convert:
             raise Exception('All subcircuit directories need to be specified.')
         elif not subList:
             print("No Subcircuit Added in the schematic")
-            pass
         else:
             for eachline in schematicInfo:
                 words = eachline.split()
@@ -624,8 +615,6 @@ class Convert:
                         if os.path.isfile(os.path.join(src, files)):
                             if files != "analysis":
                                 shutil.copy2(os.path.join(src, files), dst)
-                else:
-                    pass
 
             # Adding subcircuit line to schematicInfo
             for index, value in subLine.items():
@@ -649,6 +638,5 @@ class Convert:
         for child in libtree.iter():
             if child.tag == 'ref_model':
                 retVal = child.text
-            else:
-                pass
+                
         return retVal

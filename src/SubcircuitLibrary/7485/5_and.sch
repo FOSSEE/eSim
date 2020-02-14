@@ -16,7 +16,6 @@ LIBS:eSim_PSpice
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
-LIBS:5_and-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -156,16 +155,4 @@ F 3 "" H 6750 3150 60  0000 C CNN
 	6    6750 3150
 	-1   0    0    1   
 $EndComp
-Text Notes 3800 2700 0    60   ~ 12
-in1
-Text Notes 3800 2900 0    60   ~ 12
-in2
-Text Notes 3800 3100 0    60   ~ 12
-in3
-Text Notes 3800 3300 0    60   ~ 12
-in4
-Text Notes 3800 3500 0    60   ~ 12
-in5
-Text Notes 6150 3150 0    60   ~ 12
-out
 $EndSCHEMATC

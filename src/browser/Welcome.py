@@ -2,7 +2,10 @@ from PyQt4 import QtGui, QtCore
 
 
 class Welcome(QtGui.QWidget):
-    """This class contains content of dock area part of initial esim Window."""
+    """
+    This class contains content of dock area part of initial esim Window.
+    It creates Welcome page of eSim.
+    """
 
     def __init__(self):
         QtGui.QWidget.__init__(self)

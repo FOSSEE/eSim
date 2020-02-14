@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:Clampercircuit-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -75,7 +76,7 @@ F 3 "" H 4300 2900 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L D D1
+L D-RESCUE-Clampercircuit D1
 U 1 1 56A86555
 P 5100 3400
 F 0 "D1" H 5100 3500 50  0000 C CNN
@@ -150,7 +151,7 @@ F 3 "" H 7600 2900 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L D D2
+L D-RESCUE-Clampercircuit D2
 U 1 1 56A867F1
 P 8500 3400
 F 0 "D2" H 8500 3500 50  0000 C CNN

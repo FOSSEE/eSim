@@ -1,5 +1,4 @@
 # =========================================================================
-#
 #          FILE: Workspace.py
 #
 #         USAGE: ---
@@ -11,27 +10,26 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 05 February 2015
-#      REVISION:  ---
+#      REVISION: Friday 14 February 2020
 # =========================================================================
+
 from PyQt4 import QtCore, QtGui
 from configuration.Appconfig import Appconfig
 import time
 import os
 
 
-# This class creates Workspace GUI.
 class Workspace(QtGui.QWidget):
     """
     This class creates UI for WorkSpace selection window.
 
-        This window contains text area to select location of your choice
-        or browse location for workspace area.
-
-        By default workspace is set in ~/eSim-Workspace.
-
-         This workspace area contains all the projects made by user.
+        - This window contains text area to select location of your choice \
+          or browse location for workspace area.
+        - By default workspace is set in ~/eSim-Workspace.
+        - This workspace area contains all the projects made by user.
 
     """
 
@@ -43,7 +41,6 @@ class Workspace(QtGui.QWidget):
         self.initWorkspace()
 
     def initWorkspace(self):
-        # print "Calling workspace"
 
         self.mainwindow = QtGui.QVBoxLayout()
         self.split = QtGui.QSplitter()

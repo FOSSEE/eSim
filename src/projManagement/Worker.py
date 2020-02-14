@@ -1,5 +1,4 @@
 # =========================================================================
-#
 #          FILE: WorkerThread.py
 #
 #         USAGE: ---
@@ -11,10 +10,12 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
-#       CREATED: Tuesday 24 Feb 2015
-#      REVISION:  ---
+#       CREATED: Tuesday 24 February 2015
+#      REVISION: Friday 14 February 2020
 # =========================================================================
+
 from PyQt4 import QtCore
 import subprocess
 from configuration.Appconfig import Appconfig
@@ -27,7 +28,6 @@ class WorkerThread(QtCore.QThread):
     other PyQT windows
     This is a helper functions, used to create threads for various commands
 
-
     @params
         :args   => takes a space separated string of comamnds to be execute
                    in different child processes (see subproces.Popen())
@@ -39,6 +39,7 @@ class WorkerThread(QtCore.QThread):
     def __init__(self, args):
         QtCore.QThread.__init__(self)
         self.args = args
+        self.my_workers = []
 
     def __del__(self):
         """
@@ -52,6 +53,18 @@ class WorkerThread(QtCore.QThread):
             None
         """
         self.wait()
+
+    def get_proc_threads(self):
+        """
+        This function is a getter for the list of project's workers,
+        and is called to check if project's schematic is open or not.
+
+        @params
+        
+        @return
+            :self.my_workers
+        """        
+        return self.my_workers
 
     def run(self):
         """
@@ -82,6 +95,7 @@ class WorkerThread(QtCore.QThread):
 
         procThread = Appconfig()
         proc = subprocess.Popen(command.split())
+        self.my_workers.append(proc)
         procThread.procThread_list.append(proc)
         procThread.proc_dict[procThread.current_project['ProjectName']].append(
             proc.pid)

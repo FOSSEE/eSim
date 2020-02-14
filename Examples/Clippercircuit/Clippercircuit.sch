@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:Clippercircuit-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -64,7 +65,7 @@ F 3 "" H 4100 3500 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L D D1
+L D-RESCUE-Clippercircuit D1
 U 1 1 56A86229
 P 5550 3450
 F 0 "D1" H 5550 3550 50  0000 C CNN
@@ -75,7 +76,7 @@ F 3 "" H 5550 3450 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D2
+L D-RESCUE-Clippercircuit D2
 U 1 1 56A863C8
 P 6250 3450
 F 0 "D2" H 6250 3550 50  0000 C CNN
@@ -86,7 +87,7 @@ F 3 "" H 6250 3450 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-Clippercircuit R1
 U 1 1 56A86416
 P 4700 3050
 F 0 "R1" H 4750 3180 50  0000 C CNN

@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.3
 #encoding utf-8
 #
-# 3_and-RESCUE-4_and
+# 3_and
 #
-DEF 3_and-RESCUE-4_and X 0 40 Y Y 1 F N
+DEF 3_and X 0 40 Y Y 1 F N
 F0 "X" 900 300 60 H V C CNN
-F1 "3_and-RESCUE-4_and" 950 500 60 H V C CNN
+F1 "3_and" 950 500 60 H V C CNN
 F2 "" 0 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 DRAW

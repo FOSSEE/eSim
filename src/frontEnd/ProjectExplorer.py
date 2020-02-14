@@ -35,6 +35,8 @@ class ProjectExplorer(QtGui.QWidget):
 
         # CSS
         self.treewidget.setStyleSheet(" \
+            QTreeView { border-radius: 15px; border: 1px \
+            solid gray; padding: 5px; width: 200px; height: 150px;  }\
             QTreeView::branch:has-siblings:!adjoins-item { \
             border-image: url(../../images/vline.png) 0;} \
             QTreeView::branch:has-siblings:adjoins-item { \
@@ -61,7 +63,8 @@ class ProjectExplorer(QtGui.QWidget):
                 )
                 for files in children:
                     QtGui.QTreeWidgetItem(
-                        parentnode, [files, os.path.join(parents, files)])
+                        parentnode, [files, os.path.join(parents, files)]
+                    )
         self.window.addWidget(self.treewidget)
 
         self.treewidget.doubleClicked.connect(self.openProject)
@@ -74,7 +77,8 @@ class ProjectExplorer(QtGui.QWidget):
         os.path.join(parents)
         pathlist = parents.split(os.sep)
         parentnode = QtGui.QTreeWidgetItem(
-            self.treewidget, [pathlist[-1], parents])
+            self.treewidget, [pathlist[-1], parents]
+        )
         for files in children:
             QtGui.QTreeWidgetItem(
                 parentnode, [files, os.path.join(parents, files)]
@@ -90,7 +94,6 @@ class ProjectExplorer(QtGui.QWidget):
         ) = []
 
     def openMenu(self, position):
-
         indexes = self.treewidget.selectedIndexes()
         if len(indexes) > 0:
             level = 0
@@ -117,9 +120,8 @@ class ProjectExplorer(QtGui.QWidget):
         self.indexItem = self.treewidget.currentIndex()
         filename = str(self.indexItem.data())
         self.filePath = str(
-            self.indexItem.sibling(
-                self.indexItem.row(),
-                1).data())
+            self.indexItem.sibling(self.indexItem.row(), 1).data()
+        )
         self.obj_appconfig.print_info(
             'The current project is ' + self.filePath)
 
@@ -132,16 +134,15 @@ class ProjectExplorer(QtGui.QWidget):
         self.save = QtGui.QPushButton('Save and Exit')
         self.save.setDisabled(True)
         self.windowgrid = QtGui.QGridLayout()
-        # if (os.path.isfile(str(self.filePath))) == True:
+
         if (os.path.isfile(str(self.filePath))):
             self.fopen = open(str(self.filePath), 'r')
             lines = self.fopen.read()
             self.text.setText(lines)
 
             QtCore.QObject.connect(
-                self.text,
-                QtCore.SIGNAL("textChanged()"),
-                self.enable_save)
+                self.text, QtCore.SIGNAL("textChanged()"), self.enable_save
+            )
 
             vbox_main = QtGui.QVBoxLayout(self.textwindow)
             vbox_main.addWidget(self.text)
@@ -167,29 +168,30 @@ class ProjectExplorer(QtGui.QWidget):
                         self.obj_appconfig.current_project['ProjectName']]
                 ) = []
 
-    # This function is enabling save button option.
     def enable_save(self):
+        """This function enables save button option."""
         self.save.setEnabled(True)
 
-    # This function is saving data before it closes the given file.
     def save_data(self):
         """
-        This function first opens file in write-mode, when write
-        operation is performed it closes that file and then it closes window.
+        This function saves data before it closes the given file.
+        It first opens file in write-mode, write operation is performed, \
+        closes that file and then it closes window.
         """
         self.fopen = open(self.filePath, 'w')
         self.fopen.write(self.text.toPlainText())
         self.fopen.close()
         self.textwindow.close()
 
-    # This function removes the project in explorer area by right
-    # clicking on project and selecting remove option.
     def removeProject(self):
+        """
+        This function removes the project in explorer area by right \
+        clicking on project and selecting remove option.
+        """
         self.indexItem = self.treewidget.currentIndex()
         self.filePath = str(
-            self.indexItem.sibling(
-                self.indexItem.row(),
-                1).data())
+            self.indexItem.sibling(self.indexItem.row(), 1).data()
+        )
         self.int = self.indexItem.row()
         self.treewidget.takeTopLevelItem(self.int)
 
@@ -200,14 +202,15 @@ class ProjectExplorer(QtGui.QWidget):
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath, 'w'))
 
-    # This function refresh the project in explorer area by right
-    # clicking on project and selecting refresh option.
     def refreshProject(self):
+        """
+        This function refresh the project in explorer area by right \
+        clicking on project and selecting refresh option.
+        """
         self.indexItem = self.treewidget.currentIndex()
         self.filePath = str(
-            self.indexItem.sibling(
-                self.indexItem.row(),
-                1).data())
+            self.indexItem.sibling(self.indexItem.row(), 1).data()
+        )
         filelistnew = os.listdir(os.path.join(self.filePath))
         parentnode = self.treewidget.currentItem()
         count = parentnode.childCount()
@@ -216,9 +219,8 @@ class ProjectExplorer(QtGui.QWidget):
                 items.removeChild(items.child(0))
         for files in filelistnew:
             QtGui.QTreeWidgetItem(
-                parentnode, [
-                    files, os.path.join(
-                        self.filePath, files)])
+                parentnode, [files, os.path.join(self.filePath, files)]
+            )
 
         self.obj_appconfig.project_explorer[self.filePath] = filelistnew
         json.dump(self.obj_appconfig.project_explorer,
@@ -226,23 +228,22 @@ class ProjectExplorer(QtGui.QWidget):
 
     def renameProject(self):
         """
-        This function renames the project present in project explorer area
-        it validates first:
+        This function renames the project present in project explorer area.
+        It validates first:
 
             - If project names is not empty.
             - Project name does not contain spaces between them.
             - Project name is different between what it was earlier.
             - Project name should not exist.
 
-        And after project name is changed it recreates
-        the project explorer tree.
+        After project name is changed, it recreates the project explorer tree.
         """
         self.indexItem = self.treewidget.currentIndex()
         self.baseFileName = str(self.indexItem.data())
         newBaseFileName, ok = QtGui.QInputDialog.getText(
-            self, 'Rename Project', 'Project Name:', QtGui.QLineEdit.Normal,
-            self.baseFileName
-            )
+            self, 'Rename Project', 'Project Name:',
+            QtGui.QLineEdit.Normal, self.baseFileName
+        )
         if ok and newBaseFileName:
             print(newBaseFileName)
             print("=================")
@@ -284,8 +285,8 @@ class ProjectExplorer(QtGui.QWidget):
                     # rename project folder
                     updatedProjectPath = newBaseFileName.join(
                         projectPath.rsplit(self.baseFileName, 1))
-                    print("Renaming " + projectPath + " to "
-                          + updatedProjectPath)
+                    print("Renaming " + projectPath + " to " +
+                          updatedProjectPath)
                     os.rename(projectPath, updatedProjectPath)
 
                     # rename files matching project name
@@ -297,8 +298,8 @@ class ProjectExplorer(QtGui.QWidget):
                                 self.baseFileName, newBaseFileName, 1)
                             newFilePath = os.path.join(
                                 updatedProjectPath, projectFile)
-                            print("Renaming " + oldFilePath + " to"
-                                  + newFilePath)
+                            print("Renaming " + oldFilePath + " to" +
+                                  newFilePath)
                             os.rename(oldFilePath, newFilePath)
                             updatedProjectFiles.append(projectFile)
 
@@ -323,10 +324,10 @@ class ProjectExplorer(QtGui.QWidget):
                     print("==========================")
                     msg = QtGui.QErrorMessage(self)
                     msg.showMessage(
-                        'The project "'
-                        + newBaseFileName
-                        + '" already exist.Please select the different name or'
-                        + ' delete existing project')
+                        'The project "' + newBaseFileName +
+                        '" already exist. Please select a different name or' +
+                        ' delete existing project'
+                    )
                     msg.setWindowTitle("Error Message")
 
                 elif reply == "CHECKNAME":
@@ -334,6 +335,7 @@ class ProjectExplorer(QtGui.QWidget):
                     print("===========================")
                     msg = QtGui.QErrorMessage(self)
                     msg.showMessage(
-                        'The project name should not'
-                        + 'contain space between them')
+                        'The project name should not ' +
+                        'contain space between them'
+                    )
                     msg.setWindowTitle("Error Message")

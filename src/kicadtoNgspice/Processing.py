@@ -13,30 +13,28 @@ class PrcocessNetlist:
     def __init__(self):
         pass
 
-    """
-    - Read the circuit file and return splitted lines
-    """
-
     def readNetlist(self, filename):
+        """
+        - Read the circuit file and return splitted lines
+        """
         f = open(filename)
         data = f.read()
         f.close()
-        print("=============================================================")
-        print("readNetList called, from Processing")
-        print("=============================================================")
-        print("NETLIST", data.splitlines())
-        print("=============================================================")
+        # print("=============================================================")
+        # print("readNetList called, from Processing")
+        # print("=============================================================")
+        # print("NETLIST", data.splitlines())
+        # print("=============================================================")
         return data.splitlines()
 
-    """
-    - Read Parameter information and store it into dictionary
-    - kicadNetlis is the .cir file content
-    """
-
-    def readParamInfo(self, kicadNetlis):
+    def readParamInfo(self, kicadNetlist):
+        """
+        - Read Parameter information and store it into dictionary
+        - kicadNetlist is the .cir file content
+        """
         param = {}
-        print("=========================KICADNETLIST========================")
-        for eachline in kicadNetlis:
+        # print("=========================KICADNETLIST========================")
+        for eachline in kicadNetlist:
             print(eachline)
             eachline = eachline.strip()
             if len(eachline) > 1:
@@ -46,21 +44,20 @@ class PrcocessNetlist:
                     for i in range(1, len(words), 1):
                         paramList = words[i].split('=')
                         param[paramList[0]] = paramList[1]
-        print("=============================================================")
-        print("readParamInfo called, from Processing")
-        print("=============================================================")
-        print("PARAM", param)
-        print("=============================================================")
+        # print("=============================================================")
+        # print("readParamInfo called, from Processing")
+        # print("=============================================================")
+        # print("PARAM", param)
+        # print("=============================================================")
         return param
 
-    """
-    - Preprocess netlist (replace parameters)
-    - Separate infoline (first line) from the rest of netlist
-    """
-
-    def preprocessNetlist(self, kicadNetlis, param):
+    def preprocessNetlist(self, kicadNetlist, param):
+        """
+        - Preprocess netlist (replace parameters)
+        - Separate infoline (first line) from the rest of netlist
+        """
         netlist = []
-        for eachline in kicadNetlis:
+        for eachline in kicadNetlist:
             # Remove leading and trailing blanks spaces from line
             eachline = eachline.strip()
             # Remove special character $
@@ -89,12 +86,12 @@ class PrcocessNetlist:
         # Copy information line
         infoline = netlist[0]
         netlist.remove(netlist[0])
-        print("=============================================================")
+        """print("=============================================================")
         print("preprocessNetList called, from Processing")
         print("=============================================================")
         print("NETLIST", netlist)
         print("INFOLINE", infoline)
-        print("=============================================================")
+        print("=============================================================")"""
         return netlist, infoline
 
     def separateNetlistInfo(self, netlist):
@@ -114,26 +111,25 @@ class PrcocessNetlist:
                 optionInfo.append(eachline)
             else:
                 schematicInfo.append(eachline)
-        print("=============================================================")
+        """print("=============================================================")
         print("separateNetlistInfo called, from Processing")
         print("=============================================================")
         print("OPTIONINFO", optionInfo)
         print("SCHEMATICINFO", schematicInfo)
-        print("=============================================================")
+        print("=============================================================")"""
         return optionInfo, schematicInfo
 
-    """
-    - Insert Special source parameter
-    - As per the parameters passed create source list, start with v or i
-    - Then check for type whether ac, dc, sine, etc...
-    - Handle starting with h and f as well
-    """
-
     def insertSpecialSourceParam(self, schematicInfo, sourcelist):
+        """
+        - Insert Special source parameter
+        - As per the parameters passed create source list, start with v or i
+        - Then check for type whether ac, dc, sine, etc...
+        - Handle starting with h and f as well
+        """
         schematicInfo1 = []
-        print("=============================================================")
-        print("Reading schematic info for source details")
-        print("=============================================================")
+        # print("=============================================================")
+        # print("Reading schematic info for source details")
+        # print("=============================================================")
         for compline in schematicInfo:
             words = compline.split()
             compName = words[0]
@@ -217,14 +213,14 @@ class PrcocessNetlist:
                     words[5])
 
         schematicInfo = schematicInfo + schematicInfo1
-        print("Source List : ", sourcelist)
-        # print schematicInfo
-        print("=============================================================")
+        # print("Source List : ", sourcelist)
+
+        """print("=============================================================")
         print("insertSpecialSourceParam called, from Processing")
         print("=============================================================")
         print("SCHEMATICINFO", schematicInfo)
         print("SOURCELIST", sourcelist)
-        print("=============================================================")
+        print("=============================================================")"""
         return schematicInfo, sourcelist
 
     def convertICintoBasicBlocks(
@@ -239,8 +235,8 @@ class PrcocessNetlist:
         - - Plot text
         - Parsing info is provided below
         """
-        print("=============================================================")
-        print("Reading Schematic info for Model")
+        # print("=============================================================")
+        # print("Reading Schematic info for Model")
         # Insert details of Ngspice model
         unknownModelList = []
         multipleModelList = []
@@ -293,8 +289,8 @@ class PrcocessNetlist:
                         unknownModelList.append(compType)
                     elif count == 1:
                         try:
-                            print("==========================================\
-                                ===========================")
+                            # print("==========================================\
+                            #     ===========================")
                             print(
                                 "Start Parsing Previous Values XML\
                                  for ngspice model :", modelPath)
@@ -355,9 +351,9 @@ class PrcocessNetlist:
                                 modelLine += compName
 
                             else:
-                                print("=====================================\
-                                    ================================")
-                                print("Split Details :", splitDetail)
+                                # print("=====================================\
+                                #     ================================")
+                                # print("Split Details :", splitDetail)
                                 modelLine = "a" + str(k) + " "
                                 vectorDetail = splitDetail.split(':')
                                 # print "Vector Details",vectorDetail
@@ -507,7 +503,7 @@ class PrcocessNetlist:
 
                 else:
                     schematicInfo.insert(index, "* " + compline)
-                print("=====================================================")
+                # print("=====================================================")
                 print(
                     "UnknownModelList Used in the Schematic",
                     unknownModelList)
@@ -516,7 +512,7 @@ class PrcocessNetlist:
                     "Multiple Model XML file with same name ",
                     multipleModelList)
                 print("=====================================================")
-                print("Model List Details : ", modelList)
+                # print("Model List Details : ", modelList)
         print("=============================================================")
         print("convertICIntoBasicBlocks called, from Processing")
         print("=============================================================")

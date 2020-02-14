@@ -14,6 +14,7 @@ dockList = ['Welcome']
 count = 1
 dock = {}
 
+
 class DockArea(QtGui.QMainWindow):
     """
     This class contains function for designing UI of all the editors
@@ -22,8 +23,8 @@ class DockArea(QtGui.QMainWindow):
         - Test Editor.
         - Model Editor.
         - Python Plotting.
-        - NgSpice Editor.
-        - Kicad to NgSpice Editor.
+        - Ngspice Editor.
+        - Kicad to Ngspice Editor.
         - Subcircuit Editor.
         - Modelica editor.
     """
@@ -53,8 +54,9 @@ class DockArea(QtGui.QMainWindow):
         self.show()
 
     def createTestEditor(self):
-        """This function create widget for Library Editor."""
+        """This function create widget for Library Editor"""
         global count
+                
         self.testWidget = QtGui.QWidget()
         self.testArea = QtGui.QTextEdit()
         self.testLayout = QtGui.QVBoxLayout()
@@ -74,16 +76,18 @@ class DockArea(QtGui.QMainWindow):
 
         dock['Tips-' + str(count)].raise_()
 
-        # temp = self.obj_appconfig.current_project['ProjectName']
-        # self.obj_appconfig.dock_dict[temp].append(
-        #     dock['Tips-' + str(count)])
+        temp = self.obj_appconfig.current_project['ProjectName']
+        if temp:
+            self.obj_appconfig.dock_dict[temp].append(
+                dock['Tips-' + str(count)]
+            )
         count = count + 1
 
     def plottingEditor(self):
-        """This function create widget for interactive PythonPlotting"""
+        """This function create widget for interactive PythonPlotting."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.projName = os.path.basename(self.projDir)
-        # self.project = os.path.join(self.projDir,self.projName)
+        # self.project = os.path.join(self.projDir, self.projName)
 
         global count
         self.plottingWidget = QtGui.QWidget()
@@ -104,13 +108,15 @@ class DockArea(QtGui.QMainWindow):
         dock['Plotting-' + str(count)].setFocus()
         dock['Plotting-' + str(count)].raise_()
 
-        # temp = self.obj_appconfig.current_project['ProjectName']
-        # self.obj_appconfig.dock_dict[temp].append(
-        #     dock['Plotting-' + str(count)])
+        temp = self.obj_appconfig.current_project['ProjectName']
+        if temp:
+            self.obj_appconfig.dock_dict[temp].append(
+                dock['Plotting-' + str(count)]
+            )
         count = count + 1
 
     def ngspiceEditor(self, projDir):
-        """Sdf."""
+        """ This function creates widget for Ngspice window."""
         self.projDir = projDir
         self.projName = os.path.basename(self.projDir)
         self.ngspiceNetlist = os.path.join(
@@ -121,9 +127,8 @@ class DockArea(QtGui.QMainWindow):
 
         self.ngspiceLayout = QtGui.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(
-                self.ngspiceNetlist,
-                self.projDir))
+            NgspiceWidget(self.ngspiceNetlist, self.projDir)
+        )
 
         # Adding to main Layout
         self.ngspiceWidget.setLayout(self.ngspiceLayout)
@@ -143,9 +148,12 @@ class DockArea(QtGui.QMainWindow):
         dock['NgSpice-' + str(count)].setVisible(True)
         dock['NgSpice-' + str(count)].setFocus()
         dock['NgSpice-' + str(count)].raise_()
-        # temp = self.obj_appconfig.current_project['ProjectName']
-        # self.obj_appconfig.dock_dict[temp].append(
-        #     dock['NgSpice-' + str(count)])
+        
+        temp = self.obj_appconfig.current_project['ProjectName']
+        if temp:
+            self.obj_appconfig.dock_dict[temp].append(
+                dock['NgSpice-' + str(count)]
+            )
         count = count + 1
 
     def modelEditor(self):
@@ -178,15 +186,11 @@ class DockArea(QtGui.QMainWindow):
         dock['Model Editor-' + str(count)].setFocus()
         dock['Model Editor-' + str(count)].raise_()
 
-        # temp = self.obj_appconfig.current_project['ProjectName']
-        # self.obj_appconfig.dock_dict[temp].append(
-        #     dock['Model Editor-' + str(count)])
         count = count + 1
 
     def kicadToNgspiceEditor(self, clarg1, clarg2=None):
         """
-        This function is creating Editor UI for-
-        Kicad to Ngspice conversion.
+        This function is creating Editor UI for Kicad to Ngspice conversion.
         """
         global count
         self.kicadToNgspiceWidget = QtGui.QWidget()
@@ -212,10 +216,13 @@ class DockArea(QtGui.QMainWindow):
         dock['kicadToNgspice-' + str(count)].setVisible(True)
         dock['kicadToNgspice-' + str(count)].setFocus()
         dock['kicadToNgspice-' + str(count)].raise_()
+        dock['kicadToNgspice-' + str(count)].activateWindow()
 
-        # temp = self.obj_appconfig.current_project['ProjectName']
-        # self.obj_appconfig.dock_dict[temp].append(
-        #     dock['kicadToNgspice-' + str(count)])
+        temp = self.obj_appconfig.current_project['ProjectName']
+        if temp:
+            self.obj_appconfig.dock_dict[temp].append(
+                dock['kicadToNgspice-' + str(count)]
+            )
         count = count + 1
 
     def subcircuiteditor(self):
@@ -244,12 +251,10 @@ class DockArea(QtGui.QMainWindow):
         dock['Subcircuit-' + str(count)].setFocus()
         dock['Subcircuit-' + str(count)].raise_()
 
-        # temp = self.obj_appconfig.current_project['ProjectName']
-        # self.obj_appconfig.dock_dict[temp].append(
-        #     dock['Subcircuit-' + str(count)])
         count = count + 1
 
     def usermanual(self):
+        """This function creates a widget for user manual."""
         global count
         self.usermanualWidget = QtGui.QWidget()
         self.usermanualLayout = QtGui.QVBoxLayout()
@@ -277,7 +282,7 @@ class DockArea(QtGui.QMainWindow):
         count = count + 1
 
     def modelicaEditor(self, projDir):
-        """Dfg."""
+        """This function sets up the UI for ngspice to modelica conversion."""
         global count
         self.modelicaWidget = QtGui.QWidget()
         self.modelicaLayout = QtGui.QVBoxLayout()
@@ -300,9 +305,11 @@ class DockArea(QtGui.QMainWindow):
         .QWidget { border-radius: 15px; border: 1px solid gray;\
             padding: 5px; width: 200px; height: 150px;  } \
         ")
-        # temp = self.obj_appconfig.current_project['ProjectName']
-        # self.obj_appconfig.dock_dict[temp].append(
-        #     dock['Modelica-' + str(count)])
+        temp = self.obj_appconfig.current_project['ProjectName']
+        if temp:
+            self.obj_appconfig.dock_dict[temp].append(
+                dock['Modelica-' + str(count)]
+            )
 
         count = count + 1
 

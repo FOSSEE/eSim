@@ -1,29 +1,27 @@
-
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 from . import TrackWidget
 import os
-# from xml.etree import ElementTree as ET
 import json
 
 
 class Analysis(QtGui.QWidget):
     """
     - This class create Analysis Tab in KicadtoNgspice Window. 4 sections -
-    - - Select Analysis Type
-    - - AC Analysis
-    - - DC Analysis
-    - - Transient Analysis
-    - Set various track widget options here, for tracking purposes across\
-    different functions and modules -
-    - - AC_entry_var
-    - - AC_Parameter
-    - - DC_entry_var
-    - - DC_Parameter
-    - - TRAN_entry_var
-    - - TRAN_Parameter
-    - - set_Checkbox
-    - - AC_type
-    - - op_check
+      - Select Analysis Type
+      - AC Analysis
+      - DC Analysis
+      - Transient Analysis
+    - Set various track widget options here, for tracking purposes across \
+      different functions and modules -
+      - AC_entry_var
+      - AC_Parameter
+      - DC_entry_var
+      - DC_Parameter
+      - TRAN_entry_var
+      - TRAN_Parameter
+      - set_Checkbox
+      - AC_type
+      - op_check
     """
 
     def __init__(self, clarg1):
@@ -42,19 +40,21 @@ class Analysis(QtGui.QWidget):
 
     def createAnalysisWidget(self):
         """
-        - Create the main anaylsis widget overwiew
-        - - Checkbox for analysis type
-        - - Place, `AC`, `DC` and `TRANSIENT` analysis tab
-        - - `self.acbox`, `self.dcbox`,`self.trbox`...
+        - Create the main anaylsis widget overwiew:
+          - Checkbox for analysis type
+          - Place, `AC`, `DC` and `TRANSIENT` analysis tab
+          - `self.acbox`, `self.dcbox`, `self.trbox`...
         - Check for `analysis` file, if any in projDir, extract data from it
         - Else set the default checkbox to `TRAN`
         - Accordingly set state for track widget options, as `TRAN`, `AC` ...
         """
         self.grid = QtGui.QGridLayout()
-        self.grid.addWidget(self.createCheckBox(), 0, 0)
-        self.grid.addWidget(self.createACgroup(), 1, 0)
-        self.grid.addWidget(self.createDCgroup(), 2, 0)
-        self.grid.addWidget(self.createTRANgroup(), 3, 0)
+        self.setLayout(self.grid)
+
+        self.grid.addWidget(self.createCheckBox(), 0, 0, QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.createACgroup(), 1, 0, 5, 0)
+        self.grid.addWidget(self.createDCgroup(), 1, 0, 5, 0)
+        self.grid.addWidget(self.createTRANgroup(), 1, 0, 5, 0)
 
         try:
             kicadFile = self.clarg1
@@ -74,6 +74,10 @@ class Analysis(QtGui.QWidget):
                 self.acbox.setDisabled(False)
                 self.dcbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.acbox.setVisible(True)
+                self.dcbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "AC"
                 if contentlist[1] == 'lin':
                     self.Lin.setChecked(True)
@@ -90,6 +94,10 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.dcbox.setVisible(True)
+                self.acbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
             elif contentlist[0] == '.tran':
@@ -97,6 +105,10 @@ class Analysis(QtGui.QWidget):
                 self.trbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.dcbox.setDisabled(True)
+
+                self.trbox.setVisible(True)
+                self.dcbox.setVisible(False)
+                self.acbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
             elif contentlist[0] == '.op':
@@ -104,6 +116,10 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.dcbox.setVisible(True)
+                self.acbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.check.setChecked(True)
                 self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
@@ -111,7 +127,6 @@ class Analysis(QtGui.QWidget):
             self.checkTRAN.setChecked(True)
             self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
-        self.setLayout(self.grid)
         self.show()
 
     def createCheckBox(self):
@@ -151,25 +166,37 @@ class Analysis(QtGui.QWidget):
             self.acbox.setDisabled(False)
             self.dcbox.setDisabled(True)
             self.trbox.setDisabled(True)
+
+            self.acbox.setVisible(True)
+            self.dcbox.setVisible(False)
+            self.trbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "AC"
 
         elif self.checkDC.isChecked():
             self.dcbox.setDisabled(False)
             self.acbox.setDisabled(True)
             self.trbox.setDisabled(True)
+
+            self.dcbox.setVisible(True)
+            self.acbox.setVisible(False)
+            self.trbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
         elif self.checkTRAN.isChecked():
             self.trbox.setDisabled(False)
             self.acbox.setDisabled(True)
             self.dcbox.setDisabled(True)
+
+            self.trbox.setVisible(True)
+            self.acbox.setVisible(False)
+            self.dcbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
     def createACgroup(self):
         """
         - Designing of AC group in analysis tab
         - 3 radio buttons - Lin | Dec | Oct
-        - 3 input boxes, with top 2 combos\
+        - 3 input boxes, with top 2 combos
         - If previous values exist then fill default values from
           previous value json file
         """
@@ -194,6 +221,7 @@ class Analysis(QtGui.QWidget):
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acbox.setDisabled(True)
+        self.acbox.setVisible(False)
         self.acgrid = QtGui.QGridLayout()
         self.radiobuttongroup = QtGui.QButtonGroup()
         self.Lin = QtGui.QRadioButton("Lin")
@@ -320,11 +348,10 @@ class Analysis(QtGui.QWidget):
 
     '''
     - Below 2 functions handle combo value event listeners for
-    - - start frequency for ac
-    - - stop frequency for ac
+        - start frequency for ac
+        - stop frequency for ac
     - And accordingly set the ac_parameters
     '''
-
     def start_combovalue(self, text):
         """
         - Handle start_fre_combo box event
@@ -343,7 +370,7 @@ class Analysis(QtGui.QWidget):
 
     def set_ac_type(self):
         """
-        - Set track object for AC, according to the type of radio box selected
+        Sets track object for AC, according to the type of radio box selected.
         """
         self.parameter_cnt = 0
 
@@ -353,17 +380,15 @@ class Analysis(QtGui.QWidget):
             self.track_obj.AC_type["ITEMS"] = "dec"
         elif self.Oct.isChecked():
             self.track_obj.AC_type["ITEMS"] = "oct"
-        else:
-            pass
 
     def createDCgroup(self):
         """
         - Create DC area under analysis tab
         - Source 1 and 2, each having 4 input boxes as follows
-        - - Source
-        - - Start
-        - - Increment
-        - - Stop
+            - Source
+            - Start
+            - Increment
+            - Stop
         - The last 3 have combo box pertaining to their unit as well
         - Also in the end a checkbox, for operating system point analysis
         """
@@ -388,6 +413,7 @@ class Analysis(QtGui.QWidget):
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
         self.dcbox.setDisabled(True)
+        self.dcbox.setVisible(False)
         self.dcgrid = QtGui.QGridLayout()
         self.dcbox.setLayout(self.dcgrid)
 
@@ -811,10 +837,10 @@ class Analysis(QtGui.QWidget):
                 print("Transient Analysis JSON Parse Error")
 
         return self.trbox
+    
     '''
     - Below 3 functions handle event for the combo box in transient group
     '''
-
     def start_combo_change(self, text):
         """Handle start combo box, ie. units, as second, ms"""
         self.tran_parameter[0] = str(text)

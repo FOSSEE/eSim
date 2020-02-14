@@ -1,0 +1,28 @@
+* c:\users\malli\esim\src\subcircuitlibrary\4023\4023.cir
+
+.include 3_and.sub
+x3 net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u4-pad1_ 3_and
+* u4  net-_u4-pad1_ net-_u1-pad10_ d_inverter
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ ? net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ ? port
+x2 net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad3_ net-_u3-pad1_ 3_and
+* u3  net-_u3-pad1_ net-_u1-pad6_ d_inverter
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad8_ net-_u2-pad1_ 3_and
+* u2  net-_u2-pad1_ net-_u1-pad9_ d_inverter
+a1 net-_u4-pad1_ net-_u1-pad10_ u4
+a2 net-_u3-pad1_ net-_u1-pad6_ u3
+a3 net-_u2-pad1_ net-_u1-pad9_ u2
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

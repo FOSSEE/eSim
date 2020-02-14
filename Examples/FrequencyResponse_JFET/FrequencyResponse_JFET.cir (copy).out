@@ -1,0 +1,30 @@
+* eeschema netlist version 1.1 (spice format) creation date: fri may  8 15:00:52 2015
+
+.include NJF.lib
+j1 6 8 7 J2N3819
+r3  5 6 0.7k
+r4  7 0 1k
+r1  1 3 10k
+c1  8 1 0.01u
+r2  0 8 1meg
+c2  0 8 5p
+c3  8 7 0p
+c4  8 6 2p
+c5  6 7 0.5p
+c6  7 0 2u
+c7  6 2 5u
+c8  2 0 6p
+r5  2 0 2.2k
+v2 5 0  dc 20
+v1 3 0  ac 0.1m
+.ac lin 100 10Hz 10Meg
+
+* Control Statements 
+.control
+run
+Plot v(3)
+plot v(2)
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

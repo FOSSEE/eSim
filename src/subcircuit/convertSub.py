@@ -4,8 +4,7 @@ from configuration.Appconfig import Appconfig
 import os
 
 
-# This class is called when User create new Project and contains \
-# functions to convert kicad to Ngspice.
+# This class is called when user creates new Project
 class convertSub(QtGui.QWidget):
     """
     Contains functions that checks project present for conversion and
@@ -34,7 +33,6 @@ class convertSub(QtGui.QWidget):
         if self.obj_validation.validateKicad(self.projDir):
             # Checking if project has .cir file or not
             if self.obj_validation.validateCir(self.projDir):
-                # print "CIR file present"
                 self.projName = os.path.basename(self.projDir)
                 self.project = os.path.join(self.projDir, self.projName)
 
@@ -44,12 +42,14 @@ class convertSub(QtGui.QWidget):
             else:
                 self.msg = QtGui.QErrorMessage(None)
                 self.msg.showMessage(
-                    'The subcircuit does not contain any Kicad netlist file'
-                    + ' for conversion.')
+                    'The subcircuit does not contain any Kicad netlist file' +
+                    ' for conversion.'
+                )
                 self.msg.setWindowTitle("Error Message")
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage(
-                'Please select the subcircuit first. You can either create'
-                + ' new subcircuit or open existing subcircuit')
+                'Please select the subcircuit first. You can either create ' +
+                'new subcircuit or open existing subcircuit'
+            )
             self.msg.setWindowTitle("Error Message")

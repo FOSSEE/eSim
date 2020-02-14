@@ -12,20 +12,20 @@ class ModelEditorclass(QtGui.QWidget):
     - Initalise directory to save new models,
       savepathtest = '../deviceModelLibrary'
     - Initialise buttons and options ====>
-    - - Name            Function Called
+        - Name            Function Called
     ========================================
-    - - New             opennew
-    - - Edit            openedit
-    - - Save            savemodelfile
-    - - Upload          converttoxml
-    - - Add             addparameters
-    - - Remove          removeparameter
-    - - Diode           diode_click
-    - - BJT             bjt_click
-    - - MOS             mos_click
-    - - JFET            jfet_click
-    - - IGBT            igbt_click
-    - - Magnetic Core   magnetic_click
+        - New             opennew
+        - Edit            openedit
+        - Save            savemodelfile
+        - Upload          converttoxml
+        - Add             addparameters
+        - Remove          removeparameter
+        - Diode           diode_click
+        - BJT             bjt_click
+        - MOS             mos_click
+        - JFET            jfet_click
+        - IGBT            igbt_click
+        - Magnetic Core   magnetic_click
     '''
 
     def __init__(self):
@@ -301,8 +301,6 @@ class ModelEditorclass(QtGui.QWidget):
             if filetype == 'Magnetic Core':
                 path = os.path.join(self.path, 'CORE.xml')
                 self.createtable(path)
-        else:
-            pass
 
     def openedit(self):
         '''

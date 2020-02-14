@@ -24,7 +24,6 @@ LIBS:eSim_PSpice
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
-LIBS:3_and-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -119,12 +118,4 @@ Wire Wire Line
 	3300 3100 4700 3100
 Wire Wire Line
 	4700 3100 4700 2900
-Text Notes 3500 2600 0    60   ~ 12
-in1
-Text Notes 3450 2800 0    60   ~ 12
-in2\n
-Text Notes 3500 3100 0    60   ~ 12
-in3
-Text Notes 6100 2850 0    60   ~ 12
-out
 $EndSCHEMATC

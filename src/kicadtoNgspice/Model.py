@@ -1,7 +1,6 @@
 from PyQt4 import QtGui
 import json
 from . import TrackWidget
-# from xml.etree import ElementTree as ET
 import os
 
 
@@ -59,8 +58,6 @@ class Model(QtGui.QWidget):
             # line[7] is parameter dictionary holding parameter tags.
             i = 0
             for key, value in line[7].items():
-                # print "Key : ",key
-                # print "Value : ",value
                 # Check if value is iterable
                 if not isinstance(value, str) and hasattr(value, '__iter__'):
                     # For tag having vector value
@@ -127,7 +124,6 @@ class Model(QtGui.QWidget):
                     self.nextrow = self.nextrow + 1
 
             self.end = self.nextcount - 1
-            # print "End",self.end
             modelbox.setLayout(modelgrid)
 
             # CSS
@@ -172,7 +168,5 @@ class Model(QtGui.QWidget):
 
             if check == 0:
                 self.obj_trac.modelTrack.append(lst)
-
-            # print "The tag dictionary : ",tag_dict
 
         self.show()

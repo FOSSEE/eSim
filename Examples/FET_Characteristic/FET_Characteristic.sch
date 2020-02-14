@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:FET_Characteristic-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -53,18 +54,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L NJF J1
-U 1 1 56C45BB2
-P 5700 3300
-F 0 "J1" H 5600 3350 50  0000 R CNN
-F 1 "NJF" H 5650 3450 50  0000 R CNN
-F 2 "" H 5900 3400 29  0000 C CNN
-F 3 "" H 5700 3300 60  0000 C CNN
-	1    5700 3300
-	1    0    0    -1  
-$EndComp
-$Comp
-L DC vds1
+L DC-RESCUE-FET_Characteristic vds1
 U 1 1 56C45C58
 P 7200 3300
 F 0 "vds1" H 7000 3400 60  0000 C CNN
@@ -75,7 +65,7 @@ F 3 "" H 7200 3300 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L DC vgs1
+L DC-RESCUE-FET_Characteristic vgs1
 U 1 1 56C45CAD
 P 4450 3800
 F 0 "vgs1" H 4250 3900 60  0000 C CNN
@@ -131,4 +121,29 @@ id
 Wire Wire Line
 	6150 2100 6150 2200
 Connection ~ 6150 2200
+$Comp
+L eSim_NJF J1
+U 1 1 5D67621C
+P 5700 3300
+F 0 "J1" H 5600 3350 50  0000 R CNN
+F 1 "eSim_NJF" H 5650 3450 50  0000 R CNN
+F 2 "" H 5900 3400 29  0000 C CNN
+F 3 "" H 5700 3300 60  0000 C CNN
+	1    5700 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PWR_FLAG #FLG02
+U 1 1 5D676296
+P 5950 4100
+F 0 "#FLG02" H 5950 4175 50  0001 C CNN
+F 1 "PWR_FLAG" H 5950 4250 50  0000 C CNN
+F 2 "" H 5950 4100 50  0001 C CNN
+F 3 "" H 5950 4100 50  0001 C CNN
+	1    5950 4100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5950 4100 5950 4250
+Connection ~ 5950 4250
 $EndSCHEMATC

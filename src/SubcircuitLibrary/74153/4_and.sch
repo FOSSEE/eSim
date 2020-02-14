@@ -1,5 +1,4 @@
 EESchema Schematic File Version 2
-LIBS:4_and-rescue
 LIBS:texas
 LIBS:intel
 LIBS:audio
@@ -24,7 +23,6 @@ LIBS:eSim_PSpice
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
-LIBS:4_and-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -40,7 +38,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L 3_and-RESCUE-4_and X1
+L 3_and X1
 U 1 1 5C9A2915
 P 3700 3500
 F 0 "X1" H 4600 3800 60  0000 C CNN
@@ -138,14 +136,4 @@ F 3 "" H 6750 3350 60  0000 C CNN
 	5    6750 3350
 	-1   0    0    1   
 $EndComp
-Text Notes 3450 2650 0    60   ~ 12
-in1
-Text Notes 3450 2950 0    60   ~ 12
-in2
-Text Notes 3500 3300 0    60   ~ 12
-in3
-Text Notes 3500 3550 0    60   ~ 12
-in4
-Text Notes 6150 3350 0    60   ~ 12
-out
 $EndSCHEMATC

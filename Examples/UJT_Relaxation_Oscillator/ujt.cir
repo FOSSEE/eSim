@@ -1,0 +1,18 @@
+* /home/saurabh/Downloads/eSim-1.1.2/src/SubcircuitLibrary/ujt/ujt.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Aug 26 17:18:46 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R3  Net-_H1-Pad2_ Net-_H1-Pad1_ 1000k		
+H1  Net-_H1-Pad1_ Net-_H1-Pad2_ Net-_D1-Pad2_ Net-_B1-Pad1_ 1k		
+C1  Net-_B1-Pad1_ Net-_B1-Pad2_ 35p		
+R1  Net-_B1-Pad2_ Net-_R1-Pad2_ 38.15k		
+R2  Net-_R2-Pad1_ Net-_B1-Pad1_ 2.518k		
+U1  Net-_D1-Pad1_ Net-_R1-Pad2_ Net-_R2-Pad1_ PORT		
+B1  Net-_B1-Pad1_ Net-_B1-Pad2_ I=0.00028*V(5,7)+0.00575*V(5,7)*V(6)		
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+
+.end

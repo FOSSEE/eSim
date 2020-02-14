@@ -1,4 +1,4 @@
-update=06/01/19 12:36:09
+update=03/28/19 22:43:48
 version=1
 last_client=eeschema
 [general]
@@ -29,7 +29,7 @@ version=1
 NetIExt=net
 [eeschema]
 version=1
-LibDir=../../../kicadSchematicLibrary
+LibDir=
 [eeschema/libraries]
 LibName1=power
 LibName2=eSim_Analog

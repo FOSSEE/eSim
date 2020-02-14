@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:Integrator-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -37,7 +38,6 @@ LIBS:linear
 LIBS:regul
 LIBS:74xx
 LIBS:cmos4000
-LIBS:Integrator-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -64,7 +64,7 @@ F 3 "" H 5950 3200 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-Integrator R1
 U 1 1 56A9B635
 P 5100 3150
 F 0 "R1" H 5150 3280 50  0000 C CNN
@@ -75,7 +75,7 @@ F 3 "" V 5150 3200 30  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R2
+L R-RESCUE-Integrator R2
 U 1 1 56A9B674
 P 5400 3400
 F 0 "R2" H 5450 3530 50  0000 C CNN
@@ -86,7 +86,7 @@ F 3 "" V 5450 3450 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R3
+L R-RESCUE-Integrator R3
 U 1 1 56A9B6AE
 P 6850 3300
 F 0 "R3" H 6900 3430 50  0000 C CNN
@@ -173,7 +173,7 @@ Wire Wire Line
 Wire Wire Line
 	6650 2350 6650 3200
 $Comp
-L R R4
+L R-RESCUE-Integrator R4
 U 1 1 56B2EBCB
 P 6050 2400
 F 0 "R4" H 6100 2530 50  0000 C CNN

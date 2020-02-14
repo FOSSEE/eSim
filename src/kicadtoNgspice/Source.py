@@ -1,7 +1,6 @@
 import os
 from PyQt4 import QtGui
 from . import TrackWidget
-# from xml.etree import ElementTree as ET
 import json
 
 
@@ -13,7 +12,7 @@ class Source(QtGui.QWidget):
     def __init__(self, sourcelist, sourcelisttrack, clarg1):
         QtGui.QWidget.__init__(self)
         self.obj_track = TrackWidget.TrackWidget()
-        # Variable
+        # Variables
         self.count = 1
         self.clarg1 = clarg1
         self.start = 0
@@ -45,10 +44,10 @@ class Source(QtGui.QWidget):
         - Each line in sourcelist corresponds to a source
         - According to the source type modify the source and add it to the tab
         """
-        print("============================================================")
+        """print("============================================================")
         print("SOURCE LIST TRACK", sourcelisttrack)
         print("SOURCE LIST", sourcelist)
-        print("============================================================")
+        print("============================================================")"""
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
@@ -71,10 +70,8 @@ class Source(QtGui.QWidget):
 
         if sourcelist:
             for line in sourcelist:
-                # print "Voltage source line index: ",line[0]
                 print("SourceList line: ", line)
                 track_id = line[0]
-                # print "track_id is ",track_id
                 if line[2] == 'ac':
                     acbox = QtGui.QGroupBox()
                     acbox.setTitle(line[3])
@@ -372,7 +369,7 @@ class Source(QtGui.QWidget):
         else:
             print("No source is present in your circuit")
 
-        print("============================================================")
+        # print("============================================================")
         # This is used to keep the track of dynamically created widget
         self.obj_track.sourcelisttrack["ITEMS"] = sourcelisttrack
         self.obj_track.source_entry_var["ITEMS"] = self.entry_var

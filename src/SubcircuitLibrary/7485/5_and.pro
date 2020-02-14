@@ -1,4 +1,4 @@
-update=06/01/19 11:31:03
+update=03/26/19 18:50:27
 version=1
 last_client=eeschema
 [general]
@@ -29,7 +29,7 @@ version=1
 NetIExt=net
 [eeschema]
 version=1
-LibDir=../../../kicadSchematicLibrary
+LibDir=
 [eeschema/libraries]
 LibName1=cypress
 LibName2=siliconi

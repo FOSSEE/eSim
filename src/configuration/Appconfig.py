@@ -12,10 +12,9 @@
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
-#       CREATED: Tuesday 24 Feb 2015 
-#      REVISION: Wednesday 18 Dec 2019
+#       CREATED: Tuesday 24 February 2015
+#      REVISION: Friday 14 February 2020
 # =========================================================================
-
 
 from PyQt4 import QtGui
 import os
@@ -31,7 +30,7 @@ class Appconfig(QtGui.QWidget):
     This class also contains function for
     - Printing error.
     - Showing warnings.
-    - Dispalying information.
+    - Displaying information.
     """
 
     # Home directory
@@ -42,9 +41,9 @@ class Appconfig(QtGui.QWidget):
     # Current Subcircuit detail
     current_subcircuit = {"SubcircuitName": None}
     # Workspace detail
-    workspace_text = '''eSim stores your project in a folder called a \
-    eSim-Workspace. You can choose a different workspace folder to use\
-     for this session.'''
+    workspace_text = "eSim stores your project in a folder called "
+    workspace_text += "eSim-Workspace. You can choose a different "
+    workspace_text += "workspace folder to use for this session."
     procThread_list = []
     proc_dict = {}
     # holds the pids of all external windows corresponds to the current project
@@ -63,8 +62,23 @@ class Appconfig(QtGui.QWidget):
     # Try catch added, since eSim cannot be accessed under parser for Win10
     try:
         modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')
-    except BaseException:
-        print("Cannot access Modelica's map_json path --- .esim folder")
+    except BaseException as e:
+        print("===============================================")
+        print("Cannot access Modelica map file --- .esim folder")
+        print(str(e))
+        print("===============================================")
+
+    # Open file and read KiCad config path
+    try:
+        file = open('../supportFiles/kicad_config_path.txt', 'r')
+        kicad_path = file.read().rstrip()
+        file.close()
+    except BaseException as e:
+        kicad_path = None
+        print("===============================================")
+        print("Cannot access kicad path file --- supportFiles")
+        print(str(e))
+        print("===============================================")
 
     try:
         project_explorer = json.load(open(dictPath))
@@ -76,8 +90,8 @@ class Appconfig(QtGui.QWidget):
         super(Appconfig, self).__init__()
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = 'v1.1'
-        self._AUTHOR = 'Fahim'
+        self._VERSION = 'v2.0.0'
+        self._AUTHOR = 'Fahim, Rahul'
 
         # Application geometry setting
         self._app_xpos = 100

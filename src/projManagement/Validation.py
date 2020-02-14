@@ -1,5 +1,4 @@
 # =========================================================================
-#
 #          FILE: Validation.py
 #
 #         USAGE: ---
@@ -12,33 +11,22 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 12 February 2015
-#      REVISION:  ---
+#      REVISION: Friday 14 February 2020
 # =========================================================================
+
 import os
 import re
 import distutils.spawn
 
-"""
-This is Validation class use for validating Project.
-e.g if .proj is present in project directory
-or if new project name is already exist in workspace etc
-"""
-
 
 class Validation:
     """
-    Takes as input the path of the project and checks if
-    projName.proj file exists
-    projName is same as the folder selected
-
-    @params
-        :projDir    => contains the path of the project folder selected to open
-
-    @return
-        True        => If the folder contains the projName.proj file
-        False       => If the folder doesn't contain projName.proj file
+    This is Validation class use for validating Project.
+    e.g if .proj is present in project directory
+    or if new project name is already exist in workspace etc
     """
 
     def __init__(self):
@@ -46,7 +34,15 @@ class Validation:
 
     def validateOpenproj(self, projDir):
         """
-        This function validate Open Project Information.
+        Takes as input the path of the project and checks if
+        projName.proj file exists or not
+
+        @params
+            :projDir    => contains the path of the project folder selected to open
+
+        @return
+            True        => If the folder contains the projName.proj file
+            False       => If the folder doesn't contain projName.proj file
         """
         print("Function: Validating Open Project Information")
         projName = os.path.basename(str(projDir))
@@ -57,21 +53,17 @@ class Validation:
         else:
             return False
 
-    """
-    Validate new project created
-
-    @params
-        :projDir        => Contains path of the new projDir created
-
-    @return
-        :"CHECKEXIST"   => If smae project name folder exists
-        :"CHECKNAME"    => If space is there in name
-        :"VALID"        => If valid project name given
-    """
-
     def validateNewproj(self, projDir):
         """
-        This Project Validate New Project Information
+        Validate new project created
+
+        @params
+            :projDir        => Contains path of the new projDir created
+
+        @return
+            :"CHECKEXIST"   => If smae project name folder exists
+            :"CHECKNAME"    => If space is there in name
+            :"VALID"        => If valid project name given
         """
         print("Function: Validating New Project Information")
 
@@ -85,44 +77,36 @@ class Validation:
             else:
                 return "VALID"
 
-    """
-    Validate if projDir is set appropriately in the function calling file
-    and if Kicad components are present
-
-    @params
-        :projDir    => the path of the project directory, passed from
-                       the calling function
-
-    @return
-        True
-        False
-    """
-
     def validateKicad(self, projDir):
         """
-        This function validate if Kicad components are present
+        Validate if projDir is set appropriately in the function calling file
+        and if Kicad components are present
+
+        @params
+            :projDir    => the path of the project directory, passed from
+                           the calling function
+
+        @return
+            True
+            False
         """
-        print("FUnction : Validating for Kicad components")
+        print("Function : Validating for Kicad components")
         if projDir is None:
             return False
         else:
             return True
 
-    """
-    Validate if cir file present in the directory with the appropriate .cir
-    file name, same as the project directory base
-
-    @params
-        :projDir    => the path to the project diretory
-
-    @return
-        True
-        False
-    """
-
     def validateCir(self, projDir):
         """
-        This function checks if ".cir" file is present.
+        Validate if cir file present in the directory with the appropriate .cir
+        file name, same as the project directory base
+
+        @params
+            :projDir    => the path to the project diretory
+
+        @return
+            True
+            False
         """
         projName = os.path.basename(str(projDir))
         lookCir = os.path.join(str(projDir), projName + ".cir")

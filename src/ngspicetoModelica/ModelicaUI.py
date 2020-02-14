@@ -44,13 +44,11 @@ class OpenModelicaEditor(QtGui.QWidget):
         self.show()
 
     def browseFile(self):
-
         self.ngspiceNetlist = QtGui.QFileDialog.getOpenFileName(
             self, 'Open Ngspice file', BROWSE_LOCATION)
         self.FileEdit.setText(self.ngspiceNetlist)
 
     def callConverter(self):
-
         try:
             self.cmd1 = (
                 "python3 ../ngspicetoModelica/NgspicetoModelica.py " +
@@ -67,17 +65,18 @@ class OpenModelicaEditor(QtGui.QWidget):
                 stderr=STDOUT,
                 close_fds=True)
             error_code = convert_process.stdout.read()
+
             if not error_code:
                 self.msg = QtGui.QMessageBox()
                 self.msg.setText(
                     "Ngspice netlist successfully converted to OpenModelica" +
-                    "netlist")
+                    "netlist"
+                )
                 self.obj_appconfig.print_info(
                     "Ngspice netlist successfully converted to OpenModelica" +
                     "netlist"
                 )
                 self.msg.exec_()
-
             else:
                 self.err_msg = QtGui.QErrorMessage()
                 self.err_msg.showMessage(

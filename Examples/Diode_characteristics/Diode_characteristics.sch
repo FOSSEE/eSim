@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:Diode_characteristics-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -54,7 +55,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L DC v1
+L DC-RESCUE-Diode_characteristics v1
 U 1 1 562485DC
 P 4350 3150
 F 0 "v1" H 4150 3250 60  0000 C CNN
@@ -65,7 +66,7 @@ F 3 "" H 4350 3150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L D D1
+L D-RESCUE-Diode_characteristics D1
 U 1 1 5624867D
 P 5150 2500
 F 0 "D1" H 5150 2600 50  0000 C CNN
@@ -76,7 +77,7 @@ F 3 "" H 5150 2500 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-Diode_characteristics R1
 U 1 1 562486CA
 P 6900 2950
 F 0 "R1" H 6950 3080 50  0000 C CNN

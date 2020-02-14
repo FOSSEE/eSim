@@ -50,10 +50,11 @@ class UploadSub(QtGui.QWidget):
         if not valid:
             self.msg = QtGui.QErrorMessage(self)
             self.msg.showMessage(
-                "Content of file does not meet the required format.\
-                 Please ensure that file starts with **.subckt \
-                 " + create_subcircuit + "** and ends with **.ends \
-                 " + create_subcircuit + "**")
+                "Content of file does not meet the required format. " +
+                "Please ensure that file starts with **.subckt " +
+                create_subcircuit + " ** and ends with **.ends " +
+                create_subcircuit + " **"
+            )
             self.msg.setWindowTitle("Error Message")
             print("Invalid file format")
             return
@@ -80,8 +81,8 @@ class UploadSub(QtGui.QWidget):
             print("==========================")
             msg = QtGui.QErrorMessage(self)
             msg.showMessage(
-                "The project already exist. Please select  \
-                the different name or delete existing project")
+                "The project already exist. Please select "
+                "a different name or delete existing project")
             msg.setWindowTitle("Error Message")
 
         elif reply == "CHECKNAME":

@@ -14,13 +14,13 @@ Table of contents
     
    After downloading eSim, extract it using: 
   
-   $ unzip eSim.zip
+   $ unzip eSim-2.0.zip
 
    Now change directories in to the top-level source directory (where this INSTALL file can be found).
 
    To install eSim and other dependecies run the following command.
 
-   $ ./install-linux.sh --install
+   $ ./install-eSim.sh --install
 
    Above script will install eSim along with dependencies.
 
@@ -39,7 +39,7 @@ Table of contents
 
 2. eSim installation in Windows
 
-   After downloading eSim for Windows from esim.fossee.in , extract it.
+   After downloading eSim for Windows from esim.fossee.in , extract it. Disable the antivirus (if any).
 
    Now right click the `Setup.exe` and `run it as Administrator`. And then follow the instruction.
 

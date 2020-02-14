@@ -1,6 +1,5 @@
 from PyQt4 import QtGui
 import os
-# from xml.etree import ElementTree as ET
 import json
 from . import TrackWidget
 
@@ -12,13 +11,13 @@ class DeviceModel(QtGui.QWidget):
       transistor and jfet.
     - Same function as the subCircuit file, except for
       this takes different parameters in the if block
-    - - q   TRANSISTOR
-    - - d   DIODE
-    - - j   JFET
-    - - m   MOSFET
+        - q   TRANSISTOR
+        - d   DIODE
+        - j   JFET
+        - m   MOSFET
     - Other 2 functions same as the ones in subCircuit
-    - - trackLibrary
-    - - trackLibraryWithoutButton
+        - trackLibrary
+        - trackLibraryWithoutButton
     """
 
     def __init__(self, schematicInfo, clarg1):
@@ -62,14 +61,14 @@ class DeviceModel(QtGui.QWidget):
         # Set Layout
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
-        print("Reading Device model details from Schematic")
+        # print("Reading Device model details from Schematic")
 
         for eachline in schematicInfo:
             print("=========================================")
             print(eachline)
             words = eachline.split()
             if eachline[0] == 'q':
-                print("Device Model Transistor: ", words[0])
+                # print("Device Model Transistor: ", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 transbox = QtGui.QGroupBox()
                 transgrid = QtGui.QGridLayout()
@@ -85,8 +84,6 @@ class DeviceModel(QtGui.QWidget):
                 try:
                     for key in json_data["deviceModel"]:
                         if key == words[0]:
-                            # print "DEVICE MODEL MATCHING---",child.tag[0],\
-                            # child.tag[1],eachline[0],eachline[1]
                             try:
                                 if os.path.exists(
                                         json_data["deviceModel"][key][0]):
@@ -128,7 +125,7 @@ class DeviceModel(QtGui.QWidget):
 
                 self.grid.addWidget(transbox)
 
-                # Adding Device Details
+                # Adding Device Details #
 
                 # Increment row and widget count
                 self.row = self.row + 1
@@ -136,7 +133,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count + 1
 
             elif eachline[0] == 'd':
-                print("Device Model Diode:", words[0])
+                # print("Device Model Diode:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 diodebox = QtGui.QGroupBox()
                 diodegrid = QtGui.QGridLayout()
@@ -151,8 +148,6 @@ class DeviceModel(QtGui.QWidget):
                 try:
                     for key in json_data["deviceModel"]:
                         if key == words[0]:
-                            # print "DEVICE MODEL MATCHING---",child.tag[0],\
-                            # child.tag[1],eachline[0],eachline[1]
                             try:
                                 if os.path.exists(
                                         json_data["deviceModel"][key][0]):
@@ -193,7 +188,7 @@ class DeviceModel(QtGui.QWidget):
 
                 self.grid.addWidget(diodebox)
 
-                # Adding Device Details
+                # Adding Device Details #
 
                 # Increment row and widget count
                 self.row = self.row + 1
@@ -201,7 +196,7 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count + 1
 
             elif eachline[0] == 'j':
-                print("Device Model JFET:", words[0])
+                # print("Device Model JFET:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 jfetbox = QtGui.QGroupBox()
                 jfetgrid = QtGui.QGridLayout()
@@ -216,8 +211,6 @@ class DeviceModel(QtGui.QWidget):
                 try:
                     for key in json_data["deviceModel"]:
                         if key == words[0]:
-                            # print "DEVICE MODEL MATCHING---",child.tag[0],\
-                            # child.tag[1],eachline[0],eachline[1]
                             try:
                                 if os.path.exists(
                                         json_data["deviceModel"][key][0]):
@@ -258,7 +251,8 @@ class DeviceModel(QtGui.QWidget):
 
                 self.grid.addWidget(jfetbox)
 
-                # Adding Device Details
+                # Adding Device Details #
+
                 # Increment row and widget count
                 self.row = self.row + 1
                 self.devicemodel_dict_end[words[0]] = self.count
@@ -329,8 +323,6 @@ class DeviceModel(QtGui.QWidget):
                 try:
                     for key in json_data["deviceModel"]:
                         if key == words[0]:
-                            # print "DEVICE MODEL MATCHING---",child.tag[0],\
-                            # child.tag[1],eachline[0],eachline[1]
                             while i <= end:
                                 self.entry_var[i].setText(
                                     json_data["deviceModel"][key][i - beg])
@@ -367,7 +359,6 @@ class DeviceModel(QtGui.QWidget):
         """
         print("Calling Track Device Model Library funtion")
         sending_btn = self.sender()
-        # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
 
         self.libfile = str(
@@ -376,14 +367,12 @@ class DeviceModel(QtGui.QWidget):
                 "Open Library Directory",
                 "../deviceModelLibrary",
                 "*.lib"))
-        # print "Selected Library File :",self.libfile
 
         # Setting Library to Text Edit Line
         self.entry_var[self.widgetObjCount].setText(self.libfile)
         self.deviceName = self.deviceDetail[self.widgetObjCount]
 
         # Storing to track it during conversion
-
         if self.deviceName[0] == 'm':
             width = str(self.entry_var[self.widgetObjCount + 1].text())
             length = str(self.entry_var[self.widgetObjCount + 2].text())
@@ -406,19 +395,16 @@ class DeviceModel(QtGui.QWidget):
         This function is use to keep track of all Device Model widget
         """
         print("Calling Track Library function Without Button")
-        # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = iter_value
         print("self.widgetObjCount-----", self.widgetObjCount)
         self.libfile = path_value
         print("PATH VALUE", path_value)
-        # print "Selected Library File :",self.libfile
 
         # Setting Library to Text Edit Line
         self.entry_var[self.widgetObjCount].setText(self.libfile)
         self.deviceName = self.deviceDetail[self.widgetObjCount]
 
         # Storing to track it during conversion
-
         if self.deviceName[0] == 'm':
             width = str(self.entry_var[self.widgetObjCount + 1].text())
             length = str(self.entry_var[self.widgetObjCount + 2].text())

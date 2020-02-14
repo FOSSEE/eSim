@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:scr-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -182,7 +183,7 @@ F 3 "" H 3800 4350 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L dc v1
+L dc-RESCUE-scr v1
 U 1 1 565DBF58
 P 3600 3700
 F 0 "v1" H 3400 3800 60  0000 C CNN
@@ -193,7 +194,7 @@ F 3 "" H 3600 3700 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L dc v2
+L dc-RESCUE-scr v2
 U 1 1 565DC066
 P 5550 3000
 F 0 "v2" H 5350 3100 60  0000 C CNN
@@ -217,7 +218,7 @@ $EndComp
 Wire Wire Line
 	5950 2000 6650 2000
 $Comp
-L R R1
+L R-RESCUE-scr R1
 U 1 1 5666B019
 P 3550 2950
 F 0 "R1" H 3600 3080 50  0000 C CNN
@@ -228,7 +229,7 @@ F 3 "" V 3600 3000 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L R R2
+L R-RESCUE-scr R2
 U 1 1 5666B17A
 P 4200 5300
 F 0 "R2" H 4250 5430 50  0000 C CNN
