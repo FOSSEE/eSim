@@ -283,11 +283,13 @@ class plotWindow(QtGui.QMainWindow):
 
             if a[i] == len(self.obj_dataext.NBList):
                 QtGui.QMessageBox.about(
-                    self, "Warning!!", "One of the operands doesn't belong "
-                        "to the above list!!")
+                    self, "Warning!!", "One of the operands doesn't belong " +
+                    "to the above list!!"
+                )
                 self.warnning.setText(
                     "<font color='red'>To Err Is Human!<br>One of the " +
-                    "operands doesn't belong to the above list!!</font>")
+                    "operands doesn't belong to the above list!!</font>"
+                )
 
         if self.parts[1] == 'vs':
             if len(self.parts) > 3:

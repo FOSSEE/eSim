@@ -837,7 +837,7 @@ class Analysis(QtGui.QWidget):
                 print("Transient Analysis JSON Parse Error")
 
         return self.trbox
-    
+
     '''
     - Below 3 functions handle event for the combo box in transient group
     '''

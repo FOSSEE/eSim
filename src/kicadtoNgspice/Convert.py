@@ -638,5 +638,5 @@ class Convert:
         for child in libtree.iter():
             if child.tag == 'ref_model':
                 retVal = child.text
-                
+
         return retVal

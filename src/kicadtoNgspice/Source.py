@@ -47,7 +47,7 @@ class Source(QtGui.QWidget):
         """print("============================================================")
         print("SOURCE LIST TRACK", sourcelisttrack)
         print("SOURCE LIST", sourcelist)
-        print("============================================================")"""
+        print("===========================================================")"""
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)

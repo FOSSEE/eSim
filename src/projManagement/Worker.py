@@ -60,10 +60,10 @@ class WorkerThread(QtCore.QThread):
         and is called to check if project's schematic is open or not.
 
         @params
-        
+
         @return
             :self.my_workers
-        """        
+        """
         return self.my_workers
 
     def run(self):

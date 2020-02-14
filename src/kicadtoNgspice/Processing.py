@@ -91,7 +91,7 @@ class PrcocessNetlist:
         print("=============================================================")
         print("NETLIST", netlist)
         print("INFOLINE", infoline)
-        print("=============================================================")"""
+        print("===========================================================")"""
         return netlist, infoline
 
     def separateNetlistInfo(self, netlist):
@@ -116,7 +116,7 @@ class PrcocessNetlist:
         print("=============================================================")
         print("OPTIONINFO", optionInfo)
         print("SCHEMATICINFO", schematicInfo)
-        print("=============================================================")"""
+        print("===========================================================")"""
         return optionInfo, schematicInfo
 
     def insertSpecialSourceParam(self, schematicInfo, sourcelist):
@@ -220,7 +220,7 @@ class PrcocessNetlist:
         print("=============================================================")
         print("SCHEMATICINFO", schematicInfo)
         print("SOURCELIST", sourcelist)
-        print("=============================================================")"""
+        print("===========================================================")"""
         return schematicInfo, sourcelist
 
     def convertICintoBasicBlocks(

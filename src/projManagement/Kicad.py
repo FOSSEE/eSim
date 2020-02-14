@@ -50,7 +50,7 @@ class Kicad:
 
         @return
             True        => If the project's schematic is not open
-            False       => If the project's schematic is open        
+            False       => If the project's schematic is open
         """
         if self.obj_workThread:
             procList = self.obj_workThread.get_proc_threads()[:]

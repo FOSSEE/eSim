@@ -12,7 +12,7 @@
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
-#       CREATED: Tuesday 24 February 2015 
+#       CREATED: Tuesday 24 February 2015
 #      REVISION: Friday 14 February 2020
 # =========================================================================
 
@@ -45,9 +45,9 @@ class Application(QtGui.QMainWindow):
         # Calling __init__ of super class
         QtGui.QMainWindow.__init__(self, *args)
 
-        #Flag for mode of operation. Default is set to offline mode.
+        # Flag for mode of operation. Default is set to offline mode.
         self.online_flag = False
-                
+
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
         self.obj_Mainview = MainView()
@@ -345,44 +345,45 @@ class Application(QtGui.QMainWindow):
             # -----------------------------------------------------
             # fp-lib-table is not there than copy from supportFiles/
             if not os.path.exists(
-                self.obj_appconfig.kicad_path + "/fp-lib-table"):
-                shutil.copy('../supportFiles/fp-lib-table' ,
-                    self.obj_appconfig.kicad_path + "/")
+                self.obj_appconfig.kicad_path +
+                "/fp-lib-table"
+            ):
+                shutil.copy('../supportFiles/fp-lib-table',
+                            self.obj_appconfig.kicad_path + "/")
             # -----------------------------------------------------
             """checking online and offline both file's are avaliable.
             if yes than remove offline file."""
             if os.path.exists(self.obj_appconfig.kicad_path +
-                     "/fp-lib-table-offline") and os.path.exists(
-                self.obj_appconfig.kicad_path +
-                    "/fp-lib-table-online"):
-                     os.remove(self.obj_appconfig.kicad_path +
-                        "/fp-lib-table-offline")
+                              "/fp-lib-table-offline") and os.path.exists(
+                    self.obj_appconfig.kicad_path + "/fp-lib-table-online"):
+                os.remove(self.obj_appconfig.kicad_path +
+                          "/fp-lib-table-offline")
             # -----------------------------------------------------
             # This ladder is used for checking which file is present.
             if os.path.exists(self.obj_appconfig.kicad_path +
-                     "/fp-lib-table-offline"):
+                              "/fp-lib-table-offline"):
                 self.switchmode = QtGui.QAction(
                     QtGui.QIcon('../../images/online.png'),
-                    '<b>Go Offline</b>',self)
+                    '<b>Go Offline</b>', self)
                 self.online_flag = True
 
             elif os.path.exists(self.obj_appconfig.kicad_path +
-                    "/fp-lib-table-online"):
+                                "/fp-lib-table-online"):
                 self.switchmode = QtGui.QAction(
                     QtGui.QIcon('../../images/offline.png'),
-                    '<b>Go Online</b>',self)
+                    '<b>Go Online</b>', self)
                 self.online_flag = False
             else:
                 # if online and offline is not avaliable
-                shutil.copy('../supportFiles/fp-lib-table-online' ,
-                        self.obj_appconfig.kicad_path + "/")
+                shutil.copy('../supportFiles/fp-lib-table-online',
+                            self.obj_appconfig.kicad_path + "/")
                 if os.path.exists(self.obj_appconfig.kicad_path +
-                        "/fp-lib-table-online"):
+                                  "/fp-lib-table-online"):
                     self.switchmode = QtGui.QAction(
                         QtGui.QIcon('../../images/offline.png'),
-                        '<b>Go Online</b>',self)
+                        '<b>Go Online</b>', self)
                     self.online_flag = False
-            #----------------------------------------------------
+            # ----------------------------------------------------
         else:
             # if path is not found
             self.switchmode = QtGui.QAction(QtGui.QIcon(
@@ -393,11 +394,11 @@ class Application(QtGui.QMainWindow):
     def change_mode(self):
         """
         This function is used for changing mode of operation for KiCad. \
-        There are three modes of operation : 
-            - online 
+        There are three modes of operation :
+            - online
             - offline
             - disable
-        
+
         It will check whether kicad config path is present or not.
             - If path is available and none of the KiCad tools \
               (associated with eSim) are open, then depending on \
@@ -417,37 +418,48 @@ class Application(QtGui.QMainWindow):
                     if self.online_flag:
                         os.rename(
                             self.obj_appconfig.kicad_path + "/fp-lib-table",
-                            self.obj_appconfig.kicad_path + "/fp-lib-table-online"
+                            self.obj_appconfig.kicad_path +
+                            "/fp-lib-table-online"
                         )
                         os.rename(
-                            self.obj_appconfig.kicad_path + "/fp-lib-table-offline",
+                            self.obj_appconfig.kicad_path +
+                            "/fp-lib-table-offline",
                             self.obj_appconfig.kicad_path + "/fp-lib-table"
                         )
-                        self.switchmode.setIcon(QtGui.QIcon('../../images/offline.png'))
+                        self.switchmode.setIcon(
+                            QtGui.QIcon('../../images/offline.png')
+                        )
                         self.switchmode.setText('<b>Go Online</b>')
                         self.online_flag = False
                     else:
                         os.rename(
                             self.obj_appconfig.kicad_path + "/fp-lib-table",
-                            self.obj_appconfig.kicad_path + "/fp-lib-table-offline")
+                            self.obj_appconfig.kicad_path +
+                            "/fp-lib-table-offline"
+                        )
                         os.rename(
-                            self.obj_appconfig.kicad_path + "/fp-lib-table-online",
-                            self.obj_appconfig.kicad_path + "/fp-lib-table")
-                        self.switchmode.setIcon(QtGui.QIcon('../../images/online.png'))
+                            self.obj_appconfig.kicad_path +
+                            "/fp-lib-table-online",
+                            self.obj_appconfig.kicad_path + "/fp-lib-table"
+                        )
+                        self.switchmode.setIcon(
+                            QtGui.QIcon('../../images/online.png')
+                        )
                         self.switchmode.setText('<b>Go Offline</b>')
                         self.online_flag = True
                 else:
                     self.msg = QtGui.QErrorMessage()
-                    self.msg.showMessage('Please save and close all the Kicad'
-                        'Windows first, and then change the online-offline mode')
+                    self.msg.showMessage(
+                        'Please save and close all the Kicad ' +
+                        'windows first, then change the online-offline mode')
                     self.msg.setWindowTitle("Error Message")
-            except:
+            except BaseException:
                 self.validate_mode()
         else:
-            self.info_msg = QtGui.QMessageBox.critical(self,
-                            'Message',
-                            "Please make sure kicad_folder_file is " +
-                            "present in supportFiles folder.")
+            self.info_msg = QtGui.QMessageBox.critical(
+                self, 'Message', "Please make sure kicad_folder_file is " +
+                "present in supportFiles folder."
+            )
 
     def help_project(self):
         """
@@ -542,9 +554,9 @@ class Application(QtGui.QMainWindow):
         else:
             self.msg = QtGui.QErrorMessage(None)
             self.msg.showMessage('Error while opening NGHDL. ' +
-                'Please make sure it is installed')
+                                 'Please make sure it is installed')
             self.obj_appconfig.print_error('Error while opening NGHDL. ' +
-                'Please make sure it is installed')
+                                           'Please make sure it is installed')
             self.msg.setWindowTitle('NGHDL Error')
 
     def open_modelEditor(self):
@@ -610,7 +622,7 @@ class Application(QtGui.QMainWindow):
                         self.msg.setWindowTitle("Missing OpenModelica")
                         self.obj_appconfig.print_info(self.msgContent)
                         self.msg.exec_()
-                
+
                 except Exception as e:
                     self.msg = QtGui.QErrorMessage()
                     self.msg.showMessage(

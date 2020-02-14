@@ -56,7 +56,7 @@ class DockArea(QtGui.QMainWindow):
     def createTestEditor(self):
         """This function create widget for Library Editor"""
         global count
-                
+
         self.testWidget = QtGui.QWidget()
         self.testArea = QtGui.QTextEdit()
         self.testLayout = QtGui.QVBoxLayout()
@@ -148,7 +148,7 @@ class DockArea(QtGui.QMainWindow):
         dock['NgSpice-' + str(count)].setVisible(True)
         dock['NgSpice-' + str(count)].setFocus()
         dock['NgSpice-' + str(count)].raise_()
-        
+
         temp = self.obj_appconfig.current_project['ProjectName']
         if temp:
             self.obj_appconfig.dock_dict[temp].append(

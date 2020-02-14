@@ -38,7 +38,7 @@ class Validation:
         projName.proj file exists or not
 
         @params
-            :projDir    => contains the path of the project folder selected to open
+            :projDir    => contains the path of the project selected to open
 
         @return
             True        => If the folder contains the projName.proj file
