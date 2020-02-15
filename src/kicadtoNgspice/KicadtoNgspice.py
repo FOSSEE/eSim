@@ -121,18 +121,22 @@ class MainWindow(QtGui.QWidget):
         if unknownModelList:
             print("Unknown Model List is : ", unknownModelList)
             self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Unknown Models")
             self.content = "Your schematic contain unknown model " + \
                 ', '.join(unknownModelList)
             self.msg.showMessage(self.content)
-            self.msg.setWindowTitle("Unknown Models")
+            self.msg.exec_()
 
         elif multipleModelList:
             self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Multiple Models")
             self.mcontent = "Look like you have duplicate model in \
             modelParamXML directory " + \
                 ', '.join(multipleModelList[0])
             self.msg.showMessage(self.mcontent)
-            self.msg.setWindowTitle("Multiple Models")
+            self.msg.exec_()
 
         else:
             self.createMainWindow()

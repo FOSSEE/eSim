@@ -156,17 +156,19 @@ class SubcircuitTab(QtGui.QWidget):
             self.obj_trac.subcircuitTrack[self.subName] = self.subfile
         elif self.reply == "PORT":
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a Subcircuit with correct number of ports.")
-            self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.exec_()
         elif self.reply == "DIREC":
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a valid Subcircuit directory "
                 "(Containing '.sub' file).")
-            self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.exec_()
 
     def trackSubcircuitWithoutButton(self, iter_value, path_value):
         """
@@ -189,14 +191,16 @@ class SubcircuitTab(QtGui.QWidget):
             self.obj_trac.subcircuitTrack[self.subName] = self.subfile
         elif self.reply == "PORT":
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a Subcircuit with correct number of ports.")
-            self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.exec_()
         elif self.reply == "DIREC":
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a valid Subcircuit directory "
                 "(Containing '.sub' file).")
-            self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.exec_()

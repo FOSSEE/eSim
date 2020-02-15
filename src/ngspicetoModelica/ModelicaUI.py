@@ -79,16 +79,20 @@ class OpenModelicaEditor(QtGui.QWidget):
                 self.msg.exec_()
             else:
                 self.err_msg = QtGui.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle(
+                    "Ngspice to Modelica conversion error")
                 self.err_msg.showMessage(
                     'Unable to convert NgSpice netlist to Modelica netlist.' +
                     'Check the netlist :' +
                     error_code)
-                self.err_msg.setWindowTitle(
-                    "Ngspice to Modelica conversion error")
+                self.err_msg.exec_()
                 self.obj_appconfig.print_error(error_code)
 
         except Exception as e:
             self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Ngspice to Modelica conversion error")
             self.msg.showMessage(
                 'Unable to convert NgSpice netlist to Modelica netlist.' +
                 'Check the netlist :' +

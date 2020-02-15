@@ -91,14 +91,16 @@ class Kicad:
             self.obj_workThread.start()
 
         else:
-            self.msg = QtGui.QErrorMessage(None)
+            self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'Please select the project first. You can either ' +
                 'create new project or open existing project')
+            self.msg.exec_()
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
                 'create new project or open existing project')
-            self.msg.setWindowTitle("Error Message")
 
     '''
     # Commenting as it is no longer needed as PCB and Layout will open from
@@ -127,13 +129,15 @@ class Kicad:
             self.obj_workThread.start()
 
         else:
-            self.msg = QtGui.QErrorMessage(None)
+            self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
             + 'either create new project or open existing project')
+            self.msg.exec_()
             self.obj_appconfig.print_warning('Please select the project'
             + 'first. You can either create new project or open existing'
             + 'project')
-            self.msg.setWindowTitle("Error Message")
 
     def openLayout(self):
         """
@@ -158,14 +162,15 @@ class Kicad:
             self.obj_workThread.start()
 
         else:
-            self.msg = QtGui.QErrorMessage(None)
+            self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
             + 'either create new project or open existing project')
+            self.msg.exec_()
             self.obj_appconfig.print_warning('Please select the project'
             + 'first. You can either create new project or open existing'
             + 'project')
-            self.msg.setWindowTitle("Error Message")
-
     '''
 
     def openKicadToNgspice(self):
@@ -204,21 +209,25 @@ class Kicad:
                 self.obj_dockarea.kicadToNgspiceEditor(var)
 
             else:
-                self.msg = QtGui.QErrorMessage(None)
+                self.msg = QtGui.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
                     'The project does not contain any Kicad netlist file ' +
                     'for conversion.')
                 self.obj_appconfig.print_error(
                     'The project does not contain any Kicad netlist file ' +
                     'for conversion.')
-                self.msg.setWindowTitle("Error Message")
+                self.msg.exec_()
 
         else:
-            self.msg = QtGui.QErrorMessage(None)
+            self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'Please select the project first. You can either ' +
                 'create new project or open existing project')
+            self.msg.exec_()
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
                 'create new project or open existing project')
-            self.msg.setWindowTitle("Error Message")

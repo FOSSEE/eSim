@@ -667,9 +667,11 @@ class DataExtraction:
         except Exception as e:
             print("Exception Message : ", str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
-            self.msg = QtGui.QErrorMessage(None)
+            self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Unable to open plot data files.')
-            self.msg.setWindowTitle("Error Message:openFile")
+            self.msg.exec_()
 
         try:
             for l in alli[3].split(" "):
@@ -680,9 +682,11 @@ class DataExtraction:
         except Exception as e:
             print("Exception Message : ", str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
-            self.msg = QtGui.QErrorMessage(None)
-            self.msg.showMessage('Error in Analysis File.')
-            self.msg.setWindowTitle("Error Message:openFile")
+            self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage('Unable to read Analysis File.')
+            self.msg.exec_()
 
         d = self.numberFinder(fpath)
         d1 = int(d[0] + 1)

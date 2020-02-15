@@ -83,13 +83,17 @@ class NewProjectInfo(QtGui.QWidget):
                 self.projFile = os.path.join(
                     self.projDir, self.projName + ".proj")
                 f = open(self.projFile, "w")
+
             except BaseException:
                 self.msg = QtGui.QErrorMessage(self)
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
                     'Unable to create project. Please make sure you have ' +
                     'write permission on ' + self.workspace
                 )
-                self.msg.setWindowTitle("Error Message")
+                self.msg.exec_()
+
             f.write("schematicFile " + self.projName + ".sch\n")
             f.close()
 
@@ -112,23 +116,29 @@ class NewProjectInfo(QtGui.QWidget):
 
         elif self.reply == "CHECKEXIST":
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'The project "' + self.projName +
                 '" already exist.Please select the different name or delete' +
                 ' existing project'
             )
-            self.msg.setWindowTitle("Error Message")
+            self.msg.exec_()
 
         elif self.reply == "CHECKNAME":
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'The project name should not contain space between them')
-            self.msg.setWindowTitle("Error Message")
+            self.msg.exec_()
 
         elif self.reply == "NONE":
             self.msg = QtGui.QErrorMessage(self)
-            self.msg.showMessage('The project name cannot be empty')
+            self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage('The project name cannot be empty')
+            self.msg.exec_()
 
     def cancelProject(self):
         self.close()

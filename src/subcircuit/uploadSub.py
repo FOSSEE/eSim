@@ -41,21 +41,25 @@ class UploadSub(QtGui.QWidget):
 
         if ext != '.sub':
             self.msg = QtGui.QErrorMessage(self)
-            self.msg.showMessage("Please ensure that filename ends with .sub")
+            self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage("Please ensure that filename ends with .sub")
+            self.msg.exec_()
             print("Invalid filename")
             return
 
         valid = self.obj_validation.validateSubcir(editfile, create_subcircuit)
         if not valid:
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Content of file does not meet the required format. " +
                 "Please ensure that file starts with **.subckt " +
                 create_subcircuit + " ** and ends with **.ends " +
                 create_subcircuit + " **"
             )
-            self.msg.setWindowTitle("Error Message")
+            self.msg.exec_()
             print("Invalid file format")
             return
 
@@ -80,15 +84,19 @@ class UploadSub(QtGui.QWidget):
             print("Project name already exists.")
             print("==========================")
             msg = QtGui.QErrorMessage(self)
+            msg.setModal(True)
+            msg.setWindowTitle("Error Message")
             msg.showMessage(
                 "The project already exist. Please select "
                 "a different name or delete existing project")
-            msg.setWindowTitle("Error Message")
+            msg.exec_()
 
         elif reply == "CHECKNAME":
             print("Name can not contain space between them")
             print("===========================")
             msg = QtGui.QErrorMessage(self)
+            msg.setModal(True)
+            msg.setWindowTitle("Error Message")
             msg.showMessage(
                 'The project name should not contain space between them')
-            msg.setWindowTitle("Error Message")
+            msg.exec_()

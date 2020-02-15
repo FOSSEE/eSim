@@ -585,10 +585,11 @@ class Convert:
         if len(self.obj_track.subcircuitList) != len(
                 self.obj_track.subcircuitTrack):
             self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Conversion failed. Please add all Subcircuits.")
-            self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.exec_()
             raise Exception('All subcircuit directories need to be specified.')
         elif not subList:
             print("No Subcircuit Added in the schematic")

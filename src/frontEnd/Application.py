@@ -449,10 +449,13 @@ class Application(QtGui.QMainWindow):
                         self.online_flag = True
                 else:
                     self.msg = QtGui.QErrorMessage()
+                    self.msg.setModal(True)
+                    self.msg.setWindowTitle("Error Message")
                     self.msg.showMessage(
                         'Please save and close all the Kicad ' +
                         'windows first, then change the online-offline mode')
-                    self.msg.setWindowTitle("Error Message")
+                    self.msg.exec_()
+
             except BaseException:
                 self.validate_mode()
         else:
@@ -504,21 +507,26 @@ class Application(QtGui.QMainWindow):
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
-                self.msg = QtGui.QErrorMessage(None)
+                self.msg = QtGui.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
                     'Error while opening python plotting Editor.'
                     ' Please look at console for more details.'
                 )
+                self.msg.exec_()
                 print("Exception Message:", str(e))
                 self.obj_appconfig.print_error('Exception Message : ' + str(e))
-                self.msg.setWindowTitle("Error Message")
+
         else:
             self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.setWindowTitle("Error Message")
+            self.msg.exec_()
 
     def open_subcircuit(self):
         """
@@ -552,12 +560,14 @@ class Application(QtGui.QMainWindow):
             self.obj_workThread = Worker.WorkerThread(self.cmd)
             self.obj_workThread.start()
         else:
-            self.msg = QtGui.QErrorMessage(None)
+            self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle('NGHDL Error')
             self.msg.showMessage('Error while opening NGHDL. ' +
                                  'Please make sure it is installed')
             self.obj_appconfig.print_error('Error while opening NGHDL. ' +
                                            'Please make sure it is installed')
-            self.msg.setWindowTitle('NGHDL Error')
+            self.msg.exec_()
 
     def open_modelEditor(self):
         """
@@ -625,11 +635,13 @@ class Application(QtGui.QMainWindow):
 
                 except Exception as e:
                     self.msg = QtGui.QErrorMessage()
+                    self.msg.setModal(True)
+                    self.msg.setWindowTitle(
+                        "Ngspice to Modelica conversion error")
                     self.msg.showMessage(
                         'Unable to convert NgSpice netlist to\
                             Modelica netlist :'+str(e))
-                    self.msg.setWindowTitle(
-                        "Ngspice to Modelica conversion error")
+                    self.msg.exec_()
                     self.obj_appconfig.print_error(str(e))
                 """
 
@@ -637,18 +649,22 @@ class Application(QtGui.QMainWindow):
 
             else:
                 self.msg = QtGui.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Missing Ngspice netlist")
                 self.msg.showMessage(
                     'Current project does not contain any Ngspice file. ' +
                     'Please create Ngspice file with extension .cir.out'
                 )
-                self.msg.setWindowTitle("Missing Ngspice netlist")
+                self.msg.exec_()
         else:
             self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'Please select the project first. ' +
                 'You can either create a new project or open existing project'
             )
-            self.msg.setWindowTitle("Error Message")
+            self.exec_()
 
     def open_OMoptim(self):
         """

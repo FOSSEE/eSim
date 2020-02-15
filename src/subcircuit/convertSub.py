@@ -40,16 +40,20 @@ class convertSub(QtGui.QWidget):
                 var2 = "sub"
                 self.obj_dockarea.kicadToNgspiceEditor(var1, var2)
             else:
-                self.msg = QtGui.QErrorMessage(None)
+                self.msg = QtGui.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
                     'The subcircuit does not contain any Kicad netlist file' +
                     ' for conversion.'
                 )
-                self.msg.setWindowTitle("Error Message")
+                self.msg.exec_()
         else:
-            self.msg = QtGui.QErrorMessage(None)
+            self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'Please select the subcircuit first. You can either create ' +
                 'new subcircuit or open existing subcircuit'
             )
-            self.msg.setWindowTitle("Error Message")
+            self.msg.exec_()

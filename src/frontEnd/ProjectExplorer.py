@@ -246,7 +246,7 @@ class ProjectExplorer(QtGui.QWidget):
         )
         if ok and newBaseFileName:
             print(newBaseFileName)
-            print("=================")
+            print("==================")
             newBaseFileName = str(newBaseFileName)
 
             i = -1
@@ -264,19 +264,23 @@ class ProjectExplorer(QtGui.QWidget):
             newBaseFileName = str(newBaseFileName).rstrip().lstrip()
             projDir = os.path.join(self.workspace, str(newBaseFileName))
 
-            if newBaseFileName == "":
-                print("Project name can not be empty")
+            if not newBaseFileName.strip():
+                print("Project name cannot be empty")
                 print("==================")
                 msg = QtGui.QErrorMessage(self)
-                msg.showMessage('The project name cannot be empty')
+                msg.setModal(True)
                 msg.setWindowTitle("Error Message")
+                msg.showMessage('The project name cannot be empty')
+                msg.exec_()
 
             elif self.baseFileName == newBaseFileName:
                 print("Project name has to be different")
                 print("==================")
                 msg = QtGui.QErrorMessage(self)
-                msg.showMessage('The project name has to be different')
+                msg.setModal(True)
                 msg.setWindowTitle("Error Message")
+                msg.showMessage('The project name has to be different')
+                msg.exec_()
 
             else:
                 reply = self.obj_validation.validateNewproj(str(projDir))
@@ -323,19 +327,23 @@ class ProjectExplorer(QtGui.QWidget):
                     print("Project name already exists.")
                     print("==========================")
                     msg = QtGui.QErrorMessage(self)
+                    msg.setModal(True)
+                    msg.setWindowTitle("Error Message")
                     msg.showMessage(
                         'The project "' + newBaseFileName +
                         '" already exist. Please select a different name or' +
                         ' delete existing project'
                     )
-                    msg.setWindowTitle("Error Message")
+                    msg.exec_()
 
                 elif reply == "CHECKNAME":
                     print("Name can not contain space between them")
                     print("===========================")
                     msg = QtGui.QErrorMessage(self)
+                    msg.setModal(True)
+                    msg.setWindowTitle("Error Message")
                     msg.showMessage(
                         'The project name should not ' +
                         'contain space between them'
                     )
-                    msg.setWindowTitle("Error Message")
+                    msg.exec_()
