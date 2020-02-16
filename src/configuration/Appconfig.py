@@ -63,10 +63,8 @@ class Appconfig(QtGui.QWidget):
     try:
         modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')
     except BaseException as e:
-        print("===============================================")
         print("Cannot access Modelica map file --- .esim folder")
         print(str(e))
-        print("===============================================")
 
     # Open file and read KiCad config path
     try:
@@ -75,10 +73,7 @@ class Appconfig(QtGui.QWidget):
         file.close()
     except BaseException as e:
         kicad_path = None
-        print("===============================================")
-        print("Cannot access kicad path file --- supportFiles")
         print(str(e))
-        print("===============================================")
 
     try:
         project_explorer = json.load(open(dictPath))
