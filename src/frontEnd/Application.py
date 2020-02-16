@@ -103,6 +103,13 @@ class Application(QtGui.QMainWindow):
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
 
+        self.wrkspce = QtGui.QAction(
+            QtGui.QIcon('../../images/workspace.ico'),
+            '<b>Change Workspace</b>', self
+        )
+        self.wrkspce.setShortcut('Ctrl+W')
+        self.wrkspce.triggered.connect(self.change_workspace)
+
         self.switchmode = None
         self.validate_mode()
         if self.online_flag == True:
@@ -135,6 +142,7 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
         self.topToolbar.addAction(self.closeproj)
+        self.topToolbar.addAction(self.wrkspce)
         self.topToolbar.addAction(self.switchmode)
         self.topToolbar.addAction(self.helpfile)
 
@@ -331,6 +339,15 @@ class Application(QtGui.QMainWindow):
                 'Close', 'Current project ' +
                 os.path.basename(current_project) + ' is Closed.'
             )
+
+    def change_workspace(self):
+        """
+        This function call changes Workspace
+        """
+        print("Function : Change Workspace")
+        self.obj_workspace.returnWhetherClickedOrNot(self)
+        self.hide()
+        self.obj_workspace.show()
 
     def validate_mode(self):
         """
@@ -789,8 +806,21 @@ def main(args):
     appView = Application()
     appView.splash = splash
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
-    appView.hide()
-    appView.obj_workspace.show()
+
+    try:
+        file = open(os.path.join(
+            os.path.expanduser("~"),".esim/workspace.txt"), 'r'
+        )
+        work = int(file.read(1))
+        file.close()
+    except IOError:
+        work = 0
+    if work is not 0:
+        appView.obj_workspace.defaultWorkspace()
+    else:
+        appView.hide()
+        appView.obj_workspace.show()
+
     sys.exit(app.exec_())
 
 

@@ -63,7 +63,7 @@ class OpenProjectInfo(QtGui.QWidget):
             self.obj_Appconfig.project_explorer[dirs] = filelist
             json.dump(
                 self.obj_Appconfig.project_explorer, open(
-                    self.obj_Appconfig.dictPath, 'w'))
+                    self.obj_Appconfig.dictPath["path"], 'w'))
             self.obj_Appconfig.print_info('Open Project called')
             self.obj_Appconfig.print_info('Current Project is ' + self.projDir)
             return dirs, filelist

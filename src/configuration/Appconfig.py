@@ -34,7 +34,16 @@ class Appconfig(QtGui.QWidget):
     """
 
     # Home directory
-    home = os.path.join(os.path.expanduser("~"), "eSim-Workspace")
+    try:
+        file = open(os.path.join(
+        	os.path.expanduser("~"), ".esim/workspace.txt"), 'r'
+        )
+        workspace_check, home = file.readline().split(' ', 1)
+        file.close()
+    except IOError:
+        home = os.path.join(os.path.expanduser("~"), "eSim-Workspace")
+        workspace_check = 0
+
     default_workspace = {"workspace": home}
     # Current Project detail
     current_project = {"ProjectName": None}
@@ -44,12 +53,15 @@ class Appconfig(QtGui.QWidget):
     workspace_text = "eSim stores your project in a folder called "
     workspace_text += "eSim-Workspace. You can choose a different "
     workspace_text += "workspace folder to use for this session."
+    
     procThread_list = []
-    proc_dict = {}
-    # holds the pids of all external windows corresponds to the current project
+    proc_dict = {}  # hold pids of all external windows of the current project
     dock_dict = {}  # holds all dockwidgets
-    dictPath = os.path.join(os.path.expanduser("~"), ".projectExplorer.txt")
-    noteArea = {}
+    dictPath = {"path": os.path.join(
+        default_workspace["workspace"], ".projectExplorer.txt")
+    }
+
+    noteArea = {"Note" : []}
 
     parser_esim = SafeConfigParser()
     parser_esim.read(
@@ -76,7 +88,7 @@ class Appconfig(QtGui.QWidget):
         print(str(e))
 
     try:
-        project_explorer = json.load(open(dictPath))
+        project_explorer = json.load(open(dictPath["path"]))
     except BaseException:
         project_explorer = {}
     process_obj = []

@@ -200,7 +200,7 @@ class ProjectExplorer(QtGui.QWidget):
 
         del self.obj_appconfig.project_explorer[str(self.filePath)]
         json.dump(self.obj_appconfig.project_explorer,
-                  open(self.obj_appconfig.dictPath, 'w'))
+                  open(self.obj_appconfig.dictPath["path"], 'w'))
 
     def refreshProject(self):
         """
@@ -224,7 +224,7 @@ class ProjectExplorer(QtGui.QWidget):
 
         self.obj_appconfig.project_explorer[self.filePath] = filelistnew
         json.dump(self.obj_appconfig.project_explorer,
-                  open(self.obj_appconfig.dictPath, 'w'))
+                  open(self.obj_appconfig.dictPath["path"], 'w'))
 
     def renameProject(self):
         """
@@ -246,7 +246,7 @@ class ProjectExplorer(QtGui.QWidget):
         )
         if ok and newBaseFileName:
             print(newBaseFileName)
-            print("==================")
+            print("=================")
             newBaseFileName = str(newBaseFileName)
 
             i = -1
@@ -314,7 +314,7 @@ class ProjectExplorer(QtGui.QWidget):
 
                     # save project_explorer dictionary on disk
                     json.dump(self.obj_appconfig.project_explorer, open(
-                        self.obj_appconfig.dictPath, 'w'))
+                        self.obj_appconfig.dictPath["path"], 'w'))
 
                     # recreate project explorer tree
                     self.treewidget.clear()

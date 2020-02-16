@@ -111,7 +111,7 @@ class NewProjectInfo(QtGui.QWidget):
 
             json.dump(
                 self.obj_appconfig.project_explorer, open(
-                    self.obj_appconfig.dictPath, 'w'))
+                    self.obj_appconfig.dictPath["path"], 'w'))
             return self.projDir, newprojlist
 
         elif self.reply == "CHECKEXIST":
