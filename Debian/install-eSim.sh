@@ -40,10 +40,10 @@ function createConfigFile
     echo "[eSim]" >> $config_dir/$config_file
     echo "eSim_HOME = $eSim_Home" >> $config_dir/$config_file
     echo "LICENSE = %(eSim_HOME)s/LICENSE" >> $config_dir/$config_file
-    echo "KicadLib = %(eSim_HOME)s/kicadSchematicLibrary" >> $config_dir/$config_file
+    echo "KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz" >> $config_dir/$config_file
     echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
-    echo "MODELICA_MAP_JSON = %(eSim_HOME)s/src/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
+    echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
     
 }
 
@@ -99,20 +99,6 @@ function installDependency
         exit 1
     fi
 
-    echo "Installing PyQt4..........................."
-    sudo apt-get install -y python3-pyqt4
-    if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"PyQt4\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
-    
-    echo "Installing Matplotlib......................"
-    sudo apt-get install -y python3-matplotlib
-    if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"Matplotlib\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
-
     echo "Installing KiCad..........................."
     sudo apt install -y --no-install-recommends kicad
     if [ $? -ne 0 ]; then
@@ -134,15 +120,15 @@ function copyKicadLibrary
     fi
 
     # Dump KiCad config path
-    echo "$HOME/.config/kicad" >> $eSim_Home/src/supportFiles/kicad_config_path.txt
+    echo "$HOME/.config/kicad" > $eSim_Home/library/supportFiles/kicad_config_path.txt
 
     #Copy fp-lib-table for switching modes
-    cp -r src/supportFiles/fp-lib-table ~/.config/kicad/
-    cp -r src/supportFiles/fp-lib-table-online ~/.config/kicad/
+    cp -r library/supportFiles/fp-lib-table ~/.config/kicad/
+    cp -r library/supportFiles/fp-lib-table-online ~/.config/kicad/
     echo "fp-lib-table copied in the directory"
 
     #Extract custom KiCad Library
-    tar -xJf kicadLibrary.tar.xz
+    tar -xJf library/kicadLibrary.tar.xz
 
     #Copy KiCad libraries
     echo "Copying KiCad libraries...................."
@@ -177,17 +163,21 @@ function copyKicadLibrary
 
 
 function createDesktopStartScript
-{
-    
-    # Generating new esim-start.sh
-    echo "#!/bin/bash" > esim-start.sh
-    echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
-    echo "python3 Application.py" >> esim-start.sh
+{    
+	# Generating new esim-start.sh
+    echo '#!/bin/bash' > esim-start.sh
+    echo "cd $eSim_Home" >> esim-start.sh
+    echo "./eSim" >> esim-start.sh
     
     # Make it executable
     sudo chmod 755 esim-start.sh
     # Copy esim start script
     sudo cp -vp esim-start.sh /usr/bin/esim
+    # Remove local copy of esim start script
+    rm esim-start.sh
+
+	# Make eSim executable
+    sudo chmod 755 eSim
 
     # Generating esim.desktop file
     echo "[Desktop Entry]" > esim.desktop
@@ -198,7 +188,7 @@ function createDesktopStartScript
     echo "GenericName=eSim" >> esim.desktop
     echo "Keywords=eda-tools" >> esim.desktop
     echo "Exec=esim %u" >> esim.desktop
-    echo "Terminal=false" >> esim.desktop
+    echo "Terminal=true" >> esim.desktop
     echo "X-MultipleArgs=false" >> esim.desktop
     echo "Type=Application" >> esim.desktop
     getIcon="$config_dir/logo.png"
@@ -304,18 +294,18 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure ? As it will remove complete eSim including your subcircuit and model library packages(y/n):"
+    echo -n "Are you sure? It will remove complete eSim including KiCad, Ngspice and NGHDL packages(y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
-        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop esim-start.sh esim.desktop /usr/bin/esim
+        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop esim.desktop /usr/bin/esim
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad
         sudo rm -rf /usr/share/kicad
         sudo rm -rf $HOME/.config/kicad
-        rm -f $eSim_Home/src/supportFiles/kicad_config_path.txt 
+        rm -f $eSim_Home/library/supportFiles/kicad_config_path.txt 
         echo "Removing NGHDL..........................."
-        rm -rf src/modelParamXML/Nghdl/*
+        rm -rf library/modelParamXML/Nghdl/*
         cd nghdl/
         if [ $? -eq 0 ];then
     	    ./install-nghdl.sh --uninstall
