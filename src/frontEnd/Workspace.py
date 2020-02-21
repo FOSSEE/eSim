@@ -64,7 +64,7 @@ class Workspace(QtGui.QWidget):
         self.cancelbtn = QtGui.QPushButton('Cancel')
         self.cancelbtn.clicked.connect(self.defaultWorkspace)
 
-        #Checkbox
+        # Checkbox
         self.chkbox = QtGui.QCheckBox('Set Default', self)
         self.chkbox.setCheckState(int(self.obj_appconfig.workspace_check))
 
@@ -82,7 +82,7 @@ class Workspace(QtGui.QWidget):
         self.setWindowTitle("eSim")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.note.setReadOnly(True)
-        self.setWindowIcon(QtGui.QIcon('../../images/logo.png'))
+        self.setWindowIcon(QtGui.QIcon('images/logo.png'))
         self.setLayout(self.grid)
 
     def defaultWorkspace(self):
@@ -121,7 +121,8 @@ class Workspace(QtGui.QWidget):
         file = open(os.path.join(
             os.path.expanduser("~"), ".esim/workspace.txt"), 'w'
         )
-        file.writelines(str(self.obj_appconfig.workspace_check) +
+        file.writelines(
+            str(self.obj_appconfig.workspace_check) +
             " " + self.workspace_loc.text()
         )
         file.close()
@@ -148,10 +149,10 @@ class Workspace(QtGui.QWidget):
             self.obj_appconfig.project_explorer = json.load(
                 open(self.obj_appconfig.dictPath["path"])
             )
-        except:
+        except BaseException:
             self.obj_appconfig.project_explorer = {}
 
-        Appconfig.project_explorer = self.obj_appconfig.project_explorer        
+        Appconfig.project_explorer = self.obj_appconfig.project_explorer
 
         var_appView.obj_Mainview.obj_projectExplorer.treewidget.clear()
         for parent, children in self.obj_appconfig.project_explorer.items():

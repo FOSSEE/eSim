@@ -31,7 +31,7 @@ class NewSub(QtGui.QWidget):
         # Checking if Workspace already exist or not
         self.schematic_path = (
             os.path.join(
-                os.path.abspath('..'),
+                os.path.abspath('library'),
                 'SubcircuitLibrary',
                 self.create_schematic))
 

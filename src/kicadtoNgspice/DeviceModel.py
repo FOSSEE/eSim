@@ -363,9 +363,8 @@ class DeviceModel(QtGui.QWidget):
 
         self.libfile = str(
             QtGui.QFileDialog.getOpenFileName(
-                self,
-                "Open Library Directory",
-                "../deviceModelLibrary",
+                self, "Open Library Directory",
+                "library/deviceModelLibrary",
                 "*.lib"))
 
         # Setting Library to Text Edit Line

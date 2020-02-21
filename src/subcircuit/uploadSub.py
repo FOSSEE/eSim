@@ -7,9 +7,9 @@ import shutil
 
 class UploadSub(QtGui.QWidget):
     """
-    This class contain function for ulaoding subcircuits
-    in Subcircuit library present in src folder.
-        A folder is created in src/SubcircuitLibrary
+    This class contain function for uploading subcircuits
+    in SubcircuitLibrary present in src folder.
+    A folder is created in library/SubcircuitLibrary
     and desired file is moved to that folder.
     """
 
@@ -64,7 +64,9 @@ class UploadSub(QtGui.QWidget):
             return
 
         subcircuit_path = os.path.join(
-            os.path.abspath('..'), 'SubcircuitLibrary', create_subcircuit)
+            os.path.abspath('library'),
+            'SubcircuitLibrary', create_subcircuit
+        )
 
         reply = self.obj_validation.validateNewproj(subcircuit_path)
 

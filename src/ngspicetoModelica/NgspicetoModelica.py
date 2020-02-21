@@ -1,8 +1,6 @@
-import sys
 import os
 import re
 import json
-from string import maketrans
 
 
 class NgMoConverter:
@@ -31,10 +29,9 @@ class NgMoConverter:
             except Exception as e:
                 print("Error in opening file")
                 print(str(e))
-                sys.exit()
+                raise
         else:
-            print(filename + " does not exist")
-            sys.exit()
+            raise FileNotFoundError(filename + " does not exist")
 
         data = f.read()
         data = data.splitlines()
@@ -150,10 +147,10 @@ class NgMoConverter:
                     f = open(filename)
                 except BaseException:
                     print("Error in opening file")
-                    sys.exit()
+                    raise
             else:
-                print(filename + " does not exist")
-                sys.exit()
+                raise FileNotFoundError(filename + " does not exist")
+
             data = f.read()
             data = data.replace(
                 '+',
@@ -206,7 +203,7 @@ class NgMoConverter:
             line = line.split()
             final_line = ','.join(line)
             stat = 'parameter Real ' + final_line + ';'
-            stat = stat.translate(maketrans('{}', '  '))
+            stat = stat.translate(str.maketrans('{}', '  '))
             modelicaParam.append(stat)
         return modelicaParam
 
@@ -481,8 +478,7 @@ class NgMoConverter:
                         ["import"]
                     ) + ".PNP"
                 else:
-                    print("Transistor " + str(trans) + " Not found")
-                    sys.exit(1)
+                    raise NameError("Transistor " + str(trans) + " Not found")
 
                 stat = start + " " + words[0] + "("
                 tempstatList = []
@@ -576,8 +572,7 @@ class NgMoConverter:
                         ["import"]
                     ) + ".Mp"
                 else:
-                    print("MOSFET " + str(trans) + " not found")
-                    sys.exit(1)
+                    raise NameError("MOSFET " + str(trans) + " not found")
 
                 stat = start + " " + words[0] + "("
                 tempstatList = []
@@ -684,8 +679,7 @@ class NgMoConverter:
                                             ["import"]
                                             )+".J_PJFJFET"
                 else:
-                    print "JFET "+str(trans)+" Not found"
-                    sys.exit(1)
+                    raise NameError("JFET " + str(trans) + " Not found")
                 """
                 start = self.mappingData["Devices"][deviceName]["import"]
 
@@ -894,7 +888,7 @@ class NgMoConverter:
             appen_line = intLine[newindex:len(intLine)]
             appen_param = ','.join(appen_line)
             paramLine = 'parameter Real ' + appen_param + ';'
-            paramLine = paramLine.translate(maketrans('{}', '  '))
+            paramLine = paramLine.translate(str.maketrans('{}', '  '))
             subParamInfo.append(paramLine)
         return subParamInfo
 
@@ -1257,166 +1251,3 @@ class NgMoConverter:
             pinInitSub,
             connSubInfo
         )
-
-
-def main(args):
-    """
-    It is main function of module Ngspice to Modelica converter
-    """
-    if len(sys.argv) == 3:
-        filename = sys.argv[1]
-        map_json = sys.argv[2]
-    else:
-        print("USAGE:")
-        print("python3 NgspicetoModelica.py <filename>")
-        sys.exit()
-
-    dir_name = os.path.dirname(os.path.realpath(filename))
-    # file_basename = os.path.basename(filename)
-
-    cwd = os.getcwd()
-    os.chdir(dir_name)
-
-    obj_NgMoConverter = NgMoConverter(map_json)
-
-    # Getting all the require information
-    lines = obj_NgMoConverter.readNetlist(filename)
-    # print "Complete Lines of Ngspice netlist :lines ---------------->",lines
-    optionInfo, schematicInfo = obj_NgMoConverter.separateNetlistInfo(lines)
-    # print "All option details like analysis,subckt,.ic,.model  :
-    # OptionInfo------------------->",optionInfo
-    # print "Schematic connection info :schematicInfo",schematicInfo
-    modelName, modelInfo, subcktName, paramInfo, transInfo,\
-        inbuiltModelDict = (
-            obj_NgMoConverter.addModel(optionInfo)
-        )
-    # print "Name of Model : modelName-------------------->",modelName
-    # print "Model Information :modelInfo--------------------->",modelInfo
-    # print "Subcircuit Name :subcktName------------------------>",subcktName
-    # print "Parameter Information :paramInfo---------------------->",paramInfo
-    # print "InBuilt Model ---------------------->",inbuiltModelDict
-
-    modelicaParamInit = obj_NgMoConverter.processParam(paramInfo)
-    # print "Make modelicaParamInit from paramInfo
-    # : processParamInit------------->",modelicaParamInit
-    compInfo, plotInfo = obj_NgMoConverter.separatePlot(schematicInfo)
-    # print "Plot info like plot,print etc :plotInfo",plotInfo
-    IfMOS = '0'
-
-    for eachline in compInfo:
-        # words = eachline.split()
-        if eachline[0] == 'm':
-            IfMOS = '1'
-            break
-
-    subOptionInfo = []
-    subSchemInfo = []
-    if len(subcktName) > 0:
-        # subOptionInfo = []
-        # subSchemInfo = []
-        for eachsub in subcktName:
-            filename_temp = eachsub + '.sub'
-            data = obj_NgMoConverter.readNetlist(filename_temp)
-            # print "Data---------->",data
-            subOptionInfo, subSchemInfo = (
-                obj_NgMoConverter.separateNetlistInfo(data)
-            )
-            for eachline in subSchemInfo:
-                # words = eachline.split()
-                if eachline[0] == 'm':
-                    IfMOS = '1'
-                    break
-    # print "Subcircuit OptionInfo
-    # : subOptionInfo------------------->",subOptionInfo
-    # print "Subcircuit Schematic Info
-    # : subSchemInfo-------------------->",subSchemInfo
-
-    node, nodeDic, pinInit, pinProtectedInit = obj_NgMoConverter.nodeSeparate(
-        compInfo, '0', [], subcktName, [])
-    # print "All nodes in the netlist :node---------------->",node
-    # print "NodeDic which will be used for modelica
-    # : nodeDic------------->",nodeDic
-    # print "PinInit-------------->",pinInit
-    # print "pinProtectedInit----------->",pinProtectedInit
-
-    modelicaCompInit, numNodesSub = obj_NgMoConverter.compInit(
-        compInfo,
-        node,
-        modelInfo,
-        subcktName,
-        dir_name,
-        transInfo,
-        inbuiltModelDict
-    )
-    # print "ModelicaComponents
-    # : modelicaCompInit----------->",modelicaCompInit
-    # print "SubcktNumNodes
-    # : numNodesSub---------------->",numNodesSub
-
-    connInfo = obj_NgMoConverter.connectInfo(
-        compInfo, node, nodeDic, numNodesSub, subcktName)
-
-    # print "ConnInfo------------------>",connInfo
-
-    # After Sub Ckt Func
-    if len(subcktName) > 0:
-        data, subOptionInfo, subSchemInfo, subModel, subModelInfo,\
-            subsubName, subParamInfo, modelicaSubCompInit, modelicaSubParam,\
-            nodeSubInterface, nodeSub, nodeDicSub, pinInitSub, connSubInfo = (
-                obj_NgMoConverter.procesSubckt(
-                    subcktName, numNodesSub, dir_name
-                )
-            )  # Adding 'numNodesSub' by Fahim
-
-    # Creating Final Output file
-    newfile = filename.split('.')
-    newfilename = newfile[0]
-    outfile = newfilename + ".mo"
-    out = open(outfile, "w")
-    out.writelines('model ' + os.path.basename(newfilename))
-    out.writelines('\n')
-    if IfMOS == '0':
-        out.writelines('import Modelica.Electrical.*;')
-    elif IfMOS == '1':
-        out.writelines('import BondLib.Electrical.*;')
-        # out.writelines('import Modelica.Electrical.*;')
-    out.writelines('\n')
-
-    for eachline in modelicaParamInit:
-        if len(paramInfo) == 0:
-            continue
-        else:
-            out.writelines(eachline)
-            out.writelines('\n')
-    for eachline in modelicaCompInit:
-        if len(compInfo) == 0:
-            continue
-        else:
-            out.writelines(eachline)
-            out.writelines('\n')
-
-    out.writelines('protected')
-    out.writelines('\n')
-    out.writelines(pinInit)
-    out.writelines('\n')
-    out.writelines('equation')
-    out.writelines('\n')
-
-    for eachline in connInfo:
-        if len(connInfo) == 0:
-            continue
-        else:
-            out.writelines(eachline)
-            out.writelines('\n')
-
-    out.writelines('end ' + os.path.basename(newfilename) + ';')
-    out.writelines('\n')
-
-    out.close()
-
-    os.chdir(cwd)
-
-
-# Call main function
-if __name__ == '__main__':
-    main(sys.argv)

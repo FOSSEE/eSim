@@ -36,7 +36,7 @@ class Appconfig(QtGui.QWidget):
     # Home directory
     try:
         file = open(os.path.join(
-        	os.path.expanduser("~"), ".esim/workspace.txt"), 'r'
+            os.path.expanduser("~"), ".esim/workspace.txt"), 'r'
         )
         workspace_check, home = file.readline().split(' ', 1)
         file.close()
@@ -53,7 +53,7 @@ class Appconfig(QtGui.QWidget):
     workspace_text = "eSim stores your project in a folder called "
     workspace_text += "eSim-Workspace. You can choose a different "
     workspace_text += "workspace folder to use for this session."
-    
+
     procThread_list = []
     proc_dict = {}  # hold pids of all external windows of the current project
     dock_dict = {}  # holds all dockwidgets
@@ -61,7 +61,7 @@ class Appconfig(QtGui.QWidget):
         default_workspace["workspace"], ".projectExplorer.txt")
     }
 
-    noteArea = {"Note" : []}
+    noteArea = {"Note": []}
 
     parser_esim = SafeConfigParser()
     parser_esim.read(
@@ -80,7 +80,7 @@ class Appconfig(QtGui.QWidget):
 
     # Open file and read KiCad config path
     try:
-        file = open('../supportFiles/kicad_config_path.txt', 'r')
+        file = open('library/supportFiles/kicad_config_path.txt', 'r')
         kicad_path = file.read().rstrip()
         file.close()
     except BaseException as e:

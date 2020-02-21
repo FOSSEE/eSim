@@ -10,7 +10,7 @@ class ModelEditorclass(QtGui.QWidget):
     - Initialise the layout for dockarea
     - Use QVBoxLayout, QSplitter, QGridLayout to define the layout
     - Initalise directory to save new models,
-      savepathtest = '../deviceModelLibrary'
+      savepathtest = 'library/deviceModelLibrary'
     - Initialise buttons and options ====>
         - Name            Function Called
     ========================================
@@ -30,7 +30,7 @@ class ModelEditorclass(QtGui.QWidget):
 
     def __init__(self):
         QtGui.QWidget.__init__(self)
-        self.savepathtest = '../deviceModelLibrary'
+        self.savepathtest = 'library/deviceModelLibrary'
         self.obj_appconfig = Appconfig()
         self.newflag = 0
         self.layout = QtGui.QVBoxLayout()
@@ -252,7 +252,7 @@ class ModelEditorclass(QtGui.QWidget):
         - Accordingly call `createtable(path)` to draw tables usingg QTable
         - Check for the state of button before rendering
         '''
-        self.path = '../deviceModelLibrary/Templates'
+        self.path = 'library/deviceModelLibrary/Templates'
         if self.diode.isChecked():
             if filetype == 'Diode':
                 path = os.path.join(self.path, 'D.xml')
@@ -327,7 +327,7 @@ class ModelEditorclass(QtGui.QWidget):
                 QtGui.QFileDialog.getOpenFileName(
                     self,
                     "Open Library Directory",
-                    "../deviceModelLibrary",
+                    "library/deviceModelLibrary",
                     "*.lib"))
             self.createtable(self.editfile)
         except BaseException:
@@ -473,7 +473,7 @@ class ModelEditorclass(QtGui.QWidget):
             ET.SubElement(param, tags).text = text
         tree = ET.ElementTree(root)
         defaultcwd = os.getcwd()
-        self.savepath = '../deviceModelLibrary'
+        self.savepath = 'library/deviceModelLibrary'
         if self.diode.isChecked():
             savepath = os.path.join(self.savepath, 'Diode')
             os.chdir(savepath)
@@ -687,7 +687,7 @@ class ModelEditorclass(QtGui.QWidget):
             QtGui.QFileDialog.getOpenFileName(
                 self,
                 "Open Library Directory",
-                "../deviceModelLibrary",
+                "library/deviceModelLibrary",
                 "*.lib"))
         libopen = open(self.libfile)
         filedata = libopen.read().split()

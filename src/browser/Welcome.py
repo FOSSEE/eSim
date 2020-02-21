@@ -12,7 +12,9 @@ class Welcome(QtGui.QWidget):
         self.vlayout = QtGui.QVBoxLayout()
 
         self.browser = QtGui.QTextBrowser()
-        self.browser.setSource(QtCore.QUrl("../browser/pages/welcome.html"))
+        self.browser.setSource(QtCore.QUrl(
+            "library/browser/welcome.html")
+        )
         self.browser.setOpenExternalLinks(True)
         self.browser.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
 

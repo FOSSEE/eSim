@@ -1,9 +1,9 @@
 import os
-from subprocess import Popen, PIPE, STDOUT
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement import Worker
 from projManagement.Validation import Validation
+from .NgspicetoModelica import NgMoConverter
 
 BROWSE_LOCATION = '/home'
 
@@ -49,45 +49,172 @@ class OpenModelicaEditor(QtGui.QWidget):
         self.FileEdit.setText(self.ngspiceNetlist)
 
     def callConverter(self):
-        try:
-            self.cmd1 = (
-                "python3 ../ngspicetoModelica/NgspicetoModelica.py " +
-                self.ngspiceNetlist + ' ' +
-                self.map_json
-            )
-            # self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
-            # self.obj_workThread1.start()
-            convert_process = Popen(
-                self.cmd1,
-                shell=True,
-                stdin=PIPE,
-                stdout=PIPE,
-                stderr=STDOUT,
-                close_fds=True)
-            error_code = convert_process.stdout.read()
 
-            if not error_code:
-                self.msg = QtGui.QMessageBox()
-                self.msg.setText(
-                    "Ngspice netlist successfully converted to OpenModelica" +
-                    "netlist"
+        dir_name = os.path.dirname(os.path.realpath(self.ngspiceNetlist))
+        # file_basename = os.path.basename(self.ngspiceNetlist)
+
+        cwd = os.getcwd()
+        os.chdir(dir_name)
+
+        obj_NgMoConverter = NgMoConverter(self.map_json)
+
+        try:
+            # Getting all the require information
+            lines = obj_NgMoConverter.readNetlist(self.ngspiceNetlist)
+            # print("Complete Lines of Ngspice netlist : " +
+            # "lines ---------------->", lines)
+            optionInfo, schematicInfo = \
+                obj_NgMoConverter.separateNetlistInfo(lines)
+            # print("All option details like analysis,subckt,.ic,.model  :" +
+            # "OptionInfo------------------->", optionInfo)
+            # print("Schematic connection info :schematicInfo", schematicInfo)
+            modelName, modelInfo, subcktName, paramInfo, transInfo,\
+                inbuiltModelDict = (
+                    obj_NgMoConverter.addModel(optionInfo)
                 )
-                self.obj_appconfig.print_info(
-                    "Ngspice netlist successfully converted to OpenModelica" +
-                    "netlist"
+            # print("Name of Model : " +
+            # "modelName-------------------->", modelName)
+            # print("Model Information : " +
+            # "modelInfo--------------------->", modelInfo)
+            # print("Subcircuit Name : " +
+            # "subcktName------------------------>", subcktName)
+            # print("Parameter Information : " +
+            # "paramInfo---------------------->", paramInfo)
+            # print("InBuilt Model ---------------------->", inbuiltModelDict)
+
+            modelicaParamInit = obj_NgMoConverter.processParam(paramInfo)
+            # print("Make modelicaParamInit from paramInfo : " +
+            # "processParamInit------------->", modelicaParamInit)
+            compInfo, plotInfo = obj_NgMoConverter.separatePlot(schematicInfo)
+            # print("Plot info like plot,print etc :plotInfo",plotInfo)
+            IfMOS = '0'
+
+            for eachline in compInfo:
+                # words = eachline.split()
+                if eachline[0] == 'm':
+                    IfMOS = '1'
+                    break
+
+            subOptionInfo = []
+            subSchemInfo = []
+            if len(subcktName) > 0:
+                # subOptionInfo = []
+                # subSchemInfo = []
+                for eachsub in subcktName:
+                    filename_temp = eachsub + '.sub'
+                    data = obj_NgMoConverter.readNetlist(filename_temp)
+                    # print "Data---------->",data
+                    subOptionInfo, subSchemInfo = (
+                        obj_NgMoConverter.separateNetlistInfo(data)
+                    )
+                    for eachline in subSchemInfo:
+                        # words = eachline.split()
+                        if eachline[0] == 'm':
+                            IfMOS = '1'
+                            break
+            # print("Subcircuit OptionInfo :" +
+            # "subOptionInfo------------------->", subOptionInfo)
+            # print("Subcircuit Schematic Info :" +
+            # "subSchemInfo-------------------->", subSchemInfo)
+
+            node, nodeDic, pinInit, pinProtectedInit = \
+                obj_NgMoConverter.nodeSeparate(
+                    compInfo, '0', [], subcktName, []
                 )
-                self.msg.exec_()
-            else:
-                self.err_msg = QtGui.QErrorMessage()
-                self.msg.setModal(True)
-                self.msg.setWindowTitle(
-                    "Ngspice to Modelica conversion error")
-                self.err_msg.showMessage(
-                    'Unable to convert NgSpice netlist to Modelica netlist.' +
-                    'Check the netlist :' +
-                    error_code)
-                self.err_msg.exec_()
-                self.obj_appconfig.print_error(error_code)
+            # print("All nodes in the netlist :node---------------->", node)
+            # print("NodeDic which will be used for modelica :" +
+            # "nodeDic------------->", nodeDic)
+            # print("PinInit-------------->", pinInit)
+            # print("pinProtectedInit----------->", pinProtectedInit)
+
+            modelicaCompInit, numNodesSub = obj_NgMoConverter.compInit(
+                compInfo,
+                node,
+                modelInfo,
+                subcktName,
+                dir_name,
+                transInfo,
+                inbuiltModelDict
+            )
+            # print("ModelicaComponents :" +
+            # "modelicaCompInit----------->", modelicaCompInit)
+            # print("SubcktNumNodes :" +
+            # "numNodesSub---------------->", numNodesSub)
+
+            connInfo = obj_NgMoConverter.connectInfo(
+                compInfo, node, nodeDic, numNodesSub, subcktName)
+
+            # print("ConnInfo------------------>", connInfo)
+
+            # After Sub Ckt Func
+            if len(subcktName) > 0:
+                data, subOptionInfo, subSchemInfo, subModel, subModelInfo,\
+                    subsubName, subParamInfo, modelicaSubCompInit,\
+                    modelicaSubParam, nodeSubInterface, nodeSub, nodeDicSub,\
+                    pinInitSub, connSubInfo = (
+                        obj_NgMoConverter.procesSubckt(
+                            subcktName, numNodesSub, dir_name
+                        )
+                    )  # Adding 'numNodesSub' by Fahim
+
+            # Creating Final Output file
+            newfile = self.ngspiceNetlist.split('.')
+            newfilename = newfile[0]
+            outfile = newfilename + ".mo"
+            out = open(outfile, "w")
+            out.writelines('model ' + os.path.basename(newfilename))
+            out.writelines('\n')
+            if IfMOS == '0':
+                out.writelines('import Modelica.Electrical.*;')
+            elif IfMOS == '1':
+                out.writelines('import BondLib.Electrical.*;')
+                # out.writelines('import Modelica.Electrical.*;')
+            out.writelines('\n')
+
+            for eachline in modelicaParamInit:
+                if len(paramInfo) == 0:
+                    continue
+                else:
+                    out.writelines(eachline)
+                    out.writelines('\n')
+            for eachline in modelicaCompInit:
+                if len(compInfo) == 0:
+                    continue
+                else:
+                    out.writelines(eachline)
+                    out.writelines('\n')
+
+            out.writelines('protected')
+            out.writelines('\n')
+            out.writelines(pinInit)
+            out.writelines('\n')
+            out.writelines('equation')
+            out.writelines('\n')
+
+            for eachline in connInfo:
+                if len(connInfo) == 0:
+                    continue
+                else:
+                    out.writelines(eachline)
+                    out.writelines('\n')
+
+            out.writelines('end ' + os.path.basename(newfilename) + ';')
+            out.writelines('\n')
+
+            out.close()
+
+            os.chdir(cwd)
+
+            self.msg = QtGui.QMessageBox()
+            self.msg.setText(
+                "Ngspice netlist successfully converted to OpenModelica" +
+                "netlist"
+            )
+            self.obj_appconfig.print_info(
+                "Ngspice netlist successfully converted to OpenModelica" +
+                "netlist"
+            )
+            self.msg.exec_()
 
         except Exception as e:
             self.msg = QtGui.QErrorMessage()

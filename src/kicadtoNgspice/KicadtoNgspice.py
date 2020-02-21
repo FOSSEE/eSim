@@ -114,7 +114,7 @@ class MainWindow(QtGui.QWidget):
 
         """
         - Checking if any unknown model is used in schematic which is not
-          recognized by NgSpice.
+          recognized by Ngspice.
         - Also if the two model of same name is present under
           modelParamXML directory
         """
@@ -233,7 +233,7 @@ class MainWindow(QtGui.QWidget):
         - This function called when convert button clicked
         - Extracting data from the objs created above
         - Pushing this data to json, and dumping it finally
-        - Written to a ..._Previous_Valuse.json file in the projDirectory
+        - Written to a ..._Previous_Values.json file in the projDirectory
         - Finally, call createNetListFile, with the converted schematic
         """
         global schematicInfo

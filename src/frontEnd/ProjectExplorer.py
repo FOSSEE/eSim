@@ -38,19 +38,19 @@ class ProjectExplorer(QtGui.QWidget):
             QTreeView { border-radius: 15px; border: 1px \
             solid gray; padding: 5px; width: 200px; height: 150px;  }\
             QTreeView::branch:has-siblings:!adjoins-item { \
-            border-image: url(../../images/vline.png) 0;} \
+            border-image: url(images/vline.png) 0;} \
             QTreeView::branch:has-siblings:adjoins-item { \
-            border-image: url(../../images/branch-more.png) 0; } \
+            border-image: url(images/branch-more.png) 0; } \
             QTreeView::branch:!has-children:!has-siblings:adjoins-item { \
-            border-image: url(../../images/branch-end.png) 0; } \
+            border-image: url(images/branch-end.png) 0; } \
             QTreeView::branch:has-children:!has-siblings:closed, \
             QTreeView::branch:closed:has-children:has-siblings { \
             border-image: none; \
-            image: url(../../images/branch-closed.png); } \
+            image: url(images/branch-closed.png); } \
             QTreeView::branch:open:has-children:!has-siblings, \
             QTreeView::branch:open:has-children:has-siblings  { \
             border-image: none; \
-            image: url(../../images/branch-open.png); } \
+            image: url(images/branch-open.png); } \
         ")
 
         for parents, children in list(
