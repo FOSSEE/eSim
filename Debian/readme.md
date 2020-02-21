@@ -22,6 +22,7 @@ It contains all the documenation for making eSim executable (using PyInstaller) 
 
 		$ pip install pyinstaller
 		$ pip install matplotlib
+		$ pip install tornado
 		$ pip install --upgrade 'setuptools<45.0.0'
 		$ sudo apt install build-essential python3-dev libqt4-dev qt4-dev-tools
 		$ mkdir eSim/build
