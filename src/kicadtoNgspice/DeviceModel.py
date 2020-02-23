@@ -1,6 +1,6 @@
 from PyQt4 import QtGui
 import os
-import json
+from xml.etree import ElementTree as ET
 from . import TrackWidget
 
 
@@ -32,12 +32,15 @@ class DeviceModel(QtGui.QWidget):
                 os.path.join(
                     projpath,
                     project_name +
-                    "_Previous_Values.json"),
+                    "_Previous_Values.xml"),
                 'r')
-            data = f.read()
-            json_data = json.loads(data)
+            tree = ET.parse(f)
+            parent_root = tree.getroot()
+            for child in parent_root:
+                if child.tag == "devicemodel":
+                    root = child
         except BaseException:
-            print("Device Model Previous JSON is Empty")
+            print("Device Model Previous XML is Empty")
 
         QtGui.QWidget.__init__(self)
 
@@ -82,16 +85,16 @@ class DeviceModel(QtGui.QWidget):
                 global path_name
 
                 try:
-                    for key in json_data["deviceModel"]:
-                        if key == words[0]:
+                    for child in root:
+                        if child.tag[0] == eachline[0] \
+                                and child.tag[1] == eachline[1]:
+                            # print("DEVICE MODEL MATCHING---", child.tag[0], \
+                            #       child.tag[1], eachline[0], eachline[1])
                             try:
-                                if os.path.exists(
-                                        json_data["deviceModel"][key][0]):
-                                    self.entry_var[self.count].setText(
-                                        json_data["deviceModel"][key][0])
-                                    path_name = (
-                                        json_data["deviceModel"][key][0]
-                                    )
+                                if os.path.exists(child[0].text):
+                                    self.entry_var[self.count] \
+                                        .setText(child[0].text)
+                                    path_name = child[0].text
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
@@ -146,16 +149,16 @@ class DeviceModel(QtGui.QWidget):
                 self.entry_var[self.count].setText("")
                 # global path_name
                 try:
-                    for key in json_data["deviceModel"]:
-                        if key == words[0]:
+                    for child in root:
+                        if child.tag[0] == eachline[0] \
+                                and child.tag[1] == eachline[1]:
+                            # print("DEVICE MODEL MATCHING---", child.tag[0], \
+                            #  child.tag[1], eachline[0], eachline[1])
                             try:
-                                if os.path.exists(
-                                        json_data["deviceModel"][key][0]):
-                                    path_name = (
-                                        json_data["deviceModel"][key][0]
-                                    )
-                                    self.entry_var[self.count].setText(
-                                        json_data["deviceModel"][key][0])
+                                if os.path.exists(child[0].text):
+                                    path_name = child[0].text
+                                    self.entry_var[self.count] \
+                                        .setText(child[0].text)
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
@@ -209,16 +212,16 @@ class DeviceModel(QtGui.QWidget):
                 self.entry_var[self.count].setText("")
                 # global path_name
                 try:
-                    for key in json_data["deviceModel"]:
-                        if key == words[0]:
+                    for child in root:
+                        if child.tag[0] == eachline[0] \
+                                and child.tag[1] == eachline[1]:
+                            # print("DEVICE MODEL MATCHING---", child.tag[0], \
+                            #       child.tag[1], eachline[0], eachline[1])
                             try:
-                                if os.path.exists(
-                                        json_data["deviceModel"][key][0]):
-                                    self.entry_var[self.count].setText(
-                                        json_data["deviceModel"][key][0])
-                                    path_name = (
-                                        json_data["deviceModel"][key][0]
-                                    )
+                                if os.path.exists(child[0].text):
+                                    self.entry_var[self.count] \
+                                        .setText(child[0].text)
+                                    path_name = child[0].text
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
@@ -319,19 +322,21 @@ class DeviceModel(QtGui.QWidget):
                 self.devicemodel_dict_end[words[0]] = self.count
                 self.count = self.count + 1
                 mosfetbox.setLayout(mosfetgrid)
+
                 # global path_name
                 try:
-                    for key in json_data["deviceModel"]:
-                        if key == words[0]:
+                    for child in root:
+                        if child.tag[0] == eachline[0] \
+                                and child.tag[1] == eachline[1]:
+                            # print("DEVICE MODEL MATCHING---", child.tag[0], \
+                            #       child.tag[1], eachline[0], eachline[1])
                             while i <= end:
-                                self.entry_var[i].setText(
-                                    json_data["deviceModel"][key][i - beg])
+                                self.entry_var[i].setText(child[i-beg].text)
                                 if (i - beg) == 0:
-                                    if os.path.exists(
-                                            json_data["deviceModel"][key][0]):
-                                        path_name = (
-                                            json_data["deviceModel"][key][0]
-                                        )
+                                    if os.path.exists(child[0].text):
+                                        self.entry_var[i] \
+                                            .setText(child[i-beg].text)
+                                        path_name = child[i-beg].text
                                     else:
                                         self.entry_var[i].setText("")
                                 i = i + 1

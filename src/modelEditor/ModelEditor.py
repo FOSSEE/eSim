@@ -332,7 +332,6 @@ class ModelEditorclass(QtGui.QWidget):
             self.createtable(self.editfile)
         except BaseException:
             print("No File selected for edit")
-            pass
 
     def createtable(self, modelfile):
         '''

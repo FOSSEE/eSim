@@ -1,8 +1,8 @@
 from PyQt4 import QtGui
-import json
 from . import TrackWidget
 from projManagement import Validation
 import os
+from xml.etree import ElementTree as ET
 
 
 class SubcircuitTab(QtGui.QWidget):
@@ -11,7 +11,7 @@ class SubcircuitTab(QtGui.QWidget):
     - It dynamically creates the widget for subcircuits,
       according to the .cir file
     - Creates `lineEdit` and `Add` button, which triggers `fileSelector`
-    - Also, checks `Previous_value.json` for previous subcircuit value
+    - Also, checks `Previous_value.xml` for previous subcircuit value
       to autofill, the `lineEdit`
     - Add button is bind to `trackSubcircuit`
     - Also `trackSubcircuit` without button is triggered if `lineEdit` filled
@@ -27,12 +27,15 @@ class SubcircuitTab(QtGui.QWidget):
                 os.path.join(
                     projpath,
                     project_name +
-                    "_Previous_Values.json"),
+                    "_Previous_Values.xml"),
                 'r')
-            data = f.read()
-            json_data = json.loads(data)
+            tree = ET.parse(f)
+            parent_root = tree.getroot()
+            for child in parent_root:
+                if child.tag == "subcircuit":
+                    root = child
         except BaseException:
-            print("Subcircuit Previous values JSON is Empty")
+            print("Subcircuit Previous values XML is Empty")
 
         QtGui.QWidget.__init__(self)
 
@@ -71,14 +74,16 @@ class SubcircuitTab(QtGui.QWidget):
 
                 global path_name
                 try:
-                    for key in json_data["subcircuit"]:
-                        if key == words[0]:
+                    for child in root:
+                        if child.tag[0] == eachline[0] \
+                                and child.tag[1] == eachline[1]:
+                            # print("Subcircuit MATCHING---", child.tag[0], \
+                            #       child.tag[1], eachline[0],eachline[1])
                             try:
-                                if os.path.exists(
-                                        json_data["subcircuit"][key][0]):
-                                    self.entry_var[self.count].setText(
-                                        json_data["subcircuit"][key][0])
-                                    path_name = json_data["subcircuit"][key][0]
+                                if os.path.exists(child[0].text):
+                                    self.entry_var[self.count] \
+                                        .setText(child[0].text)
+                                    path_name = child[0].text
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
