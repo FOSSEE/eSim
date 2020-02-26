@@ -20,11 +20,10 @@ It is released under GNU GPL License. It runs on Ubuntu OS versions 16.04 and ab
 * GHDL.
 
 ## Pre-requisites
-1. Python 3.0+
-2. PyQt4
-3. Matplotlib
-4. Ngspice-31
-5. KiCad 4.0.7 (latest version released on April-2019)
+1. NGHDL
+2. Ngspice-31
+3. KiCad 4.0.7 (latest version released on April-2019)
+4. Xterm
 
 ## eSim Installation:
 

@@ -30,11 +30,10 @@ Table of contents
    =================
    
    A. Through Terminal
-   $ esim
+   		
+   		$ esim
 
    B. Double click eSim desktop icon
-
-   C. From command line : Do `cd src/fronEnd` and type `python3 Application.py` to open eSim.
 
 
 2. eSim installation in Windows
@@ -43,6 +42,6 @@ Table of contents
 
    Now right click the `Setup.exe` and `run it as Administrator`. And then follow the instruction.
 
-   Note : Please make you run it as administrator otherwise it won't set the environment variable properly.
+   Note : Please make sure you run it as administrator otherwise it won't set the environment variable properly.
 
 
