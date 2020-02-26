@@ -188,7 +188,7 @@ class Application(QtGui.QMainWindow):
         self.model.triggered.connect(self.open_modelEditor)
 
         self.subcircuit = QtGui.QAction(
-            QtGui.QIcon('images/subckt.png'),'<b>Subcircuit</b>', self
+            QtGui.QIcon('images/subckt.png'), '<b>Subcircuit</b>', self
         )
         self.subcircuit.triggered.connect(self.open_subcircuit)
 
@@ -518,7 +518,7 @@ class Application(QtGui.QMainWindow):
 
                 # Fail Safe ===>
                 count += 1
-                if count >= 100:
+                if count >= 10:
                     raise Exception(
                         "Ngspice taking too long for simulation. "
                         "Check netlist file to change simulation parameters."

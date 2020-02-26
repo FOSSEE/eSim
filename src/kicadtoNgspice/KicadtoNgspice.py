@@ -255,12 +255,7 @@ class MainWindow(QtGui.QWidget):
             check = 0
 
         # Opening previous value file pertaining to the selected project
-        fw = open(
-            os.path.join(
-                projpath,
-                project_name +
-                "_Previous_Values.xml"),
-            'w')
+        fw = os.path.join(projpath, project_name + "_Previous_Values.xml")
 
         if check == 0:
             attr_parent = ET.Element("KicadtoNgspice")
