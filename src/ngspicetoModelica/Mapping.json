@@ -16,7 +16,8 @@
 			"pulse":"Analog.Sources.TrapezoidVoltage",
 			"sine":"Analog.Sources.SineVoltage",
 			"pwl" : "Analog.Sources.TableVoltage",
-			"dc" : "Analog.Sources.ConstantVoltage"
+			"dc" : "Analog.Sources.ConstantVoltage",
+			"ac" : "Analog.Sources.ConstantVoltage"
 		},
 
 		"i":{
