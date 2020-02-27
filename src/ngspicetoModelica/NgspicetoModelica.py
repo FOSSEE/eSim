@@ -326,9 +326,9 @@ class NgMoConverter:
                             stat = stat + self.getUnitVal(words[i-1]) + ',' + self.getUnitVal(w[0]) 
                         else:
                             stat = stat + self.getUnitVal(words[i-1]) + ',' + self.getUnitVal(words[i]) + ';'
-                    stat = stat + ']);'
+                    stat = stat[:-1] + ']);'
                     modelicaCompInit.append(stat) 
-                if typ[0] == words[3] and typ[0] != "dc":
+                if typ[0] == words[3] and typ[0] != "dc" and typ[0]!="ac":
                     #It is DC constant but no dc keyword
                     val_temp = typ[0].split('v')
                     stat = self.mappingData["Sources"][sourceType]["dc"]+' ' + compName + '(V = ' + self.getUnitVal(val_temp[0]) + ');' 
@@ -337,8 +337,13 @@ class NgMoConverter:
                     stat = self.mappingData["Sources"][sourceType][typ[0]]+' ' + compName + '(V = ' + self.getUnitVal(words[4]) + ');'    ### check this
                     modelicaCompInit.append(stat)
                     
+                 if typ[0] == words[3] and typ[0]=="ac":
+                 
+                    stat = self.mappingData["Sources"][sourceType]["ac"]+' ' + compName + '(V = ' + self.getUnitVal((words[4])) + ');' 
+                    modelicaCompInit.append(stat)
+                     
             elif sourceType=='i':
-                stat = self.mappingData["Sources"][sourceType]["dc"]+' '+compName+'(I='+self.getUnitVal(words[3])+');'
+                stat = self.mappingData["Sources"][sourceType]["dc"]+' '+compName+'(I='+self.getUnitVal(words[4])+');'
                 modelicaCompInit.append(stat)
                 
         #Now empty the source list as it may be used by subcircuit
