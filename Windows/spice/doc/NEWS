@@ -1,0 +1,578 @@
+Ngspice-26, Jan 4th, 2014
+============
+
+- New features:
+    + fft command may (optionally) use fftw3 library
+    + add nint() rounding function
+    + usage of 'temper' in behavioral devices
+    + check for soa (safe operating area) in several device models
+    + library processing rewritten completely to enhance ngspice
+      compatibility (.lib)
+    + include file processing rewritten to allow nesting and various
+      absolute and relative path names (.inc)
+    + asinh, acosh, atanh functions
+    + shared ngspice option added: ngspice optionally compiles as
+      a shared object or dynamic link library
+    + use a hash table to massively speed up parsing the netlist
+    + implement a very basic .if/.else block
+    + implement a signed power function `pwr' for controlled sources
+    + implement multiplier `m' in F, G source
+    + apply Area Calculation Method (ACM) to the bsim3v3.3 model
+    + implement `tc1', `tc2' instance parameters
+
+- Bug fixes:
+    + many, many ... please see
+      http://sourceforge.net/p/ngspice/ngspice/ci/master/tree/
+      and check the 'history' button on the upper right.
+    + removed memory leaks
+
+
+Ngspice-25, Jan 4th, 2013
+============
+
+- New features:
+    + add temperature coefficients for B source
+    + commands "mdump", "mrdump" to dump matrix to file
+    + allow `time', `temper', and `hertz' in expressions with behavioral R, L, C
+    + Enable ctrl-c to interrupt a simulation also for Windows GUI
+    + tests/bsim4: use the standard CMC model qa check
+    + implement exit code for command "quit"
+    + .nodeset all = value
+    + memristor code model in extradev
+    + new scalable diode model including tunnel component
+    + variable xtrtol may override the XSPICE reduction of trtol
+    + XSPICE example: delta-sigma converter
+    + XSPICE: new d_source model
+    + new option noopac
+    + bsim3: make additonal parameters accessible with @mxx[par]
+    + enable Mac OS X compilation
+    + option reseries = val
+    + commands "snsave", "snload"
+    + update hisim to version 2.7.0, new qa tests
+    + hisimhv update to version 1.2.3, new qa tests
+    + allow Ctrl-d to quit
+    + jfet model temperature extension, tcv and bex parameter
+    + speed up vector handling by hash table for vector address storage and retrieval
+    + update PSS code
+
+
+- Bug fixes:
+    + many, many ... please see
+      http://ngspice.git.sourceforge.net/git/gitweb.cgi?p=ngspice/ngspice;a=shortlog;pg=0
+    + remove memory leaks
+    + update tclspice for MS Windows
+    + adms3 removed due to licensing issues
+
+
+Ngspice-24, Jan 29th, 2012
+============
+
+- New features:
+    + .csparam allows to tranfer a param into a vector in .control ... .endc
+    + functions floor and ceil
+    + syntax Gxxx n1 n2 TABLE {expression} = (x0, y0) (x1, y1) (x2, y2)
+    + syntax Gxxx n1 n2 value={equation} or Exxx n1 n2 value={equation}
+    + variable strict_errorhandling to exit ngspice with exit code 1
+      if any error occurs during circuit parsing
+    + command altermod allows reading from file
+    + command "devhelp" to show available devices and describe device parameters
+    + command "inventory" to print the number of istances of each device.
+    + function cph(vec) delivers phase from a vector without jumps at +-PI
+    + enable 64 bit compilation in MS Visual Studio
+    + --adms3 flag to compile with (experimental) adms code
+    + still very experimental pss code
+    + command 'remcirc' to remove a circuit from the list
+    + command 'wrdata' aknowledges appendwrite and prints complex variables
+    + allow comment lines inside of command files
+    + path variable NGSPICE_INPUT
+    + 'Filesource' code model
+
+- Bug fixes:
+    + More on prototypes, type casts, reordering of functions, compiler warnings
+    + fix a numerical problem in the hisim2 and hisimhv models
+    + plot i(vdd) from a loaded rawfile
+    + fix the guard for device generated internal nodes (via CKTmkVolt())
+    + reduce memory leaks for command 'reset'
+    + parameter processing for nested .subckt
+    + bsim4/b4noi.c: correct init the correlated noise slot in noiseDens and lnNdens vector
+    + Many small bugs
+
+Ngspice-23, June 5th, 2011
+============
+
+- New features:
+    + Reduction of trtol to 1 only if 'A' devices in the circuit and xspice is enabled
+    + command wrs2p to write a s-parameter file using Touchstone vers. 1 format
+    + d_source d_state d_ram, test cases for those xspice codemodels
+    + transient noise simulation added to independent voltage and current sources
+    + Random telegraph noise added to independent voltage and current sources
+    + 'time = nnn' in stop command added
+    + random voltage generator option trrandom to independent voltage and current sources
+    + ngspice build possible in a separate directory (e.g. in ng-spice-rework/release)
+    + update FIND .. WHEN measurements
+    + diode & bjt temperature model update with tlev and tlevc
+    + merge bsim3v1a code with bsim3v0 and bsim3v1s code with bsim3v1
+    + bjt2: removed - all GP extensions of this model are now in the bjt model
+    + HiSIM_HV model vers. 1.2.1 added
+    + bsim3v32: delvto and mulu0 as instance parameters
+    + Replace HiSIM1 by HiSIM_2.5.1_Release_20110407
+
+- Bug fixes:
+    + More on prototypes, type casts, reordering of functions, compiler warnings
+    + allow models like 2N2904 or 2SK136 also in subcircuits
+    + fix sensitvity calculation (for the dc-2+.cir testcase)
+    + allow multiple call to setup w/ correct node collapsing
+    + Many small bugs
+
+Ngspice-22, Sept 26th, 2010
+============
+
+- New features:
+    + OpenMP multicore support for BSIM3, BSIM4, and BSIMSOI4
+    + reinstate {$var} expansion in interactive interpreter
+    + .TITLE line added
+    + update to 'spectrum' script
+    + par('expression') in .four, .plot, .print, .meas, .save commands
+    + command 'option' for use in spinit, .spiceinit, and in scripts
+    + adms procedure updated
+    + new random number generator, random functions sunif() and sgauss()
+    + ngspice manual updated
+
+- Bug fixes:
+    + Major code cleanup to reduce compiler/linker warnings: ansi function prototypes,
+      void/char pointers to named pointers, explicit type casts and many more
+    + Many small bugs
+
+
+Ng-spice-rework-21, Jun3, 13th 2010
+============
+
+- Updated Devices: BSIMSOI 4.3.1
+
+- New features:
+    + Compatibility: C, L, R, devices and E, G sources with expressions
+      Variables HERTZ, TIME, TEMPER added
+    + E, G sources with pwl function
+    + New manual
+    + Plotting with Gnuplot,
+    + Writing wrdata for simple text table to file
+    + .measure improved
+    + transmission line models improved
+
+- Bug fixes:
+    + Many small bugs, memory leaks, memory overflows
+
+Ng-spice-rework-20, November, 16th 2009
+============
+
+Ngspice release 20 is the second release of the simulator in 2009.
+
+- Fixes: model names starting with a number (1n4001) are now correctly parsed.
+  The .global command has been reinstated (it was previously disabled) and
+  error messages now display the corresponding line numberin the input deck.
+- New Features: .measure command for transient, ac and dc analyses (still not
+  complete, e.g. DERIV is missing).
+- Devices: Updated BISM4 model to revision 4.6.5. Added PWL (PieceWise Linear)
+  functionality for B (arbitrary generator) sources.
+
+
+Ng-spice-rework-19, April, 23rd 2009
+============
+
+Ngspice release 19 came early after release 18. It reveals an important work
+in compile scripts, many bug fixes in memory management, interface, and work in device models.
+
+- Compile scripts: tclspice and ADMS compiling fixes. Architecture compiling
+  fixes for SunOS, MS Visual Studio, MINGW, Cygwin.
+- Memory management: fixed memory leaks, modifies memory management for
+  MS Windows, integration of espice bugfixes and enhancements, bug fixes in
+  plots and cli interface.
+- Rework of BSim models, integration of EPFL-EKV model V2.63, ADMS models
+  mextram, hicum0, hicum2.
+
+
+Ng-spice-rework-18
+============
+
+Rework-18 is introduces several new features into ngspice. This is a major
+release that comes after more than three years. During the silent years
+ngspice developers worked in CVS to stabilize and introduce new features
+into the simulator.
+
+- Tclspice simulator library has been merged with ngspice. Now you can
+  compile ngapice or tclspice by asserting a configure switch. See README.tcl
+- New options have been introduced: brief, listing, autostop and scale
+- Support for .lib file has been introduced. This allows the use of
+  third party model libraries in ngspice.
+- .measure statements: avg, integ, rms, max, min, delay, param
+- .global statements t support for global nodes whose name is not expanded
+  when flattening the netlist.
+- .func macros for inlining functions into netlists.
+- Improved the numparam library to support fully parametrized netlists.
+- BSIM model binning.
+- new multi-input gate VCVS using XSPICE extensions.
+
+
+Ng-spice-rework-17
+============
+
+This is a bug fix release. Previous release tarball did not included
+an include file necessary for compiling numparam library.
+
+
+Ng-spice-rework-16
+============
+
+Rework-16 comes out after almost one year of CVS development (from
+15-fixedRC3). This release improves ngspice in three ways:
+
+- Bug fixing: most of the bugs that affected rework-15 have been fixed,
+    thus ngspice is more stable, especially the xspice extension, the
+    subcircuit (X devices) handling and the numparam library.
+
+- New features: netlist syntax has been expandend allowing for end-of-line
+    comments. A ".global" card has beed added to define global nodes, i.e.
+    nodes that are not expanded in subcircuits. It is possible to define TC
+    for resistors on the instance line. The editline library can be used
+    instead of readline (no more GPL license violation).
+
+- Porting: ngspice now works (with xspice extension) on Windows using
+           MINGW/MSYS.
+
+
+Ng-spice-rework-15
+============
+
+Rework-15 release is a giant leap forward for ngspice. It incorporates
+many (read most) of the improvements implemented in tclspice during the
+two years long "sleep" of ngspice and adds many others. The incomplete
+list of new features incorporated are:
+
+  - Xspice simulator (with codemodel dynamic loading support):
+     a mixed signal simulator built upon spice3.
+
+  - Cider simulator:
+     a mixed level simulator built upon spice3.
+
+  - Numparam library:
+     a library that allows for parameter substitution at netlist level.
+
+  - Improved models:
+     Diode model includes periphery effects and high level of injection effects,
+     BJT and BJT2 enhanced.
+     BSIM3 now includes ACM.
+     BSIM4 implementation corrected.
+
+   -New models:
+     VBIC (3 Terminals, no excess phase and thermal network),
+     HiSIM.
+
+   - Frontend leaks closed.
+      Now frontend works as it should.
+
+   - Many new example file.
+
+   - Xgraph plotting program included.
+
+
+Ng-spice-rework-14
+============
+
+This is a major release in terms of bug-fixes. Some enhancements
+have been included: BSIM4 model and support for EKV model. The
+source code for the latter must be obtained from EKV web site
+(see DEVICE for more info). To enable EKV support you have
+to obtain the code first and then use the configure switch
+"--enable-ekv".
+
+The spice code contains an option to debug frontend code, now
+this is available in configure as "--enable-ftedebug".
+
+
+
+Ng-spice-rework-13
+============
+
+This is a major release in terms of fixes and enhancements.
+A garbage collector support has been added. If the configuration
+script detects that you have installed GC (Bohem-Weiser conservative
+garbage collector), it will use it. Some memory leaks have been
+fixed too.
+
+Enhancements to the code comes from Alan's contribute code, a
+description of improvements follows (extracted form Alan's mail):
+
+Output File Format Changes -
+
+  (NOTE: Do not rely on this, we may revert to the old format
+   in the next release).
+
+  Text mode .OP results even though "rawfile" written.
+
+  Internal device nodes are not saved to "rawfile" (reduces
+  file size). Optionally, these internal nodes can be replaced
+  by device currents and saved.
+
+
+DC Convergence Enhancements -
+
+  "Source-Stepping" algorithm modified with a "Dynamic" step size.
+  After each successful step, the node voltages are saved, the
+  source-factor is increased by the step-factor, and the step-factor
+  is increased (for the next step). If the step fails, i.e. the
+  circuit does not converge, the source-factor is set to the value
+  from the previous successful step, the previously stored node
+  voltages are restored, the step-factor is reduced, the source
+  factor is increased by this smaller step-factor, and convergence
+  is attempted again.
+
+  Same thing done for "Gmin-stepping" algorithm.
+
+  "Gshunt" option added. This sets the "diagGmin" variable used in
+  the gmin-stepping algorithm to a non-zero value for the final
+  solution. (Normally this is set to zero for the final solution).
+  This helps for circuits with floating nodes (and for some others
+  too).
+
+  The Gmin implementation across the substrate diodes of MOS1, MOS2,
+  MOS3, MOS6 and BSIM3 devices, and across BJT base-emitter and
+  base-collector diodes, was incorrect. Correcting this dramatically
+  improved DC convergence. (I think this also affects BSIM1 and 2
+  but I haven't fixed them yet !)
+
+  The gm, gmb and gds calculations in the MOS3 model were all wrong.
+  The device equations were fixed, leading to much improved
+  convergence.
+
+  The Vcrit value used for diode voltage limiting was calculated
+  without taking into account the device area (and in some cases
+  without using the temperature corrected saturation current).
+  This could cause floating point overflows, especially in device
+  models designed to be scaled by a small area, e.g. 2u by 2u diodes
+  (area=4e-12). This is now fixed for Diode, BJT, MOS1, MOS2, and
+  MOS3 models.
+
+  The diode voltage limiting was modified to add negative voltage
+  limiting. Negative diode voltages are now limited to 3*Vdp-10,
+  where Vdp is the voltage from the previous iteration. If Vdp is
+  positive, then the voltage is limited to -10V. This prevents some
+  more floating point overflows. (Actually, I'm still playing with
+  the best values for this).
+
+  The Spice3 "fix" for the MOS3 gds discontinuity between the
+  linear and saturated regions only works if the VMAX parameter
+  is non-zero. A "tweak" has been added for the VMAX=0 case.
+
+
+Transient Convergence Enhancements -
+
+  Temperature correction of various diode capacitances was implemented
+  slightly incorrectly, leading to capacitance discontinuities in
+  simulations at temperatures other than nominal. This affected the
+  Diode and MOS3 models.
+
+  A mistake in the implementation of the MOS3 source-bulk capacitance
+  model resulted in a charge storage discontinuity. This has been fixed.
+
+  The level 2 MOSFET model seems to calculate Von and Vth values for
+  the threshold and subthreshold values respectively, but then uses
+  Vbin to calculate the Vdsat voltage used to find the drain current.
+  However, a jump statement uses Von to decide that the device is in
+  the "cutoff" region, which means that when this jump allows the
+  drain current to be calculated, Vdsat can already be well above
+  zero. This leads to a discontinuity of drain current with respect
+  to gate voltage. The code is now modified to use Vbin for the jump
+  decision. It looks like the code should actually use Vth as the
+  threshold voltage, but since other SPICE simulators follow the
+  original Berkeley code, this was left alone.
+
+
+New Model Parameters -
+
+  A device multiplier instance parameter "M" (i.e. M devices in
+  parallel) was added to the MOS1,2,3 and BSIM3 mosfet models.
+
+
+Input Read-in and Checking -
+
+  Numbers beginning with a + sign got the input routine confused.
+  Fixed now.
+
+  Attempts to nodeset (or .IC) non-existent nodes are flagged with a
+  warning.
+
+  PWL statements on Voltage or Current sources are now checked for
+  "non-increasing" time-points at the start of the simulation.
+  Previously each time-point was checked as it was reached during
+  the simulation, which could be very annoying if you made a mistake
+  which caused the simulation to fail after hours of run-time.
+
+  A check which was performed at the end of each sub-circuit expansion
+  was moved to the top level. This check makes sure that all sub-circuits
+  have been defined, but in its original position, it meant that if a
+  sub-circuit included ANY .MODEL statements at all, then ALL the models
+  called in that sub-circuit must also be defined within that
+  sub-circuit. Now SPICE behaves as expected, i.e. a subcircuit may
+  define its own models, but may also use models defined at any level
+  above.
+
+
+Miscellaneous Fixes/Enhancements -
+
+  MOS devices reported only half of the Meyer capacitances, and did not
+  include overlap capacitances, when reporting to the .OP printout, or
+  when storing device capacitances to the "rawfile".
+
+  The ideal switch devices had no time-step control to stop their
+  controlling voltages/currents overshooting the switching thresholds.
+  The time-step control has been modified to use the last two time
+  points to estimate if the next one will move the controlling
+  voltage/current past a switching threshold. If this looks likely,
+  then the time-step is reduced.
+
+  The "rawfile" writing routines have been modified to print the
+  "reference value" to the console during the simulation. This lets
+  the user see exactly how far and how fast the simulation is
+  proceeding.
+
+  .OP printout tidied up a lot to make the printout clearer.
+
+  Analysis order changed to fix a "feature" where, if you ask for
+  a .OP and a .TRAN in the same simulation, the node voltages
+  printed out correspond to the .OP, but the device data was from
+  the last timepoint of the .TRAN
+
+
+Etc. -
+
+  There are other minor bug fixes, and changes to reduce compiler
+  warnings. There are probably some more significant fixes which
+  I've forgotten :-)
+
+
+Ng-spice-rework-12
+============
+Arno did a great work this summer!
+The pole-zero analysis has been corrected. The error was introduced
+in an attempt to eliminate compiler warnings. The source has been
+reworked and info file have been updated. As you may see, a new dir
+called "spicelib" has been created, another step toward the separation
+of the simulator from the frontend.
+
+Ng-spice-rework-11
+============
+
+Resistor code (device) has been modified to conform to spice3 device
+coding standard.
+A new step function (U2) has been introduced.
+Documentation updated.
+
+Ng-spice-rework-10
+============
+
+Added BSIM4 model and closed a couple of serious bugs. Added DEVICES
+file to distribution. This file contains the status of device models
+in this simulator. Read it, this file can save you a lot of time.
+
+Ng-spice-rework-9
+============
+
+Thanks to Arno Peters now all device models are dynamically loaded on
+demand.  They are linked as shared libraries. The next step is the
+dlopen() one which will make possible to link devices without any
+recompilation.
+
+
+
+Ng-spice-rework-8
+============
+
+Applied Arno's patch.
+
+From his mail message:
+
+Hi Paolo,
+
+I have prepared a source cleaning patch.
+
+Features:
+
+  + patches don't get polluted with differences between automatically
+  generated Makefile.am files.  Usually these make up the biggest part
+  of the patches.  This allows me to read the patch on the mailing
+  list instead of sifting through 90% redundant and irrelevant changes.
+
+  + the shell script autogen.sh automatically regenerates the required
+  files if the user has automake, autoconf and libtool installed.
+
+  + this feature is only valuable to developers, not to end users.
+
+
+Usage of this patch, once incorporated:
+
+  # create a working tree to work from
+  cp -a ng-spice-rework-x ng-spice
+
+  [ Changes made to ng-spice ]
+
+  # clean up all the automatically generated files
+  cd ng-spice; make maintainer-clean
+
+  # extract the differences
+  diff -ruN ng-spice-rework-x ng-spice > my.patch
+
+  [ Patch sent to ng-spice mailing list or you ]
+
+  # incorporate changes into the tree
+  cd ng-spice-rework-x; patch -p1 < my.patch
+
+  # update the automatically generated files
+  cd ng-spice-rework-x; sh autogen.sh
+
+
+
+
+Ng-spice-rework-7 (22 Mar 2000)
+============
+
+Bug fix release
+
+
+
+Ng-spice-rework-6 (29 Jan 2000)
+============
+
+This porting includes:
+
+1) BSIM3V3.1 model as level 49. This is the version modified by Serban
+Popescu which understands the M parameter and implements HDIF.
+
+2) BSIM3V3.2 model al Level 50. This is the standard Berkeley version.
+
+3) Now the resistor model can accepts two different values for DC and
+AC resistance.
+
+
+
+Ng-spice-rework-5 and 5_2  (Jan 2000)
+============
+
+Internal development release, buggy and not working.
+
+Ng-spice-rework-4  (22/12/99)
+============
+
+This porting includes a new feature:
+
+1) dynamically loading of some device code as an experimental feature
+for the future GPL simulator. Thanks to Arno Peters and Manu Rouat.
+
+2) Patched the following bug (thanks to Andrew Tuckey for having
+supplied the patch).
+
+    * Wsw (current controlled switch) in subckt, parsing bug.
+    * scale factor in arbitrary source.
+    * bug in noise analysis.
+    * save segmentation faults.
+
+

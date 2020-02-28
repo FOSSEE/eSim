@@ -1,0 +1,28 @@
+ngspice test and example files:
+===============================
+
+This directory is organized as a tree of subdirectories containing test files
+for devices and analyses implemented in ngspice.
+
+Some files comes from the original Spice3f5 package and others have been 
+contributed by developers and users.
+
+
+File Extension Convention:
+
+.cir : Circuit file. This can be a simple circuit description or a spice2
+       input file.
+.out : .cir files have been run and results are recorded into this
+       type of file. This is useful if want to test ngspice against
+       known (hopefully correct results).        
+               
+REPLICATE TESTS
+
+To replicate tests you have to launch configure without any option and
+compile ngspice. In the future this will change.
+
+TO ADD NEW TESTS
+
+Take an existing test and adopt it to your liking.  Add the test
+script and its supporting files to Makefile.am.  Use `make check' to
+see your new test in action.

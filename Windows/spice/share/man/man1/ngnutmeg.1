@@ -1,0 +1,83 @@
+.\" Copyright (c) 1985 Wayne A. Christopher, U. C. Berkeley CAD Group
+.ig
+
+(woman-find-file buffer-file-name)
+
+(let* ((man-args (concat "-l " buffer-file-name))
+       (bufname (concat "*Man " man-args "*")))
+  (when (get-buffer bufname)
+    (kill-buffer bufname))
+  (man man-args))
+
+(compile
+  (concat "groff -t -e -man -Tps "
+          buffer-file-name
+          " > /tmp/tmp.ps &&  gv /tmp/tmp.ps"))
+
+..
+.TH NGNUTMEG 1 "6 June 2010"
+.ds = \-\^\-
+.ds ngspice \s-2NGSPICE\s+2
+.SH "NAME"
+ngnutmeg \- ngspice post-processor
+.SH "SYNOPSIS"
+\fBngnutmeg\fP [\fIoptions\fP] [\fIdatafile\fP ...]
+.SH "DESCRIPTION"
+This man page is just a small overview.
+The primary documentation of ngspice is in the \*[ngspice] User's Manual,
+which is available as a pdf file.
+.br
+\fBngnutmeg\fP is a post processor for \*[ngspice] \- it takes
+the raw output file created by \fBngspice \-r\fP
+and plots the data on a graphics terminal or a workstation display.
+Note that the raw output file is different from the
+data that \*[ngspice] writes to the standard output.
+.SH "OPTIONS"
+.TP
+\fB\-\fP
+.br
+Don't try to load the default data file ("rawspice") if no other files
+are given.
+.TP
+\fB\-n\fP  or  \fB\*=no\-spiceinit\fP
+Don't try to source the file ".spiceinit" upon startup. Normally \fBngnutmeg\fP
+tries to find the file in the current directory, and if it is not found then
+in the user's home directory.
+.TP
+\fB\-q\fP  or  \fB\*=completion\fP
+Enable command completion. (defect)
+.TP
+\fB\-t\fP \fIterm\fP  or  \fB\*=term=\fP\fIterm\fP
+The program is being run on a terminal with \fBmfb\fP name \fIterm\fP.
+.TP
+\fB\-h\fP  or  \fB\*=help\fP
+Display a verbose help on the arguments available to the program.
+.TP
+\fB\-v\fP  or  \fB\*=version\fP
+Display a version number and copyright information of the program.
+.PP
+Further arguments are taken to be data files in binary or ascii format
+(see \fBsconvert\fP(1)) which are loaded into ngnutmeg.
+If the file
+is in binary format, it may be only partially completed (useful for
+examining \*[ngspice] output before the simulation is finished).
+One file may contain any number of data sets from different analyses.
+.SH "ENVIRONMENT"
+See ngspice(1)
+.SH "FILES"
+See ngspice(1)
+.SH "SEE ALSO"
+sconvert(1), ngspice(1), mfb(3), writedata(3), and
+.br
+\*[ngspice] User's Manual at \fBhttp://ngspice.sourceforge.net/docs.html\fP
+.SH "BUGS"
+Please report bugs to the ngspice project via
+.br
+\fBhttp://ngspice.sourceforge.net/bugrep.html\fP
+.SH "AUTHOR"
+Wayne Christopher (faustus@cad.berkeley.edu)
+.br
+\fBngspice\fP: various authors (see \fBhttp://sourceforge.net/projects/ngspice/\fP)
+.\" Local Variables:
+.\" mode: nroff
+.\" End:

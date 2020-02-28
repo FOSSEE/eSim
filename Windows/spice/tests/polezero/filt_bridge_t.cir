@@ -1,0 +1,13 @@
+BRIDGE-T FILTER
+V1 1 0 12 AC 1
+C1 1 2 1U
+C2 2 3 1U
+R3 2 0 1K
+R4 1 3 1K
+*
+.options noacct
+.OP
+.PZ 1 0 3 0 VOL PZ
+.PRINT PZ ALL
+*
+.END

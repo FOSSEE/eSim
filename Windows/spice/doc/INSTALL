@@ -1,0 +1,699 @@
+Ngspice installation instructions
+=================================
+
+Table of contents
+
+  1 Ngspice installation (LINUX)
+   1.1 Prerequisites
+   1.2 Install from tarball (e.g. ngspice-26.tar.gz)
+   1.3 Install from git repository
+   1.4 Advanced Install
+    1.4.1 Most useful options
+    1.4.2 Options Specific to Using Ngspice
+    1.4.3 Options Useful for Debugging Ngspice
+  2 Compilers and Options
+  3 Compiling For Multiple Architectures
+  4 Installation Names
+  5 Optional Features
+  6 Specifying the System Type
+  7 Sharing Defaults
+  8 Operation Controls
+  9 NGSPICE COMPILATION UNDER WINDOWS OS
+   9.1 How to make ngspice with MINGW and MSYS
+   9.2 make ngspice with MS Visual Studio 2008
+   9.3 make ngspice with pure CYGWIN
+   9.4 ngspice console app with MINGW or CYGWIN
+
+
+This file describes the procedures to install ngspice from sources.
+
+
+1 Ngspice Installation (LINUX, maybe others)
+  ====================
+
+1.1 Prerequisites
+
+     Ngspice is written in C and thus a complete C compilation environment
+ is needed. Almost any LINUX offers a complete C development environment.
+ Ngspice is developed on GNU/Linux with gcc and GNU make.
+
+ The following software must be installed in your system to compile ngspice:
+ bison, flex, and X11 headers and libs.
+
+ If you want to compile the source from the git repository you need
+ additional software: autoconf, automake, libtool, texinfo, readline.
+
+ The following software may be needed when enabling additional features:
+ editline, tcl/tk, adms
+
+ Please have a look at the actual ngspice manual, downloadable at
+ http://ngspice.sourceforge.net/docs.html, which gives you much more
+ information on ngspice and its usage.
+
+
+1.2 Install from tarball (e.g. ngspice-26.tar.gz)
+
+ This covers installation from a release distribution (for example
+ ngspice-26.tar.gz, the so called tar ball).
+
+ After downloading the tar ball to a local directory unpack it using:
+
+ $ tar -zxvf ngspice-26.tar.gz
+
+ Now change directories in to the top-level source directory (where this
+ INSTALL file can be found).
+
+ You should be able to do:
+
+ $ mkdir release
+ $ cd release
+ $ ../configure  --with-x --with-readline=yes --disable-debug
+ $ make
+ $ sudo make install
+
+ The default install directory for executables is /usr/local/bin.
+
+ A simple ../configure might be sufficient for a basic ngspice, but the preferred
+ arguments to ../configure are
+  --with-x --with-readline=yes and --disable-debug
+ providing you with a comfortably working ngspice (see section 1.4 for details).
+
+ See the section titled 'Advanced Install' for instructions about additional arguments
+ that can be passed to ../configure to customise the build and installation.
+
+ Do not use the script ./autogen.sh, because it is not required for
+ compiling and installing ngspice from the tarball.
+
+ A fully featured ngspice on LINUX may be obtained with the following commands:
+ $ mkdir release
+ $ cd release
+ $ ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp
+ $ make 2>&1 | tee make.log
+ $ sudo make install
+
+ To remove the executables and libraries from the install directory, you may call
+ $ sudo make uninstall
+
+
+1.3 Install from the git repository
+
+     This section describes how to install from source code taken directly
+ from the git repository.  It is intended for those who want to use the most
+ recent enhancements of ngspice and for developers. For user install
+ instructions using source from a released distributions, please see the
+ sections titled 'Install from tarball' and 'Advanced Install'.
+
+ Download ngspice sources from the git repository as described on the sourceforge project page
+ (see http://ngspice.sourceforge.net/download.html and click on the git link)
+
+ Now change directories in to the top-level source directory (where this
+ INSTALL file can be found).
+
+ The project uses the GNU build process. The compile output should go into a separate
+ directory, so to e.g. maintain separate debug and release versions.
+
+ $ ./autogen.sh
+ $ mkdir debug
+ $ cd debug
+ $ ../configure --with-x --with-readline=yes
+ $ make
+ $ sudo make install
+
+ See the section titled 'Advanced Install' for instructions about arguments
+ that can be passed to ./configure to customise the build and installation.
+
+ Preferred arguments to ./configure to obtain a comfortably working ngspice may be
+ --with-readline=yes and --disable-debug (for a smaller and speed optimized
+ executable).
+
+ A fully featured ngspice on LINUX may be obtained with the following commands:
+ $ ./autogen.sh --adms
+ $ mkdir release
+ $ cd release
+ $ ../configure --with-x --enable-xspice --disable-debug --enable-cider --with-readline=yes --enable-openmp --enable-adms
+ $ make 2>&1 | tee make.log
+ $ sudo make install
+
+ If a problem is found with the build process, please submit a report to
+ the ngspice development team. Please provide information about your system
+ and any ./configure arguments you are using, together with any error
+ messages.  Ideally you would have tried to fix the problem yourself first.
+ If you have fixed the problem then the development team will love to hear
+ from you.
+
+
+1.4 Advanced Install
+
+ Some extra options can be provided to './configure'. To get all available
+ options do:
+
+ $ ./configure --help
+
+ Some of these options are generic to the GNU build process that is used by
+ Ngspice, other are specific to Ngspice.
+
+ The following sections provide some guidance and descriptions for many,
+ but not all, of these options.
+
+ 1.4.1 Most useful options:
+
+ --enable-adms
+        ADMS is an experimental model compiler that translates
+        Verilog-A compact models into C code that can be compiled into
+        ngspice. This is (as of ngspice-26) still experimental, some
+        features (e.g. noise) are missing. If you want to use it, please
+        refer to the ADMS section on ngspice web site.
+
+ --enable-cider
+        Cider is a mixed-level simulator that couples Spice3 and DSIM
+        to simulate devices from their technological parameters.
+
+ --enable-xspice
+        Enable XSpice enhancements,
+        A mixed signal simulator built upon spice3 with codemodel
+        dynamic loading support. See the ngspice manual for details.
+
+ --with-readline=yes
+        Enable GNU readline support for the command line interface.
+
+ --enable-openmp
+        Compile ngspice for multi-core processors.
+        Parallelization is done by OpenMP, for MOS models in BSIM3.3.0
+        BSIM4.6.0 and and BSOI4 only. See the ngspice manual for details.
+
+ --disable-debug
+        This option will remove the '-g' option passed to the compiler
+                and add -O2 optimisation (instead of default O0).
+        This speeds up simulating significantly, and is recommended for
+        normal use.
+
+
+1.4.2 Options Specific to Using Ngspice
+
+Most of the options now following are not well maintained, are not tested or even maybe obsolete.
+
+ --enable-capbypass
+        Bypass calculation of cbd/cbs in the mosfets if the vbs/vbd
+        voltages are unchanged.
+
+ --enable-cluster
+                Clustering code for distributed simulation. This is a
+                contribution never tested. This code comes from TCLspice
+                implementation and is implemented for transient analysis only.
+
+ --enable-expdevices
+                Enable experimental devices. This option is used by developers
+                to mask devices under development. Almost useless for users.
+
+ --enable-experimental
+        This enables some experimental code. Specifically it enables:
+            * The ability to save and load snapshots: adds
+              interactive keywords 'savesnap' and 'loadsnap'.
+
+ --enable-help
+                Force building nghelp. This is deprecated.
+
+ --enable-ndev
+        Enable NDEV interface, (experimental, needs updating)
+        A TCP/IP interface to external device simulator such as GSS.
+        For more information, please visit the homepage of GSS at
+        http://gss-tcad.sourceforge.net
+
+ --enable-newpred
+                Enable the NEWPRED symbol in the code.
+
+ --enable-newtrunc
+        Enable the newtrunc option
+
+ --enable-nodelimiting
+         Experimental damping scheme
+
+ --enable-nobypass
+        Don't bypass recalculations of slowly changing variables
+
+ --enable-predictor
+         Enable a predictor method for convergence
+
+ --enable-sense2
+        Use spice2 sensitivity analysis
+
+ --enable-xgraph
+        Compile the Xgraph plotting program.
+        Xgraph is a plotting package for X11 and was once very popular.
+
+ --with-editline=yes
+        Enables the use of the BSD editline library (libedit).
+        See http://www.thrysoee.dk/editline/
+
+ --with-tcl=tcldir
+        When configured with this option the tcl module
+        "tclspice" is compiled and installed instead of
+        plain ngspice.
+
+ --with-ngshared
+        This option let you compile ngspice as a shared
+        library or dll, allowing an application controlling
+        ngspice. This option excludes using --with-x or
+        --with-wingui. Useful additional options are
+        --enable-xspice --enable-cider --enable-openmp.
+        No graphics inetrface is provided, this has to be
+        handled by the controlling application.
+
+
+1.4.3 Options Useful for Debugging Ngspice
+
+ --enable-ansi
+        Configure will try to find an option for your compiler so that
+        it expects ansi-C.
+
+--enable-asdebug
+        Debug sensitivity code *ASDEBUG*.
+
+ --enable-blktmsdebug
+        Debug distortion code *BLOCKTIMES*
+
+ --enable-checkergcc
+        Option for compilation with checkergcc.
+
+ --enable-cpdebug
+        Enable ngspice shell code debug.
+
+ --disable-debug
+        This option will remove the '-g' option passed to the compiler.
+        This speeds up compilation a *lot*, and is recommended for
+        normal use.
+
+ --enable-ftedebug
+        Enable ngspice frontend debug.
+
+ --enable-gc
+        Enable the Boehm-Weiser Conservative Garbage Collector.
+
+ --enable-pzdebug
+        Debug pole/zero code.
+
+ --enable-sensdebug
+                Debug sensitivity code *SENSDEBUG*.
+
+ --enable-smltmsdebug
+        Debug distortion code *SMALLTIMES*
+
+ --enable-smoketest
+        Enable smoketest compile.
+
+ --enable-stepdebug
+        Turns on debugging of convergence stepping??
+
+
+2 Compilers and Options
+  =====================
+
+     Some systems require unusual options for compilation or linking that
+ the `configure' script does not know about.  You can give `configure'
+ initial values for variables by setting them in the environment.  Using
+ a Bourne-compatible shell, you can do that on the command line like
+ this:
+      CC=c89 CFLAGS=-O2 LIBS=-lposix ./configure
+
+ Or on systems that have the `env' program, you can do it like this:
+     env CPPFLAGS=-I/usr/local/include LDFLAGS=-s ./configure
+
+3 Compiling For Multiple Architectures
+  ====================================
+
+     You can compile the package for more than one kind of computer at the
+ same time, by placing the object files for each architecture in their
+ own directory.  To do this, you must use a version of `make' that
+ supports the `VPATH' variable, such as GNU `make'.  `cd' to the
+ directory where you want the object files and executables to go and run
+ the `configure' script.  `configure' automatically checks for the
+ source code in the directory that `configure' is in and in `..'.
+
+     If you have to use a `make' that does not supports the `VPATH'
+ variable, you have to compile the package for one architecture at a time
+ in the source code directory.  After you have installed the package for
+ one architecture, use `make distclean' before reconfiguring for another
+ architecture.
+
+4 Installation Names
+  ==================
+
+    By default, `make install' will install the package's files in
+ `/usr/local/bin', `/usr/local/man', etc.  You can specify an
+ installation prefix other than `/usr/local' by giving `configure' the
+ option `--prefix=PATH'.
+
+    You can specify separate installation prefixes for
+ architecture-specific files and architecture-independent files.  If you
+ give `configure' the option `--exec-prefix=PATH', the package will use
+ PATH as the prefix for installing programs and libraries.
+ Documentation and other data files will still use the regular prefix.
+
+    In addition, if you use an unusual directory layout you can give
+ options like `--bindir=PATH' to specify different values for particular
+ kinds of files.  Run `configure --help' for a list of the directories
+ you can set and what kinds of files go in them.
+
+    If the package supports it, you can cause programs to be installed
+ with an extra prefix or suffix on their names by giving `configure' the
+ option `--program-prefix=PREFIX' or `--program-suffix=SUFFIX'.
+
+ When installed on MinGW with MSYS alternative paths are not fully supported.
+ See 'How to make ngspice with MINGW and MSYS' below for details.
+
+
+5 Optional Features
+  =================
+
+    Some packages pay attention to `--enable-FEATURE' options to
+ `configure', where FEATURE indicates an optional part of the package.
+ They may also pay attention to `--with-PACKAGE' options, where PACKAGE
+ is something like `gnu-as' or `x' (for the X Window System).  The
+ `README' should mention any `--enable-' and `--with-' options that the
+ package recognizes.
+
+    For packages that use the X Window System, `configure' can usually
+ find the X include and library files automatically, but if it doesn't,
+ you can use the `configure' options `--x-includes=DIR' and
+ `--x-libraries=DIR' to specify their locations.
+
+6 Specifying the System Type
+  ==========================
+
+    There may be some features `configure' can not figure out
+ automatically, but needs to determine by the type of host the package
+ will run on.  Usually `configure' can figure that out, but if it prints
+ a message saying it can not guess the host type, give it the
+ `--host=TYPE' option.  TYPE can either be a short name for the system
+ type, such as `sun4', or a canonical name with three fields:
+      CPU-COMPANY-SYSTEM
+
+     See the file `config.sub' for the possible values of each field.  If
+ `config.sub' isn't included in this package, then this package doesn't
+ need to know the host type.
+
+    If you are building compiler tools for cross-compiling, you can also
+ use the `--target=TYPE' option to select the type of system they will
+ produce code for and the `--build=TYPE' option to select the type of
+ system on which you are compiling the package.
+
+7 Sharing Defaults
+  ================
+
+    If you want to set default values for `configure' scripts to share,
+ you can create a site shell script called `config.site' that gives
+ default values for variables like `CC', `cache_file', and `prefix'.
+ `configure' looks for `PREFIX/share/config.site' if it exists, then
+ `PREFIX/etc/config.site' if it exists.  Or, you can set the
+ `CONFIG_SITE' environment variable to the location of the site script.
+ A warning: not all `configure' scripts look for a site script.
+
+8 Operation Controls
+  ==================
+
+    `configure' recognizes the following options to control how it
+ operates.
+
+ `--cache-file=FILE'
+      Use and save the results of the tests in FILE instead of
+      `./config.cache'.  Set FILE to `/dev/null' to disable caching, for
+      debugging `configure'.
+
+ `--help'
+      Print a summary of the options to `configure', and exit.
+
+ `--quiet'
+ `--silent'
+ `-q'
+      Do not print messages saying which checks are being made.  To
+      suppress all normal output, redirect it to `/dev/null' (any error
+      messages will still be shown).
+
+ `--srcdir=DIR'
+      Look for the package's source code in directory DIR.  Usually
+      `configure' can determine that directory automatically.
+
+ `--version'
+      Print the version of Autoconf used to generate the `configure'
+      script, and exit.
+
+ `configure' also accepts some other, not widely useful, options.
+
+
+
+9 NGSPICE COMPILATION UNDER WINDOWS OS
+  ====================================
+
+9.1 How to make ngspice with MINGW and MSYS
+
+     Creating ngspice with MINGW is a straight forward procedure,
+ if you have MSYS/MINGW installed properly. You will need some enhancements
+ to the standard install (FLEX and BISON have to be made available in MSYS).
+ Some links are given below which describe the procedures.
+
+     Installing from the tarball, e.g. ngspice-26.tar.gz, is now simple: After
+ expanding, you may just run ./compile_min.sh from the ngspice-26 directory.
+
+     The default installation location of ngspice is the Windows path
+ C:\spice. The install path can be altered by passing --prefix=NEWPATH
+ as an argument to ./configure during the build process.
+
+     Put the install path you desire inside "", e.g. "D:/NewSpice". Be
+ careful to use forward slashes "/", not backward slashes "\" (something
+ still to be fixed).  Then add --prefix="D:/NewSpice" as an argument to
+ ./configure in the normal way.
+
+ The procedure of compiling a distribution (for example, a tarball from
+ the ngspice website), is as follows:
+
+ $ cd ngspice-26
+ $ mkdir release
+ $ cd release
+ $ ../configure --with-wingui ...and other options
+ $ make
+ $ make install
+
+ The most useful options are:
+ --enable-xspice
+ --enable-cider
+ --disable-debug (-O2 optimization, no debug information)
+
+ A fully featured ngspice on Windows may be obtained with the following commands:
+ $ ./autogen.sh --adms
+ $ mkdir release
+ $ cd release
+ $ ../configure --with-wingui --enable-cider --disable-debug --enable-openmp --enable-xspice --enable-adms
+ $ make install
+
+ However, to compile code extracted from the git repository the procedure is
+ a little different. Firstly install git, e.g. from http://git-scm.com/download/win
+ To obtain ngspice, you may do the following:
+
+ Open the git command window. Go to a directory of your choice, e.g. D:\Spice
+ $ cd /d/Spice
+
+ Issue the command for downloading ngspice:
+ $ git clone git://ngspice.git.sourceforge.net/gitroot/ngspice/ngspice
+
+ This will create directory /ngspice .
+
+ Go to directory ngspice
+ $ cd /d/Spice/ngspice
+ Start compiling, e.g. by calling
+ $ ./autogen.sh --adms
+ $ ./compile_min.sh
+
+ Update the ngspice files:
+ Go to directory ngspice
+ $ cd /d/Spice/ngspice
+ Issue command for update
+ $ git pull
+
+ Instead of calling  ./compile_min.sh, you may choose to issue
+ individual commands like:
+ $ cd ngspice
+ $ ./autogen.sh
+ $ mkdir release
+ $ cd release
+ $ ../configure --enable-maintainer-mode --with-wingui ...and other options
+ $ make
+ $ make install
+
+ MINGW and MSYS can be downloaded from http://www.mingw.org/. The making of
+ ngspice and the code models *.cm for XSpice requires installation of BISON
+ and FLEX to MSYS. A typical installation was tested with:
+
+ bison-2.0-MSYS.tar.gz
+ flex-2.5.4a-1-bin.zip
+ libiconv-1.9.2-1-bin.zip
+ libintl-0.14.4-bin.zip
+
+ Bison 2.0 is now superseeded by newer releases (Bison 2.3, see
+ http://sourceforge.net/project/showfiles.php?group_id=2435&package_id=67879)
+
+ The last three are from
+ http://sourceforge.net/project/showfiles.php?group_id=23617.
+
+ Installing from git needs more packages to MSYS in advance:
+ git, automake, autoconf, libtool
+
+ You may also look at
+ http://www.mingw.org/wiki/HOWTO_Install_the_MinGW_GCC_Compiler_Suite
+ http://www.mingw.org/wiki/MSYS
+ http://www.mingw.org/wiki/HOWTO_Create_an_MSYS_Build_Environment.
+
+ An alternative compiler setup is available at
+ http://tdm-gcc.tdragon.net/
+
+
+9.2 make ngspice with MS Visual Studio 2008
+
+ ngspice may be compiled with MS Visual Studio 2008 or 2010.
+
+ CIDER and XSPICE are included, but the code models for XSPICE
+ (*.cm) are not (yet) made. You may however use the code models
+ created with MINGW (which in fact are dlls), as e.g. found in
+ the ngspice binary distribution our made as described in 9.1.
+
+ There is currently no installation procedure provided, you may
+ however install the executable manually as described in the
+ installation tree below.
+
+     The directory (visualc) with its files
+ vngspice.sln (project starter) and
+ vngspice.vcproj (project contents)
+ allows to compile and link ngspice with MS Visual Studio 2008.
+ Newer Visual Studio versions will translate the project files
+ into their compatible format (tested with MS Visual Studio 2010).
+
+ /visualc/include contains a dedicated config.h file. It contains the
+ preprocessor definitions required to properly compile the code.
+ strings.h has been necessary during setting up the project.
+
+ Install Microsoft Visual Studio 2008 C++ . The
+ MS VS 2008 C++ Express Edition (which is available at no cost from
+ http://www.microsoft.com/express/product/default.aspx) is adequate.
+
+ Goto  /ngspice/visualc.
+
+ Start MS Visual Studio 2008 by double click onto vngspice.sln.
+
+ After MS Visual Studio has opened up, select debug or release version
+ by checking 'Erstellen' , 'Konfigurations-Manager' 'Debug' or 'Release'.
+
+ Start making ngspice (called vngspice.exe) by selecting 'Erstellen' and
+ 'vngspice neu erstellen'.
+
+ Object files will be created and stored in visualc/debug or visualc/release.
+ The executable will be stored to visualc/debug/bin or visualc/release/bin.
+
+ An installation tree (as provided with MINGW make install) and also used by
+ vngspice is (maybe created manually):
+
+ C:\Spice\
+    bin\
+        ngspice.exe
+        nghelp.exe
+        ngmakeidx.exe
+        ngnutmeg.exe
+        cmpp.exe
+    lib\
+        spice\
+            analog.cm
+            digital.cm
+            spice2poly.cm
+            extradev.cm
+            extravt.cm
+    share\
+        info\
+            dir
+            ngspice.info
+            ngspice.info-1
+            ..
+            ngspice.info-10
+        man\
+            man1\
+                ngmultidec.1
+                ngnutmeg.1
+                ngsconvert.1
+                ngspice.1
+        ngspice\
+            helpdir\
+                ngspice.idx
+                ngspice.txt
+            scripts\
+                ciderinit
+                devaxis
+                devload
+                setplot
+                spectrum
+                spinit
+
+ If you intend to install vngspice into another directory, e.g. D:\MySpice,
+ you have to edit  /visualc/include/config.h and alter the entries:
+ #define NGSPICEBINDIR "C:/Spice/bin"
+ #define NGSPICEDATADIR "C:/Spice/share/ngspice"
+ to
+ #define NGSPICEBINDIR "D:/MySpice/bin"
+ #define NGSPICEDATADIR "D:/MySpice/share/ngspice"
+
+ If the code model files *.cm are not available, you will get warning messages,
+ but you may use ngspice in the normal way (of course without XSPICE extensions).
+
+
+
+9.3 make ngspice with pure CYGWIN
+
+ If you don't have libdl.a you may need to link libcygwin.a
+ to libdl.a symbolically.
+
+ for example:
+
+ $ cd /lib
+ $ ln -s libcygwin.a libdl.a.
+
+ The procedure of compiling is the same as Linux.
+
+
+9.4 ngspice console app with MINGW or CYGWIN
+
+ Omitting the configure flag --with-wingui will yield a console ngspice.
+ You then will not have any graphics interface. In CYGWIN you may add --with-x
+ for the X11 graphics (not available in mingw). A typical configure command
+ may look like
+ ./configure --enable-adms --enable-xspice --enable-cider --enable-openmp
+ --disable-debug CFLAGS=-m32 LDFLAGS=-m32 prefix=C:/Spice
+ tested with TDM mingw.
+
+
+
+10 NGSPICE COMPILATION UNDER MAC OS X
+   ==================================
+
+10.1 Use precompiled binary package
+ 1. Install an X11 interface (like Xquartz)
+ 2. Install the downloaded NGSPICE package
+ 3. Open a terminal window and start using NGSPICE
+
+10.2 Compile NGSPICE manually from a tarball
+ 1. Install an X11 interface (like Xquartz)
+ 2. Install MacPorts from http://www.macports.org
+ 3. Execute this command:
+      sudo port install bison flex ncurses xorg-libXaw
+ 4. Configure NGSPICE invoking "./configure". A complete set of feature is:
+      ./configure --enable-cider --enable-xspice --enable-openmp --enable-pss --enable-debug=no
+ 5. Compile NGSPICE invoking "make"
+ 6. Install NGSPICE invoking "make install" or "sudo make install"
+
+10.3 Compile NGSPICE manually from git
+ 1. Install an X11 interface (like Xquartz)
+ 2. Install MacPorts from http://www.macports.org
+ 3. Execute this command:
+      sudo port install automake autoconf libtool bison flex ncurses xorg-libXaw
+ 4. Execute this command:
+      ./autogen.sh or ./autogen.sh --adms (if you want to enable ADMS)
+ 5. Configure NGSPICE invoking "./configure". A complete set of feature is:
+      ./configure --enable-cider --enable-xspice --enable-openmp --enable-pss --enable-debug=no
+      ./configure --enable-adms --enable-cider --enable-xspice --enable-openmp --enable-pss --enable-debug=no (if you want to enable ADMS)
+ 6. Compile NGSPICE invoking "make"
+ 7. Install NGSPICE invoking "make install" or "sudo make install"

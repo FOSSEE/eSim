@@ -1,0 +1,152 @@
+.\" Copyright (c) 1985 Wayne A. Christopher, U. C. Berkeley CAD Group
+.ig
+
+(woman-find-file buffer-file-name)
+
+(let* ((man-args (concat "-l " buffer-file-name))
+       (bufname (concat "*Man " man-args "*")))
+  (when (get-buffer bufname)
+    (kill-buffer bufname))
+  (man man-args))
+
+(compile (concat "groff -t -e -man -Tps "
+        buffer-file-name
+        " > /tmp/tmp.ps &&  gv /tmp/tmp.ps"))
+
+..
+.TH NGSPICE 1 "6 June 2010"
+.ds = \-\^\-
+.ds ngspice \s-2NGSPICE\s+2
+.SH "NAME"
+ngspice \- circuit simulator derived from SPICE3f5
+.SH "SYNOPSIS"
+\fBngspice\fP [\fIoptions\fP] [\fIfile\fP ...]
+.SH "DESCRIPTION"
+This man page is just a small overview.
+The primary documentation of ngspice is in the \*[ngspice] User's Manual,
+which is available as a pdf file.
+.SH "OPTIONS"
+.TP
+\fB\-n\fP  or  \fB\*=no\-spiceinit\fP
+Don't try to source the file ".spiceinit" upon startup. Normally \*[ngspice]
+tries to find the file in the current directory, and if it is not found then
+in the user's home directory.
+.TP
+\fB\-q\fP  or  \fB\*=completion\fP
+Enable command completion. (defect)
+.TP
+\fB\-t\fP \fIterm\fP  or  \fB\*=term=\fP\fIterm\fP
+The program is being run on a terminal with \fBmfb\fP name \fIterm\fP.
+.TP
+\fB\-b\fP  or  \fB\*=batch\fP
+Run in batch mode.
+\*[ngspice] will read the standard input or the specified
+input file and do the simulation.
+Note that if the standard input is not a terminal, \*[ngspice] will default
+to batch mode, unless the \-i flag is given.
+.TP
+\fB\-s\fP  or  \fB\*=server\fP
+Run in server mode.
+This is like batch mode, except that a temporary rawfile is used and then
+written to the standard output, preceded by a line with a single "@", after
+the simulation is done.
+This mode is used by the ngspice daemon.
+.TP
+\fB\-i\fP  or  \fB\*=interactive\fP
+Run in interactive mode.
+This is useful if the standard input is not a terminal but interactive mode
+is desired.
+Command completion is not available unless the standard input is a terminal,
+however.
+.TP
+\fB\-r\fP \fIrawfile\fP  or  \fB\*=rawfile=\fP\fIfile\fP
+Use \fIrawfile\fP as the default file into which the results of
+the simulation are saved.
+.TP
+\fB\-c\fP \fIcircuitfile\fP  or  \fB\*=circuitfile=\fP\fIcircuitfile\fP
+Use \fIcircuitfile\fP as the default input deck.
+.TP
+\fB\-h\fP  or  \fB\*=help\fP
+Display a verbose help on the arguments available to the program.
+.TP
+\fB\-v\fP  or  \fB\*=version\fP
+Display a version number and copyright information of the program.
+.TP
+\fB\-a\fP  or  \fB\*=autorun\fP
+FIXME
+.TP
+\fB\-o\fP \fIoutfile\fP  or  \fB\*=output=\fP\fIoutfile\fP
+All logs generated during a batch run (\fB\-b\fP) will be saved in \fIoutfile\fP.
+.TP
+\fB\-p\fP  or  \fB\*=pipe\fP
+Allow a program (e.g., xcircuit) to act as a GUI frontend for
+ngspice through a pipe.
+Thus ngspice will assume that the pipe is a tty and allows one to run in
+interactive mode.
+.PP
+Further arguments are taken to be SPICE input decks, which are read
+and saved.
+(If batch mode is requested then they are run immediately.)
+.SH "ENVIRONMENT"
+.TP
+\fBSPICE_LIB_DIR\fP
+.TP
+\fBSPICE_EXEC_DIR\fP
+.TP
+\fBSPICE_HOST\fP
+.TP
+\fBSPICE_BUGADDR\fP
+.TP
+\fBSPICE_EDITOR\fP
+.TP
+\fBSPICE_ASCIIRAWFILE\fP  default  \fI0\fP
+Format of the rawfile.
+\fI0\fP for binary, and \fI1\fP for ascii.
+.TP
+\fBSPICE_NEWS\fP  default  \fI$SPICE_LIB_DIR/news\fP
+A file which is copied verbatim to stdout when ngspice starts in interactive mode.
+.TP
+\fBSPICE_MFBCAP\fP  default  \fI$SPICE_LIB_DIR/mfbcap\fP
+.TP
+\fBSPICE_HELP_DIR\fP  default  \fI$SPICE_LIB_DIR/helpdir\fP
+.TP
+\fBSPICE_SCRIPTS\fP  default  \fI$SPICE_LIB_DIR/scripts\fP
+In this directory the \fIspinit\fP file will be searched.
+.TP
+\fBSPICE_PATH\fP  default  \fI$SPICE_EXEC_DIR/ngspice\fP
+.PP
+various undocumented ngspice centric environment variables :
+.TP
+\fBNGSPICE_MEAS_PRECISION\fP
+.TP
+\fBSPICE_NO_DATASEG_CHECK\fP
+.PP
+Common environment variables :
+.TP
+\fBTERM\fP \fBLINES\fP \fBCOLS\fP \fBDISPLAY\fP \fBHOME\fP \fBPATH\fP \fBEDITOR\fP \fBSHELL\fP
+.TP
+\fBPOSIXLY_CORRECT\fP
+.SH "FILES"
+.TP
+\fI$SPICE_LIB_DIR/scripts/spinit\fP
+The System's Initialisation File.
+.TP
+\fI\&.spiceinit\fP  or  \fI$HOME/.spiceinit\fP
+The User's Initialisation File.
+.SH "SEE ALSO"
+sconvert(1), ngnutmeg(1), mfb(3), writedata(3), and
+.br
+\*[ngspice] User's Manual at \fBhttp://ngspice.sourceforge.net/docs.html\fP
+.SH "BUGS"
+Please report bugs to the ngspice project via
+.br
+\fBhttp://ngspice.sourceforge.net/bugrep.html\fP
+.SH "AUTHORS"
+\fBspice3\fP:  Tom Quarles (quarles@cad.berkeley.edu)
+.br
+\fBnutmeg\fP: User interface: Wayne Christopher (faustus@cad.berkeley.edu)
+.br
+\fBngspice\fP: various authors (see \fBhttp://sourceforge.net/projects/ngspice/\fP)
+.\" Local Variables:
+.\" mode: nroff
+.\" End:
