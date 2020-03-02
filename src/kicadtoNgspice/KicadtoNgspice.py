@@ -217,7 +217,7 @@ class MainWindow(QtGui.QWidget):
         # self.tabWidget.TabShape(QtGui.QTabWidget.Rounded)
         self.tabWidget.addTab(self.analysisTab, "Analysis")
         self.tabWidget.addTab(self.sourceTab, "Source Details")
-        self.tabWidget.addTab(self.modelTab, "NgSpice Model")
+        self.tabWidget.addTab(self.modelTab, "Ngspice Model")
         self.tabWidget.addTab(self.deviceModelTab, "Device Modeling")
         self.tabWidget.addTab(self.subcircuitTab, "Subcircuits")
         self.mainLayout = QtGui.QVBoxLayout()

@@ -102,9 +102,9 @@ class Source(QtGui.QWidget):
                             if child.tag == templist2[0] and \
                                     child.text == line[2]:
                                 self.entry_var[self.count] \
-                                    .setText(str(child[0].text))
+                                    .setText(child[0].text)
                                 self.entry_var[self.count + 1] \
-                                    .setText(str(child[1].text))
+                                    .setText(child[1].text)
                     except BaseException:
                         pass
                     # Value Need to check previuouse value
@@ -148,7 +148,7 @@ class Source(QtGui.QWidget):
                             if child.tag == templist2[0] \
                                     and child.text == line[2]:
                                 self.entry_var[self.count] \
-                                    .setText(str(child[0].text))
+                                    .setText(child[0].text)
                     except BaseException:
                         pass
 
@@ -192,7 +192,7 @@ class Source(QtGui.QWidget):
                                 if child.tag == templist2[0] \
                                         and child.text == line[2]:
                                     self.entry_var[self.count] \
-                                        .setText(str(child[it-4].text))
+                                        .setText(child[it-4].text)
                         except BaseException:
                             pass
 
@@ -235,7 +235,7 @@ class Source(QtGui.QWidget):
                                 if child.tag == templist2[0] \
                                         and child.text == line[2]:
                                     self.entry_var[self.count] \
-                                        .setText(str(child[it-4].text))
+                                        .setText(child[it-4].text)
                         except BaseException:
                             pass
 
@@ -275,7 +275,7 @@ class Source(QtGui.QWidget):
                             if child.tag == templist2[0] \
                                     and child.text == line[2]:
                                 self.entry_var[self.count] \
-                                    .setText(str(child[0].text))
+                                    .setText(child[0].text)
                     except BaseException:
                         pass
 
@@ -318,7 +318,7 @@ class Source(QtGui.QWidget):
                                 if child.tag == templist2[0] \
                                         and child.text == line[2]:
                                     self.entry_var[self.count] \
-                                        .setText(str(child[it-4].text))
+                                        .setText(child[it-4].text)
                         except BaseException:
                             pass
 

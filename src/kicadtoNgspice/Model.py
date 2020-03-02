@@ -82,8 +82,7 @@ class Model(QtGui.QWidget):
                                 if child.text == line[2] \
                                         and child.tag == line[3]:
                                     self.obj_trac.model_entry_var
-                                    [self.nextcount].setText(
-                                                        str(child[i].text))
+                                    [self.nextcount].setText(child[i].text)
                                     i = i + 1
                         except BaseException:
                             pass
@@ -108,7 +107,7 @@ class Model(QtGui.QWidget):
                         for child in root:
                             if child.text == line[2] and child.tag == line[3]:
                                 self.obj_trac.model_entry_var[self.nextcount] \
-                                                .setText(str(child[i].text))
+                                                .setText(child[i].text)
                                 i = i + 1
                     except BaseException:
                         pass
