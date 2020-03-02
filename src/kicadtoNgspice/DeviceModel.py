@@ -86,10 +86,9 @@ class DeviceModel(QtGui.QWidget):
 
                 try:
                     for child in root:
-                        if child.tag[0] == eachline[0] \
-                                and child.tag[1] == eachline[1]:
-                            # print("DEVICE MODEL MATCHING---", child.tag[0], \
-                            #       child.tag[1], eachline[0], eachline[1])
+                        if child.tag == words[0]:
+                            # print("DEVICE MODEL MATCHING---", \
+                            #       child.tag, words[0])
                             try:
                                 if os.path.exists(child[0].text):
                                     self.entry_var[self.count] \
@@ -150,10 +149,9 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for child in root:
-                        if child.tag[0] == eachline[0] \
-                                and child.tag[1] == eachline[1]:
-                            # print("DEVICE MODEL MATCHING---", child.tag[0], \
-                            #  child.tag[1], eachline[0], eachline[1])
+                        if child.tag == words[0]:
+                            # print("DEVICE MODEL MATCHING---", \
+                            #       child.tag, words[0])
                             try:
                                 if os.path.exists(child[0].text):
                                     path_name = child[0].text
@@ -213,10 +211,9 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for child in root:
-                        if child.tag[0] == eachline[0] \
-                                and child.tag[1] == eachline[1]:
-                            # print("DEVICE MODEL MATCHING---", child.tag[0], \
-                            #       child.tag[1], eachline[0], eachline[1])
+                        if child.tag == words[0]:
+                            # print("DEVICE MODEL MATCHING---", \
+                            #       child.tag, words[0])
                             try:
                                 if os.path.exists(child[0].text):
                                     self.entry_var[self.count] \
@@ -326,10 +323,9 @@ class DeviceModel(QtGui.QWidget):
                 # global path_name
                 try:
                     for child in root:
-                        if child.tag[0] == eachline[0] \
-                                and child.tag[1] == eachline[1]:
-                            # print("DEVICE MODEL MATCHING---", child.tag[0], \
-                            #       child.tag[1], eachline[0], eachline[1])
+                        if child.tag == words[0]:
+                            # print("DEVICE MODEL MATCHING---", \
+                            #       child.tag, words[0])
                             while i <= end:
                                 self.entry_var[i].setText(child[i-beg].text)
                                 if (i - beg) == 0:
