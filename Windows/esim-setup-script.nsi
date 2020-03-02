@@ -1,6 +1,6 @@
 ;NSIS Modern User Interface
 ;Start Menu Folder Selection Example Script
-;Modified by Fahim Khan, Saurabh Bansode
+;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar - 20_08_2019
 ;Made by eSim Team, FOSSEE, IIT Bombay
 
 ;--------------------------------
@@ -14,18 +14,24 @@
 
 ;General
 
-;Name and file
-	;Name "eSim"
-	;OutFile "eSim-Installer.exe"
-	
-!define PRODUCT_NAME "eSim"
-!define PRODUCT_VERSION "1.1.2"
+!define PRODUCT_NAME "eSim" 
+!define PRODUCT_VERSION "1.1.2.0"
+!define VERSION "1.1.2.0"
 !define PRODUCT_PUBLISHER "FOSSEE"
 !define PRODUCT_WEB_SITE "http://fossee.in"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
-	
-  
+
+VIAddVersionKey  "ProductName" "eSim"
+VIProductVersion "${PRODUCT_VERSION}"
+VIFileVersion "${VERSION}"
+VIAddVersionKey "FileVersion" "${VERSION}"
+VIAddVersionKey  "CompanyName" "FOSSEE @ IIT-B"
+VIAddVersionKey "LegalCopyright" "Copyright (C) 2007 Free Software Foundation,  Inc."
+VIAddVersionKey "FileDescription" "eSim Installer"
+
+
+
 ;Default installation folder
   InstallDir "C:\"
   
@@ -33,7 +39,7 @@
   InstallDirRegKey HKLM "Software\eSim" ""
 
 ;Request application privileges for Windows Vista
-  RequestExecutionLevel admin
+  RequestExecutionLevel user
   
 ;--------------------------------
 ;Variables
@@ -42,11 +48,10 @@
 ;--------------------------------
 ;Interface Settings
   !define MUI_ABORTWARNING
-  !define Python_HOME "C:\Python33"
+  !define Python_HOME "C:\Python27"
 ;--------------------------------
 
 ;Pages
-  
   
   !insertmacro MUI_PAGE_LICENSE "LICENSE.rtf"
   !insertmacro MUI_PAGE_COMPONENTS
@@ -80,17 +85,9 @@ OutFile "eSim-Installer.exe"
 Section "Ngspice circuit simulator" SecDummy
 
   SetOutPath "$INSTDIR"
-  
 ;ADD YOUR OWN FILES HERE...
-;ZipDLL::extractall "$EXEDIR\spice.zip" "C:\"
-;ZipDLL::extractall "$EXEDIR\six.zip" "C:\Python33"
-;ZipDLL::extractall "$EXEDIR\dateutil.zip" "C:\Python33"
-;ZipDLL::extractall "$EXEDIR\eSim.zip" "$INSTDIR\"
-
-CopyFiles "$EXEDIR\spice" "C:\"
-CopyFiles "$EXEDIR\six" "C:\Python33"
-CopyFiles "$EXEDIR\dateutil" "C:\Python33"
-CopyFiles "$EXEDIR\eSim" "$INSTDIR\"
+ZipDLL::extractall "$EXEDIR\spice.zip" "C:\"
+ZipDLL::extractall "$EXEDIR\eSim.zip" "$INSTDIR\"
 
 ;Copying Folder to install directory
 SetOutPath "$INSTDIR\eSim"
@@ -110,61 +107,72 @@ SetOutPath "$INSTDIR\eSim"
   
   !insertmacro MUI_STARTMENU_WRITE_END
  
+CreateDirectory "$PROFILE\AppData\Roaming\kicad"
+; will replace the kicad folder. If there is not one, it will create
+CopyFiles "$PROFILE\AppData\Roaming\kicad\fp-lib-table" "$PROFILE\AppData\Roaming\kicad\fp-lib-table-backup"
+CopyFiles "$PROFILE\AppData\Roaming\kicad\fp-lib-table-online" "$PROFILE\AppData\Roaming\kicad\fp-lib-table-online-backup"
+CopyFiles "$EXEDIR\dependencies\OfflineFiles\fp-lib-table" "$PROFILE\AppData\Roaming\kicad\"
+CopyFiles "$EXEDIR\dependencies\OfflineFiles\fp-lib-table-online" "$PROFILE\AppData\Roaming\kicad\"
 SectionEnd
 
 Section -Prerequisites
   ;SetOutPath $INSTDIR\Prerequisites
   
   MessageBox MB_OK "Installing Python" 
-      ExecWait '"msiexec" /i "$EXEDIR\dependencies\python-3.3.0.msi"'
+      ExecWait '"msiexec" /i "$EXEDIR\dependencies\python-2.7.10.msi"'
 	  
   ;Setting Environment Variable for Python
+  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "C:\Python27"
   
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "C:\Python33"
-  
-	
   
   MessageBox MB_OK "Installing PyQT4" 
-      ExecWait "$EXEDIR\dependencies\PyQt4-4.10.4-gpl-Py3.3-Qt4.8.5-x32.exe"
+      ExecWait "$EXEDIR\dependencies\PyQt4-4.10.4-gpl-Py2.7-Qt4.8.6-x32"
   
- 
+  MessageBox MB_OK "Installing Numpy"
+	  ExecWait "$EXEDIR\dependencies\numpy-1.9.0-win32-superpack-python2.7.exe"
 	  
   MessageBox MB_OK "Installing Matplotlib" 
-      ExecWait "$EXEDIR\dependencies\matplotlib-1.4.0.win32-py3.3.exe"
+      ExecWait "$EXEDIR\dependencies\matplotlib-1.4.0.win32-py2.7.exe"
 	  
-  MessageBox MB_OK "Installing Numpy"
-	  ExecWait "$EXEDIR\dependencies\numpy-1.9.0-win32-superpack-python3.3.exe"	  
+  MessageBox MB_OK "Installing dateutil for matplotlib"
+	  ExecWait "$EXEDIR\dependencies\python-dateutil-2.2.win32-py2.7.exe"
 	  
- ; MessageBox MB_OK "Installing Python-dateutil"
-	;  ExecWait '"whlexec" /i "$EXEDIR\dependencies\python_dateutil-2.6.0-py2.py3-none-any.whl"'
-	  
- ; MessageBox MB_OK "Installing dateutil for matplotlib"
-	;  ExecWait "$EXEDIR\dependencies\python-dateutil-2.2.win32-py2.7.exe"
-	  
-; MessageBox MB_OK "Installing six for matplotlib"
-;	  ExecWait '"whlexec" /i "$EXEDIR\dependencies\six-1.12.0-py2.py3-none-any.whl"'
+ MessageBox MB_OK "Installing six for matplotlib"
+	  ExecWait "$EXEDIR\dependencies\six-1.8.0.win32-py2.7.exe" 
 
  MessageBox MB_OK "Installing pyparsing for matplotlib"
-	  ExecWait "$EXEDIR\dependencies\pyparsing-2.0.2.win32-py3.3.exe"
+	  ExecWait "$EXEDIR\dependencies\pyparsing-2.0.2.win32-py2.7.exe"
 	 
  
  
   MessageBox MB_OK "Installing KiCad"
-  ExecWait "$EXEDIR\dependencies\kicad-4.0.7-i686.exe"
+    ExecWait "$EXEDIR\dependencies\kicad-4.0.7-i686.exe"
+
+
   Goto endActiveSync
   endActiveSync:
  
-  
+
   ${If} ${RunningX64}
+    
 		${EnvVarUpdate} $0 "PATH" "A" "HKLM" "C:\Program Files (x86)\KiCad\bin"
 		CopyFiles "$EXEDIR\dependencies\library\*.lib" "C:\Program Files (x86)\KiCad\share\library"
 		CopyFiles "$EXEDIR\dependencies\library\*.dcm" "C:\Program Files (x86)\KiCad\share\library"
 		CopyFiles "$EXEDIR\dependencies\template\kicad.pro" "C:\Program Files (x86)\KiCad\share\template"
-		
+
 		CopyFiles "$EXEDIR\dependencies\library\*.lib" "C:\Program Files (x86)\KiCad\share\kicad\library"
 		CopyFiles "$EXEDIR\dependencies\library\*.dcm" "C:\Program Files (x86)\KiCad\share\kicad\library"
 		CopyFiles "$EXEDIR\dependencies\template\kicad.pro" "C:\Program Files (x86)\KiCad\share\kicad\template"
- ${Else}
+
+		CopyFiles "$EXEDIR\dependencies\OfflineFiles\TerminalBlock_Altech_AK300-2_P5.00mm.kicad_mod" "C:\Program Files (x86)\KiCad\share\kicad\modules\Connectors_Terminal_Blocks.pretty\"
+		CopyFiles "$EXEDIR\dependencies\OfflineFiles\TO-220-3_Vertical.kicad_mod" "C:\Program Files (x86)\KiCad\share\kicad\modules\TO_SOT_Packages_THT.pretty\"
+
+
+    MessageBox MB_OK "Setting Permissions..."
+      ExecWait "$EXEDIR\dependencies\permission (x86).bat"
+
+  ${Else}
+    
 		${EnvVarUpdate} $0 "PATH" "A" "HKLM" "C:\Program Files\KiCad\bin"
 		CopyFiles "$EXEDIR\dependencies\library\*.lib" "C:\Program Files\KiCad\share\library"
 		CopyFiles "$EXEDIR\dependencies\library\*.dcm" "C:\Program Files\KiCad\share\library"
@@ -173,16 +181,23 @@ Section -Prerequisites
 		CopyFiles "$EXEDIR\dependencies\library\*.lib" "C:\Program Files\KiCad\share\kicad\library"
 		CopyFiles "$EXEDIR\dependencies\library\*.dcm" "C:\Program Files\KiCad\share\kicad\library"
 		CopyFiles "$EXEDIR\dependencies\template\kicad.pro" "C:\Program Files\KiCad\share\kicad\template"
+
+		CopyFiles "$EXEDIR\dependencies\OfflineFiles\TerminalBlock_Altech_AK300-2_P5.00mm.kicad_mod" "C:\Program Files\KiCad\share\kicad\modules\Connectors_Terminal_Blocks.pretty\"
+		CopyFiles "$EXEDIR\dependencies\OfflineFiles\TO-220-3_Vertical.kicad_mod" "C:\Program Files\KiCad\share\kicad\modules\TO_SOT_Packages_THT.pretty\"
+
+
+    MessageBox MB_OK "Setting Permissions..."
+      ExecWait "$EXEDIR\dependencies\permission.bat"
+
  ${EndIf}    
- 
+		
  ;Setting Env Variable for ngspice 
  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "C:\spice\bin"
  
  
  
- 
  SectionEnd
- 
+
  Section -AdditionalIcons
   SetOutPath $INSTDIR
   CreateDirectory "$SMPROGRAMS\eSim"
@@ -221,18 +236,21 @@ Section Uninstall
   Delete "$SMPROGRAMS\eSim\Uninstall.lnk"
   
   ${If} ${RunningX64}
-		${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "C:\Program Files (x86)\KiCad\bin"
-		
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "C:\Program Files (x86)\KiCad\bin"
+    
  ${Else}
-		${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "C:\Program Files\KiCad\bin"
-		
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "C:\Program Files\KiCad\bin"
+    
  ${EndIf}    
  
  ;Setting Env Variable for ngspice 
  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "C:\spice\bin"
 
   RMDir "$SMPROGRAMS\eSim"
-  RMDir /r "$INSTDIR\"
+  ;RMDir "$INSTDIR\eSim"
+  ;RMDir /r "$INSTDIR\"
+  RMDir /r "$INSTDIR\eSim"
+  Delete "$DESKTOP\eSim.lnk" 
 
   DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
   SetAutoClose true
