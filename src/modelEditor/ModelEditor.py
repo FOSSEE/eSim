@@ -121,7 +121,7 @@ class ModelEditorclass(QtGui.QWidget):
             self.modeltable.setHidden(True)
         except BaseException:
             pass
-        os.chdir(self.savepathtest)
+
         # Opens new dialog box
         text, ok = QtGui.QInputDialog.getText(
             self, 'New Model', 'Enter Model Name:')
@@ -312,7 +312,6 @@ class ModelEditorclass(QtGui.QWidget):
             `self.createtable(path)`
         - Handle exception of no file selected
         '''
-        os.chdir(self.savepathtest)
         self.newflag = 0
         self.addbtn.setHidden(True)
         self.types.setHidden(True)
@@ -600,6 +599,12 @@ class ModelEditorclass(QtGui.QWidget):
                 ' library created at ' +
                 os.getcwd())
         txtfile.close()
+
+        msg = "Model saved successfully!"
+        QtGui.QMessageBox.information(
+            self, "Information", msg, QtGui.QMessageBox.Ok
+        )
+
         os.chdir(defaultcwd)
 
     def validation(self, text):
@@ -654,6 +659,11 @@ class ModelEditorclass(QtGui.QWidget):
 
         self.obj_appconfig.print_info('Updated library ' + libpath)
 
+        msg = "Model saved successfully!"
+        QtGui.QMessageBox.information(
+            self, "Information", msg, QtGui.QMessageBox.Ok
+        )
+
     def removeparameter(self):
         '''
         - Get the index of the current selected item
@@ -676,7 +686,6 @@ class ModelEditorclass(QtGui.QWidget):
         - Save it in `User Libraries` with the given name,
         and input from uploaded file
         '''
-        os.chdir(self.savepathtest)
         self.addbtn.setHidden(True)
         self.removebtn.setHidden(True)
         self.modeltable.setHidden(True)
