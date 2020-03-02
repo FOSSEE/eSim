@@ -1,0 +1,1 @@
+# Connectors_Amphenol.pretty
