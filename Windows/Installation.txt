@@ -1,5 +1,13 @@
-1) Click on Setup.exe and select "Run as administrator". Installation process needs to be done with administrator privileges, otherwise path variables are not set correctly.
-2) While selecting path where you want eSim to be installed, be sure to select a folder/directory which doesn't have any spaces in them. Default location is C:\Program Files. Ideally you should create a new folder which does not have any spaces in the name under your choice of drive(C:/ , D:/ etc).
-3) Once installation is complete, a shortcut with eSim logo will be created on your desktop. You can run eSim by double clicking on the shortcut. Or you can go to the directory where eSim is installed using command prompt, and type change directory to 'src/frontEnd' , then run the command "python Application.py" excluding double quotes.
-4) When creating new projects under eSim, make sure there are no spaces in the name you are giving the project to.
-5) If you face difficulties while installation or while using eSim, please refer to the questions under https://esim.fossee.in/forum . If you can't find solution to your query in the forum's answered questions, you can post your questions on the same forum, or you can contact us on contact-esim@fossee.in
+1. After downloading eSim for Windows from https://esim.fossee.in/, extract it. Disable the antivirus (if any).
+
+2. Now double-click on "eSim-<version>_install.exe" to start the installation process and then follow the instruction.
+
+3. While selecting path where you want eSim to be installed, be sure to select a directory which doesn't have any spaces in them. Default location is "C:\FOSSEE\". Ideally you should create a new folder which does not have any spaces in the name under your choice of drive(C:\ , D:\ etc).
+
+	Note : Please make sure you do not select path/folder for which you don't have permissions to access it (Example : "C:\Program Files\" or "C:\Program Files (x86)\")
+
+4. Once installation is complete, a shortcut with "eSim" logo will be created on your Desktop. You can run eSim by double clicking on the shortcut. Or you can go to the directory where eSim is installed using command prompt, and then run the command "eSim" excluding double quotes.
+
+5. When creating new projects under eSim, make sure there are no spaces in the name you are giving to the project.
+
+6. If you face difficulties while installation or while using eSim, please refer https://esim.fossee.in/forum for similar questions. If you can't find solution to your query in the forum's answered questions, you can post your questions on the same forum, or you can write to us on contact-esim@fossee.in
