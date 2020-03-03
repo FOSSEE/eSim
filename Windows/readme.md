@@ -4,6 +4,9 @@ eSim Installer (Windows OS)
 
 It contains all the documenation for making eSim executable (using PyInstaller) and eSim Installation Script on Windows 7 and above.
 
+> Note : Do not develop eSim on Windows OS. Work only with `installers` branch on Windows OS and do development on Linux OS.
+> Reference : https://stackoverflow.com/questions/37672886/cannot-get-rid-of-unstaged-files-in-git-on-my-local
+
 ## eSim Executable:
 
 1. Download and install "Python-3.5.2", "Git For Windows". Use "Git Bash" for all following shell commands.
