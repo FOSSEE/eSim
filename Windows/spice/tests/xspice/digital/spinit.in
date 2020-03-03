@@ -1,3 +1,0 @@
-codemodel @top_builddir@/src/xspice/icm/digital/digital.cm
-set sourcepath = ( $ngspice_vpath . )
-set filetype=binary
