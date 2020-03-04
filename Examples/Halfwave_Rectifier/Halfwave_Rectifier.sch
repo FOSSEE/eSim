@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:Halfwave_Rectifier-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -9,7 +10,6 @@ LIBS:eSim_Power
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
-LIBS:Halfwave_Rectifier-rescue
 LIBS:power
 LIBS:device
 LIBS:transistors
@@ -39,6 +39,7 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
+LIBS:eSim_PSpice
 LIBS:Halfwave_Rectifier-cache
 EELAYER 25 0
 EELAYER END
@@ -55,7 +56,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L D D1
+L D-RESCUE-Halfwave_Rectifier D1
 U 1 1 5593CBB8
 P 5700 2900
 F 0 "D1" H 5700 3000 50  0000 C CNN

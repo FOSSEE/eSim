@@ -1,5 +1,4 @@
 # =========================================================================
-#
 #          FILE: Appconfig.py
 #
 #         USAGE: ---
@@ -11,11 +10,11 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
-#       CREATED: Wednesday 04 February 2015
-#      REVISION:  ---
+#       CREATED: Tuesday 24 February 2015
+#      REVISION: Friday 14 February 2020
 # =========================================================================
-
 
 from PyQt4 import QtGui
 import os
@@ -31,26 +30,38 @@ class Appconfig(QtGui.QWidget):
     This class also contains function for
     - Printing error.
     - Showing warnings.
-    - Dispalying information.
+    - Displaying information.
     """
 
     # Home directory
-    home = os.path.join(os.path.expanduser("~"), "eSim-Workspace")
+    try:
+        file = open(os.path.join(
+            os.path.expanduser("~"), ".esim/workspace.txt"), 'r'
+        )
+        workspace_check, home = file.readline().split(' ', 1)
+        file.close()
+    except IOError:
+        home = os.path.join(os.path.expanduser("~"), "eSim-Workspace")
+        workspace_check = 0
+
     default_workspace = {"workspace": home}
     # Current Project detail
     current_project = {"ProjectName": None}
     # Current Subcircuit detail
     current_subcircuit = {"SubcircuitName": None}
     # Workspace detail
-    workspace_text = '''eSim stores your project in a folder called a \
-    eSim-Workspace. You can choose a different workspace folder to use\
-     for this session.'''
+    workspace_text = "eSim stores your project in a folder called "
+    workspace_text += "eSim-Workspace. You can choose a different "
+    workspace_text += "workspace folder to use for this session."
+
     procThread_list = []
-    proc_dict = {}
-    # holds the pids of all external windows corresponds to the current project
+    proc_dict = {}  # hold pids of all external windows of the current project
     dock_dict = {}  # holds all dockwidgets
-    dictPath = os.path.join(os.path.expanduser("~"), ".projectExplorer.txt")
-    noteArea = {}
+    dictPath = {"path": os.path.join(
+        default_workspace["workspace"], ".projectExplorer.txt")
+    }
+
+    noteArea = {"Note": []}
 
     parser_esim = SafeConfigParser()
     parser_esim.read(
@@ -63,11 +74,21 @@ class Appconfig(QtGui.QWidget):
     # Try catch added, since eSim cannot be accessed under parser for Win10
     try:
         modelica_map_json = parser_esim.get('eSim', 'MODELICA_MAP_JSON')
-    except BaseException:
-        print("Cannot access eSim in parser")
+    except BaseException as e:
+        print("Cannot access Modelica map file --- .esim folder")
+        print(str(e))
+
+    # Open file and read KiCad config path
+    try:
+        file = open('library/supportFiles/kicad_config_path.txt', 'r')
+        kicad_path = file.read().rstrip()
+        file.close()
+    except BaseException as e:
+        kicad_path = None
+        print(str(e))
 
     try:
-        project_explorer = json.load(open(dictPath))
+        project_explorer = json.load(open(dictPath["path"]))
     except BaseException:
         project_explorer = {}
     process_obj = []
@@ -76,8 +97,8 @@ class Appconfig(QtGui.QWidget):
         super(Appconfig, self).__init__()
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = 'v1.1'
-        self._AUTHOR = 'Fahim'
+        self._VERSION = 'v2.0.0'
+        self._AUTHOR = 'Fahim, Rahul'
 
         # Application geometry setting
         self._app_xpos = 100

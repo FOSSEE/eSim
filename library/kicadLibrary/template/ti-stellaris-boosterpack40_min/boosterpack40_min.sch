@@ -1,0 +1,135 @@
+EESchema Schematic File Version 2
+LIBS:boosterpack
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:boosterpack40_min-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "19 oct 2012"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L GND #PWR01
+U 1 1 5080AA99
+P 9150 2300
+F 0 "#PWR01" H 9150 2050 50  0001 C CNN
+F 1 "GND" H 9150 2150 50  0000 C CNN
+F 2 "" H 9150 2300 50  0000 C CNN
+F 3 "" H 9150 2300 50  0000 C CNN
+	1    9150 2300
+	0    1    1    0   
+$EndComp
+$Comp
+L VCC #PWR02
+U 1 1 5080AA9F
+P 9150 750
+F 0 "#PWR02" H 9150 600 50  0001 C CNN
+F 1 "VCC" H 9150 900 50  0000 C CNN
+F 2 "" H 9150 750 50  0000 C CNN
+F 3 "" H 9150 750 50  0000 C CNN
+	1    9150 750 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Ti_Booster_40_J1 J1
+U 1 1 5080DB5C
+P 9750 1200
+F 0 "J1" H 9700 1850 60  0000 C CNN
+F 1 "TI_BOOSTER_40_J1" H 9750 550 60  0000 C CNN
+F 2 "Connect:SIL-10" V 10200 1200 60  0000 C CNN
+F 3 "" H 9750 1200 60  0001 C CNN
+	1    9750 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Ti_Booster_40_J2 J2
+U 1 1 5080DBF4
+P 9750 2750
+F 0 "J2" H 9700 3400 60  0000 C CNN
+F 1 "TI_BOOSTER_40_J2" H 9750 2100 60  0000 C CNN
+F 2 "Connect:SIL-10" V 10200 2750 60  0000 C CNN
+F 3 "" H 9750 2750 60  0001 C CNN
+	1    9750 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L Ti_Booster_40_J3 J3
+U 1 1 5080DC03
+P 9750 4300
+F 0 "J3" H 9700 4950 60  0000 C CNN
+F 1 "TI_BOOSTER_40_J3" H 9750 3650 60  0000 C CNN
+F 2 "Connect:SIL-10" V 10200 4300 60  0000 C CNN
+F 3 "" H 9750 4300 60  0001 C CNN
+	1    9750 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Ti_Booster_40_J4 J4
+U 1 1 5080DC12
+P 9750 5850
+F 0 "J4" H 9700 6500 60  0000 C CNN
+F 1 "TI_BOOSTER_40_J4" H 9750 5200 60  0000 C CNN
+F 2 "Connect:SIL-10" V 10200 5850 60  0000 C CNN
+F 3 "" H 9750 5850 60  0001 C CNN
+	1    9750 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR03
+U 1 1 5080DC79
+P 9150 3950
+F 0 "#PWR03" H 9150 3700 50  0001 C CNN
+F 1 "GND" H 9150 3800 50  0000 C CNN
+F 2 "" H 9150 3950 50  0000 C CNN
+F 3 "" H 9150 3950 50  0000 C CNN
+	1    9150 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L +5V #PWR04
+U 1 1 5080DC8B
+P 9150 3850
+F 0 "#PWR04" H 9150 3700 50  0001 C CNN
+F 1 "+5V" H 9150 3990 50  0000 C CNN
+F 2 "" H 9150 3850 50  0000 C CNN
+F 3 "" H 9150 3850 50  0000 C CNN
+	1    9150 3850
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

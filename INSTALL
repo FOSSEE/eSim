@@ -14,13 +14,13 @@ Table of contents
     
    After downloading eSim, extract it using: 
   
-   $ unzip eSim.zip
+   $ unzip eSim-2.0.zip
 
    Now change directories in to the top-level source directory (where this INSTALL file can be found).
 
    To install eSim and other dependecies run the following command.
 
-   $ ./install-linux.sh --install
+   $ ./install-eSim.sh --install
 
    Above script will install eSim along with dependencies.
 
@@ -30,19 +30,18 @@ Table of contents
    =================
    
    A. Through Terminal
-   $ esim
+   		
+   		$ esim
 
    B. Double click eSim desktop icon
-
-   C. From command line : Do `cd src/fronEnd` and type `python3 Application.py` to open eSim.
 
 
 2. eSim installation in Windows
 
-   After downloading eSim for Windows from esim.fossee.in , extract it.
+   After downloading eSim for Windows from esim.fossee.in , extract it. Disable the antivirus (if any).
 
    Now right click the `Setup.exe` and `run it as Administrator`. And then follow the instruction.
 
-   Note : Please make you run it as administrator otherwise it won't set the environment variable properly.
+   Note : Please make sure you run it as administrator otherwise it won't set the environment variable properly.
 
 

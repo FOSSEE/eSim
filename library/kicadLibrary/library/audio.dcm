@@ -1,0 +1,259 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP LM1875
+D 20W Audio Power Amplifier, TO220-5
+K LM1875 Amplifier 20W
+F http://www.national.com/ds/LM/LM1875.pdf
+$ENDCMP
+#
+$CMP LM1876
+D Dual 20W Overture Seriers Audio Power Amplifier, with Mute Standby Mode, TO220-15 (MultiWatt)
+K LM1876 Overture Amplifier Dual 20W
+F http://www.national.com/ds/LM/LM1876.pdf
+$ENDCMP
+#
+$CMP LM1877M
+D 2W/8R Dual Audio Power Amplifier, Supply Voltage 6-24V, SO14L
+K Dual Audio Amplifier 2W 24V
+F ns/lm1877.pdf
+$ENDCMP
+#
+$CMP LM1877N
+D 2W/8R Dual Audio Power Amplifier, Supply Voltage 6-24V, DIP14
+K Dual Audio Amplifier 2W 24V
+F ns/lm1877.pdf
+$ENDCMP
+#
+$CMP LM3886T
+D Single 68W Overture Seriers Audio Power Amplifier, with Mute Mode, TO220-11 (MultiWatt)
+K LM3886 Overture Amplifier Single 86W
+F http://www.ti.com/lit/ds/symlink/lm3886.pdf
+$ENDCMP
+#
+$CMP LM3886TF
+D Single 68W Overture Seriers Audio Power Amplifier, with Mute Mode, PFM-11 (Plastic MultiWatt)
+K LM3886 Overture Amplifier Single 86W
+F http://www.ti.com/lit/ds/symlink/lm3886.pdf
+$ENDCMP
+#
+$CMP LM4810_TSSOP
+D Dual105mW Headphone Amplifier, Shutdown Mode
+K headphone amplifier
+F http://www.ti.com/lit/ds/symlink/lm4810.pdf
+$ENDCMP
+#
+$CMP LM4811
+D Dual105mW Headphone Amplifier, Digital Volume Control, Shutdown Mode
+K headphone amplifier digital volume
+F http://www.ti.com/lit/ds/symlink/lm4811.pdf
+$ENDCMP
+#
+$CMP LM4950TA
+D Audio 3.1W Stereo Power Amplifier, TO220-9
+K LM4950 Stereo Power Aplifier 3.1W
+F http://www.ti.com/lit/ds/symlink/lm4950.pdf
+$ENDCMP
+#
+$CMP LM4950TS
+D Audio 3.1W Stereo Power Amplifier, TO263-9
+K LM4950 Stereo Power Aplifier 3.1W
+F http://www.ti.com/lit/ds/symlink/lm4950.pdf
+$ENDCMP
+#
+$CMP LM4990
+D Audio 1.25W Mono Power Amplifier, VSSOP
+K Audio Boomer BTL Mono Amplifier
+F http://www.ti.com/lit/ds/symlink/lm4990.pdf
+$ENDCMP
+#
+$CMP MAX9814
+D Microphone Amplifier with AGC and Low-Noise Microphone Bias
+K Microphone Amplifier AGC Maxim
+F https://datasheets.maximintegrated.com/en/ds/MAX9814.pdf
+$ENDCMP
+#
+$CMP MSGEQ7
+D Graphic Equalizer Display Filter
+K equalizer filter
+F https://www.sparkfun.com/datasheets/Components/General/MSGEQ7.pdf
+$ENDCMP
+#
+$CMP NSL-32
+D Opto resistor
+K OPTO
+F opto/silonex_nsl-32sr3.pdf
+$ENDCMP
+#
+$CMP PAM8301
+D Audio 1.5W Filterless Class-D Mono Amplifier, TSOT-23-6
+K Audio Mono Filterless Class-D Amplifier
+F http://www.diodes.com/_files/datasheets/PAM8301.pdf
+$ENDCMP
+#
+$CMP PAM8302A
+D Audio 2.5W Filterless Class-D Mono Audio Amplifier
+K Audio Class D Amp
+F https://www.diodes.com/assets/Datasheets/PAM8302A.pdf
+$ENDCMP
+#
+$CMP PGA4311
+D 4 channels Audio Volume Control
+K AUDIO
+F texas\pga4311.pdf
+$ENDCMP
+#
+$CMP SSM-2017P
+D Audio low noise preamp
+K Audio PREAMP
+$ENDCMP
+#
+$CMP SSM-2018T
+D audio VCA
+K AUDIO VCA
+$ENDCMP
+#
+$CMP SSM2120P
+D Dual VCA & level detectors
+K AUDIO VCA
+$ENDCMP
+#
+$CMP SSM2122P
+D Dual VCA
+K AUDIO VCA
+$ENDCMP
+#
+$CMP SSM2165
+D 8 pins microphone preamp and compressor
+K AUDIO
+F analog-dev/ssm2165.pdf
+$ENDCMP
+#
+$CMP SSM2210
+D Audio dual matched NPN transistor
+F AUDIO
+$ENDCMP
+#
+$CMP SSM2220
+D Audiao dual Matched PNP transistor (low noise)
+K AUDIO
+$ENDCMP
+#
+$CMP STK433
+D Dual 5W Audio Power Amplifier, 4009
+K STK433 Dual 5W Amplifier Audio
+$ENDCMP
+#
+$CMP STK435
+D Dual 7W Audio Power Amplifier, 4009
+K STK435 Dual 7W Amplifier Audio
+$ENDCMP
+#
+$CMP STK436
+D Dual 10W Audio Power Amplifier, 4009
+K STK436 Dual 10W Amplifier Audio
+$ENDCMP
+#
+$CMP STK437
+D Dual 10W Audio Power Amplifier, 4009
+K STK437 Dual 10W Amplifier Audio
+$ENDCMP
+#
+$CMP STK439
+D STK435, Dual 15W Audio Power Amplifier, 4009
+K STK435 Dual 15W Amplifier Audio
+$ENDCMP
+#
+$CMP STK441
+D Dual 20W Audio Power Amplifier, 4010
+K STK441 Dual 20W Amplifier Audio
+$ENDCMP
+#
+$CMP STK443
+D Dual 25W Audio Power Amplifier, 4010
+K STK443 Dual 25W Amplifier Audio
+$ENDCMP
+#
+$CMP TDA2003H
+D 10W Car Radio Audio Amplifier, TO220-5 (PentaWatt5H)
+K TDA2003H Amplifier 10W Pentawatt
+F http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000123.pdf
+$ENDCMP
+#
+$CMP TDA2003V
+D 10W Car Radio Audio Amplifier, PentaWatt5V
+K TDA2003V Amplifier 10W Pentawatt
+F http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000123.pdf
+$ENDCMP
+#
+$CMP TDA2005R
+D 20W Bidge/Stereo Audio Amplifier for Car Radio, TO220-11 (MultiWatt11)
+K TDA2005 Amplifier 20W Multiwatt
+F http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000124.pdf
+$ENDCMP
+#
+$CMP TDA2030
+D 14W Hi-Fi Audio Amplifier, TO220-5 (PentaWatt)
+K TDA2030 Amplifier14W Pentawatt
+F http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000128.pdf
+$ENDCMP
+#
+$CMP TDA2050
+D 32W Hi-Fi Audio Amplifier, TO220-5 (PentaWatt)
+K TDA2050 Amplifier 32W Pentawatt
+F http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000131.pdf
+$ENDCMP
+#
+$CMP TDA7265
+D Stereo Audio Amplifier, 25 W + 25 W, mute and standby
+K audio amplifier, 25 W
+F http://www.st.com/resource/en/datasheet/tda7265.pdf
+$ENDCMP
+#
+$CMP TDA7265B
+D Stereo Audio Amplifier, 30 W + 30 W, mute and standby
+K audio amplifier, 30 W
+F http://www.st.com/resource/en/datasheet/tda7265b.pdf
+$ENDCMP
+#
+$CMP TDA7269A
+D Stereo Audio Amplifier, 14 W + 14 W, mute and standby
+K audio amplfier, 14 W
+F http://www.st.com/resource/en/datasheet/tda7269a.pdf
+$ENDCMP
+#
+$CMP TDA7292
+D Stereo Audio Amplifier, 40 W + 40 W, mute and standby
+K audio amplifier, 40W
+F http://www.st.com/content/ccc/resource/technical/document/datasheet/1a/b1/d0/90/8b/8d/40/fe/CD00236549.pdf/files/CD00236549.pdf/jcr:content/translations/en.CD00236549.pdf
+$ENDCMP
+#
+$CMP TDA7294HS
+D Single 100W Audio Power Amplifier, with Mute and Standby Mode, MultiWatt15H
+K TDA7294 Amplifier Single 100W
+F http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000017.pdf
+$ENDCMP
+#
+$CMP TDA7294V
+D Single 100W Audio Power Amplifier, with Mute and Standby Mode, TO220-15 (MultiWatt15V)
+K TDA7294 Amplifier Single 100W
+F http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000017.pdf
+$ENDCMP
+#
+$CMP THAT2180
+D VCA    (THAT Corporation)
+K AUDIO VCA
+F that_corporation/vca-2180x.pdf
+$ENDCMP
+#
+$CMP THAT2181
+D VCA    (THAT Corporation)
+K AUDIO VCA
+F that_corporation/vca-2181x.pdf
+$ENDCMP
+#
+$CMP TR-AUDIO-2P
+D Microphone Input Transformer (2 P 1S)
+K TRANSFO
+$ENDCMP
+#
+#End Doc Library

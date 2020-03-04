@@ -1,4 +1,4 @@
-update=Thu Mar  3 21:14:36 2016
+update=Thu Aug 29 10:53:00 2019
 version=1
 last_client=eeschema
 [general]

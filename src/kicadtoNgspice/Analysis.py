@@ -1,29 +1,27 @@
-
-from PyQt4 import QtGui
+from PyQt4 import QtGui, QtCore
 from . import TrackWidget
 import os
-# from xml.etree import ElementTree as ET
-import json
+from xml.etree import ElementTree as ET
 
 
 class Analysis(QtGui.QWidget):
     """
     - This class create Analysis Tab in KicadtoNgspice Window. 4 sections -
-    - - Select Analysis Type
-    - - AC Analysis
-    - - DC Analysis
-    - - Transient Analysis
-    - Set various track widget options here, for tracking purposes across\
-    different functions and modules -
-    - - AC_entry_var
-    - - AC_Parameter
-    - - DC_entry_var
-    - - DC_Parameter
-    - - TRAN_entry_var
-    - - TRAN_Parameter
-    - - set_Checkbox
-    - - AC_type
-    - - op_check
+      - Select Analysis Type
+      - AC Analysis
+      - DC Analysis
+      - Transient Analysis
+    - Set various track widget options here, for tracking purposes across \
+      different functions and modules -
+      - AC_entry_var
+      - AC_Parameter
+      - DC_entry_var
+      - DC_Parameter
+      - TRAN_entry_var
+      - TRAN_Parameter
+      - set_Checkbox
+      - AC_type
+      - op_check
     """
 
     def __init__(self, clarg1):
@@ -42,19 +40,21 @@ class Analysis(QtGui.QWidget):
 
     def createAnalysisWidget(self):
         """
-        - Create the main anaylsis widget overwiew
-        - - Checkbox for analysis type
-        - - Place, `AC`, `DC` and `TRANSIENT` analysis tab
-        - - `self.acbox`, `self.dcbox`,`self.trbox`...
+        - Create the main anaylsis widget overwiew:
+          - Checkbox for analysis type
+          - Place, `AC`, `DC` and `TRANSIENT` analysis tab
+          - `self.acbox`, `self.dcbox`, `self.trbox`...
         - Check for `analysis` file, if any in projDir, extract data from it
         - Else set the default checkbox to `TRAN`
         - Accordingly set state for track widget options, as `TRAN`, `AC` ...
         """
         self.grid = QtGui.QGridLayout()
-        self.grid.addWidget(self.createCheckBox(), 0, 0)
-        self.grid.addWidget(self.createACgroup(), 1, 0)
-        self.grid.addWidget(self.createDCgroup(), 2, 0)
-        self.grid.addWidget(self.createTRANgroup(), 3, 0)
+        self.setLayout(self.grid)
+
+        self.grid.addWidget(self.createCheckBox(), 0, 0, QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.createACgroup(), 1, 0, 5, 0)
+        self.grid.addWidget(self.createDCgroup(), 1, 0, 5, 0)
+        self.grid.addWidget(self.createTRANgroup(), 1, 0, 5, 0)
 
         try:
             kicadFile = self.clarg1
@@ -74,6 +74,10 @@ class Analysis(QtGui.QWidget):
                 self.acbox.setDisabled(False)
                 self.dcbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.acbox.setVisible(True)
+                self.dcbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "AC"
                 if contentlist[1] == 'lin':
                     self.Lin.setChecked(True)
@@ -90,6 +94,10 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.dcbox.setVisible(True)
+                self.acbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
             elif contentlist[0] == '.tran':
@@ -97,6 +105,10 @@ class Analysis(QtGui.QWidget):
                 self.trbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.dcbox.setDisabled(True)
+
+                self.trbox.setVisible(True)
+                self.dcbox.setVisible(False)
+                self.acbox.setVisible(False)
                 self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
             elif contentlist[0] == '.op':
@@ -104,6 +116,10 @@ class Analysis(QtGui.QWidget):
                 self.dcbox.setDisabled(False)
                 self.acbox.setDisabled(True)
                 self.trbox.setDisabled(True)
+
+                self.dcbox.setVisible(True)
+                self.acbox.setVisible(False)
+                self.trbox.setVisible(False)
                 self.check.setChecked(True)
                 self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
@@ -111,7 +127,6 @@ class Analysis(QtGui.QWidget):
             self.checkTRAN.setChecked(True)
             self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
-        self.setLayout(self.grid)
         self.show()
 
     def createCheckBox(self):
@@ -151,27 +166,39 @@ class Analysis(QtGui.QWidget):
             self.acbox.setDisabled(False)
             self.dcbox.setDisabled(True)
             self.trbox.setDisabled(True)
+
+            self.acbox.setVisible(True)
+            self.dcbox.setVisible(False)
+            self.trbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "AC"
 
         elif self.checkDC.isChecked():
             self.dcbox.setDisabled(False)
             self.acbox.setDisabled(True)
             self.trbox.setDisabled(True)
+
+            self.dcbox.setVisible(True)
+            self.acbox.setVisible(False)
+            self.trbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "DC"
 
         elif self.checkTRAN.isChecked():
             self.trbox.setDisabled(False)
             self.acbox.setDisabled(True)
             self.dcbox.setDisabled(True)
+
+            self.trbox.setVisible(True)
+            self.acbox.setVisible(False)
+            self.dcbox.setVisible(False)
             self.track_obj.set_CheckBox["ITEMS"] = "TRAN"
 
     def createACgroup(self):
         """
         - Designing of AC group in analysis tab
         - 3 radio buttons - Lin | Dec | Oct
-        - 3 input boxes, with top 2 combos\
+        - 3 input boxes, with top 2 combos
         - If previous values exist then fill default values from
-          previous value json file
+          previous value xml file
         """
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
@@ -183,17 +210,21 @@ class Analysis(QtGui.QWidget):
                 os.path.join(
                     projpath,
                     project_name +
-                    "_Previous_Values.json"),
+                    "_Previous_Values.xml"),
                 'r')
-            data = f.read()
-            json_data = json.loads(data)
+            tree = ET.parse(f)
+            parent_root = tree.getroot()
+            for child in parent_root:
+                if child.tag == "analysis":
+                    root = child
         except BaseException:
             check = 0
-            print("AC Previous Values JSON is Empty")
+            print("AC Previous Values XML is Empty")
 
         self.acbox = QtGui.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acbox.setDisabled(True)
+        self.acbox.setVisible(False)
         self.acgrid = QtGui.QGridLayout()
         self.radiobuttongroup = QtGui.QButtonGroup()
         self.Lin = QtGui.QRadioButton("Lin")
@@ -246,8 +277,7 @@ class Analysis(QtGui.QWidget):
 
         # Try setting to default value from anaylsis file
         try:
-            self.ac_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["ac"]["Start Fre Combo"])
+            self.ac_parameter[self.parameter_cnt] = str(root[0][6].text)
         except BaseException:
             self.ac_parameter[self.parameter_cnt] = "Hz"
 
@@ -266,8 +296,7 @@ class Analysis(QtGui.QWidget):
         self.ac_parameter[1] = "Hz"
 
         try:
-            self.ac_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["ac"]["Stop Fre Combo"])
+            self.ac_parameter[self.parameter_cnt] = str(root[0][7].text)
         except BaseException:
             self.ac_parameter[self.parameter_cnt] = "Hz"
 
@@ -285,46 +314,38 @@ class Analysis(QtGui.QWidget):
         ")
         if check:
             try:
-                if json_data["analysis"]["ac"]["Lin"] == "true":
+                if root[0][0].text == "true":
                     self.Lin.setChecked(True)
                     self.Dec.setChecked(False)
                     self.Oct.setChecked(False)
-                elif json_data["analysis"]["ac"]["Dec"] == "true":
+                elif root[0][1].text == "true":
                     self.Lin.setChecked(False)
                     self.Dec.setChecked(True)
                     self.Oct.setChecked(False)
-                elif json_data["analysis"]["ac"]["Oct"] == "true":
+                elif root[0][2].text == "true":
                     self.Lin.setChecked(False)
                     self.Dec.setChecked(False)
                     self.Oct.setChecked(True)
-                else:
-                    pass
 
-                self.ac_entry_var[0].setText(
-                    json_data["analysis"]["ac"]["Start Frequency"])
-                self.ac_entry_var[1].setText(
-                    json_data["analysis"]["ac"]["Stop Frequency"])
-                self.ac_entry_var[2].setText(
-                    json_data["analysis"]["ac"]["No. of points"])
-                index = self.start_fre_combo.findText(
-                    json_data["analysis"]["ac"]["Start Fre Combo"])
+                self.ac_entry_var[0].setText(root[0][3].text)
+                self.ac_entry_var[1].setText(root[0][4].text)
+                self.ac_entry_var[2].setText(root[0][5].text)
+                index = self.start_fre_combo.findText(root[0][6].text)
                 self.start_fre_combo.setCurrentIndex(index)
-                index = self.stop_fre_combo.findText(
-                    json_data["analysis"]["ac"]["Stop Fre Combo"])
+                index = self.stop_fre_combo.findText(root[0][7].text)
                 self.stop_fre_combo.setCurrentIndex(index)
 
             except BaseException:
-                print("AC Analysis JSON Parse Error")
+                print("AC Analysis XML Parse Error")
 
         return self.acbox
 
     '''
     - Below 2 functions handle combo value event listeners for
-    - - start frequency for ac
-    - - stop frequency for ac
+        - start frequency for ac
+        - stop frequency for ac
     - And accordingly set the ac_parameters
     '''
-
     def start_combovalue(self, text):
         """
         - Handle start_fre_combo box event
@@ -343,7 +364,7 @@ class Analysis(QtGui.QWidget):
 
     def set_ac_type(self):
         """
-        - Set track object for AC, according to the type of radio box selected
+        Sets track object for AC, according to the type of radio box selected.
         """
         self.parameter_cnt = 0
 
@@ -353,17 +374,15 @@ class Analysis(QtGui.QWidget):
             self.track_obj.AC_type["ITEMS"] = "dec"
         elif self.Oct.isChecked():
             self.track_obj.AC_type["ITEMS"] = "oct"
-        else:
-            pass
 
     def createDCgroup(self):
         """
         - Create DC area under analysis tab
         - Source 1 and 2, each having 4 input boxes as follows
-        - - Source
-        - - Start
-        - - Increment
-        - - Stop
+            - Source
+            - Start
+            - Increment
+            - Stop
         - The last 3 have combo box pertaining to their unit as well
         - Also in the end a checkbox, for operating system point analysis
         """
@@ -377,17 +396,21 @@ class Analysis(QtGui.QWidget):
                 os.path.join(
                     projpath,
                     project_name +
-                    "_Previous_Values.json"),
+                    "_Previous_Values.xml"),
                 'r')
-            data = f.read()
-            json_data = json.loads(data)
+            tree = ET.parse(f)
+            parent_root = tree.getroot()
+            for child in parent_root:
+                if child.tag == "analysis":
+                    root = child
         except BaseException:
             check = 0
-            print("DC Previous Values JSON is empty")
+            print("DC Previous Values XML is empty")
 
         self.dcbox = QtGui.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
         self.dcbox.setDisabled(True)
+        self.dcbox.setVisible(False)
         self.dcgrid = QtGui.QGridLayout()
         self.dcbox.setLayout(self.dcgrid)
 
@@ -471,8 +494,7 @@ class Analysis(QtGui.QWidget):
         self.dcgrid.addWidget(self.start_combo, 2, 2)
 
         try:
-            self.dc_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["dc"]["Start Combo"])
+            self.dc_parameter[self.parameter_cnt] = str(root[1][5].text)
         except BaseException:
             self.dc_parameter[self.parameter_cnt] = "Volts or Amperes"
 
@@ -489,8 +511,7 @@ class Analysis(QtGui.QWidget):
         self.dcgrid.addWidget(self.increment_combo, 3, 2)
 
         try:
-            self.dc_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["dc"]["Increment Combo"])
+            self.dc_parameter[self.parameter_cnt] = str(root[1][6].text)
         except BaseException:
             self.dc_parameter[self.parameter_cnt] = "Volts or Amperes"
 
@@ -507,8 +528,7 @@ class Analysis(QtGui.QWidget):
         self.dcgrid.addWidget(self.stop_combo, 4, 2)
 
         try:
-            self.dc_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["dc"]["Stop Combo"])
+            self.dc_parameter[self.parameter_cnt] = str(root[1][7].text)
         except BaseException:
             self.dc_parameter[self.parameter_cnt] = "Volts or Amperes"
 
@@ -525,8 +545,7 @@ class Analysis(QtGui.QWidget):
         self.dcgrid.addWidget(self.start_combo2, 6, 2)
 
         try:
-            self.dc_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["dc"]["Start Combo2"])
+            self.dc_parameter[self.parameter_cnt] = str(root[1][12].text)
         except BaseException:
             self.dc_parameter[self.parameter_cnt] = "Volts or Amperes"
 
@@ -543,8 +562,7 @@ class Analysis(QtGui.QWidget):
         self.dcgrid.addWidget(self.increment_combo2, 7, 2)
 
         try:
-            self.dc_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["dc"]["Increment Combo2"])
+            self.dc_parameter[self.parameter_cnt] = str(root[1][13].text)
         except BaseException:
             self.dc_parameter[self.parameter_cnt] = "Volts or Amperes"
 
@@ -562,8 +580,7 @@ class Analysis(QtGui.QWidget):
         self.dcgrid.addWidget(self.stop_combo2, 8, 2)
 
         try:
-            self.dc_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["dc"]["Stop Combo2"])
+            self.dc_parameter[self.parameter_cnt] = str(root[1][14].text)
         except BaseException:
             self.dc_parameter[self.parameter_cnt] = "Volts or Amperes"
 
@@ -573,7 +590,7 @@ class Analysis(QtGui.QWidget):
         self.check = QtGui.QCheckBox('Operating Point Analysis', self)
         try:
             self.track_obj.op_check.append(
-                str(json_data["analysis"]["dc"]["Operating Point"]))
+                str(root[1][4].text()))
         except BaseException:
             self.track_obj.op_check.append('0')
 
@@ -595,47 +612,33 @@ class Analysis(QtGui.QWidget):
         ")
         if check:
             try:
-                self.dc_entry_var[0].setText(
-                    json_data["analysis"]["dc"]["Source 1"])
-                self.dc_entry_var[1].setText(
-                    json_data["analysis"]["dc"]["Start"])
-                self.dc_entry_var[2].setText(
-                    json_data["analysis"]["dc"]["Increment"])
-                self.dc_entry_var[3].setText(
-                    json_data["analysis"]["dc"]["Stop"])
-                index = self.start_combo.findText(
-                    json_data["analysis"]["dc"]["Start Combo"])
+                self.dc_entry_var[0].setText(root[1][0].text)
+                self.dc_entry_var[1].setText(root[1][1].text)
+                self.dc_entry_var[2].setText(root[1][2].text)
+                self.dc_entry_var[3].setText(root[1][3].text)
+                index = self.start_combo.findText(root[1][5].text)
                 self.start_combo.setCurrentIndex(index)
-                index = self.increment_combo.findText(
-                    json_data["analysis"]["dc"]["Increment Combo"])
+                index = self.increment_combo.findText(root[1][6].text)
                 self.increment_combo.setCurrentIndex(index)
-                index = self.stop_combo.findText(
-                    json_data["analysis"]["dc"]["Stop Combo"])
+                index = self.stop_combo.findText(root[1][7].text)
                 self.stop_combo.setCurrentIndex(index)
-                self.dc_entry_var[4].setText(
-                    json_data["analysis"]["dc"]["Source 2"])
-                self.dc_entry_var[5].setText(
-                    json_data["analysis"]["dc"]["Start2"])
-                self.dc_entry_var[6].setText(
-                    json_data["analysis"]["dc"]["Increment2"])
-                self.dc_entry_var[7].setText(
-                    json_data["analysis"]["dc"]["Stop2"])
-                index = self.start_combo2.findText(
-                    json_data["analysis"]["dc"]["Start Combo2"])
+                self.dc_entry_var[4].setText(root[1][8].text)
+                self.dc_entry_var[5].setText(root[1][9].text)
+                self.dc_entry_var[6].setText(root[1][10].text)
+                self.dc_entry_var[7].setText(root[1][11].text)
+                index = self.start_combo2.findText(root[1][12].text)
                 self.start_combo2.setCurrentIndex(index)
-                index = self.increment_combo2.findText(
-                    json_data["analysis"]["dc"]["Increment Combo2"])
+                index = self.increment_combo2.findText(root[1][13].text)
                 self.increment_combo2.setCurrentIndex(index)
-                index = self.stop_combo2.findText(
-                    json_data["analysis"]["dc"]["Stop Combo2"])
+                index = self.stop_combo2.findText(root[1][14].text)
                 self.stop_combo2.setCurrentIndex(index)
 
-                if json_data["analysis"]["dc"]["Operating Point"] == 1:
+                if root[1][4].text == 1:
                     self.check.setChecked(True)
                 else:
                     self.check.setChecked(False)
             except BaseException:
-                print("DC Analysis JSON Parse Error")
+                print("DC Analysis XML Parse Error")
 
         return self.dcbox
 
@@ -693,17 +696,21 @@ class Analysis(QtGui.QWidget):
                 os.path.join(
                     projpath,
                     project_name +
-                    "_Previous_Values.json"),
+                    "_Previous_Values.xml"),
                 'r')
-            data = f.read()
-            json_data = json.loads(data)
+            tree = ET.parse(f)
+            parent_root = tree.getroot()
+            for child in parent_root:
+                if child.tag == "analysis":
+                    root = child
         except BaseException:
             check = 0
-            print("Transient Previous Values JSON is Empty")
+            print("Transient Previous Values XML is Empty")
 
         self.trbox = QtGui.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
         # self.trbox.setDisabled(True)
+        # self.trbox.setVisible(False)
         self.trgrid = QtGui.QGridLayout()
         self.trbox.setLayout(self.trgrid)
 
@@ -719,12 +726,10 @@ class Analysis(QtGui.QWidget):
         self.trgrid.addWidget(self.tran_entry_var[self.count], 1, 1)
         self.tran_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
-
         self.tran_entry_var[self.count] = QtGui.QLineEdit()
         self.trgrid.addWidget(self.tran_entry_var[self.count], 2, 1)
         self.tran_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
-
         self.tran_entry_var[self.count] = QtGui.QLineEdit()
         self.trgrid.addWidget(self.tran_entry_var[self.count], 3, 1)
         self.tran_entry_var[self.count].setMaximumWidth(150)
@@ -740,8 +745,7 @@ class Analysis(QtGui.QWidget):
         self.trgrid.addWidget(self.start_combobox, 1, 3)
 
         try:
-            self.tran_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["tran"]["Start Combo"])
+            self.tran_parameter[self.parameter_cnt] = str(root[2][3].text)
         except BaseException:
             self.tran_parameter[self.parameter_cnt] = "Sec"
 
@@ -756,8 +760,7 @@ class Analysis(QtGui.QWidget):
         self.step_combobox.addItem("ps")
         self.trgrid.addWidget(self.step_combobox, 2, 3)
         try:
-            self.tran_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["tran"]["Step Combo"])
+            self.tran_parameter[self.parameter_cnt] = str(root[2][4].text)
         except BaseException:
             self.tran_parameter[self.parameter_cnt] = "Sec"
 
@@ -772,8 +775,7 @@ class Analysis(QtGui.QWidget):
         self.stop_combobox.addItem("ps")
         self.trgrid.addWidget(self.stop_combobox, 3, 3)
         try:
-            self.tran_parameter[self.parameter_cnt] = str(
-                json_data["analysis"]["tran"]["Stop Combo"])
+            self.tran_parameter[self.parameter_cnt] = str(root[2][5].text)
         except BaseException:
             self.tran_parameter[self.parameter_cnt] = "Sec"
 
@@ -792,29 +794,23 @@ class Analysis(QtGui.QWidget):
         ")
         if check:
             try:
-                self.tran_entry_var[0].setText(
-                    json_data["analysis"]["tran"]["Start Time"])
-                self.tran_entry_var[1].setText(
-                    json_data["analysis"]["tran"]["Step Time"])
-                self.tran_entry_var[2].setText(
-                    json_data["analysis"]["tran"]["Stop Time"])
-                index = self.start_combobox.findText(
-                    json_data["analysis"]["tran"]["Start Combo"])
+                self.tran_entry_var[0].setText(root[2][0].text)
+                self.tran_entry_var[1].setText(root[2][1].text)
+                self.tran_entry_var[2].setText(root[2][2].text)
+                index = self.start_combobox.findText(root[2][3].text)
                 self.start_combobox.setCurrentIndex(index)
-                index = self.step_combobox.findText(
-                    json_data["analysis"]["tran"]["Step Combo"])
+                index = self.step_combobox.findText(root[2][4].text)
                 self.step_combobox.setCurrentIndex(index)
-                index = self.stop_combobox.findText(
-                    json_data["analysis"]["tran"]["Stop Combo"])
+                index = self.stop_combobox.findText(root[2][5].text)
                 self.stop_combobox.setCurrentIndex(index)
             except BaseException:
-                print("Transient Analysis JSON Parse Error")
+                print("Transient Analysis XML Parse Error")
 
         return self.trbox
+
     '''
     - Below 3 functions handle event for the combo box in transient group
     '''
-
     def start_combo_change(self, text):
         """Handle start combo box, ie. units, as second, ms"""
         self.tran_parameter[0] = str(text)

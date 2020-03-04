@@ -1,0 +1,101 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP XC18V01SO20
+F xilinx/xc18v00proms.pdf
+$ENDCMP
+#
+$CMP XC2C256-TQ144
+D CoolRunner-II CPLD, 256 macrocells
+K CPLD
+F https://www.xilinx.com/support/documentation/data_sheets/ds094.pdf
+$ENDCMP
+#
+$CMP XC2S100TQ144
+D spartan 2
+K FPGA
+F xilinx/spartan2e/spartan2e.pdf
+$ENDCMP
+#
+$CMP XC2S150PQ208
+K FPGA
+F xilinx/spartan2e/spartan2e.pdf
+$ENDCMP
+#
+$CMP XC2S200PQ208
+K FPGA
+F xilinx/spartan2e/spartan2e.pdf
+$ENDCMP
+#
+$CMP XC2S300PQ208
+F xilinx/spartan2e/spartan2e.pdf
+$ENDCMP
+#
+$CMP XC2S64A-xQFG48
+D Xilinx CoolRunner
+F xilinx/xc2c64.pdf
+$ENDCMP
+#
+$CMP XC3S200AN/FT256
+D BGA256/1mm
+$ENDCMP
+#
+$CMP XC3S50-VQ100
+D spartan 2
+K FPGA
+F xilinx/spartan2e/spartan2e.pdf
+$ENDCMP
+#
+$CMP XC4003-VQ100
+F xilinx/xc400x-pinout.pdf
+$ENDCMP
+#
+$CMP XC6SLX25T-BG484
+D SPARTAN-6  FG484
+$ENDCMP
+#
+$CMP XC95108PC84
+F xilinx/xc95108.pdf
+$ENDCMP
+#
+$CMP XC95108PQ100
+F xilinx/xc95108.pdf
+$ENDCMP
+#
+$CMP XC95144XL-TQ100
+D CPLD, 144 macrocells, 3200 usable gates
+K CPLD
+F https://www.xilinx.com/support/documentation/data_sheets/ds056.pdf
+$ENDCMP
+#
+$CMP XC95144XL-TQ144
+D CPLD, 144 macrocells, 3200 usable gates
+K CPLD
+F https://www.xilinx.com/support/documentation/data_sheets/ds056.pdf
+$ENDCMP
+#
+$CMP XC9536PC44
+F xilinx/xc9536.pdf
+$ENDCMP
+#
+$CMP XC9572XL-TQ100
+D CPLD, 72 macrocells, 1600 usable gates
+K CPLD
+F http://www.xilinx.com/support/documentation/data_sheets/ds057.pdf
+$ENDCMP
+#
+$CMP XCR3064-VQ100
+D Xilinx CoolRunner
+F xilinx/xcr3064xl.pdf
+$ENDCMP
+#
+$CMP XCR3064-VQ44
+D Xilinx CoolRunner
+F xilinx/xcr3064xl.pdf
+$ENDCMP
+#
+$CMP XCR3128-VQ100
+D Xilinx CoolRunner
+F xilinx/xcr3128xl.pdf
+$ENDCMP
+#
+#End Doc Library

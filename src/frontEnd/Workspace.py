@@ -1,5 +1,4 @@
 # =========================================================================
-#
 #          FILE: Workspace.py
 #
 #         USAGE: ---
@@ -11,27 +10,27 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 05 February 2015
-#      REVISION:  ---
+#      REVISION: Friday 14 February 2020
 # =========================================================================
+
 from PyQt4 import QtCore, QtGui
 from configuration.Appconfig import Appconfig
 import time
 import os
+import json
 
 
-# This class creates Workspace GUI.
 class Workspace(QtGui.QWidget):
     """
     This class creates UI for WorkSpace selection window.
 
-        This window contains text area to select location of your choice
-        or browse location for workspace area.
-
-        By default workspace is set in ~/eSim-Workspace.
-
-         This workspace area contains all the projects made by user.
+        - This window contains text area to select location of your choice \
+          or browse location for workspace area.
+        - By default workspace is set in ~/eSim-Workspace.
+        - This workspace area contains all the projects made by user.
 
     """
 
@@ -43,7 +42,6 @@ class Workspace(QtGui.QWidget):
         self.initWorkspace()
 
     def initWorkspace(self):
-        # print "Calling workspace"
 
         self.mainwindow = QtGui.QVBoxLayout()
         self.split = QtGui.QSplitter()
@@ -65,22 +63,27 @@ class Workspace(QtGui.QWidget):
         self.okbtn.clicked.connect(self.createWorkspace)
         self.cancelbtn = QtGui.QPushButton('Cancel')
         self.cancelbtn.clicked.connect(self.defaultWorkspace)
+
+        # Checkbox
+        self.chkbox = QtGui.QCheckBox('Set Default', self)
+        self.chkbox.setCheckState(int(self.obj_appconfig.workspace_check))
+
         # Layout
         self.grid.addWidget(self.note, 0, 0, 1, 15)
         self.grid.addWidget(self.workspace_label, 2, 1)
         self.grid.addWidget(self.workspace_loc, 2, 2, 2, 12)
         self.grid.addWidget(self.browsebtn, 2, 14)
-        self.grid.addWidget(self.okbtn, 4, 13)
-        self.grid.addWidget(self.cancelbtn, 4, 14)
+        self.grid.addWidget(self.chkbox, 4, 2)
+        self.grid.addWidget(self.okbtn, 5, 13)
+        self.grid.addWidget(self.cancelbtn, 5, 14)
 
         self.setGeometry(QtCore.QRect(500, 250, 400, 400))
         self.setMaximumSize(4000, 200)
         self.setWindowTitle("eSim")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.note.setReadOnly(True)
-        self.setWindowIcon(QtGui.QIcon('../../images/logo.png'))
+        self.setWindowIcon(QtGui.QIcon('images/logo.png'))
         self.setLayout(self.grid)
-        self.show()
 
     def defaultWorkspace(self):
         print("Default workspace selected : " +
@@ -90,6 +93,13 @@ class Workspace(QtGui.QWidget):
             'Default workspace selected : ' +
             self.obj_appconfig.default_workspace["workspace"])
         self.close()
+
+        var_appView.obj_Mainview.obj_projectExplorer.treewidget.clear()
+        for parent, children in self.obj_appconfig.project_explorer.items():
+            var_appView.obj_Mainview.obj_projectExplorer.addTreeNode(
+                parent, children
+            )
+
         var_appView.show()
         time.sleep(1)
         var_appView.splash.close()
@@ -105,6 +115,18 @@ class Workspace(QtGui.QWidget):
 
     def createWorkspace(self):
         print("Function : Create workspace")
+
+        self.obj_appconfig.workspace_check = self.chkbox.checkState()
+        print(self.workspace_loc.text())
+        file = open(os.path.join(
+            os.path.expanduser("~"), ".esim/workspace.txt"), 'w'
+        )
+        file.writelines(
+            str(self.obj_appconfig.workspace_check) +
+            " " + self.workspace_loc.text()
+        )
+        file.close()
+
         self.create_workspace = str(self.workspace_loc.text())
         self.obj_appconfig.print_info('Workspace : ' + self.create_workspace)
         # Checking if Workspace already exist or not
@@ -117,6 +139,27 @@ class Workspace(QtGui.QWidget):
                 = self.create_workspace
         self.imp_var = 1
         self.close()
+
+        self.obj_appconfig.dictPath["path"] = os.path.join(
+            self.obj_appconfig.default_workspace["workspace"],
+            ".projectExplorer.txt"
+        )
+
+        try:
+            self.obj_appconfig.project_explorer = json.load(
+                open(self.obj_appconfig.dictPath["path"])
+            )
+        except BaseException:
+            self.obj_appconfig.project_explorer = {}
+
+        Appconfig.project_explorer = self.obj_appconfig.project_explorer
+
+        var_appView.obj_Mainview.obj_projectExplorer.treewidget.clear()
+        for parent, children in self.obj_appconfig.project_explorer.items():
+            var_appView.obj_Mainview.obj_projectExplorer.addTreeNode(
+                parent, children
+            )
+
         var_appView.show()
         time.sleep(1)
         var_appView.splash.close()
@@ -124,5 +167,6 @@ class Workspace(QtGui.QWidget):
     def browseLocation(self):
         print("Function : Browse Location")
         self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(
-            self, "Browse Location", os.path.expanduser("~"))
+            self, "Browse Location", os.path.expanduser("~")
+        )
         self.workspace_loc.setText(self.workspace_directory)

@@ -1,0 +1,26 @@
+* /home/saurabh/eSim-Workspace/PWM_Decremental/PWM_Decremental.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Nov 14 23:21:31 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v2  Net-_X1-Pad7_ GND 9v		
+U3  D plot_v1		
+X1  ? rc1 pwl_IN Net-_X1-Pad4_ ? D Net-_X1-Pad7_ ? lm_741		
+R1  Q rc1 1k		
+U7  rc1 plot_v1		
+C1  GND rc1 1u		
+U8  Net-_U2-Pad3_ Q dac_bridge_1		
+U9  Q plot_v1		
+U6  clk plot_v1		
+v4  Net-_U4-Pad1_ GND pulse		
+U5  D Net-_U2-Pad2_ adc_bridge_1		
+U4  Net-_U4-Pad1_ clk adc_bridge_1		
+v3  Net-_X1-Pad4_ GND -9v		
+U1  pwl_IN plot_v1		
+v1  pwl_IN GND 3		
+U2  clk Net-_U2-Pad2_ Net-_U2-Pad3_ pwmdecrement		
+
+.end

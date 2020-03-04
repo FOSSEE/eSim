@@ -10,27 +10,27 @@ class ModelEditorclass(QtGui.QWidget):
     - Initialise the layout for dockarea
     - Use QVBoxLayout, QSplitter, QGridLayout to define the layout
     - Initalise directory to save new models,
-      savepathtest = '../deviceModelLibrary'
+      savepathtest = 'library/deviceModelLibrary'
     - Initialise buttons and options ====>
-    - - Name            Function Called
+        - Name            Function Called
     ========================================
-    - - New             opennew
-    - - Edit            openedit
-    - - Save            savemodelfile
-    - - Upload          converttoxml
-    - - Add             addparameters
-    - - Remove          removeparameter
-    - - Diode           diode_click
-    - - BJT             bjt_click
-    - - MOS             mos_click
-    - - JFET            jfet_click
-    - - IGBT            igbt_click
-    - - Magnetic Core   magnetic_click
+        - New             opennew
+        - Edit            openedit
+        - Save            savemodelfile
+        - Upload          converttoxml
+        - Add             addparameters
+        - Remove          removeparameter
+        - Diode           diode_click
+        - BJT             bjt_click
+        - MOS             mos_click
+        - JFET            jfet_click
+        - IGBT            igbt_click
+        - Magnetic Core   magnetic_click
     '''
 
     def __init__(self):
         QtGui.QWidget.__init__(self)
-        self.savepathtest = '../deviceModelLibrary'
+        self.savepathtest = 'library/deviceModelLibrary'
         self.obj_appconfig = Appconfig()
         self.newflag = 0
         self.layout = QtGui.QVBoxLayout()
@@ -121,7 +121,7 @@ class ModelEditorclass(QtGui.QWidget):
             self.modeltable.setHidden(True)
         except BaseException:
             pass
-        os.chdir(self.savepathtest)
+
         # Opens new dialog box
         text, ok = QtGui.QInputDialog.getText(
             self, 'New Model', 'Enter Model Name:')
@@ -252,7 +252,7 @@ class ModelEditorclass(QtGui.QWidget):
         - Accordingly call `createtable(path)` to draw tables usingg QTable
         - Check for the state of button before rendering
         '''
-        self.path = '../deviceModelLibrary/Templates'
+        self.path = 'library/deviceModelLibrary/Templates'
         if self.diode.isChecked():
             if filetype == 'Diode':
                 path = os.path.join(self.path, 'D.xml')
@@ -301,8 +301,6 @@ class ModelEditorclass(QtGui.QWidget):
             if filetype == 'Magnetic Core':
                 path = os.path.join(self.path, 'CORE.xml')
                 self.createtable(path)
-        else:
-            pass
 
     def openedit(self):
         '''
@@ -314,7 +312,6 @@ class ModelEditorclass(QtGui.QWidget):
             `self.createtable(path)`
         - Handle exception of no file selected
         '''
-        os.chdir(self.savepathtest)
         self.newflag = 0
         self.addbtn.setHidden(True)
         self.types.setHidden(True)
@@ -329,12 +326,11 @@ class ModelEditorclass(QtGui.QWidget):
                 QtGui.QFileDialog.getOpenFileName(
                     self,
                     "Open Library Directory",
-                    "../deviceModelLibrary",
+                    "library/deviceModelLibrary",
                     "*.lib"))
             self.createtable(self.editfile)
         except BaseException:
             print("No File selected for edit")
-            pass
 
     def createtable(self, modelfile):
         '''
@@ -426,9 +422,11 @@ class ModelEditorclass(QtGui.QWidget):
         if ok:
             if text1 in list(self.modeldict.keys()):
                 self.msg = QtGui.QErrorMessage(self)
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
                     "The paramaeter " + text1 + " is already in the list")
-                self.msg.setWindowTitle("Error Message")
+                self.msg.exec_()
                 return
             text2, ok = QtGui.QInputDialog.getText(
                 self, 'Value', 'Enter Value')
@@ -473,7 +471,7 @@ class ModelEditorclass(QtGui.QWidget):
             ET.SubElement(param, tags).text = text
         tree = ET.ElementTree(root)
         defaultcwd = os.getcwd()
-        self.savepath = '../deviceModelLibrary'
+        self.savepath = 'library/deviceModelLibrary'
         if self.diode.isChecked():
             savepath = os.path.join(self.savepath, 'Diode')
             os.chdir(savepath)
@@ -601,6 +599,12 @@ class ModelEditorclass(QtGui.QWidget):
                 ' library created at ' +
                 os.getcwd())
         txtfile.close()
+
+        msg = "Model saved successfully!"
+        QtGui.QMessageBox.information(
+            self, "Information", msg, QtGui.QMessageBox.Ok
+        )
+
         os.chdir(defaultcwd)
 
     def validation(self, text):
@@ -616,9 +620,11 @@ class ModelEditorclass(QtGui.QWidget):
             all_files = os.listdir(each_dir)
             if newfilename in all_files:
                 self.msg = QtGui.QErrorMessage(self)
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
                     'The file with name ' + text + ' already exists.')
-                self.msg.setWindowTitle("Error Message")
+                self.msg.exec_()
 
     def savethefile(self, editfile):
         '''
@@ -653,6 +659,11 @@ class ModelEditorclass(QtGui.QWidget):
 
         self.obj_appconfig.print_info('Updated library ' + libpath)
 
+        msg = "Model saved successfully!"
+        QtGui.QMessageBox.information(
+            self, "Information", msg, QtGui.QMessageBox.Ok
+        )
+
     def removeparameter(self):
         '''
         - Get the index of the current selected item
@@ -675,7 +686,6 @@ class ModelEditorclass(QtGui.QWidget):
         - Save it in `User Libraries` with the given name,
         and input from uploaded file
         '''
-        os.chdir(self.savepathtest)
         self.addbtn.setHidden(True)
         self.removebtn.setHidden(True)
         self.modeltable.setHidden(True)
@@ -685,7 +695,7 @@ class ModelEditorclass(QtGui.QWidget):
             QtGui.QFileDialog.getOpenFileName(
                 self,
                 "Open Library Directory",
-                "../deviceModelLibrary",
+                "library/deviceModelLibrary",
                 "*.lib"))
         libopen = open(self.libfile)
         filedata = libopen.read().split()

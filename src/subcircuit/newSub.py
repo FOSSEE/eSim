@@ -5,7 +5,7 @@ from projManagement import Worker
 import os
 
 
-# This class is called when User create new Project.
+# This class is called when User creates new Project.
 class NewSub(QtGui.QWidget):
     """
     Contains functions to check :
@@ -31,7 +31,7 @@ class NewSub(QtGui.QWidget):
         # Checking if Workspace already exist or not
         self.schematic_path = (
             os.path.join(
-                os.path.abspath('..'),
+                os.path.abspath('library'),
                 'SubcircuitLibrary',
                 self.create_schematic))
 
@@ -54,35 +54,41 @@ class NewSub(QtGui.QWidget):
                 self.obj_workThread.start()
                 self.close()
             except BaseException:
-                # print "Some Thing Went Wrong"
                 self.msg = QtGui.QErrorMessage(self)
-                self.msg.showMessage(
-                    'Unable to create subcircuit. Please make sure\
-                     you have write permission on ' +
-                    self.schematic_path)
+                self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
+                self.msg.showMessage(
+                    'Unable to create subcircuit. Please make sure ' +
+                    'you have write permission on ' + self.schematic_path
+                )
+                self.msg.exec_()
 
             self.obj_appconfig.current_subcircuit['SubcircuitName'] \
                 = self.schematic_path
 
         elif self.reply == "CHECKEXIST":
-            # print "Project already exist"
             self.msg = QtGui.QErrorMessage(self)
-            self.msg.showMessage(
-                'The subcircuit "' +
-                self.create_schematic +
-                '" already exist.Please select the different name or delete'
-                + 'existing subcircuit')
+            self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                'The subcircuit "' + self.create_schematic +
+                '" already exist.Please select the different name or delete' +
+                'existing subcircuit'
+            )
+            self.msg.exec_()
 
         elif self.reply == "CHECKNAME":
-            # print "Name is not proper"
             self.msg = QtGui.QErrorMessage(self)
-            self.msg.showMessage(
-                'The subcircuit name should not contain space between them')
+            self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                'The subcircuit name should not contain space between them'
+            )
+            self.msg.exec_()
 
         elif self.reply == "NONE":
             self.msg = QtGui.QErrorMessage(self)
-            self.msg.showMessage('The subcircuit name cannot be empty')
+            self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage('The subcircuit name cannot be empty')
+            self.msg.exec_()

@@ -1,4 +1,4 @@
-* /home/fossee/updatedexamples/halfwave_rectifier/halfwave_rectifier.cir
+* /home/saurabh/downloads/esim-1.1.2/examples/halfwave_rectifier/halfwave_rectifier.cir
 
 .include D.lib
 d1 in out 1N4148

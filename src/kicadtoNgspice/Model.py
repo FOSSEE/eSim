@@ -1,7 +1,6 @@
 from PyQt4 import QtGui
-import json
 from . import TrackWidget
-# from xml.etree import ElementTree as ET
+from xml.etree import ElementTree as ET
 import os
 
 
@@ -19,18 +18,23 @@ class Model(QtGui.QWidget):
         kicadFile = clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
-
+        check = 1
         try:
             f = open(
                 os.path.join(
                     projpath,
                     project_name +
-                    "_Previous_Values.json"),
+                    "_Previous_Values.xml"),
                 'r')
-            data = f.read()
-            json_data = json.loads(data)
+            tree = ET.parse(f)
+            parent_root = tree.getroot()
+            for child in parent_root:
+                if child.tag == "model":
+                    root = child
+
         except BaseException:
-            print("Model Previous Values JSON is Empty")
+            check = 0
+            print("Model Previous Values XML is Empty")
 
         # Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()
@@ -59,8 +63,6 @@ class Model(QtGui.QWidget):
             # line[7] is parameter dictionary holding parameter tags.
             i = 0
             for key, value in line[7].items():
-                # print "Key : ",key
-                # print "Value : ",value
                 # Check if value is iterable
                 if not isinstance(value, str) and hasattr(value, '__iter__'):
                     # For tag having vector value
@@ -76,17 +78,11 @@ class Model(QtGui.QWidget):
                             [self.nextcount], self.nextrow, 1)
 
                         try:
-                            for mod in json_data["model"]:
-                                if json_data["model"][mod]["type"] ==\
-                                        line[2] and mod == line[3]:
-                                    (
-                                        self.obj_trac.model_entry_var
-                                        [self.nextcount].setText(
-                                            str(list(
-                                                json_data
-                                                ["model"][mod]["values"]
-                                                [i].values())[0]))
-                                    )
+                            for child in root:
+                                if child.text == line[2] \
+                                        and child.tag == line[3]:
+                                    self.obj_trac.model_entry_var
+                                    [self.nextcount].setText(child[i].text)
                                     i = i + 1
                         except BaseException:
                             pass
@@ -108,26 +104,18 @@ class Model(QtGui.QWidget):
                     )
 
                     try:
-                        for mod in json_data["model"]:
-                            if json_data["model"][mod]["type"] ==\
-                                    line[2] and mod == line[3]:
-                                (
-                                    self.obj_trac.model_entry_var
-                                    [self.nextcount].setText(
-                                        str(list(json_data
-                                                 ["model"][mod]["values"]
-                                                 [i].values())[0]))
-                                )
+                        for child in root:
+                            if child.text == line[2] and child.tag == line[3]:
+                                self.obj_trac.model_entry_var[self.nextcount] \
+                                                .setText(child[i].text)
                                 i = i + 1
                     except BaseException:
                         pass
-
                     tag_dict[key] = self.nextcount
                     self.nextcount = self.nextcount + 1
                     self.nextrow = self.nextrow + 1
 
             self.end = self.nextcount - 1
-            # print "End",self.end
             modelbox.setLayout(modelgrid)
 
             # CSS
@@ -172,7 +160,5 @@ class Model(QtGui.QWidget):
 
             if check == 0:
                 self.obj_trac.modelTrack.append(lst)
-
-            # print "The tag dictionary : ",tag_dict
 
         self.show()

@@ -9,7 +9,7 @@ Needed to define the module structure, look up `Modules` for python
 '''
 setup(
     name='eSim',
-    version='1.1.3',
+    version='2.0.0',
     author='FOSSEE',
     author_email='info@fossee.in',
     package_dir={'': 'src'},

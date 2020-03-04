@@ -1,0 +1,15 @@
+EESchema-DOCLIB  Version 2.0  Date: 09/12/2009 10:41:27
+#
+$CMP GS9020
+F gennum\gs9020.pdf
+$ENDCMP
+#
+$CMP GS9025
+F gennum\gs9025a.pdf
+$ENDCMP
+#
+$CMP GS9032
+F gennum\gs9032.pdf
+$ENDCMP
+#
+#End Doc Library

@@ -1,0 +1,22 @@
+* /home/saurabh/downloads/esim-1.1.2/src/subcircuitlibrary/ujt/ujt.cir
+
+.include D.lib
+r3  net-_h1-pad2_ net-_h1-pad1_ 1000k
+* h1
+c1  net-_b1-pad1_ net-_b1-pad2_ 35p
+r1  net-_b1-pad2_ net-_r1-pad2_ 38.15k
+r2  net-_r2-pad1_ net-_b1-pad1_ 2.518k
+* u1  net-_d1-pad1_ net-_r1-pad2_ net-_r2-pad1_ port
+b1  net-_b1-pad1_ net-_b1-pad2_ i=0.00028*v(5,7)+0.00575*v(5,7)*v(6)
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+Vh1 net-_d1-pad2_ net-_b1-pad1_ 0
+h1 net-_h1-pad1_ net-_h1-pad2_ Vh1 1k
+.tran 5e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

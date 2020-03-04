@@ -21,13 +21,13 @@ autodoc_mock_imports = ["PyQt4", "pathmagic", "matplotlib", "numpy"]
 # -- Project information -----------------------------------------------------
 
 project = u'eSim'
-copyright = u'2019, Fossee'
+copyright = u'2020, Fossee'
 author = u'Fossee'
 
 # The short X.Y version
 version = u''
 # The full version, including alpha/beta/rc tags
-release = u'1.1.2'
+release = u'2.0.0'
 
 
 # -- General configuration ---------------------------------------------------

@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:Parallel_Resonance-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -53,7 +54,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L R R1
+L R-RESCUE-Parallel_Resonance R1
 U 1 1 56C172A1
 P 5100 3150
 F 0 "R1" H 5150 3280 50  0000 C CNN
@@ -64,7 +65,7 @@ F 3 "" V 5150 3200 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L L L1
+L L-RESCUE-Parallel_Resonance L1
 U 1 1 56C172D6
 P 5850 1250
 F 0 "L1" H 7800 1750 50  0000 C CNN
@@ -145,7 +146,7 @@ Wire Wire Line
 	5900 3300 5900 3850
 Connection ~ 5900 3850
 $Comp
-L R R2
+L R-RESCUE-Parallel_Resonance R2
 U 1 1 56C1A863
 P 4600 2600
 F 0 "R2" H 4650 2730 50  0000 C CNN

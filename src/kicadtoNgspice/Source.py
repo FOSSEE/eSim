@@ -1,8 +1,7 @@
 import os
 from PyQt4 import QtGui
 from . import TrackWidget
-# from xml.etree import ElementTree as ET
-import json
+from xml.etree import ElementTree as ET
 
 
 class Source(QtGui.QWidget):
@@ -13,7 +12,7 @@ class Source(QtGui.QWidget):
     def __init__(self, sourcelist, sourcelisttrack, clarg1):
         QtGui.QWidget.__init__(self)
         self.obj_track = TrackWidget.TrackWidget()
-        # Variable
+        # Variables
         self.count = 1
         self.clarg1 = clarg1
         self.start = 0
@@ -45,10 +44,10 @@ class Source(QtGui.QWidget):
         - Each line in sourcelist corresponds to a source
         - According to the source type modify the source and add it to the tab
         """
-        print("============================================================")
+        """print("============================================================")
         print("SOURCE LIST TRACK", sourcelisttrack)
         print("SOURCE LIST", sourcelist)
-        print("============================================================")
+        print("===========================================================")"""
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
@@ -58,23 +57,24 @@ class Source(QtGui.QWidget):
                 os.path.join(
                     projpath,
                     project_name +
-                    "_Previous_Values.json"),
+                    "_Previous_Values.xml"),
                 'r')
-            data = f.read()
-            json_data = json.loads(data)
-
+            tree = ET.parse(f)
+            parent_root = tree.getroot()
+            for child in parent_root:
+                if child.tag == "source":
+                    root = child
         except BaseException:
-            print("Source Previous Values JSON is Empty")
+            print("Source Previous Values XML is Empty")
 
         self.grid = QtGui.QGridLayout()
         self.setLayout(self.grid)
+        xml_num = 0
 
         if sourcelist:
             for line in sourcelist:
-                # print "Voltage source line index: ",line[0]
                 print("SourceList line: ", line)
                 track_id = line[0]
-                # print "track_id is ",track_id
                 if line[2] == 'ac':
                     acbox = QtGui.QGroupBox()
                     acbox.setTitle(line[3])
@@ -88,34 +88,23 @@ class Source(QtGui.QWidget):
                     self.entry_var[self.count] = QtGui.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
                     acgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                    self.entry_var[self.count].setText("")
-                    self.count += 1
-
-                    self.entry_var[self.count] = QtGui.QLineEdit()
-                    self.entry_var[self.count].setMaximumWidth(150)
+                    self.entry_var[self.count + 1] = QtGui.QLineEdit()
+                    self.entry_var[self.count + 1].setMaximumWidth(150)
                     acgrid.addWidget(
-                        self.entry_var[self.count], self.row + 1, 1)
+                        self.entry_var[self.count+1], self.row + 1, 1)
                     self.entry_var[self.count].setText("")
-                    self.count += 1
-
+                    self.entry_var[self.count+1].setText("")
                     try:
-                        for key in json_data["source"]:
+                        for child in root:
                             templist1 = line[1]
                             templist2 = templist1.split(' ')
 
-                            if key == templist2[0] and \
-                                    json_data["source"][key]["type"]\
-                                    == line[2]:
-                                self.entry_var[self.count - 2].setText(
-                                    str(
-                                        json_data
-                                        ["source"][key]["values"][0]
-                                        ["Amplitude"]))
-                                self.entry_var[self.count - 1].setText(
-                                    str(
-                                        json_data["source"][key]
-                                        ["values"][1]["Phase"]))
-
+                            if child.tag == templist2[0] and \
+                                    child.text == line[2]:
+                                self.entry_var[self.count] \
+                                    .setText(child[0].text)
+                                self.entry_var[self.count + 1] \
+                                    .setText(child[1].text)
                     except BaseException:
                         pass
                     # Value Need to check previuouse value
@@ -141,6 +130,7 @@ class Source(QtGui.QWidget):
                     dcbox = QtGui.QGroupBox()
                     dcbox.setTitle(line[3])
                     dcgrid = QtGui.QGridLayout()
+                    self.row = self.row + 1
                     self.start = self.count
                     label = QtGui.QLabel(line[4])
                     dcgrid.addWidget(label, self.row, 0)
@@ -151,18 +141,14 @@ class Source(QtGui.QWidget):
                     self.entry_var[self.count].setText("")
 
                     try:
-                        for key in json_data["source"]:
+                        for child in root:
                             templist1 = line[1]
                             templist2 = templist1.split(' ')
 
-                            if key == templist2[0] and \
-                                    json_data["source"][key]["type"]\
-                                    == line[2]:
-                                self.entry_var[self.count].setText(
-                                    str(
-                                        json_data["source"][key]
-                                        ["values"][0]["Value"]))
-
+                            if child.tag == templist2[0] \
+                                    and child.text == line[2]:
+                                self.entry_var[self.count] \
+                                    .setText(child[0].text)
                     except BaseException:
                         pass
 
@@ -200,17 +186,13 @@ class Source(QtGui.QWidget):
                         self.entry_var[self.count].setText("")
 
                         try:
-                            for key in json_data["source"]:
+                            for child in root:
                                 templist1 = line[1]
                                 templist2 = templist1.split(' ')
-                                if key == templist2[0] and \
-                                        json_data["source"][key]["type"]\
-                                        == line[2]:
-                                    self.entry_var[self.count].setText(
-                                        str(
-                                            list(json_data["source"]
-                                                 [key]["values"]
-                                                 [it - 4].values())[0]))
+                                if child.tag == templist2[0] \
+                                        and child.text == line[2]:
+                                    self.entry_var[self.count] \
+                                        .setText(child[it-4].text)
                         except BaseException:
                             pass
 
@@ -247,17 +229,13 @@ class Source(QtGui.QWidget):
                         self.entry_var[self.count].setText("")
 
                         try:
-                            for key in json_data["source"]:
+                            for child in root:
                                 templist1 = line[1]
                                 templist2 = templist1.split(' ')
-
-                                if key == templist2[0] and \
-                                        json_data["source"][key]["type"]\
-                                        == line[2]:
-                                    self.entry_var[self.count].setText(
-                                        str(list(
-                                            json_data["source"][key]
-                                            ["values"][it - 4].values())[0]))
+                                if child.tag == templist2[0] \
+                                        and child.text == line[2]:
+                                    self.entry_var[self.count] \
+                                        .setText(child[it-4].text)
                         except BaseException:
                             pass
 
@@ -291,15 +269,13 @@ class Source(QtGui.QWidget):
                     self.entry_var[self.count].setText("")
 
                     try:
-                        for key in json_data["source"]:
+                        for child in root:
                             templist1 = line[1]
                             templist2 = templist1.split(' ')
-                            if key == templist2[0] and \
-                                    json_data["source"][key]["type"] \
-                                    == line[2]:
-                                self.entry_var[self.count].setText(
-                                    str(json_data["source"][key]
-                                        ["values"][0]["Enter in pwl format"]))
+                            if child.tag == templist2[0] \
+                                    and child.text == line[2]:
+                                self.entry_var[self.count] \
+                                    .setText(child[0].text)
                     except BaseException:
                         pass
 
@@ -336,19 +312,13 @@ class Source(QtGui.QWidget):
                         self.entry_var[self.count].setText("")
 
                         try:
-                            for key in json_data["source"]:
+                            for child in root:
                                 templist1 = line[1]
                                 templist2 = templist1.split(' ')
-                                if key == templist2[0] and \
-                                        json_data["source"][key]["type"]\
-                                        == line[2]:
-                                    self.entry_var[self.count].setText(
-                                        str(
-                                            list(
-                                                json_data["source"][key]
-                                                ["values"][it - 4].values())[0]
-                                        )
-                                    )
+                                if child.tag == templist2[0] \
+                                        and child.text == line[2]:
+                                    self.entry_var[self.count] \
+                                        .setText(child[it-4].text)
                         except BaseException:
                             pass
 
@@ -369,10 +339,13 @@ class Source(QtGui.QWidget):
                     sourcelisttrack.append(
                         [track_id, 'exp', self.start, self.end])
 
+                self.count = self.count + 1
+                xml_num = xml_num + 1
+
         else:
             print("No source is present in your circuit")
 
-        print("============================================================")
+        # print("============================================================")
         # This is used to keep the track of dynamically created widget
         self.obj_track.sourcelisttrack["ITEMS"] = sourcelisttrack
         self.obj_track.source_entry_var["ITEMS"] = self.entry_var

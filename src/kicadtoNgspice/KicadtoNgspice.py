@@ -1,5 +1,4 @@
 # =========================================================================
-#
 #          FILE: kicadtoNgspice.py
 #
 #         USAGE: ---
@@ -11,10 +10,12 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 04 March 2015
-#      REVISION:  ---
+#      REVISION: Friday 14 February 2020
 # =========================================================================
+
 import sys
 import os
 from PyQt4 import QtGui
@@ -26,9 +27,7 @@ from . import DeviceModel
 from . import SubcircuitTab
 from . import Convert
 from . import TrackWidget
-import json
-
-# from xml.etree import ElementTree as ET
+from xml.etree import ElementTree as ET
 
 
 class MainWindow(QtGui.QWidget):
@@ -37,7 +36,7 @@ class MainWindow(QtGui.QWidget):
     - And Call Convert function if convert button is pressed.
     - The convert function takes all the value entered by user and create
       a final netlist "*.cir.out".
-    - This final netlist is compatible with NgSpice.
+    - This final netlist is compatible with Ngspice.
     - clarg1 is the path to the .cir file
     - clarg2 is either None or "sub" depending on the analysis type
     """
@@ -45,7 +44,7 @@ class MainWindow(QtGui.QWidget):
     def __init__(self, clarg1, clarg2=None):
         QtGui.QWidget.__init__(self)
         print("==================================")
-        print("Kicad to Ngspice netlist converter ")
+        print("Kicad to Ngspice netlist converter")
         print("==================================")
         global kicadNetlist, schematicInfo
         global infoline, optionInfo
@@ -54,10 +53,10 @@ class MainWindow(QtGui.QWidget):
         self.clarg2 = clarg2
 
         # Create object of track widget
-        # Track the dynamically created widget of KicadtoNgSpice Window
+        # Track the dynamically created widget of KicadtoNgspice Window
         self.obj_track = TrackWidget.TrackWidget()
 
-        # Clear Dictionary/List item of sub circuit and ngspice model
+        # Clear Dictionary/List item of sub circuit and Ngspice model
         # Dictionary
         self.obj_track.subcircuitList.clear()
         self.obj_track.subcircuitTrack.clear()
@@ -70,22 +69,21 @@ class MainWindow(QtGui.QWidget):
 
         # Read the netlist, ie the .cir file
         kicadNetlist = obj_proc.readNetlist(self.kicadFile)
-        print("=============================================================")
-        print("Given Kicad Schematic Netlist Info :", kicadNetlist)
+        # print("=============================================================")
+        # print("Given Kicad Schematic Netlist Info :", kicadNetlist)
 
         # Construct parameter information
         param = obj_proc.readParamInfo(kicadNetlist)
 
         # Replace parameter with values
         netlist, infoline = obj_proc.preprocessNetlist(kicadNetlist, param)
-        print("=============================================================")
-        print("Schematic Info after processing Kicad Netlist: ", netlist)
-        # print "INFOLINE",infoline
+        # print("=============================================================")
+        # print("Schematic Info after processing Kicad Netlist: ", netlist)
 
         # Separate option and schematic information
         optionInfo, schematicInfo = obj_proc.separateNetlistInfo(netlist)
-        print("=============================================================")
-        print("OPTIONINFO in the Netlist", optionInfo)
+        # print("=============================================================")
+        # print("OPTIONINFO in the Netlist", optionInfo)
 
         # List for storing source and its value
         global sourcelist, sourcelisttrack
@@ -111,43 +109,47 @@ class MainWindow(QtGui.QWidget):
         ) = obj_proc.convertICintoBasicBlocks(
             schematicInfo, outputOption, modelList, plotText
         )
-        print("=======================================")
-        print("Model available in the Schematic :", modelList)
+        # print("=======================================")
+        # print("Model available in the Schematic :", modelList)
 
         """
         - Checking if any unknown model is used in schematic which is not
-          recognized by NgSpice.
+          recognized by Ngspice.
         - Also if the two model of same name is present under
           modelParamXML directory
         """
         if unknownModelList:
             print("Unknown Model List is : ", unknownModelList)
             self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Unknown Models")
             self.content = "Your schematic contain unknown model " + \
                 ', '.join(unknownModelList)
             self.msg.showMessage(self.content)
-            self.msg.setWindowTitle("Unknown Models")
+            self.msg.exec_()
 
         elif multipleModelList:
             self.msg = QtGui.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Multiple Models")
             self.mcontent = "Look like you have duplicate model in \
             modelParamXML directory " + \
                 ', '.join(multipleModelList[0])
             self.msg.showMessage(self.mcontent)
-            self.msg.setWindowTitle("Multiple Models")
+            self.msg.exec_()
 
         else:
             self.createMainWindow()
 
     def createMainWindow(self):
         """
-        - This function create main window of Kicad to Ngspice converter
+        - This function create main window of KiCad to Ngspice converter
         - Two components
-        - - createcreateConvertWidget
-        - - Convert button => callConvert
+            - createcreateConvertWidget
+            - Convert button => callConvert
         """
-        self.vbox = QtGui.QVBoxLayout(self)
-        self.hbox = QtGui.QHBoxLayout(self)
+        self.vbox = QtGui.QVBoxLayout()
+        self.hbox = QtGui.QHBoxLayout()
         self.hbox.addStretch(1)
         self.convertbtn = QtGui.QPushButton("Convert")
         self.convertbtn.clicked.connect(self.callConvert)
@@ -162,23 +164,23 @@ class MainWindow(QtGui.QWidget):
     def createcreateConvertWidget(self):
         """
         - Contains the tabs for various convertor elements
-        - - Analysis            => obj_analysis
+            - Analysis            => obj_analysis
             => Analysis.Analysis(`path_to_projFile`)
 
-        - - Source Details      => obj_source
+            - Source Details      => obj_source
             => Source.Source(`sourcelist`,`sourcelisttrack`,`path_to_projFile`)
 
-        - - NgSpice Model       => obj_model
+            - NgSpice Model       => obj_model
             => Model.Model(`schematicInfo`,`modelList`,`path_to_projFile`)
 
-        - - Device Modelling    => obj_devicemodel
+            - Device Modelling    => obj_devicemodel
             => DeviceModel.DeviceModel(`schematicInfo`,`path_to_projFile`)
 
-        - - Subcircuits         => obj_subcircuitTab
+            - Subcircuits         => obj_subcircuitTab
             => SubcircuitTab.SubcircuitTab(`schematicInfo`,`path_to_projFile`)
 
         - Finally pass each of these objects, to widgets
-        - convertWindow > mainLayout > tabWidgets > AnalysisTab, SourceTab ....
+        - convertWindow > mainLayout > tabWidgets > AnalysisTab, SourceTab ...
         """
         global obj_analysis
         self.convertWindow = QtGui.QWidget()
@@ -215,7 +217,7 @@ class MainWindow(QtGui.QWidget):
         # self.tabWidget.TabShape(QtGui.QTabWidget.Rounded)
         self.tabWidget.addTab(self.analysisTab, "Analysis")
         self.tabWidget.addTab(self.sourceTab, "Source Details")
-        self.tabWidget.addTab(self.modelTab, "NgSpice Model")
+        self.tabWidget.addTab(self.modelTab, "Ngspice Model")
         self.tabWidget.addTab(self.deviceModelTab, "Device Modeling")
         self.tabWidget.addTab(self.subcircuitTab, "Subcircuits")
         self.mainLayout = QtGui.QVBoxLayout()
@@ -230,8 +232,8 @@ class MainWindow(QtGui.QWidget):
         """
         - This function called when convert button clicked
         - Extracting data from the objs created above
-        - Pushing this data to json, and dumping it finally
-        - Written to a ..._Previous_Valuse.json file in the projDirectory
+        - Pushing this data to xml, and writing it finally
+        - Written to a ..._Previous_Values.xml file in the projDirectory
         - Finally, call createNetListFile, with the converted schematic
         """
         global schematicInfo
@@ -240,296 +242,361 @@ class MainWindow(QtGui.QWidget):
         store_schematicInfo = list(schematicInfo)
         (projpath, filename) = os.path.split(self.kicadFile)
         project_name = os.path.basename(projpath)
+        check = 1
+
+        try:
+            fr = open(
+                    os.path.join(
+                        projpath, project_name + "_Previous_Values.xml"), 'r'
+                )
+            temp_tree = ET.parse(fr)
+            temp_root = temp_tree.getroot()
+        except BaseException:
+            check = 0
 
         # Opening previous value file pertaining to the selected project
-        fw = open(
-            os.path.join(
-                projpath,
-                project_name +
-                "_Previous_Values.json"),
-            'w')
+        fw = os.path.join(projpath, project_name + "_Previous_Values.xml")
 
-        # Creating a dictionary to map the json data
-        json_data = {}
+        if check == 0:
+            attr_parent = ET.Element("KicadtoNgspice")
+        if check == 1:
+            attr_parent = temp_root
 
-        # Writing analysis values
-        json_data["analysis"] = {}
+        for child in attr_parent:
+            if child.tag == "analysis":
+                attr_parent.remove(child)
 
-        json_data["analysis"]["ac"] = {}
+        attr_analysis = ET.SubElement(attr_parent, "analysis")
+        attr_ac = ET.SubElement(attr_analysis, "ac")
+
         if obj_analysis.Lin.isChecked():
-            json_data["analysis"]["ac"]["Lin"] = "true"
-            json_data["analysis"]["ac"]["Dec"] = "false"
-            json_data["analysis"]["ac"]["Oct"] = "false"
+            ET.SubElement(attr_ac, "field1", name="Lin").text = "true"
+            ET.SubElement(attr_ac, "field2", name="Dec").text = "false"
+            ET.SubElement(attr_ac, "field3", name="Oct").text = "false"
         elif obj_analysis.Dec.isChecked():
-            json_data["analysis"]["ac"]["Lin"] = "false"
-            json_data["analysis"]["ac"]["Dec"] = "true"
-            json_data["analysis"]["ac"]["Oct"] = "false"
+            ET.SubElement(attr_ac, "field1", name="Lin").text = "false"
+            ET.SubElement(attr_ac, "field2", name="Dec").text = "true"
+            ET.SubElement(attr_ac, "field3", name="Oct").text = "false"
         if obj_analysis.Oct.isChecked():
-            json_data["analysis"]["ac"]["Lin"] = "false"
-            json_data["analysis"]["ac"]["Dec"] = "false"
-            json_data["analysis"]["ac"]["Oct"] = "true"
-        else:
-            pass
+            ET.SubElement(attr_ac, "field1", name="Lin").text = "false"
+            ET.SubElement(attr_ac, "field2", name="Dec").text = "false"
+            ET.SubElement(attr_ac, "field3", name="Oct").text = "true"
 
-        json_data["analysis"]["ac"]["Start Frequency"] = str(
-            obj_analysis.ac_entry_var[0].text())
-        json_data["analysis"]["ac"]["Stop Frequency"] = str(
-            obj_analysis.ac_entry_var[1].text())
-        json_data["analysis"]["ac"]["No. of points"] = str(
-            obj_analysis.ac_entry_var[2].text())
-        json_data["analysis"]["ac"]["Start Fre Combo"] = (
-            obj_analysis.ac_parameter[0]
-        )
-        json_data["analysis"]["ac"]["Stop Fre Combo"] = (
-            obj_analysis.ac_parameter[1]
-        )
+        ET.SubElement(
+            attr_ac, "field4", name="Start Frequency"
+        ).text = str(obj_analysis.ac_entry_var[0].text())
+        ET.SubElement(
+            attr_ac, "field5", name="Stop Frequency"
+        ).text = str(obj_analysis.ac_entry_var[1].text())
+        ET.SubElement(
+            attr_ac, "field6", name="No. of points"
+        ).text = str(obj_analysis.ac_entry_var[2].text())
+        ET.SubElement(
+            attr_ac, "field7", name="Start Fre Combo"
+        ).text = obj_analysis.ac_parameter[0]
+        ET.SubElement(
+            attr_ac, "field8", name="Stop Fre Combo"
+        ).text = obj_analysis.ac_parameter[1]
 
-        json_data["analysis"]["dc"] = {}
-        json_data["analysis"]["dc"]["Source 1"] = str(
-            obj_analysis.dc_entry_var[0].text())
-        json_data["analysis"]["dc"]["Start"] = str(
-            obj_analysis.dc_entry_var[1].text())
-        json_data["analysis"]["dc"]["Increment"] = str(
-            obj_analysis.dc_entry_var[2].text())
-        json_data["analysis"]["dc"]["Stop"] = str(
-            obj_analysis.dc_entry_var[3].text())
-        json_data["analysis"]["dc"]["Operating Point"] = str(
-            self.obj_track.op_check[-1])
-        json_data["analysis"]["dc"]["Start Combo"] = (
-            obj_analysis.dc_parameter[0]
-        )
-        json_data["analysis"]["dc"]["Increment Combo"] = (
-            obj_analysis.dc_parameter[1]
-        )
-        json_data["analysis"]["dc"]["Stop Combo"] = (
-            obj_analysis.dc_parameter[2]
-        )
-        json_data["analysis"]["dc"]["Source 2"] = str(
-            obj_analysis.dc_entry_var[4].text())
-        json_data["analysis"]["dc"]["Start2"] = str(
-            obj_analysis.dc_entry_var[5].text())
-        json_data["analysis"]["dc"]["Increment2"] = str(
-            obj_analysis.dc_entry_var[6].text())
-        json_data["analysis"]["dc"]["Stop2"] = str(
-            obj_analysis.dc_entry_var[7].text())
-        json_data["analysis"]["dc"]["Start Combo2"] = (
-            obj_analysis.dc_parameter[3]
-        )
-        json_data["analysis"]["dc"]["Increment Combo2"] = (
-            obj_analysis.dc_parameter[4]
-        )
-        json_data["analysis"]["dc"]["Stop Combo2"] = (
-            obj_analysis.dc_parameter[5]
-        )
+        attr_dc = ET.SubElement(attr_analysis, "dc")
 
-        json_data["analysis"]["tran"] = {}
-        json_data["analysis"]["tran"]["Start Time"] = str(
-            obj_analysis.tran_entry_var[0].text())
-        json_data["analysis"]["tran"]["Step Time"] = str(
-            obj_analysis.tran_entry_var[1].text())
-        json_data["analysis"]["tran"]["Stop Time"] = str(
-            obj_analysis.tran_entry_var[2].text())
-        json_data["analysis"]["tran"]["Start Combo"] = (
-            obj_analysis.tran_parameter[0]
-        )
-        json_data["analysis"]["tran"]["Step Combo"] = (
-            obj_analysis.tran_parameter[1]
-        )
-        json_data["analysis"]["tran"]["Stop Combo"] = (
-            obj_analysis.tran_parameter[2]
-        )
+        ET.SubElement(
+            attr_dc, "field1", name="Source 1"
+        ).text = str(obj_analysis.dc_entry_var[0].text())
+        ET.SubElement(
+            attr_dc, "field2", name="Start"
+        ).text = str(obj_analysis.dc_entry_var[1].text())
+        ET.SubElement(
+            attr_dc, "field3", name="Increment"
+        ).text = str(obj_analysis.dc_entry_var[2].text())
+        ET.SubElement(
+            attr_dc, "field4", name="Stop"
+        ).text = str(obj_analysis.dc_entry_var[3].text())
+        # print("OBJ_ANALYSIS.CHECK -----", self.obj_track.op_check[-1])
+        ET.SubElement(
+            attr_dc, "field5", name="Operating Point"
+        ).text = str(self.obj_track.op_check[-1])
+        ET.SubElement(
+            attr_dc, "field6", name="Start Combo"
+        ).text = obj_analysis.dc_parameter[0]
+        ET.SubElement(
+            attr_dc, "field7", name="Increment Combo"
+        ).text = obj_analysis.dc_parameter[1]
+        ET.SubElement(
+            attr_dc, "field8", name="Stop Combo"
+        ).text = obj_analysis.dc_parameter[2]
+        ET.SubElement(
+            attr_dc, "field9", name="Source 2"
+        ).text = str(obj_analysis.dc_entry_var[4].text())
+        ET.SubElement(
+            attr_dc, "field10", name="Start"
+        ).text = str(obj_analysis.dc_entry_var[5].text())
+        ET.SubElement(
+            attr_dc, "field11", name="Increment"
+        ).text = str(obj_analysis.dc_entry_var[6].text())
+        ET.SubElement(
+            attr_dc, "field12", name="Stop"
+        ).text = str(obj_analysis.dc_entry_var[7].text())
+        ET.SubElement(
+            attr_dc, "field13", name="Start Combo"
+        ).text = obj_analysis.dc_parameter[3]
+        ET.SubElement(
+            attr_dc, "field14", name="Increment Combo"
+        ).text = obj_analysis.dc_parameter[4]
+        ET.SubElement(
+            attr_dc, "field15", name="Stop Combo"
+        ).text = obj_analysis.dc_parameter[5]
 
-        # Writing source values
-        json_data["source"] = {}
+        attr_tran = ET.SubElement(attr_analysis, "tran")
+        ET.SubElement(
+            attr_tran, "field1", name="Start Time"
+        ).text = str(obj_analysis.tran_entry_var[0].text())
+        ET.SubElement(
+            attr_tran, "field2", name="Step Time"
+        ).text = str(obj_analysis.tran_entry_var[1].text())
+        ET.SubElement(
+            attr_tran, "field3", name="Stop Time"
+        ).text = str(obj_analysis.tran_entry_var[2].text())
+        ET.SubElement(
+            attr_tran, "field4", name="Start Combo"
+        ).text = obj_analysis.tran_parameter[0]
+        ET.SubElement(
+            attr_tran, "field5", name="Step Combo"
+        ).text = obj_analysis.tran_parameter[1]
+        ET.SubElement(
+            attr_tran, "field6", name="Stop Combo"
+        ).text = obj_analysis.tran_parameter[2]
+        # print("TRAN PARAMETER 2-----",obj_analysis.tran_parameter[2])
+
+        if check == 0:
+            attr_source = ET.SubElement(attr_parent, "source")
+        if check == 1:
+            for child in attr_parent:
+                if child.tag == "source":
+                    attr_source = child
+
         count = 1
+        grand_child_count = 1
 
-        for line in store_schematicInfo:
-            words = line.split(' ')
+        for i in store_schematicInfo:
+            tmp_check = 0
+            words = i.split(' ')
             wordv = words[0]
+            for child in attr_source:
+                if child.tag == wordv and child.text == words[len(words) - 1]:
+                    tmp_check = 1
+                    for grand_child in child:
+                        grand_child.text = \
+                            str(obj_source.entry_var[grand_child_count].text())
+                        grand_child_count += 1
+                    grand_child_count += 1
+            if tmp_check == 0:
+                words = i.split(' ')
+                wordv = words[0]
+                if wordv[0] == "v" or wordv[0] == "i":
+                    attr_var = ET.SubElement(
+                        attr_source, words[0], name="Source type"
+                    )
+                    attr_var.text = words[len(words) - 1]
+                    # ET.SubElement(
+                    #     attr_ac, "field1", name="Lin").text = "true"
+                if words[len(words) - 1] == "ac":
+                    # attr_ac = ET.SubElement(attr_var, "ac")
+                    ET.SubElement(
+                        attr_var, "field1", name="Amplitude"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field2", name="Phase"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 2
+                elif words[len(words) - 1] == "dc":
+                    # attr_dc = ET.SubElement(attr_var, "dc")
+                    ET.SubElement(
+                        attr_var, "field1", name="Value"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 2
+                elif words[len(words) - 1] == "sine":
+                    # attr_sine = ET.SubElement(attr_var, "sine")
+                    ET.SubElement(
+                        attr_var, "field1", name="Offset Value"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field2", name="Amplitude"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field3", name="Frequency"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field4", name="Delay Time"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field5", name="Damping Factor"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 2
+                elif words[len(words) - 1] == "pulse":
+                    # attr_pulse=ET.SubElement(attr_var,"pulse")
+                    ET.SubElement(
+                        attr_var, "field1", name="Initial Value"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field2", name="Pulse Value"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field3", name="Delay Time"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field4", name="Rise Time"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field5", name="Fall Time"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field5", name="Pulse width"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field5", name="Period"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 2
+                elif words[len(words) - 1] == "pwl":
+                    # attr_pwl=ET.SubElement(attr_var,"pwl")
+                    ET.SubElement(
+                        attr_var, "field1", name="Enter in pwl format"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 2
+                elif words[len(words) - 1] == "exp":
+                    # attr_exp=ET.SubElement(attr_var,"exp")
+                    ET.SubElement(
+                        attr_var, "field1", name="Initial Value"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field2", name="Pulsed Value"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field3", name="Rise Delay Time"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field4", name="Rise Time Constant"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field5", name="Fall TIme"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 1
+                    ET.SubElement(
+                        attr_var, "field6", name="Fall Time Constant"
+                    ).text = str(obj_source.entry_var[count].text())
+                    count += 2
 
-            if wordv[0] == "v" or wordv[0] == "i":
-                json_data["source"][wordv] = {}
-                json_data["source"][wordv]["type"] = words[len(words) - 1]
-                json_data["source"][wordv]["values"] = []
-
-            if words[len(words) - 1] == "ac":
-                amp = {"Amplitude": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(amp)
-
-                phase = {"Phase": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(phase)
-
-            elif words[len(words) - 1] == "dc":
-                value = {"Value": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(value)
-
-            elif words[len(words) - 1] == "sine":
-                offset = {
-                    "Offset Value": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(offset)
-
-                amp = {"Amplitude": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(amp)
-
-                freq = {"Freuency": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(freq)
-
-                delay = {"Delay Time": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(delay)
-
-                damp = {
-                    "Damping Factor": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(damp)
-
-            elif words[len(words) - 1] == "pulse":
-                initial = {
-                    "Initial Value": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(initial)
-
-                pulse = {
-                    "Pulse Value": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(pulse)
-
-                delay = {"Delay Time": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(delay)
-
-                rise = {"Rise Time": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(rise)
-
-                fall = {"Fall Time": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(fall)
-
-                width = {
-                    "Pulse width": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(width)
-
-                period = {"Period": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(period)
-
-            elif words[len(words) - 1] == "pwl":
-                pwl = {
-                    "Enter in pwl format": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(pwl)
-
-            elif words[len(words) - 1] == "exp":
-                initial = {
-                    "Initial Value": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(initial)
-
-                pulsed = {
-                    "Pulsed Value": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(pulsed)
-
-                rise = {
-                    "Rise Delay Time": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(rise)
-
-                fall = {"Fall Time": str(obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(fall)
-
-                fallConstant = {
-                    "Fall Time Constant": str(
-                        obj_source.entry_var[count].text())}
-                count += 1
-                json_data["source"][wordv]["values"].append(fallConstant)
-
-            else:
-                pass
-
-        # Writing Model values
-
+        if check == 0:
+            attr_model = ET.SubElement(attr_parent, "model")
+        if check == 1:
+            for child in attr_parent:
+                if child.tag == "model":
+                    attr_model = child
         i = 0
-        json_data["model"] = {}
+
+        # tmp_check is a variable to check for duplicates in the xml file
+        tmp_check = 0
+        # tmp_i is the iterator in case duplicates are there;
+        # then in that case we need to replace only the child node and
+        # not create a new parent node
 
         for line in modelList:
+            tmp_check = 0
             for rand_itr in obj_model.obj_trac.modelTrack:
                 if rand_itr[2] == line[2] and rand_itr[3] == line[3]:
                     start = rand_itr[7]
                     end = rand_itr[8]
+
             i = start
+            for child in attr_model:
+                if child.text == line[2] and child.tag == line[3]:
+                    for grand_child in child:
+                        if i <= end:
+                            grand_child.text = \
+                              str(obj_model.obj_trac.model_entry_var[i].text())
+                            i = i + 1
+                    tmp_check = 1
 
-            json_data["model"][line[3]] = {}
-            json_data["model"][line[3]]["type"] = line[2]
-            json_data["model"][line[3]]["values"] = []
+            if tmp_check == 0:
+                attr_ui = ET.SubElement(attr_model, line[3], name="type")
+                attr_ui.text = line[2]
+                for key, value in line[7].items():
+                    if(
+                        hasattr(value, '__iter__') and
+                        i <= end and not isinstance(value, str)
+                    ):
+                        for item in value:
+                            ET.SubElement(
+                                attr_ui, "field" + str(i + 1), name=item
+                            ).text = str(
+                                  obj_model.obj_trac.model_entry_var[i].text()
+                                )
+                            i = i + 1
 
-            for key, value in line[7].items():
-                if(
-                    hasattr(value, '__iter__') and
-                    i <= end and not isinstance(value, str)
-                ):
-                    for item in value:
-                        fields = {
-                            item: str(
-                                obj_model.obj_trac.model_entry_var[i].text())}
-                        json_data["model"][line[3]]["values"].append(fields)
+                    else:
+                        ET.SubElement(
+                            attr_ui, "field" + str(i + 1), name=value
+                        ).text = str(
+                                obj_model.obj_trac.model_entry_var[i].text()
+                            )
                         i = i + 1
 
-                else:
-                    fields = {
-                        value: str(
-                            obj_model.obj_trac.model_entry_var[i].text())}
-                    json_data["model"][line[3]]["values"].append(fields)
-                    i = i + 1
-
         # Writing Device Model values
-
-        json_data["deviceModel"] = {}
+        if check == 0:
+            attr_devicemodel = ET.SubElement(attr_parent, "devicemodel")
+        if check == 1:
+            for child in attr_parent:
+                if child.tag == "devicemodel":
+                    del child[:]
+                    attr_devicemodel = child
 
         for device in obj_devicemodel.devicemodel_dict_beg:
-            json_data["deviceModel"][device] = []
+            attr_var = ET.SubElement(attr_devicemodel, device)
             it = obj_devicemodel.devicemodel_dict_beg[device]
             end = obj_devicemodel.devicemodel_dict_end[device]
 
             while it <= end:
-                json_data["deviceModel"][device].append(
-                    str(obj_devicemodel.entry_var[it].text()))
+                ET.SubElement(attr_var, "field").text = \
+                        str(obj_devicemodel.entry_var[it].text())
                 it = it + 1
 
         # Writing Subcircuit values
+        if check == 0:
+            attr_subcircuit = ET.SubElement(attr_parent, "subcircuit")
+        if check == 1:
+            for child in attr_parent:
+                if child.tag == "subcircuit":
+                    del child[:]
+                    attr_subcircuit = child
 
-        json_data["subcircuit"] = {}
         for subckt in obj_subcircuitTab.subcircuit_dict_beg:
-            json_data["subcircuit"][subckt] = []
+            attr_var = ET.SubElement(attr_subcircuit, subckt)
             it = obj_subcircuitTab.subcircuit_dict_beg[subckt]
             end = obj_subcircuitTab.subcircuit_dict_end[subckt]
 
             while it <= end:
-                json_data["subcircuit"][subckt].append(
-                    str(obj_subcircuitTab.entry_var[it].text()))
+                ET.SubElement(attr_var, "field").text = \
+                        str(obj_subcircuitTab.entry_var[it].text())
                 it = it + 1
 
-        # json dumped and written to previous value file for the project
-        write_data = json.dumps(json_data)
-        fw.write(write_data)
+        # xml written to previous value file for the project
+        tree = ET.ElementTree(attr_parent)
+        tree.write(fw)
 
         # Create Convert object with the source details & the schematic details
         print("=============================================================")
@@ -594,11 +661,11 @@ class MainWindow(QtGui.QWidget):
             print("=========================================================")
             self.createNetlistFile(store_schematicInfo, plotText)
 
-            self.msg = "The Kicad to Ngspice Conversion completed\
-            successfully!"
+            self.msg = "The Kicad to Ngspice Conversion completed "
+            self.msg += "successfully!"
             QtGui.QMessageBox.information(
-                self, "Information", self.msg, QtGui.QMessageBox.Ok)
-
+                self, "Information", self.msg, QtGui.QMessageBox.Ok
+            )
         except Exception as e:
             print("Exception Message: ", e)
             print("There was error while converting kicad to ngspice")
@@ -615,31 +682,26 @@ class MainWindow(QtGui.QWidget):
         """
         - Creating .cir.out file
         - If analysis file present uses that and extract
-        - - Simulator
-        - - Initial
-        - - Analysis
+            - Simulator
+            - Initial
+            - Analysis
         - Finally add the following components to .cir.out file
-        - - SimulatorOption
-        - - InitialCondOption
-        - - Store_SchematicInfo
-        - - AnalysisOption
+            - SimulatorOption
+            - InitialCondOption
+            - Store_SchematicInfo
+            - AnalysisOption
         - In the end add control statements and allv, alli, end statements
         """
         print("=============================================================")
         print("Creating Final netlist")
-        # print "INFOLINE",infoline
-        # print "OPTIONINFO",optionInfo
-        # print "Device MODEL LIST ",devicemodelList
-        # print "SUBCKT ",subcktList
-        # print "OUTPUTOPTION",outputOption
-        # print "KicadfIle",kicadFile
+
         # To avoid writing optionInfo twice in final netlist
         store_optionInfo = list(optionInfo)
 
         # checking if analysis files is present
         (projpath, filename) = os.path.split(self.kicadFile)
         analysisFileLoc = os.path.join(projpath, "analysis")
-        # print "Analysis File Location",analysisFileLoc
+
         if os.path.exists(analysisFileLoc):
             try:
                 f = open(analysisFileLoc)
@@ -653,7 +715,7 @@ class MainWindow(QtGui.QWidget):
                  Please check it")
                 sys.exit()
         else:
-            print("========================================================")
+            # print("========================================================")
             print(analysisFileLoc + " does not exist")
             sys.exit()
 
@@ -664,10 +726,7 @@ class MainWindow(QtGui.QWidget):
             if len(eachline) > 1:
                 if eachline[0] == '.':
                     store_optionInfo.append(eachline)
-                else:
-                    pass
 
-        # print "Option Info",optionInfo
         analysisOption = []
         initialCondOption = []
         simulatorOption = []
@@ -743,7 +802,7 @@ class MainWindow(QtGui.QWidget):
             except BaseException:
                 print("Error in opening .cir.out file.")
         else:
-            print("=========================================================")
+            # print("=========================================================")
             print(
                 self.projName +
                 ".cir.out does not exist. Please create a spice netlist.")
@@ -751,8 +810,8 @@ class MainWindow(QtGui.QWidget):
         # Read the data from file
         data = f.read()
         # Close the file
-
         f.close()
+
         newNetlist = []
         netlist = iter(data.splitlines())
         for eachline in netlist:
@@ -803,5 +862,5 @@ class MainWindow(QtGui.QWidget):
         out.writelines('\n')
 
         out.writelines('.ends ' + self.projName)
-        print("=============================================================")
+        # print("=============================================================")
         print("The subcircuit has been written in " + self.projName + ".sub")

@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:Fullwavebridgerectifier-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -64,7 +65,7 @@ F 3 "" H 3400 3600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L D D1
+L D-RESCUE-Fullwavebridgerectifier D1
 U 1 1 56A85EED
 P 4200 2900
 F 0 "D1" H 4200 3000 50  0000 C CNN
@@ -75,7 +76,7 @@ F 3 "" H 4200 2900 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D3
+L D-RESCUE-Fullwavebridgerectifier D3
 U 1 1 56A85F6E
 P 5000 2900
 F 0 "D3" H 5000 3000 50  0000 C CNN
@@ -86,7 +87,7 @@ F 3 "" H 5000 2900 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D2
+L D-RESCUE-Fullwavebridgerectifier D2
 U 1 1 56A85FBD
 P 4200 4250
 F 0 "D2" H 4200 4350 50  0000 C CNN
@@ -97,7 +98,7 @@ F 3 "" H 4200 4250 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L D D4
+L D-RESCUE-Fullwavebridgerectifier D4
 U 1 1 56A8602F
 P 5000 4250
 F 0 "D4" H 5000 4350 50  0000 C CNN
@@ -108,7 +109,7 @@ F 3 "" H 5000 4250 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-Fullwavebridgerectifier R1
 U 1 1 56A860D7
 P 6050 3400
 F 0 "R1" H 6100 3530 50  0000 C CNN

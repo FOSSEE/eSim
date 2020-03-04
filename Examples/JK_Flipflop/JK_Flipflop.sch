@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:JK_Flipflop-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -37,6 +38,7 @@ LIBS:linear
 LIBS:regul
 LIBS:74xx
 LIBS:cmos4000
+LIBS:JK_Flipflop-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -74,7 +76,7 @@ F 3 "" H 3800 4350 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R1
+L R-RESCUE-JK_Flipflop R1
 U 1 1 56D58F73
 P 9300 3200
 F 0 "R1" H 9350 3330 50  0000 C CNN
@@ -85,7 +87,7 @@ F 3 "" V 9350 3250 30  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L R R2
+L R-RESCUE-JK_Flipflop R2
 U 1 1 56D58FBB
 P 9300 4000
 F 0 "R2" H 9350 4130 50  0000 C CNN

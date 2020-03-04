@@ -1,5 +1,7 @@
 from PyQt4 import QtGui
-import webbrowser
+import subprocess
+import platform
+import os
 
 
 class UserManual(QtGui.QWidget):
@@ -13,9 +15,14 @@ class UserManual(QtGui.QWidget):
 
         self.vlayout = QtGui.QVBoxLayout()
 
-        self.url = "../browser/pages/User-Manual/eSim.html"
-        self.test = webbrowser.open(
-            "../browser/pages/User-Manual/eSim.html", new=2)
+        file = os.path.realpath(
+            'library/browser/User-Manual/eSim_Manual_2019_Dec_31.pdf'
+        )
+
+        if 'Win' in platform.system():
+            os.startfile(file)
+        else:
+            subprocess.Popen(['xpdf.real', file], shell=False)
 
         self.setLayout(self.vlayout)
         self.show()

@@ -1,9 +1,8 @@
 from PyQt4 import QtGui
-import json
 from . import TrackWidget
 from projManagement import Validation
 import os
-# from xml.etree import ElementTree as ET
+from xml.etree import ElementTree as ET
 
 
 class SubcircuitTab(QtGui.QWidget):
@@ -12,7 +11,7 @@ class SubcircuitTab(QtGui.QWidget):
     - It dynamically creates the widget for subcircuits,
       according to the .cir file
     - Creates `lineEdit` and `Add` button, which triggers `fileSelector`
-    - Also, checks `Previous_value.json` for previous subcircuit value
+    - Also, checks `Previous_value.xml` for previous subcircuit value
       to autofill, the `lineEdit`
     - Add button is bind to `trackSubcircuit`
     - Also `trackSubcircuit` without button is triggered if `lineEdit` filled
@@ -28,12 +27,15 @@ class SubcircuitTab(QtGui.QWidget):
                 os.path.join(
                     projpath,
                     project_name +
-                    "_Previous_Values.json"),
+                    "_Previous_Values.xml"),
                 'r')
-            data = f.read()
-            json_data = json.loads(data)
+            tree = ET.parse(f)
+            parent_root = tree.getroot()
+            for child in parent_root:
+                if child.tag == "subcircuit":
+                    root = child
         except BaseException:
-            print("Subcircuit Previous values JSON is Empty")
+            print("Subcircuit Previous values XML is Empty")
 
         QtGui.QWidget.__init__(self)
 
@@ -61,7 +63,7 @@ class SubcircuitTab(QtGui.QWidget):
         for eachline in schematicInfo:
             words = eachline.split()
             if eachline[0] == 'x':
-                print("Subcircuit : Words", words[0])
+                # print("Subcircuit : Words", words[0])
                 self.obj_trac.subcircuitList[project_name + words[0]] = words
                 self.subcircuit_dict_beg[words[0]] = self.count
                 subbox = QtGui.QGroupBox()
@@ -72,16 +74,16 @@ class SubcircuitTab(QtGui.QWidget):
 
                 global path_name
                 try:
-                    for key in json_data["subcircuit"]:
-                        if key == words[0]:
-                            # print "Subcircuit MATCHING---",child.tag[0], \
-                            # child.tag[1], eachline[0], eachline[1]
+                    for child in root:
+                        if child.tag[0] == eachline[0] \
+                                and child.tag[1] == eachline[1]:
+                            # print("Subcircuit MATCHING---", child.tag[0], \
+                            #       child.tag[1], eachline[0],eachline[1])
                             try:
-                                if os.path.exists(
-                                        json_data["subcircuit"][key][0]):
-                                    self.entry_var[self.count].setText(
-                                        json_data["subcircuit"][key][0])
-                                    path_name = json_data["subcircuit"][key][0]
+                                if os.path.exists(child[0].text):
+                                    self.entry_var[self.count] \
+                                        .setText(child[0].text)
+                                    path_name = child[0].text
                                 else:
                                     self.entry_var[self.count].setText("")
                             except BaseException:
@@ -97,7 +99,7 @@ class SubcircuitTab(QtGui.QWidget):
                 # eg. If the line is 'x1 4 0 3 ua741', there are 3 ports(4, 0
                 # and 3).
                 self.numPorts.append(len(words) - 2)
-                print("Number of ports of sub circuit : ", self.numPorts)
+                # print("Number of ports of sub circuit : ", self.numPorts)
                 self.addbtn.clicked.connect(self.trackSubcircuit)
                 subgrid.addWidget(self.addbtn, self.row, 2)
                 subbox.setLayout(subgrid)
@@ -144,9 +146,9 @@ class SubcircuitTab(QtGui.QWidget):
 
         self.subfile = str(
             QtGui.QFileDialog.getExistingDirectory(
-                self,
-                "Open Subcircuit",
-                "../SubcircuitLibrary"))
+                self, "Open Subcircuit",
+                "library/SubcircuitLibrary")
+            )
         self.reply = self.obj_validation.validateSub(
             self.subfile, self.numPorts[self.widgetObjCount - 1])
         if self.reply == "True":
@@ -159,17 +161,19 @@ class SubcircuitTab(QtGui.QWidget):
             self.obj_trac.subcircuitTrack[self.subName] = self.subfile
         elif self.reply == "PORT":
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a Subcircuit with correct number of ports.")
-            self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.exec_()
         elif self.reply == "DIREC":
             self.msg = QtGui.QErrorMessage(self)
-            self.msg.showMessage(
-                "Please select a valid Subcircuit directory \
-                (Containing '.sub' file).")
+            self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.showMessage(
+                "Please select a valid Subcircuit directory "
+                "(Containing '.sub' file).")
+            self.msg.exec_()
 
     def trackSubcircuitWithoutButton(self, iter_value, path_value):
         """
@@ -189,18 +193,19 @@ class SubcircuitTab(QtGui.QWidget):
             self.subName = self.subDetail[self.widgetObjCount]
 
             # Storing to track it during conversion
-
             self.obj_trac.subcircuitTrack[self.subName] = self.subfile
         elif self.reply == "PORT":
             self.msg = QtGui.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a Subcircuit with correct number of ports.")
-            self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.exec_()
         elif self.reply == "DIREC":
             self.msg = QtGui.QErrorMessage(self)
-            self.msg.showMessage(
-                "Please select a valid Subcircuit directory \
-                (Containing '.sub' file).")
+            self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
-            self.msg.show()
+            self.msg.showMessage(
+                "Please select a valid Subcircuit directory "
+                "(Containing '.sub' file).")
+            self.msg.exec_()

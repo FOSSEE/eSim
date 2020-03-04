@@ -1,0 +1,1 @@
+# Connectors_Hirose.pretty

@@ -12,7 +12,7 @@ r1  b gnd 1000
 * u8  net-_u7-pad3_ out dac_bridge_1
 * u1  a b net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
 v2  a gnd pulse(0 5 0.1u 0.1u 0.1u 2u 20u)
-v1  b gnd pulse(0 5 0.1u 0.1u 0.1u 2u 20u)
+v1  b gnd pulse(5 0 0.1u 0.1u 0.1u 2u 20u)
 * u9  a plot_v1
 * u10  b plot_v1
 * u11  out plot_v1
