@@ -14,7 +14,7 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: FOSSEE at IIT Bombay.
-#       CREATED: Friday 14 February 2020 16:14
+#       CREATED: Wednesday 04 March 2020 16:14
 #      REVISION:  ---
 # ===============================================================================
 
@@ -96,6 +96,13 @@ function installDependency
     sudo apt-get install -y xterm
     if [ $? -ne 0 ]; then
         echo -e "\n\n\"Xterm\" dependency couldn't be installed.\nKindly resolve above errors and try again."
+        exit 1
+    fi
+
+    echo "Installing Xpdf............................"
+    sudo apt-get install -y xpdf
+    if [ $? -ne 0 ]; then
+        echo -e "\n\n\"Xpdf\" dependency couldn't be installed.\nKindly resolve above errors and try again."
         exit 1
     fi
 
