@@ -30,7 +30,7 @@ It is released under GNU GPL License. It runs on Ubuntu OS versions 16.04 and ab
 To use eSim on your machine please refer to link  [here](https://esim.fossee.in/downloads) for installation and other guidelines.
 
 ## eSim Manual
-To know everything about eSim, how it works and it's feature please download manual [here](https://static.fossee.in/esim/manuals/eSim_Manual_2019_Dec_31.pdf)
+To know everything about eSim, how it works and it's feature please download manual [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.0.pdf)
 
 ## Contact
 For any queries regarding eSim please write us on at this [address](mailto:contact-esim@fossee.in).
