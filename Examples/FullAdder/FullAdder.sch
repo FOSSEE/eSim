@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:FullAdder-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -30,13 +31,12 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:power
-LIBS:device
 LIBS:transistors
 LIBS:conn
-LIBS:linear
 LIBS:regul
 LIBS:74xx
 LIBS:cmos4000
+LIBS:FullAdder-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -63,7 +63,7 @@ F 3 "" H 4350 4050 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L DC v1
+L DC-RESCUE-FullAdder v1
 U 1 1 56D58CB2
 P 1300 3550
 F 0 "v1" H 1100 3650 60  0000 C CNN
@@ -74,7 +74,7 @@ F 3 "" H 1300 3550 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L DC v2
+L DC-RESCUE-FullAdder v2
 U 1 1 56D58D3D
 P 1950 3950
 F 0 "v2" H 1750 4050 60  0000 C CNN
@@ -85,7 +85,7 @@ F 3 "" H 1950 3950 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L DC v3
+L DC-RESCUE-FullAdder v3
 U 1 1 56D58D84
 P 2700 4350
 F 0 "v3" H 2500 4450 60  0000 C CNN

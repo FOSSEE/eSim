@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:Zener_Characteristic-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -30,13 +31,12 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:power
-LIBS:device
 LIBS:transistors
 LIBS:conn
-LIBS:linear
 LIBS:regul
 LIBS:74xx
 LIBS:cmos4000
+LIBS:Zener_Characteristic-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -52,7 +52,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L DC v1
+L DC-RESCUE-Zener_Characteristic v1
 U 1 1 56C6E03A
 P 5350 3750
 F 0 "v1" H 5150 3850 60  0000 C CNN

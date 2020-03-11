@@ -14,7 +14,7 @@ r2  out gnd 1k
 v1 net-_r1-pad1_ gnd  dc 5
 * u5  in plot_v1
 * u2  vc plot_v1
-.tran 1e-03 50e-03 0e-03
+.tran 10e-03 50e-03 0e-03
 
 * Control Statements 
 .control

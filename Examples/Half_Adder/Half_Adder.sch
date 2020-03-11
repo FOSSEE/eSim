@@ -10,10 +10,8 @@ LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
 LIBS:power
-LIBS:device
 LIBS:transistors
 LIBS:conn
-LIBS:linear
 LIBS:regul
 LIBS:74xx
 LIBS:cmos4000
@@ -289,7 +287,7 @@ Connection ~ 3950 3150
 Wire Wire Line
 	3900 3950 3900 3800
 $Comp
-L DC v2
+L DC-RESCUE-Half_Adder v2
 U 1 1 558A937C
 P 3450 3800
 F 0 "v2" H 3250 3900 60  0000 C CNN
@@ -300,7 +298,7 @@ F 3 "" H 3450 3800 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L DC v1
+L DC-RESCUE-Half_Adder v1
 U 1 1 558A9345
 P 3450 3150
 F 0 "v1" H 3250 3250 60  0000 C CNN

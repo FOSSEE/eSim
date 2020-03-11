@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.3
 #encoding utf-8
 #
-# DC-RESCUE-FullAdder
+# DC-RESCUE-Zener_Characteristic
 #
-DEF DC-RESCUE-FullAdder v 0 40 Y Y 1 F N
+DEF DC-RESCUE-Zener_Characteristic v 0 40 Y Y 1 F N
 F0 "v" -200 100 60 H V C CNN
-F1 "DC-RESCUE-FullAdder" -200 -50 60 H V C CNN
+F1 "DC-RESCUE-Zener_Characteristic" -200 -50 60 H V C CNN
 F2 "R1" -300 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
