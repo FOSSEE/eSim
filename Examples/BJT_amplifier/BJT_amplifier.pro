@@ -16,10 +16,10 @@ LibName9=eSim_Sources
 LibName10=eSim_Subckt
 LibName11=eSim_User
 LibName12=power
-LibName13=device
+LibName13=contrib
 LibName14=transistors
 LibName15=conn
-LibName16=linear
+LibName16=valves
 LibName17=regul
 LibName18=74xx
 LibName19=cmos4000
@@ -42,5 +42,8 @@ LibName35=cypress
 LibName36=siliconi
 LibName37=opto
 LibName38=atmel
+<<<<<<< HEAD
 LibName39=contrib
 LibName40=valves
+=======
+>>>>>>> fellowship2019-python3

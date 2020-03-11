@@ -27,11 +27,19 @@ X VDD 14 550 300 200 L 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
+<<<<<<< HEAD
 # DC
 #
 DEF DC v 0 40 Y Y 1 F N
 F0 "v" -200 100 60 H V C CNN
 F1 "DC" -200 -50 60 H V C CNN
+=======
+# DC-RESCUE-4_Input_NAND_Charcateristics
+#
+DEF DC-RESCUE-4_Input_NAND_Charcateristics v 0 40 Y Y 1 F N
+F0 "v" -200 100 60 H V C CNN
+F1 "DC-RESCUE-4_Input_NAND_Charcateristics" -200 -50 60 H V C CNN
+>>>>>>> fellowship2019-python3
 F2 "R1" -300 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST

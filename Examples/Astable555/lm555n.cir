@@ -1,0 +1,31 @@
+* /home/ash98/Downloads/lm555n/lm555n.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Dec 24 15:58:04 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+E2  Net-_E2-Pad1_ GND /c /d 10000		
+U1  Net-_Q1-Pad3_ /d Net-_U1-Pad3_ Net-_U1-Pad4_ /a /b Net-_Q1-Pad1_ Net-_R1-Pad1_ PORT		
+R8  Net-_R8-Pad1_ Net-_Q1-Pad2_ 1500		
+R7  Net-_E2-Pad1_ Net-_R7-Pad2_ 25		
+R6  Net-_E1-Pad1_ Net-_R6-Pad2_ 25		
+E1  Net-_E1-Pad1_ GND /b /a 10000		
+R4  /b /a 2E6		
+R5  /c /d 2E6		
+R3  /c Net-_Q1-Pad3_ 5000		
+R2  /a /c 5000		
+R1  Net-_R1-Pad1_ /a 5000		
+U8  Net-_U4-Pad2_ Net-_U6-Pad2_ Net-_U5-Pad2_ Net-_U7-Pad2_ Net-_U7-Pad2_ Net-_U8-Pad6_ Net-_U10-Pad1_ d_srlatch		
+U7  Net-_U5-Pad2_ Net-_U7-Pad2_ d_inverter		
+U5  Net-_U1-Pad4_ Net-_U5-Pad2_ adc_bridge_1		
+U4  Net-_U3-Pad2_ Net-_U4-Pad2_ adc_bridge_1		
+U6  Net-_U2-Pad2_ Net-_U6-Pad2_ adc_bridge_1		
+U3  Net-_R7-Pad2_ Net-_U3-Pad2_ limit		
+U2  Net-_R6-Pad2_ Net-_U2-Pad2_ limit		
+U9  Net-_U8-Pad6_ Net-_U1-Pad3_ dac_bridge_1		
+U10  Net-_U10-Pad1_ Net-_R8-Pad1_ dac_bridge_1		
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+
+.end

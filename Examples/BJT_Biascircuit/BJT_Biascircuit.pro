@@ -62,6 +62,7 @@ LibName28=opto
 LibName29=atmel
 LibName30=contrib
 LibName31=power
+<<<<<<< HEAD
 LibName32=device
 LibName33=transistors
 LibName34=conn
@@ -70,3 +71,11 @@ LibName36=regul
 LibName37=74xx
 LibName38=cmos4000
 LibName39=/home/fossee/library/eSim_Plot
+=======
+LibName32=eSim_Plot
+LibName33=transistors
+LibName34=conn
+LibName35=74xx
+LibName36=regul
+
+>>>>>>> fellowship2019-python3
