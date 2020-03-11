@@ -31,10 +31,8 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:power
-LIBS:device
 LIBS:transistors
 LIBS:conn
-LIBS:linear
 LIBS:regul
 LIBS:74xx
 LIBS:cmos4000
@@ -54,7 +52,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L DC v1
+L DC-RESCUE-JK_Flipflop v1
 U 1 1 56D58CB2
 P 2400 3550
 F 0 "v1" H 2200 3650 60  0000 C CNN
@@ -65,7 +63,7 @@ F 3 "" H 2400 3550 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L DC v3
+L DC-RESCUE-JK_Flipflop v3
 U 1 1 56D58D84
 P 3800 4350
 F 0 "v3" H 3600 4450 60  0000 C CNN
@@ -341,7 +339,7 @@ F 3 "" H 6900 4850 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L DC v4
+L DC-RESCUE-JK_Flipflop v4
 U 1 1 56D5977A
 P 7300 1600
 F 0 "v4" H 7100 1700 60  0000 C CNN
@@ -352,7 +350,7 @@ F 3 "" H 7300 1600 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
-L DC v5
+L DC-RESCUE-JK_Flipflop v5
 U 1 1 56D59898
 P 7300 5450
 F 0 "v5" H 7100 5550 60  0000 C CNN

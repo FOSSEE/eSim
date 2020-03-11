@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.3
 #encoding utf-8
 #
-# DC
+# DC-RESCUE-Half_Adder
 #
-DEF DC v 0 40 Y Y 1 F N
+DEF DC-RESCUE-Half_Adder v 0 40 Y Y 1 F N
 F0 "v" -200 100 60 H V C CNN
-F1 "DC" -200 -50 60 H V C CNN
+F1 "DC-RESCUE-Half_Adder" -200 -50 60 H V C CNN
 F2 "R1" -300 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST

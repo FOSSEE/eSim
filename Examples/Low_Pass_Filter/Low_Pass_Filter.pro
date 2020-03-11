@@ -1,4 +1,4 @@
-update=Mon Feb 29 21:41:09 2016
+update=Wed Mar 11 16:42:16 2020
 version=1
 last_client=eeschema
 [general]
@@ -62,10 +62,8 @@ LibName28=opto
 LibName29=atmel
 LibName30=contrib
 LibName31=power
-LibName32=device
-LibName33=transistors
-LibName34=conn
-LibName35=linear
-LibName36=regul
-LibName37=74xx
-LibName38=cmos4000
+LibName32=transistors
+LibName33=conn
+LibName34=regul
+LibName35=74xx
+LibName36=cmos4000
