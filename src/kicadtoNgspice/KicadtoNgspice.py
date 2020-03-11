@@ -376,7 +376,8 @@ class MainWindow(QtGui.QWidget):
                     attr_source = child
 
         count = 1
-        grand_child_count = 1
+        grand_child_count = 0
+        keys = list(obj_source.entry_var.keys())
 
         for i in store_schematicInfo:
             tmp_check = 0
@@ -387,9 +388,9 @@ class MainWindow(QtGui.QWidget):
                     tmp_check = 1
                     for grand_child in child:
                         grand_child.text = \
-                            str(obj_source.entry_var[grand_child_count].text())
+                            str(obj_source.entry_var
+                                [keys[grand_child_count]].text())
                         grand_child_count += 1
-                    grand_child_count += 1
             if tmp_check == 0:
                 words = i.split(' ')
                 wordv = words[0]
