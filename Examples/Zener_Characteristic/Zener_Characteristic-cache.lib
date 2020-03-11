@@ -1,11 +1,11 @@
 EESchema-LIBRARY Version 2.3
 #encoding utf-8
 #
-# DC
+# DC-RESCUE-Zener_Characteristic
 #
-DEF DC v 0 40 Y Y 1 F N
+DEF DC-RESCUE-Zener_Characteristic v 0 40 Y Y 1 F N
 F0 "v" -200 100 60 H V C CNN
-F1 "DC" -200 -50 60 H V C CNN
+F1 "DC-RESCUE-Zener_Characteristic" -200 -50 60 H V C CNN
 F2 "R1" -300 0 60 H V C CNN
 F3 "" 0 0 60 H V C CNN
 $FPLIST
@@ -23,10 +23,10 @@ ENDDEF
 DEF GND #PWR 0 0 Y Y 1 F P
 F0 "#PWR" 0 -250 50 H I C CNN
 F1 "GND" 0 -150 50 H V C CNN
-F2 "" 0 0 50 H V C CNN
-F3 "" 0 0 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
 DRAW
-P 6 0 1 0  0 0  0 -50  50 -50  0 -100  -50 -50  0 -50 N
+P 6 0 1 0 0 0 0 -50 50 -50 0 -100 -50 -50 0 -50 N
 X GND 1 0 0 0 D 50 50 1 1 W N
 ENDDRAW
 ENDDEF
@@ -84,10 +84,10 @@ F1 "zener" 0 100 60 H V C CNN
 F2 "" 50 0 60 H V C CNN
 F3 "" 50 0 60 H V C CNN
 DRAW
-P 2 0 1 0  100 -50  50 -100 N
-P 2 0 1 0  100 50  100 -50 N
-P 2 0 1 0  100 50  150 100 N
-P 4 0 1 0  0 50  0 -50  100 0  0 50 N
+P 2 0 1 0 100 -50 50 -100 N
+P 2 0 1 0 100 50 100 -50 N
+P 2 0 1 0 100 50 150 100 N
+P 4 0 1 0 0 50 0 -50 100 0 0 50 N
 X ~ IN -200 0 200 R 50 43 1 1 I
 X ~ OUT 300 0 200 L 50 43 1 1 O
 ENDDRAW
