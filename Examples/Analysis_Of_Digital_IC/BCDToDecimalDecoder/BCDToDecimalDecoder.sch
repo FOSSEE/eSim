@@ -1,4 +1,8 @@
 EESchema Schematic File Version 2
+<<<<<<< HEAD
+=======
+LIBS:BCDToDecimalDecoder-rescue
+>>>>>>> fellowship2019-python3
 LIBS:power
 LIBS:eSim_Analog
 LIBS:eSim_Devices
@@ -70,7 +74,11 @@ F 3 "" H 3800 5050 60  0000 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
+<<<<<<< HEAD
 L DC v2
+=======
+L DC-RESCUE-BCDToDecimalDecoder v2
+>>>>>>> fellowship2019-python3
 U 1 1 5CF25946
 P 9400 3950
 F 0 "v2" H 9200 4050 60  0000 C CNN
@@ -81,7 +89,11 @@ F 3 "" H 9400 3950 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
+<<<<<<< HEAD
 L DC v1
+=======
+L DC-RESCUE-BCDToDecimalDecoder v1
+>>>>>>> fellowship2019-python3
 U 1 1 5CF259A4
 P 9400 3400
 F 0 "v1" H 9200 3500 60  0000 C CNN
@@ -92,7 +104,11 @@ F 3 "" H 9400 3400 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
+<<<<<<< HEAD
 L DC v3
+=======
+L DC-RESCUE-BCDToDecimalDecoder v3
+>>>>>>> fellowship2019-python3
 U 1 1 5CF259F8
 P 9400 4500
 F 0 "v3" H 9200 4600 60  0000 C CNN
@@ -103,7 +119,11 @@ F 3 "" H 9400 4500 60  0000 C CNN
 	0    -1   -1   0   
 $EndComp
 $Comp
+<<<<<<< HEAD
 L DC v4
+=======
+L DC-RESCUE-BCDToDecimalDecoder v4
+>>>>>>> fellowship2019-python3
 U 1 1 5CF25A37
 P 9450 5000
 F 0 "v4" H 9250 5100 60  0000 C CNN

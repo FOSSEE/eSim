@@ -1,0 +1,10 @@
+* Subcircuit 4073
+.subckt 4073 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ ? net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ ? 
+* c:\users\malli\esim\src\subcircuitlibrary\4073\4073.cir
+.include 3_and.sub
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad8_ net-_u1-pad9_ 3_and
+x3 net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ 3_and
+x2 net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad10_ 3_and
+* Control Statements
+
+.ends 4073
