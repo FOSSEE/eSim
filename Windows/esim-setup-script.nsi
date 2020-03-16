@@ -206,7 +206,7 @@ Section -NgspiceSim
     
   ;Create shortcuts
   ;create desktop shortcut
-  CreateShortCut "$DESKTOP\eSim.lnk" "$INSTDIR\eSim\eSim" "" "$PROFILE\.esim\logo.ico" "" SW_SHOWMINIMIZED
+  CreateShortCut "$PROFILE\..\Public\Desktop\eSim.lnk" "$INSTDIR\eSim\eSim" "" "$PROFILE\.esim\logo.ico" "" SW_SHOWMINIMIZED
 
   ;Remove not required files
   Delete "$EXEDIR\spice.zip"
@@ -235,6 +235,7 @@ Section -InstallKiCad
  
   	;Remove not required files
   	Delete "$EXEDIR\kicad-4.0.7-i686.exe"
+  	Delete "$PROFILE\..\Public\Desktop\KiCad.lnk"
 
 	${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\KiCad\bin"
 
@@ -305,7 +306,8 @@ Section Uninstall
   Delete "$SMPROGRAMS\eSim\Uninstall.lnk"
  
   ;Removing Env Variable for KiCad  
-	${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\..\KiCad\bin"
+  GetFullPathName $0 $INSTDIR\..\KiCad\bin
+  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $0
 
   ;Remove KiCad config 
   RMDir /r "$PROFILE\AppData\Roaming\kicad"
@@ -317,7 +319,8 @@ Section Uninstall
   endActiveSync:
 
     ;Removing Env Variable for Ngspice 
-    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" "$INSTDIR\..\spice\bin"
+    GetFullPathName $0 $INSTDIR\..\spice\bin
+    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $0
 
     ;Removing Ngspice
     RMDir /r "$INSTDIR\..\spice"
@@ -326,7 +329,7 @@ Section Uninstall
     RMDir /r "$PROFILE\.esim"
     RMDir "$SMPROGRAMS\eSim"
     RMDir /r "$INSTDIR\..\eSim"
-    Delete "$DESKTOP\eSim.lnk" 
+    Delete "$PROFILE\..\Public\Desktop\eSim.lnk" 
 
     DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
     ;SetAutoClose true
