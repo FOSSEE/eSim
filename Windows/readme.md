@@ -120,7 +120,7 @@ It contains all the documenation for making eSim executable (using PyInstaller) 
 	- .travis.yml
 	- `Examples\NGHDL_Examples\` folder
 
-4. Remove `eSim_Nghdl.lib` file from `eSim\library\kicadLibrary\kicad_eSim-Library\`. Also, remove `library` folder, duplicate files from `template` and `modules` folders under `eSim\library\kicad\Libary\`.
+4. Remove `eSim_Nghdl.lib` file from `eSim\library\kicadLibrary\kicad_eSim-Library\`. Also, remove `library` folder, duplicate files from `template` and `modules` folders under `eSim\library\kicadLibary\`.
 
 5. Now, compress `eSim\library\kicadLibrary` in zip format, place it at `eSim\library` and delete that folder.
 
