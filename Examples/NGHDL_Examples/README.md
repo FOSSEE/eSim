@@ -11,3 +11,5 @@ In order to simulate the examples listed above, follow the below instructions.
 
 More examples will be added by eSim team along the way.
 If you have a good command on VHDL and electronics, please feel free to contribute.
+
+Note : The Examples in this directory are for demonstration purpose of eSim's Mixed-Mode simulation feature executing as expected.
