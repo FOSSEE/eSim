@@ -1,0 +1,29 @@
+* /home/saurabh/Desktop/Test_pwm/Test_pwm.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Fri Mar 13 09:45:13 2020
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v2  Net-_X1-Pad7_ GND 9v		
+U1  D plot_v1		
+X1  ? rc2 pwl_IN Net-_X1-Pad4_ ? D Net-_X1-Pad7_ ? lm_741		
+R3  Q rc1 1k		
+U3  rc1 plot_v1		
+C1  GND rc1 47u		
+U8  Net-_U2-Pad3_ Q dac_bridge_1		
+U9  Q plot_v1		
+U7  clk plot_v1		
+v5  Net-_U5-Pad1_ GND pulse		
+U6  D Net-_U2-Pad2_ adc_bridge_1		
+U5  Net-_U5-Pad1_ clk adc_bridge_1		
+v3  Net-_X1-Pad4_ GND -9v		
+v1  pwl_IN GND pwl		
+U4  pwl_IN plot_v1		
+R1  rc1 rc2 100		
+U10  rc2 plot_v1		
+C2  GND rc2 100u		
+U2  clk Net-_U2-Pad2_ Net-_U2-Pad3_ customblock		
+
+.end
