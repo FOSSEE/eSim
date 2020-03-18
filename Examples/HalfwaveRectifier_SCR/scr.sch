@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:scr-rescue
 LIBS:eSim_Analog
 LIBS:eSim_Devices
 LIBS:eSim_Digital
@@ -8,10 +9,8 @@ LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
 LIBS:power
-LIBS:device
 LIBS:transistors
 LIBS:conn
-LIBS:linear
 LIBS:regul
 LIBS:74xx
 LIBS:cmos4000
@@ -182,7 +181,7 @@ F 3 "" H 3800 4350 60  0001 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L dc v1
+L dc-RESCUE-scr v1
 U 1 1 565DBF58
 P 3600 3700
 F 0 "v1" H 3400 3800 60  0000 C CNN
@@ -193,7 +192,7 @@ F 3 "" H 3600 3700 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L dc v2
+L dc-RESCUE-scr v2
 U 1 1 565DC066
 P 5550 3000
 F 0 "v2" H 5350 3100 60  0000 C CNN
