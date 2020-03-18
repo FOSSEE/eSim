@@ -52,32 +52,18 @@ LibName18=opto
 LibName19=atmel
 LibName20=contrib
 LibName21=power
-<<<<<<< HEAD
-LibName22=device
-LibName23=transistors
-LibName24=conn
-LibName25=linear
-=======
 LibName22=eSim_Plot
 LibName23=transistors
 LibName24=conn
 LibName25=eSim_User
->>>>>>> fellowship2019-python3
 LibName26=regul
 LibName27=74xx
 LibName28=cmos4000
 LibName29=eSim_Analog
-LibName30=eSim_Devices
+LibName30=eSim_Plot
 LibName31=eSim_Digital
 LibName32=eSim_Hybrid
 LibName33=eSim_Miscellaneous
 LibName34=eSim_Power
 LibName35=eSim_Sources
 LibName36=eSim_Subckt
-<<<<<<< HEAD
-LibName37=eSim_User
-LibName38=eSim_Plot
-LibName39=eSim_PSpice
-=======
->>>>>>> fellowship2019-python3
-

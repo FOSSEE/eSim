@@ -1,6 +1,6 @@
-update=Wed Aug 14 12:44:12 2019
+update=Wed Mar 18 18:23:19 2020
 version=1
-last_client=kicad
+last_client=eeschema
 [general]
 version=1
 RootSch=
@@ -31,22 +31,14 @@ NetIExt=net
 version=1
 LibDir=../../eSim/kicadSchematicLibrary
 [eeschema/libraries]
-LibName1=4073_test-rescue
-LibName2=power
-LibName3=eSim_Analog
-LibName4=eSim_Devices
-LibName5=eSim_Digital
-LibName6=eSim_Hybrid
-LibName7=eSim_Miscellaneous
-LibName8=eSim_Plot
-LibName9=eSim_Power
-<<<<<<< HEAD
-LibName10=eSim_PSpice
-LibName11=eSim_Sources
-LibName12=eSim_Subckt
-LibName13=eSim_User
-=======
-LibName10=eSim_User
-LibName11=eSim_Sources
-LibName12=eSim_Subckt
->>>>>>> fellowship2019-python3
+LibName1=power
+LibName2=eSim_Analog
+LibName3=eSim_Devices
+LibName4=eSim_Digital
+LibName5=eSim_Hybrid
+LibName6=eSim_Miscellaneous
+LibName7=eSim_Plot
+LibName8=eSim_Power
+LibName9=eSim_Sources
+LibName10=eSim_Subckt
+LibName11=eSim_User

@@ -1,8 +1,5 @@
 EESchema Schematic File Version 2
-<<<<<<< HEAD
-=======
 LIBS:3_Input_NAND_Characteristics-rescue
->>>>>>> fellowship2019-python3
 LIBS:power
 LIBS:eSim_Analog
 LIBS:eSim_Devices
@@ -11,16 +8,9 @@ LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
 LIBS:eSim_Plot
 LIBS:eSim_Power
-<<<<<<< HEAD
-LIBS:eSim_PSpice
-LIBS:eSim_Sources
-LIBS:eSim_Subckt
-LIBS:eSim_User
-=======
 LIBS:eSim_User
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
->>>>>>> fellowship2019-python3
 LIBS:3_Input_NAND_Characteristics-cache
 EELAYER 25 0
 EELAYER END
@@ -92,11 +82,7 @@ F 3 "" H 6800 5750 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-<<<<<<< HEAD
-L DC v1
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v1
->>>>>>> fellowship2019-python3
 U 1 1 5CF24F1F
 P 1700 2350
 F 0 "v1" H 1500 2450 60  0000 C CNN
@@ -107,11 +93,7 @@ F 3 "" H 1700 2350 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-<<<<<<< HEAD
-L DC v2
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v2
->>>>>>> fellowship2019-python3
 U 1 1 5CF24F90
 P 1700 2900
 F 0 "v2" H 1500 3000 60  0000 C CNN
@@ -122,11 +104,7 @@ F 3 "" H 1700 2900 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-<<<<<<< HEAD
-L DC v3
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v3
->>>>>>> fellowship2019-python3
 U 1 1 5CF24FC7
 P 1700 3450
 F 0 "v3" H 1500 3550 60  0000 C CNN
@@ -137,11 +115,7 @@ F 3 "" H 1700 3450 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-<<<<<<< HEAD
-L DC v4
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v4
->>>>>>> fellowship2019-python3
 U 1 1 5CF25001
 P 1750 4000
 F 0 "v4" H 1550 4100 60  0000 C CNN
@@ -152,11 +126,7 @@ F 3 "" H 1750 4000 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-<<<<<<< HEAD
-L DC v5
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v5
->>>>>>> fellowship2019-python3
 U 1 1 5CF25044
 P 1750 4550
 F 0 "v5" H 1550 4650 60  0000 C CNN
@@ -167,11 +137,7 @@ F 3 "" H 1750 4550 60  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-<<<<<<< HEAD
-L DC v6
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v6
->>>>>>> fellowship2019-python3
 U 1 1 5CF25082
 P 1750 5050
 F 0 "v6" H 1550 5150 60  0000 C CNN
@@ -278,11 +244,7 @@ Wire Wire Line
 Wire Wire Line
 	5950 5900 6200 5900
 $Comp
-<<<<<<< HEAD
-L DC v7
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v7
->>>>>>> fellowship2019-python3
 U 1 1 5CF25804
 P 9250 3250
 F 0 "v7" H 9050 3350 60  0000 C CNN
@@ -293,11 +255,7 @@ F 3 "" H 9250 3250 60  0000 C CNN
 	0    -1   1    0   
 $EndComp
 $Comp
-<<<<<<< HEAD
-L DC v8
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v8
->>>>>>> fellowship2019-python3
 U 1 1 5CF2580A
 P 9250 3800
 F 0 "v8" H 9050 3900 60  0000 C CNN
@@ -308,11 +266,7 @@ F 3 "" H 9250 3800 60  0000 C CNN
 	0    -1   1    0   
 $EndComp
 $Comp
-<<<<<<< HEAD
-L DC v9
-=======
 L DC-RESCUE-3_Input_NAND_Characteristics v9
->>>>>>> fellowship2019-python3
 U 1 1 5CF25810
 P 9250 4300
 F 0 "v9" H 9050 4400 60  0000 C CNN

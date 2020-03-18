@@ -38,8 +38,6 @@ LibName4=eSim_Hybrid
 LibName5=eSim_Miscellaneous
 LibName6=eSim_Plot
 LibName7=eSim_Power
-LibName8=eSim_PSpice
+LibName8=eSim_User
 LibName9=eSim_Sources
 LibName10=eSim_Subckt
-LibName11=eSim_User
-
