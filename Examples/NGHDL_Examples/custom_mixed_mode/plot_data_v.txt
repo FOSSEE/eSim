@@ -1,5 +1,5 @@
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            ?               d               net-_u5-pad1_   
 --------------------------------------------------------------------------------
@@ -6957,7 +6957,7 @@ Index   time            ?               d               net-_u5-pad1_
 6609	1.000000e+00	-8.99113e+00	8.877380e+00	0.000000e+00	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            net-_x1-pad4_   net-_x1-pad7_   pwl_in          
 --------------------------------------------------------------------------------
@@ -13915,7 +13915,7 @@ Index   time            net-_x1-pad4_   net-_x1-pad7_   pwl_in
 6609	1.000000e+00	-9.00000e+00	9.000000e+00	1.000000e+00	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            q               rc1             rc2             
 --------------------------------------------------------------------------------
@@ -20873,7 +20873,7 @@ Index   time            q               rc1             rc2
 6609	1.000000e+00	0.000000e+00	8.377131e-01	8.959075e-01	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            x1.net-_c1-pad1 x1.net-_c1-pad2 x1.net-_q1-pad1 
 --------------------------------------------------------------------------------
@@ -27831,7 +27831,7 @@ Index   time            x1.net-_c1-pad1 x1.net-_c1-pad2 x1.net-_q1-pad1
 6609	1.000000e+00	8.996035e+00	-8.98317e+00	8.462805e+00	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            x1.net-_q1-pad3 x1.net-_q2-pad3 x1.net-_q3-pad2 
 --------------------------------------------------------------------------------
@@ -34789,7 +34789,7 @@ Index   time            x1.net-_q1-pad3 x1.net-_q2-pad3 x1.net-_q3-pad2
 6609	1.000000e+00	4.662891e-01	4.140802e-01	-7.92845e+00	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            x1.net-_q3-pad3 x1.net-_q10-pad x1.net-_q12-pad 
 --------------------------------------------------------------------------------
@@ -41747,7 +41747,7 @@ Index   time            x1.net-_q3-pad3 x1.net-_q10-pad x1.net-_q12-pad
 6609	1.000000e+00	-8.45615e+00	8.376292e+00	-8.37390e+00	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            x1.net-_q13-pad x1.net-_q13-pad x1.net-_q14-pad 
 --------------------------------------------------------------------------------
@@ -48705,7 +48705,7 @@ Index   time            x1.net-_q13-pad x1.net-_q13-pad x1.net-_q14-pad
 6609	1.000000e+00	-6.66164e-02	-8.91217e+00	8.996035e+00	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            x1.net-_q14-pad x1.net-_q15-pad x1.net-_q15-pad 
 --------------------------------------------------------------------------------
@@ -55663,7 +55663,7 @@ Index   time            x1.net-_q14-pad x1.net-_q15-pad x1.net-_q15-pad
 6609	1.000000e+00	8.996034e+00	-9.00000e+00	-9.00000e+00	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            x1.net-_q18-pad x1.net-_q19-pad 
 --------------------------------------------------------------------------------

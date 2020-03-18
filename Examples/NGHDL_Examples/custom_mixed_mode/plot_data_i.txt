@@ -1,5 +1,5 @@
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            a1#branch_1_0   v1#branch       v2#branch       
 --------------------------------------------------------------------------------
@@ -6957,7 +6957,7 @@ Index   time            a1#branch_1_0   v1#branch       v2#branch
 6609	1.000000e+00	8.377131e-04	-2.07294e-07	-4.75194e-04	
 
                  * /home/saurabh/desktop/test_pwm/test_pwm.cir
-                 Transient Analysis  Fri Mar 13 09:52:56  2020
+                 Transient Analysis  Wed Mar 18 19:30:37  2020
 --------------------------------------------------------------------------------
 Index   time            v3#branch       v5#branch       
 --------------------------------------------------------------------------------
