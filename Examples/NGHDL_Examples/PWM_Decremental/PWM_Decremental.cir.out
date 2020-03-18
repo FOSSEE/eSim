@@ -41,5 +41,6 @@ plot v(rc1)
 plot v(q)
 plot v(clk)
 plot v(pwl_in)
+plot v(pwl_in) v(rc1) v(q)
 .endc
 .end

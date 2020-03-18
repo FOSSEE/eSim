@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:c_gate-rescue
 LIBS:texas
 LIBS:intel
 LIBS:audio
@@ -19,7 +20,6 @@ LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
 LIBS:eSim_Plot
 LIBS:eSim_Power
-LIBS:eSim_PSpice
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
@@ -39,7 +39,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L 5_and X1
+L 5_and-RESCUE-c_gate X1
 U 1 1 5C9A2B0B
 P 3300 3750
 F 0 "X1" H 4650 4550 60  0000 C CNN

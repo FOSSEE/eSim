@@ -12,10 +12,10 @@ LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
 LIBS:eSim_Plot
 LIBS:eSim_Power
-LIBS:eSim_PSpice
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
+LIBS:5_and-cache
 EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
@@ -31,7 +31,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L 3_and X1
+L 3_and-RESCUE-5_and X1
 U 1 1 5C9A2741
 P 3800 3350
 F 0 "X1" H 4700 3650 60  0000 C CNN

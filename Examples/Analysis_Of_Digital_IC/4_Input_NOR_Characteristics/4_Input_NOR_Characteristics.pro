@@ -1,50 +1,4 @@
-<<<<<<< HEAD
-update=06/01/19 05:45:01
-version=1
-last_client=eeschema
-[general]
-version=1
-RootSch=
-BoardNm=
-[pcbnew]
-version=1
-LastNetListRead=
-UseCmpFile=1
-PadDrill=0.600000000000
-PadDrillOvalY=0.600000000000
-PadSizeH=1.500000000000
-PadSizeV=1.500000000000
-PcbTextSizeV=1.500000000000
-PcbTextSizeH=1.500000000000
-PcbTextThickness=0.300000000000
-ModuleTextSizeV=1.000000000000
-ModuleTextSizeH=1.000000000000
-ModuleTextSizeThickness=0.150000000000
-SolderMaskClearance=0.000000000000
-SolderMaskMinWidth=0.000000000000
-DrawSegmentWidth=0.200000000000
-BoardOutlineThickness=0.100000000000
-ModuleOutlineThickness=0.150000000000
-[cvpcb]
-version=1
-NetIExt=net
-[eeschema]
-version=1
-LibDir=
-[eeschema/libraries]
-LibName1=power
-LibName2=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Analog
-LibName3=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Devices
-LibName4=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Digital
-LibName5=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Hybrid
-LibName6=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Miscellaneous
-LibName7=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Plot
-LibName8=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Power
-LibName9=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Sources
-LibName10=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Subckt
-LibName11=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_User
-=======
-update=Wed Mar 11 12:54:03 2020
+update=Wed Mar 18 19:49:13 2020
 version=1
 last_client=eeschema
 [general]
@@ -89,4 +43,3 @@ LibName9=eSim_Miscellaneous
 LibName10=eSim_Hybrid
 LibName11=eSim_Digital
 LibName12=eSim_Analog
->>>>>>> fellowship2019-python3

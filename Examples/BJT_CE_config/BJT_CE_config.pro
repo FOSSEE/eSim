@@ -61,20 +61,3 @@ LibName27=opto
 LibName28=atmel
 LibName29=contrib
 LibName30=power
-<<<<<<< HEAD
-LibName31=device
-LibName32=transistors
-LibName33=conn
-LibName34=linear
-LibName35=regul
-LibName36=74xx
-LibName37=cmos4000
-LibName38=eSim_Plot
-=======
-LibName31=eSim_Plot
-LibName32=transistors
-LibName33=conn
-LibName34=cmos4000
-LibName35=regul
-LibName36=74xx
->>>>>>> fellowship2019-python3

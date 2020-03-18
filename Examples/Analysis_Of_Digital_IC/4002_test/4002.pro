@@ -1,4 +1,4 @@
-update=05/31/19 09:35:41
+update=Wed Mar 18 18:16:38 2020
 version=1
 last_client=eeschema
 [general]
@@ -31,14 +31,14 @@ NetIExt=net
 version=1
 LibDir=../../../kicadSchematicLibrary
 [eeschema/libraries]
-LibName1=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Analog
-LibName2=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Devices
-LibName3=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Digital
-LibName4=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Hybrid
-LibName5=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Miscellaneous
-LibName6=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Plot
-LibName7=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Power
-LibName8=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Sources
-LibName9=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_Subckt
-LibName10=C:/Users/Bhargav/eSim/kicadSchematicLibrary/eSim_User
-LibName11=power
+LibName1=power
+LibName2=eSim_Devices
+LibName3=eSim_User
+LibName4=eSim_Subckt
+LibName5=eSim_Sources
+LibName6=eSim_Power
+LibName7=eSim_Plot
+LibName8=eSim_Miscellaneous
+LibName9=eSim_Hybrid
+LibName10=eSim_Digital
+LibName11=eSim_Analog
