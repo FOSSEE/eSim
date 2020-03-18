@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:lm_741-rescue
 LIBS:power
 LIBS:eSim_Analog
 LIBS:eSim_Devices
@@ -7,7 +8,6 @@ LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
 LIBS:eSim_Plot
 LIBS:eSim_Power
-LIBS:eSim_PSpice
 LIBS:eSim_Sources
 LIBS:eSim_Subckt
 LIBS:eSim_User
@@ -27,7 +27,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L eSim_NPN Q1
+L eSim_NPN-RESCUE-lm_741 Q1
 U 1 1 5CE90A7B
 P 2650 2700
 F 0 "Q1" H 2550 2750 50  0000 R CNN
@@ -38,7 +38,7 @@ F 3 "" H 2650 2700 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L eSim_NPN Q2
+L eSim_NPN-RESCUE-lm_741 Q2
 U 1 1 5CE90A7C
 P 4300 2700
 F 0 "Q2" H 4200 2750 50  0000 R CNN
@@ -49,7 +49,7 @@ F 3 "" H 4300 2700 60  0000 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L eSim_PNP Q6
+L eSim_PNP-RESCUE-lm_741 Q6
 U 1 1 5CE90A7D
 P 3000 3200
 F 0 "Q6" H 2900 3250 50  0000 R CNN
@@ -60,7 +60,7 @@ F 3 "" H 3000 3200 60  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L eSim_PNP Q5
+L eSim_PNP-RESCUE-lm_741 Q5
 U 1 1 5CE90A7E
 P 3950 3200
 F 0 "Q5" H 3850 3250 50  0000 R CNN
@@ -71,7 +71,7 @@ F 3 "" H 3950 3200 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L eSim_NPN Q3
+L eSim_NPN-RESCUE-lm_741 Q3
 U 1 1 5CE90A7F
 P 3300 4000
 F 0 "Q3" H 3200 4050 50  0000 R CNN
@@ -82,7 +82,7 @@ F 3 "" H 3300 4000 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L eSim_PNP Q4
+L eSim_PNP-RESCUE-lm_741 Q4
 U 1 1 5CE90A80
 P 3850 2000
 F 0 "Q4" H 3750 2050 50  0000 R CNN
@@ -93,7 +93,7 @@ F 3 "" H 3850 2000 60  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L eSim_PNP Q9
+L eSim_PNP-RESCUE-lm_741 Q9
 U 1 1 5CE90A81
 P 5200 2000
 F 0 "Q9" H 5100 2050 50  0000 R CNN
@@ -104,7 +104,7 @@ F 3 "" H 5200 2000 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L eSim_NPN Q8
+L eSim_NPN-RESCUE-lm_741 Q8
 U 1 1 5CE90A82
 P 3950 4600
 F 0 "Q8" H 3850 4650 50  0000 R CNN
@@ -115,7 +115,7 @@ F 3 "" H 3950 4600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L eSim_NPN Q7
+L eSim_NPN-RESCUE-lm_741 Q7
 U 1 1 5CE90A83
 P 3000 4600
 F 0 "Q7" H 2900 4650 50  0000 R CNN
@@ -159,7 +159,7 @@ F 3 "" V 4050 5250 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L eSim_NPN Q12
+L eSim_NPN-RESCUE-lm_741 Q12
 U 1 1 5CE90A87
 P 6300 4700
 F 0 "Q12" H 6200 4750 50  0000 R CNN
@@ -170,7 +170,7 @@ F 3 "" H 6300 4700 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L eSim_NPN Q13
+L eSim_NPN-RESCUE-lm_741 Q13
 U 1 1 5CE90A88
 P 5400 4700
 F 0 "Q13" H 5300 4750 50  0000 R CNN
@@ -203,7 +203,7 @@ F 3 "" V 6400 2800 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L eSim_PNP Q10
+L eSim_PNP-RESCUE-lm_741 Q10
 U 1 1 5CE90A8B
 P 6500 1950
 F 0 "Q10" H 6400 2000 50  0000 R CNN
@@ -214,7 +214,7 @@ F 3 "" H 6500 1950 60  0000 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L eSim_PNP Q11
+L eSim_PNP-RESCUE-lm_741 Q11
 U 1 1 5CE90A8C
 P 7500 1950
 F 0 "Q11" H 7400 2000 50  0000 R CNN
@@ -225,7 +225,7 @@ F 3 "" H 7500 1950 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L eSim_NPN Q14
+L eSim_NPN-RESCUE-lm_741 Q14
 U 1 1 5CE90A8D
 P 7500 3050
 F 0 "Q14" H 7400 3100 50  0000 R CNN
@@ -269,7 +269,7 @@ F 3 "" H 6600 3200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L eSim_NPN Q16
+L eSim_NPN-RESCUE-lm_741 Q16
 U 1 1 5CE90A91
 P 7050 3950
 F 0 "Q16" H 6950 4000 50  0000 R CNN
@@ -280,7 +280,7 @@ F 3 "" H 7050 3950 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L eSim_NPN Q15
+L eSim_NPN-RESCUE-lm_741 Q15
 U 1 1 5CE90A92
 P 7500 4300
 F 0 "Q15" H 7400 4350 50  0000 R CNN
@@ -313,7 +313,7 @@ F 3 "" V 7600 5100 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L eSim_NPN Q17
+L eSim_NPN-RESCUE-lm_741 Q17
 U 1 1 5CE90A95
 P 6800 4700
 F 0 "Q17" H 6700 4750 50  0000 R CNN
@@ -324,7 +324,7 @@ F 3 "" H 6800 4700 60  0000 C CNN
 	-1   0    0    -1  
 $EndComp
 $Comp
-L eSim_NPN Q18
+L eSim_NPN-RESCUE-lm_741 Q18
 U 1 1 5CE90A96
 P 8800 2300
 F 0 "Q18" H 8700 2350 50  0000 R CNN
@@ -335,7 +335,7 @@ F 3 "" H 8800 2300 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L eSim_NPN Q20
+L eSim_NPN-RESCUE-lm_741 Q20
 U 1 1 5CE90A97
 P 8400 2750
 F 0 "Q20" H 8300 2800 50  0000 R CNN
@@ -368,7 +368,7 @@ F 3 "" V 8900 3800 30  0000 C CNN
 	0    1    1    0   
 $EndComp
 $Comp
-L eSim_PNP Q19
+L eSim_PNP-RESCUE-lm_741 Q19
 U 1 1 5CE90A9A
 P 8800 4600
 F 0 "Q19" H 8700 4650 50  0000 R CNN
