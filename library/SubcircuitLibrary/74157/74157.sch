@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:74157-rescue
 LIBS:power
 LIBS:intel
 LIBS:audio
@@ -19,10 +20,9 @@ LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
 LIBS:eSim_Plot
 LIBS:eSim_Power
-LIBS:eSim_PSpice
+LIBS:eSim_Subckt
 LIBS:eSim_Sources
 LIBS:eSim_User
-LIBS:eSim_Subckt
 LIBS:74157-cache
 EELAYER 25 0
 EELAYER END
@@ -439,7 +439,7 @@ Wire Wire Line
 	3400 6650 3400 5700
 Connection ~ 3450 5700
 $Comp
-L 3_and X2
+L 3_and-RESCUE-74157 X2
 U 1 1 5C9D0110
 P 3450 2400
 F 0 "X2" H 4350 2700 60  0000 C CNN
@@ -450,7 +450,7 @@ F 3 "" H 3450 2400 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 3_and X3
+L 3_and-RESCUE-74157 X3
 U 1 1 5C9D01B8
 P 3450 2900
 F 0 "X3" H 4350 3200 60  0000 C CNN
@@ -461,7 +461,7 @@ F 3 "" H 3450 2900 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 3_and X4
+L 3_and-RESCUE-74157 X4
 U 1 1 5C9D0222
 P 3450 3350
 F 0 "X4" H 4350 3650 60  0000 C CNN
@@ -472,7 +472,7 @@ F 3 "" H 3450 3350 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 3_and X5
+L 3_and-RESCUE-74157 X5
 U 1 1 5C9D0289
 P 3450 3850
 F 0 "X5" H 4350 4150 60  0000 C CNN
@@ -483,7 +483,7 @@ F 3 "" H 3450 3850 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 3_and X6
+L 3_and-RESCUE-74157 X6
 U 1 1 5C9D0361
 P 3450 4650
 F 0 "X6" H 4350 4950 60  0000 C CNN
@@ -494,7 +494,7 @@ F 3 "" H 3450 4650 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 3_and X7
+L 3_and-RESCUE-74157 X7
 U 1 1 5C9D0367
 P 3450 5150
 F 0 "X7" H 4350 5450 60  0000 C CNN
@@ -505,7 +505,7 @@ F 3 "" H 3450 5150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 3_and X1
+L 3_and-RESCUE-74157 X1
 U 1 1 5C9D036D
 P 3400 5600
 F 0 "X1" H 4300 5900 60  0000 C CNN
@@ -516,7 +516,7 @@ F 3 "" H 3400 5600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 3_and X8
+L 3_and-RESCUE-74157 X8
 U 1 1 5C9D0373
 P 3450 6100
 F 0 "X8" H 4350 6400 60  0000 C CNN

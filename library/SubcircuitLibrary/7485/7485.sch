@@ -1,4 +1,5 @@
 EESchema Schematic File Version 2
+LIBS:7485-rescue
 LIBS:power
 LIBS:texas
 LIBS:intel
@@ -20,10 +21,9 @@ LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
 LIBS:eSim_Plot
 LIBS:eSim_Power
-LIBS:eSim_PSpice
+LIBS:eSim_Subckt
 LIBS:eSim_Sources
 LIBS:eSim_User
-LIBS:eSim_Subckt
 LIBS:7485-cache
 EELAYER 25 0
 EELAYER END
@@ -95,7 +95,7 @@ F 3 "" H 6900 1000 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 3_and X12
+L 3_and-RESCUE-7485 X12
 U 1 1 5C9A2DC4
 P 6050 1650
 F 0 "X12" H 6950 1950 60  0000 C CNN
@@ -106,7 +106,7 @@ F 3 "" H 6050 1650 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 4_and X7
+L 4_and-RESCUE-7485 X7
 U 1 1 5C9A2EB7
 P 5450 2750
 F 0 "X7" H 6950 3800 60  0000 C CNN
@@ -117,7 +117,7 @@ F 3 "" H 5450 2750 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 5_and X9
+L 5_and-RESCUE-7485 X9
 U 1 1 5C9A2F2E
 P 5650 3050
 F 0 "X9" H 7000 3850 60  0000 C CNN
@@ -128,7 +128,7 @@ F 3 "" H 5650 3050 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 5_and X10
+L 5_and-RESCUE-7485 X10
 U 1 1 5C9A2F95
 P 5650 3600
 F 0 "X10" H 7000 4400 60  0000 C CNN
@@ -139,7 +139,7 @@ F 3 "" H 5650 3600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 5_and X11
+L 5_and-RESCUE-7485 X11
 U 1 1 5C9A3164
 P 5650 4150
 F 0 "X11" H 7000 4950 60  0000 C CNN
@@ -150,7 +150,7 @@ F 3 "" H 5650 4150 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 5_and X13
+L 5_and-RESCUE-7485 X13
 U 1 1 5C9A31B3
 P 7550 4850
 F 0 "X13" H 8900 5650 60  0000 C CNN
@@ -172,7 +172,7 @@ F 3 "" H 6350 6900 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L 3_and X8
+L 3_and-RESCUE-7485 X8
 U 1 1 5C9A3303
 P 5500 6250
 F 0 "X8" H 6400 6550 60  0000 C CNN
@@ -183,7 +183,7 @@ F 3 "" H 5500 6250 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L 4_and X3
+L 4_and-RESCUE-7485 X3
 U 1 1 5C9A3309
 P 4900 5150
 F 0 "X3" H 6400 6200 60  0000 C CNN
@@ -194,7 +194,7 @@ F 3 "" H 4900 5150 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L 5_and X6
+L 5_and-RESCUE-7485 X6
 U 1 1 5C9A330F
 P 5100 4850
 F 0 "X6" H 6450 5650 60  0000 C CNN
@@ -205,7 +205,7 @@ F 3 "" H 5100 4850 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L 5_and X5
+L 5_and-RESCUE-7485 X5
 U 1 1 5C9A3315
 P 5100 4300
 F 0 "X5" H 6450 5100 60  0000 C CNN
@@ -216,7 +216,7 @@ F 3 "" H 5100 4300 60  0000 C CNN
 	1    0    0    1   
 $EndComp
 $Comp
-L 5_and X4
+L 5_and-RESCUE-7485 X4
 U 1 1 5C9A331B
 P 5100 3750
 F 0 "X4" H 6450 4550 60  0000 C CNN
@@ -385,29 +385,15 @@ Wire Wire Line
 Wire Wire Line
 	3600 1400 3600 1550
 Wire Wire Line
-	2700 1000 2700 1200
-Wire Wire Line
-	2700 1200 2700 1400
-Wire Wire Line
-	2700 1400 2700 1500
-Wire Wire Line
-	2700 1500 2700 4700
+	2700 1000 2700 4700
 Wire Wire Line
 	2700 1600 1550 1600
 Wire Wire Line
-	1550 1600 1550 1450
+	1550 1450 1550 1600
 Wire Wire Line
-	1100 1450 1500 1450
+	1100 1450 1650 1450
 Wire Wire Line
-	1500 1450 1550 1450
-Wire Wire Line
-	1550 1450 1650 1450
-Wire Wire Line
-	1100 1350 1400 1350
-Wire Wire Line
-	1400 1350 1550 1350
-Wire Wire Line
-	1550 1350 1650 1350
+	1100 1350 1650 1350
 Wire Wire Line
 	1550 1350 1550 1100
 Wire Wire Line
@@ -422,29 +408,15 @@ Wire Wire Line
 Wire Wire Line
 	3700 2800 3700 2950
 Wire Wire Line
-	2800 2000 2800 2600
-Wire Wire Line
-	2800 2600 2800 2800
-Wire Wire Line
-	2800 2800 2800 2900
-Wire Wire Line
-	2800 2900 2800 4600
+	2800 2000 2800 4600
 Wire Wire Line
 	2800 3000 1650 3000
 Wire Wire Line
-	1650 3000 1650 2850
+	1650 2850 1650 3000
 Wire Wire Line
-	1200 2850 1600 2850
+	1200 2850 1750 2850
 Wire Wire Line
-	1600 2850 1650 2850
-Wire Wire Line
-	1650 2850 1750 2850
-Wire Wire Line
-	1200 2750 1450 2750
-Wire Wire Line
-	1450 2750 1650 2750
-Wire Wire Line
-	1650 2750 1750 2750
+	1200 2750 1750 2750
 Wire Wire Line
 	1650 2750 1650 2500
 Wire Wire Line
@@ -459,29 +431,15 @@ Wire Wire Line
 Wire Wire Line
 	4050 5150 4050 5300
 Wire Wire Line
-	3150 4950 3150 5000
-Wire Wire Line
-	3150 5000 3150 5150
-Wire Wire Line
-	3150 5150 3150 5250
-Wire Wire Line
-	3150 5250 3150 5850
+	3150 4950 3150 5850
 Wire Wire Line
 	3150 5350 2000 5350
 Wire Wire Line
-	2000 5350 2000 5200
+	2000 5200 2000 5350
 Wire Wire Line
-	1250 5200 1500 5200
+	1250 5200 2100 5200
 Wire Wire Line
-	1500 5200 2000 5200
-Wire Wire Line
-	2000 5200 2100 5200
-Wire Wire Line
-	1250 5100 1800 5100
-Wire Wire Line
-	1800 5100 2000 5100
-Wire Wire Line
-	2000 5100 2100 5100
+	1250 5100 2100 5100
 Wire Wire Line
 	2000 5100 2000 4850
 Wire Wire Line
@@ -496,29 +454,15 @@ Wire Wire Line
 Wire Wire Line
 	3850 3950 3850 4100
 Wire Wire Line
-	2950 3200 2950 3750
-Wire Wire Line
-	2950 3750 2950 3950
-Wire Wire Line
-	2950 3950 2950 4050
-Wire Wire Line
-	2950 4050 2950 4350
+	2950 3200 2950 4350
 Wire Wire Line
 	2950 4150 1800 4150
 Wire Wire Line
-	1800 4150 1800 4000
+	1800 4000 1800 4150
 Wire Wire Line
-	1350 4000 1750 4000
+	1350 4000 1900 4000
 Wire Wire Line
-	1750 4000 1800 4000
-Wire Wire Line
-	1800 4000 1900 4000
-Wire Wire Line
-	1200 3900 1600 3900
-Wire Wire Line
-	1600 3900 1800 3900
-Wire Wire Line
-	1800 3900 1900 3900
+	1200 3900 1900 3900
 Wire Wire Line
 	1800 3900 1800 3650
 Wire Wire Line
@@ -557,29 +501,9 @@ Connection ~ 2800 2900
 Wire Wire Line
 	5100 6550 5950 6550
 Wire Wire Line
-	5100 1350 5100 1700
+	5100 1350 5100 6550
 Wire Wire Line
-	5100 1700 5100 2150
-Wire Wire Line
-	5100 2150 5100 2500
-Wire Wire Line
-	5100 2500 5100 3050
-Wire Wire Line
-	5100 3050 5100 3750
-Wire Wire Line
-	5100 3750 5100 4850
-Wire Wire Line
-	5100 4850 5100 5400
-Wire Wire Line
-	5100 5400 5100 5750
-Wire Wire Line
-	5100 5750 5100 6300
-Wire Wire Line
-	5100 6300 5100 6550
-Wire Wire Line
-	4500 1350 5100 1350
-Wire Wire Line
-	5100 1350 6500 1350
+	4500 1350 6500 1350
 Wire Wire Line
 	1500 1450 1500 900 
 Wire Wire Line
@@ -627,23 +551,7 @@ Connection ~ 5100 1700
 Wire Wire Line
 	6500 1800 5250 1800
 Wire Wire Line
-	5250 1800 5250 2250
-Wire Wire Line
-	5250 2250 5250 2600
-Wire Wire Line
-	5250 2600 5250 2750
-Wire Wire Line
-	5250 2750 5250 3150
-Wire Wire Line
-	5250 3150 5250 3850
-Wire Wire Line
-	5250 3850 5250 4750
-Wire Wire Line
-	5250 4750 5250 5300
-Wire Wire Line
-	5250 5300 5250 5650
-Wire Wire Line
-	5250 5650 5250 6100
+	5250 1800 5250 6100
 Wire Wire Line
 	5250 2750 4600 2750
 Wire Wire Line
@@ -669,19 +577,7 @@ Connection ~ 5250 2250
 Wire Wire Line
 	6500 2350 5350 2350
 Wire Wire Line
-	5350 2350 5350 2700
-Wire Wire Line
-	5350 2700 5350 3200
-Wire Wire Line
-	5350 3200 5350 3900
-Wire Wire Line
-	5350 3900 5350 4050
-Wire Wire Line
-	5350 4050 5350 4650
-Wire Wire Line
-	5350 4650 5350 5200
-Wire Wire Line
-	5350 5200 5350 5550
+	5350 2350 5350 5550
 Wire Wire Line
 	5350 3900 4750 3900
 Wire Wire Line
@@ -696,17 +592,9 @@ Connection ~ 5350 2700
 Wire Wire Line
 	6500 2800 5450 2800
 Wire Wire Line
-	5450 2800 5450 3350
+	5450 2800 5450 5100
 Wire Wire Line
-	5450 3350 5450 4150
-Wire Wire Line
-	5450 4150 5450 4550
-Wire Wire Line
-	5450 4550 5450 5100
-Wire Wire Line
-	4950 5100 5450 5100
-Wire Wire Line
-	5450 5100 5950 5100
+	4950 5100 5950 5100
 Wire Wire Line
 	6500 2900 5550 2900
 Wire Wire Line
@@ -730,19 +618,13 @@ Wire Wire Line
 	6500 3350 5450 3350
 Connection ~ 5450 3350
 Wire Wire Line
-	4800 3450 5950 3450
+	4800 3450 6500 3450
 Wire Wire Line
-	5950 3450 6500 3450
+	4800 3400 4800 3450
 Wire Wire Line
-	4800 3450 4800 3400
+	1050 3400 4800 3400
 Wire Wire Line
-	4800 3400 2600 3400
-Wire Wire Line
-	2050 3400 1050 3400
-Wire Wire Line
-	5950 3450 5950 3950
-Wire Wire Line
-	5950 3950 5950 4450
+	5950 3450 5950 4450
 Connection ~ 5950 3450
 Wire Wire Line
 	5950 4550 5450 4550
@@ -1122,6 +1004,4 @@ Wire Notes Line
 	10550 1550 9500 1550
 Text Notes 9900 3400 0    60   ~ 12
 Outputs
-Wire Wire Line
-	2600 3400 2050 3400
 $EndSCHEMATC

@@ -1,4 +1,4 @@
-update=05/31/19 09:35:41
+update=Wed Mar 18 20:04:35 2020
 version=1
 last_client=eeschema
 [general]
@@ -38,8 +38,7 @@ LibName4=eSim_Hybrid
 LibName5=eSim_Miscellaneous
 LibName6=eSim_Plot
 LibName7=eSim_Power
-LibName8=eSim_PSpice
-LibName9=eSim_Sources
-LibName10=eSim_Subckt
-LibName11=eSim_User
-LibName12=power
+LibName8=eSim_Sources
+LibName9=eSim_Subckt
+LibName10=eSim_User
+LibName11=power

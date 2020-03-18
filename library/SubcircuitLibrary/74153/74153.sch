@@ -1,6 +1,7 @@
 EESchema Schematic File Version 2
+LIBS:74153-rescue
 LIBS:power
-LIBS:device
+LIBS:eSim_User
 LIBS:texas
 LIBS:intel
 LIBS:audio
@@ -21,10 +22,8 @@ LIBS:eSim_Hybrid
 LIBS:eSim_Miscellaneous
 LIBS:eSim_Plot
 LIBS:eSim_Power
-LIBS:eSim_PSpice
-LIBS:eSim_Sources
-LIBS:eSim_User
 LIBS:eSim_Subckt
+LIBS:eSim_Sources
 LIBS:74153-cache
 EELAYER 25 0
 EELAYER END
@@ -267,7 +266,7 @@ YA
 Text Notes 7400 5250 0    60   ~ 12
 YB
 $Comp
-L 4_and X8
+L 4_and-RESCUE-74153 X8
 U 1 1 5C9D0C22
 P 2750 3050
 F 0 "X8" H 4250 4100 60  0000 C CNN
@@ -278,7 +277,7 @@ F 3 "" H 2750 3050 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 4_and X9
+L 4_and-RESCUE-74153 X9
 U 1 1 5C9D0CA2
 P 2750 3600
 F 0 "X9" H 4250 4650 60  0000 C CNN
@@ -289,7 +288,7 @@ F 3 "" H 2750 3600 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 4_and X4
+L 4_and-RESCUE-74153 X4
 U 1 1 5C9D0D16
 P 2700 4200
 F 0 "X4" H 4200 5250 60  0000 C CNN
@@ -300,7 +299,7 @@ F 3 "" H 2700 4200 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 4_and X10
+L 4_and-RESCUE-74153 X10
 U 1 1 5C9D0D93
 P 2750 4700
 F 0 "X10" H 4250 5750 60  0000 C CNN
@@ -311,7 +310,7 @@ F 3 "" H 2750 4700 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 4_and X5
+L 4_and-RESCUE-74153 X5
 U 1 1 5C9D182A
 P 2700 5700
 F 0 "X5" H 4200 6750 60  0000 C CNN
@@ -322,7 +321,7 @@ F 3 "" H 2700 5700 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 4_and X6
+L 4_and-RESCUE-74153 X6
 U 1 1 5C9D1830
 P 2700 6250
 F 0 "X6" H 4200 7300 60  0000 C CNN
@@ -333,7 +332,7 @@ F 3 "" H 2700 6250 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 4_and X3
+L 4_and-RESCUE-74153 X3
 U 1 1 5C9D1836
 P 2650 6850
 F 0 "X3" H 4150 7900 60  0000 C CNN
@@ -344,7 +343,7 @@ F 3 "" H 2650 6850 60  0000 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L 4_and X7
+L 4_and-RESCUE-74153 X7
 U 1 1 5C9D183C
 P 2700 7350
 F 0 "X7" H 4200 8400 60  0000 C CNN
@@ -512,7 +511,7 @@ Wire Wire Line
 Wire Wire Line
 	3750 6450 3750 6400
 $Comp
-L 4_OR X1
+L 4_OR-RESCUE-74153 X1
 U 1 1 5C9D22F7
 P 2150 8400
 F 0 "X1" H 6050 11450 60  0000 C CNN
@@ -539,7 +538,7 @@ Wire Wire Line
 Wire Wire Line
 	4650 5400 5550 5400
 $Comp
-L 4_OR X2
+L 4_OR-RESCUE-74153 X2
 U 1 1 5C9D28DE
 P 2250 5750
 F 0 "X2" H 6150 8800 60  0000 C CNN

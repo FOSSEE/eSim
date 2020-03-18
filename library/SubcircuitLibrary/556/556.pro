@@ -1,4 +1,4 @@
-update=03/18/19 18:13:51
+update=Wed Mar 18 20:02:35 2020
 version=1
 last_client=eeschema
 [general]
@@ -62,10 +62,9 @@ LibName28=valves
 LibName29=eSim_User
 LibName30=eSim_Subckt
 LibName31=eSim_Sources
-LibName32=eSim_PSpice
-LibName33=eSim_Power
-LibName34=eSim_Plot
-LibName35=eSim_Miscellaneous
-LibName36=eSim_Hybrid
-LibName37=eSim_Digital
-LibName38=eSim_Devices
+LibName32=eSim_Power
+LibName33=eSim_Plot
+LibName34=eSim_Miscellaneous
+LibName35=eSim_Hybrid
+LibName36=eSim_Digital
+LibName37=eSim_Devices
