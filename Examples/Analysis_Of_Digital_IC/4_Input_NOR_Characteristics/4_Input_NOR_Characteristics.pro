@@ -1,4 +1,4 @@
-update=Wed Mar 18 18:14:21 2020
+update=Wed Mar 18 19:49:13 2020
 version=1
 last_client=eeschema
 [general]
@@ -31,14 +31,15 @@ NetIExt=net
 version=1
 LibDir=
 [eeschema/libraries]
-LibName1=power
-LibName2=eSim_Devices
-LibName3=eSim_User
-LibName4=eSim_Subckt
-LibName5=eSim_Sources
-LibName6=eSim_Power
-LibName7=eSim_Plot
-LibName8=eSim_Miscellaneous
-LibName9=eSim_Hybrid
-LibName10=eSim_Digital
-LibName11=eSim_Analog
+LibName1=4_Input_NOR_Characteristics-rescue
+LibName2=power
+LibName3=eSim_Devices
+LibName4=eSim_User
+LibName5=eSim_Subckt
+LibName6=eSim_Sources
+LibName7=eSim_Power
+LibName8=eSim_Plot
+LibName9=eSim_Miscellaneous
+LibName10=eSim_Hybrid
+LibName11=eSim_Digital
+LibName12=eSim_Analog
