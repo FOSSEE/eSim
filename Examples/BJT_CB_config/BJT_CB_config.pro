@@ -63,18 +63,3 @@ LibName29=opto
 LibName30=atmel
 LibName31=contrib
 LibName32=power
-<<<<<<< HEAD
-LibName33=device
-LibName34=transistors
-LibName35=conn
-LibName36=linear
-LibName37=regul
-LibName38=74xx
-LibName39=cmos4000
-=======
-LibName33=74xx
-LibName34=transistors
-LibName35=conn
-LibName36=cmos4000
-LibName37=regul
->>>>>>> fellowship2019-python3

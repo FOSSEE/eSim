@@ -16,34 +16,3 @@ LibName9=eSim_Sources
 LibName10=eSim_Subckt
 LibName11=eSim_User
 LibName12=power
-LibName13=contrib
-LibName14=transistors
-LibName15=conn
-LibName16=valves
-LibName17=regul
-LibName18=74xx
-LibName19=cmos4000
-LibName20=adc-dac
-LibName21=memory
-LibName22=xilinx
-LibName23=microcontrollers
-LibName24=dsp
-LibName25=microchip
-LibName26=analog_switches
-LibName27=motorola
-LibName28=texas
-LibName29=intel
-LibName30=audio
-LibName31=interface
-LibName32=digital-audio
-LibName33=philips
-LibName34=display
-LibName35=cypress
-LibName36=siliconi
-LibName37=opto
-LibName38=atmel
-<<<<<<< HEAD
-LibName39=contrib
-LibName40=valves
-=======
->>>>>>> fellowship2019-python3
