@@ -1,46 +1,18 @@
-EESchema Schematic File Version 2  date Wednesday 19 December 2012 10:15:16 AM IST
+EESchema Schematic File Version 2
 LIBS:power
-LIBS:device
-LIBS:transistors
-LIBS:conn
-LIBS:linear
-LIBS:regul
-LIBS:74xx
-LIBS:cmos4000
-LIBS:adc-dac
-LIBS:memory
-LIBS:xilinx
-LIBS:special
-LIBS:microcontrollers
-LIBS:dsp
-LIBS:microchip
-LIBS:analog_switches
-LIBS:motorola
-LIBS:texas
-LIBS:intel
-LIBS:audio
-LIBS:interface
-LIBS:digital-audio
-LIBS:philips
-LIBS:display
-LIBS:cypress
-LIBS:siliconi
-LIBS:opto
-LIBS:atmel
-LIBS:contrib
-LIBS:valves
-LIBS:analogSpice
-LIBS:converterSpice
-LIBS:digitalSpice
-LIBS:linearSpice
-LIBS:measurementSpice
-LIBS:portSpice
-LIBS:sourcesSpice
-LIBS:analogXSpice
-LIBS:ua741-cache
-EELAYER 25  0
+LIBS:eSim_Devices
+LIBS:eSim_User
+LIBS:eSim_Subckt
+LIBS:eSim_Sources
+LIBS:eSim_Power
+LIBS:eSim_Plot
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Hybrid
+LIBS:eSim_Digital
+LIBS:eSim_Analog
+EELAYER 25 0
 EELAYER END
-$Descr A4 11700 8267
+$Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
 Title ""
@@ -68,6 +40,8 @@ U 6 1 5082C027
 P 6250 2500
 F 0 "U1" H 6250 2450 30  0000 C CNN
 F 1 "PORT" H 6250 2500 30  0000 C CNN
+F 2 "" H 6250 2500 60  0001 C CNN
+F 3 "" H 6250 2500 60  0001 C CNN
 	6    6250 2500
 	-1   0    0    1   
 $EndComp
@@ -77,6 +51,8 @@ U 2 1 5082C011
 P 2300 3100
 F 0 "U1" H 2300 3050 30  0000 C CNN
 F 1 "PORT" H 2300 3100 30  0000 C CNN
+F 2 "" H 2300 3100 60  0001 C CNN
+F 3 "" H 2300 3100 60  0001 C CNN
 	2    2300 3100
 	1    0    0    -1  
 $EndComp
@@ -86,9 +62,57 @@ U 3 1 5082C00B
 P 2250 2600
 F 0 "U1" H 2250 2550 30  0000 C CNN
 F 1 "PORT" H 2250 2600 30  0000 C CNN
+F 2 "" H 2250 2600 60  0001 C CNN
+F 3 "" H 2250 2600 60  0001 C CNN
 	3    2250 2600
 	1    0    0    -1  
 $EndComp
+$Comp
+L PWR_FLAG #FLG1
+U 1 1 508152A0
+P 3450 3200
+F 0 "#FLG1" H 3450 3470 30  0001 C CNN
+F 1 "PWR_FLAG" H 3450 3430 30  0000 C CNN
+F 2 "" H 3450 3200 60  0001 C CNN
+F 3 "" H 3450 3200 60  0001 C CNN
+	1    3450 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L VCVS Eout1
+U 1 1 50813F0F
+P 5200 2900
+F 0 "Eout1" H 5000 3000 50  0000 C CNN
+F 1 "1" H 5000 2850 50  0000 C CNN
+F 2 "" H 5200 2900 60  0001 C CNN
+F 3 "" H 5200 2900 60  0001 C CNN
+	1    5200 2900
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR1
+U 1 1 50813E0D
+P 3700 3400
+F 0 "#PWR1" H 3700 3400 30  0001 C CNN
+F 1 "GND" H 3700 3330 30  0001 C CNN
+F 2 "" H 3700 3400 60  0001 C CNN
+F 3 "" H 3700 3400 60  0001 C CNN
+	1    3700 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L VCVS Ein1
+U 1 1 50813D7C
+P 3650 2850
+F 0 "Ein1" H 3450 2950 50  0000 C CNN
+F 1 "100e3" H 3450 2800 50  0000 C CNN
+F 2 "" H 3650 2850 60  0001 C CNN
+F 3 "" H 3650 2850 60  0001 C CNN
+	1    3650 2850
+	0    1    1    0   
+$EndComp
+Text Notes 2600 2900 0    60   ~ 0
+2e6\n
 Connection ~ 3700 3200
 Wire Wire Line
 	3450 3200 3700 3200
@@ -102,7 +126,7 @@ Wire Wire Line
 	5000 3300 5000 2950
 Connection ~ 3700 3300
 Wire Wire Line
-	4550 3300 4550 3100
+	4550 3000 4550 3300
 Wire Wire Line
 	3900 2500 3700 2500
 Wire Wire Line
@@ -141,79 +165,65 @@ Connection ~ 4550 2500
 Wire Wire Line
 	5250 2600 5250 2500
 Wire Wire Line
-	5250 2500 5350 2500
+	5250 2500 5400 2500
 Wire Wire Line
-	5850 2500 6000 2500
+	5700 2500 6000 2500
 $Comp
-L PWR_FLAG #FLG01
-U 1 1 508152A0
-P 3450 3200
-F 0 "#FLG01" H 3450 3470 30  0001 C CNN
-F 1 "PWR_FLAG" H 3450 3430 30  0000 C CNN
-	1    3450 3200
+L resistor Rin1
+U 1 1 5E71E232
+P 2950 2900
+F 0 "Rin1" H 3000 3030 50  0000 C CNN
+F 1 "2e6" H 3000 2850 50  0000 C CNN
+F 2 "" H 3000 2880 30  0000 C CNN
+F 3 "" V 3000 2950 30  0000 C CNN
+	1    2950 2900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3000 2600 3000 2800
+$Comp
+L resistor Rbw1
+U 1 1 5E71E326
+P 4050 2100
+F 0 "Rbw1" H 4100 2230 50  0000 C CNN
+F 1 "0.5e6" H 4100 2050 50  0000 C CNN
+F 2 "" H 4100 2080 30  0000 C CNN
+F 3 "" V 4100 2150 30  0000 C CNN
+	1    4050 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 2500 3900 2050
+Wire Wire Line
+	3900 2050 3950 2050
+Wire Wire Line
+	4250 2050 4400 2050
+Wire Wire Line
+	4400 2050 4400 2500
+$Comp
+L capacitor Cbw1
+U 1 1 5E71E45C
+P 4550 2850
+F 0 "Cbw1" H 4575 2950 50  0000 L CNN
+F 1 "31.85e-9" H 4575 2750 50  0000 L CNN
+F 2 "" H 4588 2700 30  0000 C CNN
+F 3 "" H 4550 2850 60  0000 C CNN
+	1    4550 2850
 	1    0    0    -1  
 $EndComp
 $Comp
-L R Rout1
-U 1 1 50813F5B
-P 5600 2500
-F 0 "Rout1" V 5680 2500 50  0000 C CNN
-F 1 "75" V 5600 2500 50  0000 C CNN
-	1    5600 2500
-	0    1    1    0   
-$EndComp
-$Comp
-L VCVS Eout1
-U 1 1 50813F0F
-P 5200 2900
-F 0 "Eout1" H 5000 3000 50  0000 C CNN
-F 1 "1" H 5000 2850 50  0000 C CNN
-	1    5200 2900
-	0    1    1    0   
-$EndComp
-$Comp
-L C Cbw1
-U 1 1 50813EE0
-P 4550 2900
-F 0 "Cbw1" H 4600 3000 50  0000 L CNN
-F 1 "31.85e-9" H 4600 2800 50  0000 L CNN
-	1    4550 2900
+L resistor Rout1
+U 1 1 5E71E59C
+P 5500 2250
+F 0 "Rout1" H 5550 2380 50  0000 C CNN
+F 1 "75" H 5550 2200 50  0000 C CNN
+F 2 "" H 5550 2230 30  0000 C CNN
+F 3 "" V 5550 2300 30  0000 C CNN
+	1    5500 2250
 	1    0    0    -1  
 $EndComp
-$Comp
-L R Rbw1
-U 1 1 50813EAB
-P 4150 2500
-F 0 "Rbw1" V 4230 2500 50  0000 C CNN
-F 1 "0.5e6" V 4150 2500 50  0000 C CNN
-	1    4150 2500
-	0    1    1    0   
-$EndComp
-$Comp
-L GND #PWR02
-U 1 1 50813E0D
-P 3700 3400
-F 0 "#PWR02" H 3700 3400 30  0001 C CNN
-F 1 "GND" H 3700 3330 30  0001 C CNN
-	1    3700 3400
-	1    0    0    -1  
-$EndComp
-$Comp
-L VCVS Ein1
-U 1 1 50813D7C
-P 3650 2850
-F 0 "Ein1" H 3450 2950 50  0000 C CNN
-F 1 "100e3" H 3450 2800 50  0000 C CNN
-	1    3650 2850
-	0    1    1    0   
-$EndComp
-$Comp
-L R Rin1
-U 1 1 50813C57
-P 3000 2850
-F 0 "Rin1" V 3080 2850 50  0000 C CNN
-F 1 "2e6" V 3000 2850 50  0000 C CNN
-	1    3000 2850
-	1    0    0    -1  
-$EndComp
+Wire Wire Line
+	5400 2500 5400 2200
+Wire Wire Line
+	5700 2200 5700 2500
 $EndSCHEMATC

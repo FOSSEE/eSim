@@ -32,7 +32,7 @@ version=1
 LibDir=
 [eeschema/libraries]
 LibName1=power
-LibName2=device
+LibName2=eSim_Analog
 LibName3=transistors
 LibName4=conn
 LibName5=regul
@@ -69,4 +69,3 @@ LibName35=eSim_Miscellaneous
 LibName36=eSim_Hybrid
 LibName37=eSim_Digital
 LibName38=eSim_Devices
-LibName39=eSim_Analog

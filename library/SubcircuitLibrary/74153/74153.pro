@@ -32,7 +32,7 @@ version=1
 LibDir=
 [eeschema/libraries]
 LibName1=power
-LibName2=device
+LibName2=eSim_User
 LibName3=texas
 LibName4=intel
 LibName5=audio
@@ -53,7 +53,5 @@ LibName19=eSim_Hybrid
 LibName20=eSim_Miscellaneous
 LibName21=eSim_Plot
 LibName22=eSim_Power
-LibName23=eSim_PSpice
+LibName23=eSim_Subckt
 LibName24=eSim_Sources
-LibName25=eSim_User
-LibName26=eSim_Subckt
