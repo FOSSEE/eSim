@@ -29,7 +29,7 @@ version=1
 NetIExt=net
 [eeschema]
 version=1
-LibDir=../../../kicadSchematicLibrary;../../../kicadSchematicLibrary;../../../kicadSchematicLibrary
+LibDir=../../../kicadSchematicLibrary
 [eeschema/libraries]
 LibName1=adc-dac
 LibName2=memory
@@ -66,7 +66,4 @@ LibName32=eSim_Hybrid
 LibName33=eSim_Miscellaneous
 LibName34=eSim_Power
 LibName35=eSim_Sources
-LibName36=eSim_Subckt
-LibName37=eSim_User
-LibName38=eSim_Plot
-
+LibName36=eSim_User

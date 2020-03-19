@@ -8,8 +8,8 @@
 _saved_*
 *.swp
 *~
-Examples/*/*_i.txt
-Examples/*/*_v.txt
+*plot_data_i.txt
+*plot_data_v.txt
 esim-start.sh
 esim.desktop
 nghdl*
