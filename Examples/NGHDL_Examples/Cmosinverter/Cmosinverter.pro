@@ -67,4 +67,4 @@ LibName33=eSim_Sources
 LibName34=eSim_User
 LibName35=eSim_Plot
 LibName36=eSim_Subckt
-
+LibName37=eSim_Nghdl
