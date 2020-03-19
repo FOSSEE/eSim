@@ -2,11 +2,7 @@
 
 .include NPN.lib
 v1 net-_r2-pad2_ gnd  dc 10
-<<<<<<< HEAD
-v2 in gnd  sine( 0.5 5 50 0 0)
-=======
 v2 in gnd  ac 0.5 0
->>>>>>> fellowship2019-python3
 c1  net-_c1-pad1_ net-_c1-pad2_ 40u
 c2  gnd net-_c2-pad2_ 100u
 c3  out net-_c3-pad2_ 40u
