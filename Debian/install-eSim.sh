@@ -55,6 +55,7 @@ function installNghdl
     unzip nghdl-master.zip
     mv nghdl-master nghdl
     cd nghdl/
+    chmod +x install-nghdl.sh
     ./install-nghdl.sh --install
         
     if [ $? -ne 0 ];then
@@ -315,6 +316,7 @@ elif [ $option == "--uninstall" ];then
         rm -rf library/modelParamXML/Nghdl/*
         cd nghdl/
         if [ $? -eq 0 ];then
+        	chmod +x install-nghdl.sh
     	    ./install-nghdl.sh --uninstall
     	    cd ../
     	    rm -rf nghdl
