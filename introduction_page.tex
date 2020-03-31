@@ -1,0 +1,79 @@
+\chapter{Introduction}
+\thispagestyle{empty}
+Electronic systems are an integral part of human life. They have
+simplified our lives to a great extent. Starting from small systems
+made of a few discrete components to the present day integrated
+circuits (ICs) with millions of logic gates, electronic systems have
+undergone a sea change. As a result, design of electronic systems too
+have become extremely difficult and time consuming. Thanks to a host
+of computer aided design tools, we have been able to come up with
+quick and efficient designs. These are called {\tt Electronic Design
+  Automation} or {\tt EDA} \index{EDA! tools}tools.
+
+Let us see the steps involved in EDA.\index{EDA!design flow} In the
+first stage, the specifications of the system are laid out. These
+specifications are then converted to a design. The design could be in
+the form of a circuit schematic, logical description using an HDL
+language, etc. The design is then simulated and re-designed, if needed,
+to achieve the desired results. Once simulation achieves the
+specifications, the design is either converted to a PCB, a chip
+layout, or ported to an FPGA. The final product is again tested for
+specifications. The whole cycle is repeated until desired results are
+obtained %\cite{eda}.
+
+A person who builds an electronic system has to first design the
+circuit, produce a virtual representation of it through a schematic
+for easy comprehension, simulate it and finally convert it into a
+Printed Circuit Board (PCB). \index{PCB} There are various tools
+available that will help us do this.  Some of the popular EDA tools 
+are those of {\tt Cadence}, {\tt Synopys}, {\tt Mentor Graphics} and 
+{\tt Xilinx}. Although these are fairly comprehensive and high end,
+their licenses are expensive, being proprietary.
+
+There are some free and open source EDA tools like {\tt gEDA}, {\tt
+  KiCad} and {\tt Ngspice}. The main drawback of these open source
+tools is that they are not comprehensive. Some of them are capable of
+PCB design (e.g. {\tt KiCad}) while some of them are capable of
+performing simulations (e.g. {\tt gEDA}).  To the best of our
+knowledge, there is no open source software that can perform circuit
+design, simulation and layout design together. eSim is capable of
+doing all of the above. 
+
+eSim is a free and open source EDA tool.  It is an
+acronym for \textbf{E}lectronics \textbf{Sim}ulation. eSim is created 
+using open source software packages, such as KiCad, Ngspice and
+Python. \index{KiCad} \index{Python} \index{Ngspice}
+Using eSim, one can create circuit schematics, perform simulations
+and design PCB layouts. It can create or edit new device models, and
+create or edit subcircuits for simulation. 
+
+Because of these reasons, eSim is expected to be useful for
+students, teachers and other professionals who would want to study
+and/or design electronic systems.  eSim is also useful for
+entrepreneurs and small scale enterprises who do not have the
+capability to invest in heavily priced proprietary tools.
+
+This book introduces eSim to the reader and illustrates all the
+features of eSim with examples. The software architecture of eSim is
+presented in \chapref{chap2} while \chapref{chap3} gives the user step 
+by step instructions to install eSim on a typical computer system. 
+\chapref{chap4} gets the user started with eSim. It takes them through 
+a tour of eSim with the help of a simple RC circuit example. 
+\chapref{chap5} illustrates how to create the circuit schematic in esim 
+and \chapref{chap6} explains simulating the circuit schematic. The 
+advanced features of eSim such as Model Builder and Sub circuit Builder 
+are covered in \chapref{chap7} and \chapref{chap8} respectively. 
+Additional features in eSim like mixed mode simulation and 
+OpenModelica are covered in \chapref{chap9} and \chapref{chap10} 
+respectively. \chapref{chap11} illustrates how to use eSim for solving 
+circuit simulation problems. The last chapter, \chapref{chap12} explains 
+how eSim can be used to do PCB layout.
+
+The following convention has been adopted throughout this manual.All
+the menu names, options under each menu item, tool names, certain
+points to be noted, etc., are given in \textit{italics}.  Some
+keywords, names of certain windows/dialog boxes, names of some
+files/projects/folders, messages displayed during an activity, names
+of websites, component references, etc., are given in {\tt typewriter}
+font. Some key presses, e.g. {\tt Enter} key, {\tt F1} key, {\tt y}
+for yes, etc., are also mentioned in {\tt typewriter} font.

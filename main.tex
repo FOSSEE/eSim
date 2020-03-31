@@ -1,0 +1,122 @@
+%%=====================================================================================
+%%
+%%       Filename:  esim_1_1.tex
+%%
+%%    Description:  
+%%
+%%        Version:  2.0.0
+%%        Created:  March 2020
+%%       Revision:  none
+%%
+%%         Author:  
+%%   Organization:  eSim,FOSSEE
+%%      Copyright:  Copyright (c) 2020, eSim
+%%
+%%          Notes:  
+%%                
+%%=====================================================================================
+
+%\documentclass[a4paper,11pt]{book}[2015/08/22]
+\documentclass[a4paper,11pt,oneside]{book}[2015/08/22]
+
+\usepackage{layouts}
+\usepackage{cclicenses}
+\usepackage{morefloats}
+\usepackage{paralist}
+\usepackage{chngcntr}
+\usepackage{color}
+\usepackage{verbatim}
+\counterwithout{footnote}{chapter}
+\usepackage{subfig}
+\usepackage{float}%----included now%
+\usepackage{graphicx}%---added now---%
+\graphicspath{ {figures/} }%----added now---%
+%\usepackage{biblatex}
+\newcommand{\ourname}[1]{\\ [1.5mm] \noindent{\bf #1}}
+% Shroff book size
+\textheight 7.75in
+\textwidth 5.75in
+\evensidemargin 0.3in
+\oddsidemargin 0.3in
+
+%Include Style Sheet
+\input{styles}
+
+% header
+\usepackage{layouts}
+\usepackage{fancyhdr}
+\pagestyle{headings}
+\renewcommand\chaptermark[1]{\markboth{\bf {\thechapter. #1}}{}}
+\renewcommand\sectionmark[1]{\markright{\bf {\thesection. #1}}}
+\cfoot{}
+\fancyfoot{}
+
+
+%Command
+
+\newcommand{\tnfig}{0.3\linewidth}
+\newcommand{\smfig}{0.45\linewidth}%0.42
+\newcommand{\smfigp}{0.49\linewidth}%0.42
+\newcommand{\lgfig}{0.65\linewidth}%0.65
+\newcommand{\hgfig}{0.9\linewidth}
+
+\renewcommand\bibname{References}
+
+\usepackage{amsmath,graphicx,makeidx}
+\usepackage{fancybox,url}
+\usepackage{cite}
+\usepackage{appendix}%%%to cut paste after compile%%%%%
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\tabref}[1]{Table~\ref{#1}}
+\newcommand{\chapref}[1]{Chapter~\ref{#1}}
+\newcommand{\secref}[1]{Sec.~\ref{#1}}
+\newcommand{\mypageref}[1]{Page~\pageref{#1}}
+\newcommand{\fnref}[1]{Footnote~\ref{#1}}
+\renewcommand{\topfraction}{1}
+\renewcommand{\bottomfraction}{1}
+\renewcommand{\textfraction}{0}
+\renewcommand{\floatpagefraction}{1}
+\bibliographystyle{./IEEEtran}
+
+\hyphenation{Ashu-tosh pr-ess}
+\makeindex
+
+\begin{document}
+% includes the cover page
+\pagestyle{plain}
+\pagenumbering{roman}
+\input{cover_page.tex} 
+\newpage
+
+%\pagestyle{empty}
+\addtocontents{toc}{\protect\thispagestyle{empty}}
+\tableofcontents % adds Index Page
+
+%\pagestyle{empty}
+
+\addtocontents{lof}{\protect\thispagestyle{empty}}
+
+%\listoffigures % adds List of Figures
+\cleardoublepage
+
+%\newpage
+\cleardoublepage
+
+\pagenumbering{arabic} %reset numbering to normal for the main content
+\input{introduction_page.tex} % adds the chapter 1 introduction
+\input{chap_2.tex} % adds chapter 2
+\input{chap_3.tex}% adds chapter 3
+\input{chap_4.tex} % adds chapter 4
+\input{chap_5.tex} % adds chapter 5
+\input{chap_6.tex} % adds chapter 6
+\input{chap_7.tex} % adds chapter 7
+\input{chap_8.tex} % adds chapter 8
+\input{chap_9.tex} % adds chapter 9
+\input{chap_10.tex} % adds chapter 10
+\input{chap_11.tex} % adds chapter 11
+\input{chap_12.tex} % adds chapter 12
+\input{Appendix.tex} % adds appendix
+
+\bibliography{ref.bib}
+
+\end{document}

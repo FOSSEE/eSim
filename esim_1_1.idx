@@ -1,0 +1,96 @@
+\indexentry{EDA! tools}{1}
+\indexentry{EDA!design flow}{1}
+\indexentry{PCB}{1}
+\indexentry{KiCad}{2}
+\indexentry{Python}{2}
+\indexentry{Ngspice}{2}
+\indexentry{CAD}{3}
+\indexentry{Eeschema}{3}
+\indexentry{KiCad}{3}
+\indexentry{Design rules check}{4}
+\indexentry{POSTSCRIPT}{4}
+\indexentry{HPGL}{4}
+\indexentry{CvPcb}{4}
+\indexentry{Pcbnew}{4}
+\indexentry{Footprints}{5}
+\indexentry{Model Builder}{6}
+\indexentry{Subcircuit Builder}{6}
+\indexentry{Ngspice}{6}
+\indexentry{diode}{6}
+\indexentry{BJT}{6}
+\indexentry{MOSFET}{6}
+\indexentry{NGHDL}{6}
+\indexentry{OpenModelica}{6}
+\indexentry{EEschema}{7}
+\indexentry{gEDA}{8}
+\indexentry{BSIM}{8}
+\indexentry{EKV}{8}
+\indexentry{HICUM}{8}
+\indexentry{HiSim}{8}
+\indexentry{PSP}{8}
+\indexentry{PTM}{8}
+\indexentry{Schematic!editor}{11}
+\indexentry{Operating point analysis}{12}
+\indexentry{DC Analysis}{12}
+\indexentry{AC Small-signal Analysis}{13}
+\indexentry{Transient Analysis}{13}
+\indexentry{DC Sweep Analysis}{13}
+\indexentry{Schematic!editor}{17}
+\indexentry{Schematic}{17}
+\indexentry{Eeschema}{17}
+\indexentry{KiCad}{17}
+\indexentry{Schematic!toolbar!top}{19}
+\indexentry{Eeschema!toolbar!top}{19}
+\indexentry{Schematic!toolbar!right}{19}
+\indexentry{Eeschema!toolbar!right}{19}
+\indexentry{Schematic!toolbar!left}{21}
+\indexentry{Eeschema!toolbar!left}{21}
+\indexentry{Schematic!for   simulation}{23}
+\indexentry{Component!place}{23}
+\indexentry{Component!rotate}{25}
+\indexentry{Component!move}{25}
+\indexentry{Schematic!wiring}{25}
+\indexentry{Component!values}{26}
+\indexentry{Annotate}{26}
+\indexentry{Schematic!annotate}{26}
+\indexentry{ERC}{26}
+\indexentry{Schematic!ERC}{26}
+\indexentry{ERC}{26}
+\indexentry{ERC!error}{26}
+\indexentry{Power Flag}{26}
+\indexentry{Netlist!for simulation}{26}
+\indexentry{Netlist}{26}
+\indexentry{CvPcb}{27}
+\indexentry{Pcbnew}{28}
+\indexentry{Circuit simulation}{29}
+\indexentry{Ngspice}{29}
+\indexentry{DC Analysis}{29}
+\indexentry{AC Small-signal Analysis}{29}
+\indexentry{Transient Analysis}{29}
+\indexentry{PCB}{89}
+\indexentry{Component!footprint}{89}
+\indexentry{Footprints}{89}
+\indexentry{Netlist!for PCB}{89}
+\indexentry{Netlist}{89}
+\indexentry{Pcbnew}{89}
+\indexentry{Footprints!mapping}{90}
+\indexentry{Footprint Editor}{90}
+\indexentry{Component!footprint!mapping}{90}
+\indexentry{CvPcb}{90}
+\indexentry{Footprint Editor}{91}
+\indexentry{Footprints!view!2D}{92}
+\indexentry{Footprints!view!3D}{92}
+\indexentry{PCB Layout!creation}{93}
+\indexentry{Layout Editor}{93}
+\indexentry{Layout Editor}{94}
+\indexentry{Hotkeys!Layout editor}{96}
+\indexentry{PCB design}{96}
+\indexentry{PCB design!move modules}{96}
+\indexentry{PCB design!lay tracks}{96}
+\indexentry{Footprints!move and place}{97}
+\indexentry{PCB design!lay tracks}{98}
+\indexentry{PCB design!design   rules}{98}
+\indexentry{PCB design!choose layer}{98}
+\indexentry{PCB design!PCB edges}{100}
+\indexentry{PCB design!design rules   check}{100}
+\indexentry{PCB design!Gerber}{100}

@@ -1,0 +1,199 @@
+\thispagestyle {empty}
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Work flow in eSim. (Boxes with dotted lines denote the modules developed in this work).\relax }}{8}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces eSim-Workspace\relax }}{10}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces eSim Main GUI\relax }}{11}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Toolbar\relax }}{12}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Confirmation for schematic creation\relax }}{12}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Simulation Output in Python Plotting Window\relax }}{14}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Schematic editor with the menu bar and toolbars marked\relax }}{18}
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Print options\relax }}{18}
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Toolbar on top with important tools marked\relax }}{19}
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Toolbar on right with important tools marked\relax }}{20}
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Toolbar on left with important tools marked\relax }}{21}
+\contentsline {figure}{\numberline {5.6}{\ignorespaces eSim-Components Libraries\relax }}{22}
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Placing a resistor using the Place a Component tool\relax }}{24}
+\contentsline {figure}{\numberline {5.8}{\ignorespaces All RC circuit components placed\relax }}{24}
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Placing the cursor (cross mark) on the resistor component\relax }}{25}
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Various stages of wiring\relax }}{25}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Initial stages}}}{25}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Wiring done}}}{25}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Final schematic with PWR\_FLAG}}}{25}
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Editing value of resistor\relax }}{26}
+\contentsline {figure}{\numberline {5.12}{\ignorespaces Steps in annotating a schematic: 1. First click on Annotation then 2. Click on Ok then 3. Click on close\relax }}{27}
+\contentsline {figure}{\numberline {5.13}{\ignorespaces ERC error\relax }}{27}
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Green arrow pointing to Ground terminal indicating an ERC error\relax }}{28}
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Steps in generating a Netlist for simulation: 1. Click on Spice then 2. Check the option {\tt Default Format} then 3. Click on Generate\relax }}{28}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces KiCad to Ngspice Window\relax }}{30}
+\contentsline {figure}{\numberline {6.2}{\ignorespaces Half Adder Schematic\relax }}{30}
+\contentsline {figure}{\numberline {6.3}{\ignorespaces Source details interface\relax }}{31}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Source Details of Half-Adder}}}{31}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Source Details of RC circuit}}}{31}
+\contentsline {figure}{\numberline {6.4}{\ignorespaces Half adder: Ngspice model\relax }}{31}
+\contentsline {figure}{\numberline {6.5}{\ignorespaces Bridge Rectifier\relax }}{32}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Schematic}}}{32}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Adding device model}}}{32}
+\contentsline {figure}{\numberline {6.6}{\ignorespaces Message after successful Ngspice netlist generation\relax }}{32}
+\contentsline {figure}{\numberline {6.7}{\ignorespaces Pythonplot for RC circuit\relax }}{33}
+\contentsline {figure}{\numberline {6.8}{\ignorespaces Ngspice voltage simulation for RC circuit\relax }}{34}
+\contentsline {figure}{\numberline {6.9}{\ignorespaces Multimeter feature in eSim\relax }}{34}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {7.1}{\ignorespaces Model Editor\relax }}{35}
+\contentsline {figure}{\numberline {7.2}{\ignorespaces Creating New Model Library\relax }}{36}
+\contentsline {figure}{\numberline {7.3}{\ignorespaces Choosing the Template Model Library \relax }}{36}
+\contentsline {figure}{\numberline {7.4}{\ignorespaces Adding the Parameter in a Library\relax }}{37}
+\contentsline {figure}{\numberline {7.5}{\ignorespaces Removing a Parameter from a Library \relax }}{37}
+\contentsline {figure}{\numberline {7.6}{\ignorespaces Editing Existing Model Library\relax }}{38}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Subcircuit Window\relax }}{39}
+\contentsline {figure}{\numberline {8.2}{\ignorespaces New Sub circuit Window\relax }}{40}
+\contentsline {figure}{\numberline {8.3}{\ignorespaces New Sub circuit Window\relax }}{40}
+\contentsline {figure}{\numberline {8.4}{\ignorespaces Half-Adder Subcircuit \relax }}{41}
+\contentsline {figure}{\numberline {8.5}{\ignorespaces Selection of PORT component\relax }}{41}
+\contentsline {figure}{\numberline {8.6}{\ignorespaces Selecting Working Library\relax }}{42}
+\contentsline {figure}{\numberline {8.7}{\ignorespaces Creating New Component\relax }}{42}
+\contentsline {figure}{\numberline {8.8}{\ignorespaces Half-Adder Subcircuit Block\relax }}{43}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {9.1}{\ignorespaces Creation of new project\relax }}{44}
+\contentsline {figure}{\numberline {9.2}{\ignorespaces NGHDL interface\relax }}{45}
+\contentsline {figure}{\numberline {9.3}{\ignorespaces Uploading of digital model\relax }}{45}
+\contentsline {figure}{\numberline {9.4}{\ignorespaces Importing the digital model in kicad\relax }}{46}
+\contentsline {figure}{\numberline {9.5}{\ignorespaces Selection of library\relax }}{47}
+\contentsline {figure}{\numberline {9.6}{\ignorespaces Locating the component in library\relax }}{47}
+\contentsline {figure}{\numberline {9.7}{\ignorespaces Placement of component on editor\relax }}{48}
+\contentsline {figure}{\numberline {9.8}{\ignorespaces Mixed mode circuit\relax }}{48}
+\contentsline {figure}{\numberline {9.9}{\ignorespaces Analysis Part I\relax }}{49}
+\contentsline {figure}{\numberline {9.10}{\ignorespaces Analysis Part II\relax }}{49}
+\contentsline {figure}{\numberline {9.11}{\ignorespaces Value of Source v1\relax }}{49}
+\contentsline {figure}{\numberline {9.12}{\ignorespaces Value of Source v2\relax }}{50}
+\contentsline {figure}{\numberline {9.13}{\ignorespaces Model Parameters\relax }}{50}
+\contentsline {figure}{\numberline {9.14}{\ignorespaces Simulation window\relax }}{51}
+\contentsline {figure}{\numberline {9.15}{\ignorespaces Plot of Source V1\relax }}{51}
+\contentsline {figure}{\numberline {9.16}{\ignorespaces Plot of source V2\relax }}{52}
+\contentsline {figure}{\numberline {9.17}{\ignorespaces Plot of output\relax }}{52}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {10.1}{\ignorespaces Circuit schematic: Low pass filter\relax }}{54}
+\contentsline {figure}{\numberline {10.2}{\ignorespaces Analysis parameters: Low pass filter\relax }}{55}
+\contentsline {figure}{\numberline {10.3}{\ignorespaces Source details: Low pass filter\relax }}{55}
+\contentsline {figure}{\numberline {10.4}{\ignorespaces Simulation: Low pass filter\relax }}{56}
+\contentsline {figure}{\numberline {10.5}{\ignorespaces OpenModelica: Text view\relax }}{56}
+\contentsline {figure}{\numberline {10.6}{\ignorespaces OpenModelica: Simulation setup\relax }}{57}
+\contentsline {figure}{\numberline {10.7}{\ignorespaces OpenModelica: Simulation\relax }}{57}
+\contentsline {figure}{\numberline {10.8}{\ignorespaces Circuit schematic for optimisation\relax }}{58}
+\contentsline {figure}{\numberline {10.9}{\ignorespaces OMOptim project\relax }}{59}
+\contentsline {figure}{\numberline {10.10}{\ignorespaces Optimisation values for various Iteration Limit \relax }}{59}
+\contentsline {figure}{\numberline {10.11}{\ignorespaces Optimised value of resistance for maximum power \relax }}{60}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {11.1}{\ignorespaces Creating New Project\relax }}{62}
+\contentsline {figure}{\numberline {11.2}{\ignorespaces Open Schematic Editor\relax }}{62}
+\contentsline {figure}{\numberline {11.3}{\ignorespaces Place Component Icon\relax }}{63}
+\contentsline {figure}{\numberline {11.4}{\ignorespaces Place Wire Icon\relax }}{63}
+\contentsline {figure}{\numberline {11.5}{\ignorespaces Electric Rules Check Icon\relax }}{64}
+\contentsline {figure}{\numberline {11.6}{\ignorespaces RC circuit\relax }}{64}
+\contentsline {figure}{\numberline {11.7}{\ignorespaces ERC check and POWER FLAG\relax }}{65}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {ERC Run}}}{65}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Power Flag}}}{65}
+\contentsline {figure}{\numberline {11.8}{\ignorespaces RC Schematic and Netlist Generation\relax }}{65}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Schematic of RC circuit}}}{65}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Generating KiCad Netlist of RC circuit}}}{65}
+\contentsline {figure}{\numberline {11.9}{\ignorespaces Convert KiCad to Ngspice Icon\relax }}{66}
+\contentsline {figure}{\numberline {11.10}{\ignorespaces RC Analysis and Source Detail\relax }}{66}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {RC Analysis}}}{66}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {RC Source Details}}}{66}
+\contentsline {figure}{\numberline {11.11}{\ignorespaces Simulation Icon\relax }}{67}
+\contentsline {figure}{\numberline {11.12}{\ignorespaces Ngspice and Interactive Python Plotting\relax }}{67}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Ngspice Plot of RC}}}{67}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Python Plot of RC}}}{67}
+\contentsline {figure}{\numberline {11.13}{\ignorespaces Schematic of Half Wave Rectifier circuit\relax }}{69}
+\contentsline {figure}{\numberline {11.14}{\ignorespaces Half Wave Rectifier circuit Netlist Generation\relax }}{69}
+\contentsline {figure}{\numberline {11.15}{\ignorespaces Analysis, Source and Device Tab\relax }}{70}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Half Wave Rectifier Analysis}}}{70}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Half Wave Rectifier Source Details}}}{70}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Half Wave Rectifier Device Modeling}}}{70}
+\contentsline {figure}{\numberline {11.16}{\ignorespaces Half Wave Rectifier Simulation Output\relax }}{71}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Ngspice Plot of Half Wave Rectifier}}}{71}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Python Plot of Half Wave Rectifier}}}{71}
+\contentsline {figure}{\numberline {11.17}{\ignorespaces Schematic of Inverting Amplifier circuit\relax }}{72}
+\contentsline {figure}{\numberline {11.18}{\ignorespaces Inverting Amplifier circuit Netlist Generation\relax }}{73}
+\contentsline {figure}{\numberline {11.19}{\ignorespaces Analysis, Source, and Subcircuit tab\relax }}{73}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Inverting Amplifier Analysis}}}{73}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Inverting Amplifier Source Details}}}{73}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Inverting Amplifier Subcircuit}}}{73}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Sub-Circuit of Op-Amp}}}{73}
+\contentsline {figure}{\numberline {11.20}{\ignorespaces Inverting Amplifier Simulation Output\relax }}{74}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Inverting Amplifier Ngspice Plot}}}{74}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Inverting Amplifier Python Plot}}}{74}
+\contentsline {figure}{\numberline {11.21}{\ignorespaces Schematic of Half Adder circuit\relax }}{75}
+\contentsline {figure}{\numberline {11.22}{\ignorespaces Half Adder circuit Netlist Generation\relax }}{76}
+\contentsline {figure}{\numberline {11.23}{\ignorespaces Analysis, Source, Ngspice Model and Subcircuit tab\relax }}{76}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Half Adder Analysis}}}{76}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Half Adder Source Details}}}{76}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Half Adder Ngspice Model}}}{76}
+\contentsline {subfigure}{\numberline {(d)}{\ignorespaces {Half Adder Subcircuit Model}}}{76}
+\contentsline {figure}{\numberline {11.24}{\ignorespaces Half Adder Subcircuit\relax }}{77}
+\contentsline {figure}{\numberline {11.25}{\ignorespaces Half Adder Simulation Output\relax }}{77}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Half Adder Ngspice Plot}}}{77}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Half Adder Python Plot}}}{77}
+\contentsline {figure}{\numberline {11.26}{\ignorespaces Schematic of Full Wave Rectifier using SCR\relax }}{78}
+\contentsline {figure}{\numberline {11.27}{\ignorespaces Full Wave Rectifier using SCR Netlist Generation\relax }}{79}
+\contentsline {figure}{\numberline {11.28}{\ignorespaces Analysis, Source and Subcircuit tab\relax }}{80}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Full Wave Rectifier using SCR Analysis}}}{80}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Full Wave Rectifier using SCR Source Details}}}{80}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Full Wave Rectifier using SCR Subcircuit Model}}}{80}
+\contentsline {figure}{\numberline {11.29}{\ignorespaces SCR Subcircuit\relax }}{81}
+\contentsline {figure}{\numberline {11.30}{\ignorespaces Full Wave Rectifier using SCR Simulation Output\relax }}{82}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Full Wave Rectifier using SCR Ngspice Plot}}}{82}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Full Wave Rectifier using SCR Python Plot}}}{82}
+\contentsline {figure}{\numberline {11.31}{\ignorespaces Schematic of Phase Shift Oscillator circuit\relax }}{83}
+\contentsline {figure}{\numberline {11.32}{\ignorespaces Phase Shift Oscillator circuit Netlist Generation\relax }}{84}
+\contentsline {figure}{\numberline {11.33}{\ignorespaces Analysis, Source and Device Tab\relax }}{84}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Phase Shift Oscillator Analysis}}}{84}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Phase Shift Oscillator Details}}}{84}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Phase Shift Oscillator Device Modeling}}}{84}
+\contentsline {figure}{\numberline {11.34}{\ignorespaces Phase Shift Oscillator Simulation Output\relax }}{85}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Ngspice Plot of Phase Shift Oscillator}}}{85}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Python Plot of Phase Shift Oscillator}}}{85}
+\contentsline {figure}{\numberline {11.35}{\ignorespaces Schematic of BJT in CB Configuration circuit\relax }}{86}
+\contentsline {figure}{\numberline {11.36}{\ignorespaces BJT in CB Configuration circuit Netlist Generation\relax }}{87}
+\contentsline {figure}{\numberline {11.37}{\ignorespaces Analysis, Source and Device Tab\relax }}{87}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {BJT in CB Configuration Analysis}}}{87}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {BJT in CB Configuration Source Details}}}{87}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {BJT in CB Configuration Device Modeling}}}{87}
+\contentsline {figure}{\numberline {11.38}{\ignorespaces BJT in CB Configuration Simulation Output\relax }}{88}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Ngspice Plot of BJT in CB Configuration}}}{88}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Python Plot of BJT in CB Configuration}}}{88}
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {12.1}{\ignorespaces Final circuit schematic for RC low pass circuit\relax }}{90}
+\contentsline {figure}{\numberline {12.2}{\ignorespaces Netlist generation for PCB\relax }}{90}
+\contentsline {figure}{\numberline {12.3}{\ignorespaces Footprint editor with the menu bar, toolbar, left pane and right pane marked\relax }}{91}
+\contentsline {figure}{\numberline {12.4}{\ignorespaces Some important tools in the toolbar\relax }}{92}
+\contentsline {figure}{\numberline {12.5}{\ignorespaces Viewing footprint for SM1210: 1. Choose the footprint SM1210 from the right pane, 2. Click on \textit {View selected footprint}\relax }}{93}
+\contentsline {figure}{\numberline {12.6}{\ignorespaces Footprint view in 2D. Click on \textit {3D} to get 3D view\relax }}{93}
+\contentsline {figure}{\numberline {12.7}{\ignorespaces Side view of the footprint in 3D\relax }}{94}
+\contentsline {figure}{\numberline {12.8}{\ignorespaces Footprint mapping done\relax }}{94}
+\contentsline {figure}{\numberline {12.9}{\ignorespaces Layout editor with menu bar, toolbars and layer options marked\relax }}{95}
+\contentsline {figure}{\numberline {12.10}{\ignorespaces Top toolbar with important tools marked\relax }}{95}
+\contentsline {figure}{\numberline {12.11}{\ignorespaces Importing netlist file to layout editor: 1. Browse netlist Files, 2. Choose the RC\_pcb.net file, 3. Read Netlist file, 4. Close\relax }}{97}
+\contentsline {figure}{\numberline {12.12}{\ignorespaces Footprint modules imported to top left corner of layout editor window\relax }}{97}
+\contentsline {figure}{\numberline {12.13}{\ignorespaces Zoomed in version of the imported netlist\relax }}{98}
+\contentsline {figure}{\numberline {12.14}{\ignorespaces Moving and placing modules to the center of layout editor. 1. Click on \textit {Mode footprint: Manual/automatic move and place}, 2. Place cursor at center of layout editor and right click on it 3. Choose \textit {Glob Move and Place} and then choose \textit {Move All Modules.}\relax }}{98}
+\contentsline {figure}{\numberline {12.15}{\ignorespaces Different stages of placement of modules on PCB\relax }}{99}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Zoomed in version of the current placement after moving modules to the center of the layout editor}}}{99}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Final placement of footprints after rotating and moving P1}}}{99}
+\contentsline {figure}{\numberline {12.16}{\ignorespaces Choose \textit {Design Rules} from the top menu bar and \textit {Design Rules} again\relax }}{99}
+\contentsline {figure}{\numberline {12.17}{\ignorespaces Changing the track width: 1. Double click on \textit {Track Width} field and type 0.8, 2. Click on \textit {OK}\relax }}{100}
+\contentsline {figure}{\numberline {12.18}{\ignorespaces Choosing the copper layer \textit {Back}\relax }}{101}
+\contentsline {figure}{\numberline {12.19}{\ignorespaces Different stages of laying tracks during PCB design\relax }}{101}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {A track formed between resistor and capacitor}}}{101}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {A track formed between capacitor and connector}}}{101}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {A track formed between connector and resistor}}}{101}
+\contentsline {figure}{\numberline {12.20}{\ignorespaces Creating PCB edges: 1. Choose \textit {PCB\_Edges} from \textit {Layer} options 2. Choose \textit {Add graphic line or polygon} from left toolbar\relax }}{102}
+\contentsline {figure}{\numberline {12.21}{\ignorespaces PCB edges drawn\relax }}{102}
+\contentsline {figure}{\numberline {12.22}{\ignorespaces Performing design rules check: 1. Click on \textit {Start DRC}, 2. Click on \textit {Ok}\relax }}{103}
+\contentsline {figure}{\numberline {12.23}{\ignorespaces Choosing \textit {Plot} from the \textit {File} menu\relax }}{103}
+\contentsline {figure}{\numberline {12.24}{\ignorespaces Creating Gerber files: 1. Choose \textit {Gerber} as the plot format, 2. Click on \textit {Plot}. Message window shows location in which Gerber files are created, 3. Click on \textit {Close}\relax }}{104}
