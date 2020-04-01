@@ -14,7 +14,7 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: FOSSEE at IIT Bombay.
-#       CREATED: Wednesday 04 March 2020 16:14
+#       CREATED: Wednesday 01 April 2020 16:14
 #      REVISION:  ---
 # ===============================================================================
 
@@ -51,7 +51,7 @@ function createConfigFile
 function installNghdl
 {
 
-    echo "Installing NGHDL......................."
+    echo "Installing NGHDL..........................."
     unzip nghdl-master.zip
     mv nghdl-master nghdl
     cd nghdl/
@@ -97,6 +97,20 @@ function installDependency
     sudo apt-get install -y xterm
     if [ $? -ne 0 ]; then
         echo -e "\n\n\"Xterm\" dependency couldn't be installed.\nKindly resolve above errors and try again."
+        exit 1
+    fi
+
+    echo "Installing PyQt4..........................."
+    sudo apt-get install -y python3-pyqt4
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\n\"PyQt4\" dependency couldn't be installed.\nKindly resolve above errors and try again."
+        exit 1
+    fi
+
+    echo "Installing Matplotlib......................"
+    sudo apt-get install -y python3-matplotlib
+    if [ $? -ne 0 ]; then
+    	echo -e "\n\n\"Matplotlib\" dependency couldn't be installed.\nKindly resolve above errors and try again."
         exit 1
     fi
 
@@ -153,7 +167,7 @@ function copyKicadLibrary
     KICAD_ORIGINAL="/usr/share/kicad/template/kicad.pro.original"
 
     if [ -f "$KICAD_ORIGINAL" ];then
-        echo "kicad.pro.original file found....."
+        echo "kicad.pro.original file found"
         sudo cp -rv kicadLibrary/template/kicad.pro ${KICAD_PRO}
     else 
         echo "Making copy of original file"
@@ -174,8 +188,8 @@ function createDesktopStartScript
 {    
 	# Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
-    echo "cd $eSim_Home" >> esim-start.sh
-    echo "./eSim" >> esim-start.sh
+    echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
+    echo "python3 Application.py" >> esim-start.sh
     
     # Make it executable
     sudo chmod 755 esim-start.sh
@@ -183,9 +197,6 @@ function createDesktopStartScript
     sudo cp -vp esim-start.sh /usr/bin/esim
     # Remove local copy of esim start script
     rm esim-start.sh
-
-	# Make eSim executable
-    sudo chmod 755 eSim
 
     # Generating esim.desktop file
     echo "[Desktop Entry]" > esim.desktop
@@ -302,7 +313,7 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure? It will remove complete eSim including KiCad, Ngspice and NGHDL packages(y/n):"
+    echo -n "Are you sure? It will remove complete eSim including KiCad, Ngspice and NGHDL models and libraries (y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
