@@ -221,6 +221,17 @@ function createDesktopStartScript
     sudo chmod 755 esim.desktop
     # Copy desktop icon file to Desktop
     cp -vp esim.desktop $HOME/Desktop/
+
+    # Check if the target OS is Ubuntu 18 or not
+    if [[ $(lsb_release -rs) == 18.* ]]; then
+        # Make esim.desktop file as trusted application
+        gio set $HOME/Desktop/esim.desktop "metadata::trusted" yes
+        # Restart nautilus-desktop, so that the changes take effect
+        killall nautilus-desktop && nautilus-desktop &
+    fi
+
+    # Remove local copy of esim.desktop file
+    rm esim.desktop
     # Copying logo.png to .esim directory to access as icon
     cp -vp images/logo.png $config_dir
 
@@ -317,7 +328,7 @@ elif [ $option == "--uninstall" ];then
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
-        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop esim.desktop /usr/bin/esim
+        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad
         sudo rm -rf /usr/share/kicad
