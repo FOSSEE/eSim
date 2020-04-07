@@ -15,7 +15,6 @@ class ProjectExplorer(QtGui.QWidget):
         - for renaming project.
         - for refreshing project.
         - for removing project.
-        - for saving data.
     """
 
     def __init__(self):
@@ -189,42 +188,57 @@ class ProjectExplorer(QtGui.QWidget):
         clicking on project and selecting remove option.
         """
         self.indexItem = self.treewidget.currentIndex()
-        self.filePath = str(
+        filePath = str(
             self.indexItem.sibling(self.indexItem.row(), 1).data()
         )
         self.int = self.indexItem.row()
         self.treewidget.takeTopLevelItem(self.int)
 
-        if self.obj_appconfig.current_project["ProjectName"] == self.filePath:
+        if self.obj_appconfig.current_project["ProjectName"] == filePath:
             self.obj_appconfig.current_project["ProjectName"] = None
 
-        del self.obj_appconfig.project_explorer[str(self.filePath)]
+        del self.obj_appconfig.project_explorer[filePath]
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath["path"], 'w'))
 
-    def refreshProject(self):
+    def refreshProject(self, filePath=None):
         """
         This function refresh the project in explorer area by right \
         clicking on project and selecting refresh option.
         """
-        self.indexItem = self.treewidget.currentIndex()
-        self.filePath = str(
-            self.indexItem.sibling(self.indexItem.row(), 1).data()
-        )
-        filelistnew = os.listdir(os.path.join(self.filePath))
-        parentnode = self.treewidget.currentItem()
-        count = parentnode.childCount()
-        for i in range(count):
-            for items in self.treewidget.selectedItems():
-                items.removeChild(items.child(0))
-        for files in filelistnew:
-            QtGui.QTreeWidgetItem(
-                parentnode, [files, os.path.join(self.filePath, files)]
+
+        if not filePath or filePath is None:
+            self.indexItem = self.treewidget.currentIndex()
+            filePath = str(
+                self.indexItem.sibling(self.indexItem.row(), 1).data()
             )
 
-        self.obj_appconfig.project_explorer[self.filePath] = filelistnew
-        json.dump(self.obj_appconfig.project_explorer,
-                  open(self.obj_appconfig.dictPath["path"], 'w'))
+        if os.path.exists(filePath):
+            filelistnew = os.listdir(os.path.join(filePath))
+            parentnode = self.treewidget.currentItem()
+            count = parentnode.childCount()
+            for i in range(count):
+                for items in self.treewidget.selectedItems():
+                    items.removeChild(items.child(0))
+            for files in filelistnew:
+                QtGui.QTreeWidgetItem(
+                    parentnode, [files, os.path.join(filePath, files)]
+                )
+
+            self.obj_appconfig.project_explorer[filePath] = filelistnew
+            json.dump(self.obj_appconfig.project_explorer,
+                      open(self.obj_appconfig.dictPath["path"], 'w'))
+            return True
+
+        else:
+            print("Selected project not found")
+            print("==================")
+            msg = QtGui.QErrorMessage(self)
+            msg.setModal(True)
+            msg.setWindowTitle("Error Message")
+            msg.showMessage('Selected project does not exist.')
+            msg.exec_()
+            return False
 
     def renameProject(self):
         """
@@ -240,29 +254,17 @@ class ProjectExplorer(QtGui.QWidget):
         """
         self.indexItem = self.treewidget.currentIndex()
         self.baseFileName = str(self.indexItem.data())
+        filePath = str(
+                    self.indexItem.sibling(self.indexItem.row(), 1).data()
+                )
+
         newBaseFileName, ok = QtGui.QInputDialog.getText(
             self, 'Rename Project', 'Project Name:',
             QtGui.QLineEdit.Normal, self.baseFileName
         )
+
         if ok and newBaseFileName:
-            print(newBaseFileName)
-            print("=================")
             newBaseFileName = str(newBaseFileName)
-
-            i = -1
-            for parents, children in list(
-                    self.obj_appconfig.project_explorer.items()):
-                if os.path.exists(parents):
-                    i += 1
-                    if i == self.indexItem.row():
-                        projectPath, projectFiles = parents, children
-                        break
-
-            updatedProjectFiles = []
-
-            self.workspace = self.obj_appconfig.default_workspace['workspace']
-            newBaseFileName = str(newBaseFileName).rstrip().lstrip()
-            projDir = os.path.join(self.workspace, str(newBaseFileName))
 
             if not newBaseFileName.strip():
                 print("Project name cannot be empty")
@@ -282,30 +284,94 @@ class ProjectExplorer(QtGui.QWidget):
                 msg.showMessage('The project name has to be different')
                 msg.exec_()
 
-            else:
+            elif self.refreshProject(filePath):
+
+                projectPath = None
+                projectFiles = None
+
+                for parents, children in list(
+                        self.obj_appconfig.project_explorer.items()):
+                    if filePath == parents:
+                        if os.path.exists(parents):
+                            projectPath, projectFiles = parents, children
+                        break
+
+                self.workspace = \
+                    self.obj_appconfig.default_workspace['workspace']
+                newBaseFileName = str(newBaseFileName).rstrip().lstrip()
+                projDir = os.path.join(self.workspace, str(newBaseFileName))
+
                 reply = self.obj_validation.validateNewproj(str(projDir))
 
-                if reply == "VALID":
+                if not (projectPath and projectFiles):
+                    print("Selected project not found")
+                    print("Project Path :", projectPath)
+                    print("Project Files :", projectFiles)
+                    print("==================")
+                    msg = QtGui.QErrorMessage(self)
+                    msg.setModal(True)
+                    msg.setWindowTitle("Error Message")
+                    msg.showMessage('Selected project does not exist.')
+                    msg.exec_()
+
+                elif reply == "VALID":
                     # rename project folder
+                    updatedProjectFiles = []
+
                     updatedProjectPath = newBaseFileName.join(
                         projectPath.rsplit(self.baseFileName, 1))
                     print("Renaming " + projectPath + " to " +
                           updatedProjectPath)
-                    os.rename(projectPath, updatedProjectPath)
+
+                    # rename project folder
+                    try:
+                        os.rename(projectPath, updatedProjectPath)
+                    except BaseException as e:
+                        msg = QtGui.QErrorMessage(self)
+                        msg.setModal(True)
+                        msg.setWindowTitle("Error Message")
+                        msg.showMessage(str(e))
+                        msg.exec_()
+                        return
 
                     # rename files matching project name
-                    for projectFile in projectFiles:
-                        if self.baseFileName in projectFile:
-                            oldFilePath = os.path.join(updatedProjectPath,
-                                                       projectFile)
-                            projectFile = projectFile.replace(
-                                self.baseFileName, newBaseFileName, 1)
+                    try:
+                        for projectFile in projectFiles:
+                            if self.baseFileName in projectFile:
+                                oldFilePath = os.path.join(updatedProjectPath,
+                                                           projectFile)
+                                projectFile = projectFile.replace(
+                                    self.baseFileName, newBaseFileName, 1)
+                                newFilePath = os.path.join(
+                                    updatedProjectPath, projectFile)
+                                print("Renaming " + oldFilePath + " to " +
+                                      newFilePath)
+                                os.rename(oldFilePath, newFilePath)
+                                updatedProjectFiles.append(projectFile)
+
+                    except BaseException as e:
+                        print("==================")
+                        print("Error! Revert renaming project")
+
+                        # Revert updatedProjectFiles
+                        for projectFile in updatedProjectFiles:
                             newFilePath = os.path.join(
-                                updatedProjectPath, projectFile)
-                            print("Renaming " + oldFilePath + " to" +
-                                  newFilePath)
-                            os.rename(oldFilePath, newFilePath)
-                            updatedProjectFiles.append(projectFile)
+                                            updatedProjectPath, projectFile)
+                            projectFile = projectFile.replace(
+                                    newBaseFileName, self.baseFileName, 1)
+                            oldFilePath = os.path.join(
+                                    updatedProjectPath, projectFile)
+                            os.rename(newFilePath, oldFilePath)
+
+                        # Revert project folder name
+                        os.rename(updatedProjectPath, projectPath)
+                        print("==================")
+                        msg = QtGui.QErrorMessage(self)
+                        msg.setModal(True)
+                        msg.setWindowTitle("Error Message")
+                        msg.showMessage(str(e))
+                        msg.exec_()
+                        return
 
                     # update project_explorer dictionary
                     del self.obj_appconfig.project_explorer[projectPath]
