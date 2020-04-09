@@ -80,16 +80,18 @@ class SubcircuitTab(QtGui.QWidget):
                             # print("Subcircuit MATCHING---", child.tag[0], \
                             #       child.tag[1], eachline[0],eachline[1])
                             try:
-                                if os.path.exists(child[0].text):
+                                if child[0].text \
+                                   and os.path.exists(child[0].text):
                                     self.entry_var[self.count] \
                                         .setText(child[0].text)
                                     path_name = child[0].text
                                 else:
                                     self.entry_var[self.count].setText("")
-                            except BaseException:
-                                print("Error when set text of subcircuit")
-                except BaseException:
-                    print("Error before subcircuit")
+                            except BaseException as e:
+                                print("Error when set text of " +
+                                      "subcircuit :", str(e))
+                except BaseException as e:
+                    print("Error before subcircuit :", str(e))
 
                 subgrid.addWidget(self.entry_var[self.count], self.row, 1)
                 self.addbtn = QtGui.QPushButton("Add")
