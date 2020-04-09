@@ -2,7 +2,7 @@
 
 eSim is an open source EDA tool for circuit design, simulation, analysis and PCB design, developed by FOSSEE team at IIT Bombay. 
 It is an integrated tool build using open source software such as [KiCad](http://www.kicad-pcd.org), [Ngspice](http://ngspice.sourcefouge.net/), [GHDL](http://ghdl.free.fr/)
-It is released under GNU GPL License. It runs on Ubuntu OS versions 16.04 and above, Windows 7 and above versions.
+It is released under GNU GPL License. It runs on Ubuntu OS version 16.04, Windows 7 and above versions.
 
 ## Features
 * An open-source tool.
@@ -30,7 +30,7 @@ It is released under GNU GPL License. It runs on Ubuntu OS versions 16.04 and ab
 To use eSim on your machine please refer to link  [here](https://esim.fossee.in/downloads) for installation and other guidelines.
 
 ## eSim Manual
-To know everything about eSim, how it works and it's feature please download manual [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.0.pdf)
+To know everything about eSim, how it works and it's feature please download manual [here](https://static.fossee.in/esim/installation-files/eSim_Manual_2.0.pdf)
 
 ## Contact
 For any queries regarding eSim please write us on at this [address](mailto:contact-esim@fossee.in).

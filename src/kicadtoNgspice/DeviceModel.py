@@ -90,16 +90,16 @@ class DeviceModel(QtGui.QWidget):
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
                             try:
-                                if os.path.exists(child[0].text):
+                                if child[0].text \
+                                   and os.path.exists(child[0].text):
                                     self.entry_var[self.count] \
                                         .setText(child[0].text)
                                     path_name = child[0].text
                                 else:
                                     self.entry_var[self.count].setText("")
-                            except BaseException:
-                                print(
-                                    "Error when set text of device\
-                                     model transistor")
+                            except BaseException as e:
+                                print("Error when set text of device " +
+                                      "model transistor :", str(e))
                 except BaseException:
                     pass
 
@@ -153,15 +153,16 @@ class DeviceModel(QtGui.QWidget):
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
                             try:
-                                if os.path.exists(child[0].text):
+                                if child[0].text \
+                                   and os.path.exists(child[0].text):
                                     path_name = child[0].text
                                     self.entry_var[self.count] \
                                         .setText(child[0].text)
                                 else:
                                     self.entry_var[self.count].setText("")
-                            except BaseException:
-                                print("Error when set text of device\
-                                 model diode")
+                            except BaseException as e:
+                                print("Error when set text of device " +
+                                      "model diode :", str(e))
                 except BaseException:
                     pass
 
@@ -215,15 +216,16 @@ class DeviceModel(QtGui.QWidget):
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
                             try:
-                                if os.path.exists(child[0].text):
+                                if child[0].text \
+                                   and os.path.exists(child[0].text):
                                     self.entry_var[self.count] \
                                         .setText(child[0].text)
                                     path_name = child[0].text
                                 else:
                                     self.entry_var[self.count].setText("")
-                            except BaseException:
-                                print("Error when set text of Device\
-                                 Model JFET ")
+                            except BaseException as e:
+                                print("Error when set text of Device " +
+                                      "Model JFET :", str(e))
                 except BaseException:
                     pass
 
