@@ -407,7 +407,8 @@ class NgMoConverter:
             if deviceName == 'd':
                 if len(words) > 3:
                     start = "\nparameter "
-                    start += self.mappingData["Devices"][deviceName]["modelcard"]
+                    start += \
+                        self.mappingData["Devices"][deviceName]["modelcard"]
                     stat = start + " card" + words[0] + "("
                     tempstatList = []
                     userDeviceParamList = []

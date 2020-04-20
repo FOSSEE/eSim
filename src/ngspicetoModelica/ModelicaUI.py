@@ -163,7 +163,7 @@ class OpenModelicaEditor(QtGui.QWidget):
             newfile = os.path.basename(self.ngspiceNetlist)
             newfilename = os.path.join(fileDir, newfile.split('.')[0])
             outfile = newfilename + ".mo"
-            
+
             out = open(outfile, "w")
             out.writelines('model ' + os.path.basename(newfilename))
             out.writelines('\n')
