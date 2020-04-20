@@ -1,4 +1,5 @@
 import os
+import traceback
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement import Worker
@@ -45,7 +46,7 @@ class OpenModelicaEditor(QtGui.QWidget):
 
     def browseFile(self):
         self.ngspiceNetlist = QtGui.QFileDialog.getOpenFileName(
-            self, 'Open Ngspice file', BROWSE_LOCATION)
+            self, 'Open Ngspice Netlist', BROWSE_LOCATION)
         self.FileEdit.setText(self.ngspiceNetlist)
 
     def callConverter(self):
@@ -158,9 +159,11 @@ class OpenModelicaEditor(QtGui.QWidget):
                     )  # Adding 'numNodesSub' by Fahim
 
             # Creating Final Output file
-            newfile = self.ngspiceNetlist.split('.')
-            newfilename = newfile[0]
+            fileDir = os.path.dirname(self.ngspiceNetlist)
+            newfile = os.path.basename(self.ngspiceNetlist)
+            newfilename = os.path.join(fileDir, newfile.split('.')[0])
             outfile = newfilename + ".mo"
+
             out = open(outfile, "w")
             out.writelines('model ' + os.path.basename(newfilename))
             out.writelines('\n')
@@ -207,24 +210,25 @@ class OpenModelicaEditor(QtGui.QWidget):
 
             self.msg = QtGui.QMessageBox()
             self.msg.setText(
-                "Ngspice netlist successfully converted to OpenModelica" +
+                "Ngspice netlist successfully converted to OpenModelica " +
                 "netlist"
             )
             self.obj_appconfig.print_info(
-                "Ngspice netlist successfully converted to OpenModelica" +
+                "Ngspice netlist successfully converted to OpenModelica " +
                 "netlist"
             )
             self.msg.exec_()
 
-        except Exception as e:
+        except BaseException as e:
+            traceback.print_exc()
+            print("================")
             self.msg = QtGui.QErrorMessage()
             self.msg.setModal(True)
-            self.msg.setWindowTitle("Ngspice to Modelica conversion error")
+            self.msg.setWindowTitle("Conversion Error")
             self.msg.showMessage(
-                'Unable to convert NgSpice netlist to Modelica netlist.' +
-                'Check the netlist :' +
-                str(e))
-            self.msg.setWindowTitle("Ngspice to Modelica conversion error")
+                'Unable to convert Ngspice netlist to Modelica netlist. ' +
+                'Check the netlist : ' + repr(e)
+            )
 
     def callOMEdit(self):
 

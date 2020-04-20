@@ -13,10 +13,11 @@
 		},
 	"Sources":{
 		"v":{
-			"pulse":"Analog.Sources.TrapezoidVoltage",
-			"sine":"Analog.Sources.SineVoltage",
+			"pulse" : "Analog.Sources.TrapezoidVoltage",
+			"sine" : "Analog.Sources.SineVoltage",
 			"pwl" : "Analog.Sources.TableVoltage",
-			"dc" : "Analog.Sources.ConstantVoltage"
+			"dc" : "Analog.Sources.ConstantVoltage",
+			"ac" : "Analog.Sources.ConstantVoltage"
 		},
 
 		"i":{
@@ -26,22 +27,55 @@
 		},
 	"Devices":{
 		"d":{
-			"import":"Analog.Semiconductors.Diode",
+			"import":"Spice3.Internal.DIODE",
+			"modelcard":"Spice3.Semiconductors.ModelcardDIODE",
 			"mapping":{
 
-				"is":"Ids"
-			},
-			"default":{
-				"Ids":"880.5e-18",
-				"Vt":"0.025",
-				"R":"1e12"
-			}
+				"is":"IS",
+				"rs":"RS",
+				"n":"N",
+				"tt":"TT",
+				"cjo":"CJO",
+				"vj":"VJ",
+				"m":"M",
+				"eg":"EG",
+				"xti":"XTI",
+				"fc":"FC",
+				"bv":"BV",
+				"ibv":"IBV",
+				"tnom":"TNOM",
+				"kf":"KF",
+				"af":"AF",
+				"g":"G"
 
+			},
+			
+			"default":{
+
+				"IS":"1e-14",
+				"RS":"0.0",
+				"N":"1.0",
+				"TT":"0.0",
+				"CJO":"0.0",
+				"VJ":"1.0",
+				"M":"0.5",
+				"EG":"1.11",
+				"XTI":"3.0",
+				"FC":"0.5",
+				"BV":"-1e40",
+				"IBV":"1e-3",
+				"TNOM":"27",
+				"KF":"0.0",
+				"AF":"1.0",
+				"G":"0"
+
+			}
 		},
 
 		"m":{
 			"import":"BondLib.Electrical.Analog.Spice",
 			"mapping":{
+			
 				"tnom":"Tnom",
 				"vto":"VT0",
 				"gamma":"GAMMA",
@@ -60,8 +94,8 @@
 				"cgbo":"CGB0",
 				"cgso":"CGS0"
 				
-			
 			},
+			
 			"default":{
 				"Tnom":"300",
 				"VT0":"0",
@@ -81,13 +115,13 @@
 				"CGB0":"0",
 				"CGS0":"0"
 
-
 			}
-
 		},	
+
 		"q":{
 			"import":"Analog.Semiconductors",
 			"mapping":{
+		
 				"bf":"Bf",
 				"br":"Br",
 				"is":"Is",
@@ -101,8 +135,11 @@
 				"mje":"Me",
 				"vjc":"Phic",
 				"mjc":"Mc"
+		
 			},
+		
 			"default":{
+		
 				"Bf":"50",
 				"Br":"0.1",
 				"Is":"1e-16",
@@ -118,12 +155,13 @@
 				"Mc":"0.333"
 
 			}
-
 		},
 
-		 "j":{
+		"j":{
+			
 			"import":"Spice3.Internal.JFET",
 			"mapping":{
+			
 				"kf":"KF",
 				"rs":"RS",
 				"is":"IS",
@@ -141,6 +179,7 @@
 			},
 
 			"default":{
+			
 				"KF":"0",
 				"RS":"0",
 				"IS":"1e-14",
@@ -155,13 +194,10 @@
 				"LAMBDA":"0",
 				"B":"1"
 
-
 			}
 		}
-
-		},
+	},
 	
-
 	"Models":{
 		"zener":{
 			"import":"Analog.Semiconductors.ZDiode",
