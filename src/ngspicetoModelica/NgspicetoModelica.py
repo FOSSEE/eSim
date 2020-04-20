@@ -406,18 +406,9 @@ class NgMoConverter:
             deviceName = eachline[0].lower()
             if deviceName == 'd':
                 if len(words) > 3:
-                    if 'n' in modelInfo[words[3]]:
-                        n = float(modelInfo[words[3]]['n'])
-                    else:
-                        n = 1.0
-                    vt = str(float(0.025 * n))
-                    '''
-                    stat = self.mappingData["Devices"][deviceName]["import"]+\
-                        ' '+words[0] + '(Ids = ' + modelInfo[words[3]]['is']+\
-                        ', Vt = ' + vt + ', R = 1e12' +');'
-                    '''
-                    start = self.mappingData["Devices"][deviceName]["import"]
-                    stat = start + " " + words[0] + "("
+                    start = "\nparameter "
+                    start += self.mappingData["Devices"][deviceName]["modelcard"]
+                    stat = start + " card" + words[0] + "("
                     tempstatList = []
                     userDeviceParamList = []
                     refName = words[-1]
@@ -432,17 +423,14 @@ class NgMoConverter:
                             )
                             tempstatList.append(
                                 actualModelicaParam +
-                                "=" +
-                                self.getUnitVal(
-                                    modelInfo[refName][key]) +
-                                " ")
+                                " = " +
+                                self.getUnitVal(modelInfo[refName][key])
+                            )
                             userDeviceParamList.append(
                                 str(actualModelicaParam))
                         except BaseException:
                             pass
-                    # Adding Vt and R
-                    userDeviceParamList.append("Vt")
-                    tempstatList.append("Vt=" + vt)
+
                     # Running loop over default parameter of OpenModelica
                     for default in (self.mappingData
                                     ["Devices"]
@@ -459,11 +447,14 @@ class NgMoConverter:
                                             [default]
                                             )
                             tempstatList.append(
-                                default + "=" +
-                                self.getUnitVal(defaultValue) + " ")
+                                default + " = " +
+                                self.getUnitVal(defaultValue))
 
-                    stat += ",".join(str(item) for item in tempstatList) + ");"
-
+                    stat += ", ".join(str(item) for item in tempstatList)
+                    stat += ");" + "\n\n"
+                    stat += self.mappingData["Devices"][deviceName]["import"]
+                    stat += " " + words[0] + "(modelcarddiode=card" + words[0]
+                    stat += ");"
                 else:
                     stat = (self.mappingData
                             ["Devices"]
@@ -942,8 +933,8 @@ class NgMoConverter:
 
         # Replace hyphen '-' from node
         for i in nodeTemp:
+            i = i.replace("-", "")
             if i not in node:
-                i = i.replace("-", "")
                 node.append(i)
 
         for i in range(0, len(node), 1):
@@ -976,10 +967,11 @@ class NgMoConverter:
                         pinInit = pinInit + nodeDic[protectedNode[i]]
         pinInit = pinInit + ';'
         pinProtectedInit = pinProtectedInit + ';'
-        # print "Node---->",node
-        # print "nodeDic----->",nodeDic
-        # print "PinInit----->",pinInit
-        # print "pinProtectedinit--->",pinProtectedInit
+        # print ("Node---->",node)
+        # print ("nodeDic----->",nodeDic)
+        # print ("PinInit----->",pinInit)
+        # print ("pinProtectedinit--->",pinProtectedInit)
+
         return node, nodeDic, pinInit, pinProtectedInit
 
     def connectInfo(self, compInfo, node, nodeDic, numNodesSub, subcktName):
