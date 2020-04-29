@@ -1,4 +1,5 @@
 import os
+import glob
 import traceback
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
@@ -19,8 +20,7 @@ class OpenModelicaEditor(QtGui.QWidget):
         self.projName = os.path.basename(self.projDir)
         self.ngspiceNetlist = os.path.join(
             self.projDir, self.projName + ".cir.out")
-        self.modelicaNetlist = os.path.join(
-            self.projDir, self.projName + ".mo")
+        self.modelicaNetlist = os.path.join(self.projDir, "*.mo")
         self.map_json = Appconfig.modelica_map_json
 
         self.grid = QtGui.QGridLayout()
@@ -95,28 +95,6 @@ class OpenModelicaEditor(QtGui.QWidget):
                 if eachline[0] == 'm':
                     IfMOS = '1'
                     break
-
-            subOptionInfo = []
-            subSchemInfo = []
-            if len(subcktName) > 0:
-                # subOptionInfo = []
-                # subSchemInfo = []
-                for eachsub in subcktName:
-                    filename_temp = eachsub + '.sub'
-                    data = obj_NgMoConverter.readNetlist(filename_temp)
-                    # print "Data---------->",data
-                    subOptionInfo, subSchemInfo = (
-                        obj_NgMoConverter.separateNetlistInfo(data)
-                    )
-                    for eachline in subSchemInfo:
-                        # words = eachline.split()
-                        if eachline[0] == 'm':
-                            IfMOS = '1'
-                            break
-            # print("Subcircuit OptionInfo :" +
-            # "subOptionInfo------------------->", subOptionInfo)
-            # print("Subcircuit Schematic Info :" +
-            # "subSchemInfo-------------------->", subSchemInfo)
 
             node, nodeDic, pinInit, pinProtectedInit = \
                 obj_NgMoConverter.nodeSeparate(
@@ -233,7 +211,9 @@ class OpenModelicaEditor(QtGui.QWidget):
     def callOMEdit(self):
 
         if self.obj_validation.validateTool("OMEdit"):
-            self.cmd2 = "OMEdit " + self.modelicaNetlist
+            modelFiles = glob.glob(self.modelicaNetlist)
+            modelFiles = ' '.join(file for file in modelFiles)
+            self.cmd2 = "OMEdit " + modelFiles
             self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
             self.obj_workThread2.start()
             print("OMEdit called")

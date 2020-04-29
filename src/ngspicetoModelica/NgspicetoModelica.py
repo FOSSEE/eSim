@@ -57,6 +57,7 @@ class NgMoConverter:
         """
         optionInfo = []
         schematicInfo = []
+        self.deviceDetail = []
 
         for eachline in netlist:
 
@@ -284,7 +285,7 @@ class NgMoConverter:
         For each component in the netlist initialize it
         according to Modelica format
         """
-        # print "CompInfo inside compInit function : compInit------->",compInfo
+        # print ("CompInfo inside compInit function : compInit----->",compInfo)
         # initial processing to check if MOs is present. If so, library to be
         # used is BondLib
         modelicaCompInit = []
@@ -292,25 +293,25 @@ class NgMoConverter:
         mosInfo = {}
         # IfMOS = '0'
 
-        for eachline in compInfo:
-            # words = eachline.split()
-            if eachline[0] == 'm':
-                # IfMOS = '1'
-                break
-        if len(subcktName) > 0:
-            subOptionInfo = []
-            subSchemInfo = []
-            for eachsub in subcktName:
-                filename_tem = eachsub + '.sub'
-                filename_tem = os.path.join(dir_name, filename_tem)
-                data = self.readNetlist(filename_tem)
-                subOptionInfo, subSchemInfo = self.separateNetlistInfo(data)
+        # for eachline in compInfo:
+        #     # words = eachline.split()
+        #     if eachline[0] == 'm':
+        #         # IfMOS = '1'
+        #         break
+        # if len(subcktName) > 0:
+        #     subOptionInfo = []
+        #     subSchemInfo = []
+        #     for eachsub in subcktName:
+        #         filename_tem = eachsub + '.sub'
+        #         filename_tem = os.path.join(dir_name, filename_tem)
+        #         data = self.readNetlist(filename_tem)
+        #         subOptionInfo, subSchemInfo = self.separateNetlistInfo(data)
 
-                for eachline in subSchemInfo:
-                    # words = eachline.split()
-                    if eachline[0] == 'm':
-                        # IfMOS = '1'
-                        break
+        #         for eachline in subSchemInfo:
+        #             # words = eachline.split()
+        #             if eachline[0] == 'm':
+        #                 # IfMOS = '1'
+        #                 break
 
         # Lets Start with Source details
         for eachline in self.sourceDetail:
@@ -398,7 +399,7 @@ class NgMoConverter:
         # Now empty the source list as it may be used by subcircuit
         self.sourceDetail[:] = []
 
-        # print "Source Detail after processing-------->",self.sourceDetail
+        # print ("Source Detail after processing-------->",self.sourceDetail)
 
         # Lets start for device
         for eachline in self.deviceDetail:
@@ -471,7 +472,8 @@ class NgMoConverter:
                         self.mappingData["Devices"][deviceName]["import"]
                     ) + ".NPN"
                 elif trans == 'pnp':
-                    start = self.mappingData(
+                    start = (
+                        self.mappingData
                         ["Devices"]
                         [deviceName]
                         ["import"]
@@ -863,7 +865,15 @@ class NgMoConverter:
             newline = newline.split('.subckt ' + subname)
             intLine = newline[1].split()
             newindex = numNodesSub[subname]
-            nodesInfoLine = intLine[0:newindex]
+            nodeTemp = intLine[0:newindex]
+
+            nodesInfoLine = []
+            # Replace hyphen '-' from node
+            for i in nodeTemp:
+                i = i.replace("-", "")
+                if i not in nodesInfoLine:
+                    nodesInfoLine.append(i)
+
         return nodesInfoLine
 
     def getSubParamLine(self, subname, numNodesSub, subParamInfo, dir_name):
@@ -903,7 +913,7 @@ class NgMoConverter:
         pinInit = 'Modelica.Electrical.Analog.Interfaces.Pin '
         pinProtectedInit = 'Modelica.Electrical.Analog.Interfaces.Pin '
         protectedNode = []
-        # print "CompInfo coming to nodeSeparate function: compInfo",compInfo
+        # print ("CompInfo coming to nodeSeparate function: compInfo",compInfo)
 
         # Removing '[' and ']' from compInfo for Digital node
         for i in range(0, len(compInfo), 1):
@@ -926,7 +936,7 @@ class NgMoConverter:
                 for i in range(0, len(templine), 1):
                     if templine[i] in subcktName:
                         point = i
-                # print "Added in node----->",words[1:point]
+                # print ("Added in node----->",words[1:point])
                 nodeTemp.extend(words[1:point])
             else:
                 nodeTemp.append(words[1])
@@ -951,6 +961,7 @@ class NgMoConverter:
                     continue
                 else:
                     protectedNode.append(node[i])
+
         if ifSub == '1':
             if len(nonprotectedNode) > 0:
                 for i in range(0, len(nonprotectedNode), 1):
@@ -1000,7 +1011,9 @@ class NgMoConverter:
                 eachline[0] == 'v' or
                 eachline[0] == 'V' or
                 eachline[0] == 'i' or
-                eachline[0] == 'I'
+                eachline[0] == 'I' or
+                eachline[0] == 'a' or
+                eachline[0] == 'A'
             ):
                 conn = 'connect(' + words[0] + '.p,' + nodeDic[words[1]] + ');'
                 connInfo.append(conn)
@@ -1107,10 +1120,10 @@ class NgMoConverter:
                 basename = filename
                 filename = os.path.join(dir_name, filename)
                 data = self.readNetlist(filename)
-                # print "Data-------------------->",data
+                # print ("Data-------------------->",data)
                 subOptionInfo, subSchemInfo = self.separateNetlistInfo(data)
-                # print "SubOptionInfo------------------->",subOptionInfo
-                # print "SubSchemInfo-------------------->",subSchemInfo
+                # print ("SubOptionInfo------------------->",subOptionInfo)
+                # print ("SubSchemInfo-------------------->",subSchemInfo)
                 if len(subOptionInfo) > 0:
                     newline = subOptionInfo[0]
                     # subInitLine = newline
@@ -1124,12 +1137,12 @@ class NgMoConverter:
                     subtransInfo, subInbuiltModelDict = (
                         self.addModel(subOptionInfo)
                     )
-                # print "Sub Model------------------------------->",subModel
-                # print "SubModelInfo------------------------>",subModelInfo
-                # print "subsubName---------------------------->",subsubName
-                # print "subParamInfo------------------------>",subParamInfo
-                # print "subtransInfo------------------------>",subtransInfo
-                # print "subInbuiltModel-------------->",subInbuiltModelDict
+                # print ("Sub Model------------------------------->",subModel)
+                # print ("SubModelInfo------------------------>",subModelInfo)
+                # print ("subsubName---------------------------->",subsubName)
+                # print ("subParamInfo------------------------>",subParamInfo)
+                # print ("subtransInfo------------------------>",subtransInfo)
+                # print ("subInbuiltModel-------------->",subInbuiltModelDict)
 
                 IfMOSsub = '0'
                 for eachline in subSchemInfo:
@@ -1154,18 +1167,18 @@ class NgMoConverter:
                             if eachline[0] == 'm':
                                 IfMOSsub = '1'
                                 break
-                # print "subsubOptionInfo------------------>",subsubOptionInfo
-                # print "subsubSchemInfo-------------------->",subsubSchemInfo
+                # print ("subsubOptionInfo----------------->",subsubOptionInfo)
+                # print ("subsubSchemInfo------------------->",subsubSchemInfo)
 
                 modelicaSubParam = self.processParam(subParamInfo)
-                # print "modelicaSubParam------------------>",modelicaSubParam
+                # print ("modelicaSubParam----------------->",modelicaSubParam)
                 nodeSub, nodeDicSub, pinInitSub,\
                     pinProtectedInitSub = self.nodeSeparate(
                         subSchemInfo, '1', eachsub, subsubName, numNodesSub)
-                # print "NodeSub------------------------->",nodeSub
-                # print "NodeDicSub-------------------------->",nodeDicSub
-                # print "PinInitSub-------------------------->",pinInitSub
-                # print "PinProtectedInitSub----------->",pinProtectedInitSub
+                # print ("NodeSub------------------------->",nodeSub)
+                # print ("NodeDicSub-------------------------->",nodeDicSub)
+                # print ("PinInitSub-------------------------->",pinInitSub)
+                # print ("PinProtectedInitSub----------->",pinProtectedInitSub)
                 modelicaSubCompInit, numNodesSubsub = self.compInit(
                     subSchemInfo,
                     nodeSub,
@@ -1175,14 +1188,14 @@ class NgMoConverter:
                     subtransInfo,
                     subInbuiltModelDict
                 )
-                # print "modelicaSubCompInit------------>",modelicaSubCompInit
-                # print "numNodesSubsub---------------------->",numNodesSubsub
+                # print ("modelicaSubCompInit---------->",modelicaSubCompInit)
+                # print ("numNodesSubsub-------------------->",numNodesSubsub)
                 modelicaSubParamNew = self.getSubParamLine(
                     eachsub,
                     numNodesSub,
                     modelicaSubParam,
                     dir_name)  # Ask Manas
-                # print "modelicaSubParamNew------------>",modelicaSubParamNew
+                # print ("modelicaSubParamNew---------->",modelicaSubParamNew)
                 connSubInfo = self.connectInfo(
                     subSchemInfo,
                     nodeSub,
@@ -1190,7 +1203,20 @@ class NgMoConverter:
                     numNodesSubsub,
                     subcktName
                 )
-                # print "connSubInfo----------------->",connSubInfo
+                # print ("connSubInfo----------------->",connSubInfo)
+
+                # Recursively process Subcircuit
+                if len(subsubName) > 0:
+                    data, subOptionInfo, subSchemInfo, subModel, subModelInfo,\
+                        subsubName, subParamInfo, modelicaSubCompInit,\
+                        modelicaSubParam, nodeSubInterface, nodeSub,\
+                        nodeDicSub, pinInitSub, connSubInfo = (
+                            self.procesSubckt(
+                                subsubName, numNodesSubsub, dir_name
+                            )
+                        )
+
+                # After Sub Ckt Func
                 newname = basename.split('.')
                 newfilename = newname[0]
                 outfilename = newfilename + ".mo"
