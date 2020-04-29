@@ -90,7 +90,7 @@ class WorkerThread(QtCore.QThread):
         @params
             :command    => (self.args) takes space separated string of\
                         comamnds to be executed in different child processes
-                        (see subproces.Popen())
+                        (see subprocess.Popen())
         """
 
         procThread = Appconfig()
