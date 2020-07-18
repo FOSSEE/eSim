@@ -1,10 +1,12 @@
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
+from configparser import SafeConfigParser
 import platform
 import os
 
-
 # This Class creates NgSpice Window
+
+
 class NgspiceWidget(QtGui.QWidget):
 
     def __init__(self, command, projPath):
@@ -19,6 +21,17 @@ class NgspiceWidget(QtGui.QWidget):
         self.terminal = QtGui.QWidget(self)
         self.layout = QtGui.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
+
+        if os.name == 'nt':
+            home = os.path.expanduser("~")
+
+            parser_nghdl = SafeConfigParser()
+            parser_nghdl.read(os.path.join(
+                home, os.path.join('.nghdl', 'config.ini')))
+            try:
+                msys_bin = parser_nghdl.get('COMPILER', 'MSYS_HOME')
+            except BaseException:
+                pass
 
         print("Argument to ngspice command : ", command)
         # For Linux OS
@@ -40,6 +53,7 @@ class NgspiceWidget(QtGui.QWidget):
             tempdir = os.getcwd()
             projPath = self.obj_appconfig.current_project["ProjectName"]
             os.chdir(projPath)
-            self.command = "ngspice " + command
+            self.command = 'cmd /c '+'"start /min ' + \
+                msys_bin + "/mintty.exe ngspice " + command + '"'
             self.process.start(self.command)
             os.chdir(tempdir)
