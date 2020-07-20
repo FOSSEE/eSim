@@ -216,7 +216,7 @@ SectionEnd
 
 Section -InstallKiCad
   
-  ; SetOutPath "$EXEDIR"
+  SetOutPath "$EXEDIR"
   File "kicad-4.0.7-i686.exe"
 
   SetOutPath "$INSTDIR"
@@ -240,7 +240,7 @@ Section -InstallKiCad
 
     ZipDLL::extractall "$INSTDIR\eSim\library\kicadLibrary.zip" "$INSTDIR\eSim\library\"
 
-    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\library\*" "$INSTDIR\KiCad\share\kicad\library\"
+    ;CopyFiles "$INSTDIR\eSim\library\kicadLibrary\library\*" "$INSTDIR\KiCad\share\kicad\library\"
 
     ;Copy KiCad library made for eSim
     CopyFiles "$INSTDIR\eSim\library\kicadLibrary\kicad_eSim-Library\*" "$INSTDIR\KiCad\share\kicad\library\"
@@ -339,7 +339,7 @@ Section Uninstall
  
   ;Removing Env Variable for KiCad  
   GetFullPathName $1 $INSTDIR\..\KiCad\bin
-	EnVar::DeleteValue "Path" $1
+  EnVar::DeleteValue "Path" $1
     Pop $0
     DetailPrint "EnVar::AddValue returned=|$0|"
 
