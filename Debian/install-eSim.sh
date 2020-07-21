@@ -1,22 +1,37 @@
-# !/bin/bash 
-# ===============================================================================
+#!/bin/bash 
+#===============================================================================
 #          FILE: install-eSim.sh
 # 
 #         USAGE: ./install-eSim.sh --install 
 #                            OR
 #                ./install-eSim.sh --uninstall
 #                
-#   DESCRIPTION: This is installation/uninstallation script for eSim
+#   DESCRIPTION: Installation script for eSim EDA Suite
 #
 #       OPTIONS: ---
 #  REQUIREMENTS: ---
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
-#  ORGANIZATION: FOSSEE at IIT Bombay.
-#       CREATED: Wednesday 01 April 2020 16:14
-#      REVISION:  ---
-# ===============================================================================
+#  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
+#       CREATED: Wednesday 15 July 2015 15:26
+#      REVISION: Monday 20 July 2020 23:26
+#===============================================================================
+
+set -e  # Set exit option immediately on error
+
+error_exit() {
+    echo -e "\n\nError! Kindly resolve above errors and try again."
+    echo -e "\nAborting Installation......\n"
+}
+
+error_skip() {
+    echo -e "\n\nWarning! Skipping over this error......\n"
+}
+
+# Trap on function error_exit before exiting on error
+trap error_exit ERR
+
 
 # All variables goes here
 config_dir="$HOME/.esim"
@@ -56,15 +71,17 @@ function installNghdl
     mv nghdl-master nghdl
     cd nghdl/
     chmod +x install-nghdl.sh
-    ./install-nghdl.sh --install
+
+    # Do not trap to any function on errors. Let NGHDL script handle its own errors.
+    trap "" ERR     
+
+    ./install-nghdl.sh --install       # Install NGHDL
         
-    if [ $? -ne 0 ];then
-    	echo -e "\n\nERROR: cannot install NGHDL\n\n"
-        exit 0
-    else
-        ngspiceFlag=1
-        cd ..
-    fi
+    # Set trap again to error_exit function to exit on errors
+    trap error_exit ERR
+
+    ngspiceFlag=1
+    cd ..
 
 }
 
@@ -95,38 +112,15 @@ function installDependency
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
-    if [ $? -ne 0 ]; then
-        echo -e "\n\n\"Xterm\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
 
     echo "Installing PyQt4..........................."
     sudo apt-get install -y python3-pyqt4
-    if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"PyQt4\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
 
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
-    if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"Matplotlib\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
-
-    echo "Installing Xpdf............................"
-    sudo apt-get install -y xpdf
-    if [ $? -ne 0 ]; then
-        echo -e "\n\n\"Xpdf\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
 
     echo "Installing KiCad..........................."
     sudo apt install -y --no-install-recommends kicad
-    if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"KiCad\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
 
 }
 
@@ -135,10 +129,10 @@ function copyKicadLibrary
 {
 
     if [ -f ~/.config/kicad ];then
-          echo "kicad folder already exists"
+        echo "kicad folder already exists"
     else 
-          echo ".config/kicad does not exist"
-          mkdir ~/.config/kicad
+        echo ".config/kicad does not exist"
+        mkdir ~/.config/kicad
     fi
 
     # Dump KiCad config path
@@ -175,8 +169,14 @@ function copyKicadLibrary
         sudo cp -rv kicadLibrary/template/kicad.pro ${KICAD_PRO}
     fi
 
-    #remove extracted KiCad Library - not needed anymore
+    set +e      # Temporary disable exit on error
+    trap error_skip ERR
+    
+    # Remove extracted KiCad Library - not needed anymore
     rm -rf kicadLibrary
+
+    set -e      # Re-enable exit on error
+    trap error_exit ERR
 
     #Change ownership from Root to the User
     sudo chown -R $USER:$USER /usr/share/kicad/library/
@@ -222,8 +222,11 @@ function createDesktopStartScript
     # Copy desktop icon file to Desktop
     cp -vp esim.desktop $HOME/Desktop/
 
+    set +e      # Temporary disable exit on error
+    trap error_skip ERR
+
     # Check if the target OS is Ubuntu 18 or not
-    if [[ $(lsb_release -rs) == 18.* ]]; then
+    if [[ $(lsb_release -rs) == [[18.*] || [20.*]] ]]; then
         # Make esim.desktop file as trusted application
         gio set $HOME/Desktop/esim.desktop "metadata::trusted" yes
         # Restart nautilus-desktop, so that the changes take effect
@@ -232,6 +235,10 @@ function createDesktopStartScript
 
     # Remove local copy of esim.desktop file
     rm esim.desktop
+
+    set -e      # Re-enable exit on error
+    trap error_exit ERR
+
     # Copying logo.png to .esim directory to access as icon
     cp -vp images/logo.png $config_dir
 
