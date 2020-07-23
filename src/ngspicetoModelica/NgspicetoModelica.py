@@ -472,12 +472,11 @@ class NgMoConverter:
                         self.mappingData["Devices"][deviceName]["import"]
                     ) + ".NPN"
                 elif trans == 'pnp':
-                    start = (
-                        self.mappingData
-                        ["Devices"]
-                        [deviceName]
-                        ["import"]
-                    ) + ".PNP"
+                    start = (self.mappingData
+                             ["Devices"]
+                             [deviceName]
+                             ["import"]
+                             ) + ".PNP"
                 else:
                     raise NameError("Transistor " + str(trans) + " Not found")
 

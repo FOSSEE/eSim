@@ -13,7 +13,7 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 05 February 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Friday 24 July 2020
 # =========================================================================
 
 from PyQt4 import QtCore, QtGui
@@ -82,7 +82,12 @@ class Workspace(QtGui.QWidget):
         self.setWindowTitle("eSim")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
         self.note.setReadOnly(True)
-        self.setWindowIcon(QtGui.QIcon('images/logo.png'))
+
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
+        self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.setLayout(self.grid)
 
     def defaultWorkspace(self):

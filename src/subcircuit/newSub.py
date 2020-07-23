@@ -27,11 +27,16 @@ class NewSub(QtGui.QWidget):
             - Name can not be empty.
             - File name already exists.
         """
+
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         self.create_schematic = subName
         # Checking if Workspace already exist or not
         self.schematic_path = (
             os.path.join(
-                os.path.abspath('library'),
+                os.path.abspath(init_path + 'library'),
                 'SubcircuitLibrary',
                 self.create_schematic))
 

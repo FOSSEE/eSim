@@ -1,6 +1,5 @@
 from PyQt4 import QtGui
 import subprocess
-import platform
 import os
 
 
@@ -15,14 +14,15 @@ class UserManual(QtGui.QWidget):
 
         self.vlayout = QtGui.QVBoxLayout()
 
-        file = os.path.realpath(
-            'library/browser/User-Manual/eSim_Manual_2019_Dec_31.pdf'
-        )
+        manual = 'library/browser/User-Manual/eSim_Manual_2.1.pdf'
 
-        if 'Win' in platform.system():
-            os.startfile(file)
+        if os.name == 'nt':
+            os.startfile(os.path.realpath(manual))
         else:
-            subprocess.Popen(['xpdf.real', file], shell=False)
+            manual_path = '../../' + manual
+            subprocess.Popen(
+                ['xdg-open', os.path.realpath(manual_path)], shell=False
+            )
 
         self.setLayout(self.vlayout)
         self.show()

@@ -364,11 +364,16 @@ class DeviceModel(QtGui.QWidget):
         sending_btn = self.sender()
         self.widgetObjCount = int(sending_btn.objectName())
 
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         self.libfile = str(
             QtGui.QFileDialog.getOpenFileName(
                 self, "Open Library Directory",
-                "library/deviceModelLibrary",
-                "*.lib"))
+                init_path + "library/deviceModelLibrary", "*.lib"
+            )
+        )
 
         # Setting Library to Text Edit Line
         self.entry_var[self.widgetObjCount].setText(self.libfile)

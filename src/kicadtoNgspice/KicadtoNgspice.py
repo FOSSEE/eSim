@@ -599,16 +599,16 @@ class MainWindow(QtGui.QWidget):
         tree = ET.ElementTree(attr_parent)
         tree.write(fw)
 
-        # Create Convert object with the source details & the schematic details
-        print("=============================================================")
-        print("SOURCE LIST TRACK")
-        print(self.obj_track.sourcelisttrack["ITEMS"])
-        print("SOURCE ENTRY VAR")
-        print(self.obj_track.source_entry_var["ITEMS"])
-        print("SCHEMATIC INFO")
-        print(store_schematicInfo)
-        print("=============================================================")
+        # print("=============================================================")
+        # print("SOURCE LIST TRACK")
+        # print(self.obj_track.sourcelisttrack["ITEMS"])
+        # print("SOURCE ENTRY VAR")
+        # print(self.obj_track.source_entry_var["ITEMS"])
+        # print("SCHEMATIC INFO")
+        # print(store_schematicInfo)
+        # print("=============================================================")
 
+        # Create Convert object with the source details & the schematic details
         self.obj_convert = Convert.Convert(
             self.obj_track.sourcelisttrack["ITEMS"],
             self.obj_track.source_entry_var["ITEMS"],

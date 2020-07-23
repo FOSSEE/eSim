@@ -63,8 +63,12 @@ class UploadSub(QtGui.QWidget):
             print("Invalid file format")
             return
 
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         subcircuit_path = os.path.join(
-            os.path.abspath('library'),
+            os.path.abspath(init_path + 'library'),
             'SubcircuitLibrary', create_subcircuit
         )
 

@@ -13,10 +13,18 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Friday 24 July 2020
 # =========================================================================
 
-from frontEnd import pathmagic  # noqa
+import os
+
+if os.name == 'nt': # noqa
+    init_path = ''
+    from frontEnd import pathmagic  # noqa:F401
+else:
+    import pathmagic    # noqa:F401
+    init_path = '../../'
+
 from PyQt4 import QtGui, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
@@ -27,11 +35,10 @@ from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
-import time
 from PyQt4.Qt import QSize
-import sys
-import os
 import shutil
+import time
+import sys
 
 
 # Its our main window of application.
@@ -64,10 +71,10 @@ class Application(QtGui.QMainWindow):
                          self.obj_appconfig._app_heigth)
         self.setWindowTitle(self.obj_appconfig._APPLICATION)
         self.showMaximized()
-        self.setWindowIcon(QtGui.QIcon('images/logo.png'))
+        self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
 
         self.systemTrayIcon = QtGui.QSystemTrayIcon(self)
-        self.systemTrayIcon.setIcon(QtGui.QIcon('images/logo.png'))
+        self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
 
     def initToolBar(self):
@@ -83,28 +90,28 @@ class Application(QtGui.QMainWindow):
         """
         # Top Tool bar
         self.newproj = QtGui.QAction(
-            QtGui.QIcon('images/newProject.png'),
+            QtGui.QIcon(init_path + 'images/newProject.png'),
             '<b>New Project</b>', self
         )
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
 
         self.openproj = QtGui.QAction(
-            QtGui.QIcon('images/openProject.png'),
+            QtGui.QIcon(init_path + 'images/openProject.png'),
             '<b>Open Project</b>', self
         )
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
 
         self.closeproj = QtGui.QAction(
-            QtGui.QIcon('images/closeProject.png'),
+            QtGui.QIcon(init_path + 'images/closeProject.png'),
             '<b>Close Project</b>', self
         )
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
 
         self.wrkspce = QtGui.QAction(
-            QtGui.QIcon('images/workspace.ico'),
+            QtGui.QIcon(init_path + 'images/workspace.ico'),
             '<b>Change Workspace</b>', self
         )
         self.wrkspce.setShortcut('Ctrl+W')
@@ -114,17 +121,17 @@ class Application(QtGui.QMainWindow):
         self.validate_mode()
         if self.online_flag is True:
             self.switchmode = QtGui.QAction(QtGui.QIcon(
-                'images/online.png'),
+                init_path + 'images/online.png'),
                 '<b>Go Offline</b>', self
             )
         elif self.online_flag is False:
             self.switchmode = QtGui.QAction(QtGui.QIcon(
-                'images/offline.png'),
+                init_path + 'images/offline.png'),
                 '<b>Go Online</b>', self
             )
         elif self.online_flag is None:
             self.switchmode = QtGui.QAction(QtGui.QIcon(
-                'images/disable.png'),
+                init_path + 'images/disable.png'),
                 '<b>Mode switching has been disabled. ' +
                 'Default mode set to offline</b>', self
             )
@@ -133,7 +140,8 @@ class Application(QtGui.QMainWindow):
         self.switchmode.triggered.connect(self.change_mode)
 
         self.helpfile = QtGui.QAction(
-            QtGui.QIcon('images/helpProject.png'), '<b>Help</b>', self
+            QtGui.QIcon(init_path + 'images/helpProject.png'),
+            '<b>Help</b>', self
         )
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
@@ -156,7 +164,7 @@ class Application(QtGui.QMainWindow):
         self.logo = QtGui.QLabel()
         self.logopic = QtGui.QPixmap(
             os.path.join(
-                os.path.abspath(''), 'images', 'fosseeLogo.png'
+                os.path.abspath(''), init_path + 'images', 'fosseeLogo.png'
             ))
         self.logopic = self.logopic.scaled(
             QSize(150, 150), QtCore.Qt.KeepAspectRatio)
@@ -166,45 +174,49 @@ class Application(QtGui.QMainWindow):
 
         # Left Tool bar Action Widget
         self.kicad = QtGui.QAction(
-            QtGui.QIcon('images/kicad.png'),
+            QtGui.QIcon(init_path + 'images/kicad.png'),
             '<b>Open Schematic</b>', self
         )
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
 
         self.conversion = QtGui.QAction(
-            QtGui.QIcon('images/ki-ng.png'),
+            QtGui.QIcon(init_path + 'images/ki-ng.png'),
             '<b>Convert Kicad to Ngspice</b>', self
         )
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
 
         self.ngspice = QtGui.QAction(
-            QtGui.QIcon('images/ngspice.png'), '<b>Simulation</b>', self
+            QtGui.QIcon(init_path + 'images/ngspice.png'),
+            '<b>Simulation</b>', self
         )
         self.ngspice.triggered.connect(self.open_ngspice)
 
         self.model = QtGui.QAction(
-            QtGui.QIcon('images/model.png'), '<b>Model Editor</b>', self
+            QtGui.QIcon(init_path + 'images/model.png'),
+            '<b>Model Editor</b>', self
         )
         self.model.triggered.connect(self.open_modelEditor)
 
         self.subcircuit = QtGui.QAction(
-            QtGui.QIcon('images/subckt.png'), '<b>Subcircuit</b>', self
+            QtGui.QIcon(init_path + 'images/subckt.png'),
+            '<b>Subcircuit</b>', self
         )
         self.subcircuit.triggered.connect(self.open_subcircuit)
 
         self.nghdl = QtGui.QAction(
-            QtGui.QIcon('images/nghdl.png'), '<b>Nghdl</b>', self
+            QtGui.QIcon(init_path + 'images/nghdl.png'), '<b>Nghdl</b>', self
         )
         self.nghdl.triggered.connect(self.open_nghdl)
 
         self.omedit = QtGui.QAction(
-            QtGui.QIcon('images/omedit.png'),
+            QtGui.QIcon(init_path + 'images/omedit.png'),
             '<b>Modelica Converter</b>', self
         )
         self.omedit.triggered.connect(self.open_OMedit)
 
         self.omoptim = QtGui.QAction(
-            QtGui.QIcon('images/omoptim.png'), '<b>OM Optimisation</b>', self
+            QtGui.QIcon(init_path + 'images/omoptim.png'),
+            '<b>OM Optimisation</b>', self
         )
         self.omoptim.triggered.connect(self.open_OMoptim)
 
@@ -398,10 +410,14 @@ class Application(QtGui.QMainWindow):
                               "/fp-lib-table-online")
 
                 # Restore original files
-                shutil.copy('library/supportFiles/fp-lib-table-online',
-                            self.obj_appconfig.kicad_path + "/")
-                shutil.copy('library/supportFiles/fp-lib-table',
-                            self.obj_appconfig.kicad_path + "/")
+                shutil.copy(
+                    init_path + 'library/supportFiles/fp-lib-table-online',
+                    self.obj_appconfig.kicad_path + "/"
+                )
+                shutil.copy(
+                    init_path + 'library/supportFiles/fp-lib-table',
+                    self.obj_appconfig.kicad_path + "/"
+                )
 
                 self.online_flag = False
         else:
@@ -442,7 +458,7 @@ class Application(QtGui.QMainWindow):
                     self.obj_appconfig.kicad_path + "/fp-lib-table"
                 )
                 self.switchmode.setIcon(
-                    QtGui.QIcon('images/offline.png')
+                    QtGui.QIcon(init_path + 'images/offline.png')
                 )
                 self.switchmode.setText('<b>Go Online</b>')
                 self.switchmode.setEnabled(True)
@@ -460,7 +476,7 @@ class Application(QtGui.QMainWindow):
                     self.obj_appconfig.kicad_path + "/fp-lib-table"
                 )
                 self.switchmode.setIcon(
-                    QtGui.QIcon('images/online.png')
+                    QtGui.QIcon(init_path + 'images/online.png')
                 )
                 self.switchmode.setText('<b>Go Offline</b>')
                 self.switchmode.setEnabled(True)
@@ -468,7 +484,7 @@ class Application(QtGui.QMainWindow):
 
             elif self.online_flag is None:
                 self.switchmode.setIcon(
-                    QtGui.QIcon('images/disable.png')
+                    QtGui.QIcon(init_path + 'images/disable.png')
                 )
                 self.switchmode.setText(
                     '<b>Mode switching has been ' +
@@ -798,7 +814,7 @@ def main(args):
     print("Starting eSim......")
     app = QtGui.QApplication(args)
 
-    splash_pix = QtGui.QPixmap('images/splash_screen_esim.png')
+    splash_pix = QtGui.QPixmap(init_path + 'images/splash_screen_esim.png')
     splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
     splash.setMask(splash_pix.mask())
     splash.show()

@@ -16,9 +16,14 @@ class openSub(QtGui.QWidget):
         self.obj_appconfig = Appconfig()
 
     def body(self):
+
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         self.editfile = str(
             QtGui.QFileDialog.getExistingDirectory(
-                None, "Open File", "library/SubcircuitLibrary"))
+                None, "Open File", init_path + "library/SubcircuitLibrary"))
         if self.editfile:
             self.obj_Appconfig = Appconfig()
             self.obj_Appconfig.current_subcircuit['SubcircuitName'] \

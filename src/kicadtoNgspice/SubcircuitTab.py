@@ -146,10 +146,14 @@ class SubcircuitTab(QtGui.QWidget):
         # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
 
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         self.subfile = str(
             QtGui.QFileDialog.getExistingDirectory(
                 self, "Open Subcircuit",
-                "library/SubcircuitLibrary")
+                init_path + "library/SubcircuitLibrary")
             )
         self.reply = self.obj_validation.validateSub(
             self.subfile, self.numPorts[self.widgetObjCount - 1])

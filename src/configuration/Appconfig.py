@@ -13,7 +13,7 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Friday 24 July 2020
 # =========================================================================
 
 from PyQt4 import QtGui
@@ -80,7 +80,12 @@ class Appconfig(QtGui.QWidget):
 
     # Open file and read KiCad config path
     try:
-        file = open('library/supportFiles/kicad_config_path.txt', 'r')
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
+        file = open(init_path +
+                    'library/supportFiles/kicad_config_path.txt', 'r')
         kicad_path = file.read().rstrip()
         file.close()
     except BaseException as e:
