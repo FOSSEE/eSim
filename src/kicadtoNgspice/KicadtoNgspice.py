@@ -11,9 +11,9 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay.
 #       CREATED: Wednesday 04 March 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Friday 24 July 2020
 # =========================================================================
 
 import sys
