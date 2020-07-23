@@ -19,8 +19,8 @@
 import os
 
 if os.name == 'nt': # noqa
-    init_path = ''
     from frontEnd import pathmagic  # noqa:F401
+    init_path = ''
 else:
     import pathmagic    # noqa:F401
     init_path = '../../'
@@ -814,11 +814,15 @@ def main(args):
     print("Starting eSim......")
     app = QtGui.QApplication(args)
 
-    splash_pix = QtGui.QPixmap(init_path + 'images/splash_screen_esim.png')
-    splash = QtGui.QSplashScreen(splash_pix, QtCore.Qt.WindowStaysOnTopHint)
-    splash.setMask(splash_pix.mask())
-    splash.show()
     appView = Application()
+    appView.hide()
+
+    splash_pix = QtGui.QPixmap(init_path + 'images/splash_screen_esim.png')
+    splash = QtGui.QSplashScreen(appView, splash_pix, QtCore.Qt.WindowStaysOnTopHint)
+    splash.setMask(splash_pix.mask())
+    splash.setDisabled(True)
+    splash.show()
+
     appView.splash = splash
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
 
@@ -830,10 +834,10 @@ def main(args):
         file.close()
     except IOError:
         work = 0
+
     if work != 0:
         appView.obj_workspace.defaultWorkspace()
     else:
-        appView.hide()
         appView.obj_workspace.show()
 
     sys.exit(app.exec_())

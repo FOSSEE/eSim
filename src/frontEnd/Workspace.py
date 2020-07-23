@@ -49,11 +49,12 @@ class Workspace(QtGui.QWidget):
 
         self.grid = QtGui.QGridLayout()
         self.note = QtGui.QTextEdit(self)
-        self.workspace_label = QtGui.QLabel(self)
-        self.workspace_loc = QtGui.QLineEdit(self)
-
         self.note.append(self.obj_appconfig.workspace_text)
+        self.note.setReadOnly(True)
+        
+        self.workspace_label = QtGui.QLabel(self)
         self.workspace_label.setText("Workspace:")
+        self.workspace_loc = QtGui.QLineEdit(self)
         self.workspace_loc.setText(self.obj_appconfig.home)
 
         # Buttons
@@ -81,7 +82,7 @@ class Workspace(QtGui.QWidget):
         self.setMaximumSize(4000, 200)
         self.setWindowTitle("eSim")
         self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-        self.note.setReadOnly(True)
+        self.setWindowModality(2)
 
         init_path = '../../'
         if os.name == 'nt':
@@ -106,7 +107,7 @@ class Workspace(QtGui.QWidget):
             )
 
         var_appView.show()
-        time.sleep(1)
+        time.sleep(1.5)
         var_appView.splash.close()
 
     def close(self, *args, **kwargs):
@@ -166,7 +167,7 @@ class Workspace(QtGui.QWidget):
             )
 
         var_appView.show()
-        time.sleep(1)
+        time.sleep(1.5)
         var_appView.splash.close()
 
     def browseLocation(self):
