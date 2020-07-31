@@ -168,13 +168,13 @@ Section -NgspiceSim
 
   SetOutPath "$EXEDIR"
 
-  File "eSim.zip"
+  File "eSim.7z"
   File "logo.ico"
   
   SetOutPath "$INSTDIR"
 
-  ;ADD YOUR OWN FILES HERE...
-  ZipDLL::extractall "$EXEDIR\eSim.zip" "$INSTDIR\"
+  ;ADD YOUR OWN FILES HERE... 
+  Nsis7z::ExtractWithDetails "$EXEDIR\eSim.7z" "Extracting eSim %s..."
 
 
   ;Copying Folder to install directory
@@ -206,7 +206,7 @@ Section -NgspiceSim
   !insertmacro MUI_STARTMENU_WRITE_END
   
   ;Remove not required files
-  Delete "$EXEDIR\eSim.zip"
+  Delete "$EXEDIR\eSim.7z"
   Delete "$EXEDIR\logo.ico"
   
   
@@ -339,7 +339,7 @@ Section Uninstall
  
   ;Removing Env Variable for KiCad  
   GetFullPathName $1 $INSTDIR\..\KiCad\bin
-  EnVar::DeleteValue "Path" $1
+	EnVar::DeleteValue "Path" $1
     Pop $0
     DetailPrint "EnVar::AddValue returned=|$0|"
 
@@ -356,6 +356,7 @@ Section Uninstall
     RMDir /r "$PROFILE\.esim"
     RMDir "$SMPROGRAMS\eSim"
     RMDir /r "$INSTDIR\..\eSim"
+	RMDir /r "$INSTDIR\..\KiCad"
     Delete "$PROFILE\..\Public\Desktop\eSim.lnk" 
 
     DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
