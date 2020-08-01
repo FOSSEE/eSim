@@ -1,4 +1,4 @@
-# Changes when eSim version is updated
+# Changes to be made when eSim version is updated
 
 1. master/VERSION\
 - Change the version number
