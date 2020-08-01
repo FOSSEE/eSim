@@ -32,7 +32,7 @@
 ```
 
 8. master/README.md
-- Update new features, OS support and other chnages that were made in the new version.
+- Update new features, OS support and other changes that were made in the new version.
 
 
 
