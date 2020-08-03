@@ -13,7 +13,7 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Saturday 25 July 2020
+#      REVISION: Saturday 01 August 2020
 # =========================================================================
 
 import os
@@ -69,13 +69,15 @@ class Application(QtWidgets.QMainWindow):
                          self.obj_appconfig._app_ypos,
                          self.obj_appconfig._app_width,
                          self.obj_appconfig._app_heigth)
-        self.setWindowTitle(self.obj_appconfig._APPLICATION)
+        self.setWindowTitle(
+            self.obj_appconfig._APPLICATION + "-" + self.obj_appconfig._VERSION
+        )
         self.showMaximized()
         self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
 
-        self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
-        self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
-        self.systemTrayIcon.setVisible(True)
+        # self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
+        # self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
+        # self.systemTrayIcon.setVisible(True)
 
     def initToolBar(self):
         """
@@ -800,8 +802,8 @@ class MainView(QtWidgets.QWidget):
 
         # Adding to main Layout
         self.mainLayout.addWidget(self.leftSplit)
-        self.leftSplit.setSizes([self.width() / 4.5, self.height()])
-        self.middleSplit.setSizes([self.width(), self.height() / 2])
+        self.leftSplit.setSizes([self.width() // 4.5, self.height()])
+        self.middleSplit.setSizes([self.width(), self.height() // 2])
         self.setLayout(self.mainLayout)
 
 
@@ -813,6 +815,7 @@ def main(args):
     """
     print("Starting eSim......")
     app = QtWidgets.QApplication(args)
+    app.setApplicationName("eSim")
 
     appView = Application()
     appView.hide()
