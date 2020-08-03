@@ -13,13 +13,13 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Saturday 25 July 2020
+#      REVISION: Sunday 02 August 2020
 # =========================================================================
 
 from PyQt5 import QtWidgets
 import os
 import json
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 
 class Appconfig(QtWidgets.QWidget):
@@ -63,7 +63,7 @@ class Appconfig(QtWidgets.QWidget):
 
     noteArea = {"Note": []}
 
-    parser_esim = SafeConfigParser()
+    parser_esim = ConfigParser()
     parser_esim.read(
         os.path.join(
             os.path.expanduser("~"),
@@ -100,10 +100,12 @@ class Appconfig(QtWidgets.QWidget):
 
     def __init__(self):
         super(Appconfig, self).__init__()
+        
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = 'v2.1.0'
-        self._AUTHOR = 'Fahim, Rahul'
+        self._VERSION = '2.1'
+        self._AUTHOR = 'Fahim'
+        self._REVISION = 'Rahul'
 
         # Application geometry setting
         self._app_xpos = 100

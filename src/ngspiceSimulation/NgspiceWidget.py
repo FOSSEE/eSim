@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 import os
 
 
@@ -25,7 +25,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         if os.name == 'nt':     # For Windows OS
             home = os.path.expanduser("~")
 
-            parser_nghdl = SafeConfigParser()
+            parser_nghdl = ConfigParser()
             parser_nghdl.read(os.path.join(
                 home, os.path.join('.nghdl', 'config.ini')))
 
