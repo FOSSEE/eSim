@@ -64,8 +64,7 @@ function installNghdl
 {
 
     echo "Installing NGHDL..........................."
-    unzip nghdl-master.zip
-    mv nghdl-master nghdl
+    unzip -o nghdl.zip
     cd nghdl/
     chmod +x install-nghdl.sh
 
@@ -91,7 +90,16 @@ function addKicadPPA
     findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
     if [ -z "$findppa" ]; then
         echo "Adding KiCad-4 PPA to local apt-repository"
-        sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
+        if [[ $(lsb_release -rs) == 20.* ]]; then
+            sudo add-apt-repository --yes "deb http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu bionic main"
+            sudo touch /etc/apt/preferences.d/preferences
+            echo "Package: kicad" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
+            echo "Pin: version 4.0.7*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
+            echo "Pin-Priority: 501" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
+            sudo add-apt-repository --yes "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
+        else
+            sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
+        fi
     else
         echo "KiCad-4 is available in synaptic"
     fi
@@ -115,8 +123,16 @@ function installDependency
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
 
+    if [[ $(lsb_release -rs) != 16.* ]]; then
+	    echo "Installing Distutils......................."
+	    sudo apt-get install python3-distutils
+	fi
+
     echo "Installing KiCad..........................."
-    sudo apt install -y --no-install-recommends kicad
+    sudo apt-get install -y --no-install-recommends kicad
+    if [[ $(lsb_release -rs) == 20.* ]]; then
+        sudo add-apt-repository -r "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
+    fi
 
 }
 
@@ -222,7 +238,7 @@ function createDesktopStartScript
     trap "" ERR # Do not trap on error of any command
 
     # Check if the target OS is Ubuntu 18 or not
-    if [[ $(lsb_release -rs) == [[18.*] || [20.*]] ]]; then
+    if [[ $(lsb_release -rs) == 18.* || $(lsb_release -rs) == 20.* ]]; then
         # Make esim.desktop file as trusted application
         gio set $HOME/Desktop/esim.desktop "metadata::trusted" yes
         # Restart nautilus-desktop, so that the changes take effect
@@ -336,7 +352,12 @@ elif [ $option == "--uninstall" ];then
         sudo apt purge -y kicad
         sudo rm -rf /usr/share/kicad
         sudo rm -rf $HOME/.config/kicad
-        rm -f $eSim_Home/library/supportFiles/kicad_config_path.txt 
+        rm -f $eSim_Home/library/supportFiles/kicad_config_path.txt
+
+        if [[ $(lsb_release -rs) == 20.* ]]; then
+            sudo sed -i '/Package: kicad/{:label;N;/Pin-Priority: 501/!blabel};/Pin: version 4.0.7*/d' /etc/apt/preferences.d/preferences
+        fi
+
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
         cd nghdl/
