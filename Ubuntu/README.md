@@ -1,0 +1,32 @@
+eSim Installer (Ubuntu OS)
+====
+
+It contains the documentation to packaging eSim and making binaries for distribution.
+
+> Note: If planning to freeze the eSim source code for a target platform (Ubuntu OS), then refer this [documentation](executable.md).
+
+
+## How to package eSim for Ubuntu OS?
+
+1. Take the `master` branch containing the source code. Rename the folder to `eSim-<version>`.
+
+2. Add the installer script `install-eSim.sh` in `eSim-<version>` folder.
+
+3. Add the eSim executable (if available) in `eSim-<version>` folder. Also, remove following files from the folder:
+	- `.git` folder
+	- `code` folder
+	- `src` folder (Applicable only if eSim executable is used)
+	- conf.py
+	- setup.py
+	- index.rst
+	- requirement.txt
+	- .gitignore
+	- .travis.yml
+
+4. Add the zip file of `NGHDL` (`nghdl.zip`) in the eSim folder.
+
+> Note: Refer this [documentation](https://github.com/fossee/nghdl/tree/installers/Ubuntu/README.md) on packaging of NGHDL for Ubuntu OS.
+
+5. Compress `kicadLibrary` folder to a `tar.xz` format.
+
+6. Compress `eSim-<version>` to a zip format for distribution.
