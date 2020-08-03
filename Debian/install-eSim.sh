@@ -15,18 +15,15 @@
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Monday 20 July 2020 23:26
+#      REVISION: Sunday 02 August 2020 01:26
 #===============================================================================
 
 set -e  # Set exit option immediately on error
+set -E  # inherit ERR trap by shell functions
 
 error_exit() {
-    echo -e "\n\nError! Kindly resolve above errors and try again."
-    echo -e "\nAborting Installation......\n"
-}
-
-error_skip() {
-    echo -e "\n\nWarning! Skipping over this error......\n"
+    echo -e "\n\nError! Kindly resolve above error(s) and try again."
+    echo -e "\nAborting Installation...\n"
 }
 
 # Trap on function error_exit before exiting on error
@@ -72,8 +69,8 @@ function installNghdl
     cd nghdl/
     chmod +x install-nghdl.sh
 
-    # Do not trap to any function on errors. Let NGHDL script handle its own errors.
-    trap "" ERR     
+    # Do not trap on error of any command. Let NGHDL script handle its own errors.
+    trap "" ERR
 
     ./install-nghdl.sh --install       # Install NGHDL
         
@@ -91,9 +88,8 @@ function addKicadPPA
 
     #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
     kicadppa="reynaud/kicad-4"
-    grep -h "^deb.*$kicadppa*" /etc/apt/sources.list.d/* > /dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
+    findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
+    if [ -z "$findppa" ]; then
         echo "Adding KiCad-4 PPA to local apt-repository"
         sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
     else
@@ -113,8 +109,8 @@ function installDependency
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
 
-    echo "Installing PyQt4..........................."
-    sudo apt-get install -y python3-pyqt4
+    echo "Installing PyQt5..........................."
+    sudo apt-get install -y python3-pyqt5
 
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
@@ -128,7 +124,7 @@ function installDependency
 function copyKicadLibrary
 {
 
-    if [ -f ~/.config/kicad ];then
+    if [ -d ~/.config/kicad ];then
         echo "kicad folder already exists"
     else 
         echo ".config/kicad does not exist"
@@ -170,7 +166,7 @@ function copyKicadLibrary
     fi
 
     set +e      # Temporary disable exit on error
-    trap error_skip ERR
+    trap "" ERR # Do not trap on error of any command
     
     # Remove extracted KiCad Library - not needed anymore
     rm -rf kicadLibrary
@@ -223,7 +219,7 @@ function createDesktopStartScript
     cp -vp esim.desktop $HOME/Desktop/
 
     set +e      # Temporary disable exit on error
-    trap error_skip ERR
+    trap "" ERR # Do not trap on error of any command
 
     # Check if the target OS is Ubuntu 18 or not
     if [[ $(lsb_release -rs) == [[18.*] || [20.*]] ]]; then
@@ -331,7 +327,7 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure? It will remove complete eSim including KiCad, Ngspice and NGHDL models and libraries (y/n):"
+    echo -n "Are you sure? It will remove eSim completely including KiCad, Ngspice and NGHDL along with their models and libraries (y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
@@ -360,7 +356,7 @@ elif [ $option == "--uninstall" ];then
     elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
         exit 0
     else 
-        echo "Please select the right option"
+        echo "Please select the right option."
         exit 0
     fi
 
