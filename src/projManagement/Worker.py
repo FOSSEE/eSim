@@ -13,12 +13,13 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Sunday 26 July 2020
+#      REVISION: Sunday 02 August 2020
 # =========================================================================
 
 from PyQt5 import QtCore
 import subprocess
 from configuration.Appconfig import Appconfig
+import threading
 
 
 class WorkerThread(QtCore.QThread):
@@ -52,7 +53,8 @@ class WorkerThread(QtCore.QThread):
         @return
             None
         """
-        self.wait()
+        if threading.active_count() > 1:
+            self.wait()
 
     def get_proc_threads(self):
         """
