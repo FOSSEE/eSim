@@ -8,7 +8,6 @@
 
  !include "MUI2.nsh"
  !include "ZipDLL.nsh"
- !include "EnvVarUpdate.nsh"
  !include "x64.nsh"
 ;--------------------------------
 
@@ -169,18 +168,14 @@ Section -NgspiceSim
 
   SetOutPath "$EXEDIR"
 
-  File "spice.zip"
-  File "eSim.zip"
+  File "eSim.7z"
   File "logo.ico"
   
   SetOutPath "$INSTDIR"
 
-  ;ADD YOUR OWN FILES HERE...
-  ZipDLL::extractall "$EXEDIR\spice.zip" "$INSTDIR\"
-  ZipDLL::extractall "$EXEDIR\eSim.zip" "$INSTDIR\"
+  ;ADD YOUR OWN FILES HERE... 
+  Nsis7z::ExtractWithDetails "$EXEDIR\eSim.7z" "Extracting eSim %s..."
 
-  ;Setting Env Variable for Ngspice 
-  ${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\spice\bin"
 
   ;Copying Folder to install directory
   SetOutPath "$INSTDIR\eSim"
@@ -208,12 +203,13 @@ Section -NgspiceSim
   ;create desktop shortcut
   CreateShortCut "$PROFILE\..\Public\Desktop\eSim.lnk" "$INSTDIR\eSim\eSim" "" "$PROFILE\.esim\logo.ico" "" SW_SHOWMINIMIZED
 
+  !insertmacro MUI_STARTMENU_WRITE_END
+  
   ;Remove not required files
-  Delete "$EXEDIR\spice.zip"
-  Delete "$EXEDIR\eSim.zip"
+  Delete "$EXEDIR\eSim.7z"
   Delete "$EXEDIR\logo.ico"
   
-  !insertmacro MUI_STARTMENU_WRITE_END
+  
 
 SectionEnd
 
@@ -233,11 +229,14 @@ Section -InstallKiCad
   Goto endActiveSync
   endActiveSync:
  
-  	;Remove not required files
-  	Delete "$EXEDIR\kicad-4.0.7-i686.exe"
-  	Delete "$PROFILE\..\Public\Desktop\KiCad.lnk"
+    ;Remove not required files
+    Delete "$EXEDIR\kicad-4.0.7-i686.exe"
+    Delete "$PROFILE\..\Public\Desktop\KiCad.lnk"
 
-	${EnvVarUpdate} $0 "PATH" "A" "HKLM" "$INSTDIR\KiCad\bin"
+    EnVar::SetHKLM
+    EnVar::AddValue "Path" "$INSTDIR\KiCad\bin"
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
 
     ZipDLL::extractall "$INSTDIR\eSim\library\kicadLibrary.zip" "$INSTDIR\eSim\library\"
 
@@ -266,7 +265,7 @@ Section -InstallKiCad
     RMDir /r "$INSTDIR\eSim\library\kicadLibrary" 
 
 SectionEnd
- 
+
 
 Section -AdditionalIcons
  
@@ -276,6 +275,7 @@ Section -AdditionalIcons
 
 SectionEnd
 
+!include "installnghdl.nsi" 
 
 Section -Post
 
@@ -300,14 +300,48 @@ FunctionEnd
 
 Section Uninstall
 
+  ; Set to HKLM
+	EnVar::SetHKLM
+	
+	GetFullPathName $1 $INSTDIR\..\eSim\nghdl\src
+	EnVar::DeleteValue "Path" $1
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
+	
+	GetFullPathName $1 $INSTDIR\..\mingw64\bin
+	EnVar::DeleteValue "Path" $1
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
+	
+	GetFullPathName $1 $INSTDIR\..\mingw64\msys\bin
+	EnVar::DeleteValue "Path" $1
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
+	
+	GetFullPathName $1 $INSTDIR\..\mingw64\GHDL\bin
+	EnVar::DeleteValue "Path" $1
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
+	
+	GetFullPathName $1 $INSTDIR\..\ngspice-nghdl\install_dir\bin
+	EnVar::DeleteValue "Path" $1
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
+	
+	RMDir /r "$INSTDIR\..\mingw64"
+	RMDir /r "$INSTDIR\..\ngspice-nghdl"
+	RMDir /r "$INSTDIR\..\eSim\nghdl"
+
   ;Note that in uninstaller code, $INSTDIR contains the directory where the uninstaller lies
 
   Delete "$INSTDIR\uninst-eSim.exe"
   Delete "$SMPROGRAMS\eSim\Uninstall.lnk"
  
   ;Removing Env Variable for KiCad  
-  GetFullPathName $0 $INSTDIR\..\KiCad\bin
-  ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $0
+  GetFullPathName $1 $INSTDIR\..\KiCad\bin
+	EnVar::DeleteValue "Path" $1
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
 
   ;Remove KiCad config 
   RMDir /r "$PROFILE\AppData\Roaming\kicad"
@@ -318,17 +352,11 @@ Section Uninstall
   Goto endActiveSync
   endActiveSync:
 
-    ;Removing Env Variable for Ngspice 
-    GetFullPathName $0 $INSTDIR\..\spice\bin
-    ${un.EnvVarUpdate} $0 "PATH" "R" "HKLM" $0
-
-    ;Removing Ngspice
-    RMDir /r "$INSTDIR\..\spice"
-
     ;Removing eSim
     RMDir /r "$PROFILE\.esim"
     RMDir "$SMPROGRAMS\eSim"
     RMDir /r "$INSTDIR\..\eSim"
+	RMDir /r "$INSTDIR\..\KiCad"
     Delete "$PROFILE\..\Public\Desktop\eSim.lnk" 
 
     DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
