@@ -1,7 +1,7 @@
 ## eSim
 
 [eSim](https://esim.fossee.in/) is an open source EDA tool for circuit design, simulation, analysis and PCB design, developed by [FOSSEE Team](https://www.fossee.in/) at [IIT Bombay](http://www.iitb.ac.in/).
-It is an integrated tool build using open source softwares such as KiCad, Ngspice, GHDL, etc.
+It is an integrated tool build using open source softwares such as KiCad, Ngspice and GHDL.
 
 ## Releases
 * Ubuntu 16.04 OS and above LTS versions.
@@ -25,7 +25,7 @@ It is an integrated tool build using open source softwares such as KiCad, Ngspic
 ## Pre-requisites
 1. Python v3.5+
 2. Ngspice v31+
-3. KiCad v4.0.7 (latest version released on April-2019)
+3. KiCad v4.0.7
 4. [NGHDL](https://github.com/fossee/nghdl)
 
 ## eSim Installation:
