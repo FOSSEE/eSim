@@ -1,11 +1,11 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from . import TrackWidget
 from projManagement import Validation
 import os
 from xml.etree import ElementTree as ET
 
 
-class SubcircuitTab(QtGui.QWidget):
+class SubcircuitTab(QtWidgets.QWidget):
     """
     - This class creates Subcircuit Tab in KicadtoNgspice Window
     - It dynamically creates the widget for subcircuits,
@@ -37,7 +37,7 @@ class SubcircuitTab(QtGui.QWidget):
         except BaseException:
             print("Subcircuit Previous values XML is Empty")
 
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
         # Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()
@@ -57,7 +57,7 @@ class SubcircuitTab(QtGui.QWidget):
         self.numPorts = []
 
         # Set Layout
-        self.grid = QtGui.QGridLayout()
+        self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
 
         for eachline in schematicInfo:
@@ -66,10 +66,10 @@ class SubcircuitTab(QtGui.QWidget):
                 # print("Subcircuit : Words", words[0])
                 self.obj_trac.subcircuitList[project_name + words[0]] = words
                 self.subcircuit_dict_beg[words[0]] = self.count
-                subbox = QtGui.QGroupBox()
-                subgrid = QtGui.QGridLayout()
+                subbox = QtWidgets.QGroupBox()
+                subgrid = QtWidgets.QGridLayout()
                 subbox.setTitle("Add subcircuit for " + words[len(words) - 1])
-                self.entry_var[self.count] = QtGui.QLineEdit()
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
 
                 global path_name
@@ -94,7 +94,7 @@ class SubcircuitTab(QtGui.QWidget):
                     print("Error before subcircuit :", str(e))
 
                 subgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                self.addbtn = QtGui.QPushButton("Add")
+                self.addbtn = QtWidgets.QPushButton("Add")
                 self.addbtn.setObjectName("%d" % self.count)
                 # Send the number of ports specified with the given\
                 # subcircuit for verification.
@@ -151,7 +151,7 @@ class SubcircuitTab(QtGui.QWidget):
             init_path = ''
 
         self.subfile = str(
-            QtGui.QFileDialog.getExistingDirectory(
+            QtWidgets.QFileDialog.getExistingDirectory(
                 self, "Open Subcircuit",
                 init_path + "library/SubcircuitLibrary")
             )
@@ -166,14 +166,14 @@ class SubcircuitTab(QtGui.QWidget):
 
             self.obj_trac.subcircuitTrack[self.subName] = self.subfile
         elif self.reply == "PORT":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a Subcircuit with correct number of ports.")
             self.msg.exec_()
         elif self.reply == "DIREC":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -201,14 +201,14 @@ class SubcircuitTab(QtGui.QWidget):
             # Storing to track it during conversion
             self.obj_trac.subcircuitTrack[self.subName] = self.subfile
         elif self.reply == "PORT":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a Subcircuit with correct number of ports.")
             self.msg.exec_()
         elif self.reply == "DIREC":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(

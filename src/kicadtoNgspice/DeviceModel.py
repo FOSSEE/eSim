@@ -1,10 +1,10 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 import os
 from xml.etree import ElementTree as ET
 from . import TrackWidget
 
 
-class DeviceModel(QtGui.QWidget):
+class DeviceModel(QtWidgets.QWidget):
     """
     - This class creates Device Library Tab in KicadtoNgspice Window
       It dynamically creates the widget for device like diode,mosfet,
@@ -42,7 +42,7 @@ class DeviceModel(QtGui.QWidget):
         except BaseException:
             print("Device Model Previous XML is Empty")
 
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
         # Creating track widget object
         self.obj_trac = TrackWidget.TrackWidget()
@@ -62,7 +62,7 @@ class DeviceModel(QtGui.QWidget):
         self.deviceDetail = {}
 
         # Set Layout
-        self.grid = QtGui.QGridLayout()
+        self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
         # print("Reading Device model details from Schematic")
 
@@ -73,14 +73,14 @@ class DeviceModel(QtGui.QWidget):
             if eachline[0] == 'q':
                 # print("Device Model Transistor: ", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
-                transbox = QtGui.QGroupBox()
-                transgrid = QtGui.QGridLayout()
+                transbox = QtWidgets.QGroupBox()
+                transgrid = QtWidgets.QGridLayout()
                 transbox.setTitle(
                     "Add library for Transistor " +
                     words[0] +
                     " : " +
                     words[4])
-                self.entry_var[self.count] = QtGui.QLineEdit()
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
                 global path_name
 
@@ -104,7 +104,7 @@ class DeviceModel(QtGui.QWidget):
                     pass
 
                 transgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                self.addbtn = QtGui.QPushButton("Add")
+                self.addbtn = QtWidgets.QPushButton("Add")
                 self.addbtn.setObjectName("%d" % self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
                 self.deviceDetail[self.count] = words[0]
@@ -137,14 +137,14 @@ class DeviceModel(QtGui.QWidget):
             elif eachline[0] == 'd':
                 # print("Device Model Diode:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
-                diodebox = QtGui.QGroupBox()
-                diodegrid = QtGui.QGridLayout()
+                diodebox = QtWidgets.QGroupBox()
+                diodegrid = QtWidgets.QGridLayout()
                 diodebox.setTitle(
                     "Add library for Diode " +
                     words[0] +
                     " : " +
                     words[3])
-                self.entry_var[self.count] = QtGui.QLineEdit()
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
                 # global path_name
                 try:
@@ -167,7 +167,7 @@ class DeviceModel(QtGui.QWidget):
                     pass
 
                 diodegrid.addWidget(self.entry_var[self.count], self.row, 1)
-                self.addbtn = QtGui.QPushButton("Add")
+                self.addbtn = QtWidgets.QPushButton("Add")
                 self.addbtn.setObjectName("%d" % self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
                 self.deviceDetail[self.count] = words[0]
@@ -200,14 +200,14 @@ class DeviceModel(QtGui.QWidget):
             elif eachline[0] == 'j':
                 # print("Device Model JFET:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
-                jfetbox = QtGui.QGroupBox()
-                jfetgrid = QtGui.QGridLayout()
+                jfetbox = QtWidgets.QGroupBox()
+                jfetgrid = QtWidgets.QGridLayout()
                 jfetbox.setTitle(
                     "Add library for JFET " +
                     words[0] +
                     " : " +
                     words[4])
-                self.entry_var[self.count] = QtGui.QLineEdit()
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
                 # global path_name
                 try:
@@ -230,7 +230,7 @@ class DeviceModel(QtGui.QWidget):
                     pass
 
                 jfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                self.addbtn = QtGui.QPushButton("Add")
+                self.addbtn = QtWidgets.QPushButton("Add")
                 self.addbtn.setObjectName("%d" % self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
                 self.deviceDetail[self.count] = words[0]
@@ -262,8 +262,8 @@ class DeviceModel(QtGui.QWidget):
 
             elif eachline[0] == 'm':
                 self.devicemodel_dict_beg[words[0]] = self.count
-                mosfetbox = QtGui.QGroupBox()
-                mosfetgrid = QtGui.QGridLayout()
+                mosfetbox = QtWidgets.QGroupBox()
+                mosfetgrid = QtWidgets.QGridLayout()
                 i = self.count
                 beg = self.count
                 mosfetbox.setTitle(
@@ -271,10 +271,10 @@ class DeviceModel(QtGui.QWidget):
                     words[0] +
                     " : " +
                     words[5])
-                self.entry_var[self.count] = QtGui.QLineEdit()
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
                 mosfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                self.addbtn = QtGui.QPushButton("Add")
+                self.addbtn = QtWidgets.QPushButton("Add")
                 self.addbtn.setObjectName("%d" % self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
                 mosfetgrid.addWidget(self.addbtn, self.row, 2)
@@ -287,32 +287,32 @@ class DeviceModel(QtGui.QWidget):
                 self.count = self.count + 1
 
                 # Adding to get MOSFET dimension
-                self.widthLabel[self.count] = QtGui.QLabel(
+                self.widthLabel[self.count] = QtWidgets.QLabel(
                     "Enter width of MOSFET " + words[0] + "(default=100u):")
                 mosfetgrid.addWidget(self.widthLabel[self.count], self.row, 0)
-                self.entry_var[self.count] = QtGui.QLineEdit()
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
                 self.entry_var[self.count].setMaximumWidth(150)
                 mosfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
                 self.row = self.row + 1
                 self.count = self.count + 1
 
-                self.lengthLabel[self.count] = QtGui.QLabel(
+                self.lengthLabel[self.count] = QtWidgets.QLabel(
                     "Enter length of MOSFET " + words[0] + "(default=100u):")
                 mosfetgrid.addWidget(self.lengthLabel[self.count], self.row, 0)
-                self.entry_var[self.count] = QtGui.QLineEdit()
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
                 self.entry_var[self.count].setMaximumWidth(150)
                 mosfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
                 self.row = self.row + 1
                 self.count = self.count + 1
 
-                self.multifactorLable[self.count] = QtGui.QLabel(
+                self.multifactorLable[self.count] = QtWidgets.QLabel(
                     "Enter multiplicative factor of MOSFET " +
                     words[0] + "(default=1):")
                 mosfetgrid.addWidget(
                     self.multifactorLable[self.count], self.row, 0)
-                self.entry_var[self.count] = QtGui.QLineEdit()
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
                 end = self.count
                 self.entry_var[self.count].setMaximumWidth(150)
@@ -368,12 +368,10 @@ class DeviceModel(QtGui.QWidget):
         if os.name == 'nt':
             init_path = ''
 
-        self.libfile = str(
-            QtGui.QFileDialog.getOpenFileName(
+        self.libfile = QtWidgets.QFileDialog.getOpenFileName(
                 self, "Open Library Directory",
                 init_path + "library/deviceModelLibrary", "*.lib"
-            )
-        )
+            )[0]
 
         # Setting Library to Text Edit Line
         self.entry_var[self.widgetObjCount].setText(self.libfile)

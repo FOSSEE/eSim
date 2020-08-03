@@ -1,11 +1,11 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from configuration.Appconfig import Appconfig
 from projManagement.Worker import WorkerThread
 import os
 
 
 # This class is called when User clicks on Edit Subcircuit Button.
-class openSub(QtGui.QWidget):
+class openSub(QtWidgets.QWidget):
     """
     It opens the existing subcircuit projects that are present in
     Subcircuit directory.
@@ -21,9 +21,8 @@ class openSub(QtGui.QWidget):
         if os.name == 'nt':
             init_path = ''
 
-        self.editfile = str(
-            QtGui.QFileDialog.getExistingDirectory(
-                None, "Open File", init_path + "library/SubcircuitLibrary"))
+        self.editfile = QtWidgets.QFileDialog.getExistingDirectory(
+                None, "Open File", init_path + "library/SubcircuitLibrary")
         if self.editfile:
             self.obj_Appconfig = Appconfig()
             self.obj_Appconfig.current_subcircuit['SubcircuitName'] \

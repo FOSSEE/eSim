@@ -1,11 +1,11 @@
-from PyQt4 import QtGui, QtCore
-from PyQt4.Qt import QTableWidgetItem
+from PyQt5 import QtWidgets, QtCore
+from PyQt5.Qt import QTableWidgetItem
 import xml.etree.ElementTree as ET
 from configuration.Appconfig import Appconfig
 import os
 
 
-class ModelEditorclass(QtGui.QWidget):
+class ModelEditorclass(QtWidgets.QWidget):
     '''
     - Initialise the layout for dockarea
     - Use QVBoxLayout, QSplitter, QGridLayout to define the layout
@@ -29,7 +29,7 @@ class ModelEditorclass(QtGui.QWidget):
     '''
 
     def __init__(self):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
         self.init_path = '../../'
         if os.name == 'nt':
@@ -38,31 +38,31 @@ class ModelEditorclass(QtGui.QWidget):
         self.savepathtest = self.init_path + 'library/deviceModelLibrary'
         self.obj_appconfig = Appconfig()
         self.newflag = 0
-        self.layout = QtGui.QVBoxLayout()
-        self.splitter = QtGui.QSplitter()
-        self.grid = QtGui.QGridLayout()
+        self.layout = QtWidgets.QVBoxLayout()
+        self.splitter = QtWidgets.QSplitter()
+        self.grid = QtWidgets.QGridLayout()
         self.splitter.setOrientation(QtCore.Qt.Vertical)
 
         # Initialise the table view
-        self.modeltable = QtGui.QTableWidget()
+        self.modeltable = QtWidgets.QTableWidget()
 
-        self.newbtn = QtGui.QPushButton('New')
+        self.newbtn = QtWidgets.QPushButton('New')
         self.newbtn.setToolTip('<b>Creating new Model Library</b>')
         self.newbtn.clicked.connect(self.opennew)
-        self.editbtn = QtGui.QPushButton('Edit')
+        self.editbtn = QtWidgets.QPushButton('Edit')
         self.editbtn.setToolTip('<b>Editing current Model Library</b>')
         self.editbtn.clicked.connect(self.openedit)
-        self.savebtn = QtGui.QPushButton('Save')
+        self.savebtn = QtWidgets.QPushButton('Save')
         self.savebtn.setToolTip('<b>Saves the Model Library</b>')
         self.savebtn.setDisabled(True)
         self.savebtn.clicked.connect(self.savemodelfile)
-        self.removebtn = QtGui.QPushButton('Remove')
+        self.removebtn = QtWidgets.QPushButton('Remove')
         self.removebtn.setHidden(True)
         self.removebtn.clicked.connect(self.removeparameter)
-        self.addbtn = QtGui.QPushButton('Add')
+        self.addbtn = QtWidgets.QPushButton('Add')
         self.addbtn.setHidden(True)
         self.addbtn.clicked.connect(self.addparameters)
-        self.uploadbtn = QtGui.QPushButton('Upload')
+        self.uploadbtn = QtWidgets.QPushButton('Upload')
         self.uploadbtn.setToolTip(
             '<b>Uploading external .lib file to eSim</b>')
         self.uploadbtn.clicked.connect(self.converttoxml)
@@ -73,18 +73,18 @@ class ModelEditorclass(QtGui.QWidget):
         self.grid.addWidget(self.removebtn, 8, 4)
         self.grid.addWidget(self.addbtn, 5, 4)
 
-        self.radiobtnbox = QtGui.QButtonGroup()
-        self.diode = QtGui.QRadioButton('Diode')
+        self.radiobtnbox = QtWidgets.QButtonGroup()
+        self.diode = QtWidgets.QRadioButton('Diode')
         self.diode.setDisabled(True)
-        self.bjt = QtGui.QRadioButton('BJT')
+        self.bjt = QtWidgets.QRadioButton('BJT')
         self.bjt.setDisabled(True)
-        self.mos = QtGui.QRadioButton('MOS')
+        self.mos = QtWidgets.QRadioButton('MOS')
         self.mos.setDisabled(True)
-        self.jfet = QtGui.QRadioButton('JFET')
+        self.jfet = QtWidgets.QRadioButton('JFET')
         self.jfet.setDisabled(True)
-        self.igbt = QtGui.QRadioButton('IGBT')
+        self.igbt = QtWidgets.QRadioButton('IGBT')
         self.igbt.setDisabled(True)
-        self.magnetic = QtGui.QRadioButton('Magnetic Core')
+        self.magnetic = QtWidgets.QRadioButton('Magnetic Core')
         self.magnetic.setDisabled(True)
 
         self.radiobtnbox.addButton(self.diode)
@@ -101,7 +101,7 @@ class ModelEditorclass(QtGui.QWidget):
         self.magnetic.clicked.connect(self.magnetic_click)
 
         # Dropdown for various types supported by that element, ex bjt -> npn
-        self.types = QtGui.QComboBox()
+        self.types = QtWidgets.QComboBox()
         self.types.setHidden(True)
 
         self.grid.addWidget(self.types, 2, 2, 2, 3)
@@ -128,7 +128,7 @@ class ModelEditorclass(QtGui.QWidget):
             pass
 
         # Opens new dialog box
-        text, ok = QtGui.QInputDialog.getText(
+        text, ok = QtWidgets.QInputDialog.getText(
             self, 'New Model', 'Enter Model Name:')
         if ok:
             self.newflag = 1
@@ -327,12 +327,11 @@ class ModelEditorclass(QtGui.QWidget):
         self.bjt.setDisabled(True)
         self.magnetic.setDisabled(True)
         try:
-            self.editfile = str(
-                QtGui.QFileDialog.getOpenFileName(
-                    self,
-                    "Open Library Directory",
-                    self.init_path + "library/deviceModelLibrary",
-                    "*.lib"))
+            self.editfile = QtWidgets.QFileDialog.getOpenFileName(
+                self, "Open Library Directory",
+                self.init_path + "library/deviceModelLibrary", "*.lib"
+            )[0]
+
             self.createtable(self.editfile)
         except BaseException:
             print("No File selected for edit")
@@ -355,7 +354,7 @@ class ModelEditorclass(QtGui.QWidget):
         self.removebtn.setHidden(False)
         self.modelfile = modelfile
         self.modeldict = {}
-        self.modeltable = QtGui.QTableWidget()
+        self.modeltable = QtWidgets.QTableWidget()
         self.modeltable.resizeColumnsToContents()
         self.modeltable.setColumnCount(2)
         self.modeltable.resizeRowsToContents()
@@ -422,18 +421,18 @@ class ModelEditorclass(QtGui.QWidget):
         - Accordingly add parameter and value in modeldict as well as table
         - text1 => parameter, text2 => value
         '''
-        text1, ok = QtGui.QInputDialog.getText(
+        text1, ok = QtWidgets.QInputDialog.getText(
             self, 'Parameter', 'Enter Parameter')
         if ok:
             if text1 in list(self.modeldict.keys()):
-                self.msg = QtGui.QErrorMessage(self)
+                self.msg = QtWidgets.QErrorMessage(self)
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
                     "The paramaeter " + text1 + " is already in the list")
                 self.msg.exec_()
                 return
-            text2, ok = QtGui.QInputDialog.getText(
+            text2, ok = QtWidgets.QInputDialog.getText(
                 self, 'Value', 'Enter Value')
             if ok:
                 currentRowCount = self.modeltable.rowCount()
@@ -606,8 +605,8 @@ class ModelEditorclass(QtGui.QWidget):
         txtfile.close()
 
         msg = "Model saved successfully!"
-        QtGui.QMessageBox.information(
-            self, "Information", msg, QtGui.QMessageBox.Ok
+        QtWidgets.QMessageBox.information(
+            self, "Information", msg, QtWidgets.QMessageBox.Ok
         )
 
         os.chdir(defaultcwd)
@@ -624,7 +623,7 @@ class ModelEditorclass(QtGui.QWidget):
         for each_dir in all_dir:
             all_files = os.listdir(each_dir)
             if newfilename in all_files:
-                self.msg = QtGui.QErrorMessage(self)
+                self.msg = QtWidgets.QErrorMessage(self)
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
@@ -665,8 +664,8 @@ class ModelEditorclass(QtGui.QWidget):
         self.obj_appconfig.print_info('Updated library ' + libpath)
 
         msg = "Model saved successfully!"
-        QtGui.QMessageBox.information(
-            self, "Information", msg, QtGui.QMessageBox.Ok
+        QtWidgets.QMessageBox.information(
+            self, "Information", msg, QtWidgets.QMessageBox.Ok
         )
 
     def removeparameter(self):
@@ -696,12 +695,12 @@ class ModelEditorclass(QtGui.QWidget):
         self.modeltable.setHidden(True)
         model_dict = {}
         stringof = []
-        self.libfile = str(
-            QtGui.QFileDialog.getOpenFileName(
-                self,
-                "Open Library Directory",
-                self.init_path + "library/deviceModelLibrary",
-                "*.lib"))
+
+        self.libfile = QtWidgets.QFileDialog.getOpenFileName(
+            self, "Open Library Directory",
+            self.init_path + "library/deviceModelLibrary", "*.lib"
+        )[0]
+
         libopen = open(self.libfile)
         filedata = libopen.read().split()
         modelcount = 0
@@ -796,7 +795,7 @@ class ModelEditorclass(QtGui.QWidget):
         defaultcwd = os.getcwd()
         savepath = os.path.join(self.savepathtest, 'User Libraries')
         os.chdir(savepath)
-        text, ok1 = QtGui.QInputDialog.getText(
+        text, ok1 = QtWidgets.QInputDialog.getText(
             self, 'Model Name', 'Enter Model Library Name')
         if ok1:
             tree.write(text + ".xml")

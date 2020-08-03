@@ -11,18 +11,18 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Friday 24 July 2020
+#      REVISION: Saturday 25 July 2020
 # =========================================================================
 
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 import os
 import json
 from configparser import SafeConfigParser
 
 
-class Appconfig(QtGui.QWidget):
+class Appconfig(QtWidgets.QWidget):
     """
     All configuration goes here.
     May change in future for code optimization.
@@ -102,7 +102,7 @@ class Appconfig(QtGui.QWidget):
         super(Appconfig, self).__init__()
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = 'v2.0.0'
+        self._VERSION = 'v2.1.0'
         self._AUTHOR = 'Fahim, Rahul'
 
         # Application geometry setting

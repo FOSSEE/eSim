@@ -11,19 +11,19 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Wednesday 12 February 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Sunday 26 July 2020
 # =========================================================================
 
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from .Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
 import json
 
 
-class NewProjectInfo(QtGui.QWidget):
+class NewProjectInfo(QtWidgets.QWidget):
     """
     This class is called when User create new Project.
     """
@@ -85,7 +85,7 @@ class NewProjectInfo(QtGui.QWidget):
                 f = open(self.projFile, "w")
 
             except BaseException:
-                self.msg = QtGui.QErrorMessage(self)
+                self.msg = QtWidgets.QErrorMessage(self)
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
@@ -115,7 +115,7 @@ class NewProjectInfo(QtGui.QWidget):
             return self.projDir, newprojlist
 
         elif self.reply == "CHECKEXIST":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -126,7 +126,7 @@ class NewProjectInfo(QtGui.QWidget):
             self.msg.exec_()
 
         elif self.reply == "CHECKNAME":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -134,7 +134,7 @@ class NewProjectInfo(QtGui.QWidget):
             self.msg.exec_()
 
         elif self.reply == "NONE":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('The project name cannot be empty')

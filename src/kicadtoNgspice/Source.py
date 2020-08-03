@@ -1,16 +1,16 @@
 import os
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from . import TrackWidget
 from xml.etree import ElementTree as ET
 
 
-class Source(QtGui.QWidget):
+class Source(QtWidgets.QWidget):
     """
     This class create Source Tab of KicadtoNgSpice Window.
     """
 
     def __init__(self, sourcelist, sourcelisttrack, clarg1):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
         self.obj_track = TrackWidget.TrackWidget()
         # Variables
         self.count = 1
@@ -67,7 +67,7 @@ class Source(QtGui.QWidget):
         except BaseException:
             print("Source Previous Values XML is Empty")
 
-        self.grid = QtGui.QGridLayout()
+        self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
         xml_num = 0
 
@@ -76,19 +76,19 @@ class Source(QtGui.QWidget):
                 print("SourceList line: ", line)
                 track_id = line[0]
                 if line[2] == 'ac':
-                    acbox = QtGui.QGroupBox()
+                    acbox = QtWidgets.QGroupBox()
                     acbox.setTitle(line[3])
-                    acgrid = QtGui.QGridLayout()
+                    acgrid = QtWidgets.QGridLayout()
                     self.start = self.count
-                    label1 = QtGui.QLabel(line[4])
-                    label2 = QtGui.QLabel(line[5])
+                    label1 = QtWidgets.QLabel(line[4])
+                    label2 = QtWidgets.QLabel(line[5])
                     acgrid.addWidget(label1, self.row, 0)
                     acgrid.addWidget(label2, self.row + 1, 0)
 
-                    self.entry_var[self.count] = QtGui.QLineEdit()
+                    self.entry_var[self.count] = QtWidgets.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
                     acgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                    self.entry_var[self.count + 1] = QtGui.QLineEdit()
+                    self.entry_var[self.count + 1] = QtWidgets.QLineEdit()
                     self.entry_var[self.count + 1].setMaximumWidth(150)
                     acgrid.addWidget(
                         self.entry_var[self.count+1], self.row + 1, 1)
@@ -127,15 +127,15 @@ class Source(QtGui.QWidget):
                         [track_id, 'ac', self.start, self.end])
 
                 elif line[2] == 'dc':
-                    dcbox = QtGui.QGroupBox()
+                    dcbox = QtWidgets.QGroupBox()
                     dcbox.setTitle(line[3])
-                    dcgrid = QtGui.QGridLayout()
+                    dcgrid = QtWidgets.QGridLayout()
                     self.row = self.row + 1
                     self.start = self.count
-                    label = QtGui.QLabel(line[4])
+                    label = QtWidgets.QLabel(line[4])
                     dcgrid.addWidget(label, self.row, 0)
 
-                    self.entry_var[self.count] = QtGui.QLineEdit()
+                    self.entry_var[self.count] = QtWidgets.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
                     dcgrid.addWidget(self.entry_var[self.count], self.row, 1)
                     self.entry_var[self.count].setText("")
@@ -170,16 +170,16 @@ class Source(QtGui.QWidget):
                         [track_id, 'dc', self.start, self.end])
 
                 elif line[2] == 'sine':
-                    sinebox = QtGui.QGroupBox()
+                    sinebox = QtWidgets.QGroupBox()
                     sinebox.setTitle(line[3])
-                    sinegrid = QtGui.QGridLayout()
+                    sinegrid = QtWidgets.QGridLayout()
                     self.row = self.row + 1
                     self.start = self.count
 
                     for it in range(4, 9):
-                        label = QtGui.QLabel(line[it])
+                        label = QtWidgets.QLabel(line[it])
                         sinegrid.addWidget(label, self.row, 0)
-                        self.entry_var[self.count] = QtGui.QLineEdit()
+                        self.entry_var[self.count] = QtWidgets.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
                         sinegrid.addWidget(
                             self.entry_var[self.count], self.row, 1)
@@ -214,15 +214,15 @@ class Source(QtGui.QWidget):
                         [track_id, 'sine', self.start, self.end])
 
                 elif line[2] == 'pulse':
-                    pulsebox = QtGui.QGroupBox()
+                    pulsebox = QtWidgets.QGroupBox()
                     pulsebox.setTitle(line[3])
-                    pulsegrid = QtGui.QGridLayout()
+                    pulsegrid = QtWidgets.QGridLayout()
                     self.start = self.count
 
                     for it in range(4, 11):
-                        label = QtGui.QLabel(line[it])
+                        label = QtWidgets.QLabel(line[it])
                         pulsegrid.addWidget(label, self.row, 0)
-                        self.entry_var[self.count] = QtGui.QLineEdit()
+                        self.entry_var[self.count] = QtWidgets.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
                         pulsegrid.addWidget(
                             self.entry_var[self.count], self.row, 1)
@@ -257,13 +257,13 @@ class Source(QtGui.QWidget):
                         [track_id, 'pulse', self.start, self.end])
 
                 elif line[2] == 'pwl':
-                    pwlbox = QtGui.QGroupBox()
+                    pwlbox = QtWidgets.QGroupBox()
                     pwlbox.setTitle(line[3])
                     self.start = self.count
-                    pwlgrid = QtGui.QGridLayout()
-                    label = QtGui.QLabel(line[4])
+                    pwlgrid = QtWidgets.QGridLayout()
+                    label = QtWidgets.QLabel(line[4])
                     pwlgrid.addWidget(label, self.row, 0)
-                    self.entry_var[self.count] = QtGui.QLineEdit()
+                    self.entry_var[self.count] = QtWidgets.QLineEdit()
                     self.entry_var[self.count].setMaximumWidth(150)
                     pwlgrid.addWidget(self.entry_var[self.count], self.row, 1)
                     self.entry_var[self.count].setText("")
@@ -297,15 +297,15 @@ class Source(QtGui.QWidget):
                         [track_id, 'pwl', self.start, self.end])
 
                 elif line[2] == 'exp':
-                    expbox = QtGui.QGroupBox()
+                    expbox = QtWidgets.QGroupBox()
                     expbox.setTitle(line[3])
-                    expgrid = QtGui.QGridLayout()
+                    expgrid = QtWidgets.QGridLayout()
                     self.start = self.count
 
                     for it in range(4, 10):
-                        label = QtGui.QLabel(line[it])
+                        label = QtWidgets.QLabel(line[it])
                         expgrid.addWidget(label, self.row, 0)
-                        self.entry_var[self.count] = QtGui.QLineEdit()
+                        self.entry_var[self.count] = QtWidgets.QLineEdit()
                         self.entry_var[self.count].setMaximumWidth(150)
                         expgrid.addWidget(
                             self.entry_var[self.count], self.row, 1)

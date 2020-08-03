@@ -1,10 +1,10 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from . import TrackWidget
 from xml.etree import ElementTree as ET
 import os
 
 
-class Model(QtGui.QWidget):
+class Model(QtWidgets.QWidget):
     """
     - This class creates Model Tab of KicadtoNgspice window.
       The widgets are created dynamically in the Model Tab.
@@ -12,7 +12,7 @@ class Model(QtGui.QWidget):
 
     def __init__(self, schematicInfo, modelList, clarg1):
 
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
         # Processing for getting previous values
         kicadFile = clarg1
@@ -48,7 +48,7 @@ class Model(QtGui.QWidget):
         self.end = 0
 
         # Creating GUI dynamically for Model tab
-        self.grid = QtGui.QGridLayout()
+        self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
 
         for line in modelList:
@@ -56,8 +56,8 @@ class Model(QtGui.QWidget):
             # Adding title label for model
             # Key: Tag name,Value:Entry widget number
             tag_dict = {}
-            modelbox = QtGui.QGroupBox()
-            modelgrid = QtGui.QGridLayout()
+            modelbox = QtWidgets.QGroupBox()
+            modelgrid = QtWidgets.QGridLayout()
             modelbox.setTitle(line[5])
             self.start = self.nextcount
             # line[7] is parameter dictionary holding parameter tags.
@@ -68,10 +68,10 @@ class Model(QtGui.QWidget):
                     # For tag having vector value
                     temp_tag = []
                     for item in value:
-                        paramLabel = QtGui.QLabel(item)
+                        paramLabel = QtWidgets.QLabel(item)
                         modelgrid.addWidget(paramLabel, self.nextrow, 0)
                         self.obj_trac.model_entry_var[self.nextcount] = (
-                            QtGui.QLineEdit()
+                            QtWidgets.QLineEdit()
                         )
                         modelgrid.addWidget(
                             self.obj_trac.model_entry_var
@@ -93,10 +93,10 @@ class Model(QtGui.QWidget):
                     tag_dict[key] = temp_tag
 
                 else:
-                    paramLabel = QtGui.QLabel(value)
+                    paramLabel = QtWidgets.QLabel(value)
                     modelgrid.addWidget(paramLabel, self.nextrow, 0)
                     self.obj_trac.model_entry_var[self.nextcount] = (
-                        QtGui.QLineEdit()
+                        QtWidgets.QLineEdit()
                     )
                     modelgrid.addWidget(
                         self.obj_trac.model_entry_var[self.nextcount],

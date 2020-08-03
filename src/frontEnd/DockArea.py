@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtCore, QtWidgets
 from ngspiceSimulation.pythonPlotting import plotWindow
 from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
@@ -15,7 +15,7 @@ count = 1
 dock = {}
 
 
-class DockArea(QtGui.QMainWindow):
+class DockArea(QtWidgets.QMainWindow):
     """
     This class contains function for designing UI of all the editors
     in dock area part:
@@ -31,13 +31,13 @@ class DockArea(QtGui.QMainWindow):
 
     def __init__(self):
         """This act as constructor for class DockArea."""
-        QtGui.QMainWindow.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
 
         for dockName in dockList:
-            dock[dockName] = QtGui.QDockWidget(dockName)
-            self.welcomeWidget = QtGui.QWidget()
-            self.welcomeLayout = QtGui.QVBoxLayout()
+            dock[dockName] = QtWidgets.QDockWidget(dockName)
+            self.welcomeWidget = QtWidgets.QWidget()
+            self.welcomeLayout = QtWidgets.QVBoxLayout()
             self.welcomeLayout.addWidget(Welcome())  # Call browser
 
             # Adding to main Layout
@@ -57,14 +57,15 @@ class DockArea(QtGui.QMainWindow):
         """This function create widget for Library Editor"""
         global count
 
-        self.testWidget = QtGui.QWidget()
-        self.testArea = QtGui.QTextEdit()
-        self.testLayout = QtGui.QVBoxLayout()
+        self.testWidget = QtWidgets.QWidget()
+        self.testArea = QtWidgets.QTextEdit()
+        self.testLayout = QtWidgets.QVBoxLayout()
         self.testLayout.addWidget(self.testArea)
 
         # Adding to main Layout
         self.testWidget.setLayout(self.testLayout)
-        dock['Tips-' + str(count)] = QtGui.QDockWidget('Tips-' + str(count))
+        dock['Tips-' + str(count)] = \
+            QtWidgets.QDockWidget('Tips-' + str(count))
         dock['Tips-' + str(count)].setWidget(self.testWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
                            dock['Tips-' + str(count)])
@@ -90,15 +91,15 @@ class DockArea(QtGui.QMainWindow):
         # self.project = os.path.join(self.projDir, self.projName)
 
         global count
-        self.plottingWidget = QtGui.QWidget()
+        self.plottingWidget = QtWidgets.QWidget()
 
-        self.plottingLayout = QtGui.QVBoxLayout()
+        self.plottingLayout = QtWidgets.QVBoxLayout()
         self.plottingLayout.addWidget(plotWindow(self.projDir, self.projName))
 
         # Adding to main Layout
         self.plottingWidget.setLayout(self.plottingLayout)
         dock['Plotting-' + str(count)
-             ] = QtGui.QDockWidget('Plotting-' + str(count))
+             ] = QtWidgets.QDockWidget('Plotting-' + str(count))
         dock['Plotting-' + str(count)].setWidget(self.plottingWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
                            dock['Plotting-' + str(count)])
@@ -123,9 +124,9 @@ class DockArea(QtGui.QMainWindow):
             self.projDir, self.projName + ".cir.out")
 
         global count
-        self.ngspiceWidget = QtGui.QWidget()
+        self.ngspiceWidget = QtWidgets.QWidget()
 
-        self.ngspiceLayout = QtGui.QVBoxLayout()
+        self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
             NgspiceWidget(self.ngspiceNetlist, self.projDir)
         )
@@ -133,7 +134,7 @@ class DockArea(QtGui.QMainWindow):
         # Adding to main Layout
         self.ngspiceWidget.setLayout(self.ngspiceLayout)
         dock['NgSpice-' + str(count)
-             ] = QtGui.QDockWidget('NgSpice-' + str(count))
+             ] = QtWidgets.QDockWidget('NgSpice-' + str(count))
         dock['NgSpice-' + str(count)].setWidget(self.ngspiceWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
                            dock['NgSpice-' + str(count)])
@@ -160,16 +161,16 @@ class DockArea(QtGui.QMainWindow):
         """This function defines UI for model editor."""
         print("in model editor")
         global count
-        self.modelwidget = QtGui.QWidget()
+        self.modelwidget = QtWidgets.QWidget()
 
-        self.modellayout = QtGui.QVBoxLayout()
+        self.modellayout = QtWidgets.QVBoxLayout()
         self.modellayout.addWidget(ModelEditorclass())
 
         # Adding to main Layout
         self.modelwidget.setLayout(self.modellayout)
 
         dock['Model Editor-' +
-             str(count)] = QtGui.QDockWidget('Model Editor-' + str(count))
+             str(count)] = QtWidgets.QDockWidget('Model Editor-' + str(count))
         dock['Model Editor-' + str(count)].setWidget(self.modelwidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
                            dock['Model Editor-' + str(count)])
@@ -193,13 +194,13 @@ class DockArea(QtGui.QMainWindow):
         This function is creating Editor UI for Kicad to Ngspice conversion.
         """
         global count
-        self.kicadToNgspiceWidget = QtGui.QWidget()
-        self.kicadToNgspiceLayout = QtGui.QVBoxLayout()
+        self.kicadToNgspiceWidget = QtWidgets.QWidget()
+        self.kicadToNgspiceLayout = QtWidgets.QVBoxLayout()
         self.kicadToNgspiceLayout.addWidget(MainWindow(clarg1, clarg2))
 
         self.kicadToNgspiceWidget.setLayout(self.kicadToNgspiceLayout)
-        dock['kicadToNgspice-' +
-             str(count)] = QtGui.QDockWidget('kicadToNgspice-' + str(count))
+        dock['kicadToNgspice-' + str(count)] = \
+            QtWidgets.QDockWidget('kicadToNgspice-' + str(count))
         dock['kicadToNgspice-' +
              str(count)].setWidget(self.kicadToNgspiceWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
@@ -228,13 +229,13 @@ class DockArea(QtGui.QMainWindow):
     def subcircuiteditor(self):
         """This function creates a widget for different subcircuit options."""
         global count
-        self.subcktWidget = QtGui.QWidget()
-        self.subcktLayout = QtGui.QVBoxLayout()
+        self.subcktWidget = QtWidgets.QWidget()
+        self.subcktLayout = QtWidgets.QVBoxLayout()
         self.subcktLayout.addWidget(Subcircuit(self))
 
         self.subcktWidget.setLayout(self.subcktLayout)
         dock['Subcircuit-' +
-             str(count)] = QtGui.QDockWidget('Subcircuit-' + str(count))
+             str(count)] = QtWidgets.QDockWidget('Subcircuit-' + str(count))
         dock['Subcircuit-' + str(count)].setWidget(self.subcktWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
                            dock['Subcircuit-' + str(count)])
@@ -256,13 +257,13 @@ class DockArea(QtGui.QMainWindow):
     def usermanual(self):
         """This function creates a widget for user manual."""
         global count
-        self.usermanualWidget = QtGui.QWidget()
-        self.usermanualLayout = QtGui.QVBoxLayout()
+        self.usermanualWidget = QtWidgets.QWidget()
+        self.usermanualLayout = QtWidgets.QVBoxLayout()
         self.usermanualLayout.addWidget(UserManual())
 
         self.usermanualWidget.setLayout(self.usermanualLayout)
         dock['User Manual-' +
-             str(count)] = QtGui.QDockWidget('User Manual-' + str(count))
+             str(count)] = QtWidgets.QDockWidget('User Manual-' + str(count))
         dock['User Manual-' + str(count)].setWidget(self.usermanualWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
                            dock['User Manual-' + str(count)])
@@ -284,13 +285,13 @@ class DockArea(QtGui.QMainWindow):
     def modelicaEditor(self, projDir):
         """This function sets up the UI for ngspice to modelica conversion."""
         global count
-        self.modelicaWidget = QtGui.QWidget()
-        self.modelicaLayout = QtGui.QVBoxLayout()
+        self.modelicaWidget = QtWidgets.QWidget()
+        self.modelicaLayout = QtWidgets.QVBoxLayout()
         self.modelicaLayout.addWidget(OpenModelicaEditor(projDir))
 
         self.modelicaWidget.setLayout(self.modelicaLayout)
         dock['Modelica-' + str(count)
-             ] = QtGui.QDockWidget('Modelica-' + str(count))
+             ] = QtWidgets.QDockWidget('Modelica-' + str(count))
         dock['Modelica-' + str(count)].setWidget(self.modelicaWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
                            dock['Modelica-' + str(count)])

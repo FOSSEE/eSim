@@ -1,11 +1,11 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from configuration.Appconfig import Appconfig
 from projManagement.Validation import Validation
 import os
 import shutil
 
 
-class UploadSub(QtGui.QWidget):
+class UploadSub(QtWidgets.QWidget):
     """
     This class contain function for uploading subcircuits
     in SubcircuitLibrary present in src folder.
@@ -30,8 +30,9 @@ class UploadSub(QtGui.QWidget):
             true if file has valid format or else it shows an error message.
         """
 
-        editfile = QtGui.QFileDialog.getOpenFileName(
-            None, "Upload Subcircuit File", os.path.expanduser("~"), "*.sub")
+        editfile = QtWidgets.QFileDialog.getOpenFileName(
+            None, "Upload Subcircuit File", os.path.expanduser("~"), "*.sub"
+        )[0]
 
         if editfile == '':
             return
@@ -40,7 +41,7 @@ class UploadSub(QtGui.QWidget):
         create_subcircuit, ext = os.path.splitext(upload)
 
         if ext != '.sub':
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage("Please ensure that filename ends with .sub")
@@ -50,7 +51,7 @@ class UploadSub(QtGui.QWidget):
 
         valid = self.obj_validation.validateSubcir(editfile, create_subcircuit)
         if not valid:
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -89,7 +90,7 @@ class UploadSub(QtGui.QWidget):
         elif reply == "CHECKEXIST":
             print("Project name already exists.")
             print("==========================")
-            msg = QtGui.QErrorMessage(self)
+            msg = QtWidgets.QErrorMessage(self)
             msg.setModal(True)
             msg.setWindowTitle("Error Message")
             msg.showMessage(
@@ -100,7 +101,7 @@ class UploadSub(QtGui.QWidget):
         elif reply == "CHECKNAME":
             print("Name can not contain space between them")
             print("===========================")
-            msg = QtGui.QErrorMessage(self)
+            msg = QtWidgets.QErrorMessage(self)
             msg.setModal(True)
             msg.setWindowTitle("Error Message")
             msg.showMessage(

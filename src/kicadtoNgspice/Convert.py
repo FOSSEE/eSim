@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 import os
 import shutil
 from . import TrackWidget
@@ -584,7 +584,7 @@ class Convert:
 
         if len(self.obj_track.subcircuitList) != len(
                 self.obj_track.subcircuitTrack):
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(

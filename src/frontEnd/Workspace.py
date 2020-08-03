@@ -11,19 +11,19 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Wednesday 05 February 2015
-#      REVISION: Friday 24 July 2020
+#      REVISION: Saturday 25 July 2020
 # =========================================================================
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, QtWidgets
 from configuration.Appconfig import Appconfig
 import time
 import os
 import json
 
 
-class Workspace(QtGui.QWidget):
+class Workspace(QtWidgets.QWidget):
     """
     This class creates UI for WorkSpace selection window.
 
@@ -43,30 +43,30 @@ class Workspace(QtGui.QWidget):
 
     def initWorkspace(self):
 
-        self.mainwindow = QtGui.QVBoxLayout()
-        self.split = QtGui.QSplitter()
+        self.mainwindow = QtWidgets.QVBoxLayout()
+        self.split = QtWidgets.QSplitter()
         self.split.setOrientation(QtCore.Qt.Vertical)
 
-        self.grid = QtGui.QGridLayout()
-        self.note = QtGui.QTextEdit(self)
+        self.grid = QtWidgets.QGridLayout()
+        self.note = QtWidgets.QTextEdit(self)
         self.note.append(self.obj_appconfig.workspace_text)
         self.note.setReadOnly(True)
-        
-        self.workspace_label = QtGui.QLabel(self)
+
+        self.workspace_label = QtWidgets.QLabel(self)
         self.workspace_label.setText("Workspace:")
-        self.workspace_loc = QtGui.QLineEdit(self)
+        self.workspace_loc = QtWidgets.QLineEdit(self)
         self.workspace_loc.setText(self.obj_appconfig.home)
 
         # Buttons
-        self.browsebtn = QtGui.QPushButton('Browse')
+        self.browsebtn = QtWidgets.QPushButton('Browse')
         self.browsebtn.clicked.connect(self.browseLocation)
-        self.okbtn = QtGui.QPushButton('OK')
+        self.okbtn = QtWidgets.QPushButton('OK')
         self.okbtn.clicked.connect(self.createWorkspace)
-        self.cancelbtn = QtGui.QPushButton('Cancel')
+        self.cancelbtn = QtWidgets.QPushButton('Cancel')
         self.cancelbtn.clicked.connect(self.defaultWorkspace)
 
         # Checkbox
-        self.chkbox = QtGui.QCheckBox('Set Default', self)
+        self.chkbox = QtWidgets.QCheckBox('Set Default', self)
         self.chkbox.setCheckState(int(self.obj_appconfig.workspace_check))
 
         # Layout
@@ -113,7 +113,7 @@ class Workspace(QtGui.QWidget):
     def close(self, *args, **kwargs):
         self.window_open_close = 1
         self.close_var = 1
-        return QtGui.QWidget.close(self, *args, **kwargs)
+        return QtWidgets.QWidget.close(self, *args, **kwargs)
 
     def returnWhetherClickedOrNot(self, appView):
         global var_appView
@@ -172,7 +172,7 @@ class Workspace(QtGui.QWidget):
 
     def browseLocation(self):
         print("Function : Browse Location")
-        self.workspace_directory = QtGui.QFileDialog.getExistingDirectory(
+        self.workspace_directory = QtWidgets.QFileDialog.getExistingDirectory(
             self, "Browse Location", os.path.expanduser("~")
         )
         self.workspace_loc.setText(self.workspace_directory)

@@ -1,10 +1,10 @@
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtCore, QtWidgets
 from . import TrackWidget
 import os
 from xml.etree import ElementTree as ET
 
 
-class Analysis(QtGui.QWidget):
+class Analysis(QtWidgets.QWidget):
     """
     - This class create Analysis Tab in KicadtoNgspice Window. 4 sections -
       - Select Analysis Type
@@ -26,7 +26,7 @@ class Analysis(QtGui.QWidget):
 
     def __init__(self, clarg1):
         self.clarg1 = clarg1
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
         self.track_obj = TrackWidget.TrackWidget()
         self.count = 0
         self.parameter_cnt = 0
@@ -48,7 +48,7 @@ class Analysis(QtGui.QWidget):
         - Else set the default checkbox to `TRAN`
         - Accordingly set state for track widget options, as `TRAN`, `AC` ...
         """
-        self.grid = QtGui.QGridLayout()
+        self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
 
         self.grid.addWidget(self.createCheckBox(), 0, 0, QtCore.Qt.AlignTop)
@@ -135,14 +135,14 @@ class Analysis(QtGui.QWidget):
         - checkbox > checkgrid > checkgroupbtn > checkAC | checkDC | checkTRAN
         - Trigger enableBox on clicking
         """
-        self.checkbox = QtGui.QGroupBox()
+        self.checkbox = QtWidgets.QGroupBox()
         self.checkbox.setTitle("Select Analysis Type")
-        self.checkgrid = QtGui.QGridLayout()
+        self.checkgrid = QtWidgets.QGridLayout()
 
-        self.checkgroupbtn = QtGui.QButtonGroup()
-        self.checkAC = QtGui.QCheckBox("AC")
-        self.checkDC = QtGui.QCheckBox("DC")
-        self.checkTRAN = QtGui.QCheckBox("TRANSIENT")
+        self.checkgroupbtn = QtWidgets.QButtonGroup()
+        self.checkAC = QtWidgets.QCheckBox("AC")
+        self.checkDC = QtWidgets.QCheckBox("DC")
+        self.checkTRAN = QtWidgets.QCheckBox("TRANSIENT")
 
         self.checkgroupbtn.addButton(self.checkAC)
         self.checkgroupbtn.addButton(self.checkDC)
@@ -221,15 +221,15 @@ class Analysis(QtGui.QWidget):
             check = 0
             print("AC Previous Values XML is Empty")
 
-        self.acbox = QtGui.QGroupBox()
+        self.acbox = QtWidgets.QGroupBox()
         self.acbox.setTitle("AC Analysis")
         self.acbox.setDisabled(True)
         self.acbox.setVisible(False)
-        self.acgrid = QtGui.QGridLayout()
-        self.radiobuttongroup = QtGui.QButtonGroup()
-        self.Lin = QtGui.QRadioButton("Lin")
-        self.Dec = QtGui.QRadioButton("Dec")
-        self.Oct = QtGui.QRadioButton("Oct")
+        self.acgrid = QtWidgets.QGridLayout()
+        self.radiobuttongroup = QtWidgets.QButtonGroup()
+        self.Lin = QtWidgets.QRadioButton("Lin")
+        self.Dec = QtWidgets.QRadioButton("Dec")
+        self.Oct = QtWidgets.QRadioButton("Oct")
         self.radiobuttongroup.addButton(self.Lin)
         self.radiobuttongroup.addButton(self.Dec)
         self.radiobuttongroup.addButton(self.Oct)
@@ -242,30 +242,30 @@ class Analysis(QtGui.QWidget):
         self.acgrid.addWidget(self.Oct, 1, 3)
         self.acbox.setLayout(self.acgrid)
 
-        self.scale = QtGui.QLabel("Scale")
-        self.start_fre_lable = QtGui.QLabel("Start Frequency")
-        self.stop_fre_lable = QtGui.QLabel("Stop Frequency")
-        self.no_of_points = QtGui.QLabel("No.of Points")
+        self.scale = QtWidgets.QLabel("Scale")
+        self.start_fre_lable = QtWidgets.QLabel("Start Frequency")
+        self.stop_fre_lable = QtWidgets.QLabel("Stop Frequency")
+        self.no_of_points = QtWidgets.QLabel("No.of Points")
         self.acgrid.addWidget(self.scale, 1, 0)
         self.acgrid.addWidget(self.start_fre_lable, 2, 0)
         self.acgrid.addWidget(self.stop_fre_lable, 3, 0)
         self.acgrid.addWidget(self.no_of_points, 4, 0)
 
         self.count = 0
-        self.ac_entry_var[self.count] = QtGui.QLineEdit()  # start
+        self.ac_entry_var[self.count] = QtWidgets.QLineEdit()  # start
         self.acgrid.addWidget(self.ac_entry_var[self.count], 2, 1)
         self.ac_entry_var[self.count].setMaximumWidth(150)
         self.count = self.count + 1
-        self.ac_entry_var[self.count] = QtGui.QLineEdit()  # stop
+        self.ac_entry_var[self.count] = QtWidgets.QLineEdit()  # stop
         self.acgrid.addWidget(self.ac_entry_var[self.count], 3, 1)
         self.ac_entry_var[self.count].setMaximumWidth(150)
         self.count = self.count + 1
-        self.ac_entry_var[self.count] = QtGui.QLineEdit()  # no of pts
+        self.ac_entry_var[self.count] = QtWidgets.QLineEdit()  # no of pts
         self.acgrid.addWidget(self.ac_entry_var[self.count], 4, 1)
         self.ac_entry_var[self.count].setMaximumWidth(150)
 
         self.parameter_cnt = 0
-        self.start_fre_combo = QtGui.QComboBox()
+        self.start_fre_combo = QtWidgets.QComboBox()
         self.start_fre_combo.addItem("Hz",)
         self.start_fre_combo.addItem("KHz")
         self.start_fre_combo.addItem("Meg")
@@ -285,7 +285,7 @@ class Analysis(QtGui.QWidget):
         self.start_fre_combo.activated[str].connect(self.start_combovalue)
 
         self.parameter_cnt = self.parameter_cnt + 1
-        self.stop_fre_combo = QtGui.QComboBox()
+        self.stop_fre_combo = QtWidgets.QComboBox()
         self.stop_fre_combo.addItem("Hz")
         self.stop_fre_combo.addItem("KHz")
         self.stop_fre_combo.addItem("Meg")
@@ -407,29 +407,29 @@ class Analysis(QtGui.QWidget):
             check = 0
             print("DC Previous Values XML is empty")
 
-        self.dcbox = QtGui.QGroupBox()
+        self.dcbox = QtWidgets.QGroupBox()
         self.dcbox.setTitle("DC Analysis")
         self.dcbox.setDisabled(True)
         self.dcbox.setVisible(False)
-        self.dcgrid = QtGui.QGridLayout()
+        self.dcgrid = QtWidgets.QGridLayout()
         self.dcbox.setLayout(self.dcgrid)
 
-        self.source_name = QtGui.QLabel('Enter Source 1', self)
+        self.source_name = QtWidgets.QLabel('Enter Source 1', self)
         self.source_name.setMaximumWidth(150)
-        self.start = QtGui.QLabel('Start', self)
+        self.start = QtWidgets.QLabel('Start', self)
         self.start.setMaximumWidth(150)
-        self.increment = QtGui.QLabel('Increment', self)
+        self.increment = QtWidgets.QLabel('Increment', self)
         self.increment.setMaximumWidth(150)
-        self.stop = QtGui.QLabel('Stop', self)
+        self.stop = QtWidgets.QLabel('Stop', self)
         self.stop.setMaximumWidth(150)
 
-        self.source_name2 = QtGui.QLabel('Enter Source 2', self)
+        self.source_name2 = QtWidgets.QLabel('Enter Source 2', self)
         self.source_name2.setMaximumWidth(150)
-        self.start2 = QtGui.QLabel('Start', self)
+        self.start2 = QtWidgets.QLabel('Start', self)
         self.start2.setMaximumWidth(150)
-        self.increment2 = QtGui.QLabel('Increment', self)
+        self.increment2 = QtWidgets.QLabel('Increment', self)
         self.increment2.setMaximumWidth(150)
-        self.stop2 = QtGui.QLabel('Stop', self)
+        self.stop2 = QtWidgets.QLabel('Stop', self)
         self.stop2.setMaximumWidth(150)
 
         self.dcgrid.addWidget(self.source_name, 1, 0)
@@ -444,47 +444,47 @@ class Analysis(QtGui.QWidget):
 
         self.count = 0
 
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()  # source
+        self.dc_entry_var[self.count] = QtWidgets.QLineEdit()  # source
         self.dcgrid.addWidget(self.dc_entry_var[self.count], 1, 1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
 
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()  # start
+        self.dc_entry_var[self.count] = QtWidgets.QLineEdit()  # start
         self.dcgrid.addWidget(self.dc_entry_var[self.count], 2, 1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
 
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()  # increment
+        self.dc_entry_var[self.count] = QtWidgets.QLineEdit()  # increment
         self.dcgrid.addWidget(self.dc_entry_var[self.count], 3, 1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
 
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()  # stop
+        self.dc_entry_var[self.count] = QtWidgets.QLineEdit()  # stop
         self.dcgrid.addWidget(self.dc_entry_var[self.count], 4, 1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
 
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()  # source
+        self.dc_entry_var[self.count] = QtWidgets.QLineEdit()  # source
         self.dcgrid.addWidget(self.dc_entry_var[self.count], 5, 1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
 
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()  # start
+        self.dc_entry_var[self.count] = QtWidgets.QLineEdit()  # start
         self.dcgrid.addWidget(self.dc_entry_var[self.count], 6, 1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
 
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()  # increment
+        self.dc_entry_var[self.count] = QtWidgets.QLineEdit()  # increment
         self.dcgrid.addWidget(self.dc_entry_var[self.count], 7, 1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
 
-        self.dc_entry_var[self.count] = QtGui.QLineEdit()  # stop
+        self.dc_entry_var[self.count] = QtWidgets.QLineEdit()  # stop
         self.dcgrid.addWidget(self.dc_entry_var[self.count], 8, 1)
         self.dc_entry_var[self.count].setMaximumWidth(150)
 
         self.parameter_cnt = 0
-        self.start_combo = QtGui.QComboBox(self)
+        self.start_combo = QtWidgets.QComboBox(self)
         self.start_combo.setMaximumWidth(150)
         self.start_combo.addItem('Volts or Amperes')
         self.start_combo.addItem('mV or mA')
@@ -501,7 +501,7 @@ class Analysis(QtGui.QWidget):
         self.start_combo.activated[str].connect(self.start_changecombo)
         self.parameter_cnt += 1
 
-        self.increment_combo = QtGui.QComboBox(self)
+        self.increment_combo = QtWidgets.QComboBox(self)
         self.increment_combo.setMaximumWidth(150)
         self.increment_combo.addItem("Volts or Amperes")
         self.increment_combo.addItem("mV or mA")
@@ -518,7 +518,7 @@ class Analysis(QtGui.QWidget):
         self.increment_combo.activated[str].connect(self.increment_changecombo)
         self.parameter_cnt += 1
 
-        self.stop_combo = QtGui.QComboBox(self)
+        self.stop_combo = QtWidgets.QComboBox(self)
         self.stop_combo.setMaximumWidth(150)
         self.stop_combo.addItem("Volts or Amperes")
         self.stop_combo.addItem("mV or mA")
@@ -535,7 +535,7 @@ class Analysis(QtGui.QWidget):
         self.stop_combo.activated[str].connect(self.stop_changecombo)
         self.parameter_cnt += 1
 
-        self.start_combo2 = QtGui.QComboBox(self)
+        self.start_combo2 = QtWidgets.QComboBox(self)
         self.start_combo2.setMaximumWidth(150)
         self.start_combo2.addItem('Volts or Amperes')
         self.start_combo2.addItem('mV or mA')
@@ -552,7 +552,7 @@ class Analysis(QtGui.QWidget):
         self.start_combo2.activated[str].connect(self.start_changecombo2)
         self.parameter_cnt += 1
 
-        self.increment_combo2 = QtGui.QComboBox(self)
+        self.increment_combo2 = QtWidgets.QComboBox(self)
         self.increment_combo2.setMaximumWidth(150)
         self.increment_combo2.addItem("Volts or Amperes")
         self.increment_combo2.addItem("mV or mA")
@@ -570,7 +570,7 @@ class Analysis(QtGui.QWidget):
             self.increment_changecombo2)
         self.parameter_cnt += 1
 
-        self.stop_combo2 = QtGui.QComboBox(self)
+        self.stop_combo2 = QtWidgets.QComboBox(self)
         self.stop_combo2.setMaximumWidth(150)
         self.stop_combo2.addItem("Volts or Amperes")
         self.stop_combo2.addItem("mV or mA")
@@ -587,18 +587,15 @@ class Analysis(QtGui.QWidget):
         self.stop_combo2.activated[str].connect(self.stop_changecombo2)
         self.parameter_cnt += 1
 
-        self.check = QtGui.QCheckBox('Operating Point Analysis', self)
+        self.check = QtWidgets.QCheckBox('Operating Point Analysis', self)
         try:
             self.track_obj.op_check.append(
                 str(root[1][4].text()))
         except BaseException:
             self.track_obj.op_check.append('0')
 
-        # QtCore.QObject.connect(check, SIGNAL("stateChanged()"), check,
-        #                        SLOT("checkedSlot"))
         self.check.stateChanged.connect(self.setflag)
-        # self.flagcheck = 1
-        # self.flagcheck= 2
+
         self.dcgrid.addWidget(self.check, 9, 1, 9, 2)
         self.track_obj.DC_entry_var["ITEMS"] = self.dc_entry_var
         self.track_obj.DC_Parameter["ITEMS"] = self.dc_parameter
@@ -707,36 +704,36 @@ class Analysis(QtGui.QWidget):
             check = 0
             print("Transient Previous Values XML is Empty")
 
-        self.trbox = QtGui.QGroupBox()
+        self.trbox = QtWidgets.QGroupBox()
         self.trbox.setTitle("Transient Analysis")
         # self.trbox.setDisabled(True)
         # self.trbox.setVisible(False)
-        self.trgrid = QtGui.QGridLayout()
+        self.trgrid = QtWidgets.QGridLayout()
         self.trbox.setLayout(self.trgrid)
 
-        self.start = QtGui.QLabel("Start Time")
-        self.step = QtGui.QLabel("Step Time")
-        self.stop = QtGui.QLabel("Stop Time")
+        self.start = QtWidgets.QLabel("Start Time")
+        self.step = QtWidgets.QLabel("Step Time")
+        self.stop = QtWidgets.QLabel("Stop Time")
         self.trgrid.addWidget(self.start, 1, 0)
         self.trgrid.addWidget(self.step, 2, 0)
         self.trgrid.addWidget(self.stop, 3, 0)
         self.count = 0
 
-        self.tran_entry_var[self.count] = QtGui.QLineEdit()
+        self.tran_entry_var[self.count] = QtWidgets.QLineEdit()
         self.trgrid.addWidget(self.tran_entry_var[self.count], 1, 1)
         self.tran_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
-        self.tran_entry_var[self.count] = QtGui.QLineEdit()
+        self.tran_entry_var[self.count] = QtWidgets.QLineEdit()
         self.trgrid.addWidget(self.tran_entry_var[self.count], 2, 1)
         self.tran_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
-        self.tran_entry_var[self.count] = QtGui.QLineEdit()
+        self.tran_entry_var[self.count] = QtWidgets.QLineEdit()
         self.trgrid.addWidget(self.tran_entry_var[self.count], 3, 1)
         self.tran_entry_var[self.count].setMaximumWidth(150)
         self.count += 1
 
         self.parameter_cnt = 0
-        self.start_combobox = QtGui.QComboBox()
+        self.start_combobox = QtWidgets.QComboBox()
         self.start_combobox.addItem("Sec")
         self.start_combobox.addItem("ms")
         self.start_combobox.addItem("us")
@@ -752,7 +749,7 @@ class Analysis(QtGui.QWidget):
         self.start_combobox.activated[str].connect(self.start_combo_change)
         self.parameter_cnt += 1
 
-        self.step_combobox = QtGui.QComboBox()
+        self.step_combobox = QtWidgets.QComboBox()
         self.step_combobox.addItem("Sec")
         self.step_combobox.addItem("ms")
         self.step_combobox.addItem("us")
@@ -767,7 +764,7 @@ class Analysis(QtGui.QWidget):
         self.step_combobox.activated[str].connect(self.step_combo_change)
         self.parameter_cnt += 1
 
-        self.stop_combobox = QtGui.QComboBox()
+        self.stop_combobox = QtWidgets.QComboBox()
         self.stop_combobox.addItem("Sec")
         self.stop_combobox.addItem("ms")
         self.stop_combobox.addItem("us")

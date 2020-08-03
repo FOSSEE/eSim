@@ -11,9 +11,9 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Friday 24 July 2020
+#      REVISION: Saturday 25 July 2020
 # =========================================================================
 
 import os
@@ -25,7 +25,7 @@ else:
     import pathmagic    # noqa:F401
     init_path = '../../'
 
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
@@ -35,14 +35,14 @@ from projManagement import Worker
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
 from frontEnd import DockArea
-from PyQt4.Qt import QSize
+from PyQt5.Qt import QSize
 import shutil
 import time
 import sys
 
 
 # Its our main window of application.
-class Application(QtGui.QMainWindow):
+class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     global project_name
 
@@ -50,7 +50,7 @@ class Application(QtGui.QMainWindow):
         """Initialize main Application window."""
 
         # Calling __init__ of super class
-        QtGui.QMainWindow.__init__(self, *args)
+        QtWidgets.QMainWindow.__init__(self, *args)
 
         # Flag for mode of operation. Default is set to offline mode.
         self.online_flag = False
@@ -73,7 +73,7 @@ class Application(QtGui.QMainWindow):
         self.showMaximized()
         self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
 
-        self.systemTrayIcon = QtGui.QSystemTrayIcon(self)
+        self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
 
@@ -89,28 +89,28 @@ class Application(QtGui.QMainWindow):
                 Converter, OM Optimisation)
         """
         # Top Tool bar
-        self.newproj = QtGui.QAction(
+        self.newproj = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/newProject.png'),
             '<b>New Project</b>', self
         )
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
 
-        self.openproj = QtGui.QAction(
+        self.openproj = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/openProject.png'),
             '<b>Open Project</b>', self
         )
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
 
-        self.closeproj = QtGui.QAction(
+        self.closeproj = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/closeProject.png'),
             '<b>Close Project</b>', self
         )
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
 
-        self.wrkspce = QtGui.QAction(
+        self.wrkspce = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/workspace.ico'),
             '<b>Change Workspace</b>', self
         )
@@ -120,17 +120,17 @@ class Application(QtGui.QMainWindow):
         self.switchmode = None
         self.validate_mode()
         if self.online_flag is True:
-            self.switchmode = QtGui.QAction(QtGui.QIcon(
+            self.switchmode = QtWidgets.QAction(QtGui.QIcon(
                 init_path + 'images/online.png'),
                 '<b>Go Offline</b>', self
             )
         elif self.online_flag is False:
-            self.switchmode = QtGui.QAction(QtGui.QIcon(
+            self.switchmode = QtWidgets.QAction(QtGui.QIcon(
                 init_path + 'images/offline.png'),
                 '<b>Go Online</b>', self
             )
         elif self.online_flag is None:
-            self.switchmode = QtGui.QAction(QtGui.QIcon(
+            self.switchmode = QtWidgets.QAction(QtGui.QIcon(
                 init_path + 'images/disable.png'),
                 '<b>Mode switching has been disabled. ' +
                 'Default mode set to offline</b>', self
@@ -139,7 +139,7 @@ class Application(QtGui.QMainWindow):
         self.switchmode.setShortcut('Ctrl+G')
         self.switchmode.triggered.connect(self.change_mode)
 
-        self.helpfile = QtGui.QAction(
+        self.helpfile = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/helpProject.png'),
             '<b>Help</b>', self
         )
@@ -156,12 +156,12 @@ class Application(QtGui.QMainWindow):
 
         # This part is setting fossee logo to the right
         # corner in the application window.
-        self.spacer = QtGui.QWidget()
+        self.spacer = QtWidgets.QWidget()
         self.spacer.setSizePolicy(
-            QtGui.QSizePolicy.Expanding,
-            QtGui.QSizePolicy.Expanding)
+            QtWidgets.QSizePolicy.Expanding,
+            QtWidgets.QSizePolicy.Expanding)
         self.topToolbar.addWidget(self.spacer)
-        self.logo = QtGui.QLabel()
+        self.logo = QtWidgets.QLabel()
         self.logopic = QtGui.QPixmap(
             os.path.join(
                 os.path.abspath(''), init_path + 'images', 'fosseeLogo.png'
@@ -173,55 +173,55 @@ class Application(QtGui.QMainWindow):
         self.topToolbar.addWidget(self.logo)
 
         # Left Tool bar Action Widget
-        self.kicad = QtGui.QAction(
+        self.kicad = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/kicad.png'),
             '<b>Open Schematic</b>', self
         )
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
 
-        self.conversion = QtGui.QAction(
+        self.conversion = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/ki-ng.png'),
             '<b>Convert Kicad to Ngspice</b>', self
         )
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
 
-        self.ngspice = QtGui.QAction(
+        self.ngspice = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/ngspice.png'),
             '<b>Simulation</b>', self
         )
         self.ngspice.triggered.connect(self.open_ngspice)
 
-        self.model = QtGui.QAction(
+        self.model = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/model.png'),
             '<b>Model Editor</b>', self
         )
         self.model.triggered.connect(self.open_modelEditor)
 
-        self.subcircuit = QtGui.QAction(
+        self.subcircuit = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/subckt.png'),
             '<b>Subcircuit</b>', self
         )
         self.subcircuit.triggered.connect(self.open_subcircuit)
 
-        self.nghdl = QtGui.QAction(
+        self.nghdl = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/nghdl.png'), '<b>Nghdl</b>', self
         )
         self.nghdl.triggered.connect(self.open_nghdl)
 
-        self.omedit = QtGui.QAction(
+        self.omedit = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/omedit.png'),
             '<b>Modelica Converter</b>', self
         )
         self.omedit.triggered.connect(self.open_OMedit)
 
-        self.omoptim = QtGui.QAction(
+        self.omoptim = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/omoptim.png'),
             '<b>OM Optimisation</b>', self
         )
         self.omoptim.triggered.connect(self.open_OMoptim)
 
         # Adding Action Widget to tool bar
-        self.lefttoolbar = QtGui.QToolBar('Left ToolBar')
+        self.lefttoolbar = QtWidgets.QToolBar('Left ToolBar')
         self.addToolBar(QtCore.Qt.LeftToolBarArea, self.lefttoolbar)
         self.lefttoolbar.addAction(self.kicad)
         self.lefttoolbar.addAction(self.conversion)
@@ -254,12 +254,12 @@ class Application(QtGui.QMainWindow):
         '''
         exit_msg = "Are you sure you want to exit the program?"
         exit_msg += " All unsaved data will be lost."
-        reply = QtGui.QMessageBox.question(
-            self, 'Message', exit_msg, QtGui.QMessageBox.Yes,
-            QtGui.QMessageBox.No
+        reply = QtWidgets.QMessageBox.question(
+            self, 'Message', exit_msg, QtWidgets.QMessageBox.Yes,
+            QtWidgets.QMessageBox.No
         )
 
-        if reply == QtGui.QMessageBox.Yes:
+        if reply == QtWidgets.QMessageBox.Yes:
             for proc in self.obj_appconfig.procThread_list:
                 try:
                     proc.terminate()
@@ -283,12 +283,12 @@ class Application(QtGui.QMainWindow):
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
-        elif reply == QtGui.QMessageBox.No:
+        elif reply == QtWidgets.QMessageBox.No:
             event.ignore()
 
     def new_project(self):
         """This function call New Project Info class."""
-        text, ok = QtGui.QInputDialog.getText(
+        text, ok = QtWidgets.QInputDialog.getText(
             self, 'New Project Info', 'Enter Project Name:'
         )
         if ok:
@@ -492,7 +492,7 @@ class Application(QtGui.QMainWindow):
                 )
                 self.switchmode.setEnabled(False)
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setWindowTitle("Error Message")
             self.msg.setModal(True)
             self.msg.showMessage(
@@ -544,7 +544,7 @@ class Application(QtGui.QMainWindow):
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
-                self.msg = QtGui.QErrorMessage()
+                self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
@@ -556,7 +556,7 @@ class Application(QtGui.QMainWindow):
                 self.obj_appconfig.print_error('Exception Message : ' + str(e))
 
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -597,7 +597,7 @@ class Application(QtGui.QMainWindow):
             self.obj_workThread = Worker.WorkerThread(self.cmd)
             self.obj_workThread.start()
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle('NGHDL Error')
             self.msg.showMessage('Error while opening NGHDL. ' +
@@ -651,7 +651,7 @@ class Application(QtGui.QMainWindow):
                         self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
                         self.obj_workThread2.start()
                     else:
-                        self.msg = QtGui.QMessageBox()
+                        self.msg = QtWidgets.QMessageBox()
                         self.msgContent = "There was an error while
                             opening OMEdit.<br/>\
                         Please make sure OpenModelica is installed in your\
@@ -671,7 +671,7 @@ class Application(QtGui.QMainWindow):
                         self.msg.exec_()
 
                 except Exception as e:
-                    self.msg = QtGui.QErrorMessage()
+                    self.msg = QtWidgets.QErrorMessage()
                     self.msg.setModal(True)
                     self.msg.setWindowTitle(
                         "Ngspice to Modelica conversion error")
@@ -685,7 +685,7 @@ class Application(QtGui.QMainWindow):
                 self.obj_Mainview.obj_dockarea.modelicaEditor(self.projDir)
 
             else:
-                self.msg = QtGui.QErrorMessage()
+                self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Missing Ngspice netlist")
                 self.msg.showMessage(
@@ -694,7 +694,7 @@ class Application(QtGui.QMainWindow):
                 )
                 self.msg.exec_()
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -721,7 +721,7 @@ class Application(QtGui.QMainWindow):
             self.obj_workThread = Worker.WorkerThread(self.cmd)
             self.obj_workThread.start()
         else:
-            self.msg = QtGui.QMessageBox()
+            self.msg = QtWidgets.QMessageBox()
             self.msgContent = (
                 "There was an error while opening OMOptim.<br/>"
                 "Please make sure OpenModelica is installed in your"
@@ -742,7 +742,7 @@ class Application(QtGui.QMainWindow):
 
 
 # This class initialize the Main View of Application
-class MainView(QtGui.QWidget):
+class MainView(QtWidgets.QWidget):
     """
     This class defines whole view and style of main page:
 
@@ -756,20 +756,20 @@ class MainView(QtGui.QWidget):
 
     def __init__(self, *args):
         # call init method of superclass
-        QtGui.QWidget.__init__(self, *args)
+        QtWidgets.QWidget.__init__(self, *args)
 
         self.obj_appconfig = Appconfig()
 
-        self.leftSplit = QtGui.QSplitter()
-        self.middleSplit = QtGui.QSplitter()
+        self.leftSplit = QtWidgets.QSplitter()
+        self.middleSplit = QtWidgets.QSplitter()
 
-        self.mainLayout = QtGui.QVBoxLayout()
+        self.mainLayout = QtWidgets.QVBoxLayout()
         # Intermediate Widget
-        self.middleContainer = QtGui.QWidget()
-        self.middleContainerLayout = QtGui.QVBoxLayout()
+        self.middleContainer = QtWidgets.QWidget()
+        self.middleContainerLayout = QtWidgets.QVBoxLayout()
 
         # Area to be included in MainView
-        self.noteArea = QtGui.QTextEdit()
+        self.noteArea = QtWidgets.QTextEdit()
         self.noteArea.setReadOnly(True)
         self.obj_appconfig.noteArea['Note'] = self.noteArea
         self.obj_appconfig.noteArea['Note'].append(
@@ -812,13 +812,15 @@ def main(args):
     by this function.
     """
     print("Starting eSim......")
-    app = QtGui.QApplication(args)
+    app = QtWidgets.QApplication(args)
 
     appView = Application()
     appView.hide()
 
     splash_pix = QtGui.QPixmap(init_path + 'images/splash_screen_esim.png')
-    splash = QtGui.QSplashScreen(appView, splash_pix, QtCore.Qt.WindowStaysOnTopHint)
+    splash = QtWidgets.QSplashScreen(
+        appView, splash_pix, QtCore.Qt.WindowStaysOnTopHint
+    )
     splash.setMask(splash_pix.mask())
     splash.setDisabled(True)
     splash.show()
