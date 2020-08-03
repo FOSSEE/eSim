@@ -212,10 +212,9 @@ function createDesktopStartScript
 
     # Generating esim.desktop file
     echo "[Desktop Entry]" > esim.desktop
-    getVersion=`tail -1 VERSION`
-    echo "Version=$getVersion" >> esim.desktop
+    echo "Version=1.0" >> esim.desktop
     echo "Name=eSim" >> esim.desktop
-    echo "Comment=EDA Tools" >> esim.desktop
+    echo "Comment=EDA Tool" >> esim.desktop
     echo "GenericName=eSim" >> esim.desktop
     echo "Keywords=eda-tools" >> esim.desktop
     echo "Exec=esim %u" >> esim.desktop
@@ -227,10 +226,11 @@ function createDesktopStartScript
     echo "Categories=Development;" >> esim.desktop
     echo "MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;" >> esim.desktop
     echo "StartupNotify=true" >> esim.desktop
-    echo "Actions=NewWindow;NewPrivateWindow;" >> esim.desktop
 
     # Make esim.desktop file executable
     sudo chmod 755 esim.desktop
+    # Copy desktop icon file to share applications
+    sudo cp -vp esim.desktop /usr/share/applications/
     # Copy desktop icon file to Desktop
     cp -vp esim.desktop $HOME/Desktop/
 
@@ -240,9 +240,9 @@ function createDesktopStartScript
     # Check if the target OS is Ubuntu 18 or not
     if [[ $(lsb_release -rs) == 18.* || $(lsb_release -rs) == 20.* ]]; then
         # Make esim.desktop file as trusted application
-        gio set $HOME/Desktop/esim.desktop "metadata::trusted" yes
-        # Restart nautilus-desktop, so that the changes take effect
-        killall nautilus-desktop && nautilus-desktop &
+        gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
+        # Set Permission and Execution bit
+    	chmod a+x $HOME/Desktop/esim.desktop
     fi
 
     # Remove local copy of esim.desktop file
@@ -347,7 +347,7 @@ elif [ $option == "--uninstall" ];then
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
-        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim
+        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim /usr/share/applications/esim.desktop
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad
         sudo rm -rf /usr/share/kicad
