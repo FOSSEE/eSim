@@ -7,6 +7,8 @@ It is an integrated tool build using open source softwares such as KiCad, Ngspic
 * Ubuntu 16.04 OS and above LTS versions.
 * Microsoft Windows 7, 8 and 10.
 
+> Note: Refer [`installers`](https://github.com/fossee/eSim/tree/installers) branch for documentation on packaging for above mentioned platforms.
+
 ## Features
 * An open-source EDA tool.
 * Perform Circuit Design.
