@@ -18,18 +18,6 @@
 #      REVISION: Sunday 02 August 2020 01:26
 #===============================================================================
 
-set -e  # Set exit option immediately on error
-set -E  # inherit ERR trap by shell functions
-
-error_exit() {
-    echo -e "\n\nError! Kindly resolve above error(s) and try again."
-    echo -e "\nAborting Installation...\n"
-}
-
-# Trap on function error_exit before exiting on error
-trap error_exit ERR
-
-
 # All variables goes here
 config_dir="$HOME/.esim"
 config_file="config.ini"
@@ -37,6 +25,12 @@ eSim_Home=`pwd`
 ngspiceFlag=0
 
 ## All Functions goes here
+
+error_exit() {
+    echo -e "\n\nError! Kindly resolve above error(s) and try again."
+    echo -e "\nAborting Installation...\n"
+}
+
 
 function createConfigFile
 {
@@ -275,6 +269,14 @@ fi
 ## Checking flags
 
 if [ $option == "--install" ];then
+
+    set -e  # Set exit option immediately on error
+    set -E  # inherit ERR trap by shell functions
+
+    # Trap on function error_exit before exiting on error
+    trap error_exit ERR
+
+
     echo "Enter proxy details if you are connected to internet thorugh proxy"
     
     echo -n "Is your internet connection behind proxy? (y/n): "
