@@ -1,9 +1,9 @@
 eSim Installer (Ubuntu OS)
 ====
 
-It contains the documentation to packaging eSim and making binaries for distribution.
+It contains the documentation to package eSim for Ubuntu OS.
 
-> Note: If planning to freeze the eSim source code for a target platform (Ubuntu OS), then refer this [documentation](executable.md).
+> Note: If planning to freeze the eSim source code for a target platform (Ubuntu OS), then refer this [documentation](executable.md). Remember to update the installer script to work with this executable!
 
 
 ## How to package eSim for Ubuntu OS?
@@ -12,7 +12,7 @@ It contains the documentation to packaging eSim and making binaries for distribu
 
 2. Add the installer script `install-eSim.sh` in `eSim-<version>` folder.
 
-3. Add the eSim executable (if available) in `eSim-<version>` folder. Also, remove following files from the folder:
+3. Add the eSim executable (if available) in `eSim-<version>` folder. Also, remove following files from this folder:
 	- `.git` folder
 	- `code` folder
 	- `src` folder (Applicable only if eSim executable is used)
