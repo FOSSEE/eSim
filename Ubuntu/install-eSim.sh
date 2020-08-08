@@ -1,22 +1,34 @@
-# !/bin/bash 
-# ===============================================================================
+#!/bin/bash 
+#===============================================================================
 #          FILE: install-eSim.sh
 # 
 #         USAGE: ./install-eSim.sh --install 
 #                            OR
 #                ./install-eSim.sh --uninstall
 #                
-#   DESCRIPTION: This is installation/uninstallation script for eSim
+#   DESCRIPTION: Installation script for eSim EDA Suite
 #
 #       OPTIONS: ---
 #  REQUIREMENTS: ---
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
-#  ORGANIZATION: FOSSEE at IIT Bombay.
-#       CREATED: Wednesday 01 April 2020 16:14
-#      REVISION:  ---
-# ===============================================================================
+#  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
+#       CREATED: Wednesday 15 July 2015 15:26
+#      REVISION: Sunday 02 August 2020 01:26
+#===============================================================================
+
+set -e  # Set exit option immediately on error
+set -E  # inherit ERR trap by shell functions
+
+error_exit() {
+    echo -e "\n\nError! Kindly resolve above error(s) and try again."
+    echo -e "\nAborting Installation...\n"
+}
+
+# Trap on function error_exit before exiting on error
+trap error_exit ERR
+
 
 # All variables goes here
 config_dir="$HOME/.esim"
@@ -52,19 +64,20 @@ function installNghdl
 {
 
     echo "Installing NGHDL..........................."
-    unzip nghdl-master.zip
-    mv nghdl-master nghdl
+    unzip -o nghdl.zip
     cd nghdl/
     chmod +x install-nghdl.sh
-    ./install-nghdl.sh --install
+
+    # Do not trap on error of any command. Let NGHDL script handle its own errors.
+    trap "" ERR
+
+    ./install-nghdl.sh --install       # Install NGHDL
         
-    if [ $? -ne 0 ];then
-    	echo -e "\n\nERROR: cannot install NGHDL\n\n"
-        exit 0
-    else
-        ngspiceFlag=1
-        cd ..
-    fi
+    # Set trap again to error_exit function to exit on errors
+    trap error_exit ERR
+
+    ngspiceFlag=1
+    cd ..
 
 }
 
@@ -74,11 +87,19 @@ function addKicadPPA
 
     #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
     kicadppa="reynaud/kicad-4"
-    grep -h "^deb.*$kicadppa*" /etc/apt/sources.list.d/* > /dev/null 2>&1
-    if [ $? -ne 0 ]
-    then
+    findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
+    if [ -z "$findppa" ]; then
         echo "Adding KiCad-4 PPA to local apt-repository"
-        sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
+        if [[ $(lsb_release -rs) == 20.* ]]; then
+            sudo add-apt-repository --yes "deb http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu bionic main"
+            sudo touch /etc/apt/preferences.d/preferences
+            echo "Package: kicad" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
+            echo "Pin: version 4.0.7*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
+            echo "Pin-Priority: 501" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
+            sudo add-apt-repository --yes "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
+        else
+            sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
+        fi
     else
         echo "KiCad-4 is available in synaptic"
     fi
@@ -95,37 +116,22 @@ function installDependency
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
-    if [ $? -ne 0 ]; then
-        echo -e "\n\n\"Xterm\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
 
-    echo "Installing PyQt4..........................."
-    sudo apt-get install -y python3-pyqt4
-    if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"PyQt4\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
+    echo "Installing PyQt5..........................."
+    sudo apt-get install -y python3-pyqt5
 
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
-    if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"Matplotlib\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
 
-    echo "Installing Xpdf............................"
-    sudo apt-get install -y xpdf
-    if [ $? -ne 0 ]; then
-        echo -e "\n\n\"Xpdf\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
-    fi
+    if [[ $(lsb_release -rs) != 16.* ]]; then
+	    echo "Installing Distutils......................."
+	    sudo apt-get install python3-distutils
+	fi
 
     echo "Installing KiCad..........................."
-    sudo apt install -y --no-install-recommends kicad
-    if [ $? -ne 0 ]; then
-    	echo -e "\n\n\"KiCad\" dependency couldn't be installed.\nKindly resolve above errors and try again."
-        exit 1
+    sudo apt-get install -y --no-install-recommends kicad
+    if [[ $(lsb_release -rs) == 20.* ]]; then
+        sudo add-apt-repository -r "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
     fi
 
 }
@@ -134,11 +140,11 @@ function installDependency
 function copyKicadLibrary
 {
 
-    if [ -f ~/.config/kicad ];then
-          echo "kicad folder already exists"
+    if [ -d ~/.config/kicad ];then
+        echo "kicad folder already exists"
     else 
-          echo ".config/kicad does not exist"
-          mkdir ~/.config/kicad
+        echo ".config/kicad does not exist"
+        mkdir ~/.config/kicad
     fi
 
     # Dump KiCad config path
@@ -175,8 +181,14 @@ function copyKicadLibrary
         sudo cp -rv kicadLibrary/template/kicad.pro ${KICAD_PRO}
     fi
 
-    #remove extracted KiCad Library - not needed anymore
+    set +e      # Temporary disable exit on error
+    trap "" ERR # Do not trap on error of any command
+    
+    # Remove extracted KiCad Library - not needed anymore
     rm -rf kicadLibrary
+
+    set -e      # Re-enable exit on error
+    trap error_exit ERR
 
     #Change ownership from Root to the User
     sudo chown -R $USER:$USER /usr/share/kicad/library/
@@ -200,10 +212,9 @@ function createDesktopStartScript
 
     # Generating esim.desktop file
     echo "[Desktop Entry]" > esim.desktop
-    getVersion=`tail -1 VERSION`
-    echo "Version=$getVersion" >> esim.desktop
+    echo "Version=1.0" >> esim.desktop
     echo "Name=eSim" >> esim.desktop
-    echo "Comment=EDA Tools" >> esim.desktop
+    echo "Comment=EDA Tool" >> esim.desktop
     echo "GenericName=eSim" >> esim.desktop
     echo "Keywords=eda-tools" >> esim.desktop
     echo "Exec=esim %u" >> esim.desktop
@@ -215,23 +226,31 @@ function createDesktopStartScript
     echo "Categories=Development;" >> esim.desktop
     echo "MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;" >> esim.desktop
     echo "StartupNotify=true" >> esim.desktop
-    echo "Actions=NewWindow;NewPrivateWindow;" >> esim.desktop
 
     # Make esim.desktop file executable
     sudo chmod 755 esim.desktop
+    # Copy desktop icon file to share applications
+    sudo cp -vp esim.desktop /usr/share/applications/
     # Copy desktop icon file to Desktop
     cp -vp esim.desktop $HOME/Desktop/
 
+    set +e      # Temporary disable exit on error
+    trap "" ERR # Do not trap on error of any command
+
     # Check if the target OS is Ubuntu 18 or not
-    if [[ $(lsb_release -rs) == 18.* ]]; then
+    if [[ $(lsb_release -rs) == 18.* || $(lsb_release -rs) == 20.* ]]; then
         # Make esim.desktop file as trusted application
-        gio set $HOME/Desktop/esim.desktop "metadata::trusted" yes
-        # Restart nautilus-desktop, so that the changes take effect
-        killall nautilus-desktop && nautilus-desktop &
+        gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
+        # Set Permission and Execution bit
+    	chmod a+x $HOME/Desktop/esim.desktop
     fi
 
     # Remove local copy of esim.desktop file
     rm esim.desktop
+
+    set -e      # Re-enable exit on error
+    trap error_exit ERR
+
     # Copying logo.png to .esim directory to access as icon
     cp -vp images/logo.png $config_dir
 
@@ -324,16 +343,21 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure? It will remove complete eSim including KiCad, Ngspice and NGHDL models and libraries (y/n):"
+    echo -n "Are you sure? It will remove eSim completely including KiCad, Ngspice and NGHDL along with their models and libraries (y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
-        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim
+        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim /usr/share/applications/esim.desktop
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad
         sudo rm -rf /usr/share/kicad
         sudo rm -rf $HOME/.config/kicad
-        rm -f $eSim_Home/library/supportFiles/kicad_config_path.txt 
+        rm -f $eSim_Home/library/supportFiles/kicad_config_path.txt
+
+        if [[ $(lsb_release -rs) == 20.* ]]; then
+            sudo sed -i '/Package: kicad/{:label;N;/Pin-Priority: 501/!blabel};/Pin: version 4.0.7*/d' /etc/apt/preferences.d/preferences
+        fi
+
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
         cd nghdl/
@@ -353,7 +377,7 @@ elif [ $option == "--uninstall" ];then
     elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
         exit 0
     else 
-        echo "Please select the right option"
+        echo "Please select the right option."
         exit 0
     fi
 
