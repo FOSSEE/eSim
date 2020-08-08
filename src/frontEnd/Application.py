@@ -802,8 +802,8 @@ class MainView(QtWidgets.QWidget):
 
         # Adding to main Layout
         self.mainLayout.addWidget(self.leftSplit)
-        self.leftSplit.setSizes([self.width() // 4.5, self.height()])
-        self.middleSplit.setSizes([self.width(), self.height() // 2])
+        self.leftSplit.setSizes([int(self.width() / 4.5), self.height()])
+        self.middleSplit.setSizes([self.width(), int(self.height() / 2)])
         self.setLayout(self.mainLayout)
 
 
