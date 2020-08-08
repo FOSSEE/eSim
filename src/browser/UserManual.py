@@ -1,28 +1,28 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 import subprocess
-import platform
 import os
 
 
-class UserManual(QtGui.QWidget):
+class UserManual(QtWidgets.QWidget):
     """
     This class opens User-Manual page in new tab of web browser
     when help button is clicked.
     """
 
     def __init__(self):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
-        self.vlayout = QtGui.QVBoxLayout()
+        self.vlayout = QtWidgets.QVBoxLayout()
 
-        file = os.path.realpath(
-            'library/browser/User-Manual/eSim_Manual_2019_Dec_31.pdf'
-        )
+        manual = 'library/browser/User-Manual/eSim_Manual_2.1.pdf'
 
-        if 'Win' in platform.system():
-            os.startfile(file)
+        if os.name == 'nt':
+            os.startfile(os.path.realpath(manual))
         else:
-            subprocess.Popen(['xpdf.real', file], shell=False)
+            manual_path = '../../' + manual
+            subprocess.Popen(
+                ['xdg-open', os.path.realpath(manual_path)], shell=False
+            )
 
         self.setLayout(self.vlayout)
         self.show()

@@ -11,14 +11,14 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Wednesday 04 March 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Saturday 25 July 2020
 # =========================================================================
 
 import sys
 import os
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from .Processing import PrcocessNetlist
 from . import Analysis
 from . import Source
@@ -30,7 +30,7 @@ from . import TrackWidget
 from xml.etree import ElementTree as ET
 
 
-class MainWindow(QtGui.QWidget):
+class MainWindow(QtWidgets.QWidget):
     """
     - This class create KicadtoNgspice window.
     - And Call Convert function if convert button is pressed.
@@ -42,7 +42,7 @@ class MainWindow(QtGui.QWidget):
     """
 
     def __init__(self, clarg1, clarg2=None):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
         print("==================================")
         print("Kicad to Ngspice netlist converter")
         print("==================================")
@@ -120,7 +120,7 @@ class MainWindow(QtGui.QWidget):
         """
         if unknownModelList:
             print("Unknown Model List is : ", unknownModelList)
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Unknown Models")
             self.content = "Your schematic contain unknown model " + \
@@ -129,7 +129,7 @@ class MainWindow(QtGui.QWidget):
             self.msg.exec_()
 
         elif multipleModelList:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Multiple Models")
             self.mcontent = "Look like you have duplicate model in \
@@ -148,10 +148,10 @@ class MainWindow(QtGui.QWidget):
             - createcreateConvertWidget
             - Convert button => callConvert
         """
-        self.vbox = QtGui.QVBoxLayout()
-        self.hbox = QtGui.QHBoxLayout()
+        self.vbox = QtWidgets.QVBoxLayout()
+        self.hbox = QtWidgets.QHBoxLayout()
         self.hbox.addStretch(1)
-        self.convertbtn = QtGui.QPushButton("Convert")
+        self.convertbtn = QtWidgets.QPushButton("Convert")
         self.convertbtn.clicked.connect(self.callConvert)
         self.hbox.addWidget(self.convertbtn)
         self.vbox.addWidget(self.createcreateConvertWidget())
@@ -183,44 +183,45 @@ class MainWindow(QtGui.QWidget):
         - convertWindow > mainLayout > tabWidgets > AnalysisTab, SourceTab ...
         """
         global obj_analysis
-        self.convertWindow = QtGui.QWidget()
-        self.analysisTab = QtGui.QScrollArea()
+        self.convertWindow = QtWidgets.QWidget()
+        self.analysisTab = QtWidgets.QScrollArea()
         obj_analysis = Analysis.Analysis(self.clarg1)
         self.analysisTab.setWidget(obj_analysis)
-        # self.analysisTabLayout = QtGui.QVBoxLayout(self.analysisTab.widget())
+        # self.analysisTabLayout = \
+        #       QtWidgets.QVBoxLayout(self.analysisTab.widget())
         self.analysisTab.setWidgetResizable(True)
         global obj_source
-        self.sourceTab = QtGui.QScrollArea()
+        self.sourceTab = QtWidgets.QScrollArea()
         obj_source = Source.Source(sourcelist, sourcelisttrack, self.clarg1)
         self.sourceTab.setWidget(obj_source)
-        # self.sourceTabLayout = QtGui.QVBoxLayout(self.sourceTab.widget())
+        # self.sourceTabLayout = QtWidgets.QVBoxLayout(self.sourceTab.widget())
         self.sourceTab.setWidgetResizable(True)
         global obj_model
-        self.modelTab = QtGui.QScrollArea()
+        self.modelTab = QtWidgets.QScrollArea()
         obj_model = Model.Model(schematicInfo, modelList, self.clarg1)
         self.modelTab.setWidget(obj_model)
-        # self.modelTabLayout = QtGui.QVBoxLayout(self.modelTab.widget())
+        # self.modelTabLayout = QtWidgets.QVBoxLayout(self.modelTab.widget())
         self.modelTab.setWidgetResizable(True)
         global obj_devicemodel
-        self.deviceModelTab = QtGui.QScrollArea()
+        self.deviceModelTab = QtWidgets.QScrollArea()
         obj_devicemodel = DeviceModel.DeviceModel(schematicInfo, self.clarg1)
         self.deviceModelTab.setWidget(obj_devicemodel)
         self.deviceModelTab.setWidgetResizable(True)
         global obj_subcircuitTab
-        self.subcircuitTab = QtGui.QScrollArea()
+        self.subcircuitTab = QtWidgets.QScrollArea()
         obj_subcircuitTab = SubcircuitTab.SubcircuitTab(
             schematicInfo, self.clarg1)
         self.subcircuitTab.setWidget(obj_subcircuitTab)
         self.subcircuitTab.setWidgetResizable(True)
 
-        self.tabWidget = QtGui.QTabWidget()
-        # self.tabWidget.TabShape(QtGui.QTabWidget.Rounded)
+        self.tabWidget = QtWidgets.QTabWidget()
+        # self.tabWidget.TabShape(QtWidgets.QTabWidget.Rounded)
         self.tabWidget.addTab(self.analysisTab, "Analysis")
         self.tabWidget.addTab(self.sourceTab, "Source Details")
         self.tabWidget.addTab(self.modelTab, "Ngspice Model")
         self.tabWidget.addTab(self.deviceModelTab, "Device Modeling")
         self.tabWidget.addTab(self.subcircuitTab, "Subcircuits")
-        self.mainLayout = QtGui.QVBoxLayout()
+        self.mainLayout = QtWidgets.QVBoxLayout()
         self.mainLayout.addWidget(self.tabWidget)
         # self.mainLayout.addStretch(1)
         self.convertWindow.setLayout(self.mainLayout)
@@ -599,16 +600,16 @@ class MainWindow(QtGui.QWidget):
         tree = ET.ElementTree(attr_parent)
         tree.write(fw)
 
-        # Create Convert object with the source details & the schematic details
-        print("=============================================================")
-        print("SOURCE LIST TRACK")
-        print(self.obj_track.sourcelisttrack["ITEMS"])
-        print("SOURCE ENTRY VAR")
-        print(self.obj_track.source_entry_var["ITEMS"])
-        print("SCHEMATIC INFO")
-        print(store_schematicInfo)
-        print("=============================================================")
+        # print("=============================================================")
+        # print("SOURCE LIST TRACK")
+        # print(self.obj_track.sourcelisttrack["ITEMS"])
+        # print("SOURCE ENTRY VAR")
+        # print(self.obj_track.source_entry_var["ITEMS"])
+        # print("SCHEMATIC INFO")
+        # print(store_schematicInfo)
+        # print("=============================================================")
 
+        # Create Convert object with the source details & the schematic details
         self.obj_convert = Convert.Convert(
             self.obj_track.sourcelisttrack["ITEMS"],
             self.obj_track.source_entry_var["ITEMS"],
@@ -664,8 +665,8 @@ class MainWindow(QtGui.QWidget):
 
             self.msg = "The Kicad to Ngspice Conversion completed "
             self.msg += "successfully!"
-            QtGui.QMessageBox.information(
-                self, "Information", self.msg, QtGui.QMessageBox.Ok
+            QtWidgets.QMessageBox.information(
+                self, "Information", self.msg, QtWidgets.QMessageBox.Ok
             )
         except Exception as e:
             print("Exception Message: ", e)

@@ -1,4 +1,4 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from projManagement.Validation import Validation
 from configuration.Appconfig import Appconfig
 from projManagement import Worker
@@ -6,7 +6,7 @@ import os
 
 
 # This class is called when User creates new Project.
-class NewSub(QtGui.QWidget):
+class NewSub(QtWidgets.QWidget):
     """
     Contains functions to check :
     - Name of project should not be blank.
@@ -27,11 +27,16 @@ class NewSub(QtGui.QWidget):
             - Name can not be empty.
             - File name already exists.
         """
+
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         self.create_schematic = subName
         # Checking if Workspace already exist or not
         self.schematic_path = (
             os.path.join(
-                os.path.abspath('library'),
+                os.path.abspath(init_path + 'library'),
                 'SubcircuitLibrary',
                 self.create_schematic))
 
@@ -54,7 +59,7 @@ class NewSub(QtGui.QWidget):
                 self.obj_workThread.start()
                 self.close()
             except BaseException:
-                self.msg = QtGui.QErrorMessage(self)
+                self.msg = QtWidgets.QErrorMessage(self)
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
@@ -67,7 +72,7 @@ class NewSub(QtGui.QWidget):
                 = self.schematic_path
 
         elif self.reply == "CHECKEXIST":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -78,7 +83,7 @@ class NewSub(QtGui.QWidget):
             self.msg.exec_()
 
         elif self.reply == "CHECKNAME":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -87,7 +92,7 @@ class NewSub(QtGui.QWidget):
             self.msg.exec_()
 
         elif self.reply == "NONE":
-            self.msg = QtGui.QErrorMessage(self)
+            self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('The subcircuit name cannot be empty')

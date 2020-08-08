@@ -1,33 +1,38 @@
 ## eSim
 
-eSim is an open source EDA tool for circuit design, simulation, analysis and PCB design, developed by FOSSEE team at IIT Bombay. 
-It is an integrated tool build using open source software such as [KiCad](http://www.kicad-pcd.org), [Ngspice](http://ngspice.sourcefouge.net/), [GHDL](http://ghdl.free.fr/)
-It is released under GNU GPL License. It runs on Ubuntu OS version 16.04, Windows 7 and above versions.
+[eSim](https://esim.fossee.in/) is an open source EDA tool for circuit design, simulation, analysis and PCB design, developed by [FOSSEE Team](https://www.fossee.in/) at [IIT Bombay](http://www.iitb.ac.in/).
+It is an integrated tool build using open source softwares such as KiCad, Ngspice and GHDL.
+
+## Releases
+* Ubuntu 16.04 OS and above LTS versions.
+* Microsoft Windows 7, 8 and 10.
+
+> Note: Refer [`installers`](https://github.com/fossee/eSim/tree/installers) branch for documentation on packaging for above mentioned platforms.
 
 ## Features
-* An open-source tool.
-* Perform circuit design.
+* An open-source EDA tool.
+* Perform Circuit Design.
 * Perform Simulation.
-* Perform layout design.
+* Perform Layout Design.
 * Model builder and Subcircuit builder.
-* Support for Mixed Mode Simulation (Currently supported only on Ubuntu OS).
+* Support for Mixed-Signal Simulations including Microcontrollers.
 * eSim has been successfully ported to low cost FOSSEE [laptop](http://laptop.fossee.in)
 
-## Open-Source Software Used
-* Python.
-* KiCad.
-* Ngspice.
-* GHDL.
+## Open-Source Softwares Used
+* [Python](https://www.python.org/)
+* [KiCad](http://www.kicad-pcd.org)
+* [Ngspice](http://ngspice.sourcefouge.net/)
+* [GHDL](http://ghdl.free.fr/)
 
 ## Pre-requisites
-1. NGHDL
-2. Ngspice-31
-3. KiCad 4.0.7 (latest version released on April-2019)
-4. Xterm
+1. Python v3.5+
+2. Ngspice v31+
+3. KiCad v4.0.7
+4. [NGHDL](https://github.com/fossee/nghdl)
 
 ## eSim Installation:
 
-To use eSim on your machine please refer to link  [here](https://esim.fossee.in/downloads) for installation and other guidelines.
+To use eSim on your machine please refer to link [here](https://esim.fossee.in/downloads) for installation and other guidelines.
 
 ## eSim Manual
 To know everything about eSim, how it works and it's feature please download manual [here](https://static.fossee.in/esim/installation-files/eSim_Manual_2.0.pdf)
@@ -39,4 +44,4 @@ For any queries regarding eSim please write us on at this [address](mailto:conta
 Please refer [here](https://github.com/FOSSEE/eSim/tree/master/CONTRIBUTION.md) for further details.
 
 ## License
-It is developed by FOSSEE team at IIT Bombay. It is released under GNU GPL License.
+It is developed by FOSSEE Team at IIT Bombay. It is released under GNU GPL License.

@@ -1,7 +1,7 @@
 import os
 import glob
 import traceback
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement import Worker
 from projManagement.Validation import Validation
@@ -10,10 +10,10 @@ from .NgspicetoModelica import NgMoConverter
 BROWSE_LOCATION = '/home'
 
 
-class OpenModelicaEditor(QtGui.QWidget):
+class OpenModelicaEditor(QtWidgets.QWidget):
 
     def __init__(self, dir=None):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
         self.obj_validation = Validation()
         self.obj_appconfig = Appconfig()
         self.projDir = dir
@@ -23,20 +23,20 @@ class OpenModelicaEditor(QtGui.QWidget):
         self.modelicaNetlist = os.path.join(self.projDir, "*.mo")
         self.map_json = Appconfig.modelica_map_json
 
-        self.grid = QtGui.QGridLayout()
-        self.FileEdit = QtGui.QLineEdit()
+        self.grid = QtWidgets.QGridLayout()
+        self.FileEdit = QtWidgets.QLineEdit()
         self.FileEdit.setText(self.ngspiceNetlist)
         self.grid.addWidget(self.FileEdit, 0, 0)
 
-        self.browsebtn = QtGui.QPushButton("Browse")
+        self.browsebtn = QtWidgets.QPushButton("Browse")
         self.browsebtn.clicked.connect(self.browseFile)
         self.grid.addWidget(self.browsebtn, 0, 1)
 
-        self.convertbtn = QtGui.QPushButton("Convert")
+        self.convertbtn = QtWidgets.QPushButton("Convert")
         self.convertbtn.clicked.connect(self.callConverter)
         self.grid.addWidget(self.convertbtn, 2, 1)
 
-        self.loadOMbtn = QtGui.QPushButton("Load OMEdit")
+        self.loadOMbtn = QtWidgets.QPushButton("Load OMEdit")
         self.loadOMbtn.clicked.connect(self.callOMEdit)
         self.grid.addWidget(self.loadOMbtn, 3, 1)
 
@@ -45,8 +45,8 @@ class OpenModelicaEditor(QtGui.QWidget):
         self.show()
 
     def browseFile(self):
-        self.ngspiceNetlist = QtGui.QFileDialog.getOpenFileName(
-            self, 'Open Ngspice Netlist', BROWSE_LOCATION)
+        self.ngspiceNetlist = QtWidgets.QFileDialog.getOpenFileName(
+            self, 'Open Ngspice Netlist', BROWSE_LOCATION)[0]
         self.FileEdit.setText(self.ngspiceNetlist)
 
     def callConverter(self):
@@ -186,7 +186,7 @@ class OpenModelicaEditor(QtGui.QWidget):
 
             os.chdir(cwd)
 
-            self.msg = QtGui.QMessageBox()
+            self.msg = QtWidgets.QMessageBox()
             self.msg.setText(
                 "Ngspice netlist successfully converted to OpenModelica " +
                 "netlist"
@@ -200,7 +200,7 @@ class OpenModelicaEditor(QtGui.QWidget):
         except BaseException as e:
             traceback.print_exc()
             print("================")
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Conversion Error")
             self.msg.showMessage(
@@ -220,7 +220,7 @@ class OpenModelicaEditor(QtGui.QWidget):
             self.obj_appconfig.print_info("OMEdit called")
 
         else:
-            self.msg = QtGui.QMessageBox()
+            self.msg = QtWidgets.QMessageBox()
             self.msgContent = (
                 "There was an error while opening OMEdit.<br/>"
                 "Please make sure OpenModelica is installed in your"

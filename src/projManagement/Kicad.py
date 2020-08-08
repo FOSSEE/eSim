@@ -11,16 +11,16 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 17 February 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Sunday 26 July 2020
 # =========================================================================
 
 import os
 from . import Validation
 from configuration.Appconfig import Appconfig
 from . import Worker
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 
 
 class Kicad:
@@ -91,7 +91,7 @@ class Kicad:
             self.obj_workThread.start()
 
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
@@ -129,7 +129,7 @@ class Kicad:
             self.obj_workThread.start()
 
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
@@ -162,7 +162,7 @@ class Kicad:
             self.obj_workThread.start()
 
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
@@ -209,7 +209,7 @@ class Kicad:
                 self.obj_dockarea.kicadToNgspiceEditor(var)
 
             else:
-                self.msg = QtGui.QErrorMessage()
+                self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
@@ -221,7 +221,7 @@ class Kicad:
                 self.msg.exec_()
 
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(

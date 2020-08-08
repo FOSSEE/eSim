@@ -1,7 +1,7 @@
 from __future__ import division  # Used for decimal division
 # eg: 2/3=0.66 and not '0' 6/2=3.0 and 6//2=3
 import os
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtGui, QtCore, QtWidgets
 from decimal import Decimal, getcontext
 from matplotlib.backends.backend_qt4agg\
     import FigureCanvasQTAgg as FigureCanvas
@@ -13,7 +13,7 @@ import numpy as np
 
 
 # This class creates Python Plotting window
-class plotWindow(QtGui.QMainWindow):
+class plotWindow(QtWidgets.QMainWindow):
     """
     This class defines python plotting window, its features, buttons,
     colors, AC and DC analysis, plotting etc.
@@ -21,7 +21,7 @@ class plotWindow(QtGui.QMainWindow):
 
     def __init__(self, fpath, projectName):
         """This create constructor for plotWindow class."""
-        QtGui.QMainWindow.__init__(self)
+        QtWidgets.QMainWindow.__init__(self)
         self.fpath = fpath
         self.projectName = projectName
         self.obj_appconfig = Appconfig()
@@ -38,7 +38,7 @@ class plotWindow(QtGui.QMainWindow):
         self.createMainFrame()
 
     def createMainFrame(self):
-        self.mainFrame = QtGui.QWidget()
+        self.mainFrame = QtWidgets.QWidget()
         self.dpi = 100
         self.fig = Figure((7.0, 7.0), dpi=self.dpi)
         # Creating Canvas which will figure
@@ -48,15 +48,15 @@ class plotWindow(QtGui.QMainWindow):
         self.navToolBar = NavigationToolbar(self.canvas, self.mainFrame)
 
         # LeftVbox hold navigation tool bar and canvas
-        self.left_vbox = QtGui.QVBoxLayout()
+        self.left_vbox = QtWidgets.QVBoxLayout()
         self.left_vbox.addWidget(self.navToolBar)
         self.left_vbox.addWidget(self.canvas)
 
         # right VBOX is main Layout which hold right grid(bottom part) and top
         # grid(top part)
-        self.right_vbox = QtGui.QVBoxLayout()
-        self.right_grid = QtGui.QGridLayout()
-        self.top_grid = QtGui.QGridLayout()
+        self.right_vbox = QtWidgets.QVBoxLayout()
+        self.right_grid = QtWidgets.QGridLayout()
+        self.top_grid = QtWidgets.QGridLayout()
 
         # Get DataExtraction Details
         self.obj_dataext = DataExtraction()
@@ -91,18 +91,18 @@ class plotWindow(QtGui.QMainWindow):
 
         # Total number of voltage source
         self.volts_length = self.a[1]
-        self.analysisType = QtGui.QLabel()
+        self.analysisType = QtWidgets.QLabel()
         self.top_grid.addWidget(self.analysisType, 0, 0)
-        self.listNode = QtGui.QLabel()
+        self.listNode = QtWidgets.QLabel()
         self.top_grid.addWidget(self.listNode, 1, 0)
-        self.listBranch = QtGui.QLabel()
+        self.listBranch = QtWidgets.QLabel()
         self.top_grid.addWidget(self.listBranch, self.a[1] + 2, 0)
         for i in range(0, self.a[1]):  # a[0]-1
-            self.chkbox.append(QtGui.QCheckBox(self.obj_dataext.NBList[i]))
+            self.chkbox.append(QtWidgets.QCheckBox(self.obj_dataext.NBList[i]))
             self.chkbox[i].setStyleSheet('color')
             self.chkbox[i].setToolTip('<b>Check To Plot</b>')
             self.top_grid.addWidget(self.chkbox[i], i + 2, 0)
-            self.colorLab = QtGui.QLabel()
+            self.colorLab = QtWidgets.QLabel()
             self.colorLab.setText('____')
             self.colorLab.setStyleSheet(
                 self.colorName(
@@ -111,10 +111,10 @@ class plotWindow(QtGui.QMainWindow):
             self.top_grid.addWidget(self.colorLab, i + 2, 1)
 
         for i in range(self.a[1], self.a[0] - 1):  # a[0]-1
-            self.chkbox.append(QtGui.QCheckBox(self.obj_dataext.NBList[i]))
+            self.chkbox.append(QtWidgets.QCheckBox(self.obj_dataext.NBList[i]))
             self.chkbox[i].setToolTip('<b>Check To Plot</b>')
             self.top_grid.addWidget(self.chkbox[i], i + 3, 0)
-            self.colorLab = QtGui.QLabel()
+            self.colorLab = QtWidgets.QLabel()
             self.colorLab.setText('____')
             self.colorLab.setStyleSheet(
                 self.colorName(
@@ -123,21 +123,21 @@ class plotWindow(QtGui.QMainWindow):
             self.top_grid.addWidget(self.colorLab, i + 3, 1)
 
         # Buttons for Plot, multimeter, plotting function.
-        self.clear = QtGui.QPushButton("Clear")
-        self.warnning = QtGui.QLabel()
-        self.funcName = QtGui.QLabel()
-        self.funcExample = QtGui.QLabel()
+        self.clear = QtWidgets.QPushButton("Clear")
+        self.warnning = QtWidgets.QLabel()
+        self.funcName = QtWidgets.QLabel()
+        self.funcExample = QtWidgets.QLabel()
 
-        self.plotbtn = QtGui.QPushButton("Plot")
+        self.plotbtn = QtWidgets.QPushButton("Plot")
         self.plotbtn.setToolTip('<b>Press</b> to Plot')
-        self.multimeterbtn = QtGui.QPushButton("Multimeter")
+        self.multimeterbtn = QtWidgets.QPushButton("Multimeter")
         self.multimeterbtn.setToolTip(
             '<b>RMS</b> value of the current and voltage is displayed')
-        self.text = QtGui.QLineEdit()
-        self.funcLabel = QtGui.QLabel()
+        self.text = QtWidgets.QLineEdit()
+        self.funcLabel = QtWidgets.QLabel()
         self.palette1 = QtGui.QPalette()
         self.palette2 = QtGui.QPalette()
-        self.plotfuncbtn = QtGui.QPushButton("Plot Function")
+        self.plotfuncbtn = QtWidgets.QPushButton("Plot Function")
         self.plotfuncbtn.setToolTip('<b>Press</b> to Plot the function')
 
         self.palette1.setColor(QtGui.QPalette.Foreground, QtCore.Qt.blue)
@@ -158,20 +158,20 @@ class plotWindow(QtGui.QMainWindow):
         self.right_grid.addWidget(self.funcExample, 4, 1)
         self.right_vbox.addLayout(self.right_grid)
 
-        self.hbox = QtGui.QHBoxLayout()
+        self.hbox = QtWidgets.QHBoxLayout()
         self.hbox.addLayout(self.left_vbox)
         self.hbox.addLayout(self.right_vbox)
 
-        self.widget = QtGui.QWidget()
+        self.widget = QtWidgets.QWidget()
         self.widget.setLayout(self.hbox)  # finalvbox
-        self.scrollArea = QtGui.QScrollArea()
+        self.scrollArea = QtWidgets.QScrollArea()
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setWidget(self.widget)
         '''
         Right side box containing checkbox for different inputs and
         options of plot, multimeter and plot function.
         '''
-        self.finalhbox = QtGui.QHBoxLayout()
+        self.finalhbox = QtWidgets.QHBoxLayout()
         self.finalhbox.addWidget(self.scrollArea)
         # Right side window frame showing list of nodes and branches.
         self.mainFrame.setLayout(self.finalhbox)
@@ -191,43 +191,25 @@ class plotWindow(QtGui.QMainWindow):
                 \nNode1 vs Node2")
 
         # Connecting to plot and clear function
-        self.connect(self.clear, QtCore.SIGNAL('clicked()'), self.pushedClear)
-        self.connect(
-            self.plotfuncbtn,
-            QtCore.SIGNAL('clicked()'),
-            self.pushedPlotFunc)
-        self.connect(
-            self.multimeterbtn,
-            QtCore.SIGNAL('clicked()'),
-            self.multiMeter)
+        self.clear.clicked.connect(self.pushedClear)
+        self.plotfuncbtn.clicked.connect(self.pushedPlotFunc)
+        self.multimeterbtn.clicked.connect(self.multiMeter)
+
         # for AC analysis
         if self.plotType[0] == 0:
             self.analysisType.setText("<b>AC Analysis</b>")
             if self.plotType[1] == 1:
-                self.connect(
-                    self.plotbtn,
-                    QtCore.SIGNAL('clicked()'),
-                    self.onPush_decade)
+                self.plotbtn.clicked.connect(self.onPush_decade)
             else:
-                self.connect(
-                    self.plotbtn,
-                    QtCore.SIGNAL('clicked()'),
-                    self.onPush_ac)
+                self.plotbtn.clicked.connect(self.onPush_ac)
         # for transient analysis
         elif self.plotType[0] == 1:
             self.analysisType.setText("<b>Transient Analysis</b>")
-            self.connect(
-                self.plotbtn,
-                QtCore.SIGNAL('clicked()'),
-                self.onPush_trans)
-
+            self.plotbtn.clicked.connect(self.onPush_trans)
         else:
             # For DC analysis
             self.analysisType.setText("<b>DC Analysis</b>")
-            self.connect(
-                self.plotbtn,
-                QtCore.SIGNAL('clicked()'),
-                self.onPush_dc)
+            self.plotbtn.clicked.connect(self.onPush_dc)
 
         self.setCentralWidget(self.mainFrame)
 
@@ -236,7 +218,6 @@ class plotWindow(QtGui.QMainWindow):
         self.text.clear()
         self.axes.cla()
         self.canvas.draw()
-        QtCore.SLOT('quit()')
 
     def pushedPlotFunc(self):
         self.parts = str(self.text.text())
@@ -253,7 +234,7 @@ class plotWindow(QtGui.QMainWindow):
 
         if len(self.parts) <= 2:
             self.warnning.setText("Too few arguments!\nRefer syntax below!")
-            QtGui.QMessageBox.about(
+            QtWidgets.QMessageBox.about(
                 self, "Warning!!", "Too Few Arguments/SYNTAX Error!\
                     \n Refer Examples")
         else:
@@ -270,7 +251,7 @@ class plotWindow(QtGui.QMainWindow):
                         a.append(j)
 
         if len(a) != len(self.parts) // 2 + 1:
-            QtGui.QMessageBox.about(
+            QtWidgets.QMessageBox.about(
                 self,
                 "Warning!!",
                 "One of the operands doesn't belong to "
@@ -282,7 +263,7 @@ class plotWindow(QtGui.QMainWindow):
         for i in range(len(a)):
 
             if a[i] == len(self.obj_dataext.NBList):
-                QtGui.QMessageBox.about(
+                QtWidgets.QMessageBox.about(
                     self, "Warning!!", "One of the operands doesn't belong " +
                     "to the above list!!"
                 )
@@ -294,7 +275,7 @@ class plotWindow(QtGui.QMainWindow):
         if self.parts[1] == 'vs':
             if len(self.parts) > 3:
                 self.warnning.setText("Enter two operands only!!")
-                QtGui.QMessageBox.about(
+                QtWidgets.QMessageBox.about(
                     self, "Warning!!", "Recheck the expression syntax!")
 
             else:
@@ -318,7 +299,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Current(I)-->')
 
         elif max(a) >= self.volts_length and min(a) < self.volts_length:
-            QtGui.QMessageBox.about(
+            QtWidgets.QMessageBox.about(
                 self, "Warning!!", "Do not combine Voltage and Current!!")
 
         else:
@@ -330,7 +311,7 @@ class plotWindow(QtGui.QMainWindow):
                 try:
                     finalResult.append(eval(re))
                 except ArithmeticError:
-                    QtGui.QMessageBox.about(
+                    QtWidgets.QMessageBox.about(
                         self, "Warning!!", "Dividing by zero!!")
 
             if self.plotType2[0] == 0:
@@ -410,7 +391,7 @@ class plotWindow(QtGui.QMainWindow):
 
                 self.axes.grid(True)
         if boxCheck == 0:
-            QtGui.QMessageBox.about(
+            QtWidgets.QMessageBox.about(
                 self, "Warning!!", "Please select at least one Node OR Branch")
         self.canvas.draw()
 
@@ -433,7 +414,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Current(I)-->')
                 self.axes.grid(True)
         if boxCheck == 0:
-            QtGui.QMessageBox.about(
+            QtWidgets.QMessageBox.about(
                 self, "Warning!!", "Please select at least one Node OR Branch")
         self.canvas.draw()
 
@@ -456,7 +437,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Current(I)-->')
                 self.axes.grid(True)
         if boxCheck == 0:
-            QtGui.QMessageBox.about(
+            QtWidgets.QMessageBox.about(
                 self, "Warning!!", "Please select at least one Node OR Branch")
         self.canvas.draw()
 
@@ -480,7 +461,7 @@ class plotWindow(QtGui.QMainWindow):
                     self.axes.set_ylabel('Current(I)-->')
                 self.axes.grid(True)
         if boxCheck == 0:
-            QtGui.QMessageBox.about(
+            QtWidgets.QMessageBox.about(
                 self, "Warning!!", "Please select atleast one Node OR Branch")
         self.canvas.draw()
 
@@ -525,7 +506,7 @@ class plotWindow(QtGui.QMainWindow):
                 )
 
         if boxCheck == 0:
-            QtGui.QMessageBox.about(
+            QtWidgets.QMessageBox.about(
                 self, "Warning!!", "Please select at least one Node OR Branch")
 
     def getRMSValue(self, dataPoints):
@@ -533,22 +514,22 @@ class plotWindow(QtGui.QMainWindow):
         return np.sqrt(np.mean(np.square(dataPoints)))
 
 
-class MultimeterWidgetClass(QtGui.QWidget):
+class MultimeterWidgetClass(QtWidgets.QWidget):
     def __init__(self, node_branch, rmsValue, loc_x, loc_y, voltFlag):
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
 
-        self.multimeter = QtGui.QWidget(self)
+        self.multimeter = QtWidgets.QWidget(self)
         if voltFlag:
-            self.node_branchLabel = QtGui.QLabel("Node")
-            self.rmsValue = QtGui.QLabel(str(rmsValue) + " Volts")
+            self.node_branchLabel = QtWidgets.QLabel("Node")
+            self.rmsValue = QtWidgets.QLabel(str(rmsValue) + " Volts")
         else:
-            self.node_branchLabel = QtGui.QLabel("Branch")
-            self.rmsValue = QtGui.QLabel(str(rmsValue) + " Amp")
+            self.node_branchLabel = QtWidgets.QLabel("Branch")
+            self.rmsValue = QtWidgets.QLabel(str(rmsValue) + " Amp")
 
-        self.rmsLabel = QtGui.QLabel("RMS Value")
-        self.nodeBranchValue = QtGui.QLabel(str(node_branch))
+        self.rmsLabel = QtWidgets.QLabel("RMS Value")
+        self.nodeBranchValue = QtWidgets.QLabel(str(node_branch))
 
-        self.layout = QtGui.QGridLayout(self)
+        self.layout = QtWidgets.QGridLayout(self)
         self.layout.addWidget(self.node_branchLabel, 0, 0)
         self.layout.addWidget(self.rmsLabel, 0, 1)
         self.layout.addWidget(self.nodeBranchValue, 1, 0)
@@ -667,7 +648,7 @@ class DataExtraction:
         except Exception as e:
             print("Exception Message : ", str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Unable to open plot data files.')
@@ -682,7 +663,7 @@ class DataExtraction:
         except Exception as e:
             print("Exception Message : ", str(e))
             self.obj_appconfig.print_error('Exception Message :' + str(e))
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Unable to read Analysis File.')

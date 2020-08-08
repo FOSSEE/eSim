@@ -1,4 +1,4 @@
-from PyQt4 import QtGui, QtCore
+from PyQt5 import QtCore, QtWidgets
 import os
 import json
 from configuration.Appconfig import Appconfig
@@ -6,7 +6,7 @@ from projManagement.Validation import Validation
 
 
 # This is main class for Project Explorer Area.
-class ProjectExplorer(QtGui.QWidget):
+class ProjectExplorer(QtWidgets.QWidget):
     """
     This class contains function:
 
@@ -23,33 +23,37 @@ class ProjectExplorer(QtGui.QWidget):
             - Working as a constructor for class ProjectExplorer.
             - view of project explorer area.
         """
-        QtGui.QWidget.__init__(self)
+        QtWidgets.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
         self.obj_validation = Validation()
-        self.treewidget = QtGui.QTreeWidget()
-        self.window = QtGui.QVBoxLayout()
-        header = QtGui.QTreeWidgetItem(["Projects", "path"])
+        self.treewidget = QtWidgets.QTreeWidget()
+        self.window = QtWidgets.QVBoxLayout()
+        header = QtWidgets.QTreeWidgetItem(["Projects", "path"])
         self.treewidget.setHeaderItem(header)
         self.treewidget.setColumnHidden(1, True)
 
         # CSS
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         self.treewidget.setStyleSheet(" \
             QTreeView { border-radius: 15px; border: 1px \
             solid gray; padding: 5px; width: 200px; height: 150px;  }\
             QTreeView::branch:has-siblings:!adjoins-item { \
-            border-image: url(images/vline.png) 0;} \
+            border-image: url(" + init_path + "images/vline.png) 0;} \
             QTreeView::branch:has-siblings:adjoins-item { \
-            border-image: url(images/branch-more.png) 0; } \
+            border-image: url(" + init_path + "images/branch-more.png) 0; } \
             QTreeView::branch:!has-children:!has-siblings:adjoins-item { \
-            border-image: url(images/branch-end.png) 0; } \
+            border-image: url(" + init_path + "images/branch-end.png) 0; } \
             QTreeView::branch:has-children:!has-siblings:closed, \
             QTreeView::branch:closed:has-children:has-siblings { \
             border-image: none; \
-            image: url(images/branch-closed.png); } \
+            image: url(" + init_path + "images/branch-closed.png); } \
             QTreeView::branch:open:has-children:!has-siblings, \
             QTreeView::branch:open:has-children:has-siblings  { \
             border-image: none; \
-            image: url(images/branch-open.png); } \
+            image: url(" + init_path + "images/branch-open.png); } \
         ")
 
         for parents, children in list(
@@ -57,11 +61,11 @@ class ProjectExplorer(QtGui.QWidget):
             os.path.join(parents)
             if os.path.exists(parents):
                 pathlist = parents.split(os.sep)
-                parentnode = QtGui.QTreeWidgetItem(
+                parentnode = QtWidgets.QTreeWidgetItem(
                     self.treewidget, [pathlist[-1], parents]
                 )
                 for files in children:
-                    QtGui.QTreeWidgetItem(
+                    QtWidgets.QTreeWidgetItem(
                         parentnode, [files, os.path.join(parents, files)]
                     )
         self.window.addWidget(self.treewidget)
@@ -75,11 +79,11 @@ class ProjectExplorer(QtGui.QWidget):
     def addTreeNode(self, parents, children):
         os.path.join(parents)
         pathlist = parents.split(os.sep)
-        parentnode = QtGui.QTreeWidgetItem(
+        parentnode = QtWidgets.QTreeWidgetItem(
             self.treewidget, [pathlist[-1], parents]
         )
         for files in children:
-            QtGui.QTreeWidgetItem(
+            QtWidgets.QTreeWidgetItem(
                 parentnode, [files, os.path.join(parents, files)]
             )
 
@@ -101,7 +105,7 @@ class ProjectExplorer(QtGui.QWidget):
                 index = index.parent()
                 level += 1
 
-        menu = QtGui.QMenu()
+        menu = QtWidgets.QMenu()
         if level == 0:
             renameProject = menu.addAction(self.tr("Rename Project"))
             renameProject.triggered.connect(self.renameProject)
@@ -124,30 +128,27 @@ class ProjectExplorer(QtGui.QWidget):
         self.obj_appconfig.print_info(
             'The current project is ' + self.filePath)
 
-        self.textwindow = QtGui.QWidget()
+        self.textwindow = QtWidgets.QWidget()
         self.textwindow.setMinimumSize(600, 500)
         self.textwindow.setGeometry(QtCore.QRect(400, 150, 400, 400))
         self.textwindow.setWindowTitle(filename)
 
-        self.text = QtGui.QTextEdit()
-        self.save = QtGui.QPushButton('Save and Exit')
+        self.text = QtWidgets.QTextEdit()
+        self.save = QtWidgets.QPushButton('Save and Exit')
         self.save.setDisabled(True)
-        self.windowgrid = QtGui.QGridLayout()
+        self.windowgrid = QtWidgets.QGridLayout()
 
         if (os.path.isfile(str(self.filePath))):
             self.fopen = open(str(self.filePath), 'r')
             lines = self.fopen.read()
             self.text.setText(lines)
 
-            QtCore.QObject.connect(
-                self.text, QtCore.SIGNAL("textChanged()"), self.enable_save
-            )
+            self.text.textChanged.connect(self.enable_save)
 
-            vbox_main = QtGui.QVBoxLayout(self.textwindow)
+            vbox_main = QtWidgets.QVBoxLayout(self.textwindow)
             vbox_main.addWidget(self.text)
             vbox_main.addWidget(self.save)
             self.save.clicked.connect(self.save_data)
-            # self.connect(exit,QtCore.SIGNAL('close()'), self.onQuit)
 
             self.textwindow.show()
         else:
@@ -221,7 +222,7 @@ class ProjectExplorer(QtGui.QWidget):
                 for items in self.treewidget.selectedItems():
                     items.removeChild(items.child(0))
             for files in filelistnew:
-                QtGui.QTreeWidgetItem(
+                QtWidgets.QTreeWidgetItem(
                     parentnode, [files, os.path.join(filePath, files)]
                 )
 
@@ -233,7 +234,7 @@ class ProjectExplorer(QtGui.QWidget):
         else:
             print("Selected project not found")
             print("==================")
-            msg = QtGui.QErrorMessage(self)
+            msg = QtWidgets.QErrorMessage(self)
             msg.setModal(True)
             msg.setWindowTitle("Error Message")
             msg.showMessage('Selected project does not exist.')
@@ -258,9 +259,9 @@ class ProjectExplorer(QtGui.QWidget):
                     self.indexItem.sibling(self.indexItem.row(), 1).data()
                 )
 
-        newBaseFileName, ok = QtGui.QInputDialog.getText(
+        newBaseFileName, ok = QtWidgets.QInputDialog.getText(
             self, 'Rename Project', 'Project Name:',
-            QtGui.QLineEdit.Normal, self.baseFileName
+            QtWidgets.QLineEdit.Normal, self.baseFileName
         )
 
         if ok and newBaseFileName:
@@ -269,7 +270,7 @@ class ProjectExplorer(QtGui.QWidget):
             if not newBaseFileName.strip():
                 print("Project name cannot be empty")
                 print("==================")
-                msg = QtGui.QErrorMessage(self)
+                msg = QtWidgets.QErrorMessage(self)
                 msg.setModal(True)
                 msg.setWindowTitle("Error Message")
                 msg.showMessage('The project name cannot be empty')
@@ -278,7 +279,7 @@ class ProjectExplorer(QtGui.QWidget):
             elif self.baseFileName == newBaseFileName:
                 print("Project name has to be different")
                 print("==================")
-                msg = QtGui.QErrorMessage(self)
+                msg = QtWidgets.QErrorMessage(self)
                 msg.setModal(True)
                 msg.setWindowTitle("Error Message")
                 msg.showMessage('The project name has to be different')
@@ -308,7 +309,7 @@ class ProjectExplorer(QtGui.QWidget):
                     print("Project Path :", projectPath)
                     print("Project Files :", projectFiles)
                     print("==================")
-                    msg = QtGui.QErrorMessage(self)
+                    msg = QtWidgets.QErrorMessage(self)
                     msg.setModal(True)
                     msg.setWindowTitle("Error Message")
                     msg.showMessage('Selected project does not exist.')
@@ -327,7 +328,7 @@ class ProjectExplorer(QtGui.QWidget):
                     try:
                         os.rename(projectPath, updatedProjectPath)
                     except BaseException as e:
-                        msg = QtGui.QErrorMessage(self)
+                        msg = QtWidgets.QErrorMessage(self)
                         msg.setModal(True)
                         msg.setWindowTitle("Error Message")
                         msg.showMessage(str(e))
@@ -366,7 +367,7 @@ class ProjectExplorer(QtGui.QWidget):
                         # Revert project folder name
                         os.rename(updatedProjectPath, projectPath)
                         print("==================")
-                        msg = QtGui.QErrorMessage(self)
+                        msg = QtWidgets.QErrorMessage(self)
                         msg.setModal(True)
                         msg.setWindowTitle("Error Message")
                         msg.showMessage(str(e))
@@ -392,7 +393,7 @@ class ProjectExplorer(QtGui.QWidget):
                 elif reply == "CHECKEXIST":
                     print("Project name already exists.")
                     print("==========================")
-                    msg = QtGui.QErrorMessage(self)
+                    msg = QtWidgets.QErrorMessage(self)
                     msg.setModal(True)
                     msg.setWindowTitle("Error Message")
                     msg.showMessage(
@@ -405,7 +406,7 @@ class ProjectExplorer(QtGui.QWidget):
                 elif reply == "CHECKNAME":
                     print("Name can not contain space between them")
                     print("===========================")
-                    msg = QtGui.QErrorMessage(self)
+                    msg = QtWidgets.QErrorMessage(self)
                     msg.setModal(True)
                     msg.setWindowTitle("Error Message")
                     msg.showMessage(

@@ -1,11 +1,11 @@
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from projManagement.Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
 
 
 # This class is called when user creates new Project
-class convertSub(QtGui.QWidget):
+class convertSub(QtWidgets.QWidget):
     """
     Contains functions that checks project present for conversion and
     also function to convert Kicad Netlist to Ngspice Netlist.
@@ -40,7 +40,7 @@ class convertSub(QtGui.QWidget):
                 var2 = "sub"
                 self.obj_dockarea.kicadToNgspiceEditor(var1, var2)
             else:
-                self.msg = QtGui.QErrorMessage()
+                self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
@@ -49,7 +49,7 @@ class convertSub(QtGui.QWidget):
                 )
                 self.msg.exec_()
         else:
-            self.msg = QtGui.QErrorMessage()
+            self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(

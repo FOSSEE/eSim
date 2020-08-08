@@ -11,18 +11,18 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Sunday 02 August 2020
 # =========================================================================
 
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 import os
 import json
-from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 
-class Appconfig(QtGui.QWidget):
+class Appconfig(QtWidgets.QWidget):
     """
     All configuration goes here.
     May change in future for code optimization.
@@ -63,7 +63,7 @@ class Appconfig(QtGui.QWidget):
 
     noteArea = {"Note": []}
 
-    parser_esim = SafeConfigParser()
+    parser_esim = ConfigParser()
     parser_esim.read(
         os.path.join(
             os.path.expanduser("~"),
@@ -80,7 +80,12 @@ class Appconfig(QtGui.QWidget):
 
     # Open file and read KiCad config path
     try:
-        file = open('library/supportFiles/kicad_config_path.txt', 'r')
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
+        file = open(init_path +
+                    'library/supportFiles/kicad_config_path.txt', 'r')
         kicad_path = file.read().rstrip()
         file.close()
     except BaseException as e:
@@ -95,10 +100,12 @@ class Appconfig(QtGui.QWidget):
 
     def __init__(self):
         super(Appconfig, self).__init__()
+
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = 'v2.0.0'
-        self._AUTHOR = 'Fahim, Rahul'
+        self._VERSION = '2.1'
+        self._AUTHOR = 'Fahim'
+        self._REVISION = 'Rahul'
 
         # Application geometry setting
         self._app_xpos = 100

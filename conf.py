@@ -17,17 +17,17 @@ import sys
 sys.path.insert(0, os.path.abspath('./src'))
 
 # added so that do not need to install them at runtime
-autodoc_mock_imports = ["PyQt4", "pathmagic", "matplotlib", "numpy"]
+autodoc_mock_imports = ["PyQt5", "pathmagic", "matplotlib", "numpy"]
 # -- Project information -----------------------------------------------------
 
 project = u'eSim'
-copyright = u'2020, Fossee'
-author = u'Fossee'
+copyright = u'2020, FOSSEE'
+author = u'FOSSEE, IIT Bombay'
 
 # The short X.Y version
-version = u''
+version = u'2.1'
 # The full version, including alpha/beta/rc tags
-release = u'2.0.0'
+release = u'2.1.0'
 
 
 # -- General configuration ---------------------------------------------------

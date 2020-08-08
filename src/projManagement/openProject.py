@@ -11,19 +11,19 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#  ORGANIZATION: eSim team at FOSSEE, IIT Bombay.
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Wednesday 12 February 2015
-#      REVISION: Friday 14 February 2020
+#      REVISION: Sunday 26 July 2020
 # =========================================================================
 
-from PyQt4 import QtGui
+from PyQt5 import QtWidgets
 from .Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
 import json
 
 
-class OpenProjectInfo(QtGui.QWidget):
+class OpenProjectInfo(QtWidgets.QWidget):
     """
     This class is called when User click on Open Project Button
     """
@@ -45,7 +45,7 @@ class OpenProjectInfo(QtGui.QWidget):
         """
         self.obj_Appconfig = Appconfig()
         self.openDir = self.obj_Appconfig.default_workspace["workspace"]
-        self.projDir = QtGui.QFileDialog.getExistingDirectory(
+        self.projDir = QtWidgets.QFileDialog.getExistingDirectory(
             self, "open", self.openDir)
 
         if self.obj_validation.validateOpenproj(self.projDir):
@@ -74,18 +74,18 @@ class OpenProjectInfo(QtGui.QWidget):
                 "proper directory else you won't be able to perform any " +
                 "operation"
             )
-            reply = QtGui.QMessageBox.critical(
+            reply = QtWidgets.QMessageBox.critical(
                 None, "Error Message",
                 "<b>Error: The project doesn't contain .proj file.</b><br/>"
                 "<b>Please select the proper project directory else you won't"
                 " be able to perform any operation</b>",
-                QtGui.QMessageBox.Ok | QtGui.QMessageBox.Cancel
+                QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
             )
 
-            if reply == QtGui.QMessageBox.Ok:
+            if reply == QtWidgets.QMessageBox.Ok:
                 self.body()
                 self.obj_Appconfig.print_info('Open Project called')
                 self.obj_Appconfig.print_info(
                     'Current Project is ' + self.projDir)
-            elif reply == QtGui.QMessageBox.Cancel:
+            elif reply == QtWidgets.QMessageBox.Cancel:
                 self.obj_Appconfig.print_info('No Project opened')
