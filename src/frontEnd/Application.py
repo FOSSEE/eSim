@@ -18,7 +18,7 @@
 
 import os
 
-if os.name == 'nt': # noqa
+if os.name == 'nt':     # noqa
     from frontEnd import pathmagic  # noqa:F401
     init_path = ''
 else:

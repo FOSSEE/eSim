@@ -100,7 +100,7 @@ class Appconfig(QtWidgets.QWidget):
 
     def __init__(self):
         super(Appconfig, self).__init__()
-        
+
         # Application Details
         self._APPLICATION = 'eSim'
         self._VERSION = '2.1'
