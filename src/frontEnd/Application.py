@@ -18,7 +18,7 @@
 
 import os
 
-if os.name == 'nt': # noqa
+if os.name == 'nt':     # noqa
     from frontEnd import pathmagic  # noqa:F401
     init_path = ''
 else:
@@ -75,11 +75,9 @@ class Application(QtWidgets.QMainWindow):
         self.showMaximized()
         self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
 
-        # self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
-        # self.systemTrayIcon.setIcon(
-        #     QtGui.QIcon(init_path + 'images/logo.png')
-        # )
-        # self.systemTrayIcon.setVisible(True)
+        self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
+        self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
+        self.systemTrayIcon.setVisible(True)
 
     def initToolBar(self):
         """
@@ -804,8 +802,8 @@ class MainView(QtWidgets.QWidget):
 
         # Adding to main Layout
         self.mainLayout.addWidget(self.leftSplit)
-        self.leftSplit.setSizes([self.width() // 4.5, self.height()])
-        self.middleSplit.setSizes([self.width(), self.height() // 2])
+        self.leftSplit.setSizes([int(self.width() / 4.5), self.height()])
+        self.middleSplit.setSizes([self.width(), int(self.height() / 2)])
         self.setLayout(self.mainLayout)
 
 

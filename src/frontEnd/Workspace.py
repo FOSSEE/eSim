@@ -106,9 +106,9 @@ class Workspace(QtWidgets.QWidget):
                 parent, children
             )
 
-        var_appView.show()
         time.sleep(1.5)
         var_appView.splash.close()
+        var_appView.show()
 
     def close(self, *args, **kwargs):
         self.window_open_close = 1
@@ -166,9 +166,9 @@ class Workspace(QtWidgets.QWidget):
                 parent, children
             )
 
-        var_appView.show()
         time.sleep(1.5)
         var_appView.splash.close()
+        var_appView.show()
 
     def browseLocation(self):
         print("Function : Browse Location")
