@@ -76,7 +76,9 @@ class Application(QtWidgets.QMainWindow):
         self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
 
         # self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
-        # self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
+        # self.systemTrayIcon.setIcon(
+        #     QtGui.QIcon(init_path + 'images/logo.png')
+        # )
         # self.systemTrayIcon.setVisible(True)
 
     def initToolBar(self):
