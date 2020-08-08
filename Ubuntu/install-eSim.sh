@@ -119,7 +119,7 @@ function installDependency
 
     if [[ $(lsb_release -rs) != 16.* ]]; then
 	    echo "Installing Distutils......................."
-	    sudo apt-get install python3-distutils
+	    sudo apt-get install -y python3-distutils
 	fi
 
     echo "Installing KiCad..........................."
