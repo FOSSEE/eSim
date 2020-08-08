@@ -22,11 +22,15 @@ It contains the documentation to package eSim for Ubuntu OS.
 	- requirement.txt
 	- .gitignore
 	- .travis.yml
+    - `library/browser/User-Manual/figures` folder
+    - library/browser/User-Manual/eSim.html
 
-4. Add the zip file of `NGHDL` (`nghdl.zip`) in the eSim folder.
+4. Add eSim user manual `eSim_Manual_<version>.pdf` at location `library/browser/User-Manual`.
+
+5. Add the zip file of `NGHDL` (`nghdl.zip`) in the eSim folder.
 
 > Note: Refer this [documentation](https://github.com/fossee/nghdl/tree/installers/Ubuntu/README.md) on packaging of NGHDL for Ubuntu OS.
 
-5. Compress `kicadLibrary` folder to a `tar.xz` format.
+6. Compress `kicadLibrary` folder to a `tar.xz` format and then remove that folder.
 
-6. Compress `eSim-<version>` to a zip format for distribution.
+7. Compress `eSim-<version>` to a zip format for distribution.

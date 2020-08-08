@@ -13,9 +13,7 @@ It contains the documentation for the changes to be done when a new release is t
 3. `master/setup.py` - Update `version` field in `setup` function
 
 4. User Manual
-    - Download eSim Manual from eSim website and add it to `library/browser/User-Manual/`.
-    - Remove `figures` folder and `eSim.html` file from `library/browser/User-Manual/`.
-    - Update user manual filename as `eSim_Manual_y.x.pdf` where y.x is the updated version.
+    - Manual name convention is `eSim_Manual_y.x.pdf` where y.x is the updated version.
     - Update path in the following line at `master/src/browser/UserManual.py` with the updated manual name:
     ```python
     file = os.path.realpath('library/browser/User-Manual/eSim_Manual_2.0.pdf')
