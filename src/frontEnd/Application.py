@@ -532,15 +532,26 @@ class Application(QtWidgets.QMainWindow):
                         break
                 except Exception:
                     pass
-                time.sleep(0.5)
+                time.sleep(1)
 
                 # Fail Safe ===>
                 count += 1
                 if count >= 10:
-                    raise Exception(
+                    print(
                         "Ngspice taking too long for simulation. "
                         "Check netlist file to change simulation parameters."
                     )
+
+                    self.msg = QtWidgets.QErrorMessage()
+                    self.msg.setModal(True)
+                    self.msg.setWindowTitle("Warning Message")
+                    self.msg.showMessage(
+                        'Ngspice taking too long for simulation. '
+                        'Check netlist file to change simulation parameters.'
+                    )
+                    self.msg.exec_()
+
+                    return
 
             # Calling Python Plotting
             try:
