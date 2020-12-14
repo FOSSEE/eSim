@@ -67,3 +67,4 @@ LibName33=eSim_Miscellaneous
 LibName34=eSim_Power
 LibName35=eSim_Sources
 LibName36=eSim_Subckt
+LibName37=eSim_Nghdl
