@@ -13,7 +13,7 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Wednesday 05 February 2015
-#      REVISION: Saturday 25 July 2020
+#      REVISION: Sunday 13 December 2020
 # =========================================================================
 
 from PyQt5 import QtCore, QtGui, QtWidgets
@@ -172,7 +172,11 @@ class Workspace(QtWidgets.QWidget):
 
     def browseLocation(self):
         print("Function : Browse Location")
-        self.workspace_directory = QtWidgets.QFileDialog.getExistingDirectory(
-            self, "Browse Location", os.path.expanduser("~")
+        self.workspace_directory = QtCore.QDir.toNativeSeparators(
+            QtWidgets.QFileDialog.getExistingDirectory(
+                self, "Browse Location", os.path.expanduser("~")
+            )
         )
-        self.workspace_loc.setText(self.workspace_directory)
+
+        if self.workspace_directory:
+            self.workspace_loc.setText(self.workspace_directory)

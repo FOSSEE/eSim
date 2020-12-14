@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 import os
 from xml.etree import ElementTree as ET
 from . import TrackWidget
@@ -368,10 +368,15 @@ class DeviceModel(QtWidgets.QWidget):
         if os.name == 'nt':
             init_path = ''
 
-        self.libfile = QtWidgets.QFileDialog.getOpenFileName(
+        self.libfile = QtCore.QDir.toNativeSeparators(
+            QtWidgets.QFileDialog.getOpenFileName(
                 self, "Open Library Directory",
                 init_path + "library/deviceModelLibrary", "*.lib"
             )[0]
+        )
+
+        if not self.libfile:
+            return
 
         # Setting Library to Text Edit Line
         self.entry_var[self.widgetObjCount].setText(self.libfile)

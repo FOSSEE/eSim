@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement.Validation import Validation
 import os
@@ -20,7 +20,7 @@ class UploadSub(QtWidgets.QWidget):
 
     def upload(self):
         """
-        This method opens a dialogue box when Upload subcircuit button is
+        This method opens a dialog box when Upload subcircuit button is
         clicked and after entering folder name, it opens directory system
         to chose file for folder, it only shows file with extension .sub
         and with the name of project entered earlier as folder name.
@@ -30,11 +30,14 @@ class UploadSub(QtWidgets.QWidget):
             true if file has valid format or else it shows an error message.
         """
 
-        editfile = QtWidgets.QFileDialog.getOpenFileName(
-            None, "Upload Subcircuit File", os.path.expanduser("~"), "*.sub"
-        )[0]
+        editfile = QtCore.QDir.toNativeSeparators(
+            QtWidgets.QFileDialog.getOpenFileName(
+                None, "Upload Subcircuit File",
+                os.path.expanduser("~"), "*.sub"
+            )[0]
+        )
 
-        if editfile == '':
+        if not editfile:
             return
 
         upload = os.path.basename(editfile)

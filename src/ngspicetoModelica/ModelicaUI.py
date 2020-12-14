@@ -45,9 +45,15 @@ class OpenModelicaEditor(QtWidgets.QWidget):
         self.show()
 
     def browseFile(self):
-        self.ngspiceNetlist = QtWidgets.QFileDialog.getOpenFileName(
-            self, 'Open Ngspice Netlist', BROWSE_LOCATION)[0]
-        self.FileEdit.setText(self.ngspiceNetlist)
+        temp = QtCore.QDir.toNativeSeparators(
+            QtWidgets.QFileDialog.getOpenFileName(
+                self, 'Open Ngspice Netlist', BROWSE_LOCATION
+            )[0]
+        )
+
+        if temp:
+            self.ngspiceNetlist = temp
+            self.FileEdit.setText(self.ngspiceNetlist)
 
     def callConverter(self):
 

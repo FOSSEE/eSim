@@ -129,8 +129,20 @@ class ModelEditorclass(QtWidgets.QWidget):
 
         # Opens new dialog box
         text, ok = QtWidgets.QInputDialog.getText(
-            self, 'New Model', 'Enter Model Name:')
+            self, 'New Model', 'Enter Model Name:'
+        )
+
         if ok:
+            if not text:
+                print("Model name cannot be empty")
+                print("==================")
+                msg = QtWidgets.QErrorMessage(self)
+                msg.setModal(True)
+                msg.setWindowTitle("Error Message")
+                msg.showMessage('The model name cannot be empty')
+                msg.exec_()
+                return
+
             self.newflag = 1
             self.diode.setDisabled(False)
             self.bjt.setDisabled(False)
@@ -140,7 +152,7 @@ class ModelEditorclass(QtWidgets.QWidget):
             self.magnetic.setDisabled(False)
             self.modelname = (str(text))
         else:
-            pass
+            return
 
         # Validate if the file created exists already or not
         # Show error accordingly
@@ -327,12 +339,15 @@ class ModelEditorclass(QtWidgets.QWidget):
         self.bjt.setDisabled(True)
         self.magnetic.setDisabled(True)
         try:
-            self.editfile = QtWidgets.QFileDialog.getOpenFileName(
-                self, "Open Library Directory",
-                self.init_path + "library/deviceModelLibrary", "*.lib"
-            )[0]
+            self.editfile = QtCore.QDir.toNativeSeparators(
+                QtWidgets.QFileDialog.getOpenFileName(
+                    self, "Open Library Directory",
+                    self.init_path + "library/deviceModelLibrary", "*.lib"
+                )[0]
+            )
 
-            self.createtable(self.editfile)
+            if self.editfile:
+                self.createtable(self.editfile)
         except BaseException:
             print("No File selected for edit")
 
@@ -422,30 +437,50 @@ class ModelEditorclass(QtWidgets.QWidget):
         - text1 => parameter, text2 => value
         '''
         text1, ok = QtWidgets.QInputDialog.getText(
-            self, 'Parameter', 'Enter Parameter')
+            self, 'Parameter', 'Enter Parameter'
+        )
         if ok:
-            if text1 in list(self.modeldict.keys()):
+            if not text1:
+                print("Parameter name cannot be empty")
+                print("==================")
+                msg = QtWidgets.QErrorMessage(self)
+                msg.setModal(True)
+                msg.setWindowTitle("Error Message")
+                msg.showMessage('The parameter name cannot be empty')
+                msg.exec_()
+                return
+            elif text1 in list(self.modeldict.keys()):
                 self.msg = QtWidgets.QErrorMessage(self)
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
-                    "The paramaeter " + text1 + " is already in the list")
+                    "The paramaeter " + text1 + " is already in the list"
+                )
                 self.msg.exec_()
                 return
             text2, ok = QtWidgets.QInputDialog.getText(
-                self, 'Value', 'Enter Value')
+                self, 'Value', 'Enter Value'
+            )
             if ok:
+                if not text2:
+                    print("Value cannot be empty")
+                    print("==================")
+                    msg = QtWidgets.QErrorMessage(self)
+                    msg.setModal(True)
+                    msg.setWindowTitle("Error Message")
+                    msg.showMessage('Value cannot be empty')
+                    msg.exec_()
+                    return
+
                 currentRowCount = self.modeltable.rowCount()
                 self.modeltable.insertRow(currentRowCount)
                 self.modeltable.setItem(
-                    currentRowCount, 0, QTableWidgetItem(text1))
+                    currentRowCount, 0, QTableWidgetItem(text1)
+                )
                 self.modeltable.setItem(
-                    currentRowCount, 1, QTableWidgetItem(text2))
+                    currentRowCount, 1, QTableWidgetItem(text2)
+                )
                 self.modeldict[str(text1)] = str(text2)
-            else:
-                pass
-        else:
-            pass
 
     def savemodelfile(self):
         '''
@@ -676,9 +711,20 @@ class ModelEditorclass(QtWidgets.QWidget):
         '''
         self.savebtn.setDisabled(False)
         index = self.modeltable.currentIndex()
-        remove_item = self.modeltable.item(index.row(), 0).text()
-        self.modeltable.removeRow(index.row())
-        del self.modeldict[str(remove_item)]
+        remove_item = self.modeltable.item(index.row(), 0)
+
+        if remove_item:
+            remove_item = remove_item.text()
+            self.modeltable.removeRow(index.row())
+            del self.modeldict[str(remove_item)]
+        else:
+            print("No parameter selected to remove")
+            print("==================")
+            msg = QtWidgets.QErrorMessage(self)
+            msg.setModal(True)
+            msg.setWindowTitle("Error Message")
+            msg.showMessage('No parameter selected to remove')
+            msg.exec_()
 
     def converttoxml(self):
         '''
@@ -696,10 +742,15 @@ class ModelEditorclass(QtWidgets.QWidget):
         model_dict = {}
         stringof = []
 
-        self.libfile = QtWidgets.QFileDialog.getOpenFileName(
-            self, "Open Library Directory",
-            self.init_path + "library/deviceModelLibrary", "*.lib"
-        )[0]
+        self.libfile = QtCore.QDir.toNativeSeparators(
+            QtWidgets.QFileDialog.getOpenFileName(
+                self, "Open Library Directory",
+                self.init_path + "library/deviceModelLibrary", "*.lib"
+            )[0]
+        )
+
+        if not self.libfile:
+            return
 
         libopen = open(self.libfile)
         filedata = libopen.read().split()
@@ -796,14 +847,25 @@ class ModelEditorclass(QtWidgets.QWidget):
         savepath = os.path.join(self.savepathtest, 'User Libraries')
         os.chdir(savepath)
         text, ok1 = QtWidgets.QInputDialog.getText(
-            self, 'Model Name', 'Enter Model Library Name')
+            self, 'Model Name', 'Enter Model Library Name'
+        )
         if ok1:
-            tree.write(text + ".xml")
-            fileopen = open(text + ".lib", 'w')
-            f = open(self.libfile)
-            fileopen.write(f.read())
-            f.close()
-            fileopen.close()
+            if not text:
+                print("Model library name cannot be empty")
+                print("==================")
+                msg = QtWidgets.QErrorMessage(self)
+                msg.setModal(True)
+                msg.setWindowTitle("Error Message")
+                msg.showMessage('The model library name cannot be empty')
+                msg.exec_()
+            else:
+                tree.write(text + ".xml")
+                fileopen = open(text + ".lib", 'w')
+                f = open(self.libfile)
+                fileopen.write(f.read())
+                f.close()
+                fileopen.close()
+
         os.chdir(defaultcwd)
         libopen.close()
         libopen1.close()
