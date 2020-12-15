@@ -15,7 +15,7 @@
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Sunday 02 August 2020 01:26
+#      REVISION: Wednesday 15 December 2020 23:50
 #===============================================================================
 
 # All variables goes here
@@ -104,9 +104,15 @@ function addKicadPPA
 function installDependency
 {
 
+    set +e      # Temporary disable exit on error
+    trap "" ERR # Do not trap on error of any command
+
 	#Update apt repository
 	echo "Updating apt index files..................."
     sudo apt-get update
+    
+    set -e      # Re-enable exit on error
+    trap error_exit ERR
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
@@ -123,7 +129,7 @@ function installDependency
 	fi
 
     echo "Installing KiCad..........................."
-    sudo apt-get install -y --no-install-recommends kicad
+    sudo apt-get install -y --no-install-recommends kicad=4.0.7*
     if [[ $(lsb_release -rs) == 20.* ]]; then
         sudo add-apt-repository -r "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
     fi
