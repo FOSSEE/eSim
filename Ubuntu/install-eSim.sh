@@ -15,7 +15,7 @@
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Wednesday 15 December 2020 23:50
+#      REVISION: Wednesday 16 December 2020 23:50
 #===============================================================================
 
 # All variables goes here
@@ -90,7 +90,8 @@ function addKicadPPA
             echo "Package: kicad" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             echo "Pin: version 4.0.7*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             echo "Pin-Priority: 501" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
-            sudo add-apt-repository --yes "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
+            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
+            sudo add-apt-repository --yes "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
         else
             sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
         fi
@@ -131,7 +132,7 @@ function installDependency
     echo "Installing KiCad..........................."
     sudo apt-get install -y --no-install-recommends kicad=4.0.7*
     if [[ $(lsb_release -rs) == 20.* ]]; then
-        sudo add-apt-repository -r "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
+        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
     fi
 
 }
