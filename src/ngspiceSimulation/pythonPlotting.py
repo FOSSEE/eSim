@@ -3,9 +3,9 @@ from __future__ import division  # Used for decimal division
 import os
 from PyQt5 import QtGui, QtCore, QtWidgets
 from decimal import Decimal, getcontext
-from matplotlib.backends.backend_qt4agg\
+from matplotlib.backends.backend_qt5agg\
     import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt4agg\
+from matplotlib.backends.backend_qt5agg\
     import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 from configuration.Appconfig import Appconfig
@@ -237,6 +237,7 @@ class plotWindow(QtWidgets.QMainWindow):
             QtWidgets.QMessageBox.about(
                 self, "Warning!!", "Too Few Arguments/SYNTAX Error!\
                     \n Refer Examples")
+            return
         else:
             self.warnning.setText("")
 
@@ -252,10 +253,11 @@ class plotWindow(QtWidgets.QMainWindow):
 
         if len(a) != len(self.parts) // 2 + 1:
             QtWidgets.QMessageBox.about(
-                self,
-                "Warning!!",
+                self, "Warning!!",
                 "One of the operands doesn't belong to "
-                "the above list of Nodes!!")
+                "the above list of Nodes!!"
+            )
+            return
 
         for i in a:
             self.comboAll.append(self.obj_dataext.y[i])
@@ -271,13 +273,15 @@ class plotWindow(QtWidgets.QMainWindow):
                     "<font color='red'>To Err Is Human!<br>One of the " +
                     "operands doesn't belong to the above list!!</font>"
                 )
+                return
 
         if self.parts[1] == 'vs':
             if len(self.parts) > 3:
                 self.warnning.setText("Enter two operands only!!")
                 QtWidgets.QMessageBox.about(
-                    self, "Warning!!", "Recheck the expression syntax!")
-
+                    self, "Warning!!", "Recheck the expression syntax!"
+                )
+                return
             else:
                 self.axes.cla()
 
@@ -300,7 +304,9 @@ class plotWindow(QtWidgets.QMainWindow):
 
         elif max(a) >= self.volts_length and min(a) < self.volts_length:
             QtWidgets.QMessageBox.about(
-                self, "Warning!!", "Do not combine Voltage and Current!!")
+                self, "Warning!!", "Do not combine Voltage and Current!!"
+            )
+            return
 
         else:
             for j in range(len(self.comboAll[0])):
@@ -312,7 +318,9 @@ class plotWindow(QtWidgets.QMainWindow):
                     finalResult.append(eval(re))
                 except ArithmeticError:
                     QtWidgets.QMessageBox.about(
-                        self, "Warning!!", "Dividing by zero!!")
+                        self, "Warning!!", "Dividing by zero!!"
+                    )
+                    return
 
             if self.plotType2[0] == 0:
                 # self.setWindowTitle('AC Analysis')
@@ -392,7 +400,10 @@ class plotWindow(QtWidgets.QMainWindow):
                 self.axes.grid(True)
         if boxCheck == 0:
             QtWidgets.QMessageBox.about(
-                self, "Warning!!", "Please select at least one Node OR Branch")
+                self, "Warning!!", "Please select at least one Node OR Branch"
+            )
+            return
+
         self.canvas.draw()
 
     def onPush_ac(self):
@@ -415,7 +426,10 @@ class plotWindow(QtWidgets.QMainWindow):
                 self.axes.grid(True)
         if boxCheck == 0:
             QtWidgets.QMessageBox.about(
-                self, "Warning!!", "Please select at least one Node OR Branch")
+                self, "Warning!!", "Please select at least one Node OR Branch"
+            )
+            return
+
         self.canvas.draw()
 
     def onPush_trans(self):
@@ -438,7 +452,9 @@ class plotWindow(QtWidgets.QMainWindow):
                 self.axes.grid(True)
         if boxCheck == 0:
             QtWidgets.QMessageBox.about(
-                self, "Warning!!", "Please select at least one Node OR Branch")
+                self, "Warning!!", "Please select at least one Node OR Branch"
+            )
+            return
         self.canvas.draw()
 
     def onPush_dc(self):
@@ -462,7 +478,10 @@ class plotWindow(QtWidgets.QMainWindow):
                 self.axes.grid(True)
         if boxCheck == 0:
             QtWidgets.QMessageBox.about(
-                self, "Warning!!", "Please select atleast one Node OR Branch")
+                self, "Warning!!", "Please select atleast one Node OR Branch"
+            )
+            return
+
         self.canvas.draw()
 
     def colorName(self, letter):
@@ -507,7 +526,8 @@ class plotWindow(QtWidgets.QMainWindow):
 
         if boxCheck == 0:
             QtWidgets.QMessageBox.about(
-                self, "Warning!!", "Please select at least one Node OR Branch")
+                self, "Warning!!", "Please select at least one Node OR Branch"
+            )
 
     def getRMSValue(self, dataPoints):
         getcontext().prec = 5
