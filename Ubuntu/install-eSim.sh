@@ -15,7 +15,7 @@
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Wednesday 16 December 2020 23:50
+#      REVISION: Wednesday 05 January 2021 23:50
 #===============================================================================
 
 # All variables goes here
@@ -85,7 +85,8 @@ function addKicadPPA
     if [ -z "$findppa" ]; then
         echo "Adding KiCad-4 PPA to local apt-repository"
         if [[ $(lsb_release -rs) == 20.* ]]; then
-            sudo add-apt-repository --yes "deb http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu bionic main"
+            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 83FBAD2D910F124E
+            sudo add-apt-repository --yes "deb [trusted=yes] http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu bionic main"
             sudo touch /etc/apt/preferences.d/preferences
             echo "Package: kicad" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             echo "Pin: version 4.0.7*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
