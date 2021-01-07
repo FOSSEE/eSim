@@ -4,7 +4,7 @@ If you want to add any enhancement feature or have found any bug and want to wor
 #### Points on how to make pull request
 * You need to fork this repository to your account.  
 
-* Clone it using ``` git clone https://github.com/[username]/eSim.git ```
+* Clone it using ``` git clone https://github.com/FOSSEE/eSim.git ```
 
 * Always create a new branch before making any changes. You can create new branch using ```git branch <branch-name> ```
 
