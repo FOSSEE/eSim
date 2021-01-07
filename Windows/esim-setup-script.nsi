@@ -67,8 +67,8 @@ FunctionEnd
 ;General
 	
 !define PRODUCT_NAME "eSim"
-!define PRODUCT_VERSION "2.0"
-!define VERSION "2.0.0.0"
+!define PRODUCT_VERSION "2.1"
+!define VERSION "2.1.0.0"
 !define PRODUCT_PUBLISHER "FOSSEE, IIT Bombay"
 !define PRODUCT_WEB_SITE "https://esim.fossee.in/"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -140,7 +140,7 @@ FunctionEnd
 ;--------------------------------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "eSim-2.0_install.exe"
+OutFile "eSim-2.1_installer.exe"
 
 
 Function .onVerifyInstDir
@@ -164,7 +164,7 @@ FunctionEnd
 Section -NgspiceSim
 
   ;Current section needs an additional "size_kb" kilobytes of disk space
-  AddSize 2726298
+  ;AddSize 2726298
 
   SetOutPath "$EXEDIR"
 
@@ -275,7 +275,7 @@ Section -AdditionalIcons
 
 SectionEnd
 
-!include "installnghdl.nsi" 
+!include "nghdl-setup-script.nsi" 
 
 Section -Post
 
@@ -323,7 +323,7 @@ Section Uninstall
     Pop $0
     DetailPrint "EnVar::AddValue returned=|$0|"
 	
-	GetFullPathName $1 $INSTDIR\..\ngspice-nghdl\install_dir\bin
+	GetFullPathName $1 $INSTDIR\..\ngspice-nghdl\bin
 	EnVar::DeleteValue "Path" $1
     Pop $0
     DetailPrint "EnVar::AddValue returned=|$0|"
@@ -354,6 +354,7 @@ Section Uninstall
 
     ;Removing eSim
     RMDir /r "$PROFILE\.esim"
+    RMDir /r "$PROFILE\.nghdl"
     RMDir "$SMPROGRAMS\eSim"
     RMDir /r "$INSTDIR\..\eSim"
 	RMDir /r "$INSTDIR\..\KiCad"
