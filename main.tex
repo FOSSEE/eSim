@@ -4,9 +4,9 @@
 %%
 %%    Description:  
 %%
-%%        Version:  2.0.0
+%%        Version:  2.1.0
 %%        Created:  March 2020
-%%       Revision:  none
+%%       Revision:  August 2020
 %%
 %%         Author:  
 %%   Organization:  eSim,FOSSEE
@@ -32,6 +32,15 @@
 \usepackage{graphicx}%---added now---%
 \graphicspath{ {figures/} }%----added now---%
 %\usepackage{biblatex}
+\usepackage{color}   %May be necessary if you want to color links
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true, %set true if you want colored links
+    linktoc=all,     %set to all if you want both sections and subsections linked
+    linkcolor=blue,  %choose some color if you want links to stand out
+    urlcolor=blue
+}
+\usepackage{multicol}
 \newcommand{\ourname}[1]{\\ [1.5mm] \noindent{\bf #1}}
 % Shroff book size
 \textheight 7.75in
@@ -101,6 +110,8 @@
 
 %\newpage
 \cleardoublepage
+
+\input{acknowledgement.tex} %adds acknowledgement
 
 \pagenumbering{arabic} %reset numbering to normal for the main content
 \input{introduction_page.tex} % adds the chapter 1 introduction
