@@ -99,7 +99,7 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 
 9. Add KiCad installer `kicad-4.0.7-i686.exe` to the installer folder.
 
-> Note: Refer this [documentation](https://github.com/fossee/KiCad-eSim/blob/master/README.md) on packaging KiCad for Windows OS
+> Note: Refer this [documentation](https://github.com/fossee/KiCad-eSim/blob/executables/README.md) on packaging KiCad for Windows OS
 
 10. Add following files/folder to the installer folder:
 	- License file (`rtf` format).
