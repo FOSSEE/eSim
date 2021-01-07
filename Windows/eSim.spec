@@ -3,8 +3,8 @@
 block_cipher = None
 
 
-a = Analysis(['..\\eSim-2.0\\src\\frontEnd\\Application.py'],
-             pathex=['C:\\Users\\admin\\Desktop\\Python3-eSim-Windows-New\\build'],
+a = Analysis(['src\\frontEnd\\Application.py'],
+             pathex=['C:\\Users\\admin\\Desktop\\FOSSEE-eSim\\eSim-build'],
              binaries=[],
              datas=[],
              hiddenimports=[],
@@ -30,4 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=True , icon='..\\logo.ico')
+          console=True , icon='logo.ico')

@@ -16,7 +16,7 @@ It contains the documentation for the changes to be done when a new release is t
     - Manual name convention is `eSim_Manual_y.x.pdf` where y.x is the updated version.
     - Update path in the following line at `master/src/browser/UserManual.py` with the updated manual name:
     ```python
-    file = os.path.realpath('library/browser/User-Manual/eSim_Manual_2.0.pdf')
+    manual = 'library/browser/User-Manual/eSim_Manual_2.1.pdf'
     ```
 
 5. `master/src/configuration/Appconfig.py` - In function `def __init__ (self)` , update the variable `self._VERSION`
@@ -28,7 +28,7 @@ It contains the documentation for the changes to be done when a new release is t
         !define PRODUCT_VERSION "y.x"
         !define VERSION "a.b.c.d"
 
-        OutFile "eSim-y.x_install.exe"
+        OutFile "eSim-y.x_installer.exe"
         ```
 
 8. `master/README.md` - Update new features, OS support and other changes that were made in the new version.
