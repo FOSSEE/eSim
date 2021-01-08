@@ -15,7 +15,7 @@
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Sunday 02 August 2020 01:26
+#      REVISION: Wednesday 05 January 2021 23:50
 #===============================================================================
 
 # All variables goes here
@@ -85,12 +85,14 @@ function addKicadPPA
     if [ -z "$findppa" ]; then
         echo "Adding KiCad-4 PPA to local apt-repository"
         if [[ $(lsb_release -rs) == 20.* ]]; then
-            sudo add-apt-repository --yes "deb http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu bionic main"
+            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 83FBAD2D910F124E
+            sudo add-apt-repository --yes "deb [trusted=yes] http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu bionic main"
             sudo touch /etc/apt/preferences.d/preferences
             echo "Package: kicad" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             echo "Pin: version 4.0.7*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             echo "Pin-Priority: 501" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
-            sudo add-apt-repository --yes "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
+            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
+            sudo add-apt-repository --yes "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
         else
             sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
         fi
@@ -104,9 +106,15 @@ function addKicadPPA
 function installDependency
 {
 
+    set +e      # Temporary disable exit on error
+    trap "" ERR # Do not trap on error of any command
+
 	#Update apt repository
 	echo "Updating apt index files..................."
     sudo apt-get update
+    
+    set -e      # Re-enable exit on error
+    trap error_exit ERR
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
@@ -123,9 +131,9 @@ function installDependency
 	fi
 
     echo "Installing KiCad..........................."
-    sudo apt-get install -y --no-install-recommends kicad
+    sudo apt-get install -y --no-install-recommends kicad=4.0.7*
     if [[ $(lsb_release -rs) == 20.* ]]; then
-        sudo add-apt-repository -r "deb http://in.archive.ubuntu.com/ubuntu/ bionic main universe"
+        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
     fi
 
 }
