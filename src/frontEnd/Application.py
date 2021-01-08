@@ -13,7 +13,7 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Saturday 01 August 2020
+#      REVISION: Sunday 13 December 2020
 # =========================================================================
 
 import os
@@ -293,13 +293,20 @@ class Application(QtWidgets.QMainWindow):
         text, ok = QtWidgets.QInputDialog.getText(
             self, 'New Project Info', 'Enter Project Name:'
         )
+        updated = False
+
         if ok:
             self.projname = (str(text))
             self.project = NewProjectInfo()
             directory, filelist = self.project.createProject(self.projname)
-            self.obj_Mainview.obj_projectExplorer.addTreeNode(
-                directory, filelist)
-        else:
+
+            if directory and filelist:
+                self.obj_Mainview.obj_projectExplorer.addTreeNode(
+                    directory, filelist
+                )
+                updated = True
+
+        if not updated:
             print("No new project created")
             self.obj_appconfig.print_info('No new project created')
             try:
@@ -532,15 +539,26 @@ class Application(QtWidgets.QMainWindow):
                         break
                 except Exception:
                     pass
-                time.sleep(0.5)
+                time.sleep(1)
 
                 # Fail Safe ===>
                 count += 1
                 if count >= 10:
-                    raise Exception(
+                    print(
                         "Ngspice taking too long for simulation. "
                         "Check netlist file to change simulation parameters."
                     )
+
+                    self.msg = QtWidgets.QErrorMessage()
+                    self.msg.setModal(True)
+                    self.msg.setWindowTitle("Warning Message")
+                    self.msg.showMessage(
+                        'Ngspice taking too long for simulation. '
+                        'Check netlist file to change simulation parameters.'
+                    )
+                    self.msg.exec_()
+
+                    return
 
             # Calling Python Plotting
             try:
@@ -703,7 +721,7 @@ class Application(QtWidgets.QMainWindow):
                 'Please select the project first. ' +
                 'You can either create a new project or open existing project'
             )
-            self.exec_()
+            self.msg.exec_()
 
     def open_OMoptim(self):
         """

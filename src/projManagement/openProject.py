@@ -16,7 +16,7 @@
 #      REVISION: Sunday 26 July 2020
 # =========================================================================
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from .Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
@@ -45,8 +45,11 @@ class OpenProjectInfo(QtWidgets.QWidget):
         """
         self.obj_Appconfig = Appconfig()
         self.openDir = self.obj_Appconfig.default_workspace["workspace"]
-        self.projDir = QtWidgets.QFileDialog.getExistingDirectory(
-            self, "open", self.openDir)
+        self.projDir = QtCore.QDir.toNativeSeparators(
+            QtWidgets.QFileDialog.getExistingDirectory(
+                self, "open", self.openDir
+            )
+        )
 
         if self.obj_validation.validateOpenproj(self.projDir):
             self.obj_Appconfig.current_project['ProjectName'] = str(

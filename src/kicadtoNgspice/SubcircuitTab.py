@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 from . import TrackWidget
 from projManagement import Validation
 import os
@@ -151,26 +151,36 @@ class SubcircuitTab(QtWidgets.QWidget):
             init_path = ''
 
         self.subfile = str(
-            QtWidgets.QFileDialog.getExistingDirectory(
-                self, "Open Subcircuit",
-                init_path + "library/SubcircuitLibrary")
+            QtCore.QDir.toNativeSeparators(
+                QtWidgets.QFileDialog.getExistingDirectory(
+                    self, "Open Subcircuit",
+                    init_path + "library/SubcircuitLibrary"
+                )
             )
+        )
+
+        if not self.subfile:
+            return
+
         self.reply = self.obj_validation.validateSub(
-            self.subfile, self.numPorts[self.widgetObjCount - 1])
+            self.subfile, self.numPorts[self.widgetObjCount - 1]
+        )
+
         if self.reply == "True":
             # Setting Library to Text Edit Line
             self.entry_var[self.widgetObjCount].setText(self.subfile)
             self.subName = self.subDetail[self.widgetObjCount]
 
             # Storing to track it during conversion
-
             self.obj_trac.subcircuitTrack[self.subName] = self.subfile
+
         elif self.reply == "PORT":
             self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
-                "Please select a Subcircuit with correct number of ports.")
+                "Please select a Subcircuit with correct number of ports."
+            )
             self.msg.exec_()
         elif self.reply == "DIREC":
             self.msg = QtWidgets.QErrorMessage(self)
@@ -178,7 +188,8 @@ class SubcircuitTab(QtWidgets.QWidget):
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a valid Subcircuit directory "
-                "(Containing '.sub' file).")
+                "(Containing '.sub' file)."
+            )
             self.msg.exec_()
 
     def trackSubcircuitWithoutButton(self, iter_value, path_value):

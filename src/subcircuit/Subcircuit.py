@@ -64,8 +64,19 @@ class Subcircuit(QtWidgets.QWidget):
 
     def newsch(self):
         text, ok = QtWidgets.QInputDialog.getText(
-            self, 'New Schematic', 'Enter Schematic Name:')
+            self, 'New Schematic', 'Enter Schematic Name:'
+        )
         if ok:
+            if not text:
+                print("Schematic name cannot be empty")
+                print("==================")
+                msg = QtWidgets.QErrorMessage(self)
+                msg.setModal(True)
+                msg.setWindowTitle("Error Message")
+                msg.showMessage('The schematic name cannot be empty')
+                msg.exec_()
+                return
+
             self.schematic_name = (str(text))
             self.subcircuit = NewSub()
             self.subcircuit.createSubcircuit(self.schematic_name)

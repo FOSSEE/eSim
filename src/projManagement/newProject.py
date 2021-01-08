@@ -124,6 +124,7 @@ class NewProjectInfo(QtWidgets.QWidget):
                 ' existing project'
             )
             self.msg.exec_()
+            return None, None
 
         elif self.reply == "CHECKNAME":
             self.msg = QtWidgets.QErrorMessage(self)
@@ -132,6 +133,7 @@ class NewProjectInfo(QtWidgets.QWidget):
             self.msg.showMessage(
                 'The project name should not contain space between them')
             self.msg.exec_()
+            return None, None
 
         elif self.reply == "NONE":
             self.msg = QtWidgets.QErrorMessage(self)
@@ -139,6 +141,7 @@ class NewProjectInfo(QtWidgets.QWidget):
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('The project name cannot be empty')
             self.msg.exec_()
+            return None, None
 
     def cancelProject(self):
         self.close()

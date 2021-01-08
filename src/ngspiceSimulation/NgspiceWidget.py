@@ -35,7 +35,7 @@ class NgspiceWidget(QtWidgets.QWidget):
             projPath = self.obj_appconfig.current_project["ProjectName"]
             os.chdir(projPath)
             self.command = 'cmd /c '+'"start /min ' + \
-                msys_bin + "/mintty.exe ngspice " + command + '"'
+                msys_bin + "/mintty.exe ngspice -p " + command + '"'
             self.process.start(self.command)
             os.chdir(tempdir)
 
