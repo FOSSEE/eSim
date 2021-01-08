@@ -1,17 +1,17 @@
-\chapter{NGHDL-Mixed mode simulation}
+\chapter{NGHDL-Mixed Signal Simulation}
 \label{chap9}
 \thispagestyle{empty}
 
 
-NGHDL feature facilitates creation of user-defined models for mixed-mode circuit simulation in eSim. By interfacing GHDL and Ngspice, we achieve mixed-mode simulation. Digital models are simulated using GHDL and XSpice engine of Ngspice. \\
+NGHDL feature facilitates creation of user-defined models for mixed-signal circuit simulation in eSim. By interfacing GHDL and Ngspice, we achieve mixed-signal simulation. Digital models are simulated using GHDL and XSpice engine of Ngspice. \\
 
-Note : NGHDL feature as of March 2020, is available only for Linux OS users, under Ubuntu 16.04 and Ubuntu 18.04 distributions
+
 %To access NGHDL click on the NGHDL button on the left pane of window as shown in figure \figref{screen3}:
 %\pagebreak
 
 \section{Introduction}
 
-Ngspice supports mixed mode simulation, i.e. it can simulate both digital and analog component. It defines a \texttt{model} which has the functionality of the circuit component, which can be used in the netlist.
+Ngspice supports mixed-signal simulation, i.e. it can simulate both digital and analog component. It defines a \texttt{model} which has the functionality of the circuit component, which can be used in the netlist.
 For example you can create an \texttt{adder} model in Ngspice and use it in any circuit netlist of Ngspice. \\
 
 However, it is not feasible to define complex digital models without a complete understanding of Ngspice and XSPICE architectures and is a time-consuming process. Also, most of the users are familiar with GHDL and can write the models using VHDL code with ease.
@@ -51,7 +51,7 @@ Hence, NGHDL provides an  interface to write VHDL code for a digital model and i
         \end{figure}
 
 
-\item Now browse and locate the VHDL file to upload. Select the VHDL file and click on the Upload button. This process will create Ngspice model and corresponding component drawing inside the KiCad library (eSim\_Nghdl.lib) of the VHDL block to be used in mixed-mode simulations. An acknowledgement message will appear upon sucessful processing of the VHDL code as shown in \figref{upload}. \\
+\item Now browse and locate the VHDL file to upload. Select the VHDL file and click on the Upload button. This process will create Ngspice model and corresponding component drawing inside the KiCad library (eSim\_Nghdl.lib) of the VHDL block to be used in mixed-signal simulations. An acknowledgement message will appear upon sucessful processing of the VHDL code as shown in \figref{upload}. \\
 
         \begin{figure}[!htp]
             \centering
