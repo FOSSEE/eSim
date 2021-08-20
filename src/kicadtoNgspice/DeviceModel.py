@@ -230,6 +230,7 @@ class DeviceModel(QtWidgets.QWidget):
                 except BaseException:
                     pass
 
+                #By Sumanto and Jay
                 #jfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
                 self.addbtn = QtWidgets.QPushButton("Upload hex file")
                 self.addbtn.setObjectName("%d" % self.count)
