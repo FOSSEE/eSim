@@ -10,6 +10,7 @@ class Model(QtWidgets.QWidget):
     - This class creates Model Tab of KicadtoNgspice window.
       The widgets are created dynamically in the Model Tab.
     """
+    #by Sumanto and Jay
     def addHex(self):
         """
         This function is use to keep track of all Device Model widget
@@ -31,6 +32,7 @@ class Model(QtWidgets.QWidget):
         chosen_file_path = os.path.abspath(self.hexfile)
         print(os.path.abspath(self.hexfile))
 
+    #By Sumanto and Jay
     def uploadHex(self):
         """
         This function is use to keep track of all Device Model widget
