@@ -2,7 +2,7 @@ from PyQt5 import QtWidgets, QtCore
 import os
 from xml.etree import ElementTree as ET
 from . import TrackWidget
-
+import subprocess
 
 class DeviceModel(QtWidgets.QWidget):
     """
@@ -103,7 +103,7 @@ class DeviceModel(QtWidgets.QWidget):
                 except BaseException:
                     pass
 
-                transgrid.addWidget(self.entry_var[self.count], self.row, 1)
+                jfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
                 self.addbtn = QtWidgets.QPushButton("Add")
                 self.addbtn.setObjectName("%d" % self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
@@ -114,11 +114,11 @@ class DeviceModel(QtWidgets.QWidget):
                 else:
                     self.trackLibraryWithoutButton(self.count, path_name)
 
-                transgrid.addWidget(self.addbtn, self.row, 2)
-                transbox.setLayout(transgrid)
+                jfetgrid.addWidget(self.addbtn, self.row, 2)
+                jfetbox.setLayout(transgrid)
 
                 # CSS
-                transbox.setStyleSheet(" \
+                jfetbox.setStyleSheet(" \
                 QGroupBox { border: 1px solid gray; border-radius: \
                 9px; margin-top: 0.5em; } \
                 QGroupBox::title { subcontrol-origin: margin; left:\
@@ -171,6 +171,7 @@ class DeviceModel(QtWidgets.QWidget):
                 self.addbtn.setObjectName("%d" % self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
                 self.deviceDetail[self.count] = words[0]
+
 
                 if self.entry_var[self.count].text() == "":
                     pass
@@ -229,8 +230,8 @@ class DeviceModel(QtWidgets.QWidget):
                 except BaseException:
                     pass
 
-                jfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                self.addbtn = QtWidgets.QPushButton("Add")
+                #jfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
+                self.addbtn = QtWidgets.QPushButton("Upload hex file")
                 self.addbtn.setObjectName("%d" % self.count)
                 self.addbtn.clicked.connect(self.trackLibrary)
                 self.deviceDetail[self.count] = words[0]
@@ -399,6 +400,10 @@ class DeviceModel(QtWidgets.QWidget):
 
         else:
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
+
+    
+
+                
 
     def trackLibraryWithoutButton(self, iter_value, path_value):
         """
