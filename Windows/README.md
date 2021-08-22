@@ -35,7 +35,7 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 			$ pip install matplotlib==3.0.3
 			$ pip install tornado
 			$ pip install setuptools
-			$ pip install PyQt5
+			$ pip install PyQt5==5.9.2
 			$ pip install pypiwin32
 		
 7. Test whether only eSim dependencies are available or not:
