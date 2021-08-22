@@ -1,6 +1,7 @@
 ;NSIS Modern User Interface
 ;Start Menu Folder Selection Example Script
 ;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar - 01_03_2020
+;Modified by Manasi Yadav, Sumanto Kar - 17_08_2021
 ;Made by eSim Team, FOSSEE, IIT Bombay
 
 ;--------------------------------
@@ -190,6 +191,7 @@ Section -NgspiceSim
   FileOpen $0  "$PROFILE\.esim\config.ini" w
   FileWrite $0 `[eSim]$\n`
   FileWrite $0 `eSim_HOME = $INSTDIR\eSim$\n`
+  FileWrite $0 `eSim = %(eSim_HOME)s\eSim.bat$\n`
   FileWrite $0 `LICENSE = %(eSim_HOME)s\LICENSE.rtf$\n`
   FileWrite $0 `KicadLib = %(eSim_HOME)s\library\kicadLibrary.zip$\n`
   FileWrite $0 `IMAGES = %(eSim_HOME)s\images$\n`
