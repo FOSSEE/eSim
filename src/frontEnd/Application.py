@@ -16,8 +16,21 @@
 #      REVISION: Friday 14 February 2020
 # =========================================================================
 
+<<<<<<< HEAD
 from frontEnd import pathmagic  # noqa
 from PyQt4 import QtGui, QtCore
+=======
+import os
+import traceback
+if os.name == 'nt':     # noqa
+    from frontEnd import pathmagic  # noqa:F401
+    init_path = ''
+else:
+    import pathmagic    # noqa:F401
+    init_path = '../../'
+
+from PyQt5 import QtGui, QtCore, QtWidgets
+>>>>>>> 5489e465... Removed eSim crashing problem when simulation interrupted/ no .cir.out file found
 from configuration.Appconfig import Appconfig
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
@@ -30,12 +43,21 @@ from frontEnd import DockArea
 import time
 from PyQt4.Qt import QSize
 import sys
+<<<<<<< HEAD
 import os
 import shutil
 
 
 # Its our main window of application.
 class Application(QtGui.QMainWindow):
+=======
+import psutil
+
+# Its our main window of application.
+
+
+class Application(QtWidgets.QMainWindow):
+>>>>>>> 5489e465... Removed eSim crashing problem when simulation interrupted/ no .cir.out file found
     """This class initializes all objects used in this file."""
     global project_name
 
@@ -66,8 +88,13 @@ class Application(QtGui.QMainWindow):
         self.showMaximized()
         self.setWindowIcon(QtGui.QIcon('images/logo.png'))
 
+<<<<<<< HEAD
         self.systemTrayIcon = QtGui.QSystemTrayIcon(self)
         self.systemTrayIcon.setIcon(QtGui.QIcon('images/logo.png'))
+=======
+        self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
+        self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
+>>>>>>> 5489e465... Removed eSim crashing problem when simulation interrupted/ no .cir.out file found
         self.systemTrayIcon.setVisible(True)
 
     def initToolBar(self):
@@ -498,18 +525,59 @@ class Application(QtGui.QMainWindow):
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
+    def checkIfProcessRunning(self, processName):
+        '''
+        Check if there is any running process
+        that contains the given name processName.
+        '''
+        # Iterate over the all the running process
+        for proc in psutil.process_iter():
+            try:
+                # Check if process name contains the given name string.
+                if processName.lower() in proc.name().lower():
+                    return True
+            except (psutil.NoSuchProcess,
+                    psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+        return False
+
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
         if self.projDir is not None:
-            self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
 
+            if self.obj_Mainview.obj_dockarea.ngspiceEditor(
+                    self.projDir) is False:
+                print(
+                    "No .cir.out file"
+                    "Check netlist file to change simulation parameters."
+                )
+
+                self.msg = QtWidgets.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Warning Message")
+                self.msg.showMessage(
+                    'No .cir.out file'
+                )
+                self.msg.exec_()
+                return
             currTime = time.time()
             count = 0
             while True:
                 try:
                     st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
+                    if self.checkIfProcessRunning('xterm') is False:
+                        self.msg = QtWidgets.QErrorMessage()
+                        self.msg.setModal(True)
+                        self.msg.setWindowTitle("Warning Message")
+                        self.msg.showMessage(
+                            'Simulation was interuppted. '
+                            'Please close all the Xterm windows.'
+                            'And then rerun the simulation'
+                        )
+                        self.msg.exec_()
+                        return
                     if st.st_mtime >= currTime:
                         break
                 except Exception:
@@ -518,8 +586,13 @@ class Application(QtGui.QMainWindow):
 
                 # Fail Safe ===>
                 count += 1
+<<<<<<< HEAD
                 if count >= 10:
                     raise Exception(
+=======
+                if count >= 1000:
+                    print(
+>>>>>>> 5489e465... Removed eSim crashing problem when simulation interrupted/ no .cir.out file found
                         "Ngspice taking too long for simulation. "
                         "Check netlist file to change simulation parameters."
                     )
@@ -536,7 +609,7 @@ class Application(QtGui.QMainWindow):
                     ' Please look at console for more details.'
                 )
                 self.msg.exec_()
-                print("Exception Message:", str(e))
+                print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : ' + str(e))
 
         else:
