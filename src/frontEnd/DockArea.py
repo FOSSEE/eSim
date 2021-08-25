@@ -324,4 +324,3 @@ class DockArea(QtWidgets.QMainWindow):
         self.temp = self.obj_appconfig.current_project['ProjectName']
         for dockwidget in self.obj_appconfig.dock_dict[self.temp]:
             dockwidget.close()
-
