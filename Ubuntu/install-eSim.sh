@@ -85,13 +85,13 @@ function addKicadPPA
     if [ -z "$findppa" ]; then
         echo "Adding KiCad-4 PPA to local apt-repository"
         if [[ $(lsb_release -rs) == 20.* ]]; then
-            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 83FBAD2D910F124E
+            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 83FBAD2D910F124E
             sudo add-apt-repository --yes "deb [trusted=yes] http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu bionic main"
             sudo touch /etc/apt/preferences.d/preferences
             echo "Package: kicad" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             echo "Pin: version 4.0.7*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             echo "Pin-Priority: 501" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
-            sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32
+            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3B4FE6ACC0B21F32
             sudo add-apt-repository --yes "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
         else
             sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
