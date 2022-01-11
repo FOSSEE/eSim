@@ -4,6 +4,7 @@ from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
 from modelEditor.ModelEditor import ModelEditorclass
 from subcircuit.Subcircuit import Subcircuit
+from maker.makerchip import makerchip
 from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
 from browser.UserManual import UserManual
@@ -122,6 +123,9 @@ class DockArea(QtWidgets.QMainWindow):
         self.projName = os.path.basename(self.projDir)
         self.ngspiceNetlist = os.path.join(
             self.projDir, self.projName + ".cir.out")
+
+        if os.path.isfile(self.ngspiceNetlist) is False:
+            return False
 
         global count
         self.ngspiceWidget = QtWidgets.QWidget()
@@ -251,6 +255,34 @@ class DockArea(QtWidgets.QMainWindow):
         dock['Subcircuit-' + str(count)].setVisible(True)
         dock['Subcircuit-' + str(count)].setFocus()
         dock['Subcircuit-' + str(count)].raise_()
+
+        count = count + 1
+
+    def makerchip(self):
+        """This function creates a widget for different subcircuit options."""
+        global count
+        self.makerWidget = QtWidgets.QWidget()
+        self.makerLayout = QtWidgets.QVBoxLayout()
+        self.makerLayout.addWidget(makerchip(self))
+
+        self.makerWidget.setLayout(self.makerLayout)
+        dock['Makerchip-' +
+             str(count)] = QtWidgets.QDockWidget('Makerchip-' + str(count))
+        dock['Makerchip-' + str(count)].setWidget(self.makerWidget)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+                           dock['Makerchip-' + str(count)])
+        self.tabifyDockWidget(dock['Welcome'],
+                              dock['Makerchip-' + str(count)])
+
+        # CSS
+        dock['Makerchip-' + str(count)].setStyleSheet(" \
+        .QWidget { border-radius: 15px; border: 1px solid gray;\
+            padding: 5px; width: 200px; height: 150px;  } \
+        ")
+
+        dock['Makerchip-' + str(count)].setVisible(True)
+        dock['Makerchip-' + str(count)].setFocus()
+        dock['Makerchip-' + str(count)].raise_()
 
         count = count + 1
 
