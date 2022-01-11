@@ -28,7 +28,7 @@ class OpenModelicaEditor(QtWidgets.QWidget):
         self.FileEdit.setText(self.ngspiceNetlist)
         self.grid.addWidget(self.FileEdit, 0, 0)
 
-        self.browsebtn = QtWidgets.QPushButton("Browse")
+        self.browsebtn = QtWidgets.QPushButton("Browse .cir.out")
         self.browsebtn.clicked.connect(self.browseFile)
         self.grid.addWidget(self.browsebtn, 0, 1)
 
@@ -40,9 +40,29 @@ class OpenModelicaEditor(QtWidgets.QWidget):
         self.loadOMbtn.clicked.connect(self.callOMEdit)
         self.grid.addWidget(self.loadOMbtn, 3, 1)
 
+        
+        self.OMPathtext = QtWidgets.QLineEdit()
+        self.OMPathtext.setText("")
+        self.grid.addWidget(self.OMPathtext, 4, 0)
+
+        self.OMPathbrowsebtn = QtWidgets.QPushButton("Browse OM")
+        self.OMPathbrowsebtn.clicked.connect(self.OMPathbrowseFile)
+        self.grid.addWidget(self.OMPathbrowsebtn, 4, 1)
+
         # self.setGeometry(300, 300, 350, 300)
         self.setLayout(self.grid)
         self.show()
+
+    def OMPathbrowseFile(self):
+        temp = QtCore.QDir.toNativeSeparators(
+            QtWidgets.QFileDialog.getExistingDirectory(
+                self, "Open Open Modelica Directory", "home"
+            )
+        )
+
+        if temp:
+            self.OMPath = temp
+            self.OMPathtext.setText(self.OMPath)
 
     def browseFile(self):
         temp = QtCore.QDir.toNativeSeparators(
@@ -215,17 +235,18 @@ class OpenModelicaEditor(QtWidgets.QWidget):
             )
 
     def callOMEdit(self):
-
-        if self.obj_validation.validateTool("OMEdit"):
+        
+        try:
             modelFiles = glob.glob(self.modelicaNetlist)
             modelFiles = ' '.join(file for file in modelFiles)
-            self.cmd2 = "OMEdit " + modelFiles
+            self.cmd2 = self.OMPath+"/OMEdit " + modelFiles
+            print(self.cmd2)
             self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
             self.obj_workThread2.start()
             print("OMEdit called")
             self.obj_appconfig.print_info("OMEdit called")
 
-        else:
+        except BaseException:
             self.msg = QtWidgets.QMessageBox()
             self.msgContent = (
                 "There was an error while opening OMEdit.<br/>"
