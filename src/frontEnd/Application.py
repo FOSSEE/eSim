@@ -551,7 +551,7 @@ class Application(QtWidgets.QMainWindow):
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
                     self.projDir) is False:
                 print(
-                    "No .cir.out file"
+                    "No netlist file (*.cir.out)"
                     "Check netlist file to change simulation parameters."
                 )
 
@@ -559,7 +559,7 @@ class Application(QtWidgets.QMainWindow):
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Warning Message")
                 self.msg.showMessage(
-                    'No .cir.out file'
+                    'No netlist file (*.cir.out)'
                 )
                 self.msg.exec_()
                 return
@@ -591,7 +591,8 @@ class Application(QtWidgets.QMainWindow):
                 if count >= 1000:
                     print(
                         "Ngspice taking too long for simulation. "
-                        "Check netlist file to change simulation parameters."
+                        "Check netlist file (*.cir.out) "
+                        "to change simulation parameters."
                     )
 
                     self.msg = QtWidgets.QErrorMessage()
@@ -599,7 +600,8 @@ class Application(QtWidgets.QMainWindow):
                     self.msg.setWindowTitle("Warning Message")
                     self.msg.showMessage(
                         'Ngspice taking too long for simulation. '
-                        'Check netlist file to change simulation parameters.'
+                        'Check netlist file (*.cir.out) '
+                        'to change simulation parameters.'
                     )
                     self.msg.exec_()
 
@@ -752,7 +754,7 @@ class Application(QtWidgets.QMainWindow):
             else:
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
-                self.msg.setWindowTitle("Missing Ngspice netlist")
+                self.msg.setWindowTitle("Missing Ngspice Netlist")
                 self.msg.showMessage(
                     'Current project does not contain any Ngspice file. ' +
                     'Please create Ngspice file with extension .cir.out'
