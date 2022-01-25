@@ -28,7 +28,7 @@ class OpenModelicaEditor(QtWidgets.QWidget):
         self.FileEdit.setText(self.ngspiceNetlist)
         self.grid.addWidget(self.FileEdit, 0, 0)
 
-        self.browsebtn = QtWidgets.QPushButton("Browse .cir.out")
+        self.browsebtn = QtWidgets.QPushButton("Browse Netlist (*.cir.out)")
         self.browsebtn.clicked.connect(self.browseFile)
         self.grid.addWidget(self.browsebtn, 0, 1)
 
@@ -40,7 +40,6 @@ class OpenModelicaEditor(QtWidgets.QWidget):
         self.loadOMbtn.clicked.connect(self.callOMEdit)
         self.grid.addWidget(self.loadOMbtn, 3, 1)
 
-        
         self.OMPathtext = QtWidgets.QLineEdit()
         self.OMPathtext.setText("")
         self.grid.addWidget(self.OMPathtext, 4, 0)
@@ -56,7 +55,7 @@ class OpenModelicaEditor(QtWidgets.QWidget):
     def OMPathbrowseFile(self):
         temp = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getExistingDirectory(
-                self, "Open Open Modelica Directory", "home"
+                self, "Open OpenModelica Directory", "home"
             )
         )
 
@@ -235,7 +234,7 @@ class OpenModelicaEditor(QtWidgets.QWidget):
             )
 
     def callOMEdit(self):
-        
+
         try:
             modelFiles = glob.glob(self.modelicaNetlist)
             modelFiles = ' '.join(file for file in modelFiles)
