@@ -12,7 +12,7 @@
 #  REQUIREMENTS: ---
 #          BUGS: ---
 #         NOTES: ---
-#        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode
+#        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode, Sumanto Kar
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
 #      REVISION: Wednesday 05 January 2021 23:50
@@ -75,7 +75,51 @@ function installNghdl
 
 }
 
+function verilator
+{   
 
+    echo "Installing Verilator Dependencies..........................."
+    if [[ -n "$(which apt-get 2> /dev/null)" ]]
+    then
+    # Ubuntu
+        sudo apt-get install make autoconf g++ flex bison
+    else [[ -n "$(which yum 2> /dev/null)" ]]
+    # Ubuntu
+        sudo yum install make autoconf flex bison which -y
+        sudo yum groupinstall 'Development Tools'  -y
+    fi
+    echo "Installing Verilator..........................."
+    sudo apt install -y curl
+    curl https://www.veripool.org/ftp/verilator-4.210.tgz | tar -zx
+    cd verilator-4.210
+    ./configure
+    make -j$(nproc)
+    sudo make install
+    echo "Removing the Unessential files in Verilator Folder..........................."
+    rm -r docs
+    rm -r examples
+    rm -r include
+    rm -r test_regress
+    rm -r bin
+    ls -1 | grep -E -v 'config.status|configure.ac|Makefile.in|verilator.1|configure|Makefile|src|verilator.pc' | xargs rm -f
+    #sudo rm -v -r'!("config.status"|"configure.ac"|"Makefile.in"|"verilator.1"|"configure"|"Makefile"|"src"|"verilator.pc")'
+}
+function Ngveridependencies
+{
+    echo "Installing Chrome.........................."
+    sudo apt install -y chromium-browser
+    echo "Installing python3 pip.........................."
+    sudo apt install python3-pip
+    echo "Installing watchdog..........................."
+    pip3 install watchdog
+    echo "Installing HDLParse..........................."
+    pip3 install hdlparse
+    echo "Installing Makerchip-App..........................."
+    pip3 install makerchip-app
+    echo "Installing Sandpiper-Saas..........................."
+    pip3 install sandpiper-saas
+
+}
 function addKicadPPA
 {
 
@@ -118,7 +162,10 @@ function installDependency
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
-
+    
+    echo "Installing PyQt5..........................."
+    sudo apt-get install -y python3-psutil
+    
     echo "Installing PyQt5..........................."
     sudo apt-get install -y python3-pyqt5
 
@@ -325,6 +372,8 @@ if [ $option == "--install" ];then
             copyKicadLibrary
             installNghdl
             createDesktopStartScript
+	    verilator
+	    Ngveridependencies
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
@@ -336,6 +385,8 @@ if [ $option == "--install" ];then
             copyKicadLibrary
             installNghdl
             createDesktopStartScript
+	    verilator
+	    Ngveridependencies
 
             if [ $? -ne 0 ];then
                 echo -e "\n\n\nFreeEDA ERROR: Unable to install required packages. Please check your internet connection.\n\n"
@@ -367,10 +418,12 @@ elif [ $option == "--uninstall" ];then
         if [[ $(lsb_release -rs) == 20.* ]]; then
             sudo sed -i '/Package: kicad/{:label;N;/Pin-Priority: 501/!blabel};/Pin: version 4.0.7*/d' /etc/apt/preferences.d/preferences
         fi
-
+	echo "Removing Verilator..........................."
+	cd verilator-4.210
+	sudo make uninstall
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
-        cd nghdl/
+        cd ../nghdl/
         if [ $? -eq 0 ];then
         	chmod +x install-nghdl.sh
     	    ./install-nghdl.sh --uninstall
