@@ -588,7 +588,7 @@ class Application(QtWidgets.QMainWindow):
 
                 # Fail Safe ===>
                 count += 1
-                if count >= 1000:
+                if count >= 10:
                     print(
                         "Ngspice taking too long for simulation. "
                         "Check netlist file (*.cir.out) "
