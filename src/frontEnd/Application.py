@@ -11,13 +11,14 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
+# 		 Sumanto Kar, jeetsumanto123@gmail.com
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Sunday 13 December 2020
+#      REVISION: Wednesday 25 August 2021
 # =========================================================================
 
 import os
-
+import traceback
 if os.name == 'nt':     # noqa
     from frontEnd import pathmagic  # noqa:F401
     init_path = ''
@@ -39,9 +40,11 @@ from PyQt5.Qt import QSize
 import shutil
 import time
 import sys
-
+import psutil
 
 # Its our main window of application.
+
+
 class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     global project_name
@@ -523,18 +526,60 @@ class Application(QtWidgets.QMainWindow):
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
+    def checkIfProcessRunning(self, processName):
+        '''
+        Check if there is any running process
+        that contains the given name processName.
+        '''
+        # Iterate over the all the running process
+        for proc in psutil.process_iter():
+            try:
+                # Check if process name contains the given name string.
+                if processName.lower() in proc.name().lower():
+                    return True
+            except (psutil.NoSuchProcess,
+                    psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+        return False
+
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
         if self.projDir is not None:
-            self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
+            # Edited by Sumanto Kar 25/08/2021
+            if self.obj_Mainview.obj_dockarea.ngspiceEditor(
+                    self.projDir) is False:
+                print(
+                    "No netlist file (*.cir.out)"
+                    "Check netlist file to change simulation parameters."
+                )
 
+                self.msg = QtWidgets.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Warning Message")
+                self.msg.showMessage(
+                    'No netlist file (*.cir.out)'
+                )
+                self.msg.exec_()
+                return
             currTime = time.time()
             count = 0
             while True:
                 try:
+                    # Edited by Sumanto Kar 25/08/2021
                     st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
+                    if self.checkIfProcessRunning('xterm') is False:
+                        self.msg = QtWidgets.QErrorMessage()
+                        self.msg.setModal(True)
+                        self.msg.setWindowTitle("Warning Message")
+                        self.msg.showMessage(
+                            'Simulation was interuppted. '
+                            'Please close all the Xterm windows.'
+                            'And then rerun the simulation'
+                        )
+                        self.msg.exec_()
+                        return
                     if st.st_mtime >= currTime:
                         break
                 except Exception:
@@ -546,7 +591,8 @@ class Application(QtWidgets.QMainWindow):
                 if count >= 10:
                     print(
                         "Ngspice taking too long for simulation. "
-                        "Check netlist file to change simulation parameters."
+                        "Check netlist file (*.cir.out) "
+                        "to change simulation parameters."
                     )
 
                     self.msg = QtWidgets.QErrorMessage()
@@ -554,7 +600,8 @@ class Application(QtWidgets.QMainWindow):
                     self.msg.setWindowTitle("Warning Message")
                     self.msg.showMessage(
                         'Ngspice taking too long for simulation. '
-                        'Check netlist file to change simulation parameters.'
+                        'Check netlist file (*.cir.out) '
+                        'to change simulation parameters.'
                     )
                     self.msg.exec_()
 
@@ -572,7 +619,7 @@ class Application(QtWidgets.QMainWindow):
                     ' Please look at console for more details.'
                 )
                 self.msg.exec_()
-                print("Exception Message:", str(e))
+                print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : ' + str(e))
 
         else:
@@ -707,7 +754,7 @@ class Application(QtWidgets.QMainWindow):
             else:
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
-                self.msg.setWindowTitle("Missing Ngspice netlist")
+                self.msg.setWindowTitle("Missing Ngspice Netlist")
                 self.msg.showMessage(
                     'Current project does not contain any Ngspice file. ' +
                     'Please create Ngspice file with extension .cir.out'
