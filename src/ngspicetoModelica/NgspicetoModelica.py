@@ -344,7 +344,7 @@ class NgMoConverter:
                     stat = self.mappingData["Sources"][sourceType][typ[0]] +\
                         ' ' + compName + '(offset = ' +\
                         self.getUnitVal(typ[1]) +\
-                        ', V = ' + self.getUnitVal(words[4]) + ', freqHz = ' +\
+                        ', V = ' + self.getUnitVal(words[4]) + ', f = ' +\
                         self.getUnitVal(words[5]) + ', startTime = ' +\
                         self.getUnitVal(words[6]) + ', phase = ' +\
                         self.getUnitVal(theta[0]) + ');'
