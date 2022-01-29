@@ -16,11 +16,11 @@
 #     GUIDED BY: Steve Hoover, Founder Redwood EDA
 #                Kunal Ghosh, VLSI System Design Corp.Pvt.Ltd
 #                Anagha Ghosh, VLSI System Design Corp.Pvt.Ltd
-#OTHER CONTRIBUTERS:
+# OTHER CONTRIBUTERS:
 #                Prof. Madhuri Kadam, Shree L. R. Tiwari College of Engineering
-#                Rohinth Ram, Madras Institue of Technology 
-#                Charaan S., Madras Institue of Technology 
-#                Nalinkumar S., Madras Institue of Technology  
+#                Rohinth Ram, Madras Institue of Technology
+#                Charaan S., Madras Institue of Technology
+#                Nalinkumar S., Madras Institue of Technology
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Monday 29, November 2021
 #      REVISION: Tuesday 25, January 2022
@@ -30,7 +30,7 @@
 from . import Appconfig
 import re
 import os
-import sys
+import sys  # noqa F401
 import xml.etree.cElementTree as ET
 from PyQt5 import QtWidgets
 
@@ -267,7 +267,7 @@ class AutoSchematic:
 
         port_list = []
         j = 0
-        k = 0
+        k = 0   # noqa F841
         for i in range(total):
             if (i < inputs):
                 input_port[1] = inputName[i]

@@ -9,14 +9,21 @@
 #     REQUIREMENTS: ---
 #             BUGS: ---
 #            NOTES: ---
-#           AUTHOR: Sumanto Kar, jeetsumanto123@gmail.com, FOSSEE, IIT Bombay
+#           AUTHOR: Sumanto Kar, sumantokar@iitb.ac.in, FOSSEE, IIT Bombay
 # ACKNOWLEDGEMENTS: Rahul Paknikar, rahulp@iitb.ac.in, FOSSEE, IIT Bombay
-#                   Digvjay Singh, chrl3hr5@gmail.com, FOSSEE, IIT Bombay
-#                   Prof. Maheswari R., VIT Chennai
+#                Digvijay Singh, digvijay.singh@iitb.ac.in, FOSSEE, IIT Bombay
+#                Prof. Maheswari R. and Team, VIT Chennai
 #     GUIDED BY: Steve Hoover, Founder Redwood EDA
+#                Kunal Ghosh, VLSI System Design Corp.Pvt.Ltd
+#                Anagha Ghosh, VLSI System Design Corp.Pvt.Ltd
+# OTHER CONTRIBUTERS:
+#                Prof. Madhuri Kadam, Shree L. R. Tiwari College of Engineering
+#                Rohinth Ram, Madras Institue of Technology
+#                Charaan S., Madras Institue of Technology
+#                Nalinkumar S., Madras Institue of Technology
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Monday 29, November 2021
-#      REVISION: Monday 29, November 2021
+#      REVISION: Tuesday 25, January 2022
 # =========================================================================
 
 

@@ -16,26 +16,28 @@
 #     GUIDED BY: Steve Hoover, Founder Redwood EDA
 #                Kunal Ghosh, VLSI System Design Corp.Pvt.Ltd
 #                Anagha Ghosh, VLSI System Design Corp.Pvt.Ltd
-#OTHER CONTRIBUTERS:
+# OTHER CONTRIBUTERS:
 #                Prof. Madhuri Kadam, Shree L. R. Tiwari College of Engineering
-#                Rohinth Ram, Madras Institue of Technology 
-#                Charaan S., Madras Institue of Technology 
-#                Nalinkumar S., Madras Institue of Technology  
+#                Rohinth Ram, Madras Institue of Technology
+#                Charaan S., Madras Institue of Technology
+#                Nalinkumar S., Madras Institue of Technology
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Monday 29, November 2021
 #      REVISION: Tuesday 25, January 2022
 # =========================================================================
 
 # importing the files and libraries
-from xml.etree import ElementTree as ET
+from xml.etree import ElementTree as ET  # noqa:F401
 import hdlparse.verilog_parser as vlog
-import time
+import time  # noqa:F401
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QThread, Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout
+from PyQt5.QtCore import QThread, Qt  # noqa:F401
+from PyQt5.QtWidgets \
+    import QApplication, \
+    QWidget, QLabel, QVBoxLayout  # noqa:F401
 from configuration.Appconfig import Appconfig
 import os
-import subprocess
+import subprocess  # noqa:F401
 import watchdog.events
 import watchdog.observers
 from os.path import expanduser
@@ -74,7 +76,7 @@ class Maker(QtWidgets.QWidget):
 
         self.grid.addWidget(self.createoptionsBox(), 0, 0, QtCore.Qt.AlignTop)
         self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.show()
 
     # This function is to Add new  verilog file
@@ -173,7 +175,7 @@ class Maker(QtWidgets.QWidget):
     def runmakerchip(self):
         init_path = '../../'
         if os.name == 'nt':
-            init_path = ''
+            init_path = ''  # noqa:F841
         try:
             if not os.path.isfile(home + "/.makerchip_accepted"):
                 reply = QtWidgets.QMessageBox.warning(
@@ -207,19 +209,21 @@ class Maker(QtWidgets.QWidget):
                         and the makerchip will be running on \
                         this file. Otherwise click on NO.</b><br/> \
                     <b> To not open Makerchip, click CANCEL</b>",
-                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No | QtWidgets.QMessageBox.Cancel)
-                
+                    QtWidgets.QMessageBox.Yes
+                    | QtWidgets.QMessageBox.No
+                    | QtWidgets.QMessageBox.Cancel)
                 if reply == QtWidgets.QMessageBox.Cancel:
                     return
-                    
                 if reply == QtWidgets.QMessageBox.Yes:
                     code = open(self.verilogfile).read()
                     text = code
-                    filename = '.'.join(self.verilogfile.split('.')[:-1]) + ".tlv"
-                    file = os.path.basename('.'.join(self.verilogfile.split('.')[:-1]))
+                    filename = '.'.join(
+                        self.verilogfile.split('.')[:-1]) + ".tlv"
+                    file = os.path.basename('.'.join(
+                        self.verilogfile.split('.')[:-1]))
                     f = open(filename, 'w')
-                    flag = 1
-                    ports = ""
+                    flag = 1  # noqa F841
+                    ports = ""  # noqa F841
                     code = code.replace(" wire ", " ")
                     code = code.replace(" reg ", " ")
                     vlog_ex = vlog.VerilogExtractor()
@@ -252,7 +256,8 @@ output logic passed, output logic failed);\n'''
                             None,
                             "Error Message",
                             "<b>Error: File name and module \
-                            name are not same. Please ensure that they are same</b>",
+                            name are not same. Please \
+                            ensure that they are same</b>",
                             QtWidgets.QMessageBox.Ok)
 
                         self.obj_Appconfig.print_info(
@@ -333,41 +338,37 @@ Please check if Verilog File Chosen.")
         # self.optionsbox2.setTitle("Note: Please save the file once edited")
         # self.optionsgrid2 = QtWidgets.QGridLayout()
         self.optionsgroupbtn = QtWidgets.QButtonGroup()
-
         self.addoptions = QtWidgets.QPushButton("Add Top Level Verilog file")
         self.optionsgroupbtn.addButton(self.addoptions)
         self.addoptions.clicked.connect(self.addverilog)
         self.optionsgrid.addWidget(self.addoptions, 0, 1)
-        #self.optionsbox.setLayout(self.optionsgrid)
-        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-        
+        # self.optionsbox.setLayout(self.optionsgrid)
+        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0
         self.refreshoption = QtWidgets.QPushButton("Refresh")
         self.optionsgroupbtn.addButton(self.refreshoption)
         self.refreshoption.clicked.connect(self.refresh)
         self.optionsgrid.addWidget(self.refreshoption, 0, 2)
-        #self.optionsbox.setLayout(self.optionsgrid)
-        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-        
+        # self.optionsbox.setLayout(self.optionsgrid)
+        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.saveoption = QtWidgets.QPushButton("Save")
         self.optionsgroupbtn.addButton(self.saveoption)
         self.saveoption.clicked.connect(self.save)
         self.optionsgrid.addWidget(self.saveoption, 0, 3)
-        #self.optionsbox.setLayout(self.optionsgrid)
-        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-        
+        # self.optionsbox.setLayout(self.optionsgrid)
+        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.runoptions = QtWidgets.QPushButton("Edit in Makerchip")
         self.optionsgroupbtn.addButton(self.runoptions)
         self.runoptions.clicked.connect(self.runmakerchip)
         self.optionsgrid.addWidget(self.runoptions, 0, 4)
-        #self.optionsbox.setLayout(self.optionsgrid)
-        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        # self.optionsbox.setLayout(self.optionsgrid)
+        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         if not os.path.isfile(home + "/.makerchip_accepted"):
             self.acceptTOS = QtWidgets.QPushButton("Accept Makerchip TOS")
             self.optionsgroupbtn.addButton(self.acceptTOS)
             self.acceptTOS.clicked.connect(self.makerchipaccepted)
             self.optionsgrid.addWidget(self.acceptTOS, 0, 5)
-            #self.optionsbox.setLayout(self.optionsgrid)
-            #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+            # self.optionsbox.setLayout(self.optionsgrid)
+            # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.optionsbox.setLayout(self.optionsgrid)
         return self.optionsbox
 
@@ -387,7 +388,7 @@ Please check if Verilog File Chosen.")
         if reply == QtWidgets.QMessageBox.Yes:
             f = open(home + "/.makerchip_accepted", "w")
             f.close()
-        #else:
+        # else:
         #    return
 
     # This function adds the other parts of widget like text box
