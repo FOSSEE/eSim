@@ -11,13 +11,15 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-# 		 Sumanto Kar, jeetsumanto123@gmail.com
+#                Sumanto Kar, sumantokar@iitb.ac.in, FOSSEE, IIT Bombay
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
 #      REVISION: Wednesday 25 August 2021
 # =========================================================================
 
 import os
+import traceback        # noqa:F401
+
 import traceback
 if os.name == 'nt':     # noqa
     from frontEnd import pathmagic  # noqa:F401
@@ -213,6 +215,12 @@ class Application(QtWidgets.QMainWindow):
         )
         self.nghdl.triggered.connect(self.open_nghdl)
 
+        self.makerchip = QtWidgets.QAction(
+            QtGui.QIcon(init_path + 'images/makerchip.png'),
+            '<b>Makerchip-NgVeri</b>', self
+        )
+        self.makerchip.triggered.connect(self.open_makerchip)
+
         self.omedit = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/omedit.png'),
             '<b>Modelica Converter</b>', self
@@ -233,6 +241,7 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.ngspice)
         self.lefttoolbar.addAction(self.model)
         self.lefttoolbar.addAction(self.subcircuit)
+        self.lefttoolbar.addAction(self.makerchip)
         self.lefttoolbar.addAction(self.nghdl)
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
@@ -547,6 +556,24 @@ class Application(QtWidgets.QMainWindow):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
         if self.projDir is not None:
+
+            self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
+            if self.obj_Mainview.obj_dockarea.ngspiceEditor(
+                    self.projDir) is False:
+                print(
+                    "No netlist (*.cir.out) file"
+                    "Check netlist file to change simulation parameters."
+                )
+
+                self.msg = QtWidgets.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Warning Message")
+                self.msg.showMessage(
+                    'No netlist (*.cir.out) file'
+                )
+                self.msg.exec_()
+                return
+=======
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
                     self.projDir) is False:
@@ -554,6 +581,7 @@ class Application(QtWidgets.QMainWindow):
                     "No netlist file (*.cir.out)"
                     "Check netlist file to change simulation parameters."
                 )
+>>>>>>> master
 
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
@@ -672,6 +700,20 @@ class Application(QtWidgets.QMainWindow):
             self.obj_appconfig.print_error('Error while opening NGHDL. ' +
                                            'Please make sure it is installed')
             self.msg.exec_()
+
+    def open_makerchip(self):
+        """
+        This function opens 'subcircuit' option in left-tool-bar.
+        When 'subcircuit' icon is clicked wich is present in
+        left-tool-bar of main page:
+
+            - Meassge shown on screen "Subcircuit editor is called".
+            - 'subcircuiteditor()' function is called using object
+              'obj_dockarea' of class 'Mainview'.
+        """
+        print("Function : Makerchip and Verilator to Ngspice Converter")
+        self.obj_appconfig.print_info('Makerchip is called')
+        self.obj_Mainview.obj_dockarea.makerchip()
 
     def open_modelEditor(self):
         """
