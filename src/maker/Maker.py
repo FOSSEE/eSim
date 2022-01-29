@@ -9,14 +9,21 @@
 #     REQUIREMENTS: ---
 #             BUGS: ---
 #            NOTES: ---
-#           AUTHOR: Sumanto Kar, jeetsumanto123@gmail.com, FOSSEE, IIT Bombay
+#           AUTHOR: Sumanto Kar, sumantokar@iitb.ac.in, FOSSEE, IIT Bombay
 # ACKNOWLEDGEMENTS: Rahul Paknikar, rahulp@iitb.ac.in, FOSSEE, IIT Bombay
-#                Digvjay Singh, digvijay.singh@iitb.ac.in, FOSSEE, IIT Bombay
-#                Prof. Maheswari R., VIT Chennai
+#                Digvijay Singh, digvijay.singh@iitb.ac.in, FOSSEE, IIT Bombay
+#                Prof. Maheswari R. and Team, VIT Chennai
 #     GUIDED BY: Steve Hoover, Founder Redwood EDA
+#                Kunal Ghosh, VLSI System Design Corp.Pvt.Ltd
+#                Anagha Ghosh, VLSI System Design Corp.Pvt.Ltd
+#OTHER CONTRIBUTERS:
+#                Prof. Madhuri Kadam, Shree L. R. Tiwari College of Engineering
+#                Rohinth Ram, Madras Institue of Technology 
+#                Charaan S., Madras Institue of Technology 
+#                Nalinkumar S., Madras Institue of Technology  
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Monday 29, November 2021
-#      REVISION: Monday 29, November 2021
+#      REVISION: Tuesday 25, January 2022
 # =========================================================================
 
 # importing the files and libraries
@@ -67,7 +74,7 @@ class Maker(QtWidgets.QWidget):
 
         self.grid.addWidget(self.createoptionsBox(), 0, 0, QtCore.Qt.AlignTop)
         self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-        self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.show()
 
     # This function is to Add new  verilog file
@@ -189,7 +196,7 @@ class Maker(QtWidgets.QWidget):
             # self.file.write(self.entry_var[1].toPlainText())
             # self.file.close()
             filename = self.verilogfile
-            if self.verilogfile.split('.')[1] != "tlv":
+            if self.verilogfile.split('.')[-1] != "tlv":
                 reply = QtWidgets.QMessageBox.warning(
                     None,
                     "Do you want to automate top module?",
@@ -198,18 +205,23 @@ class Maker(QtWidgets.QWidget):
                     NOTE: a .tlv file will be created \
                     in the directory of current verilog file\
                         and the makerchip will be running on \
-                        this file. Otherwise click on NO.</b>",
-                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No)
+                        this file. Otherwise click on NO.</b><br/> \
+                    <b> To not open Makerchip, click CANCEL</b>",
+                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No | QtWidgets.QMessageBox.Cancel)
+                
+                if reply == QtWidgets.QMessageBox.Cancel:
+                    return
+                    
                 if reply == QtWidgets.QMessageBox.Yes:
                     code = open(self.verilogfile).read()
                     text = code
-                    filename = self.verilogfile.split('.')[0] + ".tlv"
-                    file = os.path.basename(self.verilogfile.split('.')[0])
+                    filename = '.'.join(self.verilogfile.split('.')[:-1]) + ".tlv"
+                    file = os.path.basename('.'.join(self.verilogfile.split('.')[:-1]))
                     f = open(filename, 'w')
                     flag = 1
                     ports = ""
-                    code = code.replace("wire", " ")
-                    code = code.replace("reg", " ")
+                    code = code.replace(" wire ", " ")
+                    code = code.replace(" reg ", " ")
                     vlog_ex = vlog.VerilogExtractor()
                     vlog_mods = vlog_ex.extract_objects_from_source(code)
                     lint_off = open("../maker/lint_off.txt").readlines()
@@ -218,9 +230,9 @@ class Maker(QtWidgets.QWidget):
                         string += "/* verilator lint_off " + \
                             item.strip("\n") + "*/  "
                     string += '''\n\n//Your Verilog/System \
-                    Verilog Code Starts Here:\n''' + \
+Verilog Code Starts Here:\n''' + \
                         text + '''\n\n//Top Module Code \
-                        Starts here:\n\tmodule top(input \
+Starts here:\n\tmodule top(input \
 logic clk, input logic reset, input logic [31:0] cyc_cnt, \
 output logic passed, output logic failed);\n'''
                     print(file)
@@ -235,8 +247,20 @@ output logic passed, output logic failed);\n'''
                                         p.name) != "failed":
                                     string += '\t\tlogic ' + p.data_type\
                                      + " " + p.name + ";//" + p.mode + "\n"
+                    if m.name.lower() != file.lower():
+                        QtWidgets.QMessageBox.critical(
+                            None,
+                            "Error Message",
+                            "<b>Error: File name and module \
+                            name are not same. Please ensure that they are same</b>",
+                            QtWidgets.QMessageBox.Ok)
+
+                        self.obj_Appconfig.print_info(
+                            'NgVeri Stopped due to File \
+name and module name not matching error')
+                        return
                     string += "//The $random() can be replaced \
-                    if user wants to assign values\n"
+if user wants to assign values\n"
                     for m in vlog_mods:
                         if m.name.lower() == file.lower():
                             for p in m.ports:
@@ -258,32 +282,33 @@ output logic passed, output logic failed);\n'''
                             i = 0
                             for p in m.ports:
                                 i = i + 1
-                                string += p.name
+                                string += "."+p.name+"("+p.name+")"
                                 if i == len(m.ports):
                                     string += ");\n\t\n\\TLV\n//\
-                                     Add \\TLV here if desired\
+Add \\TLV here if desired\
                                      \n\\SV\nendmodule\n\n"
                                 else:
                                     string += ", "
                     f.write(string)
 
-                self.process = QtCore.QProcess(self)
-                cmd = 'makerchip ' + filename
-                print("File: " + filename)
-                self.process.start(cmd)
-                print(
-                    "Makerchip command process pid ---------- >",
-                    self.process.pid())
-        except BaseException:
+            self.process = QtCore.QProcess(self)
+            cmd = 'makerchip ' + filename
+            print("File: " + filename)
+            self.process.start(cmd)
+            print(
+                "Makerchip command process pid ---------- >",
+                self.process.pid())
+        except BaseException as e:
+            print(e)
             self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Error in running Makerchip. \
-                Please check if Verilog File Chosen.")
+Please check if Verilog File Chosen.")
             self.msg.exec_()
             print("Error in running Makerchip. \
-                Please check if Verilog File Chosen.")
+Please check if Verilog File Chosen.")
         #   initial = self.read_file()
 
         # while True:
@@ -313,33 +338,37 @@ output logic passed, output logic failed);\n'''
         self.optionsgroupbtn.addButton(self.addoptions)
         self.addoptions.clicked.connect(self.addverilog)
         self.optionsgrid.addWidget(self.addoptions, 0, 1)
-        self.optionsbox.setLayout(self.optionsgrid)
-        self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        #self.optionsbox.setLayout(self.optionsgrid)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        
         self.refreshoption = QtWidgets.QPushButton("Refresh")
         self.optionsgroupbtn.addButton(self.refreshoption)
         self.refreshoption.clicked.connect(self.refresh)
         self.optionsgrid.addWidget(self.refreshoption, 0, 2)
-        self.optionsbox.setLayout(self.optionsgrid)
-        self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        #self.optionsbox.setLayout(self.optionsgrid)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        
         self.saveoption = QtWidgets.QPushButton("Save")
         self.optionsgroupbtn.addButton(self.saveoption)
         self.saveoption.clicked.connect(self.save)
         self.optionsgrid.addWidget(self.saveoption, 0, 3)
-        self.optionsbox.setLayout(self.optionsgrid)
-        self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        #self.optionsbox.setLayout(self.optionsgrid)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        
         self.runoptions = QtWidgets.QPushButton("Edit in Makerchip")
         self.optionsgroupbtn.addButton(self.runoptions)
         self.runoptions.clicked.connect(self.runmakerchip)
         self.optionsgrid.addWidget(self.runoptions, 0, 4)
+        #self.optionsbox.setLayout(self.optionsgrid)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+        if not os.path.isfile(home + "/.makerchip_accepted"):
+            self.acceptTOS = QtWidgets.QPushButton("Accept Makerchip TOS")
+            self.optionsgroupbtn.addButton(self.acceptTOS)
+            self.acceptTOS.clicked.connect(self.makerchipaccepted)
+            self.optionsgrid.addWidget(self.acceptTOS, 0, 5)
+            #self.optionsbox.setLayout(self.optionsgrid)
+            #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.optionsbox.setLayout(self.optionsgrid)
-        self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-        self.acceptTOS = QtWidgets.QPushButton("Accept Makerchip TOS")
-        self.optionsgroupbtn.addButton(self.acceptTOS)
-        self.acceptTOS.clicked.connect(self.makerchipaccepted)
-        self.optionsgrid.addWidget(self.acceptTOS, 0, 5)
-        self.optionsbox.setLayout(self.optionsgrid)
-        self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-
         return self.optionsbox
 
     # This function is called to accept TOS of makerchip
@@ -358,8 +387,8 @@ output logic passed, output logic failed);\n'''
         if reply == QtWidgets.QMessageBox.Yes:
             f = open(home + "/.makerchip_accepted", "w")
             f.close()
-        else:
-            return
+        #else:
+        #    return
 
     # This function adds the other parts of widget like text box
 
@@ -375,7 +404,7 @@ output logic passed, output logic failed);\n'''
         self.start = QtWidgets.QLabel("Path to .tlv file")
         self.trgrid.addWidget(self.start, 1, 0)
         self.count = 0
-        self.entry_var[self.count] = QtWidgets.QLineEdit(self)
+        self.entry_var[self.count] = QtWidgets.QLabel(" - ")
         self.trgrid.addWidget(self.entry_var[self.count], 1, 1)
         self.entry_var[self.count].setMaximumWidth(1000)
         self.count += 1

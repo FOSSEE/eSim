@@ -23,16 +23,16 @@
 # importing the files and libraries
 import re
 import os
-import sys
-import shutil
-import subprocess
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.QtGui import *
-from configparser import ConfigParser
+import sys  # noqa:F401
+import shutil  # noqa:F401
+import subprocess  # noqa:F401
+from PyQt5 import QtGui, QtCore, QtWidgets  # noqa:F401
+from PyQt5.QtGui import *  # noqa:F401 F403
+from configparser import ConfigParser  # noqa:F401
 from configuration import Appconfig
 from . import createkicad
 import hdlparse.verilog_parser as vlog
-from configparser import SafeConfigParser
+from configparser import SafeConfigParser  # noqa:F401
 
 # Class is used to generate the Ngspice Model
 
@@ -1006,7 +1006,7 @@ and set the load for input ports */
 
         init_path = '../../../'
         if os.name == 'nt':
-            init_path = ''
+            init_path = ''  # noqa:F841
         includefolder = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getExistingDirectory(
                 self, "open", "home"
