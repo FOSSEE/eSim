@@ -792,7 +792,7 @@ and set the load for input ports */
         # print(self.modelpath)
 
         self.cmd = "verilator -Wall " + wno + "\
-         --cc --exe --Mdir . -CFLAGS -fPIC  sim_main_" + \
+         --cc --exe --no-MMD --Mdir . -CFLAGS -fPIC  sim_main_" + \
             self.fname.split('.')[0] + ".cpp " + self.fname
         self.process = QtCore.QProcess(self)
         self.process.readyReadStandardOutput.connect(self.readAllStandard)
