@@ -191,21 +191,21 @@ class NgVeri(QtWidgets.QWidget):
         self.optionsgroupbtn.addButton(self.addverilogbutton)
         self.addverilogbutton.clicked.connect(self.addverilog)
         self.optionsgrid.addWidget(self.addverilogbutton, 0, 1)
-        #self.optionsbox.setLayout(self.optionsgrid)
+        # self.optionsbox.setLayout(self.optionsgrid)
         #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
         self.addfilebutton = QtWidgets.QPushButton("Add Other file")
         self.optionsgroupbtn.addButton(self.addfilebutton)
         self.addfilebutton.clicked.connect(self.addfile)
         self.optionsgrid.addWidget(self.addfilebutton, 0, 2)
-        #self.optionsbox.setLayout(self.optionsgrid)
+        # self.optionsbox.setLayout(self.optionsgrid)
         #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
         self.addfolderbutton = QtWidgets.QPushButton("Add Folder")
         self.optionsgroupbtn.addButton(self.addfolderbutton)
         self.addfolderbutton.clicked.connect(self.addfolder)
         self.optionsgrid.addWidget(self.addfolderbutton, 0, 3)
-        #self.optionsbox.setLayout(self.optionsgrid)
+        # self.optionsbox.setLayout(self.optionsgrid)
         #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
         self.clearTerminalBtn = QtWidgets.QPushButton("Clear Terminal")
@@ -246,7 +246,7 @@ class NgVeri(QtWidgets.QWidget):
             model.runMakeInstall()
             return
 
-        #else:
+        # else:
         #    return
 
     # This is to remove lint_off comments needed by the verilator warnings
@@ -275,7 +275,7 @@ class NgVeri(QtWidgets.QWidget):
                 file.write(item)
             return
 
-        #else:
+        # else:
         #    return
 
     # This is to add lint_off comments needed by the verilator warnings
