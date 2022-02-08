@@ -1,9 +1,9 @@
 # =========================================================================
-#             FILE: ModelGeneration.py
+#             FILE: NgVeri.py
 #
 #            USAGE: ---
 #
-#      DESCRIPTION: This define all model generation processes of NgVeri.
+#      DESCRIPTION: This define all components of the NgVeri Tab.
 #
 #          OPTIONS: ---
 #     REQUIREMENTS: ---
@@ -28,36 +28,25 @@
 
 
 # importing the files and libraries
-import re
+from PyQt5 import QtCore, QtWidgets, QtGui
+from . import Maker
+from . import ModelGeneration
 import os
-import sys  # noqa:F401
-import shutil  # noqa:F401
-import subprocess  # noqa:F401
-from PyQt5 import QtGui, QtCore, QtWidgets  # noqa:F401
-from PyQt5.QtGui import *  # noqa:F401 F403
-from configparser import ConfigParser  # noqa:F401
-from configuration import Appconfig
-from . import createkicad
-import hdlparse.verilog_parser as vlog
-from configparser import SafeConfigParser  # noqa:F401
-
-# Class is used to generate the Ngspice Model
+import subprocess
+from configuration.Appconfig import Appconfig
+from configparser import SafeConfigParser
+from configparser import ConfigParser
 
 
-class ModelGeneration(QtWidgets.QWidget):
+# beginning class NgVeri. This class create the NgVeri Tab
+class NgVeri(QtWidgets.QWidget):
 
     # initialising the variables
-    def __init__(self, file, termedit):
+    def __init__(self, filecount):
+        print(self)
         QtWidgets.QWidget.__init__(self)
-        super().__init__()
-        self.obj_Appconfig = Appconfig.Appconfig()
-        print("Argument is : ", file)
-        self.file = file
-        self.termedit = termedit
-        self.cur_dir = os.getcwd()
-        self.fname = os.path.basename(file)
-        self.fname = self.fname.lower()
-        print("Verilog/SystemVerilog/TL Verilog filename is : ", self.fname)
+        # Maker.addverilog(self)
+        self.obj_Appconfig = Appconfig()
         self.home = os.path.expanduser("~")
         self.parser = SafeConfigParser()
         self.parser.read(os.path.join(
@@ -67,1091 +56,301 @@ class ModelGeneration(QtWidgets.QWidget):
         self.src_home = self.parser.get('SRC', 'SRC_HOME')
         self.licensefile = self.parser.get('SRC', 'LICENSE')
         self.digital_home = self.parser.get('NGSPICE', 'DIGITAL_MODEL')
-
         self.digital_home = self.digital_home.split("/ghdl")[0] + "/Ngveri"
-        # # #### Creating connection_info.txt file from verilog file #### #
+        self.count = 0
+        self.text = ""
+        self.entry_var = {}
+        self.createNgveriWidget()
+        self.fname = ""
+        self.filecount = filecount
 
-    # Readinf the file and performing operations and copying it in the Ngspice
-    # folder
-    def verilogfile(self):
-        Text = "<span style=\" font-size:25pt;\
-         font-weight:1000; color:#008000;\" >"
-        Text += ".................Running NgVeri..................."
-        Text += "</span>"
-        self.termedit.append(Text)
+    # Creating the various components of the Widget(Ngveri Tab)
 
-        read_verilog = open(self.file, 'r')
-        verilog_data = read_verilog.readlines()
-        read_verilog.close()
-        self.modelpath = self.digital_home + \
-            "/" + self.fname.split('.')[0] + "/"
-        if not os.path.isdir(self.modelpath):
-            os.mkdir(self.modelpath)
+    def createNgveriWidget(self):
 
-        if self.fname.split('.')[1] == "tlv":
-            self.sandpiper()
-            read_verilog = open(self.modelpath + self.fname, 'r')
-            verilog_data = read_verilog.readlines()
-            read_verilog.close()
-        f = open(self.modelpath + self.fname, 'w')
+        self.grid = QtWidgets.QGridLayout()
+        self.setLayout(self.grid)
 
-        for item in verilog_data:
-            if self.fname.split('.')[1] == "sv":
-                string = item.replace("top", self.fname.split('.')[0])
-            else:
-                string = item
-            f.write(string)
-        f.write("\n")
-        f.close()
+        self.grid.addWidget(self.createoptionsBox(), 0, 0, QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
-    # This function is call the sandpiper to convert .tlv file to .sv file
-    def sandpiper(self):
-        # Text="Running Sandpiper............"
-        print("Running Sandpiper-Saas for TLV to SV Conversion")
-        self.cmd = "cp ../maker/tlv/clk_gate.v ../maker/tlv/pseudo_rand.sv \
-../maker/tlv/sandpiper.vh ../maker/tlv/sandpiper_gen.vh \
-../maker/tlv/sp_default.vh ../maker/tlv/pseudo_rand_gen.sv \
-../maker/tlv/pseudo_rand.m4out.tlv " + self.file + " " + self.modelpath
+        self.show()
 
-        self.process = QtCore.QProcess(self)
-        self.args = ['-c', self.cmd]
-        self.process.start('sh', self.args)
-        self.termedit.append("Command: " + self.cmd)
-        self.process \
-            .readyReadStandardOutput.connect(self.readAllStandard)
-        self.process.waitForFinished(50000)
-        print("Copied the files required for TLV successfully")
-        self.cur_dir = os.getcwd()
-        print("Running Sandpiper............")
-        os.chdir(self.modelpath)
-        self.cmd = "sandpiper-saas -i " + \
-            self.fname.split('.')[0] + ".tlv -o "\
-            + self.fname.split('.')[0] + ".sv"
-        self.args = ['-c', self.cmd]
-        self.process.start('sh', self.args)
-        self.termtitle("RUN SANDPIPER-SAAS")
-        self.termtext("Current Directory: " + self.modelpath)
-        self.termtext("Command: " + self.cmd)
-        # self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
-        self.process \
-            .readyReadStandardOutput.connect(self.readAllStandard)
-        self.process \
-            .readyReadStandardError.connect(self.readAllStandard)
-        self.process.waitForFinished(50000)
-        print("Ran Sandpiper successfully")
-        os.chdir(self.cur_dir)
-        self.fname = self.fname.split('.')[0] + ".sv"
-
-    # This function parses the module name and \
-    # input/output ports of verilog code using HDL parse
-    # and writes to the connection_info.txt
-
-    def verilogParse(self):
-
-        with open(self.modelpath + self.fname, 'rt') as fh:
-            code = fh.read()
-
-        code = code.replace("wire", " ")
-        code = code.replace("reg", " ")
-        vlog_ex = vlog.VerilogExtractor()
-        vlog_mods = vlog_ex.extract_objects_from_source(code)
-        f = open(self.modelpath + "connection_info.txt", 'w')
-        for m in vlog_mods:
-            if m.name.lower() == self.fname.split('.')[0]:
-                print(str(m.name) + " " + self.fname.split('.')[0])
-                for p in m.ports:
-                    print(p.data_type)
-                    if str(p.data_type).find(':') == -1:
-                        p.port_number = "1"
-                    else:
-                        x = p.data_type.split(":")
-                        print(x)
-                        y = x[0].split("[")
-                        z = x[1].split("]")
-                        z = int(y[1]) - int(z[0])
-                        p.port_number = z + 1
-
-        for m in vlog_mods:
-            if m.name.lower() == self.fname.split('.')[0]:
-                m.name = m.name.lower()
-                print('Module "{}":'.format(m.name))
-                for p in m.generics:
-                    print('\t{:20}{:8}{}'.format(p.name, p.mode, p.data_type))
-                print('  Ports:')
-                for p in m.ports:
-                    print(
-                        '\t{:20}{:8}{}'.format(
-                            p.name, p.mode, p.port_number))
-                    f.write(
-                        '\t{:20}{:8}{}\n'.format(
-                            p.name, p.mode, p.port_number))
-                break
-        f.close()
-        if m.name.lower() != self.fname.split(".")[0]:
-            QtWidgets.QMessageBox.critical(
-                None,
-                "Error Message",
-                "<b>Error: File name and module \
-                name are not same. Please ensure that they are same</b>",
-                QtWidgets.QMessageBox.Ok)
-
-            self.obj_Appconfig.print_info(
-                'NgVeri Stopped due to File \
-                name and module name not matching error')
-            return "Error"
-        modelname = str(m.name)
-        schematicLib = createkicad.AutoSchematic()
-        schematicLib.init(modelname, self.modelpath)
-        error = schematicLib.createkicad()
-        if error == "Error":
-            return "Error"
-        return "No Error"
-
-    # This function is used to get the Port Information from
-    # connection_info.txt
-    def getPortInfo(self):
-        readfile = open(self.modelpath + 'connection_info.txt', 'r')
-        data = readfile.readlines()
-        self.input_list = []
-        self.output_list = []
-        for line in data:
-            if re.match(r'^\s*$', line):
-                pass
-            else:
-                in_items = re.findall(
-                    "INPUT", line, re.MULTILINE | re.IGNORECASE
-                )
-                inout_items = re.findall(
-                    "INOUT", line, re.MULTILINE | re.IGNORECASE
-                )
-                out_items = re.findall(
-                    "OUTPUT", line, re.MULTILINE | re.IGNORECASE
-                )
-            if in_items:
-                self.input_list.append(line.split())
-            if inout_items:
-                self.input_list.append(line.split())
-            if out_items:
-                self.output_list.append(line.split())
-
-        self.input_port = []
-        self.output_port = []
-
-        # creating list of input and output port with its weight
-        for input in self.input_list:
-            self.input_port.append(input[0] + ":" + input[2])
-        for output in self.output_list:
-            self.output_port.append(output[0] + ":" + output[2])
-
-    # This function is used to create the cfunc.mod file in Ngspice folder
-    # automatically
-
-    def cfuncmod(self):
-
-        # ############# Creating content for cfunc.mod file ############## #
-
-        print("Starting With cfunc.mod file")
-        cfunc = open(self.modelpath + 'cfunc.mod', 'w')
-        print("Building content for cfunc.mod file")
-
-        comment = '''/* This is cfunc.mod file auto generated by gen_con_info.py
-        Developed by Sumanto Kar at IIT Bombay */\n
-                '''
-
-        header = '''
-        #include <stdio.h>
-        #include <math.h>
-        #include <string.h>
-        #include "sim_main_''' + self.fname.split('.')[0] + '''.h"
-
-        '''
-
-        function_open = (
-            '''void cm_''' + self.fname.split('.')[0] + '''(ARGS) \n{''')
-
-        digital_state_output = []
-        for item in self.output_port:
-            digital_state_output.append(
-                "Digital_State_t *_op_" + item.split(':')[0] +
-                ", *_op_" + item.split(':')[0] + "_old;"
-            )
-
-        var_section = '''
-    static int inst_count=0;
-    int count=0;
-        '''
-
-        # Start of INIT function
-        init_start_function = '''
-    if(INIT)
-    {
-        inst_count++;
-        PARAM(instance_id)=inst_count;
-        foo''' + self.fname.split('.')[0] + '''(0,inst_count);
-        /* Allocate storage for output ports \
-and set the load for input ports */
-
-        '''
-        port_init = []
-        for i, item in enumerate(self.input_port + self.output_port):
-            port_init.append('''
-        port_''' + item.split(':')[0] + '''=PORT_SIZE(''' + item.split(':')[0] + ''');
-''')
-
-        cm_event_alloc = []
-        cm_count_output = 0
-        for item in self.output_port:
-            cm_event_alloc.append(
-                "cm_event_alloc(" +
-                str(cm_count_output) + "," + item.split(':')[1] +
-                "*sizeof(Digital_State_t));"
-            )
-            cm_count_output = cm_count_output + 1
-
-        load_in_port = []
-        for item in self.input_port:
-            load_in_port.append(
-                "for(Ii=0;Ii<PORT_SIZE(" + item.split(':')[0] +
-                ");Ii++)\n\t\t{\n\t\t\tLOAD(" + item.split(':')[0] +
-                "[Ii])=PARAM(input_load); \n\t\t}"
-            )
-
-        cm_count_ptr = 0
-        cm_event_get_ptr = []
-        for item in self.output_port:
-            cm_event_get_ptr.append(
-                "_op_" + item.split(':')[0] + " = _op_" +
-                item.split(':')[0] +
-                "_old = (Digital_State_t *) cm_event_get_ptr(" +
-                str(cm_count_ptr) + ",0);"
-            )
-
-            cm_count_ptr = cm_count_ptr + 1
-
-        els_evt_ptr = []
-        els_evt_count1 = 0
-        els_evt_count2 = 0
-        for item in self.output_port:
-            els_evt_ptr.append("_op_" + item.split(":")[0] +
-                               " = (Digital_State_t *) cm_event_get_ptr(" +
-                               str(els_evt_count1) + "," +
-                               str(els_evt_count2) + ");")
-            els_evt_count2 = els_evt_count2 + 1
-            els_evt_ptr.append("_op_" + item.split(":")[0] + "_old" +
-                               " = (Digital_State_t *) cm_event_get_ptr(" +
-                               str(els_evt_count1) + "," +
-                               str(els_evt_count2) + ");")
-            els_evt_count1 = els_evt_count1 + 1
-
-        # Assign bit value to every input
-        assign_data_to_input = []
-        for item in self.input_port:
-            assign_data_to_input.append("\
-    for(Ii=0;Ii<PORT_SIZE(" + item.split(':')[0] + ");Ii++)\n\
-    {\n\
-        if( INPUT_STATE(" + item.split(':')[0] + "[Ii])==ZERO )\n\
-        {\n\
-            temp_" + item.split(':')[0] + "[Ii]=0;\
-            }\n\
-        else\n\
-        {\n\
-            temp_" + item.split(':')[0] + "[Ii]=1;\n\
-        }\n\
-            }\n")
-
-        # Scheduling output event
-        sch_output_event = []
-
-        for item in self.output_port:
-            sch_output_event.append(
-                "\t/* Scheduling event and processing them */\n\
-    for(Ii=0;Ii<PORT_SIZE(" + item.split(':')[0] + ");Ii++)\n\
-    {\n\
-        if(temp_" + item.split(':')[0] + "[Ii]==0)\n\
-        {\n\
-            _op_" + item.split(':')[0] + "[Ii]=ZERO;\n\
-            }\n\
-        else if(temp_" + item.split(':')[0] + "[Ii]==1)\n\
-        {\n\
-            _op_" + item.split(':')[0] + "[Ii]=ONE;\n\
-            }\n\
-        else\n\
-        {\n\
-            printf(\"Unknown value\\n\");\n\
-                }\n\n\
-        if(ANALYSIS == DC)\n\
-        {\n\
-            OUTPUT_STATE(" + item.split(':')[0] + "[Ii]) = _op_" + item.split(':')[0] + "[Ii];\n\
-            }\n\
-        else if(_op_" + item.split(':')[0] + "[Ii] != _op_" + item.split(':')[0] + "_old[Ii])\n\
-        {\n\
-            OUTPUT_STATE(" + item.split(':')[0] + "[Ii]) = _op_" + item.split(':')[0] + "[Ii];\n\
-            OUTPUT_DELAY(" + item.split(':')[0] + "[Ii]) = ((_op_" + item.split(':')[0] + "[Ii] == ZERO) ? PARAM(fall_delay) : PARAM(rise_delay));\n\
-            }\n\
-        else\n\
-        {\n\
-            OUTPUT_CHANGED(" + item.split(':')[0] + "[Ii]) = FALSE;\n\
-            }\n\
-        OUTPUT_STRENGTH(" + item.split(':')[0] + "[Ii]) = STRONG;\n\
-    }\n")
-
-        # Writing content in cfunc.mod file
-        cfunc.write(comment)
-        cfunc.write(header)
-        cfunc.write("\n")
-        cfunc.write(function_open)
-        cfunc.write("\n")
-
-        # Adding digital state Variable
-        for item in digital_state_output:
-            cfunc.write("\t" + item + "\n")
-
-        # Adding variable declaration section
-        cfunc.write(var_section)
-
-        # Adding INIT portion
-        cfunc.write(init_start_function)
-        for item in port_init:
-            cfunc.write(item)
-        for item in cm_event_alloc:
-            cfunc.write(2 * "\t" + item)
-            cfunc.write("\n")
-
-        cfunc.write(2 * "\t" + "/* set the load for input ports. */")
-        cfunc.write("\n")
-        cfunc.write(2 * "\t" + "int Ii;")
-        cfunc.write("\n")
-
-        for item in load_in_port:
-            cfunc.write(2 * "\t" + item)
-            cfunc.write("\n")
-        cfunc.write("\n")
-        cfunc.write(2 * "\t" + "/*Retrieve Storage for output*/")
-        cfunc.write("\n")
-        for item in cm_event_get_ptr:
-            cfunc.write(2 * "\t" + item)
-            cfunc.write("\n")
-        cfunc.write("\n")
-
-        # if os.name == 'nt':
-        #     digital_home = parser.get('NGSPICE', 'DIGITAL_MODEL')
-        #     msys_home = parser.get('COMPILER', 'MSYS_HOME')
-        #     cmd_str2 = "/start_server.sh %d %s & read" + "\\" + "\"" + "\""
-        #     cmd_str1 = os.path.normpath(
-        #                         "\"" + digital_home + "/" +
-        #                         fname.split('.')[0] + "/DUTghdl/"
-        #     )
-        #     cmd_str1 = cmd_str1.replace("\\", "/")
-
-        #     cfunc.write(
-        #         '\t\tsnprintf(command,1024, "start mintty.exe -t ' +
-        #         '\\"VHDL-Testbench Logs\\" -h always bash.exe -c ' +
-        #         '\\' + cmd_str1 + cmd_str2 + ', sock_port, my_ip);'
-        #     )
-        # else:
-        #     cfunc.write(
-        #         '\t\tsnprintf(command,1024,"' + home +
-        #         '/ngspice-nghdl/src/xspice/icm/ghdl/' +
-        #         fname.split('.')[0] +
-        #         '/DUTghdl/start_server.sh %d %s &", sock_port, my_ip);'
-        #     )
-
-        cfunc.write("\n\t}")
-        cfunc.write("\n")
-        cfunc.write("\telse\n\t{\n")
-
-        for item in els_evt_ptr:
-            cfunc.write(2 * "\t" + item)
-            cfunc.write("\n")
-        cfunc.write("\t}")
-        cfunc.write("\n\n")
-
-        cfunc.write("\t//Formating data for sending it to client\n")
-        cfunc.write("\tint Ii;\n")
-        cfunc.write("\tcount=(int)PARAM(instance_id);\n\n")
-        for item in assign_data_to_input:
-            cfunc.write(item)
-
-        cfunc.write("\tfoo" + self.fname.split('.')[0] + "(1,count);\n\n")
-
-        for item in sch_output_event:
-            cfunc.write(item)
-
-        # Close cm_ function
-        cfunc.write("\n}")
-        cfunc.close()
-
-    # This function creates the ifspec file automatically in Ngspice folder
-
-    def ifspecwrite(self):
-        print("Starting with ifspec.ifs file")
-        ifspec = open(self.modelpath + 'ifspec.ifs', 'w')
-
-        print("Gathering Al the content for ifspec file")
-
-        ifspec_comment = '''
-        /*
-        SUMMARY: This file is auto generated and it contains the interface
-         specification for the code model. */\n
-        '''
-
-        name_table = 'NAME_TABLE:\n\
-        C_Function_Name: cm_' + self.fname.split('.')[0] + '\n\
-        Spice_Model_Name: ' + self.fname.split('.')[0] + '\n\
-        Description: "Model generated from ghdl code ' + self.fname + '" \n'
-
-        # Input and Output Port Table
-        in_port_table = []
-        out_port_table = []
-
-        for item in self.input_port:
-            port_table = 'PORT_TABLE:\n'
-            port_name = 'Port_Name:\t' + item.split(':')[0] + '\n'
-            description = (
-                'Description:\t"input port ' + item.split(':')[0] + '"\n'
-            )
-            direction = 'Direction:\tin\n'
-            default_type = 'Default_Type:\td\n'
-            allowed_type = 'Allowed_Types:\t[d]\n'
-            vector = 'Vector:\tyes\n'
-            vector_bounds = (
-                'Vector_Bounds:\t[' + item.split(':')[1] +
-                ' ' + item.split(":")[1] + ']\n'
-            )
-            null_allowed = 'Null_Allowed:\tno\n'
-
-            # Insert detail in the list
-            in_port_table.append(
-                port_table + port_name + description +
-                direction + default_type + allowed_type +
-                vector + vector_bounds + null_allowed
-            )
-
-        for item in self.output_port:
-            port_table = 'PORT_TABLE:\n'
-            port_name = 'Port_Name:\t' + item.split(':')[0] + '\n'
-            description = (
-                'Description:\t"output port ' + item.split(':')[0] + '"\n'
-            )
-            direction = 'Direction:\tout\n'
-            default_type = 'Default_Type:\td\n'
-            allowed_type = 'Allowed_Types:\t[d]\n'
-            vector = 'Vector:\tyes\n'
-            vector_bounds = (
-                'Vector_Bounds:\t[' + item.split(':')[1] +
-                ' ' + item.split(":")[1] + ']\n'
-            )
-            null_allowed = 'Null_Allowed:\tno\n'
-
-            # Insert detail in the list
-            in_port_table.append(
-                port_table + port_name + description +
-                direction + default_type + allowed_type +
-                vector + vector_bounds + null_allowed
-            )
-
-        parameter_table = '''
-
-        PARAMETER_TABLE:
-        Parameter_Name:     instance_id                  input_load
-        Description:        "instance_id"                "input load value (F)"
-        Data_Type:          real                         real
-        Default_Value:      0                            1.0e-12
-        Limits:             -                            -
-        Vector:              no                          no
-        Vector_Bounds:       -                           -
-        Null_Allowed:       yes                          yes
-
-        PARAMETER_TABLE:
-        Parameter_Name:     rise_delay                  fall_delay
-        Description:        "rise delay"                "fall delay"
-        Data_Type:          real                        real
-        Default_Value:      1.0e-9                      1.0e-9
-        Limits:             [1e-12 -]                   [1e-12 -]
-        Vector:              no                          no
-        Vector_Bounds:       -                           -
-        Null_Allowed:       yes                         yes
-
-        '''
-
-        # Writing all the content in ifspec file
-        ifspec.write(ifspec_comment)
-        ifspec.write(name_table + "\n\n")
-
-        for item in in_port_table:
-            ifspec.write(item + "\n")
-
-        ifspec.write("\n")
-
-        for item in out_port_table:
-            ifspec.write(item + "\n")
-
-        ifspec.write("\n")
-        ifspec.write(parameter_table)
-        ifspec.write("\n")
-        ifspec.close()
-
-    # This function creates the header file of sim_main file automatically in
-    # Ngspice folder
-
-    def sim_main_header(self):
-        print("Starting With sim_main_" + self.fname.split('.')[0] + ".h file")
-        simh = open(
-            self.modelpath +
-            'sim_main_' +
-            self.fname.split('.')[0] +
-            '.h',
-            'w')
-        print("Building content for sim_main_" +
-              self.fname.split('.')[0] + ".h file")
-        simh.write("int foo" + self.fname.split('.')[0] + "(int,int);")
-        extern_var = []
-        for i, item in enumerate(self.input_port + self.output_port):
-            extern_var.append('''
-        int temp_''' + item.split(':')[0] + '''[1024];
-        int port_''' + item.split(':')[0] + ''';''')
-        for item in extern_var:
-            simh.write(item)
-        simh.close()
-
-    # This function creates the sim_main file needed by verilator
-    # automatically in Ngspice folder
-    def sim_main(self):
-        print(
-            "Starting With sim_main_" +
-            self.fname.split('.')[0] +
-            ".cpp file")
-        csim = open(
-            self.modelpath +
-            'sim_main_' +
-            self.fname.split('.')[0] +
-            '.cpp',
-            'w')
-        print(
-            "Building content for sim_main_" +
-            self.fname.split('.')[0] +
-            ".cpp file")
-
-        comment = '''/* This is cfunc.mod file auto generated by gen_con_info.py
-        Developed by Sumanto Kar at IIT Bombay */\n
-        '''
-
-        header = '''
-        #include <memory>
-        #include <verilated.h>
-        #include "V''' + self.fname.split('.')[0] + '''.h"
-        #include <stdio.h>
-        #include <stdio.h>
-        #include <fstream>
-        #include <stdlib.h>
-        #include <string>
-        #include <iostream>
-        #include <cstring>
-        using namespace std;
-        '''
-
-        extern_var = []
-        for i, item in enumerate(self.input_port + self.output_port):
-            extern_var.append('''
-        extern "C" int temp_''' + item.split(':')[0] + '''[1024];
-        extern "C" int port_''' + item.split(':')[0] + ''';''')
-
-        extern_var.append('''
-        extern "C" int foo''' + self.fname.split('.')[0] + '''(int,int);
-        ''')
-        convert_func = '''
-        void int2arr''' + self.fname.split('.')[0] + '''(int  num, int array[], int n)
-        {
-            for (int i = 0; i < n && num>=0; i++)
-            {
-                array[n-i-1] = num % 2;
-                num /= 2;
-                }
-        }
-        int arr2int''' + self.fname.split('.')[0] + '''(int array[],int n)
-        {
-            int i,k=0;
-            for (i = 0; i < n; i++)
-                k = 2 * k + array[i];
-            return k;
-        }
-        '''
-        foo_func = '''
-        int foo''' + self.fname.split('.')[0] + '''(int init,int count)
-        {
-            static VerilatedContext* contextp = new VerilatedContext;
-            static V''' + self.fname.split('.')[0] + "* " + self.fname.split('.')[0] + '''[1024];
-            count--;
-            if (init==0)
-            {
-                ''' + self.fname.split('.')[0] + '''[count]=new V''' + self.fname.split('.')[0] + '''{contextp};
-                contextp->traceEverOn(true);
-            }
-            else
-            {
-                contextp->timeInc(1);
-                printf("=============''' + self.fname.split('.')[0] + ''' : New Iteration===========");
-                printf("\\nInstance : %d\\n",count);
-                printf("\\nInside foo before eval.....\\n");
-'''
-
-        before_eval = []
-        after_eval = []
-        for i, item in enumerate(self.input_port + self.output_port):
-            before_eval.append(
-                '''\t\t\t\tprintf("''' +
-                item.split(':')[0] +
-                '''=%d\\n", ''' +
-                self.fname.split('.')[0] +
-                '''[count] ->''' +
-                item.split(':')[0] +
-                ''');\n''')
-        for i, item in enumerate(self.input_port):
-
-            before_eval.append(
-                '''\t\t\t\t''' +
-                self.fname.split('.')[0] +
-                '''[count]->''' +
-                item.split(':')[0] +
-                ''' = arr2int''' +
-                self.fname.split('.')[0] +
-                '''(temp_''' +
-                item.split(':')[0] +
-                ", port_" +
-                item.split(':')[0] +
-                ''');\n''')
-        before_eval.append(
-            "\t\t\t\t" +
-            self.fname.split('.')[0] +
-            "[count]->eval();\n")
-
-        after_eval.append('''
-                printf("\\nInside foo after eval.....\\n");\n''')
-        for i, item in enumerate(self.input_port + self.output_port):
-            after_eval.append(
-                '''\t\t\t\tprintf("''' +
-                item.split(':')[0] +
-                '''=%d\\n", ''' +
-                self.fname.split('.')[0] +
-                '''[count] ->''' +
-                item.split(':')[0] +
-                ''');\n''')
-
-        for i, item in enumerate(self.output_port):
-            after_eval.append(
-                "\t\t\t\tint2arr" +
-                self.fname.split('.')[0] +
-                "(" +
-                self.fname.split('.')[0] +
-                '''[count] -> ''' +
-                item.split(':')[0] +
-                ''', temp_''' +
-                item.split(':')[0] +
-                ''', port_''' +
-                item.split(':')[0] +
-                ''');\n''')
-        after_eval.append('''
-            }
-            return 0;
-        }''')
-
-        csim.write(comment)
-        csim.write(header)
-        for item in extern_var:
-            csim.write(item)
-        csim.write(convert_func)
-        csim.write(foo_func)
-
-        for item in before_eval:
-            csim.write(item)
-        for item in after_eval:
-            csim.write(item)
-        csim.close()
-
-    # This function creates modpathlst in Ngspice folder
-    def modpathlst(self):
-        print("Editing modpath.lst file")
-        mod = open(self.digital_home + '/modpath.lst', 'r')
-        text = mod.read()
-        mod.close()
-        mod = open(self.digital_home + '/modpath.lst', 'a+')
-        if not self.fname.split('.')[0] in text:
-            mod.write(self.fname.split('.')[0] + "\n")
-        mod.close()
-
-    # This function is used to run the Verilator using the verilator commands
-    def run_verilator(self):
-        self.cur_dir = os.getcwd()
-        file = open("../maker/lint_off.txt").readlines()
-        wno = " "
-        for item in file:
-            wno += " -Wno-" + item.strip("\n")
-        print("Running Verilator.............")
-        os.chdir(self.modelpath)
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
-        # print(self.modelpath)
-
-        self.cmd = "verilator -Wall " + wno + "\
-         --cc --exe --no-MMD --Mdir . -CFLAGS -fPIC  sim_main_" + \
-            self.fname.split('.')[0] + ".cpp " + self.fname
-        self.process = QtCore.QProcess(self)
-        self.process.readyReadStandardOutput.connect(self.readAllStandard)
-        self.process.start('sh', ['-c', self.cmd])
-        self.termtitle("RUN VERILATOR")
-        self.termtext("Current Directory: " + self.modelpath)
-        self.termtext("Command: " + self.cmd)
-        # self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
-        self.process \
-            .readyReadStandardOutput.connect(self.readAllStandard)
-        self.process \
-            .readyReadStandardError.connect(self.readAllStandard)
-        self.process.waitForFinished(50000)
-        print("Verilator Executed")
-        os.chdir(self.cur_dir)
-
-    # Running make verilator using this function
-    def make_verilator(self):
-        self.cur_dir = os.getcwd()
-        print("Make Verilator.............")
-        os.chdir(self.modelpath)
-        self.cmd = "make -f V" + self.fname.split('.')[0]\
-            + ".mk V" + self.fname.split(
-            '.')[0] + "__ALL.a sim_main_" \
-            + self.fname.split('.')[0] + ".o verilated.o"
-        self.process = QtCore.QProcess(self)
-        self.process.readyReadStandardOutput.connect(self.readAllStandard)
-        self.process.start('sh', ['-c', self.cmd])
-        self.termtitle("MAKE VERILATOR")
-        self.termtext("Current Directory: " + self.modelpath)
-        self.termtext("Command: " + self.cmd)
-        self.process \
-            .readyReadStandardOutput.connect(self.readAllStandard)
-        self.process \
-            .readyReadStandardError.connect(self.readAllStandard)
-        self.process.waitForFinished(50000)
-
-        print("Make Verilator Executed")
-        os.chdir(self.cur_dir)
-
-    # This function copies the verilator files/object files from
-    # src/xspice/icm/Ngveri/ to release/src/xspice/icm/Ngveri/
-    def copy_verilator(self):
-        self.cur_dir = os.getcwd()
-        print("Copying the required files to Release Folder.............")
-        os.chdir(self.modelpath)
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
-        path_icm = os.path.join(self.release_home, "src/xspice/icm/Ngveri/")
-        if not os.path.isdir(path_icm + self.fname.split('.')[0]):
-            os.mkdir(path_icm + self.fname.split('.')[0])
-        path_icm = path_icm + self.fname.split('.')[0]
-        if os.path.exists(
-            path_icm +
-            "sim_main_" +
-            self.fname.split('.')[0] +
-                ".o"):
-            os.remove(path_icm + "sim_main_" + self.fname.split('.')[0] + ".o")
-        if os.path.exists(
-            self.release_home +
-            "src/xspice/icm/" +
-                "verilated.o"):
-            os.remove(self.release_home + "src/xspice/icm/" + "verilated.o")
-        if os.path.exists(
-            path_icm +
-            "V" +
-            self.fname.split('.')[0] +
-                "__ALL.o"):
-            os.remove(path_icm + "V" + self.fname.split('.')[0] + "__ALL.o")
-        # print(self.modelpath)
-        try:
-            self.cmd = "cp sim_main_" + \
-                self.fname.split('.')[0] + ".o V" + \
-                self.fname.split('.')[0] + "__ALL.o " + path_icm
-            self.process = QtCore.QProcess(self)
-            self.args = ['-c', self.cmd]
-            self.process \
-                .readyReadStandardOutput.connect(self.readAllStandard)
-            self.process \
-                .readyReadStandardError.connect(self.readAllStandard)
-            self.process.start('sh', self.args)
-            self.termtitle("COPYING FILES")
-            self.termtext("Current Directory: " + self.modelpath)
-            self.termtext("Command: " + self.cmd)
-            self.process.waitForFinished(50000)
-            self.cmd = "cp verilated.o " + self.release_home \
-                + "/src/xspice/icm/"
-            self.process.start('sh', ['-c', self.cmd])
-            self.termtext("Command: " + self.cmd)
-            self.process \
-                .readyReadStandardOutput.connect(self.readAllStandard)
-            self.process.waitForFinished(50000)
-            print("Copied the files")
-            os.chdir(self.cur_dir)
-        except BaseException:
-            print("There is error in Copying Files ")
-
-    # Running the make command for Ngspice
-    def runMake(self):
-        print("run Make Called")
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
-        path_icm = os.path.join(self.release_home, "src/xspice/icm")
-        os.chdir(path_icm)
-
-        try:
-            if os.name == 'nt':
-                # path to msys bin directory where make is located
-                self.msys_bin = self.parser.get('COMPILER', 'MSYS_HOME')
-                self.cmd = self.msys_bin + "\\make.exe"
-            else:
-                self.cmd = "make"
-
-            print("Running Make command in " + path_icm)
-            path = os.getcwd()  # noqa
-            self.process = QtCore.QProcess(self)
-            self.process.start('sh', ['-c', self.cmd])
-            print("make command process pid ---------- >", self.process.pid())
-
-            self.termtitle("MAKE COMMAND")
-            self.termtext("Current Directory: " + path_icm)
-            self.termtext("Command: " + self.cmd)
-            self.process \
-                .readyReadStandardOutput.connect(self.readAllStandard)
-            self.process \
-                .readyReadStandardError.connect(self.readAllStandard)
-            self.process.waitForFinished(50000)
-            os.chdir(self.cur_dir)
-        except BaseException:
-            print("There is error in 'make' ")
-            # sys.exit()
-
-    # Running the make install command for Ngspice
-    def runMakeInstall(self):
-        self.cur_dir = os.getcwd()
-        print("run Make Install Called")
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
-        path_icm = os.path.join(self.release_home, "src/xspice/icm")
-        os.chdir(path_icm)
-
-        try:
-            if os.name == 'nt':
-                self.msys_bin = self.parser.get('COMPILER', 'MSYS_HOME')
-                self.cmd = self.msys_bin + "\\make.exe install"
-            else:
-                self.cmd = "make install"
-            print("Running Make Install")
-            path = os.getcwd()  # noqa
-            try:
-                self.process.close()
-            except BaseException:
-                pass
-
-            self.process = QtCore.QProcess(self)
-            self.process.start('sh', ['-c', self.cmd])
-            # text="<span style=\" font-size:8pt; font-weight:600;
-            # color:#000000;\" >"
-            self.termtitle("MAKE INSTALL COMMAND")
-            self.termtext("Current Directory: " + path_icm)
-            self.termtext("Command: " + self.cmd)
-            self.process \
-                .readyReadStandardOutput.connect(self.readAllStandard)
-            self.process \
-                .readyReadStandardError.connect(self.readAllStandard)
-            self.process.waitForFinished(50000)
-            os.chdir(self.cur_dir)
-
-        except BaseException as e:
-            print(e)
-            print("There is error in 'make install' ")
-            # sys.exit()
-
-    # This function is used to add additional files required by the verilog
-    # top module
-    def addfile(self):
-        print("Adding the files required by the top level module file")
+    # Adding the verilog file in Maker tab to Ngveri Tab automatically
+    def addverilog(self):
 
         init_path = '../../../'
         if os.name == 'nt':
             init_path = ''
-        includefile = QtCore.QDir.toNativeSeparators(
-            QtWidgets.QFileDialog.getOpenFileName(
-                self,
-                "Open adding other necessary files to be included",
-                init_path + "home")[0])
-        if includefile == "":
+        # b=Maker.Maker(self)
+        print(Maker.verilogFile)
+        if Maker.verilogFile[self.filecount] == "":
             reply = QtWidgets.QMessageBox.critical(
-                None, "Error Message",
-                "<b>Error: No File Chosen. Please chose a file</b>",
-                QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
-            )
+                None,
+                "Error Message",
+                "<b>Error: No Verilog File Chosen. \
+                Please chose a Verilog file in Makerchip Tab</b>",
+                QtWidgets.QMessageBox.Ok)
             if reply == QtWidgets.QMessageBox.Ok:
-                self.addfile()
-                self.obj_Appconfig.print_info('Add Other Files Called')
+                self.obj_Appconfig.print_error(
+                    'No VerilogFile. Please add a File in Makerchip Tab')
+                return
 
-            elif reply == QtWidgets.QMessageBox.Cancel:
-                self.obj_Appconfig.print_info('No File Chosen')
-        filename = os.path.basename(includefile)
-        self.modelpath = self.digital_home + \
-            "/" + self.fname.split('.')[0] + "/"
+        self.fname = Maker.verilogFile[self.filecount]
+        model = ModelGeneration.ModelGeneration(self.fname, self.entry_var[0])
+        file = (os.path.basename(self.fname)).split('.')[0]
+        if self.entry_var[1].findText(file) == -1:
+            self.entry_var[1].addItem(file)
+        model.verilogfile()
+        error = model.verilogParse()
+        if error != "Error":
+            model.getPortInfo()
+            model.cfuncmod()
+            model.ifspecwrite()
+            model.sim_main_header()
+            model.sim_main()
+            model.modpathlst()
+            model.run_verilator()
+            model.make_verilator()
+            model.copy_verilator()
+            model.runMake()
+            model.runMakeInstall()
+            txt = self.entry_var[0].toPlainText()
+            if not "error" in txt.lower():
+                self.entry_var[0].append('''
+                <p style=\" font-size:20pt; font-weight:1000; color:#00FF00;\" >
+                Model Created Successfully !
+                </p>
+                ''')
+            else:
+                self.entry_var[0].append('''
+                <p style=\" font-size:20pt; font-weight:1000; color:#FF0000;\" >
+                There was an error during model creation, 
+                <br/>
+                Please rectify the error and try again !
+                </p>
+                ''')
 
-        if not os.path.isdir(self.modelpath):
-            os.mkdir(self.modelpath)
-        text = open(includefile).read()
-        text = text + '\n'
-        f = open(self.modelpath + filename, 'w')
-        for item in text:
-            f.write(item)
-        f.write("\n")
-        f.close()
-        print("Added the File:" + filename)
-        self.termtitle("Added the File:" + filename)
+    # This function is used to add additional files required by the verilog
+    # top module
+
+    def addfile(self):
+        if len(Maker.verilogFile) < (self.filecount + 1):
+            reply = QtWidgets.QMessageBox.critical(
+                None,
+                "Error Message",
+                "<b>Error: No Verilog File Chosen. \
+                Please chose a Verilog file in Makerchip Tab</b>",
+                QtWidgets.QMessageBox.Ok)
+            if reply == QtWidgets.QMessageBox.Ok:
+                self.obj_Appconfig.print_error(
+                    'No VerilogFile. Please chose\
+                     a Verilog File in Makerchip Tab')
+                return
+        self.fname = Maker.verilogFile[self.filecount]
+        model = ModelGeneration.ModelGeneration(self.fname, self.entry_var[0])
+        # model.verilogfile()
+        model.addfile()
 
     # This function is used to add additional folder required by the verilog
     # top module
-
     def addfolder(self):
-        # self.cur_dir = os.getcwd()
-        print("Adding the folder required by the top level module file")
-
-        init_path = '../../../'
-        if os.name == 'nt':
-            init_path = ''  # noqa:F841
-        includefolder = QtCore.QDir.toNativeSeparators(
-            QtWidgets.QFileDialog.getExistingDirectory(
-                self, "open", "home"
-            )
-        )
-        if includefolder == "":
+        if len(Maker.verilogFile) < (self.filecount + 1):
             reply = QtWidgets.QMessageBox.critical(
-                None, "Error Message",
-                "<b>Error: No Folder Chosen. Please chose a folder</b>",
-                QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
-            )
+                None,
+                "Error Message",
+                "<b>Error: No Verilog File Chosen. \
+                Please chose a Verilog file in Makerchip Tab</b>",
+                QtWidgets.QMessageBox.Ok)
             if reply == QtWidgets.QMessageBox.Ok:
-                self.addfolder()
-                self.obj_Appconfig.print_info('Add Folder Called')
+                self.obj_Appconfig.print_error(
+                    'No VerilogFile. Please chose \
+                    a Verilog File in Makerchip Tab')
+                return
+        self.fname = Maker.verilogFile[self.filecount]
+        model = ModelGeneration.ModelGeneration(self.fname, self.entry_var[0])
+        # model.verilogfile()
+        model.addfolder()
 
-            elif reply == QtWidgets.QMessageBox.Cancel:
-                self.obj_Appconfig.print_info('No File Chosen')
+    # This function is used to clear the terminal
 
-        self.modelpath = self.digital_home + \
-            "/" + self.fname.split('.')[0] + "/"
+    def clearTerminal(self):
+        self.entry_var[0].setText("")
 
-        reply = QtWidgets.QMessageBox.question(
-            None, "Message",
-            '''<b>If you want only the contents\
-             of the folder to be added press "Yes".\
-                    If you want complete folder \
-                    to be added, press "No". </b>''',
-            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
+    # This function is used to create buttons/options
+    def createoptionsBox(self):
+
+        self.optionsbox = QtWidgets.QGroupBox()
+        self.optionsbox.setTitle("Select Options")
+        self.optionsgrid = QtWidgets.QGridLayout()
+
+        self.optionsgroupbtn = QtWidgets.QButtonGroup()
+
+        self.addverilogbutton = QtWidgets.QPushButton(
+            "Run Verilog to NgSpice Converter")
+        self.optionsgroupbtn.addButton(self.addverilogbutton)
+        self.addverilogbutton.clicked.connect(self.addverilog)
+        self.optionsgrid.addWidget(self.addverilogbutton, 0, 1)
+        #self.optionsbox.setLayout(self.optionsgrid)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+
+        self.addfilebutton = QtWidgets.QPushButton("Add Other file")
+        self.optionsgroupbtn.addButton(self.addfilebutton)
+        self.addfilebutton.clicked.connect(self.addfile)
+        self.optionsgrid.addWidget(self.addfilebutton, 0, 2)
+        #self.optionsbox.setLayout(self.optionsgrid)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+
+        self.addfolderbutton = QtWidgets.QPushButton("Add Folder")
+        self.optionsgroupbtn.addButton(self.addfolderbutton)
+        self.addfolderbutton.clicked.connect(self.addfolder)
+        self.optionsgrid.addWidget(self.addfolderbutton, 0, 3)
+        #self.optionsbox.setLayout(self.optionsgrid)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+
+        self.clearTerminalBtn = QtWidgets.QPushButton("Clear Terminal")
+        self.optionsgroupbtn.addButton(self.clearTerminalBtn)
+        self.clearTerminalBtn.clicked.connect(self.clearTerminal)
+        self.optionsgrid.addWidget(self.clearTerminalBtn, 0, 4)
+        self.optionsbox.setLayout(self.optionsgrid)
+        #self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
+
+        return self.optionsbox
+
+    # This function is used to remove models in modlst of Ngspice folder if
+    # the user wants to remove a model.Note: files do not get removed
+    def edit_modlst(self, text):
+        if text == "Edit modlst":
+            return
+        index = self.entry_var[1].findText(text)
+        self.entry_var[1].removeItem(index)
+        self.entry_var[1].setCurrentIndex(0)
+        ret = QtWidgets.QMessageBox.warning(
+            None, "Warning", '''<b>Do you want to remove model:''' +
+            text,
+            QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Cancel
         )
-        if reply == QtWidgets.QMessageBox.Yes:
-            self.cmd = "cp -a " + includefolder + "/. " + self.modelpath
-            self.obj_Appconfig.print_info('Adding Contents of the Folder')
-        elif reply == QtWidgets.QMessageBox.No:
-            self.cmd = "cp -R " + includefolder + " " + self.modelpath
-            self.obj_Appconfig.print_info('Adding the Folder')
+        if ret == QtWidgets.QMessageBox.Ok:
+            mod = open(self.digital_home + '/modpath.lst', 'r')
+            data = mod.readlines()
+            mod.close()
 
-        print("Adding the Folder:" + includefolder.split('/')[-1])
-        self.termtitle("Adding the Folder:" + includefolder.split('/')[-1])
+            data.remove(text + "\n")
+            mod = open(self.digital_home + '/modpath.lst', 'w')
+            for item in data:
+                mod.write(item)
+            self.fname = Maker.verilogFile[self.filecount]
+            model = ModelGeneration.ModelGeneration(
+                self.fname, self.entry_var[0])
+            model.runMake()
+            model.runMakeInstall()
+            return
 
-        self.process = QtCore.QProcess(self)
-        self.process.start('sh', ['-c', self.cmd])
-        self.termtext("Command: " + self.cmd)
-        self.process \
-            .readyReadStandardOutput.connect(self.readAllStandard)
-        self.process.waitForFinished(50000)
-        print("Added the folder")
-        # os.chdir(self.cur_dir)
+        #else:
+        #    return
 
-    # This function is used to print the titles in the terminal of Ngveri tab
+    # This is to remove lint_off comments needed by the verilator warnings
+    # This function writes to the lint_off.txt here in the same folder
+    def lint_off_edit(self, text):
+        if text == "Edit lint_off":
+            return
+        index = self.entry_var[2].findText(text)
+        self.entry_var[2].removeItem(index)
+        self.entry_var[2].setCurrentIndex(0)
+        ret = QtWidgets.QMessageBox.warning(
+            None,
+            "Warning",
+            '''<b>Do you want to remove the lint off error:''' +
+            text,
+            QtWidgets.QMessageBox.Ok,
+            QtWidgets.QMessageBox.Cancel)
+        if ret == QtWidgets.QMessageBox.Ok:
+            file = open("../maker/lint_off.txt", 'r')
+            data = file.readlines()
+            file.close()
 
-    def termtitle(self, textin):
+            data.remove(text + "\n")
+            file = open("../maker/lint_off.txt", 'w')
+            for item in data:
+                file.write(item)
+            return
 
-        Text = "<span style=\" font-size:20pt; \
-        font-weight:1000; color:#0000FF;\" >"
-        Text += "<br>================================<br>"
-        Text += textin
-        Text += "<br>================================<br>"
-        Text += "</span>"
-        self.termedit.append(Text)
+        #else:
+        #    return
 
-    # This function is used to print the text/commands in the terminal of
-    # Ngveri tab
-    def termtext(self, textin):
+    # This is to add lint_off comments needed by the verilator warnings
+    # This function writes to the lint_off.txt here in the same folder
+    def add_lint_off(self):
+        text = self.entry_var[3].text()
 
-        Text = "<span style=\" font-size:12pt;\
-         font-weight:500; color:#000000;\" >"
-        Text += textin
-        Text += "</span>"
-        self.termedit.append(Text)
+        if self.entry_var[2].findText(text) == -1:
+            self.entry_var[2].addItem(text)
+            file = open("../maker/lint_off.txt", 'a+')
+            file.write(text + "\n")
+            file.close()
+        self.entry_var[3].setText("")
 
-    # This function reads all the Standard output data and the errors from the
-    # process that aree being run
-    @QtCore.pyqtSlot()
-    def readAllStandard(self):
-        # self.termedit = termedit
-        # self.termedit.append(str(self.process.readAll().data(),\
-        # encoding='utf-8'))
-        stdoutput = self.process.readAll()
-        TextStdOut = "<span style=\" font-size:12pt;\
-         font-weight:300; color:#000000;\" >"
-        for line in str(stdoutput.data(), encoding='utf-8').split("\n"):
-            TextStdOut += "<br>" + line
-        TextStdOut += "</span>"
-        self.termedit.append(TextStdOut)
-        # print(str(self.process.readAll().data(), encoding='utf-8'))
+    # creating various other groups like terminal, edit modlst, edit lint_off
+    # and add lint_off
 
-        stderror = self.process.readAllStandardError()
-        if stderror.toUpper().contains(b"ERROR"):
-            self.errorFlag = True
-        TextErr = "<span style=\" font-size:12pt; \
-        font-weight:1000; color:#ff0000;\" >"
-        for line in str(stderror.data(), encoding='utf-8').split("\n"):
-            TextErr += "<br>" + line
-        TextErr += "</span>"
-        self.termedit.append(TextErr)
-    # @QtCore.pyqtSlot()
-    # def readAllStandard(self):
-    #     #self.termedit = termedit
-    #     self.termedit.append(str(self.process.\
-    # readAll().data(), encoding='utf-8'))
+    def creategroup(self):
 
-    #     print(str(self.process.readAll().data(), encoding='utf-8'))
-    #     stderror = self.process.readAllStandardError()
-    #     if stderror.toUpper().contains(b"ERROR"):
-    #         self.errorFlag = True
-    #     Text = "<span style=\" font-size:12pt;\
-    # font-weight:1000; color:#ff0000;\" >"
-    #     for line in str(stderror.data(), encoding='utf-8').split("\n"):
-    #         Text += "<br>"+line+"<br>"
-    #     Text += "</span>"
-    #     self.termedit.append(Text+"\n")
+        self.trbox = QtWidgets.QGroupBox()
+        self.trbox.setTitle("Terminal")
+        # self.trbox.setDisabled(True)
+        # self.trbox.setVisible(False)
+        self.trgrid = QtWidgets.QGridLayout()
+        self.trbox.setLayout(self.trgrid)
+        self.count = 0
 
-        # init_path = '../../../'
-        # if os.name == 'nt':
-        #     init_path = ''
-        # includefile = QtCore.QDir.toNativeSeparators(\
-        # QtWidgets.QFileDialog.getOpenFileName(
-        #         self, "Open adding other necessary files to be included",
-        #             init_path + "home"
-        #        )[0]
-        #     )
-        # if includefile=="":
-        #     reply=QtWidgets.QMessageBox.critical(
-        #             None, "Error Message",
-        #             "<b>Error: No File Chosen. Please chose a file</b>",
-        #             QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
-        #         )
-        #     if reply == QtWidgets.QMessageBox.Ok:
-        #         self.addfile()
-        #         self.obj_Appconfig.print_info('Add Other Files Called')
+        self.start = QtWidgets.QLabel("Terminal")
+        # self.trgrid.addWidget(self.start, 2,0)
+        self.entry_var[self.count] = QtWidgets.QTextEdit()
+        self.entry_var[self.count].setReadOnly(1)
+        self.trgrid.addWidget(self.entry_var[self.count], 1, 1, 5, 3)
+        self.entry_var[self.count].setMaximumWidth(1000)
+        self.entry_var[self.count].setMaximumHeight(1000)
+        self.count += 1
 
-        #     elif reply == QtWidgets.QMessageBox.Cancel:
-        #         self.obj_Appconfig.print_info('No File Chosen')
-        # filename = os.path.basename(includefile)
-        # self.modelpath=self.digital_home+"/"+self.fname.split('.')[0]+"/"
+        self.entry_var[self.count] = QtWidgets.QComboBox()
+        self.entry_var[self.count].addItem("Edit modlst")
+        self.modlst = open(self.digital_home + '/modpath.lst', 'r')
+        self.data = self.modlst.readlines()
+        self.modlst.close()
+        for item in self.data:
+            if item != "\n":
+                self.entry_var[self.count].addItem(item.strip())
+        self.entry_var[self.count].activated[str].connect(self.edit_modlst)
+        self.trgrid.addWidget(self.entry_var[self.count], 1, 4, 1, 2)
+        self.count += 1
+        self.entry_var[self.count] = QtWidgets.QComboBox()
+        self.entry_var[self.count].addItem("Edit lint_off")
+        self.lint_off = open("../maker/lint_off.txt", 'r')
+        self.data = self.lint_off.readlines()
+        self.lint_off.close()
+        for item in self.data:
+            if item != "\n":
+                self.entry_var[self.count].addItem(item.strip())
+        self.entry_var[self.count].activated[str].connect(self.lint_off_edit)
+        self.trgrid.addWidget(self.entry_var[self.count], 2, 4, 1, 2)
+        self.count += 1
+        self.entry_var[self.count] = QtWidgets.QLineEdit(self)
+        self.trgrid.addWidget(self.entry_var[self.count], 3, 4)
+        self.entry_var[self.count].setMaximumWidth(100)
+        self.count += 1
+        self.entry_var[self.count] = QtWidgets.QPushButton("Add Lint_Off")
+        self.entry_var[self.count].setMaximumWidth(100)
+        self.trgrid.addWidget(self.entry_var[self.count], 3, 5)
+        self.entry_var[self.count].clicked.connect(self.add_lint_off)
 
-        # if not os.path.isdir(self.modelpath):
-        #     os.mkdir(self.modelpath)
-        # text = open(includefile).read()
-        # open(self.modelpath+filename,'w').write(text)
-        # includefile.close()
+        self.count += 1
+
+        # CSS
+        self.trbox.setStyleSheet(" \
+        QGroupBox { border: 1px solid gray; border-radius: \
+        9px; margin-top: 0.5em; } \
+        QGroupBox::title { subcontrol-origin: margin; left: \
+         10px; padding: 0 3px 0 3px; } \
+        ")
+
+        return self.trbox
