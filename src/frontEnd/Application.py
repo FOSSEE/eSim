@@ -18,7 +18,6 @@
 # =========================================================================
 
 import os
-import traceback        # noqa:F401
 
 import traceback
 if os.name == 'nt':     # noqa
@@ -557,23 +556,6 @@ class Application(QtWidgets.QMainWindow):
 
         if self.projDir is not None:
 
-            self.obj_Mainview.obj_dockarea.ngspiceEditor(self.projDir)
-            if self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                    self.projDir) is False:
-                print(
-                    "No netlist (*.cir.out) file"
-                    "Check netlist file to change simulation parameters."
-                )
-
-                self.msg = QtWidgets.QErrorMessage()
-                self.msg.setModal(True)
-                self.msg.setWindowTitle("Warning Message")
-                self.msg.showMessage(
-                    'No netlist (*.cir.out) file'
-                )
-                self.msg.exec_()
-                return
-=======
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
                     self.projDir) is False:
@@ -581,7 +563,6 @@ class Application(QtWidgets.QMainWindow):
                     "No netlist file (*.cir.out)"
                     "Check netlist file to change simulation parameters."
                 )
->>>>>>> master
 
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
