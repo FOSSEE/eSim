@@ -5,7 +5,7 @@ Following are the changes to be done when a new release of eSim is to be made:
 
 1. `master/VERSION` - Change the version number
 
-2. `master/conf.py` - Update `release` variable
+2. `master/conf.py` - Update `version` and `release` variables
 
 3. `master/setup.py` - Update `version` field in `setup` function
 
