@@ -14,7 +14,7 @@ class UserManual(QtWidgets.QWidget):
 
         self.vlayout = QtWidgets.QVBoxLayout()
 
-        manual = 'library/browser/User-Manual/eSim_Manual_2.1.pdf'
+        manual = 'library/browser/User-Manual/eSim_Manual_2.2-pre_release.pdf'
 
         if os.name == 'nt':
             os.startfile(os.path.realpath(manual))
