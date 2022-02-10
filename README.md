@@ -15,7 +15,7 @@ It is an integrated tool build using open source softwares such as KiCad, Ngspic
 
 ## Releases and Installation
 eSim is released for the following distributions (operating systems):
-* Ubuntu 16.04 OS and above LTS versions.
+* Ubuntu 18.04 and 20.04 LTS versions.
 * Microsoft Windows 7, 8 and 10.
 
 To use eSim on your machine having above distributions, please refer to link [here](https://esim.fossee.in/downloads) for installation and other guidelines.
@@ -37,7 +37,7 @@ To use eSim on your machine having above distributions, please refer to link [he
 * [NGHDL](https://github.com/fossee/nghdl)
 
 ## eSim Manual
-To know everything about eSim, how it works and it's feature please download manual [here](https://static.fossee.in/esim/manuals/eSim_Manual_2020_August.pdf)
+To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.2_pre-release.pdf)
 
 ## Contact
 For any queries regarding eSim please write us on at this [email address](mailto:contact-esim@fossee.in).

@@ -109,7 +109,7 @@ class AutoSchematic:
         self.input_length = portInformation.input_len
         self.portName = portInformation.port_name
 
-    # creating the XML files in eSim-2.1/library/modelParamXML/Ngveri
+    # creating the XML files in eSim-2.2/library/modelParamXML/Ngveri
     def createXML(self):
         cwd = os.getcwd()
         xmlDestination = os.path.join(self.xml_loc, 'Ngveri')

@@ -103,9 +103,9 @@ class Appconfig(QtWidgets.QWidget):
 
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = '2.1'
+        self._VERSION = '2.2 pre-release'
         self._AUTHOR = 'Fahim'
-        self._REVISION = 'Rahul'
+        self._REVISION = 'Rahul, Sumanto'
 
         # Application geometry setting
         self._app_xpos = 100
