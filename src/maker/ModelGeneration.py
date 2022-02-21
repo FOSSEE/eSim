@@ -834,7 +834,14 @@ and set the load for input ports */
         if os.path.exists(self.modelpath + "../verilated.o"):
             os.remove(self.modelpath + "../verilated.o")
 
-        self.cmd = "make -f V" + self.fname.split('.')[0]\
+        if os.name == 'nt':
+            # path to msys home directory
+            self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
+            self.cmd = self.msys_home + "/mingw64/bin/mingw32-make.exe"
+        else:
+            self.cmd = "make"
+
+        self.cmd = self.cmd + " -f V" + self.fname.split('.')[0]\
             + ".mk V" + self.fname.split(
             '.')[0] + "__ALL.a sim_main_" \
             + self.fname.split('.')[0] + ".o ../verilated.o"
@@ -918,9 +925,9 @@ and set the load for input ports */
 
         try:
             if os.name == 'nt':
-                # path to msys bin directory where make is located
-                self.msys_bin = self.parser.get('COMPILER', 'MSYS_HOME')
-                self.cmd = self.msys_bin + "\\make.exe"
+                # path to msys home directory
+                self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
+                self.cmd = self.msys_home + "/mingw64/bin/mingw32-make.exe"
             else:
                 self.cmd = "make"
 
@@ -953,8 +960,8 @@ and set the load for input ports */
 
         try:
             if os.name == 'nt':
-                self.msys_bin = self.parser.get('COMPILER', 'MSYS_HOME')
-                self.cmd = self.msys_bin + "\\make.exe install"
+                self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
+                self.cmd = self.msys_home + "/mingw64/bin/mingw32-make.exe install"
             else:
                 self.cmd = "make install"
             print("Running Make Install")
