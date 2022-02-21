@@ -32,6 +32,7 @@ from PyQt5 import QtCore, QtWidgets, QtGui
 from . import Maker
 from . import ModelGeneration
 import os
+import shutil
 import subprocess
 from configuration.Appconfig import Appconfig
 from configparser import SafeConfigParser
@@ -112,30 +113,53 @@ class NgVeri(QtWidgets.QWidget):
 
             return
 
-        model.verilogfile()
-        error = model.verilogParse()
-        if error != "Error":
-            model.getPortInfo()
-            model.cfuncmod()
-            model.ifspecwrite()
-            model.sim_main_header()
-            model.sim_main()
-            model.modpathlst()
-            model.run_verilator()
-            model.make_verilator()
-            model.copy_verilator()
-            model.runMake()
-            model.runMakeInstall()
-            txt = self.entry_var[0].toPlainText()
-            if "error" not in txt.lower():
-                self.entry_var[0].append('''
-                <p style=\"font-size:20pt; font-weight:1000; color:#00FF00;\" >
-                Model Created Successfully !
-                </p>
-                ''')
-            else:
-                self.entry_var[0].append('''
-                <p style=\"font-size:20pt; font-weight:1000; color:#FF0000;\" >
+        try:
+            model.verilogfile()
+            error = model.verilogParse()
+            if error != "Error":
+                model.getPortInfo()
+                model.cfuncmod()
+                model.ifspecwrite()
+                model.sim_main_header()
+                model.sim_main()
+                model.modpathlst()
+                model.run_verilator()
+                model.make_verilator()
+                model.copy_verilator()
+                model.runMake()
+
+                if os.name != 'nt':
+                    model.runMakeInstall()
+                else:
+                    try:
+                        shutil.copy(
+                            self.release_dir + "/src/xspice/icm/Ngveri/Ngveri.cm",
+                            self.nghdl_home + "/lib/ngspice/"
+                        )
+                    except FileNotFoundError as err:
+                        self.entry_var[0].append(
+                            "Error in copying Ngveri code model: " + str(err)
+                        )
+
+                terminalLog = self.entry_var[0].toPlainText()
+                if "error" not in terminalLog.lower():
+                    self.entry_var[0].append('''
+                        <p style=\" font-size:16pt; font-weight:1000; color:#00FF00;\" >
+                        Model Created Successfully!
+                        </p>
+                    ''')
+
+                    return
+
+        except BaseException as err:
+            self.entry_var[0].append(
+                "Error in Ngspice code model generation from Verilog: " + str(err)
+            )
+
+        terminalLog = self.entry_var[0].toPlainText()
+        if "error" in terminalLog.lower():
+            self.entry_var[0].append('''
+                <p style=\" font-size:16pt; font-weight:1000; color:#FF0000;\" >
                 There was an error during model creation,
                 <br/>
                 Please rectify the error and try again !
@@ -253,12 +277,24 @@ class NgVeri(QtWidgets.QWidget):
             self.fname = Maker.verilogFile[self.filecount]
             model = ModelGeneration.ModelGeneration(
                 self.fname, self.entry_var[0])
-            model.runMake()
-            model.runMakeInstall()
-            return
 
-        # else:
-        #    return
+            try:
+                model.runMake()
+
+                if os.name != 'nt':
+                    model.runMakeInstall()
+                else:
+                    shutil.copy(
+                        self.release_dir + "/src/xspice/icm/Ngveri/Ngveri.cm",
+                        self.nghdl_home + "/lib/ngspice/"
+                    )
+            except BaseException as err:
+                QtWidgets.QMessageBox.critical(
+                None, "Error Message",
+                "The verilog model '" + str(text) +
+                "' could not be removed: " + str(err),
+                QtWidgets.QMessageBox.Ok)
+
 
     # This is to remove lint_off comments needed by the verilator warnings
     # This function writes to the lint_off.txt here in the same folder
