@@ -324,28 +324,28 @@ Section Uninstall
     Pop $0
     DetailPrint "EnVar::AddValue returned=|$0|"
 	
-	GetFullPathName $1 $INSTDIR\..\mingw64\bin
+    GetFullPathName $1 $INSTDIR\..\MSYS\mingw64\bin
+    EnVar::DeleteValue "Path" $1
+    Pop $0
+    DetailPrint "EnVar::AddValue returned=|$0|"
+
+	GetFullPathName $1 $INSTDIR\..\MSYS\usr\bin
 	EnVar::DeleteValue "Path" $1
     Pop $0
     DetailPrint "EnVar::AddValue returned=|$0|"
 	
-	GetFullPathName $1 $INSTDIR\..\mingw64\msys\bin
+	;GetFullPathName $1 $INSTDIR\..\mingw64\GHDL\bin
+	;EnVar::DeleteValue "Path" $1
+    ;Pop $0
+    ;DetailPrint "EnVar::AddValue returned=|$0|"
+	
+	GetFullPathName $1 $INSTDIR\..\nghdl-simulator\bin
 	EnVar::DeleteValue "Path" $1
     Pop $0
     DetailPrint "EnVar::AddValue returned=|$0|"
 	
-	GetFullPathName $1 $INSTDIR\..\mingw64\GHDL\bin
-	EnVar::DeleteValue "Path" $1
-    Pop $0
-    DetailPrint "EnVar::AddValue returned=|$0|"
-	
-	GetFullPathName $1 $INSTDIR\..\ngspice-nghdl\bin
-	EnVar::DeleteValue "Path" $1
-    Pop $0
-    DetailPrint "EnVar::AddValue returned=|$0|"
-	
-	RMDir /r "$INSTDIR\..\mingw64"
-	RMDir /r "$INSTDIR\..\ngspice-nghdl"
+	RMDir /r "$INSTDIR\..\MSYS"
+	RMDir /r "$INSTDIR\..\nghdl-simulator"
 	RMDir /r "$INSTDIR\..\eSim\nghdl"
 
   ;Note that in uninstaller code, $INSTDIR contains the directory where the uninstaller lies
