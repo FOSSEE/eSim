@@ -226,6 +226,10 @@ class NgVeri(QtWidgets.QWidget):
 
         self.addverilogbutton = QtWidgets.QPushButton(
             "Run Verilog to NgSpice Converter")
+        self.addverilogbutton.setToolTip(
+            "Requires internet connection for converting TL-Verilog models"
+        )
+        self.addverilogbutton.setToolTipDuration(5000)
         self.optionsgroupbtn.addButton(self.addverilogbutton)
         self.addverilogbutton.clicked.connect(self.addverilog)
         self.optionsgrid.addWidget(self.addverilogbutton, 0, 1)
