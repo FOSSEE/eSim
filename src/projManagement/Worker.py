@@ -16,7 +16,7 @@
 #      REVISION: Sunday 16 August 2020
 # =========================================================================
 
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtWidgets
 import subprocess
 from configuration.Appconfig import Appconfig
 
@@ -97,7 +97,25 @@ class WorkerThread(QtCore.QThread):
         """
 
         procThread = Appconfig()
+        projDir = procThread.current_project["ProjectName"]
+
+        if (projDir is None) and ('nghdl' not in command):
+            msg = QtWidgets.QErrorMessage()
+            msg.setModal(True)
+            msg.setWindowTitle("Error Message")
+            msg.showMessage(
+                'Please select the project first. You can either ' +
+                'create a new project or open an existing project.'
+            )
+            msg.exec_()
+
+            return
+
         proc = subprocess.Popen(command.split())
+
+        if 'nghdl' in command:
+            return
+
         self.my_workers.append(proc)
         procThread.procThread_list.append(proc)
         procThread.proc_dict[procThread.current_project['ProjectName']].append(
