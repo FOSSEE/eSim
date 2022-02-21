@@ -101,6 +101,17 @@ class NgVeri(QtWidgets.QWidget):
         file = (os.path.basename(self.fname)).split('.')[0]
         if self.entry_var[1].findText(file) == -1:
             self.entry_var[1].addItem(file)
+
+        if not Maker.makerchipTOSAccepted(True):
+            QtWidgets.QMessageBox.warning(
+                None, "Warning Message",
+                "Please accept the Makerchip Terms of Service "
+                "to proceed further.",
+                QtWidgets.QMessageBox.Ok
+            )
+
+            return
+
         model.verilogfile()
         error = model.verilogParse()
         if error != "Error":

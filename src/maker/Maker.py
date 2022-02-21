@@ -50,9 +50,31 @@ home = expanduser("~")
 verilogFile = []
 toggle_flag = []
 
+
+# This function is called to accept TOS of makerchip
+def makerchipTOSAccepted(display=True):
+    if not os.path.isfile(home + "/.makerchip_accepted"):
+        if display:
+            reply = QtWidgets.QMessageBox.warning(
+                None, "Terms of Service", "Please review the Makerchip \
+                       Terms of Service \
+                       (<a href='https://www.makerchip.com/terms/'>\
+                       https://www.makerchip.com/terms/</a>). \
+                       Have you read and do you \
+                       accept these Terms of Service?",
+                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
+            )
+
+            if reply == QtWidgets.QMessageBox.Yes:
+                f = open(home + "/.makerchip_accepted", "w")
+                f.close()
+                return True
+
+        return False
+    return True
+
+
 # beginning class Maker. This class create the Maker Tab
-
-
 class Maker(QtWidgets.QWidget):
 
     # initailising the varaibles
@@ -177,22 +199,9 @@ class Maker(QtWidgets.QWidget):
         if os.name == 'nt':
             init_path = ''  # noqa:F841
         try:
-            if not os.path.isfile(home + "/.makerchip_accepted"):
-                reply = QtWidgets.QMessageBox.warning(
-                    None, "Terms of Services", "Please review the makerchip\
-                         Terms of Service \
-                         (<a href='https://www.makerchip.com/terms/'>\
-                         https://www.makerchip.com/terms/</a> ).\
-                          Have you read and do you accept \
-                          these Terms of Service? [y/N]:",
-                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
-                )
+            if not makerchipTOSAccepted(True):
+                return
 
-                if reply == QtWidgets.QMessageBox.Yes:
-                    f = open(home + "/.makerchip_accepted", "w")
-                    f.close()
-                else:
-                    return
             print("Running Makerchip..............................")
             # self.file = open(self.verilogfile,"w")
             # self.file.write(self.entry_var[1].toPlainText())
@@ -372,27 +381,7 @@ Please check if Verilog File Chosen.")
         self.optionsbox.setLayout(self.optionsgrid)
         return self.optionsbox
 
-    # This function is called to accept TOS of makerchip
-
-    def makerchipaccepted(self):
-        reply = QtWidgets.QMessageBox.warning(
-            None, "Terms of Services", "Please review the makerchip\
-                         Terms of Service \
-                         (<a href='https://www.makerchip.com/terms/'>\
-                         https://www.makerchip.com/terms/</a> ).\
-                          Have you read and do you \
-                          accept these Terms of Service? [y/N]:",
-            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
-        )
-
-        if reply == QtWidgets.QMessageBox.Yes:
-            f = open(home + "/.makerchip_accepted", "w")
-            f.close()
-        # else:
-        #    return
-
     # This function adds the other parts of widget like text box
-
     def creategroup(self):
 
         self.trbox = QtWidgets.QGroupBox()
