@@ -46,16 +46,21 @@ class NgVeri(QtWidgets.QWidget):
         QtWidgets.QWidget.__init__(self)
         # Maker.addverilog(self)
         self.obj_Appconfig = Appconfig()
-        self.home = os.path.expanduser("~")
+
+        if os.name == 'nt':
+            self.home = os.path.join('library', 'config')
+        else:
+            self.home = os.path.expanduser('~')
+
         self.parser = ConfigParser()
         self.parser.read(os.path.join(
             self.home, os.path.join('.nghdl', 'config.ini')))
-        self.ngspice_home = self.parser.get('NGSPICE', 'NGSPICE_HOME')
-        self.release_dir = self.parser.get('NGSPICE', 'RELEASE')
+        self.nghdl_home = self.parser.get('NGHDL', 'NGHDL_HOME')
+        self.release_dir = self.parser.get('NGHDL', 'RELEASE')
         self.src_home = self.parser.get('SRC', 'SRC_HOME')
         self.licensefile = self.parser.get('SRC', 'LICENSE')
-        self.digital_home = self.parser.get('NGSPICE', 'DIGITAL_MODEL')
-        self.digital_home = self.digital_home.split("/ghdl")[0] + "/Ngveri"
+        self.digital_home = self.parser.get('NGHDL', 'DIGITAL_MODEL')
+        self.digital_home = self.digital_home + "/Ngveri"
         self.count = 0
         self.text = ""
         self.entry_var = {}
@@ -77,8 +82,7 @@ class NgVeri(QtWidgets.QWidget):
 
     # Adding the verilog file in Maker tab to Ngveri Tab automatically
     def addverilog(self):
-
-        init_path = '../../../'
+        init_path = '../../'
         if os.name == 'nt':
             init_path = ''
         # b=Maker.Maker(self)

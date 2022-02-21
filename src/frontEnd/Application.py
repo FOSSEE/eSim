@@ -926,9 +926,12 @@ def main(args):
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
 
     try:
-        file = open(os.path.join(
-            os.path.expanduser("~"), ".esim/workspace.txt"), 'r'
-        )
+        if os.name == 'nt':
+            user_home = os.path.join('library', 'config')
+        else:
+            user_home = os.path.expanduser('~')
+
+        file = open(os.path.join(user_home, ".esim/workspace.txt"), 'r')
         work = int(file.read(1))
         file.close()
     except IOError:

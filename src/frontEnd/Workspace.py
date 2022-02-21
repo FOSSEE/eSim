@@ -124,9 +124,13 @@ class Workspace(QtWidgets.QWidget):
 
         self.obj_appconfig.workspace_check = self.chkbox.checkState()
         print(self.workspace_loc.text())
-        file = open(os.path.join(
-            os.path.expanduser("~"), ".esim/workspace.txt"), 'w'
-        )
+
+        if os.name == 'nt':
+            user_home = os.path.join('library', 'config')
+        else:
+            user_home = os.path.expanduser('~')
+
+        file = open(os.path.join(user_home, ".esim/workspace.txt"), 'w')
         file.writelines(
             str(self.obj_appconfig.workspace_check) +
             " " + self.workspace_loc.text()
