@@ -252,6 +252,10 @@ class NgVeri(QtWidgets.QWidget):
     # This is to remove lint_off comments needed by the verilator warnings
     # This function writes to the lint_off.txt here in the same folder
     def lint_off_edit(self, text):
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         if text == "Edit lint_off":
             return
         index = self.entry_var[2].findText(text)
@@ -260,17 +264,18 @@ class NgVeri(QtWidgets.QWidget):
         ret = QtWidgets.QMessageBox.warning(
             None,
             "Warning",
-            '''<b>Do you want to remove the lint off error:''' +
+            '''<b>Do you want to remove the lint off error: ''' +
             text,
             QtWidgets.QMessageBox.Ok,
             QtWidgets.QMessageBox.Cancel)
+
         if ret == QtWidgets.QMessageBox.Ok:
-            file = open("../maker/lint_off.txt", 'r')
+            file = open(init_path + "library/tlv/lint_off.txt", 'r')
             data = file.readlines()
             file.close()
 
             data.remove(text + "\n")
-            file = open("../maker/lint_off.txt", 'w')
+            file = open(init_path + "library/tlv/lint_off.txt", 'w')
             for item in data:
                 file.write(item)
             return
@@ -281,11 +286,15 @@ class NgVeri(QtWidgets.QWidget):
     # This is to add lint_off comments needed by the verilator warnings
     # This function writes to the lint_off.txt here in the same folder
     def add_lint_off(self):
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         text = self.entry_var[3].text()
 
         if self.entry_var[2].findText(text) == -1:
             self.entry_var[2].addItem(text)
-            file = open("../maker/lint_off.txt", 'a+')
+            file = open(init_path + "library/tlv/lint_off.txt", 'a+')
             file.write(text + "\n")
             file.close()
         self.entry_var[3].setText("")
@@ -325,7 +334,12 @@ class NgVeri(QtWidgets.QWidget):
         self.count += 1
         self.entry_var[self.count] = QtWidgets.QComboBox()
         self.entry_var[self.count].addItem("Edit lint_off")
-        self.lint_off = open("../maker/lint_off.txt", 'r')
+
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+        self.lint_off = open(init_path + "library/tlv/lint_off.txt", 'r')
+
         self.data = self.lint_off.readlines()
         self.lint_off.close()
         for item in self.data:

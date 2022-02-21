@@ -106,12 +106,15 @@ class ModelGeneration(QtWidgets.QWidget):
 
     # This function is call the sandpiper to convert .tlv file to .sv file
     def sandpiper(self):
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
         # Text="Running Sandpiper............"
         print("Running Sandpiper-Saas for TLV to SV Conversion")
-        self.cmd = "cp ../maker/tlv/clk_gate.v ../maker/tlv/pseudo_rand.sv \
-../maker/tlv/sandpiper.vh ../maker/tlv/sandpiper_gen.vh \
-../maker/tlv/sp_default.vh ../maker/tlv/pseudo_rand_gen.sv \
-../maker/tlv/pseudo_rand.m4out.tlv " + self.file + " " + self.modelpath
+        self.cmd = "cp " + init_path + "library/tlv/clk_gate.v " + init_path + "library/tlv/pseudo_rand.sv "\
+ + init_path + "library/tlv/sandpiper.vh " + init_path + "library/tlv/sandpiper_gen.vh "\
+ + init_path + "library/tlv/sp_default.vh " + init_path + "library/tlv/pseudo_rand_gen.sv "\
+ + init_path + "library/tlv/pseudo_rand.m4out.tlv " + self.file + " " + self.modelpath
 
         self.process = QtCore.QProcess(self)
         self.args = ['-c', self.cmd]
@@ -790,8 +793,12 @@ and set the load for input ports */
 
     # This function is used to run the Verilator using the verilator commands
     def run_verilator(self):
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         self.cur_dir = os.getcwd()
-        file = open("../maker/lint_off.txt").readlines()
+        file = open(init_path + "library/tlv/lint_off.txt").readlines()
         wno = " "
         for item in file:
             wno += " -Wno-" + item.strip("\n")
@@ -823,10 +830,14 @@ and set the load for input ports */
         self.cur_dir = os.getcwd()
         print("Make Verilator.............")
         os.chdir(self.modelpath)
+
+        if os.path.exists(self.modelpath + "../verilated.o"):
+            os.remove(self.modelpath + "../verilated.o")
+
         self.cmd = "make -f V" + self.fname.split('.')[0]\
             + ".mk V" + self.fname.split(
             '.')[0] + "__ALL.a sim_main_" \
-            + self.fname.split('.')[0] + ".o verilated.o"
+            + self.fname.split('.')[0] + ".o ../verilated.o"
         self.process = QtCore.QProcess(self)
         self.process.readyReadStandardOutput.connect(self.readAllStandard)
         self.process.start('sh', ['-c', self.cmd])
@@ -861,9 +872,9 @@ and set the load for input ports */
             os.remove(path_icm + "sim_main_" + self.fname.split('.')[0] + ".o")
         if os.path.exists(
             self.release_home +
-            "src/xspice/icm/" +
+            "src/xspice/icm/Ngveri/" +
                 "verilated.o"):
-            os.remove(self.release_home + "src/xspice/icm/" + "verilated.o")
+            os.remove(self.release_home + "src/xspice/icm/Ngveri/" + "verilated.o")
         if os.path.exists(
             path_icm +
             "V" +
@@ -886,8 +897,8 @@ and set the load for input ports */
             self.termtext("Current Directory: " + self.modelpath)
             self.termtext("Command: " + self.cmd)
             self.process.waitForFinished(50000)
-            self.cmd = "cp verilated.o " + self.release_home \
-                + "/src/xspice/icm/"
+            self.cmd = "cp ../verilated.o " + self.release_home \
+                + "/src/xspice/icm/Ngveri/"
             self.process.start('sh', ['-c', self.cmd])
             self.termtext("Command: " + self.cmd)
             self.process \

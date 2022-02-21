@@ -228,7 +228,7 @@ class Maker(QtWidgets.QWidget):
                     code = code.replace(" reg ", " ")
                     vlog_ex = vlog.VerilogExtractor()
                     vlog_mods = vlog_ex.extract_objects_from_source(code)
-                    lint_off = open("../maker/lint_off.txt").readlines()
+                    lint_off = open(init_path + "library/tlv/lint_off.txt").readlines()
                     string = '''\\TLV_version 1d: tl-x.org\n\\SV\n'''
                     for item in lint_off:
                         string += "/* verilator lint_off " + \
