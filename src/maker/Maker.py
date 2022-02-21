@@ -125,6 +125,10 @@ class Maker(QtWidgets.QWidget):
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
             if reply == QtWidgets.QMessageBox.Ok:
                 self.addverilog()
+
+                if self.verilogfile == "":
+                    return
+
                 self.obj_Appconfig.print_info('Add Verilog File Called')
 
             elif reply == QtWidgets.QMessageBox.Cancel:
