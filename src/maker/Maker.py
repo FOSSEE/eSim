@@ -82,7 +82,7 @@ class Maker(QtWidgets.QWidget):
     # This function is to Add new  verilog file
     def addverilog(self):
 
-        init_path = '../../../'
+        init_path = '../../'
         if os.name == 'nt':
             init_path = ''
         self.verilogfile = QtCore.QDir.toNativeSeparators(

@@ -34,9 +34,14 @@ class Appconfig(QtWidgets.QWidget):
     """
 
     # Home directory
+    if os.name == 'nt':
+        user_home = os.path.join('library', 'config')
+    else:
+        user_home = os.path.expanduser('~')
+
     try:
         file = open(os.path.join(
-            os.path.expanduser("~"), ".esim/workspace.txt"), 'r'
+            user_home, ".esim/workspace.txt"), 'r'
         )
         workspace_check, home = file.readline().split(' ', 1)
         file.close()
@@ -65,11 +70,8 @@ class Appconfig(QtWidgets.QWidget):
 
     parser_esim = ConfigParser()
     parser_esim.read(
-        os.path.join(
-            os.path.expanduser("~"),
-            os.path.join(
-                '.esim',
-                'config.ini')))
+        os.path.join(user_home, '.esim', 'config.ini')
+    )
 
     # Try catch added, since eSim cannot be accessed under parser for Win10
     try:

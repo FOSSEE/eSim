@@ -51,23 +51,31 @@ class ModelGeneration(QtWidgets.QWidget):
         super().__init__()
         self.obj_Appconfig = Appconfig.Appconfig()
         print("Argument is : ", file)
-        self.file = file
+
+        if os.name == 'nt':
+            self.file = file.replace('\\', '/')
+        else:
+            self.file = file
+
         self.termedit = termedit
         self.cur_dir = os.getcwd()
         self.fname = os.path.basename(file)
         self.fname = self.fname.lower()
         print("Verilog/SystemVerilog/TL Verilog filename is : ", self.fname)
-        self.home = os.path.expanduser("~")
+
+        if os.name == 'nt':
+            self.home = os.path.join('library', 'config')
+        else:
+            self.home = os.path.expanduser('~')
+
         self.parser = ConfigParser()
         self.parser.read(os.path.join(
             self.home, os.path.join('.nghdl', 'config.ini')))
-        self.ngspice_home = self.parser.get('NGSPICE', 'NGSPICE_HOME')
-        self.release_dir = self.parser.get('NGSPICE', 'RELEASE')
+        self.nghdl_home = self.parser.get('NGHDL', 'NGHDL_HOME')
+        self.release_dir = self.parser.get('NGHDL', 'RELEASE')
         self.src_home = self.parser.get('SRC', 'SRC_HOME')
         self.licensefile = self.parser.get('SRC', 'LICENSE')
-        self.digital_home = self.parser.get('NGSPICE', 'DIGITAL_MODEL')
-
-        self.digital_home = self.digital_home.split("/ghdl")[0] + "/Ngveri"
+        self.digital_home = self.parser.get('NGHDL', 'DIGITAL_MODEL') + "/Ngveri"
         # # #### Creating connection_info.txt file from verilog file #### #
 
     # Readinf the file and performing operations and copying it in the Ngspice
@@ -438,7 +446,7 @@ and set the load for input ports */
         cfunc.write("\n")
 
         # if os.name == 'nt':
-        #     digital_home = parser.get('NGSPICE', 'DIGITAL_MODEL')
+        #     digital_home = parser.get('NGHDL', 'DIGITAL_MODEL')
         #     msys_home = parser.get('COMPILER', 'MSYS_HOME')
         #     cmd_str2 = "/start_server.sh %d %s & read" + "\\" + "\"" + "\""
         #     cmd_str1 = os.path.normpath(
@@ -455,7 +463,7 @@ and set the load for input ports */
         # else:
         #     cfunc.write(
         #         '\t\tsnprintf(command,1024,"' + home +
-        #         '/ngspice-nghdl/src/xspice/icm/ghdl/' +
+        #         '/nghdl-simulator/src/xspice/icm/ghdl/' +
         #         fname.split('.')[0] +
         #         '/DUTghdl/start_server.sh %d %s &", sock_port, my_ip);'
         #     )
@@ -796,7 +804,7 @@ and set the load for input ports */
             wno += " -Wno-" + item.strip("\n")
         print("Running Verilator.............")
         os.chdir(self.modelpath)
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
+        self.release_home = self.parser.get('NGHDL', 'RELEASE')
         # print(self.modelpath)
 
         self.cmd = "verilator -Wall " + wno + "\
@@ -847,8 +855,8 @@ and set the load for input ports */
         self.cur_dir = os.getcwd()
         print("Copying the required files to Release Folder.............")
         os.chdir(self.modelpath)
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
-        path_icm = os.path.join(self.release_home, "src/xspice/icm/Ngveri/")
+        self.release_home = self.parser.get('NGHDL', 'RELEASE')
+        path_icm = self.release_home + "/src/xspice/icm/Ngveri/"
         if not os.path.isdir(path_icm + self.fname.split('.')[0]):
             os.mkdir(path_icm + self.fname.split('.')[0])
         path_icm = path_icm + self.fname.split('.')[0]
@@ -900,7 +908,7 @@ and set the load for input ports */
     # Running the make command for Ngspice
     def runMake(self):
         print("run Make Called")
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
+        self.release_home = self.parser.get('NGHDL', 'RELEASE')
         path_icm = os.path.join(self.release_home, "src/xspice/icm")
         os.chdir(path_icm)
 
@@ -935,7 +943,7 @@ and set the load for input ports */
     def runMakeInstall(self):
         self.cur_dir = os.getcwd()
         print("run Make Install Called")
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
+        self.release_home = self.parser.get('NGHDL', 'RELEASE')
         path_icm = os.path.join(self.release_home, "src/xspice/icm")
         os.chdir(path_icm)
 
@@ -976,7 +984,7 @@ and set the load for input ports */
     def addfile(self):
         print("Adding the files required by the top level module file")
 
-        init_path = '../../../'
+        init_path = '../../'
         if os.name == 'nt':
             init_path = ''
         includefile = QtCore.QDir.toNativeSeparators(
@@ -1019,7 +1027,7 @@ and set the load for input ports */
         # self.cur_dir = os.getcwd()
         print("Adding the folder required by the top level module file")
 
-        init_path = '../../../'
+        init_path = '../../'
         if os.name == 'nt':
             init_path = ''  # noqa:F841
         includefolder = QtCore.QDir.toNativeSeparators(
@@ -1134,7 +1142,7 @@ and set the load for input ports */
     #     Text += "</span>"
     #     self.termedit.append(Text+"\n")
 
-        # init_path = '../../../'
+        # init_path = '../../'
         # if os.name == 'nt':
         #     init_path = ''
         # includefile = QtCore.QDir.toNativeSeparators(\

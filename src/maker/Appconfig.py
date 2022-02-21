@@ -3,7 +3,11 @@ from configparser import ConfigParser
 
 
 class Appconfig:
-    home = os.path.expanduser("~")
+    if os.name == 'nt':
+        home = os.path.join('library', 'config')
+    else:
+        home = os.path.expanduser('~')
+
     # Reading all variables from eSim config.ini
     parser_esim = ConfigParser()
     parser_esim.read(os.path.join(home, os.path.join('.esim', 'config.ini')))
