@@ -35,11 +35,10 @@ import shutil  # noqa:F401
 import subprocess  # noqa:F401
 from PyQt5 import QtGui, QtCore, QtWidgets  # noqa:F401
 from PyQt5.QtGui import *  # noqa:F401 F403
-from configparser import ConfigParser  # noqa:F401
+from configparser import ConfigParser
 from configuration import Appconfig
 from . import createkicad
 import hdlparse.verilog_parser as vlog
-from configparser import SafeConfigParser  # noqa:F401
 
 # Class is used to generate the Ngspice Model
 
@@ -59,7 +58,7 @@ class ModelGeneration(QtWidgets.QWidget):
         self.fname = self.fname.lower()
         print("Verilog/SystemVerilog/TL Verilog filename is : ", self.fname)
         self.home = os.path.expanduser("~")
-        self.parser = SafeConfigParser()
+        self.parser = ConfigParser()
         self.parser.read(os.path.join(
             self.home, os.path.join('.nghdl', 'config.ini')))
         self.ngspice_home = self.parser.get('NGSPICE', 'NGSPICE_HOME')
