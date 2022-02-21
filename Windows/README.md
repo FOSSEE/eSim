@@ -93,10 +93,11 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 > Note: Refer this [documentation](https://github.com/fossee/KiCad-eSim/blob/executables/README.md) on packaging KiCad for Windows OS
 
 10. Add following files/folder to the installer folder:
-	- License file (`rtf` format).
-	- Logo (`ico` format).
-	- `esim-setup-script` file.
-	- `nghdl-setup-script` file.
+	- License file (`rtf` format)
+	- Logo (`ico` format)
+	- `esim-setup-script` file
+	- Makerchip executables (`makerchip.7z` file)
+	- `nghdl-setup-script` file fromt the `NGHDL` repository
 
 11. Compile the NSI script (`esim-setup-script` file). Now only use the generated installer for distribution.
 
