@@ -15,7 +15,7 @@
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode, Sumanto Kar
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Wednesday 05 January 2021 23:50
+#      REVISION: Tuesday 01 February 2022 23:50
 #===============================================================================
 
 # All variables goes here
@@ -75,35 +75,6 @@ function installNghdl
 
 }
 
-function verilator
-{   
-
-    echo "Installing Verilator Dependencies..........................."
-    if [[ -n "$(which apt-get 2> /dev/null)" ]]
-    then
-    # Ubuntu
-        sudo apt-get install make autoconf g++ flex bison
-    else [[ -n "$(which yum 2> /dev/null)" ]]
-    # Ubuntu
-        sudo yum install make autoconf flex bison which -y
-        sudo yum groupinstall 'Development Tools'  -y
-    fi
-    echo "Installing Verilator..........................."
-    sudo apt install -y curl
-    curl https://www.veripool.org/ftp/verilator-4.210.tgz | tar -zx
-    cd verilator-4.210
-    ./configure
-    make -j$(nproc)
-    sudo make install
-    echo "Removing the Unessential files in Verilator Folder..........................."
-    rm -r docs
-    rm -r examples
-    rm -r include
-    rm -r test_regress
-    rm -r bin
-    ls -1 | grep -E -v 'config.status|configure.ac|Makefile.in|verilator.1|configure|Makefile|src|verilator.pc' | xargs rm -f
-    #sudo rm -v -r'!("config.status"|"configure.ac"|"Makefile.in"|"verilator.1"|"configure"|"Makefile"|"src"|"verilator.pc")'
-}
 function Ngveridependencies
 {
     echo "Installing Chrome.........................."
@@ -372,7 +343,6 @@ if [ $option == "--install" ];then
             copyKicadLibrary
             installNghdl
             createDesktopStartScript
-	    verilator
 	    Ngveridependencies
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
@@ -385,7 +355,6 @@ if [ $option == "--install" ];then
             copyKicadLibrary
             installNghdl
             createDesktopStartScript
-	    verilator
 	    Ngveridependencies
 
             if [ $? -ne 0 ];then
@@ -418,9 +387,7 @@ elif [ $option == "--uninstall" ];then
         if [[ $(lsb_release -rs) == 20.* ]]; then
             sudo sed -i '/Package: kicad/{:label;N;/Pin-Priority: 501/!blabel};/Pin: version 4.0.7*/d' /etc/apt/preferences.d/preferences
         fi
-	echo "Removing Verilator..........................."
-	cd verilator-4.210
-	sudo make uninstall
+
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
         cd ../nghdl/
