@@ -371,10 +371,10 @@ Please check if Verilog File Chosen.")
         self.optionsgrid.addWidget(self.runoptions, 0, 4)
         # self.optionsbox.setLayout(self.optionsgrid)
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-        if not os.path.isfile(home + "/.makerchip_accepted"):
+        if not makerchipTOSAccepted(False):
             self.acceptTOS = QtWidgets.QPushButton("Accept Makerchip TOS")
             self.optionsgroupbtn.addButton(self.acceptTOS)
-            self.acceptTOS.clicked.connect(self.makerchipaccepted)
+            self.acceptTOS.clicked.connect(lambda: makerchipTOSAccepted(True))
             self.optionsgrid.addWidget(self.acceptTOS, 0, 5)
             # self.optionsbox.setLayout(self.optionsgrid)
             # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
