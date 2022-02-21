@@ -71,7 +71,7 @@ function installNghdl
     trap error_exit ERR
 
     ngspiceFlag=1
-    cd ..
+    cd ../
 
 }
 
@@ -134,10 +134,8 @@ function installDependency
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
 
-    if [[ $(lsb_release -rs) != 16.* ]]; then
-	    echo "Installing Distutils......................."
-	    sudo apt-get install -y python3-distutils
-	fi
+    echo "Installing Distutils......................."
+    sudo apt-get install -y python3-distutils
 
     # Install NgVeri Depedencies
     echo "Installing Pip3............................"
@@ -258,13 +256,10 @@ function createDesktopStartScript
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
-    # Check if the target OS is Ubuntu 18 or not
-    if [[ $(lsb_release -rs) == 18.* || $(lsb_release -rs) == 20.* ]]; then
-        # Make esim.desktop file as trusted application
-        gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
-        # Set Permission and Execution bit
-    	chmod a+x $HOME/Desktop/esim.desktop
-    fi
+    # Make esim.desktop file as trusted application
+    gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
+    # Set Permission and Execution bit
+    chmod a+x $HOME/Desktop/esim.desktop
 
     # Remove local copy of esim.desktop file
     rm esim.desktop
@@ -357,7 +352,7 @@ if [ $option == "--install" ];then
             createDesktopStartScript
 
             if [ $? -ne 0 ];then
-                echo -e "\n\n\nFreeEDA ERROR: Unable to install required packages. Please check your internet connection.\n\n"
+                echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
                 exit 0
             fi
 
@@ -372,7 +367,7 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure? It will remove eSim completely including KiCad, Ngspice and NGHDL along with their models and libraries (y/n):"
+    echo -n "Are you sure? It will remove eSim completely including KiCad, Makerchip and NGHDL along with their models and libraries (y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
@@ -394,7 +389,8 @@ elif [ $option == "--uninstall" ];then
 
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
-        cd ../nghdl/
+        rm -rf library/modelParamXML/Ngveri/*
+        cd nghdl/
         if [ $? -eq 0 ];then
         	chmod +x install-nghdl.sh
     	    ./install-nghdl.sh --uninstall
