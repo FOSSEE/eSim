@@ -48,7 +48,7 @@ class AutoSchematic:
         self.lib_loc = self.App_obj.lib_loc
         self.modelpath = modelpath
         if os.name == 'nt':
-            eSim_src = Appconfig.src_home
+            eSim_src = self.App_obj.src_home
             inst_dir = eSim_src.replace('\\eSim', '')
             self.kicad_ngveri_lib = \
                 inst_dir + '/KiCad/share/kicad/library/eSim_Ngveri.lib'
