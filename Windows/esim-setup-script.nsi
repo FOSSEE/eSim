@@ -1,6 +1,6 @@
 ;NSIS Modern User Interface
 ;Start Menu Folder Selection Example Script
-;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar - 01_03_2020
+;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar - 14_02_2022
 ;Made by eSim Team, FOSSEE, IIT Bombay
 
 ;--------------------------------
@@ -276,6 +276,22 @@ Section -AdditionalIcons
 SectionEnd
 
 !include "nghdl-setup-script.nsi" 
+
+
+Section -InstallMakerchip
+
+  SetOutPath "$EXEDIR"
+  File "makerchip.7z"
+  
+  SetOutPath $INSTDIR
+  Nsis7z::ExtractWithDetails "$EXEDIR\makerchip.7z" "Extracting Makerchip %s..."
+  CopyFiles "$INSTDIR\makerchip\*" "$INSTDIR\MSYS\mingw64\bin"
+
+  RMDir /r "$INSTDIR\makerchip"
+  Delete "$EXEDIR\makerchip.7z"
+
+SectionEnd
+
 
 Section -Post
 
