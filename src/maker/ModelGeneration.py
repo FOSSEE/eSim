@@ -987,23 +987,32 @@ and set the load for input ports */
         init_path = '../../'
         if os.name == 'nt':
             init_path = ''
+
         includefile = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getOpenFileName(
                 self,
                 "Open adding other necessary files to be included",
                 init_path + "home")[0])
+
         if includefile == "":
             reply = QtWidgets.QMessageBox.critical(
                 None, "Error Message",
                 "<b>Error: No File Chosen. Please chose a file</b>",
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
             )
+
             if reply == QtWidgets.QMessageBox.Ok:
                 self.addfile()
+
+                if includefile == "":
+                    return
+
                 self.obj_Appconfig.print_info('Add Other Files Called')
 
             elif reply == QtWidgets.QMessageBox.Cancel:
                 self.obj_Appconfig.print_info('No File Chosen')
+                return
+
         filename = os.path.basename(includefile)
         self.modelpath = self.digital_home + \
             "/" + self.fname.split('.')[0] + "/"
@@ -1020,9 +1029,9 @@ and set the load for input ports */
         print("Added the File:" + filename)
         self.termtitle("Added the File:" + filename)
 
+
     # This function is used to add additional folder required by the verilog
     # top module
-
     def addfolder(self):
         # self.cur_dir = os.getcwd()
         print("Adding the folder required by the top level module file")
@@ -1030,23 +1039,31 @@ and set the load for input ports */
         init_path = '../../'
         if os.name == 'nt':
             init_path = ''  # noqa:F841
+
         includefolder = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getExistingDirectory(
                 self, "open", "home"
             )
         )
+
         if includefolder == "":
             reply = QtWidgets.QMessageBox.critical(
                 None, "Error Message",
                 "<b>Error: No Folder Chosen. Please chose a folder</b>",
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
             )
+
             if reply == QtWidgets.QMessageBox.Ok:
                 self.addfolder()
+
+                if includefolder == "":
+                    return
+
                 self.obj_Appconfig.print_info('Add Folder Called')
 
             elif reply == QtWidgets.QMessageBox.Cancel:
                 self.obj_Appconfig.print_info('No File Chosen')
+                return
 
         self.modelpath = self.digital_home + \
             "/" + self.fname.split('.')[0] + "/"
