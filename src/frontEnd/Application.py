@@ -11,10 +11,10 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#                Sumanto Kar, sumantokar@iitb.ac.in, FOSSEE, IIT Bombay
+#                Sumanto Kar, sumantokar@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Wednesday 25 August 2021
+#      REVISION: Monday 31 January 2022
 # =========================================================================
 
 import os
@@ -576,19 +576,25 @@ class Application(QtWidgets.QMainWindow):
             count = 0
             while True:
                 try:
+                    # if os.name == 'nt':
+                    #     proc = 'mintty'
+                    # else:
+                    #     proc = 'xterm'
+
                     # Edited by Sumanto Kar 25/08/2021
-                    st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-                    if self.checkIfProcessRunning('xterm') is False:
+                    if os.name != 'nt' and self.checkIfProcessRunning('xterm') is False:
                         self.msg = QtWidgets.QErrorMessage()
                         self.msg.setModal(True)
                         self.msg.setWindowTitle("Warning Message")
                         self.msg.showMessage(
-                            'Simulation was interuppted. '
-                            'Please close all the Xterm windows.'
-                            'And then rerun the simulation'
+                            'Simulation was interrupted/failed. '
+                            'Please close all the Xterm windows '
+                            'and then rerun the simulation.'
                         )
                         self.msg.exec_()
                         return
+
+                    st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
                     if st.st_mtime >= currTime:
                         break
                 except Exception:
