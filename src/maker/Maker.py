@@ -172,8 +172,18 @@ class Maker(QtWidgets.QWidget):
 
     # This function is used to save the edited file in eSim
     def save(self):
-        wr = self.entry_var[1].toPlainText()
-        open(self.verilogfile, "w+").write(wr)
+        try:
+            wr = self.entry_var[1].toPlainText()
+            open(self.verilogfile, "w+").write(wr)
+        except BaseException as err:
+            self.msg = QtWidgets.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                "Error in saving verilog file. Please check if it is chosen."
+            )
+            self.msg.exec_()
+            print("Error in saving verilog file: " + str(err))
 
     # This is used to run the makerchip-app
     def runmakerchip(self):
