@@ -27,23 +27,15 @@
 # =========================================================================
 
 # importing the files and libraries
-import sys
-import os
 from PyQt5 import QtWidgets
-from configuration.Appconfig import Appconfig
-from projManagement.Validation import Validation
-# from .Processing import PrcocessNetlist
 from . import Maker
 from . import NgVeri
-
-from xml.etree import ElementTree as ET
 
 # filecount is used to count thenumber of objects created
 filecount = 0
 
-# this class creates objects for creating the Maker and the Ngveri tabs
 
-
+# This class creates objects for creating the Maker and the Ngveri tabs
 class makerchip(QtWidgets.QWidget):
 
     # initialising the variables

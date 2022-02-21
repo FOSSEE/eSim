@@ -318,7 +318,7 @@ class PrcocessNetlist:
                                 for item in param:
                                     # print "Tags ",item.tag
                                     # print "Value",item.text
-                                    if 'vector'in item.attrib:
+                                    if 'vector' in item.attrib:
                                         # print "Tag having vector attribute",\
                                         # item.tag,item.attrib['vector']
                                         temp_count = 1

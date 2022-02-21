@@ -96,11 +96,11 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'Please select the project first. You can either ' +
-                'create new project or open existing project')
+                'create new project or open an existing project')
             self.msg.exec_()
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
-                'create new project or open existing project')
+                'create new project or open an existing project')
 
     '''
     # Commenting as it is no longer needed as PCB and Layout will open from
@@ -133,10 +133,10 @@ class Kicad:
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
-            + 'either create new project or open existing project')
+            + 'either create new project or open an existing project')
             self.msg.exec_()
             self.obj_appconfig.print_warning('Please select the project'
-            + 'first. You can either create new project or open existing'
+            + 'first. You can either create new project or open an existing'
             + 'project')
 
     def openLayout(self):
@@ -166,10 +166,10 @@ class Kicad:
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
-            + 'either create new project or open existing project')
+            + 'either create new project or open an existing project')
             self.msg.exec_()
             self.obj_appconfig.print_warning('Please select the project'
-            + 'first. You can either create new project or open existing'
+            + 'first. You can either create new project or open an existing'
             + 'project')
     '''
 
@@ -226,8 +226,8 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'Please select the project first. You can either ' +
-                'create new project or open existing project')
+                'create new project or open an existing project')
             self.msg.exec_()
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
-                'create new project or open existing project')
+                'create new project or open an existing project')

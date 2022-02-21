@@ -28,12 +28,11 @@
 
 
 # importing the files and libraries
-from PyQt5 import QtCore, QtWidgets, QtGui
+from PyQt5 import QtCore, QtWidgets
 from . import Maker
 from . import ModelGeneration
 import os
 import shutil
-import subprocess
 from configuration.Appconfig import Appconfig
 from configparser import ConfigParser
 
@@ -83,9 +82,6 @@ class NgVeri(QtWidgets.QWidget):
 
     # Adding the verilog file in Maker tab to Ngveri Tab automatically
     def addverilog(self):
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
         # b=Maker.Maker(self)
         print(Maker.verilogFile)
         if Maker.verilogFile[self.filecount] == "":
@@ -93,11 +89,13 @@ class NgVeri(QtWidgets.QWidget):
                 None,
                 "Error Message",
                 "<b>Error: No Verilog File Chosen. \
-                Please chose a Verilog file in Makerchip Tab</b>",
+                Please choose a verilog file in Makerchip Tab</b>",
                 QtWidgets.QMessageBox.Ok)
             if reply == QtWidgets.QMessageBox.Ok:
                 self.obj_Appconfig.print_error(
-                    'No VerilogFile. Please add a File in Makerchip Tab')
+                    'No Verilog File Chosen. '
+                    'Please choose a verilog file in Makerchip Tab'
+                )
                 return
 
         self.fname = Maker.verilogFile[self.filecount]
@@ -136,7 +134,8 @@ class NgVeri(QtWidgets.QWidget):
                 else:
                     try:
                         shutil.copy(
-                            self.release_dir + "/src/xspice/icm/Ngveri/Ngveri.cm",
+                            self.release_dir +
+                            "/src/xspice/icm/Ngveri/Ngveri.cm",
                             self.nghdl_home + "/lib/ngspice/"
                         )
                     except FileNotFoundError as err:
@@ -147,8 +146,8 @@ class NgVeri(QtWidgets.QWidget):
                 terminalLog = self.entry_var[0].toPlainText()
                 if "error" not in terminalLog.lower():
                     self.entry_var[0].append('''
-                        <p style=\" font-size:16pt; font-weight:1000; color:#00FF00;\" >
-                        Model Created Successfully!
+                        <p style=\" font-size:16pt; font-weight:1000;
+                        color:#00FF00;\"> Model Created Successfully!
                         </p>
                     ''')
 
@@ -156,35 +155,37 @@ class NgVeri(QtWidgets.QWidget):
 
         except BaseException as err:
             self.entry_var[0].append(
-                "Error in Ngspice code model generation from Verilog: " + str(err)
+                "Error in Ngspice code model generation " +
+                "from Verilog: " + str(err)
             )
 
         terminalLog = self.entry_var[0].toPlainText()
         if "error" in terminalLog.lower():
             self.entry_var[0].append('''
-                <p style=\" font-size:16pt; font-weight:1000; color:#FF0000;\" >
-                There was an error during model creation,
-                <br/>
-                Please rectify the error and try again !
+                <p style=\" font-size:16pt; font-weight:1000;
+                color:#FF0000;\">There was an error during model creation,
+                <br/>Please rectify the error and try again!
                 </p>
-                ''')
-
-    # This function is used to add additional files required by the verilog
-    # top module
+            ''')
 
     def addfile(self):
+        '''
+            This function is used to add additional files required
+            by the verilog top module
+        '''
         if len(Maker.verilogFile) < (self.filecount + 1):
             reply = QtWidgets.QMessageBox.critical(
                 None,
                 "Error Message",
                 "<b>Error: No Verilog File Chosen. \
-                Please chose a Verilog file in Makerchip Tab</b>",
+                Please choose a verilog file in Makerchip Tab</b>",
                 QtWidgets.QMessageBox.Ok)
             if reply == QtWidgets.QMessageBox.Ok:
                 self.obj_Appconfig.print_error(
-                    'No VerilogFile. Please chose\
-                     a Verilog File in Makerchip Tab')
+                    'No Verilog File Chosen. Please choose \
+                     a verilog file in Makerchip Tab')
                 return
+
         self.fname = Maker.verilogFile[self.filecount]
         model = ModelGeneration.ModelGeneration(self.fname, self.entry_var[0])
         # model.verilogfile()
@@ -198,12 +199,12 @@ class NgVeri(QtWidgets.QWidget):
                 None,
                 "Error Message",
                 "<b>Error: No Verilog File Chosen. \
-                Please chose a Verilog file in Makerchip Tab</b>",
+                Please choose a verilog file in Makerchip Tab</b>",
                 QtWidgets.QMessageBox.Ok)
             if reply == QtWidgets.QMessageBox.Ok:
                 self.obj_Appconfig.print_error(
-                    'No VerilogFile. Please chose \
-                    a Verilog File in Makerchip Tab')
+                    'No Verilog File Chosen. Please choose \
+                    a verilog file in Makerchip Tab')
                 return
         self.fname = Maker.verilogFile[self.filecount]
         model = ModelGeneration.ModelGeneration(self.fname, self.entry_var[0])
@@ -260,7 +261,7 @@ class NgVeri(QtWidgets.QWidget):
         return self.optionsbox
 
     # This function is used to remove models in modlst of Ngspice folder if
-    # the user wants to remove a model.Note: files do not get removed
+    # the user wants to remove a model. Note: files do not get removed
     def edit_modlst(self, text):
         if text == "Edit modlst":
             return
@@ -268,7 +269,7 @@ class NgVeri(QtWidgets.QWidget):
         self.entry_var[1].removeItem(index)
         self.entry_var[1].setCurrentIndex(0)
         ret = QtWidgets.QMessageBox.warning(
-            None, "Warning", '''<b>Do you want to remove model:''' +
+            None, "Warning", '''<b>Do you want to remove the model: ''' +
             text,
             QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Cancel
         )
@@ -297,15 +298,17 @@ class NgVeri(QtWidgets.QWidget):
                     )
             except BaseException as err:
                 QtWidgets.QMessageBox.critical(
-                None, "Error Message",
-                "The verilog model '" + str(text) +
-                "' could not be removed: " + str(err),
-                QtWidgets.QMessageBox.Ok)
+                    None, "Error Message",
+                    "The verilog model '" + str(text) +
+                    "' could not be removed: " + str(err),
+                    QtWidgets.QMessageBox.Ok
+                )
 
-
-    # This is to remove lint_off comments needed by the verilator warnings
-    # This function writes to the lint_off.txt here in the same folder
     def lint_off_edit(self, text):
+        '''
+          This is to remove lint_off comments needed by the verilator warnings.
+          This function writes to the lint_off.txt in the library/tlv folder.
+        '''
         init_path = '../../'
         if os.name == 'nt':
             init_path = ''
@@ -332,14 +335,12 @@ class NgVeri(QtWidgets.QWidget):
             file = open(init_path + "library/tlv/lint_off.txt", 'w')
             for item in data:
                 file.write(item)
-            return
 
-        # else:
-        #    return
-
-    # This is to add lint_off comments needed by the verilator warnings
-    # This function writes to the lint_off.txt here in the same folder
     def add_lint_off(self):
+        '''
+            This is to add lint_off comments needed by the verilator warnings.
+            This function writes to the lint_off.txt in the library/tlv folder.
+        '''
         init_path = '../../'
         if os.name == 'nt':
             init_path = ''
