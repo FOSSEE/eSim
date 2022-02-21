@@ -137,8 +137,9 @@ class ModelGeneration(QtWidgets.QWidget):
         self.cmd = "sandpiper-saas -i " + \
             self.fname.split('.')[0] + ".tlv -o "\
             + self.fname.split('.')[0] + ".sv"
-        self.args = ['-c', self.cmd]
-        self.process.start('sh', self.args)
+        # self.args = ['-c', self.cmd]
+        # self.process.start('sh', self.args)
+        self.process.start(self.cmd)
         self.termtitle("RUN SANDPIPER-SAAS")
         self.termtext("Current Directory: " + self.modelpath)
         self.termtext("Command: " + self.cmd)
@@ -814,8 +815,14 @@ and set the load for input ports */
         self.release_home = self.parser.get('NGHDL', 'RELEASE')
         # print(self.modelpath)
 
-        self.cmd = "verilator -Wall " + wno + "\
-         --cc --exe --no-MMD --Mdir . -CFLAGS -fPIC  sim_main_" + \
+        if os.name == 'nt':
+            self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
+            self.cmd = "export VERILATOR_ROOT=" + self.msys_home + "/mingw64; "
+        else:
+            self.cmd = ''
+
+        self.cmd = self.cmd + "verilator -Wall " + wno + " \
+         --cc --exe --no-MMD --Mdir . -CFLAGS -fPIC sim_main_" + \
             self.fname.split('.')[0] + ".cpp " + self.fname
         self.process = QtCore.QProcess(self)
         self.process.readyReadStandardOutput.connect(self.readAllStandard)
