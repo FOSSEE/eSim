@@ -75,24 +75,10 @@ function installNghdl
 
 }
 
-function Ngveridependencies
+function installKicad
 {
-    echo "Installing Chrome.........................."
-    sudo apt install -y chromium-browser
-    echo "Installing python3 pip.........................."
-    sudo apt install -y python3-pip
-    echo "Installing watchdog..........................."
-    pip3 install watchdog
-    echo "Installing HDLParse..........................."
-    pip3 install hdlparse
-    echo "Installing Makerchip-App..........................."
-    pip3 install makerchip-app
-    echo "Installing Sandpiper-Saas..........................."
-    pip3 install sandpiper-saas
 
-}
-function addKicadPPA
-{
+    echo "Installing KiCad..........................."
 
     #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
     kicadppa="reynaud/kicad-4"
@@ -115,6 +101,11 @@ function addKicadPPA
         echo "KiCad-4 is available in synaptic"
     fi
 
+    sudo apt-get install -y --no-install-recommends kicad=4.0.7*
+    if [[ $(lsb_release -rs) == 20.* ]]; then
+        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
+    fi
+
 }
 
 
@@ -134,7 +125,7 @@ function installDependency
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
     
-    echo "Installing PyQt5..........................."
+    echo "Installing Psutil.........................."
     sudo apt-get install -y python3-psutil
     
     echo "Installing PyQt5..........................."
@@ -148,11 +139,21 @@ function installDependency
 	    sudo apt-get install -y python3-distutils
 	fi
 
-    echo "Installing KiCad..........................."
-    sudo apt-get install -y --no-install-recommends kicad=4.0.7*
-    if [[ $(lsb_release -rs) == 20.* ]]; then
-        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
-    fi
+    # Install NgVeri Depedencies
+    echo "Installing Pip3............................"
+    sudo apt install -y python3-pip
+
+    echo "Installing Watchdog........................"
+    pip3 install watchdog
+
+    echo "Installing Hdlparse........................"
+    pip3 install hdlparse
+
+    echo "Installing Makerchip......................."
+    pip3 install makerchip-app
+
+    echo "Installing SandPiper Saas.................."
+    pip3 install sandpiper-saas
 
 }
 
@@ -338,24 +339,22 @@ if [ $option == "--install" ];then
             echo "Install with proxy"
             # Calling functions
             createConfigFile
-            addKicadPPA
             installDependency
+            installKicad
             copyKicadLibrary
             installNghdl
             createDesktopStartScript
-	    Ngveridependencies
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
             
             # Calling functions
             createConfigFile
-            addKicadPPA
             installDependency
+            installKicad
             copyKicadLibrary
             installNghdl
             createDesktopStartScript
-	    Ngveridependencies
 
             if [ $? -ne 0 ];then
                 echo -e "\n\n\nFreeEDA ERROR: Unable to install required packages. Please check your internet connection.\n\n"
@@ -387,6 +386,11 @@ elif [ $option == "--uninstall" ];then
         if [[ $(lsb_release -rs) == 20.* ]]; then
             sudo sed -i '/Package: kicad/{:label;N;/Pin-Priority: 501/!blabel};/Pin: version 4.0.7*/d' /etc/apt/preferences.d/preferences
         fi
+
+        echo "Removing Makerchip......................."
+        pip3 uninstall -y hdlparse
+        pip3 uninstall -y makerchip-app
+        pip3 uninstall -y sandpiper-saas
 
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
