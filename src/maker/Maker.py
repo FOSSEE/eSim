@@ -210,14 +210,15 @@ class Maker(QtWidgets.QWidget):
             if self.verilogfile.split('.')[-1] != "tlv":
                 reply = QtWidgets.QMessageBox.warning(
                     None,
-                    "Do you want to automate top module?",
-                    "<b>Click on YES if you want top module \
-                    to be automatically added. \
-                    NOTE: a .tlv file will be created \
-                    in the directory of current verilog file\
-                        and the makerchip will be running on \
-                        this file. Otherwise click on NO.</b><br/> \
-                    <b> To not open Makerchip, click CANCEL</b>",
+                    "Do you want to automate the top module? ",
+                    "<b>Click on YES button if you want the top module \
+                    to be added automatically. A .tlv file will be created \
+                    in the directory of current verilog file \
+                    and the Makerchip IDE will be running on \
+                    this file. Otherwise click on NO button. \
+                    To not open Makerchip IDE, click on CANCEL button. </b>\
+                    <br><br> NOTE: Makerchip IDE requires an active \
+                    internet connection and a browser.",
                     QtWidgets.QMessageBox.Yes
                     | QtWidgets.QMessageBox.No
                     | QtWidgets.QMessageBox.Cancel)
@@ -366,6 +367,10 @@ Please check if Verilog File Chosen.")
         # self.optionsbox.setLayout(self.optionsgrid)
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.runoptions = QtWidgets.QPushButton("Edit in Makerchip")
+        self.runoptions.setToolTip(
+            "Requires internet connection and a browser"
+        )
+        self.runoptions.setToolTipDuration(5000)
         self.optionsgroupbtn.addButton(self.runoptions)
         self.runoptions.clicked.connect(self.runmakerchip)
         self.optionsgrid.addWidget(self.runoptions, 0, 4)
