@@ -18,8 +18,8 @@
 ; Otherwise it returns null(""). 
 ; Written by kenglish_hi
 ; Adapted from StrReplace written by dandaman32
- 
- 
+
+
 Var STR_HAYSTACK
 Var STR_NEEDLE
 Var STR_CONTAINS_VAR_1
@@ -67,13 +67,13 @@ FunctionEnd
 ;General
 	
 !define PRODUCT_NAME "eSim"
-!define PRODUCT_VERSION "2.1"
-!define VERSION "2.1.0.0"
+!define PRODUCT_VERSION "2.2"
+!define VERSION "2.2.0.0"
 !define PRODUCT_PUBLISHER "FOSSEE, IIT Bombay"
 !define PRODUCT_WEB_SITE "https://esim.fossee.in/"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
 !define PRODUCT_UNINST_ROOT_KEY "HKLM"
-	
+
 VIAddVersionKey  "ProductName" "eSim"
 VIProductVersion "${VERSION}"
 VIFileVersion "${VERSION}"
@@ -86,7 +86,7 @@ VIAddVersionKey "FileDescription" "Installer for eSim EDA Suite"
 
 ;Default installation folder
   InstallDir "C:\FOSSEE"
-  
+
 ;Request application privileges for Admin Rights
   RequestExecutionLevel admin
 
@@ -140,20 +140,20 @@ FunctionEnd
 ;--------------------------------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "eSim-2.1_installer.exe"
+OutFile "eSim-2.2_installer.exe"
 
 
 Function .onVerifyInstDir
   ${StrContains} $0 "Program Files" $INSTDIR
   StrCmp $0 "" notfound
   MessageBox MB_ICONSTOP|MB_OK \
-        "Installation in 'Program Files' is not allowed, choose another directory."
+        "Installation in 'Program Files' is not allowed, please choose another directory."
   Abort
   notfound:
     ${StrContains} $0 " " $INSTDIR
     StrCmp $0 "" PathGood
     MessageBox MB_ICONSTOP|MB_OK \
-        "Installation path containing spaces is not allowed, choose another directory."
+        "Installation path containing spaces is not allowed, please choose another directory."
     Abort
   PathGood:
 FunctionEnd
@@ -165,6 +165,7 @@ Section -NgspiceSim
 
   ;Current section needs an additional "size_kb" kilobytes of disk space
   ;AddSize 2726298
+  AddSize 859966
 
   SetOutPath "$EXEDIR"
 
@@ -206,7 +207,7 @@ Section -NgspiceSim
   ;FileClose $0
 
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
-    
+
   ;Create shortcuts
   ;create desktop shortcut
   CreateShortCut "$PROFILE\..\Public\Desktop\eSim.lnk" "$INSTDIR\eSim\eSim.exe" "" "$INSTDIR\eSim\library\config\.esim\logo.ico" "" SW_SHOWMINIMIZED
@@ -216,14 +217,12 @@ Section -NgspiceSim
   ;Remove not required files
   Delete "$EXEDIR\eSim.7z"
   Delete "$EXEDIR\logo.ico"
-  
-  
 
 SectionEnd
 
 
 Section -InstallKiCad
-  
+
   SetOutPath "$EXEDIR"
   File "kicad-4.0.7-i686.exe"
 
@@ -283,6 +282,7 @@ Section -AdditionalIcons
 
 SectionEnd
 
+
 !include "nghdl-setup-script.nsi" 
 
 
@@ -312,6 +312,7 @@ Section -Post
 
 SectionEnd
 
+
 ;Function un.onUninstSuccess
 ;  HideWindow
 ;  MessageBox MB_ICONINFORMATION|MB_OK "$(^Name) was successfully removed from your computer."
@@ -322,9 +323,10 @@ Function un.onInit
   Abort
 FunctionEnd
 
+
 Section Uninstall
 
-  ; Set to HKLM
+    ; Set to HKLM
 	EnVar::SetHKLM
 	
 	GetFullPathName $1 $INSTDIR\..\eSim\nghdl\src
@@ -358,22 +360,23 @@ Section Uninstall
 
   ;Note that in uninstaller code, $INSTDIR contains the directory where the uninstaller lies
 
-  Delete "$INSTDIR\uninst-eSim.exe"
-  Delete "$SMPROGRAMS\eSim\Uninstall.lnk"
+    Delete "$INSTDIR\uninst-eSim.exe"
+    Delete "$SMPROGRAMS\eSim\Uninstall.lnk"
  
-  ;Removing Env Variable for KiCad  
-  GetFullPathName $1 $INSTDIR\..\KiCad\bin
-	EnVar::DeleteValue "Path" $1
+    ;Removing Env Variable for KiCad
+    GetFullPathName $1 $INSTDIR\..\KiCad\bin
+    EnVar::DeleteValue "Path" $1
     Pop $0
     DetailPrint "EnVar::AddValue returned=|$0|"
 
-  ;Remove KiCad config 
-  RMDir /r "$PROFILE\AppData\Roaming\kicad"
- 
-  ;Removing KiCad
-  ExecWait '"$INSTDIR\..\KiCad\uninstaller.exe" /S'
+    ;Remove KiCad config
+    RMDir /r "$PROFILE\AppData\Roaming\kicad"
 
-  Goto endActiveSync
+    ;Removing KiCad
+    ExecWait '"$INSTDIR\..\KiCad\uninstaller.exe" /S'
+
+    Goto endActiveSync
+  
   endActiveSync:
 
     ;Removing eSim
@@ -383,22 +386,22 @@ Section Uninstall
     RMDir "$SMPROGRAMS\eSim"
     RMDir /r "$INSTDIR\..\eSim"
 	RMDir /r "$INSTDIR\..\KiCad"
-    Delete "$PROFILE\..\Public\Desktop\eSim.lnk" 
+    Delete "$PROFILE\..\Public\Desktop\eSim.lnk"
 
     DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
     ;SetAutoClose true
 
 SectionEnd
- 
+
 
 ;Descriptions--------------------
 
   ;Language strings
-  ;LangString DESC_NgspiceSim ${LANG_ENGLISH} "Ngspice is a mixed-level/mixed-signal circuit simulator. Its code is based on three open source software packages: Spice3f5, Cider1b1 and Xspice. Ngspice is part of gEDA project, a full GPL'd suite of Electronic Design Automation tools."
+  ;LangString DESC_NgspiceSim ${LANG_ENGLISH} "Ngspice is a mixed-level/mixed-signal circuit simulator. Its code is based on three open source software packages: Spice3f5, Cider1b1 and XSPICE. Ngspice is part of gEDA project, a full GPL'd suite of Electronic Design Automation tools."
 
   ;Assign language strings to sections
   ;!insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   ;!insertmacro MUI_DESCRIPTION_TEXT ${NgspiceSim} $(DESC_NgspiceSim)
   ;!insertmacro MUI_FUNCTION_DESCRIPTION_END
- 
+
 ;--------------------------------
