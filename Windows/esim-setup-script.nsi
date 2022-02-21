@@ -185,9 +185,9 @@ Section -NgspiceSim
   WriteRegStr HKLM "Software\eSim" "" $INSTDIR
 
   ;Create eSim config directory
-  CreateDirectory $PROFILE\.esim
-  CopyFiles "$EXEDIR\logo.ico" "$PROFILE\.esim"
-  FileOpen $0  "$PROFILE\.esim\config.ini" w
+  CreateDirectory $INSTDIR\eSim\library\config\.esim
+  CopyFiles "$EXEDIR\logo.ico" "$INSTDIR\eSim\library\config\.esim"
+  FileOpen $0  "$INSTDIR\eSim\library\config\.esim\config.ini" w
   FileWrite $0 `[eSim]$\n`
   FileWrite $0 `eSim_HOME = $INSTDIR\eSim$\n`
   FileWrite $0 `LICENSE = %(eSim_HOME)s\LICENSE.rtf$\n`
@@ -197,11 +197,19 @@ Section -NgspiceSim
   FileWrite $0 `MODELICA_MAP_JSON = %(eSim_HOME)s\library\ngspicetoModelica\Mapping.json$\n`
   FileClose $0
 
+  ;Create eSim startup batch file
+  ;FileOpen $0  "$INSTDIR\eSim\eSim.bat" w
+  ;FileWrite $0 `@echo off$\n`
+  ;FileWrite $0 `set HOME=$PROFILE$\n`
+  ;FileWrite $0 `start eSim.exe$\n`
+  ;FileWrite $0 `cd /d %HOME%$\n`
+  ;FileClose $0
+
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     
   ;Create shortcuts
   ;create desktop shortcut
-  CreateShortCut "$PROFILE\..\Public\Desktop\eSim.lnk" "$INSTDIR\eSim\eSim" "" "$PROFILE\.esim\logo.ico" "" SW_SHOWMINIMIZED
+  CreateShortCut "$PROFILE\..\Public\Desktop\eSim.lnk" "$INSTDIR\eSim\eSim.exe" "" "$INSTDIR\eSim\library\config\.esim\logo.ico" "" SW_SHOWMINIMIZED
 
   !insertmacro MUI_STARTMENU_WRITE_END
   
@@ -369,8 +377,9 @@ Section Uninstall
   endActiveSync:
 
     ;Removing eSim
-    RMDir /r "$PROFILE\.esim"
-    RMDir /r "$PROFILE\.nghdl"
+    RMDir /r "$INSTDIR\eSim\library\config\.esim"
+    RMDir /r "$INSTDIR\eSim\library\config\.nghdl"
+    RMDir /r "$INSTDIR\eSim\library\config"
     RMDir "$SMPROGRAMS\eSim"
     RMDir /r "$INSTDIR\..\eSim"
 	RMDir /r "$INSTDIR\..\KiCad"
