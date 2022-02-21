@@ -34,7 +34,6 @@ from . import ModelGeneration
 import os
 import subprocess
 from configuration.Appconfig import Appconfig
-from configparser import SafeConfigParser
 from configparser import ConfigParser
 
 
@@ -48,7 +47,7 @@ class NgVeri(QtWidgets.QWidget):
         # Maker.addverilog(self)
         self.obj_Appconfig = Appconfig()
         self.home = os.path.expanduser("~")
-        self.parser = SafeConfigParser()
+        self.parser = ConfigParser()
         self.parser.read(os.path.join(
             self.home, os.path.join('.nghdl', 'config.ini')))
         self.ngspice_home = self.parser.get('NGSPICE', 'NGSPICE_HOME')
