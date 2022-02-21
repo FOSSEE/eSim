@@ -806,10 +806,12 @@ and set the load for input ports */
             init_path = ''
 
         self.cur_dir = os.getcwd()
-        file = open(init_path + "library/tlv/lint_off.txt").readlines()
         wno = " "
-        for item in file:
-            wno += " -Wno-" + item.strip("\n")
+        with open(init_path + "library/tlv/lint_off.txt") as file:
+            for item in file.readlines():
+                if item and item.strip():
+                    wno += " -Wno-" + item.strip("\n")
+
         print("Running Verilator.............")
         os.chdir(self.modelpath)
         self.release_home = self.parser.get('NGHDL', 'RELEASE')
