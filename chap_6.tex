@@ -237,8 +237,8 @@ The component libraries for components like DAC, ADC, transformer etc. which are
 Spice based simulators include a feature which allows accurate modeling of semiconductor devices such as diodes, transistors etc. Model libraries holds these features to define models for devices such as diodes, MOSFET, BJT, JFET, IGBT, Magnetic core etc.
 
 The fields in this tab are added for each such device in the circuit and the corresponding model library is added. In the example of bridge rectifier as shown in \figref{bridgerectifier} for four diodes library files are added as in \figref{devicemodel}. Location for these libraries is as following : \\
-../library/deviceModelLibrary/Diode/ if you are using version 2.0 and above \\
-../src/deviceModelLibrary/Diode/ if you are using versions lower than 2.0
+library/deviceModelLibrary/Diode/ if you are using version 2.0 and above \\
+src/deviceModelLibrary/Diode/ if you are using versions lower than 2.0
 
 \begin{figure}[h]
 \centering
@@ -254,7 +254,7 @@ The fields in this tab are added for each such device in the circuit and the cor
 \subsection{Sub Circuit}
 Subcircuit is a way to implement hierarchical modeling.  Once a subcircuit for a compo-
 nent is created, it can be used in other circuits. \\
-In the KiCadToNgspice conversion of example 7805VoltageRegulator, where a bridge rectifier is further connected to a voltage regulator LM7805, a subcircuit of this 7805 IC is used. These are located in library/Subcircuitlibrary if you are using version 2.0 and above and in src/SubcircuitLibrary if you are using versions lower than 2.0. The association is done as shown in \figref{7805}.
+In the KiCadToNgspice conversion of example 7805VoltageRegulator, where a bridge rectifier is further connected to a voltage regulator LM7805, a subcircuit of this 7805 IC is used. These are located in library/SubcircuitLibrary if you are using version 2.0 and above and in src/SubcircuitLibrary if you are using versions lower than 2.0. The association is done as shown in \figref{7805}.
 \begin{figure}
 \centering
 \includegraphics[width=\lgfig]{7805.png}
