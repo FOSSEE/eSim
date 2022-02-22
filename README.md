@@ -33,11 +33,12 @@ To use eSim on your machine having above distributions, please refer to link [he
 
 ## Open-Source Softwares Used
 * [Python](https://www.python.org/)
-* [KiCad](https://kicad.org/)
-* [NGHDL](https://github.com/fossee/nghdl)
+* [KiCad](https://www.kicad.org/)
+* [Makerchip](https://www.makerchip.com/)
+* [NGHDL](https://github.com/fossee/nghdl/)
 
 ## eSim Manual
-To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.2_pre-release.pdf)
+To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.2.pdf)
 
 ## Contact
 For any queries regarding eSim please write us on at this [email address](mailto:contact-esim@fossee.in).
