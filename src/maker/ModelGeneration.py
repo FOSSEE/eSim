@@ -30,20 +30,15 @@
 # importing the files and libraries
 import re
 import os
-import sys  # noqa:F401
-import shutil  # noqa:F401
-import subprocess  # noqa:F401
-from PyQt5 import QtGui, QtCore, QtWidgets  # noqa:F401
-from PyQt5.QtGui import *  # noqa:F401 F403
+from PyQt5 import QtCore, QtWidgets
 from configparser import ConfigParser  # noqa:F401
 from configuration import Appconfig
 from . import createkicad
 import hdlparse.verilog_parser as vlog
 from configparser import SafeConfigParser  # noqa:F401
 
+
 # Class is used to generate the Ngspice Model
-
-
 class ModelGeneration(QtWidgets.QWidget):
 
     # initialising the variables
@@ -66,13 +61,12 @@ class ModelGeneration(QtWidgets.QWidget):
         self.release_dir = self.parser.get('NGSPICE', 'RELEASE')
         self.src_home = self.parser.get('SRC', 'SRC_HOME')
         self.licensefile = self.parser.get('SRC', 'LICENSE')
-        self.digital_home = self.parser.get('NGSPICE', 'DIGITAL_MODEL')
-
-        self.digital_home = self.digital_home.split("/ghdl")[0] + "/Ngveri"
+        self.digital_home = self.parser.get(
+                            'NGHDL', 'DIGITAL_MODEL') + "/Ngveri"
         # # #### Creating connection_info.txt file from verilog file #### #
 
-    # Readinf the file and performing operations and copying it in the Ngspice
-    # folder
+    # Reading the file and performing operations and
+    # copying it in the Ngspice folder
     def verilogfile(self):
         Text = "<span style=\" font-size:25pt;\
          font-weight:1000; color:#008000;\" >"
@@ -104,17 +98,21 @@ class ModelGeneration(QtWidgets.QWidget):
         f.write("\n")
         f.close()
 
-    # This function is call the sandpiper to convert .tlv file to .sv file
+    # This function calls the sandpiper to convert .tlv file to .sv file
     def sandpiper(self):
         init_path = '../../'
         if os.name == 'nt':
             init_path = ''
         # Text="Running Sandpiper............"
         print("Running Sandpiper-Saas for TLV to SV Conversion")
-        self.cmd = "cp " + init_path + "library/tlv/clk_gate.v " + init_path + "library/tlv/pseudo_rand.sv "\
- + init_path + "library/tlv/sandpiper.vh " + init_path + "library/tlv/sandpiper_gen.vh "\
- + init_path + "library/tlv/sp_default.vh " + init_path + "library/tlv/pseudo_rand_gen.sv "\
- + init_path + "library/tlv/pseudo_rand.m4out.tlv " + self.file + " " + self.modelpath
+        self.cmd = "cp " + init_path + "library/tlv/clk_gate.v " + \
+                   init_path + "library/tlv/pseudo_rand.sv " + \
+                   init_path + "library/tlv/sandpiper.vh " + \
+                   init_path + "library/tlv/sandpiper_gen.vh " + \
+                   init_path + "library/tlv/sp_default.vh " + \
+                   init_path + "library/tlv/pseudo_rand_gen.sv " + \
+                   init_path + "library/tlv/pseudo_rand.m4out.tlv " + \
+                   self.file + " " + self.modelpath
 
         self.process = QtCore.QProcess(self)
         self.args = ['-c', self.cmd]
@@ -200,7 +198,7 @@ class ModelGeneration(QtWidgets.QWidget):
                 QtWidgets.QMessageBox.Ok)
 
             self.obj_Appconfig.print_info(
-                'NgVeri Stopped due to File \
+                'NgVeri stopped due to file \
                 name and module name not matching error')
             return "Error"
         modelname = str(m.name)
@@ -888,7 +886,9 @@ and set the load for input ports */
             self.release_home +
             "src/xspice/icm/Ngveri/" +
                 "verilated.o"):
-            os.remove(self.release_home + "src/xspice/icm/Ngveri/" + "verilated.o")
+            os.remove(
+                self.release_home + "src/xspice/icm/Ngveri/" + "verilated.o"
+            )
         if os.path.exists(
             path_icm +
             "V" +
@@ -939,7 +939,6 @@ and set the load for input ports */
                 self.cmd = "make"
 
             print("Running Make command in " + path_icm)
-            path = os.getcwd()  # noqa
             self.process = QtCore.QProcess(self)
             self.process.start('sh', ['-c', self.cmd])
             print("make command process pid ---------- >", self.process.pid())
@@ -968,11 +967,11 @@ and set the load for input ports */
         try:
             if os.name == 'nt':
                 self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
-                self.cmd = self.msys_home + "/mingw64/bin/mingw32-make.exe install"
+                self.cmd = self.msys_home + \
+                    "/mingw64/bin/mingw32-make.exe install"
             else:
                 self.cmd = "make install"
             print("Running Make Install")
-            path = os.getcwd()  # noqa
             try:
                 self.process.close()
             except BaseException:
@@ -1038,16 +1037,14 @@ and set the load for input ports */
         print("Added the File:" + filename)
         self.termtitle("Added the File:" + filename)
 
-    # This function is used to add additional folder required by the verilog
-    # top module
-
     def addfolder(self):
+        '''
+            This function is used to add additional folder required
+            by the verilog top module
+        '''
         # self.cur_dir = os.getcwd()
         print("Adding the folder required by the top level module file")
 
-        init_path = '../../../'
-        if os.name == 'nt':
-            init_path = ''  # noqa:F841
         includefolder = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getExistingDirectory(
                 self, "open", "home"
@@ -1064,7 +1061,8 @@ and set the load for input ports */
                 self.obj_Appconfig.print_info('Add Folder Called')
 
             elif reply == QtWidgets.QMessageBox.Cancel:
-                self.obj_Appconfig.print_info('No File Chosen')
+                self.obj_Appconfig.print_info('No Folder Chosen')
+                return
 
         self.modelpath = self.digital_home + \
             "/" + self.fname.split('.')[0] + "/"
@@ -1097,7 +1095,6 @@ and set the load for input ports */
         # os.chdir(self.cur_dir)
 
     # This function is used to print the titles in the terminal of Ngveri tab
-
     def termtitle(self, textin):
 
         Text = "<span style=\" font-size:20pt; \
