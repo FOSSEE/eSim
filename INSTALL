@@ -14,7 +14,7 @@ Table of contents
     
    	i.      After downloading eSim, extract it using: 
   
-   		       $ unzip eSim-2.2_pre-release.zip
+   		       $ unzip eSim-2.2.zip
 
    	ii.     Now change directories in to the top-level eSim directory (where this INSTALL file can be found).
 
@@ -43,9 +43,12 @@ Table of contents
 
     i.      Download eSim for Windows OS from "https://esim.fossee.in/". Disable the antivirus (if any).
 
-    ii.     Now double click on eSim installer and then follow the instruction to install eSim.
+    ii.     If MinGW and/or MSYS is already installed in your machine, then remove it from the
+            PATH environment variable as it may interfere with eSim and might not work as intended.
 
-    iii.    To uninstall eSim and all of its components, run the uninstaller "uninst-eSim.exe" located at 
+    iii.    Now double click on eSim installer and then follow the instruction to install eSim.
+
+    iv.     To uninstall eSim and all of its components, run the uninstaller "uninst-eSim.exe" located at 
             top-level eSim directory (where this INSTALL file can be found).
 
 

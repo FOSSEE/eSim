@@ -105,7 +105,7 @@ class Appconfig(QtWidgets.QWidget):
 
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = '2.2 pre-release'
+        self._VERSION = '2.2'
         self._AUTHOR = 'Fahim'
         self._REVISION = 'Rahul, Sumanto'
 
