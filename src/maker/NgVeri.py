@@ -42,7 +42,6 @@ class NgVeri(QtWidgets.QWidget):
 
     # initialising the variables
     def __init__(self, filecount):
-        print(self)
         QtWidgets.QWidget.__init__(self)
         # Maker.addverilog(self)
         self.obj_Appconfig = Appconfig()
@@ -99,7 +98,8 @@ class NgVeri(QtWidgets.QWidget):
                 return
 
         self.fname = Maker.verilogFile[self.filecount]
-        model = ModelGeneration.ModelGeneration(self.fname, self.entry_var[0])
+        currentTermLogs = QtWidgets.QTextEdit()
+        model = ModelGeneration.ModelGeneration(self.fname, currentTermLogs)
         file = (os.path.basename(self.fname)).split('.')[0]
         if self.entry_var[1].findText(file) == -1:
             self.entry_var[1].addItem(file)
@@ -139,34 +139,37 @@ class NgVeri(QtWidgets.QWidget):
                             self.nghdl_home + "/lib/ngspice/"
                         )
                     except FileNotFoundError as err:
-                        self.entry_var[0].append(
+                        currentTermLogs.append(
                             "Error in copying Ngveri code model: " + str(err)
                         )
 
-                terminalLog = self.entry_var[0].toPlainText()
-                if "error" not in terminalLog.lower():
-                    self.entry_var[0].append('''
+                if "error" not in currentTermLogs.toPlainText().lower():
+                    currentTermLogs.append('''
                         <p style=\" font-size:16pt; font-weight:1000;
                         color:#00FF00;\"> Model Created Successfully!
                         </p>
                     ''')
 
-                    return
-
         except BaseException as err:
-            self.entry_var[0].append(
+            currentTermLogs.append(
                 "Error in Ngspice code model generation " +
                 "from Verilog: " + str(err)
             )
 
-        terminalLog = self.entry_var[0].toPlainText()
-        if "error" in terminalLog.lower():
-            self.entry_var[0].append('''
+        if "error" in currentTermLogs.toPlainText().lower():
+            currentTermLogs.append('''
                 <p style=\" font-size:16pt; font-weight:1000;
                 color:#FF0000;\">There was an error during model creation,
                 <br/>Please rectify the error and try again!
                 </p>
             ''')
+
+        self.entry_var[0].append(currentTermLogs.toHtml())
+
+        # Force scroll the terminal widget at bottom
+        self.entry_var[0].verticalScrollBar().setValue(
+            self.entry_var[0].verticalScrollBar().maximum()
+        )
 
     def addfile(self):
         '''
