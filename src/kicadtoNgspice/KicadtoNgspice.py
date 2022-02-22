@@ -663,7 +663,7 @@ class MainWindow(QtWidgets.QWidget):
             print("=========================================================")
             self.createNetlistFile(store_schematicInfo, plotText)
 
-            self.msg = "The Kicad to Ngspice Conversion completed "
+            self.msg = "The KiCad to Ngspice conversion completed "
             self.msg += "successfully!"
             QtWidgets.QMessageBox.information(
                 self, "Information", self.msg, QtWidgets.QMessageBox.Ok

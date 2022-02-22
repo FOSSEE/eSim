@@ -23,19 +23,18 @@ class NgspiceWidget(QtWidgets.QWidget):
         print("Argument to ngspice command : ", command)
 
         if os.name == 'nt':     # For Windows OS
-            home = os.path.expanduser("~")
-
             parser_nghdl = ConfigParser()
-            parser_nghdl.read(os.path.join(
-                home, os.path.join('.nghdl', 'config.ini')))
+            parser_nghdl.read(
+                os.path.join('library', 'config', '.nghdl', 'config.ini')
+            )
 
-            msys_bin = parser_nghdl.get('COMPILER', 'MSYS_HOME')
+            msys_home = parser_nghdl.get('COMPILER', 'MSYS_HOME')
 
             tempdir = os.getcwd()
             projPath = self.obj_appconfig.current_project["ProjectName"]
             os.chdir(projPath)
             self.command = 'cmd /c '+'"start /min ' + \
-                msys_bin + "/mintty.exe ngspice -p " + command + '"'
+                msys_home + "/usr/bin/mintty.exe ngspice -p " + command + '"'
             self.process.start(self.command)
             os.chdir(tempdir)
 

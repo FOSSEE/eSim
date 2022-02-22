@@ -27,17 +27,11 @@
 # =========================================================================
 
 # importing the files and libraries
-from xml.etree import ElementTree as ET  # noqa:F401
 import hdlparse.verilog_parser as vlog
-import time  # noqa:F401
 from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QThread, Qt  # noqa:F401
-from PyQt5.QtWidgets \
-    import QApplication, \
-    QWidget, QLabel, QVBoxLayout  # noqa:F401
+from PyQt5.QtCore import QThread
 from configuration.Appconfig import Appconfig
 import os
-import subprocess  # noqa:F401
 import watchdog.events
 import watchdog.observers
 from os.path import expanduser
@@ -50,9 +44,31 @@ home = expanduser("~")
 verilogFile = []
 toggle_flag = []
 
+
+# This function is called to accept TOS of makerchip
+def makerchipTOSAccepted(display=True):
+    if not os.path.isfile(home + "/.makerchip_accepted"):
+        if display:
+            reply = QtWidgets.QMessageBox.warning(
+                None, "Terms of Service", "Please review the Makerchip \
+                       Terms of Service \
+                       (<a href='https://www.makerchip.com/terms/'>\
+                       https://www.makerchip.com/terms/</a>). \
+                       Have you read and do you \
+                       accept these Terms of Service?",
+                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
+            )
+
+            if reply == QtWidgets.QMessageBox.Yes:
+                f = open(home + "/.makerchip_accepted", "w")
+                f.close()
+                return True
+
+        return False
+    return True
+
+
 # beginning class Maker. This class create the Maker Tab
-
-
 class Maker(QtWidgets.QWidget):
 
     # initailising the varaibles
@@ -79,15 +95,15 @@ class Maker(QtWidgets.QWidget):
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.show()
 
-    # This function is to Add new  verilog file
+    # This function is to Add new verilog file
     def addverilog(self):
 
-        init_path = '../../../'
+        init_path = '../../'
         if os.name == 'nt':
             init_path = ''
         self.verilogfile = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getOpenFileName(
-                self, "Open verilog Directory",
+                self, "Open Verilog Directory",
                 init_path + "home", "*v"
             )[0]
         )
@@ -98,11 +114,16 @@ class Maker(QtWidgets.QWidget):
             reply = QtWidgets.QMessageBox.critical(
                 None,
                 "Error Message",
-                "<b>Error: No Verilog File Chosen.\
-                Please chose a Verilog file</b>",
+                "<b>No Verilog File Chosen. \
+                Please choose a verilog file.</b>",
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+
             if reply == QtWidgets.QMessageBox.Ok:
                 self.addverilog()
+
+                if self.verilogfile == "":
+                    return
+
                 self.obj_Appconfig.print_info('Add Verilog File Called')
 
             elif reply == QtWidgets.QMessageBox.Cancel:
@@ -168,32 +189,29 @@ class Maker(QtWidgets.QWidget):
 
     # This function is used to save the edited file in eSim
     def save(self):
-        wr = self.entry_var[1].toPlainText()
-        open(self.verilogfile, "w+").write(wr)
+        try:
+            wr = self.entry_var[1].toPlainText()
+            open(self.verilogfile, "w+").write(wr)
+        except BaseException as err:
+            self.msg = QtWidgets.QErrorMessage(self)
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                "Error in saving verilog file. Please check if it is chosen."
+            )
+            self.msg.exec_()
+            print("Error in saving verilog file: " + str(err))
 
     # This is used to run the makerchip-app
     def runmakerchip(self):
         init_path = '../../'
         if os.name == 'nt':
-            init_path = ''  # noqa:F841
+            init_path = ''
         try:
-            if not os.path.isfile(home + "/.makerchip_accepted"):
-                reply = QtWidgets.QMessageBox.warning(
-                    None, "Terms of Services", "Please review the makerchip\
-                         Terms of Service \
-                         (<a href='https://www.makerchip.com/terms/'>\
-                         https://www.makerchip.com/terms/</a> ).\
-                          Have you read and do you accept \
-                          these Terms of Service? [y/N]:",
-                    QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
-                )
+            if not makerchipTOSAccepted(True):
+                return
 
-                if reply == QtWidgets.QMessageBox.Yes:
-                    f = open(home + "/.makerchip_accepted", "w")
-                    f.close()
-                else:
-                    return
-            print("Running Makerchip..............................")
+            print("Running Makerchip IDE...........................")
             # self.file = open(self.verilogfile,"w")
             # self.file.write(self.entry_var[1].toPlainText())
             # self.file.close()
@@ -201,14 +219,15 @@ class Maker(QtWidgets.QWidget):
             if self.verilogfile.split('.')[-1] != "tlv":
                 reply = QtWidgets.QMessageBox.warning(
                     None,
-                    "Do you want to automate top module?",
-                    "<b>Click on YES if you want top module \
-                    to be automatically added. \
-                    NOTE: a .tlv file will be created \
-                    in the directory of current verilog file\
-                        and the makerchip will be running on \
-                        this file. Otherwise click on NO.</b><br/> \
-                    <b> To not open Makerchip, click CANCEL</b>",
+                    "Do you want to automate the top module? ",
+                    "<b>Click on YES button if you want the top module \
+                    to be added automatically. A .tlv file will be created \
+                    in the directory of current verilog file \
+                    and the Makerchip IDE will be running on \
+                    this file. Otherwise click on NO button. \
+                    To not open Makerchip IDE, click on CANCEL button. </b>\
+                    <br><br> NOTE: Makerchip IDE requires an active \
+                    internet connection and a browser.",
                     QtWidgets.QMessageBox.Yes
                     | QtWidgets.QMessageBox.No
                     | QtWidgets.QMessageBox.Cancel)
@@ -222,13 +241,13 @@ class Maker(QtWidgets.QWidget):
                     file = os.path.basename('.'.join(
                         self.verilogfile.split('.')[:-1]))
                     f = open(filename, 'w')
-                    flag = 1  # noqa F841
-                    ports = ""  # noqa F841
                     code = code.replace(" wire ", " ")
                     code = code.replace(" reg ", " ")
                     vlog_ex = vlog.VerilogExtractor()
                     vlog_mods = vlog_ex.extract_objects_from_source(code)
-                    lint_off = open("../maker/lint_off.txt").readlines()
+                    lint_off = open(
+                        init_path + "library/tlv/lint_off.txt"
+                    ).readlines()
                     string = '''\\TLV_version 1d: tl-x.org\n\\SV\n'''
                     for item in lint_off:
                         string += "/* verilator lint_off " + \
@@ -257,11 +276,11 @@ output logic passed, output logic failed);\n'''
                             "Error Message",
                             "<b>Error: File name and module \
                             name are not same. Please \
-                            ensure that they are same</b>",
+                            ensure that they are same.</b>",
                             QtWidgets.QMessageBox.Ok)
 
                         self.obj_Appconfig.print_info(
-                            'NgVeri Stopped due to File \
+                            'NgVeri stopped due to file \
 name and module name not matching error')
                         return
                     string += "//The $random() can be replaced \
@@ -301,7 +320,7 @@ Add \\TLV here if desired\
             print("File: " + filename)
             self.process.start(cmd)
             print(
-                "Makerchip command process pid ---------- >",
+                "Makerchip IDE command process pid ---------->",
                 self.process.pid())
         except BaseException as e:
             print(e)
@@ -309,11 +328,11 @@ Add \\TLV here if desired\
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
-                "Error in running Makerchip. \
-Please check if Verilog File Chosen.")
+                "Error in running Makerchip IDE. \
+Please check if verilog file is chosen.")
             self.msg.exec_()
-            print("Error in running Makerchip. \
-Please check if Verilog File Chosen.")
+            print("Error in running Makerchip IDE. \
+Please check if verilog file is chosen.")
         #   initial = self.read_file()
 
         # while True:
@@ -357,44 +376,27 @@ Please check if Verilog File Chosen.")
         # self.optionsbox.setLayout(self.optionsgrid)
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.runoptions = QtWidgets.QPushButton("Edit in Makerchip")
+        self.runoptions.setToolTip(
+            "Requires internet connection and a browser"
+        )
+        self.runoptions.setToolTipDuration(5000)
         self.optionsgroupbtn.addButton(self.runoptions)
         self.runoptions.clicked.connect(self.runmakerchip)
         self.optionsgrid.addWidget(self.runoptions, 0, 4)
         # self.optionsbox.setLayout(self.optionsgrid)
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
-        if not os.path.isfile(home + "/.makerchip_accepted"):
+        if not makerchipTOSAccepted(False):
             self.acceptTOS = QtWidgets.QPushButton("Accept Makerchip TOS")
             self.optionsgroupbtn.addButton(self.acceptTOS)
-            self.acceptTOS.clicked.connect(self.makerchipaccepted)
+            self.acceptTOS.clicked.connect(lambda: makerchipTOSAccepted(True))
             self.optionsgrid.addWidget(self.acceptTOS, 0, 5)
             # self.optionsbox.setLayout(self.optionsgrid)
             # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.optionsbox.setLayout(self.optionsgrid)
         return self.optionsbox
 
-    # This function is called to accept TOS of makerchip
-
-    def makerchipaccepted(self):
-        reply = QtWidgets.QMessageBox.warning(
-            None, "Terms of Services", "Please review the makerchip\
-                         Terms of Service \
-                         (<a href='https://www.makerchip.com/terms/'>\
-                         https://www.makerchip.com/terms/</a> ).\
-                          Have you read and do you \
-                          accept these Terms of Service? [y/N]:",
-            QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
-        )
-
-        if reply == QtWidgets.QMessageBox.Yes:
-            f = open(home + "/.makerchip_accepted", "w")
-            f.close()
-        # else:
-        #    return
-
     # This function adds the other parts of widget like text box
-
     def creategroup(self):
-
         self.trbox = QtWidgets.QGroupBox()
         self.trbox.setTitle(".tlv file")
         # self.trbox.setDisabled(True)
@@ -405,7 +407,7 @@ Please check if Verilog File Chosen.")
         self.start = QtWidgets.QLabel("Path to .tlv file")
         self.trgrid.addWidget(self.start, 1, 0)
         self.count = 0
-        self.entry_var[self.count] = QtWidgets.QLabel(" - ")
+        self.entry_var[self.count] = QtWidgets.QLabel()
         self.trgrid.addWidget(self.entry_var[self.count], 1, 1)
         self.entry_var[self.count].setMaximumWidth(1000)
         self.count += 1

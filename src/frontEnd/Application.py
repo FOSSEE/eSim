@@ -11,16 +11,16 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
-#                Sumanto Kar, sumantokar@iitb.ac.in, FOSSEE, IIT Bombay
+#                Sumanto Kar, sumantokar@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Wednesday 25 August 2021
+#      REVISION: Monday 31 January 2022
 # =========================================================================
 
 import os
-
 import traceback
-if os.name == 'nt':     # noqa
+
+if os.name == 'nt':
     from frontEnd import pathmagic  # noqa:F401
     init_path = ''
 else:
@@ -90,7 +90,7 @@ class Application(QtWidgets.QMainWindow):
 
             - Top-tool-bar (New project, Open project, Close project, \
                 Mode switch, Help option)
-            - Left-tool-bar (Open Schematic, Convert KiCad to NgSpice, \
+            - Left-tool-bar (Open Schematic, Convert KiCad to Ngspice, \
                 Simuation, Model Editor, Subcircuit, NGHDL, Modelica \
                 Converter, OM Optimisation)
         """
@@ -187,7 +187,7 @@ class Application(QtWidgets.QMainWindow):
 
         self.conversion = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/ki-ng.png'),
-            '<b>Convert Kicad to Ngspice</b>', self
+            '<b>Convert KiCad to Ngspice</b>', self
         )
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
 
@@ -210,7 +210,7 @@ class Application(QtWidgets.QMainWindow):
         self.subcircuit.triggered.connect(self.open_subcircuit)
 
         self.nghdl = QtWidgets.QAction(
-            QtGui.QIcon(init_path + 'images/nghdl.png'), '<b>Nghdl</b>', self
+            QtGui.QIcon(init_path + 'images/nghdl.png'), '<b>NGHDL</b>', self
         )
         self.nghdl.triggered.connect(self.open_nghdl)
 
@@ -516,7 +516,7 @@ class Application(QtWidgets.QMainWindow):
             self.msg.setWindowTitle("Error Message")
             self.msg.setModal(True)
             self.msg.showMessage(
-                'Please save and close all the Kicad ' +
+                'Please save and close all the KiCad ' +
                 'windows first, then change the mode'
             )
             self.msg.exec_()
@@ -560,35 +560,42 @@ class Application(QtWidgets.QMainWindow):
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
                     self.projDir) is False:
                 print(
-                    "No netlist file (*.cir.out)"
-                    "Check netlist file to change simulation parameters."
+                    "Netlist file (*.cir.out) not found."
                 )
 
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
-                self.msg.setWindowTitle("Warning Message")
+                self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
-                    'No netlist file (*.cir.out)'
+                    'Netlist file (*.cir.out) not found.'
                 )
                 self.msg.exec_()
                 return
+
             currTime = time.time()
             count = 0
             while True:
                 try:
+                    # if os.name == 'nt':
+                    #     proc = 'mintty'
+                    # else:
+                    #     proc = 'xterm'
+
                     # Edited by Sumanto Kar 25/08/2021
-                    st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-                    if self.checkIfProcessRunning('xterm') is False:
+                    if os.name != 'nt' and \
+                            self.checkIfProcessRunning('xterm') is False:
                         self.msg = QtWidgets.QErrorMessage()
                         self.msg.setModal(True)
                         self.msg.setWindowTitle("Warning Message")
                         self.msg.showMessage(
-                            'Simulation was interuppted. '
-                            'Please close all the Xterm windows.'
-                            'And then rerun the simulation'
+                            'Simulation was interrupted/failed. '
+                            'Please close all the Ngspice windows '
+                            'and then rerun the simulation.'
                         )
                         self.msg.exec_()
                         return
+
+                    st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
                     if st.st_mtime >= currTime:
                         break
                 except Exception:
@@ -788,8 +795,8 @@ class Application(QtWidgets.QMainWindow):
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
-                'Please select the project first. ' +
-                'You can either create a new project or open existing project'
+                'Please select the project first. You can either ' +
+                'create a new project or open an existing project'
             )
             self.msg.exec_()
 
@@ -920,9 +927,12 @@ def main(args):
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
 
     try:
-        file = open(os.path.join(
-            os.path.expanduser("~"), ".esim/workspace.txt"), 'r'
-        )
+        if os.name == 'nt':
+            user_home = os.path.join('library', 'config')
+        else:
+            user_home = os.path.expanduser('~')
+
+        file = open(os.path.join(user_home, ".esim/workspace.txt"), 'r')
         work = int(file.read(1))
         file.close()
     except IOError:

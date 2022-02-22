@@ -30,20 +30,14 @@
 # importing the files and libraries
 import re
 import os
-import sys  # noqa:F401
-import shutil  # noqa:F401
-import subprocess  # noqa:F401
-from PyQt5 import QtGui, QtCore, QtWidgets  # noqa:F401
-from PyQt5.QtGui import *  # noqa:F401 F403
-from configparser import ConfigParser  # noqa:F401
+from PyQt5 import QtCore, QtWidgets
+from configparser import ConfigParser
 from configuration import Appconfig
 from . import createkicad
 import hdlparse.verilog_parser as vlog
-from configparser import SafeConfigParser  # noqa:F401
+
 
 # Class is used to generate the Ngspice Model
-
-
 class ModelGeneration(QtWidgets.QWidget):
 
     # initialising the variables
@@ -52,27 +46,36 @@ class ModelGeneration(QtWidgets.QWidget):
         super().__init__()
         self.obj_Appconfig = Appconfig.Appconfig()
         print("Argument is : ", file)
-        self.file = file
+
+        if os.name == 'nt':
+            self.file = file.replace('\\', '/')
+        else:
+            self.file = file
+
         self.termedit = termedit
         self.cur_dir = os.getcwd()
         self.fname = os.path.basename(file)
         self.fname = self.fname.lower()
         print("Verilog/SystemVerilog/TL Verilog filename is : ", self.fname)
-        self.home = os.path.expanduser("~")
-        self.parser = SafeConfigParser()
+
+        if os.name == 'nt':
+            self.home = os.path.join('library', 'config')
+        else:
+            self.home = os.path.expanduser('~')
+
+        self.parser = ConfigParser()
         self.parser.read(os.path.join(
             self.home, os.path.join('.nghdl', 'config.ini')))
-        self.ngspice_home = self.parser.get('NGSPICE', 'NGSPICE_HOME')
-        self.release_dir = self.parser.get('NGSPICE', 'RELEASE')
+        self.nghdl_home = self.parser.get('NGHDL', 'NGHDL_HOME')
+        self.release_dir = self.parser.get('NGHDL', 'RELEASE')
         self.src_home = self.parser.get('SRC', 'SRC_HOME')
         self.licensefile = self.parser.get('SRC', 'LICENSE')
-        self.digital_home = self.parser.get('NGSPICE', 'DIGITAL_MODEL')
-
-        self.digital_home = self.digital_home.split("/ghdl")[0] + "/Ngveri"
+        self.digital_home = self.parser.get(
+                            'NGHDL', 'DIGITAL_MODEL') + "/Ngveri"
         # # #### Creating connection_info.txt file from verilog file #### #
 
-    # Readinf the file and performing operations and copying it in the Ngspice
-    # folder
+    # Reading the file and performing operations and
+    # copying it in the Ngspice folder
     def verilogfile(self):
         Text = "<span style=\" font-size:25pt;\
          font-weight:1000; color:#008000;\" >"
@@ -104,14 +107,21 @@ class ModelGeneration(QtWidgets.QWidget):
         f.write("\n")
         f.close()
 
-    # This function is call the sandpiper to convert .tlv file to .sv file
+    # This function calls the sandpiper to convert .tlv file to .sv file
     def sandpiper(self):
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
         # Text="Running Sandpiper............"
         print("Running Sandpiper-Saas for TLV to SV Conversion")
-        self.cmd = "cp ../maker/tlv/clk_gate.v ../maker/tlv/pseudo_rand.sv \
-../maker/tlv/sandpiper.vh ../maker/tlv/sandpiper_gen.vh \
-../maker/tlv/sp_default.vh ../maker/tlv/pseudo_rand_gen.sv \
-../maker/tlv/pseudo_rand.m4out.tlv " + self.file + " " + self.modelpath
+        self.cmd = "cp " + init_path + "library/tlv/clk_gate.v " + \
+                   init_path + "library/tlv/pseudo_rand.sv " + \
+                   init_path + "library/tlv/sandpiper.vh " + \
+                   init_path + "library/tlv/sandpiper_gen.vh " + \
+                   init_path + "library/tlv/sp_default.vh " + \
+                   init_path + "library/tlv/pseudo_rand_gen.sv " + \
+                   init_path + "library/tlv/pseudo_rand.m4out.tlv " + \
+                   self.file + " " + self.modelpath
 
         self.process = QtCore.QProcess(self)
         self.args = ['-c', self.cmd]
@@ -127,8 +137,9 @@ class ModelGeneration(QtWidgets.QWidget):
         self.cmd = "sandpiper-saas -i " + \
             self.fname.split('.')[0] + ".tlv -o "\
             + self.fname.split('.')[0] + ".sv"
-        self.args = ['-c', self.cmd]
-        self.process.start('sh', self.args)
+        # self.args = ['-c', self.cmd]
+        # self.process.start('sh', self.args)
+        self.process.start(self.cmd)
         self.termtitle("RUN SANDPIPER-SAAS")
         self.termtext("Current Directory: " + self.modelpath)
         self.termtext("Command: " + self.cmd)
@@ -196,7 +207,7 @@ class ModelGeneration(QtWidgets.QWidget):
                 QtWidgets.QMessageBox.Ok)
 
             self.obj_Appconfig.print_info(
-                'NgVeri Stopped due to File \
+                'NgVeri stopped due to file \
                 name and module name not matching error')
             return "Error"
         modelname = str(m.name)
@@ -439,7 +450,7 @@ and set the load for input ports */
         cfunc.write("\n")
 
         # if os.name == 'nt':
-        #     digital_home = parser.get('NGSPICE', 'DIGITAL_MODEL')
+        #     digital_home = parser.get('NGHDL', 'DIGITAL_MODEL')
         #     msys_home = parser.get('COMPILER', 'MSYS_HOME')
         #     cmd_str2 = "/start_server.sh %d %s & read" + "\\" + "\"" + "\""
         #     cmd_str1 = os.path.normpath(
@@ -456,7 +467,7 @@ and set the load for input ports */
         # else:
         #     cfunc.write(
         #         '\t\tsnprintf(command,1024,"' + home +
-        #         '/ngspice-nghdl/src/xspice/icm/ghdl/' +
+        #         '/nghdl-simulator/src/xspice/icm/ghdl/' +
         #         fname.split('.')[0] +
         #         '/DUTghdl/start_server.sh %d %s &", sock_port, my_ip);'
         #     )
@@ -790,18 +801,30 @@ and set the load for input ports */
 
     # This function is used to run the Verilator using the verilator commands
     def run_verilator(self):
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
         self.cur_dir = os.getcwd()
-        file = open("../maker/lint_off.txt").readlines()
         wno = " "
-        for item in file:
-            wno += " -Wno-" + item.strip("\n")
+        with open(init_path + "library/tlv/lint_off.txt") as file:
+            for item in file.readlines():
+                if item and item.strip():
+                    wno += " -Wno-" + item.strip("\n")
+
         print("Running Verilator.............")
         os.chdir(self.modelpath)
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
+        self.release_home = self.parser.get('NGHDL', 'RELEASE')
         # print(self.modelpath)
 
-        self.cmd = "verilator -Wall " + wno + "\
-         --cc --exe --no-MMD --Mdir . -CFLAGS -fPIC  sim_main_" + \
+        if os.name == 'nt':
+            self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
+            self.cmd = "export VERILATOR_ROOT=" + self.msys_home + "/mingw64; "
+        else:
+            self.cmd = ''
+
+        self.cmd = self.cmd + "verilator -Wall " + wno + " \
+         --cc --exe --no-MMD --Mdir . -CFLAGS -fPIC sim_main_" + \
             self.fname.split('.')[0] + ".cpp " + self.fname
         self.process = QtCore.QProcess(self)
         self.process.readyReadStandardOutput.connect(self.readAllStandard)
@@ -823,10 +846,21 @@ and set the load for input ports */
         self.cur_dir = os.getcwd()
         print("Make Verilator.............")
         os.chdir(self.modelpath)
-        self.cmd = "make -f V" + self.fname.split('.')[0]\
+
+        if os.path.exists(self.modelpath + "../verilated.o"):
+            os.remove(self.modelpath + "../verilated.o")
+
+        if os.name == 'nt':
+            # path to msys home directory
+            self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
+            self.cmd = self.msys_home + "/mingw64/bin/mingw32-make.exe"
+        else:
+            self.cmd = "make"
+
+        self.cmd = self.cmd + " -f V" + self.fname.split('.')[0]\
             + ".mk V" + self.fname.split(
             '.')[0] + "__ALL.a sim_main_" \
-            + self.fname.split('.')[0] + ".o verilated.o"
+            + self.fname.split('.')[0] + ".o ../verilated.o"
         self.process = QtCore.QProcess(self)
         self.process.readyReadStandardOutput.connect(self.readAllStandard)
         self.process.start('sh', ['-c', self.cmd])
@@ -848,8 +882,8 @@ and set the load for input ports */
         self.cur_dir = os.getcwd()
         print("Copying the required files to Release Folder.............")
         os.chdir(self.modelpath)
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
-        path_icm = os.path.join(self.release_home, "src/xspice/icm/Ngveri/")
+        self.release_home = self.parser.get('NGHDL', 'RELEASE')
+        path_icm = self.release_home + "/src/xspice/icm/Ngveri/"
         if not os.path.isdir(path_icm + self.fname.split('.')[0]):
             os.mkdir(path_icm + self.fname.split('.')[0])
         path_icm = path_icm + self.fname.split('.')[0]
@@ -861,9 +895,11 @@ and set the load for input ports */
             os.remove(path_icm + "sim_main_" + self.fname.split('.')[0] + ".o")
         if os.path.exists(
             self.release_home +
-            "src/xspice/icm/" +
+            "src/xspice/icm/Ngveri/" +
                 "verilated.o"):
-            os.remove(self.release_home + "src/xspice/icm/" + "verilated.o")
+            os.remove(
+                self.release_home + "src/xspice/icm/Ngveri/" + "verilated.o"
+            )
         if os.path.exists(
             path_icm +
             "V" +
@@ -886,8 +922,8 @@ and set the load for input ports */
             self.termtext("Current Directory: " + self.modelpath)
             self.termtext("Command: " + self.cmd)
             self.process.waitForFinished(50000)
-            self.cmd = "cp verilated.o " + self.release_home \
-                + "/src/xspice/icm/"
+            self.cmd = "cp ../verilated.o " + self.release_home \
+                + "/src/xspice/icm/Ngveri/"
             self.process.start('sh', ['-c', self.cmd])
             self.termtext("Command: " + self.cmd)
             self.process \
@@ -901,20 +937,19 @@ and set the load for input ports */
     # Running the make command for Ngspice
     def runMake(self):
         print("run Make Called")
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
+        self.release_home = self.parser.get('NGHDL', 'RELEASE')
         path_icm = os.path.join(self.release_home, "src/xspice/icm")
         os.chdir(path_icm)
 
         try:
             if os.name == 'nt':
-                # path to msys bin directory where make is located
-                self.msys_bin = self.parser.get('COMPILER', 'MSYS_HOME')
-                self.cmd = self.msys_bin + "\\make.exe"
+                # path to msys home directory
+                self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
+                self.cmd = self.msys_home + "/mingw64/bin/mingw32-make.exe"
             else:
                 self.cmd = "make"
 
             print("Running Make command in " + path_icm)
-            path = os.getcwd()  # noqa
             self.process = QtCore.QProcess(self)
             self.process.start('sh', ['-c', self.cmd])
             print("make command process pid ---------- >", self.process.pid())
@@ -936,18 +971,18 @@ and set the load for input ports */
     def runMakeInstall(self):
         self.cur_dir = os.getcwd()
         print("run Make Install Called")
-        self.release_home = self.parser.get('NGSPICE', 'RELEASE')
+        self.release_home = self.parser.get('NGHDL', 'RELEASE')
         path_icm = os.path.join(self.release_home, "src/xspice/icm")
         os.chdir(path_icm)
 
         try:
             if os.name == 'nt':
-                self.msys_bin = self.parser.get('COMPILER', 'MSYS_HOME')
-                self.cmd = self.msys_bin + "\\make.exe install"
+                self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
+                self.cmd = self.msys_home + \
+                    "/mingw64/bin/mingw32-make.exe install"
             else:
                 self.cmd = "make install"
             print("Running Make Install")
-            path = os.getcwd()  # noqa
             try:
                 self.process.close()
             except BaseException:
@@ -977,26 +1012,35 @@ and set the load for input ports */
     def addfile(self):
         print("Adding the files required by the top level module file")
 
-        init_path = '../../../'
+        init_path = '../../'
         if os.name == 'nt':
             init_path = ''
+
         includefile = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getOpenFileName(
                 self,
                 "Open adding other necessary files to be included",
                 init_path + "home")[0])
+
         if includefile == "":
             reply = QtWidgets.QMessageBox.critical(
                 None, "Error Message",
                 "<b>Error: No File Chosen. Please chose a file</b>",
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
             )
+
             if reply == QtWidgets.QMessageBox.Ok:
                 self.addfile()
+
+                if includefile == "":
+                    return
+
                 self.obj_Appconfig.print_info('Add Other Files Called')
 
             elif reply == QtWidgets.QMessageBox.Cancel:
                 self.obj_Appconfig.print_info('No File Chosen')
+                return
+
         filename = os.path.basename(includefile)
         self.modelpath = self.digital_home + \
             "/" + self.fname.split('.')[0] + "/"
@@ -1013,33 +1057,38 @@ and set the load for input ports */
         print("Added the File:" + filename)
         self.termtitle("Added the File:" + filename)
 
-    # This function is used to add additional folder required by the verilog
-    # top module
-
     def addfolder(self):
+        '''
+            This function is used to add additional folder required
+            by the verilog top module
+        '''
         # self.cur_dir = os.getcwd()
         print("Adding the folder required by the top level module file")
 
-        init_path = '../../../'
-        if os.name == 'nt':
-            init_path = ''  # noqa:F841
         includefolder = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getExistingDirectory(
                 self, "open", "home"
             )
         )
+
         if includefolder == "":
             reply = QtWidgets.QMessageBox.critical(
                 None, "Error Message",
                 "<b>Error: No Folder Chosen. Please chose a folder</b>",
                 QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
             )
+
             if reply == QtWidgets.QMessageBox.Ok:
                 self.addfolder()
+
+                if includefolder == "":
+                    return
+
                 self.obj_Appconfig.print_info('Add Folder Called')
 
             elif reply == QtWidgets.QMessageBox.Cancel:
-                self.obj_Appconfig.print_info('No File Chosen')
+                self.obj_Appconfig.print_info('No Folder Chosen')
+                return
 
         self.modelpath = self.digital_home + \
             "/" + self.fname.split('.')[0] + "/"
@@ -1072,7 +1121,6 @@ and set the load for input ports */
         # os.chdir(self.cur_dir)
 
     # This function is used to print the titles in the terminal of Ngveri tab
-
     def termtitle(self, textin):
 
         Text = "<span style=\" font-size:20pt; \
@@ -1135,7 +1183,7 @@ and set the load for input ports */
     #     Text += "</span>"
     #     self.termedit.append(Text+"\n")
 
-        # init_path = '../../../'
+        # init_path = '../../'
         # if os.name == 'nt':
         #     init_path = ''
         # includefile = QtCore.QDir.toNativeSeparators(\

@@ -30,7 +30,6 @@
 from . import Appconfig
 import re
 import os
-import sys  # noqa F401
 import xml.etree.cElementTree as ET
 from PyQt5 import QtWidgets
 
@@ -48,7 +47,7 @@ class AutoSchematic:
         self.lib_loc = self.App_obj.lib_loc
         self.modelpath = modelpath
         if os.name == 'nt':
-            eSim_src = Appconfig.src_home
+            eSim_src = self.App_obj.src_home
             inst_dir = eSim_src.replace('\\eSim', '')
             self.kicad_ngveri_lib = \
                 inst_dir + '/KiCad/share/kicad/library/eSim_Ngveri.lib'
@@ -68,40 +67,43 @@ class AutoSchematic:
             if (str(self.modelname) + '.xml') in files:
                 xmlFound = root
                 print(xmlFound)
+                break
+
         if xmlFound is None:
             self.getPortInformation()
             self.createXML()
             self.createLib()
+
         elif (xmlFound == os.path.join(self.xml_loc, 'Ngveri')):
             print('Library already exists...')
             ret = QtWidgets.QMessageBox.warning(
                 None, "Warning", '''<b>Library files for this model''' +
                 ''' already exist. Do you want to overwrite it?</b><br/>
                 If yes press ok, else cancel it and ''' +
-                '''change the name of your vhdl file.''',
+                '''change the name of your verilog model.''',
                 QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Cancel
             )
+
             if ret == QtWidgets.QMessageBox.Ok:
                 print("Overwriting existing libraries")
                 self.getPortInformation()
                 self.createXML()
-                self.removeOldLibrary()     # Removes the exisitng library
+                self.removeOldLibrary()     # Removes the existng library
                 self.createLib()
             else:
                 print("Library Creation Cancelled")
                 return "Error"
 
         else:
-            print('Pre existing library...')
+            print('Pre-existing library...')
             ret = QtWidgets.QMessageBox.critical(
                 self.parent, "Error", '''<b>A standard library already ''' +
                 '''exists with this name.</b><br/><b>Please change the ''' +
-                '''name of your vhdl file and upload it again</b>''',
+                '''name of your verilog model and add it again.</b>''',
                 QtWidgets.QMessageBox.Ok
             )
 
     # getting the port information here
-
     def getPortInformation(self):
         portInformation = PortInfo(self, self.modelpath)
         portInformation.getPortInfo()
@@ -267,7 +269,6 @@ class AutoSchematic:
 
         port_list = []
         j = 0
-        k = 0   # noqa F841
         for i in range(total):
             if (i < inputs):
                 input_port[1] = inputName[i]
