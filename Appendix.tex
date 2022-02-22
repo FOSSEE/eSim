@@ -114,7 +114,7 @@ Review global labels in hierarchy to find possible duplicates, watch for similar
 \begin{compactenum}
 \item VHDL filename should be in small letters without any space or special characters (Underscore is allowed).
 \item Entity name, architecture declaration and the VHDL file name should match exactly.
-\item Declaration of each port should be done on a new line. See \textbf{nghdl/Example/} for further reference.
+% \item Declaration of each port should be done on a new line. See \textbf{nghdl/Example/} for further reference.
 \item Port declaration can be either \textbf{std\_logic} or \textbf{std\_logic\_vector}. No other declarations are allowed.
 \item All \textbf{in} ports should be declared before \textbf{out} ports.
 \item Maximum number of output ports that a VHDL entity under simulation can have is 64, provided the port names are not too lengthy to overflow the buffer.
@@ -122,7 +122,7 @@ Review global labels in hierarchy to find possible duplicates, watch for similar
 (See \textbf{nghdl/Example/counter/counter.vhdl} for further reference)
 \item If structural style is used, then the main entity of your VHDL code which is to be simulated,  should be declared first in the file with inclusion of libraries for subsequent declaration of each supporting entity.
 See \textbf{nghdl/Example/full\_adder/ \\ full\_adder\_structural.vhdl} for further reference.
-\item Do not use \texttt{sudo} or root permissions while working Mixed-Mode Simulation and eSim.
+\item Do not use \texttt{sudo} or root permissions while working with Mixed Signal Simulation and eSim.
 \item If there are more than one VHDL file to be uploaded, then do it \textbf{one-by-one}, as described below:
     \begin{compactenum}
     \item Click on \texttt{NGHDL} button on eSim or type \texttt{nghdl}/ in terminal. A new window will be opened.
@@ -153,7 +153,7 @@ Hence, \texttt{browsing} one file and \texttt{adding} several files won’t crea
 
 \section {Appendix F: Common Errors in NGHDL}
 
-Before concluding anything about NGHDL’s working or about eSim’s Mixed-Mode Simulation, do check the console for outputs and logs. Kindly see the following errors on User’s end that can be rectified there itself :
+Before concluding anything about NGHDL’s working or about eSim’s Mixed Signal Simulation, do check the console for outputs and logs. Kindly see the following errors on User’s end that can be rectified there itself:
 
 \subsection{NGHDL Upload Errors}
 

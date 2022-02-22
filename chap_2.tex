@@ -8,11 +8,9 @@ to design, test and analyse their circuits. But the important feature
 of this tool is that it is open source and hence the user can modify
 the source as per his/her need. The software provides a generic,
 modular and extensible platform for experiment with electronic
-circuits. This software runs on Ubuntu Linux LTS distributions 18.04 and 20.04 %some flavours of Windows.
-It uses {\tt Python 3}, {\tt KiCad 4.0.7},
-{\tt GHDL}, {\tt Verilator}
-and 
-{\tt Ngspice}.
+circuits. This software runs on Ubuntu Linux LTS distributions 18.04 and 20.04, and  Microsoft Windows 7, 8 and 10.
+It uses {\tt Python 3}, {\tt KiCad 4.0.7}, {\tt Makerchip},
+{\tt GHDL}, {\tt Verilator} and {\tt Ngspice}.
 
 The objective behind the development of eSim is to provide an open
 source EDA solution for electronics and electrical engineers. The 
@@ -200,9 +198,23 @@ and MOSFET. \index{MOSFET}
 This module is indicated by the label 9 in \figref{blockd}.
 
 \subsection{NGHDL} \index{NGHDL} \label{sec:nghdl}
-NGHDL, a module for mixed mode circuit simulation is also integrated with eSim. 
-It uses ghdl for digital simulation and the mixed mode simulation happens through 
-NgSpice.
+NGHDL, a module for mixed signal circuit simulation, is also integrated with eSim.  It makes use of VHDL code.
+It uses ghdl for digital simulation and the mixed signal simulation happens through 
+Ngspice.
+
+\subsection{NgVeri} \index{NgVeri} \label{sec:NgVeri}
+NgVeri, a module for mixed signal circuit simulation, is also integrated with eSim. It makes use of Verilog/System Verilog/Transaction-Level Verilog  code.
+It uses SandPiper SaaS and Verilator for digital simulation and the mixed signal simulation happens through 
+Ngspice. 
+
+\subsection{Makerchip-App} \index{Makerchip-App} \label{sec:Makerchip-App}
+Makerchip is a cloud based browser application developed by Redwood EDA to do digital circuit design. One can simulate Verilog/SystemVerilog/Transaction-Level Verilog code in Makerchip. eSim is interfaced with Makerchip using a Python based application called Makerchip-App which launches the Makerchip IDE.
+
+\subsection{SandPiper SaaS} \index{SandPiper SaaS} \label{sec:Sandpiper-saas}
+Sandpiper-saas is a tool developed by Redwood EDA which converts Transaction Level Verilog code to SystemVerilog code. It is used by NgVeri so that it can get the System Verilog code which can be further passed to the Verilator.
+
+\subsection{Verilator} \index{Verilator} \label{sec:Verilator}
+Verilator is a Verilog/SystemVerilog simulator tool. It converts the Verilog/SystemVerilog code to C++ object files. These object files are linked with that of Ngspice thus enabling mixed signal simulation in eSim.
 
 \subsection{OpenModelica} \index{OpenModelica} \label{sec:openmodelica}
 OpenModelica (OM) is an open source modeling and simulation tool based on
