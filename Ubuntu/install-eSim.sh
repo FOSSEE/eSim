@@ -15,7 +15,7 @@
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode, Sumanto Kar
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Wednesday 05 January 2021 23:50
+#      REVISION: Tuesday 01 February 2022 23:50
 #===============================================================================
 
 # All variables goes here
@@ -71,57 +71,14 @@ function installNghdl
     trap error_exit ERR
 
     ngspiceFlag=1
-    cd ..
+    cd ../
 
 }
 
-function verilator
-{   
-
-    echo "Installing Verilator Dependencies..........................."
-    if [[ -n "$(which apt-get 2> /dev/null)" ]]
-    then
-    # Ubuntu
-        sudo apt-get install make autoconf g++ flex bison
-    else [[ -n "$(which yum 2> /dev/null)" ]]
-    # Ubuntu
-        sudo yum install make autoconf flex bison which -y
-        sudo yum groupinstall 'Development Tools'  -y
-    fi
-    echo "Installing Verilator..........................."
-    sudo apt install -y curl
-    curl https://www.veripool.org/ftp/verilator-4.210.tgz | tar -zx
-    cd verilator-4.210
-    ./configure
-    make -j$(nproc)
-    sudo make install
-    echo "Removing the Unessential files in Verilator Folder..........................."
-    rm -r docs
-    rm -r examples
-    rm -r include
-    rm -r test_regress
-    rm -r bin
-    ls -1 | grep -E -v 'config.status|configure.ac|Makefile.in|verilator.1|configure|Makefile|src|verilator.pc' | xargs rm -f
-    #sudo rm -v -r'!("config.status"|"configure.ac"|"Makefile.in"|"verilator.1"|"configure"|"Makefile"|"src"|"verilator.pc")'
-}
-function Ngveridependencies
+function installKicad
 {
-    echo "Installing Chrome.........................."
-    sudo apt install -y chromium-browser
-    echo "Installing python3 pip.........................."
-    sudo apt install -y python3-pip
-    echo "Installing watchdog..........................."
-    pip3 install watchdog
-    echo "Installing HDLParse..........................."
-    pip3 install hdlparse
-    echo "Installing Makerchip-App..........................."
-    pip3 install makerchip-app
-    echo "Installing Sandpiper-Saas..........................."
-    pip3 install sandpiper-saas
 
-}
-function addKicadPPA
-{
+    echo "Installing KiCad..........................."
 
     #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
     kicadppa="reynaud/kicad-4"
@@ -144,6 +101,11 @@ function addKicadPPA
         echo "KiCad-4 is available in synaptic"
     fi
 
+    sudo apt-get install -y --no-install-recommends kicad=4.0.7*
+    if [[ $(lsb_release -rs) == 20.* ]]; then
+        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
+    fi
+
 }
 
 
@@ -163,7 +125,7 @@ function installDependency
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
     
-    echo "Installing PyQt5..........................."
+    echo "Installing Psutil.........................."
     sudo apt-get install -y python3-psutil
     
     echo "Installing PyQt5..........................."
@@ -172,16 +134,24 @@ function installDependency
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
 
-    if [[ $(lsb_release -rs) != 16.* ]]; then
-	    echo "Installing Distutils......................."
-	    sudo apt-get install -y python3-distutils
-	fi
+    echo "Installing Distutils......................."
+    sudo apt-get install -y python3-distutils
 
-    echo "Installing KiCad..........................."
-    sudo apt-get install -y --no-install-recommends kicad=4.0.7*
-    if [[ $(lsb_release -rs) == 20.* ]]; then
-        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
-    fi
+    # Install NgVeri Depedencies
+    echo "Installing Pip3............................"
+    sudo apt install -y python3-pip
+
+    echo "Installing Watchdog........................"
+    pip3 install watchdog
+
+    echo "Installing Hdlparse........................"
+    pip3 install hdlparse
+
+    echo "Installing Makerchip......................."
+    pip3 install makerchip-app
+
+    echo "Installing SandPiper Saas.................."
+    pip3 install sandpiper-saas
 
 }
 
@@ -286,13 +256,10 @@ function createDesktopStartScript
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
-    # Check if the target OS is Ubuntu 18 or not
-    if [[ $(lsb_release -rs) == 18.* || $(lsb_release -rs) == 20.* ]]; then
-        # Make esim.desktop file as trusted application
-        gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
-        # Set Permission and Execution bit
-    	chmod a+x $HOME/Desktop/esim.desktop
-    fi
+    # Make esim.desktop file as trusted application
+    gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
+    # Set Permission and Execution bit
+    chmod a+x $HOME/Desktop/esim.desktop
 
     # Remove local copy of esim.desktop file
     rm esim.desktop
@@ -367,29 +334,25 @@ if [ $option == "--install" ];then
             echo "Install with proxy"
             # Calling functions
             createConfigFile
-            addKicadPPA
             installDependency
+            installKicad
             copyKicadLibrary
             installNghdl
             createDesktopStartScript
-	    verilator
-	    Ngveridependencies
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
             echo "Install without proxy"
             
             # Calling functions
             createConfigFile
-            addKicadPPA
             installDependency
+            installKicad
             copyKicadLibrary
             installNghdl
             createDesktopStartScript
-	    verilator
-	    Ngveridependencies
 
             if [ $? -ne 0 ];then
-                echo -e "\n\n\nFreeEDA ERROR: Unable to install required packages. Please check your internet connection.\n\n"
+                echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
                 exit 0
             fi
 
@@ -404,7 +367,7 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure? It will remove eSim completely including KiCad, Ngspice and NGHDL along with their models and libraries (y/n):"
+    echo -n "Are you sure? It will remove eSim completely including KiCad, Makerchip and NGHDL along with their models and libraries (y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
@@ -418,12 +381,16 @@ elif [ $option == "--uninstall" ];then
         if [[ $(lsb_release -rs) == 20.* ]]; then
             sudo sed -i '/Package: kicad/{:label;N;/Pin-Priority: 501/!blabel};/Pin: version 4.0.7*/d' /etc/apt/preferences.d/preferences
         fi
-	echo "Removing Verilator..........................."
-	cd verilator-4.210
-	sudo make uninstall
+
+        echo "Removing Makerchip......................."
+        pip3 uninstall -y hdlparse
+        pip3 uninstall -y makerchip-app
+        pip3 uninstall -y sandpiper-saas
+
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
-        cd ../nghdl/
+        rm -rf library/modelParamXML/Ngveri/*
+        cd nghdl/
         if [ $? -eq 0 ];then
         	chmod +x install-nghdl.sh
     	    ./install-nghdl.sh --uninstall
