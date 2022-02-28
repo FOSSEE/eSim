@@ -1,7 +1,7 @@
 eSim Installer (Windows OS)
 ====
 
-It contains all the documentation for making eSim executable (using PyInstaller) and packaging eSim for Windows 7 and above.
+It contains all the documentation for making eSim executable (using PyInstaller) and packaging eSim for Windows 8 and above.
 
 > Note: Do not develop eSim on Windows OS. Work only with `installers` branch on Windows OS and do development on Linux OS.
 > Reference : https://stackoverflow.com/questions/37672886/cannot-get-rid-of-unstaged-files-in-git-on-my-local
