@@ -66,6 +66,8 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 	- .gitignore
 	- .travis.yml
 	- INSTALL
+	- library/modelParamXML/Nghdl/.gitignore
+	- library/modelParamXML/Ngveri/.gitignore
     - `library/browser/User-Manual/figures` folder
     - library/browser/User-Manual/eSim.html
 
@@ -74,32 +76,35 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 	- everything from `modules` folder except `Connectors_Terminal_Blocks.pretty/TerminalBlock_Altech_AK300-2_P5.00mm.kicad_mod` and `TO_SOT_Packages_THT.pretty/TO-220-3_Vertical.kicad_mod`
 	- everything from `temmplate` folder except `kicad.pro` file
 
-   Now, compress it in zip format, place it at `eSim\library` and delete that folder.
+   Now, compress it in zip format (`kicadLibrary.zip`), place it at `eSim/library` and delete that folder.
 
-4. Add eSim user manual `eSim_Manual_<version>.pdf` at location `library/browser/User-Manual`.
+4. Update the ``image`` directory path in the `library/browser/welcome.html` as:
 
-5. Replace `LICENSE` file with `LICENSE.rtf` file in `eSim` folder.
+	From `src="../../images/logo.png"` to `src="images/logo.png"`
 
-6. Compress `eSim` folder in 7z format and add it to the installer folder (Make sure that there is folder named `eSim` inside this compressed file).
+5. Add eSim user manual `eSim_Manual_<version>.pdf` at location `library/browser/User-Manual`.
 
-7. Add the dependencies for `NGHDL` to the installer folder.
+6. Replace `LICENSE` file with `LICENSE.rtf` file in `eSim` folder.
+
+7. Compress `eSim` folder in 7z format and add it to the installer folder (Make sure that there is folder named `eSim` inside this compressed file).
+
+8. Add the dependencies for `NGHDL` to the installer folder.
 
 > Note: Refer this [documentation](https://github.com/fossee/nghdl/tree/installers/Windows/README.md) on packaging NGHDL for Windows OS.
 
-8. Apply NSIS plugins. Refer [here](https://github.com/fossee/nghdl/tree/installers/Windows/NSISplugins/) for the same.
+9. Apply NSIS plugins. Refer [here](https://github.com/fossee/nghdl/tree/installers/Windows/NSISplugins/) for the same.
 
-9. Add KiCad installer `kicad-4.0.7-i686.exe` to the installer folder.
+10. Add KiCad installer `kicad-4.0.7-i686.exe` to the installer folder.
 
 > Note: Refer this [documentation](https://github.com/fossee/KiCad-eSim/blob/executables/README.md) on packaging KiCad for Windows OS
 
-10. Add following files/folder to the installer folder:
+11. Add following files/folder to the installer folder:
 	- License file (`rtf` format)
 	- Logo (`ico` format)
 	- `esim-setup-script` file
-	- Makerchip executables (`makerchip.7z` file)
-	- `nghdl-setup-script` file fromt the `NGHDL` repository
+	- `nghdl-setup-script` file from the `NGHDL` repository
 
-11. Compile the NSI script (`esim-setup-script` file). Now only use the generated installer for distribution.
+12. Compile the NSI script (`esim-setup-script` file). Now only use the generated installer for distribution.
 
 > Note: If there is any warning on `Eliminating "zeroing code out"`, then have a look at this reference -
 https://nsis-dev.github.io/NSIS-Forums/html/t-358040.html
