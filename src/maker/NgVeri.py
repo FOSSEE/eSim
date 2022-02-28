@@ -229,7 +229,7 @@ class NgVeri(QtWidgets.QWidget):
         self.optionsgroupbtn = QtWidgets.QButtonGroup()
 
         self.addverilogbutton = QtWidgets.QPushButton(
-            "Run Verilog to NgSpice Converter")
+            "Convert Verilog to Ngspice")
         self.addverilogbutton.setToolTip(
             "Requires internet connection for converting TL-Verilog models"
         )
@@ -240,14 +240,14 @@ class NgVeri(QtWidgets.QWidget):
         # self.optionsbox.setLayout(self.optionsgrid)
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
-        self.addfilebutton = QtWidgets.QPushButton("Add Other file")
+        self.addfilebutton = QtWidgets.QPushButton("Add dependency files")
         self.optionsgroupbtn.addButton(self.addfilebutton)
         self.addfilebutton.clicked.connect(self.addfile)
         self.optionsgrid.addWidget(self.addfilebutton, 0, 2)
         # self.optionsbox.setLayout(self.optionsgrid)
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
-        self.addfolderbutton = QtWidgets.QPushButton("Add Folder")
+        self.addfolderbutton = QtWidgets.QPushButton("Add dependency folder")
         self.optionsgroupbtn.addButton(self.addfolderbutton)
         self.addfolderbutton.clicked.connect(self.addfolder)
         self.optionsgrid.addWidget(self.addfolderbutton, 0, 3)
@@ -266,7 +266,7 @@ class NgVeri(QtWidgets.QWidget):
     # This function is used to remove models in modlst of Ngspice folder if
     # the user wants to remove a model. Note: files do not get removed
     def edit_modlst(self, text):
-        if text == "Edit modlst":
+        if text == "Remove Verilog Models":
             return
         index = self.entry_var[1].findText(text)
         self.entry_var[1].removeItem(index)
@@ -316,7 +316,7 @@ class NgVeri(QtWidgets.QWidget):
         if os.name == 'nt':
             init_path = ''
 
-        if text == "Edit lint_off":
+        if text == "Remove lint_off":
             return
         index = self.entry_var[2].findText(text)
         self.entry_var[2].removeItem(index)
@@ -357,7 +357,7 @@ class NgVeri(QtWidgets.QWidget):
             file.close()
         self.entry_var[3].setText("")
 
-    # creating various other groups like terminal, edit modlst, edit lint_off
+    # creating various other groups like terminal, remove modlst, remove lint_off
     # and add lint_off
 
     def creategroup(self):
@@ -380,7 +380,7 @@ class NgVeri(QtWidgets.QWidget):
         self.count += 1
 
         self.entry_var[self.count] = QtWidgets.QComboBox()
-        self.entry_var[self.count].addItem("Edit modlst")
+        self.entry_var[self.count].addItem("Remove Verilog Models")
         self.modlst = open(self.digital_home + '/modpath.lst', 'r')
         self.data = self.modlst.readlines()
         self.modlst.close()
@@ -391,7 +391,7 @@ class NgVeri(QtWidgets.QWidget):
         self.trgrid.addWidget(self.entry_var[self.count], 1, 4, 1, 2)
         self.count += 1
         self.entry_var[self.count] = QtWidgets.QComboBox()
-        self.entry_var[self.count].addItem("Edit lint_off")
+        self.entry_var[self.count].addItem("Remove lint_off")
 
         init_path = '../../'
         if os.name == 'nt':
@@ -410,7 +410,7 @@ class NgVeri(QtWidgets.QWidget):
         self.trgrid.addWidget(self.entry_var[self.count], 3, 4)
         self.entry_var[self.count].setMaximumWidth(100)
         self.count += 1
-        self.entry_var[self.count] = QtWidgets.QPushButton("Add Lint_Off")
+        self.entry_var[self.count] = QtWidgets.QPushButton("Add lint_off")
         self.entry_var[self.count].setMaximumWidth(100)
         self.trgrid.addWidget(self.entry_var[self.count], 3, 5)
         self.entry_var[self.count].clicked.connect(self.add_lint_off)
