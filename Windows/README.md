@@ -102,6 +102,10 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 	- License file (`rtf` format)
 	- Logo (`ico` format)
 	- `esim-setup-script` file
+	- Makerchip executables (`makerchip.7z` file)
+
+		> Note: Refer this [documentation](https://github.com/fossee/tree/installers/Windows/Makerchip-Build.md) on packaging Makerchip-App and Sandpiper SaaS for Windows OS
+
 	- `nghdl-setup-script` file from the `NGHDL` repository
 
 12. Compile the NSI script (`esim-setup-script` file). Now only use the generated installer for distribution.
