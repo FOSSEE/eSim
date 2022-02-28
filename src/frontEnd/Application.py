@@ -193,7 +193,7 @@ class Application(QtWidgets.QMainWindow):
 
         self.ngspice = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/ngspice.png'),
-            '<b>Simulation</b>', self
+            '<b>Simulate</b>', self
         )
         self.ngspice.triggered.connect(self.open_ngspice)
 
