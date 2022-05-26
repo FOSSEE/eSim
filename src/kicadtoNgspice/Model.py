@@ -1,68 +1,64 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtCore import QObject, pyqtSlot
-from . import TrackWidget
-from xml.etree import ElementTree as ET
 import os
-import sys
+from configparser import ConfigParser
+from xml.etree import ElementTree as ET
+
+from PyQt5 import QtWidgets, QtCore
+
+from . import TrackWidget
 
 
 class Model(QtWidgets.QWidget):
-
     """
     - This class creates Model Tab of KicadtoNgspice window.
       The widgets are created dynamically in the Model Tab.
     """
 
-    # by Sumanto and Jay
+    # by Sumanto, Jay and Vatsal
 
     def addHex(self):
         """
         This function is use to keep track of all Device Model widget
         """
+        if os.name == 'nt':
+            self.home = os.path.join('library', 'config')
+        else:
+            self.home = os.path.expanduser('~')
 
-        # print("Calling Track Device Model Library funtion")
-
-        init_path = "../../../"
-        if os.name == "nt":
-            init_path = ""
+        self.parser = ConfigParser()
+        self.parser.read(os.path.join(
+            self.home, os.path.join('.nghdl', 'config.ini')))
+        self.nghdl_home = self.parser.get('NGHDL', 'NGHDL_HOME')
 
         self.hexfile = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getOpenFileName(
-                self, "Open Hex Directory", init_path + "home", "*.hex"
+                self, "Open Hex Directory", os.path.expanduser('~'),
+                "Text files (*.txt);;HEX files (*.hex)"
             )[0]
         )
+
         self.text = open(self.hexfile).read()
         chosen_file_path = os.path.abspath(self.hexfile)
+        filename = os.path.basename(chosen_file_path)
 
-    # By Sumanto and Jay
+        path1 = os.sep + "src" + os.sep + "xspice" + os.sep + "icm" \
+            + os.sep + "ghdl" + os.sep + self.model_name
+        path2 = os.sep + "DUTghdl" + os.sep
 
-    def uploadHex(self):
-        """
-        This function is use to keep track of all Device Model widget
-        """
+        path_new = self.nghdl_home + path1 + path2
 
-        # print("Calling Track Device Model Library funtion")
-
-        path1 = os.path.expanduser("~")
-        path2 = "/ngspice-nghdl/src/xspice/icm/ghdl"
-        init_path = path1 + path2
-        if os.name == "nt":
-            init_path = ""
-
-        self.hexloc = QtWidgets.QFileDialog.getExistingDirectory(
-            self, "Open Hex Directory", init_path
-        )
-        self.file = open(self.hexloc + "/hex.txt", "w")
+        self.hexloc = path_new + filename
+        self.file = open(self.hexloc, "w")
         self.file.write(self.text)
         self.file.close()
+        self.entry_var[self.nextcount - 1].setText(chosen_file_path)
 
     def __init__(
-        self,
-        schematicInfo,
-        modelList,
-        clarg1,
+            self,
+            schematicInfo,
+            modelList,
+            clarg1,
     ):
 
         QtWidgets.QWidget.__init__(self)
@@ -110,7 +106,6 @@ class Model(QtWidgets.QWidget):
         self.setLayout(self.grid)
 
         for line in modelList:
-
             # print "ModelList Item:",line
             # Adding title label for model
             # Key: Tag name,Value:Entry widget number
@@ -120,6 +115,7 @@ class Model(QtWidgets.QWidget):
             modelgrid = QtWidgets.QGridLayout()
             modelbox.setTitle(line[5])
             self.start = self.nextcount
+            self.model_name = line[2]
 
             # line[7] is parameter dictionary holding parameter tags.
 
@@ -134,73 +130,41 @@ class Model(QtWidgets.QWidget):
 
                     temp_tag = []
                     for item in value:
+
                         paramLabel = QtWidgets.QLabel(item)
                         modelgrid.addWidget(paramLabel, self.nextrow, 0)
                         self.obj_trac.model_entry_var[
                             self.nextcount
                         ] = QtWidgets.QLineEdit()
-                        modelgrid.addWidget(
-                            self.obj_trac.model_entry_var[self.nextcount],
-                            self.nextrow,
-                            1,
-                        )
+                        self.entry_var[self.count] = QtWidgets.QLineEdit()
+                        self.entry_var[self.count].setText("")
+
+                        if value == "Path of your .hex file":
+                            self.entry_var[self.nextcount].setReadOnly(True)
+                            self.add_hex_btn(modelgrid, modelbox)
 
                         try:
                             for child in root:
                                 if (
-                                    child.text == line[2]
-                                    and child.tag == line[3]
+                                        child.text == line[2]
+                                        and child.tag == line[3]
                                 ):
                                     self.obj_trac.model_entry_var
                                     [self.nextcount].setText(child[i].text)
+                                    self.entry_var[self.count].setText(
+                                        child[0].text)
                                     i = i + 1
                         except BaseException:
                             pass
+                        modelgrid.addWidget(self.entry_var[self.nextcount],
+                                            self.nextrow, 1)
 
                         temp_tag.append(self.nextcount)
                         self.nextcount = self.nextcount + 1
                         self.nextrow = self.nextrow + 1
-                        if "upload_hex_file:1" in tag_dict:
-                            self.addbtn = QtWidgets.QPushButton("Add Hex File")
-                            self.addbtn.setObjectName("%d" % self.nextcount)
-                            self.addbtn.clicked.connect(self.addHex)
-                            modelgrid.addWidget(self.addbtn, self.nextrow, 2)
-                            modelbox.setLayout(modelgrid)
-
-                            # CSS
-
-                            modelbox.setStyleSheet(
-                                " \
-                            QGroupBox { border: 1px solid gray; border-radius:\
-                            9px; margin-top: 0.5em; } \
-                            QGroupBox::title {subcontrol-origin: margin; left:\
-                            10px; padding: 0 3px 0 3px; } \
-                            "
-                            )
-
-                            self.grid.addWidget(modelbox)
-                            self.addbtn = QtWidgets.QPushButton(
-                                "Upload Hex File"
-                            )
-                            self.addbtn.setObjectName("%d" % self.nextcount)
-                            self.addbtn.clicked.connect(self.uploadHex)
-                            modelgrid.addWidget(self.addbtn, self.nextrow, 3)
-                            modelbox.setLayout(modelgrid)
-
-                            # CSS
-
-                            modelbox.setStyleSheet(
-                                " \
-                            QGroupBox { border: 1px solid gray; border-radius:\
-                            9px; margin-top: 0.5em; } \
-                            QGroupBox::title {subcontrol-origin: margin; left:\
-                            10px; padding: 0 3px 0 3px; } \
-                            "
-                            )
-
-                            self.grid.addWidget(modelbox)
 
                     tag_dict[key] = temp_tag
+
                 else:
 
                     paramLabel = QtWidgets.QLabel(value)
@@ -208,11 +172,12 @@ class Model(QtWidgets.QWidget):
                     self.obj_trac.model_entry_var[
                         self.nextcount
                     ] = QtWidgets.QLineEdit()
-                    modelgrid.addWidget(
-                        self.obj_trac.model_entry_var[self.nextcount],
-                        self.nextrow,
-                        1,
-                    )
+                    self.entry_var[self.nextcount] = QtWidgets.QLineEdit()
+                    self.entry_var[self.nextcount].setText("")
+
+                    if value == "Path of your .hex file":
+                        self.entry_var[self.nextcount].setReadOnly(True)
+                        self.add_hex_btn(modelgrid, modelbox)
 
                     try:
                         for child in root:
@@ -220,50 +185,16 @@ class Model(QtWidgets.QWidget):
                                 self.obj_trac.model_entry_var[
                                     self.nextcount
                                 ].setText(child[i].text)
+                                self.entry_var[self.count].setText(
+                                    child[0].text)
                                 i = i + 1
                     except BaseException:
                         pass
-
+                    modelgrid.addWidget(self.entry_var[self.nextcount],
+                                        self.nextrow, 1)
                     tag_dict[key] = self.nextcount
                     self.nextcount = self.nextcount + 1
                     self.nextrow = self.nextrow + 1
-                    if "upload_hex_file:1" in tag_dict:
-                        self.addbtn = QtWidgets.QPushButton("Add Hex File")
-                        self.addbtn.setObjectName("%d" % self.nextcount)
-                        self.addbtn.clicked.connect(self.addHex)
-                        modelgrid.addWidget(self.addbtn, self.nextrow, 2)
-                        modelbox.setLayout(modelgrid)
-
-                        # CSS
-
-                        modelbox.setStyleSheet(
-                            " \
-                        QGroupBox { border: 1px solid gray; border-radius:\
-                        9px; margin-top: 0.5em; } \
-                        QGroupBox::title { subcontrol-origin: margin; left:\
-                        10px; padding: 0 3px 0 3px; } \
-                        "
-                        )
-
-                        self.grid.addWidget(modelbox)
-                        self.addbtn = QtWidgets.QPushButton("Upload Hex File")
-                        self.addbtn.setObjectName("%d" % self.nextcount)
-                        self.addbtn.clicked.connect(self.uploadHex)
-                        modelgrid.addWidget(self.addbtn, self.nextrow, 3)
-                        modelbox.setLayout(modelgrid)
-
-                        # CSS
-
-                        modelbox.setStyleSheet(
-                            " \
-                        QGroupBox { border: 1px solid gray; border-radius:\
-                        9px; margin-top: 0.5em; } \
-                        QGroupBox::title { subcontrol-origin: margin; left:\
-                        10px; padding: 0 3px 0 3px; } \
-                        "
-                        )
-
-                        self.grid.addWidget(modelbox)
 
             self.end = self.nextcount - 1
             modelbox.setLayout(modelgrid)
@@ -303,3 +234,22 @@ class Model(QtWidgets.QWidget):
                 self.obj_trac.modelTrack.append(lst)
 
         self.show()
+
+    def add_hex_btn(self, modelgrid, modelbox):
+        self.addbtn = QtWidgets.QPushButton("Add Hex File")
+        self.addbtn.setObjectName("%d" % self.nextcount)
+        self.addbtn.clicked.connect(self.addHex)
+        modelgrid.addWidget(self.addbtn, self.nextrow, 2)
+        modelbox.setLayout(modelgrid)
+
+        # CSS
+
+        modelbox.setStyleSheet(
+            " \
+        QGroupBox { border: 1px solid gray; border-radius:\
+        9px; margin-top: 0.5em; } \
+        QGroupBox::title { subcontrol-origin: margin; left:\
+        10px; padding: 0 3px 0 3px; } \
+        "
+        )
+        self.grid.addWidget(modelbox)
