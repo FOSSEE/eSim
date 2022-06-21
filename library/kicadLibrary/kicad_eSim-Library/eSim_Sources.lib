@@ -1,7 +1,7 @@
 EESchema-LIBRARY Version 2.3
 #encoding utf-8
 #
-# eSim_AC
+# AC
 #
 DEF eSim_AC v 0 40 Y Y 1 F N
 F0 "v" -200 100 60 H V C CNN
