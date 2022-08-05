@@ -196,7 +196,7 @@ sky130_fd_pr/models/sky130.lib.spice")
             if eachline[0:2] != 'sc' and eachline[0] != 'u' \
                     and eachline[0] != 'x' and eachline[0] != '*'\
                     and eachline[0] != 'v' and eachline[0] != 'i'\
-                    and eachline[0] != 'a' :
+                    and eachline[0] != 'a':
                 print("Only components with designators 'sc', 'u', \
 'x', 'v', 'i', 'a'\
                      can be used with sky130 mode")
