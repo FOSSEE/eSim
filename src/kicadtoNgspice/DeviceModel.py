@@ -89,7 +89,8 @@ class DeviceModel(QtWidgets.QWidget):
         self.SOCbtn = QtWidgets.QPushButton("Generate SoC")
         self.SOCbtn.clicked.connect(self.GenerateSOCbutton)
         sky130grid.addWidget(self.SOCbtn, self.row, 2)
-        self.SOCbtn.setToolTip('''This is the Generate SoC option to convert SPICE to verilog.
+        self.SOCbtn.setToolTip('''This is the Generate SoC \
+option to convert SPICE to verilog.
 Naming convention should be strictly:
 IP for Analog Design: IPAD
 IP for Digital Design: IPDD
@@ -195,8 +196,9 @@ sky130_fd_pr/models/sky130.lib.spice")
             if eachline[0:2] != 'sc' and eachline[0] != 'u' \
                     and eachline[0] != 'x' and eachline[0] != '*'\
                     and eachline[0] != 'v' and eachline[0] != 'i'\
-                    and eachline[0] != 'a':
-                print("Only components with designators 'sc', 'u',  'x', 'v', 'i', 'a'\
+                    and eachline[0] != 'a' :
+                print("Only components with designators 'sc', 'u', \
+'x', 'v', 'i', 'a'\
                      can be used with sky130 mode")
                 print("Please remove other components")
                 self.msg = QtWidgets.QErrorMessage()
