@@ -525,6 +525,7 @@ class Convert:
                     # print("Library Path :", libpath)
                     # Copying library from devicemodelLibrary to Project Path
                     # Special case for MOSFET
+                    print(eachline[0:5] )
                     if eachline[0] == 'm':
                         # For mosfet library name come along with MOSFET
                         # dimension information
@@ -547,6 +548,21 @@ class Convert:
                         src = os.path.join(src_path, src_lib)
                         dst = projpath
                         shutil.copy2(src, dst)
+
+                    elif eachline[0:6] == 'scmode':
+                        tempStr = completeLibPath.split(':')
+                        print(tempStr)
+                        includeLine.append(".lib \"" + tempStr[0] + "\" " + tempStr[1])
+                        deviceLine[index] = ''
+                        #words.append(completeLibPath)
+                        #deviceLine[index] = words
+
+                    elif eachline[0:2] == 'sc' and eachline[0:6] != 'scmode':
+                        temp_str = words[0].replace('sc','xsc')
+                        words[0] = temp_str
+                        words.append(completeLibPath)
+                        deviceLine[index] = words
+
                     else:
                         # Replace last word with library name
                         # words[-1] = libname.split('.')[0]
