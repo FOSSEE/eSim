@@ -19,7 +19,7 @@ ceived at the load end. There is no power dissipation in the line itself.
 
 **NOTE: We have to put one space between Z0=50 and Td=3ns**<br/>
 
- This can be done in the cir.out file after creating the circuits and converting kiCad
+ This can be done in the cir.out file after creating the circuit(s) and converting kiCad
 to NgSpice.
 
 ## Single Lossy Transmission Line (SLTL)
