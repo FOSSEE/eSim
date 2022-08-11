@@ -10,9 +10,7 @@ that the forward voltage of the LEDs are higher than the normal diode.
 Bv=5 Ibv=10e-6 Fc=0.5 Isr=0.0 Nr=2.0 Kf=0.0 Af=1.0 Ffe=1.0 Xti=3.0 Eg=1.11
 Tbv=0.0 Trs=0.0 )
 ```
-NOTE: The name of the above LED is set as eSim_Red_LED the same name of the
-LED must be given to the subcircuit while creating the symbol for LED. While the
-D is the designator for the diode.
+**NOTE: The name of the above LED is set as eSim_Red_LED the same name of the LED must be given to the subcircuit while creating the symbol for LED. While the D is the designator for the diode.**
 
 # Blue LED
 
