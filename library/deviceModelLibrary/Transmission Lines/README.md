@@ -14,15 +14,14 @@ ceived at the load end. There is no power dissipation in the line itself.
 
 
 ![tline](https://user-images.githubusercontent.com/43288153/184139198-e25e1e59-3b3f-415c-bf7d-99ebee4eb601.png)
-
 fig: Symbol of tline
 
 
-NOTE: We have to put one space between Z0=50 and Td=3ns
+**NOTE: We have to put one space between Z0=50 and Td=3ns**
 This can be done in the cir.out file after creating the circuits and converting kiCad
 to NgSpice.
 
-## Single Lossy Transmission Line
+## Single Lossy Transmission Line (SLTL)
 An appreciable value of series resistance and shunt conductance make up a lossy
 transmission line, which allows different frequencies to transmit at various speeds.
 In contrast, on a lossless transmission line, wave propagation rates are constant
@@ -31,3 +30,4 @@ line, distortion is caused by a change in speed.
 The symbol for Single Lossy Transmission Lines(SLTL) is shown below-
 
 ![ymod](https://user-images.githubusercontent.com/43288153/184139539-ed4eac77-934a-423c-8f7b-2cba4daf42d1.png)
+fig: Symbol of SLTL
