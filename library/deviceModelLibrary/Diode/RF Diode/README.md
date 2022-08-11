@@ -1,6 +1,5 @@
 # Radio Frequency Diode
--- Diode is a pn junction device, which allows the current to flow in one direction. In
-this chapter different types of diodes have been discussed.
+Diode is a pn junction device, which allows the current to flow in one direction. RF Diodes are a semiconductor device with two terminals that allows the flow of electricity in one direction and restricts the flow in the other. The devices in this family are used in radio frequency matching circuits for electronic tuning.
 ## RF Diode(DRN142S)
 
 ```
