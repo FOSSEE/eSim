@@ -159,11 +159,13 @@ sky130_fd_pr/models/sky130.lib.spice")
         self.entry_var[self.count].setText("")
         self.entry_var[self.count].setMaximumWidth(150)
         self.entry_var[self.count].setObjectName("%d" % beg)
+        path_name = ''
         for child in self.root:
             if child.tag == "scmode1":
                 if child[1].text:
                     self.entry_var[self.count] \
                         .setText(child[1].text)
+                    path_name = child[0].text
                 else:
                     self.entry_var[self.count].setText("")
 
@@ -223,6 +225,7 @@ sky130_fd_pr/models/sky130.lib.spice")
                 sky130box.setTitle(
                     "Add parameters for " +
                     words[0] + " : " + words[-1])
+                path_name = ''
 
                 # Adding to get sky130 dimension
                 self.parameterLabel[self.count] = QtWidgets.QLabel(
@@ -251,7 +254,7 @@ sky130_fd_pr/models/sky130.lib.spice")
                                 if child[0].text:
                                     self.entry_var[self.count] \
                                         .setText(child[0].text)
-                                    path_name = ""
+                                    path_name = child[0].text
                                 else:
                                     self.entry_var[self.count].setText("")
                                     path_name = ""
