@@ -552,9 +552,20 @@ class Convert:
                     elif eachline[0:6] == 'scmode':
                         tempStr = completeLibPath.split(':')
                         print(tempStr)
+                        libs = '''sky130_fd_pr__model__diode_pd2nw_11v0.model.spice
+sky130_fd_pr__model__diode_pw2nd_11v0.model.spice             sky130_fd_pr__model__inductors.model.spice
+sky130_fd_pr__model__linear.model.spice
+sky130_fd_pr__model__pnp.model.spice
+sky130_fd_pr__model__r+c.model.spice
+'''
+
+            
+                        
                         includeLine.append(
                             ".lib \"" + tempStr[0] + "\" " + tempStr[1])
-                        deviceLine[index] = '*scmode'
+                        for i in libs.split():
+                            includeLine.append(".include \"" + tempStr[0].replace("sky130.lib.spice",i) + "\"")
+                        deviceLine[index] = "*scmode"
                         # words.append(completeLibPath)
                         # deviceLine[index] = words
 
