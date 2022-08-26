@@ -552,7 +552,8 @@ class Convert:
                     elif eachline[0:6] == 'scmode':
                         tempStr = completeLibPath.split(':')
                         print(tempStr)
-                        libs = '''sky130_fd_pr__model__diode_pd2nw_11v0.model.spice
+                        libs = '''
+sky130_fd_pr__model__diode_pd2nw_11v0.model.spice
 sky130_fd_pr__model__diode_pw2nd_11v0.model.spice
 sky130_fd_pr__model__inductors.model.spice
 sky130_fd_pr__model__linear.model.spice
