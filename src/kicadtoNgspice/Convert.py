@@ -554,7 +554,7 @@ class Convert:
                         print(tempStr)
                         includeLine.append(
                             ".lib \"" + tempStr[0] + "\" " + tempStr[1])
-                        deviceLine[index] = ''
+                        deviceLine[index] = '*scmode'
                         # words.append(completeLibPath)
                         # deviceLine[index] = words
 
