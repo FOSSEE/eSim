@@ -550,6 +550,20 @@ class Convert:
                         shutil.copy2(src, dst)
 
                     elif eachline[0:6] == 'scmode':
+                        (filepath, filemname) = os.path.split(self.clarg1)
+                        self.Fileopen = os.path.join(filepath, ".spiceinit")
+                        print("======================================================")
+                        print("Writing to the .spiceinit file to make ngspice SKY130 compatible")
+                        self.writefile = open(self.Fileopen, "w")
+                        self.writefile.write('''
+set ngbehavior=hsa     ; set compatibility for reading PDK libs
+set ng_nomodcheck      ; don't check the model parameters 
+set num_threads=8      ; CPU hardware threads available
+option noinit          ; don't print operating point data
+optran 0 0 0 100p 2n 0 ; don't use dc operating point, but transient op)
+''')
+                        print("======================================================")
+
                         tempStr = completeLibPath.split(':')
                         print(tempStr)
                         libs = '''
