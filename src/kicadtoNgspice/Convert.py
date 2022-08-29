@@ -550,11 +550,37 @@ class Convert:
                         shutil.copy2(src, dst)
 
                     elif eachline[0:6] == 'scmode':
+                        (filepath, filemname) = os.path.split(self.clarg1)
+                        self.Fileopen = os.path.join(filepath, ".spiceinit")
+                        print("======================================================")
+                        print("Writing to the .spiceinit file to make ngspice SKY130 compatible")
+                        self.writefile = open(self.Fileopen, "w")
+                        self.writefile.write('''
+set ngbehavior=hsa     ; set compatibility for reading PDK libs
+set ng_nomodcheck      ; don't check the model parameters 
+set num_threads=8      ; CPU hardware threads available
+option noinit          ; don't print operating point data
+optran 0 0 0 100p 2n 0 ; don't use dc operating point, but transient op)
+''')
+                        print("======================================================")
+
                         tempStr = completeLibPath.split(':')
                         print(tempStr)
+                        libs = '''
+sky130_fd_pr__model__diode_pd2nw_11v0.model.spice
+sky130_fd_pr__model__diode_pw2nd_11v0.model.spice
+sky130_fd_pr__model__inductors.model.spice
+sky130_fd_pr__model__linear.model.spice
+sky130_fd_pr__model__pnp.model.spice
+sky130_fd_pr__model__r+c.model.spice
+'''
                         includeLine.append(
                             ".lib \"" + tempStr[0] + "\" " + tempStr[1])
-                        deviceLine[index] = '*scmode'
+                        for i in libs.split():
+                            includeLine.append(
+                                ".include \"" + tempStr[0].replace(
+                                    "sky130.lib.spice", i) + "\"")
+                        deviceLine[index] = "*scmode"
                         # words.append(completeLibPath)
                         # deviceLine[index] = words
 

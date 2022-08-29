@@ -113,7 +113,7 @@ For more info please see the documentation''')
         beg = self.count
         self.deviceDetail[self.count] = "scmode1"
         sky130box.setTitle(
-            "Add parameters of sky130 library ")
+            "Add parameters of SKY130 library ")
         # +
         # " : " +
         # words[6])
@@ -201,14 +201,14 @@ sky130_fd_pr/models/sky130.lib.spice")
                     and eachline[0] != 'a':
                 print("Only components with designators 'sc', 'u', \
 'x', 'v', 'i', 'a'\
-                     can be used with sky130 mode")
+                     can be used with SKY130 mode")
                 print("Please remove other components")
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Invalid components")
                 self.content = "Only components with designators " + \
                                "'sc', 'u' and 'x' can be used \
-                               with sky130 mode. " + \
+                               with SKY130 mode. " + \
                                "Please edit the schematic and \
                                generate netlist again"
                 self.msg.showMessage(self.content)
@@ -227,9 +227,9 @@ sky130_fd_pr/models/sky130.lib.spice")
                     words[0] + " : " + words[-1])
                 path_name = ''
 
-                # Adding to get sky130 dimension
+                # Adding to get SKY130 dimension
                 self.parameterLabel[self.count] = QtWidgets.QLabel(
-                    "Enter the parameters of sky130 component " + words[0])
+                    "Enter the parameters of SKY130 component " + words[0])
                 sky130grid.addWidget(
                     self.parameterLabel[self.count], self.row, 0)
                 self.entry_var[self.count] = QtWidgets.QLineEdit()
@@ -260,7 +260,7 @@ sky130_fd_pr/models/sky130.lib.spice")
                                     path_name = ""
                             except BaseException as e:
                                 print("Error when set text of Device " +
-                                      "Sky130 Component :", str(e))
+                                      "SKY130 Component :", str(e))
                 except BaseException:
                     pass
                 self.trackLibraryWithoutButton(self.count, path_name)
