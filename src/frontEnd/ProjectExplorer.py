@@ -69,12 +69,19 @@ class ProjectExplorer(QtWidgets.QWidget):
                         parentnode, [files, os.path.join(parents, files)]
                     )
         self.window.addWidget(self.treewidget)
-
+        self.treewidget.expanded.connect(self.refreshInstant)
         self.treewidget.doubleClicked.connect(self.openProject)
         self.treewidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.treewidget.customContextMenuRequested.connect(self.openMenu)
         self.setLayout(self.window)
         self.show()
+
+    def refreshInstant(self):
+        for i in range(self.treewidget.topLevelItemCount()):
+            if(self.treewidget.topLevelItem(i).isExpanded()):
+                index = self.treewidget.indexFromItem(
+                    self.treewidget.topLevelItem(i))
+                self.refreshProject(indexItem=index)
 
     def addTreeNode(self, parents, children):
         os.path.join(parents)
@@ -137,6 +144,7 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.save = QtWidgets.QPushButton('Save and Exit')
         self.save.setDisabled(True)
         self.windowgrid = QtWidgets.QGridLayout()
+        self.refreshProject(self.filePath)
 
         if (os.path.isfile(str(self.filePath))):
             self.fopen = open(str(self.filePath), 'r')
@@ -202,25 +210,31 @@ class ProjectExplorer(QtWidgets.QWidget):
         json.dump(self.obj_appconfig.project_explorer,
                   open(self.obj_appconfig.dictPath["path"], 'w'))
 
-    def refreshProject(self, filePath=None):
+    def refreshProject(self, filePath=None, indexItem=None):
         """
         This function refresh the project in explorer area by right \
         clicking on project and selecting refresh option.
         """
 
         if not filePath or filePath is None:
-            self.indexItem = self.treewidget.currentIndex()
+            if indexItem is None:
+                self.indexItem = self.treewidget.currentIndex()
+            else:
+                self.indexItem = indexItem
+
             filePath = str(
                 self.indexItem.sibling(self.indexItem.row(), 1).data()
             )
 
         if os.path.exists(filePath):
             filelistnew = os.listdir(os.path.join(filePath))
-            parentnode = self.treewidget.currentItem()
+            if indexItem is None:
+                parentnode = self.treewidget.currentItem()
+            else:
+                parentnode = self.treewidget.itemFromIndex(self.indexItem)
             count = parentnode.childCount()
             for i in range(count):
-                for items in self.treewidget.selectedItems():
-                    items.removeChild(items.child(0))
+                parentnode.removeChild(parentnode.child(0))
             for files in filelistnew:
                 QtWidgets.QTreeWidgetItem(
                     parentnode, [files, os.path.join(filePath, files)]
