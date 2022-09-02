@@ -71,7 +71,7 @@ class SubcircuitTab(QtWidgets.QWidget):
                 subbox.setTitle("Add subcircuit for " + words[len(words) - 1])
                 self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
-
+                self.entry_var[self.count].setReadOnly(True)
                 global path_name
                 try:
                     for child in root:
