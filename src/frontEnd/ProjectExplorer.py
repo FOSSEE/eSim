@@ -132,25 +132,21 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.filePath = str(
             self.indexItem.sibling(self.indexItem.row(), 1).data()
         )
-        self.obj_appconfig.print_info(
-            'The current project is ' + self.filePath)
-
-        self.textwindow = QtWidgets.QWidget()
-        self.textwindow.setMinimumSize(600, 500)
-        self.textwindow.setGeometry(QtCore.QRect(400, 150, 400, 400))
-        self.textwindow.setWindowTitle(filename)
-
-        self.text = QtWidgets.QTextEdit()
-        self.save = QtWidgets.QPushButton('Save and Exit')
-        self.save.setDisabled(True)
-        self.windowgrid = QtWidgets.QGridLayout()
-        self.refreshProject(self.filePath)
 
         if (os.path.isfile(str(self.filePath))):
             self.fopen = open(str(self.filePath), 'r')
             lines = self.fopen.read()
-            self.text.setText(lines)
 
+            self.textwindow = QtWidgets.QWidget()
+            self.textwindow.setMinimumSize(600, 500)
+            self.textwindow.setGeometry(QtCore.QRect(400, 150, 400, 400))
+            self.textwindow.setWindowTitle(filename)
+
+            self.text = QtWidgets.QTextEdit()
+            self.save = QtWidgets.QPushButton('Save and Exit')
+            self.save.setDisabled(True)
+
+            self.text.setText(lines)
             self.text.textChanged.connect(self.enable_save)
 
             vbox_main = QtWidgets.QVBoxLayout(self.textwindow)
@@ -160,6 +156,12 @@ class ProjectExplorer(QtWidgets.QWidget):
 
             self.textwindow.show()
         else:
+            self.refreshProject(self.filePath)
+
+            self.obj_appconfig.print_info(
+                'The current project is: ' + self.filePath
+            )
+
             self.obj_appconfig.current_project["ProjectName"] = str(
                 self.filePath)
             (
