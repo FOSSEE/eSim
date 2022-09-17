@@ -153,12 +153,6 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
-    echo "Installing wget.................."
-    pip3 install wget
-
-    echo "Installing zipfile36.................."
-    pip install zipfile36 
-
 }
 
 
