@@ -14,6 +14,7 @@ It contains the documentation to package eSim for Ubuntu OS.
 
 3. Add the eSim executable (if available) in `eSim-<version>` folder. Also, remove following files from this folder:
 	- `.git` folder
+	- `.github` folder
 	- `code` folder
 	- `src` folder (Applicable only if eSim executable is used)
 	- conf.py

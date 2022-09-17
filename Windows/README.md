@@ -57,6 +57,7 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 
 2. Add eSim executable (`eSim.exe`) to the `eSim` folder. Also, remove following files from that folder:
 	- `.git` folder
+	- `.github` folder
 	- `code` folder
 	- `src` folder
 	- conf.py
