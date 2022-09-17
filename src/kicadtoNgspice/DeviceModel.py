@@ -77,7 +77,6 @@ class DeviceModel(QtWidgets.QWidget):
         self.count = self.count+1
         self.row = self.row + 1
         self.devicemodel_dict_beg["scmode1"] = self.count
-        i = self.count
         beg = self.count
         self.deviceDetail[self.count] = "scmode1"
         sky130box.setTitle("Add parameters of SKY130 library ")
@@ -88,9 +87,7 @@ class DeviceModel(QtWidgets.QWidget):
         self.row = self.row + 1
         sky130grid.addWidget(self.parameterLabel[self.count], self.row, 0)
         self.entry_var[self.count] = QtWidgets.QLineEdit()
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        self.entry_var[self.count].setReadOnly(True)
 
         for child in self.root:
             if child.tag == "scmode1":
@@ -100,9 +97,16 @@ class DeviceModel(QtWidgets.QWidget):
                         .setText(child[0].text)
                     path_name = child[0].text
                 else:
-                    path_name = os.path.abspath(
-                        init_path + "library/deviceModelLibrary/\
-sky130_fd_pr/models/sky130.lib.spice")
+                    if os.name == 'nt':
+                        path_name = os.path.abspath(
+                            "library/" +
+                            "sky130_fd_pr/models/sky130.lib.spice"
+                        )
+                    else:
+                        path_name = os.path.abspath(
+                            "/usr/share/local/" +
+                            "sky130_fd_pr/models/sky130.lib.spice"
+                        )
                     self.entry_var[self.count].setText(path_name)
         # self.trackLibraryWithoutButton(self.count, path_name)
 
@@ -186,7 +190,6 @@ sky130_fd_pr/models/sky130.lib.spice")
                 self.deviceDetail[self.count] = words[0]
                 sky130box = QtWidgets.QGroupBox()
                 sky130grid = QtWidgets.QGridLayout()
-                i = self.count
                 beg = self.count
                 sky130box.setTitle(
                     "Add parameters for " +
@@ -533,14 +536,18 @@ sky130_fd_pr/models/sky130.lib.spice")
             self.show()
 
     def trackDefaultLib(self):
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
         sending_btn = self.sender()
         self.widgetObjCount = int(sending_btn.objectName())
-        path_name = os.path.abspath(
-            init_path + "library/deviceModelLibrary/sky130_fd_pr\
-/models/sky130.lib.spice")
+        if os.name == 'nt':
+            path_name = os.path.abspath(
+                "library/" +
+                "sky130_fd_pr/models/sky130.lib.spice"
+            )
+        else:
+            path_name = os.path.abspath(
+                "/usr/share/local/" +
+                "sky130_fd_pr/models/sky130.lib.spice"
+            )
         self.entry_var[self.widgetObjCount].setText(path_name)
         self.trackLibraryWithoutButton(self.widgetObjCount, path_name)
 
@@ -802,4 +809,3 @@ Converter developed at FOSSEE, IIT Bombay\n")
         self.msg.showMessage(self.content)
         self.msg.exec_()
         return
-
