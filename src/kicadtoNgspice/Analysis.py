@@ -734,7 +734,7 @@ class Analysis(QtWidgets.QWidget):
 
         self.parameter_cnt = 0
         self.start_combobox = QtWidgets.QComboBox()
-        self.start_combobox.addItem("Sec")
+        self.start_combobox.addItem("sec")
         self.start_combobox.addItem("ms")
         self.start_combobox.addItem("us")
         self.start_combobox.addItem("ns")
@@ -744,13 +744,13 @@ class Analysis(QtWidgets.QWidget):
         try:
             self.tran_parameter[self.parameter_cnt] = str(root[2][3].text)
         except BaseException:
-            self.tran_parameter[self.parameter_cnt] = "Sec"
+            self.tran_parameter[self.parameter_cnt] = "sec"
 
         self.start_combobox.activated[str].connect(self.start_combo_change)
         self.parameter_cnt += 1
 
         self.step_combobox = QtWidgets.QComboBox()
-        self.step_combobox.addItem("Sec")
+        self.step_combobox.addItem("sec")
         self.step_combobox.addItem("ms")
         self.step_combobox.addItem("us")
         self.step_combobox.addItem("ns")
@@ -759,13 +759,13 @@ class Analysis(QtWidgets.QWidget):
         try:
             self.tran_parameter[self.parameter_cnt] = str(root[2][4].text)
         except BaseException:
-            self.tran_parameter[self.parameter_cnt] = "Sec"
+            self.tran_parameter[self.parameter_cnt] = "sec"
 
         self.step_combobox.activated[str].connect(self.step_combo_change)
         self.parameter_cnt += 1
 
         self.stop_combobox = QtWidgets.QComboBox()
-        self.stop_combobox.addItem("Sec")
+        self.stop_combobox.addItem("sec")
         self.stop_combobox.addItem("ms")
         self.stop_combobox.addItem("us")
         self.stop_combobox.addItem("ns")
@@ -774,7 +774,7 @@ class Analysis(QtWidgets.QWidget):
         try:
             self.tran_parameter[self.parameter_cnt] = str(root[2][5].text)
         except BaseException:
-            self.tran_parameter[self.parameter_cnt] = "Sec"
+            self.tran_parameter[self.parameter_cnt] = "sec"
 
         self.stop_combobox.activated[str].connect(self.stop_combo_change)
         self.parameter_cnt += 1
