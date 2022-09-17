@@ -70,3 +70,4 @@ LibName36=eSim_Subckt
 LibName37=eSim_Nghdl
 LibName38=eSim_Ngveri
 LibName39=eSim_SKY130
+LibName40=eSim_SKY130_Subckts
