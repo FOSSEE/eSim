@@ -1,0 +1,50 @@
+* ==================================== *
+* IP Name :avsdvco_1V8
+* PDK : Sky130 PDK by Google SkyWater
+* ==================================== *
+
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*  Name of the author : NALINKUMAR S 
+* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+* =================================== *
+ .TITLE avsd_vco_1V8 analysis @ 0.9 V 
+* =================================== *
+
+
+* === NETLIST === *
+.subckt avsdvco_1v8 VDD VCTRL v_Ibias F_OUT GND
+
+xm1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ VDD sky130_fd_pr__pfet_01v8 W=0.5 L=0.18 
+xm3 net-_m3-pad1_ net-_m1-pad1_ net-_m12-pad1_ VDD sky130_fd_pr__pfet_01v8 W=0.5 L=0.18 
+xm5 net-_m5-pad1_ net-_m3-pad1_ net-_m13-pad1_ VDD sky130_fd_pr__pfet_01v8 W=0.5 L=0.18 
+xm7 net-_m10-pad2_ net-_m5-pad1_ net-_m14-pad1_ VDD sky130_fd_pr__pfet_01v8 W=0.5 L=0.18 
+xm9 net-_m1-pad2_ net-_m10-pad2_ net-_m15-pad1_ VDD sky130_fd_pr__pfet_01v8 W=0.5 L=0.18 
+xm2 net-_m1-pad1_ net-_m1-pad2_ net-_m16-pad1_ gnd sky130_fd_pr__nfet_01v8 W=0.5 L=0.18 
+xm4 net-_m3-pad1_ net-_m1-pad1_ net-_m17-pad1_ gnd sky130_fd_pr__nfet_01v8 W=0.5 L=0.18 
+xm6 net-_m5-pad1_ net-_m3-pad1_ net-_m18-pad1_ gnd sky130_fd_pr__nfet_01v8 W=0.5 L=0.18 
+xm8 net-_m10-pad2_ net-_m5-pad1_ net-_m19-pad1_ gnd sky130_fd_pr__nfet_01v8 W=0.5 L=0.18 
+xm10 net-_m1-pad2_ net-_m10-pad2_ net-_m10-pad3_ gnd sky130_fd_pr__nfet_01v8 W=0.5 L=0.18 
+
+xm11 net-_m1-pad3_ net-_m11-pad2_ VDD VDD sky130_fd_pr__pfet_01v8 W=1.29 L=0.18 
+xm12 net-_m12-pad1_ net-_m11-pad2_ VDD VDD sky130_fd_pr__pfet_01v8 W=1.29 L=0.18 
+xm13 net-_m13-pad1_ net-_m11-pad2_ VDD VDD sky130_fd_pr__pfet_01v8 W=1.29 L=0.18 
+xm14 net-_m14-pad1_ net-_m11-pad2_ VDD VDD sky130_fd_pr__pfet_01v8 W=1.29 L=0.18 
+xm15 net-_m15-pad1_ net-_m11-pad2_ VDD VDD sky130_fd_pr__pfet_01v8 W=1.29 L=0.18 
+
+xm16 net-_m16-pad1_ VCTRL gnd gnd sky130_fd_pr__nfet_01v8 W=1.29 L=0.18 
+xm17 net-_m17-pad1_ VCTRL gnd gnd sky130_fd_pr__nfet_01v8 W=1.29 L=0.18 
+xm18 net-_m18-pad1_ VCTRL gnd gnd sky130_fd_pr__nfet_01v8 W=1.29 L=0.18 
+xm19 net-_m19-pad1_ VCTRL gnd gnd sky130_fd_pr__nfet_01v8 W=1.29 L=0.18 
+xm20 net-_m10-pad3_ VCTRL gnd gnd sky130_fd_pr__nfet_01v8 W=1.29 L=0.18
+
+xm21 net-_m21-pad1_ net-_m1-pad2_ VDD VDD sky130_fd_pr__pfet_01v8 W=2.88 L=0.18 
+xm23 f_out net-_m21-pad1_ VDD VDD sky130_fd_pr__pfet_01v8 W=1.29 L=0.18 
+
+xm22 net-_m21-pad1_ net-_m1-pad2_ gnd gnd sky130_fd_pr__nfet_01v8 W=1.44 L=0.18 
+xm24 f_out net-_m21-pad1_ gnd gnd sky130_fd_pr__nfet_01v8 W=6.5 L=0.18 
+
+xm25 net-_m11-pad2_ net-_m11-pad2_ bias VDD sky130_fd_pr__pfet_01v8 w=1.01 L=0.18 
+xm26 net-_m11-pad2_ VCTRL gnd gnd sky130_fd_pr__nfet_01v8 W=1.01 L=0.18 
+
+.ends

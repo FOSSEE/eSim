@@ -14,7 +14,7 @@ Table of contents
     
    	i.      After downloading eSim, extract it using: 
   
-   		       $ unzip eSim-2.2.zip
+   		       $ unzip eSim-2.3.zip
 
    	ii.     Now change directories in to the top-level eSim directory (where this INSTALL file can be found).
 

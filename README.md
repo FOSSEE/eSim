@@ -10,7 +10,7 @@
 
 ## eSim
 
-[eSim](https://esim.fossee.in/) is an open source EDA tool for circuit design, simulation, analysis and PCB design, developed by [FOSSEE Team](https://www.fossee.in/) at [IIT Bombay](http://www.iitb.ac.in/).
+[eSim](https://esim.fossee.in/) is an open source EDA tool for circuit design, simulation, analysis and PCB design, developed by [FOSSEE Team](https://www.fossee.in/) at [IIT Bombay](https://www.iitb.ac.in/).
 It is an integrated tool build using open source softwares such as KiCad, Ngspice and GHDL.
 
 ## Releases and Installation
@@ -27,18 +27,19 @@ To use eSim on your machine having above distributions, please refer to link [he
 * Perform Circuit Design.
 * Perform Simulation.
 * Perform Layout Design.
-* Model builder and Subcircuit builder.
+* Model and Subcircuit builder.
 * Support for Mixed-Signal Simulations including Microcontrollers.
-* eSim has been successfully ported to low cost FOSSEE [laptop](http://laptop.fossee.in)
+* eSim has been successfully ported to low cost FOSSEE [laptop](https://laptop.fossee.in/)
 
 ## Open-Source Softwares Used
 * [Python](https://www.python.org/)
 * [KiCad](https://www.kicad.org/)
-* [Makerchip](https://www.makerchip.com/)
 * [NGHDL](https://github.com/fossee/nghdl/)
+* [Makerchip](https://www.makerchip.com/)
+* [SkyWater SKY130 PDK](https://skywater-pdk.rtfd.io/)
 
 ## eSim Manual
-To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.2.pdf)
+To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.3.pdf)
 
 ## Contact
 For any queries regarding eSim please write us on at this [email address](mailto:contact-esim@fossee.in).

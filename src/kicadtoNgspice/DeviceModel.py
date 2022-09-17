@@ -1,11 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtCore import QThread, Qt
 import os
-import wget
-import zipfile
 from xml.etree import ElementTree as ET
 from . import TrackWidget
-flag = 0
 
 
 class DeviceModel(QtWidgets.QWidget):
@@ -55,6 +51,7 @@ class DeviceModel(QtWidgets.QWidget):
         self.row = 0
         self.count = 1  # Entry count
         self.entry_var = {}
+
         # For MOSFET
         self.widthLabel = {}
         self.lengthLabel = {}
@@ -77,54 +74,20 @@ class DeviceModel(QtWidgets.QWidget):
     def eSim_sky130(self, schematicInfo):
         sky130box = QtWidgets.QGroupBox()
         sky130grid = QtWidgets.QGridLayout()
-        i = self.count
-        beg = self.count
-        sky130box.setTitle(
-            "Various Options for Sky130")
-        self.row = self.row + 1
-        self.downloadbtn = QtWidgets.QPushButton("Download Sky130_fd_pr PDK")
-        self.downloadbtn.clicked.connect(self.downloadPDK)
-        sky130grid.addWidget(self.downloadbtn, self.row, 1)
-
-        self.SOCbtn = QtWidgets.QPushButton("Generate SoC")
-        self.SOCbtn.clicked.connect(self.GenerateSOCbutton)
-        sky130grid.addWidget(self.SOCbtn, self.row, 2)
-        self.SOCbtn.setToolTip('''This is the Generate SoC \
-option to convert SPICE to verilog.
-Naming convention should be strictly:
-IP for Analog Design: IPAD
-IP for Digital Design: IPDD
-Net labels: pinname_pinno_mode_bridgetype
-For more info please see the documentation''')
-        sky130box.setLayout(sky130grid)
-        sky130box.setStyleSheet(" \
-                QGroupBox { border: 1px solid gray; border-radius:\
-                 9px; margin-top: 0.5em; } \
-                QGroupBox::title { subcontrol-origin: margin; left:\
-                 10px; padding: 0 3px 0 3px; } \
-                ")
-        self.grid.addWidget(sky130box)
-        sky130box = QtWidgets.QGroupBox()
-        sky130grid = QtWidgets.QGridLayout()
         self.count = self.count+1
         self.row = self.row + 1
         self.devicemodel_dict_beg["scmode1"] = self.count
-        i = self.count
         beg = self.count
         self.deviceDetail[self.count] = "scmode1"
-        sky130box.setTitle(
-            "Add parameters of SKY130 library ")
+        sky130box.setTitle("Add parameters of SKY130 library ")
         # +
         # " : " +
         # words[6])
-        self.parameterLabel[self.count] = QtWidgets.QLabel(
-            "Enter the path ")
+        self.parameterLabel[self.count] = QtWidgets.QLabel("Enter the path ")
         self.row = self.row + 1
         sky130grid.addWidget(self.parameterLabel[self.count], self.row, 0)
         self.entry_var[self.count] = QtWidgets.QLineEdit()
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        self.entry_var[self.count].setReadOnly(True)
 
         for child in self.root:
             if child.tag == "scmode1":
@@ -134,9 +97,16 @@ For more info please see the documentation''')
                         .setText(child[0].text)
                     path_name = child[0].text
                 else:
-                    path_name = os.path.abspath(
-                        init_path + "library/deviceModelLibrary/\
-sky130_fd_pr/models/sky130.lib.spice")
+                    if os.name == 'nt':
+                        path_name = os.path.abspath(
+                            "library/" +
+                            "sky130_fd_pr/models/sky130.lib.spice"
+                        )
+                    else:
+                        path_name = os.path.abspath(
+                            "/usr/share/local/" +
+                            "sky130_fd_pr/models/sky130.lib.spice"
+                        )
                     self.entry_var[self.count].setText(path_name)
         # self.trackLibraryWithoutButton(self.count, path_name)
 
@@ -220,7 +190,6 @@ sky130_fd_pr/models/sky130.lib.spice")
                 self.deviceDetail[self.count] = words[0]
                 sky130box = QtWidgets.QGroupBox()
                 sky130grid = QtWidgets.QGridLayout()
-                i = self.count
                 beg = self.count
                 sky130box.setTitle(
                     "Add parameters for " +
@@ -566,56 +535,19 @@ sky130_fd_pr/models/sky130.lib.spice")
 
             self.show()
 
-    def downloadPDK(self):
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
-        path_name = os.path.abspath(init_path + "library/deviceModelLibrary/")
-        global flag
-        print("flag="+str(flag))
-        if os.path.exists(path_name+'/sky130_fd_pr'):
-            print("Sky130_fd_pr PDK already exists")
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("PDK already exists")
-            self.content = "Sky130_fd_pr PDK already exists.\n" + \
-                           "Hence no need to download."
-            self.msg.showMessage(self.content)
-            self.msg.exec_()
-            return
-        elif flag == 1:
-            # print("Sky130_fd_pr PDK download in progress")
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Download in Progress")
-            self.content = "PDK download in progress.\n" + \
-                           "Please see the eSim terminal " +\
-                           "to track the progress.\nClick on OK."
-            self.msg.showMessage(self.content)
-            self.msg.exec_()
-            return
-        else:
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("PDK download started")
-            self.content = "PDK download started.\n" + \
-                           "Please see the eSim terminal " +\
-                           "to track the progress.\nClick on OK."
-            self.msg.showMessage(self.content)
-            self.msg.exec_()
-            flag = 1
-            self.downloadThread = downloadThread(path_name)
-            self.downloadThread.start()
-
     def trackDefaultLib(self):
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
         sending_btn = self.sender()
         self.widgetObjCount = int(sending_btn.objectName())
-        path_name = os.path.abspath(
-            init_path + "library/deviceModelLibrary/sky130_fd_pr\
-/models/sky130.lib.spice")
+        if os.name == 'nt':
+            path_name = os.path.abspath(
+                "library/" +
+                "sky130_fd_pr/models/sky130.lib.spice"
+            )
+        else:
+            path_name = os.path.abspath(
+                "/usr/share/local/" +
+                "sky130_fd_pr/models/sky130.lib.spice"
+            )
         self.entry_var[self.widgetObjCount].setText(path_name)
         self.trackLibraryWithoutButton(self.widgetObjCount, path_name)
 
@@ -748,7 +680,6 @@ sky130_fd_pr/models/sky130.lib.spice")
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
 
     def GenerateSOCbutton(self):
-
         #############################################################
         # ***************** SPICE to Verilog Converter **************
 
@@ -758,7 +689,7 @@ sky130_fd_pr/models/sky130.lib.spice")
         #               Sumanto Kar, sumantokar@iitb.ac.in
         #               Nagesh Karmali, nags@cse.iitb.ac.in
         #               Firuza Karmali, firuza@cse.iitb.ac.in
-        #               Rahul Paknikar, rahulp@iitb.ac.in
+        #               Rahul Paknikar, rahulp@cse.iitb.ac.in
         # GUIDED BY:
         #               Kunal Ghosh, VLSI System Design Corp.Pvt.Ltd
         #               Anagha Ghosh, VLSI System Design Corp.Pvt.Ltd
@@ -839,7 +770,7 @@ sky130_fd_pr/models/sky130.lib.spice")
             "\\\\Generated from SPICE to Verilog. \
 Converter developed at FOSSEE, IIT Bombay\n")
         parsedcontent.append(
-            "\\\\The development is under progress and may not be accurate\n")
+            "\\\\The development is under progress and may not be accurate.\n")
 
         for j in filelist:
             parsedcontent.append('''`include "'''+j+'''.v"''')
@@ -862,8 +793,8 @@ Converter developed at FOSSEE, IIT Bombay\n")
             parsedcontent.append(j)
         parsedcontent.append("endmodule;")
 
-        print('\n**************Generated Verilog File:' +
-              filename+'.parsed.v***************\n')
+        print('\n**************Generated Verilog File: ' +
+              filename + '.parsed.v***************\n')
         for j in parsedcontent:
             print(j)
             parsedfile.write(j+"\n")
@@ -873,51 +804,8 @@ Converter developed at FOSSEE, IIT Bombay\n")
         self.msg = QtWidgets.QErrorMessage()
         self.msg.setModal(True)
         self.msg.setWindowTitle("Verilog File Generated")
-        self.content = "The Verilog File has been successfully\
-             generated from the SPICE file"
+        self.content = "The Verilog file has been successfully \
+             generated from the SPICE netlist"
         self.msg.showMessage(self.content)
         self.msg.exec_()
         return
-
-
-class downloadThread(QThread):
-    # initialising the threads
-    # initialising the threads
-    def __init__(self, path_name):
-        QThread.__init__(self)
-        self.path_name = path_name
-
-    def __del__(self):
-        self.wait()
-
-    # running the thread to toggle
-    def run(self):
-        global flag
-        try:
-            print("\nSky130_fd_pr Download started at Location: "
-                + self.path_name)  # noqa
-            print("\nYou will be notified once downloaded\n")
-            wget.download("https://static.fossee.in/esim/installation\
-                -files/sky130_fd_pr.zip",
-                          self.path_name+'/sky130_fd_pr.zip')
-            print("\nSky130_fd_pr Downloaded Successfully \
-                at Location: "+self.path_name)
-
-        except Exception as e:
-            print(e)
-            print("Download process Failed")
-
-        try:
-            print("\nStarted Extracting................................\n")
-            print("\nYou will be notified once extracted")
-            zp = zipfile.ZipFile(self.path_name+'/sky130_fd_pr.zip')
-            curr_dir = os.getcwd()
-            os.chdir(self.path_name)
-            zp.extractall()
-            os.remove('sky130_fd_pr.zip')
-            print("\nZip File Extracted Successfully\n")
-            os.chdir(curr_dir)
-        except Exception as e:
-            print(e)
-            print("Extraction process Failed")
-        flag = 0
