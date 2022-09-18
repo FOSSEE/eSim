@@ -10,11 +10,11 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
+#    MAINTAINED: Rahul Paknikar, rahulp@cse.iitb.ac.in
 #                Sumanto Kar, sumantokar@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Monday 31 January 2022
+#      REVISION: Tuesday 13 September 2022
 # =========================================================================
 
 import os
@@ -975,4 +975,7 @@ def main(args):
 # Call main function
 if __name__ == '__main__':
     # Create and display the splash screen
-    main(sys.argv)
+    try:
+        main(sys.argv)
+    except Exception as err:
+        print("Error: ", err)
