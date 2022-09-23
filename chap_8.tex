@@ -1,8 +1,8 @@
-\chapter{SubCircuit Builder}
+\chapter{Subcircuit Builder}
 \label{chap8}
 Subcircuit is a way to implement hierarchical modeling. Once a subcircuit for a compo-
 nent is created, it can be used in other circuits. eSim provides an easy way to create
-a subcircuit. The following \figref{subcircuit_mainwin} shows the window that is opened when the SubCircuit tool is chosen from the toolbar.
+a subcircuit. The following \figref{subcircuit_mainwin} shows the window that is opened when the Subcircuit tool is chosen from the toolbar.
 \begin{figure}[!htp]
 \centering
 \includegraphics[width =\lgfig]{subcirciut_window.png}
@@ -11,7 +11,7 @@ a subcircuit. The following \figref{subcircuit_mainwin} shows the window that is
 \end{figure}
 
 
-\section{Creating a SubCircuit}
+\section{Creating a Subcircuit}
 %Let us take an example of Half-adder circuit. To create a new sub circuit select the New Subcircuit Schematic.\figref{halfadder} shows the half-adder circuit. %and \figref{block} shows the block of the sub circuit included in the main circuit.
 %\begin{figure}[!htp]
 %\centering
@@ -72,7 +72,7 @@ The steps to create subcircuit are as follows.
             \label{port}
         \end{figure}
 
-    \item Next step is to save the schematic and generate KiCad netlist as explained in Chapter 5.
+    \item Next step is to save the schematic and generate KiCad netlist as explained in \chapref{chap5}.
 
     \item To use this subcircuit in other schematics, create a block in the schematic editor by following steps given below as one should have a symbol corresponding to the newly created subcircuit that can be used in other schematics:
         \begin{enumerate}
@@ -97,10 +97,8 @@ The steps to create subcircuit are as follows.
                 \label{subcktnewcomp}
             \end{figure}
 
-
-        \item Start drawing the subcircuit block by using the drawing tools from the right taskbar. Here we have used {\textitbf{\tt Add graphic rectangle to component body}}. You can start drawing with a point to point click on the editor.
-        
-        \item To add pins select {\textitbf {Add pins to components}} from the right taskbar. Give the {\tt Pin Name} as {\tt {IN1}} and {\tt{Pin Number as 1}}. The pin number has to match with the {\tt Port name}. Example Port A is mapped to pin 1. Select the {\textitbf{ Orientation}} as right or left accordingly. The {\textitbf{ Electrical Type}} has to be chosen as {\tt Input} for nodes which will act as Input in the subcircuit you are creating. Similar logic is for output nodes. We would recommend to declare the ports as either Input, Output or Passive.
+        \item Start drawing the subcircuit block by using the drawing tools from the right taskbar. Here we have used \textbf{Add graphic rectangle to component body}. You can start drawing with a point to point click on the editor.
+        \item To add pins select {\textbf {Add pins to components}} from the right taskbar. Give the {\tt Pin Name} as {\tt {IN1}} and {\tt{Pin Number as 1}}. The pin number has to match with the {\tt Port name}. Example Port A is mapped to pin 1. Select the {\textbf{ Orientation}} as right or left accordingly. The {\textbf{ Electrical Type}} has to be chosen as {\tt Input} for nodes which will act as Input in the subcircuit you are creating. Similar logic is for output nodes. We would recommend to declare the ports as either Input, Output or Passive.
         
         \item The final block of the subcircuit would look as shown in \figref{block}. Pins should be attached properly. Labels(Names to the PORTs) should be given such that it is intuitive and someone other than you should be able to understand and use that block with least amount of hassle.
         
