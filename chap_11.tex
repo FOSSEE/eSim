@@ -1,692 +1,548 @@
-\chapter{Solved Examples}
+\chapter{Makerchip-NgVeri: Mixed Signal Simulation}
+\label{chap10}
 \thispagestyle{empty}
-\label{chap11}
 
-\section{Solved Examples}
+NgVeri is a simulator in eSim which facilitates mixed-signal circuit simulation. Digital models are simulated using Verilator and analog models are simulated using XSPICE engine of Ngspice. NgVeri links Ngspice and Verilator to support mixed-mode simulations in eSim as shown in \figref{ngveriblock}. 
 
-%---------------RC circuit-------------------
-\subsection{Basic RC Circuit}
-\subsubsection{Problem Statement:} Plot the Input and Output Waveform of an RC circuit whose input voltage (Vs) is 50Hz, 3V peak to peak. The values of Resistor (R) and Capacitor(C) are $1k$ and $1uf$ respectively.
-\subsubsection{Solution:}
-\begin{itemize}
-\item Creating a Project:
-The new project is created by clicking the {\tt New} icon on the menubar. The name of the project is given in the pop up window as shown in \figref{rc1}.
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\hgfig]{figures/rc1.png}
-    %\includegraphics[width=\linewidth]{figures/rc1.png}
-    \caption{Creating New Project}
-    \label{rc1}
+
+\begin{figure}[H]
+\centering
+\includegraphics[ height = 2cm]{./NgVeri/ngveri_block.png}
+\caption{NgVeri Block}
+\label{ngveriblock}
 \end{figure}
 
-\item Creating the Schematic:
-To create the schematic, click the very first icon of the left toolbar as shown in the \figref{rc2}. This will open KiCad Eeschema.
+ 
+\noindent {Makerchip is a web browser IDE to develop/simulate/debug Verilog, SystemVerilog and TL-Verilog Code developed by Redwood EDA, LLC. It provides seamless design experience by integrating code, debug window, block diagrams, waveforms together in one screen. Makerchip is integrated with NgVeri in the latest version of eSim (eSim 2.2). Makerchip provides the digital side of eSim's mixed-signal environment.} 
 
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\smfigp]{figures/rc2.png}
-    %\includegraphics[width=\linewidth]{figures/rc2.png}
-    \caption{Open Schematic Editor}
-    \label{rc2}
+
+\section{Familiarizing the Makerchip-NgVeri interface in eSim}
+
+In this section, we will explain Makerchip-NgVeri interface in eSim and the various menus and tabs.
+ 
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height = 7cm]{./NgVeri/MakerchipNgVeriicon.png}
+\caption{Makerchip NgVeri Tab}
+\label{makerchipngveri}
 \end{figure}
 
-To create a schematic in KiCad, we need to place the required components. \figref{rc_component} shows the icon on the right toolbar which opens the component library.
+%description of makerchip:
+\figref{makerchipngveri} shows the Makerchip-NgVeri tab (newly added in eSim 2.2). In order to open this tab click on the Makerchip button on LHS vertical bar. Makerchip interface opens up as shown in the \figref{makerchipinterface}. 
 
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\tnfig]{figures/rc_component.png}
-    %\includegraphics[width=\linewidth]{figures/rc_component.png}
-    \caption{Place Component Icon}
-    \label{rc_component}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height = 7cm]{./NgVeri/makerchipinterface.png}
+\caption{Makerchip Interface}
+\label{makerchipinterface}
 \end{figure}
 
 \pagebreak
 
-After all the required components of the simple RC circuit are placed, wiring is done using the {\tt Place Wire} option as shown in the \figref{rc_wire} 
+\section{Makerchip Interface}
 
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\tnfig]{figures/rc_wire.png}
-    %\includegraphics[width=\linewidth]{figures/rc_wire.png}
-    \caption{Place Wire Icon}
-    \label{rc_wire}
+%Description of Makerchip interface
+Makerchip interface working space is shown in the \figref{makerchipinterface}. Various buttons of Makerchip interface are shown in the \figref{makerchipbuttons}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height = 7cm]{./NgVeri/makerchipbuttons.png}
+\caption{Makerchip buttons}
+\label{makerchipbuttons}
 \end{figure}
 
-Next step is {\tt ERC (Electric Rules Check)}. \figref{erc1} shows the icon for {\tt ERC}.
+\noindent \textbf{The components of the Makerchip tab are}:
 
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/erc1.png}
-    %\includegraphics[width=\linewidth]{figures/erc1.png}
-    \caption{Electric Rules Check Icon}
-    \label{erc1}
-\end{figure}
+\begin{enumerate}
+\item Add Top Level Verilog file: This button helps the user to load the verilog file. 
 
-\figref{rc_complete1} shows the RC circuit after connecting the components by wire.
+\item Refresh: It enables refreshing of the file locally edited. 
 
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/rc_complete1.png}
-    \caption{RC circuit}
-    \label{rc_complete1}
-\end{figure}
+\item Save: It saves the edited file. 
+
+\item Edit in Makerchip: It opens the Makerchip App and the user can edit and simulate the verilog file in Makerchip IDE.
+
+\item .tlv Code Editor: After loading the top level verilog file, the verilog code appears in this editor. The user can then edit the verilog code within this editor workspace. 
+
+\item Path to .tlv file: The path or the directory where the verilog file exists locally appears here after uploading the verilog file.
+
+\item Accept Makerchip TOS: This button when pressed accepts the Terms of Service of Makerchip. After accepting this, the button vanishes in the rerun of eSim. 
+
+\end{enumerate}
 
 \pagebreak
 
-After clicking the {\tt ERC} icon a window opens up. Click the {\tt Run} button to run rules check. The errors are listed in as shown in \figref{erc2}. This error is handled by adding {\tt Power Flag} as shown in \figref{rc_pwr}.
+\section{NgVeri Interface}
 
-\begin{figure}[!htp]
-    \centering
-    \subfloat[ERC Run]{
-        \includegraphics[width=\smfig]{figures/erc2.png}
-    \label{erc2}} \hfill
-    \subfloat[Power Flag]{
-        \includegraphics[width= 5cm, height=5cm]{figures/rc_pwr.png}
-    \label{rc_pwr}}
-    \caption{ERC check and POWER FLAG}
-\end{figure}
-
-After adding the {\tt Power Flag} the completed RC circuit is shown in \figref{rc_schematic} and the netlist is generated as shown in \figref{rc_netlist}.
-
-
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Schematic of RC circuit]{
-        \includegraphics[width=\smfig]{figures/rc_schematic.png}
-    \label{rc_schematic}} \hfill
-    \subfloat[Generating KiCad Netlist of RC circuit]{
-        \includegraphics[width=\smfig]{figures/rc_netlistgeneration.png}
-    \label{rc_netlist}}
-    \caption{RC Schematic and Netlist Generation}
-\end{figure}
-
-\pagebreak
-\item Convert KiCad to Ngspice:
-To convert KiCad netlist of RC circuit to NgSpice compatible netlist click on KiCad to Ngspice icon as shown in \figref{rcki2ng}.
+%Description of Makerchip interface
+NgVeri interface is shown in the \figref{ngveriinterface}. Various components of NgVeri interface are shown in the \figref{ngveributtons}
 
 \begin{figure}[!htp]
 \centering
-\includegraphics[width=\tnfig]{figures/rc_ki2ng.png}
-\caption{Convert KiCad to Ngspice Icon}
-\label{rcki2ng}
+\includegraphics[width = 13cm, height = 7cm]{./NgVeri/ngveriinterface.png}
+\caption{NgVeri Interface}
+\label{ngveriinterface}
 \end{figure}
 
-Now you can enter the type of analysis and source details as shown in \figref{rc_analysistab} and \figref{rc_sourcedetailstab} respectively.
 
-\begin{figure}[!htp]
-    \centering
-    \subfloat[RC Analysis]{
-        \includegraphics[width=\smfig]{figures/rc_analysistab.png}
-    \label{rc_analysistab}} \hfill
-    \subfloat[RC Source Details]{
-        \includegraphics[width=\smfig]{figures/rc_sourcedetailstab.png}
-    \label{rc_sourcedetailstab}}
-    \caption{RC Analysis and Source Detail}
-\end{figure}
-The other tab will be empty as RC circuit do not use any Ngspice model, device library and subcircuit.
+\noindent \textbf{The important components of NgVeri are:}
 
-After entering the value, press the convert button. It will convert the netlist into Ngspice compatible netlist.
+\begin{enumerate}
 
-\pagebreak
+\item Terminal : This is the terminal where the user can view all the commands and processes running. 
 
-\item Simulation:
-To run Ngspice simulation click the simulation icon in the tool bar as shown in the \figref{rcplot}.
-\begin{figure}[!htp]
+\item Run Verilog to Ngspice Converter: This button when pressed run NgVeri and builds the model for Ngspice. 
+
+\item Add Other file: Using this option, the user can add all the dependency files which are needed by the Top level verilog file in Makerchip.
+
+\item Add Folder: Using this option, the user can add all the dependency folders which are needed by the Top level verilog file.
+
+\item Clear terminal: This button when pressed erases the content of the terminal i.e it clears the terminal.
+
+\item Edit modlst: Using this option, the user can see the existing models present and the user can remove the models from the Model list. 
+
+\begin{figure}[H]
 \centering
-\includegraphics[width=\tnfig]{figures/rc_plot.png}
-\caption{Simulation Icon}
-\label{rcplot}
+\includegraphics[width = 15cm, height = 8cm]{./NgVeri/ngveributtons.png}
+\caption{NgVeri buttons}
+\label{ngveributtons}
 \end{figure}
 
-In eSim, there are two types of plot. First is normal Ngspice plot and second is interactive python plot as shown in \figref{rc_ngspiceplot} and \figref{rc_pythonplot} respectively.
+\item Edit lint off:  When this button is pressed, the user can see all the lint-off commands list and the user can remove the lint-off from the list. 
 
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Ngspice Plot of RC]{
-        \includegraphics[width=\lgfig]{figures/rc_ngspiceplot.png}
-    \label{rc_ngspiceplot}}  \hfill
-    \subfloat[Python Plot of RC]{
-        \includegraphics[width=\lgfig]{figures/rc_pythonplot.png}
-    \label{rc_pythonplot}}
-    \caption{Ngspice and Interactive Python Plotting}
+\item Add Lint off: The user can add lint-off command by using this button. This lint-off command is used if user gets a lint-off error in the terminal.
+
+\end{enumerate}
+
+\newpage
+
+\section{Counter example using Makerchip and NgVeri in eSim}
+
+%Description of Sample schematic creation
+In this section, a digital 8 bit counter example using NgVeri and Makerchip tabs in eSim is discussed. Kindly note that steps shown over here are carried out with eSim 2.2 in Ubuntu version 20.04. Steps remain same for eSim in Windows version.
+
+
+\subsection {Makerchip steps in eSim}
+
+Steps for verilog code compilation and verification using Makerchip IDE are as follows: 
+
+\begin{enumerate}
+
+\item Open eSim and select the default eSim workspace by clicking on \textbf{OK} as shown in \figref{workspaceeSim}. Its format is /home/$<$username$>$/eSim-Workspace. User-name can be user specific but be careful of the naming conventions(space is not allowed). If the user wants to select they can chose the same by using the \textbf{Browse} button in the dialog box.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 9cm, height = 5cm]{./NgVeri/defaultworkspace.png}
+\caption{eSim workspace}
+\label{workspaceeSim}
 \end{figure}
 
-In the interactive python plot you can select any node or branch to  plot voltage or current across it. Also it has the facility to plot basic functions across the node like addition, substraction, multiplication, division and v/s.  
-
-\end{itemize}
-%-----------------------Half Wave Rectifier---------------------------
-\pagebreak
-
-\subsection{Half Wave Rectifier}
-
-\subsubsection{Problem Statement:} Plot the Input and Output Waveform of Half Wave Rectifier circuit where the input voltage (Vs) is 50Hz, 2V peak to peak. The value for Resistor (R) is 1k.
-
-\subsubsection{Solution:}
-The new project is created by clicking the {\tt New} icon on the menubar. The name of the project is given in the window shown in \figref{rc1}.
-
+\item Open a blank Text Editor and write verilog code of 8 bit counter and save the file as either filename.v in the eSim-Workspace as shown in \figref{savingv}. 
+\item \textbf{Please Note}: The filename should be the same as top-level module name, otherwise eSim will throw an error as discussed in Common error sections.\\
+The file extensions allowed are:
 \begin{itemize}
-\item Creating Schematic:
-To create the schematic, click the very first icon of the left toolbar as shown in the \figref{rc2}. This will open KiCad Eeschema.\\
-
-After the KiCad window is opened, to create a schematic we need to place the required components. \figref{rc_component} shows the icon on the 
-right toolbar which opens the component library.\\
-
-After all the required components of the simple Half Wave rectifier circuits are placed, wiring is done using the {\tt Place Wire} option as shown in the \figref{rc_wire}\\
-
-Next step is {\tt ERC (Electric Rules Check)}. \figref{erc1} shows the icon for {\tt ERC}. After completing all the above steps the final Half Wave Rectifier schematic will look like \figref{hwr_schematic}.\\
-
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/hwr_schematic.png}
-    \caption{Schematic of Half Wave Rectifier circuit}
-    \label{hwr_schematic}
-\end{figure}
-
-\pagebreak
-
-KiCad netlist is generated as shown in the \figref{hwr_netlistgeneration} \\
-
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/hwr_netlistgeneration.png}
-    \caption{Half Wave Rectifier circuit Netlist Generation}
-    \label{hwr_netlistgeneration}
-\end{figure}
-
-\item Convert KiCad to Ngspice: After creating KiCad netlist, click on the {\tt KiCad-Ngspice converter} button. This will open converter window where you can enter details of Analysis, Source values and Device library.
-
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Half Wave Rectifier Analysis]{
-        \includegraphics[width=\smfig]{figures/hwr_analysistab.png}
-    \label{hwr_analysistab}} \hfill
-    \subfloat[Half Wave Rectifier Source Details]{
-        \includegraphics[width=\smfig]{figures/hwr_sourcedetailstab.png}
-    \label{hwr_sourcedetailstab}} \hfill
-    \subfloat[Half Wave Rectifier Device Modeling]{
-        \includegraphics[width=\smfig]{figures/hwr_devicemodelingtab.png}
-    \label{hwr_devicemodelingtab}}
-    \caption{Analysis, Source and Device Tab}
-\end{figure}
-
-Under device library you can add the library for diode used in the circuit. If you do not add any library it will take default Ngspice model.
-
-
-\item Simulation: Once the KiCad-Ngspice converter runs successfully, you can run simulation by clicking the simulation button in the toolbar.
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Ngspice Plot of Half Wave Rectifier]{
-        \includegraphics[width=\lgfig]{figures/hwr_ngspiceplot.png}
-    \label{hwr_ngspiceplot}} \hfill
-    \subfloat[Python Plot of Half Wave Rectifier]{
-        \includegraphics[width=\lgfig]{figures/hwr_pythonplot.png}
-    \label{hwr_pythonplot}}
-    \caption{Half Wave Rectifier Simulation Output}
-\end{figure}
-
-
+    \item .v for Verilog 
+    \item .sv for SystemVerilog
+    \item .tlv for Transaction-Level Verilog
 \end{itemize}
 
-\pagebreak
-%-------------- Precision rectifier--------------------------------------
-
-%\pagebreak
-
-%\subsection{Precision Rectifier}
-%\subsubsection{Problem Statement:} Plot the input and output waveform of the Precision Rectifier circuit where input voltage (Vs) is $50Hz$ , $3V$ peak to peak.
-
-%\subsubsection{Solution:}
-%The new project is created by clicking the {\tt New} icon on the menubar. The name of the project is given as shown in the \figref{rc1}.
-
-%\begin{itemize}
-%\item Creating Schematic:
-%To create the schematic, click the very first icon of the left toolbar as shown in the \figref{rc2}. This will open KiCad Eeschema.\\
-%After the KiCad window is opened, to create a schematic we need to place the required components. \figref{rc_component} shows the icon on the right toolbar which opens the component library.\\
-%After all the required components of the precision rectifier circuit are placed, wiring is done using the {\tt Place Wire} option as shown in the \figref{rc_wire}.\\
-%Next step is {\tt ERC (Electric Rules Check)}. \figref{erc1} shows the icon for {\tt ERC}.
-%The \figref{pr_schematic} shows the complete Precision Rectifier schematic after removing the errors.
-
-%\begin{figure}[!htp]
-%\centering
-%\includegraphics[width=\hgfig]{figures/pr_schematic.png}
-%\caption{Schematic of Precision Rectifier circuit}
-%\label{pr_schematic}
-%\end{figure}
-
-%The KiCad netlist is generated as shown in \figref{pr_netlistgeneration}.\\
-
-%\begin{figure}[!htp]
-%    \centering
-%    \includegraphics[width=\lgfig]{figures/pr_netlistgeneration.png}
-%    \caption{Precision Rectifier circuit Netlist Generation}
-%    \label{pr_netlistgeneration}
-%\end{figure}
-
-%\pagebreak
-
-%\item Convert KiCad to Ngspice: After creating KiCad netlist, click on KiCad-Ngspice converter button.\\ 
-
-%    This will open converter window where you can enter details of Analysis, Source values, Device library and Subcircuit.
-
-%\begin{figure}[!htp]
-%   \centering
-%    \subfloat[Precision Rectifier Analysis]{
-%        \includegraphics[width=\smfig]{figures/pr_analysistab.png}
-%    \label{pr_analysistab}} \hfill
-%    \subfloat[Precision Rectifier Source Details]{
-%        \includegraphics[width=\smfig]{figures/pr_sourcedetailstab.png}
-%    \label{pr_sourcedetailstab}} \vfill
-%    \subfloat[Precision Rectifier Device Modeling]{
-%        \includegraphics[width=\smfig]{figures/pr_devicemodelingtab.png}
-%    \label{pr_devicemodelingtab}}\hfill
-%    \subfloat[Precision Rectifier Subcircuit]{
-%        \includegraphics[width=\smfig]{figures/pr_subcircuitstab.png}
-%    \label{pr_subcircuitstab}}
-%    \caption{Analysis, Source, Device library and Subcircuit tab}
-%\end{figure}
-
-%Under device library you can add the library for the diode used in the circuit. If you do not add any library it will take default Ngspice 
-%model for diode.\\
-
-%Under subcircuit tab you have to add the subciruit used in your circuit. If you forget to add subcircuit it will throw an error.
-
-
-%\pagebreak
-%\item Simulation: Once the KiCad-Ngspice converter runs successfully, you can run the simulation by clicking the simulation button in the toolbar.
-%\begin{figure}[!htp]
-%    \centering
-%    \subfloat[Ngspice Plot of Precision Rectifier]{
-%        \includegraphics[width=\lgfig]{figures/pr_ngspiceplot.png}
-%    \label{pr_ngspiceplot}} \hfill
-%    \subfloat[Python Plot of Precision Rectifier]{
-%        \includegraphics[width=\lgfig]{figures/pr_pythonplot.png}
-%    \label{pr_pythonplot}}
-%    \caption{Precision Rectifier Simulation Output}
-%\end{figure}
-
-%\end{itemize}
-
-%-------------- Inverting Amplifier--------------------------------------
-
-\pagebreak
-\subsection{Inverting Amplifier}
-\subsubsection{Problem Statement:}
-Plot the Input and Output Waveform of Inverting Amplifier circuit where the input voltage (Vs) is $50Hz$, $2V$ peak to peak and gain is 2.
-\subsubsection{Solution:}
-
-\begin{itemize}
-\item Creating Schematic:
-To create the schematic, click the very first icon of the left toolbar as shown in the \figref{rc2}. This will open KiCad Eeschema.\\
-After the KiCad window is opened, to create a schematic we need to place the required components. \figref{rc_component} shows the icon on the right toolbar which opens the component library.\\
-After all the required components of the inverting amplifier circuit are placed, wiring is done using the {\tt Place Wire} option as shown in the \figref{rc_wire}.\\
-Next step is {\tt ERC (Electric Rules Check)}. \figref{erc1} shows the icon for {\tt ERC}.
-
-The \figref{ia_schematic} shows the complete Precision Rectifier schematic after removing the errors.
-
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\hgfig]{figures/ia_schematic.png}
-    \caption{Schematic of Inverting Amplifier circuit}
-    \label{ia_schematic}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height = 5cm]{./NgVeri/savingvfile.png}
+\caption{Saving verilog file in eSim workspace}
+\label{savingv}
 \end{figure}
 
-The KiCad netlist is generated as shown in \figref{ia_netlistgeneration}.\\
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/ia_netlistgeneration.png}
-    \caption{Inverting Amplifier circuit Netlist Generation}
-    \label{ia_netlistgeneration}
+\item The verilog code for 8 bit counter is written inside the Text Editor with .v file as extension saved in eSim workspace is shown in \figref{vcode}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 11cm, height = 5cm]{./NgVeri/verilogcode.png}
+\caption{8 bit Counter verilog code}
+\label{vcode}
 \end{figure}
 
+\item Click on Makerchip-NgVeri button on the left toolbar of eSim window which opens Makerchip interface in eSim as shown in \figref{addingv}. 
 
-\item Convert KiCad to Ngspice:
-After creating KiCad netlist, click on KiCad-Ngspice converter button.\\
-
-This will open converter window where you can enter details of Analysis, Source values, Device library and Subcircuit.
-
-Subcircuit of Op-Amp is shown in \figref{ia_sub}
-    \begin{figure}[!htp]
-        \centering
-        \subfloat[Inverting Amplifier Analysis]{
-            \includegraphics[width=\smfig]{figures/ia_analysistab.png}
-        \label{ia_analysistab}} \hfill
-        \subfloat[Inverting Amplifier Source Details]{
-            \includegraphics[width=\smfig]{figures/ia_sourcedetailstab.png}
-        \label{ia_sourcedetailstab}} \vfill
-        \subfloat[Inverting Amplifier Subcircuit]{
-            \includegraphics[width=\smfig]{figures/ia_subcircuitstab.png}
-        \label{ia_subcircuitstab}}\hfill
-        \subfloat[Sub-Circuit of Op-Amp]{
-            \includegraphics[width=\lgfig]{figures/ia_sub.png}
-        \label{ia_sub}}
-        \caption{Analysis, Source, and Subcircuit tab}
-    \end{figure}
-
-\pagebreak
-Under subcircuit tab you have to add the subciruit used in your circuit. If you forget to add subcircuit, it will throw an error.\\
-
-
-\item Simulation: Once the KiCad-Ngspice converter runs successfully, you can run simulation by clicking the simulation button in the toolbar.
-\begin{figure}
-    \centering
-    \subfloat[Inverting Amplifier Ngspice Plot]{
-        \includegraphics[width=\lgfig]{figures/ia_ngspiceplot.png}
-    \label{ia_ngspiceplot}}\vfill
-    \subfloat[Inverting Amplifier Python Plot]{
-        \includegraphics[width=\lgfig]{figures/ia_pythonplot.png}
-    \label{ia_pythonplot}}
-    \caption{Inverting Amplifier Simulation Output}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm, height =7cm]{./NgVeri/addingvfile.png}
+\caption{Adding verilog file in Makerchip editor}
+\label{addingv}
 \end{figure}
 
+\item Click on the button shown in Step 2 as shown in \figref{addingv} to add the verilog file for 8 bit counter. The path to top level verilog file along with the verilog code get added in the Makerchip editor terminal shown in Step 3 of \figref{addingv}
 
+\item User can refresh locally edited verilog file by clicking on the \textbf{Refresh} button as shown in Step 4 of \figref{addingv}. If the file is edited using some other editor and also loaded in Makerchip Tab at the same time, the \textbf{Refresh} button starts toggling. The user must click on the Refresh button to get the new version of the file in the editor.
 
-\end{itemize}
+\item User can save the verilog code edited in the Makerchip editor terminal by clicking on the \textbf{Save} button shown in Step 5 of \figref{addingv}
 
-%-------------------------Half Adder------------------------------------------
+\item For the first run, the user needs to accept the Term of Service by clicking on \textbf{Accept Makerchip TOS} as shown in \figref{TOS}. This button will disappear after rerun of eSim as shown in \figref{addingv}. 
 
-\pagebreak
-
-\subsection{Half Adder}
-
-\subsubsection{Problem Statement:}  Plot the Input and Output Waveform of Half Adder circuit.
-
-\subsubsection{Solution:}
-
-\begin{itemize}
-
-\item Creating Schematic:  To create the schematic, click the very first icon of the left toolbar as shown in the \figref{rc2}. This will open KiCad Eeschema.\\
-After the KiCad window is opened, to create a schematic we need to place the required components. \figref{rc_component} shows the icon on the right toolbar which opens the component library.\\
-After all the required components of the Half Adder circuit are placed, wiring is done using the {\tt Place Wire} option as shown in the \figref{rc_wire}.\\
-Next step is {\tt ERC (Electric Rules Check)}. \figref{erc1} shows the icon for {\tt ERC}.
-
-The \figref{ha_schematic} shows the complete Half Adder schematic after removing the errors.
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\hgfig]{figures/ha_schematic.png}
-    \caption{Schematic of Half Adder circuit}
-    \label{ha_schematic}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 13cm, height = 4cm]{./NgVeri/acceptTOS.png}
+\caption{Accepting Terms of Service of Makerchip}
+\label{TOS}
 \end{figure}
 
-The KiCad netlist is generated as shown in \figref{ha_netlistgeneration}.\\
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/ha_netlistgeneration.png}
-    \caption{Half Adder circuit Netlist Generation}
-    \label{ha_netlistgeneration}
+\item Now click on \textbf{Edit in Makerchip} button to open and edit the verilog code in Makerchip IDE. A pop-up window will appear as shown in \figref{editinmakerchip}. By clicking on \textbf{Yes}, a top level verilog file i.e .tlv file will be created in the same directory of current verilog file and the Makerchip IDE will be run in a new web browser as shown in \figref{makerchipide}. By clicking on \textbf{No}, the current raw verilog file i.e .v file will open up in Makerchip IDE web browser. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height = 6cm]{./NgVeri/editinmakerchip.png}
+\caption{Opening Makerchip IDE}
+\label{editinmakerchip}
 \end{figure}
 
-\pagebreak
-
-\item Convert KiCad to Ngspice:
-After creating KiCad netlist click on KiCad-Ngspice converter button.\\
-
-This will open converter window where you can enter details of Analysis, Source values, Ngspice model and Subcircuit.
-
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Half Adder Analysis]{
-        \includegraphics[width=\smfig]{figures/ha_analysistab.png}
-    \label{ha_analysistab}} \hfill
-    \subfloat[Half Adder Source Details]{
-        \includegraphics[width=\smfig]{figures/ha_sourcedetailstab.png}
-    \label{ha_sourcedetailstab}} \vfill
-    \subfloat[Half Adder Ngspice Model]{
-        \includegraphics[width=\smfig]{figures/ha_ngspicemodeltab.png}
-    \label{ha_ngspicemodeltab}} \hfill
-    \subfloat[Half Adder Subcircuit Model]{
-        \includegraphics[width=\smfig]{figures/ha_subcircuitstab.png}
-    \label{ha_subcircuitstab}}
-    \caption{Analysis, Source, Ngspice Model and Subcircuit tab}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height = 6cm]{./NgVeri/makerchipIDE.png}
+\caption{Makerchip IDE interface}
+\label{makerchipide}
 \end{figure}
 
-Subcircuit of Half Adder in \figref{ha_sub}
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/ha_sub.png}
-    \caption{Half Adder Subcircuit}
-    \label{ha_sub}
+\item User can check for errors by clicking on \textbf{LOG} tab in Makerchip IDE interface as shown in the \figref{makerchipide}. Following window will appear as shown in \figref{makerchiperror}, where you can check the Verilator lint-off errors. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =7cm]{./NgVeri/makerchiperrors.png}
+\caption{Verilator lintoff errors}
+\label{makerchiperror}
 \end{figure}
 
-\pagebreak
+\item As shown in the \figref{makerchiperror}, verilator lint-off commands which caused error in the Log section needs to be removed from Line 3 in the editor window. Two such commands which needs to be removed are shown in the \figref{lintofferror}.
 
-\item Simulation: Once the KiCad-Ngspice converter runs successfully, you can run simulation by clicking the simulation button in the toolbar.
-    \begin{figure}[!htp]
-    \centering
-    \subfloat[Half Adder Ngspice Plot]{
-        \includegraphics[width=\lgfig]{figures/ha_ngspiceplot.png}
-    \label{ha_ngspiceplot}} \hfill
-    \subfloat[Half Adder Python Plot]{
-        \includegraphics[width=\lgfig]{figures/ha_pythonplot.png}
-    \label{ha_pythonplot}}
-    \caption{Half Adder Simulation Output}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 12cm, height =4cm]{./NgVeri/lintofferror.png}
+\caption{Removal of lintoff errors}
+\label{lintofferror}
 \end{figure}
 
-\end{itemize}
+\item Next, click on the \textbf{Editor} tab in the editor as shown in \figref{compile1}, then click on \textbf{Compile/Sim} button to compile the verilog code. 
 
-
-%-------------------------Full Wave Rectifier using SCR------------------------------------------
-
-
-\pagebreak
-
-\subsection{Full Wave Rectifier using SCR}
-
-\subsubsection{Problem Statement:}  Plot the Input and Output Waveform of Full Wave Rectifier using SCR.
-
-\subsubsection{Solution:}
-
-\begin{itemize}
-
-\item Creating Schematic:  To create the schematic, click the very first icon of the left toolbar as shown in the \figref{rc2}. This will open KiCad Eeschema.\\
-After the KiCad window is opened, to create a schematic we need to place the required components. \figref{rc_component} shows the icon on the right toolbar which opens the component library.\\
-After all the required components of the Full Wave Rectifier using SCR circuit are placed, wiring is done using the {\tt Place Wire} option as shown in the \figref{rc_wire}.\\
-Next step is {\tt ERC (Electric Rules Check)}. \figref{erc1} shows the icon for {\tt ERC}.
-
-The \figref{fwrscr_schematic} shows the complete Rectifier circuit using SCR after removing the errors.
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\hgfig]{figures/fwrscr_schematic.png}
-    \caption{Schematic of Full Wave Rectifier using SCR}
-    \label{fwrscr_schematic}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 12cm, height =5cm]{./NgVeri/compile1.png}
+\caption{Compiling after removing lintoff errors}
+\label{compile1}
 \end{figure}
 
-The KiCad netlist is generated as shown in \figref{fwrscr_netlistgeneration}.\\
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/fwrscr_netlistgeneration.png}
-    \caption{Full Wave Rectifier using SCR Netlist Generation}
-    \label{fwrscr_netlistgeneration}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =6cm]{./NgVeri/regerror.png}
+\caption{ Unexpected reg error in the code}
+\label{regerror}
 \end{figure}
 
-\pagebreak
+\item After compiling, \textbf{Unexpected reg error} remains in the Log section (Refer \figref{regerror}) which can be rectified by removing \textit{reg} from top level verilog code as shown in \figref{removereg}. By clicking \textbf{Yes} button in \figref{editinmakerchip}, a Top Level Verilog (TLV) code automatically gets added in the editor. Refer \figref{removereg}. The value of \textit{rst} value is by default as random value and it can be replaced if user wants to assign values. We have assigned \textit{rst} with \textit{reset} in this counter example. 
 
-\item Convert KiCad to Ngspice:
-After creating KiCad netlist click on KiCad-Ngspice converter button.\\
-
-This will open converter window where you can enter details of Analysis, Source values, Ngspice model and Subcircuit.
-
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Full Wave Rectifier using SCR Analysis]{
-        \includegraphics[width=\smfig]{figures/fwrscr_analysistab.png}
-    \label{fwrscr_analysistab}} \hfill
-    \subfloat[Full Wave Rectifier using SCR Source Details]{
-        \includegraphics[width=\smfig]{figures/fwrscr_sourcedetailstab.png}
-    \label{fwrscr_sourcedetailstab}} \vfill
-    \subfloat[Full Wave Rectifier using SCR Subcircuit Model]{
-        \includegraphics[width=\smfig]{figures/fwrscr_subcircuitstab.png}
-    \label{fwrscr_subcircuitstab}}
-    \caption{Analysis, Source and Subcircuit tab}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 12cm, height =6cm]{./NgVeri/removereg.png}
+\caption{Top level verilog code}
+\label{removereg}
 \end{figure}
 
-Subcircuit of SCR in \figref{scr_sub}
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/scr_sub.png}
-    \caption{SCR Subcircuit}
-    \label{scr_sub}
+\item Now click on the \textbf{Editor} tab and then click on \textbf{Compile/Sim} button in the editor as shown in \figref{compile1}, it will display the following waveform window as shown in \figref{output1}. This means that the verilog code of 8 bit Counter is successfully compiled. Kindly, note that in \figref{output1}, inputs and output waveform are in the compressed form. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =6cm]{./NgVeri/makerchipoutput1.png}
+\caption{Output waveforms in compressed form of 8 bit Counter }
+\label{output1}
 \end{figure}
 
-\pagebreak
+\item \figref{output2} shows the expanded view of inputs and output waveforms of 8 bit counter. The waveforms in \figref{output1} can be expanded by clicking on \textbf{Zoom In} button as shown in \figref{output2}.
 
-\item Simulation: Once the KiCad-Ngspice converter runs successfully, you can run simulation by clicking the simulation button in the toolbar.
-    \begin{figure}[!htp]
-    \centering
-    \subfloat[Full Wave Rectifier using SCR Ngspice Plot]{
-        \includegraphics[width=\lgfig]{figures/fwrscr_ngspiceplot.png}
-    \label{fwrscr_ngspiceplot}} \hfill
-    \subfloat[Full Wave Rectifier using SCR Python Plot]{
-        \includegraphics[width=\lgfig]{figures/fwrscr_pythonplot.png}
-    \label{fwrscr_pythonplot}}
-    \caption{Full Wave Rectifier using SCR Simulation Output}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =6cm]{./NgVeri/makerchipoutput2.png}
+\caption{Output waveforms in expanded form of 8 bit Counter }
+\label{output2}
 \end{figure}
 
-\end{itemize}
-
-
-%-------------------------Oscillator------------------------------------------
-\pagebreak
-
-\subsection{Oscillator Circuit}
-
-\subsubsection{Problem Statement:} Plot the Oscillation Waveforms for Phase Shift Oscillator circuit.
-
-\subsubsection{Solution:}
-The new project is created by clicking the {\tt New} icon on the menubar. The name of the project is given in the window shown in \figref{rc1}.
-
-\begin{itemize}
-\item Creating Schematic:
-To create the schematic, click the very first icon of the left toolbar as shown in the \figref{rc2}. This will open KiCad Eeschema.\\
-
-After the KiCad window is opened, to create a schematic we need to place the required components. \figref{rc_component} shows the icon on the 
-right toolbar which opens the component library.\\
-
-After all the required components of the Oscillator circuits are placed, wiring is done using the {\tt Place Wire} option as shown in the \figref{rc_wire}\\sss
-
-Next step is {\tt ERC (Electric Rules Check)}. \figref{erc1} shows the icon for {\tt ERC}. After completing all the above steps the Oscillator schematic will look like \figref{osc_schematic}.\\
-
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/osc_schematic.png}
-    \caption{Schematic of Phase Shift Oscillator circuit}
-    \label{osc_schematic}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =7cm]{./NgVeri/makerchipoutput3.png}
+\caption{8 bit Counter counting from 0 to 255}
+\label{output3}
 \end{figure}
 
-\pagebreak
+\item To view the output waveform forward in time, click on forward button as shown in \figref{output3}. It can be clearly seen, the 8 bit counter counts from to 0 to 255 in decimal (FF in hexadecimal) and it resets after counting up to 255. 
 
-KiCad netlist is generated as shown in the \figref{osc_netlistgeneration} \\
+\item Next, close the Makerchip window. This completes the 8 bit counter verilog code compilation and verification process using Makerchip IDE. 
 
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/osc_netlistgeneration.png}
-    \caption{Phase Shift Oscillator circuit Netlist Generation}
-    \label{osc_netlistgeneration}
+\end{enumerate}
+
+\subsection {Steps to run NgVeri in eSim}
+
+Steps for schematic creation and simulation using NgVeri in eSim are as follows: 
+
+\begin{enumerate}
+\item The verilog code named counter8bit.v is loaded in editor space of Makerchip tab as shown in \figref{addingv}.
+
+
+\item Click on \textbf{NgVeri} button and then click on \textbf{Run Verilog to Ngspice converter} button as shown in \figref{ngclick}. This step will convert 8 bit counter's verilog file to Ngspice model. The commands that run in the NgVeri terminal leads to creation of Ngspice(XSPICE) model of 8 bit counter are mentioned in following steps. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =6cm]{./NgVeri/ngvericlick.png}
+\caption{NgVeri interface buttons}
+\label{ngclick}
 \end{figure}
 
-\item Convert KiCad to Ngspice: After creating KiCad netlist, click on the {\tt KiCad-Ngspice converter} button. This will open converter window where you can enter details of Analysis, Source values and Device library.
+\item First command after clicking \textbf{Run Verilog to Ngspice Converter} button in NgVeri terminal is \textbf{RUN VERILATOR} highlighted as 1 in red color in \figref{ngvericommands}. 
 
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Phase Shift Oscillator Analysis]{
-        \includegraphics[width=\smfig]{figures/osc_analysistab.png}
-    \label{osc_analysistab}} \hfill
-    \subfloat[Phase Shift Oscillator Details]{
-        \includegraphics[width=\smfig]{figures/osc_sourcedetailstab.png}
-    \label{osc_sourcedetailstab}} \hfill
-    \subfloat[Phase Shift Oscillator Device Modeling]{
-        \includegraphics[width=\smfig]{figures/osc_devicemodelingtab.png}
-    \label{osc_devicemodelingtab}}
-    \caption{Analysis, Source and Device Tab}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =10cm]{./NgVeri/runverilator.png}
+\caption{Commands in NgVeri}
+\label{ngvericommands}
 \end{figure}
 
-Under device library you can add the library for diode used in the circuit. If you do not add any library it will take default Ngspice model.
+\item Verilator converts the verilog file into C++ objects. Next command is\textbf{ MAKE VERILATOR} for obtaining the C++ objects. Next is \textbf{MAKE COMMAND}, which links the verilator's C++ objects and Ngspice objects.\textbf{ MAKE INSTALL COMMAND} is the last command in the process before Ngspice model creation.
 
+\item When the \textbf{Model Created Successfully} message appears in the terminal as shown in green color in \figref{ngmodel}, it indicates that the Ngspice model is created.
 
-\item Simulation: Once the KiCad-Ngspice converter runs successfully, you can run simulation by clicking the simulation button in the toolbar.
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Ngspice Plot of Phase Shift Oscillator]{
-        \includegraphics[width=\lgfig]{figures/osc_ngspiceplot.png}
-    \label{osc_ngspiceplot}} \hfill
-    \subfloat[Python Plot of Phase Shift Oscillator]{
-        \includegraphics[width=\lgfig]{figures/osc_pythonplot.png}
-    \label{osc_pythonplot}}
-    \caption{Phase Shift Oscillator Simulation Output}
+\item An optional command \textbf{RUN SANDPIPER-SAAS} gets run Transaction-Level Verilog Code(.tlv) before the \textbf{RUN VERILATOR} command. This command in run to convert the Transaction-Level Verilog Code to the SystemVerilog Code which is easily accessible to the verilator.
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =5cm]{./NgVeri/modelcreated.png}
+\caption{NgVeri Model created}
+\label{ngmodel}
 \end{figure}
 
 
-\end{itemize}
 
-%-------------------------BJT CB Characteristics------------------------------------------
-
-\pagebreak
-
-\subsection{Characteristics of BJT in Common Base Configuration}
-
-\subsubsection{Problem Statement:} Plot Characteristics of BJT in Common Base Configuration.
-
-\subsubsection{Solution:}
-The new project is created by clicking the {\tt New} icon on the menubar. The name of the project is given in the window shown in \figref{rc1}.
-
-\begin{itemize}
-\item Creating Schematic:
-To create the schematic, click the very first icon of the left toolbar as shown in the \figref{rc2}. This will open KiCad Eeschema.\\
-
-After the KiCad window is opened, to create a schematic we need to place the required components. \figref{rc_component} shows the icon on the 
-right toolbar which opens the component library.\\
-
-After all the required components of the simple Half Wave rectifier circuits are placed, wiring is done using the {\tt Place Wire} option as shown in the \figref{rc_wire}\\
-
-Next step is {\tt ERC (Electric Rules Check)}. \figref{erc1} shows the icon for {\tt ERC}. After completing all the above steps the BJT in CB Configuration schematic will look like \figref{cb_schematic}.\\
-
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/cb_schematic.png}
-    \caption{Schematic of BJT in CB Configuration circuit}
-    \label{cb_schematic}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 12cm, height =10cm]{./NgVeri/error1.png}
+\caption{NgVeri Model creation error}
+\label{ngverierror}
 \end{figure}
 
-\pagebreak
+\item In case of any error encountered in NgVeri terminal after running Verilog to Ngspice converter, then those errors will be displayed in the terminal in Red color in any of the commands discussed above. Debug the errors as per the messages displayed in the terminal. In \figref{ngverierror}, the error message is displayed in Red color in NgVeri terminal. 
 
-KiCad netlist is generated as shown in the \figref{cb_netlistgeneration} \\
+\end{enumerate}
 
-\begin{figure}[!htp]
-    \centering
-    \includegraphics[width=\lgfig]{figures/cb_netlistgeneration.png}
-    \caption{BJT in CB Configuration circuit Netlist Generation}
-    \label{cb_netlistgeneration}
+\subsection {Creating of Schematic of 8 bit counter}
+
+In this section, we will create a new project in eSim, create the schematic and run the simulation for 8 bit counter. Steps for schematic creation are as follows:
+
+\begin{enumerate}
+
+\item Click on \textbf{New Project} icon to create a new project as shown in \figref{newproject}, be careful of the naming conventions.
+
+\item After successful creation of NgVeri model using the Verilog code, you can create the schematic of your design by clicking on \textbf{Open Schematic} button on the left pane of the eSim window as shown in \figref{newschematic}. A confirmation pop-up window appears. Click on \textbf{Yes} to create a new schematic. A blank schematic created is shown in \figref{blankschematic}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =5cm]{./NgVeri/newproject.png}
+\caption{Creation of new project in eSim}
+\label{newproject}
 \end{figure}
 
-\item Convert KiCad to Ngspice: After creating KiCad netlist, click on the {\tt KiCad-Ngspice converter} button. This will open converter window where you can enter details of Analysis, Source values and Device library.
+\item Next step is to click on \textbf{Place component} icon to place the components in the schematic editor as shown in \figref{blankschematic}.
 
-\begin{figure}[!htp]
-    \centering
-    \subfloat[BJT in CB Configuration Analysis]{
-        \includegraphics[width=\smfig]{figures/cb_analysistab.png}
-    \label{cb_analysistab}} \hfill
-    \subfloat[BJT in CB Configuration Source Details]{
-        \includegraphics[width=\smfig]{figures/cb_sourcedetailstab.png}
-    \label{cb_sourcedetailstab}} \hfill
-    \subfloat[BJT in CB Configuration Device Modeling]{
-        \includegraphics[width=\smfig]{figures/cb_devicemodelingtab.png}
-    \label{cb_devicemodelingtab}}
-    \caption{Analysis, Source and Device Tab}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =7cm]{./NgVeri/newschematic.png}
+\caption{Creation of new schematic in eSim}
+\label{newschematic}
 \end{figure}
 
-Under device library you can add the library for diode used in the circuit. If you do not add any library it will take default Ngspice model.
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =7cm]{./NgVeri/blankschematic.png}
+\caption{Blank schematic created in eSim}
+\label{blankschematic}
+\end{figure}
 
+\item To locate the components in eSim library, click on \textbf{Place component} icon as shown in \figref{blankschematic}. A pop-up window named \textbf{Choose Component} appears. User can type component name in the space as shown in \figref{choosemodel}. 
 
-\item Simulation: Once the KiCad-Ngspice converter runs successfully, you can run simulation by clicking the simulation button in the toolbar.
-\begin{figure}[!htp]
-    \centering
-    \subfloat[Ngspice Plot of BJT in CB Configuration]{
-        \includegraphics[width=\lgfig]{figures/cb_ngspiceplot.png}
-    \label{cb_ngspiceplot}} \hfill
-    \subfloat[Python Plot of BJT in CB Configuration]{
-        \includegraphics[width=\lgfig]{figures/cb_pythonplot.png}
-    \label{cb_pythonplot}}
-    \caption{BJT in CB Configuration Simulation Output}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 12cm, height =7cm]{./NgVeri/choosemodel.png}
+\caption{Locating the model in library}
+\label{choosemodel}
+\end{figure}
+
+\item In this example, counter8bit model is created under eSim NgVeri library. The model view is visible with two input pins reset and clock and 8 output pins from out0 to out7 as shown in \figref{choosemodel}. Click on \textbf{OK} to place the component on the schematic editor as shown in \figref{placemodel}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =7cm]{./NgVeri/placingmodel.png}
+\caption{Placement of component in Schematic Editor}
+\label{placemodel}
+\end{figure}
+
+\item Now create the schematic as shown in \figref{circuitschematic}, annotate, perform electrical rules check (ERC), create the netlist and save the schematic by following the steps given in \chapref{chap5}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 16cm, height =6cm]{./NgVeri/schematicwithblockdescription.png}
+\caption{Example of a 8 bit Counter circuit in eSim}
+\label{circuitschematic}
+\end{figure}
+
+\end{enumerate}
+
+\subsection{Ngspice Simulation of 8 bit counter}
+
+In this section, we will run the simulation and plot input-output waveforms for 8 bit counter. Steps for Ngspice simulation and plotting results are as follows:
+
+\begin{enumerate}
+
+\item After creating the schematic, click on \textbf{KiCad to Ngspice Converter} icon and select the type of analysis as transient and set the start, step and stop time as shown in \figref{kitong}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =6cm]{./NgVeri/KiCadtoNgspice.png}
+\caption{KiCad to Ngspice conversion steps}
+\label{kitong}
+\end{figure}
+ 
+ 
+\item Now click on Source Details and enter the values for Source v1 and Source v2 as shown in \figref{sourcev1} and \figref{sourcev2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 13cm, height =5cm]{./NgVeri/sourcev1.png}
+\caption{Values for Source v1}
+\label{sourcev1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 13cm, height =5cm]{./NgVeri/sourcev2.png}
+\caption{Values for Source v2}
+\label{sourcev2}
+\end{figure}
+
+\item In this counter example, no device modeling and sub-circuit build up is required. Now click on the \textbf{Convert} button as shown in \figref{KiCadconv}. This will convert KiCad schematic into Ngspice code i.e it creates the simulation compatible netlist.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =6cm]{./NgVeri/KiCadconv.png}
+\caption{KiCad to Ngspice conversion}
+\label{KiCadconv}
+\end{figure}
+
+\item Next, right click on \textbf{Counter} and click on \textbf{Refresh} as shown in \figref{refresh}. It can be seen that Project\_Name.cir.out file (Note: In this example, project name is Counter, so the file name is Counter.cir.out) is added after pressing refresh. Repeat this step for every rerun of KiCad to Ngspice conversion. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =7cm]{./NgVeri/refreshbefore.png}
+\caption{Cir.out file added after conversion}
+\label{refresh}
+\end{figure}
+
+\item Next, right click on \textbf{Counter.cir.out} file and open it as shown in \figref{cirout1}. This file consists of Ngspice netlist of 8 bit counter including information of source, input and output plot labels, transient analysis parameters and control and plot statements. Refer \figref{cirout1} and \figref{cirout2}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =8cm]{./NgVeri/cirout1.png}
+\caption{Cir.out file details Part 1}
+\label{cirout1}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =8cm]{./NgVeri/cirout2.png}
+\caption{Cir.out file details Part 2}
+\label{cirout2}
+\end{figure}
+
+\item To run simulation click on \textbf{Simulation} icon as shown in \figref{cirout2}. It will display input and output plots for 8 bit counter as shown in \figref{outputsim1}. You can see the plots of input clock, input reset and outputs out0 to out7. However, these plots are not in order. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm, height =7cm]{./NgVeri/output1.png}
+\caption{Input and Output simulation plots of 8 bit Counter}
+\label{outputsim1}
+\end{figure}
+
+\item Close the simulations plots, and right click on \textbf{Counter} button and click on \textbf{Refresh} button as shown in \figref{refresh} to update the plot data files in the Projects folder. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =7cm]{./NgVeri/control1.png}
+\caption{Editing the plots statements for stacked waveforms}
+\label{control1}
 \end{figure}
 
 
-\end{itemize}
+\begin{figure}[H]
+\centering
+\includegraphics[width = 15cm, height =7cm]{./NgVeri/finalouput.png}
+\caption{Stacked Input and Output Simulation plots of 8 bit counter}
+\label{finaloutput}
+\end{figure}
+
+\item To view the plots in order and stacked manner, open Counter.cir.out file, do the changes in the plot statements as shown in \figref{control1}.
+
+\item Running simulation again will result in the output of 8 bit counter as shown in \figref{finaloutput}. 
+
+\end{enumerate}
+
+\section {Common errors encountered in Makerchip-NgVeri:}
+
+This section describes the most common errors faced by the user while building projects using Makerchip-NgVeri feature in eSim. 
+
+\begin{enumerate}
+
+\item In Makerchip tab, when the user clicks on Add Top Level Verilog button to load the file, the allowed file extension's should be either .v, .sv or .tlv as shown in \figref{filext}. It will not accept any other file extension. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =11cm]{./NgVeri/svfile.png}
+\caption{File extension allowed in NgVeri}
+\label{filext}
+\end{figure}
+
+
+\item User should avoid spaces or special characters in the path to file. \figref{path} shows file path and workspace path without any spaces and special characters. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =8cm]{./NgVeri/path.png}
+\caption{File and workspace path without spaces and special characters}
+\label{path}
+\end{figure}
+
+\item The verilog file should have Read and write Permissions. To set read and write permissions of the verilog file, right click on verilog file and click on \textbf{Properties}. Next click on \textbf{Permissions} and select access as \textbf{Read and write} as shown in \figref{rdwr}. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =7cm]{./NgVeri/readwritepermission.png}
+\caption{Read-Write Permissions for Verilog file}
+\label{rdwr}
+\end{figure}
+
+\item Do not delete or rename the verilog file while it is loaded in eSim. 
+
+\item If one gets an error in the NgVeri terminal, please clear the terminal and rerun. 
+
+\item Do not use delays in the verilog code (as verilator does not support it). 
+
+\item Verilog filename should be the same as top-level verilog module name, otherwise the following error message will appear as shown in \figref{error1}. This error appears when a user tries to open TL verilog in Makerchip by clicking \textbf{Edit in Makerchip} button.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width = 14cm, height =6cm]{./NgVeri/modulenameerror.png}
+\caption{Verilog file and module name error}
+\label{error1}
+\end{figure}
+
+\item \textbf{Verilator lint-off errors:} Lint-off commands will create this error in verilog code in Makerchip IDE can be resolved by removing such lint-off commands as shown in \figref{makerchiperror} and \figref{lintofferror}. Details about dealing with removal of such errors are already discussed in Makerchip steps in eSim. 
+
+\item \textbf{Unexpected reg error:} This type of error can occur after compiling TL verilog code in Makerchip IDE visible in Log section (Refer \figref{regerror}). This error can be rectified by removing word \textit{reg} from top level verilog code as shown in \figref{removereg}. More details are discussed in Makerchip steps in eSim. 
+
+\end{enumerate}
+
+
+

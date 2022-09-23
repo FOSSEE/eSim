@@ -1,409 +1,153 @@
-\chapter{PCB Design}
+\chapter{OpenModelica}
 \thispagestyle{empty}
-\label{chap12}
+\label{chap11}
 
-Printed Circuit Board (PCB) \index{PCB} design is an important
-step in electronic system design. Every component of the circuit
-needs to be placed and connections routed to minimise delay and
-area. Each component has an associated footprint. Footprint refers to
-the physical layout of a component that is required to mount it on the
-PCB. PCB design involves associating footprints to all components, placing them appropriately to
-minimise wire length and area, connecting the footprints using
-tracks or vias and finally extracting the required files needed for
-printing the PCB. Let us see the steps to design PCB using eSim. 
+\section {Introduction}
+OpenModelica (OM) is an open source modeling and simulation tool based on
+Modelica language. Modelica is an object oriented language. As a result, it has all the
+features of an object oriented language such as inheritance. Models or circuits are
+defined in the form of classes, with in which there are components, functions,
+connection and placement information. The OM suite has the following major tools.
 
-\section{Schematic creation for PCB design}
-In \chapref{chap5}, we have seen the differences between schematic for
-simulation and schematic for PCB design. Let us design a PCB Layout for a 'constant 5V DC supply'  circuit named as \texttt{7805VoltageRegulator}. First, we will simulate the circuit. Refer to \figref{pcbschfin} for the schematic used for simulation. After satisfying simulation results, we will move to PCB design. For this, we will remove the Source(s), Probes (plot\_v , plot\_db etc.), and global labels connected \texttt{solely} for the purpose of viewing simulation plots conveniently. \\  Connectors are the physical components that are used to interface/connect the board to external peripherals or sources.
+\subsection {OMEdit}
+An IDE for modeling and simulation. It supports a lot of electrical components. It
+has a good graphical interface to drag and drop components and create the circuit.
+One can only do transient simulation using this interface. An attractive feature of
+OMEdit is the plotting interface. All the parameters in the circuit like voltages and currents through each component,
+parameters like frequency, delay etc. will be displayed as
+a list, after simulation. The user can choose the variables to be plotted in an
+interactive manner from this list. On choosing the variable to plot, it will be plotted
+on the plot window. One can also create multiple plot windows.
 
-\begin{figure}
+\subsection {OMOptim}
+An IDE for optimisation. It lists all the variables in the given model. One can choose
+the variables to be optimised from the list. Multiple models can be loaded for a given
+optimisation problem. One can do multi objective optimisations as well. It supports
+various optimisation algorithms such as Particle Swarm Optimisation (PSO) and
+Simulated Annealing (SA). The results are displayed graphically.
+
+\section {OpenModelica in eSim}
+The above two functionalities can be accessed through the {\tt Modelica Converter} and {\tt OM Optimisation} tools on the eSim left toolbar. The two examples given below illustrates how to use OpenModelica in eSim. 
+
+\subsubsection {Low Pass Filter circuit} 
+Let us now see how to simulate a low pass filter in OpenModelica.
+\begin{enumerate}
+\item Open the schematic and create the circuit as shown in \figref{lowpass}. 
+
+\begin{figure}[h]
 \centering
-\includegraphics[width=\lgfig]{NGHDL/pcbschinitial.png}
-\caption{Schematic for simulation of the constant 5V DC supply circuit}
-\label{pcbschfin}
-\end{figure}
- 
-%Create the circuit schematic as shown in \figref{pcbschfin}. The two pin female
-%connector (\texttt{Conn\_01x02\_Female}) can be placed from the Eeschema's \texttt {Conn} library. Do the annotation and
-%test for ERC.  Refer to \chapref{chap5} to know more about
-%basic steps in schematic creation. 
-
-
-\subsection{Removing components required for simulation from the schematic}
-\begin{itemsize}
-\item We will remove the components which were placed for simulation purpose only.
-\item Components that will be placed on the board need to be added in the schematic.
-\item Modify the circuit schematic as shown in \figref{pcbschconn}. The two pin female connector (\texttt{Conn\_01x02\_Female}) is placed for the taking the 5V output supply meanwhile a 2 pin Screw Terminal (\textt{Screw\_Terminal\_01x02}) is used to transmit the input signal on board. Do the annotation and test for ERC.  Refer to \chapref{chap5} to know more about basic steps in schematic creation. 
-\begin{figure}
-\centering
-\includegraphics[width=\lgfig]{NGHDL/pcbschwithconn.png}
-\caption{Schematic after adding connectors and removing the probes and sources.}
-\label{pcbschconn}
-\end{figure}
-\end{itemsize}
-
-\subsection{Mapping of components using Cvpcb}
-%\index{Footprints!mapping} \index{Footprint Editor}
-\index{Component!footprint!mapping}
-
-\item Once the schematic for PCB Design is created, one needs to map each component
-in the schematic to the appropriate footprint. The tool \texttt{Cvpcb} is
-used for this.
-\item Cvpcb can be launched by clicking the icon \texttt{Run Cvpcb to associate footprints and components} in Eeschema or by going under the \textt{Tools} menu and selecting \texttt{Assign Component Footprint} option. 
-
-\subsection{Familiarising with Cvpcb Window}
-\index{Cvpcb}
-\begin{itemsize}
-\item I. When one opens \texttt{Cvpcb} after annotating and running ERC on the schematic intended for PCB Design a window as shown in \figref{cvpcb} will be obtained. The Toolbar for using Cvpcb will be available in the top-most left corner.
-\begin{figure}
-\centering
-\includegraphics[width=\lgfig]{NGHDL/cvpcb_unassigned.png}
-\caption{Cvpcb window}
-\label{cvpcb}
-\end{figure}
-\item II. The left pane has a list of all footprint libraries in the database.
-\item III. The middle pane displays the list of components present in the schematic and if any footprint is assigned/associated to them.
-\item IV. The right pane has a list of available footprints for each component depending upon how of libraries.
-\end{itemsize}
-
-
-
-\subsubsection{ Cvpcb Toolbar}
-Some of the important tools in the toolbar are shown in
-\figref{tb_fe}. They are explained below (Order of operation should ideally be from RIGHT to LEFT):
-\begin{figure}
-\centering
-\includegraphics[width=\hgfig]{tb_fe.png}
-\caption{Cvpcb Toolbar}
-\label{tb_fe}
-\end{figure}
-\begin{compactenum}
-\item Filter footprints list by library : We recommend the use of only this as a filtering method if you are completely new to eSim and/or PCB Design as it narrows down footprints based on libraries of the type of the component. When a filter is selected, it's icon will be highlighted in light red color as seen in \figref{tb_fe}.
-\item Filter footprints list by pin count : This will filter the footprints based on number of pins the footprint has. This can be used to narrow down your search after sorting footprints by their library type.
-\item Filter footprints list by keyword - This filters the footprints in the database based on keywords.
-\item Automatic footprint association - Perform footprint association
-  for each component automatically. Footprints will be selected from
-  the list of footprints available.\\
-  Note: This method of association is not recommended at all.
-\item Delete all associations - Delete all the footprint associations made. This will erase all your association till now so be very careful in selecting this.
- \item Select next unlinked component: Using this you can go to the next component in the list of components for associating a footprint.
- \item Select previous unlinked component: Using this you can go to the previous component in the list of components for associating a footprint.
-\item View selected footprint - View the selected footprint in 2D. See \secref{viewfp} for more details. \\
-  Before clicking on this, make sure that a footprint is selected. Order of this operation should be
-  \\ 1. Selection of footprint library from the left-most pane 
-  \\ 2. Selecting a footprint from the right-most pane
-  \\ 3. Click on \textt{View selected footprint}
-\item Edit footprint library table - One should familiarize themselves with Cvpcb first and then only choose to use this. This impacts the footprints that you can choose, so be careful before making any severe changes.
-\item Save netlist and footprint files - Save the netlist and the
-  footprints that are associated with it. One ought to save the association after having assigned proper footprints to all the components.
-\end{compactenum}
-
-\subsection{Viewing footprints in 2D and 3D}
-\index{Footprints!view!2D}
-\index{Footprints!view!3D}
-\label{viewfp}
-\item To view a footprint in 2D, select the component for which you wish to view the available footprints, then select the library from left-most pane and now from the right pane and click on the desired footprint and click on \texttt{View selected footprint} from the menu bar. 
-Let us view a footprint for \texttt{C1} from the \texttt{Capacitors\_THT} footprint library. Choose C1 from the middle pane as shown, click on \texttt{Capacitors\_THT} in the left-most pane and select the  
-\textit{View selected footprint} tool.
-On clicking the \textbf{View selected footprint} tool, the {\tt Footprint} window with the view in 2D will be displayed. 2D view of the footprint \texttt{CP\_Radial\_D5.0mm\_P2.50mm} is shown in \figref{2dview}.
-
-\begin{figure}
-\centering
-\includegraphics[width=\lgfig]{smnew.png}
-\caption{Viewing footprint for C1}
-\label{sm}
+\includegraphics[width=\lgfig]{list_of_figures/1.png}
+\caption{Circuit schematic: Low pass filter}
+\label{lowpass}
 \end{figure}
 
-\item Click on the \texttt{3D Display} icon in the {\tt Footprint}
-window, as shown in \figref{2dview}. A top view of the selected footprint
-in 3D is obtained. Click on the footprint and rotate it using the computer mouse to
-get 3D views from various angles. One such view of the footprint
-in 3D is shown in \figref{3dv}.
+\item Create the KiCad netlist. Now the analysis and analysis parameters are given as shown in \figref{lowpass-analysis}. 
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=\lgfig]{manual_images/2dviewofcp.png}
-\caption{Footprint \texttt{CP\_Radial\_D5.0mm\_P2.50mm}'s view in 2D.}
-\label{2dview}
-\end{figure}
-\begin{figure}
-\centering
-\includegraphics[width=\lgfig]{manual_images/3dv.png}
-\caption{3D view of the footprint}
-\label{3dv}
+\includegraphics[width=\lgfig]{list_of_figures/2.png}
+\caption{Analysis parameters: Low pass filter}
+\label{lowpass-analysis}
 \end{figure}
 
-\subsection{Mapping of components in the circuit}
-\begin{itemsize}
-\begin{compactenum}
+\item The source details are given as in \figref{lowpass-source}. The generated KiCad netlist is then converted to ngspice compatible netlist.
 
-\item Click on {\tt C1} from the middle pane. Choose the footprint  library \textit{Capacitors\_THT}
-from the left pane and locate the footprint \texttt{CP\_Radial\_D5.0mm\_P2.50mm}. By double clicking on it, the said footprint will be assigned to {\tt C1}.
-\item Similarly choose the footprints per \figref{map} where the footprint association for all the footprints is shown in \figref{map}. Save the footprint association by clicking on the
-\texttt{Save footprint association in schematic component footprint fields} tool from the {\tt CvPcb toolbar}. 
-\end{compactenum}
-\end{itemsize}
-
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[width=0.85\linewidth]{manual_images/map.png}
-\caption{Footprint mapping completed for the circuit}
-\label{map}
-\end{figure}.
-
-\subsection{Netlist generation for PCB}
-\index{Netlist!for PCB} \index{Netlist} 
-\label{netc}
-\begin{figure}
-\centering
-\includegraphics[width=\lgfig]{manual_images/netlistpcb.png}
-\caption{Netlist generation for PCB}
-\label{netlistpcb}
-\end{figure}   
-\begin{itemsize}
-\begin{compactenum}
-\item After having saved your footprint association, switch back to the Eeschema window and press Ctrl+S.
-\item The netlist for PCB is different from that for simulation. To generate
-netlist for PCB, click on the \textit{Generate netlist} tool from the
-top toolbar in Schematic editor.
-\item In the \textt{Netlist} window, under the tab \textit{Pcbnew}, Select the option \texttt{Default format}. This is shown in \figref{netlistpcb}. Click on \texttt{Generate} option. 
-\item Click on \texttt{Save} in the Save netlist file dialog box that opens up. Do not change the directory or the name of the netlist file. \texttt{Note that the netlist for PCB has an extension \emph{.net}. The netlist created for simulation has an extension \emph .cir}.
-\end{compactenum}
-\end{itemsize}
-
-
-\section{Creation of PCB layout}
-\index{PCB Layout!creation} \index{Layout Editor}
-
-The next step is to place the footprints and lay tracks between them
-to get the layout. This is done using the \textit{Layout Editor}
-tool. eSim uses {\tt Pcbnew}, the layout creation tool in KiCad, as
-its layout editor.
-
-\subsection{Launching Pcbnew}
-\begin{compactenum}
-\item To Launch the layout editor, \texttt{Pcbnew}, click on the \texttt{Run Pcbnew to layout printed circuit board} icon on the top right corner of the Schematic window.
-\item Similarly, you can also click on \texttt{Tools}, and select the \texttt{Layout printed circuit board} option.
-\item After doing either of the steps above, click \textbf{yes} on the \textit{Confirmation Box} that will appear on the screen.
-\end{compactenum}
-
-\subsection{Familiarizing the Layout Editor tool}
-\index{Layout Editor}
-
-The layout editor with the various menu bar and toolbars is shown in
-\figref{pcbnew}.
-\begin{figure}
-\centering
-\includegraphics[width=0.68\linewidth]{NGHDL/toptble.png}
-\caption{Layout editor with menu bar, toolbars and layer options}
-\label{pcbnew}
+\includegraphics[width=\lgfig]{list_of_figures/3.png}
+\caption{Source details: Low pass filter}
+\label{lowpass-source}
 \end{figure}
 
+\item Simulate the ngspice netlist. The simulation curves are shown in \figref{lowpass-simulation}.
 
-\subsubsection{Top toolbar}
-Some of the important menu options in the top menu bar are shown in
-\figref{pcbnew}. They are explained below:
-\begin{compactenum}
-\item Save board - Save the printed circuit board
-%\item Module editor - Open module editor to edit footprint modules or
- % libraries
- \item Plot - This enables users to import their design in Gerber, PDF, SVG and few more formats depending on the requirement.
-\item Read netlist - Import the netlist whose layout needs to be
-  created.
-\item Perform design rules check - Check for design rules, unconnected
-  nets, etc., in the layout.
-\item Select working layer - Selection of working layer.\\
-Note: Selection of working layer can also be done from the \texttt{Layers toolbar} on the right-most side of the Pcbnew tool window.
-\end{compactenum} 
-
-\subsection{Hotkeys}
-\index{Hotkeys!Layout editor}
-A list of few important hotkeys is given below:
-\begin{compactenum}
-\item F1 - Zoom in
-\item F2 - Zoom out
-\item Delete - Delete Track or Footprint
-\item X - Add new track
-\item V - Add Via
-\item M - Move Item
-\item F - Flip Footprint
-\item R - Rotate Item
-\item G - Drag Footprint
-\item Ctrl+Z - Undo
-\item E - Edit Item
-\end{compactenum}
-The entire list of Hotkeys can be viewed by selecting \textit{Preferences} from the top
-menu bar and choosing \textit{List Current Keys} from the option \textit{Hotkeys}.
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[height=0.4\textwidth]{manual_images/hotkeys.png}
-\caption{Default Hotkeys}
-\label{netlisttop}
-\end{figure}
-%[width=0.5\textwidth]
-
-\subsection{Designing PCB layout for 7805VoltageRegulator circuit} \index{PCB design}
-Click on \textit{Read Netlist} tool from the top toolbar of Pcbnew. Click on
-\textit{Browse Netlist files} on the Netlist window that opens
-up. Select the {\tt .net} file that was modified \\\texttt{after}
-assigning footprints. Click on \textit{Open}. Now Click on
-\textit{Read Current Netlist} on the Netlist window. The
-sequence of operations is shown in \figref{brnet}. 
-\index{PCB design!move modules} \index{PCB design!lay tracks}
-
-\begin{figure}
-\centering
-\includegraphics[width=0.67\linewidth]{manual_images/readnetlist.png}
-\includegraphics[width=0.67\textwidth]{manual_images/browsenetlistforpcb.png}
-\caption{Importing netlist file to layout editor: 1. Browse netlist
-  Files, 2. Choose the appropriate .net file, 3. Read Netlist file, 4. Close}
-\label{brnet}
-\end{figure} 
- 
-\subsubsection{Arranging the footprints}
-\begin{compactenum}
-\item After clicking on Read Netlist button and closing the Read Netlist window, the footprints that we assigned will appear on the Pcbnew screen in a cluttered fashion, stacked on top of each other as shown in \figref{cluttered}
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{cluterredFPs.png}
-\caption{Cluttered footprints}
-\label{cluttered}
+\includegraphics[width=\lgfig]{list_of_figures/4.png}
+\caption{Simulation: Low pass filter}
+\label{lowpass-simulation}
 \end{figure}
 
-\item Let us separate these footprints and place them in proper orientation per the requirement of the circuit. Let us start with Screw\_Terminal\_01x02 footprint.
-\item Right Click on the text \textt{Screw\_Terminal\_01x02} in the Pcbnew window, and select \texttt{Footprint J1 on F.Cu.} and select the \texttt{Move} option from the list.
-\item The footprint will be glued to the cursor and it can be placed in the location of one's choice by moving the cursor at the desired location and clicking once to place it there.
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{FPMove.png}
-\caption{Moving the footprint}
-\label{movingFP}
-\end{figure}
-\item We have moved the Screw\_Terminal\_01x02 footprint to the left side of the Pcbnew window.
-\item Once again right click on the text \textt{Screw\_Terminal\_01x02} in the Pcbnew window, and select \texttt{Footprint J1 on F.Cu.} and select the \texttt{Rotate +} option from the list as shown in \figref{rotateFP}
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{rotatefp.png}
-\caption{Rotating the footprint}
-\label{rotateFP}
-\end{figure}
-\item Using similar methods, we have moved and rotated all other footprints as shown in \figref{rotateall}
+\item Now to use OpenModelica, click on {\tt Modelica Converter} in the bottom left of eSim left toolbar.{\textit Make sure you have OpenModelica installed in the system}. This converter converts the spice netlist to Modelica format. Click on the LPF in the left that is appended in OpenModelica main window. Make sure you are in text view to see the Modelica code as shown in \figref{om-convert} Figure shows that LPF circuit is being used as a model, the initialisation of sources and components are in the beginning followed by the connection information. n3, n0,n2 are the nodes.
 
-\begin{figure}
+\begin{figure}[h]
 \centering
-\includegraphics[height=0.4\textwidth]{fpsmovedandrotated.png}
-\caption{All footprints moved and rotated}
-\label{rotateall}
-\end{figure}
-\end{compactenum}
-
-\subsubsection{Setting Design Rules}
-
-\begin{compactenum}
-\item Click on \texttt{Design Rules on top of the Pcbnew window, select Design Rules option from the drop down menu there.}
-\item \texttt{Design Rules Editor} window will open, Under the \texttt{Net Classes Editor}, locate the \texttt{Track Width} box, erase the default value from the window placed under the \texttt{Track Width} box and enter 1.25 as the track width.
-\item Click on \texttt{Global Design Rules}, under Minimum Allowed Values, locate \texttt{Min track width}, erase the default value and enter 1.25 in the data entry field on the right side of it as shown in \figref{DRC_GDR}. This will ensure that all tracks placed are of width 1.25mm and that when we perform Design Rules Check, the checks will be made such that all tracks are of the width 1.25mm will be checked.
-\item Click on Ok button and close the Design Editor Rules window.
-\end{compactenum}
-
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{druleseditor.png}
-\caption{Design Rules Editor Window: Global Design Rules}
-\label{DRC_GDR}
+\includegraphics[width=\lgfig]{list_of_figures/5.png}
+\caption{OpenModelica: Text view}
+\label{om-convert}
 \end{figure}
 
-\subsubsection{Drawing the Board Outline}
-\begin{compactenum}
-\item Board outline defines the physical dimensions of your board. After the fabricator is done placing tracks and other processes, he/she will cut your design from the copper cladded sheet or the material used per your choice, as per your board outline dimensions. Say, if your board outline is of rectangular shape with dimensions 80mmx50mm, the fabricator will cut the copper sheet of the said dimension. Its important to know that all the tracks(physical electrically conductive connections between two nodes or points on a PCB) must lie inside this board outline.
-\item We will also choose a board outline of rectangular shape. Select working layer as \texttt{Edge.Cuts} from the Layers menu on the far-right side of Pcbnew.
-\item Click on \texttt{Place} from the top-left tool bar of the Pcbnew window and select \texttt{Line or Polygon}. A pencil icon will appear to be tied to the cursor.
-\item Click once on the layout editor to start drawing the outline. Drag the cursor either horizontally or vertically. When it comes to the corner of the board, click once and drag the cursor in perpendicular direction. Do this till you reach the origin of the outline, and double click to finish drawing the rectangular outline. Completed outline is as shown in \figref{brdoutline}.
-\end{compactenum}
+Default Modelica libary is used for electrical sources and components. This has to imported so that it can be used in the current circuit. This is available in the left side of main window. 
 
-\begin{figure}
+\item Click on Simulation Setup on the toolbar at the top. A window opens as shown in \figref{om-simsetup}. Give start and stop time. Click {\tt OK}.
+
+\begin{figure}[h]
 \centering
-\includegraphics[height=0.4\textwidth]{boardoutline.png}
-\caption{Drawing a board outline}
-\label{brdoutline}
+\includegraphics[width=\lgfig]{list_of_figures/6.png}
+\caption{OpenModelica: Simulation setup}
+\label{om-simsetup}
 \end{figure}
 
-\subsubsection{Placing Tracks}
-\begin{compactenum}
-\item Select the working layer as B.Cu from the Layers menu on the far-right side of Pcbnew.
-\item Click on \texttt{Place} from the top-left tool bar of the Pcbnew window and select \texttt{Track}. A pencil icon will appear to be tied to the cursor.
-\item The procedure to place a track between Node 2 of Screw\_Terminal\_01x02 to Node 1 of D3 diode, as shown in \figref{brdoutline} is described in below steps.
-\item Working layer is B.Cu., \texttt{Place Track tool} is selected earlier. Click the pencil icon tied to cursor on the Node 2 of Screw\_Terminal\_01x02 and drag the cursor till Node 1 of D3 diode and double click on Node 2 of D3. By double clicking the track will end at Node 2 of D3. Please refer \figref{D3node1track} for the mentioned track being placed.
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{firsttrack.png}
-\caption{Track placed on B.Cu. between Screw\_Terminal\_01x02 connector and D3 Diode}
-\label{D3node1track}
-\end{figure}
-\item Similarly, all the tracks have been placed as shown in \figref{alltracks}. Please note that tracks shown in green color are on B.Cu. layer whereas the tracks in red color are placed on the F.Cu. layer. 
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{alltracks.png}
-\caption{All tracks placed}
-\label{alltracks}
-\end{figure}
-\end{compactenum}
+\item A plotting window opens. Click on the node at the right to display the waveform. The window is shown in \figref{om-simulation}.
 
-\subsubsection{Performing Design Rules Check(DRC)}
-\begin{compactenum}
-\item After tracks are placed, it is important that the design created by used should not violate any design rules set earlier.
-\item Click on \texttt{Perform Design Rules check} button from the top menu bar of Pcbnew. DRC Control Window will pop-up as shown in \figref{DRC}.
-\item Click on \texttt{Start DRC}, and observe if any messages/warnings appear in the \texttt{error messages} window at the bottom of the DRC Control window. If there are no errors in the design present, there will not be any errors in the message window as shown in \figref{DRC}
-\end{compactenum}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\lgfig]{list_of_figures/7.png}
+\caption{OpenModelica: Simulation}
+\label{om-simulation}
+\end{figure}
+
+\end{enumerate}
+
+\subsection {OM Optimisation}
+
+Now let us explore how to use OpenModelica for optimisation through an example. Find the value of resistance R2 that maximises the power dissipated through it for the circuit in \figref{optim-circuit}. This is an illustration of the Maximum Power Transfer Theorem. The power is maximum when R2 = R1, i.e., when R2 = 100. So maximum power would be Pmax = 0.0625. Let us now see the steps to be followed find the value of R2 using eSim.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\lgfig]{list_of_figures/8.png}
+\caption{Circuit schematic for optimisation}
+\label{optim-circuit}
+\end{figure}
+
+\begin{enumerate}
+\item Follow all the steps as above and generate the Modelica model using the Ngspice to Modelica converter.
+
+\item The objective function is $Power = i^2 \times R2$ . 
+To define the objective function, the line $power := i^2 \times R1+ i^2 \times R2$  
+is added under the keyword algorithm, in the Modelica model file.
+
+\item Select {\tt OMOptim} from eSim left toolbar, in the displayed window click on {\tt New Project}. Then save the project. It is stored with an extension {\tt .min}. Now select {\tt Models} and then {\tt Load Modelica Library}. Now select {\tt Load mo file} under {\tt Models}. It will be added on the left. 
+
+\item Click {\tt Problems} and then {\tt Optimisation}. Select the model to be optimised. \textit {Note that for optimising, that model has to be loaded in OpenModelica as stated before}. Clicking
+blue turnover icon will display all the variables used in the model. Add details like optimsation variables and objective.
+
+The OMOptim project for this problem is given in \figref{om-project}. Power is the objective function that has to be maximized. {\tt r2.R} is the variable that will be varied. {\tt r2.R} is limited between 0 and 1000.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\hgfig]{list_of_figures/9.png}
+\caption{OMOptim project}
+\label{om-project}
+\end{figure}
+
+\item Click on Parameters tab to select the type of algorithm and its parameters. In this example, the optimisation algorithm used is PSO (Particle Swarm Optimisation). The various parameter values given are as follows: population size as 50, Inertia factor as 1, Learning factor: alpha and beta as 2, Population saving frequency was 1. Iteration limit is also specified. Select the .mo file to be simulated from {\tt Files} tab. Click on {\tt Launch}. The results of optimisation for various values of Iteration Limit are given in \figref {table}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\lgfig]{list_of_figures/10.png}
+\caption{Optimisation values for various Iteration Limit }
+\label{table}
+\end{figure}
+
+\item Depending on the type of algorithm, the time for optimisation varies. Optimised result is graphically displayed as shown in \figref {om-optimised}. 
 
 \begin{figure}
 \centering
-\includegraphics[height=0.4\textwidth]{drc1.png}
-\caption{DRC Control Window}
-\label{DRC}
+\includegraphics[width=\hgfig]{list_of_figures/11.png}
+\caption{Optimised value of resistance for maximum power }
+\label{om-optimised}
 \end{figure}
 
-\subsubsection{Exporting the Design to Gerber format}
-\begin{compactenum}
-\item Click on \texttt{Plot} tool from the top toolbar, select the Plot Format as \texttt{gerber} from the drop down menu of Plot Format.
-\item Select the directory in which the user wishes to save the gerber files. 
-\item Select F.Cu, B.Cu, B.Silks, F.Mask, B.Mask, Margin and Edge.Cuts from the \textit{Layers} on the left side of the Plot window as shown in \figref{plotbef}.
-\item After clicking on 'Plot' button, acknowledgment messages can be seen in the 'Messages' window at the bottom of the \texttt{Plot} tool window as shown in \figref{plotaf}.
-\end{compactenum}
+\end{enumerate}
 
-
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{plotwindowbefore.png}
-\caption{Plot Window before generating gerber files}
-\label{plotbef}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{plotafter.png}
-\caption{Plot window after generating gerber files}
-\label{plotaf}
-\end{figure}
-
-\subsubsection{Viewing the Gerber files generated}
-\begin{compactenum}
-\item Open the terminal by Ctrl+Alt+T keys, and type \texttt{gerbview} and press enter. Gerbview tool of KiCad will open up. For windows OS users, search for \texttt{gerbview} application through Windows' search application option.
-\item Click on File from top-left menu, and select Load Gerber File option.
-\item Go to the directory where you have stored the earlier created gerber files as shown in \figref{gerbviewloading} and click on Open.
-\item The design created earlier will appear in the gerbview window as shown in \figref{gerbviewcapture}.
-\end{compactenum}
-
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{gerbviewloading.png}
-\caption{Loading gerber files in the gerbview}
-\label{gerbviewloading}
-\end{figure}
-
-\begin{figure}
-\centering
-\includegraphics[height=0.4\textwidth]{gerbviewcapture.png}
-\caption{Observing the design in Gerber format}
-\label{gerbviewcapture}
-\end{figure}
