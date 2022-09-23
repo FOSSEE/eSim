@@ -1,153 +1,192 @@
-\chapter{OpenModelica}
+\chapter{NGHDL: Mixed Signal Simulation}
+\label{chap9}
 \thispagestyle{empty}
-\label{chap10}
 
-\section {Introduction}
-OpenModelica (OM) is an open source modeling and simulation tool based on
-Modelica language. Modelica is an object oriented language. As a result, it has all the
-features of an object oriented language such as inheritance. Models or circuits are
-defined in the form of classes, with in which there are components, functions,
-connection and placement information. The OM suite has the following major tools.
 
-\subsection {OMEdit}
-An IDE for modeling and simulation. It supports a lot of electrical components. It
-has a good graphical interface to drag and drop components and create the circuit.
-One can only do transient simulation using this interface. An attractive feature of
-OMEdit is the plotting interface. All the parameters in the circuit like voltages and currents through each component,
-parameters like frequency, delay etc. will be displayed as
-a list, after simulation. The user can choose the variables to be plotted in an
-interactive manner from this list. On choosing the variable to plot, it will be plotted
-on the plot window. One can also create multiple plot windows.
+NGHDL feature facilitates creation of user-defined models for mixed-signal circuit simulation in eSim. By interfacing GHDL and Ngspice, we achieve mixed-signal simulation. Digital models are simulated using GHDL and XSPICE engine of Ngspice. \\
 
-\subsection {OMOptim}
-An IDE for optimisation. It lists all the variables in the given model. One can choose
-the variables to be optimised from the list. Multiple models can be loaded for a given
-optimisation problem. One can do multi objective optimisations as well. It supports
-various optimisation algorithms such as Particle Swarm Optimisation (PSO) and
-Simulated Annealing (SA). The results are displayed graphically.
 
-\section {OpenModelica in eSim}
-The above two functionalities can be accessed through the {\tt Modelica Converter} and {\tt OM Optimisation} tools on the eSim left toolbar. The two examples given below illustrates how to use OpenModelica in eSim. 
+%To access NGHDL click on the NGHDL button on the left pane of window as shown in figure \figref{screen3}:
+%\pagebreak
 
-\subsubsection {Low Pass Filter circuit} 
-Let us now see how to simulate a low pass filter in OpenModelica.
-\begin{enumerate}
-\item Open the schematic and create the circuit as shown in \figref{lowpass}. 
+\section{Introduction}
 
-\begin{figure}[h]
+Ngspice supports mixed-signal simulation, i.e. it can simulate both digital and analog component. It defines a \texttt{model} which has the functionality of the circuit component, which can be used in the netlist.
+For example you can create an \texttt{adder} model in Ngspice and use it in any circuit netlist of Ngspice. \\
+
+However, it is not feasible to define complex digital models without a complete understanding of Ngspice and XSPICE architectures and is a time-consuming process. Also, most of the users are familiar with GHDL and can write the models using VHDL code with ease.
+Hence, NGHDL provides an  interface to write VHDL code for a digital model and install it as model in Ngspice. So whenever Ngspice looks for that model, it will actually interface with VHDL code to get the result. \\
+
+\begin{figure}[!htp]
 \centering
-\includegraphics[width=\lgfig]{list_of_figures/1.png}
-\caption{Circuit schematic: Low pass filter}
-\label{lowpass}
+\includegraphics[width = 12cm, height = 6cm]{./NGHDL/NGHDL_Overview.png}
+\caption{Overview of NGHDL}
+\label{overview}
+\end{figure}
+%description of Overview:
+\figref{overview} shows the overview of NGHDL indicating its architecture at the abstract level. The values for the digital models present in the netlist are fetched from the GHDL side of the interface whereas the values of the analog part are fetched from Ngspice's spice3f5 engine. Digital and Analog components in \figref{overview} are connected to each other with the help of the hybrid ADC and DAC models provided by Ngspice. This helps in the signal level switching when simulation is performed. As analog signals are in continuous time domain and Digital signals are in discrete time domain, hybrid components help bridge the gap. More information on the parameters of ADC and DAC present in Appendix : D.
+
+\pagebreak
+
+\section{Digital Model creation using NGHDL}
+
+%Description of User Flow of NGHDL
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[width = 12cm, height = 8cm]{./NGHDL/NGHDL_Flow.png}
+\caption{User flow for NGHDL}
+\label{user_flow}
 \end{figure}
 
-\item Create the KiCad netlist. Now the analysis and analysis parameters are given as shown in \figref{lowpass-analysis}. 
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\lgfig]{list_of_figures/2.png}
-\caption{Analysis parameters: Low pass filter}
-\label{lowpass-analysis}
-\end{figure}
-
-\item The source details are given as in \figref{lowpass-source}. The generated KiCad netlist is then converted to ngspice compatible netlist.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\lgfig]{list_of_figures/3.png}
-\caption{Source details: Low pass filter}
-\label{lowpass-source}
-\end{figure}
-
-\item Simulate the ngspice netlist. The simulation curves are shown in \figref{lowpass-simulation}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\lgfig]{list_of_figures/4.png}
-\caption{Simulation: Low pass filter}
-\label{lowpass-simulation}
-\end{figure}
-
-\item Now to use OpenModelica, click on {\tt Modelica Converter} in the bottom left of eSim left toolbar.{\textit Make sure you have OpenModelica installed in the system}. This converter converts the spice netlist to Modelica format. Click on the LPF in the left that is appended in OpenModelica main window. Make sure you are in text view to see the Modelica code as shown in \figref{om-convert} Figure shows that LPF circuit is being used as a model, the initialisation of sources and components are in the beginning followed by the connection information. n3, n0,n2 are the nodes.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\lgfig]{list_of_figures/5.png}
-\caption{OpenModelica: Text view}
-\label{om-convert}
-\end{figure}
-
-Default Modelica libary is used for electrical sources and components. This has to imported so that it can be used in the current circuit. This is available in the left side of main window. 
-
-\item Click on Simulation Setup on the toolbar at the top. A window opens as shown in \figref{om-simsetup}. Give start and stop time. Click {\tt OK}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\lgfig]{list_of_figures/6.png}
-\caption{OpenModelica: Simulation setup}
-\label{om-simsetup}
-\end{figure}
-
-\item A plotting window opens. Click on the node at the right to display the waveform. The window is shown in \figref{om-simulation}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\lgfig]{list_of_figures/7.png}
-\caption{OpenModelica: Simulation}
-\label{om-simulation}
-\end{figure}
-
-\end{enumerate}
-
-\subsection {OM Optimisation}
-
-Now let us explore how to use OpenModelica for optimisation through an example. Find the value of resistance R2 that maximises the power dissipated through it for the circuit in \figref{optim-circuit}. This is an illustration of the Maximum Power Transfer Theorem. The power is maximum when R2 = R1, i.e., when R2 = 100. So maximum power would be Pmax = 0.0625. Let us now see the steps to be followed find the value of R2 using eSim.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\lgfig]{list_of_figures/8.png}
-\caption{Circuit schematic for optimisation}
-\label{optim-circuit}
-\end{figure}
+\noindent \textbf{The steps to create digital models are given below}:
 
 \begin{enumerate}
-\item Follow all the steps as above and generate the Modelica model using the Ngspice to Modelica converter.
+\item Click on NGHDL button on left side pane of main window, the Ngspice Digital Model Creator window will appear as shown in  \figref{screen3}
+        \begin{figure}[!htp]
+            \centering
+            \includegraphics[height=10cm, width =\lgfig]{./NGHDL/screen3.png}
+            \caption{NGHDL interface}
+            \label{screen3}
+        \end{figure}
 
-\item The objective function is $Power = i^2 \times R2$ . 
-To define the objective function, the line $power := i^2 \times R1+ i^2 \times R2$  
-is added under the keyword algorithm, in the Modelica model file.
 
-\item Select {\tt OMOptim} from eSim left toolbar, in the displayed window click on {\tt New Project}. Then save the project. It is stored with an extension {\tt .min}. Now select {\tt Models} and then {\tt Load Modelica Library}. Now select {\tt Load mo file} under {\tt Models}. It will be added on the left. 
+\item Now browse and locate the VHDL file to upload. Select the VHDL file and click on the Upload button. This process will create Ngspice model and corresponding component drawing inside the KiCad library (eSim\_Nghdl.lib) of the VHDL block to be used in mixed-signal simulations. An acknowledgement message will appear upon sucessful processing of the VHDL code as shown in \figref{upload}. \\
 
-\item Click {\tt Problems} and then {\tt Optimisation}. Select the model to be optimised. \textit {Note that for optimising, that model has to be loaded in OpenModelica as stated before}. Clicking
-blue turnover icon will display all the variables used in the model. Add details like optimsation variables and objective.
+        \begin{figure}[!htp]
+            \centering
+            \includegraphics[width =\smfig]{./NGHDL/screen4.png}
+            \caption{Uploading of digital model}
+            \label{upload}
+         \end{figure}
+         
+Note : \texttt{"Add files"} option allow you to use a smaller entity / subpart / submodule to support the main VHDL file. That is, a digital model will be generated corresponding to that file that has been browsed. The file that has been \texttt{"added"} to Nghdl upload window will only be placed along with the model under model’s DUTghdl folder to support the model.
 
-The OMOptim project for this problem is given in \figref{om-project}. Power is the objective function that has to be maximized. {\tt r2.R} is the variable that will be varied. {\tt r2.R} is limited between 0 and 1000.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\hgfig]{list_of_figures/9.png}
-\caption{OMOptim project}
-\label{om-project}
-\end{figure}
-
-\item Click on Parameters tab to select the type of algorithm and its parameters. In this example, the optimisation algorithm used is PSO (Particle Swarm Optimisation). The various parameter values given are as follows: population size as 50, Inertia factor as 1, Learning factor: alpha and beta as 2, Population saving frequency was 1. Iteration limit is also specified. Select the .mo file to be simulated from {\tt Files} tab. Click on {\tt Launch}. The results of optimisation for various values of Iteration Limit are given in \figref {table}.
-
-\begin{figure}[h]
-\centering
-\includegraphics[width=\lgfig]{list_of_figures/10.png}
-\caption{Optimisation values for various Iteration Limit }
-\label{table}
-\end{figure}
-
-\item Depending on the type of algorithm, the time for optimisation varies. Optimised result is graphically displayed as shown in \figref {om-optimised}. 
-
-\begin{figure}
-\centering
-\includegraphics[width=\hgfig]{list_of_figures/11.png}
-\caption{Optimised value of resistance for maximum power }
-\label{om-optimised}
-\end{figure}
-
+Hence, \texttt{"browsing"} one file and \texttt{"adding"} several files won’t create that many number of models, but only one model will be created corresponding to the browsed file.
 \end{enumerate}
 
+\section{Schematic Creation}
+Steps for schematic creation are as follows:
+\begin{enumerate}
+\item Click on New Project icon to create a new project as shown in \figref{screen1}, be careful of the naming conventions.
+%To access nghdl click on the NGHDL button on the left pane of window as shown in figure \figref{screen3}:
+
+\begin{figure}[!htp]
+\centering
+\includegraphics[width = 13cm, height = 7cm]{./NGHDL/screen1.png}
+\caption{Creation of a new project}
+\label{screen1}
+\end{figure}
+
+\item After successful upload of the model using the VHDL code, you can create the schematic of your design by clicking on \texttt{Open Schematic} button on the left pane of the eSim window. Then go to \texttt{Preferences} option on top of the schematic editor window and click on \texttt{Component Libraries} to add the library eSim\_Nghdl.lib in KiCad. Following window will appear as shown in \figref{screen6}, where you will have to click on \textit {Add} button and select the \texttt{eSim\_Nghdl} library. Refer \figref{screen6} and \figref{screen7}. %%last sentence may not be required
+    
+        \begin{figure}[!htp]
+            \centering
+            \includegraphics[width =\smfig]{./NGHDL/screen6.png}
+            \caption{Adding the digital model library in KiCad}
+            \label{screen6}
+        \end{figure}
+
+
+        \begin{figure}[!htp]
+            \centering
+            \includegraphics[width =\smfig]{./NGHDL/screen7.png}
+            \caption{Selection of library} %%this may not be required either
+            \label{screen7}
+        \end{figure}
+
+
+    
+    \pagebreak
+    \item Next step is to locate the component in \texttt{eSim\_Nghdl} library as shown in \figref{screen9} and place it on the schematic editor as shown in \figref{screen10}.
+        \begin{figure}[!htp]
+            \centering
+            \includegraphics[width =\smfig]{./NGHDL/screen9.png} %%Change this image
+            \caption{Locating the component in library} 
+            \label{screen9}
+        \end{figure}
+
+
+        \begin{figure}[!htp]
+            \centering
+            \includegraphics[width =\smfig]{./NGHDL/screen10.png}
+            \caption{Placement of component on editor}
+            \label{screen10}
+        \end{figure}
+\pagebreak
+
+\item Now create the schematic as shown in \figref{screen14}, annotate, perform ERC, create the netlist and save the schematic by following the steps given in \chapref{chap5}.
+\begin{figure}[!htp]
+            \centering
+            \includegraphics[width =\hgfig]{./NGHDL/screen14.png}
+            \caption{Example of an AND gate characteristics circuit}
+            \label{screen14}
+        \end{figure}
+
+\item After creating the schematic, click on \texttt{KiCad-to-Ngspice converter} and select the type of analysis as transient as shown in \figref{screen15} and set the start, step and stop time as shown in \figref{screen16}
+   \begin{figure}[!htp]
+                \centering
+                \includegraphics[width =\hgfig]{./NGHDL/screen15.png}
+                \caption{Analysis Part I}
+                \label{screen15}
+            \end{figure}
+           \begin{figure}[!htp]
+            \centering
+            \includegraphics[width =\hgfig]{./NGHDL/screen16.png}
+            \caption{Analysis Part II}
+            \label{screen16}
+        \end{figure}
+\pagebreak
+
+\item Now click on \texttt{Source Details} and enter the values for Source v1 and source v2 as shown in figure \figref{val1} and \figref{val2}
+\begin{figure}[!htp]
+                \centering
+                \includegraphics[width =\hgfig]{./NGHDL/val1.png}
+                \caption{Value of Source v1}
+                \label{val1}
+            \end{figure}
+           \begin{figure}[!htp]
+            \centering
+            \includegraphics[width =\hgfig]{./NGHDL/val2.png}
+            \caption{Value of Source v2}
+            \label{val2}
+        \end{figure}
+
+\item Now select the option \texttt{Ngspice Model}, window as shown in \figref{screen17} will appear. The values of the parameters listed can be changed per user's requirement. If you have used any semicnductor devices and Subcircuits in your design, then please specify the Spice models and subcircuits in the \texttt{Device Modeling} and \texttt{Subcircuits} tabs of the \texttt{KiCad-to-Ngspice converter} window.  After that click on \texttt{Convert} button. This step will create the simulation compatible netlist.
+                    \begin{figure}[!htp]
+                        \centering
+                        \includegraphics[width =\hgfig]{./NGHDL/screen17.png} %Change the figure
+                        \caption{Model Parameters}
+                        \label{screen17}
+                    \end{figure}
+\item Now click on \texttt{Simulation} button, it will display the following windows as shown in \figref{screen19}. This is the Ngspice terminal and Python plot window.
+\begin{figure}[!htp]
+                        \centering
+                        \includegraphics[width =\hgfig]{./NGHDL/screen19.png}
+                        \caption{Simulation window}
+                        \label{screen19}
+                    \end{figure}
+\pagebreak 
+\item Now select the required nodes and click on \texttt {Plot} button. You can see the plots of input source v1, input source v2 and output as shown in \figref{plotv1}, \figref{plotv2}, and \figref{plotout} respectively.
+\begin{figure}[!htp]
+                        \centering
+                        \includegraphics[width =\lgfig]{./NGHDL/plotv1.png}
+                        \caption{Plot of Source V1}
+                        \label{plotv1}
+                    \end{figure}
+\begin{figure}[!htp]
+                        \centering
+                        \includegraphics[width =\lgfig]{./NGHDL/plotv2.png}
+                        \caption{Plot of source V2}
+                        \label{plotv2}
+                    \end{figure}
+\begin{figure}[!htp]
+                        \centering
+                        \includegraphics[width =\lgfig]{./NGHDL/plotout.png}
+                        \caption{Plot of output}
+                        \label{plotout}
+                    \end{figure}
+
+        \pagebreak
+
+\end{enumerate}

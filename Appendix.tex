@@ -1,20 +1,25 @@
 \chapter{Appendix}
 \section{Appendix A}
 \subsection{Backing up important data before uninstalling eSim}
+\begin{itemize}
+
 \item Locate the folders : {\tt SubcircuitLibrary} and {\tt deviceModelLibrary} in the eSim installation directory, compress them in .zip or .rar format on your Desktop or some other location which does not contain eSim related files.
 \item The projects created and stored in eSim-Workspace will not be deleted when one uninstalls eSim, hence there is no need to backup these project files. 
 \item Newly created subcircuits and device models should be backed up as explained above. A way to take backup of the subcircuit blocks (external outlook) which appears in the schematic editor (not to be confused with internal circuit of the subcircuit) is explained in the Subcircuit section of this manual.
-
+\end{itemize}
 \subsection{Uninstalling eSim}
 
 \subsubsection{For Windows OS users}
+\begin{itemize}
 \item Locate the uninstaller {\tt "uninst-eSim.exe"} from the directory where eSim is present, by default it is installed at C:/FOSSEE/eSim/ 
 \item Run the uninstaller executable and all the eSim related files and components \textbf{except} the projects created in \textbf{eSim-Workspace} will be deleted.
-
+\end{itemize}
 \subsubsection{For Ubuntu Linux OS users}
+\begin{itemize}
 \item Open terminal and go to the location where eSim is stored using the cd command.
 \item type the following and press enter : \\
 \quad {\tt \$ ./install-eSim.sh --uninstall }
+\end{itemize}
 \section{Appendix B}
 
 \subsection{Pin types in KiCad}
@@ -35,7 +40,7 @@
 \item {\textbf{ Not-connected}}:pins are pins which have no function. Think of these as package pins that are not bonded to the IC inside.
  \end{itemize}
 
-\subsection{ ERC Table}
+\subsection{ERC Table}
 
      \begin{itemize}   
 
@@ -45,6 +50,7 @@
             \centering
             \includegraphics[width =\lgfig]{erctable.jpg}
             \caption{ERC Table}
+            \label{erc_table}
          \end{figure}
 \end {itemize}
 
@@ -141,7 +147,7 @@ Hence, \texttt{browsing} one file and \texttt{adding} several files won’t crea
         \begin{compactenum}
         \item \textbf{Circuits involving both Analog and NGHDL Components} - If step time is 10 ms and simulation time is 200 ms, then DAC-ADC delays should be atleast 1 us.
         \item \textbf{Circuits involving only NGHDL Components} - If step time is 10 ms and simulation time is 200 ms, then DAC-ADC delays should be atleast 500 us.
-        \item \textbfCMOS inverter subcircuit [INVCMOS] has a delay of 6 ms(can be changed by changing capacitor value inside the CMOS subcircuit). 
+        \item \textbf{CMOS inverter subcircuit [INVCMOS]} has a delay of 6 ms(can be changed by changing capacitor value inside the CMOS subcircuit). 
         NGHDL model created, ADC and DAC bridges has rise and fall time 1 ns. You are simulating this circuit for 100 ms, it won’t work. Increase the rise and fall delay for the ADC-DAC models from 1 nanosecond to 1 microsecond (1/1000th of the analog delay).
         \end{compactenum}
         
@@ -160,7 +166,7 @@ Before concluding anything about NGHDL’s working or about eSim’s Mixed Signa
 \begin{itemize}
     \item \textbf{Error while opening NGHDL. Please make sure NGHDL is installed :}
 
- \\
+
 As the error indicates, NGHDL is not installed at all or there has been some error during installation which was not resolved effectively. However, if the installation was done correctly, then open a terminal and type : \\
 
 \noindent \texttt{\$ sudo ln -s <your\_path\_to\_nghdl>/nghdl/src/ngspice\_ghdl.py /usr/loc\linebreak     al/bin/nghdl}
@@ -224,7 +230,7 @@ Following are the examples that can cause this error:
 \item If a vhdl file is saved as \texttt{dummycode.vhdl} and the entity and architecture 
 are declared as for example, \texttt{codedummy} or \texttt{dummy} or something other than the name of the actual vhdl file itself, one will get the above error.
 \item If structural style is being used and above error is seen, then kindly make the necessary changes by referring our example found at:\\ \texttt{nghdl/Example/full\_adder/full\_adder\_structural.vhdl}
-\end{itemize}\\
+\end{itemize}
 Kindly check with the GHDL documentation and online resources too are available regarding this GHDL error.
 
 \item \textbf{Warning : Too many analog/event-driven solution alternations \\
@@ -265,27 +271,23 @@ This error, displayed on xterm by Ngspice, is similar to that of \texttt{Permiss
 If you want to delete a model from your file system or is deleted due to unavoidable circumstances, perform the following steps (to ensure consistency within the software) :
 \begin{enumerate}
     \item Delete the folders found at path :
-    \begin{itemize}
         \begin{itemize}
         \item
         \texttt{ngspice-nghdl/src/xspice/icm/ghdl/<your\_model>/} 
         \item \texttt{ngspice-nghdl/release/src/xspice/icm/ghdl/<your\_model>/}
         \end{itemize}
-    \end{itemize}
     \item Delete the name and description of that model from the files :
-    \begin{itemize}
         \begin{itemize}
         \item
      \texttt{ngspice-nghdl/src/xspice/icm/ghdl/modpath.lst}
      \item  \texttt{eSim\_Nghdl.lib}
      \end{itemize}
-    \end{itemize}
     
      Realign the content of these files by            removing any extra spaces or empty lines found between any two subsequent remaining         model names after deletion.
     
     \item Delete the file found at path : \\
     \texttt{eSim-version/src/modelParamXML/Nghdl/<your\_model>.xml}
-    
+\pagebreak
 \section {Appendix G: References}
 \item [1] A. S. Sedra and K. C. Smith, Microelectronic Circuits - Theory and Applications. Oxford University Press, 2009. 
 \item [2] K. M. Moudgalya, “Spoken Tutorial: A Collaborative and Scalable Education Technology,” CSI Communications, vol. 35, no. 6, pp. 10–12, September 2011, available at https://spoken-tutorial.org/CSI.pdf. 
@@ -298,7 +300,7 @@ https://scilab-test.garudaindia.in/cloud
 \item [8] (2020, March). [Online]. Available: http://www.aakashlabs.org/ 
 \item [9] (2020, March). [Online]. \\
 Available: http://en.wikipedia.org/wiki/Electronic\_design\_automation
-\item [10] (2020, March) Synaptic Package Manager Spoken Tutorial. [Online]. Available: https://www.spoken-tutorial.org/tutorial-search/?search\_foss=Linux&search\_language=English 
+\item [10] (2020, March) Synaptic Package Manager Spoken Tutorial. [Online]. Available:  https://www.spoken-tutorial.org/tutorial-search/?search\_foss=Linux\&search\_language=English
 \item [11] (2020, March). [Online]. Available: https://www.kicad-pcb.org/
 \item [12] (2020, March). [Online]. Available: ngspice.sourceforge.net/
 \item [13] (2020, March). [Online]. Available: http://scilab.in/ 
@@ -310,4 +312,7 @@ Available: https://launchpad.net/kicad/4.0/4.0.7
 Available: http://ngspice.sourceforge.net/docs/ngspice-manual.pdf 
 \item [18]   K. M. Moudgalya, “LATEX Training through Spoken Tutorials,” TUGboat, vol. 32, no. 3, pp. 251–257, 2011. 
 \item [19]   (2020, March). [Online]. Available: https://www.spoken-tutorial.org/ 
+\item [20]   (2022, September). [Online]. Available: https://skywater-pdk.readthedocs.io/en/main/
+\item [21]   (2022, September). [Online]. Available: https://github.com/google/skywater-pdk
+\item [22]   (2022, September). [Online]. Available: https://efabless.com/open\_shuttle\_program
 \end{enumerate}

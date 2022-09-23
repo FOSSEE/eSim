@@ -199,7 +199,7 @@ simulation and that created for PCB design. We need certain components
 like plots and current sources for simulation whereas these are not
 needed for PCB design. For PCB design, we would require connectors
 (e.g. DB15 and 2 pin connector) for taking signals in and out of the
-PCB whereas these have no meaning in simulation. This section covers schematic creation for simulation. Refer to \chapref{chap12} to know how to create schematic for PCB design.
+PCB whereas these have no meaning in simulation. This section covers schematic creation for simulation. Refer to \chapref{chap13} to know how to create schematic for PCB design.
 
 The first step in the creation of circuit schematic is the selection
 and placement of required components. Let  us  see  this  using  an  example.   Let  us  create  the  circuit schematic of an RC  filter given in \figref{schemfin} and do a transient simulation.  
@@ -352,7 +352,8 @@ while saving.
  2. Check the option {\tt Default Format} then 3. Click on Generate}
 \label{chap5net}
 \end{figure} 
-Now the netlist is ready to be simulated. Refer to \cite{kicad} or \cite{kicad2} to know more about Eeschema.
+Now the netlist is ready to be simulated. 
+% Refer to \cite{kicad} or \cite{kicad2} to know more about Eeschema.
 
 \section {Tools for creating the PCB layout}
 The Eeschema top toolbar also has two important tools which can help the user to generate the PCB layout of the created schematic.
@@ -362,7 +363,7 @@ Clicking on the \textit{Footprint Editor} tool will open the {\tt CvPcb}
 \index{CvPcb} window. This window will ideally open the .net file for the 
 current project. So, before using this tool, one should have the netlist 
 for PCB design (a .net file). To know more about how to assign footprints 
-to components, see \chapref{chap12}.
+to components, see \chapref{chap13}.
 
 \subsection {PCB Layout}
 Clicking on the \textit{Layout Editor} tool will open {\tt
@@ -370,7 +371,7 @@ Pcbnew}\index{Pcbnew}, the layout editor used in eSim. In this
 window, one will create the PCB. It involves laying tracks and vias,
 performing optimum routing of tracks, creating one or more copper
 layers for PCB, etc. It will be saved as a {\tt .brd} file in the 
-current project directory. \chapref{chap12} explains how to use the 
+current project directory. \chapref{chap13} explains how to use the 
 \textit{Layout Editor} to design a PCB. 
 
 
