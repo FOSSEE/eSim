@@ -84,9 +84,9 @@ jobs:
       # extract the number from the tag to pull the relevant manual from the website
       - name: Copy eSim manual which is available at https://static.fossee.in/esim/manuals/
         run: |
-          echo $GITHUB_REF_NAME
-          # echo "VERSION=$(echo $GITHUB_REF_NAME | cut -d 'v' -f 2)" >> $GITHUB_ENV
-          wget https://static.fossee.in/esim/manuals/eSim_Manual_$GITHUB_REF_NAME.pdf
+          # echo $GITHUB_REF_NAME
+          echo "VERSION=$(echo $GITHUB_REF_NAME | cut -d 'v' -f 2)" >> $GITHUB_ENV
+          wget https://static.fossee.in/esim/manuals/eSim_Manual_$VERSION.pdf
 
       - name: Zip the eSim_release folder
         run: |
