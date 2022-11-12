@@ -1,10 +1,17 @@
+# By Sai Charan Lanka (@saicharan0112) : Nov 12, 2022
+# This is the workflow to pack the eSim for Ubuntu OS which follows the steps shown in the installer branch and release the zip file which can be uploaded onto the website
+# Note: 
+# 1. Make sure the eSim manual for the version about to release, already exists in the https://static.fossee.in/esim/manuals/ location. Else the release fails.
+# 2. To trigger this workflow, create and push tags that start with "v".
+# For more info, refer to PR#230 and Issue#211
+
+
 name: Auto release of eSim for Ubuntu OS
 
 on:
   push:
     tags:
       - 'v*' # Push events to matching v*, i.e. v2.2, v2.3 etc
-  workflow_dispatch:
 
 
 jobs:
