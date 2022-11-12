@@ -90,7 +90,7 @@ jobs:
       - name: Zip the eSim_release folder
         run: |
           cd /home/runner/work/
-          zip -r eSim_release.zip eSim_release/
+          zip -r eSim-$VERSION.zip eSim_release/
 
 
 # Create a release and upload artifact
@@ -101,7 +101,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}
-          release_name: ${{ github.ref_name }}
+          release_name: eSim-$VERSION
           draft: false
           prerelease: false
 
@@ -112,8 +112,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: /home/runner/work/eSim_release.zip
-          asset_name: eSim_release.zip
+          asset_path: /home/runner/work/eSim-$VERSION.zip
+          asset_name: eSim-$VERSION.zip
           asset_content_type: application/zip
-      
-
