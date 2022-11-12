@@ -1,11 +1,9 @@
-#This flow will build the latest docker image, test the OpenFASOC flow in it and if it works, update the readme file and push it to the docker hub for reference
-
 name: Auto release of eSim for Ubuntu OS
 
 on:
   push:
     tags:
-      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'eSim-*' # Push events to matching v*, i.e. eSim-2.2, eSim-2.3 etc
   workflow_dispatch:
 
 
@@ -14,12 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+
 # Create eSim release directory
       - name: Preparing eSim for release
         run: mkdir /home/runner/work/eSim_release
 
-# Steps to prepare nghld.zip 
 
+# Steps to prepare nghld.zip 
       - name: Preparing nghdl for release
         run: mkdir /home/runner/work/nghdl_release
 
@@ -53,8 +52,8 @@ jobs:
           cp nghld.zip /home/runner/work/eSim_release/.
           tree /home/runner/work/
 
-# Steps to prepare eSim release directory
 
+# Steps to prepare eSim release directory
       - name: Checkout FOSSEE/eSim master branch
         uses: actions/checkout@v3
         with:
@@ -82,21 +81,27 @@ jobs:
         run: |
           cp Ubuntu/install-eSim.sh /home/runner/work/eSim_release/.
 
+      # extract the number from the tag to pull the relevant manual from the website
+      - name: Copy eSim manual which is available at https://static.fossee.in/esim/manuals/
+        run: |
+          version=echo ${{github.ref_name}} | tr -d "-" -f 2
+          wget https://static.fossee.in/esim/manuals/eSim_Manual_${{version}}.pdf
+
       - name: Zip the eSim_release folder
         run: |
           cd /home/runner/work/
           zip -r eSim_release.zip eSim_release/
 
-# Create a release and upload artifact
 
+# Create a release and upload artifact
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: test_tag1
-          release_name: Release test_tag2
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
           draft: false
           prerelease: false
 
