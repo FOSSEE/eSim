@@ -3,7 +3,7 @@ name: Auto release of eSim for Ubuntu OS
 on:
   push:
     tags:
-      - 'eSim-*' # Push events to matching v*, i.e. eSim-2.2, eSim-2.3 etc
+      - 'v*' # Push events to matching v*, i.e. v2.2, v2.3 etc
   workflow_dispatch:
 
 
@@ -84,7 +84,7 @@ jobs:
       # extract the number from the tag to pull the relevant manual from the website
       - name: Copy eSim manual which is available at https://static.fossee.in/esim/manuals/
         run: |
-          version=echo ${{github.ref_name}} | tr -d "-" -f 2
+          version=echo ${{github.ref_name}} | tr -d "v" -f 2
           wget https://static.fossee.in/esim/manuals/eSim_Manual_${{version}}.pdf
 
       - name: Zip the eSim_release folder
