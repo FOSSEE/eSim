@@ -1,0 +1,25 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\demux\demux.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 8/18/2022 2:01:37 AM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M2  /Vcc /Ebar Net-_M1-Pad1_ /Vcc mosfet_p		
+M1  Net-_M1-Pad1_ /Ebar /GND /GND mosfet_n		
+M3  /Vcc Net-_M1-Pad1_ Net-_M11-Pad2_ /Vcc mosfet_p		
+M9  /Vcc /A Net-_M11-Pad2_ /Vcc mosfet_p		
+M4  /Vcc /Ebar Net-_M10-Pad3_ /Vcc mosfet_p		
+M10  /Vcc /A Net-_M10-Pad3_ /Vcc mosfet_p		
+M5  Net-_M11-Pad2_ Net-_M1-Pad1_ Net-_M5-Pad3_ /GND mosfet_n		
+M6  Net-_M5-Pad3_ /A /GND /GND mosfet_n		
+M7  Net-_M10-Pad3_ /Ebar Net-_M7-Pad3_ /GND mosfet_n		
+M8  Net-_M7-Pad3_ /A /GND /GND mosfet_n		
+M13  /Vcc Net-_M11-Pad2_ /Y1 /Vcc mosfet_p		
+M11  /Y1 Net-_M11-Pad2_ /GND /GND mosfet_n		
+M14  /Vcc Net-_M10-Pad3_ /Y2 /Vcc mosfet_p		
+M12  /Y2 Net-_M10-Pad3_ /GND /GND mosfet_n		
+U1  /A /GND /Ebar /Y2 /Vcc /Y1 PORT		
+
+.end
