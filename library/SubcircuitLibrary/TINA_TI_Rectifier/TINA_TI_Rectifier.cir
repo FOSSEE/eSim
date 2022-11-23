@@ -1,0 +1,24 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\TINA_TI_Rectifier\TINA_TI_Rectifier.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 9/8/2022 12:13:00 PM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  ? Net-_C1-Pad1_ /Vin /Vneg ? Net-_C1-Pad2_ /Vpos ? lm_741		
+X2  ? Net-_R2-Pad1_ Net-_D2-Pad2_ /Vneg ? /Vout /Vpos ? lm_741		
+R1  /Vin GND 49.9		
+R3  Net-_D2-Pad2_ GND 1k		
+D2  Net-_C1-Pad2_ Net-_D2-Pad2_ eSim_Diode		
+D1  Net-_C1-Pad1_ Net-_C1-Pad2_ eSim_Diode		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 47p		
+R2  Net-_R2-Pad1_ Net-_C1-Pad1_ 1k		
+R4  /Vout Net-_R2-Pad1_ 1k		
+C3  /Vpos GND 100p		
+C5  /Vpos GND 100n		
+C2  /Vneg GND 100p		
+C4  /Vneg GND 100n		
+U1  /Vin /Vneg /Vout /Vpos PORT		
+
+.end
