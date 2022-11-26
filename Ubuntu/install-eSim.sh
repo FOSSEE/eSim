@@ -145,7 +145,7 @@ function installDependency
     pip3 install watchdog
 
     echo "Installing Hdlparse........................"
-    pip3 install hdlparse
+    pip3 install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
 
     echo "Installing Makerchip......................."
     pip3 install makerchip-app
