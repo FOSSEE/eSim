@@ -549,12 +549,69 @@ class Application(QtWidgets.QMainWindow):
                     psutil.AccessDenied, psutil.ZombieProcess):
                 pass
         return False
+    
+    def check_change_in_plotfile(self, currTime):
+        print("The function has executed")
+        try:
+            # if os.name == 'nt':
+            #     proc = 'mintty'
+            # else:
+            #     proc = 'xterm'
+
+            # Edited by Sumanto Kar 25/08/2021
+            if False and os.name != 'nt' and \
+                    self.checkIfProcessRunning('xterm') is False:
+                self.msg = QtWidgets.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Warning Message")
+                self.msg.showMessage(
+                    'Simulation was interrupted/failed. '
+                    'Please close all the Ngspice windows '
+                    'and then rerun the simulation.'
+                )
+                self.msg.exec_()
+                return
+
+            st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
+            print(st.st_mtime, currTime - 1)
+            if st.st_mtime >= currTime - 1:
+                self.is_file_changed = True
+                self.timer.stop()
+                self.plot_simulation()
+                return
+        except Exception:
+            pass
+
+        if self.is_file_changed is False:
+            self.timer.start()
+
+        # Fail Safe ===>
+        self.count += 1
+        if self.count >= 10:
+            print(
+                "Ngspice taking too long for simulation. "
+                "Check netlist file (*.cir.out) "
+                "to change simulation parameters."
+            )
+
+            self.msg = QtWidgets.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Warning Message")
+            self.msg.showMessage(
+                'Ngspice taking too long for simulation. '
+                'Check netlist file (*.cir.out) '
+                'to change simulation parameters.'
+            )
+            self.msg.exec_()
+
+            return
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
         if self.projDir is not None:
+            currTime = time.time()
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
@@ -572,71 +629,11 @@ class Application(QtWidgets.QMainWindow):
                 self.msg.exec_()
                 return
 
-            currTime = time.time()
-            count = 0
-            while True:
-                try:
-                    # if os.name == 'nt':
-                    #     proc = 'mintty'
-                    # else:
-                    #     proc = 'xterm'
-
-                    # Edited by Sumanto Kar 25/08/2021
-                    if os.name != 'nt' and \
-                            self.checkIfProcessRunning('xterm') is False:
-                        self.msg = QtWidgets.QErrorMessage()
-                        self.msg.setModal(True)
-                        self.msg.setWindowTitle("Warning Message")
-                        self.msg.showMessage(
-                            'Simulation was interrupted/failed. '
-                            'Please close all the Ngspice windows '
-                            'and then rerun the simulation.'
-                        )
-                        self.msg.exec_()
-                        return
-
-                    st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-                    if st.st_mtime >= currTime:
-                        break
-                except Exception:
-                    pass
-                time.sleep(1)
-
-                # Fail Safe ===>
-                count += 1
-                if count >= 10:
-                    print(
-                        "Ngspice taking too long for simulation. "
-                        "Check netlist file (*.cir.out) "
-                        "to change simulation parameters."
-                    )
-
-                    self.msg = QtWidgets.QErrorMessage()
-                    self.msg.setModal(True)
-                    self.msg.setWindowTitle("Warning Message")
-                    self.msg.showMessage(
-                        'Ngspice taking too long for simulation. '
-                        'Check netlist file (*.cir.out) '
-                        'to change simulation parameters.'
-                    )
-                    self.msg.exec_()
-
-                    return
-
-            # Calling Python Plotting
-            try:
-                self.obj_Mainview.obj_dockarea.plottingEditor()
-            except Exception as e:
-                self.msg = QtWidgets.QErrorMessage()
-                self.msg.setModal(True)
-                self.msg.setWindowTitle("Error Message")
-                self.msg.showMessage(
-                    'Error while opening python plotting Editor.'
-                    ' Please look at console for more details.'
-                )
-                self.msg.exec_()
-                print("Exception Message:", str(e), traceback.format_exc())
-                self.obj_appconfig.print_error('Exception Message : ' + str(e))
+            self.count = 0
+            self.timer = QtCore.QTimer(self)
+            self.timer.setInterval(1000)
+            self.timer.timeout.connect(lambda: self.check_change_in_plotfile(currTime))
+            self.timer.start()
 
         else:
             self.msg = QtWidgets.QErrorMessage()
@@ -647,6 +644,21 @@ class Application(QtWidgets.QMainWindow):
                 ' You can either create new project or open existing project'
             )
             self.msg.exec_()
+
+    def plot_simulation(self):
+        try:
+            self.obj_Mainview.obj_dockarea.plottingEditor()
+        except Exception as e:
+            self.msg = QtWidgets.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                'Error while opening python plotting Editor.'
+                ' Please look at console for more details.'
+            )
+            self.msg.exec_()
+            print("Exception Message:", str(e), traceback.format_exc())
+            self.obj_appconfig.print_error('Exception Message : ' + str(e))
 
     def open_subcircuit(self):
         """

@@ -1,6 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
 from configparser import ConfigParser
+from progressBar import progressBar
 import os
 
 
@@ -19,6 +20,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.terminal = QtWidgets.QWidget(self)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
+        self.errorFlag = False
 
         print("Argument to ngspice command : ", command)
 
@@ -39,12 +41,16 @@ class NgspiceWidget(QtWidgets.QWidget):
             os.chdir(tempdir)
 
         else:                   # For Linux OS
-            self.command = "cd " + projPath + \
-                ";ngspice -r " + command.replace(".cir.out", ".raw") + \
-                " " + command
+            # self.command = "cd " + projPath + \
+            #     ";ngspice -r " + command.replace(".cir.out", ".raw") + \
+            #     " " + command
             # Creating argument for process
-            self.args = ['-hold', '-e', self.command]
-            self.process.start('xterm', self.args)
+            self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
+            self.process.setWorkingDirectory(projPath)
+            self.launchProgressBar()
+            self.process.start('ngspice', self.args)
+            self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
+            self.process.finished.connect(self.progressBarUi.showProgressCompleted)
             self.obj_appconfig.process_obj.append(self.process)
             print(self.obj_appconfig.proc_dict)
             (
@@ -52,7 +58,23 @@ class NgspiceWidget(QtWidgets.QWidget):
                 [self.obj_appconfig.current_project['ProjectName']].append(
                     self.process.pid())
             )
-            self.process = QtCore.QProcess(self)
-            self.command = "gaw " + command.replace(".cir.out", ".raw")
-            self.process.start('sh', ['-c', self.command])
-            print(self.command)
+            self.gawProcess = QtCore.QProcess(self)
+            self.gawCommand = "gaw " + command.replace(".cir.out", ".raw")
+            self.gawProcess.start('sh', ['-c', self.gawCommand])
+            print(self.gawCommand)
+
+    @QtCore.pyqtSlot()
+    def readyReadAll(self):
+        self.progressBarUi.writeIntoConsole(
+            str(self.process.readAllStandardOutput().data(), encoding='utf-8')
+        )
+        stderror = self.process.readAllStandardError()
+        if stderror.toUpper().contains(b"ERROR"):
+            self.errorFlag = True
+        self.progressBarUi.writeIntoConsole(str(stderror.data(), encoding='utf-8'))
+
+    def launchProgressBar(self):
+        self.progressBar = QtWidgets.QWidget()
+        self.progressBarUi = progressBar.Ui_Dialog()
+        self.progressBarUi.setupUi(self.progressBar)
+        self.progressBar.show()
