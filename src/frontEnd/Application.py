@@ -83,6 +83,8 @@ class Application(QtWidgets.QMainWindow):
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
 
+        self.is_file_changed = False
+
     def initToolBar(self):
         """
         This function initializes Tool Bars.
@@ -573,8 +575,10 @@ class Application(QtWidgets.QMainWindow):
                 return
 
             st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-            print(st.st_mtime, currTime - 1)
-            if st.st_mtime >= currTime - 1:
+            is_ngspice_running = self.checkIfProcessRunning("ngspice")
+            print("Ngspice is running:", is_ngspice_running)
+            print(st.st_mtime, currTime)
+            if st.st_mtime >= currTime and not is_ngspice_running:
                 self.is_file_changed = True
                 self.timer.stop()
                 self.plot_simulation()
