@@ -18,6 +18,8 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.obj_appconfig = Appconfig()
         self.process = QtCore.QProcess(self)
         self.terminal = QtWidgets.QWidget(self)
+        self.progressBarUi = progressBar.Ui_Simulation()
+        self.progressBarUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
         self.errorFlag = False
@@ -47,7 +49,6 @@ class NgspiceWidget(QtWidgets.QWidget):
             # Creating argument for process
             self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
             self.process.setWorkingDirectory(projPath)
-            self.launchProgressBar()
             self.process.start('ngspice', self.args)
             self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
             self.process.finished.connect(self.progressBarUi.showProgressCompleted)
@@ -73,8 +74,8 @@ class NgspiceWidget(QtWidgets.QWidget):
             self.errorFlag = True
         self.progressBarUi.writeIntoConsole(str(stderror.data(), encoding='utf-8'))
 
-    def launchProgressBar(self):
-        self.progressBar = QtWidgets.QWidget()
-        self.progressBarUi = progressBar.Ui_Dialog()
-        self.progressBarUi.setupUi(self.progressBar)
-        self.progressBar.show()
+    # def launchProgressBar(self):
+    #     self.progressBar = QtWidgets.QWidget()
+    #     self.progressBarUi = progressBar.Ui_Dialog()
+    #     self.progressBarUi.setupUi(self.progressBar)
+    #     self.progressBar.show()
