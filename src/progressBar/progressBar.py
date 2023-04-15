@@ -15,27 +15,38 @@ class Ui_Simulation(object):
     def setupUi(self, Simulation):
         Simulation.setObjectName("Simulation")
         Simulation.resize(1250, 652)
+        self.gridLayout = QtWidgets.QGridLayout(Simulation)
+        self.gridLayout.setObjectName("gridLayout")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setObjectName("verticalLayout")
         self.progressBar = QtWidgets.QProgressBar(Simulation)
-        self.progressBar.setGeometry(QtCore.QRect(27, 32, 660, 31))
         self.progressBar.setStyleSheet("")
         self.progressBar.setMaximum(0)
         self.progressBar.setProperty("value", -1)
         self.progressBar.setFormat("")
         self.progressBar.setObjectName("progressBar")
+        self.verticalLayout.addWidget(self.progressBar)
         self.simulationConsole = QtWidgets.QTextEdit(Simulation)
-        self.simulationConsole.setGeometry(QtCore.QRect(30, 90, 661, 430))
         self.simulationConsole.setStyleSheet("")
         self.simulationConsole.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.simulationConsole.setObjectName("simulationConsole")
+        self.verticalLayout.addWidget(self.simulationConsole)
+        self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.pushButton = QtWidgets.QPushButton(Simulation)
-        self.pushButton.setGeometry(QtCore.QRect(839, 330, 241, 25))
         self.pushButton.setObjectName("pushButton")
+        self.verticalLayout_2.addWidget(self.pushButton)
         self.pushButton_2 = QtWidgets.QPushButton(Simulation)
-        self.pushButton_2.setGeometry(QtCore.QRect(840, 220, 240, 25))
         self.pushButton_2.setObjectName("pushButton_2")
+        self.verticalLayout_2.addWidget(self.pushButton_2)
         self.pushButton_3 = QtWidgets.QPushButton(Simulation)
-        self.pushButton_3.setGeometry(QtCore.QRect(840, 430, 240, 25))
         self.pushButton_3.setObjectName("pushButton_3")
+        self.verticalLayout_2.addWidget(self.pushButton_3)
+        self.pushButton_4 = QtWidgets.QPushButton(Simulation)
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.verticalLayout_2.addWidget(self.pushButton_4)
+        self.gridLayout.addLayout(self.verticalLayout_2, 0, 1, 1, 1)
 
         self.retranslateUi(Simulation)
         QtCore.QMetaObject.connectSlotsByName(Simulation)
@@ -48,9 +59,10 @@ class Ui_Simulation(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The quick brown fox jumped over the lazy dog</p></body></html>"))
-        self.pushButton.setText(_translate("Simulation", "Button 2"))
-        self.pushButton_2.setText(_translate("Simulation", "Cancel simulation"))
-        self.pushButton_3.setText(_translate("Simulation", "Button 3"))
+        self.pushButton.setText(_translate("Simulation", "PushButton"))
+        self.pushButton_2.setText(_translate("Simulation", "PushButton"))
+        self.pushButton_3.setText(_translate("Simulation", "PushButton"))
+        self.pushButton_4.setText(_translate("Simulation", "PushButton"))
 
     def writeIntoConsole(self, consoleLog):    
         self.simulationConsole.insertPlainText(consoleLog)    
@@ -58,3 +70,13 @@ class Ui_Simulation(object):
     def showProgressCompleted(self):    
         self.progressBar.setMaximum(100)    
         self.progressBar.setProperty("value", 100)
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Simulation = QtWidgets.QWidget()
+    ui = Ui_Simulation()
+    ui.setupUi(Simulation)
+    Simulation.show()
+    sys.exit(app.exec_())
