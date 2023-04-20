@@ -67,7 +67,7 @@ FunctionEnd
 ;General
 	
 !define PRODUCT_NAME "eSim"
-!define PRODUCT_VERSION "2.3"
+!define PRODUCT_VERSION "2.3-Beta"
 !define VERSION "2.3.0.0"
 !define PRODUCT_PUBLISHER "FOSSEE, IIT Bombay"
 !define PRODUCT_WEB_SITE "https://esim.fossee.in/"
@@ -140,7 +140,7 @@ FunctionEnd
 ;--------------------------------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "eSim-2.3_installer.exe"
+OutFile "eSim-2.3-Beta_installer.exe"
 
 
 Function .onVerifyInstDir
@@ -231,20 +231,20 @@ SectionEnd
 Section -InstallKiCad
 
   SetOutPath "$EXEDIR"
-  File "kicad-4.0.7-i686.exe"
+  File "kicad-6.0.11-i686.exe"
 
   SetOutPath "$INSTDIR"
   SetDetailsPrint both
   DetailPrint "Installing: KiCad......"
   SetDetailsPrint listonly
-  ExecWait '"$EXEDIR\kicad-4.0.7-i686.exe" /S /D=$INSTDIR\KiCad'
+  ExecWait '"$EXEDIR\kicad-6.0.11-i686.exe" /S /D=$INSTDIR\KiCad'
   SetDetailsPrint both
   
   Goto endActiveSync
   endActiveSync:
  
     ;Remove not required files
-    Delete "$EXEDIR\kicad-4.0.7-i686.exe"
+    Delete "$EXEDIR\kicad-6.0.11-i686.exe"
     Delete "$PROFILE\..\Public\Desktop\KiCad.lnk"
 
     EnVar::SetHKLM
@@ -254,14 +254,14 @@ Section -InstallKiCad
 
     ZipDLL::extractall "$INSTDIR\eSim\library\kicadLibrary.zip" "$INSTDIR\eSim\library\"
 
-    ;CopyFiles "$INSTDIR\eSim\library\kicadLibrary\library\*" "$INSTDIR\KiCad\share\kicad\library\"
+    ; CopyFiles "$INSTDIR\eSim\library\kicadLibrary\library\*" "$INSTDIR\KiCad\share\kicad\library\"
 
     ;Copy KiCad library made for eSim
-    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\kicad_eSim-Library\*" "$INSTDIR\KiCad\share\kicad\library\"
+    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\kicad_eSim-Library\*" "$INSTDIR\KiCad\share\kicad\symbols\" ;kicad v6 
     
-    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\modules\*" "$INSTDIR\KiCad\share\kicad\modules\"
+    ;CopyFiles "$INSTDIR\eSim\library\kicadLibrary\modules\*" "$INSTDIR\KiCad\share\kicad\footprints\"
 
-    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\template\*" "$INSTDIR\KiCad\share\kicad\template\"
+    ;CopyFiles "$INSTDIR\eSim\library\kicadLibrary\template\*" "$INSTDIR\KiCad\share\kicad\template\"
  
 
     ;Remove older KiCad config files (if any).
