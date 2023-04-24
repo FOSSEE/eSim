@@ -254,9 +254,9 @@ class DeviceModel(QtWidgets.QWidget):
                 ")
 
                 self.grid.addWidget(jfetbox)
-		
-		# Adding Device Details #
-	        # Increment row and widget count
+
+                # Adding Device Details #
+                # Increment row and widget count
                 self.row = self.row + 1
                 self.devicemodel_dict_end[words[0]] = self.count
                 self.count = self.count + 1
@@ -316,8 +316,8 @@ class DeviceModel(QtWidgets.QWidget):
                 ")
 
                 self.grid.addWidget(switchbox)
-	
-		# Adding Device Details #
+
+                # Adding Device Details #
 
                 # Increment row and widget count
                 self.row = self.row + 1
@@ -328,7 +328,7 @@ class DeviceModel(QtWidgets.QWidget):
                 # print("Device Model ymod:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 ymodbox = QtWidgets.QGroupBox()
-                ymodhgrid = QtWidgets.QGridLayout()
+                ymodgrid = QtWidgets.QGridLayout()
                 ymodbox.setTitle(
                     "Add library for ymod " +
                     words[0] +
@@ -379,10 +379,6 @@ class DeviceModel(QtWidgets.QWidget):
                 ")
 
                 self.grid.addWidget(ymodbox)
-	
-				
-				
-				
 
                 # Adding Device Details #
 
@@ -392,7 +388,7 @@ class DeviceModel(QtWidgets.QWidget):
                 self.count = self.count + 1
 
             elif eachline[0] == 'm':
-            	
+
                 self.devicemodel_dict_beg[words[0]] = self.count
                 mosfetbox = QtWidgets.QGroupBox()
                 mosfetgrid = QtWidgets.QGridLayout()
@@ -461,12 +457,12 @@ class DeviceModel(QtWidgets.QWidget):
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
                             while i <= end:
-                                self.entry_var[i].setText(child[i-beg].text)
+                                self.entry_var[i].setText(child[i - beg].text)
                                 if (i - beg) == 0:
                                     if os.path.exists(child[0].text):
                                         self.entry_var[i] \
-                                            .setText(child[i-beg].text)
-                                        path_name = child[i-beg].text
+                                            .setText(child[i - beg].text)
+                                        path_name = child[i - beg].text
                                     else:
                                         self.entry_var[i].setText("")
                                 i = i + 1
@@ -561,4 +557,3 @@ class DeviceModel(QtWidgets.QWidget):
                 ":" + "W=" + width + " L=" + length + " M=" + multifactor
         else:
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
-
