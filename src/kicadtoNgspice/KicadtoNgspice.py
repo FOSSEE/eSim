@@ -16,18 +16,20 @@
 #      REVISION: Sunday 18 September 2022
 # =========================================================================
 
-import sys
 import os
-from PyQt5 import QtWidgets
-from .Processing import PrcocessNetlist
-from . import Analysis
-from . import Source
-from . import Model
-from . import DeviceModel
-from . import SubcircuitTab
-from . import Convert
-from . import TrackWidget
+import sys
 from xml.etree import ElementTree as ET
+
+from PyQt5 import QtWidgets
+
+from . import Analysis
+from . import Convert
+from . import DeviceModel
+from . import Model
+from . import Source
+from . import SubcircuitTab
+from . import TrackWidget
+from .Processing import PrcocessNetlist
 
 
 class MainWindow(QtWidgets.QWidget):
@@ -93,10 +95,11 @@ class MainWindow(QtWidgets.QWidget):
             schematicInfo, sourcelist)
 
         # List storing model detail
-        global modelList, outputOption,\
-            unknownModelList, multipleModelList, plotText
+        global modelList, outputOption, unknownModelList, multipleModelList, \
+            plotText, microcontrollerList
 
         modelList = []
+        microcontrollerList = []
         outputOption = []
         plotText = []
         (
@@ -109,6 +112,10 @@ class MainWindow(QtWidgets.QWidget):
         ) = obj_proc.convertICintoBasicBlocks(
             schematicInfo, outputOption, modelList, plotText
         )
+        for line in modelList:
+            if line[6] == "Nghdl":
+                microcontrollerList.append(line)
+                modelList.remove(line)
         # print("=======================================")
         # print("Model available in the Schematic :", modelList)
 
@@ -124,7 +131,7 @@ class MainWindow(QtWidgets.QWidget):
             self.msg.setModal(True)
             self.msg.setWindowTitle("Unknown Models")
             self.content = "Your schematic contain unknown model " + \
-                ', '.join(unknownModelList)
+                           ', '.join(unknownModelList)
             self.msg.showMessage(self.content)
             self.msg.exec_()
 
@@ -134,7 +141,7 @@ class MainWindow(QtWidgets.QWidget):
             self.msg.setWindowTitle("Multiple Models")
             self.mcontent = "Look like you have duplicate model in \
             modelParamXML directory " + \
-                ', '.join(multipleModelList[0])
+                            ', '.join(multipleModelList[0])
             self.msg.showMessage(self.mcontent)
             self.msg.exec_()
 
@@ -179,6 +186,9 @@ class MainWindow(QtWidgets.QWidget):
             - Subcircuits         => obj_subcircuitTab
             => SubcircuitTab.SubcircuitTab(`schematicInfo`,`path_to_projFile`)
 
+            - Microcontrollers         => obj_microcontroller
+            => Model.Model(schematicInfo, microcontrollerList, self.clarg1)
+
         - Finally pass each of these objects, to widgets
         - convertWindow > mainLayout > tabWidgets > AnalysisTab, SourceTab ...
         """
@@ -213,6 +223,12 @@ class MainWindow(QtWidgets.QWidget):
             schematicInfo, self.clarg1)
         self.subcircuitTab.setWidget(obj_subcircuitTab)
         self.subcircuitTab.setWidgetResizable(True)
+        global obj_microcontroller
+        self.microcontrollerTab = QtWidgets.QScrollArea()
+        obj_microcontroller = Model.Model(schematicInfo, microcontrollerList,
+                                          self.clarg1)
+        self.microcontrollerTab.setWidget(obj_microcontroller)
+        self.microcontrollerTab.setWidgetResizable(True)
 
         self.tabWidget = QtWidgets.QTabWidget()
         # self.tabWidget.TabShape(QtWidgets.QTabWidget.Rounded)
@@ -221,6 +237,7 @@ class MainWindow(QtWidgets.QWidget):
         self.tabWidget.addTab(self.modelTab, "Ngspice Model")
         self.tabWidget.addTab(self.deviceModelTab, "Device Modeling")
         self.tabWidget.addTab(self.subcircuitTab, "Subcircuits")
+        self.tabWidget.addTab(self.microcontrollerTab, "Microcontroller")
         self.mainLayout = QtWidgets.QVBoxLayout()
         self.mainLayout.addWidget(self.tabWidget)
         # self.mainLayout.addStretch(1)
@@ -247,9 +264,9 @@ class MainWindow(QtWidgets.QWidget):
 
         try:
             fr = open(
-                    os.path.join(
-                        projpath, project_name + "_Previous_Values.xml"), 'r'
-                )
+                os.path.join(
+                    projpath, project_name + "_Previous_Values.xml"), 'r'
+            )
             temp_tree = ET.parse(fr)
             temp_root = temp_tree.getroot()
         except BaseException:
@@ -552,7 +569,8 @@ class MainWindow(QtWidgets.QWidget):
                     for grand_child in child:
                         if i <= end:
                             grand_child.text = \
-                              str(obj_model.obj_trac.model_entry_var[i].text())
+                                str(obj_model.obj_trac.model_entry_var[
+                                        i].text())
                             i = i + 1
                     tmp_check = 1
 
@@ -560,24 +578,24 @@ class MainWindow(QtWidgets.QWidget):
                 attr_ui = ET.SubElement(attr_model, line[3], name="type")
                 attr_ui.text = line[2]
                 for key, value in line[7].items():
-                    if(
-                        hasattr(value, '__iter__') and
-                        i <= end and not isinstance(value, str)
+                    if (
+                            hasattr(value, '__iter__') and
+                            i <= end and not isinstance(value, str)
                     ):
                         for item in value:
                             ET.SubElement(
                                 attr_ui, "field" + str(i + 1), name=item
                             ).text = str(
-                                  obj_model.obj_trac.model_entry_var[i].text()
-                                )
+                                obj_model.obj_trac.model_entry_var[i].text()
+                            )
                             i = i + 1
 
                     else:
                         ET.SubElement(
                             attr_ui, "field" + str(i + 1), name=value
                         ).text = str(
-                                obj_model.obj_trac.model_entry_var[i].text()
-                            )
+                            obj_model.obj_trac.model_entry_var[i].text()
+                        )
                         i = i + 1
 
         # Writing Device Model values
@@ -596,7 +614,7 @@ class MainWindow(QtWidgets.QWidget):
 
             while it <= end:
                 ET.SubElement(attr_var, "field").text = \
-                        str(obj_devicemodel.entry_var[it].text())
+                    str(obj_devicemodel.entry_var[it].text())
                 it = it + 1
 
         # Writing Subcircuit values
@@ -615,8 +633,70 @@ class MainWindow(QtWidgets.QWidget):
 
             while it <= end:
                 ET.SubElement(attr_var, "field").text = \
-                        str(obj_subcircuitTab.entry_var[it].text())
+                    str(obj_subcircuitTab.entry_var[it].text())
                 it = it + 1
+
+        # Writing for Microcontroller
+
+        if check == 0:
+            attr_model = ET.SubElement(attr_parent, "microcontroller")
+        if check == 1:
+            for child in attr_parent:
+                if child.tag == "microcontroller":
+                    attr_model = child
+        i = 0
+
+        # tmp_check is a variable to check for duplicates in the xml file
+        tmp_check = 0
+        # tmp_i is the iterator in case duplicates are there;
+        # then in that case we need to replace only the child node and
+        # not create a new parent node
+
+        for line in modelList:
+            tmp_check = 0
+            if line[6] == "Nghdl":
+                for rand_itr in obj_model.obj_trac.modelTrack:
+                    if rand_itr[2] == line[2] and rand_itr[3] == line[3]:
+                        start = rand_itr[7]
+                        end = rand_itr[8]
+
+                i = start
+                for child in attr_model:
+                    if child.text == line[2] and child.tag == line[3]:
+                        for grand_child in child:
+                            if i <= end:
+                                grand_child.text = str(
+                                    obj_model.obj_trac.model_entry_var[
+                                        i].text())
+                                i = i + 1
+                        tmp_check = 1
+
+                if tmp_check == 0:
+                    attr_ui = ET.SubElement(attr_model, line[3], name="type")
+                    attr_ui.text = line[2]
+
+                    for key, value in line[7].items():
+                        if (
+                                hasattr(value, '__iter__') and
+                                i <= end and not isinstance(value, str)
+                        ):
+                            for item in value:
+                                ET.SubElement(
+                                    attr_ui, "field" + str(i + 1), name=item
+                                ).text = str(
+                                    obj_microcontroller.obj_trac.
+                                    model_entry_var[i].text()
+                                )
+                                i = i + 1
+
+                        else:
+                            ET.SubElement(
+                                attr_ui, "field" + str(i + 1), name=value
+                            ).text = str(
+                                obj_microcontroller.obj_trac.model_entry_var[
+                                    i].text()
+                            )
+                            i = i + 1
 
         # xml written to previous value file for the project
         tree = ET.ElementTree(attr_parent)
@@ -761,14 +841,14 @@ class MainWindow(QtWidgets.QWidget):
             words = eachline.split()
             option = words[0]
             if (option == '.ac' or option == '.dc' or option ==
-                '.disto' or option == '.noise' or
-                option == '.op' or option == '.pz' or option ==
-                '.sens' or option == '.tf' or
+                    '.disto' or option == '.noise' or
+                    option == '.op' or option == '.pz' or option ==
+                    '.sens' or option == '.tf' or
                     option == '.tran'):
                 analysisOption.append(eachline + '\n')
 
             elif (option == '.save' or option == '.print' or option ==
-                    '.plot' or option == '.four'):
+                  '.plot' or option == '.four'):
                 eachline = eachline.strip('.')
                 outputOption.append(eachline + '\n')
             elif (option == '.nodeset' or option == '.ic'):
@@ -849,17 +929,17 @@ class MainWindow(QtWidgets.QWidget):
                     for i in range(2, len(words) - 1):
                         subcktInfo += words[i] + " "
                     continue
-            if(
-                words[0] == ".end" or
-                words[0] == ".ac" or
-                words[0] == ".dc" or
-                words[0] == ".tran" or
-                words[0] == '.disto' or
-                words[0] == '.noise' or
-                words[0] == '.op' or
-                words[0] == '.pz' or
-                words[0] == '.sens' or
-                words[0] == '.tf'
+            if (
+                    words[0] == ".end" or
+                    words[0] == ".ac" or
+                    words[0] == ".dc" or
+                    words[0] == ".tran" or
+                    words[0] == '.disto' or
+                    words[0] == '.noise' or
+                    words[0] == '.op' or
+                    words[0] == '.pz' or
+                    words[0] == '.sens' or
+                    words[0] == '.tf'
             ):
                 continue
             elif words[0] == ".control":
