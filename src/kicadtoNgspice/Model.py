@@ -15,45 +15,6 @@ class Model(QtWidgets.QWidget):
       The widgets are created dynamically in the Model Tab.
     """
 
-    # by Sumanto, Jay and Vatsal
-
-    def addHex(self):
-        """
-        This function is use to keep track of all Device Model widget
-        """
-        if os.name == 'nt':
-            self.home = os.path.join('library', 'config')
-        else:
-            self.home = os.path.expanduser('~')
-
-        self.parser = ConfigParser()
-        self.parser.read(os.path.join(
-            self.home, os.path.join('.nghdl', 'config.ini')))
-        self.nghdl_home = self.parser.get('NGHDL', 'NGHDL_HOME')
-
-        self.hexfile = QtCore.QDir.toNativeSeparators(
-            QtWidgets.QFileDialog.getOpenFileName(
-                self, "Open Hex Directory", os.path.expanduser('~'),
-                "Text files (*.txt);;HEX files (*.hex)"
-            )[0]
-        )
-
-        self.text = open(self.hexfile).read()
-        chosen_file_path = os.path.abspath(self.hexfile)
-        filename = os.path.basename(chosen_file_path)
-
-        path1 = os.sep + "src" + os.sep + "xspice" + os.sep + "icm" \
-            + os.sep + "ghdl" + os.sep + self.model_name
-        path2 = os.sep + "DUTghdl" + os.sep
-
-        path_new = self.nghdl_home + path1 + path2
-
-        self.hexloc = path_new + filename
-        self.file = open(self.hexloc, "w")
-        self.file.write(self.text)
-        self.file.close()
-        self.entry_var[self.nextcount - 1].setText(chosen_file_path)
-
     def __init__(
             self,
             schematicInfo,
@@ -80,9 +41,7 @@ class Model(QtWidgets.QWidget):
                 if child.tag == "model":
                     root = child
         except BaseException:
-
             check = 0
-            print("Model Previous Values XML is Empty")
 
         # Creating track widget object
 
@@ -97,7 +56,8 @@ class Model(QtWidgets.QWidget):
 
         self.start = 0
         self.end = 0
-        self.entry_var = {}
+        self.entry_var = []
+        self.hex_btns = []
         self.text = ""
 
         # Creating GUI dynamically for Model tab
@@ -121,7 +81,8 @@ class Model(QtWidgets.QWidget):
 
             i = 0
             for (key, value) in line[7].items():
-
+                print(value)
+                print(key)
                 # Check if value is iterable
 
                 if not isinstance(value, str) and hasattr(value, "__iter__"):
@@ -136,12 +97,11 @@ class Model(QtWidgets.QWidget):
                         self.obj_trac.model_entry_var[
                             self.nextcount
                         ] = QtWidgets.QLineEdit()
-                        self.entry_var[self.count] = QtWidgets.QLineEdit()
-                        self.entry_var[self.count].setText("")
 
-                        if value == "Path of your .hex file":
-                            self.entry_var[self.nextcount].setReadOnly(True)
-                            self.add_hex_btn(modelgrid, modelbox)
+                        self.obj_trac.model_entry_var[
+                            self.nextcount] = QtWidgets.QLineEdit()
+                        self.obj_trac.model_entry_var[self.nextcount].setText(
+                            "")
 
                         try:
                             for child in root:
@@ -159,6 +119,11 @@ class Model(QtWidgets.QWidget):
                         modelgrid.addWidget(self.entry_var[self.nextcount],
                                             self.nextrow, 1)
 
+                        modelgrid.addWidget(
+                            self.obj_trac.model_entry_var[self.nextcount],
+                            self.nextrow,
+                            1, )
+
                         temp_tag.append(self.nextcount)
                         self.nextcount = self.nextcount + 1
                         self.nextrow = self.nextrow + 1
@@ -172,12 +137,21 @@ class Model(QtWidgets.QWidget):
                     self.obj_trac.model_entry_var[
                         self.nextcount
                     ] = QtWidgets.QLineEdit()
-                    self.entry_var[self.nextcount] = QtWidgets.QLineEdit()
-                    self.entry_var[self.nextcount].setText("")
 
-                    if value == "Path of your .hex file":
-                        self.entry_var[self.nextcount].setReadOnly(True)
-                        self.add_hex_btn(modelgrid, modelbox)
+                    self.obj_trac.model_entry_var[
+                        self.nextcount] = QtWidgets.QLineEdit()
+                    self.obj_trac.model_entry_var[self.nextcount].setText("")
+
+                    # CSS
+                    modelbox.setStyleSheet(
+                        " \
+                    QGroupBox { border: 1px solid gray; border-radius:\
+                    9px; margin-top: 0.5em; } \
+                    QGroupBox::title { subcontrol-origin: margin; left:\
+                    10px; padding: 0 3px 0 3px; } \
+                    "
+                    )
+                    self.grid.addWidget(modelbox)
 
                     try:
                         for child in root:
@@ -190,8 +164,14 @@ class Model(QtWidgets.QWidget):
                                 i = i + 1
                     except BaseException:
                         pass
+
                     modelgrid.addWidget(self.entry_var[self.nextcount],
                                         self.nextrow, 1)
+                    modelgrid.addWidget(
+                        self.obj_trac.model_entry_var[self.nextcount],
+                        self.nextrow,
+                        1, )
+
                     tag_dict[key] = self.nextcount
                     self.nextcount = self.nextcount + 1
                     self.nextrow = self.nextrow + 1

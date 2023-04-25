@@ -10,10 +10,10 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#      MODIFIED: Rahul Paknikar, rahulp@cse.iitb.ac.in
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Wednesday 04 March 2015
-#      REVISION: Sunday 18 September 2022
+#      REVISION: Tuesday 25 April 2023
 # =========================================================================
 
 import os
@@ -26,6 +26,7 @@ from . import Analysis
 from . import Convert
 from . import DeviceModel
 from . import Model
+from . import Microcontroller
 from . import Source
 from . import SubcircuitTab
 from . import TrackWidget
@@ -116,8 +117,6 @@ class MainWindow(QtWidgets.QWidget):
             if line[6] == "Nghdl":
                 microcontrollerList.append(line)
                 modelList.remove(line)
-        # print("=======================================")
-        # print("Model available in the Schematic :", modelList)
 
         """
         - Checking if any unknown model is used in schematic which is not
@@ -225,8 +224,8 @@ class MainWindow(QtWidgets.QWidget):
         self.subcircuitTab.setWidgetResizable(True)
         global obj_microcontroller
         self.microcontrollerTab = QtWidgets.QScrollArea()
-        obj_microcontroller = Model.Model(schematicInfo, microcontrollerList,
-                                          self.clarg1)
+        obj_microcontroller = Microcontroller.\
+            Microcontroller(schematicInfo, microcontrollerList, self.clarg1)
         self.microcontrollerTab.setWidget(obj_microcontroller)
         self.microcontrollerTab.setWidgetResizable(True)
 
@@ -637,13 +636,13 @@ class MainWindow(QtWidgets.QWidget):
                 it = it + 1
 
         # Writing for Microcontroller
-
         if check == 0:
-            attr_model = ET.SubElement(attr_parent, "microcontroller")
+            attr_microcontroller = ET.SubElement(attr_parent,
+                                                 "microcontroller")
         if check == 1:
             for child in attr_parent:
                 if child.tag == "microcontroller":
-                    attr_model = child
+                    attr_microcontroller = child
         i = 0
 
         # tmp_check is a variable to check for duplicates in the xml file
@@ -652,51 +651,50 @@ class MainWindow(QtWidgets.QWidget):
         # then in that case we need to replace only the child node and
         # not create a new parent node
 
-        for line in modelList:
+        for line in microcontrollerList:
             tmp_check = 0
-            if line[6] == "Nghdl":
-                for rand_itr in obj_model.obj_trac.modelTrack:
-                    if rand_itr[2] == line[2] and rand_itr[3] == line[3]:
-                        start = rand_itr[7]
-                        end = rand_itr[8]
+            for rand_itr in obj_microcontroller.obj_trac.microcontrollerTrack:
+                if rand_itr[2] == line[2] and rand_itr[3] == line[3]:
+                    start = rand_itr[7]
+                    end = rand_itr[8]
 
-                i = start
-                for child in attr_model:
-                    if child.text == line[2] and child.tag == line[3]:
-                        for grand_child in child:
-                            if i <= end:
-                                grand_child.text = str(
-                                    obj_model.obj_trac.model_entry_var[
-                                        i].text())
-                                i = i + 1
-                        tmp_check = 1
+            i = start
+            for child in attr_microcontroller:
+                if child.text == line[2] and child.tag == line[3]:
+                    for grand_child in child:
+                        if i <= end:
+                            grand_child.text = \
+                                str(
+                                    obj_microcontroller.
+                                    obj_trac.microcontroller_var[i].text())
+                            i = i + 1
+                    tmp_check = 1
 
-                if tmp_check == 0:
-                    attr_ui = ET.SubElement(attr_model, line[3], name="type")
-                    attr_ui.text = line[2]
-
-                    for key, value in line[7].items():
-                        if (
-                                hasattr(value, '__iter__') and
-                                i <= end and not isinstance(value, str)
-                        ):
-                            for item in value:
-                                ET.SubElement(
-                                    attr_ui, "field" + str(i + 1), name=item
-                                ).text = str(
-                                    obj_microcontroller.obj_trac.
-                                    model_entry_var[i].text()
-                                )
-                                i = i + 1
-
-                        else:
+            if tmp_check == 0:
+                attr_ui = ET.SubElement(attr_microcontroller, line[3],
+                                        name="type")
+                attr_ui.text = line[2]
+                for key, value in line[7].items():
+                    if (
+                            hasattr(value, '__iter__') and
+                            i <= end and not isinstance(value, str)
+                    ):
+                        for item in value:
                             ET.SubElement(
-                                attr_ui, "field" + str(i + 1), name=value
+                                attr_ui, "field" + str(i + 1), name=item
                             ).text = str(
-                                obj_microcontroller.obj_trac.model_entry_var[
-                                    i].text()
+                                obj_microcontroller.
+                                obj_trac.microcontroller_var[i].text()
                             )
                             i = i + 1
+                    else:
+                        ET.SubElement(
+                            attr_ui, "field" + str(i + 1), name=value
+                        ).text = str(
+                            obj_microcontroller.obj_trac.microcontroller_var[
+                                i].text()
+                        )
+                        i = i + 1
 
         # xml written to previous value file for the project
         tree = ET.ElementTree(attr_parent)
@@ -729,6 +727,12 @@ class MainWindow(QtWidgets.QWidget):
                 store_schematicInfo)
             print("=========================================================")
             print("Netlist After Adding Ngspice Model :", store_schematicInfo)
+
+            store_schematicInfo = self.obj_convert.addMicrocontrollerParameter(
+                store_schematicInfo)
+            print("=========================================================")
+            print("Netlist After Adding Microcontroller Model :",
+                  store_schematicInfo)
 
             # Adding Device Library to SchematicInfo
             store_schematicInfo = self.obj_convert.addDeviceLibrary(
