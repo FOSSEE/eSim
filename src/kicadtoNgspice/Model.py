@@ -75,6 +75,7 @@ class Model(QtWidgets.QWidget):
             modelgrid = QtWidgets.QGridLayout()
             modelbox.setTitle(line[5])
             self.start = self.nextcount
+            self.model_name = line[2]
 
             # line[7] is parameter dictionary holding parameter tags.
 
@@ -96,6 +97,7 @@ class Model(QtWidgets.QWidget):
                         self.obj_trac.model_entry_var[
                             self.nextcount
                         ] = QtWidgets.QLineEdit()
+
                         self.obj_trac.model_entry_var[
                             self.nextcount] = QtWidgets.QLineEdit()
                         self.obj_trac.model_entry_var[self.nextcount].setText(
@@ -114,6 +116,8 @@ class Model(QtWidgets.QWidget):
                                     i = i + 1
                         except BaseException:
                             pass
+                        modelgrid.addWidget(self.entry_var[self.nextcount],
+                                            self.nextrow, 1)
 
                         modelgrid.addWidget(
                             self.obj_trac.model_entry_var[self.nextcount],
@@ -133,6 +137,7 @@ class Model(QtWidgets.QWidget):
                     self.obj_trac.model_entry_var[
                         self.nextcount
                     ] = QtWidgets.QLineEdit()
+
                     self.obj_trac.model_entry_var[
                         self.nextcount] = QtWidgets.QLineEdit()
                     self.obj_trac.model_entry_var[self.nextcount].setText("")
@@ -209,3 +214,22 @@ class Model(QtWidgets.QWidget):
                 self.obj_trac.modelTrack.append(lst)
 
         self.show()
+
+    def add_hex_btn(self, modelgrid, modelbox):
+        self.addbtn = QtWidgets.QPushButton("Add Hex File")
+        self.addbtn.setObjectName("%d" % self.nextcount)
+        self.addbtn.clicked.connect(self.addHex)
+        modelgrid.addWidget(self.addbtn, self.nextrow, 2)
+        modelbox.setLayout(modelgrid)
+
+        # CSS
+
+        modelbox.setStyleSheet(
+            " \
+        QGroupBox { border: 1px solid gray; border-radius:\
+        9px; margin-top: 0.5em; } \
+        QGroupBox::title { subcontrol-origin: margin; left:\
+        10px; padding: 0 3px 0 3px; } \
+        "
+        )
+        self.grid.addWidget(modelbox)

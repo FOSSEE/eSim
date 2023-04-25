@@ -13,7 +13,7 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Wednesday 04 March 2015
-#      REVISION: Saturday 25 July 2020
+#      REVISION: Tuesday 25 April 2023
 # =========================================================================
 
 import os
@@ -392,9 +392,9 @@ class MainWindow(QtWidgets.QWidget):
                 if child.tag == "source":
                     attr_source = child
 
-        count = 1
+        count = 0
         grand_child_count = 0
-        keys = list(obj_source.entry_var.keys())
+        entry_var_keys = list(obj_source.entry_var.keys())
 
         for i in store_schematicInfo:
             tmp_check = 0
@@ -406,7 +406,7 @@ class MainWindow(QtWidgets.QWidget):
                     for grand_child in child:
                         grand_child.text = \
                             str(obj_source.entry_var
-                                [keys[grand_child_count]].text())
+                                [entry_var_keys[grand_child_count]].text())
                         grand_child_count += 1
             if tmp_check == 0:
                 words = i.split(' ')
@@ -422,102 +422,124 @@ class MainWindow(QtWidgets.QWidget):
                     # attr_ac = ET.SubElement(attr_var, "ac")
                     ET.SubElement(
                         attr_var, "field1", name="Amplitude"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field2", name="Phase"
-                    ).text = str(obj_source.entry_var[count].text())
-                    count += 2
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
+                    count += 1
                 elif words[len(words) - 1] == "dc":
                     # attr_dc = ET.SubElement(attr_var, "dc")
                     ET.SubElement(
                         attr_var, "field1", name="Value"
-                    ).text = str(obj_source.entry_var[count].text())
-                    count += 2
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
+                    count += 1
                 elif words[len(words) - 1] == "sine":
                     # attr_sine = ET.SubElement(attr_var, "sine")
                     ET.SubElement(
                         attr_var, "field1", name="Offset Value"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field2", name="Amplitude"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field3", name="Frequency"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field4", name="Delay Time"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field5", name="Damping Factor"
-                    ).text = str(obj_source.entry_var[count].text())
-                    count += 2
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
+                    count += 1
                 elif words[len(words) - 1] == "pulse":
                     # attr_pulse=ET.SubElement(attr_var,"pulse")
                     ET.SubElement(
                         attr_var, "field1", name="Initial Value"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field2", name="Pulse Value"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field3", name="Delay Time"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field4", name="Rise Time"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field5", name="Fall Time"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field5", name="Pulse width"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field5", name="Period"
-                    ).text = str(obj_source.entry_var[count].text())
-                    count += 2
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
+                    count += 1
                 elif words[len(words) - 1] == "pwl":
                     # attr_pwl=ET.SubElement(attr_var,"pwl")
                     ET.SubElement(
                         attr_var, "field1", name="Enter in pwl format"
-                    ).text = str(obj_source.entry_var[count].text())
-                    count += 2
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
+                    count += 1
                 elif words[len(words) - 1] == "exp":
                     # attr_exp=ET.SubElement(attr_var,"exp")
                     ET.SubElement(
                         attr_var, "field1", name="Initial Value"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field2", name="Pulsed Value"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field3", name="Rise Delay Time"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field4", name="Rise Time Constant"
-                    ).text = str(obj_source.entry_var[count].text())
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
-                        attr_var, "field5", name="Fall TIme"
-                    ).text = str(obj_source.entry_var[count].text())
+                        attr_var, "field5", name="Fall Time"
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
                     count += 1
                     ET.SubElement(
                         attr_var, "field6", name="Fall Time Constant"
-                    ).text = str(obj_source.entry_var[count].text())
-                    count += 2
+                    ).text = str(obj_source.entry_var
+                                 [entry_var_keys[count]].text())
+                    count += 1
 
         if check == 0:
             attr_model = ET.SubElement(attr_parent, "model")
