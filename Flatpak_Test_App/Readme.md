@@ -1,5 +1,5 @@
-Flatpak_Test_App (FOSSEE_Installer_Test)
-========================================
+Flatpak_Test_App (FOSSEE_Installer_Test) WIP :warning:
+===
 
 documentation to package demo installer using Flatpak.
 
