@@ -1,5 +1,10 @@
-echo "hello"
-sleep 2
-echo "this is a test script"
-sleep 5
-echo "bye"
+#!/bin/sh
+
+echo "This is a test script"
+echo "========================================"
+git --version
+echo "========================================"
+make --version
+echo "========================================"
+autoconf --verison
+echo "========================================"

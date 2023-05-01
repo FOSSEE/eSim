@@ -1,18 +1,27 @@
 #!/bin/bash
 
-# Install dependencies
-sudo apt-get update
-sudo apt-get install git make autoconf g++ flex bison -y
-
 # Clone Verilator repository
+echo '# Please wait... cloning https://github.com/verilator/verilator'
 git clone http://git.veripool.org/git/verilator
+echo '# repo cloned...'
+
+cd verilator
+echo '# changing dir to verilator/'
 
 # Switch to version 4.106
-cd verilator
 git checkout v4.106
 
 # Build Verilator
 autoconf
 ./configure
+echo '# please wait... This may take some time'
+
+cd ./verilator/
+
 make
-sudo make install
+echo 'installing make...'
+
+make install
+
+echo '# verilator installed...'
+verilator --version
