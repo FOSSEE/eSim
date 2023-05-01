@@ -1,5 +1,5 @@
 app-id: org.flatpak.FOSSEE_Inst_test
-runtime: org.kde.Platform
+runtime: org.kde.Sdk
 runtime-version: '5.15-22.08'
 sdk: org.kde.Sdk
 base: com.riverbankcomputing.PyQt.BaseApp
@@ -15,14 +15,6 @@ finish-args:
   - --filesystem=host-os
   - --device=dri
   - --talk-name=org.freedesktop.Flatpak
-
-runtime-options:
-  extensions:
-    - org.freedesktop.Platform.GL.default
-    - org.freedesktop.Platform.VAAPI.Intel
-    - org.freedesktop.Platform.openh264
-  add-extensions:
-    - git
 
 modules:
   - name: FOSSEE_Inst_test
