@@ -8,5 +8,7 @@ To get stared, we need to first install the runtimes required for packing our Qt
 ```
 flatpak install org.kde.Platform//5.15-22.08
 
+flatpak install org.kde.Sdk//5.15-22.08
+
 flatpak install com.riverbankcomputing.PyQt.BaseApp/x86_64/5.15-22.08
 ```

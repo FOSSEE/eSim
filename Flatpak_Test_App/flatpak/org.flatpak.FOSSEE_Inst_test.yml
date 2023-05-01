@@ -16,10 +16,13 @@ finish-args:
   - --device=dri
   - --talk-name=org.freedesktop.Flatpak
 
-add-extensions:
-  org.test.MyExtension:
-    directory: test-my-extension
-    version: '1.0'
+runtime-options:
+  extensions:
+    - org.freedesktop.Platform.GL.default
+    - org.freedesktop.Platform.VAAPI.Intel
+    - org.freedesktop.Platform.openh264
+  add-extensions:
+    - git
 
 modules:
   - name: FOSSEE_Inst_test
@@ -37,17 +40,13 @@ modules:
   - name: assets
     buildsystem: simple
     build-commands:
-      - 'mkdir -p /app/assets'
-      - 'pwd'
-      - 'ls'
-      - 'cd ..'
-      - 'pwd'
-      - install -D packages /app/assets/packages
-      - install -D scripts /app/assets/scripts
+      - cp -r assets/ /app/assets/
+      
     sources:
       - type: dir
-        path: assets
-        
+        path: assets/
+        dest: assets/
+
   - name: python3-py7zr
     buildsystem: simple
     build-commands:

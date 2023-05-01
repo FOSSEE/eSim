@@ -43,7 +43,7 @@ class PipInstaller(QtWidgets.QWidget):
         except Exception as e: print("[ERROR!]: ",e)
 
     def intall_Verilator(self):
-        file_name = "assets/packages/verilator.7z"
+        file_name = "/app/assets/packages/verilator.7z"
         output_dir = os.getcwd()
 
         source_file = f"{output_dir}/verilator/bin/verilator"
@@ -135,7 +135,7 @@ class InstallThread_SRC(QThread):
         super().__init__()
 
     def run(self):
-        command = "bash assets/scripts/Install_verilator.sh"
+        command = "bash /app/assets/scripts/Install_verilator.sh"
         process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         while True:
@@ -147,6 +147,8 @@ class InstallThread_SRC(QThread):
                 print(output.strip())
 
         rc = process.poll()
+
+        print(os.system('verilator --version'))
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
