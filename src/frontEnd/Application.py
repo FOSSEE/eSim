@@ -578,7 +578,7 @@ class Application(QtWidgets.QMainWindow):
             is_ngspice_running = self.checkIfProcessRunning("ngspice")
             print("Ngspice is running:", is_ngspice_running)
             print(st.st_mtime, currTime)
-            if st.st_mtime >= currTime and not is_ngspice_running:
+            if st.st_mtime >= currTime - 1 and not is_ngspice_running:
                 self.is_file_changed = True
                 self.timer.stop()
                 self.plot_simulation()
@@ -592,6 +592,7 @@ class Application(QtWidgets.QMainWindow):
         # Fail Safe ===>
         self.count += 1
         if self.count >= 10:
+            self.timer.stop()
             print(
                 "Ngspice taking too long for simulation. "
                 "Check netlist file (*.cir.out) "

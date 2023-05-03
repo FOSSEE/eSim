@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'pop_up_design.ui'
+# Form implementation generated from reading ui file 'progressBarNew.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -11,41 +11,100 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(843, 396)
-        self.progressBar = QtWidgets.QProgressBar(Dialog)
-        self.progressBar.setGeometry(QtCore.QRect(30, 30, 781, 31))
-        self.progressBar.setStyleSheet("QProgressBar::chunk {\n"
-"    background-color: rgb(38, 162, 105);\n"
-"}")
+class Ui_Simulation(object):
+    def setupUi(self, Simulation):
+        Simulation.setObjectName("Simulation")
+        Simulation.resize(1250, 645)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout(Simulation)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.progressBar = QtWidgets.QProgressBar(Simulation)
+        self.progressBar.setStyleSheet("")
         self.progressBar.setMaximum(0)
-        #self.progressBar.setProperty("value", 100)
-        self.progressBar.setTextDirection(QtWidgets.QProgressBar.TopToBottom)
+        self.progressBar.setProperty("value", -1)
         self.progressBar.setFormat("")
         self.progressBar.setObjectName("progressBar")
-        self.ngspiceConsole = QtWidgets.QPlainTextEdit(Dialog)
-        self.ngspiceConsole.setGeometry(QtCore.QRect(30, 80, 781, 281))
-        self.ngspiceConsole.setAutoFillBackground(False)
-        self.ngspiceConsole.setTextInteractionFlags(QtCore.Qt.TextSelectableByKeyboard | QtCore.Qt.TextSelectableByMouse)
-        self.ngspiceConsole.setStyleSheet("QPlainTextEdit {\n"
+        self.verticalLayout.addWidget(self.progressBar)
+        self.simulationConsole = QtWidgets.QTextEdit(Simulation)
+        self.simulationConsole.setStyleSheet("QTextEdit {\n"
 "    background-color: rgb(36, 31, 49);\n"
 "    color: white;\n"
 "}")
-        self.ngspiceConsole.setObjectName("ngspiceConsole")
+        self.simulationConsole.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
+        self.simulationConsole.setObjectName("simulationConsole")
+        self.verticalLayout.addWidget(self.simulationConsole)
+        self.horizontalLayout_2.addLayout(self.verticalLayout)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        spacerItem = QtWidgets.QSpacerItem(150, 30, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_2.addItem(spacerItem)
+        self.pushButton = QtWidgets.QPushButton(Simulation)
+        self.pushButton.setObjectName("pushButton")
+        self.verticalLayout_2.addWidget(self.pushButton)
+        self.pushButton_2 = QtWidgets.QPushButton(Simulation)
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.verticalLayout_2.addWidget(self.pushButton_2)
+        self.pushButton_3 = QtWidgets.QPushButton(Simulation)
+        self.pushButton_3.setObjectName("pushButton_3")
+        self.verticalLayout_2.addWidget(self.pushButton_3)
+        self.pushButton_4 = QtWidgets.QPushButton(Simulation)
+        self.pushButton_4.setObjectName("pushButton_4")
+        self.verticalLayout_2.addWidget(self.pushButton_4)
+        self.pushButton_5 = QtWidgets.QPushButton(Simulation)
+        self.pushButton_5.setObjectName("pushButton_5")
+        self.verticalLayout_2.addWidget(self.pushButton_5)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 400, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.verticalLayout_2.addItem(spacerItem1)
+        self.horizontalLayout_2.addLayout(self.verticalLayout_2)
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(Simulation)
+        QtCore.QMetaObject.connectSlotsByName(Simulation)
 
-    def retranslateUi(self, Dialog):
+        self.dark_color = True
+
+    def retranslateUi(self, Simulation):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        #self.ngspiceConsole.setPlainText(_translate("Dialog", "The Ngspice simulation log will appear here."))
+        Simulation.setWindowTitle(_translate("Simulation", "Simulation"))
+        self.simulationConsole.setHtml(_translate("Simulation", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The quick brown fox jumped over the lazy dog</p></body></html>"))
+        self.pushButton.setText(_translate("Simulation", "Cancel Simulation"))
+        self.pushButton_2.setText(_translate("Simulation", "Show Schematic"))
+        self.pushButton_3.setText(_translate("Simulation", "Plot_data_i.txt"))
+        self.pushButton_4.setText(_translate("Simulation", "Plot_data_v.txt"))
+        self.pushButton_5.setText(_translate("Simulation", "Switch Colour"))
 
-    def writeIntoConsole(self, text):
-        self.ngspiceConsole.insertPlainText(text)
+        self.pushButton_5.clicked.connect(self.changeColor)
 
-    def showProgressCompleted(self):
-        self.progressBar.setMaximum(100)
+    def writeIntoConsole(self, consoleLog):    
+        self.simulationConsole.insertPlainText(consoleLog)    
+    
+    def showProgressCompleted(self):    
+        self.progressBar.setMaximum(100)    
         self.progressBar.setProperty("value", 100)
+
+    def changeColor(self):
+        if self.dark_color is True:
+            self.simulationConsole.setStyleSheet("QTextEdit {\n"
+            "    background-color: white;\n"
+            "    color: black;\n"
+            "}")
+            self.dark_color = False
+        else:
+            self.simulationConsole.setStyleSheet("QTextEdit {\n"
+            "    background-color: rgb(36, 31, 49);\n"
+            "    color: white;\n"
+            "}")
+            self.dark_color = True
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Simulation = QtWidgets.QWidget()
+    ui = Ui_Simulation()
+    ui.setupUi(Simulation)
+    Simulation.show()
+    sys.exit(app.exec_())

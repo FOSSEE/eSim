@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'progressBarNew.ui'
+# Form implementation generated from reading ui file 'progressBar.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -11,58 +11,84 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_Simulation(object):
-    def setupUi(self, Simulation):
-        Simulation.setObjectName("Simulation")
-        Simulation.resize(1250, 652)
-        self.gridLayout = QtWidgets.QGridLayout(Simulation)
-        self.gridLayout.setObjectName("gridLayout")
-        self.verticalLayout = QtWidgets.QVBoxLayout()
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(1244, 644)
+        self.verticalLayoutWidget = QtWidgets.QWidget(Form)
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 1131, 481))
+        self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
+        self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout.setContentsMargins(15, 15, 15, 15)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.progressBar = QtWidgets.QProgressBar(Simulation)
-        self.progressBar.setStyleSheet("")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setContentsMargins(-1, -1, -1, 0)
+        self.horizontalLayout.setSpacing(6)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.progressBar = QtWidgets.QProgressBar(self.verticalLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.progressBar.sizePolicy().hasHeightForWidth())
+        self.progressBar.setSizePolicy(sizePolicy)
+        self.progressBar.setMaximumSize(QtCore.QSize(16777215, 35))
+        self.progressBar.setStyleSheet("QProgressBar::chunk {\n"
+"    background-color: rgb(54,158,225);\n"
+"}")
         self.progressBar.setMaximum(0)
         self.progressBar.setProperty("value", -1)
         self.progressBar.setFormat("")
         self.progressBar.setObjectName("progressBar")
-        self.verticalLayout.addWidget(self.progressBar)
-        self.simulationConsole = QtWidgets.QTextEdit(Simulation)
-        self.simulationConsole.setStyleSheet("")
+        self.horizontalLayout.addWidget(self.progressBar)
+        self.cancel_simulation_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.cancel_simulation_button.setMaximumSize(QtCore.QSize(16777215, 35))
+        self.cancel_simulation_button.setObjectName("cancel_simulation_button")
+        self.horizontalLayout.addWidget(self.cancel_simulation_button)
+        self.light_dark_mode_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.light_dark_mode_button.sizePolicy().hasHeightForWidth())
+        self.light_dark_mode_button.setSizePolicy(sizePolicy)
+        self.light_dark_mode_button.setMaximumSize(QtCore.QSize(35, 35))
+        self.light_dark_mode_button.setText("")
+        self.light_dark_mode_button.setObjectName("light_dark_mode_button")
+        self.horizontalLayout.addWidget(self.light_dark_mode_button)
+        self.verticalLayout.addLayout(self.horizontalLayout)
+        self.simulationConsole = QtWidgets.QTextEdit(self.verticalLayoutWidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.simulationConsole.sizePolicy().hasHeightForWidth())
+        self.simulationConsole.setSizePolicy(sizePolicy)
+        self.simulationConsole.setMinimumSize(QtCore.QSize(0, 400))
+        self.simulationConsole.setStyleSheet("QTextEdit {\n"
+"    background-color: rgb(36, 31, 49);\n"
+"    color: white;\n"
+"}")
         self.simulationConsole.setTextInteractionFlags(QtCore.Qt.NoTextInteraction)
         self.simulationConsole.setObjectName("simulationConsole")
         self.verticalLayout.addWidget(self.simulationConsole)
-        self.gridLayout.addLayout(self.verticalLayout, 0, 0, 1, 1)
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.pushButton = QtWidgets.QPushButton(Simulation)
-        self.pushButton.setObjectName("pushButton")
-        self.verticalLayout_2.addWidget(self.pushButton)
-        self.pushButton_2 = QtWidgets.QPushButton(Simulation)
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.verticalLayout_2.addWidget(self.pushButton_2)
-        self.pushButton_3 = QtWidgets.QPushButton(Simulation)
-        self.pushButton_3.setObjectName("pushButton_3")
-        self.verticalLayout_2.addWidget(self.pushButton_3)
-        self.pushButton_4 = QtWidgets.QPushButton(Simulation)
-        self.pushButton_4.setObjectName("pushButton_4")
-        self.verticalLayout_2.addWidget(self.pushButton_4)
-        self.gridLayout.addLayout(self.verticalLayout_2, 0, 1, 1, 1)
 
-        self.retranslateUi(Simulation)
-        QtCore.QMetaObject.connectSlotsByName(Simulation)
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
 
-    def retranslateUi(self, Simulation):
+    def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Simulation.setWindowTitle(_translate("Simulation", "Simulation"))
-        self.simulationConsole.setHtml(_translate("Simulation", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.cancel_simulation_button.setText(_translate("Form", "Cancel Simulation"))
+        self.simulationConsole.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'Ubuntu\'; font-size:11pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">The quick brown fox jumped over the lazy dog</p></body></html>"))
-        self.pushButton.setText(_translate("Simulation", "PushButton"))
-        self.pushButton_2.setText(_translate("Simulation", "PushButton"))
-        self.pushButton_3.setText(_translate("Simulation", "PushButton"))
-        self.pushButton_4.setText(_translate("Simulation", "PushButton"))
+
+        self.simulationConsole.setText("")
+
+        self.dark_color = True
+        self.light_dark_mode_button.setIcon(QtGui.QIcon("icons/light_mode.png"))
+        self.light_dark_mode_button.clicked.connect(self.changeColor)
 
     def writeIntoConsole(self, consoleLog):    
         self.simulationConsole.insertPlainText(consoleLog)    
@@ -71,12 +97,27 @@ class Ui_Simulation(object):
         self.progressBar.setMaximum(100)    
         self.progressBar.setProperty("value", 100)
 
+    def changeColor(self):
+        if self.dark_color is True:
+            self.simulationConsole.setStyleSheet("QTextEdit {\n"
+            "    background-color: white;\n"
+            "    color: black;\n"
+            "}")
+            self.light_dark_mode_button.setIcon(QtGui.QIcon("icons/dark_mode.png"))
+            self.dark_color = False
+        else:
+            self.simulationConsole.setStyleSheet("QTextEdit {\n"
+            "    background-color: rgb(36, 31, 49);\n"
+            "    color: white;\n"
+            "}")
+            self.light_dark_mode_button.setIcon(QtGui.QIcon("icons/light_mode.png"))
+            self.dark_color = True
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Simulation = QtWidgets.QWidget()
-    ui = Ui_Simulation()
-    ui.setupUi(Simulation)
-    Simulation.show()
+    Form = QtWidgets.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
     sys.exit(app.exec_())

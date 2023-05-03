@@ -18,7 +18,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.obj_appconfig = Appconfig()
         self.process = QtCore.QProcess(self)
         self.terminal = QtWidgets.QWidget(self)
-        self.progressBarUi = progressBar.Ui_Simulation()
+        self.progressBarUi = progressBar.Ui_Form()
         self.progressBarUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
