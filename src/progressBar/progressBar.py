@@ -12,6 +12,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form(object):
+    def __init__(self, qProcess, qTimer):
+        self.qProcess = qProcess
+        self.qTimer = qTimer
+        # super().__init__()
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(1244, 644)
@@ -90,12 +94,19 @@ class Ui_Form(object):
         self.light_dark_mode_button.setIcon(QtGui.QIcon("icons/light_mode.png"))
         self.light_dark_mode_button.clicked.connect(self.changeColor)
 
+        self.cancel_simulation_button.clicked.connect(self.cancelSimulation)
+
     def writeIntoConsole(self, consoleLog):    
         self.simulationConsole.insertPlainText(consoleLog)    
     
     def showProgressCompleted(self):    
         self.progressBar.setMaximum(100)    
         self.progressBar.setProperty("value", 100)
+
+    def cancelSimulation(self):
+        self.qTimer.stop()
+        self.qProcess.kill()
+        self.showProgressCompleted()
 
     def changeColor(self):
         if self.dark_color is True:

@@ -614,13 +614,14 @@ class Application(QtWidgets.QMainWindow):
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        self.timer = QtCore.QTimer(self)
 
         if self.projDir is not None:
             currTime = time.time()
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                    self.projDir) is False:
+                    self.projDir, self.timer) is False:
                 print(
                     "Netlist file (*.cir.out) not found."
                 )
@@ -635,7 +636,6 @@ class Application(QtWidgets.QMainWindow):
                 return
 
             self.count = 0
-            self.timer = QtCore.QTimer(self)
             self.timer.setInterval(1000)
             self.timer.timeout.connect(lambda: self.check_change_in_plotfile(currTime))
             self.timer.start()
