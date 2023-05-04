@@ -1,0 +1,377 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:AD_620-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L lm_741 X1
+U 1 1 62A60F4C
+P 5600 3650
+F 0 "X1" H 5400 3650 60  0000 C CNN
+F 1 "lm_741" H 5500 3400 60  0000 C CNN
+F 2 "" H 5600 3650 60  0000 C CNN
+F 3 "" H 5600 3650 60  0000 C CNN
+	1    5600 3650
+	1    0    0    1   
+$EndComp
+$Comp
+L lm_741 X3
+U 1 1 62A60F4D
+P 8250 4800
+F 0 "X3" H 8050 4800 60  0000 C CNN
+F 1 "lm_741" H 8150 4550 60  0000 C CNN
+F 2 "" H 8250 4800 60  0000 C CNN
+F 3 "" H 8250 4800 60  0000 C CNN
+	1    8250 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L lm_741 X2
+U 1 1 62A60F4E
+P 5600 5700
+F 0 "X2" H 5400 5700 60  0000 C CNN
+F 1 "lm_741" H 5500 5450 60  0000 C CNN
+F 2 "" H 5600 5700 60  0000 C CNN
+F 3 "" H 5600 5700 60  0000 C CNN
+	1    5600 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R11
+U 1 1 62A60F4F
+P 7100 4700
+F 0 "R11" H 7150 4830 50  0000 C CNN
+F 1 "10k" H 7150 4650 50  0000 C CNN
+F 2 "" H 7150 4680 30  0000 C CNN
+F 3 "" V 7150 4750 30  0000 C CNN
+	1    7100 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R12
+U 1 1 62A60F50
+P 7100 4950
+F 0 "R12" H 7150 5080 50  0000 C CNN
+F 1 "10k" H 7150 4900 50  0000 C CNN
+F 2 "" H 7150 4930 30  0000 C CNN
+F 3 "" V 7150 5000 30  0000 C CNN
+	1    7100 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R21
+U 1 1 62A60F51
+P 8350 4050
+F 0 "R21" H 8400 4180 50  0000 C CNN
+F 1 "11.11k" H 8400 4000 50  0000 C CNN
+F 2 "" H 8400 4030 30  0000 C CNN
+F 3 "" V 8400 4100 30  0000 C CNN
+	1    8350 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R22
+U 1 1 62A60F52
+P 7600 5750
+F 0 "R22" H 7650 5880 50  0000 C CNN
+F 1 "11.11k" H 7650 5700 50  0000 C CNN
+F 2 "" H 7650 5730 30  0000 C CNN
+F 3 "" V 7650 5800 30  0000 C CNN
+	1    7600 5750
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R31
+U 1 1 62A60F53
+P 6250 4150
+F 0 "R31" H 6300 4280 50  0000 C CNN
+F 1 "24.7k" H 6300 4100 50  0000 C CNN
+F 2 "" H 6300 4130 30  0000 C CNN
+F 3 "" V 6300 4200 30  0000 C CNN
+	1    6250 4150
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R32
+U 1 1 62A60F55
+P 6250 5300
+F 0 "R32" H 6300 5430 50  0000 C CNN
+F 1 "24.7k" H 6300 5250 50  0000 C CNN
+F 2 "" H 6300 5280 30  0000 C CNN
+F 3 "" V 6300 5350 30  0000 C CNN
+	1    6250 5300
+	0    1    1    0   
+$EndComp
+Text Label 7300 3400 0    60   ~ 0
+vcc
+$Comp
+L resistor R5
+U 1 1 62A60F69
+P 7250 3800
+F 0 "R5" H 7300 3930 50  0000 C CNN
+F 1 "1" H 7300 3750 50  0000 C CNN
+F 2 "" H 7300 3780 30  0000 C CNN
+F 3 "" V 7300 3850 30  0000 C CNN
+	1    7250 3800
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R6
+U 1 1 62A60F6A
+P 6800 2750
+F 0 "R6" H 6850 2880 50  0000 C CNN
+F 1 "1" H 6850 2700 50  0000 C CNN
+F 2 "" H 6850 2730 30  0000 C CNN
+F 3 "" V 6850 2800 30  0000 C CNN
+	1    6800 2750
+	-1   0    0    1   
+$EndComp
+$Comp
+L resistor R4
+U 1 1 62A60F6B
+P 6250 4900
+F 0 "R4" H 6300 5030 50  0000 C CNN
+F 1 "40" H 6300 4850 50  0000 C CNN
+F 2 "" H 6300 4880 30  0000 C CNN
+F 3 "" V 6300 4950 30  0000 C CNN
+	1    6250 4900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6150 3650 6150 4050
+Wire Wire Line
+	6150 4050 6800 4050
+Wire Wire Line
+	6800 4050 6800 4650
+Wire Wire Line
+	6800 4650 7000 4650
+Connection ~ 6300 4050
+Wire Wire Line
+	7300 4650 7700 4650
+Wire Wire Line
+	7300 4900 7700 4900
+Wire Wire Line
+	7650 5650 7650 4900
+Connection ~ 7650 4900
+Wire Wire Line
+	8250 4000 7600 4000
+Wire Wire Line
+	7600 4000 7600 4650
+Connection ~ 7600 4650
+Wire Wire Line
+	8800 4800 9400 4800
+Wire Wire Line
+	8550 4000 9050 4000
+Wire Wire Line
+	9050 4000 9050 4800
+Connection ~ 9050 4800
+Wire Wire Line
+	5050 3550 3800 3550
+Wire Wire Line
+	5450 4100 5450 5250
+Wire Wire Line
+	5450 4350 8100 4350
+Wire Wire Line
+	4800 3200 5450 3200
+Wire Wire Line
+	4800 3200 4800 6150
+Wire Wire Line
+	4800 6150 7200 6150
+Wire Wire Line
+	8100 5250 7200 5250
+Wire Wire Line
+	7200 5250 7200 6150
+Connection ~ 5450 6150
+Wire Wire Line
+	7650 5950 7650 6250
+Wire Wire Line
+	4900 3200 4900 2800
+Wire Wire Line
+	4900 2800 6600 2800
+Connection ~ 4900 3200
+Wire Wire Line
+	7750 3200 7300 3200
+Wire Wire Line
+	7300 3200 7300 3700
+Wire Wire Line
+	7300 4000 7300 4350
+Wire Wire Line
+	6300 4350 6300 4500
+Wire Wire Line
+	6300 4700 6300 4800
+Wire Wire Line
+	6300 5100 6300 5200
+Wire Wire Line
+	6300 5500 6300 5700
+Wire Wire Line
+	6150 5700 6800 5700
+Wire Wire Line
+	6800 5700 6800 4900
+Wire Wire Line
+	6800 4900 7000 4900
+Connection ~ 6300 5700
+Wire Wire Line
+	5050 3800 5050 4400
+Wire Wire Line
+	5050 4400 6300 4400
+Wire Wire Line
+	5050 5550 5050 5200
+Wire Wire Line
+	5050 5200 6300 5200
+Connection ~ 5450 4350
+Connection ~ 7300 4350
+Wire Wire Line
+	5050 5800 3800 5800
+Wire Wire Line
+	6900 2800 7350 2800
+Wire Wire Line
+	6300 4500 3850 4500
+Connection ~ 6300 4400
+Wire Wire Line
+	6300 4700 3850 4700
+Wire Wire Line
+	7650 6250 8850 6250
+$Comp
+L PORT U1
+U 1 1 62A61C9F
+P 3600 4500
+F 0 "U1" H 3650 4600 30  0000 C CNN
+F 1 "PORT" H 3600 4500 30  0000 C CNN
+F 2 "" H 3600 4500 60  0000 C CNN
+F 3 "" H 3600 4500 60  0000 C CNN
+	1    3600 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 62A61D59
+P 3550 5800
+F 0 "U1" H 3600 5900 30  0000 C CNN
+F 1 "PORT" H 3550 5800 30  0000 C CNN
+F 2 "" H 3550 5800 60  0000 C CNN
+F 3 "" H 3550 5800 60  0000 C CNN
+	2    3550 5800
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 62A61E36
+P 3550 3550
+F 0 "U1" H 3600 3650 30  0000 C CNN
+F 1 "PORT" H 3550 3550 30  0000 C CNN
+F 2 "" H 3550 3550 60  0000 C CNN
+F 3 "" H 3550 3550 60  0000 C CNN
+	3    3550 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 62A61EFF
+P 7600 2800
+F 0 "U1" H 7650 2900 30  0000 C CNN
+F 1 "PORT" H 7600 2800 30  0000 C CNN
+F 2 "" H 7600 2800 60  0000 C CNN
+F 3 "" H 7600 2800 60  0000 C CNN
+	4    7600 2800
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 62A61FDE
+P 9100 6250
+F 0 "U1" H 9150 6350 30  0000 C CNN
+F 1 "PORT" H 9100 6250 30  0000 C CNN
+F 2 "" H 9100 6250 60  0000 C CNN
+F 3 "" H 9100 6250 60  0000 C CNN
+	5    9100 6250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 62A62529
+P 9650 4800
+F 0 "U1" H 9700 4900 30  0000 C CNN
+F 1 "PORT" H 9650 4800 30  0000 C CNN
+F 2 "" H 9650 4800 60  0000 C CNN
+F 3 "" H 9650 4800 60  0000 C CNN
+	6    9650 4800
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 7 1 62A625D2
+P 8000 3200
+F 0 "U1" H 8050 3300 30  0000 C CNN
+F 1 "PORT" H 8000 3200 30  0000 C CNN
+F 2 "" H 8000 3200 60  0000 C CNN
+F 3 "" H 8000 3200 60  0000 C CNN
+	7    8000 3200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 8 1 62A62687
+P 3600 4700
+F 0 "U1" H 3650 4800 30  0000 C CNN
+F 1 "PORT" H 3600 4700 30  0000 C CNN
+F 2 "" H 3600 4700 60  0000 C CNN
+F 3 "" H 3600 4700 60  0000 C CNN
+	8    3600 4700
+	1    0    0    -1  
+$EndComp
+NoConn ~ 5550 4050
+NoConn ~ 5650 4000
+NoConn ~ 5650 5350
+NoConn ~ 5550 5300
+NoConn ~ 8300 4450
+NoConn ~ 8200 4400
+$EndSCHEMATC
