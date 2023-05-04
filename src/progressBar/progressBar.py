@@ -12,9 +12,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class Ui_Form(object):
-    def __init__(self, qProcess, qTimer):
+    def __init__(self, qProcess, simulationEssentials):
         self.qProcess = qProcess
-        self.qTimer = qTimer
+        self.qTimer = simulationEssentials['timer']
+        self.enableButtons = simulationEssentials['enableButtons']
         # super().__init__()
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -97,10 +98,10 @@ class Ui_Form(object):
         self.cancel_simulation_button.clicked.connect(self.cancelSimulation)
 
     def writeIntoConsole(self, consoleLog):    
-        self.simulationConsole.insertPlainText(consoleLog)    
+        self.simulationConsole.insertPlainText(consoleLog)
     
-    def showProgressCompleted(self):    
-        self.progressBar.setMaximum(100)    
+    def showProgressCompleted(self):
+        self.progressBar.setMaximum(100)
         self.progressBar.setProperty("value", 100)
 
     def cancelSimulation(self):

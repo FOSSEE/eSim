@@ -581,6 +581,7 @@ class Application(QtWidgets.QMainWindow):
             if st.st_mtime >= currTime - 1 and not is_ngspice_running:
                 self.is_file_changed = True
                 self.timer.stop()
+
                 self.plot_simulation()
                 return
         except Exception:
@@ -610,18 +611,30 @@ class Application(QtWidgets.QMainWindow):
             self.msg.exec_()
 
             return
+        
+    def enableButtons(self, state):
+        self.ngspice.setEnabled(state)
+        self.conversion.setEnabled(state)
+        self.closeproj.setEnabled(state)
+        self.wrkspce.setEnabled(state)
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.timer = QtCore.QTimer(self)
 
+        self.simulationEssentials = {
+            "timer": self.timer,
+            "enableButtons": self.enableButtons,
+        }
+
         if self.projDir is not None:
             currTime = time.time()
 
             # Edited by Sumanto Kar 25/08/2021
+            self.enableButtons(False)
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                    self.projDir, self.timer) is False:
+                    self.projDir, self.simulationEssentials) is False:
                 print(
                     "Netlist file (*.cir.out) not found."
                 )

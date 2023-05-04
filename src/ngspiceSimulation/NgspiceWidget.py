@@ -8,7 +8,7 @@ import os
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
 
-    def __init__(self, command, projPath, timer):
+    def __init__(self, command, projPath, simulationEssentials):
         """
         - Creates constructor for NgspiceWidget class.
         - Checks whether OS is Linux or Windows and
@@ -18,8 +18,8 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.obj_appconfig = Appconfig()
         self.process = QtCore.QProcess(self)
         self.terminal = QtWidgets.QWidget(self)
-        self.qTimer = timer
-        self.progressBarUi = progressBar.Ui_Form(self.process, self.qTimer)
+        self.simulationEssentials = simulationEssentials
+        self.progressBarUi = progressBar.Ui_Form(self.process, self.simulationEssentials)
         self.progressBarUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
@@ -52,7 +52,7 @@ class NgspiceWidget(QtWidgets.QWidget):
             self.process.setWorkingDirectory(projPath)
             self.process.start('ngspice', self.args)
             self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
-            self.process.finished.connect(self.progressBarUi.showProgressCompleted)
+            self.process.finished.connect(self.finishSimulation)
             self.obj_appconfig.process_obj.append(self.process)
             print(self.obj_appconfig.proc_dict)
             (
@@ -64,6 +64,12 @@ class NgspiceWidget(QtWidgets.QWidget):
             self.gawCommand = "gaw " + command.replace(".cir.out", ".raw")
             self.gawProcess.start('sh', ['-c', self.gawCommand])
             print(self.gawCommand)
+
+    def finishSimulation(self):
+        self.enableButtons = self.simulationEssentials['enableButtons']
+
+        self.enableButtons(True)
+        self.progressBarUi.showProgressCompleted()
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):

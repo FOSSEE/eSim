@@ -117,10 +117,10 @@ class DockArea(QtWidgets.QMainWindow):
             )
         count = count + 1
 
-    def ngspiceEditor(self, projDir, timer):
+    def ngspiceEditor(self, projDir, simulationEssentials):
         """ This function creates widget for Ngspice window."""
         self.projDir = projDir
-        self.qTimer = timer
+        self.simulationEssentials = simulationEssentials
         self.projName = os.path.basename(self.projDir)
         self.ngspiceNetlist = os.path.join(
             self.projDir, self.projName + ".cir.out")
@@ -134,7 +134,7 @@ class DockArea(QtWidgets.QMainWindow):
 
         self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(self.ngspiceNetlist, self.projDir, self.qTimer)
+            NgspiceWidget(self.ngspiceNetlist, self.projDir, self.simulationEssentials)
         )
 
         # Adding to main Layout
