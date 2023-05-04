@@ -1,0 +1,1 @@
+.MODEL DI_S1B D( Is=7.31E-018 Rs=42.0m N=0.775 tt=4.32u Cjo=42.4p M=0.333 Vj=1 Bv=100 Ibv=5.00u )
