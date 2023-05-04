@@ -1,0 +1,124 @@
+# By Sai Charan Lanka (@saicharan0112) : Nov 12, 2022
+# This is the workflow to pack the eSim for Ubuntu OS which follows the steps shown in the installer branch and release the zip file which can be uploaded onto the website
+# Note: 
+# 1. Make sure the eSim manual for the version about to release, already exists in the https://static.fossee.in/esim/manuals/ location. Else the release fails.
+# 2. To trigger this workflow, create and push tags that start with "v".
+# For more info, refer to PR#230 and Issue#211
+
+
+name: Auto release of eSim for Ubuntu OS
+
+on:
+  push:
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v2.2, v2.3 etc
+
+
+jobs:
+  release_eSim:
+    runs-on: ubuntu-latest
+    steps:
+
+
+# Create eSim release directory
+      - name: Preparing eSim for release
+        run: mkdir /home/runner/work/eSim_release
+
+
+# Steps to prepare nghld.zip 
+      - name: Preparing nghdl for release
+        run: mkdir /home/runner/work/nghdl_release
+
+      - name: Checkout FOSSEE/nghdl installers branch
+        uses: actions/checkout@v3
+        with:
+          repository: FOSSEE/nghdl
+          ref: installers
+      
+      - name: Get required data from the nghld/installers branch
+        run: |
+          cp Ubuntu/ghdl-*.tar.xz /home/runner/work/nghdl_release/.
+          cp Ubuntu/verilator-*.tar.xz /home/runner/work/nghdl_release/.
+          cp Ubuntu/install-nghdl.sh /home/runner/work/nghdl_release/.
+
+      - name: Checkout FOSSEE/nghdl installers branch
+        uses: actions/checkout@v3
+        with:
+          repository: FOSSEE/nghdl
+          ref: master
+
+      - name: Get required data from the nghld/master branch
+        run: |
+          cp -rf ./* /home/runner/work/nghdl_release/.
+          cd /home/runner/work
+          rm -rf nghdl_release/.git* nghdl_release/*.md 
+
+      - name: Compress the nghdl folder and copy it to eSim release folder
+        run: |
+          zip -r nghld.zip . -i nghdl_release/.
+          cp nghld.zip /home/runner/work/eSim_release/.
+          tree /home/runner/work/
+
+
+# Steps to prepare eSim release directory
+      - name: Checkout FOSSEE/eSim master branch
+        uses: actions/checkout@v3
+        with:
+          repository: FOSSEE/eSim
+          ref: master
+
+      - name: Compress the library/kicadLibrary folder
+        run: |
+          tar cfJ kicadLibrary.tar.xz library/kicadLibrary/.
+          cp kicadLibrary.tar.xz /home/runner/work/eSim_release/.
+
+      - name: Copy all the data from eSim/master to eSim_release and delete specific data
+        run: |
+          rm -rf .git* code library/browser/User-Manual/figures
+          rm conf.py setup.py index.rst requirements.txt .travis.yml library/browser/User-Manual/eSim.html
+          cp -rf ./* /home/runner/work/eSim_release/.
+
+      - name: Checkout FOSSEE/eSim installers branch
+        uses: actions/checkout@v3
+        with:
+          repository: FOSSEE/eSim
+          ref: installers
+
+      - name: Copy install-eSim.sh script to the release directory
+        run: |
+          cp Ubuntu/install-eSim.sh /home/runner/work/eSim_release/.
+
+      # extract the number from the tag to pull the relevant manual from the website
+      - name: Copy eSim manual which is available at https://static.fossee.in/esim/manuals/
+        run: |
+          VERSION=$(echo $GITHUB_REF_NAME | cut -d 'v' -f 2)
+          wget https://static.fossee.in/esim/manuals/eSim_Manual_$VERSION.pdf
+
+      - name: Zip the eSim_release folder
+        run: |
+          cd /home/runner/work/
+          zip -r eSim-$VERSION.zip eSim_release/
+
+
+# Create a release and upload artifact
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: eSim-$VERSION
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
+          asset_path: /home/runner/work/eSim-$VERSION.zip
+          asset_name: eSim-$VERSION.zip
+          asset_content_type: application/zip

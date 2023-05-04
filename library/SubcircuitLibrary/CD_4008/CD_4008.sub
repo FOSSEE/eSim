@@ -1,0 +1,9 @@
+* Subcircuit CD_4008
+.subckt CD_4008 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ 
+* c:\fossee\esim\library\subcircuitlibrary\cd_4008\cd_4008.cir
+.include Adder_2bit.sub
+x1 net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad16_ net-_x1-pad17_ Adder_2bit
+x2 net-_u1-pad15_ net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad8_ net-_x1-pad17_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad16_ net-_u1-pad14_ Adder_2bit
+* Control Statements
+
+.ends CD_4008

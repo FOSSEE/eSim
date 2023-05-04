@@ -84,6 +84,7 @@ class DeviceModel(QtWidgets.QWidget):
                     words[4])
                 self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
+                self.entry_var[self.count].setReadOnly(True)
                 global path_name
 
                 try:
@@ -148,6 +149,7 @@ class DeviceModel(QtWidgets.QWidget):
                     words[3])
                 self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
+                self.entry_var[self.count].setReadOnly(True)
                 # global path_name
                 try:
                     for child in root:
@@ -211,6 +213,7 @@ class DeviceModel(QtWidgets.QWidget):
                     words[4])
                 self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
+                self.entry_var[self.count].setReadOnly(True)
                 # global path_name
                 try:
                     for child in root:
@@ -401,6 +404,7 @@ class DeviceModel(QtWidgets.QWidget):
                     words[4])
                 self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
+                self.entry_var[self.count].setReadOnly(True)
                 mosfetgrid.addWidget(self.entry_var[self.count], self.row, 1)
                 self.addbtn = QtWidgets.QPushButton("Add")
                 self.addbtn.setObjectName("%d" % self.count)
