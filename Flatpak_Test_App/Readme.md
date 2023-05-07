@@ -46,4 +46,5 @@ Other Linux Distributions: Use equivalent commands to install the necesarry pack
 
 ![image](https://user-images.githubusercontent.com/75079303/236667291-1467a423-d1d1-479d-b2f2-3fd49e195926.png)
 
+![image](https://user-images.githubusercontent.com/75079303/236675064-114cffc4-f05f-4f7d-9e33-252cc7e062ef.png)
 
