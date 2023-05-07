@@ -578,12 +578,16 @@ class Application(QtWidgets.QMainWindow):
             is_ngspice_running = self.checkIfProcessRunning("ngspice")
             print("Ngspice is running:", is_ngspice_running)
             print(st.st_mtime, currTime)
-            if st.st_mtime >= currTime - 1 and not is_ngspice_running:
-                self.is_file_changed = True
-                self.timer.stop()
+            if not is_ngspice_running:
+                if st.st_mtime >= currTime - 1:
+                    self.is_file_changed = True
+                    self.timer.stop()
 
-                self.plot_simulation()
-                return
+                    self.plot_simulation()
+                    return
+                else:
+                    self.timer.stop()
+                    return
         except Exception:
             pass
 
@@ -618,14 +622,19 @@ class Application(QtWidgets.QMainWindow):
         self.closeproj.setEnabled(state)
         self.wrkspce.setEnabled(state)
 
+    def isSimulationSuccess(self):
+        return self.is_file_changed
+
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.timer = QtCore.QTimer(self)
+        self.is_file_changed = False
 
         self.simulationEssentials = {
             "timer": self.timer,
             "enableButtons": self.enableButtons,
+            "isSimulationSuccess": self.isSimulationSuccess,
         }
 
         if self.projDir is not None:

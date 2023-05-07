@@ -16,12 +16,13 @@ class Ui_Form(object):
         self.qProcess = qProcess
         self.qTimer = simulationEssentials['timer']
         self.enableButtons = simulationEssentials['enableButtons']
+        self.isSimulationSuccess = simulationEssentials['isSimulationSuccess']
         # super().__init__()
     def setupUi(self, Form):
         Form.setObjectName("Form")
         Form.resize(1244, 644)
         self.verticalLayoutWidget = QtWidgets.QWidget(Form)
-        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 1131, 481))
+        self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 1131, 471))
         self.verticalLayoutWidget.setObjectName("verticalLayoutWidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
@@ -99,6 +100,15 @@ class Ui_Form(object):
 
     def writeIntoConsole(self, consoleLog):    
         self.simulationConsole.insertPlainText(consoleLog)
+
+    def writeSimulationStatusToConsole(self, isSuccess):
+        failedFormat = '<span style="color:red;">{}</span>'
+        successFormat = '<span style="color:green;">{}</span>'
+
+        if isSuccess:
+            self.simulationConsole.append(successFormat.format("Simulation Completed Successfully!"))
+        else:
+            self.simulationConsole.append(failedFormat.format("Simulation Failed!"))
     
     def showProgressCompleted(self):
         self.progressBar.setMaximum(100)

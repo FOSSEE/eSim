@@ -3,6 +3,7 @@ from configuration.Appconfig import Appconfig
 from configparser import ConfigParser
 from progressBar import progressBar
 import os
+import time
 
 
 # This Class creates NgSpice Window
@@ -19,6 +20,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.process = QtCore.QProcess(self)
         self.terminal = QtWidgets.QWidget(self)
         self.simulationEssentials = simulationEssentials
+        self.qTimer = simulationEssentials['timer']
         self.progressBarUi = progressBar.Ui_Form(self.process, self.simulationEssentials)
         self.progressBarUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
@@ -70,6 +72,19 @@ class NgspiceWidget(QtWidgets.QWidget):
 
         self.enableButtons(True)
         self.progressBarUi.showProgressCompleted()
+
+        self.qTimer.timeout.connect(self.writeSimulationStatus)
+
+    def writeSimulationStatus(self):
+        self.isSimulationSuccess = self.simulationEssentials['isSimulationSuccess']
+
+        if self.isSimulationSuccess():
+            self.progressBarUi.writeSimulationStatusToConsole(isSuccess=True)
+        else:
+            self.progressBarUi.writeSimulationStatusToConsole(isSuccess=False)
+
+        scrollLength = self.progressBarUi.simulationConsole.verticalScrollBar().maximum()
+        self.progressBarUi.simulationConsole.verticalScrollBar().setValue(scrollLength)
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):
