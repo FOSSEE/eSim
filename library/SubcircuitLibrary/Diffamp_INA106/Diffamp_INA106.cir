@@ -1,0 +1,16 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\Diffamp_INA106\Diffamp_INA106.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 7/20/2022 1:33:22 PM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  ? Net-_R1-Pad2_ Net-_R2-Pad2_ /V- ? /Output /V+ ? lm_741		
+R1  /-IN Net-_R1-Pad2_ 100k		
+R2  /+IN Net-_R2-Pad2_ 100k		
+R4  Net-_R1-Pad2_ /Sense 10k		
+R3  Net-_R2-Pad2_ /REF 10k		
+U1  /REF /-IN /+IN /V- /Sense /Output /V+ ? PORT		
+
+.end
