@@ -41,4 +41,9 @@ Other Linux Distributions: Use equivalent commands to install the necesarry pack
   bash scripts/build_new_flatpak.sh
 ```
 
-## Screen Shots:
+## Screenshots:
+![image](https://user-images.githubusercontent.com/75079303/236667264-3d77cd7a-9bf0-405b-a0fc-32cde1f2f9be.png)
+
+![image](https://user-images.githubusercontent.com/75079303/236667291-1467a423-d1d1-479d-b2f2-3fd49e195926.png)
+
+
