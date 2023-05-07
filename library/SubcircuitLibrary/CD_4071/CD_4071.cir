@@ -1,0 +1,35 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD_4071\CD_4071.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/20/22 11:07:38
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M3  Net-_M3-Pad1_ Net-_M1-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M4  Net-_M1-Pad1_ Net-_M4-Pad2_ Net-_M3-Pad1_ Net-_M3-Pad1_ eSim_MOS_P		
+M7  Net-_M1-Pad1_ Net-_M4-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M11  Net-_M11-Pad1_ Net-_M1-Pad1_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M9  Net-_M11-Pad1_ Net-_M1-Pad1_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M15  Net-_M15-Pad1_ Net-_M13-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M13  Net-_M13-Pad1_ Net-_M13-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M16  Net-_M13-Pad1_ Net-_M16-Pad2_ Net-_M15-Pad1_ Net-_M15-Pad1_ eSim_MOS_P		
+M19  Net-_M13-Pad1_ Net-_M16-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M23  Net-_M21-Pad1_ Net-_M13-Pad1_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M21  Net-_M21-Pad1_ Net-_M13-Pad1_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M5  Net-_M5-Pad1_ Net-_M2-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M2  Net-_M10-Pad2_ Net-_M2-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M6  Net-_M10-Pad2_ Net-_M6-Pad2_ Net-_M5-Pad1_ Net-_M5-Pad1_ eSim_MOS_P		
+M8  Net-_M10-Pad2_ Net-_M6-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M12  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M17  Net-_M17-Pad1_ Net-_M14-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M14  Net-_M14-Pad1_ Net-_M14-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M18  Net-_M14-Pad1_ Net-_M18-Pad2_ Net-_M17-Pad1_ Net-_M17-Pad1_ eSim_MOS_P		
+M20  Net-_M14-Pad1_ Net-_M18-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M24  Net-_M22-Pad1_ Net-_M14-Pad1_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M22  Net-_M22-Pad1_ Net-_M14-Pad1_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+U1  Net-_M2-Pad2_ Net-_M6-Pad2_ Net-_M10-Pad1_ Net-_M22-Pad1_ Net-_M14-Pad2_ Net-_M18-Pad2_ Net-_M1-Pad3_ Net-_M13-Pad2_ Net-_M16-Pad2_ Net-_M21-Pad1_ Net-_M11-Pad1_ Net-_M1-Pad2_ Net-_M4-Pad2_ Net-_M11-Pad3_ PORT		
+
+.end

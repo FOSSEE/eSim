@@ -1,0 +1,211 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:NOR_Gate-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L eSim_MOS_P M2
+U 1 1 62B6BCF2
+P 4800 2350
+F 0 "M2" H 4750 2400 50  0000 R CNN
+F 1 "eSim_MOS_P" H 4850 2500 50  0000 R CNN
+F 2 "" H 5050 2450 29  0000 C CNN
+F 3 "" H 4850 2350 60  0000 C CNN
+	1    4800 2350
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_MOS_N M1
+U 1 1 62B6BD21
+P 4500 3350
+F 0 "M1" H 4500 3200 50  0000 R CNN
+F 1 "eSim_MOS_N" H 4600 3300 50  0000 R CNN
+F 2 "" H 4800 3050 29  0000 C CNN
+F 3 "" H 4600 3150 60  0000 C CNN
+	1    4500 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_P M3
+U 1 1 62B6BD52
+P 4800 2850
+F 0 "M3" H 4750 2900 50  0000 R CNN
+F 1 "eSim_MOS_P" H 4850 3000 50  0000 R CNN
+F 2 "" H 5050 2950 29  0000 C CNN
+F 3 "" H 4850 2850 60  0000 C CNN
+	1    4800 2850
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_MOS_N M4
+U 1 1 62B6BE27
+P 5350 3350
+F 0 "M4" H 5350 3200 50  0000 R CNN
+F 1 "eSim_MOS_N" H 5450 3300 50  0000 R CNN
+F 2 "" H 5650 3050 29  0000 C CNN
+F 3 "" H 5450 3150 60  0000 C CNN
+	1    5350 3350
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 2550 4950 2650
+Wire Wire Line
+	4950 3050 4950 3250
+Wire Wire Line
+	4700 3350 4700 3250
+Wire Wire Line
+	4700 3250 5150 3250
+Wire Wire Line
+	5150 3250 5150 3350
+Connection ~ 4950 3250
+Wire Wire Line
+	4800 3700 4800 3750
+Wire Wire Line
+	4700 3750 5150 3750
+Wire Wire Line
+	5050 3750 5050 3700
+Wire Wire Line
+	5050 2200 5050 2150
+Wire Wire Line
+	5050 2150 4950 2150
+Wire Wire Line
+	5050 2700 5050 2650
+Wire Wire Line
+	5050 2650 4950 2650
+Connection ~ 5050 3750
+Connection ~ 4800 3750
+Wire Wire Line
+	4650 2350 4250 2350
+Wire Wire Line
+	4250 2350 4250 3550
+Wire Wire Line
+	4250 3550 4400 3550
+Wire Wire Line
+	5450 3550 5450 3200
+Wire Wire Line
+	5450 3200 4650 3200
+Wire Wire Line
+	4650 3200 4650 2850
+Wire Wire Line
+	4950 3050 5800 3050
+Wire Wire Line
+	4250 2450 4000 2450
+Connection ~ 4250 2450
+Wire Wire Line
+	4650 2950 4000 2950
+Connection ~ 4650 2950
+Wire Wire Line
+	5000 2150 5000 2100
+Wire Wire Line
+	5000 2100 4000 2100
+Connection ~ 5000 2150
+Wire Wire Line
+	4950 3750 4950 3850
+Wire Wire Line
+	4950 3850 4050 3850
+Connection ~ 4950 3750
+$Comp
+L PORT U1
+U 5 1 62B6C047
+P 3800 3850
+F 0 "U1" H 3850 3950 30  0000 C CNN
+F 1 "PORT" H 3800 3850 30  0000 C CNN
+F 2 "" H 3800 3850 60  0000 C CNN
+F 3 "" H 3800 3850 60  0000 C CNN
+	5    3800 3850
+	1    0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 2 1 62B6C0A2
+P 3750 2450
+F 0 "U1" H 3800 2550 30  0000 C CNN
+F 1 "PORT" H 3750 2450 30  0000 C CNN
+F 2 "" H 3750 2450 60  0000 C CNN
+F 3 "" H 3750 2450 60  0000 C CNN
+	2    3750 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 62B6C0DB
+P 3750 2950
+F 0 "U1" H 3800 3050 30  0000 C CNN
+F 1 "PORT" H 3750 2950 30  0000 C CNN
+F 2 "" H 3750 2950 60  0000 C CNN
+F 3 "" H 3750 2950 60  0000 C CNN
+	3    3750 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 62B6C112
+P 6050 3050
+F 0 "U1" H 6100 3150 30  0000 C CNN
+F 1 "PORT" H 6050 3050 30  0000 C CNN
+F 2 "" H 6050 3050 60  0000 C CNN
+F 3 "" H 6050 3050 60  0000 C CNN
+	1    6050 3050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 62B6C165
+P 3750 2100
+F 0 "U1" H 3800 2200 30  0000 C CNN
+F 1 "PORT" H 3750 2100 30  0000 C CNN
+F 2 "" H 3750 2100 60  0000 C CNN
+F 3 "" H 3750 2100 60  0000 C CNN
+	4    3750 2100
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
