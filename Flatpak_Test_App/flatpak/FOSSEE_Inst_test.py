@@ -2,8 +2,11 @@ import sys
 import subprocess
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+import PyQt5.QtCore 
 from PyQt5.QtCore import *
-#import py7zr
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QLabel
+import py7zr
 import os
 
 class PipInstaller(QtWidgets.QWidget):
@@ -12,57 +15,68 @@ class PipInstaller(QtWidgets.QWidget):
         self.initUI()
 
     def initUI(self):
+        self.Logo = QLabel(self)
+        self.pixmap = QPixmap('assets/Fossee_logo.png')
+        self.Logo.setPixmap(self.pixmap)
+        self.Logo.setAlignment(PyQt5.QtCore.Qt.AlignRight)
+
         self.label = QtWidgets.QLabel('Select package to install:')
         self.combo = QtWidgets.QComboBox()
         self.combo.addItems(['makerchip-app', 'sandpiper-saas', 'matplotlib'])
-        self.install_pkg_button = QtWidgets.QPushButton('Install')
-        self.install_pkg_button.clicked.connect(self.install_package)
-        self.install_verilator_button = QtWidgets.QPushButton('verilator')
-        self.install_verilator_button.clicked.connect(self.intall_Verilator)
-        self.install_verilator_SRC_button = QtWidgets.QPushButton('Verilator from SRC')
+
+        self.install_pkg_button = QtWidgets.QPushButton('Install Pip package')
+        self.install_pkg_button.clicked.connect(self.install_Pip_package)
+
+        self.install_verilator_from_Archive_button = QtWidgets.QPushButton('Install Verilator from Archive')
+        self.install_verilator_from_Archive_button.clicked.connect(self.intall_Verilator_from_Archive)
+
+        self.install_verilator_SRC_button = QtWidgets.QPushButton('Install Verilator from SRC')
         self.install_verilator_SRC_button.clicked.connect(self.install_Verilator_SRC)
+        
         self.Install_Output = QtWidgets.QPlainTextEdit()
 
         self.install_thread = InstallThread_SRC()
         self.install_thread.output_signal.connect(self.update_output)
 
         layout = QtWidgets.QVBoxLayout()
+        layout.addWidget(self.Logo)
         layout.addWidget(self.label)
         layout.addWidget(self.combo)
         layout.addWidget(self.install_pkg_button)
-        layout.addWidget(self.install_verilator_button)
+        layout.addWidget(self.install_verilator_from_Archive_button)
         layout.addWidget(self.install_verilator_SRC_button)
         layout.addWidget(self.Install_Output)
         self.setLayout(layout)
 
-    def install_package(self):
+    def install_Pip_package(self):
         package = self.combo.currentText()
         try:
             subprocess.check_call(['flatpak-spawn', '--host', sys.executable, '-m', 'pip', 'install', package])
             QtWidgets.QMessageBox.information(self, 'Success', f'{package} installed successfully')
-        except Exception as e: print("[ERROR!]: ",e)
+            self.Install_Output.appendPlainText(f'Success: {package} installed successfully')
+        except Exception as e: 
+            QMessageBox.warning(self,"ERROR", str(e))
+            self.Install_Output.appendPlainText("[ERROR!]: ")
+            self.Install_Output.appendPlainText(str(e))
 
-    def intall_Verilator(self):
+    def intall_Verilator_from_Archive(self):
         file_name = "/app/assets/packages/verilator.7z"
         output_dir = os.getcwd()
 
         source_file = f"{output_dir}/verilator/bin/verilator"
         destination_dir = "/usr/bin/" 
 
-        #with py7zr.SevenZipFile(file_name, mode='r') as z:
-        #    z.extractall(path=output_dir)
+        with py7zr.SevenZipFile(file_name, mode='r') as z:
+            z.extractall(path=output_dir)
 
         try:
             subprocess.check_call(['flatpak-spawn', '--host', "pkexec", "cp", source_file, destination_dir])
-            QtWidgets.QMessageBox.information(self, 'Success', 'verilator installed successfully')
-            self.Install_Output.appendPlainText('Success!! verilator installed successfully')
-        except subprocess.CalledProcessError:
-            self.Install_Output.appendPlainText("[Error!]: Failed to copy file")
-            print("[Error!]: Failed to copy file")
-
-    def install_status(self,status):
-        self.Install_Output.appendPlainText(status)
-
+            QtWidgets.QMessageBox.information(self, 'Success', 'Verilator installed successfully from Archive')
+            self.Install_Output.appendPlainText('[Success]: verilator installed successfully from Archive')
+        except subprocess.CalledProcessError as e:
+            QMessageBox.warning(self,"ERROR", str(e))
+            self.Install_Output.appendPlainText("[ERROR!]: ")
+            self.Install_Output.appendPlainText(str(e))
 
     ## Used to show updates for install_Verilator_SRC
     def update_output(self, text):
@@ -72,13 +86,14 @@ class PipInstaller(QtWidgets.QWidget):
         try:
             self.Install_Output.clear()
 
-            ## Sol 3 ##
             self.Install_Output.clear()
             self.install_thread.start()
 
         except Exception as e: 
             self.Install_Output.appendPlainText("[ERROR!]: ")
             self.Install_Output.appendPlainText(str(e))
+            QtWidgets.QMessageBox.information(self,"Error", str(e))
+            print("[ERROR!]: ",e)
 
 class install_verilator(QThread):
     P_progress = pyqtSignal(str)                
@@ -94,7 +109,9 @@ class install_verilator(QThread):
             if p:
                 print(status)
                 self.P_progress.emit(status)
-        except:
+        except Exception as e: 
+            self.Install_Output.appendPlainText("[ERROR!]: ")
+            self.Install_Output.appendPlainText(str(e))
             QMessageBox.warning(None,"Invalid Install Commands!","Error in install_verilator")
 
 class InstallThread_SRC(QThread):
@@ -117,10 +134,10 @@ class InstallThread_SRC(QThread):
 
         rc = process.poll()
         if rc == 0:
-            self.output_signal.emit("Installation succeeded!")
+            self.output_signal.emit("[Info] Installation succeeded!")
             print("Installation succeeded!")
         else:
-            self.output_signal.emit("Installation failed!")
+            self.output_signal.emit("[ERROR] Installation failed!")
             print("Installation failed!")
 
 if __name__ == '__main__':

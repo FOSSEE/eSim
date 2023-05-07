@@ -45,3 +45,5 @@ modules:
       - type: dir
         path: assets/
         dest: assets/
+  
+  - python3-py7zr.json
