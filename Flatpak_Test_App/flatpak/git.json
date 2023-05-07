@@ -1,0 +1,26 @@
+{
+    "name": "git",
+    "make-args": [
+        "INSTALL_SYMLINKS=1"
+    ],
+    "make-install-args": [
+        "INSTALL_SYMLINKS=1"
+    ],
+    "cleanup": [
+        "/lib/pkgconfig",
+        "/man"
+    ],
+    "sources": [
+        {
+            "type": "archive",
+            "url": "https://www.kernel.org/pub/software/scm/git/git-2.40.1.tar.xz",
+            "sha256": "4893b8b98eefc9fdc4b0e7ca249e340004faa7804a433d17429e311e1fef21d2",
+            "x-checker-data": {
+                "type": "anitya",
+                "project-id": 5350,
+                "stable-only": true,
+                "url-template": "https://www.kernel.org/pub/software/scm/git/git-$version.tar.xz"
+            }
+        }
+    ]
+}

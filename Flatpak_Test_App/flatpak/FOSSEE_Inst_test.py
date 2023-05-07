@@ -3,7 +3,7 @@ import subprocess
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtCore import *
-import py7zr
+#import py7zr
 import os
 
 class PipInstaller(QtWidgets.QWidget):
@@ -49,8 +49,8 @@ class PipInstaller(QtWidgets.QWidget):
         source_file = f"{output_dir}/verilator/bin/verilator"
         destination_dir = "/usr/bin/" 
 
-        with py7zr.SevenZipFile(file_name, mode='r') as z:
-            z.extractall(path=output_dir)
+        #with py7zr.SevenZipFile(file_name, mode='r') as z:
+        #    z.extractall(path=output_dir)
 
         try:
             subprocess.check_call(['flatpak-spawn', '--host', "pkexec", "cp", source_file, destination_dir])
@@ -71,37 +71,6 @@ class PipInstaller(QtWidgets.QWidget):
     def install_Verilator_SRC(self):
         try:
             self.Install_Output.clear()
-
-            # commands = open('assets/scripts/verilator_install_script')
-            # for command in commands:
-
-                ## Sol 1##
-
-                # process = subprocess.run(command,shell=True,check=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-                # try:
-                #     self.Install_Output.appendPlainText(process.stdout.decode())
-                #     print(process.stdout.decode())
-                # except:
-                #     self.Install_Output.appendPlainText(process.stderr.decode())
-                #     print(process.stderr.decode())
-
-                ## Sol 2 ##
-
-                # process = subprocess.Popen(command,shell=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-                # while True:
-                #     output = process.stdout.readline()
-                #     if output == '' and process.poll() is not None:
-                #         break
-                #     if output:
-                #         self.Install_Output.appendPlainText(output.strip().decode())
-                #         print(output.strip().decode())
-                # while True:
-                #     error = process.stderr.readline()
-                #     if error == '' and process.poll() is not None:
-                #         break
-                #     if error:
-                #         self.Install_Output.appendPlainText(error.strip().decode())
-                #         print(error.strip().decode())
 
             ## Sol 3 ##
             self.Install_Output.clear()
@@ -133,22 +102,26 @@ class InstallThread_SRC(QThread):
 
     def __init__(self):
         super().__init__()
-
+    
     def run(self):
-        command = "bash /app/assets/scripts/Install_verilator.sh"
-        process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        command = "/app/assets/scripts/Install_verilator.sh"
+        process = subprocess.Popen(["bash", command], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         while True:
             output = process.stdout.readline()
             if output == b'' and process.poll() is not None:
                 break
             if output:
-                self.output_signal.emit(str(output.strip()))
-                print(output.strip())
+                self.output_signal.emit(str(output.strip())[2:-1])
+                print(output.strip()[2:-1])
 
         rc = process.poll()
-
-        print(os.system('verilator --version'))
+        if rc == 0:
+            self.output_signal.emit("Installation succeeded!")
+            print("Installation succeeded!")
+        else:
+            self.output_signal.emit("Installation failed!")
+            print("Installation failed!")
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

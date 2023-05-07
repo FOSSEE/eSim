@@ -1,5 +1,0 @@
-echo "hello"
-sleep 2
-echo "this is a test script"
-sleep 5
-echo "bye"

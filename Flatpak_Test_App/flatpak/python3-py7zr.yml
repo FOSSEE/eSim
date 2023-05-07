@@ -1,0 +1,36 @@
+- name: python3-py7zr
+  buildsystem: simple
+  build-commands:
+    - pip3 install --verbose --exists-action=i --no-index --find-links="file://${PWD}"
+      --prefix=${FLATPAK_DEST} "py7zr" --no-build-isolation
+  sources:
+    - type: file
+      url: https://files.pythonhosted.org/packages/2a/18/70c32fe9357f3eea18598b23aa9ed29b1711c3001835f7cf99a9818985d0/Brotli-1.0.9.zip
+      sha256: 4d1b810aa0ed773f81dceda2cc7b403d01057458730e309856356d4ef4188438
+    - type: file
+      url: https://files.pythonhosted.org/packages/14/6f/825068e229aaa59719d252d2279a23ba471f95d6df18ca09e9f7f445fda3/inflate64-0.3.1.tar.gz
+      sha256: b52dd8fefd2ba179e5dfa18d6eca7e2fc822584616271c039d5ef1f9ca90c71c
+    - type: file
+      url: https://files.pythonhosted.org/packages/22/31/ec5f46fd4c83185b806aa9c736e228cb780f13990a9cf4da0beb70025fcc/multivolumefile-0.2.3-py3-none-any.whl
+      sha256: 237f4353b60af1703087cf7725755a1f6fcaeeea48421e1896940cd1c920d678
+    - type: file
+      url: https://files.pythonhosted.org/packages/3d/7d/d05864a69e452f003c0d77e728e155a89a2a26b09e64860ddd70ad64fb26/psutil-5.9.4.tar.gz
+      sha256: 3d7f9739eb435d4b1338944abe23f49584bde5395f27487d2ee25ad9a8774a62
+    - type: file
+      url: https://files.pythonhosted.org/packages/1b/9c/514791abe077098ca6b4dac2ba8780c2f162aa35b5d99e48915a0f4ad2a8/py7zr-0.20.4-py3-none-any.whl
+      sha256: 94d0c24217f6582741813ee94490a4ca82bd5f9bf35e4f8610cb588cf7445764
+    - type: file
+      url: https://files.pythonhosted.org/packages/26/ff/25952179fa892e7d082a34e5917d747d05a227ba3c83dd3adac1c3f0be24/pybcj-1.0.1.tar.gz
+      sha256: 8b682ed08caabfb7c042d4be083e28ddc692afb1deff5567111f8855071b75c3
+    - type: file
+      url: https://files.pythonhosted.org/packages/3d/07/cfd8f52b9068877801317d26dc7225e19421bc659e1395d2cd6933b1a351/pycryptodomex-3.17.tar.gz
+      sha256: 0af93aad8d62e810247beedef0261c148790c52f3cd33643791cc6396dd217c1
+    - type: file
+      url: https://files.pythonhosted.org/packages/49/93/e45d3f8d2725ec448b9178b91791c2509d3a9b42d8984a22f576fe2f89be/pyppmd-1.0.0.tar.gz
+      sha256: 075c9bd297e3b0a87dd7aeabca7fee668218acbe69ecc1c6511064558de8840f
+    - type: file
+      url: https://files.pythonhosted.org/packages/b0/d8/75d91aa30bac7fa5b88f7216768c932b8b7ad48ccff1d2e322655c0571cd/pyzstd-0.15.4.tar.gz
+      sha256: de07ac54f57642f186732075cdce2be3d4a30228c3b17a6d8c6053765dc6eec8
+    - type: file
+      url: https://files.pythonhosted.org/packages/ba/a7/2c12b543f853dae886286b824200eb9d7cd2466e3d14eff1799fbe8223b9/texttable-1.6.7-py2.py3-none-any.whl
+      sha256: b7b68139aa8a6339d2c320ca8b1dc42d13a7831a346b446cb9eb385f0c76310c
