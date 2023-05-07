@@ -553,7 +553,6 @@ class Application(QtWidgets.QMainWindow):
         return False
     
     def check_change_in_plotfile(self, currTime):
-        print("The function has executed")
         try:
             # if os.name == 'nt':
             #     proc = 'mintty'
@@ -576,8 +575,6 @@ class Application(QtWidgets.QMainWindow):
 
             st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
             is_ngspice_running = self.checkIfProcessRunning("ngspice")
-            print("Ngspice is running:", is_ngspice_running)
-            print(st.st_mtime, currTime)
             if not is_ngspice_running:
                 if st.st_mtime >= currTime - 1:
                     self.is_file_changed = True
