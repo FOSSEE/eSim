@@ -1,12 +1,44 @@
-Flatpak_Test_App (FOSSEE_Installer_Test) WIP :warning:
-===
+# Flatpak_Test_App (FOSSEE_Installer_Test) WIP :warning:
 
-documentation to package demo installer using Flatpak.
 
-To get stared, we need to first install the runtimes required for packing our Qt5 application
+## Documentation to package demo installer using Flatpak.
+
+### To get stared, we need to first install the runtimes required for packing our Qt5 application
 
 ```
-flatpak install org.kde.Sdk//5.15-22.08
+  flatpak install org.kde.Sdk//5.15-22.08
 
-flatpak install com.riverbankcomputing.PyQt.BaseApp/x86_64/5.15-22.08
+  flatpak install com.riverbankcomputing.PyQt.BaseApp//5.15-22.08
 ```
+---
+
+### To build the flatpak application we require flatpak-builder
+
+Ubuntu:
+```
+  sudo apt install flatpak-builder -y
+```
+Fedora:
+```
+  sudo dnf install flatpak-builder -y
+```
+
+### Install the dependencies mentioned below on the host system
+
+Ubuntu:
+```
+  sudo apt install make flex g++ ccache bison -y
+```
+Fedora:
+```
+  sudo dnf install make flex g++ ccache bison -y
+```
+Other Linux Distributions: Use equivalent commands to install the necesarry packages
+
+### To see all available commands for building, installing, accessing runtime through shell and more...
+```bash
+  # execute the listed commands in ./flatpak/ dir
+  bash scripts/build_new_flatpak.sh
+```
+
+## Screen Shots:
