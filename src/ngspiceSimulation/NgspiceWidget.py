@@ -83,8 +83,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         else:
             self.progressBarUi.writeSimulationStatusToConsole(isSuccess=False)
 
-        scrollLength = self.progressBarUi.simulationConsole.verticalScrollBar().maximum()
-        self.progressBarUi.simulationConsole.verticalScrollBar().setValue(scrollLength)
+        self.progressBarUi.scrollConsoleToBottom()
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):

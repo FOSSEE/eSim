@@ -9,6 +9,7 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+import os
 
 
 class Ui_Form(object):
@@ -17,6 +18,7 @@ class Ui_Form(object):
         self.qTimer = simulationEssentials['timer']
         self.enableButtons = simulationEssentials['enableButtons']
         self.isSimulationSuccess = simulationEssentials['isSimulationSuccess']
+        self.iconDir = "../progressBar/icons"
         # super().__init__()
     def setupUi(self, Form):
         Form.setObjectName("Form")
@@ -93,7 +95,7 @@ class Ui_Form(object):
         self.simulationConsole.setText("")
 
         self.dark_color = True
-        self.light_dark_mode_button.setIcon(QtGui.QIcon("icons/light_mode.png"))
+        self.light_dark_mode_button.setIcon(QtGui.QIcon(os.path.join(self.iconDir, 'light_mode.png')))
         self.light_dark_mode_button.clicked.connect(self.changeColor)
 
         self.cancel_simulation_button.clicked.connect(self.cancelSimulation)
@@ -102,22 +104,31 @@ class Ui_Form(object):
         self.simulationConsole.insertPlainText(consoleLog)
 
     def writeSimulationStatusToConsole(self, isSuccess):
-        failedFormat = '<span style="color:red;">{}</span>'
-        successFormat = '<span style="color:green;">{}</span>'
+        failedFormat = '<span style="color:#ff3333;">{}</span>'
+        successFormat = '<span style="color:#00ff00;">{}</span>'
 
         if isSuccess:
             self.simulationConsole.append(successFormat.format("Simulation Completed Successfully!"))
         else:
             self.simulationConsole.append(failedFormat.format("Simulation Failed!"))
+
+    def scrollConsoleToBottom(self):
+        scrollLength = self.simulationConsole.verticalScrollBar().maximum()
+        self.simulationConsole.verticalScrollBar().setValue(scrollLength)
     
     def showProgressCompleted(self):
         self.progressBar.setMaximum(100)
         self.progressBar.setProperty("value", 100)
 
     def cancelSimulation(self):
+        if not self.qTimer.isActive():
+            return
+        cancelFormat = '<span style="color:#3385ff;">{}</span>'
         self.qTimer.stop()
         self.qProcess.kill()
         self.showProgressCompleted()
+        self.simulationConsole.append(cancelFormat.format("Simulation Cancelled!"))
+        self.scrollConsoleToBottom()
 
     def changeColor(self):
         if self.dark_color is True:
@@ -125,14 +136,14 @@ class Ui_Form(object):
             "    background-color: white;\n"
             "    color: black;\n"
             "}")
-            self.light_dark_mode_button.setIcon(QtGui.QIcon("icons/dark_mode.png"))
+            self.light_dark_mode_button.setIcon(QtGui.QIcon(os.path.join(self.iconDir, "dark_mode.png")))
             self.dark_color = False
         else:
             self.simulationConsole.setStyleSheet("QTextEdit {\n"
             "    background-color: rgb(36, 31, 49);\n"
             "    color: white;\n"
             "}")
-            self.light_dark_mode_button.setIcon(QtGui.QIcon("icons/light_mode.png"))
+            self.light_dark_mode_button.setIcon(QtGui.QIcon(os.path.join(self.iconDir, "light_mode.png")))
             self.dark_color = True
 
 if __name__ == "__main__":
