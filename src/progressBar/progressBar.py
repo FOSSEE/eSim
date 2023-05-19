@@ -18,6 +18,7 @@ class Ui_Form(object):
         self.qTimer = simulationEssentials['timer']
         self.enableButtons = simulationEssentials['enableButtons']
         self.isSimulationSuccess = simulationEssentials['isSimulationSuccess']
+        self.resetSimulationVariables = simulationEssentials['resetSimulationVariables']
         self.iconDir = "../progressBar/icons"
         # super().__init__()
     def setupUi(self, Form):
@@ -49,6 +50,10 @@ class Ui_Form(object):
         self.progressBar.setFormat("")
         self.progressBar.setObjectName("progressBar")
         self.horizontalLayout.addWidget(self.progressBar)
+        self.redo_simulation_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
+        self.redo_simulation_button.setMaximumSize(QtCore.QSize(16777215, 35))
+        self.redo_simulation_button.setObjectName("redo_simulation_button")
+        self.horizontalLayout.addWidget(self.redo_simulation_button)
         self.cancel_simulation_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.cancel_simulation_button.setMaximumSize(QtCore.QSize(16777215, 35))
         self.cancel_simulation_button.setObjectName("cancel_simulation_button")
@@ -85,6 +90,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
         Form.setWindowTitle(_translate("Form", "Form"))
+        self.redo_simulation_button.setText(_translate("Form", "Redo Simulation"))
         self.cancel_simulation_button.setText(_translate("Form", "Cancel Simulation"))
         self.simulationConsole.setHtml(_translate("Form", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
@@ -99,6 +105,7 @@ class Ui_Form(object):
         self.light_dark_mode_button.clicked.connect(self.changeColor)
 
         self.cancel_simulation_button.clicked.connect(self.cancelSimulation)
+        self.redo_simulation_button.clicked.connect(self.redoSimulation)
 
     def writeIntoConsole(self, consoleLog):    
         self.simulationConsole.insertPlainText(consoleLog)
@@ -115,6 +122,10 @@ class Ui_Form(object):
     def scrollConsoleToBottom(self):
         scrollLength = self.simulationConsole.verticalScrollBar().maximum()
         self.simulationConsole.verticalScrollBar().setValue(scrollLength)
+
+    def showProgressRunning(self):
+        self.progressBar.setMaximum(0)
+        self.progressBar.setProperty("value", -1)
     
     def showProgressCompleted(self):
         self.progressBar.setMaximum(100)
@@ -129,6 +140,18 @@ class Ui_Form(object):
         self.showProgressCompleted()
         self.simulationConsole.append(cancelFormat.format("Simulation Cancelled!"))
         self.scrollConsoleToBottom()
+
+    def setNgspiceArgs(self, args):
+        self.args = args
+
+    def redoSimulation(self):
+        if self.qTimer.isActive():
+            return
+        self.showProgressRunning()
+        self.simulationConsole.setText("")
+        self.resetSimulationVariables()
+        self.qProcess.start('ngspice', self.args)
+        self.qTimer.start()
 
     def changeColor(self):
         if self.dark_color is True:

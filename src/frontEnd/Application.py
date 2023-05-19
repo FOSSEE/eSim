@@ -621,6 +621,10 @@ class Application(QtWidgets.QMainWindow):
 
     def isSimulationSuccess(self):
         return self.is_file_changed
+    
+    def resetSimulationVariables(self):
+        self.count = 0
+        self.currTime = 0
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
@@ -632,10 +636,11 @@ class Application(QtWidgets.QMainWindow):
             "timer": self.timer,
             "enableButtons": self.enableButtons,
             "isSimulationSuccess": self.isSimulationSuccess,
+            "resetSimulationVariables": self.resetSimulationVariables,
         }
 
         if self.projDir is not None:
-            currTime = time.time()
+            self.currTime = time.time()
 
             # Edited by Sumanto Kar 25/08/2021
             self.enableButtons(False)
@@ -656,7 +661,7 @@ class Application(QtWidgets.QMainWindow):
 
             self.count = 0
             self.timer.setInterval(1000)
-            self.timer.timeout.connect(lambda: self.check_change_in_plotfile(currTime))
+            self.timer.timeout.connect(lambda: self.check_change_in_plotfile(self.currTime))
             self.timer.start()
 
         else:

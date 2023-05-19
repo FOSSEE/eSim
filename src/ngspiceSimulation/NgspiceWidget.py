@@ -52,6 +52,7 @@ class NgspiceWidget(QtWidgets.QWidget):
             # Creating argument for process
             self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
             self.process.setWorkingDirectory(projPath)
+            self.progressBarUi.setNgspiceArgs(self.args)
             self.process.start('ngspice', self.args)
             self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
             self.process.finished.connect(self.finishSimulation)
@@ -68,6 +69,7 @@ class NgspiceWidget(QtWidgets.QWidget):
             print(self.gawCommand)
 
     def finishSimulation(self):
+        self.readyToPrintSimulationStatus = True
         self.enableButtons = self.simulationEssentials['enableButtons']
 
         self.enableButtons(True)
@@ -76,6 +78,8 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.qTimer.timeout.connect(self.writeSimulationStatus)
 
     def writeSimulationStatus(self):
+        if self.readyToPrintSimulationStatus is False:
+            return
         self.isSimulationSuccess = self.simulationEssentials['isSimulationSuccess']
 
         if self.isSimulationSuccess():
@@ -84,6 +88,7 @@ class NgspiceWidget(QtWidgets.QWidget):
             self.progressBarUi.writeSimulationStatusToConsole(isSuccess=False)
 
         self.progressBarUi.scrollConsoleToBottom()
+        self.readyToPrintSimulationStatus = False
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):
