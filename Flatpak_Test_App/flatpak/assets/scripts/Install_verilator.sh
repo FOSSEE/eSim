@@ -37,3 +37,8 @@ echo "Please enter root password:"
 flatpak-spawn --host sudo -S make install
 
 flatpak-spawn --host verilator --version
+
+echo "===============================================\n"
+echo "Cleaning up..."
+
+flatpak-spawn --host rm -rf ./verilator

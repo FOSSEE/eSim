@@ -9,14 +9,14 @@ from PyQt5.QtWidgets import QLabel
 import py7zr
 import os
 
-class PipInstaller(QtWidgets.QWidget):
+class AppWindow(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
 
     def initUI(self):
         self.Logo = QLabel(self)
-        self.pixmap = QPixmap('assets/Fossee_logo.png')
+        self.pixmap = QPixmap('/app/assets/Fossee_logo.png')
         self.Logo.setPixmap(self.pixmap)
         self.Logo.setAlignment(PyQt5.QtCore.Qt.AlignRight)
 
@@ -142,6 +142,6 @@ class InstallThread_SRC(QThread):
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
-    ex = PipInstaller()
+    ex = AppWindow()
     ex.show()
     sys.exit(app.exec_())

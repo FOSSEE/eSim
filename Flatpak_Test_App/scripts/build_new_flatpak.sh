@@ -1,8 +1,16 @@
 #!/bin/sh
 
-echo "run 'flatpak-builder --force-clean build-dir org.flatpak.FOSSEE_Inst_test.yml' to build"
-echo "run 'flatpak-builder --user --install --force-clean build-dir org.flatpak.FOSSEE_Inst_test.yml' to install"
-
-echo "use 'flatpak run org.flatpak.FOSSEE_Inst_test to run app' to run app"
-echo "use 'python3 flatpak-pip-generator --requirements-file='/home/suchinton/Repos/Test/req' --output pypi-dependencies --yaml
-' to resolove pip dependencies"
+echo "Reference Commands:"
+echo "========================================================================="
+echo "To build, run command:"
+echo "  $ flatpak-builder --force-clean build-dir org.flatpak.FOSSEE_Inst_test.yml"
+echo "========================================================================="
+echo "To install the app, run command:"
+echo "  $ flatpak-builder --user --install --force-clean build-dir org.flatpak.FOSSEE_Inst_test.ym"
+echo "========================================================================="
+echo "To run application, run command:"
+echo '  $ flatpak run org.flatpak.FOSSEE_Inst_test to run app'
+echo "========================================================================="
+echo "To resolove new pip dependencies, run command:"
+echo '  $ python3 flatpak-pip-generator --requirements-file='$HOME/Repos/Test/req' --output pypi-dependencies --yaml'
+echo "========================================================================="
