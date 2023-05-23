@@ -20,7 +20,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.process = QtCore.QProcess(self)
         self.terminal = QtWidgets.QWidget(self)
         self.simulationEssentials = simulationEssentials
-        self.qTimer = simulationEssentials['timer']
+        self.checkChangeInPlotFile = simulationEssentials['checkChangeInPlotFile']
         self.progressBarUi = progressBar.Ui_Form(self.process, self.simulationEssentials)
         self.progressBarUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
@@ -50,6 +50,7 @@ class NgspiceWidget(QtWidgets.QWidget):
             #     ";ngspice -r " + command.replace(".cir.out", ".raw") + \
             #     " " + command
             # Creating argument for process
+            self.currTime = time.time()
             self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
             self.process.setWorkingDirectory(projPath)
             self.progressBarUi.setNgspiceArgs(self.args)
@@ -68,14 +69,16 @@ class NgspiceWidget(QtWidgets.QWidget):
             self.gawProcess.start('sh', ['-c', self.gawCommand])
             print(self.gawCommand)
 
-    def finishSimulation(self):
+    def finishSimulation(self, exitCode, exitStatus):
+        if exitStatus == QtCore.QProcess.NormalExit:
+            self.checkChangeInPlotFile(self.currTime)
         self.readyToPrintSimulationStatus = True
         self.enableButtons = self.simulationEssentials['enableButtons']
 
         self.enableButtons(True)
         self.progressBarUi.showProgressCompleted()
 
-        self.qTimer.timeout.connect(self.writeSimulationStatus)
+        self.writeSimulationStatus()
 
     def writeSimulationStatus(self):
         if self.readyToPrintSimulationStatus is False:

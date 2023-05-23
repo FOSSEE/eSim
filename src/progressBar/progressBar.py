@@ -15,7 +15,6 @@ import os
 class Ui_Form(object):
     def __init__(self, qProcess, simulationEssentials):
         self.qProcess = qProcess
-        self.qTimer = simulationEssentials['timer']
         self.enableButtons = simulationEssentials['enableButtons']
         self.isSimulationSuccess = simulationEssentials['isSimulationSuccess']
         self.resetSimulationVariables = simulationEssentials['resetSimulationVariables']
@@ -114,10 +113,11 @@ class Ui_Form(object):
         failedFormat = '<span style="color:#ff3333;">{}</span>'
         successFormat = '<span style="color:#00ff00;">{}</span>'
 
-        if isSuccess:
-            self.simulationConsole.append(successFormat.format("Simulation Completed Successfully!"))
-        else:
-            self.simulationConsole.append(failedFormat.format("Simulation Failed!"))
+        if self.qProcess.exitStatus() == QtCore.QProcess.NormalExit:
+            if isSuccess:
+                self.simulationConsole.append(successFormat.format("Simulation Completed Successfully!"))
+            else:
+                self.simulationConsole.append(failedFormat.format("Simulation Failed!"))
 
     def scrollConsoleToBottom(self):
         scrollLength = self.simulationConsole.verticalScrollBar().maximum()
@@ -132,10 +132,9 @@ class Ui_Form(object):
         self.progressBar.setProperty("value", 100)
 
     def cancelSimulation(self):
-        if not self.qTimer.isActive():
+        if (self.qProcess.state() == QtCore.QProcess.NotRunning):
             return
         cancelFormat = '<span style="color:#3385ff;">{}</span>'
-        self.qTimer.stop()
         self.qProcess.kill()
         self.showProgressCompleted()
         self.simulationConsole.append(cancelFormat.format("Simulation Cancelled!"))
@@ -145,13 +144,12 @@ class Ui_Form(object):
         self.args = args
 
     def redoSimulation(self):
-        if self.qTimer.isActive():
+        if (self.qProcess.state() == QtCore.QProcess.Running):
             return
         self.showProgressRunning()
         self.simulationConsole.setText("")
         self.resetSimulationVariables()
         self.qProcess.start('ngspice', self.args)
-        self.qTimer.start()
 
     def changeColor(self):
         if self.dark_color is True:

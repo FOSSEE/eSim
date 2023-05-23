@@ -559,59 +559,16 @@ class Application(QtWidgets.QMainWindow):
             # else:
             #     proc = 'xterm'
 
-            # Edited by Sumanto Kar 25/08/2021
-            if False and os.name != 'nt' and \
-                    self.checkIfProcessRunning('xterm') is False:
-                self.msg = QtWidgets.QErrorMessage()
-                self.msg.setModal(True)
-                self.msg.setWindowTitle("Warning Message")
-                self.msg.showMessage(
-                    'Simulation was interrupted/failed. '
-                    'Please close all the Ngspice windows '
-                    'and then rerun the simulation.'
-                )
-                self.msg.exec_()
-                return
-
             st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
             is_ngspice_running = self.checkIfProcessRunning("ngspice")
             if not is_ngspice_running:
+                self.simulationCompleted = True
                 if st.st_mtime >= currTime - 1:
                     self.is_file_changed = True
-                    self.timer.stop()
-
                     self.plot_simulation()
-                    return
-                else:
-                    self.timer.stop()
-                    return
+                return
         except Exception:
             pass
-
-        if self.is_file_changed is False:
-            self.timer.start()
-
-        # Fail Safe ===>
-        self.count += 1
-        if self.count >= 10:
-            self.timer.stop()
-            print(
-                "Ngspice taking too long for simulation. "
-                "Check netlist file (*.cir.out) "
-                "to change simulation parameters."
-            )
-
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Warning Message")
-            self.msg.showMessage(
-                'Ngspice taking too long for simulation. '
-                'Check netlist file (*.cir.out) '
-                'to change simulation parameters.'
-            )
-            self.msg.exec_()
-
-            return
         
     def enableButtons(self, state):
         self.ngspice.setEnabled(state)
@@ -629,14 +586,14 @@ class Application(QtWidgets.QMainWindow):
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        self.timer = QtCore.QTimer(self)
         self.is_file_changed = False
+        self.simulationCompleted = False
 
         self.simulationEssentials = {
-            "timer": self.timer,
             "enableButtons": self.enableButtons,
             "isSimulationSuccess": self.isSimulationSuccess,
             "resetSimulationVariables": self.resetSimulationVariables,
+            "checkChangeInPlotFile": self.check_change_in_plotfile,
         }
 
         if self.projDir is not None:
@@ -660,9 +617,6 @@ class Application(QtWidgets.QMainWindow):
                 return
 
             self.count = 0
-            self.timer.setInterval(1000)
-            self.timer.timeout.connect(lambda: self.check_change_in_plotfile(self.currTime))
-            self.timer.start()
 
         else:
             self.msg = QtWidgets.QErrorMessage()
