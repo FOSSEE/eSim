@@ -162,12 +162,3 @@ class Ui_Form(object):
             "}")
             self.light_dark_mode_button.setIcon(QtGui.QIcon(os.path.join(self.iconDir, "light_mode.png")))
             self.dark_color = True
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    Form = QtWidgets.QWidget()
-    ui = Ui_Form()
-    ui.setupUi(Form)
-    Form.show()
-    sys.exit(app.exec_())
