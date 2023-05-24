@@ -561,6 +561,20 @@ class Application(QtWidgets.QMainWindow):
                 # else:
                 #     proc = 'xterm'
 
+                # # Edited by Sumanto Kar 25/08/2021	
+                # if False and os.name != 'nt' and \
+                #         self.checkIfProcessRunning('xterm') is False:
+                #     self.msg = QtWidgets.QErrorMessage()	
+                #     self.msg.setModal(True)	
+                #     self.msg.setWindowTitle("Warning Message")	
+                #     self.msg.showMessage(	
+                #         'Simulation was interrupted/failed. '	
+                #         'Please close all the Ngspice windows '	
+                #         'and then rerun the simulation.'	
+                #     )	
+                #     self.msg.exec_()	
+                #     return
+
                 st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
                 self.simulationCompleted = True
                 if st.st_mtime >= currTime:
