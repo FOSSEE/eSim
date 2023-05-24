@@ -15,7 +15,7 @@ import os
 class Ui_Form(object):
     def __init__(self, qProcess):
         self.qProcess = qProcess
-        self.iconDir = "../progressBar/icons"
+        self.iconDir = "../../images"
         # super().__init__()
     def setupUi(self, Form):
         Form.setObjectName("Form")
