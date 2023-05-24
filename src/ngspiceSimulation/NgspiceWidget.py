@@ -27,7 +27,6 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.terminalUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
-        self.errorFlag = False
 
         print("Argument to ngspice command : ", command)
 
@@ -101,8 +100,6 @@ class NgspiceWidget(QtWidgets.QWidget):
             str(self.process.readAllStandardOutput().data(), encoding='utf-8')
         )
         stderror = self.process.readAllStandardError()
-        if stderror.toUpper().contains(b"ERROR"):
-            self.errorFlag = True
         self.terminalUi.simulationConsole.insertPlainText(
             str(stderror.data(), encoding='utf-8')
         )
