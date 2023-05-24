@@ -9,7 +9,7 @@ import time
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
 
-    def __init__(self, command, projPath, simulationEssentials):
+    def __init__(self, command, simulationEssentials):
         """
         - Creates constructor for NgspiceWidget class.
         - Checks whether OS is Linux or Windows and
@@ -19,9 +19,10 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.obj_appconfig = Appconfig()
         self.process = QtCore.QProcess(self)
         self.terminal = QtWidgets.QWidget(self)
-        self.simulationEssentials = simulationEssentials
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.checkChangeInPlotFile = simulationEssentials['checkChangeInPlotFile']
-        self.progressBarUi = progressBar.Ui_Form(self.process, self.simulationEssentials)
+        self.enableButtons = simulationEssentials['enableButtons']
+        self.progressBarUi = progressBar.Ui_Form(self.process)
         self.progressBarUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
@@ -46,15 +47,13 @@ class NgspiceWidget(QtWidgets.QWidget):
             os.chdir(tempdir)
 
         else:                   # For Linux OS
-            # self.command = "cd " + projPath + \
-            #     ";ngspice -r " + command.replace(".cir.out", ".raw") + \
-            #     " " + command
             # Creating argument for process
             self.currTime = time.time()
             self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
-            self.process.setWorkingDirectory(projPath)
+            self.process.setWorkingDirectory(self.projDir)
             self.progressBarUi.setNgspiceArgs(self.args)
             self.process.start('ngspice', self.args)
+            self.process.started.connect(lambda: self.enableButtons(state=False))
             self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
             self.process.finished.connect(self.finishSimulation)
             self.obj_appconfig.process_obj.append(self.process)
@@ -70,22 +69,22 @@ class NgspiceWidget(QtWidgets.QWidget):
             print(self.gawCommand)
 
     def finishSimulation(self, exitCode, exitStatus):
-        if exitStatus == QtCore.QProcess.NormalExit:
-            self.checkChangeInPlotFile(self.currTime)
+        self.checkChangeInPlotFile(self.currTime, exitStatus)
         self.readyToPrintSimulationStatus = True
-        self.enableButtons = self.simulationEssentials['enableButtons']
 
-        self.enableButtons(True)
         self.progressBarUi.showProgressCompleted()
 
         self.writeSimulationStatus()
 
+        #To set the current time stamp of the generated file so as for re-simulation
+        self.currTime = time.time()
+
     def writeSimulationStatus(self):
         if self.readyToPrintSimulationStatus is False:
             return
-        self.isSimulationSuccess = self.simulationEssentials['isSimulationSuccess']
 
-        if self.isSimulationSuccess():
+        st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
+        if st.st_mtime >= self.currTime:
             self.progressBarUi.writeSimulationStatusToConsole(isSuccess=True)
         else:
             self.progressBarUi.writeSimulationStatusToConsole(isSuccess=False)
@@ -102,9 +101,3 @@ class NgspiceWidget(QtWidgets.QWidget):
         if stderror.toUpper().contains(b"ERROR"):
             self.errorFlag = True
         self.progressBarUi.writeIntoConsole(str(stderror.data(), encoding='utf-8'))
-
-    # def launchProgressBar(self):
-    #     self.progressBar = QtWidgets.QWidget()
-    #     self.progressBarUi = progressBar.Ui_Dialog()
-    #     self.progressBarUi.setupUi(self.progressBar)
-    #     self.progressBar.show()

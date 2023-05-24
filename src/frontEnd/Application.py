@@ -83,7 +83,7 @@ class Application(QtWidgets.QMainWindow):
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
 
-        self.is_file_changed = False
+        self.isFileChanged = False
 
     def initToolBar(self):
         """
@@ -552,23 +552,37 @@ class Application(QtWidgets.QMainWindow):
                 pass
         return False
     
-    def check_change_in_plotfile(self, currTime):
-        try:
-            # if os.name == 'nt':
-            #     proc = 'mintty'
-            # else:
-            #     proc = 'xterm'
+    def checkChangeInPlotFile(self, currTime, exitStatus):
+        self.enableButtons(True)
+        if exitStatus == QtCore.QProcess.NormalExit:
+            try:
+                # if os.name == 'nt':
+                #     proc = 'mintty'
+                # else:
+                #     proc = 'xterm'
 
-            st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-            is_ngspice_running = self.checkIfProcessRunning("ngspice")
-            if not is_ngspice_running:
+                st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
                 self.simulationCompleted = True
-                if st.st_mtime >= currTime - 1:
-                    self.is_file_changed = True
-                    self.plot_simulation()
+                if st.st_mtime >= currTime:
+                    self.isFileChanged = True
+
+                    try:
+                        self.obj_Mainview.obj_dockarea.plottingEditor()
+                    except Exception as e:
+                        self.msg = QtWidgets.QErrorMessage()
+                        self.msg.setModal(True)
+                        self.msg.setWindowTitle("Error Message")
+                        self.msg.showMessage(
+                            'Error while opening python plotting Editor.'
+                            ' Please look at console for more details.'
+                        )
+                        self.msg.exec_()
+                        print("Exception Message:", str(e), traceback.format_exc())
+                        self.obj_appconfig.print_error('Exception Message : ' + str(e))
+
                 return
-        except Exception:
-            pass
+            except Exception:
+                pass
         
     def enableButtons(self, state):
         self.ngspice.setEnabled(state)
@@ -577,30 +591,23 @@ class Application(QtWidgets.QMainWindow):
         self.wrkspce.setEnabled(state)
 
     def isSimulationSuccess(self):
-        return self.is_file_changed
-    
-    def resetSimulationVariables(self):
-        self.count = 0
-        self.currTime = 0
+        return self.isFileChanged
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        self.is_file_changed = False
+        self.isFileChanged = False
         self.simulationCompleted = False
 
         self.simulationEssentials = {
             "enableButtons": self.enableButtons,
-            "isSimulationSuccess": self.isSimulationSuccess,
-            "resetSimulationVariables": self.resetSimulationVariables,
-            "checkChangeInPlotFile": self.check_change_in_plotfile,
+            "checkChangeInPlotFile": self.checkChangeInPlotFile,
         }
 
         if self.projDir is not None:
             self.currTime = time.time()
 
             # Edited by Sumanto Kar 25/08/2021
-            self.enableButtons(False)
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
                     self.projDir, self.simulationEssentials) is False:
                 print(
@@ -616,8 +623,6 @@ class Application(QtWidgets.QMainWindow):
                 self.msg.exec_()
                 return
 
-            self.count = 0
-
         else:
             self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
@@ -627,21 +632,6 @@ class Application(QtWidgets.QMainWindow):
                 ' You can either create new project or open existing project'
             )
             self.msg.exec_()
-
-    def plot_simulation(self):
-        try:
-            self.obj_Mainview.obj_dockarea.plottingEditor()
-        except Exception as e:
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Error Message")
-            self.msg.showMessage(
-                'Error while opening python plotting Editor.'
-                ' Please look at console for more details.'
-            )
-            self.msg.exec_()
-            print("Exception Message:", str(e), traceback.format_exc())
-            self.obj_appconfig.print_error('Exception Message : ' + str(e))
 
     def open_subcircuit(self):
         """

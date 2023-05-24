@@ -133,7 +133,7 @@ class DockArea(QtWidgets.QMainWindow):
 
         self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(self.ngspiceNetlist, self.projDir, simulationEssentials)
+            NgspiceWidget(self.ngspiceNetlist, simulationEssentials)
         )
 
         # Adding to main Layout

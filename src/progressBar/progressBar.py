@@ -13,11 +13,8 @@ import os
 
 
 class Ui_Form(object):
-    def __init__(self, qProcess, simulationEssentials):
+    def __init__(self, qProcess):
         self.qProcess = qProcess
-        self.enableButtons = simulationEssentials['enableButtons']
-        self.isSimulationSuccess = simulationEssentials['isSimulationSuccess']
-        self.resetSimulationVariables = simulationEssentials['resetSimulationVariables']
         self.iconDir = "../progressBar/icons"
         # super().__init__()
     def setupUi(self, Form):
@@ -148,7 +145,6 @@ class Ui_Form(object):
             return
         self.showProgressRunning()
         self.simulationConsole.setText("")
-        self.resetSimulationVariables()
         self.qProcess.start('ngspice', self.args)
 
     def changeColor(self):
