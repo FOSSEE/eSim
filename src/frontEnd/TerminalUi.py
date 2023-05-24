@@ -3,8 +3,9 @@ import os
 
 
 class Ui_Form(object):
-    def __init__(self, qProcess):
+    def __init__(self, qProcess, args):
         self.qProcess = qProcess
+        self.args = args
         self.iconDir = "../../images"
         # super().__init__()
     def setupUi(self, Form):
@@ -21,21 +22,21 @@ class Ui_Form(object):
         self.horizontalLayout.setContentsMargins(-1, -1, -1, 0)
         self.horizontalLayout.setSpacing(6)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.terminalUi = QtWidgets.QProgressBar(self.verticalLayoutWidget)
+        self.progressBar = QtWidgets.QProgressBar(self.verticalLayoutWidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.terminalUi.sizePolicy().hasHeightForWidth())
-        self.terminalUi.setSizePolicy(sizePolicy)
-        self.terminalUi.setMaximumSize(QtCore.QSize(16777215, 35))
-        self.terminalUi.setStyleSheet("QProgressBar::chunk {\n"
+        sizePolicy.setHeightForWidth(self.progressBar.sizePolicy().hasHeightForWidth())
+        self.progressBar.setSizePolicy(sizePolicy)
+        self.progressBar.setMaximumSize(QtCore.QSize(16777215, 35))
+        self.progressBar.setStyleSheet("QProgressBar::chunk {\n"
 "    background-color: rgb(54,158,225);\n"
 "}")
-        self.terminalUi.setMaximum(0)
-        self.terminalUi.setProperty("value", -1)
-        self.terminalUi.setFormat("")
-        self.terminalUi.setObjectName("progressBar")
-        self.horizontalLayout.addWidget(self.terminalUi)
+        self.progressBar.setMaximum(0)
+        self.progressBar.setProperty("value", -1)
+        self.progressBar.setFormat("")
+        self.progressBar.setObjectName("progressBar")
+        self.horizontalLayout.addWidget(self.progressBar)
         self.redo_simulation_button = QtWidgets.QPushButton(self.verticalLayoutWidget)
         self.redo_simulation_button.setMaximumSize(QtCore.QSize(16777215, 35))
         self.redo_simulation_button.setObjectName("redo_simulation_button")
@@ -93,9 +94,6 @@ class Ui_Form(object):
         self.cancel_simulation_button.clicked.connect(self.cancelSimulation)
         self.redo_simulation_button.clicked.connect(self.redoSimulation)
 
-    def writeIntoConsole(self, consoleLog):    
-        self.simulationConsole.insertPlainText(consoleLog)
-
     def writeSimulationStatusToConsole(self, isSuccess):
         failedFormat = '<span style="color:#ff3333;">{}</span>'
         successFormat = '<span style="color:#00ff00;">{}</span>'
@@ -105,35 +103,34 @@ class Ui_Form(object):
                 self.simulationConsole.append(successFormat.format("Simulation Completed Successfully!"))
             else:
                 self.simulationConsole.append(failedFormat.format("Simulation Failed!"))
-
-    def scrollConsoleToBottom(self):
-        scrollLength = self.simulationConsole.verticalScrollBar().maximum()
-        self.simulationConsole.verticalScrollBar().setValue(scrollLength)
-
-    def showProgressRunning(self):
-        self.terminalUi.setMaximum(0)
-        self.terminalUi.setProperty("value", -1)
     
     def showProgressCompleted(self):
-        self.terminalUi.setMaximum(100)
-        self.terminalUi.setProperty("value", 100)
+        self.progressBar.setMaximum(100)
+        self.progressBar.setProperty("value", 100)
 
     def cancelSimulation(self):
         if (self.qProcess.state() == QtCore.QProcess.NotRunning):
             return
         cancelFormat = '<span style="color:#3385ff;">{}</span>'
         self.qProcess.kill()
-        self.showProgressCompleted()
-        self.simulationConsole.append(cancelFormat.format("Simulation Cancelled!"))
-        self.scrollConsoleToBottom()
+        
+        #To show progressBar completed
+        self.progressBar.setMaximum(100)
+        self.progressBar.setProperty("value", 100)
 
-    def setNgspiceArgs(self, args):
-        self.args = args
+        self.simulationConsole.append(cancelFormat.format("Simulation Cancelled!"))
+        self.simulationConsole.verticalScrollBar().setValue(
+            self.simulationConsole.verticalScrollBar().maximum()
+        )
 
     def redoSimulation(self):
         if (self.qProcess.state() == QtCore.QProcess.Running):
             return
-        self.showProgressRunning()
+        
+        #To make the progressbar running
+        self.progressBar.setMaximum(0)
+        self.progressBar.setProperty("value", -1)
+
         self.simulationConsole.setText("")
         self.qProcess.start('ngspice', self.args)
 

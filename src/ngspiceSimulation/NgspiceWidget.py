@@ -22,7 +22,8 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.checkChangeInPlotFile = simulationEssentials['checkChangeInPlotFile']
         self.enableButtons = simulationEssentials['enableButtons']
-        self.terminalUi = TerminalUi.Ui_Form(self.process)
+        self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
+        self.terminalUi = TerminalUi.Ui_Form(self.process, self.args)
         self.terminalUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
@@ -49,9 +50,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         else:                   # For Linux OS
             # Creating argument for process
             self.currTime = time.time()
-            self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
             self.process.setWorkingDirectory(self.projDir)
-            self.terminalUi.setNgspiceArgs(self.args)
             self.process.start('ngspice', self.args)
             self.process.started.connect(lambda: self.enableButtons(state=False))
             self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
@@ -72,7 +71,9 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.checkChangeInPlotFile(self.currTime, exitStatus)
         self.readyToPrintSimulationStatus = True
 
-        self.terminalUi.showProgressCompleted()
+        #To stop progressbar from running after simulation is completed
+        self.terminalUi.progressBar.setMaximum(100)
+        self.terminalUi.progressBar.setProperty("value", 100)
 
         self.writeSimulationStatus()
 
@@ -89,15 +90,19 @@ class NgspiceWidget(QtWidgets.QWidget):
         else:
             self.terminalUi.writeSimulationStatusToConsole(isSuccess=False)
 
-        self.terminalUi.scrollConsoleToBottom()
+        self.terminalUi.simulationConsole.verticalScrollBar().setValue(
+            self.terminalUi.simulationConsole.verticalScrollBar().maximum()
+        )
         self.readyToPrintSimulationStatus = False
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):
-        self.terminalUi.writeIntoConsole(
+        self.terminalUi.simulationConsole.insertPlainText(
             str(self.process.readAllStandardOutput().data(), encoding='utf-8')
         )
         stderror = self.process.readAllStandardError()
         if stderror.toUpper().contains(b"ERROR"):
             self.errorFlag = True
-        self.terminalUi.writeIntoConsole(str(stderror.data(), encoding='utf-8'))
+        self.terminalUi.simulationConsole.insertPlainText(
+            str(stderror.data(), encoding='utf-8')
+        )
