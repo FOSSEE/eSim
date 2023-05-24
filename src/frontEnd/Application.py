@@ -599,7 +599,7 @@ class Application(QtWidgets.QMainWindow):
         self.isFileChanged = False
         self.simulationCompleted = False
 
-        self.simulationEssentials = {
+        simulationEssentials = {
             "enableButtons": self.enableButtons,
             "checkChangeInPlotFile": self.checkChangeInPlotFile,
         }
@@ -609,7 +609,7 @@ class Application(QtWidgets.QMainWindow):
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                    self.projDir, self.simulationEssentials) is False:
+                    self.projDir, simulationEssentials) is False:
                 print(
                     "Netlist file (*.cir.out) not found."
                 )

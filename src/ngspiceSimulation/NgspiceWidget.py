@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
 from configparser import ConfigParser
-from progressBar import progressBar
+from frontEnd import TerminalUi
 import os
 import time
 
@@ -22,8 +22,8 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.checkChangeInPlotFile = simulationEssentials['checkChangeInPlotFile']
         self.enableButtons = simulationEssentials['enableButtons']
-        self.progressBarUi = progressBar.Ui_Form(self.process)
-        self.progressBarUi.setupUi(self.terminal)
+        self.terminalUi = TerminalUi.Ui_Form(self.process)
+        self.terminalUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminal)
         self.errorFlag = False
@@ -51,7 +51,7 @@ class NgspiceWidget(QtWidgets.QWidget):
             self.currTime = time.time()
             self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
             self.process.setWorkingDirectory(self.projDir)
-            self.progressBarUi.setNgspiceArgs(self.args)
+            self.terminalUi.setNgspiceArgs(self.args)
             self.process.start('ngspice', self.args)
             self.process.started.connect(lambda: self.enableButtons(state=False))
             self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
@@ -72,7 +72,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.checkChangeInPlotFile(self.currTime, exitStatus)
         self.readyToPrintSimulationStatus = True
 
-        self.progressBarUi.showProgressCompleted()
+        self.terminalUi.showProgressCompleted()
 
         self.writeSimulationStatus()
 
@@ -85,19 +85,19 @@ class NgspiceWidget(QtWidgets.QWidget):
 
         st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
         if st.st_mtime >= self.currTime:
-            self.progressBarUi.writeSimulationStatusToConsole(isSuccess=True)
+            self.terminalUi.writeSimulationStatusToConsole(isSuccess=True)
         else:
-            self.progressBarUi.writeSimulationStatusToConsole(isSuccess=False)
+            self.terminalUi.writeSimulationStatusToConsole(isSuccess=False)
 
-        self.progressBarUi.scrollConsoleToBottom()
+        self.terminalUi.scrollConsoleToBottom()
         self.readyToPrintSimulationStatus = False
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):
-        self.progressBarUi.writeIntoConsole(
+        self.terminalUi.writeIntoConsole(
             str(self.process.readAllStandardOutput().data(), encoding='utf-8')
         )
         stderror = self.process.readAllStandardError()
         if stderror.toUpper().contains(b"ERROR"):
             self.errorFlag = True
-        self.progressBarUi.writeIntoConsole(str(stderror.data(), encoding='utf-8'))
+        self.terminalUi.writeIntoConsole(str(stderror.data(), encoding='utf-8'))
