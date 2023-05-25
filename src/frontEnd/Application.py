@@ -83,8 +83,6 @@ class Application(QtWidgets.QMainWindow):
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
 
-        self.isFileChanged = False
-
     def initToolBar(self):
         """
         This function initializes Tool Bars.
@@ -553,6 +551,14 @@ class Application(QtWidgets.QMainWindow):
         return False
     
     def checkChangeInPlotFile(self, currTime, exitStatus):
+        """Checks whether there is a change in the analysis files(To see if simulation was successful)
+        and displays the plotter where graphs can be plotted.
+
+        :param currTime: The time stamp of the analysis file before simulation starts
+        :type currTime: float
+        :param exitStatus: The exit status of the ngspice QProcess
+        :type exitStatus: class:`QtCore.QProcess.ExitStatus`
+        """
         self.enableButtons(True)
         if exitStatus == QtCore.QProcess.NormalExit:
             try:
@@ -576,9 +582,7 @@ class Application(QtWidgets.QMainWindow):
                 #     return
 
                 st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-                self.simulationCompleted = True
                 if st.st_mtime >= currTime:
-                    self.isFileChanged = True
 
                     try:
                         self.obj_Mainview.obj_dockarea.plottingEditor()
@@ -604,14 +608,9 @@ class Application(QtWidgets.QMainWindow):
         self.closeproj.setEnabled(state)
         self.wrkspce.setEnabled(state)
 
-    def isSimulationSuccess(self):
-        return self.isFileChanged
-
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        self.isFileChanged = False
-        self.simulationCompleted = False
 
         simulationEssentials = {
             "enableButtons": self.enableButtons,
@@ -619,7 +618,6 @@ class Application(QtWidgets.QMainWindow):
         }
 
         if self.projDir is not None:
-            self.currTime = time.time()
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(

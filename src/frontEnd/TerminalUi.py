@@ -95,6 +95,12 @@ class Ui_Form(object):
         self.redo_simulation_button.clicked.connect(self.redoSimulation)
 
     def writeSimulationStatusToConsole(self, isSuccess):
+        """Writes simulation status to the console with appropriate style
+        to the :class:`Form_Ui` console.
+        
+        :param isSuccess: A boolean flag used to indicate whether the simulation was a success or not
+        :type isSuccess: bool
+        """
         failedFormat = '<span style="color:#ff3333;">{}</span>'
         successFormat = '<span style="color:#00ff00;">{}</span>'
 
@@ -103,12 +109,10 @@ class Ui_Form(object):
                 self.simulationConsole.append(successFormat.format("Simulation Completed Successfully!"))
             else:
                 self.simulationConsole.append(failedFormat.format("Simulation Failed!"))
-    
-    def showProgressCompleted(self):
-        self.progressBar.setMaximum(100)
-        self.progressBar.setProperty("value", 100)
 
     def cancelSimulation(self):
+        """This function cancels the ongoing ngspice simulation.
+        """
         if (self.qProcess.state() == QtCore.QProcess.NotRunning):
             return
         cancelFormat = '<span style="color:#3385ff;">{}</span>'
@@ -124,6 +128,8 @@ class Ui_Form(object):
         )
 
     def redoSimulation(self):
+        """This function reruns the ngspice simulation
+        """
         if (self.qProcess.state() == QtCore.QProcess.Running):
             return
         
@@ -135,6 +141,8 @@ class Ui_Form(object):
         self.qProcess.start('ngspice', self.args)
 
     def changeColor(self):
+        """Toggles the :class:`Ui_Form` console between dark mode and light mode
+        """
         if self.dark_color is True:
             self.simulationConsole.setStyleSheet("QTextEdit {\n"
             "    background-color: white;\n"

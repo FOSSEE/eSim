@@ -67,6 +67,15 @@ class NgspiceWidget(QtWidgets.QWidget):
             print(self.gawCommand)
 
     def finishSimulation(self, exitCode, exitStatus):
+        """This function is intended to run when the ngspice simulation finishes.
+        It singals to the function that generates the plots and also writes in the
+        appropriate status of the simulation (Whether it was a success or not).
+
+        :param exitCode: The exit code signal of the qprocess that runs ngspice
+        :type exitCode: int
+        :param exitStatus: The exit status signal of the qprocess that runs ngspice
+        :type exitStatus: class:`QtCore.QProcess.ExitStatus`
+        """
         self.checkChangeInPlotFile(self.currTime, exitStatus)
         self.readyToPrintSimulationStatus = True
 
@@ -80,6 +89,9 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.currTime = time.time()
 
     def writeSimulationStatus(self):
+        """This function writes status of the simulation (Success or Failure) to the 
+        :class:`TerminalUi.Ui_Form` console.
+        """
         if self.readyToPrintSimulationStatus is False:
             return
 
@@ -96,6 +108,8 @@ class NgspiceWidget(QtWidgets.QWidget):
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):
+        """Outputs the ngspice process standard output and standard error to :class:`TerminalUi.Ui_Form` console
+        """
         self.terminalUi.simulationConsole.insertPlainText(
             str(self.process.readAllStandardOutput().data(), encoding='utf-8')
         )
