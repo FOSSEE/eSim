@@ -18,15 +18,15 @@ class NgspiceWidget(QtWidgets.QWidget):
         QtWidgets.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
         self.process = QtCore.QProcess(self)
-        self.terminal = QtWidgets.QWidget(self)
+        #self.terminal = QtWidgets.QWidget(self)
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.checkChangeInPlotFile = simulationEssentials['checkChangeInPlotFile']
         self.enableButtons = simulationEssentials['enableButtons']
         self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
-        self.terminalUi = TerminalUi.Ui_Form(self.process, self.args)
-        self.terminalUi.setupUi(self.terminal)
+        self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
+        #self.terminalUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(self.terminal)
+        self.layout.addWidget(self.terminalUi)
 
         print("Argument to ngspice command : ", command)
 
@@ -90,7 +90,7 @@ class NgspiceWidget(QtWidgets.QWidget):
 
     def writeSimulationStatus(self):
         """This function writes status of the simulation (Success or Failure) to the 
-        :class:`TerminalUi.Ui_Form` console.
+        :class:`TerminalUi.TerminalUi` console.
         """
         if self.readyToPrintSimulationStatus is False:
             return
@@ -108,7 +108,7 @@ class NgspiceWidget(QtWidgets.QWidget):
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):
-        """Outputs the ngspice process standard output and standard error to :class:`TerminalUi.Ui_Form` console
+        """Outputs the ngspice process standard output and standard error to :class:`TerminalUi.TerminalUi` console
         """
         self.terminalUi.simulationConsole.insertPlainText(
             str(self.process.readAllStandardOutput().data(), encoding='utf-8')
