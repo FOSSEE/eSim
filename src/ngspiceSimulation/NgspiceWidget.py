@@ -30,41 +30,41 @@ class NgspiceWidget(QtWidgets.QWidget):
 
         print("Argument to ngspice command : ", command)
 
-        if os.name == 'nt':     # For Windows OS
-            parser_nghdl = ConfigParser()
-            parser_nghdl.read(
-                os.path.join('library', 'config', '.nghdl', 'config.ini')
-            )
+        # if os.name == 'nt':     # For Windows OS
+        #     parser_nghdl = ConfigParser()
+        #     parser_nghdl.read(
+        #         os.path.join('library', 'config', '.nghdl', 'config.ini')
+        #     )
 
-            msys_home = parser_nghdl.get('COMPILER', 'MSYS_HOME')
+        #     msys_home = parser_nghdl.get('COMPILER', 'MSYS_HOME')
 
-            tempdir = os.getcwd()
-            projPath = self.obj_appconfig.current_project["ProjectName"]
-            os.chdir(projPath)
-            self.command = 'cmd /c '+'"start /min ' + \
-                msys_home + "/usr/bin/mintty.exe ngspice -p " + command + '"'
-            self.process.start(self.command)
-            os.chdir(tempdir)
+        #     tempdir = os.getcwd()
+        #     projPath = self.obj_appconfig.current_project["ProjectName"]
+        #     os.chdir(projPath)
+        #     self.command = 'cmd /c '+'"start /min ' + \
+        #         msys_home + "/usr/bin/mintty.exe ngspice -p " + command + '"'
+        #     self.process.start(self.command)
+        #     os.chdir(tempdir)
 
-        else:                   # For Linux OS
+        # else:                   # For Linux OS
             # Creating argument for process
-            self.currTime = time.time()
-            self.process.setWorkingDirectory(self.projDir)
-            self.process.start('ngspice', self.args)
-            self.process.started.connect(lambda: self.enableButtons(state=False))
-            self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
-            self.process.finished.connect(self.finishSimulation)
-            self.obj_appconfig.process_obj.append(self.process)
-            print(self.obj_appconfig.proc_dict)
-            (
-                self.obj_appconfig.proc_dict
-                [self.obj_appconfig.current_project['ProjectName']].append(
-                    self.process.pid())
-            )
-            self.gawProcess = QtCore.QProcess(self)
-            self.gawCommand = "gaw " + command.replace(".cir.out", ".raw")
-            self.gawProcess.start('sh', ['-c', self.gawCommand])
-            print(self.gawCommand)
+        self.currTime = time.time()
+        self.process.setWorkingDirectory(self.projDir)
+        self.process.start('ngspice', self.args)
+        self.process.started.connect(lambda: self.enableButtons(state=False))
+        self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
+        self.process.finished.connect(self.finishSimulation)
+        self.obj_appconfig.process_obj.append(self.process)
+        print(self.obj_appconfig.proc_dict)
+        (
+            self.obj_appconfig.proc_dict
+            [self.obj_appconfig.current_project['ProjectName']].append(
+                self.process.pid())
+        )
+        self.gawProcess = QtCore.QProcess(self)
+        self.gawCommand = "gaw " + command.replace(".cir.out", ".raw")
+        self.gawProcess.start('sh', ['-c', self.gawCommand])
+        print(self.gawCommand)
 
     def finishSimulation(self, exitCode, exitStatus):
         """This function is intended to run when the ngspice simulation finishes.
