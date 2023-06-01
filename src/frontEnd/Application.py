@@ -40,7 +40,6 @@ from frontEnd import Workspace
 from frontEnd import DockArea
 from PyQt5.Qt import QSize
 import shutil
-import time
 import sys
 import psutil
 
@@ -551,47 +550,37 @@ class Application(QtWidgets.QMainWindow):
                 pass
         return False
 
-    def checkChangeInPlotData(self, currTime, exitStatus):
+#   @QtCore.pyqtSlot(int, QtCore.QProcess.ExitStatus)
+    def checkChangeInPlotData(self, exitCode):
         """Checks whether there is a change in the analysis files.
         (To see if simulation was successful)
         and displays the plotter where graphs can be plotted.
-
-        :param currTime: The time stamp of the analysis file
-            before simulation starts
-        :type currTime: float
-        :param exitStatus: The exit status of the ngspice QProcess
-        :type exitStatus: class:`QtCore.QProcess.ExitStatus`
+        :param exitCode: The exit status of the ngspice QProcess
+        :type exitCode: int
         """
         self.toggleToolbarButtons(True)
-        if exitStatus == QtCore.QProcess.NormalExit:
+        if exitCode == 0:
             try:
-
-                st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-                if st.st_mtime >= currTime:
-
-                    try:
-                        self.obj_Mainview.obj_dockarea.plottingEditor()
-                    except Exception as e:
-                        self.msg = QtWidgets.QErrorMessage()
-                        self.msg.setModal(True)
-                        self.msg.setWindowTitle("Error Message")
-                        self.msg.showMessage(
-                            'Error while opening python plotting Editor.'
-                            ' Please look at console for more details.'
-                        )
-                        self.msg.exec_()
-                        print("Exception Message:", str(e),
-                              traceback.format_exc())
-                        self.obj_appconfig.print_error('Exception Message : '
-                                                       + str(e))
-
-                    self.currTime = time.time()
-
-                return
-            except Exception:
-                pass
+                self.obj_Mainview.obj_dockarea.plottingEditor()
+            except Exception as e:
+                self.msg = QtWidgets.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Error Message")
+                self.msg.showMessage(
+                    'Error while opening python plotting Editor.'
+                    ' Please look at console for more details.'
+                )
+                self.msg.exec_()
+                print("Exception Message:", str(e), traceback.format_exc())
+                self.obj_appconfig.print_error('Exception Message : '
+                                               + str(e))
 
     def toggleToolbarButtons(self, state):
+        """This function is used to disable buttons related to simulation
+        during the ngspice simulation and to enable it back once the
+        simulation is completed
+        param: state: Decides whether to enable or disable the button
+        type:  state: bool"""
         self.ngspice.setEnabled(state)
         self.conversion.setEnabled(state)
         self.closeproj.setEnabled(state)
@@ -602,19 +591,14 @@ class Application(QtWidgets.QMainWindow):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
         if self.projDir is not None:
-
-            self.currTime = time.time()
-
-            process = self.obj_Mainview.obj_dockarea.qprocess
-            process.started.connect(lambda:
-                                    self.toggleToolbarButtons(state=False))
-            process.finished.connect(lambda exitCode, exitStatus:
-                                     self.checkChangeInPlotData(self.currTime,
-                                                                exitStatus))
+            simulationEssentials = {
+                'checkChangeInPlotData': self.checkChangeInPlotData,
+                'toggleToolbarButtons': self.toggleToolbarButtons
+            }
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                    self.projDir) is False:
+                    self.projDir, simulationEssentials) is False:
                 print(
                     "Netlist file (*.cir.out) not found."
                 )

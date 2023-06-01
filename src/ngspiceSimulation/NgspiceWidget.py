@@ -1,15 +1,12 @@
 from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
-# from configparser import ConfigParser
 from frontEnd import TerminalUi
-import os
-import time
 
 
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
 
-    def __init__(self, command, qprocess):
+    def __init__(self, command, simulationEssentials):
         """
         - Creates constructor for NgspiceWidget class.
         - Checks whether OS is Linux or Windows and
@@ -17,34 +14,19 @@ class NgspiceWidget(QtWidgets.QWidget):
         """
         QtWidgets.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
-        self.process = qprocess
+        self.process = QtCore.QProcess(self)
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
         self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminalUi)
+        self.checkChangeInPlotData = \
+            simulationEssentials['checkChangeInPlotData']
+        toggleToolbarButtons = simulationEssentials['toggleToolbarButtons']
 
         print("Argument to ngspice command : ", command)
 
-        # if os.name == 'nt':     # For Windows OS
-        #     parser_nghdl = ConfigParser()
-        #     parser_nghdl.read(
-        #         os.path.join('library', 'config', '.nghdl', 'config.ini')
-        #     )
-
-        #     msys_home = parser_nghdl.get('COMPILER', 'MSYS_HOME')
-
-        #     tempdir = os.getcwd()
-        #     projPath = self.obj_appconfig.current_project["ProjectName"]
-        #     os.chdir(projPath)
-        #     self.command = 'cmd /c '+'"start /min ' + \
-        #         msys_home + "/usr/bin/mintty.exe ngspice -p " + command + '"'
-        #     self.process.start(self.command)
-        #     os.chdir(tempdir)
-
-        # else:                   # For Linux OS
-
-        self.currTime = time.time()
+        self.process.started.connect(lambda: toggleToolbarButtons(state=False))
         self.process.setWorkingDirectory(self.projDir)
         self.process.start('ngspice', self.args)
         self.process.readyReadStandardOutput.connect(
@@ -80,19 +62,36 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.terminalUi.progressBar.setMaximum(100)
         self.terminalUi.progressBar.setProperty("value", 100)
 
-        st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-        if st.st_mtime >= self.currTime:
-            self.terminalUi.writeSimulationStatusToConsole(isSuccess=True)
+        # st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
+        # if st.st_mtime >= self.currTime:
+        if exitStatus == QtCore.QProcess.NormalExit:
+            self.checkChangeInPlotData(exitCode)
+#            self.terminalUi.writeSimulationStatusToConsole()
+
+            failedFormat = '<span style="color:#ff3333; font-size:26px;"> \
+                            {} \
+                            </span>'
+            successFormat = '<span style="color:#00ff00; font-size:26px;"> \
+                            {} \
+                            </span>'
+            if exitCode == 0:
+                self.terminalUi.simulationConsole.append(
+                    successFormat.format("Simulation Completed Successfully!"))
+            else:
+                self.terminalUi.simulationConsole.append(
+                    failedFormat.format("Simulation Failed!"))
+
+            self.terminalUi.simulationConsole.verticalScrollBar().setValue(
+                self.terminalUi.simulationConsole.verticalScrollBar().maximum()
+            )
         else:
-            self.terminalUi.writeSimulationStatusToConsole(isSuccess=False)
-
-        self.terminalUi.simulationConsole.verticalScrollBar().setValue(
-            self.terminalUi.simulationConsole.verticalScrollBar().maximum()
-        )
-
-#       To set the current time stamp of the generated
-#       file so as for re-simulation
-        self.currTime = time.time()
+            self.msg = QtWidgets.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                'Ngspice simulation did not complete successfully.'
+            )
+            self.msg.exec_()
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):

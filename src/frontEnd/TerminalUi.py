@@ -65,35 +65,12 @@ class TerminalUi(QtWidgets.QMainWindow):
 #       show app
         self.show()
 
-    def writeSimulationStatusToConsole(self, isSuccess):
-        """Writes simulation status to the console with appropriate style
-        to the :class:`Form_Ui` console.
-
-        :param isSuccess: A boolean flag used to indicate whether the
-            simulation was a success or not
-        :type isSuccess: bool
-        """
-        failedFormat = '<span style="color:#ff3333; font-size:18px;"> \
-                        {} \
-                        </span>'
-        successFormat = '<span style="color:#00ff00; font-size:18px;"> \
-                        {} \
-                        </span>'
-
-        if self.qProcess.exitStatus() == QtCore.QProcess.NormalExit:
-            if isSuccess:
-                self.simulationConsole.append(
-                    successFormat.format("Simulation Completed Successfully!"))
-            else:
-                self.simulationConsole.append(
-                    failedFormat.format("Simulation Failed!"))
-
     def cancelSimulation(self):
         """This function cancels the ongoing ngspice simulation.
         """
         if (self.qProcess.state() == QtCore.QProcess.NotRunning):
             return
-        cancelFormat = '<span style="color:#3385ff; font-size:18px;">{}</span>'
+        cancelFormat = '<span style="color:#FF8624; font-size:26px;">{}</span>'
         self.qProcess.kill()
 
 #       To show progressBar completed
