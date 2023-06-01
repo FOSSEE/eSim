@@ -3,7 +3,18 @@ import os
 
 
 class TerminalUi(QtWidgets.QMainWindow):
+    """This is a class that represents the GUI required to provide
+    details regarding the ngspice simulation. This GUI consists of
+    a progress bar, a console window which displays the log of the
+    simulation and button required for re-simulation and cancellation
+    of the simulation"""
     def __init__(self, qProcess, args):
+        """The constructor of the TerminalUi class
+        param: qProcess: a PyQt QProcess that runs ngspice
+        type: qProcess: :class:`QtCore.QProcess`
+        param: args: arguments to be passed on to the ngspice call
+        type: args: list
+        """
         super(TerminalUi, self).__init__()
 
 #        Other variables
