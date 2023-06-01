@@ -601,11 +601,6 @@ class Application(QtWidgets.QMainWindow):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
-        simulationEssentials = {
-            "toggleToolbarButtons": self.toggleToolbarButtons,
-            "checkChangeInPlotData": self.checkChangeInPlotData,
-        }
-
         if self.projDir is not None:
 
             self.currTime = time.time()
@@ -619,7 +614,7 @@ class Application(QtWidgets.QMainWindow):
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                    self.projDir, simulationEssentials) is False:
+                    self.projDir) is False:
                 print(
                     "Netlist file (*.cir.out) not found."
                 )
