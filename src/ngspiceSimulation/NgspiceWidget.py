@@ -9,7 +9,7 @@ import time
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
 
-    def __init__(self, command, simulationEssentials):
+    def __init__(self, command, qprocess):
         """
         - Creates constructor for NgspiceWidget class.
         - Checks whether OS is Linux or Windows and
@@ -17,14 +17,10 @@ class NgspiceWidget(QtWidgets.QWidget):
         """
         QtWidgets.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
-        self.process = QtCore.QProcess(self)
-        #self.terminal = QtWidgets.QWidget(self)
+        self.process = qprocess
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        self.checkChangeInPlotFile = simulationEssentials['checkChangeInPlotFile']
-        self.enableButtons = simulationEssentials['enableButtons']
         self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
         self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
-        #self.terminalUi.setupUi(self.terminal)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminalUi)
 
@@ -48,10 +44,10 @@ class NgspiceWidget(QtWidgets.QWidget):
 
         # else:                   # For Linux OS
             # Creating argument for process
+
         self.currTime = time.time()
         self.process.setWorkingDirectory(self.projDir)
         self.process.start('ngspice', self.args)
-        self.process.started.connect(lambda: self.enableButtons(state=False))
         self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
         self.process.finished.connect(self.finishSimulation)
         self.obj_appconfig.process_obj.append(self.process)
@@ -76,24 +72,10 @@ class NgspiceWidget(QtWidgets.QWidget):
         :param exitStatus: The exit status signal of the qprocess that runs ngspice
         :type exitStatus: class:`QtCore.QProcess.ExitStatus`
         """
-        self.checkChangeInPlotFile(self.currTime, exitStatus)
-        self.readyToPrintSimulationStatus = True
 
         #To stop progressbar from running after simulation is completed
         self.terminalUi.progressBar.setMaximum(100)
         self.terminalUi.progressBar.setProperty("value", 100)
-
-        self.writeSimulationStatus()
-
-        #To set the current time stamp of the generated file so as for re-simulation
-        self.currTime = time.time()
-
-    def writeSimulationStatus(self):
-        """This function writes status of the simulation (Success or Failure) to the 
-        :class:`TerminalUi.TerminalUi` console.
-        """
-        if self.readyToPrintSimulationStatus is False:
-            return
 
         st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
         if st.st_mtime >= self.currTime:
@@ -104,7 +86,9 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.terminalUi.simulationConsole.verticalScrollBar().setValue(
             self.terminalUi.simulationConsole.verticalScrollBar().maximum()
         )
-        self.readyToPrintSimulationStatus = False
+
+        #To set the current time stamp of the generated file so as for re-simulation
+        self.currTime = time.time()
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):

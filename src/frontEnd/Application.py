@@ -12,9 +12,10 @@
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #    MAINTAINED: Rahul Paknikar, rahulp@cse.iitb.ac.in
 #                Sumanto Kar, sumantokar@iitb.ac.in
+#                Pranav P, pranavsdreams@gmail.com
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Tuesday 13 September 2022
+#      REVISION: Thursday 01 June 2023
 # =========================================================================
 
 import os
@@ -550,7 +551,7 @@ class Application(QtWidgets.QMainWindow):
                 pass
         return False
     
-    def checkChangeInPlotFile(self, currTime, exitStatus):
+    def checkChangeInPlotData(self, currTime, exitStatus):
         """Checks whether there is a change in the analysis files(To see if simulation was successful)
         and displays the plotter where graphs can be plotted.
 
@@ -559,27 +560,9 @@ class Application(QtWidgets.QMainWindow):
         :param exitStatus: The exit status of the ngspice QProcess
         :type exitStatus: class:`QtCore.QProcess.ExitStatus`
         """
-        self.enableButtons(True)
+        self.toggleToolbarButtons(True)
         if exitStatus == QtCore.QProcess.NormalExit:
             try:
-                # if os.name == 'nt':
-                #     proc = 'mintty'
-                # else:
-                #     proc = 'xterm'
-
-                # # Edited by Sumanto Kar 25/08/2021	
-                # if False and os.name != 'nt' and \
-                #         self.checkIfProcessRunning('xterm') is False:
-                #     self.msg = QtWidgets.QErrorMessage()	
-                #     self.msg.setModal(True)	
-                #     self.msg.setWindowTitle("Warning Message")	
-                #     self.msg.showMessage(	
-                #         'Simulation was interrupted/failed. '	
-                #         'Please close all the Ngspice windows '	
-                #         'and then rerun the simulation.'	
-                #     )	
-                #     self.msg.exec_()	
-                #     return
 
                 st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
                 if st.st_mtime >= currTime:
@@ -597,12 +580,14 @@ class Application(QtWidgets.QMainWindow):
                         self.msg.exec_()
                         print("Exception Message:", str(e), traceback.format_exc())
                         self.obj_appconfig.print_error('Exception Message : ' + str(e))
+                        
+                    self.currTime = time.time()
 
                 return
             except Exception:
                 pass
         
-    def enableButtons(self, state):
+    def toggleToolbarButtons(self, state):
         self.ngspice.setEnabled(state)
         self.conversion.setEnabled(state)
         self.closeproj.setEnabled(state)
@@ -613,11 +598,17 @@ class Application(QtWidgets.QMainWindow):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
         simulationEssentials = {
-            "enableButtons": self.enableButtons,
-            "checkChangeInPlotFile": self.checkChangeInPlotFile,
+            "toggleToolbarButtons": self.toggleToolbarButtons,
+            "checkChangeInPlotData": self.checkChangeInPlotData,
         }
-
+        
         if self.projDir is not None:
+
+            self.currTime = time.time()
+
+            process = self.obj_Mainview.obj_dockarea.qprocess
+            process.started.connect(lambda: self.toggleToolbarButtons(state=False))
+            process.finished.connect(lambda exitCode, exitStatus: self.checkChangeInPlotData(self.currTime, exitStatus))
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
@@ -634,7 +625,7 @@ class Application(QtWidgets.QMainWindow):
                 )
                 self.msg.exec_()
                 return
-
+            
         else:
             self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)

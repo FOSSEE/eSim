@@ -35,6 +35,8 @@ class DockArea(QtWidgets.QMainWindow):
         QtWidgets.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
 
+        self.qprocess = QtCore.QProcess(self)
+
         for dockName in dockList:
             dock[dockName] = QtWidgets.QDockWidget(dockName)
             self.welcomeWidget = QtWidgets.QWidget()
@@ -133,7 +135,7 @@ class DockArea(QtWidgets.QMainWindow):
 
         self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(self.ngspiceNetlist, simulationEssentials)
+            NgspiceWidget(self.ngspiceNetlist, self.qprocess)
         )
 
         # Adding to main Layout

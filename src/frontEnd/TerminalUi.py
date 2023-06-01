@@ -39,8 +39,8 @@ class TerminalUi(QtWidgets.QMainWindow):
         :param isSuccess: A boolean flag used to indicate whether the simulation was a success or not
         :type isSuccess: bool
         """
-        failedFormat = '<span style="color:#ff3333;">{}</span>'
-        successFormat = '<span style="color:#00ff00;">{}</span>'
+        failedFormat = '<span style="color:#ff3333; font-size:18px;">{}</span>'
+        successFormat = '<span style="color:#00ff00; font-size:18px;">{}</span>'
 
         if self.qProcess.exitStatus() == QtCore.QProcess.NormalExit:
             if isSuccess:
@@ -53,7 +53,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         """
         if (self.qProcess.state() == QtCore.QProcess.NotRunning):
             return
-        cancelFormat = '<span style="color:#3385ff;">{}</span>'
+        cancelFormat = '<span style="color:#3385ff; font-size:18px;">{}</span>'
         self.qProcess.kill()
         
         #To show progressBar completed
