@@ -97,7 +97,12 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.terminalUi.simulationConsole.insertPlainText(
             str(self.process.readAllStandardOutput().data(), encoding='utf-8')
         )
-        stderror = self.process.readAllStandardError()
+
+        stderror = str(self.process.readAllStandardError().data(), encoding='utf-8')
+        #For suppressing the PrinterOnly error that batch mode throws
+        stderror = '\n'.join([line for line in stderror.split('\n') 
+                              if ('PrinterOnly' not in line and
+                              'viewport for graphics' not in line)])
         self.terminalUi.simulationConsole.insertPlainText(
-            str(stderror.data(), encoding='utf-8')
+            stderror
         )
