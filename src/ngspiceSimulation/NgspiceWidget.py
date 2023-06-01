@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
-from configparser import ConfigParser
+# from configparser import ConfigParser
 from frontEnd import TerminalUi
 import os
 import time
@@ -43,12 +43,12 @@ class NgspiceWidget(QtWidgets.QWidget):
         #     os.chdir(tempdir)
 
         # else:                   # For Linux OS
-            # Creating argument for process
 
         self.currTime = time.time()
         self.process.setWorkingDirectory(self.projDir)
         self.process.start('ngspice', self.args)
-        self.process.readyReadStandardOutput.connect(lambda: self.readyReadAll())
+        self.process.readyReadStandardOutput.connect(
+            lambda: self.readyReadAll())
         self.process.finished.connect(self.finishSimulation)
         self.obj_appconfig.process_obj.append(self.process)
         print(self.obj_appconfig.proc_dict)
@@ -63,17 +63,20 @@ class NgspiceWidget(QtWidgets.QWidget):
         print(self.gawCommand)
 
     def finishSimulation(self, exitCode, exitStatus):
-        """This function is intended to run when the ngspice simulation finishes.
-        It singals to the function that generates the plots and also writes in the
-        appropriate status of the simulation (Whether it was a success or not).
+        """This function is intended to run when the ngspice
+        simulation finishes. It singals to the function that generates
+        the plots and also writes in the appropriate status of the
+        simulation (Whether it was a success or not).
 
-        :param exitCode: The exit code signal of the qprocess that runs ngspice
+        :param exitCode: The exit code signal of the qprocess
+            that runs ngspice
         :type exitCode: int
-        :param exitStatus: The exit status signal of the qprocess that runs ngspice
+        :param exitStatus: The exit status signal of the
+            qprocess that runs ngspice
         :type exitStatus: class:`QtCore.QProcess.ExitStatus`
         """
 
-        #To stop progressbar from running after simulation is completed
+#       To stop progressbar from running after simulation is completed
         self.terminalUi.progressBar.setMaximum(100)
         self.terminalUi.progressBar.setProperty("value", 100)
 
@@ -87,20 +90,23 @@ class NgspiceWidget(QtWidgets.QWidget):
             self.terminalUi.simulationConsole.verticalScrollBar().maximum()
         )
 
-        #To set the current time stamp of the generated file so as for re-simulation
+#       To set the current time stamp of the generated
+#       file so as for re-simulation
         self.currTime = time.time()
 
     @QtCore.pyqtSlot()
     def readyReadAll(self):
-        """Outputs the ngspice process standard output and standard error to :class:`TerminalUi.TerminalUi` console
+        """Outputs the ngspice process standard output and standard error
+        to :class:`TerminalUi.TerminalUi` console
         """
         self.terminalUi.simulationConsole.insertPlainText(
             str(self.process.readAllStandardOutput().data(), encoding='utf-8')
         )
 
-        stderror = str(self.process.readAllStandardError().data(), encoding='utf-8')
-        #For suppressing the PrinterOnly error that batch mode throws
-        stderror = '\n'.join([line for line in stderror.split('\n') 
+        stderror = str(self.process.readAllStandardError().data(),
+                       encoding='utf-8')
+#       For suppressing the PrinterOnly error that batch mode throws
+        stderror = '\n'.join([line for line in stderror.split('\n')
                               if ('PrinterOnly' not in line and
                               'viewport for graphics' not in line)])
         self.terminalUi.simulationConsole.insertPlainText(

@@ -550,12 +550,14 @@ class Application(QtWidgets.QMainWindow):
                     psutil.AccessDenied, psutil.ZombieProcess):
                 pass
         return False
-    
+
     def checkChangeInPlotData(self, currTime, exitStatus):
-        """Checks whether there is a change in the analysis files(To see if simulation was successful)
+        """Checks whether there is a change in the analysis files.
+        (To see if simulation was successful)
         and displays the plotter where graphs can be plotted.
 
-        :param currTime: The time stamp of the analysis file before simulation starts
+        :param currTime: The time stamp of the analysis file
+            before simulation starts
         :type currTime: float
         :param exitStatus: The exit status of the ngspice QProcess
         :type exitStatus: class:`QtCore.QProcess.ExitStatus`
@@ -578,15 +580,17 @@ class Application(QtWidgets.QMainWindow):
                             ' Please look at console for more details.'
                         )
                         self.msg.exec_()
-                        print("Exception Message:", str(e), traceback.format_exc())
-                        self.obj_appconfig.print_error('Exception Message : ' + str(e))
-                        
+                        print("Exception Message:", str(e),
+                              traceback.format_exc())
+                        self.obj_appconfig.print_error('Exception Message : '
+                                                       + str(e))
+
                     self.currTime = time.time()
 
                 return
             except Exception:
                 pass
-        
+
     def toggleToolbarButtons(self, state):
         self.ngspice.setEnabled(state)
         self.conversion.setEnabled(state)
@@ -601,14 +605,17 @@ class Application(QtWidgets.QMainWindow):
             "toggleToolbarButtons": self.toggleToolbarButtons,
             "checkChangeInPlotData": self.checkChangeInPlotData,
         }
-        
+
         if self.projDir is not None:
 
             self.currTime = time.time()
 
             process = self.obj_Mainview.obj_dockarea.qprocess
-            process.started.connect(lambda: self.toggleToolbarButtons(state=False))
-            process.finished.connect(lambda exitCode, exitStatus: self.checkChangeInPlotData(self.currTime, exitStatus))
+            process.started.connect(lambda:
+                                    self.toggleToolbarButtons(state=False))
+            process.finished.connect(lambda exitCode, exitStatus:
+                                     self.checkChangeInPlotData(self.currTime,
+                                                                exitStatus))
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
@@ -625,7 +632,7 @@ class Application(QtWidgets.QMainWindow):
                 )
                 self.msg.exec_()
                 return
-            
+
         else:
             self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
