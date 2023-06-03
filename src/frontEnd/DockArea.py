@@ -121,7 +121,7 @@ class DockArea(QtWidgets.QMainWindow):
             )
         count = count + 1
 
-    def ngspiceEditor(self, projDir, simulationEssentials):
+    def ngspiceEditor(self, projDir, startSimulation):
         """ This function creates widget for Ngspice window."""
         self.projDir = projDir
         self.projName = os.path.basename(self.projDir)
@@ -138,7 +138,7 @@ class DockArea(QtWidgets.QMainWindow):
 
         self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(self.ngspiceNetlist, simulationEssentials)
+            NgspiceWidget(self.ngspiceNetlist, startSimulation)
         )
 
         # Adding to main Layout

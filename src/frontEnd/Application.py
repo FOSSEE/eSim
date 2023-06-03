@@ -558,7 +558,11 @@ class Application(QtWidgets.QMainWindow):
         :param exitCode: The exit status of the ngspice QProcess
         :type exitCode: int
         """
-        self.toggleToolbarButtons(True)
+        self.ngspice.setEnabled(True)
+        self.conversion.setEnabled(True)
+        self.closeproj.setEnabled(True)
+        self.wrkspce.setEnabled(True)
+
         if exitCode == 0:
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
@@ -575,30 +579,36 @@ class Application(QtWidgets.QMainWindow):
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
 
-    def toggleToolbarButtons(self, state):
+    def startSimulation(self, process, function):
         """This function is used to disable buttons related to simulation
-        during the ngspice simulation and to enable it back once the
-        simulation is completed
-        param: state: Decides whether to enable or disable the button
-        type:  state: bool"""
-        self.ngspice.setEnabled(state)
-        self.conversion.setEnabled(state)
-        self.closeproj.setEnabled(state)
-        self.wrkspce.setEnabled(state)
+        during the ngspice simulation and to connect the
+        `self.checkChangeInPlotData` function to finished signal if not
+        already connected.
+        param: process: The QProcess that runs the simulation
+        type:  process: :class:`QtCore.QProcess`"""
+        self.ngspice.setEnabled(False)
+        self.conversion.setEnabled(False)
+        self.closeproj.setEnabled(False)
+        self.wrkspce.setEnabled(False)
+
+        if process.isFinishConnected is False:
+            process.isFinishConnected = True
+
+#           Calls the finished connect exactly once.
+            process.finished.connect(
+                lambda exitCode, exitStatus:
+                    function(exitCode, exitStatus, self.checkChangeInPlotData)
+            )
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
         if self.projDir is not None:
-            simulationEssentials = {
-                'checkChangeInPlotData': self.checkChangeInPlotData,
-                'toggleToolbarButtons': self.toggleToolbarButtons
-            }
 
             # Edited by Sumanto Kar 25/08/2021
             if self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                    self.projDir, simulationEssentials) is False:
+                    self.projDir, self.startSimulation) is False:
                 print(
                     "Netlist file (*.cir.out) not found."
                 )
