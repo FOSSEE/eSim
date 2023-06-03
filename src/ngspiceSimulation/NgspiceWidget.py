@@ -7,21 +7,31 @@ import os
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
 
-    def __init__(self, command, startSimulation):
+    def __init__(self, netlist, startSimulation):
         """
         - Creates constructor for NgspiceWidget class.
-        - Checks whether OS is Linux or Windows and
-          creates Ngspice window accordingly.
+        - Creates NgspiceWindow and runs the process
+        - Calls the logs the ngspice process, returns
+          it's simulation status and calls the plotter
+        - Checks whether it is Linux and runs gaw
+        :param netlist: The file .cir.out file that
+            contains the instructions.
+        :type netlist: str
+        :param startSimulation: A function that disables
+            the toolbar buttons of connects the finishSimulation
+            function to finished.connect
+        :type startSimulation: function
         """
         QtWidgets.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
         self.process = QtCore.QProcess(self)
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        self.args = ['-b', '-r', command.replace(".cir.out", ".raw"), command]
+        self.args = ['-b', '-r', netlist.replace(".cir.out", ".raw"),
+                     netlist]
         self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminalUi)
-        print("Argument to ngspice command : ", command)
+#        print("Argument to ngspice command : ", netlist)
 
 #       This variable makes sure that finished.connect is called exactly once
         self.process.isFinishConnected = False
@@ -46,11 +56,12 @@ class NgspiceWidget(QtWidgets.QWidget):
 
         if os.name != "nt":
             self.gawProcess = QtCore.QProcess(self)
-            self.gawCommand = "gaw " + command.replace(".cir.out", ".raw")
+            self.gawCommand = "gaw " + netlist.replace(".cir.out", ".raw")
             self.gawProcess.start('sh', ['-c', self.gawCommand])
             print(self.gawCommand)
 
-    def finishSimulation(self, exitCode, exitStatus, checkChangeInPlotData):
+    def finishSimulation(self, exitCode,
+                         exitStatus, checkNgspiceProcessFinished):
         """This function is intended to run when the ngspice
         simulation finishes. It singals to the function that generates
         the plots and also writes in the appropriate status of the
@@ -62,22 +73,19 @@ class NgspiceWidget(QtWidgets.QWidget):
         :param exitStatus: The exit status signal of the
             qprocess that runs ngspice
         :type exitStatus: class:`QtCore.QProcess.ExitStatus`
-        :param checkChangeInPlotData: Takes the plotting function
+        :param checkNgspiceProcessFinished: Takes the plotting function
             as input and uses it to generate the plots. The reason
             why this is passed in such a way is to minimize the no.
             of functions passed through a chain of objects.
-        :type checkChangeInPlotData: function
+        :type checkNgspiceProcessFinished: function
         """
 
 #       To stop progressbar from running after simulation is completed
         self.terminalUi.progressBar.setMaximum(100)
         self.terminalUi.progressBar.setProperty("value", 100)
 
-        # st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
-        # if st.st_mtime >= self.currTime:
         if exitStatus == QtCore.QProcess.NormalExit:
-            checkChangeInPlotData(exitCode)
-#            self.terminalUi.writeSimulationStatusToConsole()
+            checkNgspiceProcessFinished(exitCode)
 
             failedFormat = '<span style="color:#ff3333; font-size:26px;"> \
                             {} \

@@ -550,11 +550,10 @@ class Application(QtWidgets.QMainWindow):
                 pass
         return False
 
-#   @QtCore.pyqtSlot(int, QtCore.QProcess.ExitStatus)
-    def checkChangeInPlotData(self, exitCode):
-        """Checks whether there is a change in the analysis files.
-        (To see if simulation was successful)
-        and displays the plotter where graphs can be plotted.
+    def checkNgspiceProcessFinished(self, exitCode):
+        """Checks whether the QProcess that runs ngspice
+        finished successfully and displays the plotter
+        where graphs can be plotted.
         :param exitCode: The exit status of the ngspice QProcess
         :type exitCode: int
         """
@@ -582,10 +581,13 @@ class Application(QtWidgets.QMainWindow):
     def startSimulation(self, process, function):
         """This function is used to disable buttons related to simulation
         during the ngspice simulation and to connect the
-        `self.checkChangeInPlotData` function to finished signal if not
+        `self.checkNgspiceProcessFinished` function to finished signal if not
         already connected.
-        param: process: The QProcess that runs the simulation
-        type:  process: :class:`QtCore.QProcess`"""
+        :param process: The QProcess that runs the simulation
+        :type  process: :class:`QtCore.QProcess`
+        :param function: Used to call the finishSimulation function in
+                :class:`NgspiceWidget.NgspiceWidget` class
+        :type  function: function"""
         self.ngspice.setEnabled(False)
         self.conversion.setEnabled(False)
         self.closeproj.setEnabled(False)
@@ -597,7 +599,8 @@ class Application(QtWidgets.QMainWindow):
 #           Calls the finished connect exactly once.
             process.finished.connect(
                 lambda exitCode, exitStatus:
-                    function(exitCode, exitStatus, self.checkChangeInPlotData)
+                    function(exitCode, exitStatus,
+                             self.checkNgspiceProcessFinished)
             )
 
     def open_ngspice(self):
