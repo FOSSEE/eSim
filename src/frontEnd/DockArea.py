@@ -121,28 +121,19 @@ class DockArea(QtWidgets.QMainWindow):
             )
         count = count + 1
 
-    def ngspiceEditor(self, projDir, startSimulation):
+    def ngspiceEditor(self, projName, netlist, simEndSignal):
         """ This function creates widget for Ngspice window."""
-        self.projDir = projDir
-        self.projName = os.path.basename(self.projDir)
-        dockName = f'Simulation-{self.projName}-'
-        self.ngspiceNetlist = os.path.join(
-            self.projDir, self.projName + ".cir.out")
-
-        # Edited by Sumanto Kar 25/08/2021
-        if os.path.isfile(self.ngspiceNetlist) is False:
-            return False
-
         global count
         self.ngspiceWidget = QtWidgets.QWidget()
 
         self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(self.ngspiceNetlist, startSimulation)
+            NgspiceWidget(netlist, simEndSignal)
         )
 
         # Adding to main Layout
         self.ngspiceWidget.setLayout(self.ngspiceLayout)
+        dockName = f'Simulation-{projName}-'
         dock[dockName + str(count)
              ] = QtWidgets.QDockWidget(dockName
                                        + str(count))

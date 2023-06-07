@@ -10,15 +10,17 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#    MAINTAINED: Rahul Paknikar, rahulp@cse.iitb.ac.in
+#    MAINTAINED: Rahul Paknikar, rahulp@iitb.ac.in
 #                Sumanto Kar, sumantokar@iitb.ac.in
 #                Pranav P, pranavsdreams@gmail.com
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Thursday 01 June 2023
+#      REVISION: Wednesday 07 June 2023
 # =========================================================================
 
 import os
+import sys
+import shutil
 import traceback
 
 if os.name == 'nt':
@@ -29,19 +31,16 @@ else:
     init_path = '../../'
 
 from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt5.Qt import QSize
 from configuration.Appconfig import Appconfig
+from frontEnd import ProjectExplorer
+from frontEnd import Workspace
+from frontEnd import DockArea
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
-from frontEnd import ProjectExplorer
-from frontEnd import Workspace
-from frontEnd import DockArea
-from PyQt5.Qt import QSize
-import shutil
-import sys
-import psutil
 
 # Its our main window of application.
 
@@ -49,6 +48,7 @@ import psutil
 class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     global project_name
+    simulationEndSignal = QtCore.pyqtSignal(QtCore.QProcess.ExitStatus, int)
 
     def __init__(self, *args):
         """Initialize main Application window."""
@@ -58,6 +58,9 @@ class Application(QtWidgets.QMainWindow):
 
         # Flag for mode of operation. Default is set to offline mode.
         self.online_flag = False
+
+        # Set slot for simulation end signal to plot simulation data
+        self.simulationEndSignal.connect(self.plotSimulationData)
 
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
@@ -534,35 +537,17 @@ class Application(QtWidgets.QMainWindow):
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
-    def checkIfProcessRunning(self, processName):
-        '''
-        Check if there is any running process
-        that contains the given name processName.
-        '''
-        # Iterate over the all the running process
-        for proc in psutil.process_iter():
-            try:
-                # Check if process name contains the given name string.
-                if processName.lower() in proc.name().lower():
-                    return True
-            except (psutil.NoSuchProcess,
-                    psutil.AccessDenied, psutil.ZombieProcess):
-                pass
-        return False
-
-    def checkNgspiceProcessFinished(self, exitCode):
-        """Checks whether the QProcess that runs ngspice
-        finished successfully and displays the plotter
-        where graphs can be plotted.
-        :param exitCode: The exit status of the ngspice QProcess
-        :type exitCode: int
+    @QtCore.pyqtSlot(QtCore.QProcess.ExitStatus, int)
+    def plotSimulationData(self, exitCode, exitStatus):
+        """Enables interaction for new simulation and
+           displays the plotter dock where graphs can be plotted.
         """
         self.ngspice.setEnabled(True)
         self.conversion.setEnabled(True)
         self.closeproj.setEnabled(True)
         self.wrkspce.setEnabled(True)
 
-        if exitCode == 0:
+        if exitStatus == QtCore.QProcess.NormalExit and exitCode == 0:
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
@@ -570,60 +555,41 @@ class Application(QtWidgets.QMainWindow):
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
-                    'Error while opening python plotting Editor.'
-                    ' Please look at console for more details.'
+                    'Data could not be plotted. Please try again.'
                 )
                 self.msg.exec_()
                 print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
 
-    def startSimulation(self, process, function):
-        """This function is used to disable buttons related to simulation
-        during the ngspice simulation and to connect the
-        `self.checkNgspiceProcessFinished` function to finished signal if not
-        already connected.
-        :param process: The QProcess that runs the simulation
-        :type  process: :class:`QtCore.QProcess`
-        :param function: Used to call the finishSimulation function in
-                :class:`NgspiceWidget.NgspiceWidget` class
-        :type  function: function"""
-        self.ngspice.setEnabled(False)
-        self.conversion.setEnabled(False)
-        self.closeproj.setEnabled(False)
-        self.wrkspce.setEnabled(False)
-
-        if process.isFinishConnected is False:
-            process.isFinishConnected = True
-
-#           Calls the finished connect exactly once.
-            process.finished.connect(
-                lambda exitCode, exitStatus:
-                    function(exitCode, exitStatus,
-                             self.checkNgspiceProcessFinished)
-            )
-
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
-        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        projDir = self.obj_appconfig.current_project["ProjectName"]
 
-        if self.projDir is not None:
+        if projDir is not None:
+            projName = os.path.basename(projDir)
+            ngspiceNetlist = os.path.join(projDir, projName + ".cir.out")
 
-            # Edited by Sumanto Kar 25/08/2021
-            if self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                    self.projDir, self.startSimulation) is False:
+            if not os.path.isfile(ngspiceNetlist):
                 print(
                     "Netlist file (*.cir.out) not found."
                 )
-
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
-                    'Netlist file (*.cir.out) not found.'
+                    'Netlist (*.cir.out) not found.'
                 )
                 self.msg.exec_()
                 return
+
+            self.obj_Mainview.obj_dockarea.ngspiceEditor(
+                projName, ngspiceNetlist, self.simulationEndSignal)
+
+            self.ngspice.setEnabled(False)
+            self.conversion.setEnabled(False)
+            self.closeproj.setEnabled(False)
+            self.wrkspce.setEnabled(False)
 
         else:
             self.msg = QtWidgets.QErrorMessage()
@@ -726,7 +692,7 @@ class Application(QtWidgets.QMainWindow):
                     # Creating a command for Ngspice to Modelica converter
                     self.cmd1 = "
                         python3 ../ngspicetoModelica/NgspicetoModelica.py "\
-                            +self.ngspiceNetlist
+                            + self.ngspiceNetlist
                     self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
                     self.obj_workThread1.start()
                     if self.obj_validation.validateTool("OMEdit"):
