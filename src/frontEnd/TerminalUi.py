@@ -17,39 +17,42 @@ class TerminalUi(QtWidgets.QMainWindow):
         """
         super(TerminalUi, self).__init__()
 
-#        Other variables
+        # Other variables
         self.darkColor = True
         self.qProcess = qProcess
         self.args = args
         self.iconDir = "../../images"
 
-#       Load the ui file
+        # Load the ui file
         uic.loadUi("TerminalUi.ui", self)
 
-#       Define Our Widgets
+        # Define Our Widgets
         self.progressBar = self.findChild(
             QtWidgets.QProgressBar,
             "progressBar"
-            )
+        )
         self.simulationConsole = self.findChild(
             QtWidgets.QTextEdit,
             "simulationConsole"
-            )
+        )
 
         self.lightDarkModeButton = self.findChild(
             QtWidgets.QPushButton,
             "lightDarkModeButton"
-            )
+        )
         self.cancelSimulationButton = self.findChild(
             QtWidgets.QPushButton,
             "cancelSimulationButton"
-            )
+        )
+        self.cancelSimulationButton.setEnabled(True)
+
         self.redoSimulationButton = self.findChild(
             QtWidgets.QPushButton,
             "redoSimulationButton"
-            )
+        )
+        self.redoSimulationButton.setEnabled(False)
 
-#       Add functionalities to Widgets
+        # Add functionalities to Widgets
         self.lightDarkModeButton.setIcon(
             QtGui.QIcon(
                 os.path.join(
@@ -62,7 +65,6 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.cancelSimulationButton.clicked.connect(self.cancelSimulation)
         self.redoSimulationButton.clicked.connect(self.redoSimulation)
 
-#       show app
         self.show()
 
     def cancelSimulation(self):
@@ -70,10 +72,11 @@ class TerminalUi(QtWidgets.QMainWindow):
         """
         if (self.qProcess.state() == QtCore.QProcess.NotRunning):
             return
+
         cancelFormat = '<span style="color:#FF8624; font-size:26px;">{}</span>'
         self.qProcess.kill()
 
-#       To show progressBar completed
+        # To show progressBar completed
         self.progressBar.setMaximum(100)
         self.progressBar.setProperty("value", 100)
 
@@ -83,18 +86,24 @@ class TerminalUi(QtWidgets.QMainWindow):
             self.simulationConsole.verticalScrollBar().maximum()
         )
 
+        self.cancelSimulationButton.setEnabled(False)
+        self.redoSimulationButton.setEnabled(True)
+
     def redoSimulation(self):
         """This function reruns the ngspice simulation
         """
         if (self.qProcess.state() == QtCore.QProcess.Running):
             return
 
-#        To make the progressbar running
+        # To make the progressbar running
         self.progressBar.setMaximum(0)
         self.progressBar.setProperty("value", -1)
 
         self.simulationConsole.setText("")
         self.qProcess.start('ngspice', self.args)
+
+        self.cancelSimulationButton.setEnabled(True)
+        self.redoSimulationButton.setEnabled(False)
 
     def changeColor(self):
         """Toggles the :class:`Ui_Form` console between dark mode
