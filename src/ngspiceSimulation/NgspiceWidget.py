@@ -38,10 +38,10 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.process.readyRead.connect(self.readyReadAll)
         self.process.finished.connect(
             lambda exitCode, exitStatus:
-            self.finishSimulation(exitCode, exitStatus, simEndSignal)
+            self.finishSimulation(exitCode, exitStatus, simEndSignal, False)
         )
         self.process.errorOccurred.connect(
-            lambda: self.finishSimulation(None, None, simEndSignal))
+            lambda: self.finishSimulation(None, None, simEndSignal, True))
         self.process.start('ngspice', self.args)
 
         self.obj_appconfig.process_obj.append(self.process)
@@ -77,7 +77,8 @@ class NgspiceWidget(QtWidgets.QWidget):
 
         self.terminalUi.simulationConsole.insertPlainText(stderror)
 
-    def finishSimulation(self, exitCode, exitStatus, simEndSignal):
+    def finishSimulation(self, exitCode, exitStatus,
+                         simEndSignal, hasErrorOccurred):
         """This function is intended to run when the Ngspice
         simulation finishes. It singals to the function that generates
         the plots and also writes in the appropriate status of the
@@ -94,6 +95,12 @@ class NgspiceWidget(QtWidgets.QWidget):
             simulation is successful
         :type simEndSignal: PyQt Signal
         """
+
+        # Canceling simulation triggers both finished and
+        # errorOccurred signals...need to skip finished signal in this case.
+        if not hasErrorOccurred and self.terminalUi.simulationCancelled:
+            return
+
         # Stop progressbar from running after simulation is completed
         self.terminalUi.progressBar.setMaximum(100)
         self.terminalUi.progressBar.setProperty("value", 100)
@@ -109,11 +116,21 @@ class NgspiceWidget(QtWidgets.QWidget):
         elif exitStatus is None:
             exitStatus = self.process.exitStatus()
 
-        # Redo-simulation does not set correct exit status and code.
-        # So, need to check the error type:
-        #   =>  UnknownError along with NormalExit seems successful simulation
-        if exitStatus == QtCore.QProcess.NormalExit and exitCode == 0 \
+        if self.terminalUi.simulationCancelled:
+            msg = QtWidgets.QMessageBox()
+            msg.setModal(True)
+            msg.setIcon(QtWidgets.QMessageBox.Warning)
+            msg.setWindowTitle("Warning Message")
+            msg.setText("Simulation was cancelled.")
+            msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
+            msg.exec()
+
+        elif exitStatus == QtCore.QProcess.NormalExit and exitCode == 0 \
                 and errorType == QtCore.QProcess.UnknownError:
+            # Redo-simulation does not set correct exit status and code.
+            # So, need to check the error type ==>
+            #   UnknownError along with NormalExit seems successful simulation
+
             successFormat = '<span style="color:#00ff00; font-size:26px;">\
                         {} \
                         </span>'
@@ -139,11 +156,11 @@ class NgspiceWidget(QtWidgets.QWidget):
             else:
                 errMsg += ' could not complete. Try again later.'
 
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Error Message")
-            self.msg.showMessage(errMsg)
-            self.msg.exec_()
+            msg = QtWidgets.QErrorMessage()
+            msg.setModal(True)
+            msg.setWindowTitle("Error Message")
+            msg.showMessage(errMsg)
+            msg.exec()
 
         self.terminalUi.simulationConsole.verticalScrollBar().setValue(
             self.terminalUi.simulationConsole.verticalScrollBar().maximum()
