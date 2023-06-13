@@ -10,7 +10,7 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#      MODIFIED: Rahul Paknikar, rahulp@cse.iitb.ac.in
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Wednesday 04 March 2015
 #      REVISION: Sunday 18 September 2022
@@ -560,7 +560,7 @@ class MainWindow(QtWidgets.QWidget):
                 attr_ui = ET.SubElement(attr_model, line[3], name="type")
                 attr_ui.text = line[2]
                 for key, value in line[7].items():
-                    if(
+                    if (
                         hasattr(value, '__iter__') and
                         i <= end and not isinstance(value, str)
                     ):
@@ -849,7 +849,7 @@ class MainWindow(QtWidgets.QWidget):
                     for i in range(2, len(words) - 1):
                         subcktInfo += words[i] + " "
                     continue
-            if(
+            if (
                 words[0] == ".end" or
                 words[0] == ".ac" or
                 words[0] == ".dc" or

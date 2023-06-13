@@ -472,7 +472,7 @@ class Handler(watchdog.events.PatternMatchingEventHandler):
         # self.obj_Appconfig.print_info("NgVeri File:\
         # "+self.verilogfile+" modified. Please click on Refresh")
         global toggle_flag
-        if not(self.refreshoption in toggle_flag):
+        if self.refreshoption not in toggle_flag:
             toggle_flag.append(self.refreshoption)
         # i.rm_watch()
         self.observer.stop()

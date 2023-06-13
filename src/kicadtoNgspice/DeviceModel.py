@@ -693,7 +693,7 @@ class DeviceModel(QtWidgets.QWidget):
         #               Sumanto Kar, sumantokar@iitb.ac.in
         #               Nagesh Karmali, nags@cse.iitb.ac.in
         #               Firuza Karmali, firuza@cse.iitb.ac.in
-        #               Rahul Paknikar, rahulp@cse.iitb.ac.in
+        #               Rahul Paknikar, rahulp@iitb.ac.in
         # GUIDED BY:
         #               Kunal Ghosh, VLSI System Design Corp.Pvt.Ltd
         #               Anagha Ghosh, VLSI System Design Corp.Pvt.Ltd
@@ -756,9 +756,9 @@ class DeviceModel(QtWidgets.QWidget):
                         outputlist.append(k)
                     if '_OR_' in str(j):
                         realoutputlist.append(k)
-                    if '_W_' in str(j) and not(k in wirelist):
+                    if '_W_' in str(j) and not (k in wirelist):
                         wirelist.append(k)
-                    if '_WR_' in str(j) and not(k in realwirelist):
+                    if '_WR_' in str(j) and not (k in realwirelist):
                         realwirelist.append(k)
 
                 netnames[-1] = netnames[-1].replace("IPAD", '')

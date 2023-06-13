@@ -1,11 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from PyQt5 import QtWidgets, QtCore, QtGui
-from PyQt5.QtCore import QObject, pyqtSlot
+from PyQt5 import QtWidgets, QtCore
 from . import TrackWidget
 from xml.etree import ElementTree as ET
 import os
-import sys
 
 
 class Model(QtWidgets.QWidget):
@@ -16,7 +14,6 @@ class Model(QtWidgets.QWidget):
     """
 
     # by Sumanto and Jay
-
     def addHex(self):
         """
         This function is use to keep track of all Device Model widget
@@ -34,10 +31,8 @@ class Model(QtWidgets.QWidget):
             )[0]
         )
         self.text = open(self.hexfile).read()
-        chosen_file_path = os.path.abspath(self.hexfile)
 
     # By Sumanto and Jay
-
     def uploadHex(self):
         """
         This function is use to keep track of all Device Model widget
