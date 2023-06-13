@@ -645,38 +645,71 @@ class Convert:
                     # print("Library Path :", libpath)
                     # Copying library from devicemodelLibrary to Project Path
                     # Special case for MOSFET
+                    tempStr = libname.split(':')
+                    libname = tempStr[0]
+                    libAbsPath = os.path.join(libpath, libname)
+
                     if eachline[0] == 'm':
                         # For mosfet library name come along with MOSFET
                         # dimension information
-                        tempStr = libname.split(':')
-                        libname = tempStr[0]
                         dimension = tempStr[1]
                         # Replace last word with library name
                         # words[-1] = libname.split('.')[0]
-                        words[-1] = self.getRefrenceName(libname, libpath)
+                        words[-1] = self.getReferenceName(libname, libpath)
                         # Appending Dimension of MOSFET
                         words.append(dimension)
                         deviceLine[index] = words
                         includeLine.append(".include " + libname)
 
-                        # src = completeLibPath.split(':')[0] # <----- Not
-                        # working in Windows
+                        shutil.copy2(libAbsPath, projpath)
 
-                        (src_path, src_lib) = os.path.split(completeLibPath)
-                        src_lib = src_lib.split(':')[0]
-                        src = os.path.join(src_path, src_lib)
-                        dst = projpath
-                        shutil.copy2(src, dst)
+                    elif eachline[0:6] == 'scmode':
+                        (filepath, filemname) = os.path.split(self.clarg1)
+                        self.Fileopen = os.path.join(filepath, ".spiceinit")
+                        print("==============================================")
+                        print("Writing to the .spiceinit file to " +
+                              "make ngspice SKY130 compatible")
+                        self.writefile = open(self.Fileopen, "w")
+                        self.writefile.write('''
+set ngbehavior=hsa     ; set compatibility for reading PDK libs
+set ng_nomodcheck      ; don't check the model parameters
+set num_threads=8      ; CPU hardware threads available
+option noinit          ; don't print operating point data
+optran 0 0 0 100p 2n 0 ; don't use dc operating point, but transient op)
+''')
+                        print("==============================================")
+
+                        libs = '''
+sky130_fd_pr__model__diode_pd2nw_11v0.model.spice
+sky130_fd_pr__model__diode_pw2nd_11v0.model.spice
+sky130_fd_pr__model__inductors.model.spice
+sky130_fd_pr__model__linear.model.spice
+sky130_fd_pr__model__pnp.model.spice
+sky130_fd_pr__model__r+c.model.spice
+'''
+                        includeLine.append(
+                            ".lib \"" + libAbsPath + "\" " + tempStr[1])
+                        for i in libs.split():
+                            includeLine.append(
+                                ".include \"" + libAbsPath.replace(
+                                    "sky130.lib.spice", i) + "\"")
+                        deviceLine[index] = "*scmode"
+                        # words.append(completeLibPath)
+                        # deviceLine[index] = words
+
+                    elif eachline[0:2] == 'sc' and eachline[0:6] != 'scmode':
+                        words[0] = words[0].replace('sc', 'xsc')
+                        words.append(completeLibPath)
+                        deviceLine[index] = words
+
                     else:
                         # Replace last word with library name
                         # words[-1] = libname.split('.')[0]
-                        words[-1] = self.getRefrenceName(libname, libpath)
+                        words[-1] = self.getReferenceName(libname, libpath)
                         deviceLine[index] = words
                         includeLine.append(".include " + libname)
 
-                        src = completeLibPath
-                        dst = projpath
-                        shutil.copy2(src, dst)
+                        shutil.copy2(completeLibPath, projpath)
 
             # Adding device line to schematicInfo
             for index, value in deviceLine.items():
@@ -750,7 +783,7 @@ class Convert:
 
         return schematicInfo
 
-    def getRefrenceName(self, libname, libpath):
+    def getReferenceName(self, libname, libpath):
         libname = libname.replace('.lib', '.xml')
         library = os.path.join(libpath, libname)
 

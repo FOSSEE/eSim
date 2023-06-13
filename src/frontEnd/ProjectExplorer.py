@@ -78,7 +78,7 @@ class ProjectExplorer(QtWidgets.QWidget):
 
     def refreshInstant(self):
         for i in range(self.treewidget.topLevelItemCount()):
-            if(self.treewidget.topLevelItem(i).isExpanded()):
+            if self.treewidget.topLevelItem(i).isExpanded():
                 index = self.treewidget.indexFromItem(
                     self.treewidget.topLevelItem(i))
                 self.refreshProject(indexItem=index)

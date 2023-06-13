@@ -998,7 +998,7 @@ class NgMoConverter:
             for i in range(0, len(words), 1):
                 words[i] = words[i].replace("-", "")
 
-            if(
+            if (
                 eachline[0] == 'r' or
                 eachline[0] == 'R' or
                 eachline[0] == 'c' or

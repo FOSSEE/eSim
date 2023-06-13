@@ -578,8 +578,8 @@ class MainWindow(QtWidgets.QWidget):
                 attr_ui.text = line[2]
                 for key, value in line[7].items():
                     if (
-                            hasattr(value, '__iter__') and
-                            i <= end and not isinstance(value, str)
+                        hasattr(value, '__iter__') and
+                        i <= end and not isinstance(value, str)
                     ):
                         for item in value:
                             ET.SubElement(
@@ -934,16 +934,16 @@ class MainWindow(QtWidgets.QWidget):
                         subcktInfo += words[i] + " "
                     continue
             if (
-                    words[0] == ".end" or
-                    words[0] == ".ac" or
-                    words[0] == ".dc" or
-                    words[0] == ".tran" or
-                    words[0] == '.disto' or
-                    words[0] == '.noise' or
-                    words[0] == '.op' or
-                    words[0] == '.pz' or
-                    words[0] == '.sens' or
-                    words[0] == '.tf'
+                words[0] == ".end" or
+                words[0] == ".ac" or
+                words[0] == ".dc" or
+                words[0] == ".tran" or
+                words[0] == '.disto' or
+                words[0] == '.noise' or
+                words[0] == '.op' or
+                words[0] == '.pz' or
+                words[0] == '.sens' or
+                words[0] == '.tf'
             ):
                 continue
             elif words[0] == ".control":

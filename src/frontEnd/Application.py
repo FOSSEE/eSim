@@ -163,6 +163,23 @@ class Application(QtWidgets.QMainWindow):
         self.topToolbar.addAction(self.switchmode)
         self.topToolbar.addAction(self.helpfile)
 
+        # ## This part is meant for SoC Generation which is currently  ##
+        # ## under development and will be will be required in future. ##
+        # self.soc = QtWidgets.QToolButton(self)
+        # self.soc.setText('Generate SoC')
+        # self.soc.setToolTip(
+        #     '<b>SPICE to Verilog Conversion</b><br>' + \
+        #     '<br>The feature is under development.' + \
+        #     '<br>It will be released soon.' + \
+        #     '<br><br>Thank you for your patience!!!'
+        # )
+        # self.soc.setStyleSheet(" \
+        # QWidget { border-radius: 15px; border: 1px \
+        #     solid gray; padding: 10px; margin-left: 20px; } \
+        # ")
+        # self.soc.clicked.connect(self.showSoCRelease)
+        # self.topToolbar.addWidget(self.soc)
+
         # This part is setting fossee logo to the right
         # corner in the application window.
         self.spacer = QtWidgets.QWidget()

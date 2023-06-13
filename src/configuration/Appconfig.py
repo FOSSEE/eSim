@@ -13,7 +13,7 @@
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Sunday 02 August 2020
+#      REVISION: Tuesday 13 September 2022
 # =========================================================================
 
 from PyQt5 import QtWidgets
@@ -105,7 +105,7 @@ class Appconfig(QtWidgets.QWidget):
 
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = '2.2'
+        self._VERSION = '2.3'
         self._AUTHOR = 'Fahim'
         self._REVISION = 'Rahul, Sumanto'
 

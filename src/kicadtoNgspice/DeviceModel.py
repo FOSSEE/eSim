@@ -28,7 +28,7 @@ class DeviceModel(QtWidgets.QWidget):
         kicadFile = self.clarg1
         (projpath, filename) = os.path.split(kicadFile)
         project_name = os.path.basename(projpath)
-
+        self.root = []
         try:
             f = open(
                 os.path.join(
@@ -37,10 +37,10 @@ class DeviceModel(QtWidgets.QWidget):
                     "_Previous_Values.xml"),
                 'r')
             tree = ET.parse(f)
-            parent_root = tree.getroot()
-            for child in parent_root:
+            parent_self = tree.getroot()
+            for child in parent_self:
                 if child.tag == "devicemodel":
-                    root = child
+                    self.root = child
         except BaseException:
             print("Device Model Previous XML is Empty")
 
@@ -57,6 +57,7 @@ class DeviceModel(QtWidgets.QWidget):
         # For MOSFET
         self.widthLabel = {}
         self.lengthLabel = {}
+        self.parameterLabel = {}
         self.multifactorLable = {}
         self.devicemodel_dict_beg = {}
         self.devicemodel_dict_end = {}
@@ -67,7 +68,185 @@ class DeviceModel(QtWidgets.QWidget):
         self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
         # print("Reading Device model details from Schematic")
+        if "sky130" in " ".join(schematicInfo):
+            self.eSim_sky130(schematicInfo)
+        else:
+            self.eSim_general_libs(schematicInfo)
 
+    def eSim_sky130(self, schematicInfo):
+        sky130box = QtWidgets.QGroupBox()
+        sky130grid = QtWidgets.QGridLayout()
+        self.count = self.count+1
+        self.row = self.row + 1
+        self.devicemodel_dict_beg["scmode1"] = self.count
+        beg = self.count
+        self.deviceDetail[self.count] = "scmode1"
+        sky130box.setTitle("Add parameters of SKY130 library ")
+        # +
+        # " : " +
+        # words[6])
+        self.parameterLabel[self.count] = QtWidgets.QLabel("Enter the path ")
+        self.row = self.row + 1
+        sky130grid.addWidget(self.parameterLabel[self.count], self.row, 0)
+        self.entry_var[self.count] = QtWidgets.QLineEdit()
+        self.entry_var[self.count].setReadOnly(True)
+
+        for child in self.root:
+            if child.tag == "scmode1":
+                if child[0].text \
+                   and os.path.exists(child[0].text):
+                    self.entry_var[self.count] \
+                        .setText(child[0].text)
+                    path_name = child[0].text
+                else:
+                    if os.name == 'nt':
+                        path_name = os.path.abspath(
+                            "library/" +
+                            "sky130_fd_pr/models/sky130.lib.spice"
+                        )
+                    else:
+                        path_name = os.path.abspath(
+                            "/usr/share/local/" +
+                            "sky130_fd_pr/models/sky130.lib.spice"
+                        )
+                    self.entry_var[self.count].setText(path_name)
+        # self.trackLibraryWithoutButton(self.count, path_name)
+
+        sky130grid.addWidget(self.entry_var[self.count], self.row, 1)
+        self.addbtn = QtWidgets.QPushButton("Add")
+        self.addbtn.setObjectName("%d" % beg)
+        self.addbtn.clicked.connect(self.trackLibrary)
+        sky130grid.addWidget(self.addbtn, self.row, 2)
+        # self.count = self.count + 1
+        self.adddefaultbtn = QtWidgets.QPushButton("Add Default")
+        self.adddefaultbtn.setObjectName("%d" % beg)
+        self.adddefaultbtn.clicked.connect(self.trackDefaultLib)
+        sky130grid.addWidget(self.adddefaultbtn, self.row, 3)
+        self.count = self.count + 1
+        self.parameterLabel[self.count] = QtWidgets.QLabel(
+            "Enter the corner e.g. tt")
+        self.row = self.row + 1
+        sky130grid.addWidget(self.parameterLabel[self.count], self.row, 0)
+        self.entry_var[self.count] = QtWidgets.QLineEdit()
+        self.entry_var[self.count].setText("")
+        self.entry_var[self.count].setMaximumWidth(150)
+        self.entry_var[self.count].setObjectName("%d" % beg)
+        path_name = ''
+        for child in self.root:
+            if child.tag == "scmode1":
+                if child[1].text:
+                    self.entry_var[self.count] \
+                        .setText(child[1].text)
+                    path_name = child[0].text
+                else:
+                    self.entry_var[self.count].setText("")
+
+        sky130grid.addWidget(self.entry_var[self.count], self.row, 1)
+        self.entry_var[self.count].textChanged.connect(self.textChange)
+        self.trackLibraryWithoutButton(beg, path_name)
+
+        sky130box.setLayout(sky130grid)
+        sky130box.setStyleSheet(" \
+                QGroupBox { border: 1px solid gray; border-radius:\
+                 9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left:\
+                 10px; padding: 0 3px 0 3px; } \
+                ")
+        self.grid.addWidget(sky130box)
+        # if self.entry_var[self.count-3].text() == "":
+        #    pass
+        # else:
+        #   self.trackLibraryWithoutButton(self.count-3, path_name)
+
+        self.row = self.row + 1
+        self.devicemodel_dict_end["scmode1"] = self.count
+        self.count = self.count + 1
+
+        for eachline in schematicInfo:
+            print("=========================================")
+            print(eachline)
+            words = eachline.split()
+            # supporteddesignator = ['sc', 'u', 'x', 'v', 'i', 'a']
+            if eachline[0:2] != 'sc' and eachline[0] != 'u' \
+                    and eachline[0] != 'x' and eachline[0] != '*'\
+                    and eachline[0] != 'v' and eachline[0] != 'i'\
+                    and eachline[0] != 'a':
+                print("Only components with designators 'sc', 'u', \
+'x', 'v', 'i', 'a'\
+                     can be used with SKY130 mode")
+                print("Please remove other components")
+                self.msg = QtWidgets.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Invalid components")
+                self.content = "Only components with designators " + \
+                               "'sc', 'u' and 'x' can be used \
+                               with SKY130 mode. " + \
+                               "Please edit the schematic and \
+                               generate netlist again"
+                self.msg.showMessage(self.content)
+                self.msg.exec_()
+                return
+
+            elif eachline[0:2] == 'sc' and eachline[0:6] != 'scmode':
+                self.devicemodel_dict_beg[words[0]] = self.count
+                self.deviceDetail[self.count] = words[0]
+                sky130box = QtWidgets.QGroupBox()
+                sky130grid = QtWidgets.QGridLayout()
+                beg = self.count
+                sky130box.setTitle(
+                    "Add parameters for " +
+                    words[0] + " : " + words[-1])
+                path_name = ''
+
+                # Adding to get SKY130 dimension
+                self.parameterLabel[self.count] = QtWidgets.QLabel(
+                    "Enter the parameters of SKY130 component " + words[0])
+                sky130grid.addWidget(
+                    self.parameterLabel[self.count], self.row, 0)
+                self.entry_var[self.count] = QtWidgets.QLineEdit()
+                self.entry_var[self.count].setText("")
+                self.entry_var[self.count].setMaximumWidth(1000)
+                self.entry_var[self.count].setObjectName("%d" % beg)
+                sky130grid.addWidget(self.entry_var[self.count], self.row, 1)
+                self.entry_var[self.count].textChanged.connect(self.textChange)
+                sky130box.setLayout(sky130grid)
+                sky130box.setStyleSheet(" \
+                QGroupBox { border: 1px solid gray; border-radius: \
+                9px; margin-top: 0.5em; } \
+                QGroupBox::title { subcontrol-origin: margin; left:\
+                 10px; padding: 0 3px 0 3px; } \
+                ")
+                try:
+                    for child in self.root:
+                        if child.tag == words[0]:
+                            # print("DEVICE MODEL MATCHING---", \
+                            #       child.tag, words[0])
+                            try:
+                                if child[0].text:
+                                    self.entry_var[self.count] \
+                                        .setText(child[0].text)
+                                    path_name = child[0].text
+                                else:
+                                    self.entry_var[self.count].setText("")
+                                    path_name = ""
+                            except BaseException as e:
+                                print("Error when set text of Device " +
+                                      "SKY130 Component :", str(e))
+                except BaseException:
+                    pass
+                self.trackLibraryWithoutButton(self.count, path_name)
+                self.grid.addWidget(sky130box)
+
+                # Adding Device Details #
+
+                # Increment row and widget count
+                self.row = self.row + 1
+                self.devicemodel_dict_end[words[0]] = self.count
+                self.count = self.count + 1
+
+            self.show()
+
+    def eSim_general_libs(self, schematicInfo):
         for eachline in schematicInfo:
             print("=========================================")
             print(eachline)
@@ -88,7 +267,7 @@ class DeviceModel(QtWidgets.QWidget):
                 global path_name
 
                 try:
-                    for child in root:
+                    for child in self.root:
                         if child.tag == words[0]:
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
@@ -152,7 +331,7 @@ class DeviceModel(QtWidgets.QWidget):
                 self.entry_var[self.count].setReadOnly(True)
                 # global path_name
                 try:
-                    for child in root:
+                    for child in self.root:
                         if child.tag == words[0]:
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
@@ -216,7 +395,7 @@ class DeviceModel(QtWidgets.QWidget):
                 self.entry_var[self.count].setReadOnly(True)
                 # global path_name
                 try:
-                    for child in root:
+                    for child in self.root:
                         if child.tag == words[0]:
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
@@ -456,7 +635,7 @@ class DeviceModel(QtWidgets.QWidget):
 
                 # global path_name
                 try:
-                    for child in root:
+                    for child in self.root:
                         if child.tag == words[0]:
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
@@ -487,6 +666,55 @@ class DeviceModel(QtWidgets.QWidget):
                 self.grid.addWidget(mosfetbox)
 
             self.show()
+
+    def trackDefaultLib(self):
+        sending_btn = self.sender()
+        self.widgetObjCount = int(sending_btn.objectName())
+        if os.name == 'nt':
+            path_name = os.path.abspath(
+                "library/" +
+                "sky130_fd_pr/models/sky130.lib.spice"
+            )
+        else:
+            path_name = os.path.abspath(
+                "/usr/share/local/" +
+                "sky130_fd_pr/models/sky130.lib.spice"
+            )
+        self.entry_var[self.widgetObjCount].setText(path_name)
+        self.trackLibraryWithoutButton(self.widgetObjCount, path_name)
+
+    def textChange(self):
+        sending_btn = self.sender()
+        self.widgetObjCount = int(sending_btn.objectName())
+        self.deviceName = self.deviceDetail[self.widgetObjCount]
+        # self.widgetObjCount = self.count_beg
+        # if self.deviceName[0] == 'm':
+        #     width = str(self.entry_var[self.widgetObjCount + 1].text())
+        #     length = str(self.entry_var[self.widgetObjCount + 2].text())
+        #     multifactor = str(self.entry_var[self.widgetObjCount + 3].text())
+        #     if width == "":
+        #         width = "100u"
+        #     if length == "":
+        #         length = "100u"
+        #     if multifactor == "":
+        #         multifactor = "1"
+
+        #     self.obj_trac.deviceModelTrack[self.deviceName] =\
+        # str(self.entry_var[self.widgetObjCount].text()) + \
+        #         ":" + "W=" + width + " L=" + length + " M=" + multifactor
+
+        if self.deviceName[0:6] == 'scmode':
+            self.obj_trac.deviceModelTrack[self.deviceName] = \
+                self.entry_var[self.widgetObjCount].text() + \
+                ":" + str(self.entry_var[self.widgetObjCount + 1].text())
+            print(self.obj_trac.deviceModelTrack[self.deviceName])
+        elif self.deviceName[0:2] == 'sc':
+            self.obj_trac.deviceModelTrack[self.deviceName] = str(
+                self.entry_var[self.widgetObjCount].text())
+            print(self.obj_trac.deviceModelTrack[self.deviceName])
+
+        else:
+            self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
 
     def trackLibrary(self):
         """
@@ -529,6 +757,16 @@ class DeviceModel(QtWidgets.QWidget):
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile + \
                 ":" + "W=" + width + " L=" + length + " M=" + multifactor
 
+        elif self.deviceName[0:6] == 'scmode':
+            self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile + \
+                ":" + str(self.entry_var[self.widgetObjCount + 1].text())
+            print(self.obj_trac.deviceModelTrack[self.deviceName])
+
+        elif self.deviceName[0:2] == 'sc':
+            self.obj_trac.deviceModelTrack[self.deviceName] = str(
+                self.entry_var[self.widgetObjCount].text())
+            print(self.obj_trac.deviceModelTrack[self.deviceName])
+
         else:
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
 
@@ -559,5 +797,147 @@ class DeviceModel(QtWidgets.QWidget):
                 multifactor = "1"
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile + \
                 ":" + "W=" + width + " L=" + length + " M=" + multifactor
+
+        elif self.deviceName[0:6] == 'scmode':
+            self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile + \
+                ":" + str(self.entry_var[self.widgetObjCount + 1].text())
+            print(self.obj_trac.deviceModelTrack[self.deviceName])
+
+        elif self.deviceName[0:2] == 'sc':
+            self.obj_trac.deviceModelTrack[self.deviceName] = str(
+                self.entry_var[self.widgetObjCount].text())
+            print(self.obj_trac.deviceModelTrack[self.deviceName])
+
         else:
             self.obj_trac.deviceModelTrack[self.deviceName] = self.libfile
+
+    def GenerateSOCbutton(self):
+        #############################################################
+        # ***************** SPICE to Verilog Converter **************
+
+        # The development is under progress and may not be accurate
+
+        # Developed by:
+        #               Sumanto Kar, sumantokar@iitb.ac.in
+        #               Nagesh Karmali, nags@cse.iitb.ac.in
+        #               Firuza Karmali, firuza@cse.iitb.ac.in
+        #               Rahul Paknikar, rahulp@iitb.ac.in
+        # GUIDED BY:
+        #               Kunal Ghosh, VLSI System Design Corp.Pvt.Ltd
+        #               Anagha Ghosh, VLSI System Design Corp.Pvt.Ltd
+        #               Philipp Gühring
+
+        # ***********************************************************
+
+        kicadFile = self.clarg1
+        (projpath, filename) = os.path.split(kicadFile)
+        analysisfile = open(os.path.join(projpath, filename))
+        # analysisfile = open(os.path.join(projpath, 'analysis'))
+        content = analysisfile.read()
+        contentlines = content.split("\n")
+        parsedfile = open(os.path.join(projpath, filename+'.parsed.v'), 'w')
+        parsedfile.write("")
+        # print("module "+filename)
+        i = 1
+        inputlist = []
+        realinputlist = []
+        outputlist = []
+        realoutputlist = []
+        wirelist = []
+        realwirelist = []
+        uutlist = []
+        filelist = []
+        parsedcontent = []
+        for contentlist in contentlines:
+            if "IPDD" in contentlist or "IPAD" in contentlist:
+                # if len(contentlist)>1 and ( contentlist[0:1]=='U'\
+                # or contentlist[0:1]=='X') and not 'plot_' in contentlist :
+                # print(contentlist)
+                netnames = contentlist.split()
+                net = ' '.join(map(str, netnames[1:-1]))
+                netnames[-1] = netnames[-1].replace("IPAD", '')
+                netnames[-1] = netnames[-1].replace("IPDD", '')
+                # net=net.replace(netnames[-1],'')
+                # net=net.replace('BI_','')
+                # net=net.replace('BO_','')
+                net2 = []
+
+                for j in net.split():
+                    # print(j)
+                    secondpart = j
+                    if '_' in j:
+                        secondpart = j.split('_')[1]
+                    if secondpart in net2:
+                        continue
+                    if net.count(secondpart)-1 > 0:
+                        k = "["+str(net.count(secondpart)-1) + \
+                            ":0"+"] "+secondpart
+                    else:
+                        k = secondpart
+
+                    net2.append(secondpart)
+                    if '_I_' in str(j):
+                        inputlist.append(k)
+                    if '_IR_' in str(j):
+                        inputlist.append(k)
+                    if '_O_' in str(j):
+                        outputlist.append(k)
+                    if '_OR_' in str(j):
+                        realoutputlist.append(k)
+                    if '_W_' in str(j) and not (k in wirelist):
+                        wirelist.append(k)
+                    if '_WR_' in str(j) and not (k in realwirelist):
+                        realwirelist.append(k)
+
+                netnames[-1] = netnames[-1].replace("IPAD", '')
+                netnames[-1] = netnames[-1].replace("IPDD", '')
+                uutlist.append(netnames[-1]+" uut" +
+                               str(i)+" ("+', '.join(net2)+');')
+                filelist.append(netnames[-1])
+                i = i+1
+        # print(inputlist)
+        # print(outputlist)
+        # print(wirelist)
+        parsedcontent.append(
+            "\\\\Generated from SPICE to Verilog. \
+Converter developed at FOSSEE, IIT Bombay\n")
+        parsedcontent.append(
+            "\\\\The development is under progress and may not be accurate.\n")
+
+        for j in filelist:
+            parsedcontent.append('''`include "'''+j+'''.v"''')
+        parsedcontent.append(
+            "module "+filename+"("+', '.join(inputlist  # noqa
+            + realinputlist + outputlist + realoutputlist)+");")  # noqa
+        if inputlist:
+            parsedcontent.append("input "+', '.join(inputlist)+";")
+        if realinputlist:
+            parsedcontent.append("input real "+', '.join(inputlist)+";")
+        if outputlist:
+            parsedcontent.append("output "+', '.join(outputlist)+";")
+        if realoutputlist:
+            parsedcontent.append("output real "+', '.join(realoutputlist)+";")
+        if wirelist:
+            parsedcontent.append("wire "+', '.join(wirelist)+";")
+        if realwirelist:
+            parsedcontent.append("wire real"+', '.join(realwirelist)+";")
+        for j in uutlist:
+            parsedcontent.append(j)
+        parsedcontent.append("endmodule;")
+
+        print('\n**************Generated Verilog File: ' +
+              filename + '.parsed.v***************\n')
+        for j in parsedcontent:
+            print(j)
+            parsedfile.write(j+"\n")
+        print(
+            '\n*************************************\
+************************************\n')
+        self.msg = QtWidgets.QErrorMessage()
+        self.msg.setModal(True)
+        self.msg.setWindowTitle("Verilog File Generated")
+        self.content = "The Verilog file has been successfully \
+             generated from the SPICE netlist"
+        self.msg.showMessage(self.content)
+        self.msg.exec_()
+        return
