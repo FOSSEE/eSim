@@ -1,6 +1,6 @@
 ;NSIS Modern User Interface
 ;Start Menu Folder Selection Example Script
-;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar - 14_02_2022
+;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar - 14_09_2022
 ;Made by eSim Team, FOSSEE, IIT Bombay
 
 ;--------------------------------
@@ -67,8 +67,8 @@ FunctionEnd
 ;General
 	
 !define PRODUCT_NAME "eSim"
-!define PRODUCT_VERSION "2.2"
-!define VERSION "2.2.0.0"
+!define PRODUCT_VERSION "2.3"
+!define VERSION "2.3.0.0"
 !define PRODUCT_PUBLISHER "FOSSEE, IIT Bombay"
 !define PRODUCT_WEB_SITE "https://esim.fossee.in/"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -140,7 +140,7 @@ FunctionEnd
 ;--------------------------------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "eSim-2.2_installer.exe"
+OutFile "eSim-2.3_installer.exe"
 
 
 Function .onVerifyInstDir
@@ -165,13 +165,14 @@ Section -NgspiceSim
 
   ;Current section needs an additional "size_kb" kilobytes of disk space
   ;AddSize 2726298
-  AddSize 859966
+  AddSize 1593968
 
   SetOutPath "$EXEDIR"
 
   File "eSim.7z"
   File "logo.ico"
-  
+  File "sky130_fd_pr.7z"
+
   SetOutPath "$INSTDIR"
 
   ;ADD YOUR OWN FILES HERE... 
@@ -212,12 +213,18 @@ Section -NgspiceSim
   ;create desktop shortcut
   CreateShortCut "$PROFILE\..\Public\Desktop\eSim.lnk" "$INSTDIR\eSim\eSim.exe" "" "$INSTDIR\eSim\library\config\.esim\logo.ico" "" SW_SHOWMINIMIZED
 
+  SetOutPath "$INSTDIR\eSim\library"
+
+  Nsis7z::ExtractWithDetails "$EXEDIR\sky130_fd_pr.7z" "Extracting SkyWater SKY130 PDK %s..."
+
+  SetOutPath "$INSTDIR"
+
   !insertmacro MUI_STARTMENU_WRITE_END
   
   ;Remove not required files
   Delete "$EXEDIR\eSim.7z"
   Delete "$EXEDIR\logo.ico"
-
+  Delete "$EXEDIR\sky130_fd_pr.7z"
 SectionEnd
 
 
@@ -385,7 +392,7 @@ Section Uninstall
     RMDir /r "$INSTDIR\eSim\library\config"
     RMDir "$SMPROGRAMS\eSim"
     RMDir /r "$INSTDIR\..\eSim"
-	RMDir /r "$INSTDIR\..\KiCad"
+	  RMDir /r "$INSTDIR\..\KiCad"
     Delete "$PROFILE\..\Public\Desktop\eSim.lnk"
 
     DeleteRegKey ${PRODUCT_UNINST_ROOT_KEY} "${PRODUCT_UNINST_KEY}"
