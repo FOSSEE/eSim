@@ -15,7 +15,7 @@
 #        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode, Sumanto Kar
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Tuesday 01 February 2022 23:50
+#      REVISION: Tuesday 13 September 2022 23:50
 #===============================================================================
 
 # All variables goes here
@@ -74,6 +74,30 @@ function installNghdl
     cd ../
 
 }
+
+
+function installSky130Pdk
+{
+
+    echo "Installing SKY130 PDK......................"
+    
+    #Extract SKY130 PDK
+    tar -xJf library/sky130_fd_pr.tar.xz
+
+    # Remove any previous sky130-fd-pdr instance, if any
+    sudo rm -rf /usr/share/local/sky130_fd_pr
+
+    #Copy SKY130 library
+    echo "Copying SKY130 PDK........................."
+
+    sudo mkdir -p /usr/share/local/
+    sudo mv sky130_fd_pr /usr/share/local/
+
+    #Change ownership from root to the user
+    sudo chown -R $USER:$USER /usr/share/local/sky130_fd_pr/
+
+}
+
 
 function installKicad
 {
@@ -338,6 +362,7 @@ if [ $option == "--install" ];then
             installKicad
             copyKicadLibrary
             installNghdl
+            installSky130Pdk
             createDesktopStartScript
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
@@ -349,6 +374,7 @@ if [ $option == "--install" ];then
             installKicad
             copyKicadLibrary
             installNghdl
+            installSky130Pdk
             createDesktopStartScript
 
             if [ $? -ne 0 ];then
@@ -367,7 +393,7 @@ if [ $option == "--install" ];then
 
 
 elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure? It will remove eSim completely including KiCad, Makerchip and NGHDL along with their models and libraries (y/n):"
+    echo -n "Are you sure? It will remove eSim completely including KiCad, Makerchip, NGHDL and SKY130 PDK along with their models and libraries (y/n):"
     read getConfirmation
     if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
         echo "Removing eSim............................"
@@ -386,6 +412,9 @@ elif [ $option == "--uninstall" ];then
         pip3 uninstall -y hdlparse
         pip3 uninstall -y makerchip-app
         pip3 uninstall -y sandpiper-saas
+
+        echo "Removing SKY130 PDK......................"
+        sudo rm -R /usr/share/local/sky130_fd_pr
 
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
