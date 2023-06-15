@@ -12,10 +12,10 @@
 #  REQUIREMENTS: ---
 #          BUGS: ---
 #         NOTES: ---
-#        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode, Sumanto Kar
+#        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode, Sumanto Kar, Partha Singha Roy
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Tuesday 13 September 2022 23:50
+#      REVISION: Wednesday 14 june 2023 12:50
 #===============================================================================
 
 # All variables goes here
@@ -105,29 +105,29 @@ function installKicad
     echo "Installing KiCad..........................."
 
     #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
-    kicadppa="reynaud/kicad-4"
+    kicadppa="kicad/kicad-6.0-releases"
     findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
     if [ -z "$findppa" ]; then
-        echo "Adding KiCad-4 PPA to local apt-repository"
+        echo "Adding KiCad-6 PPA to local apt-repository"
         if [[ $(lsb_release -rs) == 20.* ]]; then
             sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 83FBAD2D910F124E
-            sudo add-apt-repository --yes "deb [trusted=yes] http://ppa.launchpad.net/js-reynaud/kicad-4/ubuntu bionic main"
+            sudo add-apt-repository --yes "deb [trusted=yes] http://ppa.launchpad.net/kicad/kicad-6.0-releases/ubuntu focal main"
             sudo touch /etc/apt/preferences.d/preferences
             echo "Package: kicad" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
-            echo "Pin: version 4.0.7*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
+            echo "Pin: version 6.0.11*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             echo "Pin-Priority: 501" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
             sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3B4FE6ACC0B21F32
-            sudo add-apt-repository --yes "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
+            sudo add-apt-repository --yes "deb http://archive.ubuntu.com/ubuntu/ focal main universe"
         else
-            sudo add-apt-repository --yes ppa:js-reynaud/kicad-4
+            sudo add-apt-repository ppa:kicad/kicad-6.0-releases
         fi
     else
-        echo "KiCad-4 is available in synaptic"
+        echo "KiCad-6 is available in synaptic"
     fi
 
-    sudo apt-get install -y --no-install-recommends kicad=4.0.7*
+    sudo apt-get install -y --no-install-recommends kicad
     if [[ $(lsb_release -rs) == 20.* ]]; then
-        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ bionic main universe"
+        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ focal main universe"
     fi
 
 }
@@ -183,20 +183,24 @@ function installDependency
 function copyKicadLibrary
 {
 
-    if [ -d ~/.config/kicad ];then
+    if [ -d ~/.config/kicad/6.0 ];then
         echo "kicad folder already exists"
     else 
         echo ".config/kicad does not exist"
-        mkdir ~/.config/kicad
+        mkdir -p ~/.config/kicad/6.0
     fi
 
     # Dump KiCad config path
     echo "$HOME/.config/kicad" > $eSim_Home/library/supportFiles/kicad_config_path.txt
 
     #Copy fp-lib-table for switching modes
-    cp -r library/supportFiles/fp-lib-table ~/.config/kicad/
-    cp -r library/supportFiles/fp-lib-table-online ~/.config/kicad/
+    cp -r library/supportFiles/fp-lib-table ~/.config/kicad/6.0
+    cp -r library/supportFiles/fp-lib-table-online ~/.config/kicad/6.0
     echo "fp-lib-table copied in the directory"
+
+    # copy sym-lib-table for eSim-custom symbols 
+    cp -r library/supportFiles/sym-lib-table ~/.config/kicad/6.0
+    echo "sym-lib-table copied in the directory"
 
     #Extract custom KiCad Library
     tar -xJf library/kicadLibrary.tar.xz
@@ -204,24 +208,24 @@ function copyKicadLibrary
     #Copy KiCad libraries
     echo "Copying KiCad libraries...................."
 
-    sudo cp -r kicadLibrary/library /usr/share/kicad/
-    sudo cp -r kicadLibrary/modules /usr/share/kicad/    
+    sudo cp -r kicadLibrary/symbols /usr/share/kicad/
+    sudo cp -r kicadLibrary/footprints /usr/share/kicad/    
     sudo cp -r kicadLibrary/template/* /usr/share/kicad/template/
 
     #Copy KiCad library made for eSim
-    sudo cp -r kicadLibrary/kicad_eSim-Library/* /usr/share/kicad/library/
+    sudo cp -r kicadLibrary/kicad_eSim-Library/* /usr/share/kicad/symbols/
 
     # Full path of 'kicad.pro file'
-    KICAD_PRO="/usr/share/kicad/template/kicad.pro"
+    KICAD_PRO="/usr/share/kicad/template/kicad.kicad_pro"
     KICAD_ORIGINAL="/usr/share/kicad/template/kicad.pro.original"
 
     if [ -f "$KICAD_ORIGINAL" ];then
         echo "kicad.pro.original file found"
-        sudo cp -rv kicadLibrary/template/kicad.pro ${KICAD_PRO}
+        sudo cp -rv kicadLibrary/template/kicad.kicad_pro ${KICAD_PRO}
     else 
         echo "Making copy of original file"
         sudo cp -rv ${KICAD_PRO}{,.original}                                             
-        sudo cp -rv kicadLibrary/template/kicad.pro ${KICAD_PRO}
+        sudo cp -rv kicadLibrary/template/kicad.kicad_pro ${KICAD_PRO}
     fi
 
     set +e      # Temporary disable exit on error
@@ -234,7 +238,7 @@ function copyKicadLibrary
     trap error_exit ERR
 
     #Change ownership from Root to the User
-    sudo chown -R $USER:$USER /usr/share/kicad/library/
+    sudo chown -R $USER:$USER /usr/share/kicad/symbols/
 
 }
 
