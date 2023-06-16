@@ -1,2 +1,2 @@
-# DEPRECATED
-This library is deprecated and will be removed. 
+# labels.pretty
+Deprecated - DO NOT USE
