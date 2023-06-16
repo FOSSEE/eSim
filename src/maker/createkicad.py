@@ -21,9 +21,10 @@
 #                Rohinth Ram, Madras Institue of Technology
 #                Charaan S., Madras Institue of Technology
 #                Nalinkumar S., Madras Institue of Technology
+#                Partha Singha Roy, Kalyani Government Engineering College
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Monday 29, November 2021
-#      REVISION: Tuesday 25, January 2022
+#      REVISION: Friday 16 , June 2023
 # =========================================================================
 
 # importing the files and libraries
@@ -42,7 +43,7 @@ class AutoSchematic:
     def init(self, modelname, modelpath):
         self.App_obj = Appconfig.Appconfig()
         self.modelname = modelname.split('.')[0]
-        self.template = self.App_obj.kicad_lib_template.copy()
+        self.template = self.App_obj.kicad_sym_template.copy()
         self.xml_loc = self.App_obj.xml_loc
         self.lib_loc = self.App_obj.lib_loc
         self.modelpath = modelpath
@@ -50,9 +51,9 @@ class AutoSchematic:
             eSim_src = self.App_obj.src_home
             inst_dir = eSim_src.replace('\\eSim', '')
             self.kicad_ngveri_lib = \
-                inst_dir + '/KiCad/share/kicad/library/eSim_Ngveri.lib'
+                inst_dir + '/KiCad/share/kicad/symbols/eSim_Ngveri.kicad_sym'
         else:
-            self.kicad_ngveri_lib = '/usr/share/kicad/library/eSim_Ngveri.lib'
+            self.kicad_ngveri_lib = '/usr/share/kicad/symbols/eSim_Ngveri.kicad_sym'
         # self.parser = self.App_obj.parser_ngveri
 
     # creating KiCAD library using this function
@@ -169,12 +170,12 @@ class AutoSchematic:
         line_reading_flag = False
 
         for line in lines:
-            if line.startswith("DEF"):
-                if line.split()[1] == self.modelname:
+            if line.startswith("(symbol"):    # Eeschema Template start
+                if line.split()[1] == f"\"{self.modelname}\"":
                     line_reading_flag = True
             if not line_reading_flag:
                 output.append(line)
-            if line.startswith("ENDDEF"):
+            if line.startswith("))"):        # Eeschema Template end
                 line_reading_flag = False
 
         f = open(self.kicad_ngveri_lib, 'w')
@@ -186,19 +187,29 @@ class AutoSchematic:
 
     # creating the library
     def createLib(self):
-        self.dist_port = 100         # Distance between two ports
-        self.inc_size = 100          # Increment size of a block
+        self.dist_port = 2.54         # Distance between two ports(mil)
+        self.inc_size = 2.54          # Increment size of a block(mil)
         cwd = os.getcwd()
         os.chdir(self.lib_loc)
         print("Changing directory to ", self.lib_loc)
 
+        # Removeing ")" from "eSim_Ngveri.kicad_sym"
+        file = open(self.kicad_ngveri_lib,"r")
+        content_file = file.read()
+        new_content_file=content_file[:-1]
+        file.close()
+        file = open(self.kicad_ngveri_lib,"w")
+        file.write(new_content_file)
+        file.close()
+
+        # Appending New Schematic
         lib_file = open(self.kicad_ngveri_lib, "a")
         line1 = self.template["start_def"]
         line1 = line1.split()
         line1 = [w.replace('comp_name', self.modelname) for w in line1]
         self.template["start_def"] = ' '.join(line1)
         if os.stat(self.kicad_ngveri_lib).st_size == 0:
-            lib_file.write("EESchema-LIBRARY Version 2.3" + "\n\n")
+            lib_file.write("(kicad_symbol_lib (version 20211014) (generator kicad_symbol_editor)" + "\n\n") # Eeschema startar code
         # lib_file.write("#encoding utf-8"+ "\n"+ "#"+ "\n" +
         # "#test_compo" + "\n"+ "#"+ "\n")
         lib_file.write(
@@ -223,10 +234,7 @@ class AutoSchematic:
         line4[1] = ' '.join(line4_2)
         self.template["blank_qoutes"] = line4
 
-        lib_file.write(
-            line4[0] + "\n" + line4[1] + "\n" +
-            self.template["start_draw"] + "\n"
-        )
+        lib_file.write(line4[0] + "\n" + line4[1] + "\n")
 
         draw_pos = self.template["draw_pos"]
         draw_pos = draw_pos.split()
@@ -268,30 +276,34 @@ class AutoSchematic:
         total = inputs + outputs
 
         port_list = []
+
+        # Set input & output port 
+        input_port[4] = draw_pos_rec 
+        output_port[4] =draw_pos_rec
+
         j = 0
         for i in range(total):
             if (i < inputs):
-                input_port[1] = inputName[i]
-                input_port[2] = str(i + 1)
-                input_port[4] = str(int(input_port[4]) - self.dist_port)
+                input_port[9] = f"\"{inputName[i]}\""
+                input_port[13] = f"\"{str(i + 1)}\""
+                input_port[4] = str(float(input_port[4]) - float(self.dist_port))
                 input_list = ' '.join(input_port)
                 port_list.append(input_list)
                 j = j + 1
 
             else:
-                output_port[1] = outputName[i - inputs]
-                output_port[2] = str(i + 1)
-                output_port[4] = str(int(output_port[4]) - self.dist_port)
+                output_port[9] = f"\"{outputName[i - inputs]}\""
+                output_port[13] = f"\"{str(i + 1)}\""
+                output_port[4] = str(float(output_port[4]) - float(self.dist_port))
                 output_list = ' '.join(output_port)
                 port_list.append(output_list)
 
         for ports in port_list:
             lib_file.write(ports + "\n")
         lib_file.write(
-            self.template["end_draw"] + "\n" +
-            self.template["end_def"] + "\n\n\n"
+            self.template["end_draw"] + "\n\n\n"+")"
         )
-
+        lib_file.close()
         os.chdir(cwd)
 
 
