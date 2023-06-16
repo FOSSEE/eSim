@@ -9,6 +9,7 @@ from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
 from browser.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
+from PyQt5.QtWidgets import QMessageBox
 import os
 
 dockList = ['Welcome']
@@ -247,36 +248,50 @@ class DockArea(QtWidgets.QMainWindow):
         """This function creates a widget for different subcircuit options."""
         global count
 
-        projDir = self.obj_appconfig.current_project["ProjectName"]
-        projName = os.path.basename(projDir)
-        dockName = f'Subcircuit-{projName}-'
+        projDir = self.obj_appconfig.current_project["ProjectName"] 
+        #print(projDir)
 
-        self.subcktWidget = QtWidgets.QWidget()
-        self.subcktLayout = QtWidgets.QVBoxLayout()
-        self.subcktLayout.addWidget(Subcircuit(self))
+        if projDir is not None:  # If project is selected
 
-        self.subcktWidget.setLayout(self.subcktLayout)
-        dock[dockName +
-             str(count)] = QtWidgets.QDockWidget(dockName
-                                                 + str(count))
-        dock[dockName + str(count)] \
-            .setWidget(self.subcktWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock[dockName + str(count)])
-        self.tabifyDockWidget(dock['Welcome'],
-                              dock[dockName + str(count)])
+            projName = os.path.basename(projDir)
+            dockName = f'Subcircuit-{projName}-'
 
-        # CSS
-        dock[dockName + str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray;\
-            padding: 5px; width: 200px; height: 150px;  } \
-        ")
+            self.subcktWidget = QtWidgets.QWidget()
+            self.subcktLayout = QtWidgets.QVBoxLayout()
+            self.subcktLayout.addWidget(Subcircuit(self))
 
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
+            self.subcktWidget.setLayout(self.subcktLayout)
+            dock[dockName +
+                str(count)] = QtWidgets.QDockWidget(dockName
+                                                    + str(count))
+            dock[dockName + str(count)] \
+                .setWidget(self.subcktWidget)
+            self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+                            dock[dockName + str(count)])
+            self.tabifyDockWidget(dock['Welcome'],
+                                dock[dockName + str(count)])
 
-        count = count + 1
+            # CSS
+            dock[dockName + str(count)].setStyleSheet(" \
+            .QWidget { border-radius: 15px; border: 1px solid gray;\
+                padding: 5px; width: 200px; height: 150px;  } \
+            ")
+
+            dock[dockName + str(count)].setVisible(True)
+            dock[dockName + str(count)].setFocus()
+            dock[dockName + str(count)].raise_()
+
+            count = count + 1
+
+        else:
+            self.msg = QMessageBox()
+            self.msg.setWindowTitle("Error Message")
+            self.msg.setText("Please select the project first. You can either create a new project or open an existing project.")
+            self.msg.setModal(True)
+            self.msg.exec_()
+            self.obj_appconfig.print_warning("Please select the project first. You can either create a new project or open an existing project")
+
+                        
 
     def makerchip(self):
         """This function creates a widget for different subcircuit options."""
