@@ -86,7 +86,13 @@ class Kicad:
             self.project = os.path.join(self.projDir, self.projName)
 
             # Creating a command to run
-            self.cmd = "eeschema " + self.project + ".sch "
+            if os.path.exists(self.project + ".kicad_sch"):
+                self.cmd = "eeschema " + self.project + ".kicad_sch" #kicad v6 file
+            elif os.path.exists(self.project + ".sch"):
+                self.cmd = "eeschema " + self.project + ".sch"       #kicad v4 file
+            else:
+                self.cmd = "eeschema " + self.project + ".kicad_sch"
+
             self.obj_workThread.args = self.cmd
             self.obj_workThread.start()
 
