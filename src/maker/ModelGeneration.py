@@ -216,7 +216,7 @@ class ModelGeneration(QtWidgets.QWidget):
         modelname = str(m.name)
         schematicLib = createkicad.AutoSchematic()
         schematicLib.init(modelname, self.modelpath)
-        error = schematicLib.createkicad()
+        error = schematicLib.createKicadSymbol()
         if error == "Error":
             return "Error"
         return "No Error"
