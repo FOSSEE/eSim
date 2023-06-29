@@ -238,11 +238,17 @@ class AutoSchematic:
 
         draw_pos = self.template["draw_pos"]
         draw_pos = draw_pos.split()
-        draw_pos[4] = str(
-            int(draw_pos[4]) - self.findBlockSize() * self.inc_size)
+
+        draw_pos= [w.replace('comp_name', f"{self.modelname}_0_1") for w in draw_pos]
+        draw_pos[8] = str(float(draw_pos[8]) + float(self.findBlockSize() * self.inc_size)) ##previously it is (-)
+        draw_pos_rec= draw_pos[8]
+        
         self.template["draw_pos"] = ' '.join(draw_pos)
 
-        lib_file.write(self.template["draw_pos"] + "\n")
+        lib_file.write(
+            self.template["draw_pos"] + "\n"+
+            self.template["start_draw"] + " \""+ f"{self.modelname}_1_1\""+ "\n"
+        )
 
         input_port = self.template["input_port"]
         input_port = input_port.split()
