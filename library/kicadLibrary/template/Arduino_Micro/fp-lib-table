@@ -1,3 +1,0 @@
-(fp_lib_table
-  (lib (name "Arduino_MountingHole")(type "KiCad")(uri "${KICAD6_TEMPLATE_DIR}/Arduino_Mega/Arduino_MountingHole.pretty")(options "")(descr ""))
-)
