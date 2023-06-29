@@ -1,6 +1,6 @@
 ;NSIS Modern User Interface
 ;Start Menu Folder Selection Example Script
-;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar, Partha Singha Roy - 14_06_2023
+;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar, Partha Singha Roy - 29_06_2023
 ;Made by eSim Team, FOSSEE, IIT Bombay
 
 ;--------------------------------
@@ -231,20 +231,20 @@ SectionEnd
 Section -InstallKiCad
 
   SetOutPath "$EXEDIR"
-  File "kicad-6.0.11-i686.exe"
+  File "kicad-6.0.11-x86_64.exe"
 
   SetOutPath "$INSTDIR"
   SetDetailsPrint both
   DetailPrint "Installing: KiCad......"
   SetDetailsPrint listonly
-  ExecWait '"$EXEDIR\kicad-6.0.11-i686.exe" /S /D=$INSTDIR\KiCad'
+  ExecWait '"$EXEDIR\kicad-6.0.11-x86_64.exe" /S /D=$INSTDIR\KiCad'
   SetDetailsPrint both
   
   Goto endActiveSync
   endActiveSync:
  
     ;Remove not required files
-    Delete "$EXEDIR\kicad-6.0.11-i686.exe"
+    Delete "$EXEDIR\kicad-6.0.11-x86_64.exe"
     Delete "$PROFILE\..\Public\Desktop\KiCad.lnk"
 
     EnVar::SetHKLM
@@ -254,27 +254,15 @@ Section -InstallKiCad
 
     ZipDLL::extractall "$INSTDIR\eSim\library\kicadLibrary.zip" "$INSTDIR\eSim\library\"
 
-    ;CopyFiles "$INSTDIR\eSim\library\kicadLibrary\library\*" "$INSTDIR\KiCad\share\kicad\library\"
-
     ;Copy KiCad library made for eSim
-    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\kicad_eSim-Library\*" "$INSTDIR\KiCad\share\kicad\symbols\"
-    
-    ;No need to copy
-    ;CopyFiles "$INSTDIR\eSim\library\kicadLibrary\footprints\*" "$INSTDIR\KiCad\share\kicad\footprints\"
-    ;CopyFiles "$INSTDIR\eSim\library\kicadLibrary\template\*" "$INSTDIR\KiCad\share\kicad\template\"
+    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\eSim-symbols\*" "$INSTDIR\KiCad\share\kicad\symbols\"
  
     ;Remove older KiCad config files (if any).
     RMDir /r "$PROFILE\AppData\Roaming\kicad\6.0\"
 
     ;Set KiCad settings
     CreateDirectory "$PROFILE\AppData\Roaming\kicad\6.0\"
-    CopyFiles "$INSTDIR\eSim\library\supportFiles\fp-lib-table" "$PROFILE\AppData\Roaming\kicad\6.0\"
-    CopyFiles "$INSTDIR\eSim\library\supportFiles\fp-lib-table-online" "$PROFILE\AppData\Roaming\kicad\6.0\"
-    CopyFiles "$INSTDIR\eSim\library\supportFiles\sym-lib-table" "$PROFILE\AppData\Roaming\kicad\6.0\"
-
-    FileOpen $0 "$INSTDIR\eSim\library\supportFiles\kicad_config_path.txt" w
-    FileWrite $0 `$PROFILE\AppData\Roaming\kicad\6.0$\n`
-    FileClose $0
+    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\template\sym-lib-table" "$PROFILE\AppData\Roaming\kicad\6.0\"
 
     ;Remove extracted KiCad Library - not needed anymore
     RMDir /r "$INSTDIR\eSim\library\kicadLibrary" 

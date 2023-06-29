@@ -1,5 +1,5 @@
 #!/bin/bash 
-#===============================================================================
+#=============================================================================
 #          FILE: install-eSim.sh
 # 
 #         USAGE: ./install-eSim.sh --install 
@@ -12,11 +12,12 @@
 #  REQUIREMENTS: ---
 #          BUGS: ---
 #         NOTES: ---
-#        AUTHOR: Fahim Khan, Rahul Paknikar, Saurabh Bansode, Sumanto Kar, Partha Singha Roy
+#       AUTHORS: Fahim Khan, Rahul Paknikar, Saurabh Bansode,
+#                Sumanto Kar, Partha Singha Roy
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Wednesday 14 june 2023 12:50
-#===============================================================================
+#      REVISION: Thursday 29 June 2023 12:50
+#=============================================================================
 
 # All variables goes here
 config_dir="$HOME/.esim"
@@ -26,9 +27,12 @@ ngspiceFlag=0
 
 ## All Functions goes here
 
-error_exit() {
+error_exit()
+{
+
     echo -e "\n\nError! Kindly resolve above error(s) and try again."
     echo -e "\nAborting Installation...\n"
+
 }
 
 
@@ -81,19 +85,19 @@ function installSky130Pdk
 
     echo "Installing SKY130 PDK......................"
     
-    #Extract SKY130 PDK
+    # Extract SKY130 PDK
     tar -xJf library/sky130_fd_pr.tar.xz
 
     # Remove any previous sky130-fd-pdr instance, if any
     sudo rm -rf /usr/share/local/sky130_fd_pr
 
-    #Copy SKY130 library
+    # Copy SKY130 library
     echo "Copying SKY130 PDK........................."
 
     sudo mkdir -p /usr/share/local/
     sudo mv sky130_fd_pr /usr/share/local/
 
-    #Change ownership from root to the user
+    # Change ownership from root to the user
     sudo chown -R $USER:$USER /usr/share/local/sky130_fd_pr/
 
 }
@@ -104,31 +108,17 @@ function installKicad
 
     echo "Installing KiCad..........................."
 
-    #sudo add-apt-repository ppa:js-reynaud/ppa-kicad
     kicadppa="kicad/kicad-6.0-releases"
     findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
     if [ -z "$findppa" ]; then
-        echo "Adding KiCad-6 PPA to local apt-repository"
-        if [[ $(lsb_release -rs) == 20.* ]]; then
-            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 83FBAD2D910F124E
-            sudo add-apt-repository --yes "deb [trusted=yes] http://ppa.launchpad.net/kicad/kicad-6.0-releases/ubuntu focal main"
-            sudo touch /etc/apt/preferences.d/preferences
-            echo "Package: kicad" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
-            echo "Pin: version 6.0.11*" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
-            echo "Pin-Priority: 501" | sudo tee -a /etc/apt/preferences.d/preferences > /dev/null
-            sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3B4FE6ACC0B21F32
-            sudo add-apt-repository --yes "deb http://archive.ubuntu.com/ubuntu/ focal main universe"
-        else
-            sudo add-apt-repository ppa:kicad/kicad-6.0-releases
-        fi
+        echo "Adding KiCad-6 ppa to local apt-repository"
+        sudo add-apt-repository -y ppa:kicad/kicad-6.0-releases
+        sudo apt-get update
     else
         echo "KiCad-6 is available in synaptic"
     fi
 
-    sudo apt-get install -y --no-install-recommends kicad
-    if [[ $(lsb_release -rs) == 20.* ]]; then
-        sudo add-apt-repository -ry "deb http://archive.ubuntu.com/ubuntu/ focal main universe"
-    fi
+    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
 
 }
 
@@ -139,7 +129,7 @@ function installDependency
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
-	#Update apt repository
+	# Update apt repository
 	echo "Updating apt index files..................."
     sudo apt-get update
     
@@ -183,50 +173,22 @@ function installDependency
 function copyKicadLibrary
 {
 
-    if [ -d ~/.config/kicad/6.0 ];then
-        echo "kicad folder already exists"
-    else 
-        echo ".config/kicad does not exist"
-        mkdir -p ~/.config/kicad/6.0
-    fi
-
-    # Dump KiCad config path
-    echo "$HOME/.config/kicad" > $eSim_Home/library/supportFiles/kicad_config_path.txt
-
-    #Copy fp-lib-table for switching modes
-    cp -r library/supportFiles/fp-lib-table ~/.config/kicad/6.0
-    cp -r library/supportFiles/fp-lib-table-online ~/.config/kicad/6.0
-    echo "fp-lib-table copied in the directory"
-
-    # copy sym-lib-table for eSim-custom symbols 
-    cp -r library/supportFiles/sym-lib-table ~/.config/kicad/6.0
-    echo "sym-lib-table copied in the directory"
-
     #Extract custom KiCad Library
     tar -xJf library/kicadLibrary.tar.xz
 
-    #Copy KiCad libraries
-    echo "Copying KiCad libraries...................."
-
-    sudo cp -r kicadLibrary/symbols /usr/share/kicad/
-    sudo cp -r kicadLibrary/footprints /usr/share/kicad/    
-    sudo cp -r kicadLibrary/template/* /usr/share/kicad/template/
-
-    #Copy KiCad library made for eSim
-    sudo cp -r kicadLibrary/kicad_eSim-Library/* /usr/share/kicad/symbols/
-
-    # Full path of 'kicad.pro file'
-    KICAD_PRO="/usr/share/kicad/template/kicad.kicad_pro"
-    KICAD_ORIGINAL="/usr/share/kicad/template/kicad.pro.original"
-
-    if [ -f "$KICAD_ORIGINAL" ];then
-        echo "kicad.pro.original file found"
-        sudo cp -rv kicadLibrary/template/kicad.kicad_pro ${KICAD_PRO}
+    if [ -d ~/.config/kicad/6.0 ];then
+        echo "kicad config folder already exists"
     else 
-        echo "Making copy of original file"
-        sudo cp -rv ${KICAD_PRO}{,.original}                                             
-        sudo cp -rv kicadLibrary/template/kicad.kicad_pro ${KICAD_PRO}
+        echo ".config/kicad/6.0 does not exist"
+        mkdir -p ~/.config/kicad/6.0
     fi
+
+    # Copy symbol table for eSim custom symbols 
+    cp library/kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
+    echo "symbol table copied in the directory"
+
+    # Copy KiCad symbols made for eSim
+    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
 
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
@@ -245,11 +207,12 @@ function copyKicadLibrary
 
 function createDesktopStartScript
 {    
+
 	# Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
     echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
     echo "python3 Application.py" >> esim-start.sh
-    
+
     # Make it executable
     sudo chmod 755 esim-start.sh
     # Copy esim start script
@@ -395,14 +358,9 @@ elif [ $option == "--uninstall" ];then
         echo "Removing eSim............................"
         sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim /usr/share/applications/esim.desktop
         echo "Removing KiCad..........................."
-        sudo apt purge -y kicad
+        sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
-        sudo rm -rf $HOME/.config/kicad
-        rm -f $eSim_Home/library/supportFiles/kicad_config_path.txt
-
-        if [[ $(lsb_release -rs) == 20.* ]]; then
-            sudo sed -i '/Package: kicad/{:label;N;/Pin-Priority: 501/!blabel};/Pin: version 4.0.7*/d' /etc/apt/preferences.d/preferences
-        fi
+        rm -rf $HOME/.config/kicad/6.0
 
         echo "Removing Makerchip......................."
         pip3 uninstall -y hdlparse
