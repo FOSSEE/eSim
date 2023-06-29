@@ -332,68 +332,60 @@ if [ $option == "--install" ];then
     echo -n "Is your internet connection behind proxy? (y/n): "
     read getProxy
     if [ $getProxy == "y" -o $getProxy == "Y" ];then
-            echo -n 'Proxy Hostname :'
-            read proxyHostname
+        echo -n 'Proxy Hostname :'
+        read proxyHostname
 
-            echo -n 'Proxy Port :'
-            read proxyPort
+        echo -n 'Proxy Port :'
+        read proxyPort
 
-            echo -n username@$proxyHostname:$proxyPort :
-            read username
+        echo -n username@$proxyHostname:$proxyPort :
+        read username
 
-            echo -n 'Password :'
-            read -s passwd
+        echo -n 'Password :'
+        read -s passwd
 
-            unset http_proxy
-            unset https_proxy
-            unset HTTP_PROXY
-            unset HTTPS_PROXY
-            unset ftp_proxy
-            unset FTP_PROXY
+        unset http_proxy
+        unset https_proxy
+        unset HTTP_PROXY
+        unset HTTPS_PROXY
+        unset ftp_proxy
+        unset FTP_PROXY
 
-            export http_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-            export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-            export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-            export HTTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
-            export HTTPS_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
-            export ftp_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-            export FTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
+        export http_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
+        export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
+        export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
+        export HTTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
+        export HTTPS_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
+        export ftp_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
+        export FTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
 
-            echo "Install with proxy"
-            # Calling functions
-            createConfigFile
-            installDependency
-            installKicad
-            copyKicadLibrary
-            installNghdl
-            installSky130Pdk
-            createDesktopStartScript
+        echo "Install with proxy"
 
     elif [ $getProxy == "n" -o $getProxy == "N" ];then
-            echo "Install without proxy"
-            
-            # Calling functions
-            createConfigFile
-            installDependency
-            installKicad
-            copyKicadLibrary
-            installNghdl
-            installSky130Pdk
-            createDesktopStartScript
-
-            if [ $? -ne 0 ];then
-                echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
-                exit 0
-            fi
-
-            echo "-----------------eSim Installed Successfully-----------------"
-            echo "Type \"esim\" in Terminal to launch it"
-            echo "or double click on \"eSim\" icon placed on Desktop"
+        echo "Install without proxy"
     
     else
         echo "Please select the right option"
         exit 0    
     fi
+
+    # Calling functions
+    createConfigFile
+    installDependency
+    installKicad
+    copyKicadLibrary
+    installNghdl
+    installSky130Pdk
+    createDesktopStartScript
+
+    if [ $? -ne 0 ];then
+        echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
+        exit 0
+    fi
+
+    echo "-----------------eSim Installed Successfully-----------------"
+    echo "Type \"esim\" in Terminal to launch it"
+    echo "or double click on \"eSim\" icon placed on Desktop"
 
 
 elif [ $option == "--uninstall" ];then
