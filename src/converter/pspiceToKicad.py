@@ -67,7 +67,6 @@ class PspiceConverter:
             msg_box.setText("The selected file is empty. Conversion cannot be performed.")
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
-        return
 
     def upload_file_Pspice(self, file_path,convert_button):
         if file_path:
