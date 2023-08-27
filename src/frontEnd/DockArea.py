@@ -9,7 +9,10 @@ from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
 from browser.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
+from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
+from PyQt5.QtCore import Qt
 import os
+from Application import Application
 
 dockList = ['Welcome']
 count = 1
