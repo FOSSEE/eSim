@@ -28,3 +28,31 @@ class LTspiceConverter:
             msg_box.setText("The selected file is empty. Conversion cannot be performed.")
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
+
+    def upload_file_LTspice(self, file_path,convert_button):
+        if file_path:
+            # Check if the file path contains spaces
+            if ' ' in file_path:
+                # Show a message box indicating that spaces are not allowed
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setWindowTitle("Invalid File Path")
+                msg_box.setText("Spaces are not allowed in the file path.")
+                msg_box.setStandardButtons(QMessageBox.Ok)
+                msg_box.exec_()
+                return
+            print(file_path)
+            convert_button.setEnabled(True)
+            convert_button.clicked.connect(lambda: self.convert(file_path))
+            
+        else:
+            print("No file selected.")
+            convert_button.setEnabled(False)
+
+            # Message box indicating that no file is selected
+            msg_box = QMessageBox()
+            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setWindowTitle("No File Selected")
+            msg_box.setText("Please select a file before uploading.")
+            msg_box.setStandardButtons(QMessageBox.Ok)
+            msg_box.exec_()
