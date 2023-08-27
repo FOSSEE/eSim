@@ -82,7 +82,7 @@ class PspiceConverter:
                 return
             print(file_path)
             convert_button.setEnabled(True)
-            convert_button.clicked.connect(lambda: self.convert_Pspice(file_path))
+            convert_button.clicked.connect(lambda: self.convert(file_path))
             
         else:
             print("No file selected.")
