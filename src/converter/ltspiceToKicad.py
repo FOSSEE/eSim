@@ -9,7 +9,7 @@ class LTspiceConverter:
     def __init__(self, parent):
         self.parent = parent
 
-    def convert(self, file_path,convert_button):
+    def convert(self, file_path):
         
         # Get the base name of the file without the extension
         filename = os.path.splitext(os.path.basename(file_path))[0]
@@ -18,7 +18,6 @@ class LTspiceConverter:
         # Check if the file is not empty
         if os.path.getsize(file_path) > 0:
             print("con lt")
-            convert_button.setEnabled(False)
         else:
             print("File is empty. Cannot perform conversion.")
             # A message box indicating that the file is empty
@@ -29,7 +28,7 @@ class LTspiceConverter:
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
 
-    def upload_file_LTspice(self, file_path,convert_button):
+    def upload_file_LTspice(self, file_path):
         if file_path:
             # Check if the file path contains spaces
             if ' ' in file_path:
@@ -42,12 +41,10 @@ class LTspiceConverter:
                 msg_box.exec_()
                 return
             print(file_path)
-            convert_button.setEnabled(True)
-            convert_button.clicked.connect(self.convert(file_path,convert_button))
+            (self.convert(file_path))
             
         else:
             print("No file selected.")
-            convert_button.setEnabled(False)
 
             # Message box indicating that no file is selected
             msg_box = QMessageBox()
