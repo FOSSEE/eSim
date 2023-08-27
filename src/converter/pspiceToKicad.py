@@ -1,7 +1,7 @@
 import os
 import subprocess
 import shutil
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
+from PyQt5.QtWidgets import QFileDialog, QMessageBox ,QWidget
 from PyQt5 import QtWidgets
 from frontEnd.Application import Application
 
@@ -50,7 +50,7 @@ class PspiceConverter:
                     msg_box.setWindowTitle("Added Successfully")
                     msg_box.setText("File added under the project explorer successfully.")
                     result = msg_box.exec_()
-                    QtWidgets.QMainWindow.close(self)
+                    QtWidgets.QMainWindow.close(QWidget)
 
                 else:
                     # User chose not to add the file
