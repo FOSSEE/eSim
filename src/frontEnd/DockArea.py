@@ -12,8 +12,9 @@ from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt
 import os
-from Application import Application
-
+from converter.pspiceToKicad import PspiceConverter
+from converter.ltspiceToKicad import LTspiceConverter
+from converter.browseUpload import browse_path
 dockList = ['Welcome']
 count = 1
 dock = {}
@@ -184,12 +185,15 @@ class DockArea(QtWidgets.QMainWindow):
 
         browse_button = QPushButton("Browse")
         browse_button.setFixedSize(100, 30)
-        browse_button.clicked.connect(lambda: self.browse_path(file_path_text_box))
+        browse_button.clicked.connect(lambda: browse_path(file_path_text_box))
         file_path_layout.addWidget(browse_button)
 
         self.eConLayout.addLayout(file_path_layout)  # Add file path layout to main layout
 
         button_layout = QHBoxLayout()  # QHBoxLayout for the buttons
+
+        self.pspice_converter = PspiceConverter(self)
+        self.ltspice_converter = LTspiceConverter(self)
 
         upload_button1 = QPushButton("Upload Pspice schematics")
         upload_button1.setFixedSize(180, 30)
