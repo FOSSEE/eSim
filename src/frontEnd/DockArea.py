@@ -185,7 +185,7 @@ class DockArea(QtWidgets.QMainWindow):
 
         browse_button = QPushButton("Browse")
         browse_button.setFixedSize(100, 30)
-        browse_button.clicked.connect(lambda: browse_path(file_path_text_box))
+        browse_button.clicked.connect(lambda: browse_path(self,file_path_text_box))
         file_path_layout.addWidget(browse_button)
 
         self.eConLayout.addLayout(file_path_layout)  # Add file path layout to main layout
