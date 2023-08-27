@@ -38,7 +38,7 @@ class DockArea(QtWidgets.QMainWindow):
         """This act as constructor for class DockArea."""
         QtWidgets.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
-
+        self.convert_button = None
         for dockName in dockList:
             dock[dockName] = QtWidgets.QDockWidget(dockName)
             self.welcomeWidget = QtWidgets.QWidget()
