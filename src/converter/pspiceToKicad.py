@@ -68,7 +68,7 @@ class PspiceConverter:
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
 
-    def upload_file_Pspice(self, file_path):
+    def upload_file_Pspice(self, file_path,convert_button):
         if file_path:
             # Check if the file path contains spaces
             if ' ' in file_path:
@@ -81,12 +81,12 @@ class PspiceConverter:
                 msg_box.exec_()
                 return
             print(file_path)
-            self.convert_button.setEnabled(True)
-            self.convert_button.clicked.connect(lambda: self.convert_Pspice(file_path))
+            convert_button.setEnabled(True)
+            convert_button.clicked.connect(lambda: self.convert_Pspice(file_path))
             
         else:
             print("No file selected.")
-            self.convert_button.setEnabled(False)
+            convert_button.setEnabled(False)
 
             # Message box indicating that no file is selected
             msg_box = QMessageBox()
