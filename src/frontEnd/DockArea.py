@@ -209,7 +209,7 @@ class DockArea(QtWidgets.QMainWindow):
         # self.convert_button.setFixedSize(190, 30)
         # self.convert_button.setEnabled(False)
         # button_layout.addWidget(self.convert_button)
-        # self.eConLayout.addLayout(button_layout)
+        self.eConLayout.addLayout(button_layout)
 
         self.eConWidget.setLayout(self.eConLayout)
 
