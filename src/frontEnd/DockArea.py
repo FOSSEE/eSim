@@ -14,7 +14,7 @@ from PyQt5.QtCore import Qt
 import os
 from converter.pspiceToKicad import PspiceConverter
 from converter.ltspiceToKicad import LTspiceConverter
-from converter.browseUpload import browse_path
+from converter.browseSchematics import browse_path
 dockList = ['Welcome']
 count = 1
 dock = {}
