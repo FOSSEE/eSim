@@ -50,7 +50,7 @@ class PspiceConverter:
                     msg_box.setWindowTitle("Added Successfully")
                     msg_box.setText("File added under the project explorer successfully.")
                     result = msg_box.exec_()
-                    QtWidgets.QMainWindow.close(QWidget)
+                    #QtWidgets.QMainWindow.close(QWidget)
 
                 else:
                     # User chose not to add the file
