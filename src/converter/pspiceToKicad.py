@@ -9,7 +9,7 @@ class PspiceConverter:
     def __init__(self, parent):
         self.parent = parent
 
-    def convert(self, file_path):
+    def convert(self, file_path,convert_button):
         
         # Get the base name of the file without the extension
         filename = os.path.splitext(os.path.basename(file_path))[0]
@@ -21,7 +21,7 @@ class PspiceConverter:
             
             try:
                 subprocess.run(command, shell=True, check=True)
-                self.convert_button.setEnabled(False)
+                convert_button.setEnabled(False)
                 # Message box with the conversion success message
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Information)
@@ -82,7 +82,7 @@ class PspiceConverter:
                 return
             print(file_path)
             convert_button.setEnabled(True)
-            convert_button.clicked.connect(lambda: self.convert(file_path))
+            convert_button.clicked.connect(lambda: self.convert(file_path,convert_button))
             
         else:
             print("No file selected.")
