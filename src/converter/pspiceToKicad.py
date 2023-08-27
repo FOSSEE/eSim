@@ -37,7 +37,7 @@ class PspiceConverter:
                     newFile = str(conPath + "/" + filename)
                     print(newFile)
                     
-                    self.app = Application(self)
+                    self.app = Application(None)
                     self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
                     #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
                     shutil.rmtree(f"/home/ubuntus/eSim-Workspace/{filename}", ignore_errors=True)
