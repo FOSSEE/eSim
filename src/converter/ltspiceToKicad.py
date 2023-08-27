@@ -10,7 +10,7 @@ class LTspiceConverter:
         self.parent = parent
 
     def convert(self, file_path,convert_button):
-        self.convert_button.clicked.disconnect()
+        convert_button.clicked.disconnect()
         # Get the base name of the file without the extension
         filename = os.path.splitext(os.path.basename(file_path))[0]
         conPath = os.path.dirname(file_path)
