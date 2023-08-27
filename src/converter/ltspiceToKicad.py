@@ -43,7 +43,7 @@ class LTspiceConverter:
                 return
             print(file_path)
             convert_button.setEnabled(True)
-            convert_button.clicked.connect(lambda: self.convert(file_path,convert_button))
+            convert_button.clicked.connect(self.convert(file_path,convert_button))
             
         else:
             print("No file selected.")
