@@ -717,6 +717,9 @@ and set the load for input ports */
         foo_func = '''
         int foo_''' + self.fname.split('.')[0] + '''(int init,int count)
         {
+            int argc=1;
+            char* argv[]={"fullverbose"};
+            Verilated::commandArgs(argc, argv);
             static VerilatedContext* contextp = new VerilatedContext;
             static V''' + self.fname.split('.')[0] + "* " + \
             self.fname.split('.')[0] + '''[1024];
@@ -849,9 +852,16 @@ and set the load for input ports */
         else:
             self.cmd = ''
 
-        self.cmd = self.cmd + "verilator -Wall " + wno + " \
-         --cc --exe --no-MMD --Mdir . -CFLAGS -fPIC sim_main_" + \
-            self.fname.split('.')[0] + ".cpp " + self.fname
+        # self.cmd = self.cmd + "verilator -Wall " + wno + " \
+        # --cc --exe --no-MMD --Mdir . -CFLAGS -fPIC sim_main_" + \
+        #    self.fname.split('.')[0] + ".cpp " + self.fname
+        self.cmd = self.cmd + "verilator --stats -O3 -CFLAGS\
+         -O3 -LDFLAGS \"-static\" --x-assign fast \
+         --x-initial fast --noassert  --bbox-sys -Wall " + wno + "\
+         --cc --exe --no-MMD --Mdir . -CFLAGS\
+          -fPIC -output-split 0 sim_main_" + \
+            self.fname.split('.')[0] + ".cpp --autoflush  \
+            -DBSV_RESET_FIFO_HEAD -DBSV_RESET_FIFO_ARRAY  " + self.fname
         self.process = QtCore.QProcess(self)
         self.process.readyReadStandardOutput.connect(self.readAllStandard)
         self.process.start('sh', ['-c', self.cmd])
