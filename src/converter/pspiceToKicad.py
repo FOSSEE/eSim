@@ -45,18 +45,30 @@ class PspiceConverter:
                     
                     self.app = Application(None)
                     self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
-                    #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
-                    shutil.rmtree(f"/home/ubuntus/eSim-Workspace/{filename}", ignore_errors=True)
-                    shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}")
 
-                    print("File added under the project explorer.")
-                    # Message box with the Added Successfully message
-                    msg_box = QMessageBox()
-                    msg_box.setIcon(QMessageBox.Information)
-                    msg_box.setWindowTitle("Added Successfully")
-                    msg_box.setText("File added under the project explorer successfully.")
-                    result = msg_box.exec_()
-                    #QtWidgets.QMainWindow.close(QWidget)
+                    target_directory_name = "eSim-Workspace"
+
+                    # Find the eSim-Workspace directory
+                    workspace_directory = self.find_workspace_directory(target_directory_name)
+
+                    if workspace_directory:
+                        print(f"Found the {target_directory_name} directory at: {workspace_directory}")
+
+                        #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
+                        shutil.rmtree(f"/home/ubuntus/eSim-Workspace/{filename}", ignore_errors=True)
+                        shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}")
+
+                        print("File added under the project explorer.")
+                        # Message box with the Added Successfully message
+                        msg_box = QMessageBox()
+                        msg_box.setIcon(QMessageBox.Information)
+                        msg_box.setWindowTitle("Added Successfully")
+                        msg_box.setText("File added under the project explorer successfully.")
+                        result = msg_box.exec_()
+                        #QtWidgets.QMainWindow.close(QWidget)
+
+                    else:
+                        print(f"{target_directory_name} directory not found.")
 
                 else:
                     # User chose not to add the file
@@ -99,3 +111,9 @@ class PspiceConverter:
             msg_box.setText("Please select a file before uploading.")
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
+
+    def find_workspace_directory(self,target_directory_name):
+        for root, dirs, files in os.walk("/"):
+            if target_directory_name in dirs:
+                return os.path.join(root, target_directory_name)
+        return None  # Return None if the directory is not found
