@@ -166,7 +166,7 @@ class AutoSchematic:
         sym_file = open(self.kicad_ngveri_sym)
         lines = sym_file.readlines()
         sym_file.close()
-
+        lines = lines[0:-2]
         output = []
         line_reading_flag = False
 
@@ -199,7 +199,7 @@ class AutoSchematic:
         # Removing ")" from "eSim_Ngveri.kicad_sym"
         file = open(self.kicad_ngveri_sym, "r")
         content_file = file.read()
-        new_content_file = content_file[:-1]
+        new_content_file = content_file[:-2]
         file.close()
         file = open(self.kicad_ngveri_sym, "w")
         file.write(new_content_file)
