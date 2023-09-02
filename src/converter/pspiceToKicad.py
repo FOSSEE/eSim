@@ -52,11 +52,11 @@ class PspiceConverter:
                     workspace_directory = find_workspace_directory(target_directory_name)
 
                     if workspace_directory:
-                        print(f"Found the {target_directory_name} directory at: {workspace_directory}")
+                        print(f"{target_directory_name} is at: {workspace_directory}")
 
                         #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
-                        shutil.rmtree(f"/home/ubuntus/eSim-Workspace/{filename}", ignore_errors=True)
-                        shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}")
+                        shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
+                        shutil.copytree(newFile, f"{target_directory_name}/{filename}")
 
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
