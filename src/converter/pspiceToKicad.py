@@ -4,7 +4,7 @@ import shutil
 from PyQt5.QtWidgets import QFileDialog, QMessageBox ,QWidget
 from PyQt5 import QtWidgets
 from frontEnd.Application import Application
-from schematic_converters.lib.PythonLib import parser
+
 class PspiceConverter:
     def __init__(self, parent):
         self.parent = parent
