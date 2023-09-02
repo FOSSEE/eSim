@@ -4,7 +4,7 @@ import shutil
 from PyQt5.QtWidgets import QFileDialog, QMessageBox ,QWidget
 from PyQt5 import QtWidgets
 from frontEnd.Application import Application
-
+from schematic_converters.lib.PythonLib import parser
 class PspiceConverter:
     def __init__(self, parent):
         self.parent = parent
@@ -17,7 +17,7 @@ class PspiceConverter:
         
         # Check if the file is not empty
         if os.path.getsize(file_path) > 0:
-            command = f"cd /home/ubuntus/eSim/schematic_converters/lib/PythonLib && python3 parser.py {file_path} {conPath}/{filename}"
+            command = f"cd python3 {parser}.py {file_path} {conPath}/{filename}"
             
             try:
                 subprocess.run(command, shell=True, check=True)
