@@ -248,35 +248,52 @@ class DockArea(QtWidgets.QMainWindow):
         global count
 
         projDir = self.obj_appconfig.current_project["ProjectName"]
-        projName = os.path.basename(projDir)
-        dockName = f'Subcircuit-{projName}-'
 
-        self.subcktWidget = QtWidgets.QWidget()
-        self.subcktLayout = QtWidgets.QVBoxLayout()
-        self.subcktLayout.addWidget(Subcircuit(self))
+        """ Checks projDir variable has valid value 
+        & is not None before calling os.path.basename """
 
-        self.subcktWidget.setLayout(self.subcktLayout)
-        dock[dockName +
-             str(count)] = QtWidgets.QDockWidget(dockName
-                                                 + str(count))
-        dock[dockName + str(count)] \
-            .setWidget(self.subcktWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock[dockName + str(count)])
-        self.tabifyDockWidget(dock['Welcome'],
-                              dock[dockName + str(count)])
+        if projDir is not None:
+            projName = os.path.basename(projDir)
+            dockName = f'Subcircuit-{projName}-'
 
-        # CSS
-        dock[dockName + str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray;\
-            padding: 5px; width: 200px; height: 150px;  } \
-        ")
+            self.subcktWidget = QtWidgets.QWidget()
+            self.subcktLayout = QtWidgets.QVBoxLayout()
+            self.subcktLayout.addWidget(Subcircuit(self))
 
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
+            self.subcktWidget.setLayout(self.subcktLayout)
+            dock[dockName +
+                str(count)] = QtWidgets.QDockWidget(dockName
+                                                    + str(count))
+            dock[dockName + str(count)] \
+                .setWidget(self.subcktWidget)
+            self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+                            dock[dockName + str(count)])
+            self.tabifyDockWidget(dock['Welcome'],
+                                dock[dockName + str(count)])
 
-        count = count + 1
+            # CSS
+            dock[dockName + str(count)].setStyleSheet(" \
+            .QWidget { border-radius: 15px; border: 1px solid gray;\
+                padding: 5px; width: 200px; height: 150px;  } \
+            ")
+
+            dock[dockName + str(count)].setVisible(True)
+            dock[dockName + str(count)].setFocus()
+            dock[dockName + str(count)].raise_()
+
+            count = count + 1
+
+        else:
+            """ when projDir is None that is clicking on subcircuit icon
+                without any project selection """
+            self.msg = QtWidgets.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                'Please select the project first.'
+                ' You can either create new project or open existing project'
+            )
+            self.msg.exec_()
 
     def makerchip(self):
         """This function creates a widget for different subcircuit options."""
