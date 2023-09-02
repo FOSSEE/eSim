@@ -1,8 +1,7 @@
 import os
 import subprocess
 import shutil
-from PyQt5.QtWidgets import QFileDialog, QMessageBox ,QWidget
-from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QMessageBox
 from frontEnd.Application import Application
 
 class PspiceConverter:
@@ -73,7 +72,7 @@ class PspiceConverter:
                 else:
                     # User chose not to add the file
                     print("File not added under the project explorer.")
-                    
+
             except subprocess.CalledProcessError as e:
                 print("Error:", e)
         else:
