@@ -1,0 +1,16 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\IC_OPA862\IC_OPA862.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 03/14/23 14:32:55
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  ? Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad4_ ? Net-_R1-Pad1_ Net-_U1-Pad5_ ? lm_741		
+X2  ? Net-_C1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ ? Net-_C1-Pad1_ Net-_U1-Pad5_ ? lm_741		
+R1  Net-_R1-Pad1_ Net-_C1-Pad2_ 1k		
+R2  Net-_C1-Pad2_ Net-_C1-Pad1_ 1k		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 4p		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_R1-Pad1_ Net-_C1-Pad1_ PORT		
+
+.end
