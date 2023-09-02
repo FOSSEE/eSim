@@ -73,8 +73,8 @@ class PspiceConverter:
                 else:
                     # User chose not to add the file
                     print("File not added under the project explorer.")
+                    
             except subprocess.CalledProcessError as e:
-                # Handle any errors that occurred during command execution
                 print("Error:", e)
         else:
             print("File is empty. Cannot perform conversion.")
