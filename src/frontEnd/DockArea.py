@@ -168,6 +168,18 @@ class DockArea(QtWidgets.QMainWindow):
         global count
 
         projDir = self.obj_appconfig.current_project["ProjectName"]
+        if projDir is None:
+            """ when projDir is None that is clicking on subcircuit icon
+                without any project selection """
+            self.msg = QtWidgets.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                'Please select the project first.'
+                ' You can either create new project or open existing project'
+            )
+            self.msg.exec_()
+            return
         projName = os.path.basename(projDir)
         dockName = f'Model Editor-{projName}-'
 
@@ -300,6 +312,18 @@ class DockArea(QtWidgets.QMainWindow):
         global count
 
         projDir = self.obj_appconfig.current_project["ProjectName"]
+        if projDir is None:
+            """ when projDir is None that is clicking on subcircuit icon
+                without any project selection """
+            self.msg = QtWidgets.QErrorMessage()
+            self.msg.setModal(True)
+            self.msg.setWindowTitle("Error Message")
+            self.msg.showMessage(
+                'Please select the project first.'
+                ' You can either create new project or open existing project'
+            )
+            self.msg.exec_()
+            return
         projName = os.path.basename(projDir)
         dockName = f'Makerchip-{projName}-'
 
