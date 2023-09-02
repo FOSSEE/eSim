@@ -33,7 +33,8 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 
 			$ pip install pyinstaller matplotlib==3.0.3 tornado setuptools
 			$ pip install PyQt5==5.9.2 pypiwin32 psutil
-			$ pip install watchdog hdlparse
+			$ pip install watchdog 
+			$ pip install --upgrade https://github.com/hdl/pyhdlparser/tarball/master 
 
 7. Test whether only eSim dependencies are available or not:
 
@@ -73,9 +74,8 @@ It contains all the documentation for making eSim executable (using PyInstaller)
     - library/browser/User-Manual/eSim.html
 
 3. Remove following from `eSim\library\kicadLibrary` folder as same will be repeated in KiCad installer:
-	- entire `library` folder
-	- everything from `modules` folder except `Connectors_Terminal_Blocks.pretty/TerminalBlock_Altech_AK300-2_P5.00mm.kicad_mod` and `TO_SOT_Packages_THT.pretty/TO-220-3_Vertical.kicad_mod`
-	- everything from `temmplate` folder except `kicad.pro` file
+	- entire `symbols` and `footprints` folder
+	- all files except `sym-lib-table` from `template` folder
 
    Now, compress it in zip format (`kicadLibrary.zip`), place it at `eSim/library` and delete that folder.
 
@@ -87,17 +87,17 @@ It contains all the documentation for making eSim executable (using PyInstaller)
 
 6. Replace `LICENSE` file with `LICENSE.rtf` file in `eSim` folder.
 
-7. Compress `eSim` folder in 7z format and add it to the installer folder (Make sure that there is folder named `eSim` inside this compressed file).
+7. Compress `eSim` folder in 7z format and add it to the installer folder (Make sure that there is a folder named `eSim` inside this compressed file).
 
-8. Add the dependencies for `NGHDL` to the installer folder.
+8. Add KiCad installer `kicad-6.0.11-x86_64.exe` to the installer folder.
+
+> Note: Refer this [documentation](https://github.com/fossee/KiCad-eSim/blob/executables/README.md) on packaging KiCad for Windows OS.
+
+9. Add the dependencies for `NGHDL` to the installer folder.
 
 > Note: Refer this [documentation](https://github.com/fossee/nghdl/tree/installers/Windows/README.md) on packaging NGHDL for Windows OS.
 
-9. Apply NSIS plugins. Refer [here](https://github.com/fossee/nghdl/tree/installers/Windows/NSISplugins/) for the same.
-
-10. Add KiCad installer `kicad-4.0.7-i686.exe` to the installer folder.
-
-> Note: Refer this [documentation](https://github.com/fossee/KiCad-eSim/blob/executables/README.md) on packaging KiCad for Windows OS
+10. Apply NSIS plugins. Refer [here](https://github.com/fossee/nghdl/tree/installers/Windows/NSISplugins/) for the same.
 
 11. Add following files/folder to the installer folder:
 	- License file (`rtf` format)
