@@ -21,11 +21,11 @@ class PspiceConverter:
             script_dir = os.path.dirname(os.path.abspath(__file__))
 
             # Define the relative path to parser.py from the current script's directory
-            relative_parser_path = "schematic_converters/lib/PythonLib/parser.py"
+            relative_parser_path = "schematic_converters/lib/PythonLib"
 
             # Construct the full path to parser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
-            command = f"python3 {parser_path} {file_path} {conPath}/{filename}"
+            command = f"cd {parser_path} && python3 parser.py {file_path} {conPath}/{filename}"
             try:
                 subprocess.run(command, shell=True, check=True)
                 # Message box with the conversion success message
