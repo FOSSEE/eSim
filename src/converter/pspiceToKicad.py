@@ -17,8 +17,15 @@ class PspiceConverter:
         
         # Check if the file is not empty
         if os.path.getsize(file_path) > 0:
-            command = f"cd python3 {parser}.py {file_path} {conPath}/{filename}"
-            
+            # Get the absolute path of the current script's directory
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+
+            # Define the relative path to parser.py from the current script's directory
+            relative_parser_path = "schematic_converters/lib/PythonLib/parser.py"
+
+            # Construct the full path to parser.py
+            parser_path = os.path.join(script_dir, relative_parser_path)
+            command = f"python3 {parser_path} {file_path} {conPath}/{filename}"
             try:
                 subprocess.run(command, shell=True, check=True)
                 # Message box with the conversion success message
