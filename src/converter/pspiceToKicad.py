@@ -49,7 +49,7 @@ class PspiceConverter:
                     target_directory_name = "eSim-Workspace"
 
                     # Find the eSim-Workspace directory
-                    workspace_directory = self.find_workspace_directory(target_directory_name)
+                    workspace_directory = find_workspace_directory(target_directory_name)
 
                     if workspace_directory:
                         print(f"Found the {target_directory_name} directory at: {workspace_directory}")
@@ -112,8 +112,8 @@ class PspiceConverter:
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
 
-    def find_workspace_directory(self,target_directory_name):
-        for root, dirs, files in os.walk("/"):
-            if target_directory_name in dirs:
-                return os.path.join(root, target_directory_name)
-        return None  # Return None if the directory is not found
+def find_workspace_directory(target_directory_name):
+    for root, dirs, files in os.walk("/"):
+        if target_directory_name in dirs:
+            return os.path.join(root, target_directory_name)
+    return None  # Return None if the directory is not found
