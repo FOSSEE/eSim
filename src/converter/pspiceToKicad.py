@@ -114,6 +114,6 @@ class PspiceConverter:
 
 def find_workspace_directory(target_directory_name):
     for root, dirs, files in os.walk("/"):
-        if target_directory_name in dirs:
+        if target_directory_name in dirs or target_directory_name in files:
             return os.path.join(root, target_directory_name)
     return None  # Return None if the directory is not found
