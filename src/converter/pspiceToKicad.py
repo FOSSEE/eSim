@@ -17,15 +17,18 @@ class PspiceConverter:
         
         # Check if the file is not empty
         if os.path.getsize(file_path) > 0:
-            # Get the absolute path of the current script's directory
+            # Get the absolute path of the directory where this script is located
             script_dir = os.path.dirname(os.path.abspath(__file__))
 
-            # Define the relative path to parser.py from the current script's directory
-            relative_parser_path = "schematic_converters/lib/PythonLib"
+            # Construct the full path to parser.py (assuming it's in the same directory as this script)
+            parser_path = os.path.join(script_dir, 'parser.py')
 
-            # Construct the full path to parser.py
-            parser_path = os.path.join(script_dir, relative_parser_path)
-            command = f"python3 parser.py {file_path} {conPath}/{filename}"
+            # Assuming you have 'file_path', 'conPath', and 'filename' defined earlier
+            file_path = "/home/ubuntus/eSim_PSpice_to_KiCad_Python_Parser/Examples/PSpice_Schematics/555_test.sch"
+            conPath = "/home/ubuntus/eSim_PSpice_to_KiCad_Python_Parser/Examples/PSpice_Schematics/555_test"
+
+            # Construct and run the command using the constructed path to parser.py
+            command = f"python3 {parser_path} {file_path} {conPath}"
             try:
                 subprocess.run(command, shell=True, check=True)
                 # Message box with the conversion success message
