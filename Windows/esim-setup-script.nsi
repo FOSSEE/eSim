@@ -67,8 +67,8 @@ FunctionEnd
 ;General
 	
 !define PRODUCT_NAME "eSim"
-!define PRODUCT_VERSION "2.3"
-!define VERSION "2.3.0.0"
+!define PRODUCT_VERSION "2.4"
+!define VERSION "2.4.0.0"
 !define PRODUCT_PUBLISHER "FOSSEE, IIT Bombay"
 !define PRODUCT_WEB_SITE "https://esim.fossee.in/"
 !define PRODUCT_UNINST_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\${PRODUCT_NAME}"
@@ -140,7 +140,7 @@ FunctionEnd
 ;--------------------------------
 
 Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
-OutFile "eSim-2.3_installer.exe"
+OutFile "eSim-2.4_installer.exe"
 
 
 Function .onVerifyInstDir
