@@ -1,6 +1,6 @@
 ;NSIS Modern User Interface
 ;Start Menu Folder Selection Example Script
-;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar, Partha Singha Roy - 29_06_2023
+;Modified by Fahim Khan, Saurabh Bansode, Rahul Paknikar, Sumanto Kar, Partha Singha Roy - 04_09_2023
 ;Made by eSim Team, FOSSEE, IIT Bombay
 
 ;--------------------------------
@@ -231,20 +231,20 @@ SectionEnd
 Section -InstallKiCad
 
   SetOutPath "$EXEDIR"
-  File "kicad-6.0.11-x86_64.exe"
+  File "kicad-6.0.11-i686.exe"
 
   SetOutPath "$INSTDIR"
   SetDetailsPrint both
   DetailPrint "Installing: KiCad......"
   SetDetailsPrint listonly
-  ExecWait '"$EXEDIR\kicad-6.0.11-x86_64.exe" /S /D=$INSTDIR\KiCad'
+  ExecWait '"$EXEDIR\kicad-6.0.11-i686.exe" /S /D=$INSTDIR\KiCad'
   SetDetailsPrint both
   
   Goto endActiveSync
   endActiveSync:
  
     ;Remove not required files
-    Delete "$EXEDIR\kicad-6.0.11-x86_64.exe"
+    Delete "$EXEDIR\kicad-6.0.11-i686.exe"
     Delete "$PROFILE\..\Public\Desktop\KiCad.lnk"
 
     EnVar::SetHKLM
@@ -260,8 +260,8 @@ Section -InstallKiCad
     ;Remove older KiCad config files (if any).
     RMDir /r "$PROFILE\AppData\Roaming\kicad\6.0\"
 
-    ;Set KiCad settings
-    CreateDirectory "$PROFILE\AppData\Roaming\kicad\6.0\"
+    ;Set  settings
+    CreateDirectory "$PROFILE\AppData\Roaming\\6.0\"
     CopyFiles "$INSTDIR\eSim\library\kicadLibrary\template\sym-lib-table" "$PROFILE\AppData\Roaming\kicad\6.0\"
 
     ;Remove extracted KiCad Library - not needed anymore
