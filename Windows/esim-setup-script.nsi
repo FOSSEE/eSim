@@ -18,8 +18,8 @@
 ; Otherwise it returns null(""). 
 ; Written by kenglish_hi
 ; Adapted from StrReplace written by dandaman32
-
-
+;ShowInstDetails show
+;ShowUninstDetails show
 Var STR_HAYSTACK
 Var STR_NEEDLE
 Var STR_CONTAINS_VAR_1
@@ -258,11 +258,13 @@ Section -InstallKiCad
     CopyFiles "$INSTDIR\eSim\library\kicadLibrary\eSim-symbols\*" "$INSTDIR\KiCad\share\kicad\symbols\"
  
     ;Remove older KiCad config files (if any).
-    RMDir /r "$PROFILE\AppData\Roaming\kicad\6.0\"
+    ;RMDir /r "$PROFILE\AppData\Roaming\kicad\6.0\"
 
     ;Set  settings
-    CreateDirectory "$PROFILE\AppData\Roaming\\6.0\"
+    ;CreateDirectory "$PROFILE\AppData\Roaming\kicad\6.0\"
     CopyFiles "$INSTDIR\eSim\library\kicadLibrary\template\sym-lib-table" "$PROFILE\AppData\Roaming\kicad\6.0\"
+	Delete "$INSTDIR\KiCad\share\kicad\template\sym-lib-table"
+    CopyFiles "$INSTDIR\eSim\library\kicadLibrary\template\sym-lib-table" "$INSTDIR\KiCad\share\kicad\template\"
 
     ;Remove extracted KiCad Library - not needed anymore
     RMDir /r "$INSTDIR\eSim\library\kicadLibrary" 
