@@ -184,7 +184,7 @@ function copyKicadLibrary
     fi
 
     # Copy symbol table for eSim custom symbols 
-    cp library/kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
+    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
     echo "symbol table copied in the directory"
 
     # Copy KiCad symbols made for eSim
