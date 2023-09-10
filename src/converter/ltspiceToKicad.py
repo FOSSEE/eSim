@@ -22,7 +22,11 @@ class LTspiceConverter:
             script_dir = os.path.dirname(os.path.abspath(__file__))
 
             # Define the relative path to parser.py from the current script's directory
-            relative_parser_path = "LTSpiceToKiCadConverter/src/Ubuntu"
+            # Check the current operating system
+            if os.name == 'nt':  # 'nt' represents Windows
+                relative_parser_path = "LTSpiceToKiCadConverter/src/Windows"
+            else:
+                relative_parser_path = "LTSpiceToKiCadConverter/src/Ubuntu"
 
             # Construct the full path to parser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
