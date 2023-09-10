@@ -14,7 +14,7 @@ class PspiceConverter:
         filename = os.path.splitext(os.path.basename(file_path))[0]
         conPath = os.path.dirname(file_path)
         
-        # Check if the file is not empty
+        # Checks if the file is not empty
         if os.path.getsize(file_path) > 0:
             # Get the absolute path of the current script's directory
             script_dir = os.path.dirname(os.path.abspath(__file__))
