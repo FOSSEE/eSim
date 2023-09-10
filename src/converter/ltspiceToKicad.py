@@ -72,7 +72,7 @@ class LTspiceConverter:
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Warning)
                 msg_box.setWindowTitle("Invalid File Path")
-                msg_box.setText("Only .sch file can be converted.")
+                msg_box.setText("Only .asc file can be converted.")
                 msg_box.setStandardButtons(QMessageBox.Ok)
                 msg_box.exec_()
                 return
