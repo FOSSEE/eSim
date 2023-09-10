@@ -40,6 +40,42 @@ class LTspiceConverter:
                 result = msg_box.exec_()
                 print("Conversion of LTspice to eSim schematic Successful")
             
+                if result == QMessageBox.Yes:
+                    # Add the converted file under the project explorer
+                    newFile = str(conPath + "/LTspice" + filename)
+                    print(newFile)
+                    
+                    self.app = Application(None)
+                    self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
+
+                    target_directory_name = "eSim-Workspace"
+
+                    # Find the eSim-Workspace directory
+                    workspace_directory = find_workspace_directory(target_directory_name)
+
+                    if workspace_directory:
+                        print(f"{target_directory_name} is at: {workspace_directory}")
+
+                        #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
+                        shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
+                        shutil.copytree(newFile, f"{target_directory_name}/{filename}")
+
+                        print("File added under the project explorer.")
+                        # Message box with the Added Successfully message
+                        msg_box = QMessageBox()
+                        msg_box.setIcon(QMessageBox.Information)
+                        msg_box.setWindowTitle("Added Successfully")
+                        msg_box.setText("File added under the project explorer successfully.")
+                        result = msg_box.exec_()
+                        #QtWidgets.QMainWindow.close(QWidget)
+
+                    else:
+                        print(f"{target_directory_name} directory not found.")
+
+                else:
+                    # User chose not to add the file
+                    print("File not added under the project explorer.")
+
             except subprocess.CalledProcessError as e:
                 print("Error:", e)
         else:
@@ -87,3 +123,9 @@ class LTspiceConverter:
             msg_box.setText("Please select a file before uploading.")
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
+
+def find_workspace_directory(target_directory_name):
+    for root, dirs, files in os.walk("/"):
+        if target_directory_name in dirs or target_directory_name in files:
+            return os.path.join(root, target_directory_name)
+    return None  # Return None if the directory is not found
