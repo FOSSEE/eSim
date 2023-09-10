@@ -17,13 +17,12 @@ class LTspiceConverter:
         
         # Check if the file is not empty
         if os.path.getsize(file_path) > 0:
-            print("con lt")
             # Get the absolute path of the current script's directory
             script_dir = os.path.dirname(os.path.abspath(__file__))
 
             # Define the relative path to parser.py from the current script's directory
             # Check the current operating system
-            if os.name == 'nt':  # 'nt' represents Windows
+            if os.name == 'nt':  # Windows
                 relative_parser_path = "LTSpiceToKiCadConverter/src/Windows"
             else:
                 relative_parser_path = "LTSpiceToKiCadConverter/src/Ubuntu"
