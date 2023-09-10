@@ -27,7 +27,7 @@ class LTspiceConverter:
             # Construct the full path to parser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
             print(f"{file_path} {conPath} {filename}")
-            command = f"cd {parser_path} && python3 sch_LTspice2Kicad.py {file_path} {conPath}/{filename}"
+            #command = f"cd {parser_path} && python3 sch_LTspice2Kicad.py {file_path} {conPath}/{filename}"
             try:
                 subprocess.run(command, shell=True, check=True)
                 # Message box with the conversion success message
