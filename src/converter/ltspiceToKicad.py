@@ -18,6 +18,30 @@ class LTspiceConverter:
         # Check if the file is not empty
         if os.path.getsize(file_path) > 0:
             print("con lt")
+            # Get the absolute path of the current script's directory
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+
+            # Define the relative path to parser.py from the current script's directory
+            relative_parser_path = "LTSpiceToKiCadConverter/src/Ubuntu"
+
+            # Construct the full path to parser.py
+            parser_path = os.path.join(script_dir, relative_parser_path)
+            print(f"{file_path} {conPath} {filename}")
+            command = f"cd {parser_path} && python3 sch_LTspice2Kicad.py {file_path} {conPath}/{filename}"
+            try:
+                subprocess.run(command, shell=True, check=True)
+                # Message box with the conversion success message
+                msg_box = QMessageBox()
+                msg_box.setIcon(QMessageBox.Information)
+                msg_box.setWindowTitle("Conversion Successful")
+                msg_box.setText("The file has been converted successfully. Do you want to include it under the project explorer?")
+                msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                msg_box.setDefaultButton(QMessageBox.Yes)
+                result = msg_box.exec_()
+                print("Conversion of LTspice to eSim schematic Successful")
+            
+            except subprocess.CalledProcessError as e:
+                print("Error:", e)
         else:
             print("File is empty. Cannot perform conversion.")
             # A message box indicating that the file is empty
