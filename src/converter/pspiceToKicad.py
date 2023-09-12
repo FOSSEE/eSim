@@ -57,11 +57,8 @@ class PspiceConverter:
                         # shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
                         # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
 
-                        # Destination folder path (where you want to copy the file)
-                        destination_folder = "/path/to/destination/folder"
-
                         # Use shutil.copy to copy the file to the destination folder
-                        shutil.copy(newFile, workspace_directory)
+                        shutil.copytree(newFile, workspace_directory)
 
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
