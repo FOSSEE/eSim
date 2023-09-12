@@ -57,8 +57,7 @@ class PspiceConverter:
                         # shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
                         # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
 
-                        # Use shutil.copy to copy the file to the destination folder
-                        shutil.copytree(newFile, workspace_directory)
+                        merge_copytree(newFile, workspace_directory)
 
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
@@ -129,3 +128,17 @@ def find_workspace_directory(target_directory_name):
         if target_directory_name in dirs or target_directory_name in files:
             return os.path.join(root, target_directory_name)
     return None  # Return None if the directory is not found
+
+def merge_copytree(src, dst, symlinks=False, ignore=None):
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+
+    for item in os.listdir(src):
+        src_item = os.path.join(src, item)
+        dst_item = os.path.join(dst, item)
+
+        if os.path.isdir(src_item):
+            merge_copytree(src_item, dst_item, symlinks, ignore)
+        else:
+            if not os.path.exists(dst_item) or os.stat(src_item).st_mtime > os.stat(dst_item).st_mtime:
+                shutil.copy2(src_item, dst_item)
