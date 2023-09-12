@@ -57,8 +57,7 @@ class PspiceConverter:
                         # shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
                         # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
 
-                        #merge_copytree(newFile, workspace_directory)
-                        shutil.copy2(newFile, workspace_directory)
+                        merge_copytree(newFile, workspace_directory,filename)
 
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
@@ -130,16 +129,26 @@ def find_workspace_directory(target_directory_name):
             return os.path.join(root, target_directory_name)
     return None  # Return None if the directory is not found
 
-def merge_copytree(src, dst, symlinks=False, ignore=None):
+def merge_copytree(src, dst, filename, symlinks=False, ignore=None):
     if not os.path.exists(dst):
         os.makedirs(dst)
+
+    # Specify the path of the folder you want to create (including nested directories)
+    folder_path = f"{dst}/{filename}"
+
+    # Create the folder and any missing parent directories
+    try:
+        os.makedirs(folder_path)
+        print(f"Folder created at {folder_path}")
+    except OSError as error:
+        print(f"Folder creation failed: {error}")
 
     for item in os.listdir(src):
         src_item = os.path.join(src, item)
         dst_item = os.path.join(dst, item)
 
         if os.path.isdir(src_item):
-            merge_copytree(src_item, dst_item, symlinks, ignore)
+            merge_copytree(src_item, folder_path, symlinks, ignore)
         else:
-            if not os.path.exists(dst_item) or os.stat(src_item).st_mtime > os.stat(dst_item).st_mtime:
-                shutil.copy2(src_item, dst_item)
+            if not os.path.exists(folder_path) or os.stat(src_item).st_mtime > os.stat(folder_path).st_mtime:
+                shutil.copy2(src_item, folder_path)
