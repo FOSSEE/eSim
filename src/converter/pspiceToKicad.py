@@ -133,10 +133,9 @@ def merge_copytree(src, dst, filename, symlinks=False, ignore=None):
     if not os.path.exists(dst):
         os.makedirs(dst)
 
-    # Specify the path of the folder you want to create (including nested directories)
-    folder_path = f"{dst}/{filename}"
+    folder_path = f"{dst}/{filename}" # Folder to be created in eSim-Workspace
 
-    # Create the folder and any missing parent directories
+    # Create the folder 
     try:
         os.makedirs(folder_path)
         print(f"Folder created at {folder_path}")
