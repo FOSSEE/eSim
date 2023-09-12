@@ -42,8 +42,8 @@ class PspiceConverter:
                     newFile = str(conPath + "/" + filename)
                     print(newFile)
                     
-                    self.app = Application(None)
-                    self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
+                    # self.app = Application(None)
+                    # self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
 
                     target_directory_name = "eSim-Workspace"
 
