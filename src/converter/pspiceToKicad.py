@@ -142,13 +142,13 @@ def merge_copytree(src, dst, filename, symlinks=False, ignore=None):
         print(f"Folder created at {folder_path}")
     except OSError as error:
         print(f"Folder creation failed: {error}")
-
+        
     for item in os.listdir(src):
         src_item = os.path.join(src, item)
-        dst_item = os.path.join(dst, item)
+        dst_item = os.path.join(folder_path, item)
 
         if os.path.isdir(src_item):
-            merge_copytree(src_item, folder_path, symlinks, ignore)
+            merge_copytree(src_item, dst_item, symlinks, ignore)
         else:
-            if not os.path.exists(folder_path) or os.stat(src_item).st_mtime > os.stat(folder_path).st_mtime:
-                shutil.copy2(src_item, folder_path)
+            if not os.path.exists(dst_item) or os.stat(src_item).st_mtime > os.stat(dst_item).st_mtime:
+                shutil.copy2(src_item, dst_item)
