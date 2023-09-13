@@ -58,7 +58,7 @@ class PspiceConverter:
                         # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
 
                         merge_copytree(newFile, workspace_directory,filename)
-                        ProjectExplorer.addTreeNode(newFile, [newFile])
+                        ProjectExplorer.addTreeNode(self,newFile, [newFile])
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
                         msg_box = QMessageBox()
