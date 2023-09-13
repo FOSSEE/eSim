@@ -2,7 +2,7 @@ import os
 import subprocess
 import shutil
 from PyQt5.QtWidgets import QMessageBox
-from frontEnd.Application import Application
+from frontEnd.ProjectExplorer import ProjectExplorer
 
 class PspiceConverter:
     def __init__(self, parent):
@@ -58,7 +58,7 @@ class PspiceConverter:
                         # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
 
                         merge_copytree(newFile, workspace_directory,filename)
-                        self.addTreeNode(newFile, [newFile])
+                        ProjectExplorer.addTreeNode(newFile, [newFile])
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
                         msg_box = QMessageBox()
