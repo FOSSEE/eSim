@@ -129,7 +129,7 @@ def find_workspace_directory(target_directory_name):
             return os.path.join(root, target_directory_name)
     return None  # Return None if the directory is not found
 
-def merge_copytree(src, dst, filename, symlinks=False, ignore=None):
+def merge_copytree(src, dst, filename):
     if not os.path.exists(dst):
         os.makedirs(dst)
 
@@ -147,7 +147,7 @@ def merge_copytree(src, dst, filename, symlinks=False, ignore=None):
         dst_item = os.path.join(folder_path, item)
 
         if os.path.isdir(src_item):
-            merge_copytree(src_item, dst_item, symlinks, ignore)
+            merge_copytree(src_item, dst_item)
         else:
             if not os.path.exists(dst_item) or os.stat(src_item).st_mtime > os.stat(dst_item).st_mtime:
                 shutil.copy2(src_item, dst_item)
