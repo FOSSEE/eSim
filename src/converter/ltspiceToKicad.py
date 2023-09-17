@@ -45,7 +45,7 @@ class LTspiceConverter:
             
                 if result == QMessageBox.Yes:
                     # Add the converted file under the project explorer
-                    newFile = str(conPath + "/" + filename)
+                    newFile = str(conPath + "/LTspice_" + filename)
                     print(newFile)
                     
                     # self.app = Application(None)
