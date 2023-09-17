@@ -39,7 +39,6 @@ class PspiceConverter:
                 if result == QMessageBox.Yes:
                     # Add the converted file under the project explorer
                     newFile = str(conPath + "/" + filename)
-                    print(newFile)
                     
                     target_directory_name = "eSim-Workspace"
 
