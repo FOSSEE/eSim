@@ -44,8 +44,7 @@ class LTspiceConverter:
                 if result == QMessageBox.Yes:
                     # Add the converted file under the project explorer
                     newFile = str(conPath + "/LTspice_" + filename)
-                    print(newFile)
-                   
+                    
                     target_directory_name = "eSim-Workspace"
 
                     # Find the eSim-Workspace directory
@@ -53,9 +52,6 @@ class LTspiceConverter:
 
                     if workspace_directory:
                         print(f"{target_directory_name} is at: {workspace_directory}")
-
-                        print("newFile, workspace_directory,filename")
-                        print(newFile, workspace_directory,filename)
 
                         merge_copytree(newFile, workspace_directory,filename)
                         print("File added under the project explorer.")
