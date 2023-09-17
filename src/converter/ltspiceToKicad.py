@@ -62,6 +62,8 @@ class LTspiceConverter:
                         # #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
                         # shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
                         # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
+                        print("newFile, workspace_directory,filename")
+                        print(newFile, workspace_directory,filename)
 
                         merge_copytree(newFile, workspace_directory,filename)
                         print("File added under the project explorer.")
@@ -138,7 +140,7 @@ def merge_copytree(src, dst, filename):
     if not os.path.exists(dst):
         os.makedirs(dst)
 
-    folder_path = f"{dst}/LTspice_{filename}" # Folder to be created in eSim-Workspace
+    folder_path = f"{dst}/{filename}" # Folder to be created in eSim-Workspace
 
     # Create the folder 
     try:
