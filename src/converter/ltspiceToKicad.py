@@ -138,7 +138,7 @@ def merge_copytree(src, dst, filename):
     if not os.path.exists(dst):
         os.makedirs(dst)
 
-    folder_path = f"{dst}/{filename}" # Folder to be created in eSim-Workspace
+    folder_path = f"{dst}/LTspice_{filename}" # Folder to be created in eSim-Workspace
 
     # Create the folder 
     try:
