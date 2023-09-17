@@ -2,7 +2,6 @@ import os
 import subprocess
 import shutil
 from PyQt5.QtWidgets import QMessageBox
-from frontEnd.ProjectExplorer import ProjectExplorer
 
 class PspiceConverter:
     def __init__(self, parent):
@@ -42,9 +41,6 @@ class PspiceConverter:
                     newFile = str(conPath + "/" + filename)
                     print(newFile)
                     
-                    # self.app = Application(None)
-                    # self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
-
                     target_directory_name = "eSim-Workspace"
 
                     # Find the eSim-Workspace directory
@@ -52,10 +48,6 @@ class PspiceConverter:
 
                     if workspace_directory:
                         print(f"{target_directory_name} is at: {workspace_directory}")
-
-                        # #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
-                        # shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
-                        # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
 
                         merge_copytree(newFile, workspace_directory,filename)
                         print("File added under the project explorer.")
@@ -65,7 +57,6 @@ class PspiceConverter:
                         msg_box.setWindowTitle("Added Successfully")
                         msg_box.setText("File added under the project explorer successfully.")
                         result = msg_box.exec_()
-                        #QtWidgets.QMainWindow.close(QWidget)
 
                     else:
                         print(f"{target_directory_name} directory not found.")
