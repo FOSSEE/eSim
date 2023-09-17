@@ -45,11 +45,11 @@ class LTspiceConverter:
             
                 if result == QMessageBox.Yes:
                     # Add the converted file under the project explorer
-                    newFile = str(conPath + "/LTspice_" + filename)
+                    newFile = str(conPath + "/" + filename)
                     print(newFile)
                     
-                    self.app = Application(None)
-                    self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
+                    # self.app = Application(None)
+                    # self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
 
                     target_directory_name = "eSim-Workspace"
 
@@ -59,10 +59,11 @@ class LTspiceConverter:
                     if workspace_directory:
                         print(f"{target_directory_name} is at: {workspace_directory}")
 
-                        #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
-                        shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
-                        shutil.copytree(newFile, f"{target_directory_name}/{filename}")
+                        # #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
+                        # shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
+                        # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
 
+                        merge_copytree(newFile, workspace_directory,filename)
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
                         msg_box = QMessageBox()
@@ -132,3 +133,26 @@ def find_workspace_directory(target_directory_name):
         if target_directory_name in dirs or target_directory_name in files:
             return os.path.join(root, target_directory_name)
     return None  # Return None if the directory is not found
+
+def merge_copytree(src, dst, filename):
+    if not os.path.exists(dst):
+        os.makedirs(dst)
+
+    folder_path = f"{dst}/{filename}" # Folder to be created in eSim-Workspace
+
+    # Create the folder 
+    try:
+        os.makedirs(folder_path)
+        print(f"Folder created at {folder_path}")
+    except OSError as error:
+        print(f"Folder creation failed: {error}")
+        
+    for item in os.listdir(src):
+        src_item = os.path.join(src, item)
+        dst_item = os.path.join(folder_path, item)
+
+        if os.path.isdir(src_item):
+            merge_copytree(src_item, dst_item)
+        else:
+            if not os.path.exists(dst_item) or os.stat(src_item).st_mtime > os.stat(dst_item).st_mtime:
+                shutil.copy2(src_item, dst_item)
