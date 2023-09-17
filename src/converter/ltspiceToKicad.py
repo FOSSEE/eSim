@@ -1,9 +1,7 @@
 import os
 import subprocess
 import shutil
-from PyQt5.QtWidgets import QFileDialog, QMessageBox
-from PyQt5 import QtWidgets
-from frontEnd.Application import Application
+from PyQt5.QtWidgets import QMessageBox
 
 class LTspiceConverter:
     def __init__(self, parent):
@@ -29,7 +27,7 @@ class LTspiceConverter:
 
             # Construct the full path to parser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
-            #print(f"{file_path} {conPath} {filename}")
+            
             command = f"cd {parser_path} && python3 sch_LTspice2Kicad.py {file_path}"
             try:
                 subprocess.run(command, shell=True, check=True)
@@ -47,10 +45,7 @@ class LTspiceConverter:
                     # Add the converted file under the project explorer
                     newFile = str(conPath + "/LTspice_" + filename)
                     print(newFile)
-                    
-                    # self.app = Application(None)
-                    # self.app.obj_Mainview.obj_projectExplorer.addTreeNode(newFile, [newFile])
-
+                   
                     target_directory_name = "eSim-Workspace"
 
                     # Find the eSim-Workspace directory
@@ -59,9 +54,6 @@ class LTspiceConverter:
                     if workspace_directory:
                         print(f"{target_directory_name} is at: {workspace_directory}")
 
-                        # #shutil.copytree(newFile, f"/home/ubuntus/eSim-Workspace/{filename}") 
-                        # shutil.rmtree(f"{target_directory_name}/{filename}", ignore_errors=True)
-                        # shutil.copytree(newFile, f"{target_directory_name}/{filename}")
                         print("newFile, workspace_directory,filename")
                         print(newFile, workspace_directory,filename)
 
