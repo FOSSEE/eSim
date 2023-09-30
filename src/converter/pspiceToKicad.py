@@ -113,10 +113,25 @@ class PspiceConverter:
             msg_box.exec_()
 
 def find_workspace_directory(target_directory_name):
-    for root, dirs, files in os.walk("/"):
+    # Open the file in read mode
+    with open('.esim/workspace.txt', 'r') as file:
+        # Read the content of the file
+        file_content = file.read()
+
+        # Split the content into lines and find the line containing 'eSim'
+        lines = file_content.splitlines()
+        for line in lines:
+            if 'eSim' in line:
+                esim_path = line
+                print('Path to eSim folder:', esim_path)
+                return esim_path
+        else:
+            print('eSim folder not found in the file.')
+
+    '''for root, dirs, files in os.walk("/"):
         if target_directory_name in dirs or target_directory_name in files:
             return os.path.join(root, target_directory_name)
-    return None  # Return None if the directory is not found
+    return None  # Return None if the directory is not found'''
 
 def merge_copytree(src, dst, filename):
     if not os.path.exists(dst):
