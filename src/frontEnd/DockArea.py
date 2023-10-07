@@ -195,6 +195,7 @@ class DockArea(QtWidgets.QMainWindow):
 
         self.pspice_converter = PspiceConverter(self)
         self.ltspice_converter = LTspiceConverter(self)
+        self.pspiceLib_converter = PspiceLibConverter(self)
 
         upload_button2 = QPushButton("Convert PSpice library")
         upload_button2.setFixedSize(180, 30)
