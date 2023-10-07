@@ -219,7 +219,7 @@ class DockArea(QtWidgets.QMainWindow):
         browse_button1 = QPushButton("Browse lib")
         browse_button1.setFixedSize(110, 30)
         browse_button1.clicked.connect(lambda: browse_path(self,lib_path_text_box))
-        lib_path_layout.addWidget(browse_button)
+        lib_path_layout.addWidget(browse_button1)
 
         self.eConLayout.addLayout(lib_path_layout)
 
