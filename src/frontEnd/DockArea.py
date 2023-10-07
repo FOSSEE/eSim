@@ -216,6 +216,11 @@ class DockArea(QtWidgets.QMainWindow):
         lib_path_layout.setAlignment(Qt.AlignCenter)
         lib_path_layout.addWidget(lib_path_text_box)
 
+        browse_button1 = QPushButton("Browse lib")
+        browse_button1.setFixedSize(110, 30)
+        browse_button1.clicked.connect(lambda: browse_path(self,lib_path_text_box))
+        lib_path_layout.addWidget(browse_button)
+
         self.eConLayout.addLayout(lib_path_layout)
 
         # Add the description HTML content
