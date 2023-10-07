@@ -176,6 +176,7 @@ class DockArea(QtWidgets.QMainWindow):
         self.eConLayout = QVBoxLayout()  # QVBoxLayout for the main layout
 
         file_path_layout = QHBoxLayout()  # QHBoxLayout for file path line
+        lib_path_layout = QHBoxLayout()
 
         file_path_text_box = QLineEdit()
         file_path_text_box.setFixedHeight(30)
@@ -205,13 +206,15 @@ class DockArea(QtWidgets.QMainWindow):
         upload_button.clicked.connect(lambda: self.ltspice_converter.upload_file_LTspice(file_path_text_box.text()))
         button_layout.addWidget(upload_button)
 
-        # self.convert_button = QPushButton("Convert Schematics to eSim")
-        # self.convert_button.setFixedSize(190, 30)
-        # self.convert_button.setEnabled(False)
-        # button_layout.addWidget(self.convert_button)
         self.eConLayout.addLayout(button_layout)
 
         self.eConWidget.setLayout(self.eConLayout)
+
+        lib_path_text_box = QLineEdit()
+        lib_path_text_box.setFixedHeight(30)
+        lib_path_text_box.setFixedWidth(800)
+        lib_path_layout.setAlignment(Qt.AlignCenter)
+        lib_path_layout.addWidget(lib_path_text_box)
 
         # Add the description HTML content
         description_html = """
