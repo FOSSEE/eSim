@@ -216,6 +216,8 @@ class DockArea(QtWidgets.QMainWindow):
         lib_path_layout.setAlignment(Qt.AlignCenter)
         lib_path_layout.addWidget(lib_path_text_box)
 
+        self.eConLayout.addLayout(lib_path_layout)
+
         # Add the description HTML content
         description_html = """
             <html>
