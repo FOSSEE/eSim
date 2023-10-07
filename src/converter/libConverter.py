@@ -1,6 +1,5 @@
 import os
 import subprocess
-import shutil
 from PyQt5.QtWidgets import QMessageBox
 
 class PspiceLibConverter:
@@ -23,46 +22,15 @@ class PspiceLibConverter:
 
             # Construct the full path to parser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
-            command = f"cd {parser_path} && python3 parser.py {file_path} {conPath}/{filename}"
+            command = f"cd {parser_path} && python3 libParser.py {file_path} {conPath}/{filename}"
             try:
                 subprocess.run(command, shell=True, check=True)
                 # Message box with the conversion success message
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Information)
                 msg_box.setWindowTitle("Conversion Successful")
-                msg_box.setText("The file has been converted successfully. Do you want to include it under the project explorer?")
-                msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-                msg_box.setDefaultButton(QMessageBox.Yes)
-                result = msg_box.exec_()
+                msg_box.setText("The file has been converted successfully.")
                 print("Conversion of Pspice to eSim schematic Successful")
-
-                if result == QMessageBox.Yes:
-                    # Add the converted file under the project explorer
-                    newFile = str(conPath + "/" + filename)
-                    
-                    target_directory_name = "eSim-Workspace"
-
-                    # Find the eSim-Workspace directory
-                    workspace_directory = find_workspace_directory(target_directory_name)
-
-                    if workspace_directory:
-                        print(f"{target_directory_name} is at: {workspace_directory}")
-
-                        merge_copytree(newFile, workspace_directory,filename)
-                        print("File added under the project explorer.")
-                        # Message box with the Added Successfully message
-                        msg_box = QMessageBox()
-                        msg_box.setIcon(QMessageBox.Information)
-                        msg_box.setWindowTitle("Added Successfully")
-                        msg_box.setText("File added under the project explorer successfully.")
-                        result = msg_box.exec_()
-
-                    else:
-                        print(f"{target_directory_name} directory not found.")
-
-                else:
-                    # User chose not to add the file
-                    print("File not added under the project explorer.")
 
             except subprocess.CalledProcessError as e:
                 print("Error:", e)
@@ -111,32 +79,3 @@ class PspiceLibConverter:
             msg_box.setText("Please select a file before uploading.")
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
-
-def find_workspace_directory(target_directory_name):
-    for root, dirs, files in os.walk("/"):
-        if target_directory_name in dirs or target_directory_name in files:
-            return os.path.join(root, target_directory_name)
-    return None  # Return None if the directory is not found
-
-def merge_copytree(src, dst, filename):
-    if not os.path.exists(dst):
-        os.makedirs(dst)
-
-    folder_path = f"{dst}/{filename}" # Folder to be created in eSim-Workspace
-
-    # Create the folder 
-    try:
-        os.makedirs(folder_path)
-        print(f"Folder created at {folder_path}")
-    except OSError as error:
-        print(f"Folder creation failed: {error}")
-        
-    for item in os.listdir(src):
-        src_item = os.path.join(src, item)
-        dst_item = os.path.join(folder_path, item)
-
-        if os.path.isdir(src_item):
-            merge_copytree(src_item, dst_item)
-        else:
-            if not os.path.exists(dst_item) or os.stat(src_item).st_mtime > os.stat(dst_item).st_mtime:
-                shutil.copy2(src_item, dst_item)
