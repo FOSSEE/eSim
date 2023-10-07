@@ -196,6 +196,11 @@ class DockArea(QtWidgets.QMainWindow):
         self.pspice_converter = PspiceConverter(self)
         self.ltspice_converter = LTspiceConverter(self)
 
+        upload_button2 = QPushButton("Convert Pspice schematics")
+        upload_button2.setFixedSize(180, 30)
+        upload_button2.clicked.connect(lambda: self.pspice_converter.upload_file_Pspice(file_path_text_box.text()))
+        button_layout.addWidget(upload_button2)
+
         upload_button1 = QPushButton("Convert Pspice schematics")
         upload_button1.setFixedSize(180, 30)
         upload_button1.clicked.connect(lambda: self.pspice_converter.upload_file_Pspice(file_path_text_box.text()))
@@ -210,18 +215,18 @@ class DockArea(QtWidgets.QMainWindow):
 
         self.eConWidget.setLayout(self.eConLayout)
 
-        lib_path_text_box = QLineEdit()
-        lib_path_text_box.setFixedHeight(30)
-        lib_path_text_box.setFixedWidth(800)
-        lib_path_layout.setAlignment(Qt.AlignCenter)
-        lib_path_layout.addWidget(lib_path_text_box)
+        # lib_path_text_box = QLineEdit()
+        # lib_path_text_box.setFixedHeight(30)
+        # lib_path_text_box.setFixedWidth(800)
+        # lib_path_layout.setAlignment(Qt.AlignCenter)
+        # lib_path_layout.addWidget(lib_path_text_box)
 
-        browse_button1 = QPushButton("Browse lib")
-        browse_button1.setFixedSize(110, 30)
-        browse_button1.clicked.connect(lambda: browse_path(self,lib_path_text_box))
-        lib_path_layout.addWidget(browse_button1)
+        # browse_button1 = QPushButton("Browse lib")
+        # browse_button1.setFixedSize(110, 30)
+        # browse_button1.clicked.connect(lambda: browse_path(self,lib_path_text_box))
+        # lib_path_layout.addWidget(browse_button1)
 
-        self.eConLayout.addLayout(lib_path_layout)
+        # self.eConLayout.addLayout(lib_path_layout)
 
         # Add the description HTML content
         description_html = """
