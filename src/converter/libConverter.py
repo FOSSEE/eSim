@@ -23,8 +23,8 @@ class PspiceLibConverter:
             # Construct the full path to libParser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
             print(parser_path)
-            command = f"cd {parser_path} && python3 libParser.py {file_path}"
-            print(f"cd {parser_path} && python3 libParser.py {file_path}")
+            command = f"cd {parser_path} ; python3 libParser.py {file_path}"
+            print(f"cd {parser_path} ; python3 libParser.py {file_path}")
             try:
                 subprocess.run(command, shell=True, check=True)
                 # Message box with the conversion success message
