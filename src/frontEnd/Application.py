@@ -253,7 +253,7 @@ class Application(QtWidgets.QMainWindow):
         self.omoptim.triggered.connect(self.open_OMoptim)
 
         self.conToeSim = QtWidgets.QAction(
-            QtGui.QIcon(init_path + 'images/esim_text.png'),
+            QtGui.QIcon(init_path + 'images/icon.png'),
             '<b>Schematics converter</b>', self
         )
         self.conToeSim.triggered.connect(self.open_conToeSim)
