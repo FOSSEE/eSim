@@ -32,7 +32,7 @@ class PspiceLibConverter:
                 msg_box.setWindowTitle("Conversion Successful")
                 msg_box.setText("The file has been converted successfully.")
                 msg_box.exec()
-                print("Conversion of Pspice to eSim schematic Successful")
+                print("Conversion of Pspice library is Successful")
 
             except subprocess.CalledProcessError as e:
                 print("Error:", e)
