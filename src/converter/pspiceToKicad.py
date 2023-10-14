@@ -17,6 +17,8 @@ class PspiceConverter:
             # Read the workspace directory from the workspace.txt file
             with open(workspace_file_path, 'r') as file:
                 workspace_directory = file.read().strip()  # Remove any leading/trailing whitespaces
+            # Split the string by spaces and select the last element
+            workspace_directory = workspace_directory.split()[-1]
             return workspace_directory
 
         return None  # Return None if the hidden folder or the workspace file is not found
@@ -53,8 +55,7 @@ class PspiceConverter:
                     # Add the converted file under the project explorer
                     newFile = str(conPath + "/" + filename)
                     workspace_directory = self.get_workspace_directory()
-                    # Split the string by spaces and select the last element
-                    workspace_directory = workspace_directory.split()[-1]
+                    
 
                     if workspace_directory:
                         print(f"Workspace directory found: {workspace_directory}")
