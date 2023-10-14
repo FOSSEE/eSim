@@ -69,7 +69,6 @@ class PspiceConverter:
                         result = msg_box.exec_()
                     else:
                         print("Workspace directory not found.")
-                        # Handle the case when the workspace directory is not found
 
                 else:
                     # User chose not to add the file
