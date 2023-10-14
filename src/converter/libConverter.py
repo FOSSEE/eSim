@@ -20,7 +20,7 @@ class PspiceLibConverter:
             # Define the relative path to parser.py from the current script's directory
             relative_parser_path = "schematic_converters/lib/PythonLib"
 
-            # Construct the full path to parser.py
+            # Construct the full path to libParser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
             print(parser_path)
             command = f"cd {parser_path} && python3 libParser.py {file_path}"
