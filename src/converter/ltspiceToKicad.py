@@ -7,6 +7,22 @@ class LTspiceConverter:
     def __init__(self, parent):
         self.parent = parent
 
+    def get_workspace_directory(self):
+        # Path to the hidden folder and the workspace file
+        hidden_folder_path = os.path.join(os.path.expanduser('~'), '.esim')
+        workspace_file_path = os.path.join(hidden_folder_path, 'workspace.txt')
+
+        # Check if the hidden folder and the workspace file exist
+        if os.path.exists(hidden_folder_path) and os.path.exists(workspace_file_path):
+            # Read the workspace directory from the workspace.txt file
+            with open(workspace_file_path, 'r') as file:
+                workspace_directory = file.read().strip()  # Remove any leading/trailing whitespaces
+            # Split the string by spaces and select the last element
+            workspace_directory = workspace_directory.split()[-1]
+            return workspace_directory
+
+        return None  # Return None if the hidden folder or the workspace file is not found
+
     def convert(self, file_path):
         
         # Get the base name of the file without the extension
@@ -44,15 +60,11 @@ class LTspiceConverter:
                 if result == QMessageBox.Yes:
                     # Add the converted file under the project explorer
                     newFile = str(conPath + "/LTspice_" + filename)
+                    workspace_directory = self.get_workspace_directory()
                     
-                    target_directory_name = "eSim-Workspace"
-
-                    # Find the eSim-Workspace directory
-                    workspace_directory = find_workspace_directory(target_directory_name)
 
                     if workspace_directory:
-                        print(f"{target_directory_name} is at: {workspace_directory}")
-
+                        print(f"Workspace directory found: {workspace_directory}")
                         merge_copytree(newFile, workspace_directory,filename)
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
@@ -64,7 +76,7 @@ class LTspiceConverter:
                         #QtWidgets.QMainWindow.close(QWidget)
 
                     else:
-                        print(f"{target_directory_name} directory not found.")
+                        print("Workspace directory not found.")
 
                 else:
                     # User chose not to add the file
