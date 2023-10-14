@@ -7,8 +7,21 @@ class PspiceConverter:
     def __init__(self, parent):
         self.parent = parent
 
+    def get_workspace_directory(self):
+        # Path to the hidden folder and the workspace file
+        hidden_folder_path = os.path.join(os.path.expanduser('~'), '.esim')
+        workspace_file_path = os.path.join(hidden_folder_path, 'workspace.txt')
+
+        # Check if the hidden folder and the workspace file exist
+        if os.path.exists(hidden_folder_path) and os.path.exists(workspace_file_path):
+            # Read the workspace directory from the workspace.txt file
+            with open(workspace_file_path, 'r') as file:
+                workspace_directory = file.read().strip()  # Remove any leading/trailing whitespaces
+            return workspace_directory
+
+        return None  # Return None if the hidden folder or the workspace file is not found
+
     def convert(self, file_path):
-        
         # Get the base name of the file without the extension
         filename = os.path.splitext(os.path.basename(file_path))[0]
         conPath = os.path.dirname(file_path)
@@ -39,16 +52,11 @@ class PspiceConverter:
                 if result == QMessageBox.Yes:
                     # Add the converted file under the project explorer
                     newFile = str(conPath + "/" + filename)
-                    
-                    target_directory_name = "eSim-Workspace"
-
-                    # Find the eSim-Workspace directory
-                    workspace_directory = find_workspace_directory(target_directory_name)
+                    workspace_directory = self.get_workspace_directory()
 
                     if workspace_directory:
-                        print(f"{target_directory_name} is at: {workspace_directory}")
-
-                        merge_copytree(newFile, workspace_directory,filename)
+                        print(f"Workspace directory found: {workspace_directory}")
+                        merge_copytree(newFile, workspace_directory, filename)
                         print("File added under the project explorer.")
                         # Message box with the Added Successfully message
                         msg_box = QMessageBox()
@@ -56,9 +64,9 @@ class PspiceConverter:
                         msg_box.setWindowTitle("Added Successfully")
                         msg_box.setText("File added under the project explorer successfully.")
                         result = msg_box.exec_()
-
                     else:
-                        print(f"{target_directory_name} directory not found.")
+                        print("Workspace directory not found.")
+                        # Handle the case when the workspace directory is not found
 
                 else:
                     # User chose not to add the file
@@ -112,12 +120,6 @@ class PspiceConverter:
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
 
-def find_workspace_directory(target_directory_name):
-    for root, dirs, files in os.walk("/"):
-        if target_directory_name in dirs or target_directory_name in files:
-            return os.path.join(root, target_directory_name)
-    return None  # Return None if the directory is not found
-
 def merge_copytree(src, dst, filename):
     if not os.path.exists(dst):
         os.makedirs(dst)
@@ -130,13 +132,13 @@ def merge_copytree(src, dst, filename):
         print(f"Folder created at {folder_path}")
     except OSError as error:
         print(f"Folder creation failed: {error}")
-        
+
     for item in os.listdir(src):
         src_item = os.path.join(src, item)
         dst_item = os.path.join(folder_path, item)
 
         if os.path.isdir(src_item):
-            merge_copytree(src_item, dst_item)
+            merge_copytree(src_item, dst_item, filename)
         else:
             if not os.path.exists(dst_item) or os.stat(src_item).st_mtime > os.stat(dst_item).st_mtime:
                 shutil.copy2(src_item, dst_item)
