@@ -53,6 +53,8 @@ class PspiceConverter:
                     # Add the converted file under the project explorer
                     newFile = str(conPath + "/" + filename)
                     workspace_directory = self.get_workspace_directory()
+                    # Split the string by spaces and select the last element
+                    workspace_directory = workspace_directory.split()[-1]
 
                     if workspace_directory:
                         print(f"Workspace directory found: {workspace_directory}")
