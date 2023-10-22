@@ -430,3 +430,33 @@ class ProjectExplorer(QtWidgets.QWidget):
                         'contain space between them'
                     )
                     msg.exec_()
+
+    def addFolderExternally(self, folder_path):
+        """
+        Adds a folder to the project explorer from an external source.
+        Args:
+            folder_path (str): Path to the folder to be added.
+        """
+        project_path = self.obj_appconfig.current_project["ProjectName"]
+        folder_name = os.path.basename(folder_path)
+
+        # Check if the folder already exists in the project
+        if folder_name in self.obj_appconfig.project_explorer[project_path]:
+            print("Folder already exists in the project.")
+            return
+
+        # Update project_explorer dictionary
+        self.obj_appconfig.project_explorer[project_path].append(folder_name)
+        json.dump(self.obj_appconfig.project_explorer, open(
+            self.obj_appconfig.dictPath["path"], 'w'))
+
+        # Update the project explorer tree
+        parent_node = None
+        for i in range(self.treewidget.topLevelItemCount()):
+            item = self.treewidget.topLevelItem(i)
+            if item.text(1) == project_path:
+                parent_node = item
+                break
+
+        if parent_node:
+            QtWidgets.QTreeWidgetItem(parent_node, [folder_name, folder_path])
