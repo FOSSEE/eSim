@@ -2,6 +2,7 @@ import os
 import subprocess
 import shutil
 from PyQt5.QtWidgets import QMessageBox
+from frontEnd import ProjectExplorer
 
 class PspiceConverter:
     def __init__(self, parent):
@@ -61,6 +62,17 @@ class PspiceConverter:
                         print(f"Workspace directory found: {workspace_directory}")
                         merge_copytree(newFile, workspace_directory, filename)
                         print("File added under the project explorer.")
+
+                        # Create an instance of ProjectExplorer
+                        project_explorer_instance = ProjectExplorer()
+
+                        # Specify the folder path you want to open
+                        folder_path = newFile
+
+                        # Call the openProject method and pass the folder path
+                        project_explorer_instance.openProject(folder_path)
+
+
                         # Message box with the Added Successfully message
                         msg_box = QMessageBox()
                         msg_box.setIcon(QMessageBox.Information)
