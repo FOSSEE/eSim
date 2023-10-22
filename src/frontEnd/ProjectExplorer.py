@@ -126,12 +126,15 @@ class ProjectExplorer(QtWidgets.QWidget):
 
         menu.exec_(self.treewidget.viewport().mapToGlobal(position))
 
-    def openProject(self):
-        self.indexItem = self.treewidget.currentIndex()
-        filename = str(self.indexItem.data())
-        self.filePath = str(
-            self.indexItem.sibling(self.indexItem.row(), 1).data()
-        )
+    def openProject(self, folder_path=None):
+        if folder_path:
+            self.filePath = folder_path
+        else:
+            self.indexItem = self.treewidget.currentIndex()
+            filename = str(self.indexItem.data())
+            self.filePath = str(
+                self.indexItem.sibling(self.indexItem.row(), 1).data()
+            )
 
         if (os.path.isfile(str(self.filePath))):
             self.fopen = open(str(self.filePath), 'r')
