@@ -63,14 +63,9 @@ class PspiceConverter:
                         merge_copytree(newFile, workspace_directory, filename)
                         print("File added under the project explorer.")
 
-                        # Create an instance of ProjectExplorer
-                        project_explorer_instance = ProjectExplorer()
-
-                        # Specify the folder path you want to open
+                        # Assuming you have an instance of ProjectExplorer called project_explorer_instance
                         folder_path = newFile
-
-                        # Call the openProject method and pass the folder path
-                        project_explorer_instance.openProject(folder_path)
+                        ProjectExplorer.addFolderToExplorer(folder_path)
 
 
                         # Message box with the Added Successfully message
