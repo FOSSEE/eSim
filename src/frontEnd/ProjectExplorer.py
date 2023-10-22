@@ -196,6 +196,26 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.fopen.close()
         self.textwindow.close()
 
+    def addFolderToExplorer(self, folder_path):
+        """
+        This method allows adding a folder to the project explorer tree programmatically.
+
+        Args:
+            folder_path (str): The path of the folder to be added to the project explorer.
+        """
+        folder_name = os.path.basename(folder_path)
+        if folder_name not in self.obj_appconfig.project_explorer:
+            # Update the project explorer dictionary
+            self.obj_appconfig.project_explorer[folder_path] = os.listdir(folder_path)
+
+            # Save the updated project explorer dictionary to disk
+            json.dump(self.obj_appconfig.project_explorer, open(self.obj_appconfig.dictPath["path"], 'w'))
+
+            # Add the selected folder to the project explorer tree
+            self.addTreeNode(folder_path, self.obj_appconfig.project_explorer[folder_path])
+
+
+
     def removeProject(self):
         """
         This function removes the project in explorer area by right \
