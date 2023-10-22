@@ -63,10 +63,7 @@ class PspiceConverter:
                         merge_copytree(newFile, workspace_directory, filename)
                         print("File added under the project explorer.")
 
-                        # Assuming you have an instance of ProjectExplorer called project_explorer_instance
-                        folder_path = newFile
-                        ProjectExplorer.addFolderToExplorer(folder_path)
-
+                        
 
                         # Message box with the Added Successfully message
                         msg_box = QMessageBox()
