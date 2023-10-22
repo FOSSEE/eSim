@@ -126,15 +126,12 @@ class ProjectExplorer(QtWidgets.QWidget):
 
         menu.exec_(self.treewidget.viewport().mapToGlobal(position))
 
-    def openProject(self, folder_path=None):
-        if folder_path:
-            self.filePath = folder_path
-        else:
-            self.indexItem = self.treewidget.currentIndex()
-            filename = str(self.indexItem.data())
-            self.filePath = str(
-                self.indexItem.sibling(self.indexItem.row(), 1).data()
-            )
+    def openProject(self):
+        self.indexItem = self.treewidget.currentIndex()
+        filename = str(self.indexItem.data())
+        self.filePath = str(
+            self.indexItem.sibling(self.indexItem.row(), 1).data()
+        )
 
         if (os.path.isfile(str(self.filePath))):
             self.fopen = open(str(self.filePath), 'r')
@@ -195,26 +192,6 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.fopen.write(self.text.toPlainText())
         self.fopen.close()
         self.textwindow.close()
-
-    def addFolderToExplorer(self, folder_path):
-        """
-        This method allows adding a folder to the project explorer tree programmatically.
-
-        Args:
-            folder_path (str): The path of the folder to be added to the project explorer.
-        """
-        folder_name = os.path.basename(folder_path)
-        if folder_name not in self.obj_appconfig.project_explorer:
-            # Update the project explorer dictionary
-            self.obj_appconfig.project_explorer[folder_path] = os.listdir(folder_path)
-
-            # Save the updated project explorer dictionary to disk
-            json.dump(self.obj_appconfig.project_explorer, open(self.obj_appconfig.dictPath["path"], 'w'))
-
-            # Add the selected folder to the project explorer tree
-            self.addTreeNode(folder_path, self.obj_appconfig.project_explorer[folder_path])
-
-
 
     def removeProject(self):
         """
