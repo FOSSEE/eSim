@@ -1,0 +1,47 @@
+* c:\users\arpit\coding\esim_projects\cd4013\cd4013.cir
+
+.include cmos_tg.sub
+.include CMOS_inverter.sub
+.include cmos_buffer.sub
+.include cmos__nand.sub
+v1 vdd gnd  dc 5
+v2  reset gnd pulse(0 0 0 0 0 10n 200n)
+v3  din gnd pulse(0 5 0 0 0 25n 50n)
+v4  set gnd pulse(0 5 0 0 0 10n 400n)
+v5  clk gnd pulse(0 5 0 0 0 7.5n 15n)
+* u4  reset plot_v1
+* u1  din plot_v1
+* u3  set plot_v1
+* u2  clk plot_v1
+* u6  q plot_v1
+* u5  qbar plot_v1
+x2 reset vdd gnd net-_x14-pad1_ CMOS_inverter
+x1 set vdd gnd net-_x1-pad4_ CMOS_inverter
+x4 net-_x10-pad2_ vdd gnd net-_x10-pad3_ CMOS_inverter
+x5 net-_x11-pad4_ vdd gnd net-_x13-pad1_ CMOS_inverter
+x3 clk vdd gnd net-_x10-pad2_ CMOS_inverter
+x6 din net-_x10-pad3_ net-_x10-pad2_ net-_x6-pad4_ cmos_tg
+x8 net-_x8-pad1_ net-_x10-pad2_ net-_x10-pad3_ net-_x6-pad4_ cmos_tg
+x10 net-_x10-pad1_ net-_x10-pad2_ net-_x10-pad3_ net-_x10-pad4_ cmos_tg
+x15 net-_x10-pad1_ net-_x10-pad3_ net-_x10-pad2_ net-_x14-pad4_ cmos_tg
+x7 net-_x14-pad1_ vdd gnd net-_x10-pad4_ net-_x6-pad4_ cmos__nand
+x9 net-_x10-pad4_ vdd gnd net-_x8-pad1_ net-_x1-pad4_ cmos__nand
+x11 net-_x10-pad1_ vdd gnd net-_x11-pad4_ net-_x1-pad4_ cmos__nand
+x14 net-_x14-pad1_ vdd gnd net-_x14-pad4_ net-_x11-pad4_ cmos__nand
+x13 net-_x13-pad1_ vdd gnd q cmos_buffer
+x12 net-_x10-pad1_ vdd gnd qbar cmos_buffer
+.tran 0.1e-09 400e-09 0e-09
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(reset)
+plot v(din)
+plot v(set)
+plot v(clk)
+plot v(q)
+plot v(qbar)
+.endc
+.end
