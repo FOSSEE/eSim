@@ -18,7 +18,7 @@ class PspiceLibConverter:
             script_dir = os.path.dirname(os.path.abspath(__file__))
 
             # Define the relative path to parser.py from the current script's directory
-            relative_parser_path = "schematic_converters/lib/PythonLib"
+            relative_parser_path = "LTSpiceToKiCadConverter/src/Ubuntu"
 
             # Construct the full path to libParser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
