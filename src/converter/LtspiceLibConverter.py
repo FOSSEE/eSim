@@ -60,7 +60,7 @@ class LTspiceLibConverter:
                 msg_box.exec_()
                 return
             
-            if ".slb" in file_path:
+            if ".asy" in file_path:
                 print(file_path)
                 self.convert(file_path)
             else:
