@@ -14,6 +14,7 @@ from PyQt5.QtCore import Qt
 import os
 from converter.pspiceToKicad import PspiceConverter
 from converter.ltspiceToKicad import LTspiceConverter
+from converter.LtspiceLibConverter import LTspiceLibConverter
 from converter.libConverter import PspiceLibConverter
 from converter.browseSchematics import browse_path
 dockList = ['Welcome']
@@ -197,6 +198,7 @@ class DockArea(QtWidgets.QMainWindow):
         self.pspice_converter = PspiceConverter(self)
         self.ltspice_converter = LTspiceConverter(self)
         self.pspiceLib_converter = PspiceLibConverter(self)
+        self.ltspiceLib_converter = LTspiceLibConverter(self)
 
         upload_button2 = QPushButton("Convert PSpice library")
         upload_button2.setFixedSize(180, 30)
@@ -207,6 +209,11 @@ class DockArea(QtWidgets.QMainWindow):
         upload_button1.setFixedSize(180, 30)
         upload_button1.clicked.connect(lambda: self.pspice_converter.upload_file_Pspice(file_path_text_box.text()))
         button_layout.addWidget(upload_button1)
+
+        upload_button3 = QPushButton("Convert LTspice library")
+        upload_button3.setFixedSize(184, 30)
+        upload_button3.clicked.connect(lambda: self.ltspiceLib_converter.upload_file_LTspice(file_path_text_box.text()))
+        button_layout.addWidget(upload_button3)
 
         upload_button = QPushButton("Convert LTspice schematics")
         upload_button.setFixedSize(184, 30)
