@@ -125,7 +125,7 @@ class PspiceConverter:
             msg_box.setText("Please select a file before uploading.")
             msg_box.setStandardButtons(QMessageBox.Ok)
             msg_box.exec_()
-
+'''
 def merge_copytree(src, dst, filename):
     if not os.path.exists(dst):
         os.makedirs(dst)
@@ -148,3 +148,4 @@ def merge_copytree(src, dst, filename):
         else:
             if not os.path.exists(dst_item) or os.stat(src_item).st_mtime > os.stat(dst_item).st_mtime:
                 shutil.copy2(src_item, dst_item)
+'''
