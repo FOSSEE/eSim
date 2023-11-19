@@ -2,7 +2,7 @@ import os
 import subprocess
 from PyQt5.QtWidgets import QMessageBox
 
-class PspiceLibConverter:
+class LTspiceLibConverter:
     def __init__(self, parent):
         self.parent = parent
 
