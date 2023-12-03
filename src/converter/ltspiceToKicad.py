@@ -51,13 +51,20 @@ class LTspiceConverter:
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Information)
                 msg_box.setWindowTitle("Conversion Successful")
-                msg_box.setText("The file has been converted successfully. Do you want to include it under the project explorer?")
-                msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
-                msg_box.setDefaultButton(QMessageBox.Yes)
+                #msg_box.setText("The file has been converted successfully. Do you want to include it under the project explorer?")
+                #msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                #msg_box.setDefaultButton(QMessageBox.Yes)
+                if workspace_directory:
+                        print(f"Workspace directory found: {workspace_directory}")
+                        merge_copytree(newFile, workspace_directory, filename)
+                        msg_box.setText(f"The file has been converted successfully. It's in {workspace_directory} Please go to the location manually.")
+                        print("File added under the project explorer.")
+                else:
+                        print("Workspace directory not found.")
                 result = msg_box.exec_()
                 print("Conversion of LTspice to eSim schematic Successful")
             
-                if result == QMessageBox.Yes:
+                '''if result == QMessageBox.Yes:
                     # Add the converted file under the project explorer
                     newFile = str(conPath + "/LTspice_" + filename)
                     workspace_directory = self.get_workspace_directory()
@@ -80,7 +87,7 @@ class LTspiceConverter:
 
                 else:
                     # User chose not to add the file
-                    print("File not added under the project explorer.")
+                    print("File not added under the project explorer.")'''
 
             except subprocess.CalledProcessError as e:
                 print("Error:", e)
