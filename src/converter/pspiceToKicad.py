@@ -56,7 +56,7 @@ class PspiceConverter:
                 if workspace_directory:
                         print(f"Workspace directory found: {workspace_directory}")
                         merge_copytree(newFile, workspace_directory, filename)
-                        msg_box.setText(f"The file has been converted successfully.  It's in {workspace_directory}.  Please go to the location manually.")
+                        msg_box.setText(f"The file has been converted successfully.  Saved in {workspace_directory}.  Open the Project manually.")
                         print("File added under the project explorer.")
                 else:
                         print("Workspace directory not found.")
