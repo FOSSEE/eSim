@@ -54,6 +54,9 @@ class LTspiceConverter:
                 #msg_box.setText("The file has been converted successfully. Do you want to include it under the project explorer?")
                 #msg_box.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
                 #msg_box.setDefaultButton(QMessageBox.Yes)
+                # Add the converted file under the project explorer
+                newFile = str(conPath + "/LTspice_" + filename)
+                workspace_directory = self.get_workspace_directory()
                 if workspace_directory:
                         print(f"Workspace directory found: {workspace_directory}")
                         merge_copytree(newFile, workspace_directory, filename)
