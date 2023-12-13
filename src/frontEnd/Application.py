@@ -225,6 +225,12 @@ class Application(QtWidgets.QMainWindow):
         )
         self.omoptim.triggered.connect(self.open_OMoptim)
 
+        self.conToeSim = QtWidgets.QAction(
+            QtGui.QIcon(init_path + 'images/icon.png'),
+            '<b>Schematics converter</b>', self
+        )
+        self.conToeSim.triggered.connect(self.open_conToeSim)
+
         # Adding Action Widget to tool bar
         self.lefttoolbar = QtWidgets.QToolBar('Left ToolBar')
         self.addToolBar(QtCore.Qt.LeftToolBarArea, self.lefttoolbar)
@@ -237,6 +243,7 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.nghdl)
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
+        self.lefttoolbar.addAction(self.conToeSim)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
 
@@ -637,6 +644,10 @@ class Application(QtWidgets.QMainWindow):
             self.obj_appconfig.print_info(self.msgContent)
             self.msg.exec_()
 
+    def open_conToeSim(self):
+        print("Function : Schematics converter")
+        self.obj_appconfig.print_info('Schematics converter is called')
+        self.obj_Mainview.obj_dockarea.eSimConverter()
 
 # This class initialize the Main View of Application
 class MainView(QtWidgets.QWidget):
