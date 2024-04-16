@@ -51,7 +51,7 @@ Table of contents
     iv.     After the installation is completed, please download and add the following file to the esim home directory:
             https://github.com/FOSSEE/eSim/blob/master/src/frontEnd/TerminalUi.ui#L6
 
-    iv.     To uninstall eSim and all of its components, run the uninstaller "uninst-eSim.exe" located at 
+    v.     To uninstall eSim and all of its components, run the uninstaller "uninst-eSim.exe" located at 
             top-level eSim directory (where this INSTALL file can be found).
 
 
