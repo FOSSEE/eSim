@@ -1,0 +1,56 @@
+* c:\users\aditya\esim-workspace\9348\9348.cir
+
+.include 9348_PC.sub
+v2 net-_x1-pad16_ gnd  dc 5
+r1  po gnd 1000k
+r2  pe gnd 1000k
+x1 i5 i6 i7 i8 i9 i10 i11 gnd po pe i0 i1 i2 i3 i4 net-_x1-pad16_ 9348_PC
+* u2  pe plot_v1
+* u1  po plot_v1
+v1  i5 gnd pulse(0 5 0 1m 1m 6 24)
+v3  i6 gnd pulse(0 5 0 1m 1m 7 24)
+v4  i7 gnd pulse(0 5 0 1m 1m 8 24)
+v5  i8 gnd pulse(0 5 0 1m 1m 9 24)
+v6  i9 gnd pulse(0 5 0 1m 1m 10 24)
+v7  i10 gnd pulse(0 5 0 1m 1m 11 24)
+v8  i11 gnd pulse(0 5 0 1m 1m 12 24)
+v9  i0 gnd pulse(0 5 0 1m 1m 1 24)
+v10  i1 gnd pulse(0 5 0 1m 1m 2 24)
+v11  i2 gnd pulse(0 5 0 1m 1m 3 24)
+v12  i3 gnd pulse(0 5 0 1m 1m 4 24)
+v13  i4 gnd pulse(0 5 0 1m 1m 5 24)
+* u4  i6 plot_v1
+* u5  i7 plot_v1
+* u6  i8 plot_v1
+* u7  i9 plot_v1
+* u8  i10 plot_v1
+* u9  i11 plot_v1
+* u10  i0 plot_v1
+* u11  i1 plot_v1
+* u12  i2 plot_v1
+* u13  i3 plot_v1
+* u14  i4 plot_v1
+* u3  i5 plot_v1
+.tran 0.1e-00 24e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(pe)
+plot v(po)
+plot v(i6)
+plot v(i7)
+plot v(i8)
+plot v(i9)
+plot v(i10)
+plot v(i11)
+plot v(i0)
+plot v(i1)
+plot v(i2)
+plot v(i3)
+plot v(i4)
+plot v(i5)
+.endc
+.end
