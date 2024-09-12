@@ -1,0 +1,68 @@
+* c:\users\aditya\esim-workspace\sn74f521\sn74f521.cir
+
+.include SN74F521_ic.sub
+x1 oe_bar p0 q0 p1 q1 p2 q2 p3 q3 gnd p4 q4 p5 q5 p6 q6 p7 q7 out net-_v2-pad1_ SN74F521_ic
+v1  p0 gnd pulse(0 0 0 1m 1m 0 10)
+v2 net-_v2-pad1_ gnd  dc 5
+r2  out gnd 1000k
+r1  gnd oe_bar 1000k
+* u2  out plot_v1
+* u1  oe_bar plot_v1
+v3  q0 gnd pulse(0 5 0 1m 1m 5 10)
+v4  p1 gnd pulse(0 5 0 1m 1m 5 10)
+v5  q1 gnd pulse(0 5 0 1m 1m 5 10)
+v6  p2 gnd pulse(0 5 0 1m 1m 5 10)
+v7  q2 gnd pulse(0 5 0 1m 1m 5 10)
+v8  p3 gnd pulse(0 5 0 1m 1m 5 10)
+v9  q3 gnd pulse(0 5 0 1m 1m 5 10)
+v10  p4 gnd pulse(0 5 0 1m 1m 5 10)
+v11  q4 gnd pulse(0 5 0 1m 1m 5 10)
+v12  p5 gnd pulse(0 5 0 1m 1m 5 10)
+v13  q5 gnd pulse(0 5 0 1m 1m 5 10)
+v14  p6 gnd pulse(0 5 0 1m 1m 5 10)
+v15  q6 gnd pulse(0 5 0 1m 1m 5 10)
+v16  p7 gnd pulse(0 5 0 1m 1m 5 10)
+v17  q7 gnd pulse(0 5 0 1m 1m 5 10)
+* u18  q7 plot_v1
+* u17  p7 plot_v1
+* u16  q6 plot_v1
+* u15  p6 plot_v1
+* u14  q5 plot_v1
+* u13  p5 plot_v1
+* u12  q4 plot_v1
+* u11  p4 plot_v1
+* u10  q3 plot_v1
+* u9  p3 plot_v1
+* u8  q2 plot_v1
+* u7  p2 plot_v1
+* u6  q1 plot_v1
+* u5  p1 plot_v1
+* u4  q0 plot_v1
+* u3  p0 plot_v1
+.tran 0.01e-00 50e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+plot v(oe_bar)
+plot v(q7)
+plot v(p7)
+plot v(q6)
+plot v(p6)
+plot v(q5)
+plot v(p5)
+plot v(q4)
+plot v(p4)
+plot v(q3)
+plot v(p3)
+plot v(q2)
+plot v(p2)
+plot v(q1)
+plot v(p1)
+plot v(q0)
+plot v(p0)
+.endc
+.end

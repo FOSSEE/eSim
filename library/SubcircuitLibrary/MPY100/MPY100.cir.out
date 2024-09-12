@@ -1,0 +1,28 @@
+* c:\users\aditya\esim-workspace\mpy100\mpy100.cir
+
+.include MPY_100.sub
+v1 net-_x1-pad10_ gnd  dc 15
+v4 net-_x1-pad3_ gnd  dc -15
+r2  net-_r1-pad2_ vout 70k
+r1  gnd net-_r1-pad2_ 10k
+v2  v1 gnd sine(0 2 50 0 0)
+v3  v2 gnd sine(0 4 50 0 0)
+* u1  vout plot_v1
+* u2  v1 plot_v1
+* u3  v2 plot_v1
+v5  z2 gnd sine(0 0 0 0 0)
+* u4  z2 plot_v1
+x1 net-_r1-pad2_ vout net-_x1-pad3_ v1 gnd z2 gnd gnd v2 net-_x1-pad10_ MPY_100
+.tran 0.01e-03 40e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(vout)
+plot v(v1)
+plot v(v2)
+plot v(z2)
+.endc
+.end
