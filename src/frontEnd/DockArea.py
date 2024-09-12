@@ -9,8 +9,14 @@ from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
 from browser.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
+from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
+from PyQt5.QtCore import Qt
 import os
-
+from converter.pspiceToKicad import PspiceConverter
+from converter.ltspiceToKicad import LTspiceConverter
+from converter.LtspiceLibConverter import LTspiceLibConverter
+from converter.libConverter import PspiceLibConverter
+from converter.browseSchematics import browse_path
 dockList = ['Welcome']
 count = 1
 dock = {}
@@ -160,6 +166,141 @@ class DockArea(QtWidgets.QMainWindow):
             self.obj_appconfig.dock_dict[temp].append(
                 dock[dockName + str(count)]
             )
+        count = count + 1
+
+    def eSimConverter(self):
+        """This function creates a widget for eSimConverter."""
+        global count
+
+        dockName = 'Schematics Converter-'
+
+        self.eConWidget = QtWidgets.QWidget()
+        self.eConLayout = QVBoxLayout()  # QVBoxLayout for the main layout
+
+        file_path_layout = QHBoxLayout()  # QHBoxLayout for file path line
+        lib_path_layout = QHBoxLayout()
+
+        file_path_text_box = QLineEdit()
+        file_path_text_box.setFixedHeight(30)
+        file_path_text_box.setFixedWidth(800)
+        file_path_layout.setAlignment(Qt.AlignCenter)
+        file_path_layout.addWidget(file_path_text_box)
+
+        browse_button = QPushButton("Browse")
+        browse_button.setFixedSize(100, 30)
+        browse_button.clicked.connect(lambda: browse_path(self,file_path_text_box))
+        file_path_layout.addWidget(browse_button)
+
+        self.eConLayout.addLayout(file_path_layout)  # Add file path layout to main layout
+
+        button_layout = QHBoxLayout()  # QHBoxLayout for the buttons
+
+        self.pspice_converter = PspiceConverter(self)
+        self.ltspice_converter = LTspiceConverter(self)
+        self.pspiceLib_converter = PspiceLibConverter(self)
+        self.ltspiceLib_converter = LTspiceLibConverter(self)
+
+        upload_button2 = QPushButton("Convert PSpice library")
+        upload_button2.setFixedSize(180, 30)
+        upload_button2.clicked.connect(lambda: self.pspiceLib_converter.upload_file_Pspice(file_path_text_box.text()))
+        button_layout.addWidget(upload_button2)
+
+        upload_button1 = QPushButton("Convert Pspice schematics")
+        upload_button1.setFixedSize(180, 30)
+        upload_button1.clicked.connect(lambda: self.pspice_converter.upload_file_Pspice(file_path_text_box.text()))
+        button_layout.addWidget(upload_button1)
+
+        upload_button3 = QPushButton("Convert LTspice library")
+        upload_button3.setFixedSize(184, 30)
+        upload_button3.clicked.connect(lambda: self.ltspiceLib_converter.upload_file_LTspice(file_path_text_box.text()))
+        button_layout.addWidget(upload_button3)
+
+        upload_button = QPushButton("Convert LTspice schematics")
+        upload_button.setFixedSize(184, 30)
+        upload_button.clicked.connect(lambda: self.ltspice_converter.upload_file_LTspice(file_path_text_box.text()))
+        button_layout.addWidget(upload_button)
+
+        self.eConLayout.addLayout(button_layout)
+
+        self.eConWidget.setLayout(self.eConLayout)
+
+        # lib_path_text_box = QLineEdit()
+        # lib_path_text_box.setFixedHeight(30)
+        # lib_path_text_box.setFixedWidth(800)
+        # lib_path_layout.setAlignment(Qt.AlignCenter)
+        # lib_path_layout.addWidget(lib_path_text_box)
+
+        # browse_button1 = QPushButton("Browse lib")
+        # browse_button1.setFixedSize(110, 30)
+        # browse_button1.clicked.connect(lambda: browse_path(self,lib_path_text_box))
+        # lib_path_layout.addWidget(browse_button1)
+
+        # self.eConLayout.addLayout(lib_path_layout)
+
+        # Add the description HTML content
+        description_html = """
+            <html>
+                <head>
+                    <style>
+                        body {
+                            font-family: sans-serif;
+                            margin: 0px;
+                            padding: 0px;
+                            background-color: white;
+                            border: 4px solid  black;
+                            font-size: 10pt; /* Adjust the font size as needed */
+                        }
+
+                        h1{
+                            font-weight: bold;
+                            font-size: 9pt;
+                            color: #eeeeee;
+                            padding: 10px;
+                            background-color: #165982;
+                            border: 4px outset  #0E324B;
+                        }
+                    </style>
+                </head>
+
+                <body>
+                    <h1>About eSim Converter</h1>
+                    <p>
+                        <b>Pspice to eSim </b> will convert the PSpice Schematic and Library files to KiCad Schematic and
+                        Library files respectively with proper mapping of the components and the wiring. By this way one 
+                        will be able to simulate their schematics in PSpice and get the PCB layout in KiCad.</b> 
+                        <br/><br/>
+                        <b>LTspice to eSim </b> will convert symbols and schematics from LTspice to Kicad.The goal is to design and
+                        simulate under LTspice and to automatically transfer the circuit under Kicad to draw the PCB.</b>
+                    </p>
+                </body>
+            </html>
+        """
+
+        self.description_label = QLabel()
+        self.description_label.setFixedHeight(160)
+        self.description_label.setFixedWidth(950)
+        self.description_label.setAlignment(Qt.AlignBottom)
+        self.description_label.setWordWrap(True)
+        self.description_label.setText(description_html)
+        self.eConLayout.addWidget(self.description_label)  # Add the description label to the layout
+
+        self.eConWidget.setLayout(self.eConLayout)
+
+        dock[dockName + str(count)] = QtWidgets.QDockWidget(dockName + str(count))
+        dock[dockName + str(count)].setWidget(self.eConWidget)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName + str(count)])
+        self.tabifyDockWidget(dock['Welcome'], dock[dockName + str(count)])
+
+        # CSS
+        dock[dockName + str(count)].setStyleSheet(" \
+            .QWidget { border-radius: 15px; border: 1px solid gray;\
+                padding: 5px; width: 200px; height: 150px;  } \
+            ")
+
+        dock[dockName + str(count)].setVisible(True)
+        dock[dockName + str(count)].setFocus()
+        dock[dockName + str(count)].raise_()
+
         count = count + 1
 
     def modelEditor(self):
