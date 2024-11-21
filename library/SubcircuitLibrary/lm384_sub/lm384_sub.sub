@@ -1,0 +1,32 @@
+* Subcircuit lm384_sub
+.subckt lm384_sub net-_r2-pad1_ net-_q7-pad2_ net-_q1-pad1_ net-_q1-pad1_ net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad1_ net-_r5-pad2_ ? net-_q1-pad1_ net-_q1-pad1_ net-_q1-pad1_ ? net-_q11-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\lm384_sub\lm384_sub.cir
+.include PNP.lib
+.include NPN.lib
+.include D.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q2 net-_q2-pad1_ net-_q1-pad3_ net-_q2-pad3_ Q2N2907A
+q5 net-_c1-pad1_ net-_q5-pad2_ net-_q5-pad3_ Q2N2907A
+q4 net-_q4-pad1_ net-_q4-pad1_ net-_q11-pad1_ Q2N2907A
+q7 net-_q1-pad1_ net-_q7-pad2_ net-_q5-pad2_ Q2N2907A
+q3 net-_q2-pad1_ net-_q2-pad1_ net-_q1-pad1_ Q2N2222
+q6 net-_c1-pad1_ net-_q2-pad1_ net-_q1-pad1_ Q2N2222
+q11 net-_q11-pad1_ net-_d1-pad1_ net-_q11-pad3_ Q2N2222
+q12 net-_q10-pad3_ net-_q10-pad1_ net-_q1-pad1_ Q2N2222
+q9 net-_c1-pad2_ net-_c1-pad1_ net-_q1-pad1_ Q2N2222
+q8 net-_d1-pad1_ net-_q4-pad1_ net-_q11-pad1_ Q2N2907A
+q10 net-_q10-pad1_ net-_c1-pad2_ net-_q10-pad3_ Q2N2907A
+r1  net-_q1-pad1_ net-_q1-pad2_ 150k
+r4  net-_q2-pad3_ net-_q5-pad3_ 125k
+r3  net-_q2-pad3_ net-_r2-pad1_ 17.5k
+r2  net-_r2-pad1_ net-_q4-pad1_ 17.5k
+r5  net-_q5-pad3_ net-_r5-pad2_ 22.5k
+r6  net-_q1-pad1_ net-_q7-pad2_ 150k
+r7  net-_r5-pad2_ net-_q11-pad3_ 0.5
+r8  net-_q10-pad3_ net-_r5-pad2_ 0.5
+c1  net-_c1-pad1_ net-_c1-pad2_ 10pf
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d1-pad2_ net-_c1-pad2_ 1N4148
+* Control Statements
+
+.ends lm384_sub
