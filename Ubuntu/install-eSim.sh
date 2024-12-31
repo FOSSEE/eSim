@@ -16,7 +16,7 @@
 #                Sumanto Kar, Partha Singha Roy
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Thursday 29 June 2023 12:50
+#      REVISION: Tuesday 31 December 2024 17:28
 #=============================================================================
 
 # All variables goes here
@@ -54,7 +54,7 @@ function createConfigFile
     echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
     echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-    
+   
 }
 
 
@@ -129,12 +129,24 @@ function installDependency
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
-	# Update apt repository
-	echo "Updating apt index files..................."
+    # Update apt repository
+    echo "Updating apt index files..................."
     sudo apt-get update
     
     set -e      # Re-enable exit on error
     trap error_exit ERR
+    
+    echo "Instaling virtualenv......................."
+    sudo apt install python3-virtualenv
+   
+    echo "Creating virtual environment to isolate packages "
+    virtualenv $config_dir/env
+    
+    echo "Starting the virtual env..................."
+    source $config_dir/env/bin/activate
+
+    echo "Upgrading Pip.............................."
+    pip install --upgrade pip
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
@@ -167,6 +179,15 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
+   
+    echo "Installing Hdlparse......................"
+    pip3 install hdlparse
+
+    echo "Installing matplotlib................"
+    pip3 install matplotlib
+
+    echo "Installing PyQt5............."
+    pip3 install PyQt5  
 }
 
 
@@ -208,9 +229,10 @@ function copyKicadLibrary
 function createDesktopStartScript
 {    
 
-	# Generating new esim-start.sh
+    # Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
     echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
+    echo "source $config_dir/env/bin/activate" >> esim-start.sh
     echo "python3 Application.py" >> esim-start.sh
 
     # Make it executable
@@ -360,12 +382,11 @@ elif [ $option == "--uninstall" ];then
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
+	sudo rm /etc/apt/sources.list.d/kicad*
         rm -rf $HOME/.config/kicad/6.0
 
-        echo "Removing Makerchip......................."
-        pip3 uninstall -y hdlparse
-        pip3 uninstall -y makerchip-app
-        pip3 uninstall -y sandpiper-saas
+        echo "Removing Virtual env......................."
+        sudo rm -r $config_dir/env
 
         echo "Removing SKY130 PDK......................"
         sudo rm -R /usr/share/local/sky130_fd_pr
