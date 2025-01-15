@@ -1,0 +1,37 @@
+* Subcircuit MPY_100
+.subckt MPY_100 net-_r12-pad1_ net-_u1-pad2_ net-_i1-pad2_ net-_q1-pad2_ net-_q2-pad2_ net-_r8-pad1_ net-_r9-pad2_ net-_q4-pad2_ net-_q6-pad2_ net-_r2-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\mpy_100\mpy_100.cir
+.include CA3240_OP.sub
+.include D.lib
+.include NPN.lib
+q1 net-_d1-pad2_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_d2-pad2_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q4 net-_q3-pad3_ net-_q4-pad2_ net-_q4-pad3_ Q2N2222
+q6 net-_q6-pad1_ net-_q6-pad2_ net-_q6-pad3_ Q2N2222
+q9 net-_q5-pad1_ net-_q9-pad2_ net-_q9-pad3_ Q2N2222
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d1-pad1_ net-_d2-pad2_ 1N4148
+q3 net-_q10-pad1_ net-_d2-pad2_ net-_q3-pad3_ Q2N2222
+q5 net-_q5-pad1_ net-_d1-pad2_ net-_q3-pad3_ Q2N2222
+q7 net-_q10-pad1_ net-_d1-pad2_ net-_q6-pad1_ Q2N2222
+q8 net-_q5-pad1_ net-_d2-pad2_ net-_q6-pad1_ Q2N2222
+r1  net-_q1-pad3_ net-_i1-pad1_ 25k
+r3  net-_q2-pad3_ net-_i1-pad1_ 25k
+r5  net-_q4-pad3_ net-_i2-pad1_ 25k
+r6  net-_q6-pad3_ net-_i2-pad1_ 25k
+r9  net-_q9-pad2_ net-_r9-pad2_ 25k
+r10  net-_q9-pad3_ net-_i3-pad1_ 25k
+r11  net-_q10-pad3_ net-_i3-pad1_ 25k
+r7  net-_r2-pad1_ net-_q5-pad1_ 10k
+r4  net-_r2-pad1_ net-_q10-pad1_ 10k
+r2  net-_r2-pad1_ net-_d1-pad1_ 10k
+r12  net-_r12-pad1_ net-_q10-pad2_ 5k
+x1 net-_u1-pad2_ net-_q5-pad1_ net-_q10-pad1_ net-_i1-pad2_ net-_r2-pad1_ CA3240_OP
+i1 net-_i1-pad1_ net-_i1-pad2_  dc 500u
+i2 net-_i2-pad1_ net-_i1-pad2_  dc 500u
+i3 net-_i3-pad1_ net-_i1-pad2_  dc 500u
+r8  net-_r8-pad1_ net-_q9-pad2_ 145k
+* Control Statements
+
+.ends MPY_100

@@ -1,0 +1,44 @@
+* Subcircuit LM302-PORT
+.subckt LM302-PORT net-_j1-pad1_ net-_j1-pad2_ net-_d1-pad1_ net-_j1-pad2_ net-_q15-pad3_ net-_q13-pad1_ net-_j1-pad1_ net-_j1-pad1_ 
+* c:\fossee2\esim\library\subcircuitlibrary\lm302-port\lm302-port.cir
+.include NPN.lib
+.include D.lib
+.include NJF.lib
+.include PNP.lib
+q1 net-_q1-pad1_ net-_q1-pad1_ net-_j1-pad2_ Q2N2222
+q2 net-_q15-pad2_ net-_q1-pad1_ net-_j1-pad3_ Q2N2907A
+q3 net-_q11-pad2_ net-_j1-pad3_ net-_q3-pad3_ Q2N2222
+r1  net-_j1-pad1_ net-_q4-pad3_ 1k
+r3  net-_j1-pad1_ net-_j1-pad1_ 500
+r7  net-_j1-pad1_ net-_j1-pad1_ 500
+r8  net-_j1-pad1_ net-_q8-pad3_ 1k
+q4 net-_q11-pad2_ net-_q11-pad3_ net-_q4-pad3_ Q2N2907A
+q8 net-_q11-pad3_ net-_q11-pad3_ net-_q8-pad3_ Q2N2907A
+j1 net-_j1-pad1_ net-_j1-pad2_ net-_j1-pad3_ J2N3819
+r2  net-_q3-pad3_ net-_j1-pad2_ 3k
+q11 net-_c1-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2907A
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q5 net-_d1-pad2_ net-_d1-pad1_ net-_q5-pad3_ Q2N2222
+r4  net-_q5-pad3_ net-_q10-pad1_ 200k
+q6 net-_d1-pad2_ net-_q5-pad3_ net-_q6-pad3_ Q2N2222
+r5  net-_q6-pad3_ net-_q10-pad3_ 150
+q9 net-_q12-pad1_ net-_q12-pad3_ net-_q6-pad3_ Q2N2222
+q12 net-_q12-pad1_ net-_c1-pad2_ net-_q12-pad3_ Q2N2222
+r9  net-_q12-pad3_ net-_q10-pad1_ 200k
+q10 net-_q10-pad1_ net-_q10-pad1_ net-_q10-pad3_ Q2N2222
+q7 net-_q10-pad3_ net-_j1-pad3_ net-_q7-pad3_ Q2N2222
+r6  net-_q7-pad3_ net-_j1-pad2_ 1.5k
+q13 net-_q13-pad1_ net-_q13-pad1_ net-_d1-pad1_ Q2N2222
+q15 net-_q13-pad1_ net-_q15-pad2_ net-_q15-pad3_ Q2N2222
+r11  net-_q15-pad3_ net-_j1-pad2_ 200
+q14 net-_c1-pad1_ net-_q14-pad2_ net-_q12-pad1_ Q2N2222
+q18 net-_j1-pad1_ net-_q14-pad2_ net-_d1-pad2_ Q2N2222
+q17 net-_j1-pad1_ net-_c1-pad1_ net-_q14-pad2_ Q2N2222
+q16 net-_c1-pad1_ net-_d1-pad2_ net-_q13-pad1_ Q2N2222
+r10  net-_c1-pad2_ net-_q13-pad1_ 5k
+r13  net-_d1-pad2_ net-_q13-pad1_ 25
+r12  net-_q14-pad2_ net-_d1-pad2_ 3k
+c1  net-_c1-pad1_ net-_c1-pad2_ 10p
+* Control Statements
+
+.ends LM302-PORT

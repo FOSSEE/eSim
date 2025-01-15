@@ -1,0 +1,29 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD4050\CD4050.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/06/24 14:47:03
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M2  Net-_M2-Pad1_ Net-_M1-Pad2_ Net-_C1-Pad1_ Net-_M2-Pad1_ mosfet_p		
+M1  Net-_C1-Pad1_ Net-_M1-Pad2_ GND GND mosfet_n		
+C1  Net-_C1-Pad1_ GND 1u		
+M5  Net-_M2-Pad1_ Net-_M3-Pad2_ Net-_C2-Pad1_ Net-_M2-Pad1_ mosfet_p		
+M3  Net-_C2-Pad1_ Net-_M3-Pad2_ GND GND mosfet_n		
+C2  Net-_C2-Pad1_ GND 1u		
+M6  Net-_M2-Pad1_ Net-_M4-Pad2_ Net-_C3-Pad1_ Net-_M2-Pad1_ mosfet_p		
+M4  Net-_C3-Pad1_ Net-_M4-Pad2_ GND GND mosfet_n		
+C3  Net-_C3-Pad1_ GND 1u		
+M9  Net-_M2-Pad1_ Net-_M12-Pad2_ Net-_C6-Pad1_ Net-_M2-Pad1_ mosfet_p		
+M12  Net-_C6-Pad1_ Net-_M12-Pad2_ GND GND mosfet_n		
+C6  Net-_C6-Pad1_ GND 1u		
+M7  Net-_M2-Pad1_ Net-_M10-Pad2_ Net-_C4-Pad1_ Net-_M2-Pad1_ mosfet_p		
+M10  Net-_C4-Pad1_ Net-_M10-Pad2_ GND GND mosfet_n		
+C4  Net-_C4-Pad1_ GND 1u		
+M8  Net-_M2-Pad1_ Net-_M11-Pad2_ Net-_C5-Pad1_ Net-_M2-Pad1_ mosfet_p		
+M11  Net-_C5-Pad1_ Net-_M11-Pad2_ GND GND mosfet_n		
+C5  Net-_C5-Pad1_ GND 1u		
+U1  Net-_M1-Pad2_ Net-_C1-Pad1_ Net-_M3-Pad2_ Net-_C2-Pad1_ Net-_M4-Pad2_ Net-_C3-Pad1_ GND Net-_M2-Pad1_ Net-_M10-Pad2_ Net-_C4-Pad1_ Net-_M11-Pad2_ Net-_C5-Pad1_ Net-_M12-Pad2_ Net-_C6-Pad1_ PORT		
+
+.end
