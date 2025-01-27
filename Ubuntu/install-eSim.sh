@@ -123,30 +123,19 @@ function installKicad
 }
 
 
+
 function installDependency
 {
 
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
-    # Update apt repository
-    echo "Updating apt index files..................."
+	# Update apt repository
+	echo "Updating apt index files..................."
     sudo apt-get update
     
     set -e      # Re-enable exit on error
     trap error_exit ERR
-    
-    echo "Instaling virtualenv......................."
-    sudo apt install python3-virtualenv
-   
-    echo "Creating virtual environment to isolate packages "
-    virtualenv $config_dir/env
-    
-    echo "Starting the virtual env..................."
-    source $config_dir/env/bin/activate
-
-    echo "Upgrading Pip.............................."
-    pip install --upgrade pip
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
@@ -159,37 +148,81 @@ function installDependency
 
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
+    
+    echo "Attempting to install python3-setuptools as an alternative to distutils..."
+    if sudo apt-get install -y python3-setuptools; then
+        echo "python3-setuptools installed successfully."
+    else
+        echo "Failed to install python3-setuptools."
+        echo "Please check your package sources or consult your system administrator."
+    fi
 
-    echo "Installing Distutils......................."
-    sudo apt-get install -y python3-distutils
+
 
     # Install NgVeri Depedencies
     echo "Installing Pip3............................"
     sudo apt install -y python3-pip
+    
+    # Check if python3-venv is installed, and install if necessary
+    echo "Checking for python3-venv package..."
+    if ! dpkg -l | grep -q python3-venv; then
+        echo "python3-venv not found, installing..."
+        sudo apt install -y python3-venv
+    fi
 
+    # Install pipx
+    echo "Installing pipx............................."
+    sudo apt install -y pipx
+    
+    # Ensure pipx is in PATH
+    echo "Ensuring pipx is in PATH..."
+    pipx ensurepath
+    
+    # Reload the shell configuration (to ensure PATH is updated)
+    source ~/.bashrc
+    
+    # Prompt user for custom virtual environment location, default to ~/myenv
+    echo "Enter the desired path for the virtual environment (default: ~/myenv to use default press ENTER): "
+    read -r VENV_PATH
+    VENV_PATH=${VENV_PATH:-"$HOME/myenv"} # Default to $HOME/myenv if empty input
+
+    # Check if virtual environment directory already exists
+    if [ -d "$VENV_PATH" ]; then
+        echo "Removing existing virtual environment at $VENV_PATH..."
+        rm -rf $VENV_PATH
+    fi
+
+    # Create a new virtual environment
+    echo "Creating a new virtual environment at $VENV_PATH..."
+    python3 -m venv $VENV_PATH
+
+    # Check if the virtual environment was created successfully
+    if [ ! -f "$VENV_PATH/bin/activate" ]; then
+        echo "Failed to create virtual environment at $VENV_PATH."
+        exit 1
+    fi
+
+    # Activate the virtual environment
+    echo "Activating virtual environment..."
+    source $VENV_PATH/bin/activate
+    
+    # Install packages using pipx
     echo "Installing Watchdog........................"
-    pip3 install watchdog
+    pip install watchdog
 
     echo "Installing Hdlparse........................"
-    pip3 install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
+    pip install https://github.com/hdl/pyhdlparser/tarball/master
 
     echo "Installing Makerchip......................."
-    pip3 install makerchip-app
+    pip install makerchip-app
 
     echo "Installing SandPiper Saas.................."
-    pip3 install sandpiper-saas
-
-   
-    echo "Installing Hdlparse......................"
-    pip3 install hdlparse
-
-    echo "Installing matplotlib................"
-    pip3 install matplotlib
-
-    echo "Installing PyQt5............."
-    pip3 install PyQt5  
+    pip install sandpiper-saas
+    
+    echo "alll dependecy install"
+    
+    
 }
-
 
 function copyKicadLibrary
 {
