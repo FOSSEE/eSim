@@ -16,7 +16,7 @@
 #                Sumanto Kar, Partha Singha Roy
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Tuesday 31 December 2024 17:28
+#      REVISION: Friday 14 February 2025 10:00
 #=============================================================================
 
 # All variables goes here
@@ -54,30 +54,44 @@ function createConfigFile
     echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
     echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-   
+    
 }
 
 
-function installNghdl
-{
-
+function installNghdl {
     echo "Installing NGHDL..........................."
-    unzip -o nghdl.zip
-    cd nghdl/
+
+    # Check if NGHDL is already extracted
+    if [ -d "nghdl" ]; then
+        echo "nghdl/ directory already exists. Skipping unzip..."
+    else
+        unzip -o nghdl.zip || { echo "Failed to unzip nghdl.zip"; exit 1; }
+        echo "Successfully extracted nghdl.zip"
+    fi
+
+    cd nghdl/ || { echo "Failed to change directory to nghdl/"; exit 1; }
+
     chmod +x install-nghdl.sh
 
-    # Do not trap on error of any command. Let NGHDL script handle its own errors.
-    trap "" ERR
+    trap "" ERR 
 
-    ./install-nghdl.sh --install       # Install NGHDL
-        
-    # Set trap again to error_exit function to exit on errors
-    trap error_exit ERR
+    ./install-nghdl.sh --install
+
+    trap error_exit ERR 
+
+    # Verify if NGHDL was installed successfully
+    if ! command -v ghdl >/dev/null; then
+        echo "Error: NGHDL installation failed"
+        exit 1
+    fi
+
+    echo "NGHDL installation completed successfully."
 
     ngspiceFlag=1
-    cd ../
 
+    cd ../ || { echo "Failed to return to parent directory"; exit 1; }
 }
+
 
 
 function installSky130Pdk
@@ -93,33 +107,38 @@ function installSky130Pdk
 
     # Copy SKY130 library
     echo "Copying SKY130 PDK........................."
-
     sudo mkdir -p /usr/share/local/
-    sudo mv sky130_fd_pr /usr/share/local/
+    echo "Directory created"
+    # sudo mv sky130_fd_pr /usr/share/local/
+    # placing  the SKY130 PDK in a standard, system-wide location. 
+
+    sudo cp -R sky130_fd_pr /usr/share/local/
+    
+    sudo rm -rf sky130_fd_pr
 
     # Change ownership from root to the user
     sudo chown -R $USER:$USER /usr/share/local/sky130_fd_pr/
 
 }
 
+function installKicad {
+    echo "Installing KiCad..."
 
-function installKicad
-{
-
-    echo "Installing KiCad..........................."
-
-    kicadppa="kicad/kicad-6.0-releases"
+    kicadppa="kicad/kicad-8.0-releases"
     findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
+    
     if [ -z "$findppa" ]; then
-        echo "Adding KiCad-6 ppa to local apt-repository"
-        sudo add-apt-repository -y ppa:kicad/kicad-6.0-releases
-        sudo apt-get update
+        echo "Adding KiCad-8 PPA to local apt repository..."
+        sudo add-apt-repository -y ppa:kicad/kicad-8.0-releases
+        sudo apt update
     else
-        echo "KiCad-6 is available in synaptic"
+        echo "KiCad-8 PPA is already added."
     fi
 
-    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    echo "Installing KiCad and necessary libraries..."
+    sudo apt install -y --no-install-recommends kicad
 
+    echo "KiCad installation completed successfully!"
 }
 
 
@@ -191,48 +210,63 @@ function installDependency
 }
 
 
-function copyKicadLibrary
-{
+function copyKicadLibrary {
+    set -e  # Exit immediately on error
+    trap 'echo "An error occurred! Exiting..."; exit 1' ERR
 
-    #Extract custom KiCad Library
-    tar -xJf library/kicadLibrary.tar.xz
+    echo "Extracting custom KiCad Library..."
+    tar -xJf library/kicadLibrary.tar.xz -C library || { echo "Extraction failed!"; exit 1; }
 
-    if [ -d ~/.config/kicad/6.0 ];then
-        echo "kicad config folder already exists"
-    else 
-        echo ".config/kicad/6.0 does not exist"
-        mkdir -p ~/.config/kicad/6.0
+    # Detect the latest installed KiCad version
+    kicad_config_dir="$HOME/.config/kicad"
+    latest_version=$(ls "$kicad_config_dir" | grep -E "^[0-9]+\.[0-9]+$" | sort -V | tail -n 1)
+
+    if [ -z "$latest_version" ]; then
+        latest_version="8.0"  # Default to the latest known version
+        mkdir -p "$kicad_config_dir/$latest_version"
+        echo "Created KiCad config directory: $kicad_config_dir/$latest_version"
+    else
+        echo "Using existing KiCad version: $latest_version"
     fi
 
-    # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
-    echo "symbol table copied in the directory"
+    kicad_version_dir="$kicad_config_dir/$latest_version"
 
-    # Copy KiCad symbols made for eSim
-    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
+    # Copy the symbol table for eSim custom symbols
+    echo "Copying symbol table..."
+    cp library/kicadLibrary/template/sym-lib-table "$kicad_version_dir/"
 
-    set +e      # Temporary disable exit on error
-    trap "" ERR # Do not trap on error of any command
-    
-    # Remove extracted KiCad Library - not needed anymore
-    rm -rf kicadLibrary
+    # Ensure KiCad symbols directory exists
+    kicad_symbols_dir="/usr/share/kicad/symbols"
+    if [ ! -d "$kicad_symbols_dir" ]; then
+        echo "Creating KiCad symbols directory..."
+        sudo mkdir -p "$kicad_symbols_dir"
+    fi
 
-    set -e      # Re-enable exit on error
-    trap error_exit ERR
+    # Copy custom symbols using rsync for better reliability
+    echo "Copying eSim custom symbols..."
+    sudo rsync -av library/kicadLibrary/eSim-symbols/ "$kicad_symbols_dir/"
 
-    #Change ownership from Root to the User
-    sudo chown -R $USER:$USER /usr/share/kicad/symbols/
+    # Cleanup: Remove extracted KiCad Library (not needed anymore)
+    echo "Removing extracted KiCad library..."
+    rm -rf library/kicadLibrary
 
+    # Change ownership from root to the user only if needed
+    if [ "$(stat -c "%U" "$kicad_symbols_dir")" != "$USER" ]; then
+        echo "Changing ownership of KiCad symbols directory..."
+        sudo chown -R "$USER:$USER" "$kicad_symbols_dir"
+    fi
+
+    echo "KiCad Library successfully copied and configured!"
 }
+
 
 
 function createDesktopStartScript
 {    
 
-    # Generating new esim-start.sh
+	# Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
     echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
-    echo "source $config_dir/env/bin/activate" >> esim-start.sh
     echo "python3 Application.py" >> esim-start.sh
 
     # Make it executable
@@ -382,11 +416,12 @@ elif [ $option == "--uninstall" ];then
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
-	sudo rm /etc/apt/sources.list.d/kicad*
         rm -rf $HOME/.config/kicad/6.0
 
-        echo "Removing Virtual env......................."
-        sudo rm -r $config_dir/env
+        echo "Removing Makerchip......................."
+        pip3 uninstall -y hdlparse
+        pip3 uninstall -y makerchip-app
+        pip3 uninstall -y sandpiper-saas
 
         echo "Removing SKY130 PDK......................"
         sudo rm -R /usr/share/local/sky130_fd_pr
@@ -420,3 +455,4 @@ else
     echo "--install"
     echo "--uninstall"
 fi
+
