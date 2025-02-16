@@ -225,16 +225,6 @@ function createDesktopStartScript
 
     # Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
- 
-    #echo "cd $HOME/Downloads/eSim-2.4/src/frontEnd" >> esim-start.sh  # Change to the eSim directory
-    #echo "python3 -m venv myenv" >> esim-start.sh  # Create virtual environment
-    #echo "source myenv/bin/activate" >> esim-start.sh  # Activate virtual environment
-    #echo "pip install --upgrade \"https://github.com/hdl/pyhdlparser/tarball/master\"" >> esim-start.sh  # Install hdlparse
-    #echo "pip install makerchip-app" >> esim-start.sh  # Install makerchip
-    #echo "pip install sandpiper-saas" >> esim-start.sh  # Install sandpiper
-    #echo "python3 Application.py" >> esim-start.sh  # Run the application
-    #echo "deactivate" >> esim-start.sh  # Deactivate the virtual environment
-
     echo "cd $eSim_Home/src/frontEnd || exit" >> esim-start.sh
     echo "$eSim_Home/venv/bin/python Application.py" >> esim-start.sh
 
@@ -424,6 +414,5 @@ else
     echo "--install"
     echo "--uninstall"
 fi
-
 
 deactivate
