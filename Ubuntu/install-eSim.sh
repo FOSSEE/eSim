@@ -16,8 +16,56 @@
 #                Sumanto Kar, Partha Singha Roy
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Tuesday 31 December 2024 17:28
+#      REVISION: Thursday 29 June 2023 12:50
 #=============================================================================
+
+# Creating the Virtual Environment
+if [ ! -d "venv" ]; then
+    echo "Creating virtual environment..."
+    python3.11 -m venv venv      
+else
+    echo "Virtual environment already exists."
+fi
+
+# Activate the virtual environment
+source ./venv/bin/activate
+
+# Ensure virtual environment is deactivated when script exits
+trap 'if [[ -d "venv" ]]; then deactivate; fi' EXIT
+
+# Update Sources list if necessary
+# Get Ubuntu version
+UBUNTU_VERSION=$(lsb_release -rs)
+UBUNTU_CODENAME=$(lsb_release -cs)
+
+echo "Detected Ubuntu version: $UBUNTU_VERSION ($UBUNTU_CODENAME)"
+
+# Check if running Ubuntu 23.04 (Lunar)
+if [[ "$UBUNTU_CODENAME" == "lunar" ]]; then
+    echo "Ubuntu 23.04 detected. Checking sources list..."
+
+    # Check if the old-releases mirror is already set
+    if grep -q "old-releases.ubuntu.com" /etc/apt/sources.list; then
+        echo "Old-releases mirror is already in use. No changes needed."
+    else
+        echo "Switching to old-releases mirror..."
+        
+        # Backup existing sources.list (only if not backed up before)
+        if [ ! -f /etc/apt/sources.list.bak ]; then
+            sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+        fi
+
+        # Replace standard mirrors with old-releases
+        sudo sed -i 's|http://\(.*\).ubuntu.com/ubuntu|http://old-releases.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+
+        echo "Updated sources.list to use old-releases. Running apt update..."
+        
+        # Update package lists
+        sudo apt update -y && sudo apt upgrade -y
+    fi
+else
+    echo "Not running Ubuntu 23.04, no changes needed."
+fi
 
 # All variables goes here
 config_dir="$HOME/.esim"
@@ -54,7 +102,7 @@ function createConfigFile
     echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
     echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-   
+    
 }
 
 
@@ -136,18 +184,6 @@ function installDependency
     set -e      # Re-enable exit on error
     trap error_exit ERR
     
-    echo "Instaling virtualenv......................."
-    sudo apt install python3-virtualenv
-   
-    echo "Creating virtual environment to isolate packages "
-    virtualenv $config_dir/env
-    
-    echo "Starting the virtual env..................."
-    source $config_dir/env/bin/activate
-
-    echo "Upgrading Pip.............................."
-    pip install --upgrade pip
-    
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
     
@@ -155,10 +191,12 @@ function installDependency
     sudo apt-get install -y python3-psutil
     
     echo "Installing PyQt5..........................."
-    sudo apt-get install -y python3-pyqt5
+    #sudo apt-get install -y python3-pyqt5
+    pip install PyQt5
 
     echo "Installing Matplotlib......................"
-    sudo apt-get install -y python3-matplotlib
+    #sudo apt-get install -y python3-matplotlib
+    pip install matplotlib
 
     echo "Installing Distutils......................."
     sudo apt-get install -y python3-distutils
@@ -168,10 +206,12 @@ function installDependency
     sudo apt install -y python3-pip
 
     echo "Installing Watchdog........................"
-    pip3 install watchdog
+    #sudo apt install watchdog
+    pip install watchdog
 
     echo "Installing Hdlparse........................"
     pip3 install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
+    pip3 install hdlparse
 
     echo "Installing Makerchip......................."
     pip3 install makerchip-app
@@ -179,15 +219,6 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
-   
-    echo "Installing Hdlparse......................"
-    pip3 install hdlparse
-
-    echo "Installing matplotlib................"
-    pip3 install matplotlib
-
-    echo "Installing PyQt5............."
-    pip3 install PyQt5  
 }
 
 
@@ -231,9 +262,8 @@ function createDesktopStartScript
 
     # Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
-    echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
-    echo "source $config_dir/env/bin/activate" >> esim-start.sh
-    echo "python3 Application.py" >> esim-start.sh
+    echo "cd $eSim_Home/src/frontEnd || exit" >> esim-start.sh
+    echo "$eSim_Home/venv/bin/python Application.py" >> esim-start.sh
 
     # Make it executable
     sudo chmod 755 esim-start.sh
@@ -382,14 +412,13 @@ elif [ $option == "--uninstall" ];then
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
-	sudo rm /etc/apt/sources.list.d/kicad*
         rm -rf $HOME/.config/kicad/6.0
 
-        echo "Removing Virtual env......................."
-        sudo rm -r $config_dir/env
+        echo "Removing Makerchip......................."
+        pip3 uninstall -y hdlparse makerchip-app sandpiper-saas
 
         echo "Removing SKY130 PDK......................"
-        sudo rm -R /usr/share/local/sky130_fd_pr
+        sudo rm -rf /usr/share/local/sky130_fd_pr
 
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
@@ -408,13 +437,18 @@ elif [ $option == "--uninstall" ];then
         else
             echo -e "\nCannot find \"nghdl\" directory. Please remove it manually"
         fi
+
+        deactivate
+        
+        rm -rf venv
+
     elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
         exit 0
     else 
         echo "Please select the right option."
         exit 0
     fi
-
+    
 else 
     echo "Please select the proper operation."
     echo "--install"
