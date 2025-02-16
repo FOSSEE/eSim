@@ -19,6 +19,7 @@
 #      REVISION: Thursday 29 June 2023 12:50
 #=============================================================================
 
+# Creating the Virtual Environment
 if [ ! -d "venv" ]; then
     echo "Creating virtual environment..."
     python3.11 -m venv venv      
@@ -28,6 +29,43 @@ fi
 
 # Activate the virtual environment
 source ./venv/bin/activate
+
+# Ensure virtual environment is deactivated when script exits
+trap 'if [[ -d "venv" ]]; then deactivate; fi' EXIT
+
+# Update Sources list if necessary
+# Get Ubuntu version
+UBUNTU_VERSION=$(lsb_release -rs)
+UBUNTU_CODENAME=$(lsb_release -cs)
+
+echo "Detected Ubuntu version: $UBUNTU_VERSION ($UBUNTU_CODENAME)"
+
+# Check if running Ubuntu 23.04 (Lunar)
+if [[ "$UBUNTU_CODENAME" == "lunar" ]]; then
+    echo "Ubuntu 23.04 detected. Checking sources list..."
+
+    # Check if the old-releases mirror is already set
+    if grep -q "old-releases.ubuntu.com" /etc/apt/sources.list; then
+        echo "Old-releases mirror is already in use. No changes needed."
+    else
+        echo "Switching to old-releases mirror..."
+        
+        # Backup existing sources.list (only if not backed up before)
+        if [ ! -f /etc/apt/sources.list.bak ]; then
+            sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+        fi
+
+        # Replace standard mirrors with old-releases
+        sudo sed -i 's|http://\(.*\).ubuntu.com/ubuntu|http://old-releases.ubuntu.com/ubuntu|g' /etc/apt/sources.list
+
+        echo "Updated sources.list to use old-releases. Running apt update..."
+        
+        # Update package lists
+        sudo apt update -y && sudo apt upgrade -y
+    fi
+else
+    echo "Not running Ubuntu 23.04, no changes needed."
+fi
 
 # All variables goes here
 config_dir="$HOME/.esim"
@@ -173,7 +211,6 @@ function installDependency
 
     echo "Installing Hdlparse........................"
     pip3 install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
-
     pip3 install hdlparse
 
     echo "Installing Makerchip......................."
@@ -378,12 +415,10 @@ elif [ $option == "--uninstall" ];then
         rm -rf $HOME/.config/kicad/6.0
 
         echo "Removing Makerchip......................."
-        pip3 uninstall -y hdlparse
-        pip3 uninstall -y makerchip-app
-        pip3 uninstall -y sandpiper-saas
+        pip3 uninstall -y hdlparse makerchip-app sandpiper-saas
 
         echo "Removing SKY130 PDK......................"
-        sudo rm -R /usr/share/local/sky130_fd_pr
+        sudo rm -rf /usr/share/local/sky130_fd_pr
 
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
@@ -402,17 +437,20 @@ elif [ $option == "--uninstall" ];then
         else
             echo -e "\nCannot find \"nghdl\" directory. Please remove it manually"
         fi
+
+        deactivate
+        
+        rm -rf venv
+
     elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
         exit 0
     else 
         echo "Please select the right option."
         exit 0
     fi
-
+    
 else 
     echo "Please select the proper operation."
     echo "--install"
     echo "--uninstall"
 fi
-
-deactivate
