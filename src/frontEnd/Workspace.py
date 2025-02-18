@@ -33,6 +33,7 @@ class Workspace(QtWidgets.QWidget):
         - This workspace area contains all the projects made by user.
 
     """
+    workspace_closed = QtCore.pyqtSignal()#Added Code
 
     def __init__(self, parent=None):
         super(Workspace, self).__init__()
@@ -113,6 +114,7 @@ class Workspace(QtWidgets.QWidget):
     def close(self, *args, **kwargs):
         self.window_open_close = 1
         self.close_var = 1
+        self.workspace_closed.emit()  # Emit the signal
         return QtWidgets.QWidget.close(self, *args, **kwargs)
 
     def returnWhetherClickedOrNot(self, appView):

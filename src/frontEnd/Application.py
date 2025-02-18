@@ -34,16 +34,94 @@ from PyQt5.Qt import QSize
 from configuration.Appconfig import Appconfig
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
-from frontEnd import DockArea
+from frontEnd import DockArea,tracker
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
+import subprocess,json,sys,logging
+from datetime import datetime
+from multiprocessing import Process
+
+
+
+LOG_DIR = "logs"
+if not os.path.exists(LOG_DIR):
+    os.makedirs(LOG_DIR)
+
+def log_capture(user_id):
+    log_file_path = os.path.join(LOG_DIR, f"{user_id}_log_{datetime.now().strftime('%Y%m%d_%H%M%S')}.txt")
+    
+    # Set up logging to capture only warnings and errors
+    logging.basicConfig(filename=log_file_path, 
+                        level=logging.WARNING,  # Log WARNING, ERROR, and CRITICAL only
+                        format="%(asctime)s - %(levelname)s - %(message)s")
+    
+    # Redirect stdout and stderr to log file
+    sys.stdout = sys.stderr = open(log_file_path, 'a')
+    print("Log capturing started...")
+    
+    return log_file_path
+
+
+class UserPreferenceDialog(QtWidgets.QDialog):
+    """Dialog to ask the user for session tracking preferences."""
+    def __init__(self, parent=None):
+        super().__init__(parent)
+
+        self.setWindowTitle("Session Tracking")
+        self.setFixedSize(400, 250)  # Set dialog size
+
+        layout = QtWidgets.QVBoxLayout()
+
+        # Display username (Read-only)
+        username = tracker.generate_username()  # Replace with TrackerTool.generate_username()
+        self.name_label = QtWidgets.QLabel(f"👤 Username: <b>{username}</b>")
+        layout.addWidget(self.name_label)
+
+        # Session tracking option
+        self.track_checkbox = QtWidgets.QCheckBox("Track this session")
+        layout.addWidget(self.track_checkbox)
+
+        # Remember choice option
+        self.remember_checkbox = QtWidgets.QCheckBox("Remember my choice")
+        layout.addWidget(self.remember_checkbox)
+
+        # Buttons
+        self.button_box = QtWidgets.QDialogButtonBox(QtWidgets.QDialogButtonBox.Ok | QtWidgets.QDialogButtonBox.Cancel)
+        self.button_box.accepted.connect(self.accept)
+        self.button_box.rejected.connect(self.reject)
+        layout.addWidget(self.button_box)
+
+        # Info Icon at the bottom right
+        info_layout = QtWidgets.QHBoxLayout()
+        info_layout.addStretch()
+
+        self.info_icon = QtWidgets.QLabel()
+        self.info_icon.setPixmap(self.style().standardIcon(QtWidgets.QStyle.SP_MessageBoxInformation).pixmap(24, 24))
+        self.info_icon.setToolTip("Tracking will log session start/end time and activity data.")
+        self.info_icon.mousePressEvent = self.show_info  # Make icon clickable
+        info_layout.addWidget(self.info_icon)
+
+        layout.addLayout(info_layout)
+        self.setLayout(layout)
+
+    def show_info(self, event):
+        """Show detailed information when the icon is clicked."""
+        QtWidgets.QMessageBox.information(self, "Session Tracking Info", 
+            "This feature logs your session start and end time, along with activity data. "
+            "You can disable tracking at any time in settings.""You can go and delete the unwanted sessions details from the tracker Tool bar.")
+        
+    def getPreferences(self):
+        """Return user preferences."""
+        return {
+            "username":tracker.generate_username(),  # Fetch username dynamically
+            "track_session": self.track_checkbox.isChecked(),
+            "remember_choice": self.remember_checkbox.isChecked(),
+        }
 
 # Its our main window of application.
-
-
 class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     global project_name
@@ -129,12 +207,20 @@ class Application(QtWidgets.QMainWindow):
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
 
+        self.trackerTool = QtWidgets.QAction(
+            QtGui.QIcon(init_path + 'images/tracker.png'),
+            '<b>Tracker Tool</b>', self
+        )
+        self.trackerTool.setShortcut('Ctrl+H')
+        self.trackerTool.triggered.connect(self.tracker_tool)
+
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
         self.topToolbar.addAction(self.closeproj)
         self.topToolbar.addAction(self.wrkspce)
         self.topToolbar.addAction(self.helpfile)
+        self.topToolbar.addAction(self.trackerTool)
 
         # ## This part is meant for SoC Generation which is currently  ##
         # ## under development and will be will be required in future. ##
@@ -390,6 +476,26 @@ class Application(QtWidgets.QMainWindow):
         self.obj_appconfig.print_info('Help is called')
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
+    
+    def tracker_tool(self, event):
+        """
+        Opens the Tracker Tool application.
+        """
+        # Dynamically locate the tracker tool script
+        # base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the current directory of this script
+        # tracker_script_path = os.path.join(base_dir, "TrackerTool", "main.py")
+        home_dir = os.path.expanduser("~")  # Get the user's home directory
+        tracker_script_path = os.path.join(home_dir, "Downloads", "eSim-2.4", "src", "TrackerTool", "main.py")
+        try:
+            # Check if the tracker tool script exists
+            if os.path.exists(tracker_script_path):
+                # Use subprocess to run the tracker tool
+                subprocess.Popen(["python3", tracker_script_path])
+                print("Tracker Tool launched successfully.")
+            else:
+                print("Tracker Tool script not found:", tracker_script_path)
+        except Exception as e:
+            print("Error launching Tracker Tool:", e)
 
     @QtCore.pyqtSlot(QtCore.QProcess.ExitStatus, int)
     def plotSimulationData(self, exitCode, exitStatus):
@@ -715,6 +821,8 @@ class MainView(QtWidgets.QWidget):
 
 # It is main function of the module and starts the application
 def main(args):
+    user_id = tracker.generate_username()
+    log_capture(user_id)
     """
     The splash screen opened at the starting of screen is performed
     by this function.
@@ -749,10 +857,78 @@ def main(args):
     except IOError:
         work = 0
 
+    def show_preferences():
+            global tracker_thread
+            preferences_file = os.path.expanduser("~/.esim/preferences.json")
+            user_preferences = {}
+
+
+            # Load existing preferences if available
+            if os.path.exists(preferences_file):
+                with open(preferences_file, "r") as file:
+                    user_preferences = json.load(file)
+
+            # Show dialog if the user has not chosen to remember preferences
+            if not user_preferences.get("remember_choice", False):
+                dialog = UserPreferenceDialog()
+                if dialog.exec_() == QtWidgets.QDialog.Accepted:
+                    preferences = dialog.getPreferences()
+
+                    # Save preferences if the user chose to remember
+                    if preferences["remember_choice"]:
+                        os.makedirs(os.path.dirname(preferences_file), exist_ok=True)
+                        with open(preferences_file, "w") as file:
+                            json.dump(preferences, file)
+
+                    # Start session tracking if the user chose to track
+                    if preferences["track_session"]:
+                        print("Session tracking enabled.")
+                        start_tracking(preferences["username"])  # Start tracking in a separate process
+                    else:
+                        print("Session tracking disabled.")
+                else:
+                    print("User cancelled. Exiting application.")
+                    sys.exit(0)
+            else:
+                # Act based on remembered preferences
+                if user_preferences.get("track_session", False):
+                    print("Session tracking enabled (from remembered preferences).")
+                    start_tracking(user_preferences.get("username", "Unknown"))
+                else:
+                    print("Session tracking disabled (from remembered preferences).")
+
+    def start_tracking(username):
+            """
+            Start tracking the session by launching tracker.py as a completely independent process.
+            """
+            home_dir = os.path.expanduser("~")
+            tracker_script = os.path.join(home_dir, "Downloads", "eSim-2.4", "src", "TrackerTool", "tracker.py")
+            #command = [sys.executable, "tracker.py", username]
+            command = [sys.executable, tracker_script, username]
+
+            if sys.platform.startswith("win"):
+                # Windows: DETACHED_PROCESS ensures process runs independently
+                DETACHED_PROCESS = 0x00000008
+                subprocess.Popen(command, creationflags=DETACHED_PROCESS, close_fds=True)
+            else:
+                # Linux/macOS: Use setsid to detach process
+                subprocess.Popen(command, preexec_fn=os.setsid, close_fds=True)    
+ 
+    def after_workspace_selection():
+            splash.close()
+            appView.show()
+            QtCore.QTimer.singleShot(100, show_preferences)
+
+    def on_workspace_closed():
+        appView.obj_workspace.close()
+        after_workspace_selection()
+
     if work != 0:
         appView.obj_workspace.defaultWorkspace()
+        after_workspace_selection()
     else:
         appView.obj_workspace.show()
+        appView.obj_workspace.okbtn.clicked.connect(on_workspace_closed)
 
     sys.exit(app.exec_())
 
