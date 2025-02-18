@@ -43,7 +43,7 @@ from projManagement import Worker
 import subprocess,json,sys,logging
 from datetime import datetime
 from multiprocessing import Process
-
+from TrackerTool.main import TrackerApp
 
 
 LOG_DIR = "logs"
@@ -479,21 +479,12 @@ class Application(QtWidgets.QMainWindow):
     
     def tracker_tool(self, event):
         """
-        Opens the Tracker Tool application.
+        Opens the Tracker Tool application without restarting the event loop.
         """
-        # Dynamically locate the tracker tool script
-        # base_dir = os.path.dirname(os.path.abspath(__file__))  # Get the current directory of this script
-        # tracker_script_path = os.path.join(base_dir, "TrackerTool", "main.py")
-        home_dir = os.path.expanduser("~")  # Get the user's home directory
-        tracker_script_path = os.path.join(home_dir, "Downloads", "eSim-2.4", "src", "TrackerTool", "main.py")
         try:
-            # Check if the tracker tool script exists
-            if os.path.exists(tracker_script_path):
-                # Use subprocess to run the tracker tool
-                subprocess.Popen(["python3", tracker_script_path])
-                print("Tracker Tool launched successfully.")
-            else:
-                print("Tracker Tool script not found:", tracker_script_path)
+            self.tracker_window = TrackerApp()  # Create a new window instance
+            self.tracker_window.show()  # Show the Tracker Tool window
+            print("Tracker Tool launched successfully.")
         except Exception as e:
             print("Error launching Tracker Tool:", e)
 
@@ -858,61 +849,80 @@ def main(args):
         work = 0
 
     def show_preferences():
-            global tracker_thread
+        
+        global tracker_thread
+        if os.name == "nt":  # Windows
+            preferences_file = os.path.join(os.environ["APPDATA"], "eSim", "preferences.json")
+        else:  # Linux/macOS
             preferences_file = os.path.expanduser("~/.esim/preferences.json")
             user_preferences = {}
 
+        # Load existing preferences if available
+        if os.path.exists(preferences_file):
+            with open(preferences_file, "r") as file:
+                user_preferences = json.load(file)
 
-            # Load existing preferences if available
-            if os.path.exists(preferences_file):
-                with open(preferences_file, "r") as file:
-                    user_preferences = json.load(file)
+        # Show dialog if the user has not chosen to remember preferences
+        if not user_preferences.get("remember_choice", False):
+            dialog = UserPreferenceDialog()
+            if dialog.exec_() == QtWidgets.QDialog.Accepted:
+                preferences = dialog.getPreferences()
 
-            # Show dialog if the user has not chosen to remember preferences
-            if not user_preferences.get("remember_choice", False):
-                dialog = UserPreferenceDialog()
-                if dialog.exec_() == QtWidgets.QDialog.Accepted:
-                    preferences = dialog.getPreferences()
+                # Save preferences if the user chose to remember
+                if preferences["remember_choice"]:
+                    os.makedirs(os.path.dirname(preferences_file), exist_ok=True)
+                    with open(preferences_file, "w") as file:
+                        json.dump(preferences, file)
 
-                    # Save preferences if the user chose to remember
-                    if preferences["remember_choice"]:
-                        os.makedirs(os.path.dirname(preferences_file), exist_ok=True)
-                        with open(preferences_file, "w") as file:
-                            json.dump(preferences, file)
-
-                    # Start session tracking if the user chose to track
-                    if preferences["track_session"]:
-                        print("Session tracking enabled.")
-                        start_tracking(preferences["username"])  # Start tracking in a separate process
-                    else:
-                        print("Session tracking disabled.")
+                # Start session tracking if the user chose to track
+                if preferences["track_session"]:
+                    print("Session tracking enabled.")
+                    start_tracking(preferences["username"])  # Start tracking in a separate process
                 else:
-                    print("User cancelled. Exiting application.")
-                    sys.exit(0)
+                    print("Session tracking disabled.")
             else:
-                # Act based on remembered preferences
-                if user_preferences.get("track_session", False):
-                    print("Session tracking enabled (from remembered preferences).")
-                    start_tracking(user_preferences.get("username", "Unknown"))
-                else:
-                    print("Session tracking disabled (from remembered preferences).")
+                print("User cancelled. Exiting application.")
+                sys.exit(0)
+        else:
+            # Act based on remembered preferences
+            if user_preferences.get("track_session", False):
+                print("Session tracking enabled (from remembered preferences).")
+                start_tracking(user_preferences.get("username", "Unknown"))
+            else:
+                print("Session tracking disabled (from remembered preferences).")
+
+    
 
     def start_tracking(username):
             """
-            Start tracking the session by launching tracker.py as a completely independent process.
+            Start tracking the session by launching tracker.py as a separate process.
             """
-            home_dir = os.path.expanduser("~")
-            tracker_script = os.path.join(home_dir, "Downloads", "eSim-2.4", "src", "TrackerTool", "tracker.py")
-            #command = [sys.executable, "tracker.py", username]
-            command = [sys.executable, tracker_script, username]
+            try:
+                # Get the current working directory (from where the script is executed)
+                current_dir = os.getcwd()
 
-            if sys.platform.startswith("win"):
-                # Windows: DETACHED_PROCESS ensures process runs independently
-                DETACHED_PROCESS = 0x00000008
-                subprocess.Popen(command, creationflags=DETACHED_PROCESS, close_fds=True)
-            else:
-                # Linux/macOS: Use setsid to detach process
-                subprocess.Popen(command, preexec_fn=os.setsid, close_fds=True)    
+                # Move up one directory to the parent directory and then navigate to TrackerTool
+                parent_dir = os.path.dirname(current_dir)  # Go one directory up
+                tracker_script = os.path.join(parent_dir,"TrackerTool", "tracker.py")
+
+                if not os.path.exists(tracker_script):
+                    raise FileNotFoundError(f"Tracker script not found at: {tracker_script}")
+
+                # The command to run tracker.py as an independent process
+                command = [sys.executable, tracker_script, username]
+
+                if sys.platform.startswith("win"):
+                    # Windows: DETACHED_PROCESS ensures process runs independently
+                    DETACHED_PROCESS = 0x00000008
+                    subprocess.Popen(command, creationflags=DETACHED_PROCESS, close_fds=True)
+                else:
+                    # Linux/macOS: Use setsid to detach process
+                    subprocess.Popen(command, preexec_fn=os.setsid, close_fds=True)
+
+                print(f"Tracker started successfully for user: {username}")
+
+            except Exception as e:
+                print("Error starting tracker:", e)   
  
     def after_workspace_selection():
             splash.close()
