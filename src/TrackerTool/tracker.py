@@ -75,7 +75,8 @@ def log_session(user_id, session_start, session_end):
 #         send_log_to_api(user_id, datetime.now(), log_content)
 #     except Exception as e:
 #         print(f"Error handling log file: {e}")
-LOG_DIR = "/home/mmn/Downloads/eSim-2.4/src/frontEnd/logs"
+# LOG_DIR = "/home/mmn/Downloads/eSim-2.4/src/frontEnd/logs"
+LOG_DIR = os.path.join(os.getcwd(), "logs")
 
 def store_log(user_id):
     """Finds the latest log file for the user and sends it to the API."""

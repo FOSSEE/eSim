@@ -57,7 +57,9 @@ def log_session(user_id, session_start, session_end):
     total_duration = (session_end - session_start).total_seconds() / 3600  # Duration in hours
     send_session_to_api(user_id, session_start, session_end, total_duration)
 
-LOG_DIR = "/home/mmn/Downloads/eSim-2.4/src/frontEnd/logs"
+# LOG_DIR = "/home/mmn/Downloads/eSim-2.4/src/frontEnd/logs"
+LOG_DIR = os.path.join(os.getcwd(), "logs")
+
 
 def store_log(user_id):
     """Finds the latest log file for the user and sends it to the API."""
