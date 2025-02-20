@@ -25,9 +25,9 @@ copyright = u'2022, FOSSEE'
 author = u'FOSSEE, IIT Bombay'
 
 # The short X.Y version
-version = u'2.2'
+version = u'2.4'
 # The full version, including alpha/beta/rc tags
-release = u'2.2.0'
+release = u'2.4.0'
 
 
 # -- General configuration ---------------------------------------------------

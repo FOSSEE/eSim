@@ -15,8 +15,8 @@ It is an integrated tool build using open source softwares such as KiCad, Ngspic
 
 ## Releases and Installation
 eSim is released for the following distributions (operating systems):
-* Ubuntu 18.04 and 20.04 LTS versions.
-* Microsoft Windows 8 and 10.
+* Ubuntu 18.04, 20.04 LTS versions.
+* Microsoft Windows 8, 10 and 11.
 
 To use eSim on your machine having above distributions, please refer to link [here](https://esim.fossee.in/downloads) for installation and other guidelines.
 
@@ -39,7 +39,7 @@ To use eSim on your machine having above distributions, please refer to link [he
 * [SkyWater SKY130 PDK](https://skywater-pdk.rtfd.io/)
 
 ## eSim Manual
-To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.3.pdf)
+To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.4.pdf)
 
 ## Contact
 For any queries regarding eSim please write us on at this [email address](mailto:contact-esim@fossee.in).
