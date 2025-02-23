@@ -1,0 +1,17 @@
+* c:\fossee\esim\library\subcircuitlibrary\sn55188\sn55188.cir
+
+.include SN55188_0.sub
+x2 vcc+ net-_u1-pad2_ net-_u1-pad2_ gnd vcc- net-_u1-pad3_ SN55188_0
+x3 vcc+ net-_u1-pad9_ net-_u1-pad10_ gnd vcc- net-_u1-pad8_ SN55188_0
+x1 vcc+ net-_u1-pad4_ net-_u1-pad5_ gnd vcc- net-_u1-pad6_ SN55188_0
+x4 vcc+ net-_u1-pad12_ net-_u1-pad13_ gnd vcc- net-_u1-pad11_ SN55188_0
+* u1  vcc- net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ gnd net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ vcc+ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

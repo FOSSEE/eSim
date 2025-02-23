@@ -1,0 +1,284 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:NAND_GATE_FINAL-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L eSim_NPN Q2
+U 1 1 67704AAF
+P 3150 4650
+F 0 "Q2" H 3050 4700 50  0000 R CNN
+F 1 "eSim_NPN" H 3100 4800 50  0000 R CNN
+F 2 "" H 3350 4750 29  0000 C CNN
+F 3 "" H 3150 4650 60  0000 C CNN
+	1    3150 4650
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q1
+U 1 1 67704B0A
+P 2350 4650
+F 0 "Q1" H 2250 4700 50  0000 R CNN
+F 1 "eSim_NPN" H 2300 4800 50  0000 R CNN
+F 2 "" H 2550 4750 29  0000 C CNN
+F 3 "" H 2350 4650 60  0000 C CNN
+	1    2350 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R1
+U 1 1 67704BF2
+P 2700 3400
+F 0 "R1" H 2750 3530 50  0000 C CNN
+F 1 "500" H 2750 3350 50  0000 C CNN
+F 2 "" H 2750 3380 30  0000 C CNN
+F 3 "" V 2750 3450 30  0000 C CNN
+	1    2700 3400
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R2
+U 1 1 67704C41
+P 3600 3400
+F 0 "R2" H 3650 3530 50  0000 C CNN
+F 1 "60k" H 3650 3350 50  0000 C CNN
+F 2 "" H 3650 3380 30  0000 C CNN
+F 3 "" V 3650 3450 30  0000 C CNN
+	1    3600 3400
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R4
+U 1 1 67704C62
+P 4650 3500
+F 0 "R4" H 4700 3630 50  0000 C CNN
+F 1 "10k" H 4700 3450 50  0000 C CNN
+F 2 "" H 4700 3480 30  0000 C CNN
+F 3 "" V 4700 3550 30  0000 C CNN
+	1    4650 3500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_NPN Q4
+U 1 1 67704C93
+P 4500 4050
+F 0 "Q4" H 4400 4100 50  0000 R CNN
+F 1 "eSim_NPN" H 4450 4200 50  0000 R CNN
+F 2 "" H 4700 4150 29  0000 C CNN
+F 3 "" H 4500 4050 60  0000 C CNN
+	1    4500 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q3
+U 1 1 67704CC8
+P 3900 4350
+F 0 "Q3" H 3800 4400 50  0000 R CNN
+F 1 "eSim_NPN" H 3850 4500 50  0000 R CNN
+F 2 "" H 4100 4450 29  0000 C CNN
+F 3 "" H 3900 4350 60  0000 C CNN
+	1    3900 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Diode D1
+U 1 1 67704D0D
+P 4600 4600
+F 0 "D1" H 4600 4700 50  0000 C CNN
+F 1 "eSim_Diode" H 4600 4500 50  0000 C CNN
+F 2 "" H 4600 4600 60  0000 C CNN
+F 3 "" H 4600 4600 60  0000 C CNN
+	1    4600 4600
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_NPN Q5
+U 1 1 67704DC5
+P 4500 5250
+F 0 "Q5" H 4400 5300 50  0000 R CNN
+F 1 "eSim_NPN" H 4450 5400 50  0000 R CNN
+F 2 "" H 4700 5350 29  0000 C CNN
+F 3 "" H 4500 5250 60  0000 C CNN
+	1    4500 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R3
+U 1 1 67704DD6
+P 3950 5500
+F 0 "R3" H 4000 5630 50  0000 C CNN
+F 1 "10k" V 4000 5450 50  0000 C CNN
+F 2 "" H 4000 5480 30  0000 C CNN
+F 3 "" V 4000 5550 30  0000 C CNN
+	1    3950 5500
+	0    1    1    0   
+$EndComp
+$Comp
+L PORT U1
+U 1 1 67705207
+P 2450 5250
+F 0 "U1" H 2500 5350 30  0000 C CNN
+F 1 "PORT" H 2450 5250 30  0000 C CNN
+F 2 "" H 2450 5250 60  0000 C CNN
+F 3 "" H 2450 5250 60  0000 C CNN
+	1    2450 5250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 2 1 67705289
+P 3050 5250
+F 0 "U1" H 3100 5350 30  0000 C CNN
+F 1 "PORT" H 3050 5250 30  0000 C CNN
+F 2 "" H 3050 5250 60  0000 C CNN
+F 3 "" H 3050 5250 60  0000 C CNN
+	2    3050 5250
+	0    -1   -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 677052CE
+P 5300 4900
+F 0 "U1" H 5350 5000 30  0000 C CNN
+F 1 "PORT" H 5300 4900 30  0000 C CNN
+F 2 "" H 5300 4900 60  0000 C CNN
+F 3 "" H 5300 4900 60  0000 C CNN
+	3    5300 4900
+	-1   0    0    1   
+$EndComp
+$Comp
+L GND #PWR01
+U 1 1 67705545
+P 4750 5800
+F 0 "#PWR01" H 4750 5550 50  0001 C CNN
+F 1 "GND" H 4750 5650 50  0000 C CNN
+F 2 "" H 4750 5800 50  0001 C CNN
+F 3 "" H 4750 5800 50  0001 C CNN
+	1    4750 5800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3050 4450 2450 4450
+Wire Wire Line
+	3350 4150 2150 4150
+Wire Wire Line
+	3350 4650 3350 4150
+Wire Wire Line
+	2150 4150 2150 4650
+Connection ~ 2750 4450
+Wire Wire Line
+	4000 4550 4000 5400
+Wire Wire Line
+	4300 5250 4000 5250
+Connection ~ 4000 5250
+Wire Wire Line
+	4600 5050 4600 4750
+Wire Wire Line
+	4600 4450 4600 4250
+Wire Wire Line
+	4600 3850 4600 3600
+Wire Wire Line
+	3650 4050 4300 4050
+Wire Wire Line
+	4000 4050 4000 4150
+Wire Wire Line
+	3650 4050 3650 3600
+Connection ~ 4000 4050
+Wire Wire Line
+	2750 3300 2750 3050
+Wire Wire Line
+	4600 3050 4600 3300
+Wire Wire Line
+	3650 3300 3650 3050
+Connection ~ 3650 3050
+Wire Wire Line
+	2450 4850 2450 5000
+Wire Wire Line
+	3050 4850 3050 5000
+Wire Wire Line
+	4000 5700 4000 5800
+Wire Wire Line
+	4000 5800 4750 5800
+Wire Wire Line
+	4600 4900 5050 4900
+Connection ~ 4600 4900
+Connection ~ 4600 5800
+Connection ~ 4600 3050
+Wire Wire Line
+	4600 5800 4600 5450
+$Comp
+L PORT U1
+U 4 1 677060E6
+P 4750 2700
+F 0 "U1" H 4800 2800 30  0000 C CNN
+F 1 "PORT" H 4750 2700 30  0000 C CNN
+F 2 "" H 4750 2700 60  0000 C CNN
+F 3 "" H 4750 2700 60  0000 C CNN
+	4    4750 2700
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4750 2950 4750 3050
+Connection ~ 4750 3050
+Wire Wire Line
+	4750 3050 2750 3050
+Connection ~ 4600 3750
+Wire Wire Line
+	2750 3600 2750 4150
+Connection ~ 2750 4150
+Wire Wire Line
+	3700 4350 2750 4350
+Wire Wire Line
+	2750 4350 2750 4450
+$EndSCHEMATC
