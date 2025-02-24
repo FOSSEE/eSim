@@ -1,0 +1,84 @@
+* Subcircuit SN7432_Subcirrcuit
+.subckt SN7432_Subcirrcuit net-_d1-pad2_ net-_d3-pad2_ net-_d2-pad2_ net-_d4-pad2_ net-_d7-pad2_ net-_d8-pad2_ net-_r1-pad1_ gndpwr net-_d9-pad2_ net-_d10-pad2_ net-_d15-pad2_ net-_d13-pad2_ net-_d16-pad2_ net-_d14-pad2_ 
+* c:\fossee\esim\library\subcircuitlibrary\sn7432_subcirrcuit\sn7432_subcirrcuit.cir
+.include NPN.lib
+.include D.lib
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_d2-pad2_ Q2N2222
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_d4-pad2_ Q2N2222
+q7 net-_d6-pad1_ net-_q3-pad1_ net-_q10-pad2_ Q2N2222
+q8 net-_d6-pad1_ net-_q4-pad1_ net-_q10-pad2_ Q2N2222
+d6 net-_d6-pad1_ net-_d6-pad2_ 1N4148
+r2  net-_r1-pad1_ net-_q3-pad2_ 4k
+r4  net-_r1-pad1_ net-_q4-pad2_ 2k
+r7  net-_r1-pad1_ net-_d6-pad1_ 2.5k
+q10 net-_d6-pad2_ net-_q10-pad2_ gndpwr Q2N2222
+q12 net-_q12-pad1_ net-_d6-pad2_ net-_q12-pad3_ Q2N2222
+q15 net-_q15-pad1_ net-_q12-pad1_ net-_d8-pad1_ Q2N2222
+r11  net-_r1-pad1_ net-_q12-pad1_ 1.6k
+r14  net-_r1-pad1_ net-_q15-pad1_ 130
+d4 gndpwr net-_d4-pad2_ 1N4148
+d2 gndpwr net-_d2-pad2_ 1N4148
+r8  net-_q10-pad2_ gndpwr 1k
+r12  net-_q12-pad3_ gndpwr 1k
+d8 net-_d8-pad1_ net-_d8-pad2_ 1N4148
+q16 net-_d8-pad2_ net-_q12-pad3_ gndpwr Q2N2222
+q29 net-_q25-pad2_ net-_q29-pad2_ net-_d15-pad2_ Q2N2222
+q30 net-_q26-pad2_ net-_q30-pad2_ net-_d13-pad2_ Q2N2222
+q25 net-_d11-pad1_ net-_q25-pad2_ net-_q23-pad2_ Q2N2222
+q26 net-_d11-pad1_ net-_q26-pad2_ net-_q23-pad2_ Q2N2222
+d11 net-_d11-pad1_ net-_d11-pad2_ 1N4148
+r27  net-_r1-pad1_ net-_q29-pad2_ 4k
+r25  net-_r1-pad1_ net-_q30-pad2_ 2k
+r22  net-_r1-pad1_ net-_d11-pad1_ 2.5k
+q23 net-_d11-pad2_ net-_q23-pad2_ gndpwr Q2N2222
+q21 net-_q17-pad2_ net-_d11-pad2_ net-_q18-pad2_ Q2N2222
+q17 net-_q17-pad1_ net-_q17-pad2_ net-_d9-pad1_ Q2N2222
+r17  net-_r1-pad1_ net-_q17-pad2_ 1.6k
+r15  net-_r1-pad1_ net-_q17-pad1_ 130
+d13 gndpwr net-_d13-pad2_ 1N4148
+d15 gndpwr net-_d15-pad2_ 1N4148
+r21  net-_q23-pad2_ gndpwr 1k
+r18  net-_q18-pad2_ gndpwr 1k
+d9 net-_d9-pad1_ net-_d9-pad2_ 1N4148
+q18 net-_d9-pad2_ net-_q18-pad2_ gndpwr Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_d1-pad2_ Q2N2222
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_d3-pad2_ Q2N2222
+q5 net-_d5-pad1_ net-_q1-pad1_ net-_q5-pad3_ Q2N2222
+q6 net-_d5-pad1_ net-_q2-pad1_ net-_q5-pad3_ Q2N2222
+d5 net-_d5-pad1_ net-_d5-pad2_ 1N4148
+r1  net-_r1-pad1_ net-_q1-pad2_ 4k
+r3  net-_r1-pad1_ net-_q2-pad2_ 2k
+r5  net-_r1-pad1_ net-_d5-pad1_ 2.5k
+q9 net-_d5-pad2_ net-_q5-pad3_ gndpwr Q2N2222
+q11 net-_q11-pad1_ net-_d5-pad2_ net-_q11-pad3_ Q2N2222
+q13 net-_q13-pad1_ net-_q11-pad1_ net-_d7-pad1_ Q2N2222
+r9  net-_r1-pad1_ net-_q11-pad1_ 1.6k
+r13  net-_r1-pad1_ net-_q13-pad1_ 130
+d3 gndpwr net-_d3-pad2_ 1N4148
+d1 gndpwr net-_d1-pad2_ 1N4148
+r6  net-_q5-pad3_ gndpwr 1k
+r10  net-_q11-pad3_ gndpwr 1k
+d7 net-_d7-pad1_ net-_d7-pad2_ 1N4148
+q14 net-_d7-pad2_ net-_q11-pad3_ gndpwr Q2N2222
+q31 net-_q27-pad2_ net-_q31-pad2_ net-_d16-pad2_ Q2N2222
+q32 net-_q28-pad2_ net-_q32-pad2_ net-_d14-pad2_ Q2N2222
+q27 net-_d12-pad1_ net-_q27-pad2_ net-_q24-pad2_ Q2N2222
+q28 net-_d12-pad1_ net-_q28-pad2_ net-_q24-pad2_ Q2N2222
+d12 net-_d12-pad1_ net-_d12-pad2_ 1N4148
+r28  net-_r1-pad1_ net-_q31-pad2_ 4k
+r26  net-_r1-pad1_ net-_q32-pad2_ 2k
+r24  net-_r1-pad1_ net-_d12-pad1_ 2.5k
+q24 net-_d12-pad2_ net-_q24-pad2_ gndpwr Q2N2222
+q22 net-_q19-pad2_ net-_d12-pad2_ net-_q20-pad2_ Q2N2222
+q19 net-_q19-pad1_ net-_q19-pad2_ net-_d10-pad1_ Q2N2222
+r19  net-_r1-pad1_ net-_q19-pad2_ 1.6k
+r16  net-_r1-pad1_ net-_q19-pad1_ 130
+d14 gndpwr net-_d14-pad2_ 1N4148
+d16 gndpwr net-_d16-pad2_ 1N4148
+r23  net-_q24-pad2_ gndpwr 1k
+r20  net-_q20-pad2_ gndpwr 1k
+d10 net-_d10-pad1_ net-_d10-pad2_ 1N4148
+q20 net-_d10-pad2_ net-_q20-pad2_ gndpwr Q2N2222
+* Control Statements
+
+.ends SN7432_Subcirrcuit
