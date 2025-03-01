@@ -1,0 +1,56 @@
+* c:\esim\fossee\esim\library\subcircuitlibrary\ne555_subcircuit\ne555_subcircuit.cir
+
+.include NPN.lib
+.include PNP.lib
+.include LED.lib
+r13  net-_q18-pad3_ net-_d2-pad2_ 6.8k
+q21 net-_q18-pad3_ net-_d2-pad2_ net-_q21-pad3_ Q2N2222
+r14  net-_q21-pad3_ net-_d2-pad1_ 3.8k
+q22 net-_q18-pad3_ net-_q21-pad3_ net-_d2-pad1_ Q2N2222
+r8  net-_q18-pad3_ net-_q11-pad2_ 75k
+r6  net-_q18-pad3_ net-_q13-pad3_ 41k
+r5  net-_q18-pad3_ net-_q10-pad3_ 4.7k
+r4  net-_q18-pad3_ net-_q6-pad3_ 330
+r1  net-_q18-pad3_ net-_q1-pad3_ 4.7k
+q6 net-_q16-pad1_ net-_q1-pad1_ net-_q6-pad3_ Q2N2907A
+q8 gnd net-_q10-pad1_ net-_q6-pad3_ Q2N2907A
+q2 net-_q1-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q5 net-_q1-pad1_ net-_q2-pad3_ net-_q5-pad3_ Q2N2222
+q7 net-_q10-pad1_ net-_q11-pad3_ net-_q5-pad3_ Q2N2222
+r2  net-_q5-pad3_ gnd 10k
+q4 net-_q3-pad2_ net-_q4-pad2_ net-_d1-pad1_ Q2N2907A
+q3 net-_q3-pad1_ net-_q3-pad2_ gnd Q2N2222
+r3  net-_q3-pad2_ net-_q20-pad3_ 100
+q9 gnd net-_q9-pad2_ net-_q12-pad2_ Q2N2907A
+q12 net-_q12-pad1_ net-_q12-pad2_ net-_q12-pad3_ Q2N2907A
+q14 gnd net-_q14-pad2_ net-_q12-pad3_ Q2N2907A
+q15 gnd net-_q15-pad2_ net-_q14-pad2_ Q2N2907A
+r7  net-_q12-pad1_ gnd 100k
+r9  net-_q11-pad2_ net-_q15-pad2_ 5k
+r10  net-_q15-pad2_ gnd 5k
+q16 net-_q16-pad1_ net-_q12-pad1_ gnd Q2N2222
+q17 net-_d1-pad2_ net-_q16-pad1_ gnd Q2N2222
+q19 net-_q18-pad1_ net-_d1-pad2_ gnd Q2N2222
+q20 net-_d2-pad2_ net-_q18-pad1_ net-_q20-pad3_ Q2N2222
+r12  net-_q16-pad1_ net-_q18-pad1_ 4.7k
+d1 net-_d1-pad1_ net-_d1-pad2_ LED
+r11  net-_q13-pad2_ net-_d1-pad1_ 82k
+d2 net-_d2-pad1_ net-_d2-pad2_ LED
+r16  net-_q20-pad3_ net-_q23-pad2_ 220
+r15  net-_q20-pad3_ gnd 4.7k
+q23 net-_d2-pad1_ net-_q23-pad2_ gnd Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad1_ net-_q1-pad3_ Q2N2907A
+q10 net-_q10-pad1_ net-_q10-pad1_ net-_q10-pad3_ Q2N2907A
+q18 net-_q18-pad1_ net-_q13-pad2_ net-_q18-pad3_ Q2N2907A
+q11 net-_q10-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+q13 net-_q12-pad3_ net-_q13-pad2_ net-_q13-pad3_ Q2N2907A
+* u1  net-_q2-pad2_ net-_q9-pad2_ net-_q4-pad2_ net-_q3-pad1_ gnd net-_q18-pad3_ net-_q11-pad2_ net-_d2-pad1_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
