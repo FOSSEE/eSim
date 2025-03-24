@@ -814,7 +814,7 @@ class MainView(QtWidgets.QWidget):
 def main(args):
     user_id = tracker.generate_username()
     log_capture(user_id)
-    """
+    """""
     The splash screen opened at the starting of screen is performed
     by this function.
     """
