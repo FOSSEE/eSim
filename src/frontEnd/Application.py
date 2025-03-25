@@ -40,6 +40,7 @@ from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
+from frontEnd.Chatbot import ChatbotGUI
 
 # Its our main window of application.
 
@@ -48,6 +49,7 @@ class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     global project_name
     simulationEndSignal = QtCore.pyqtSignal(QtCore.QProcess.ExitStatus, int)
+    errorDetectedSignal = QtCore.pyqtSignal(str)
 
     def __init__(self, *args):
         """Initialize main Application window."""
@@ -57,6 +59,7 @@ class Application(QtWidgets.QMainWindow):
 
         # Set slot for simulation end signal to plot simulation data
         self.simulationEndSignal.connect(self.plotSimulationData)
+        self.errorDetectedSignal.connect(self.handleError)
 
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
@@ -64,9 +67,11 @@ class Application(QtWidgets.QMainWindow):
         self.obj_kicad = Kicad(self.obj_Mainview.obj_dockarea)
         self.obj_appconfig = Appconfig()
         self.obj_validation = Validation()
+        self.chatbot_window = ChatbotGUI()
         # Initialize all widget
         self.setCentralWidget(self.obj_Mainview)
         self.initToolBar()
+        self.initchatbot()
 
         self.setGeometry(self.obj_appconfig._app_xpos,
                          self.obj_appconfig._app_ypos,
@@ -81,6 +86,35 @@ class Application(QtWidgets.QMainWindow):
         self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
+
+    def initchatbot(self):  
+        """
+        This function initializes ChatbotIcon.
+        """
+        self.chatboticon = QtWidgets.QPushButton(self, icon=QtGui.QIcon(init_path + 'images/chatbot.png'))
+        self.chatboticon.setIconSize(QtCore.QSize(40, 40))
+        self.chatboticon.setStyleSheet("border-radius: 30px;")
+        self.chatboticon.clicked.connect(self.openChatbot)
+
+    def openChatbot(self):  
+        if not hasattr(self, 'chatbot_window') or not self.chatbot_window.isVisible():
+            self.chatbot_window.setWindowModality(QtCore.Qt.WindowModal)
+            self.chatbot_window.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.WindowStaysOnTopHint)
+            self.chatbot_window.show()
+            self.obj_appconfig.print_info('Chat Bot function is called')
+
+    def resizeEvent(self, event):  
+        """
+        Adjust debug button position during window resize.
+        """
+        super().resizeEvent(event)
+        self.chatboticon.move(self.width() - 90, self.height() - 90) 
+
+    def handleError(self):  
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        self.output_file = os.path.join(self.projDir, "ngspice_error.log")  
+        if self.chatbot_window.isVisible():
+            self.chatbot_window.debug_error(self.output_file)
 
     def initToolBar(self):
         """
@@ -415,6 +449,8 @@ class Application(QtWidgets.QMainWindow):
                 print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
+        else:
+            self.errorDetectedSignal.emit("Simulation failed.")
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
@@ -438,7 +474,7 @@ class Application(QtWidgets.QMainWindow):
                 return
 
             self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                projName, ngspiceNetlist, self.simulationEndSignal)
+                projName, ngspiceNetlist, self.simulationEndSignal,self.chatbot_window)
 
             self.ngspice.setEnabled(False)
             self.conversion.setEnabled(False)
