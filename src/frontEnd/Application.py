@@ -41,7 +41,7 @@ from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
 from frontEnd.Chatbot import ChatbotGUI
-import time
+from PyQt5.QtCore import QTimer
 # Its our main window of application.
 
 
@@ -443,14 +443,18 @@ class Application(QtWidgets.QMainWindow):
                 print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
-                time.sleep(3)
+
                 self.errorDetectedSignal.emit("Simulation failed.")
 
     def handleError(self):  
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.output_file = os.path.join(self.projDir, "ngspice_error.log")  
         if self.chatbot_window.isVisible():
-            self.chatbot_window.debug_error(self.output_file)
+            self.delayed_function_call()
+
+    def delayed_function_call(self):
+        QTimer.singleShot(2000, lambda: self.chatbot_window.debug_error(self.output_file))  
+
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         projDir = self.obj_appconfig.current_project["ProjectName"]
