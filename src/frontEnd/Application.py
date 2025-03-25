@@ -41,7 +41,7 @@ from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
 from frontEnd.Chatbot import ChatbotGUI
-
+import time
 # Its our main window of application.
 
 
@@ -49,7 +49,7 @@ class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     global project_name
     simulationEndSignal = QtCore.pyqtSignal(QtCore.QProcess.ExitStatus, int)
-
+    errorDetectedSignal = QtCore.pyqtSignal(str)
     def __init__(self, *args):
         """Initialize main Application window."""
 
@@ -58,7 +58,7 @@ class Application(QtWidgets.QMainWindow):
 
         # Set slot for simulation end signal to plot simulation data
         self.simulationEndSignal.connect(self.plotSimulationData)
-
+        self.errorDetectedSignal.connect(self.handleError)
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
         self.obj_Mainview = MainView()
@@ -443,7 +443,14 @@ class Application(QtWidgets.QMainWindow):
                 print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
+                time.sleep(3)
+                self.errorDetectedSignal.emit("Simulation failed.")
 
+    def handleError(self):  
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        self.output_file = os.path.join(self.projDir, "ngspice_error.log")  
+        if self.chatbot_window.isVisible():
+            self.chatbot_window.debug_error(self.output_file)
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         projDir = self.obj_appconfig.current_project["ProjectName"]

@@ -171,7 +171,5 @@ class NgspiceWidget(QtWidgets.QWidget):
         error_log_path = os.path.join(self.projDir, "ngspice_error.log")
         with open(error_log_path, "w", encoding="utf-8") as error_log:
             error_log.write(console_output + "\n")
-        if self.chat.isVisible():
-            if (exitStatus == QtCore.QProcess.NormalExit and exitCode == 0 \
-                and errorType == QtCore.QProcess.UnknownError) or "Simulation Failed!" in console_output:
-                    self.chat.debug_error(self.output_file)
+        if self.chat.isVisible()and "Simulation Failed!" in console_output:
+           self.chat.debug_error(self.output_file)
