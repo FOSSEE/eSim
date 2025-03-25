@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QWidget, QHBoxLayout, QTextEdit, QVBoxLayout, QLineE
 from PyQt5.QtCore import QSize
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication
+from configuration.Appconfig import Appconfig
 import os
 if os.name == 'nt':
     from frontEnd import pathmagic  # noqa:F401
@@ -81,15 +82,21 @@ class ChatbotGUI(QWidget):
         self.chat_history = []
         if os.path.exists(log):
             with open(log, "r") as f:
-                lines = f.readlines()
+                lines = [line for line in f.readlines() if line.strip()]
             
-            start_index = next((i for i, line in enumerate(lines) if "No compatibility mode selected" in line), len(lines))
-            cutoff_index = next((i for i, line in enumerate(lines) if "Total CPU time (seconds)" in line), len(lines))
-        
-            # Keep only the lines before the cutoff index
-            filtered_lines = [line for line in lines[start_index+1:cutoff_index] if line.strip()]
+            no_compat_index = next((i for i, line in enumerate(lines) if "No compatibility mode selected!" in line), None)
+            circuit_index = next((i for i, line in enumerate(lines) if "Circuit:" in line), None)
+            total_cpu_index = next((i for i, line in enumerate(lines) if "Total CPU time (seconds)" in line), None)
             
+            before_no_compat = lines[:no_compat_index] if no_compat_index else []
+            between_circuit_and_cpu = lines[circuit_index + 1:total_cpu_index] if circuit_index is not None and total_cpu_index is not None else []
+            
+            filtered_lines = before_no_compat + between_circuit_and_cpu
             combined_text = "".join(filtered_lines)
-            print(combined_text)
             self.user_input.setText(combined_text)
+            self.obj_appconfig = Appconfig()
+            self.projDir = self.obj_appconfig.current_project["ProjectName"]
+            output_file = os.path.join(self.projDir, "erroroutput.txt")
+            with open(output_file, "w") as f:
+                f.writelines(filtered_lines)
             self.debug_ollama()
