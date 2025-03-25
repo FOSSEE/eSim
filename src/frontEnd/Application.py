@@ -92,7 +92,7 @@ class Application(QtWidgets.QMainWindow):
         This function initializes ChatbotIcon.
         """
         self.chatboticon = QtWidgets.QPushButton(self, icon=QtGui.QIcon(init_path + 'images/chatbot.png'))
-        self.chatboticon.setIconSize(QtCore.QSize(40, 40))
+        self.chatboticon.setIconSize(QtCore.QSize(30, 30))
         self.chatboticon.setStyleSheet("border-radius: 30px;")
         self.chatboticon.clicked.connect(self.openChatbot)
 
@@ -327,6 +327,8 @@ class Application(QtWidgets.QMainWindow):
                 self.project.close()
             except BaseException:
                 pass
+            if self.chatbot_window.isVisible():
+                self.chatbot_window.close()
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
