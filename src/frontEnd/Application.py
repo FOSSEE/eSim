@@ -451,8 +451,7 @@ class Application(QtWidgets.QMainWindow):
                 print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
-        else:
-            self.errorDetectedSignal.emit("Simulation failed.")
+                self.errorDetectedSignal.emit("Simulation failed.")
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""

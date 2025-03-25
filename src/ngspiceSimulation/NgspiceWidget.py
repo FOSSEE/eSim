@@ -32,7 +32,7 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminalUi)
-
+        self.output_file = os.path.join(self.projDir, "ngspice_error.log") 
         self.process.setWorkingDirectory(self.projDir)
         self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
         self.process.readyRead.connect(self.readyReadAll)
@@ -136,12 +136,10 @@ class NgspiceWidget(QtWidgets.QWidget):
                         </span>'
             self.terminalUi.simulationConsole.append(
                 successFormat.format("Simulation Completed Successfully!")) 
-            self.projDir = self.obj_appconfig.current_project["ProjectName"]
-            self.output_file = os.path.join(self.projDir, "ngspice_error.log")  
+        else:
             if self.chat.isVisible():
                 self.chat.debug_error(self.output_file)
-
-        else:
+                
             failedFormat = '<span style="color:#ff3333; font-size:26px;"> \
                         {} \
                         </span>'
