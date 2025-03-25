@@ -136,10 +136,7 @@ class NgspiceWidget(QtWidgets.QWidget):
                         </span>'
             self.terminalUi.simulationConsole.append(
                 successFormat.format("Simulation Completed Successfully!")) 
-        else:
-            if self.chat.isVisible():
-                self.chat.debug_error(self.output_file)
-                
+        else:  
             failedFormat = '<span style="color:#ff3333; font-size:26px;"> \
                         {} \
                         </span>'
@@ -174,3 +171,5 @@ class NgspiceWidget(QtWidgets.QWidget):
         error_log_path = os.path.join(self.projDir, "ngspice_error.log")
         with open(error_log_path, "w", encoding="utf-8") as error_log:
             error_log.write(console_output + "\n")
+        if "Simulation Failed!" in console_output and self.chat.isVisible():
+            self.chat.debug_error(self.output_file)
