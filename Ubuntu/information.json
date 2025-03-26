@@ -1,0 +1,107 @@
+{
+    "important_packages": [
+        {
+            "package_name": "ngspice",
+            "version": "-",
+            "installed": "-",
+            "installed_date": "-"
+        },
+        {
+            "package_name": "kicad",
+            "version": "-",
+            "installed": "-",
+            "installed_date": "-"
+        },
+        {
+            "package_name": "ghdl",
+            "version": "-",
+            "installed": "-",
+            "installed_date": "-"
+        },
+        {
+            "package_name": "verilator",
+            "version": "-",
+            "installed": "-",
+            "installed_date": "-"
+        }
+    ],
+    "pip_packages": [
+        {
+            "pip_package_name": "watchdog",
+            "version": "-"
+        },
+        {
+            "pip_package_name": "hdlparser",
+            "package_git_link": "https://github.com/hdl/pyhdlparser/tarball/master",
+            "version": "-"
+        },
+        {
+            "pip_package_name": "makerchip-app",
+            "version": "-"
+        },
+        {
+            "pip_package_name": "sandpiper-saas",
+            "version": "-"
+        }
+    ],
+    "dependencies": [
+        {
+            "dependency_name": "xterm",
+            "version": "-"
+        },
+        {
+            "dependency_name": "python3-psutil",
+            "version": "-"
+        },
+        {
+            "dependency_name": "python3-pyqt5",
+            "version": "-"
+        },
+        {
+            "dependency_name": "python3-matplotlib",
+            "version": "-"
+        },
+        {
+            "dependency_name": "python3-distutils",
+            "version": "-"
+        },
+        {
+            "dependency_name": "python3-pip",
+            "version": "-"
+        }
+    ],
+    "nghdl_dependencies": [
+        {
+            "dependency_name": "make",
+            "version": "-"
+        },
+        {
+            "dependency_name": "gnat",
+            "version": "-"
+        },
+        {
+            "dependency_name": "llvm",
+            "version": "-"
+        },
+        {
+            "dependency_name": "clang",
+            "version": "-"
+        },
+        {
+            "dependency_name": "zlib1g-dev",
+            "version": "-"
+        },
+        {
+            "dependency_name": "libcanberra-gtk-module",
+            "version": "-"
+        },
+        {
+            "dependency_name": "libxaw7",
+            "version": "-"
+        },
+        {
+            "dependency_name": "libxaw7-dev",
+            "version": "-"
+        }
+    ]
+}

@@ -1,0 +1,9 @@
+.title KiCad schematic
+.save all
+.probe alli
+R1 in out 1k
+v1 __v1
+U2 __U2
+C1 out GND 10u
+U1 __U1
+.end

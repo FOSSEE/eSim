@@ -1,0 +1,1 @@
+.MODEL ymod txl( R=12.45 L=8.972e-9 G=0 C=0.468e-12 length=16 )

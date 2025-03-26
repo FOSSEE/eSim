@@ -1,0 +1,24 @@
+{
+    "important_packages": [
+        {
+            "package_name": "ngspice",
+            "version": "43",
+            "installed_date": "2025-03-20 10:01:17"
+        },
+        {
+            "package_name": "kicad",
+            "version": "7.0.11",
+            "installed_date": "2025-03-20 12:29:52"
+        },
+        {
+            "package_name": "ghdl",
+            "version": "4.1.0",
+            "installed_date": "2025-03-20 10:01:42"
+        },
+        {
+            "package_name": "verilator",
+            "version": "5.032",
+            "installed_date": "2025-03-20 10:01:50"
+        }
+    ]
+}

@@ -1,0 +1,830 @@
+2025-01-20 11:03:46,009 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:03:49,328 - INFO - Updated chocolatey installation status in install_details.json.
+2025-01-20 11:03:49,893 - INFO - Updated chocolatey installation status in install_details.json.
+2025-01-20 11:04:06,835 - INFO - Chocolatey updated successfully.
+2025-01-20 11:04:07,401 - INFO - Updated chocolatey installation status in install_details.json.
+2025-01-20 11:07:30,637 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:07:30,637 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:07:33,290 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:07:33,290 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:07:33,853 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-20 11:07:33,859 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:07:35,686 - INFO - Attempted to install Chocolatey, but it is already installed.
+2025-01-20 11:07:43,933 - INFO - Chocolatey updated successfully.
+2025-01-20 11:07:45,779 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-20 11:07:45,781 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:19:39,642 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:19:39,650 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:25:53,102 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:25:53,118 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:28:13,516 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:28:13,516 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:28:14,079 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:28:14,079 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:28:17,361 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:28:17,362 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:29:34,085 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-20 11:29:34,085 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:29:34,675 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:29:34,675 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:29:39,343 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-20 11:29:39,344 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:30:55,667 - ERROR - Installation failed: Command 'choco install -y ngspice --version=40.0.0' returned non-zero exit status 1.
+2025-01-20 11:31:09,641 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-20 11:31:09,642 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:31:56,061 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-20 11:31:56,061 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:31:56,597 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:31:56,597 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:31:59,548 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-20 11:31:59,548 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:32:08,201 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:32:08,201 - INFO - Ngspice version 40.0.0 installed successfully.
+2025-01-20 11:32:22,142 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:32:22,142 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:32:59,615 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:32:59,615 - INFO - Ngspice has been updated to version 41.0.0.
+2025-01-20 11:33:13,142 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:33:13,143 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:37:09,140 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:37:09,140 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:37:09,145 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:37:09,145 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:37:09,712 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:37:09,712 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:37:16,742 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:37:16,742 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:37:23,977 - INFO - Fetched latest KiCad versions.
+2025-01-20 11:37:28,940 - ERROR - Installation failed: Command 'choco install -y kicad --version=8.0.7' returned non-zero exit status 1.
+2025-01-20 11:37:35,418 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:37:35,419 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:37:36,343 - INFO - Fetched latest KiCad versions.
+2025-01-20 11:38:20,286 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:38:20,286 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:38:20,286 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:38:20,286 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:38:20,831 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:38:20,831 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:38:22,799 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:38:22,800 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:38:23,727 - INFO - Fetched latest KiCad versions.
+2025-01-20 11:38:26,440 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:38:26,440 - INFO - KiCad version 8.0.8 installed successfully.
+2025-01-20 11:38:29,867 - INFO - Updated existing KiCad installation details.
+2025-01-20 11:38:29,867 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:38:30,774 - INFO - Fetched latest KiCad versions.
+2025-01-20 11:39:01,460 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:39:01,460 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:39:01,460 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:39:01,460 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:39:02,032 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:39:02,032 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:39:04,380 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:39:04,380 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:39:05,295 - INFO - Fetched latest KiCad versions.
+2025-01-20 11:40:06,628 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:40:06,628 - INFO - KiCad version 8.0.8 installed successfully.
+2025-01-20 11:40:22,400 - INFO - Updated existing KiCad installation details.
+2025-01-20 11:40:22,400 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:40:23,421 - INFO - Fetched latest KiCad versions.
+2025-01-20 11:43:53,466 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:43:53,466 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:43:53,466 - INFO - Updated existing KiCad installation details.
+2025-01-20 11:43:53,466 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:43:54,042 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:43:54,042 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:44:06,367 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:44:06,367 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:44:06,367 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:44:06,367 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:44:06,963 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:44:06,963 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:44:09,533 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-20 11:44:09,534 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:44:10,509 - INFO - Fetched latest KiCad versions.
+2025-01-20 11:48:21,081 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:48:21,081 - INFO - KiCad version 8.0.7 installed successfully.
+2025-01-20 11:48:22,476 - INFO - Updated existing KiCad installation details.
+2025-01-20 11:48:22,477 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:48:23,645 - INFO - Fetched latest KiCad versions.
+2025-01-20 11:52:51,490 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:52:51,490 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:52:51,490 - INFO - Updated existing KiCad installation details.
+2025-01-20 11:52:51,490 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:52:51,490 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-20 11:52:51,490 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:52:52,052 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:52:52,052 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:52:54,318 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-20 11:52:54,318 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:54:39,374 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:54:39,374 - INFO - LLVM version 19.1.5 installed successfully.
+2025-01-20 11:54:44,499 - INFO - Updated existing LLVM installation details.
+2025-01-20 11:54:44,499 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:58:22,048 - INFO - Updated existing Ngspice installation details.
+2025-01-20 11:58:22,048 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:58:22,048 - INFO - Updated existing KiCad installation details.
+2025-01-20 11:58:22,048 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:58:22,048 - WARNING - GHDL directory not found. Marked as not installed.
+2025-01-20 11:58:22,048 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:58:22,048 - INFO - Updated existing LLVM installation details.
+2025-01-20 11:58:22,048 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:58:22,596 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 11:58:22,596 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 11:58:25,189 - WARNING - GHDL directory not found. Marked as not installed.
+2025-01-20 11:58:25,189 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:58:27,461 - INFO - Fetched the latest GHDL version from GitHub API.
+2025-01-20 11:58:27,461 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v4.1.0/ghdl-MINGW32.zip.
+2025-01-20 11:58:27,462 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v4.1.0/ghdl-MINGW32.zip...
+2025-01-20 11:58:32,610 - INFO - GHDL downloaded to D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools\ghdl-v4.1.0.zip.
+2025-01-20 11:58:32,611 - INFO - Extracting D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools\ghdl-v4.1.0.zip...
+2025-01-20 11:58:33,630 - INFO - GHDL extracted successfully to D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools.
+2025-01-20 11:58:33,746 - INFO - Added D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools to the system PATH.
+2025-01-20 11:58:33,746 - INFO - Updated existing GHDL installation details.
+2025-01-20 11:58:33,746 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:58:33,746 - INFO - GHDL version v4.1.0 installed successfully in D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools.
+2025-01-20 11:58:35,868 - INFO - Updated existing GHDL installation details.
+2025-01-20 11:58:35,869 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:58:36,829 - INFO - Fetched the latest GHDL version from GitHub API.
+2025-01-20 11:58:36,830 - INFO - Updating GHDL to the latest version.
+2025-01-20 11:58:36,831 - INFO - GHDL already installed (version -).
+2025-01-20 11:58:38,432 - INFO - Updated existing GHDL installation details.
+2025-01-20 11:58:38,432 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:59:33,424 - INFO - Updated existing GHDL installation details.
+2025-01-20 11:59:33,424 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 11:59:36,387 - INFO - GHDL already installed (version -).
+2025-01-20 11:59:40,278 - INFO - Updated existing GHDL installation details.
+2025-01-20 11:59:40,278 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:04:42,711 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:04:42,711 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:04:42,711 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:04:42,711 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:04:42,711 - WARNING - GHDL directory not found. Marked as not installed.
+2025-01-20 12:04:42,711 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:04:42,711 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:04:42,711 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:04:43,260 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:04:43,260 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:04:48,463 - WARNING - GHDL directory not found. Marked as not installed.
+2025-01-20 12:04:48,464 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:05:11,381 - INFO - Fetched the latest GHDL version from GitHub API.
+2025-01-20 12:05:11,382 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v4.1.0/ghdl-MINGW32.zip.
+2025-01-20 12:05:11,382 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v4.1.0/ghdl-MINGW32.zip...
+2025-01-20 12:05:13,975 - INFO - GHDL downloaded to D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools\ghdl-v4.1.0.zip.
+2025-01-20 12:05:13,975 - INFO - Extracting D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools\ghdl-v4.1.0.zip...
+2025-01-20 12:05:14,197 - INFO - GHDL extracted successfully to D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools.
+2025-01-20 12:05:19,307 - INFO - Added D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools to the system PATH.
+2025-01-20 12:05:19,307 - INFO - GHDL version v4.1.0 installed successfully in D:\Capstone Project\ToolManager(Task2)\Application_Venv\tools.
+2025-01-20 12:05:21,072 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:05:21,074 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:05:24,034 - INFO - Fetched the latest GHDL version from GitHub API.
+2025-01-20 12:05:24,034 - INFO - GHDL is up-to-date.
+2025-01-20 12:05:25,293 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:05:25,293 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:23,256 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:12:23,256 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:23,272 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:12:23,272 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:23,272 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:12:23,272 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:23,288 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:12:23,288 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:23,834 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:12:23,834 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:12:57,554 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:12:57,554 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:57,554 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:12:57,554 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:57,554 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:12:57,554 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:57,569 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:12:57,569 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:12:58,105 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:12:58,105 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:13:03,181 - INFO - Ensuring pip is installed in toolmanagervenv...
+2025-01-20 12:13:05,611 - INFO - Installing watchdog in toolmanagervenv...
+2025-01-20 12:13:06,378 - INFO - Installing https://github.com/hdl/pyhdlparser/tarball/master in toolmanagervenv...
+2025-01-20 12:13:14,183 - INFO - Installing makerchip-app in toolmanagervenv...
+2025-01-20 12:13:14,986 - INFO - Installing sandpiper-saas in toolmanagervenv...
+2025-01-20 12:13:15,905 - INFO - Installing psutil in toolmanagervenv...
+2025-01-20 12:13:16,695 - INFO - Installing pyqt5 in toolmanagervenv...
+2025-01-20 12:13:17,475 - INFO - Installing matplotlib in toolmanagervenv...
+2025-01-20 12:13:18,265 - INFO - install_details.json updated successfully.
+2025-01-20 12:14:17,817 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:14:17,817 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:14:17,817 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:14:17,817 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:14:17,817 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:14:17,817 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:14:17,834 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:14:17,834 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:14:18,392 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:14:18,392 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:16:38,686 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:16:38,686 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:16:38,701 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:16:38,701 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:16:38,701 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:16:38,701 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:16:38,701 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:16:38,701 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:16:39,277 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:16:39,277 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:16:56,672 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:16:56,672 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:16:56,672 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:16:56,672 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:16:56,672 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:16:56,672 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:16:56,686 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:16:56,686 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:16:57,258 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:16:57,258 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:17:29,519 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:17:29,519 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:17:29,527 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:17:29,527 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:17:29,527 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:17:29,527 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:17:29,533 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:17:29,533 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:17:30,099 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:17:30,099 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:17:49,304 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:17:49,304 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:17:49,304 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:17:49,304 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:17:49,304 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:17:49,304 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:17:49,312 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:17:49,312 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:17:49,890 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:17:49,890 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:19:04,857 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:19:04,857 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:19:04,857 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:19:04,857 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:19:04,857 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:19:04,857 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:19:04,873 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:19:04,873 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:19:05,437 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:19:05,437 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:19:48,623 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:19:48,623 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:19:48,623 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:19:48,623 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:19:48,623 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:19:48,623 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:19:48,639 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:19:48,639 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:19:49,180 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:19:49,196 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:20:05,049 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:20:05,049 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:20:05,060 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:20:05,061 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:20:05,061 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:20:05,061 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:20:05,072 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:20:05,072 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:20:05,620 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:20:05,620 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:21:17,553 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:21:17,553 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:21:17,553 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:21:17,553 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:21:17,553 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:21:17,553 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:21:17,569 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:21:17,569 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:21:18,154 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:21:18,154 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:22:23,831 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:22:23,831 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:22:23,831 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:22:23,831 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:22:23,831 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:22:23,831 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:22:23,847 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:22:23,847 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:22:24,420 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:22:24,420 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:23:14,221 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:23:14,221 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:23:14,221 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:23:14,221 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:23:14,221 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:23:14,221 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:23:14,237 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:23:14,237 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:23:14,791 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:23:14,791 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:23:38,221 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:23:38,221 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:23:38,237 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:23:38,237 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:23:38,237 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:23:38,237 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:23:38,237 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:23:38,237 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:23:38,791 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:23:38,791 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:26:40,015 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:26:40,015 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:29:05,277 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:29:05,277 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:38:20,161 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:38:20,161 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:38:21,618 - INFO - Fetched latest KiCad versions.
+2025-01-20 12:43:47,707 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:43:47,707 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:47:02,544 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:47:02,544 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:55:43,615 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:55:43,615 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:55:43,615 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:55:43,615 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:55:43,615 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:55:43,615 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:55:43,630 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:55:43,630 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:55:44,190 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:55:44,190 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:59:26,273 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:59:26,273 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:59:26,273 - INFO - Updated existing KiCad installation details.
+2025-01-20 12:59:26,273 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:59:26,273 - INFO - Updated existing GHDL installation details.
+2025-01-20 12:59:26,273 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:59:26,288 - INFO - Updated existing LLVM installation details.
+2025-01-20 12:59:26,288 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 12:59:26,860 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:59:26,860 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:59:29,544 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 12:59:29,544 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:59:30,100 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-20 12:59:30,108 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 12:59:37,539 - INFO - Updated existing Ngspice installation details.
+2025-01-20 12:59:37,539 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:01:53,812 - INFO - Updated existing Ngspice installation details.
+2025-01-20 13:01:53,812 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:01:53,812 - INFO - Updated existing KiCad installation details.
+2025-01-20 13:01:53,828 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:01:53,828 - INFO - Updated existing GHDL installation details.
+2025-01-20 13:01:53,828 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:01:53,830 - INFO - Updated existing LLVM installation details.
+2025-01-20 13:01:53,830 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:01:54,407 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 13:01:54,407 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:01:57,580 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 13:01:57,580 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:01:58,154 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-20 13:01:58,169 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:02:02,027 - INFO - Updated existing Ngspice installation details.
+2025-01-20 13:02:02,027 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:02:07,582 - INFO - Updated existing KiCad installation details.
+2025-01-20 13:02:07,582 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:02:08,673 - INFO - Fetched latest KiCad versions.
+2025-01-20 13:02:15,416 - INFO - Fetched latest KiCad versions.
+2025-01-20 13:02:16,337 - INFO - Fetched latest KiCad versions.
+2025-01-20 13:03:13,983 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:03:13,983 - INFO - KiCad has been updated to version 8.0.8.
+2025-01-20 13:03:16,336 - INFO - Updated existing KiCad installation details.
+2025-01-20 13:03:16,336 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:03:22,067 - INFO - Updated existing LLVM installation details.
+2025-01-20 13:03:22,067 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:03:27,189 - INFO - Updated existing GHDL installation details.
+2025-01-20 13:03:27,189 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:04:37,329 - INFO - Updated existing Ngspice installation details.
+2025-01-20 13:04:37,330 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:04:37,330 - INFO - Updated existing KiCad installation details.
+2025-01-20 13:04:37,330 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:04:37,330 - INFO - Updated existing GHDL installation details.
+2025-01-20 13:04:37,330 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:04:37,330 - INFO - Updated existing LLVM installation details.
+2025-01-20 13:04:37,330 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:04:37,928 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 13:04:37,928 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:05:07,623 - INFO - Updated existing Ngspice installation details.
+2025-01-20 13:05:07,623 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:05:07,623 - INFO - Updated existing KiCad installation details.
+2025-01-20 13:05:07,623 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:05:07,623 - INFO - Updated existing GHDL installation details.
+2025-01-20 13:05:07,623 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:05:07,639 - INFO - Updated existing LLVM installation details.
+2025-01-20 13:05:07,639 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:05:08,212 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 13:05:08,228 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:06:58,874 - INFO - Updated existing Ngspice installation details.
+2025-01-20 13:06:58,874 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:06:58,889 - INFO - Updated existing KiCad installation details.
+2025-01-20 13:06:58,890 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:06:58,891 - INFO - Updated existing GHDL installation details.
+2025-01-20 13:06:58,891 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:06:58,891 - INFO - Updated existing LLVM installation details.
+2025-01-20 13:06:58,891 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:06:59,453 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 13:06:59,453 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:07:01,319 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 13:07:01,319 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:07:01,877 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-20 13:07:01,893 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:07:06,661 - INFO - Updated existing Ngspice installation details.
+2025-01-20 13:07:06,661 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:07:11,334 - INFO - Updated existing KiCad installation details.
+2025-01-20 13:07:11,334 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:07:12,254 - INFO - Fetched latest KiCad versions.
+2025-01-20 13:07:15,477 - INFO - Updated existing LLVM installation details.
+2025-01-20 13:07:15,477 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:07:19,483 - INFO - Updated existing GHDL installation details.
+2025-01-20 13:07:19,483 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:08:27,477 - INFO - Updated existing Ngspice installation details.
+2025-01-20 13:08:27,477 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:08:27,477 - INFO - Updated existing KiCad installation details.
+2025-01-20 13:08:27,477 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:08:27,477 - INFO - Updated existing GHDL installation details.
+2025-01-20 13:08:27,477 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:08:27,492 - INFO - Updated existing LLVM installation details.
+2025-01-20 13:08:27,492 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 13:08:28,065 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 13:08:28,065 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:08:30,065 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 13:08:30,065 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 13:08:30,651 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-20 13:08:30,655 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 16:16:48,657 - INFO - Updated existing Ngspice installation details.
+2025-01-20 16:16:48,657 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 16:16:48,657 - INFO - Updated existing KiCad installation details.
+2025-01-20 16:16:48,657 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 16:16:48,657 - INFO - Updated existing GHDL installation details.
+2025-01-20 16:16:48,657 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 16:16:48,673 - INFO - Updated existing LLVM installation details.
+2025-01-20 16:16:48,673 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-20 16:16:49,245 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 16:16:49,247 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 16:16:52,807 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-20 16:16:52,807 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 16:16:53,364 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-20 16:16:53,364 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-20 16:21:55,042 - INFO - Updated existing Ngspice installation details.
+2025-01-20 16:21:55,042 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:37:18,488 - INFO - Updated existing Ngspice installation details.
+2025-01-21 15:37:18,503 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:37:18,503 - INFO - Updated existing KiCad installation details.
+2025-01-21 15:37:18,503 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:37:18,503 - INFO - Updated existing GHDL installation details.
+2025-01-21 15:37:18,503 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:37:18,503 - INFO - Updated existing LLVM installation details.
+2025-01-21 15:37:18,503 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:37:19,108 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-21 15:37:19,108 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-21 15:41:08,848 - INFO - Updated existing Ngspice installation details.
+2025-01-21 15:41:08,848 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:41:08,848 - INFO - Updated existing KiCad installation details.
+2025-01-21 15:41:08,848 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:41:08,848 - INFO - Updated existing GHDL installation details.
+2025-01-21 15:41:08,848 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:41:08,859 - INFO - Updated existing LLVM installation details.
+2025-01-21 15:41:08,859 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:41:09,448 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-21 15:41:09,448 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-21 15:41:48,644 - INFO - Updated existing Ngspice installation details.
+2025-01-21 15:41:48,644 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:41:48,648 - INFO - Updated existing KiCad installation details.
+2025-01-21 15:41:48,648 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:41:48,649 - INFO - Updated existing GHDL installation details.
+2025-01-21 15:41:48,649 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:41:48,658 - INFO - Updated existing LLVM installation details.
+2025-01-21 15:41:48,658 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:41:49,213 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-21 15:41:49,213 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-21 15:42:28,092 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-21 15:42:28,092 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-21 15:42:28,658 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-21 15:42:28,664 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-21 15:42:57,897 - INFO - Updated existing Ngspice installation details.
+2025-01-21 15:42:57,898 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:43:34,898 - INFO - Updated existing Ngspice installation details.
+2025-01-21 15:43:34,898 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:43:50,404 - INFO - Updated existing KiCad installation details.
+2025-01-21 15:43:50,404 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:43:57,438 - INFO - Fetched latest KiCad versions.
+2025-01-21 15:44:14,775 - INFO - Updated existing LLVM installation details.
+2025-01-21 15:44:14,775 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-21 15:44:36,373 - INFO - Updated existing GHDL installation details.
+2025-01-21 15:44:36,379 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:01:36,172 - INFO - Updated existing Ngspice installation details.
+2025-01-29 19:01:36,172 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:01:36,174 - INFO - Updated existing KiCad installation details.
+2025-01-29 19:01:36,174 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:01:36,175 - INFO - Updated existing GHDL installation details.
+2025-01-29 19:01:36,175 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:01:36,186 - INFO - Updated existing LLVM installation details.
+2025-01-29 19:01:36,186 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:01:36,841 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-29 19:01:36,842 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-29 19:03:40,794 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-29 19:03:40,794 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:03:40,812 - INFO - Updated existing KiCad installation details.
+2025-01-29 19:03:40,813 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:03:40,813 - INFO - Updated existing GHDL installation details.
+2025-01-29 19:03:40,813 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:03:40,823 - INFO - Updated existing LLVM installation details.
+2025-01-29 19:03:40,823 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:03:41,442 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-29 19:03:41,443 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-29 19:06:21,200 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-29 19:06:21,201 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:06:39,904 - ERROR - Installation failed: Command 'choco install -y ngspice --version=40.0.0' returned non-zero exit status 1.
+2025-01-29 19:06:43,403 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-29 19:06:43,403 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:06:45,956 - ERROR - Installation failed: Command 'choco install -y ngspice --version=40.0.0' returned non-zero exit status 1.
+2025-01-29 19:06:46,916 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-29 19:06:46,916 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:06:50,691 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:06:50,691 - INFO - Ngspice version 41.0.0 installed successfully.
+2025-01-29 19:06:55,226 - INFO - Updated existing Ngspice installation details.
+2025-01-29 19:06:55,227 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-29 19:18:07,332 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-29 19:18:07,333 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-29 19:18:08,036 - INFO - Chocolatey is already installed. Version: 2.4.1.
+2025-01-29 19:18:08,043 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 09:12:26,719 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 09:12:26,719 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:12:26,732 - INFO - Updated existing KiCad installation details.
+2025-01-30 09:12:26,732 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:12:26,734 - INFO - Updated existing GHDL installation details.
+2025-01-30 09:12:26,735 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:12:26,744 - INFO - Updated existing LLVM installation details.
+2025-01-30 09:12:26,744 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:12:27,372 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 09:12:27,373 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 09:12:30,210 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 09:12:30,211 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:01,599 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:01,599 - INFO - Ngspice version 39.0.0 installed successfully.
+2025-01-30 09:13:03,406 - INFO - Updated existing Ngspice installation details.
+2025-01-30 09:13:03,406 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:20,977 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:20,977 - INFO - Ngspice has been updated to version 41.0.0.
+2025-01-30 09:13:22,353 - INFO - Updated existing Ngspice installation details.
+2025-01-30 09:13:22,354 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:41,765 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 09:13:41,766 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:41,780 - INFO - Updated existing KiCad installation details.
+2025-01-30 09:13:41,781 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:41,781 - INFO - Updated existing GHDL installation details.
+2025-01-30 09:13:41,781 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:41,793 - INFO - Updated existing LLVM installation details.
+2025-01-30 09:13:41,793 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:13:42,375 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 09:13:42,377 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 09:13:47,571 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 09:13:47,571 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:14:12,245 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:14:12,245 - INFO - Ngspice version 40.0.0 installed successfully.
+2025-01-30 09:14:28,047 - INFO - Updated existing Ngspice installation details.
+2025-01-30 09:14:28,047 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:14:49,838 - INFO - Updated existing Ngspice installation details.
+2025-01-30 09:14:49,838 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:14:49,840 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-30 09:14:49,840 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:14:49,856 - INFO - Updated existing GHDL installation details.
+2025-01-30 09:14:49,857 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:14:49,870 - INFO - Updated existing LLVM installation details.
+2025-01-30 09:14:49,871 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:14:50,444 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 09:14:50,445 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 09:14:55,579 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-30 09:14:55,579 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:15:01,490 - INFO - Fetched latest KiCad versions.
+2025-01-30 09:15:07,149 - ERROR - Installation failed: Command 'choco install -y kicad --version=8.0.7' returned non-zero exit status 1.
+2025-01-30 09:15:13,986 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-30 09:15:13,986 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:20:21,171 - INFO - Updated existing Ngspice installation details.
+2025-01-30 09:20:21,171 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:20:21,173 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-30 09:20:21,173 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:20:21,174 - INFO - Updated existing GHDL installation details.
+2025-01-30 09:20:21,174 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:20:21,186 - INFO - Updated existing LLVM installation details.
+2025-01-30 09:20:21,186 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:20:21,781 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 09:20:21,783 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 09:20:24,601 - INFO - Updated existing LLVM installation details.
+2025-01-30 09:20:24,602 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:23:02,626 - INFO - Updated existing Ngspice installation details.
+2025-01-30 09:23:02,627 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:23:02,627 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-30 09:23:02,628 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:23:02,628 - INFO - Updated existing GHDL installation details.
+2025-01-30 09:23:02,628 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:23:02,643 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-30 09:23:02,643 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:23:03,225 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 09:23:03,232 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 09:23:05,634 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-30 09:23:05,634 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:23:06,576 - INFO - Fetched latest KiCad versions.
+2025-01-30 09:23:11,820 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:23:11,820 - INFO - KiCad version 8.0.8 installed successfully.
+2025-01-30 09:23:15,948 - INFO - Updated existing KiCad installation details.
+2025-01-30 09:23:15,948 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:23:38,085 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-30 09:23:38,086 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:25:56,466 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:25:56,466 - INFO - LLVM version 19.1.3 installed successfully.
+2025-01-30 09:26:14,081 - INFO - Updated existing LLVM installation details.
+2025-01-30 09:26:14,081 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:27:57,007 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 09:27:57,007 - INFO - LLVM has been updated to version 19.1.5.
+2025-01-30 09:28:02,579 - INFO - Updated existing LLVM installation details.
+2025-01-30 09:28:02,580 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:38:47,506 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 14:38:47,510 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:38:47,522 - INFO - Updated existing KiCad installation details.
+2025-01-30 14:38:47,522 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:38:47,523 - INFO - Updated existing GHDL installation details.
+2025-01-30 14:38:47,523 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:38:47,531 - INFO - Updated existing LLVM installation details.
+2025-01-30 14:38:47,531 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:38:48,145 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 14:38:48,147 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 14:38:50,723 - INFO - Updated existing KiCad installation details.
+2025-01-30 14:38:50,723 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:38:55,095 - INFO - Fetched latest KiCad versions.
+2025-01-30 14:39:44,244 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 14:39:44,244 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:39:44,245 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-30 14:39:44,246 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:39:44,261 - INFO - Updated existing GHDL installation details.
+2025-01-30 14:39:44,262 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:39:44,270 - INFO - Updated existing LLVM installation details.
+2025-01-30 14:39:44,270 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:39:44,838 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 14:39:44,840 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 14:39:48,025 - WARNING - KiCad directory not found. Marked as not installed.
+2025-01-30 14:39:48,025 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:39:48,932 - INFO - Fetched latest KiCad versions.
+2025-01-30 14:42:31,855 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 14:42:31,855 - INFO - KiCad version 8.0.8 installed successfully.
+2025-01-30 14:42:33,775 - INFO - Updated existing KiCad installation details.
+2025-01-30 14:42:33,776 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:30:19,220 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 15:30:19,221 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:30:19,223 - INFO - Updated existing KiCad installation details.
+2025-01-30 15:30:19,224 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:30:19,226 - INFO - Updated existing GHDL installation details.
+2025-01-30 15:30:19,226 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:30:19,244 - INFO - Updated existing LLVM installation details.
+2025-01-30 15:30:19,244 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:30:20,094 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 15:30:20,096 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 15:30:40,769 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 15:30:40,771 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:31:28,435 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 15:31:28,435 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:32:02,070 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 15:32:02,070 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:32:30,394 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-30 15:32:30,397 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:33:11,543 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 15:33:11,548 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:33:11,549 - INFO - Updated existing KiCad installation details.
+2025-01-30 15:33:11,551 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:33:11,552 - INFO - Updated existing GHDL installation details.
+2025-01-30 15:33:11,552 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:33:11,571 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-30 15:33:11,571 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:33:12,296 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 15:33:12,298 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 15:33:15,664 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-30 15:33:15,664 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:43:24,008 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 15:43:24,009 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:43:24,010 - INFO - Updated existing KiCad installation details.
+2025-01-30 15:43:24,010 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:43:24,011 - INFO - Updated existing GHDL installation details.
+2025-01-30 15:43:24,011 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:43:24,026 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-30 15:43:24,027 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:43:24,775 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-30 15:43:24,776 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-01-30 15:43:28,740 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-01-30 15:43:28,741 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:45:29,814 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:45:29,814 - INFO - Ngspice version 41.0.0 installed successfully.
+2025-01-30 15:45:32,071 - INFO - Updated existing Ngspice installation details.
+2025-01-30 15:45:32,071 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:46:10,794 - WARNING - LLVM directory not found. Marked as not installed.
+2025-01-30 15:46:10,796 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:47:09,799 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-30 15:47:09,799 - INFO - LLVM version 19.1.5 installed successfully.
+2025-01-30 15:47:12,627 - INFO - Updated existing LLVM installation details.
+2025-01-30 15:47:12,628 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-31 17:22:17,077 - INFO - Updated existing Ngspice installation details.
+2025-01-31 17:22:17,078 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-31 17:22:17,079 - INFO - Updated existing KiCad installation details.
+2025-01-31 17:22:17,079 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-31 17:22:17,079 - INFO - Updated existing GHDL installation details.
+2025-01-31 17:22:17,081 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-31 17:22:17,090 - INFO - Updated existing LLVM installation details.
+2025-01-31 17:22:17,090 - INFO - JSON data saved to D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-01-31 17:22:17,775 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-01-31 17:22:17,776 - INFO - Updated chocolatey installation status in D:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-02-05 11:43:54,783 - INFO - Updated existing Ngspice installation details.
+2025-02-05 11:43:54,783 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:43:54,783 - INFO - Updated existing KiCad installation details.
+2025-02-05 11:43:54,783 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:43:54,799 - INFO - Updated existing GHDL installation details.
+2025-02-05 11:43:54,799 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:43:54,815 - INFO - Updated existing LLVM installation details.
+2025-02-05 11:43:54,815 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:43:55,453 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-02-05 11:43:55,459 - INFO - Updated chocolatey installation status in C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-02-05 11:43:58,254 - INFO - Updated existing KiCad installation details.
+2025-02-05 11:43:58,254 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:44:03,169 - INFO - Fetched latest KiCad versions.
+2025-02-05 11:44:46,945 - INFO - Updated existing Ngspice installation details.
+2025-02-05 11:44:46,961 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:44:46,961 - INFO - Updated existing KiCad installation details.
+2025-02-05 11:44:46,961 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:44:46,961 - INFO - Updated existing GHDL installation details.
+2025-02-05 11:44:46,961 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:44:46,961 - INFO - Updated existing LLVM installation details.
+2025-02-05 11:44:46,961 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:44:47,568 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-02-05 11:44:47,568 - INFO - Updated chocolatey installation status in C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-02-05 11:45:05,361 - INFO - Updated existing Ngspice installation details.
+2025-02-05 11:45:05,361 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:45:05,361 - WARNING - KiCad directory not found. Marked as not installed.
+2025-02-05 11:45:05,361 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:45:05,378 - INFO - Updated existing GHDL installation details.
+2025-02-05 11:45:05,378 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:45:05,378 - INFO - Updated existing LLVM installation details.
+2025-02-05 11:45:05,392 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:45:05,994 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-02-05 11:45:05,994 - INFO - Updated chocolatey installation status in C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-02-05 11:45:08,225 - WARNING - KiCad directory not found. Marked as not installed.
+2025-02-05 11:45:08,225 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:45:09,180 - INFO - Fetched latest KiCad versions.
+2025-02-05 11:46:11,178 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-05 11:46:11,178 - INFO - KiCad version 8.0.8 installed successfully.
+2025-02-05 11:46:53,100 - INFO - Updated existing KiCad installation details.
+2025-02-05 11:46:53,101 - INFO - JSON data saved to C:\Users\User\Desktop\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-06 15:34:26,335 - WARNING - KiCad directory not found. Marked as not installed.
+2025-02-06 15:34:26,336 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-06 15:34:31,291 - INFO - Fetched latest KiCad versions.
+2025-02-06 15:37:54,571 - WARNING - KiCad directory not found. Marked as not installed.
+2025-02-06 15:37:54,571 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-06 15:37:55,528 - INFO - Fetched latest KiCad versions.
+2025-02-06 15:38:03,867 - ERROR - Installation failed: Command 'choco install -y kicad --version=8.0.8' returned non-zero exit status 4294967295.
+2025-02-06 15:38:07,376 - WARNING - KiCad directory not found. Marked as not installed.
+2025-02-06 15:38:07,376 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:32:21,302 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-02-17 17:32:21,303 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:32:21,310 - WARNING - KiCad directory not found. Marked as not installed.
+2025-02-17 17:32:21,311 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:32:21,311 - WARNING - GHDL directory not found. Marked as not installed.
+2025-02-17 17:32:21,311 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:32:21,323 - WARNING - LLVM directory not found. Marked as not installed.
+2025-02-17 17:32:21,323 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:32:22,034 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-02-17 17:32:22,040 - INFO - Updated chocolatey installation status in E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-02-17 17:33:04,939 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-02-17 17:33:04,940 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:33:04,941 - WARNING - KiCad directory not found. Marked as not installed.
+2025-02-17 17:33:04,941 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:33:04,942 - WARNING - GHDL directory not found. Marked as not installed.
+2025-02-17 17:33:04,942 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:33:04,943 - WARNING - LLVM directory not found. Marked as not installed.
+2025-02-17 17:33:04,943 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-17 17:33:05,503 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-02-17 17:33:05,503 - INFO - Updated chocolatey installation status in E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-02-24 14:19:17,025 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-02-24 14:19:17,025 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-24 14:19:17,026 - WARNING - KiCad directory not found. Marked as not installed.
+2025-02-24 14:19:17,026 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-24 14:19:17,027 - WARNING - GHDL directory not found. Marked as not installed.
+2025-02-24 14:19:17,027 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-24 14:19:17,028 - WARNING - LLVM directory not found. Marked as not installed.
+2025-02-24 14:19:17,028 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-24 14:19:17,727 - INFO - Chocolatey directory exists. Version: 2.4.1.
+2025-02-24 14:19:17,729 - INFO - Updated chocolatey installation status in E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json. Version: 2.4.1, Installed: Yes.
+2025-02-24 14:19:25,734 - WARNING - Ngspice directory not found. Marked as not installed.
+2025-02-24 14:19:25,735 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-24 14:19:53,481 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-24 14:19:53,481 - INFO - Ngspice version 41.0.0 installed successfully.
+2025-02-24 14:20:17,718 - INFO - Updated existing Ngspice installation details.
+2025-02-24 14:20:17,718 - INFO - JSON data saved to E:\Capstone Project\ToolManager(Task2)\Application_Venv\install_details.json.
+2025-02-24 15:18:35,909 - INFO - Virtual environment 'toolmanagervenv' not found. Creating one...
+2025-02-24 15:18:46,019 - INFO - Virtual environment 'toolmanagervenv' created successfully.
+2025-02-24 15:18:46,019 - INFO - Ensuring pip is installed in toolmanagervenv...
+2025-02-24 15:18:55,143 - INFO - Installing watchdog in toolmanagervenv...
+2025-02-24 15:18:57,667 - INFO - Installing https://github.com/hdl/pyhdlparser/tarball/master in toolmanagervenv...
+2025-02-24 15:19:06,513 - INFO - Installing makerchip-app in toolmanagervenv...
+2025-02-24 15:19:10,583 - INFO - Installing sandpiper-saas in toolmanagervenv...
+2025-02-24 15:19:12,399 - INFO - Installing psutil in toolmanagervenv...
+2025-02-24 15:19:14,113 - INFO - Installing pyqt5 in toolmanagervenv...
+2025-02-24 15:19:17,532 - INFO - Installing matplotlib in toolmanagervenv...

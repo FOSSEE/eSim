@@ -1,0 +1,26 @@
+* /home/fossee/Downloads/LabMigration/LM_Solve/BasicGates/BasicGates.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Feb 29 21:52:07 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R3  A GND 1000		
+R2  OUT GND 1000		
+R1  B GND 1000		
+U2  Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U2-Pad3_ d_and		
+U3  Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U3-Pad3_ d_or		
+U4  Net-_U2-Pad3_ Net-_U3-Pad3_ Net-_U4-Pad3_ d_nor		
+U5  Net-_U2-Pad3_ Net-_U3-Pad3_ Net-_U5-Pad3_ d_nand		
+U6  Net-_U4-Pad3_ Net-_U6-Pad2_ d_inverter		
+U7  Net-_U5-Pad3_ Net-_U6-Pad2_ Net-_U7-Pad3_ d_xor		
+U8  Net-_U7-Pad3_ OUT dac_bridge_1		
+U1  A B Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2		
+v2  A GND pulse		
+v1  B GND pulse		
+U9  A plot_v1		
+U10  B plot_v1		
+U11  OUT plot_v1		
+
+.end

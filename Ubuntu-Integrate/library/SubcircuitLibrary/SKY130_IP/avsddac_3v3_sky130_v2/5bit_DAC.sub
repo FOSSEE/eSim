@@ -1,0 +1,11 @@
+* Subcircuit 5bit_DAC
+.subckt 5bit_DAC /vrefh /vrefl /d0 /d1 /d2 /d3 /d4 /vdd /vout 
+* c:\fossee\esim\library\subcircuitlibrary\5bit_dac\5bit_dac.cir
+.include switch.sub
+.include 4bit_DAC.sub
+x1 /vrefh net-_x1-pad2_ /d0 /d1 /d2 /d3 /vdd net-_x1-pad8_ 4bit_DAC
+x2 net-_x1-pad2_ /vrefl /d0 /d1 /d2 /d3 /vdd net-_x2-pad8_ 4bit_DAC
+x3 /d4 /vdd net-_x1-pad8_ net-_x2-pad8_ /vout switch
+* Control Statements
+
+.ends 5bit_DAC

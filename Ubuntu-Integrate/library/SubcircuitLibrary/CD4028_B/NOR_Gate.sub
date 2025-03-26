@@ -1,0 +1,12 @@
+* Subcircuit NOR_Gate
+.subckt NOR_Gate net-_m1-pad1_ net-_m1-pad2_ net-_m3-pad2_ net-_m2-pad3_ net-_m1-pad3_ 
+* c:\fossee\esim\library\subcircuitlibrary\nor_gate\nor_gate.cir
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m2 net-_m2-pad1_ net-_m1-pad2_ net-_m2-pad3_ net-_m2-pad3_ CMOSP W=100u L=100u M=1
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m3 net-_m1-pad1_ net-_m3-pad2_ net-_m2-pad1_ net-_m2-pad1_ CMOSP W=100u L=100u M=1
+m4 net-_m1-pad1_ net-_m3-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+* Control Statements
+
+.ends NOR_Gate

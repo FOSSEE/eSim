@@ -1,0 +1,29 @@
+<library>
+<model_name>NJF</model_name>
+<ref_model>J2N3819</ref_model>
+<param>
+<Beta>1.304m</Beta>
+<Betatce>-.5</Betatce>
+<Rd>1 </Rd>
+<Rs>1 </Rs>
+<Lambda>2.25m</Lambda> 
+<Vto>-3</Vto>
+<Vtotc>-2.5m</Vtotc>
+<Is>33.57f </Is>
+<Isr>322.4f </Isr>
+<N>1</N>
+<Nr>2</Nr>
+<Xti>3</Xti>
+<Alpha>311.7u</Alpha>
+<Vk>243.6 </Vk>
+<Cgd>1.6p </Cgd>
+<M>.3622 </M>
+<Pb>1</Pb>
+<Fc>.5</Fc>
+<Cgs>2.414p</Cgs>
+<Kf>9.882E-18</Kf>
+<Af>1</Af>
+
+
+</param>
+</library>

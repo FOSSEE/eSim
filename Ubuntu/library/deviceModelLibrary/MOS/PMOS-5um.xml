@@ -1,0 +1,23 @@
+<library>
+<model_name>PMOS</model_name>
+<ref_model>mos_p</ref_model>
+<param>
+<Cgso>0.4n </Cgso>
+<Tox>85n </Tox>
+<Vto>-1 </Vto>
+<phi>0.65</phi>
+<Level>1</Level>
+<Mj>.5 </Mj>
+<UO>250 </UO>
+<Cgdo>0.4n </Cgdo>
+<Gamma>0.65 </Gamma>
+<LAMBDA>0.03 </LAMBDA>
+<LD>0.6u </LD>
+<JS>1u </JS>
+<CJ>0.18m </CJ>
+<CJSW>0.6n </CJSW>
+<MJSW>0.5 </MJSW>
+<PB>0.7 </PB>
+<CGBO>0.2n</CGBO>
+</param>
+</library>

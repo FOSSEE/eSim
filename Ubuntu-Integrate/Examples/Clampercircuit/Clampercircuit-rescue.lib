@@ -1,0 +1,26 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# D-RESCUE-Clampercircuit
+#
+DEF D-RESCUE-Clampercircuit D 0 40 N N 1 F N
+F0 "D" 0 100 50 H V C CNN
+F1 "D-RESCUE-Clampercircuit" 0 -100 50 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+$FPLIST
+ Diode_*
+ D-Pak_TO252AA
+ *SingleDiode
+ *_Diode_*
+ *SingleDiode*
+$ENDFPLIST
+DRAW
+P 2 0 1 6 50 50 50 -50 N
+P 3 0 1 0 -50 50 50 0 -50 -50 F
+X A 1 -150 0 100 R 40 40 1 1 P
+X K 2 150 0 100 L 40 40 1 1 P
+ENDDRAW
+ENDDEF
+#
+#End Library

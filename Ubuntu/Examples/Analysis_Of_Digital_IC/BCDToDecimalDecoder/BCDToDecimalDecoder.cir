@@ -1,0 +1,32 @@
+* C:\Users\malli\eSim-Workspace\4028_test\4028_test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/01/19 16:27:32
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U11-Pad5_ Net-_U11-Pad3_ Net-_U11-Pad1_ Net-_U11-Pad8_ Net-_U12-Pad2_ Net-_U11-Pad6_ Net-_U11-Pad7_ ? Net-_U12-Pad1_ Net-_U13-Pad5_ Net-_U13-Pad8_ Net-_U13-Pad7_ Net-_U13-Pad6_ Net-_U11-Pad2_ Net-_U11-Pad4_ ? 4028		
+U13  a0 a1 a2 a3 Net-_U13-Pad5_ Net-_U13-Pad6_ Net-_U13-Pad7_ Net-_U13-Pad8_ adc_bridge_4		
+U11  Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ Net-_U11-Pad4_ Net-_U11-Pad5_ Net-_U11-Pad6_ Net-_U11-Pad7_ Net-_U11-Pad8_ q0 q1 q2 q3 q4 q5 q6 q7 dac_bridge_8		
+U12  Net-_U12-Pad1_ Net-_U12-Pad2_ q8 q9 dac_bridge_2		
+v2  a1 GND DC		
+v1  a0 GND DC		
+v3  a2 GND DC		
+v4  a3 GND DC		
+U2  q1 plot_v1		
+U3  q2 plot_v1		
+U4  q3 plot_v1		
+U5  q4 plot_v1		
+U6  q5 plot_v1		
+U7  q6 plot_v1		
+U8  q7 plot_v1		
+U9  q8 plot_v1		
+U10  q9 plot_v1		
+U1  q0 plot_v1		
+U16  a1 plot_v1		
+U15  a0 plot_v1		
+U14  a3 plot_v1		
+U17  a2 plot_v1		
+
+.end

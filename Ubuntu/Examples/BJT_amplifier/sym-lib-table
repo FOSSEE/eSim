@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "BJT_amplifier-rescue")(type "Legacy")(uri "${KIPRJMOD}/BJT_amplifier-rescue.lib")(options "")(descr ""))
+)

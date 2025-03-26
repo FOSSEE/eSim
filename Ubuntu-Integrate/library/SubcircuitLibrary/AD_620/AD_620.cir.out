@@ -1,0 +1,25 @@
+* c:\fossee\esim\library\subcircuitlibrary\ad_620\ad_620.cir
+
+.include lm_741.sub
+x1 ? net-_r31-pad2_ net-_u1-pad3_ net-_r6-pad2_ ? net-_r11-pad1_ net-_r5-pad2_ ? lm_741
+x3 ? net-_r11-pad2_ net-_r12-pad2_ net-_r6-pad2_ ? net-_r21-pad2_ net-_r5-pad2_ ? lm_741
+x2 ? net-_r32-pad1_ net-_u1-pad2_ net-_r6-pad2_ ? net-_r12-pad1_ net-_r5-pad2_ ? lm_741
+r11  net-_r11-pad1_ net-_r11-pad2_ 10k
+r12  net-_r12-pad1_ net-_r12-pad2_ 10k
+r21  net-_r11-pad2_ net-_r21-pad2_ 11.11k
+r22  net-_r12-pad2_ net-_r22-pad2_ 11.11k
+r31  net-_r11-pad1_ net-_r31-pad2_ 24.7k
+r32  net-_r32-pad1_ net-_r12-pad1_ 24.7k
+r5  /vcc net-_r5-pad2_ 1
+r6  net-_r6-pad1_ net-_r6-pad2_ 1
+r4  net-_r4-pad1_ net-_r32-pad1_ 40
+* u1  net-_r31-pad2_ net-_u1-pad2_ net-_u1-pad3_ net-_r6-pad1_ net-_r22-pad2_ net-_r21-pad2_ /vcc net-_r4-pad1_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

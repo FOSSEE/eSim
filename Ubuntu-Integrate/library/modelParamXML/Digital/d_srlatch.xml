@@ -1,0 +1,20 @@
+<model>
+<name>d_srlatch</name>
+<type>Digital</type>
+<node_number>7</node_number>
+<title>Add Parameters for SR Latch</title>
+<split>None</split>
+<param>
+	<sr_delay default ="1.0e-9">Enter SR Delay (default=1.0e-9)</sr_delay>
+	<enable_delay default ="1.0e-9">Enter Enable Delay (default=1.0e-9)</enable_delay>
+	<set_delay default ="1.0e-9">Enter Set Delay (default=1.0e-9)</set_delay>
+	<reset_delay default ="1.0e-9">Enter Reset Delay (default=1.0)</reset_delay>
+	<ic default ="0">Enter IC (default=0)</ic>
+	<sr_load default ="1.0e-12">Enter value for SR Load (default=1.0e-12)</sr_load>
+	<enable_load default ="1.0e-12">Enter value for Enable Load (default=1.0e-12)</enable_load>
+	<set_load default ="1.0e-12">Enter value for Set Load (default=1.0e-12)</set_load>
+	<reset_load default ="1.0e-12">Enter value for Reset Load (default=1.0e-12)</reset_load>
+	<rise_delay default ="1.0e-9">Enter Rise Delay (default=1.0e-9)</rise_delay>
+	<fall_delay default ="1.0e-9">Enter Fall Delay (default=1.0e-9)</fall_delay>
+</param>
+</model>

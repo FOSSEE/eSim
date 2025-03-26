@@ -1,0 +1,40 @@
+* /home/fossee/UpdatedExamples/4_bit_JK_ff/4_bit_JK_ff.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 18:13:51 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U3  Net-_U1-Pad4_ Net-_U1-Pad6_ Net-_U1-Pad5_ Net-_U2-Pad8_ Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ d_jkff		
+v1  Net-_U1-Pad1_ GND DC		
+v3  Net-_U1-Pad3_ GND DC		
+v4  Net-_U4-Pad2_ GND 0		
+v2  IN GND pulse		
+U5  Net-_U3-Pad7_ Net-_U3-Pad7_ Net-_U1-Pad5_ Net-_U2-Pad7_ Net-_U4-Pad6_ Net-_U5-Pad6_ Net-_U5-Pad7_ d_jkff		
+U7  Net-_U6-Pad3_ Net-_U6-Pad3_ Net-_U1-Pad5_ Net-_U2-Pad6_ Net-_U4-Pad7_ Net-_U7-Pad6_ Net-_U7-Pad7_ d_jkff		
+U10  Net-_U10-Pad1_ Net-_U10-Pad1_ Net-_U1-Pad5_ Net-_U10-Pad4_ Net-_U10-Pad5_ Net-_U10-Pad6_ Net-_U10-Pad7_ d_jkff		
+U6  Net-_U5-Pad7_ Net-_U3-Pad7_ Net-_U6-Pad3_ d_and		
+U8  Net-_U7-Pad7_ Net-_U6-Pad3_ Net-_U10-Pad1_ d_and		
+U4  Net-_U4-Pad1_ Net-_U4-Pad2_ Net-_U4-Pad3_ Net-_U4-Pad4_ Net-_U3-Pad5_ Net-_U4-Pad6_ Net-_U4-Pad7_ Net-_U10-Pad5_ adc_bridge_4		
+v10  Net-_U4-Pad3_ GND 0		
+v11  Net-_U4-Pad4_ GND 0		
+v9  Net-_U4-Pad1_ GND 0		
+v8  Net-_U2-Pad2_ GND 0		
+U2  Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ Net-_U10-Pad4_ Net-_U2-Pad6_ Net-_U2-Pad7_ Net-_U2-Pad8_ adc_bridge_4		
+v6  Net-_U2-Pad3_ GND 0		
+v7  Net-_U2-Pad4_ GND 0		
+v5  Net-_U2-Pad1_ GND 0		
+U1  Net-_U1-Pad1_ IN Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ adc_bridge_3		
+U9  Net-_U3-Pad6_ Net-_U5-Pad6_ Net-_U7-Pad6_ Net-_U10-Pad6_ D1 D2 D3 D4 dac_bridge_4		
+R1  D1 GND 1k		
+R2  D2 GND 1k		
+R3  D3 GND 1k		
+R4  D4 GND 1k		
+U11  Net-_U10-Pad7_ GND dac_bridge_1		
+U12  D1 plot_v1		
+U14  D4 plot_v1		
+U15  D3 plot_v1		
+U13  D2 plot_v1		
+
+.end
