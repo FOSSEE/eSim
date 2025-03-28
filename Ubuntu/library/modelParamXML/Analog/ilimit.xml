@@ -1,0 +1,19 @@
+<model>
+<name>ilimit</name>
+<type>Analog</type>
+<node_number>4</node_number>
+<title>Add Parameters for Current Limiter </title>
+<split>None</split>
+<param>
+	<in_offset default="0.0">Enter offset for Input (default=0.0)</in_offset>
+	<gain default="1.0">Enter value for Gain (default=1.0)</gain>
+	<r_out_source default="1.0">Enter value for Sourcing Resistance (default=1.0)</r_out_source>
+	<r_out_sink default="1.0">Enter value for Sinking Resistance (default=1.0)</r_out_sink>
+	<i_limit_source default="1.0e-12">Enter Current Sourcing Limit (default=1.0e-12)</i_limit_source>
+	<i_limit_sink default="1.0e-12">Enter Current Sinking Limit (default=1.0e-12)</i_limit_sink>
+	<v_pwr_range default="1.0e-6">Enter Power Supply Range (default=1.0e-6)</v_pwr_range>
+	<i_source_range default="1.0e-9">Enter Current Sourcing Range (default=1.0e-9)</i_source_range>
+	<i_sink_range default="1.0e-9">Enter Current Sinking Range (default=1.0e-9)</i_sink_range>
+	<r_out_domain default="1.0e-9">Enter Voltage Delta Range (default=1.0e-9)</r_out_domain>	
+</param>
+</model>

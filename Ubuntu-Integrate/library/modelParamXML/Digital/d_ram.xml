@@ -1,0 +1,16 @@
+<model>
+<name>d_ram</name>
+<type>Digital</type>
+<node_number>5</node_number>
+<title>Add Parameters for RAM</title>
+<split>4-V:4-V:8-V:1-NV:3-V</split>
+<param>
+	<select_value default ="1">Enter Select Value (default=1)</select_value>
+	<ic default ="2">Enter IC (default=2)</ic>
+	<read_delay default ="100.0e-9">Enter Read Delay (default=100.0e-9)</read_delay>
+	<data_load default ="1.0e-12">Enter value for Data Load (default=1.0e-12)</data_load>
+	<address_load default ="1.0e-12">Enter value for Address Load (default=1.0e-12)</address_load>
+	<select_load default ="1.0e-12">Enter value for Select Load (default=1.0e-12)</select_load>
+	<enable_load default ="1.0e-12">Enter value for Enable Load (default=1.0e-12)</enable_load>
+</param>
+</model>

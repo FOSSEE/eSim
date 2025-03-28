@@ -1,0 +1,83 @@
+ngspice authors
+
+Spice was originally written at The University of California at Berkeley (USA).
+Since then, there have been many people working on the software, most of them
+releasing patches to the original code through the Internet.
+
+
+The following people have contributed in some way:
+
+Vera Albrecht,
+Cecil Aswell,
+Giles Atkinson,
+Giles C. Billingsley,
+Phil Barker,
+Steven Borley,
+Krzysztof Blaszkowski,
+Stuart Brorson,
+Alessio Cacciatori,
+Mansun Chan,
+Wayne A. Christopher,
+Al Davis,
+Glao S. Dezai,
+Jon Engelbert,
+Daniele Foci,
+Henrik Forstén,
+Noah Friedman,
+David A. Gates,
+Alan Gillespie,
+John Heidemann,
+Marcel Hendrix,
+Jeffrey M. Hsu,
+JianHui Huang,
+S. Hwang,
+Chris Inbody,
+Gordon M. Jacobs,
+Min-Chie Jeng,
+Beorn Johnson,
+Stefan Jones,
+Kenneth H. Keller,
+Francesco Lannutti,
+Robert Larice,
+Mathew Lew,
+Robert Lindsell,
+Weidong Liu,
+Kartikeya Mayaram,
+Richard D. McRoberts,
+Manfred Metzger,
+Jim Monte,
+Wolfgang Muees,
+Paolo Nenzi,
+Gary W. Ng,
+Hong June Park,
+Arno Peters,
+Stefano Perticaroli,
+Serban-Mihai Popescu,
+Georg Post,
+Thomas L. Quarles,
+Emmanuel Rouat,
+Jean-Marc Routure,
+Jaijeet S. Roychowdhury,
+Lionel Sainte Cluque,
+Takayasu Sakurai,
+AMAKAWA Shuhei,
+Kanwar Jit Singh,
+Bill Swartz,
+Hitoshi Tanaka,
+Brian Taylor,
+Steve Tell,
+Andrew Tuckey,
+Robert Turnbull,
+Andreas Unger,
+Holger Vogt,
+Dietmar Warning,
+Michael Widlok,
+Charles D.H. Williams,
+Antony Wilson,
+Pascal Kuthe,
+and many others...
+
+If someone helped in the development and has not been inserted in this list
+then this omission was unintentional. If you feel you should be on this list
+then please write to <ngspice-devel@@lists.sourceforge.net>. Do not be shy, we
+would like to make a list as complete as possible.

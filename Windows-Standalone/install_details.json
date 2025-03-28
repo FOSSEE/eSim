@@ -1,0 +1,65 @@
+{
+    "important_packages": [
+        {
+            "package_name": "ngspice",
+            "version": "41.0.0",
+            "installed": "Yes",
+            "installed_date": "2025-02-24 14:19:53",
+            "install_directory": "E:\\Capstone Project\\ToolManager(Task2)\\Application_Venv\\tools\\ngspice"
+        },
+        {
+            "package_name": "kicad",
+            "version": "-",
+            "installed": "No",
+            "installed_date": "-",
+            "install_directory": "-"
+        },
+        {
+            "package_name": "llvm",
+            "version": "-",
+            "installed": "No",
+            "installed_date": "-",
+            "install_directory": "-"
+        },
+        {
+            "package_name": "ghdl",
+            "version": "-",
+            "installed": "No",
+            "installed_date": "-",
+            "install_directory": "-"
+        },
+        {
+            "package_name": "pip_packages",
+            "installed": "Yes",
+            "installed_date": "2025-01-20 12:13:18"
+        },
+        {
+            "package_name": "chocolatey",
+            "version": "2.4.1",
+            "installed": "Yes",
+            "installed_date": "2025-02-24 14:19:17",
+            "install_directory": "C:\\ProgramData\\chocolatey"
+        }
+    ],
+    "pip_packages": [
+        "watchdog",
+        "https://github.com/hdl/pyhdlparser/tarball/master",
+        "makerchip-app",
+        "sandpiper-saas",
+        "psutil",
+        "pyqt5",
+        "matplotlib"
+    ],
+    "dependencies": [
+        "make",
+        "gnat",
+        "clang",
+        "zlib1g-dev",
+        "libcanberra-gtk-module",
+        "libcanberra-gtk3-module",
+        "libxaw7",
+        "libxaw7-dev",
+        "llvm-9",
+        "llvm9-dev"
+    ]
+}

@@ -1,0 +1,58 @@
+
+eSim installation instructions
+=================================
+
+Table of contents
+
+    1. eSim installation in Ubuntu OS
+
+    2. eSim Uninstallation in Ubuntu OS
+
+    3. Manual Package Download (If Automated Download Fails)
+
+
+1. eSim installation in Ubuntu OS
+
+    i.  Download and Extract eSim - After downloading eSim-2.3.zip, extract it using:
+
+            $ unzip eSim-2.3.zip
+
+    ii. Navigate to the eSim Directory - Change into the top-level eSim directory:
+
+            $ cd eSim-2.3
+    
+    iii. Run the Installer - To install eSim and required tools, run:
+
+            $ python3 main.py
+
+    This will guide you through the installation and setup of tools like Ngspice, KiCad, GHDL, and Verilator.
+
+
+2. eSim Uninstallation in Ubuntu OS
+     
+    To uninstall eSim and its components, run the same script:
+
+            $ python3 main.py
+
+3. Manual Package Download (If Automated Download Fails)
+
+    If downloading packages fails during installation, you can manually download them using the links below. 
+    After downloading, save each file using the exact name shown in the brackets, including the .tar.gz extension, and place them into the following folder:
+
+    eSim-2.3/nghdl/packages/
+
+    Download Links
+    Saved Filename	        Download Link
+    ghdl-nightly.tar.gz	        https://github.com/ghdl/ghdl/archive/refs/tags/nightly.tar.gz
+    ghdl-4.1.0.tar.gz	        https://github.com/ghdl/ghdl/archive/refs/tags/v4.1.0.tar.gz
+    ghdl-4.0.0.tar.gz	        https://github.com/ghdl/ghdl/archive/refs/tags/v4.0.0.tar.gz
+    ghdl-3.0.0.tar.gz	        https://github.com/ghdl/ghdl/archive/refs/tags/v3.0.0.tar.gz
+    verilator-4.228.tar.gz	https://github.com/verilator/verilator/archive/refs/tags/v4.228.tar.gz
+    verilator-5.020.tar.gz	https://github.com/verilator/verilator/archive/refs/tags/v5.020.tar.gz
+    verilator-5.026.tar.gz	https://github.com/verilator/verilator/archive/refs/tags/v5.026.tar.gz
+    verilator-5.030.tar.gz	https://github.com/verilator/verilator/archive/refs/tags/v5.030.tar.gz
+    ngspice-38.tar.gz	        https://github.com/imr/ngspice/archive/refs/tags/ngspice-38.tar.gz
+    ngspice-40.tar.gz	        https://github.com/imr/ngspice/archive/refs/tags/ngspice-40.tar.gz
+    ngspice-43.tar.gz	        https://github.com/imr/ngspice/archive/refs/tags/ngspice-43.tar.gz
+
+Important: Make sure each file is saved exactly as listed (e.g., ghdl-4.1.0.tar.gz) before placing it in the nghdl/packages/ directory.

@@ -1,0 +1,22 @@
+* Subcircuit switch
+*Model Description
+.param temp=27
+
+
+*Including sky130 library files
+
+.subckt switch /digital_input /vdd /vin_1 /vin_2 /vout  
+
+* c:\fossee\esim\library\subcircuitlibrary\switch\switch.cir
+
+xm2  net-_m1-pad1_ /digital_input /vdd /vdd sky130_fd_pr__pfet_01v8 w=1 l=0.5 
+xm5  net-_m3-pad1_ net-_m1-pad1_ /vdd /vdd sky130_fd_pr__pfet_01v8 w=1 l=0.5 
+xm6  /vout net-_m1-pad1_ /vin_1 /vdd sky130_fd_pr__pfet_01v8 w=1 l=0.5 
+xm7  /vin_2 net-_m3-pad1_ /vout /vdd sky130_fd_pr__pfet_01v8 w=1 l=0.5 
+xm1  net-_m1-pad1_ /digital_input gnd gnd sky130_fd_pr__nfet_01v8 w=.42 l=.5 
+xm3  net-_m3-pad1_ net-_m1-pad1_ gnd gnd sky130_fd_pr__nfet_01v8 w=.42 l=.5 
+xm4  /vout net-_m1-pad1_ /vin_2 gnd sky130_fd_pr__nfet_01v8 w=.42 l=.5 
+xm8  /vin_1 net-_m3-pad1_ /vout gnd sky130_fd_pr__nfet_01v8 w=.42 l=.5 
+* Control Statements
+
+.ends switch

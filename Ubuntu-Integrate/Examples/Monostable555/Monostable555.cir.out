@@ -1,0 +1,28 @@
+* /home/ash98/downloads/esim-master/examples/monostable555/monostable555.cir
+
+.include lm555n.sub
+* u3  vc ic
+.ic v(vc)=0
+x1 gnd in out net-_r1-pad1_ net-_c2-pad1_ vc vc net-_r1-pad1_ lm555n
+c1  vc gnd 1u
+* u3  vc ic
+c2  net-_c2-pad1_ gnd 0.01u
+v2  in gnd pulse(0 5 0.0025 0.0005 0.0005 0.0025 0.005)
+r1  net-_r1-pad1_ vc 1k
+r2  out gnd 1k
+* u4  out plot_v1
+v1 net-_r1-pad1_ gnd  dc 5
+* u5  in plot_v1
+* u2  vc plot_v1
+.tran 10e-03 50e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+plot v(in)
+plot v(vc)
+.endc
+.end

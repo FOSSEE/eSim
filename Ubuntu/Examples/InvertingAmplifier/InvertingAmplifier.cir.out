@@ -1,0 +1,24 @@
+* /home/saurabh/desktop/esim/examples/invertingamplifier/invertingamplifier.cir
+
+.include lm_741.sub
+r1  in net-_r1-pad2_ 1k
+r3  net-_r1-pad2_ out 5k
+v1  in gnd sine(0 2 50 0 0)
+r4  out gnd 1k
+r2  net-_r2-pad1_ gnd 1k
+* u1  in plot_v1
+* u2  out plot_v1
+v3  net-_x1-pad7_ gnd 12
+v2  gnd net-_x1-pad4_ 12
+x1 ? net-_r1-pad2_ net-_r2-pad1_ net-_x1-pad4_ ? out net-_x1-pad7_ ? lm_741
+.tran 1e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

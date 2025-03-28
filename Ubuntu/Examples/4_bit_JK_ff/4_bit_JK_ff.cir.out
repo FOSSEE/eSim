@@ -1,0 +1,78 @@
+* /home/fossee/updatedexamples/4_bit_jk_ff/4_bit_jk_ff.cir
+
+* u3  net-_u1-pad4_ net-_u1-pad6_ net-_u1-pad5_ net-_u2-pad8_ net-_u3-pad5_ net-_u3-pad6_ net-_u3-pad7_ d_jkff
+v1 net-_u1-pad1_ gnd  dc 5
+v3 net-_u1-pad3_ gnd  dc 5
+v4  net-_u4-pad2_ gnd 0
+v2  in gnd pulse(0 5 0.1m 0.1m 0.1m 20m 40m)
+* u5  net-_u3-pad7_ net-_u3-pad7_ net-_u1-pad5_ net-_u2-pad7_ net-_u4-pad6_ net-_u5-pad6_ net-_u5-pad7_ d_jkff
+* u7  net-_u6-pad3_ net-_u6-pad3_ net-_u1-pad5_ net-_u2-pad6_ net-_u4-pad7_ net-_u7-pad6_ net-_u7-pad7_ d_jkff
+* u10  net-_u10-pad1_ net-_u10-pad1_ net-_u1-pad5_ net-_u10-pad4_ net-_u10-pad5_ net-_u10-pad6_ net-_u10-pad7_ d_jkff
+* u6  net-_u5-pad7_ net-_u3-pad7_ net-_u6-pad3_ d_and
+* u8  net-_u7-pad7_ net-_u6-pad3_ net-_u10-pad1_ d_and
+* u4  net-_u4-pad1_ net-_u4-pad2_ net-_u4-pad3_ net-_u4-pad4_ net-_u3-pad5_ net-_u4-pad6_ net-_u4-pad7_ net-_u10-pad5_ adc_bridge_4
+v10  net-_u4-pad3_ gnd 0
+v11  net-_u4-pad4_ gnd 0
+v9  net-_u4-pad1_ gnd 0
+v8  net-_u2-pad2_ gnd 0
+* u2  net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ net-_u2-pad4_ net-_u10-pad4_ net-_u2-pad6_ net-_u2-pad7_ net-_u2-pad8_ adc_bridge_4
+v6  net-_u2-pad3_ gnd 0
+v7  net-_u2-pad4_ gnd 0
+v5  net-_u2-pad1_ gnd 0
+* u1  net-_u1-pad1_ in net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ adc_bridge_3
+* u9  net-_u3-pad6_ net-_u5-pad6_ net-_u7-pad6_ net-_u10-pad6_ d1 d2 d3 d4 dac_bridge_4
+r1  d1 gnd 1k
+r2  d2 gnd 1k
+r3  d3 gnd 1k
+r4  d4 gnd 1k
+* u11  net-_u10-pad7_ gnd dac_bridge_1
+* u12  d1 plot_v1
+* u14  d4 plot_v1
+* u15  d3 plot_v1
+* u13  d2 plot_v1
+a1 net-_u1-pad4_ net-_u1-pad6_ net-_u1-pad5_ net-_u2-pad8_ net-_u3-pad5_ net-_u3-pad6_ net-_u3-pad7_ u3
+a2 net-_u3-pad7_ net-_u3-pad7_ net-_u1-pad5_ net-_u2-pad7_ net-_u4-pad6_ net-_u5-pad6_ net-_u5-pad7_ u5
+a3 net-_u6-pad3_ net-_u6-pad3_ net-_u1-pad5_ net-_u2-pad6_ net-_u4-pad7_ net-_u7-pad6_ net-_u7-pad7_ u7
+a4 net-_u10-pad1_ net-_u10-pad1_ net-_u1-pad5_ net-_u10-pad4_ net-_u10-pad5_ net-_u10-pad6_ net-_u10-pad7_ u10
+a5 [net-_u5-pad7_ net-_u3-pad7_ ] net-_u6-pad3_ u6
+a6 [net-_u7-pad7_ net-_u6-pad3_ ] net-_u10-pad1_ u8
+a7 [net-_u4-pad1_ net-_u4-pad2_ net-_u4-pad3_ net-_u4-pad4_ ] [net-_u3-pad5_ net-_u4-pad6_ net-_u4-pad7_ net-_u10-pad5_ ] u4
+a8 [net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ net-_u2-pad4_ ] [net-_u10-pad4_ net-_u2-pad6_ net-_u2-pad7_ net-_u2-pad8_ ] u2
+a9 [net-_u1-pad1_ in net-_u1-pad3_ ] [net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ ] u1
+a10 [net-_u3-pad6_ net-_u5-pad6_ net-_u7-pad6_ net-_u10-pad6_ ] [d1 d2 d3 d4 ] u9
+a11 [net-_u10-pad7_ ] [gnd ] u11
+* Schematic Name: d_jkff, NgSpice Name: d_jkff
+.model u3 d_jkff(ic=0 set_delay=1.0e-9 set_load=1.0e-12 reset_load=1.0e-12 clk_delay=1.0e-9 clk_load=1.0e-12 reset_delay=1.0 rise_delay=1.0e-9 jk_load=1.0e-12 fall_delay=1.0e-9 ) 
+* Schematic Name: d_jkff, NgSpice Name: d_jkff
+.model u5 d_jkff(ic=0 set_delay=1.0e-9 set_load=1.0e-12 reset_load=1.0e-12 clk_delay=1.0e-9 clk_load=1.0e-12 reset_delay=1.0 rise_delay=1.0e-9 jk_load=1.0e-12 fall_delay=1.0e-9 ) 
+* Schematic Name: d_jkff, NgSpice Name: d_jkff
+.model u7 d_jkff(ic=0 set_delay=1.0e-9 set_load=1.0e-12 reset_load=1.0e-12 clk_delay=1.0e-9 clk_load=1.0e-12 reset_delay=1.0 rise_delay=1.0e-9 jk_load=1.0e-12 fall_delay=1.0e-9 ) 
+* Schematic Name: d_jkff, NgSpice Name: d_jkff
+.model u10 d_jkff(ic=0 set_delay=1.0e-9 set_load=1.0e-12 reset_load=1.0e-12 clk_delay=1.0e-9 clk_load=1.0e-12 reset_delay=1.0 rise_delay=1.0e-9 jk_load=1.0e-12 fall_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u6 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u8 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: adc_bridge_4, NgSpice Name: adc_bridge
+.model u4 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: adc_bridge_4, NgSpice Name: adc_bridge
+.model u2 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: adc_bridge_3, NgSpice Name: adc_bridge
+.model u1 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: dac_bridge_4, NgSpice Name: dac_bridge
+.model u9 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name: dac_bridge_1, NgSpice Name: dac_bridge
+.model u11 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(d1)
+plot v(d4)
+plot v(d3)
+plot v(d2)
+.endc
+.end

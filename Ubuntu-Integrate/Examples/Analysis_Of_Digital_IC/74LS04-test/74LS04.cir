@@ -1,0 +1,23 @@
+* /home/ash98/Downloads/eSim-1.1.3/src/SubcircuitLibrary/74LS04/74LS04.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Jan 14 11:36:33 2020
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+Q5  Net-_Q5-Pad1_ Net-_Q5-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+R5  Net-_R1-Pad1_ Net-_Q5-Pad1_ 100		
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+R1  Net-_R1-Pad1_ Net-_Q1-Pad1_ 100		
+Q3  Net-_Q3-Pad1_ Net-_Q3-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+R3  Net-_R1-Pad1_ Net-_Q3-Pad1_ 100		
+Q6  Net-_Q6-Pad1_ Net-_Q6-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+R6  Net-_R1-Pad1_ Net-_Q6-Pad1_ 100		
+Q2  Net-_Q2-Pad1_ Net-_Q2-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+R2  Net-_R1-Pad1_ Net-_Q2-Pad1_ 100		
+Q4  Net-_Q4-Pad1_ Net-_Q4-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+R4  Net-_R1-Pad1_ Net-_Q4-Pad1_ 100		
+U1  Net-_Q1-Pad2_ Net-_Q1-Pad1_ Net-_Q3-Pad2_ Net-_Q3-Pad1_ Net-_Q5-Pad2_ Net-_Q5-Pad1_ Net-_Q1-Pad3_ Net-_Q2-Pad1_ Net-_Q2-Pad2_ Net-_Q4-Pad1_ Net-_Q4-Pad2_ Net-_Q6-Pad1_ Net-_Q6-Pad2_ Net-_R1-Pad1_ PORT		
+
+.end

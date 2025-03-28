@@ -1,0 +1,22 @@
+* /home/fossee/UpdatedExamples/FrequencyResponse_JFET/FrequencyResponse_JFET.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 21:17:16 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+C1  Net-_C1-Pad1_ in 1u		
+C6  Net-_C6-Pad1_ GND 0.1u		
+v2  Net-_R3-Pad1_ GND DC		
+J1  out Net-_C1-Pad1_ Net-_C6-Pad1_ NJF		
+R3  Net-_R3-Pad1_ out 3k		
+R2  GND Net-_C1-Pad1_ 1Meg		
+R4  GND Net-_C6-Pad1_ 470		
+U1  in plot_v1		
+v1  in GND AC		
+U3  out plot_log		
+U2  out plot_phase		
+U4  out plot_db		
+
+.end

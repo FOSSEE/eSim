@@ -1,0 +1,72 @@
+* Subcircuit IC_ULN2803
+.subckt IC_ULN2803 net-_d1-pad2_ net-_d2-pad2_ net-_d3-pad2_ net-_d4-pad2_ net-_d6-pad2_ net-_d7-pad2_ net-_d10-pad2_ net-_d11-pad2_ com net-_d12-pad2_ e net-_d13-pad2_ net-_d19-pad2_ net-_d15-pad2_ net-_d17-pad2_ net-_d20-pad2_ net-_d21-pad2_ net-_d23-pad2_ 
+* c:\fossee\esim\library\subcircuitlibrary\ic_uln2803\ic_uln2803.cir
+.include D.lib
+.include NPN.lib
+q2 net-_d6-pad2_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q5 net-_d6-pad2_ net-_q2-pad3_ e Q2N2222
+r2  net-_d2-pad2_ net-_q2-pad2_ 2.7k
+r5  net-_q2-pad2_ net-_q2-pad3_ 7.2k
+r8  net-_q2-pad3_ e 3k
+d6 e net-_d6-pad2_ 1N4148
+d8 net-_d6-pad2_ com 1N4148
+d2 e net-_d2-pad2_ 1N4148
+q3 net-_d7-pad2_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+q6 net-_d7-pad2_ net-_q3-pad3_ e Q2N2222
+r3  net-_d3-pad2_ net-_q3-pad2_ 2.7k
+r6  net-_q3-pad2_ net-_q3-pad3_ 7.2k
+r9  net-_q3-pad3_ e 3k
+d7 e net-_d7-pad2_ 1N4148
+d9 net-_d7-pad2_ com 1N4148
+d3 e net-_d3-pad2_ 1N4148
+d1 e net-_d1-pad2_ 1N4148
+d5 net-_d4-pad2_ com 1N4148
+d4 e net-_d4-pad2_ 1N4148
+r7  net-_q1-pad3_ e 3k
+r4  net-_q1-pad2_ net-_q1-pad3_ 7.2k
+r1  net-_d1-pad2_ net-_q1-pad2_ 2.7k
+q4 net-_d4-pad2_ net-_q1-pad3_ e Q2N2222
+q1 net-_d4-pad2_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+d10 e net-_d10-pad2_ 1N4148
+d14 net-_d13-pad2_ com 1N4148
+d13 e net-_d13-pad2_ 1N4148
+r16  net-_q10-pad2_ e 3k
+r11  net-_q7-pad2_ net-_q10-pad2_ 7.2k
+r10  net-_d10-pad2_ net-_q7-pad2_ 2.7k
+q10 net-_d13-pad2_ net-_q10-pad2_ e Q2N2222
+q7 net-_d13-pad2_ net-_q7-pad2_ net-_q10-pad2_ Q2N2222
+q8 net-_d15-pad2_ net-_q8-pad2_ net-_q11-pad2_ Q2N2222
+q11 net-_d15-pad2_ net-_q11-pad2_ e Q2N2222
+r12  net-_d11-pad2_ net-_q8-pad2_ 2.7k
+r14  net-_q8-pad2_ net-_q11-pad2_ 7.2k
+r17  net-_q11-pad2_ e 3k
+d15 e net-_d15-pad2_ 1N4148
+d16 net-_d15-pad2_ com 1N4148
+d11 e net-_d11-pad2_ 1N4148
+q9 net-_d17-pad2_ net-_q9-pad2_ net-_q12-pad2_ Q2N2222
+q12 net-_d17-pad2_ net-_q12-pad2_ e Q2N2222
+r13  net-_d12-pad2_ net-_q9-pad2_ 2.7k
+r15  net-_q9-pad2_ net-_q12-pad2_ 7.2k
+r18  net-_q12-pad2_ e 3k
+d17 e net-_d17-pad2_ 1N4148
+d18 net-_d17-pad2_ com 1N4148
+d12 e net-_d12-pad2_ 1N4148
+q13 net-_d21-pad2_ net-_q13-pad2_ net-_q13-pad3_ Q2N2222
+q15 net-_d21-pad2_ net-_q13-pad3_ e Q2N2222
+r19  net-_d19-pad2_ net-_q13-pad2_ 2.7k
+r20  net-_q13-pad2_ net-_q13-pad3_ 7.2k
+r23  net-_q13-pad3_ e 3k
+d21 e net-_d21-pad2_ 1N4148
+d22 net-_d21-pad2_ com 1N4148
+d19 e net-_d19-pad2_ 1N4148
+q14 net-_d23-pad2_ net-_q14-pad2_ net-_q14-pad3_ Q2N2222
+q16 net-_d23-pad2_ net-_q14-pad3_ e Q2N2222
+r21  net-_d20-pad2_ net-_q14-pad2_ 2.7k
+r22  net-_q14-pad2_ net-_q14-pad3_ 7.2k
+r24  net-_q14-pad3_ e 3k
+d23 e net-_d23-pad2_ 1N4148
+d24 net-_d23-pad2_ com 1N4148
+d20 e net-_d20-pad2_ 1N4148
+* Control Statements
+
+.ends IC_ULN2803

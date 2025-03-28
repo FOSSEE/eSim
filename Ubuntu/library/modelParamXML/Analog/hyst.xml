@@ -1,0 +1,16 @@
+<model>
+<name>hyst</name>
+<type>Analog</type>
+<node_number>2</node_number>
+<title>Add Parameters for Hysteresis</title>
+<split>None</split>
+<param>
+	<in_low default="0.0">Enter Input Low Value (default=0.0)</in_low>
+	<in_high default="1.0">Enter Input High Value (default=1.0)</in_high>
+	<hyst default="0.1">Enter Hysteresis (default=0.1)</hyst>
+	<out_lower_limit default="0.0">Enter Output Lower Limit (default=0.0)</out_lower_limit>
+	<out_upper_limit default="1.0">Enter Output Upper Limit (default=1.0)</out_upper_limit>
+	<input_domain default="0.01">Enter Input Domain Value (default=0.01)</input_domain>
+	<fraction default="TRUE">Enter Fraction (default=TRUE)</fraction>
+</param>
+</model>

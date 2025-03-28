@@ -1,0 +1,10 @@
+  ADDER - 4 BIT ALL-74HC00-GATE BINARY ADDER
+  * behavioral gate description
+
+*** SUBCIRCUIT DEFINITIONS
+.include 74HCng_short_2.lib
+.param vcc=3 tripdt=6n
+
+.include ../adder_common.inc
+
+.END

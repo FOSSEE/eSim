@@ -1,0 +1,35 @@
+* Subcircuit IC_LM397MFX
+.subckt IC_LM397MFX net-_j1-pad1_ net-_d1-pad1_ net-_d5-pad1_ net-_q16-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\ic_lm397mfx\ic_lm397mfx.cir
+.include NPN.lib
+.include D.lib
+.include PNP.lib
+.include NJF.lib
+j1 net-_j1-pad1_ gnd net-_j1-pad3_ J2N3819
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_j1-pad1_ Q2N2907A
+q4 net-_j1-pad3_ net-_q1-pad1_ net-_j1-pad1_ Q2N2907A
+q5 net-_q2-pad3_ net-_q1-pad1_ net-_j1-pad1_ Q2N2907A
+q8 net-_d4-pad1_ net-_q1-pad1_ net-_q7-pad3_ Q2N2907A
+q7 net-_d2-pad1_ net-_q1-pad1_ net-_q7-pad3_ Q2N2907A
+q10 net-_q10-pad1_ net-_q1-pad1_ net-_j1-pad1_ Q2N2907A
+r2  net-_q1-pad1_ net-_q1-pad2_ 2k
+r3  net-_j1-pad1_ net-_q7-pad3_ 2.1k
+q2 net-_q1-pad1_ net-_j1-pad3_ net-_q2-pad3_ Q2N2222
+q3 net-_j1-pad3_ net-_q2-pad3_ gnd Q2N2222
+d2 net-_d2-pad1_ net-_d1-pad2_ 1N4148
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q6 gnd net-_d1-pad1_ net-_d1-pad2_ Q2N2907A
+q9 net-_d3-pad1_ net-_d1-pad2_ net-_q10-pad1_ Q2N2907A
+q12 net-_q11-pad1_ net-_d4-pad2_ net-_q10-pad1_ Q2N2907A
+q13 gnd net-_d5-pad1_ net-_d4-pad2_ Q2N2907A
+d4 net-_d4-pad1_ net-_d4-pad2_ 1N4148
+d5 net-_d5-pad1_ net-_d4-pad2_ 1N4148
+r1  net-_q2-pad3_ gnd 4.8k
+q11 net-_q11-pad1_ net-_d3-pad1_ gnd Q2N2222
+d3 net-_d3-pad1_ gnd 1N4148
+q14 net-_q14-pad1_ net-_q1-pad1_ net-_j1-pad1_ Q2N2907A
+q15 net-_q14-pad1_ net-_q11-pad1_ gnd Q2N2222
+q16 net-_q16-pad1_ net-_q14-pad1_ gnd Q2N2222
+* Control Statements
+
+.ends IC_LM397MFX

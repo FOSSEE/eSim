@@ -1,0 +1,35 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD54_HC153\CD54_HC153.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/17/22 13:33:21
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  /s0 ? ? ? ? ? ? /gnd Net-_M1-Pad2_ /i1_1 /i0_1 ? ? ? /e_bar_1 /vcc CD_54157		
+X2  /s0 ? ? ? ? ? ? /gnd Net-_M3-Pad2_ /i3_1 /i2_1 ? ? ? /e_bar_1 /vcc CD_54157		
+X5  /s1 ? ? ? Net-_R1-Pad2_ Net-_R2-Pad2_ Net-_R5-Pad1_ /gnd ? ? ? ? ? ? /e_bar_1 /vcc CD_54157		
+M2  Net-_M1-Pad1_ Net-_M1-Pad2_ /vcc /vcc eSim_MOS_P		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ /gnd /gnd eSim_MOS_N		
+M4  Net-_M3-Pad1_ Net-_M3-Pad2_ /vcc /vcc eSim_MOS_P		
+M3  Net-_M3-Pad1_ Net-_M3-Pad2_ /gnd /gnd eSim_MOS_N		
+M10  /y1 Net-_M10-Pad2_ /vcc /vcc eSim_MOS_P		
+M9  /y1 Net-_M10-Pad2_ /gnd /gnd eSim_MOS_N		
+R1  Net-_M1-Pad1_ Net-_R1-Pad2_ 1		
+R2  Net-_M3-Pad1_ Net-_R2-Pad2_ 1		
+R5  Net-_R5-Pad1_ Net-_M10-Pad2_ 1		
+X3  /s0 ? ? ? ? ? ? /gnd Net-_M5-Pad2_ /i1_2 /i0_2 ? ? ? /e_bar_2 /vcc CD_54157		
+X4  /s0 ? ? ? ? ? ? /gnd Net-_M7-Pad2_ /i3_2 /i2_2 ? ? ? /e_bar_2 /vcc CD_54157		
+X6  /s1 ? ? ? Net-_R3-Pad2_ Net-_R4-Pad2_ Net-_R6-Pad1_ /gnd ? ? ? ? ? ? /e_bar_2 /vcc CD_54157		
+M6  Net-_M5-Pad1_ Net-_M5-Pad2_ /vcc /vcc eSim_MOS_P		
+M5  Net-_M5-Pad1_ Net-_M5-Pad2_ /gnd /gnd eSim_MOS_N		
+M8  Net-_M7-Pad1_ Net-_M7-Pad2_ /vcc /vcc eSim_MOS_P		
+M7  Net-_M7-Pad1_ Net-_M7-Pad2_ /gnd /gnd eSim_MOS_N		
+M12  /y2 Net-_M11-Pad2_ /vcc /vcc eSim_MOS_P		
+M11  /y2 Net-_M11-Pad2_ /gnd /gnd eSim_MOS_N		
+R3  Net-_M5-Pad1_ Net-_R3-Pad2_ 1		
+R4  Net-_M7-Pad1_ Net-_R4-Pad2_ 1		
+R6  Net-_R6-Pad1_ Net-_M11-Pad2_ 1		
+U1  /e_bar_1 /s1 /i3_1 /i2_1 /i1_1 /i0_1 /y1 /gnd /y2 /i0_2 /i1_2 /i2_2 /i3_2 /s0 /e_bar_2 /vcc PORT		
+
+.end

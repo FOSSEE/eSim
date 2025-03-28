@@ -1,0 +1,278 @@
+EESchema Schematic File Version 2
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:eSim_Plot
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "21 aug 2014"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Connection ~ 4250 4300
+Wire Wire Line
+	3800 4300 5400 4300
+Connection ~ 6800 2550
+Wire Wire Line
+	6800 2050 6800 2550
+Wire Wire Line
+	5100 3050 5100 3500
+Wire Wire Line
+	6500 5400 6500 4800
+Connection ~ 5100 3350
+Wire Wire Line
+	4250 3150 4250 3500
+Wire Wire Line
+	6700 3700 6500 3700
+Wire Wire Line
+	6500 3700 6500 3900
+Connection ~ 5800 4150
+Wire Wire Line
+	5800 5250 7050 5250
+Wire Wire Line
+	5800 3850 5800 5250
+Connection ~ 5800 2600
+Wire Wire Line
+	6250 2550 6250 2600
+Wire Wire Line
+	6250 2600 5100 2600
+Wire Wire Line
+	5100 4150 5800 4150
+Wire Wire Line
+	5100 3800 5100 4150
+Wire Wire Line
+	5800 3050 5800 3550
+Wire Wire Line
+	5100 2600 5100 2750
+Wire Wire Line
+	5800 2600 5800 2750
+Wire Wire Line
+	6650 2550 7050 2550
+Wire Wire Line
+	7050 2550 7050 2900
+Wire Wire Line
+	7050 5250 7050 3850
+Connection ~ 6500 5250
+Wire Wire Line
+	5400 4300 5400 3450
+Wire Wire Line
+	5400 3450 5800 3450
+Connection ~ 5800 3450
+Wire Wire Line
+	6200 2050 6200 2600
+Connection ~ 6200 2600
+Wire Wire Line
+	3800 3350 5100 3350
+Connection ~ 4250 3350
+$Comp
+L PWR_FLAG #FLG01
+U 1 1 53F57BC9
+P 6500 5400
+F 0 "#FLG01" H 6500 5670 30  0001 C CNN
+F 1 "PWR_FLAG" H 6500 5630 30  0000 C CNN
+F 2 "" H 6500 5400 60  0001 C CNN
+F 3 "" H 6500 5400 60  0001 C CNN
+	1    6500 5400
+	0    1    1    0   
+$EndComp
+$Comp
+L GND #PWR02
+U 1 1 53F57B8F
+P 6500 5400
+F 0 "#PWR02" H 6500 5400 30  0001 C CNN
+F 1 "GND" H 6500 5330 30  0001 C CNN
+F 2 "" H 6500 5400 60  0001 C CNN
+F 3 "" H 6500 5400 60  0001 C CNN
+	1    6500 5400
+	1    0    0    -1  
+$EndComp
+$Comp
+L SCR x1
+U 1 1 53F57A75
+P 7050 3300
+F 0 "x1" H 7200 3550 70  0000 C CNN
+F 1 "SCR" H 7200 2950 70  0000 C CNN
+F 2 "" H 7050 3300 60  0001 C CNN
+F 3 "" H 7050 3300 60  0001 C CNN
+	1    7050 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L sine v1
+U 1 1 566163B6
+P 3800 3850
+F 0 "v1" H 3600 3950 60  0000 C CNN
+F 1 "sine" H 3600 3800 60  0000 C CNN
+F 2 "R1" H 3500 3850 60  0000 C CNN
+F 3 "" H 3800 3850 60  0000 C CNN
+	1    3800 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L pulse v2
+U 1 1 5661641A
+P 6500 4350
+F 0 "v2" H 6300 4450 60  0000 C CNN
+F 1 "pulse" H 6300 4300 60  0000 C CNN
+F 2 "R1" H 6200 4350 60  0000 C CNN
+F 3 "" H 6500 4350 60  0000 C CNN
+	1    6500 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L D D1
+U 1 1 566164AF
+P 5100 2900
+F 0 "D1" H 5100 3000 50  0000 C CNN
+F 1 "D" H 5100 2800 50  0000 C CNN
+F 2 "" H 5100 2900 60  0000 C CNN
+F 3 "" H 5100 2900 60  0000 C CNN
+	1    5100 2900
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D3
+U 1 1 566164F1
+P 5800 2900
+F 0 "D3" H 5800 3000 50  0000 C CNN
+F 1 "D" H 5800 2800 50  0000 C CNN
+F 2 "" H 5800 2900 60  0000 C CNN
+F 3 "" H 5800 2900 60  0000 C CNN
+	1    5800 2900
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D2
+U 1 1 56616559
+P 5100 3650
+F 0 "D2" H 5100 3750 50  0000 C CNN
+F 1 "D" H 5100 3550 50  0000 C CNN
+F 2 "" H 5100 3650 60  0000 C CNN
+F 3 "" H 5100 3650 60  0000 C CNN
+	1    5100 3650
+	0    -1   -1   0   
+$EndComp
+$Comp
+L D D4
+U 1 1 566165C2
+P 5800 3700
+F 0 "D4" H 5800 3800 50  0000 C CNN
+F 1 "D" H 5800 3600 50  0000 C CNN
+F 2 "" H 5800 3700 60  0000 C CNN
+F 3 "" H 5800 3700 60  0000 C CNN
+	1    5800 3700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L R R1
+U 1 1 56616736
+P 6450 2600
+F 0 "R1" H 6500 2730 50  0000 C CNN
+F 1 "100" H 6500 2650 50  0000 C CNN
+F 2 "" H 6500 2580 30  0000 C CNN
+F 3 "" V 6500 2650 30  0000 C CNN
+	1    6450 2600
+	1    0    0    -1  
+$EndComp
+Text GLabel 4250 3150 1    60   Input ~ 0
+in1
+Text GLabel 4250 4500 3    60   Input ~ 0
+in2
+Text GLabel 6200 2050 1    60   Input ~ 0
+out1
+Text GLabel 6800 2050 1    60   Input ~ 0
+out2
+Wire Wire Line
+	3800 3350 3800 3400
+Wire Wire Line
+	4250 4100 4250 4500
+Wire Wire Line
+	6350 2550 6250 2550
+Text GLabel 6450 3600 0    60   Input ~ 0
+pulse
+Wire Wire Line
+	6450 3600 6550 3600
+Wire Wire Line
+	6550 3600 6550 3700
+Connection ~ 6550 3700
+$Comp
+L plot_v2 U1
+U 1 1 56D85F3A
+P 4000 3800
+F 0 "U1" H 4000 4200 60  0000 C CNN
+F 1 "plot_v2" H 4000 3900 60  0000 C CNN
+F 2 "" H 4000 3800 60  0000 C CNN
+F 3 "" H 4000 3800 60  0000 C CNN
+	1    4000 3800
+	0    1    1    0   
+$EndComp
+$Comp
+L plot_v1 U3
+U 1 1 56D860A5
+P 6500 3750
+F 0 "U3" H 6500 4250 60  0000 C CNN
+F 1 "plot_v1" H 6700 4100 60  0000 C CNN
+F 2 "" H 6500 3750 60  0000 C CNN
+F 3 "" H 6500 3750 60  0000 C CNN
+	1    6500 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v2 U2
+U 1 1 56D860FE
+P 6500 1900
+F 0 "U2" H 6500 2300 60  0000 C CNN
+F 1 "plot_v2" H 6500 2000 60  0000 C CNN
+F 2 "" H 6500 1900 60  0000 C CNN
+F 3 "" H 6500 1900 60  0000 C CNN
+	1    6500 1900
+	1    0    0    1   
+$EndComp
+Connection ~ 6200 2150
+Connection ~ 6800 2150
+Wire Wire Line
+	6500 3550 6500 3600
+Connection ~ 6500 3600
+$EndSCHEMATC

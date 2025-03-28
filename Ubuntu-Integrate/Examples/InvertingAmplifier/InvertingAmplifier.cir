@@ -1,0 +1,20 @@
+* /home/saurabh/Desktop/eSim/Examples/InvertingAmplifier/InvertingAmplifier.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Fri Mar 27 17:44:01 2020
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R1  in Net-_R1-Pad2_ 1k		
+R3  Net-_R1-Pad2_ out 5k		
+v1  in GND sine		
+R4  out GND 1k		
+R2  Net-_R2-Pad1_ GND 1k		
+U1  in plot_v1		
+U2  out plot_v1		
+v3  Net-_X1-Pad7_ GND 12		
+v2  GND Net-_X1-Pad4_ 12		
+X1  ? Net-_R1-Pad2_ Net-_R2-Pad1_ Net-_X1-Pad4_ ? out Net-_X1-Pad7_ ? lm_741		
+
+.end

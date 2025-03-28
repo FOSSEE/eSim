@@ -1,0 +1,55 @@
+{
+    "important_packages": [
+        {
+            "package_name": "ngspice",
+            "version": "38",
+            "installed": "Yes",
+            "installed_date": "2025-01-31 14:36:11",
+            "install_directory": "/usr/local/bin"
+        },
+        {
+            "package_name": "kicad",
+            "version": "7.0.11~ubuntu20.04.1",
+            "installed": "Yes",
+            "installed_date": "2025-02-24 14:49:40",
+            "install_directory": "/usr/bin/kicad"
+        },
+        {
+            "package_name": "ghdl",
+            "version": "v4.1.0",
+            "installed": "Yes",
+            "installed_date": "2025-01-31 14:51:46",
+            "install_directory": "/usr/local/bin"
+        },
+        {
+            "package_name": "LLVM",
+            "version": "15",
+            "installed": "Yes",
+            "installed_date": "2025-01-31 15:24:22",
+            "install_directory": "/usr/local/bin/llvm/clang+llvm-15.0.0-x86_64-linux-gnu-rhel-8.4"
+        },
+        {
+            "package_name": "CMake",
+            "version": "15",
+            "installed": "Yes",
+            "installed_date": "2025-01-31 15:24:22",
+            "install_directory": "/usr/local/bin/llvm/cmake-15.0.0.src"
+        },
+        {
+            "package_name": "Verilator",
+            "version": "5.002",
+            "installed": "Yes",
+            "installed_date": "2025-01-31 15:52:27",
+            "install_directory": "/usr/local/bin/verilator"
+        }
+    ],
+    "pip_packages": [
+        "watchdog",
+        "https://github.com/hdl/pyhdlparser/tarball/master",
+        "makerchip-app",
+        "sandpiper-saas",
+        "psutil",
+        "pyqt5",
+        "matplotlib"
+    ]
+}
