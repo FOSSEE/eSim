@@ -40,7 +40,8 @@ from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
-
+from frontEnd.Chatbot import ChatbotGUI
+from PyQt5.QtCore import QTimer
 # Its our main window of application.
 
 
@@ -48,7 +49,7 @@ class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     global project_name
     simulationEndSignal = QtCore.pyqtSignal(QtCore.QProcess.ExitStatus, int)
-
+    errorDetectedSignal = QtCore.pyqtSignal(str)
     def __init__(self, *args):
         """Initialize main Application window."""
 
@@ -57,16 +58,18 @@ class Application(QtWidgets.QMainWindow):
 
         # Set slot for simulation end signal to plot simulation data
         self.simulationEndSignal.connect(self.plotSimulationData)
-
+        self.errorDetectedSignal.connect(self.handleError)
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
         self.obj_Mainview = MainView()
         self.obj_kicad = Kicad(self.obj_Mainview.obj_dockarea)
         self.obj_appconfig = Appconfig()
         self.obj_validation = Validation()
+        self.chatbot_window = ChatbotGUI()
         # Initialize all widget
         self.setCentralWidget(self.obj_Mainview)
         self.initToolBar()
+        self.initchatbot()
 
         self.setGeometry(self.obj_appconfig._app_xpos,
                          self.obj_appconfig._app_ypos,
@@ -82,6 +85,29 @@ class Application(QtWidgets.QMainWindow):
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
 
+    def initchatbot(self):  
+        """
+        This function initializes ChatbotIcon.
+        """
+        self.chatboticon = QtWidgets.QPushButton(self, icon=QtGui.QIcon(init_path + 'images/chatbot.png'))
+        self.chatboticon.setIconSize(QtCore.QSize(30, 30))
+        self.chatboticon.setStyleSheet("border-radius: 30px;")
+        self.chatboticon.clicked.connect(self.openChatbot)
+
+    def openChatbot(self):  
+        if not hasattr(self, 'chatbot_window') or not self.chatbot_window.isVisible():
+            self.chatbot_window.setWindowModality(QtCore.Qt.WindowModal)
+            self.chatbot_window.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.WindowStaysOnTopHint)
+            self.chatbot_window.show()
+            self.obj_appconfig.print_info('Chat Bot function is called')
+
+    def resizeEvent(self, event):  
+        """
+        Adjust debug button position during window resize.
+        """
+        super().resizeEvent(event)
+        self.chatboticon.move(self.width() - 100, self.height() - 60) 
+        
     def initToolBar(self):
         """
         This function initializes Tool Bars.
@@ -293,6 +319,8 @@ class Application(QtWidgets.QMainWindow):
                 self.project.close()
             except BaseException:
                 pass
+            if self.chatbot_window.isVisible():
+                self.chatbot_window.close()
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
@@ -416,6 +444,17 @@ class Application(QtWidgets.QMainWindow):
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
 
+                self.errorDetectedSignal.emit("Simulation failed.")
+
+    def handleError(self):  
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
+        self.output_file = os.path.join(self.projDir, "ngspice_error.log")  
+        if self.chatbot_window.isVisible():
+            self.delayed_function_call()
+
+    def delayed_function_call(self):
+        QTimer.singleShot(2000, lambda: self.chatbot_window.debug_error(self.output_file))  
+
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
         projDir = self.obj_appconfig.current_project["ProjectName"]
@@ -438,7 +477,7 @@ class Application(QtWidgets.QMainWindow):
                 return
 
             self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                projName, ngspiceNetlist, self.simulationEndSignal)
+                projName, ngspiceNetlist, self.simulationEndSignal,self.chatbot_window)
 
             self.ngspice.setEnabled(False)
             self.conversion.setEnabled(False)

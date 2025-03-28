@@ -7,7 +7,7 @@ from frontEnd import TerminalUi
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
 
-    def __init__(self, netlist, simEndSignal):
+    def __init__(self, netlist, simEndSignal,chatbot):
         """
         - Creates constructor for NgspiceWidget class.
         - Creates NgspiceWindow and runs the process
@@ -27,12 +27,12 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.args = ['-b', '-r', netlist.replace(".cir.out", ".raw"), netlist]
         print("Argument to ngspice: ", self.args)
-
+        self.chat=chatbot
         self.process = QtCore.QProcess(self)
         self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminalUi)
-
+        self.output_file = os.path.join(self.projDir, "ngspice_error.log")  
         self.process.setWorkingDirectory(self.projDir)
         self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
         self.process.readyRead.connect(self.readyReadAll)
@@ -69,7 +69,7 @@ class NgspiceWidget(QtWidgets.QWidget):
 
         stderror = str(self.process.readAllStandardError().data(),
                        encoding='utf-8')
-
+        print(stderror)
         # Suppressing the Ngspice PrinterOnly error that batch mode throws
         stderror = '\n'.join([errLine for errLine in stderror.split('\n')
                               if ('PrinterOnly' not in errLine and
@@ -135,8 +135,7 @@ class NgspiceWidget(QtWidgets.QWidget):
                         {} \
                         </span>'
             self.terminalUi.simulationConsole.append(
-                successFormat.format("Simulation Completed Successfully!"))
-
+                successFormat.format("Simulation Completed Successfully!"))         
         else:
             failedFormat = '<span style="color:#ff3333; font-size:26px;"> \
                         {} \
@@ -167,3 +166,10 @@ class NgspiceWidget(QtWidgets.QWidget):
         )
 
         simEndSignal.emit(exitStatus, exitCode)
+        console_output = self.terminalUi.simulationConsole.toPlainText()
+        # Save console output to a log file
+        error_log_path = os.path.join(self.projDir, "ngspice_error.log")
+        with open(error_log_path, "w", encoding="utf-8") as error_log:
+            error_log.write(console_output + "\n")
+        if self.chat.isVisible()and "Simulation Failed!" in console_output:
+           self.chat.debug_error(self.output_file)
