@@ -10,10 +10,10 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#      MODIFIED: Rahul Paknikar, Partha Singh Roy
+#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 17 February 2015
-#      REVISION: Thursday 29 Jun 2023
+#      REVISION: Sunday 26 July 2020
 # =========================================================================
 
 import os
@@ -25,7 +25,7 @@ from PyQt5 import QtWidgets
 
 class Kicad:
     """
-    This class called the Kicad Schematic, KicadtoNgspice Converter, Layout
+    This class called the Kicad Schematic,KicadtoNgspice Converter,Layout
     editor and Footprint Editor
     Initialise validation, appconfig and dockarea
 
@@ -79,18 +79,14 @@ class Kicad:
                 'Kicad Schematic is called for project ' + self.projDir)
         except BaseException:
             pass
-
         # Validating if current project is available or not
+
         if self.obj_validation.validateKicad(self.projDir):
             self.projName = os.path.basename(self.projDir)
             self.project = os.path.join(self.projDir, self.projName)
 
-            # creating a command to open schematic
-            self.cmd = "eeschema " + self.project + ".kicad_sch"  # kicad6 file
-            if not os.path.exists(self.project + ".kicad_sch") \
-                    and os.path.exists(self.project + ".sch"):
-                self.cmd = "eeschema " + self.project + ".sch"    # kicad4 file
-
+            # Creating a command to run
+            self.cmd = "eeschema " + self.project + ".sch "
             self.obj_workThread.args = self.cmd
             self.obj_workThread.start()
 

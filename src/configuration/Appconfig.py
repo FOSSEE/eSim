@@ -10,10 +10,10 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
+#      MODIFIED: Rahul Paknikar, rahulp@cse.iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Thursday 29 June 2023
+#      REVISION: Tuesday 13 September 2022
 # =========================================================================
 
 from PyQt5 import QtWidgets
@@ -80,6 +80,20 @@ class Appconfig(QtWidgets.QWidget):
         print("Cannot access Modelica map file --- .esim folder")
         print(str(e))
 
+    # Open file and read KiCad config path
+    try:
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
+        file = open(init_path +
+                    'library/supportFiles/kicad_config_path.txt', 'r')
+        kicad_path = file.read().rstrip()
+        file.close()
+    except BaseException as e:
+        kicad_path = None
+        print(str(e))
+
     try:
         project_explorer = json.load(open(dictPath["path"]))
     except BaseException:
@@ -91,7 +105,7 @@ class Appconfig(QtWidgets.QWidget):
 
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = '2.4'
+        self._VERSION = '2.3'
         self._AUTHOR = 'Fahim'
         self._REVISION = 'Rahul, Sumanto'
 

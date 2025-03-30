@@ -1,10 +1,8 @@
+from PyQt5 import QtWidgets
 import os
 import shutil
-from xml.etree import ElementTree as ET
-
-from PyQt5 import QtWidgets
-
 from . import TrackWidget
+from xml.etree import ElementTree as ET
 
 
 class Convert:
@@ -69,8 +67,9 @@ class Convert:
                     theta_val = str(self.entry_var[self.end].text()) if len(
                         str(self.entry_var[self.end].text())) > 0 else '0'
                     self.addline = self.addline.partition(
-                        '(')[0] + "(" + vo_val + " " + va_val + " " + \
-                        freq_val + " " + td_val + " " + theta_val + ")"
+                        '(')[0] + "(" + vo_val + " " + va_val + " " +\
+                        freq_val + " " + td_val + " " +\
+                        theta_val + ")"
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
                     print(
@@ -103,8 +102,8 @@ class Convert:
                         str(self.entry_var[self.end].text())) > 0 else '0'
 
                     self.addline = self.addline.partition(
-                        '(')[0] + "(" + v1_val + " " + v2_val + " " + \
-                        td_val + " " + tr_val + " " + tf_val + " " + \
+                        '(')[0] + "(" + v1_val + " " + v2_val + " " +\
+                        td_val + " " + tr_val + " " + tf_val + " " +\
                         pw_val + " " + tp_val + ")"
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
@@ -184,8 +183,8 @@ class Convert:
                         str(self.entry_var[self.end].text())) > 0 else '0'
 
                     self.addline = self.addline.partition(
-                        '(')[0] + "(" + v1_val + " " + v2_val + " " + \
-                        td1_val + " " + tau1_val + " " + td2_val + \
+                        '(')[0] + "(" + v1_val + " " + v2_val + " " +\
+                        td1_val + " " + tau1_val + " " + td2_val +\
                         " " + tau2_val + ")"
                     self.sourcelistvalue.append([self.index, self.addline])
                 except BaseException:
@@ -404,21 +403,18 @@ class Convert:
                     if num_turns2 == "":
                         num_turns2 = "620"
                     addmodelLine = ".model " + \
-                                   line[3] + \
-                                   "_primary lcouple (num_turns= " + \
-                                   num_turns + ")"
+                        line[3] + \
+                        "_primary lcouple (num_turns= " + num_turns + ")"
                     modelParamValue.append(
                         [line[0], addmodelLine, "*primary lcouple"])
                     addmodelLine = ".model " + \
-                                   line[3] + "_iron_core core (" + bh_array + \
-                                   " area = " + area + " length =" + length + \
-                                   ")"
+                        line[3] + "_iron_core core (" + bh_array + \
+                        " area = " + area + " length =" + length + ")"
                     modelParamValue.append(
                         [line[0], addmodelLine, "*iron core"])
                     addmodelLine = ".model " + \
-                                   line[3] + \
-                                   "_secondary lcouple (num_turns =" + \
-                                   num_turns2 + ")"
+                        line[3] + \
+                        "_secondary lcouple (num_turns =" + num_turns2 + ")"
                     modelParamValue.append(
                         [line[0], addmodelLine, "*secondary lcouple"])
                 except Exception as e:
@@ -460,8 +456,8 @@ class Convert:
                             default = 0
                         # Checking if value is iterable.its for vector
                         if (
-                                not isinstance(value, str) and
-                                hasattr(value, '__iter__')
+                            not isinstance(value, str) and
+                            hasattr(value, '__iter__')
                         ):
                             addmodelLine += param + "=["
                             for lineVar in value:
@@ -492,122 +488,6 @@ class Convert:
                 except Exception as e:
                     print("Caught an exception in model ", line[1])
                     print("Exception Message : ", str(e))
-
-        # Adding it to schematic
-        for item in modelParamValue:
-            if ".ic" in item[1]:
-                schematicInfo.insert(0, item[1])
-                schematicInfo.insert(0, item[2])
-            else:
-                schematicInfo.append(item[2])  # Adding Comment
-                schematicInfo.append(item[1])  # Adding model line
-
-        return schematicInfo
-
-    def addMicrocontrollerParameter(self, schematicInfo):
-        """
-        This function adds the Microcontroller Model details to schematicInfo
-        """
-
-        # Create object of TrackWidget
-        self.obj_track = TrackWidget.TrackWidget()
-
-        # List to store model line
-        addmodelLine = []
-        modelParamValue = []
-
-        for line in self.obj_track.microcontrollerTrack:
-            # print "Model Track :",line
-            try:
-                start = line[7]
-                # end = line[8]
-                addmodelLine = ".model " + line[3] + " " + line[2] + "("
-                z = 0
-                for key, value in line[9].items():
-                    # Checking for default value and accordingly assign
-                    # param and default.
-                    if ':' in key:
-                        key = key.split(':')
-                        param = key[0]
-                        default = key[1]
-                    else:
-                        param = key
-                        default = 0
-                    # Checking if value is iterable.its for vector
-                    if (
-                            not isinstance(value, str) and
-                            hasattr(value, '__iter__')
-                    ):
-                        addmodelLine += param + "=["
-                        for lineVar in value:
-                            if str(
-                                    self.obj_track.microcontroller_var
-                                    [lineVar].text()) == "":
-                                paramVal = default
-                            else:
-                                paramVal = str(
-                                    self.obj_track.microcontroller_var
-                                    [lineVar].text())
-                            # Checks For 5th Parameter(Hex File Path)
-                            if z == 4:
-                                chosen_file_path = paramVal
-                                star_file_path = chosen_file_path
-                                star_count = 0
-                                for c in chosen_file_path:
-                                    # If character is uppercase
-                                    if c.isupper():
-                                        c_in = chosen_file_path.index(c)
-                                        c_in += star_count
-                                        # Adding asterisks(*) to the path
-                                        # around the character
-                                        star_file_path = \
-                                            star_file_path[
-                                                :c_in] + "*" + star_file_path[
-                                                c_in] + "**" + star_file_path[
-                                                c_in + 1:]
-                                        star_count += 3
-
-                                paramVal = "\"" + star_file_path + "\""
-
-                            addmodelLine += paramVal + " "
-                            z = z + 1
-                        addmodelLine += "] "
-                    else:
-                        if str(
-                                self.obj_track.microcontroller_var
-                                [value].text()) == "":
-                            paramVal = default
-                        else:
-                            paramVal = str(
-                                self.obj_track.microcontroller_var
-                                [value].text())
-                        # Checks For 5th Parameter(Hex File Path)
-                        if z == 4:
-                            chosen_file_path = paramVal
-                            star_file_path = chosen_file_path
-                            star_count = 0
-                            for c in chosen_file_path:
-                                # If character is uppercase
-                                if c.isupper():
-                                    c_in = chosen_file_path.index(c)
-                                    c_in += star_count
-                                    # Adding asterisks(*) to the path around
-                                    # the character
-                                    star_file_path = \
-                                        star_file_path[:c_in] + "*" + \
-                                        star_file_path[c_in] + "**" + \
-                                        star_file_path[c_in + 1:]
-                                    star_count += 3
-
-                            paramVal = "\"" + star_file_path + "\""
-                        z = z + 1
-                        addmodelLine += param + "=" + paramVal + " "
-
-                addmodelLine += ") "
-                modelParamValue.append([line[0], addmodelLine, line[4]])
-            except Exception as e:
-                print("Caught an exception in microcontroller ", line[1])
-                print("Exception Message : ", str(e))
 
         # Adding it to schematic
         for item in modelParamValue:

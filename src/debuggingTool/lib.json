@@ -1,0 +1,178 @@
+{
+    "subcircuit": [
+        {
+            "sub": "10bitdac",
+            "dic": ["10bitDAC"]
+        },
+        {
+            "sub": "2bitmul",
+            "dic": ["2bitmul"]
+        },
+        {
+            "sub": "3_and",
+            "dic": ["3_and"]
+        },
+        {
+            "sub": "4_and",
+            "dic": ["4_and"]
+        },
+        {
+            "sub": "4_or",
+            "dic": ["4_OR"]
+        },
+        {
+            "sub": "556",
+            "dic": ["556"]
+        },
+        {
+            "sub": "5_and",
+            "dic": ["5_and"]
+        },
+        {
+            "sub": "clock_pulse_generator",
+            "dic": ["Clock_pulse_generator"]
+        },
+        {
+            "sub": "cmos_nand",
+            "dic": ["CMOS_NAND"]
+        },
+        {
+            "sub": "esim_74ls04",
+            "dic": ["74LS04"]
+        },
+        {
+            "sub": "full_adder",
+            "dic": ["full_adder"]
+        },
+        {
+            "sub": "full_sub",
+            "dic": ["full_sub"]
+        },
+        {
+            "sub": "ic_4002",
+            "dic": ["4002"]
+        },
+        {
+            "sub": "ic_4012",
+            "dic": ["4012"]
+        },
+        {
+            "sub": "ic_4017",
+            "dic": ["4017"]
+        },
+        {
+            "sub": "ic_4023",
+            "dic": ["4023"]
+        },
+        {
+            "sub": "ic_4028",
+            "dic": ["4028"]
+        },
+        {
+            "sub": "ic_4073",
+            "dic": ["4073"]
+        },
+        {
+            "sub": "ic_74153",
+            "dic": ["74153"]
+        },
+        {
+            "sub": "ic_74157",
+            "dic": ["74157"]
+        },
+        {
+            "sub": "invcmos",
+            "dic": ["INVCMOS"]
+        },
+        {
+            "sub": "ic_7485",
+            "dic": ["7485"]
+        },
+        {
+            "sub": "lm555n",
+            "dic": ["lm555n"]
+        },
+        {
+            "sub": "lm_741",
+            "dic": ["lm_741"]
+        },
+        {
+            "sub": "lm_7805",
+            "dic": ["lm7805"]
+        },
+        {
+            "sub": "lm_7812",
+            "dic": ["LM7812"]
+        },
+        {
+            "sub": "ujt",
+            "dic": ["ujt"]
+        },
+        {
+            "sub": "scr",
+            "dic": ["scr"]
+        }
+    ],
+    "library": [
+        {
+            "device": "esim_npn",
+            "library": ["NPN.lib"]
+        },
+        {
+            "device": "bc547",
+            "library": ["BC547B.lib"]
+        },
+        {
+            "device": "esim_diode",
+            "library": ["D.lib"]
+        },
+        {
+            "device": "esim_led",
+            "library": ["LED.lib"]
+        },
+        {
+            "device": "esim_mos_n",
+            "library": ["NMOS-0.5um.lib", "NMOS-5um.lib", "NMOS-180nm.lib"]
+        },
+        {
+            "device": "esim_mos_p",
+            "library": ["PMOS-0.5um.lib", "PMOS-5um.lib", "PMOS-180nm.lib"]
+        },
+        {
+            "device": "esim_njf",
+            "library": ["NJF.lib"]
+        },
+        {
+            "device": "njf",
+            "library": ["NJF.lib"]
+        },
+        {
+            "device": "esim_pjf",
+            "library": ["PJF.lib"]
+        },
+        {
+            "device": "esim_pnp",
+            "library": ["PNP.lib"]
+        },
+        {
+            "device": "jfet_n",
+            "library": ["NJF.lib"]
+        },
+        {
+            "device": "mosfet_p",
+            "library": ["PMOS-0.5um.lib", "PMOS-5um.lib", "PMOS-180nm.lib"]
+        },
+        {
+            "device": "mosfet_n",
+            "library": ["NMOS-0.5um.lib", "NMOS-5um.lib", "NMOS-180nm.lib"]
+        },
+        {
+            "device": "q2n2222",
+            "library": ["NPN.lib"]
+        },
+        {
+            "device": "d",
+            "library": ["D.lib"]
+        }
+    ]
+}

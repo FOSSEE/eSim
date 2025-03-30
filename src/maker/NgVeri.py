@@ -37,10 +37,10 @@ from configuration.Appconfig import Appconfig
 from configparser import ConfigParser
 
 
+# beginning class NgVeri. This class create the NgVeri Tab
 class NgVeri(QtWidgets.QWidget):
-    '''
-        This class create the NgVeri Tab
-    '''
+
+    # initialising the variables
     def __init__(self, filecount):
         QtWidgets.QWidget.__init__(self)
         # Maker.addverilog(self)
@@ -67,10 +67,10 @@ class NgVeri(QtWidgets.QWidget):
         self.fname = ""
         self.filecount = filecount
 
+    # Creating the various components of the Widget(Ngveri Tab)
+
     def createNgveriWidget(self):
-        '''
-            Creating the various components of the Widget(Ngveri Tab)
-        '''
+
         self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
 
@@ -79,10 +79,8 @@ class NgVeri(QtWidgets.QWidget):
 
         self.show()
 
+    # Adding the verilog file in Maker tab to Ngveri Tab automatically
     def addverilog(self):
-        '''
-            Adding the verilog file in Maker tab to Ngveri Tab automatically
-        '''
         # b=Maker.Maker(self)
         print(Maker.verilogFile)
         if Maker.verilogFile[self.filecount] == "":
@@ -196,11 +194,9 @@ class NgVeri(QtWidgets.QWidget):
         # model.verilogfile()
         model.addfile()
 
+    # This function is used to add additional folder required by the verilog
+    # top module
     def addfolder(self):
-        '''
-            This function is used to add additional folder required
-            by the verilog top module.
-        '''
         if len(Maker.verilogFile) < (self.filecount + 1):
             reply = QtWidgets.QMessageBox.critical(
                 None,
@@ -218,16 +214,14 @@ class NgVeri(QtWidgets.QWidget):
         # model.verilogfile()
         model.addfolder()
 
+    # This function is used to clear the terminal
+
     def clearTerminal(self):
-        '''
-            This function is used to clear the terminal
-        '''
         self.entry_var[0].setText("")
 
+    # This function is used to create buttons/options
     def createoptionsBox(self):
-        '''
-            This function is used to create buttons/options
-        '''
+
         self.optionsbox = QtWidgets.QGroupBox()
         self.optionsbox.setTitle("Select Options")
         self.optionsgrid = QtWidgets.QGridLayout()
@@ -269,11 +263,9 @@ class NgVeri(QtWidgets.QWidget):
 
         return self.optionsbox
 
+    # This function is used to remove models in modlst of Ngspice folder if
+    # the user wants to remove a model. Note: files do not get removed
     def edit_modlst(self, text):
-        '''
-            This is used to remove models in modlst of Ngspice folder if
-            the user wants to remove a model. Note: files do not get removed.
-        '''
         if text == "Remove Verilog Models":
             return
         index = self.entry_var[1].findText(text)
@@ -365,11 +357,11 @@ class NgVeri(QtWidgets.QWidget):
             file.close()
         self.entry_var[3].setText("")
 
+    # creating various other groups like terminal, remove modlst, remove lint_off
+    # and add lint_off
+
     def creategroup(self):
-        '''
-            Creates various other groups like terminal, remove modlst,
-            remove lint_off and add lint_off
-        '''
+
         self.trbox = QtWidgets.QGroupBox()
         self.trbox.setTitle("Terminal")
         # self.trbox.setDisabled(True)
