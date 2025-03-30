@@ -16,7 +16,7 @@
 #                Sumanto Kar, Partha Singha Roy
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Friday 14 February 2025 10:00
+#      REVISION: Sunday 30 March 2024 18:40
 #=============================================================================
 
 # All variables goes here
@@ -54,44 +54,30 @@ function createConfigFile
     echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
     echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-    
+   
 }
 
 
-function installNghdl {
+function installNghdl
+{
+
     echo "Installing NGHDL..........................."
-
-    # Check if NGHDL is already extracted
-    if [ -d "nghdl" ]; then
-        echo "nghdl/ directory already exists. Skipping unzip..."
-    else
-        unzip -o nghdl.zip || { echo "Failed to unzip nghdl.zip"; exit 1; }
-        echo "Successfully extracted nghdl.zip"
-    fi
-
-    cd nghdl/ || { echo "Failed to change directory to nghdl/"; exit 1; }
-
+    unzip -o nghdl.zip
+    cd nghdl/
     chmod +x install-nghdl.sh
 
-    trap "" ERR 
+    # Do not trap on error of any command. Let NGHDL script handle its own errors.
+    trap "" ERR
 
-    ./install-nghdl.sh --install
-
-    trap error_exit ERR 
-
-    # Verify if NGHDL was installed successfully
-    if ! command -v ghdl >/dev/null; then
-        echo "Error: NGHDL installation failed"
-        exit 1
-    fi
-
-    echo "NGHDL installation completed successfully."
+    ./install-nghdl.sh --install       # Install NGHDL
+        
+    # Set trap again to error_exit function to exit on errors
+    trap error_exit ERR
 
     ngspiceFlag=1
+    cd ../
 
-    cd ../ || { echo "Failed to return to parent directory"; exit 1; }
 }
-
 
 
 function installSky130Pdk
@@ -107,25 +93,21 @@ function installSky130Pdk
 
     # Copy SKY130 library
     echo "Copying SKY130 PDK........................."
-    sudo mkdir -p /usr/share/local/
-    echo "Directory created"
-    # sudo mv sky130_fd_pr /usr/share/local/
-    # placing  the SKY130 PDK in a standard, system-wide location. 
 
-    sudo cp -R sky130_fd_pr /usr/share/local/
-    
-    sudo rm -rf sky130_fd_pr
+    sudo mkdir -p /usr/share/local/
+    sudo mv sky130_fd_pr /usr/share/local/
 
     # Change ownership from root to the user
     sudo chown -R $USER:$USER /usr/share/local/sky130_fd_pr/
 
 }
 
+
 function installKicad {
     echo "Installing KiCad..."
 
     kicadppa="kicad/kicad-8.0-releases"
-    findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
+    findppa=$(grep -h -r "^deb.$kicadppa" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
     
     if [ -z "$findppa" ]; then
         echo "Adding KiCad-8 PPA to local apt repository..."
@@ -142,23 +124,21 @@ function installKicad {
 }
 
 
-function installDependency
-{
-
+function installDependency {
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
-    # Update apt repository
     echo "Updating apt index files..................."
     sudo apt-get update
     
     set -e      # Re-enable exit on error
     trap error_exit ERR
     
-    echo "Instaling virtualenv......................."
-    sudo apt install python3-virtualenv
+    echo "Installing virtualenv......................."
+    sudo apt install -y python3-virtualenv
    
     echo "Creating virtual environment to isolate packages "
+    rm -rf $config_dir/env
     virtualenv $config_dir/env
     
     echo "Starting the virtual env..................."
@@ -166,6 +146,9 @@ function installDependency
 
     echo "Upgrading Pip.............................."
     pip install --upgrade pip
+    
+    echo "Reinstalling Matplotlib and PyQt5 to fix corrupted dependencies"
+    pip install --force-reinstall --no-cache-dir PyQt5 PyQt5-sip matplotlib
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
@@ -175,14 +158,13 @@ function installDependency
     
     echo "Installing PyQt5..........................."
     sudo apt-get install -y python3-pyqt5
-
+    
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
-
+    
     echo "Installing Distutils......................."
     sudo apt-get install -y python3-distutils
-
-    # Install NgVeri Depedencies
+    
     echo "Installing Pip3............................"
     sudo apt install -y python3-pip
 
@@ -198,7 +180,6 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
-   
     echo "Installing Hdlparse......................"
     pip3 install hdlparse
 
@@ -208,6 +189,9 @@ function installDependency
     echo "Installing PyQt5............."
     pip3 install PyQt5  
 }
+
+
+
 
 
 function copyKicadLibrary {
@@ -259,14 +243,13 @@ function copyKicadLibrary {
     echo "KiCad Library successfully copied and configured!"
 }
 
-
-
 function createDesktopStartScript
 {    
 
-	# Generating new esim-start.sh
+    # Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
     echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
+    echo "source $config_dir/env/bin/activate" >> esim-start.sh
     echo "python3 Application.py" >> esim-start.sh
 
     # Make it executable
@@ -416,12 +399,11 @@ elif [ $option == "--uninstall" ];then
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
+	sudo rm /etc/apt/sources.list.d/kicad*
         rm -rf $HOME/.config/kicad/6.0
 
-        echo "Removing Makerchip......................."
-        pip3 uninstall -y hdlparse
-        pip3 uninstall -y makerchip-app
-        pip3 uninstall -y sandpiper-saas
+        echo "Removing Virtual env......................."
+        sudo rm -r $config_dir/env
 
         echo "Removing SKY130 PDK......................"
         sudo rm -R /usr/share/local/sky130_fd_pr
@@ -455,4 +437,3 @@ else
     echo "--install"
     echo "--uninstall"
 fi
-
