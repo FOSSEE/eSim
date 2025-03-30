@@ -16,7 +16,7 @@
 #                Sumanto Kar, Partha Singha Roy
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Tuesday 31 December 2024 17:28
+#      REVISION: Sunday 30 March 2024 18:40
 #=============================================================================
 
 # All variables goes here
@@ -103,43 +103,42 @@ function installSky130Pdk
 }
 
 
-function installKicad
-{
+function installKicad {
+    echo "Installing KiCad..."
 
-    echo "Installing KiCad..........................."
-
-    kicadppa="kicad/kicad-6.0-releases"
-    findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
+    kicadppa="kicad/kicad-8.0-releases"
+    findppa=$(grep -h -r "^deb.$kicadppa" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
+    
     if [ -z "$findppa" ]; then
-        echo "Adding KiCad-6 ppa to local apt-repository"
-        sudo add-apt-repository -y ppa:kicad/kicad-6.0-releases
-        sudo apt-get update
+        echo "Adding KiCad-8 PPA to local apt repository..."
+        sudo add-apt-repository -y ppa:kicad/kicad-8.0-releases
+        sudo apt update
     else
-        echo "KiCad-6 is available in synaptic"
+        echo "KiCad-8 PPA is already added."
     fi
 
-    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    echo "Installing KiCad and necessary libraries..."
+    sudo apt install -y --no-install-recommends kicad
 
+    echo "KiCad installation completed successfully!"
 }
 
 
-function installDependency
-{
-
+function installDependency {
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
-    # Update apt repository
     echo "Updating apt index files..................."
     sudo apt-get update
     
     set -e      # Re-enable exit on error
     trap error_exit ERR
     
-    echo "Instaling virtualenv......................."
-    sudo apt install python3-virtualenv
+    echo "Installing virtualenv......................."
+    sudo apt install -y python3-virtualenv
    
     echo "Creating virtual environment to isolate packages "
+    rm -rf $config_dir/env
     virtualenv $config_dir/env
     
     echo "Starting the virtual env..................."
@@ -147,6 +146,9 @@ function installDependency
 
     echo "Upgrading Pip.............................."
     pip install --upgrade pip
+    
+    echo "Reinstalling Matplotlib and PyQt5 to fix corrupted dependencies"
+    pip install --force-reinstall --no-cache-dir PyQt5 PyQt5-sip matplotlib
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
@@ -156,14 +158,13 @@ function installDependency
     
     echo "Installing PyQt5..........................."
     sudo apt-get install -y python3-pyqt5
-
+    
     echo "Installing Matplotlib......................"
     sudo apt-get install -y python3-matplotlib
-
+    
     echo "Installing Distutils......................."
     sudo apt-get install -y python3-distutils
-
-    # Install NgVeri Depedencies
+    
     echo "Installing Pip3............................"
     sudo apt install -y python3-pip
 
@@ -179,7 +180,6 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
-   
     echo "Installing Hdlparse......................"
     pip3 install hdlparse
 
@@ -191,40 +191,57 @@ function installDependency
 }
 
 
-function copyKicadLibrary
-{
 
-    #Extract custom KiCad Library
-    tar -xJf library/kicadLibrary.tar.xz
 
-    if [ -d ~/.config/kicad/6.0 ];then
-        echo "kicad config folder already exists"
-    else 
-        echo ".config/kicad/6.0 does not exist"
-        mkdir -p ~/.config/kicad/6.0
+
+function copyKicadLibrary {
+    set -e  # Exit immediately on error
+    trap 'echo "An error occurred! Exiting..."; exit 1' ERR
+
+    echo "Extracting custom KiCad Library..."
+    tar -xJf library/kicadLibrary.tar.xz -C library || { echo "Extraction failed!"; exit 1; }
+
+    # Detect the latest installed KiCad version
+    kicad_config_dir="$HOME/.config/kicad"
+    latest_version=$(ls "$kicad_config_dir" | grep -E "^[0-9]+\.[0-9]+$" | sort -V | tail -n 1)
+
+    if [ -z "$latest_version" ]; then
+        latest_version="8.0"  # Default to the latest known version
+        mkdir -p "$kicad_config_dir/$latest_version"
+        echo "Created KiCad config directory: $kicad_config_dir/$latest_version"
+    else
+        echo "Using existing KiCad version: $latest_version"
     fi
 
-    # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
-    echo "symbol table copied in the directory"
+    kicad_version_dir="$kicad_config_dir/$latest_version"
 
-    # Copy KiCad symbols made for eSim
-    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
+    # Copy the symbol table for eSim custom symbols
+    echo "Copying symbol table..."
+    cp library/kicadLibrary/template/sym-lib-table "$kicad_version_dir/"
 
-    set +e      # Temporary disable exit on error
-    trap "" ERR # Do not trap on error of any command
-    
-    # Remove extracted KiCad Library - not needed anymore
-    rm -rf kicadLibrary
+    # Ensure KiCad symbols directory exists
+    kicad_symbols_dir="/usr/share/kicad/symbols"
+    if [ ! -d "$kicad_symbols_dir" ]; then
+        echo "Creating KiCad symbols directory..."
+        sudo mkdir -p "$kicad_symbols_dir"
+    fi
 
-    set -e      # Re-enable exit on error
-    trap error_exit ERR
+    # Copy custom symbols using rsync for better reliability
+    echo "Copying eSim custom symbols..."
+    sudo rsync -av library/kicadLibrary/eSim-symbols/ "$kicad_symbols_dir/"
 
-    #Change ownership from Root to the User
-    sudo chown -R $USER:$USER /usr/share/kicad/symbols/
+    # Cleanup: Remove extracted KiCad Library (not needed anymore)
+    echo "Removing extracted KiCad library..."
+    rm -rf library/kicadLibrary
 
+    # Change ownership from root to the user only if needed
+    if [ "$(stat -c "%U" "$kicad_symbols_dir")" != "$USER" ]; then
+        echo "Changing ownership of KiCad symbols directory..."
+        sudo chown -R "$USER:$USER" "$kicad_symbols_dir"
+    fi
+
+    echo "KiCad Library successfully copied and configured!"
 }
-
 
 function createDesktopStartScript
 {    
