@@ -58,6 +58,9 @@ class Application(QtWidgets.QMainWindow):
         # Set slot for simulation end signal to plot simulation data
         self.simulationEndSignal.connect(self.plotSimulationData)
 
+        #the plotFlag
+        self.plotFlag = False
+
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
         self.obj_Mainview = MainView()
@@ -188,7 +191,7 @@ class Application(QtWidgets.QMainWindow):
             QtGui.QIcon(init_path + 'images/ngspice.png'),
             '<b>Simulate</b>', self
         )
-        self.ngspice.triggered.connect(self.open_ngspice)
+        self.ngspice.triggered.connect(self.plotFlagPopBox)
 
         self.model = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/model.png'),
@@ -246,6 +249,27 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.conToeSim)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
+
+    def plotFlagPopBox(self):
+        """This function displays a pop-up box with message- Do you want Ngspice plots? and oprions Yes and NO.
+        
+        If the user clicks on Yes, both the NgSpice and python plots are displayed and if No is clicked then only the python plots."""
+
+        msg_box = QtWidgets.QMessageBox(self)
+        msg_box.setWindowTitle("Ngspice Plots")
+        msg_box.setText("Do you want Ngspice plots?")
+        
+        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.YesRole)
+        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.NoRole)
+
+        msg_box.exec_()
+
+        if msg_box.clickedButton() == yes_button:
+            self.plotFlag = True  
+        else:
+            self.plotFlag = False  
+
+        self.open_ngspice()
 
     def closeEvent(self, event):
         '''
@@ -438,7 +462,7 @@ class Application(QtWidgets.QMainWindow):
                 return
 
             self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                projName, ngspiceNetlist, self.simulationEndSignal)
+                projName, ngspiceNetlist, self.simulationEndSignal, self.plotFlag)
 
             self.ngspice.setEnabled(False)
             self.conversion.setEnabled(False)
