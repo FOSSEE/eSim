@@ -1,4 +1,4 @@
-# ==============================================================================
+# =========================================================================
 #             FILE: createkicad.py
 #
 #            USAGE: ---
@@ -21,41 +21,47 @@
 #                Rohinth Ram, Madras Institue of Technology
 #                Charaan S., Madras Institue of Technology
 #                Nalinkumar S., Madras Institue of Technology
-#                Partha Singha Roy, Kalyani Government Engineering College
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Monday 29, November 2021
-#      REVISION: Friday 16, June 2023
-# ==============================================================================
+#      REVISION: Tuesday 25, January 2022
+# =========================================================================
 
+# importing the files and libraries
 from . import Appconfig
 import re
 import os
 import xml.etree.cElementTree as ET
 from PyQt5 import QtWidgets
 
+# beginning the AutoSchematic Class
+
 
 class AutoSchematic:
+
+    # initialising the variables here
     def init(self, modelname, modelpath):
         self.App_obj = Appconfig.Appconfig()
         self.modelname = modelname.split('.')[0]
-        self.template = self.App_obj.kicad_sym_template.copy()
+        self.template = self.App_obj.kicad_lib_template.copy()
         self.xml_loc = self.App_obj.xml_loc
         self.lib_loc = self.App_obj.lib_loc
         self.modelpath = modelpath
         if os.name == 'nt':
             eSim_src = self.App_obj.src_home
             inst_dir = eSim_src.replace('\\eSim', '')
-            self.kicad_ngveri_sym = \
-                inst_dir + '/KiCad/share/kicad/symbols/eSim_Ngveri.kicad_sym'
+            self.kicad_ngveri_lib = \
+                inst_dir + '/KiCad/share/kicad/library/eSim_Ngveri.lib'
         else:
-            self.kicad_ngveri_sym = \
-                '/usr/share/kicad/symbols/eSim_Ngveri.kicad_sym'
+            self.kicad_ngveri_lib = '/usr/share/kicad/library/eSim_Ngveri.lib'
         # self.parser = self.App_obj.parser_ngveri
 
-    def createKicadSymbol(self):
-        '''
-            creating KiCad library using this function
-        '''
+    # creating KiCAD library using this function
+    def createkicad(self):
+
+        xmlFound = None
+        # read_file = open(self.modelpath+'connection_info.txt', 'r')
+        # data = read_file.readlines()
+        # print(data)
         xmlFound = None
         for root, dirs, files in os.walk(self.xml_loc):
             if (str(self.modelname) + '.xml') in files:
@@ -66,7 +72,7 @@ class AutoSchematic:
         if xmlFound is None:
             self.getPortInformation()
             self.createXML()
-            self.createSym()
+            self.createLib()
 
         elif (xmlFound == os.path.join(self.xml_loc, 'Ngveri')):
             print('Library already exists...')
@@ -82,8 +88,8 @@ class AutoSchematic:
                 print("Overwriting existing libraries")
                 self.getPortInformation()
                 self.createXML()
-                self.removeOldLibrary()     # Removes the existing library
-                self.createSym()
+                self.removeOldLibrary()     # Removes the existng library
+                self.createLib()
             else:
                 print("Library Creation Cancelled")
                 return "Error"
@@ -97,20 +103,16 @@ class AutoSchematic:
                 QtWidgets.QMessageBox.Ok
             )
 
+    # getting the port information here
     def getPortInformation(self):
-        '''
-            getting the port information here
-        '''
         portInformation = PortInfo(self, self.modelpath)
         portInformation.getPortInfo()
         self.portInfo = portInformation.bit_list
         self.input_length = portInformation.input_len
         self.portName = portInformation.port_name
 
+    # creating the XML files in eSim-2.2/library/modelParamXML/Ngveri
     def createXML(self):
-        '''
-            creating the XML files at `library/modelParamXML/Ngveri`
-        '''
         cwd = os.getcwd()
         xmlDestination = os.path.join(self.xml_loc, 'Ngveri')
         self.splitText = ""
@@ -143,10 +145,8 @@ class AutoSchematic:
         print("Leaving the directory ", xmlDestination)
         os.chdir(cwd)
 
+    # Calculates the maximum between input and output ports
     def findBlockSize(self):
-        '''
-            Calculates the maximum between input and output ports
-        '''
         ind = self.input_length
         return max(
             self.char_sum(self.portInfo[:ind]),
@@ -156,72 +156,52 @@ class AutoSchematic:
     def char_sum(self, ls):
         return sum([int(x) for x in ls])
 
+    # removing the old library
     def removeOldLibrary(self):
-        '''
-            removing the old library
-        '''
         cwd = os.getcwd()
         os.chdir(self.lib_loc)
         print("Changing directory to ", self.lib_loc)
-        sym_file = open(self.kicad_ngveri_sym)
-        lines = sym_file.readlines()
-        sym_file.close()
-        lines = lines[0:-2]
+        f = open(self.kicad_ngveri_lib)
+        lines = f.readlines()
+        f.close()
+
         output = []
         line_reading_flag = False
 
         for line in lines:
-            if line.startswith("(symbol"):    # Eeschema Template start
-                if line.split()[1] == f"\"{self.modelname}\"":
+            if line.startswith("DEF"):
+                if line.split()[1] == self.modelname:
                     line_reading_flag = True
             if not line_reading_flag:
                 output.append(line)
-            if line.startswith("))"):        # Eeschema Template end
+            if line.startswith("ENDDEF"):
                 line_reading_flag = False
 
-        sym_file = open(self.kicad_ngveri_sym, 'w')
+        f = open(self.kicad_ngveri_lib, 'w')
         for line in output:
-            sym_file.write(line)
+            f.write(line)
 
         os.chdir(cwd)
         print("Leaving directory, ", self.lib_loc)
 
-    def createSym(self):
-        '''
-            creating the symbol
-        '''
-        self.dist_port = 2.54         # Distance between two ports (mil)
-        self.inc_size = 2.54          # Increment size of a block (mil)
+    # creating the library
+    def createLib(self):
+        self.dist_port = 100         # Distance between two ports
+        self.inc_size = 100          # Increment size of a block
         cwd = os.getcwd()
         os.chdir(self.lib_loc)
         print("Changing directory to ", self.lib_loc)
 
-        # Removing ")" from "eSim_Ngveri.kicad_sym"
-        file = open(self.kicad_ngveri_sym, "r")
-        content_file = file.read()
-        new_content_file = content_file[:-2]
-        file.close()
-        file = open(self.kicad_ngveri_sym, "w")
-        file.write(new_content_file)
-        file.close()
-
-        # Appending new schematic block
-        sym_file = open(self.kicad_ngveri_sym, "a")
+        lib_file = open(self.kicad_ngveri_lib, "a")
         line1 = self.template["start_def"]
         line1 = line1.split()
         line1 = [w.replace('comp_name', self.modelname) for w in line1]
         self.template["start_def"] = ' '.join(line1)
-
-        if os.stat(self.kicad_ngveri_sym).st_size == 0:
-            sym_file.write(
-                "(kicad_symbol_lib (version 20211014) " +
-                "(generator kicad_symbol_editor)" +
-                "\n\n"
-            )                       # Eeschema starter code
-
-        # sym_file.write("#encoding utf-8"+ "\n"+ "#"+ "\n" +
+        if os.stat(self.kicad_ngveri_lib).st_size == 0:
+            lib_file.write("EESchema-LIBRARY Version 2.3" + "\n\n")
+        # lib_file.write("#encoding utf-8"+ "\n"+ "#"+ "\n" +
         # "#test_compo" + "\n"+ "#"+ "\n")
-        sym_file.write(
+        lib_file.write(
             self.template["start_def"] + "\n" + self.template["U_field"] + "\n"
         )
 
@@ -230,7 +210,7 @@ class AutoSchematic:
         line3 = [w.replace('comp_name', self.modelname) for w in line3]
         self.template["comp_name_field"] = ' '.join(line3)
 
-        sym_file.write(self.template["comp_name_field"] + "\n")
+        lib_file.write(self.template["comp_name_field"] + "\n")
 
         line4 = self.template["blank_field"]
         line4_1 = line4[0]
@@ -243,23 +223,18 @@ class AutoSchematic:
         line4[1] = ' '.join(line4_2)
         self.template["blank_qoutes"] = line4
 
-        sym_file.write(line4[0] + "\n" + line4[1] + "\n")
+        lib_file.write(
+            line4[0] + "\n" + line4[1] + "\n" +
+            self.template["start_draw"] + "\n"
+        )
 
         draw_pos = self.template["draw_pos"]
         draw_pos = draw_pos.split()
-
-        draw_pos = \
-            [w.replace('comp_name', f"{self.modelname}_0_1") for w in draw_pos]
-        draw_pos[8] = str(float(draw_pos[8]) +           # previously it is (-)
-                          float(self.findBlockSize() * self.inc_size))
-        draw_pos_rec = draw_pos[8]
-
+        draw_pos[4] = str(
+            int(draw_pos[4]) - self.findBlockSize() * self.inc_size)
         self.template["draw_pos"] = ' '.join(draw_pos)
 
-        sym_file.write(
-            self.template["draw_pos"] + "\n" + self.template["start_draw"] +
-            " \"" + f"{self.modelname}_1_1\"" + "\n"
-        )
+        lib_file.write(self.template["draw_pos"] + "\n")
 
         input_port = self.template["input_port"]
         input_port = input_port.split()
@@ -281,60 +256,59 @@ class AutoSchematic:
                     self.portName[i] +
                     str(int(outputs[i - self.input_length]) - j - 1))
 
+        # print("INPUTS AND OUTPUTS ")
+        # print("INPUTS:"+inputName)
+        # print("OUTPUTS:"outputName)
+        # print(inputs)
+        # print(outputs)
+
         inputs = self.char_sum(inputs)
         outputs = self.char_sum(outputs)
 
         total = inputs + outputs
 
         port_list = []
-
-        # Set input & output port
-        input_port[4] = draw_pos_rec
-        output_port[4] = draw_pos_rec
-
         j = 0
         for i in range(total):
             if (i < inputs):
-                input_port[9] = f"\"{inputName[i]}\""
-                input_port[13] = f"\"{str(i + 1)}\""
-                input_port[4] = \
-                    str(float(input_port[4]) - float(self.dist_port))
+                input_port[1] = inputName[i]
+                input_port[2] = str(i + 1)
+                input_port[4] = str(int(input_port[4]) - self.dist_port)
                 input_list = ' '.join(input_port)
                 port_list.append(input_list)
                 j = j + 1
 
             else:
-                output_port[9] = f"\"{outputName[i - inputs]}\""
-                output_port[13] = f"\"{str(i + 1)}\""
-                output_port[4] = \
-                    str(float(output_port[4]) - float(self.dist_port))
+                output_port[1] = outputName[i - inputs]
+                output_port[2] = str(i + 1)
+                output_port[4] = str(int(output_port[4]) - self.dist_port)
                 output_list = ' '.join(output_port)
                 port_list.append(output_list)
 
         for ports in port_list:
-            sym_file.write(ports + "\n")
-        sym_file.write(
-            self.template["end_draw"] + "\n\n\n"+")"
+            lib_file.write(ports + "\n")
+        lib_file.write(
+            self.template["end_draw"] + "\n" +
+            self.template["end_def"] + "\n\n\n"
         )
-        sym_file.close()
+
         os.chdir(cwd)
 
 
+# beginning the PortInfo Class containing Port Information
 class PortInfo:
-    '''
-        The class contains port information
-    '''
+
+    # initialising the variables
     def __init__(self, model, modelpath):
         self.modelname = model.modelname
+        # self.model_loc = model.parser.get('NGVERI', 'DIGITAL_MODEL')
         self.bit_list = []
         self.port_name = []
         self.input_len = 0
         self.modelpath = modelpath
 
+    # getting the port information from connection_info.txt
     def getPortInfo(self):
-        '''
-            getting the port information from `connection_info.txt`
-        '''
         input_list = []
         output_list = []
         read_file = open(self.modelpath + 'connection_info.txt', 'r')
@@ -362,7 +336,8 @@ class PortInfo:
                 input_list.append(line.split())
             if out_items:
                 output_list.append(line.split())
-
+        # print(input_list)
+        # print(output_list)
         for in_list in input_list:
             self.bit_list.append(in_list[2])
             self.port_name.append(in_list[0])

@@ -408,7 +408,7 @@ class PrcocessNetlist:
                             # Insert comment at remove line
                             schematicInfo.insert(index, "* " + compline)
                             comment = "* Schematic Name:\
-                             " + compType + ", Ngspice Name: " + modelname
+                             " + compType + ", NgSpice Name: " + modelname
                             # Here instead of adding compType(use for XML),
                             # added modelName(Unique Model Name)
                             modelList.append(

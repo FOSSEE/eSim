@@ -19,7 +19,7 @@
 
 import os
 import re
-import shutil
+import distutils.spawn
 
 
 class Validation:
@@ -170,7 +170,7 @@ class Validation:
 
     def validateTool(self, toolName):
         """This function check if tool is present in the system."""
-        return shutil.which(toolName) is not None
+        return distutils.spawn.find_executable(toolName) is not None
 
     def validateSubcir(self, projDir, fileName):
         """

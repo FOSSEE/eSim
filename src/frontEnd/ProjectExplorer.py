@@ -3,7 +3,7 @@ import os
 import json
 from configuration.Appconfig import Appconfig
 from projManagement.Validation import Validation
-
+from frontEnd.debugging_window import Debugging_tool 
 
 # This is main class for Project Explorer Area.
 class ProjectExplorer(QtWidgets.QWidget):
@@ -31,7 +31,7 @@ class ProjectExplorer(QtWidgets.QWidget):
         header = QtWidgets.QTreeWidgetItem(["Projects", "path"])
         self.treewidget.setHeaderItem(header)
         self.treewidget.setColumnHidden(1, True)
-
+        self.filePath=None
         # CSS
         init_path = '../../'
         if os.name == 'nt':
@@ -78,7 +78,7 @@ class ProjectExplorer(QtWidgets.QWidget):
 
     def refreshInstant(self):
         for i in range(self.treewidget.topLevelItemCount()):
-            if self.treewidget.topLevelItem(i).isExpanded():
+            if(self.treewidget.topLevelItem(i).isExpanded()):
                 index = self.treewidget.indexFromItem(
                     self.treewidget.topLevelItem(i))
                 self.refreshProject(indexItem=index)
@@ -155,6 +155,9 @@ class ProjectExplorer(QtWidgets.QWidget):
             self.save.clicked.connect(self.save_data)
 
             self.textwindow.show()
+            
+
+
         else:
             self.refreshProject(self.filePath)
 
@@ -177,6 +180,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                     dock_dict[
                         self.obj_appconfig.current_project['ProjectName']]
                 ) = []
+            
 
     def enable_save(self):
         """This function enables save button option."""

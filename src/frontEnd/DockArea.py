@@ -9,14 +9,9 @@ from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
 from browser.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
-from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
-from PyQt5.QtCore import Qt
+from frontEnd.debugging_window import Debugging_tool
 import os
-from converter.pspiceToKicad import PspiceConverter
-from converter.ltspiceToKicad import LTspiceConverter
-from converter.LtspiceLibConverter import LTspiceLibConverter
-from converter.libConverter import PspiceLibConverter
-from converter.browseSchematics import browse_path
+
 dockList = ['Welcome']
 count = 1
 dock = {}
@@ -40,13 +35,12 @@ class DockArea(QtWidgets.QMainWindow):
         """This act as constructor for class DockArea."""
         QtWidgets.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
-
+        self.debug=Debugging_tool()
         for dockName in dockList:
             dock[dockName] = QtWidgets.QDockWidget(dockName)
             self.welcomeWidget = QtWidgets.QWidget()
             self.welcomeLayout = QtWidgets.QVBoxLayout()
             self.welcomeLayout.addWidget(Welcome())  # Call browser
-
             # Adding to main Layout
             self.welcomeWidget.setLayout(self.welcomeLayout)
             dock[dockName].setWidget(self.welcomeWidget)
@@ -95,7 +89,6 @@ class DockArea(QtWidgets.QMainWindow):
         """This function create widget for interactive PythonPlotting."""
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.projName = os.path.basename(self.projDir)
-        dockName = f'Plotting-{self.projName}-'
         # self.project = os.path.join(self.projDir, self.projName)
 
         global count
@@ -106,224 +99,73 @@ class DockArea(QtWidgets.QMainWindow):
 
         # Adding to main Layout
         self.plottingWidget.setLayout(self.plottingLayout)
-        dock[dockName + str(count)
-             ] = QtWidgets.QDockWidget(dockName
-                                       + str(count))
-        dock[dockName + str(count)] \
-            .setWidget(self.plottingWidget)
+        dock['Plotting-' + str(count)
+             ] = QtWidgets.QDockWidget('Plotting-' + str(count))
+        dock['Plotting-' + str(count)].setWidget(self.plottingWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock[dockName + str(count)])
-        self.tabifyDockWidget(dock['Welcome'],
-                              dock[dockName + str(count)])
+                           dock['Plotting-' + str(count)])
+        self.tabifyDockWidget(dock['Welcome'], dock['Plotting-' + str(count)])
 
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
+        dock['Plotting-' + str(count)].setVisible(True)
+        dock['Plotting-' + str(count)].setFocus()
+        dock['Plotting-' + str(count)].raise_()
 
         temp = self.obj_appconfig.current_project['ProjectName']
         if temp:
             self.obj_appconfig.dock_dict[temp].append(
-                dock[dockName + str(count)]
+                dock['Plotting-' + str(count)]
             )
         count = count + 1
 
-    def ngspiceEditor(self, projName, netlist, simEndSignal):
+    def ngspiceEditor(self, projDir):
         """ This function creates widget for Ngspice window."""
+        self.projDir = projDir
+        self.projName = os.path.basename(self.projDir)
+        self.ngspiceNetlist = os.path.join(
+            self.projDir, self.projName + ".cir.out")
+
+        # Edited by Sumanto Kar 25/08/2021
+        if os.path.isfile(self.ngspiceNetlist) is False:
+            return False
+
         global count
         self.ngspiceWidget = QtWidgets.QWidget()
 
         self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(netlist, simEndSignal)
+            NgspiceWidget(self.ngspiceNetlist, self.projDir)
         )
 
         # Adding to main Layout
         self.ngspiceWidget.setLayout(self.ngspiceLayout)
-        dockName = f'Simulation-{projName}-'
-        dock[dockName + str(count)
-             ] = QtWidgets.QDockWidget(dockName
-                                       + str(count))
-        dock[dockName + str(count)] \
-            .setWidget(self.ngspiceWidget)
+        dock['NgSpice-' + str(count)
+             ] = QtWidgets.QDockWidget('NgSpice-' + str(count))
+        dock['NgSpice-' + str(count)].setWidget(self.ngspiceWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock[dockName + str(count)])
-        self.tabifyDockWidget(dock['Welcome'],
-                              dock[dockName
-                                   + str(count)])
+                           dock['NgSpice-' + str(count)])
+        self.tabifyDockWidget(dock['Welcome'], dock['NgSpice-' + str(count)])
 
         # CSS
-        dock[dockName + str(count)].setStyleSheet(" \
+        dock['NgSpice-' + str(count)].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px;\
             width: 200px; height: 150px;  } \
         ")
 
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
+        dock['NgSpice-' + str(count)].setVisible(True)
+        dock['NgSpice-' + str(count)].setFocus()
+        dock['NgSpice-' + str(count)].raise_()
 
         temp = self.obj_appconfig.current_project['ProjectName']
         if temp:
             self.obj_appconfig.dock_dict[temp].append(
-                dock[dockName + str(count)]
+                dock['NgSpice-' + str(count)]
             )
-        count = count + 1
-
-    def eSimConverter(self):
-        """This function creates a widget for eSimConverter."""
-        global count
-
-        dockName = 'Schematics Converter-'
-
-        self.eConWidget = QtWidgets.QWidget()
-        self.eConLayout = QVBoxLayout()  # QVBoxLayout for the main layout
-
-        file_path_layout = QHBoxLayout()  # QHBoxLayout for file path line
-        lib_path_layout = QHBoxLayout()
-
-        file_path_text_box = QLineEdit()
-        file_path_text_box.setFixedHeight(30)
-        file_path_text_box.setFixedWidth(800)
-        file_path_layout.setAlignment(Qt.AlignCenter)
-        file_path_layout.addWidget(file_path_text_box)
-
-        browse_button = QPushButton("Browse")
-        browse_button.setFixedSize(100, 30)
-        browse_button.clicked.connect(lambda: browse_path(self,file_path_text_box))
-        file_path_layout.addWidget(browse_button)
-
-        self.eConLayout.addLayout(file_path_layout)  # Add file path layout to main layout
-
-        button_layout = QHBoxLayout()  # QHBoxLayout for the buttons
-
-        self.pspice_converter = PspiceConverter(self)
-        self.ltspice_converter = LTspiceConverter(self)
-        self.pspiceLib_converter = PspiceLibConverter(self)
-        self.ltspiceLib_converter = LTspiceLibConverter(self)
-
-        upload_button2 = QPushButton("Convert PSpice library")
-        upload_button2.setFixedSize(180, 30)
-        upload_button2.clicked.connect(lambda: self.pspiceLib_converter.upload_file_Pspice(file_path_text_box.text()))
-        button_layout.addWidget(upload_button2)
-
-        upload_button1 = QPushButton("Convert Pspice schematics")
-        upload_button1.setFixedSize(180, 30)
-        upload_button1.clicked.connect(lambda: self.pspice_converter.upload_file_Pspice(file_path_text_box.text()))
-        button_layout.addWidget(upload_button1)
-
-        upload_button3 = QPushButton("Convert LTspice library")
-        upload_button3.setFixedSize(184, 30)
-        upload_button3.clicked.connect(lambda: self.ltspiceLib_converter.upload_file_LTspice(file_path_text_box.text()))
-        button_layout.addWidget(upload_button3)
-
-        upload_button = QPushButton("Convert LTspice schematics")
-        upload_button.setFixedSize(184, 30)
-        upload_button.clicked.connect(lambda: self.ltspice_converter.upload_file_LTspice(file_path_text_box.text()))
-        button_layout.addWidget(upload_button)
-
-        self.eConLayout.addLayout(button_layout)
-
-        self.eConWidget.setLayout(self.eConLayout)
-
-        # lib_path_text_box = QLineEdit()
-        # lib_path_text_box.setFixedHeight(30)
-        # lib_path_text_box.setFixedWidth(800)
-        # lib_path_layout.setAlignment(Qt.AlignCenter)
-        # lib_path_layout.addWidget(lib_path_text_box)
-
-        # browse_button1 = QPushButton("Browse lib")
-        # browse_button1.setFixedSize(110, 30)
-        # browse_button1.clicked.connect(lambda: browse_path(self,lib_path_text_box))
-        # lib_path_layout.addWidget(browse_button1)
-
-        # self.eConLayout.addLayout(lib_path_layout)
-
-        # Add the description HTML content
-        description_html = """
-            <html>
-                <head>
-                    <style>
-                        body {
-                            font-family: sans-serif;
-                            margin: 0px;
-                            padding: 0px;
-                            background-color: white;
-                            border: 4px solid  black;
-                            font-size: 10pt; /* Adjust the font size as needed */
-                        }
-
-                        h1{
-                            font-weight: bold;
-                            font-size: 9pt;
-                            color: #eeeeee;
-                            padding: 10px;
-                            background-color: #165982;
-                            border: 4px outset  #0E324B;
-                        }
-                    </style>
-                </head>
-
-                <body>
-                    <h1>About eSim Converter</h1>
-                    <p>
-                        <b>Pspice to eSim </b> will convert the PSpice Schematic and Library files to KiCad Schematic and
-                        Library files respectively with proper mapping of the components and the wiring. By this way one 
-                        will be able to simulate their schematics in PSpice and get the PCB layout in KiCad.</b> 
-                        <br/><br/>
-                        <b>LTspice to eSim </b> will convert symbols and schematics from LTspice to Kicad.The goal is to design and
-                        simulate under LTspice and to automatically transfer the circuit under Kicad to draw the PCB.</b>
-                    </p>
-                </body>
-            </html>
-        """
-
-        self.description_label = QLabel()
-        self.description_label.setFixedHeight(160)
-        self.description_label.setFixedWidth(950)
-        self.description_label.setAlignment(Qt.AlignBottom)
-        self.description_label.setWordWrap(True)
-        self.description_label.setText(description_html)
-        self.eConLayout.addWidget(self.description_label)  # Add the description label to the layout
-
-        self.eConWidget.setLayout(self.eConLayout)
-
-        dock[dockName + str(count)] = QtWidgets.QDockWidget(dockName + str(count))
-        dock[dockName + str(count)].setWidget(self.eConWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName + str(count)])
-        self.tabifyDockWidget(dock['Welcome'], dock[dockName + str(count)])
-
-        # CSS
-        dock[dockName + str(count)].setStyleSheet(" \
-            .QWidget { border-radius: 15px; border: 1px solid gray;\
-                padding: 5px; width: 200px; height: 150px;  } \
-            ")
-
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
-
         count = count + 1
 
     def modelEditor(self):
         """This function defines UI for model editor."""
         print("in model editor")
         global count
-
-        projDir = self.obj_appconfig.current_project["ProjectName"]
-        if projDir is None:
-            """ when projDir is None that is clicking on subcircuit icon
-                without any project selection """
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Error Message")
-            self.msg.showMessage(
-                'Please select the project first.'
-                ' You can either create new project or open existing project'
-            )
-            self.msg.exec_()
-            return
-        projName = os.path.basename(projDir)
-        dockName = f'Model Editor-{projName}-'
-
         self.modelwidget = QtWidgets.QWidget()
 
         self.modellayout = QtWidgets.QVBoxLayout()
@@ -332,25 +174,23 @@ class DockArea(QtWidgets.QMainWindow):
         # Adding to main Layout
         self.modelwidget.setLayout(self.modellayout)
 
-        dock[dockName +
-             str(count)] = QtWidgets.QDockWidget(dockName
-                                                 + str(count))
-        dock[dockName + str(count)] \
-            .setWidget(self.modelwidget)
+        dock['Model Editor-' +
+             str(count)] = QtWidgets.QDockWidget('Model Editor-' + str(count))
+        dock['Model Editor-' + str(count)].setWidget(self.modelwidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock[dockName + str(count)])
+                           dock['Model Editor-' + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
-                              dock[dockName + str(count)])
+                              dock['Model Editor-' + str(count)])
 
         # CSS
-        dock[dockName + str(count)].setStyleSheet(" \
+        dock['Model Editor-' + str(count)].setStyleSheet(" \
             .QWidget { border-radius: 15px; border: 1px solid gray; \
                 padding: 5px; width: 200px; height: 150px;  } \
             ")
 
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
+        dock['Model Editor-' + str(count)].setVisible(True)
+        dock['Model Editor-' + str(count)].setFocus()
+        dock['Model Editor-' + str(count)].raise_()
 
         count = count + 1
 
@@ -359,138 +199,90 @@ class DockArea(QtWidgets.QMainWindow):
         This function is creating Editor UI for Kicad to Ngspice conversion.
         """
         global count
-
-        projDir = self.obj_appconfig.current_project["ProjectName"]
-        projName = os.path.basename(projDir)
-        dockName = f'Netlist-{projName}-'
-
         self.kicadToNgspiceWidget = QtWidgets.QWidget()
         self.kicadToNgspiceLayout = QtWidgets.QVBoxLayout()
         self.kicadToNgspiceLayout.addWidget(MainWindow(clarg1, clarg2))
-
         self.kicadToNgspiceWidget.setLayout(self.kicadToNgspiceLayout)
-        dock[dockName + str(count)] = \
-            QtWidgets.QDockWidget(dockName + str(count))
-        dock[dockName +
+        dock['kicadToNgspice-' + str(count)] = \
+            QtWidgets.QDockWidget('kicadToNgspice-' + str(count))
+        dock['kicadToNgspice-' +
              str(count)].setWidget(self.kicadToNgspiceWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock[dockName + str(count)])
+                           dock['kicadToNgspice-' + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
-                              dock[dockName + str(count)])
+                              dock['kicadToNgspice-' + str(count)])
 
         # CSS
-        dock[dockName + str(count)].setStyleSheet(" \
+        dock['kicadToNgspice-' + str(count)].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray;\
             padding: 5px; width: 200px; height: 150px;  } \
         ")
 
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
-        dock[dockName + str(count)].activateWindow()
+        dock['kicadToNgspice-' + str(count)].setVisible(True)
+        dock['kicadToNgspice-' + str(count)].setFocus()
+        dock['kicadToNgspice-' + str(count)].raise_()
+        dock['kicadToNgspice-' + str(count)].activateWindow()
 
         temp = self.obj_appconfig.current_project['ProjectName']
         if temp:
             self.obj_appconfig.dock_dict[temp].append(
-                dock[dockName + str(count)]
+                dock['kicadToNgspice-' + str(count)]
             )
         count = count + 1
-
+        
     def subcircuiteditor(self):
         """This function creates a widget for different subcircuit options."""
         global count
+        self.subcktWidget = QtWidgets.QWidget()
+        self.subcktLayout = QtWidgets.QVBoxLayout()
+        self.subcktLayout.addWidget(Subcircuit(self))
 
-        projDir = self.obj_appconfig.current_project["ProjectName"]
+        self.subcktWidget.setLayout(self.subcktLayout)
+        dock['Subcircuit-' +
+             str(count)] = QtWidgets.QDockWidget('Subcircuit-' + str(count))
+        dock['Subcircuit-' + str(count)].setWidget(self.subcktWidget)
+        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+                           dock['Subcircuit-' + str(count)])
+        self.tabifyDockWidget(dock['Welcome'],
+                              dock['Subcircuit-' + str(count)])
 
-        """ Checks projDir variable has valid value 
-        & is not None before calling os.path.basename """
+        # CSS
+        dock['Subcircuit-' + str(count)].setStyleSheet(" \
+        .QWidget { border-radius: 15px; border: 1px solid gray;\
+            padding: 5px; width: 200px; height: 150px;  } \
+        ")
 
-        if projDir is not None:
-            projName = os.path.basename(projDir)
-            dockName = f'Subcircuit-{projName}-'
+        dock['Subcircuit-' + str(count)].setVisible(True)
+        dock['Subcircuit-' + str(count)].setFocus()
+        dock['Subcircuit-' + str(count)].raise_()
 
-            self.subcktWidget = QtWidgets.QWidget()
-            self.subcktLayout = QtWidgets.QVBoxLayout()
-            self.subcktLayout.addWidget(Subcircuit(self))
-
-            self.subcktWidget.setLayout(self.subcktLayout)
-            dock[dockName +
-                str(count)] = QtWidgets.QDockWidget(dockName
-                                                    + str(count))
-            dock[dockName + str(count)] \
-                .setWidget(self.subcktWidget)
-            self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                            dock[dockName + str(count)])
-            self.tabifyDockWidget(dock['Welcome'],
-                                dock[dockName + str(count)])
-
-            # CSS
-            dock[dockName + str(count)].setStyleSheet(" \
-            .QWidget { border-radius: 15px; border: 1px solid gray;\
-                padding: 5px; width: 200px; height: 150px;  } \
-            ")
-
-            dock[dockName + str(count)].setVisible(True)
-            dock[dockName + str(count)].setFocus()
-            dock[dockName + str(count)].raise_()
-
-            count = count + 1
-
-        else:
-            """ when projDir is None that is clicking on subcircuit icon
-                without any project selection """
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Error Message")
-            self.msg.showMessage(
-                'Please select the project first.'
-                ' You can either create new project or open existing project'
-            )
-            self.msg.exec_()
+        count = count + 1
 
     def makerchip(self):
         """This function creates a widget for different subcircuit options."""
         global count
-
-        projDir = self.obj_appconfig.current_project["ProjectName"]
-        if projDir is None:
-            """ when projDir is None that is clicking on subcircuit icon
-                without any project selection """
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Error Message")
-            self.msg.showMessage(
-                'Please select the project first.'
-                ' You can either create new project or open existing project'
-            )
-            self.msg.exec_()
-            return
-        projName = os.path.basename(projDir)
-        dockName = f'Makerchip-{projName}-'
-
         self.makerWidget = QtWidgets.QWidget()
         self.makerLayout = QtWidgets.QVBoxLayout()
         self.makerLayout.addWidget(makerchip(self))
 
         self.makerWidget.setLayout(self.makerLayout)
-        dock[dockName +
-             str(count)] = QtWidgets.QDockWidget(dockName
-                                                 + str(count))
-        dock[dockName + str(count)].setWidget(self.makerWidget)
+        dock['Makerchip-' +
+             str(count)] = QtWidgets.QDockWidget('Makerchip-' + str(count))
+        dock['Makerchip-' + str(count)].setWidget(self.makerWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock[dockName + str(count)])
+                           dock['Makerchip-' + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
-                              dock[dockName + str(count)])
+                              dock['Makerchip-' + str(count)])
 
         # CSS
-        dock[dockName + str(count)].setStyleSheet(" \
+        dock['Makerchip-' + str(count)].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray;\
             padding: 5px; width: 200px; height: 150px;  } \
         ")
 
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
+        dock['Makerchip-' + str(count)].setVisible(True)
+        dock['Makerchip-' + str(count)].setFocus()
+        dock['Makerchip-' + str(count)].raise_()
 
         count = count + 1
 
@@ -525,38 +317,31 @@ class DockArea(QtWidgets.QMainWindow):
     def modelicaEditor(self, projDir):
         """This function sets up the UI for ngspice to modelica conversion."""
         global count
-
-        projName = os.path.basename(projDir)
-        dockName = f'Modelica-{projName}-'
-
         self.modelicaWidget = QtWidgets.QWidget()
         self.modelicaLayout = QtWidgets.QVBoxLayout()
         self.modelicaLayout.addWidget(OpenModelicaEditor(projDir))
 
         self.modelicaWidget.setLayout(self.modelicaLayout)
-        dock[dockName + str(count)
-             ] = QtWidgets.QDockWidget(dockName + str(count))
-        dock[dockName + str(count)] \
-            .setWidget(self.modelicaWidget)
+        dock['Modelica-' + str(count)
+             ] = QtWidgets.QDockWidget('Modelica-' + str(count))
+        dock['Modelica-' + str(count)].setWidget(self.modelicaWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock[dockName
-                                + str(count)])
-        self.tabifyDockWidget(dock['Welcome'], dock[dockName
-                                                    + str(count)])
+                           dock['Modelica-' + str(count)])
+        self.tabifyDockWidget(dock['Welcome'], dock['Modelica-' + str(count)])
 
-        dock[dockName + str(count)].setVisible(True)
-        dock[dockName + str(count)].setFocus()
-        dock[dockName + str(count)].raise_()
+        dock['Modelica-' + str(count)].setVisible(True)
+        dock['Modelica-' + str(count)].setFocus()
+        dock['Modelica-' + str(count)].raise_()
 
         # CSS
-        dock[dockName + str(count)].setStyleSheet(" \
+        dock['Modelica-' + str(count)].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray;\
             padding: 5px; width: 200px; height: 150px;  } \
         ")
         temp = self.obj_appconfig.current_project['ProjectName']
         if temp:
             self.obj_appconfig.dock_dict[temp].append(
-                dock[dockName + str(count)]
+                dock['Modelica-' + str(count)]
             )
 
         count = count + 1
