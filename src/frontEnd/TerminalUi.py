@@ -94,6 +94,7 @@ class TerminalUi(QtWidgets.QMainWindow):
     def redoSimulation(self):
         """This function reruns the ngspice simulation
         """
+        self.Flag = "Flase"
         self.cancelSimulationButton.setEnabled(True)
         self.redoSimulationButton.setEnabled(False)
 
@@ -106,6 +107,23 @@ class TerminalUi(QtWidgets.QMainWindow):
 
         self.simulationConsole.setText("")
         self.simulationCancelled = False
+
+        msg_box = QtWidgets.QMessageBox(self)
+        msg_box.setWindowTitle("Ngspice Plots")
+        msg_box.setText("Do you want Ngspice plots?")
+        
+        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.YesRole)
+        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.NoRole)
+
+        msg_box.exec_()
+
+        if msg_box.clickedButton() == yes_button:
+            self.Flag = True 
+        else:
+            self.Flag = False  
+
+        # Emit a custom signal with name plotFlag2 depending upon the Flag
+        self.qProcess.setProperty("plotFlag2", self.Flag)
 
         self.qProcess.start('ngspice', self.args)
 
