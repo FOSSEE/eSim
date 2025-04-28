@@ -1,169 +1,86 @@
-import os
 from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
-from frontEnd import TerminalUi
+from configparser import ConfigParser
+import os
 
-
-# This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
 
-    def __init__(self, netlist, simEndSignal):
+    def __init__(self, command, projPath):
         """
         - Creates constructor for NgspiceWidget class.
-        - Creates NgspiceWindow and runs the process
-        - Calls the logs the ngspice process, returns
-          it's simulation status and calls the plotter
-        - Checks whether it is Linux and runs gaw
-        :param netlist: The file .cir.out file that
-            contains the instructions.
-        :type netlist: str
-        :param simEndSignal: A signal that will be emitted to Application class
-            for enabling simulation interaction and plotting data if the
-            simulation is successful
-        :type simEndSignal: PyQt Signal
+        - Checks whether OS is Linux or Windows and
+          creates Ngspice window accordingly.
         """
         QtWidgets.QWidget.__init__(self)
         self.obj_appconfig = Appconfig()
-        self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        self.args = ['-b', '-r', netlist.replace(".cir.out", ".raw"), netlist]
-        print("Argument to ngspice: ", self.args)
-
         self.process = QtCore.QProcess(self)
-        self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
+        self.terminal = QtWidgets.QWidget(self)
         self.layout = QtWidgets.QVBoxLayout(self)
-        self.layout.addWidget(self.terminalUi)
+        self.layout.addWidget(self.terminal)
 
-        self.process.setWorkingDirectory(self.projDir)
-        self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
-        self.process.readyRead.connect(self.readyReadAll)
-        self.process.finished.connect(
-            lambda exitCode, exitStatus:
-            self.finishSimulation(exitCode, exitStatus, simEndSignal, False)
-        )
-        self.process.errorOccurred.connect(
-            lambda: self.finishSimulation(None, None, simEndSignal, True))
-        self.process.start('ngspice', self.args)
+        self.output_file = os.path.join(projPath, "ngspice_output.txt")  # Define output file
 
-        self.obj_appconfig.process_obj.append(self.process)
-        print(self.obj_appconfig.proc_dict)
-        (
-            self.obj_appconfig.proc_dict
-            [self.obj_appconfig.current_project['ProjectName']].append(
-                self.process.pid())
-        )
+        print("Argument to ngspice command:", command)
+        if os.name == 'nt':  # Windows OS
+            parser_nghdl = ConfigParser()
+            parser_nghdl.read(
+                os.path.join('library', 'config', '.nghdl', 'config.ini')
+            )
 
-        if os.name != "nt":     # Linux OS
-            self.gawProcess = QtCore.QProcess(self)
-            self.gawCommand = "gaw " + netlist.replace(".cir.out", ".raw")
-            self.gawProcess.start('sh', ['-c', self.gawCommand])
-            print(self.gawCommand)
+            msys_home = parser_nghdl.get('COMPILER', 'MSYS_HOME')
 
-    @QtCore.pyqtSlot()
-    def readyReadAll(self):
-        """Outputs the ngspice process standard output and standard error
-        to :class:`TerminalUi.TerminalUi` console
-        """
-        self.terminalUi.simulationConsole.insertPlainText(
-            str(self.process.readAllStandardOutput().data(), encoding='utf-8')
-        )
+            tempdir = os.getcwd()
+            projPath = self.obj_appconfig.current_project["ProjectName"]
+            os.chdir(projPath)
+            self.command = f'cmd /c "start /min {msys_home}/usr/bin/mintty.exe ngspice -p {command} > {self.output_file} 2>&1"'
 
-        stderror = str(self.process.readAllStandardError().data(),
-                       encoding='utf-8')
+            self.process.finished.connect(self.read_output)  # Read output after process finishes
+            self.process.start(self.command)
+            os.chdir(tempdir)
 
-        # Suppressing the Ngspice PrinterOnly error that batch mode throws
-        stderror = '\n'.join([errLine for errLine in stderror.split('\n')
-                              if ('PrinterOnly' not in errLine and
-                              'viewport for graphics' not in errLine)])
+        else:  # Linux OS
+            self.command = f"cd {projPath}; ngspice -r {command.replace('.cir.out', '.raw')} {command} 2>&1 | tee {self.output_file}"
 
-        self.terminalUi.simulationConsole.insertPlainText(stderror)
+            self.args = ['-hold', '-e', 'bash', '-c', self.command]
 
-    def finishSimulation(self, exitCode, exitStatus,
-                         simEndSignal, hasErrorOccurred):
-        """This function is intended to run when the Ngspice
-        simulation finishes. It singals to the function that generates
-        the plots and also writes in the appropriate status of the
-        simulation (Whether it was a success or not).
+            self.process.start('xterm', self.args)
 
-        :param exitCode: The exit code signal of the QProcess
-            that runs ngspice
-        :type exitCode: int
-        :param exitStatus: The exit status signal of the
-            qprocess that runs ngspice
-        :type exitStatus: class:`QtCore.QProcess.ExitStatus`
-        :param simEndSignal: A signal passed from constructor
-            for enabling simulation interaction and plotting data if the
-            simulation is successful
-        :type simEndSignal: PyQt Signal
-        """
+            self.obj_appconfig.process_obj.append(self.process)
+            (
+                self.obj_appconfig.proc_dict
+                [self.obj_appconfig.current_project['ProjectName']].append(
+                    self.process.pid())
+            )
 
-        # Canceling simulation triggers both finished and
-        # errorOccurred signals...need to skip finished signal in this case.
-        if not hasErrorOccurred and self.terminalUi.simulationCancelled:
-            return
+            self.process = QtCore.QProcess(self)
+            self.command = "gaw " + command.replace(".cir.out", ".raw")
+            self.process.start('sh', ['-c', self.command])
 
-        # Stop progressbar from running after simulation is completed
-        self.terminalUi.progressBar.setMaximum(100)
-        self.terminalUi.progressBar.setProperty("value", 100)
-        self.terminalUi.cancelSimulationButton.setEnabled(False)
-        self.terminalUi.redoSimulationButton.setEnabled(True)
+            self.process.finished.connect(self.read_output)  # Read output after process finishes
 
-        if exitCode is None:
-            exitCode = self.process.exitCode()
+    
+    import os
 
-        errorType = self.process.error()
-        if errorType < 3:   # 0, 1, 2 ==> failed to start, crashed, timedout
-            exitStatus = QtCore.QProcess.CrashExit
-        elif exitStatus is None:
-            exitStatus = self.process.exitStatus()
+    def read_output(self):
+        """Reads NGSpice output, filters error-related lines, excludes empty lines, removes duplicates, and skips lines with 'no such vector'."""
+        filtered_output_file = os.path.join(os.path.dirname(self.output_file), "ngspice_filtered_output.txt")
+        seen_lines = set()  # Set to track already seen lines to remove duplicates
+        try:
+            with open(self.output_file, "r") as infile, open(filtered_output_file, "w") as outfile:
+                lines = [line.strip() for line in infile if line.strip()]        
+                i = 0
+                while i < len(lines):
+                    line = lines[i].lower()
+                    
+                    # Process error-related lines
+                    if any(k in line for k in ["error", "fatal", "singular matrix","no such command"]) and not any(k in line for k in ["*","!", "trying"]):
+                        if line not in seen_lines:  # Check if line is already seen
+                            outfile.write("\n".join(lines[i:i+3]) + "\n")  # Write up to 3 lines
+                            seen_lines.add(line)  # Mark this line as seen
+                            i += 2  # Skip processed lines
+                    i += 1
+        except Exception as e:
+            print(f"Error processing NGSpice output: {e}")
 
-        if self.terminalUi.simulationCancelled:
-            msg = QtWidgets.QMessageBox()
-            msg.setModal(True)
-            msg.setIcon(QtWidgets.QMessageBox.Warning)
-            msg.setWindowTitle("Warning Message")
-            msg.setText("Simulation was cancelled.")
-            msg.setStandardButtons(QtWidgets.QMessageBox.Ok)
-            msg.exec()
 
-        elif exitStatus == QtCore.QProcess.NormalExit and exitCode == 0 \
-                and errorType == QtCore.QProcess.UnknownError:
-            # Redo-simulation does not set correct exit status and code.
-            # So, need to check the error type ==>
-            #   UnknownError along with NormalExit seems successful simulation
 
-            successFormat = '<span style="color:#00ff00; font-size:26px;">\
-                        {} \
-                        </span>'
-            self.terminalUi.simulationConsole.append(
-                successFormat.format("Simulation Completed Successfully!"))
-
-        else:
-            failedFormat = '<span style="color:#ff3333; font-size:26px;"> \
-                        {} \
-                        </span>'
-            self.terminalUi.simulationConsole.append(
-                failedFormat.format("Simulation Failed!"))
-
-            errMsg = 'Simulation '
-            if errorType == QtCore.QProcess.FailedToStart:
-                errMsg += 'failed to start. ' + \
-                          'Ensure that eSim is installed correctly.'
-            elif errorType == QtCore.QProcess.Crashed:
-                errMsg += 'crashed. Try again later.'
-            elif errorType == QtCore.QProcess.Timedout:
-                errMsg += ' has timed out. Try to reduce the ' + \
-                          ' simulation time or the simulation step interval.'
-            else:
-                errMsg += ' could not complete. Try again later.'
-
-            msg = QtWidgets.QErrorMessage()
-            msg.setModal(True)
-            msg.setWindowTitle("Error Message")
-            msg.showMessage(errMsg)
-            msg.exec()
-
-        self.terminalUi.simulationConsole.verticalScrollBar().setValue(
-            self.terminalUi.simulationConsole.verticalScrollBar().maximum()
-        )
-
-        simEndSignal.emit(exitStatus, exitCode)
