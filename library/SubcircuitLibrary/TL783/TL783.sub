@@ -1,0 +1,17 @@
+* Subcircuit TL783
+.subckt TL783 net-_m1-pad1_ net-_m1-pad3_ net-_r1-pad2_ 
+* c:\fossee\esim\library\subcircuitlibrary\tl783\tl783.cir
+.include lm_741.sub
+.include NMOS-180nm.lib
+x1 ? net-_m1-pad3_ net-_u1-padout_ gnd ? net-_m1-pad2_ ? ? lm_741
+* u1  net-_r1-pad2_ net-_u1-padout_ zener
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+r1  net-_m1-pad3_ net-_r1-pad2_ 1k
+r2  net-_r1-pad2_ gnd 39k
+v1  net-_m1-pad1_ gnd 53
+a1 net-_r1-pad2_ net-_u1-padout_ u1
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u1 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Control Statements
+
+.ends TL783
