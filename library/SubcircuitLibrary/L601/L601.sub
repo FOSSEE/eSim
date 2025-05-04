@@ -1,0 +1,64 @@
+* Subcircuit L601
+.subckt L601 net-_d2-pad2_ net-_d3-pad2_ net-_d1-pad2_ net-_d11-pad2_ net-_d10-pad2_ net-_d16-pad2_ net-_d17-pad2_ net-_d18-pad2_ gnd com net-_d24-pad2_ net-_d23-pad2_ net-_d21-pad2_ net-_d14-pad2_ net-_d15-pad2_ net-_d7-pad2_ net-_d9-pad2_ net-_d8-pad2_ 
+* c:\fossee\esim\library\subcircuitlibrary\l601\l601.cir
+.include D.lib
+.include NPN.lib
+q2 net-_d8-pad2_ net-_d2-pad2_ net-_q2-pad3_ Q2N2222
+q5 net-_d5-pad1_ net-_q2-pad3_ gnd Q2N2222
+r2  net-_d2-pad2_ net-_q2-pad3_ 7.2k
+r5  net-_q2-pad3_ gnd 3k
+d8 gnd net-_d8-pad2_ 1N4148
+d2 gnd net-_d2-pad2_ 1N4148
+d5 net-_d5-pad1_ com 1N4148
+q3 net-_d9-pad2_ net-_d3-pad2_ net-_q3-pad3_ Q2N2222
+q6 net-_d6-pad1_ net-_q3-pad3_ gnd Q2N2222
+r3  net-_d3-pad2_ net-_q3-pad3_ 7.2k
+r6  net-_q3-pad3_ gnd 3k
+d9 gnd net-_d9-pad2_ 1N4148
+d3 gnd net-_d3-pad2_ 1N4148
+d6 net-_d6-pad1_ com 1N4148
+q1 net-_d7-pad2_ net-_d1-pad2_ net-_q1-pad3_ Q2N2222
+q4 net-_d4-pad1_ net-_q1-pad3_ gnd Q2N2222
+r1  net-_d1-pad2_ net-_q1-pad3_ 7.2k
+r4  net-_q1-pad3_ gnd 3k
+d7 gnd net-_d7-pad2_ 1N4148
+d1 gnd net-_d1-pad2_ 1N4148
+d4 net-_d4-pad1_ com 1N4148
+q11 net-_d21-pad2_ net-_d16-pad2_ net-_q11-pad3_ Q2N2222
+q14 net-_d19-pad1_ net-_q11-pad3_ gnd Q2N2222
+r11  net-_d16-pad2_ net-_q11-pad3_ 7.2k
+r14  net-_q11-pad3_ gnd 3k
+d21 gnd net-_d21-pad2_ 1N4148
+d16 gnd net-_d16-pad2_ 1N4148
+d19 net-_d19-pad1_ com 1N4148
+q12 net-_d23-pad2_ net-_d17-pad2_ net-_q12-pad3_ Q2N2222
+q15 net-_d20-pad1_ net-_q12-pad3_ gnd Q2N2222
+r12  net-_d17-pad2_ net-_q12-pad3_ 7.2k
+r15  net-_q12-pad3_ gnd 3k
+d23 gnd net-_d23-pad2_ 1N4148
+d17 gnd net-_d17-pad2_ 1N4148
+d20 net-_d20-pad1_ com 1N4148
+q7 net-_d14-pad2_ net-_d10-pad2_ net-_q7-pad3_ Q2N2222
+q9 net-_d12-pad1_ net-_q7-pad3_ gnd Q2N2222
+r7  net-_d10-pad2_ net-_q7-pad3_ 7.2k
+r9  net-_q7-pad3_ gnd 3k
+d14 gnd net-_d14-pad2_ 1N4148
+d10 gnd net-_d10-pad2_ 1N4148
+d12 net-_d12-pad1_ com 1N4148
+q13 net-_d24-pad2_ net-_d18-pad2_ net-_q13-pad3_ Q2N2222
+q16 net-_d22-pad1_ net-_q13-pad3_ gnd Q2N2222
+r13  net-_d18-pad2_ net-_q13-pad3_ 7.2k
+r16  net-_q13-pad3_ gnd 3k
+d24 gnd net-_d24-pad2_ 1N4148
+d18 gnd net-_d18-pad2_ 1N4148
+d22 net-_d22-pad1_ com 1N4148
+q8 net-_d15-pad2_ net-_d11-pad2_ net-_q10-pad2_ Q2N2222
+q10 net-_d13-pad1_ net-_q10-pad2_ gnd Q2N2222
+r8  net-_d11-pad2_ net-_q10-pad2_ 7.2k
+r10  net-_q10-pad2_ gnd 3k
+d15 gnd net-_d15-pad2_ 1N4148
+d11 gnd net-_d11-pad2_ 1N4148
+d13 net-_d13-pad1_ com 1N4148
+* Control Statements
+
+.ends L601
