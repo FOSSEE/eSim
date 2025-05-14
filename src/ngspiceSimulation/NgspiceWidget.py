@@ -7,7 +7,7 @@ from frontEnd import TerminalUi
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
 
-    def __init__(self, netlist, simEndSignal):
+    def __init__(self, netlist, simEndSignal, plotFlag):
         """
         - Creates constructor for NgspiceWidget class.
         - Creates NgspiceWindow and runs the process
@@ -27,11 +27,17 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
         self.args = ['-b', '-r', netlist.replace(".cir.out", ".raw"), netlist]
         print("Argument to ngspice: ", self.args)
+        self.projPath = self.projDir
 
         self.process = QtCore.QProcess(self)
         self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminalUi)
+
+        # Receiving the plotFlag
+        self.plotFlag = plotFlag
+        print("Value of plotFlag: ", self.plotFlag)
+        self.command = netlist
 
         self.process.setWorkingDirectory(self.projDir)
         self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
@@ -166,4 +172,57 @@ class NgspiceWidget(QtWidgets.QWidget):
             self.terminalUi.simulationConsole.verticalScrollBar().maximum()
         )
 
+        """ Get the plotFlag from process if it exists, otherwise use current plotFlag, plotFlag2 is for pop which appears when resimulate is clicked on ngSpice window """
+        newPlotFlag = self.process.property("plotFlag")
+        if newPlotFlag is not None:
+            self.plotFlag = newPlotFlag
+        
+        newPlotFlag2 = self.process.property("plotFlag2")
+        if newPlotFlag2 is not None:
+            self.plotFlag = newPlotFlag2
+
+        if self.plotFlag:
+            self.plotFlagFunc(self.projPath, self.command)
+
         simEndSignal.emit(exitStatus, exitCode)
+
+    def plotFlagFunc(self,projPath,command):
+        if self.plotFlag == True:
+            print("reached here too")
+            if os.name == 'nt':
+                parser_nghdl = ConfigParser()
+                parser_nghdl.read(
+                    os.path.join('library', 'config', '.nghdl', 'config.ini')
+                )
+
+                msys_home = parser_nghdl.get('COMPILER', 'MSYS_HOME')
+
+                tempdir = os.getcwd()
+                projPath = self.obj_appconfig.current_project["ProjectName"]
+                os.chdir(projPath)
+                self.command = 'cmd /c ' + '"start /min ' + \
+                               msys_home + "/usr/bin/mintty.exe ngspice -p " + command + '"'
+
+                self.process.start(self.command)
+                os.chdir(tempdir)
+            else:
+                print("reached .. 4")
+                self.commandi = "cd " + projPath + \
+                                ";ngspice -r " + command.replace(".cir.out", ".raw") + \
+                                " " + command
+                self.xtermArgs = ['-hold', '-e', self.commandi]
+                print("xTerm")
+
+                self.xtermProcess = QtCore.QProcess(self)
+                self.xtermProcess.start('xterm', self.xtermArgs)
+
+                self.obj_appconfig.process_obj.append(self.xtermProcess)
+                print(self.obj_appconfig.proc_dict)
+                (
+                    self.obj_appconfig.proc_dict
+                    [self.obj_appconfig.current_project['ProjectName']].append(
+                        self.xtermProcess.pid())
+                )
+
+                self.gawProcess.start('sh', ['-c', self.gawCommand])
+                print("last:", self.gawCommand)

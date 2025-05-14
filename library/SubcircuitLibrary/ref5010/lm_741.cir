@@ -1,0 +1,43 @@
+* C:\Users\malli\eSim\src\SubcircuitLibrary\lm_741\lm_741.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/25/19 19:37:28
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+Q2  Net-_Q1-Pad1_ Net-_Q2-Pad2_ Net-_Q2-Pad3_ eSim_NPN		
+Q6  Net-_Q3-Pad2_ Net-_Q13-Pad1_ Net-_Q1-Pad3_ eSim_PNP		
+Q5  Net-_C1-Pad2_ Net-_Q13-Pad1_ Net-_Q2-Pad3_ eSim_PNP		
+Q3  Net-_Q10-Pad3_ Net-_Q3-Pad2_ Net-_Q3-Pad3_ eSim_NPN		
+Q4  Net-_Q1-Pad1_ Net-_Q1-Pad1_ Net-_Q10-Pad3_ eSim_PNP		
+Q9  Net-_Q13-Pad1_ Net-_Q1-Pad1_ Net-_Q10-Pad3_ eSim_PNP		
+Q8  Net-_C1-Pad2_ Net-_Q3-Pad3_ Net-_Q8-Pad3_ eSim_NPN		
+Q7  Net-_Q3-Pad2_ Net-_Q3-Pad3_ Net-_Q7-Pad3_ eSim_NPN		
+R1  Net-_Q7-Pad3_ Net-_Q12-Pad3_ 1k		
+R2  Net-_Q3-Pad3_ Net-_Q12-Pad3_ 50k		
+R3  Net-_Q8-Pad3_ Net-_Q12-Pad3_ 1k		
+Q12  Net-_Q12-Pad1_ Net-_Q12-Pad1_ Net-_Q12-Pad3_ eSim_NPN		
+Q13  Net-_Q13-Pad1_ Net-_Q12-Pad1_ Net-_Q13-Pad3_ eSim_NPN		
+R4  Net-_Q13-Pad3_ Net-_Q12-Pad3_ 5k		
+R11  Net-_Q10-Pad1_ Net-_Q12-Pad1_ 39k		
+Q10  Net-_Q10-Pad1_ Net-_Q10-Pad1_ Net-_Q10-Pad3_ eSim_PNP		
+Q11  Net-_C1-Pad1_ Net-_Q10-Pad1_ Net-_Q10-Pad3_ eSim_PNP		
+Q14  Net-_C1-Pad1_ Net-_Q14-Pad2_ Net-_Q14-Pad3_ eSim_NPN		
+R8  Net-_C1-Pad1_ Net-_Q14-Pad2_ 4.5k		
+R7  Net-_Q14-Pad3_ Net-_Q14-Pad2_ 7.5k		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 30p		
+Q16  Net-_Q14-Pad3_ Net-_C1-Pad2_ Net-_Q15-Pad2_ eSim_NPN		
+Q15  Net-_Q14-Pad3_ Net-_Q15-Pad2_ Net-_Q15-Pad3_ eSim_NPN		
+R5  Net-_Q15-Pad2_ Net-_Q12-Pad3_ 50k		
+R6  Net-_Q15-Pad3_ Net-_Q12-Pad3_ 50		
+Q17  Net-_C1-Pad2_ Net-_Q15-Pad3_ Net-_Q12-Pad3_ eSim_NPN		
+Q18  Net-_Q10-Pad3_ Net-_C1-Pad1_ Net-_Q18-Pad3_ eSim_NPN		
+Q20  Net-_C1-Pad1_ Net-_Q18-Pad3_ Net-_Q20-Pad3_ eSim_NPN		
+R9  Net-_Q18-Pad3_ Net-_Q20-Pad3_ 25		
+R10  Net-_Q20-Pad3_ Net-_Q19-Pad3_ 50		
+Q19  Net-_Q12-Pad3_ Net-_Q14-Pad3_ Net-_Q19-Pad3_ eSim_PNP		
+U1  Net-_Q7-Pad3_ Net-_Q2-Pad2_ Net-_Q1-Pad2_ Net-_Q12-Pad3_ Net-_Q8-Pad3_ Net-_Q20-Pad3_ Net-_Q10-Pad3_ ? PORT		
+
+.end
