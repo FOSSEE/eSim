@@ -21,6 +21,7 @@
 import os
 import sys
 import traceback
+import webbrowser
 
 if os.name == 'nt':
     from frontEnd import pathmagic  # noqa:F401
@@ -132,12 +133,21 @@ class Application(QtWidgets.QMainWindow):
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
 
+        # added devDocs logo and called functions
+        self.devdocs = QtWidgets.QAction(
+            QtGui.QIcon(init_path + 'images/dev_docs.png'),
+            '<b>Dev Docs</b>', self
+        )
+        self.devdocs.setShortcut('Ctrl+D')
+        self.devdocs.triggered.connect(self.dev_docs)
+
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
         self.topToolbar.addAction(self.closeproj)
         self.topToolbar.addAction(self.wrkspce)
         self.topToolbar.addAction(self.helpfile)
+        self.topToolbar.addAction(self.devdocs)
 
         # ## This part is meant for SoC Generation which is currently  ##
         # ## under development and will be will be required in future. ##
@@ -414,6 +424,15 @@ class Application(QtWidgets.QMainWindow):
         self.obj_appconfig.print_info('Help is called')
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
+
+    def dev_docs(self):
+        """
+        This function guides the user to readthedocs website for the developer docs
+        """
+        print("Function : DevDocs")
+        self.obj_appconfig.print_info('DevDocs is called')
+        print("Current Project is : ", self.obj_appconfig.current_project)
+        webbrowser.open("https://esim.readthedocs.io/en/latest/index.html")
 
     @QtCore.pyqtSlot(QtCore.QProcess.ExitStatus, int)
     def plotSimulationData(self, exitCode, exitStatus):

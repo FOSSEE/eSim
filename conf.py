@@ -21,7 +21,7 @@ autodoc_mock_imports = ["PyQt5", "pathmagic", "matplotlib", "numpy"]
 # -- Project information -----------------------------------------------------
 
 project = u'eSim'
-copyright = u'2022, FOSSEE'
+copyright = u'2025, FOSSEE'
 author = u'FOSSEE, IIT Bombay'
 
 # The short X.Y version

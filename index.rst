@@ -6,6 +6,12 @@
 Welcome to eSim's documentation!
 ================================
 
+**eSim** is a free/libre and open-source EDA tool for circuit design, simulation, analysis, and PCB design. It is an integrated tool built using free/libre and open-source software such as KiCad, Ngspice, GHDL, OpenModelica, Verilator, Makerchip, and SkyWater SKY130 PDK.
+
+.. image:: ./images/logo.png
+    :width: 100px
+    :target: https://esim.readthedocs.io/en/latest/index.html
+
 .. image:: ./images/ki-ng.png
     :width: 100px
     :target: https://esim.readthedocs.io/en/latest/code/kicadtoNgspice.html
