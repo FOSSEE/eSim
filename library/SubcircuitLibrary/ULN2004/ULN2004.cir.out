@@ -1,0 +1,23 @@
+* c:\fossee\esim\library\subcircuitlibrary\uln2004\uln2004.cir
+
+.include D.lib
+.include NPN.lib
+q1 /com net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q2 /com net-_q1-pad3_ gnd Q2N2222
+r3  net-_q1-pad3_ gnd 3k
+r2  net-_q1-pad2_ net-_q1-pad3_ 7.2k
+d2 /com /com 1N4148
+d3 gnd /com 1N4148
+d1 gnd net-_d1-pad2_ 1N4148
+c1  /com gnd 15p
+r1  net-_d1-pad2_ net-_q1-pad2_ 10.5k
+* u1  net-_d1-pad2_ /com /com port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
