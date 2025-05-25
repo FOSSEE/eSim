@@ -13,10 +13,11 @@
 #          BUGS: ---
 #         NOTES: ---
 #       AUTHORS: Fahim Khan, Rahul Paknikar, Saurabh Bansode,
-#                Sumanto Kar, Partha Singha Roy
+#                Sumanto Kar, Partha Singha Roy, Jayanth Tatineni,
+#                Anshul Verma
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Thursday 29 June 2023 12:50
+#      REVISION: Sunday 25 May 2025 17:40
 #=============================================================================
  
 sudo apt install -y libxcb-xinerama0 libxcb1 libx11-xcb1 libxcb-glx0 libxcb-util1 libxrender1 libxi6 libxrandr2 libqt5gui5 libqt5core5a libqt5widgets5

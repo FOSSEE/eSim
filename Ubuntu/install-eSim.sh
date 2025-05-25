@@ -1,4 +1,24 @@
 #!/bin/bash
+#=============================================================================
+#          FILE: install-eSim.sh
+# 
+#         USAGE: ./install-eSim.sh --install 
+#                            OR
+#                ./install-eSim.sh --uninstall
+#                
+#   DESCRIPTION: Installation script for eSim EDA Suite
+#
+#       OPTIONS: ---
+#  REQUIREMENTS: ---
+#          BUGS: ---
+#         NOTES: ---
+#       AUTHORS: Fahim Khan, Rahul Paknikar, Saurabh Bansode,
+#                Sumanto Kar, Partha Singha Roy, Jayanth Tatineni,
+#                Anshul Verma, Shiva Krishna Sangati, Harsha Narayana P
+#  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
+#       CREATED: Sunday 25 May 2025 17:40
+#      REVISION: ---
+#=============================================================================
 
 # Function to detect Ubuntu version and full version string
 get_ubuntu_version() {
