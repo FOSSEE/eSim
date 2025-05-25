@@ -72,6 +72,8 @@ class Model(QtWidgets.QWidget):
             # line[7] is parameter dictionary holding parameter tags.
             i = 0
             for (key, value) in line[7].items():
+                print(value)
+                print(key)
 
                 # VECTOR parameters
                 if not isinstance(value, str) and hasattr(value, "__iter__"):
