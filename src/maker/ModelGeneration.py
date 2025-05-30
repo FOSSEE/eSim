@@ -167,6 +167,12 @@ class ModelGeneration(QtWidgets.QWidget):
 
         code = code.replace("wire", " ")
         code = code.replace("reg", " ")
+                
+        header_re = re.compile(r'module\s+\w+\s*\((.*?)\)\s*;', re.S)
+        def _split_ports(match):
+            # add a newline after every comma that is inside the header
+            return match.group(0).replace(',', ',\n')
+        code = header_re.sub(_split_ports, code)
         vlog_ex = vlog.VerilogExtractor()
         vlog_mods = vlog_ex.extract_objects_from_source(code)
         f = open(self.modelpath + "connection_info.txt", 'w')
@@ -718,7 +724,7 @@ and set the load for input ports */
         int foo_''' + self.fname.split('.')[0] + '''(int init,int count)
         {
             int argc=1;
-            char* argv[]={"fullverbose"};
+            const char* argv[]={"fullverbose"};
             Verilated::commandArgs(argc, argv);
             static VerilatedContext* contextp = new VerilatedContext;
             static V''' + self.fname.split('.')[0] + "* " + \
