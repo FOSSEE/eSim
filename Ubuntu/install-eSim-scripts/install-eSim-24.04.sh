@@ -85,18 +85,18 @@ function installSky130Pdk
 {
 
     echo "Installing SKY130 PDK......................"
-    
-    # Extract SKY130 PDK
-    tar -xJf library/sky130_fd_pr.tar.xz
 
+    
     # Remove any previous sky130-fd-pdr instance, if any
     sudo rm -rf /usr/share/local/sky130_fd_pr
-
+    #installing sky130
+    volare enable --pdk sky130 --pdk-root /usr/share/local/ 0fe599b2afb6708d281543108caf8310912f54af
     # Copy SKY130 library
     echo "Copying SKY130 PDK........................."
 
     sudo mkdir -p /usr/share/local/
-    sudo mv sky130_fd_pr /usr/share/local/
+    sudo mv /usr/share/local/volare/sky130/versions/0fe599b2afb6708d281543108caf8310912f54af/sky130A/libs.ref/sky130_fd_pr /usr/share/local/
+    rm -rf /usr/share/local/volare/
 
     # Change ownership from root to the user
     sudo chown -R $USER:$USER /usr/share/local/sky130_fd_pr/
@@ -222,6 +222,10 @@ function installDependency
 
     echo "Installing PyQt5............."
     pip3 install PyQt5  
+
+    echo "Installing volare"
+    sudo apt-get xz-utils
+    pip3 install volare
 }
 
 
