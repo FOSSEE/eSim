@@ -1,0 +1,24 @@
+* C:\Users\Shanthipriya\eSim-Workspace\72\72.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/24/25 09:48:04
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U8  Qnot plot_v1		
+U7  Q plot_v1		
+U3  k plot_v1		
+U1  j plot_v1		
+U2  clk plot_v1		
+v3  k GND pulse		
+v2  clk GND pulse		
+v1  j GND pulse		
+U6  Net-_U6-Pad1_ Net-_U6-Pad2_ Q Qnot dac_bridge_2		
+U5  j clk k Net-_U5-Pad4_ Net-_U5-Pad5_ Net-_U5-Pad6_ adc_bridge_3		
+x1  Net-_U5-Pad4_ Net-_U5-Pad5_ Net-_U5-Pad6_ ? ? Net-_U4-Pad3_ Net-_U4-Pad4_ Net-_U6-Pad1_ Net-_U6-Pad2_ internal72		
+v4  pre GND DC		
+U4  pre clr Net-_U4-Pad3_ Net-_U4-Pad4_ adc_bridge_2		
+v5  clr GND DC		
+
+.end

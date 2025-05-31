@@ -1,0 +1,36 @@
+* c:\users\shanthipriya\esim-workspace\72\72.cir
+
+.include internal72.sub
+* u8  qnot plot_v1
+* u7  q plot_v1
+* u3  k plot_v1
+* u1  j plot_v1
+* u2  clk plot_v1
+v3  k gnd pulse(5 0 0.3u 1n 1n 1u 2.1u)
+v2  clk gnd pulse(0 5 0.1u 1n 1n 20n 45n)
+v1  j gnd pulse(0 5 0.5u 1n 1n 1u 2.1u)
+* u6  net-_u6-pad1_ net-_u6-pad2_ q qnot dac_bridge_2
+* u5  j clk k net-_u5-pad4_ net-_u5-pad5_ net-_u5-pad6_ adc_bridge_3
+x1 net-_u5-pad4_ net-_u5-pad5_ net-_u5-pad6_ ? ? net-_u4-pad3_ net-_u4-pad4_ net-_u6-pad1_ net-_u6-pad2_ internal72
+v4 pre gnd  dc 0
+* u4  pre clr net-_u4-pad3_ net-_u4-pad4_ adc_bridge_2
+v5 clr gnd  dc 0
+a1 [net-_u6-pad1_ net-_u6-pad2_ ] [q qnot ] u6
+a2 [j clk k ] [net-_u5-pad4_ net-_u5-pad5_ net-_u5-pad6_ ] u5
+a3 [pre clr ] [net-_u4-pad3_ net-_u4-pad4_ ] u4
+* Schematic Name:                             dac_bridge_2, NgSpice Name: dac_bridge
+.model u6 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_3, NgSpice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u4 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-09 5e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(qnot)+6 v(q)+12 v(k)+18 v(j)+24 v(clk)
+.endc
+.end
