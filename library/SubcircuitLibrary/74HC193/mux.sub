@@ -1,0 +1,22 @@
+* Subcircuit mux
+.subckt mux net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ 
+* c:\fossee\esim\library\subcircuitlibrary\mux\mux.cir
+* u3  net-_u1-pad1_ net-_u1-pad3_ net-_u3-pad3_ d_and
+* u4  net-_u1-pad2_ net-_u2-pad2_ net-_u4-pad3_ d_and
+* u5  net-_u3-pad3_ net-_u4-pad3_ net-_u1-pad4_ d_or
+* u2  net-_u1-pad1_ net-_u2-pad2_ d_inverter
+a1 [net-_u1-pad1_ net-_u1-pad3_ ] net-_u3-pad3_ u3
+a2 [net-_u1-pad2_ net-_u2-pad2_ ] net-_u4-pad3_ u4
+a3 [net-_u3-pad3_ net-_u4-pad3_ ] net-_u1-pad4_ u5
+a4 net-_u1-pad1_ net-_u2-pad2_ u2
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u5 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends mux
