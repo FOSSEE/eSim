@@ -1,0 +1,43 @@
+* e:\esim\fossee\esim\library\subcircuitlibrary\ltc156531\ltc156531.cir
+
+.include lm_741.sub
+x1 ? net-_c1-pad1_ net-_c3-pad1_ net-_u1-pad4_ ? net-_r6-pad2_ net-_u1-pad3_ ? lm_741
+r2  net-_r2-pad1_ net-_c3-pad1_ 350
+c3  net-_c3-pad1_ gnd 0.01u
+r6  net-_c1-pad1_ net-_r6-pad2_ 10k
+r4  net-_c1-pad1_ gnd 10k
+c1  net-_c1-pad1_ gnd 0.0001u
+x3 ? net-_c6-pad1_ net-_c7-pad1_ net-_u1-pad4_ ? net-_c8-pad1_ net-_u1-pad3_ ? lm_741
+r8  net-_r6-pad2_ net-_c8-pad2_ 350
+r9  net-_c8-pad2_ net-_c7-pad1_ 350
+c7  net-_c7-pad1_ gnd 0.01u
+c8  net-_c8-pad1_ net-_c8-pad2_ 0.01u
+r11  net-_c6-pad1_ net-_c8-pad1_ 15.55k
+r10  net-_c6-pad1_ gnd 10k
+c6  net-_c6-pad1_ gnd 0.003u
+x4 ? net-_c9-pad1_ net-_c10-pad1_ net-_u1-pad4_ ? net-_c11-pad1_ net-_u1-pad3_ ? lm_741
+r12  net-_c8-pad1_ net-_c11-pad2_ 350
+r13  net-_c11-pad2_ net-_c10-pad1_ 350
+c10  net-_c10-pad1_ gnd 0.01u
+c11  net-_c11-pad1_ net-_c11-pad2_ 0.01u
+r15  net-_c9-pad1_ net-_c11-pad1_ 7.53k
+r14  net-_c9-pad1_ gnd 10k
+c9  net-_c9-pad1_ gnd 0.005u
+x2 ? net-_c2-pad1_ net-_c4-pad1_ net-_u1-pad4_ ? net-_c5-pad1_ net-_u1-pad3_ ? lm_741
+r1  net-_c11-pad1_ net-_c5-pad2_ 350
+r3  net-_c5-pad2_ net-_c4-pad1_ 350
+c4  net-_c4-pad1_ gnd 0.01u
+c5  net-_c5-pad1_ net-_c5-pad2_ 0.01u
+r7  net-_c2-pad1_ net-_c5-pad1_ 1.98k
+r5  net-_c2-pad1_ gnd 10k
+c2  net-_c2-pad1_ gnd 0.007u
+* u1  net-_r2-pad1_ gnd net-_u1-pad3_ net-_u1-pad4_ gnd gnd net-_c5-pad1_ gnd port
+.ac lin 0 0Hz 0Hz
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
