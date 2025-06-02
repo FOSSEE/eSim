@@ -338,14 +338,21 @@ class NgVeri(QtWidgets.QWidget):
             QtWidgets.QMessageBox.Cancel)
 
         if ret == QtWidgets.QMessageBox.Ok:
-            file = open(init_path + "library/tlv/lint_off.txt", 'r')
-            data = file.readlines()
-            file.close()
-
-            data.remove(text + "\n")
-            file = open(init_path + "library/tlv/lint_off.txt", 'w')
-            for item in data:
-                file.write(item)
+            try: 
+                file_path = os.path.join(init_path, "library/tlv/lint_off.txt")
+                with open(file_path, 'r') as file:
+                    data = file.readlines()
+                data = [line for line in data if line.strip() != text]
+                with open(file_path, 'w') as file:
+                    file.writelines(data)
+                    
+            except Exception as e:
+                QtWidgets.QMessageBox.warning(
+                    None,
+                    "Warning",
+                    f"Could not remove lint_off entry '{text}'",
+                    QtWidgets.QMessageBox.Ok
+                )
 
     def add_lint_off(self):
         '''
