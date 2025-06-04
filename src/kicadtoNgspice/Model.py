@@ -75,94 +75,58 @@ class Model(QtWidgets.QWidget):
                 print(value)
                 print(key)
 
-                # Check if value is iterable
+                # VECTOR parameters
                 if not isinstance(value, str) and hasattr(value, "__iter__"):
-                    # For tag having vector value
                     temp_tag = []
                     for item in value:
+                        lbl = QtWidgets.QLabel(item)
+                        modelgrid.addWidget(lbl, self.nextrow, 0)
 
-                        paramLabel = QtWidgets.QLabel(item)
-                        modelgrid.addWidget(paramLabel, self.nextrow, 0)
-                        self.obj_trac.model_entry_var[
-                            self.nextcount
-                        ] = QtWidgets.QLineEdit()
+                        # create & store one QLineEdit
+                        le = QtWidgets.QLineEdit()
+                        self.obj_trac.model_entry_var[self.nextcount] = le
+                        le.setText("")
 
-                        self.obj_trac.model_entry_var[
-                            self.nextcount] = QtWidgets.QLineEdit()
-                        self.obj_trac.model_entry_var[self.nextcount].setText(
-                            "")
-
+                        # load any previous XML value
                         try:
                             for child in root:
-                                if (
-                                        child.text == line[2]
-                                        and child.tag == line[3]
-                                ):
-                                    self.obj_trac.model_entry_var
-                                    [self.nextcount].setText(child[i].text)
-                                    self.entry_var[self.count].setText(
-                                        child[0].text)
-                                    i = i + 1
+                                if child.text == line[2] and child.tag == line[3]:
+                                    le.setText(child[i].text)
+                                    i += 1
                         except BaseException:
                             pass
-                        modelgrid.addWidget(self.entry_var[self.nextcount],
-                                            self.nextrow, 1)
 
-                        modelgrid.addWidget(
-                            self.obj_trac.model_entry_var[self.nextcount],
-                            self.nextrow,
-                            1, )
+                        # add exactly one widget per row
+                        modelgrid.addWidget(le, self.nextrow, 1)
 
                         temp_tag.append(self.nextcount)
-                        self.nextcount = self.nextcount + 1
-                        self.nextrow = self.nextrow + 1
+                        self.nextcount += 1
+                        self.nextrow   += 1
 
                     tag_dict[key] = temp_tag
 
+                # SCALAR parameters
                 else:
-                    paramLabel = QtWidgets.QLabel(value)
-                    modelgrid.addWidget(paramLabel, self.nextrow, 0)
-                    self.obj_trac.model_entry_var[
-                        self.nextcount
-                    ] = QtWidgets.QLineEdit()
+                    lbl = QtWidgets.QLabel(value)
+                    modelgrid.addWidget(lbl, self.nextrow, 0)
 
-                    self.obj_trac.model_entry_var[
-                        self.nextcount] = QtWidgets.QLineEdit()
-                    self.obj_trac.model_entry_var[self.nextcount].setText("")
-
-                    # CSS
-                    modelbox.setStyleSheet(
-                        " \
-                    QGroupBox { border: 1px solid gray; border-radius:\
-                    9px; margin-top: 0.5em; } \
-                    QGroupBox::title { subcontrol-origin: margin; left:\
-                    10px; padding: 0 3px 0 3px; } \
-                    "
-                    )
-                    self.grid.addWidget(modelbox)
+                    le = QtWidgets.QLineEdit()
+                    self.obj_trac.model_entry_var[self.nextcount] = le
+                    le.setText("")
 
                     try:
                         for child in root:
                             if child.text == line[2] and child.tag == line[3]:
-                                self.obj_trac.model_entry_var[
-                                    self.nextcount
-                                ].setText(child[i].text)
-                                self.entry_var[self.count].setText(
-                                    child[0].text)
-                                i = i + 1
+                                le.setText(child[i].text)
+                                i += 1
                     except BaseException:
                         pass
 
-                    modelgrid.addWidget(self.entry_var[self.nextcount],
-                                        self.nextrow, 1)
-                    modelgrid.addWidget(
-                        self.obj_trac.model_entry_var[self.nextcount],
-                        self.nextrow,
-                        1, )
+                    modelgrid.addWidget(le, self.nextrow, 1)
 
-                    tag_dict[key] = self.nextcount
-                    self.nextcount = self.nextcount + 1
-                    self.nextrow = self.nextrow + 1
+                    tag_dict[key]   = self.nextcount
+                    self.nextcount  += 1
+                    self.nextrow    += 1
 
             self.end = self.nextcount - 1
             modelbox.setLayout(modelgrid)

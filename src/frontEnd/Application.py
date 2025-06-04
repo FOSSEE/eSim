@@ -41,7 +41,6 @@ from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
-from PyQt5.QtWidgets import QGraphicsDropShadowEffect
 
 # Its our main window of application.
 
@@ -83,18 +82,9 @@ class Application(QtWidgets.QMainWindow):
         self.showMaximized()
         self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
 
-        # Apply a modern, aesthetic dark theme
-        self.apply_dark_theme()
-
         self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
-
-        font = QtGui.QFont("Fira Sans", 11)
-        self.setFont(font)
-
-        self.statusBar = self.statusBar()
-        self.statusBar.showMessage('Welcome to eSim!')
 
     def initToolBar(self):
         """
@@ -110,35 +100,35 @@ class Application(QtWidgets.QMainWindow):
         # Top Tool bar
         self.newproj = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/newProject.png'),
-            'New Project', self
+            '<b>New Project</b>', self
         )
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
 
         self.openproj = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/openProject.png'),
-            'Open Project', self
+            '<b>Open Project</b>', self
         )
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
 
         self.closeproj = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/closeProject.png'),
-            'Close Project', self
+            '<b>Close Project</b>', self
         )
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
 
         self.wrkspce = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/workspace.ico'),
-            'Change Workspace', self
+            '<b>Change Workspace</b>', self
         )
         self.wrkspce.setShortcut('Ctrl+W')
         self.wrkspce.triggered.connect(self.change_workspace)
 
         self.helpfile = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/helpProject.png'),
-            'Help', self
+            '<b>Help</b>', self
         )
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
@@ -146,7 +136,7 @@ class Application(QtWidgets.QMainWindow):
         # added devDocs logo and called functions
         self.devdocs = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/dev_docs.png'),
-            'Dev Docs', self
+            '<b>Dev Docs</b>', self
         )
         self.devdocs.setShortcut('Ctrl+D')
         self.devdocs.triggered.connect(self.dev_docs)
@@ -158,8 +148,6 @@ class Application(QtWidgets.QMainWindow):
         self.topToolbar.addAction(self.wrkspce)
         self.topToolbar.addAction(self.helpfile)
         self.topToolbar.addAction(self.devdocs)
-        self.topToolbar.setIconSize(QSize(32, 32))
-        self.topToolbar.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
 
         # ## This part is meant for SoC Generation which is currently  ##
         # ## under development and will be will be required in future. ##
@@ -199,60 +187,60 @@ class Application(QtWidgets.QMainWindow):
         # Left Tool bar Action Widget
         self.kicad = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/kicad.png'),
-            'Open Schematic', self
+            '<b>Open Schematic</b>', self
         )
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
 
         self.conversion = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/ki-ng.png'),
-            'Convert KiCad to Ngspice', self
+            '<b>Convert KiCad to Ngspice</b>', self
         )
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
 
         self.ngspice = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/ngspice.png'),
-            'Simulate', self
+            '<b>Simulate</b>', self
         )
         self.ngspice.triggered.connect(self.plotFlagPopBox)
 
         self.model = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/model.png'),
-            'Model Editor', self
+            '<b>Model Editor</b>', self
         )
         self.model.triggered.connect(self.open_modelEditor)
 
         self.subcircuit = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/subckt.png'),
-            'Subcircuit', self
+            '<b>Subcircuit</b>', self
         )
         self.subcircuit.triggered.connect(self.open_subcircuit)
 
         self.nghdl = QtWidgets.QAction(
-            QtGui.QIcon(init_path + 'images/nghdl.png'), 'NGHDL', self
+            QtGui.QIcon(init_path + 'images/nghdl.png'), '<b>NGHDL</b>', self
         )
         self.nghdl.triggered.connect(self.open_nghdl)
 
         self.makerchip = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/makerchip.png'),
-            'Makerchip-NgVeri', self
+            '<b>Makerchip-NgVeri</b>', self
         )
         self.makerchip.triggered.connect(self.open_makerchip)
 
         self.omedit = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/omedit.png'),
-            'Modelica Converter', self
+            '<b>Modelica Converter</b>', self
         )
         self.omedit.triggered.connect(self.open_OMedit)
 
         self.omoptim = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/omoptim.png'),
-            'OM Optimisation', self
+            '<b>OM Optimisation</b>', self
         )
         self.omoptim.triggered.connect(self.open_OMoptim)
 
         self.conToeSim = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/icon.png'),
-            'Schematics converter', self
+            '<b>Schematics converter</b>', self
         )
         self.conToeSim.triggered.connect(self.open_conToeSim)
 
@@ -269,347 +257,8 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.addAction(self.conToeSim)
-        self.lefttoolbar.setIconSize(QSize(48, 48))
-        self.lefttoolbar.setToolButtonStyle(QtCore.Qt.ToolButtonTextUnderIcon)
-
-    def apply_dark_theme(self):
-        """Applies a premium, modern dark theme everywhere using only supported QSS properties."""
-        premium_dark_stylesheet = """
-        QMainWindow {
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-                stop:0 #0a0e1a, stop:0.3 #1a1d29, stop:0.7 #1e2124, stop:1 #0f1419);
-            color: #e8eaed;
-            font-family: 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        QDockWidget {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #e8eaed;
-            border: 1px solid #23273a;
-            border-radius: 14px;
-        }
-        QDockWidget::title {
-            text-align: center;
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #40c4ff;
-            border-radius: 14px 14px 0 0;
-            padding: 12px 16px;
-            font-weight: 700;
-            font-size: 16px;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid #23273a;
-        }
-        QGroupBox {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            border: 1px solid #23273a;
-            border-radius: 14px;
-            margin-top: 24px;
-            color: #e8eaed;
-            font-weight: 600;
-            padding-top: 16px;
-        }
-        QGroupBox::title {
-            subcontrol-origin: margin;
-            subcontrol-position: top left;
-            padding: 8px 16px 4px 16px;
-            color: #40c4ff;
-            background: transparent;
-            font-weight: 700;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-        }
-        QToolBar {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            border: 1px solid #23273a;
-            border-radius: 12px;
-            color: #e8eaed;
-            padding: 10px 16px;
-            spacing: 10px;
-            margin: 4px;
-        }
-        QToolBar::separator {
-            background: #23273a;
-            width: 1px;
-            margin: 8px 12px;
-        }
-        QToolButton {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            border: 1px solid #23273a;
-            color: #e8eaed;
-            padding: 12px 12px 8px 12px;
-            margin: 6px 3px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 13px;
-            letter-spacing: 0.3px;
-        }
-        QToolButton:hover {
-            background: #40c4ff;
-            color: #181b24;
-            border: 1.5px solid #40c4ff;
-        }
-        QToolButton:pressed, QToolButton:checked {
-            background: #1976d2;
-            color: #fff;
-            border: 1.5px solid #1976d2;
-        }
-        QLabel {
-            color: #e8eaed;
-            font-weight: 500;
-            font-size: 13px;
-            letter-spacing: 0.2px;
-        }
-        QMenuBar {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            border: none;
-            border-bottom: 1px solid #23273a;
-            color: #e8eaed;
-            font-weight: 600;
-        }
-        QMenuBar::item {
-            background: transparent;
-            color: #e8eaed;
-            padding: 10px 20px;
-            border-radius: 8px;
-            margin: 2px;
-            font-weight: 600;
-        }
-        QMenuBar::item:selected {
-            background: #23273a;
-            color: #40c4ff;
-        }
-        QMenu {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #e8eaed;
-            border: 1px solid #23273a;
-            border-radius: 12px;
-            padding: 8px;
-        }
-        QMenu::item {
-            padding: 10px 24px;
-            border-radius: 8px;
-            margin: 2px;
-            font-weight: 600;
-        }
-        QMenu::item:selected {
-            background: #40c4ff;
-            color: #181b24;
-        }
-        QMenu::separator {
-            height: 1px;
-            background: #23273a;
-            margin: 8px 16px;
-        }
-        QTreeWidget, QTreeView, QListView {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #e8eaed;
-            border: 1px solid #23273a;
-            border-radius: 12px;
-            selection-background-color: #40c4ff;
-            selection-color: #181b24;
-            font-weight: 600;
-            padding: 4px;
-        }
-        QTreeView::item, QListView::item {
-            padding: 8px 12px;
-            border-radius: 8px;
-            margin: 1px;
-        }
-        QTreeView::item:hover, QListView::item:hover {
-            background: #23273a;
-            color: #40c4ff;
-        }
-        QTreeView::item:selected, QListView::item:selected {
-            background: #40c4ff;
-            color: #181b24;
-            font-weight: 700;
-        }
-        QHeaderView::section {
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #40c4ff;
-            font-weight: 700;
-            font-size: 17px;
-            border: none;
-            border-radius: 12px 12px 0 0;
-            padding: 12px 0px 12px 18px;
-            letter-spacing: 0.5px;
-        }
-        QTabBar::tab {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #b0b3b8;
-            border: 1px solid #23273a;
-            border-bottom: none;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-            padding: 12px 28px;
-            margin-right: 4px;
-            font-weight: 600;
-            font-size: 13px;
-            letter-spacing: 0.3px;
-        }
-        QTabBar::tab:selected {
-            background: #40c4ff;
-            color: #181b24;
-            border: 1px solid #40c4ff;
-            border-bottom: 3px solid #40c4ff;
-            font-weight: 700;
-        }
-        QTabBar::tab:hover:!selected {
-            background: #23273a;
-            color: #e8eaed;
-        }
-        QTabWidget::pane {
-            border: 1px solid #23273a;
-            border-radius: 0 12px 12px 12px;
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-        }
-        QTextEdit, QLineEdit, QPlainTextEdit {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #e8eaed;
-            border: 1px solid #23273a;
-            border-radius: 10px;
-            padding: 12px 16px;
-            font-weight: 500;
-            font-size: 13px;
-            selection-background-color: #40c4ff;
-            selection-color: #181b24;
-        }
-        QTextEdit:focus, QLineEdit:focus, QPlainTextEdit:focus {
-            border: 2px solid #40c4ff;
-            background: #181b24;
-        }
-        QDialog {
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #e8eaed;
-            border: 1px solid #23273a;
-            border-radius: 16px;
-        }
-        QPushButton {
-            background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                stop:0 #40c4ff, stop:1 #1976d2);
-            color: #181b24;
-            border: 1px solid #40c4ff;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-        }
-        QPushButton:hover {
-            background: #1976d2;
-            color: #fff;
-            border: 1.5px solid #1976d2;
-        }
-        QPushButton:pressed {
-            background: #23273a;
-            color: #40c4ff;
-            border: 1.5px solid #40c4ff;
-        }
-        QPushButton:disabled {
-            background: #23273a;
-            color: #888;
-            border: 1px solid #23273a;
-        }
-        QStatusBar {
-            background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                stop:0 #23273a, stop:1 #181b24);
-            color: #b0b3b8;
-            border: none;
-            border-top: 1px solid #23273a;
-            padding: 8px 16px;
-            font-weight: 600;
-            font-size: 12px;
-            letter-spacing: 0.3px;
-        }
-        QScrollBar:vertical, QScrollBar:horizontal {
-            background: #23273a;
-            border-radius: 6px;
-            margin: 0;
-        }
-        QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
-            background: #40c4ff;
-            border-radius: 6px;
-            min-height: 30px;
-            min-width: 30px;
-            margin: 2px;
-        }
-        QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
-            background: #1976d2;
-        }
-        QScrollBar::add-line, QScrollBar::sub-line {
-            background: none;
-            border: none;
-        }
-        QProgressBar {
-            background: #23273a;
-            border: 1px solid #23273a;
-            border-radius: 8px;
-            text-align: center;
-            color: #e8eaed;
-            font-weight: 600;
-        }
-        QProgressBar::chunk {
-            background: #40c4ff;
-            border-radius: 7px;
-        }
-        QComboBox {
-            background: #23273a;
-            border: 1px solid #23273a;
-            border-radius: 10px;
-            padding: 8px 16px;
-            color: #e8eaed;
-            font-weight: 600;
-        }
-        QComboBox:hover {
-            border: 1.5px solid #40c4ff;
-            background: #181b24;
-        }
-        QComboBox::drop-down {
-            border: none;
-            width: 30px;
-        }
-        QComboBox::down-arrow {
-            image: none;
-            border-left: 5px solid transparent;
-            border-right: 5px solid transparent;
-            border-top: 8px solid #40c4ff;
-            margin-right: 12px;
-        }
-        QSplitter::handle {
-            background: #23273a;
-            border-radius: 2px;
-        }
-        QSplitter::handle:hover {
-            background: #40c4ff;
-        }
-        QHeaderView::section:horizontal {
-            min-height: 36px;
-        }
-        QToolTip {
-            background: #23273a;
-            color: #e8eaed;
-            border: 1px solid #40c4ff;
-            border-radius: 8px;
-            padding: 8px 12px;
-            font-weight: 600;
-            font-size: 12px;
-        }
-        """
-        self.setStyleSheet(premium_dark_stylesheet)
+        self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
+        self.lefttoolbar.setIconSize(QSize(40, 40))
 
     def plotFlagPopBox(self):
         """This function displays a pop-up box with message- Do you want Ngspice plots? and oprions Yes and NO.
@@ -1073,58 +722,16 @@ class MainView(QtWidgets.QWidget):
         # Area to be included in MainView
         self.noteArea = QtWidgets.QTextEdit()
         self.noteArea.setReadOnly(True)
-        self.noteArea.setAcceptRichText(True)
-        self.noteArea.setStyleSheet("""
-            QTextEdit {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-                    stop:0 #23273a, stop:1 #181b24);
-                color: #e8eaed;
-                border: 1.5px solid #23273a;
-                border-radius: 14px;
-                padding: 18px 24px;
-                font-family: 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-                font-size: 15px;
-                font-weight: 500;
-                letter-spacing: 0.1px;
-            }
-            QTextEdit QScrollBar:vertical, QTextEdit QScrollBar:horizontal {
-                background: #23273a;
-                border-radius: 6px;
-            }
-            QTextEdit a {
-                color: #40c4ff;
-                text-decoration: none;
-                font-weight: 600;
-            }
-        """)
-        welcome_html = '''
-<div style="color: #e8eaed; background-color: transparent; font-family: 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;">
-    <h2 style="color: #e8eaed; margin-bottom: 16px; font-weight: 700; letter-spacing: 0.5px;">
-        Welcome to <span style='color: #40c4ff; font-weight: 700;'>eSim</span>
-    </h2>
-    <p style="color: #e8eaed; margin-bottom: 14px; line-height: 1.6; font-weight: 500;">
-        <b style="color: #40c4ff; font-weight: 700;">eSim</b> is an open source EDA tool for circuit design, simulation, analysis and PCB design.<br>
-        It is an integrated tool built using open source software such as
-        <a href="https://www.kicad.org/" style="color: #40c4ff; text-decoration: none; font-weight: 600;">KiCad</a>,
-        <a href="https://ngspice.sourceforge.io/" style="color: #40c4ff; text-decoration: none; font-weight: 600;">Ngspice</a>,
-        <a href="http://ghdl.free.fr" style="color: #40c4ff; text-decoration: none; font-weight: 600;">GHDL</a>,
-        <a href="https://www.veripool.org/verilator/" style="color: #40c4ff; text-decoration: none; font-weight: 600;">Verilator</a>,
-        <a href="https://www.makerchip.com/" style="color: #40c4ff; text-decoration: none; font-weight: 600;">Makerchip IDE</a>, and
-        <a href="https://skywater-pdk.rtfd.io/" style="color: #40c4ff; text-decoration: none; font-weight: 600;">SkyWater SKY130 PDK</a>.<br>
-        eSim source is released under <b style="color: #40c4ff; font-weight: 700;">GNU General Public License</b>.
-    </p>
-    <p style="color: #e8eaed; margin-bottom: 14px; line-height: 1.6; font-weight: 500;">
-        This tool is developed by the <b style="color: #40c4ff; font-weight: 700;">eSim Team at FOSSEE, IIT Bombay</b>.<br>
-        To know more about eSim, please visit:
-        <a href="https://esim.fossee.in/" style="color: #40c4ff; text-decoration: none; font-weight: 600;">https://esim.fossee.in/</a>.
-    </p>
-    <p style="color: #e8eaed; margin-bottom: 14px; line-height: 1.6; font-weight: 500;">
-        To discuss more about eSim, please visit:
-        <a href="https://forums.fossee.in/" style="color: #40c4ff; text-decoration: none; font-weight: 600;">https://forums.fossee.in/</a>
-    </p>
-</div>
-'''
-        self.noteArea.setHtml(welcome_html)
+        self.obj_appconfig.noteArea['Note'] = self.noteArea
+        self.obj_appconfig.noteArea['Note'].append(
+            '        eSim Started......')
+        self.obj_appconfig.noteArea['Note'].append('Project Selected : None')
+        self.obj_appconfig.noteArea['Note'].append('\n')
+        # CSS
+        self.noteArea.setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px \
+            solid gray; padding: 5px; } \
+        ")
 
         self.obj_dockarea = DockArea.DockArea()
         self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()
@@ -1148,21 +755,7 @@ class MainView(QtWidgets.QWidget):
         self.middleSplit.setSizes([self.width(), int(self.height() / 2)])
         self.setLayout(self.mainLayout)
 
-def ensure_config_directory():
-    
-    if os.name == 'nt':
-        user_home = os.path.join('library', 'config')
-    else:
-        user_home = os.path.expanduser('~')
-    
-    esim_config_dir = os.path.join(user_home, '.esim')
-    
-    # Create directory if it doesn't exist
-    if not os.path.exists(esim_config_dir):
-        os.makedirs(esim_config_dir, exist_ok=True)
-    
-    return user_home
-    
+
 # It is main function of the module and starts the application
 def main(args):
     """
@@ -1193,8 +786,7 @@ def main(args):
         else:
             user_home = os.path.expanduser('~')
 
-        user_home = ensure_config_directory()  # Add this line
-        file = open(os.path.join(user_home, ".esim/workspace.txt"), 'w')
+        file = open(os.path.join(user_home, ".esim/workspace.txt"), 'r')
         work = int(file.read(1))
         file.close()
     except IOError:
