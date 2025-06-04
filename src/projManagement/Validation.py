@@ -221,4 +221,4 @@ class Validation:
             return True
 
         print("Last line not found:", last_line)
-        return false
+        return False
