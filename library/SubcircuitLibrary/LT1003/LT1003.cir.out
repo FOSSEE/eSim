@@ -1,0 +1,83 @@
+* c:\fossee\esim\library\subcircuitlibrary\lt1003\lt1003.cir
+
+.include PNP.lib
+.include NPN.lib
+.include NJF.lib
+* u1  in out gnd port
+q2 net-_j1-pad1_ net-_j1-pad1_ in Q2N2907A
+q3 net-_q1-pad2_ net-_j1-pad1_ in Q2N2907A
+q5 net-_q10-pad1_ net-_j1-pad1_ in Q2N2907A
+j1 net-_j1-pad1_ gnd net-_j1-pad3_ J2N3819
+q1 net-_j1-pad1_ net-_q1-pad2_ net-_j1-pad3_ Q2N2222
+r1  net-_j1-pad3_ net-_q4-pad2_ 4k
+r2  net-_q4-pad2_ gnd 250
+* u2  gnd net-_q1-pad2_ zener
+q4 net-_q10-pad1_ net-_q4-pad2_ gnd Q2N2222
+r3  net-_q6-pad3_ gnd 1k
+r7  net-_q7-pad3_ gnd 100
+q7 net-_q10-pad2_ net-_q6-pad3_ net-_q7-pad3_ Q2N2222
+q6 net-_q6-pad1_ net-_q6-pad2_ net-_q6-pad3_ Q2N2222
+r6  net-_q6-pad2_ net-_q10-pad2_ 130
+r5  net-_q9-pad3_ net-_q6-pad2_ 2.4k
+r4  net-_q6-pad1_ net-_q9-pad3_ 2k
+q9 net-_q6-pad1_ net-_q6-pad1_ net-_q9-pad3_ Q2N2222
+q8 net-_j1-pad1_ out net-_q6-pad1_ Q2N2222
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+r8  net-_q10-pad3_ gnd 12k
+q11 net-_c1-pad1_ net-_q10-pad3_ net-_q11-pad3_ Q2N2222
+r10  net-_q11-pad3_ gnd 825
+r11  net-_q14-pad3_ gnd 4k
+q14 net-_q13-pad3_ net-_q13-pad3_ net-_q14-pad3_ Q2N2222
+q13 net-_c1-pad2_ net-_c1-pad1_ net-_q13-pad3_ Q2N2222
+q17 net-_c1-pad2_ net-_q13-pad3_ gnd Q2N2222
+c1  net-_c1-pad1_ net-_c1-pad2_ 30
+r9  net-_q12-pad3_ net-_c1-pad1_ 20k
+q12 out net-_q12-pad2_ net-_q12-pad3_ Q2N2222
+q16 out out net-_c1-pad2_ Q2N2222
+r12  net-_q15-pad3_ out 1k
+q15 net-_q10-pad1_ net-_q10-pad1_ net-_q15-pad3_ Q2N2222
+q18 gnd out net-_q10-pad1_ Q2N2907A
+q19 gnd net-_c2-pad1_ net-_q10-pad1_ Q2N2907A
+c2  net-_c2-pad1_ gnd 15
+r15  net-_c2-pad1_ net-_c3-pad1_ 3k
+r16  net-_q10-pad1_ net-_c3-pad1_ 2k
+c3  net-_c3-pad1_ net-_c3-pad2_ 10
+q20 net-_c3-pad1_ net-_c3-pad2_ out Q2N2222
+r17  net-_c3-pad2_ net-_q23-pad1_ 2k
+r18  net-_q23-pad2_ net-_q23-pad1_ 200
+q23 net-_q23-pad1_ net-_q23-pad2_ net-_q23-pad3_ Q2N2222
+r20  net-_q10-pad1_ net-_q23-pad2_ 6k
+r21  net-_r21-pad1_ net-_q23-pad3_ 10k
+* u3  net-_r21-pad1_ in zener
+q24 in net-_q10-pad1_ net-_q24-pad3_ Q2N2222
+q25 in net-_q24-pad3_ net-_q25-pad3_ Q2N2222
+r23  net-_q24-pad3_ net-_q25-pad3_ 1k
+r22  net-_q23-pad3_ net-_q25-pad3_ 50
+r25  net-_q25-pad3_ out 0.03
+* u4  gnd out zener
+q21 out out net-_q21-pad3_ Q2N2222
+r14  net-_r14-pad1_ net-_q21-pad3_ 400
+q22 net-_q10-pad2_ net-_q21-pad3_ net-_q22-pad3_ Q2N2907A
+r13  net-_q12-pad2_ net-_r13-pad2_ 200k
+r19  net-_q22-pad3_ net-_q25-pad3_ 2k
+r24  out gnd 1k
+r26  net-_r13-pad2_ gnd 100k
+r27  net-_q12-pad2_ net-_r14-pad1_ 400
+a1 gnd net-_q1-pad2_ u2
+a2 net-_r21-pad1_ in u3
+a3 gnd out u4
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u2 zener(v_breakdown=6.4 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u3 zener(v_breakdown=6.4 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u4 zener(v_breakdown=6.4 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
