@@ -1,0 +1,33 @@
+* Subcircuit LT1009
+.subckt LT1009 anode adj cathode 
+* c:\fossee\esim\library\subcircuitlibrary\lt1009\lt1009.cir
+.include PNP.lib
+.include NPN.lib
+q14 net-_q11-pad2_ net-_q11-pad2_ anode Q2N2222
+q7 net-_q5-pad2_ net-_q10-pad1_ net-_q4-pad3_ Q2N2907A
+q9 net-_q4-pad3_ net-_q15-pad1_ cathode Q2N2907A
+q4 net-_c2-pad1_ net-_c2-pad2_ net-_q4-pad3_ Q2N2907A
+q5 net-_c2-pad1_ net-_q5-pad2_ net-_q3-pad2_ Q2N2222
+q2 cathode net-_c2-pad1_ net-_q1-pad2_ Q2N2222
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q11 net-_q10-pad3_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+q8 net-_q5-pad2_ net-_q5-pad2_ net-_q3-pad2_ Q2N2222
+q3 net-_q1-pad2_ net-_q3-pad2_ anode Q2N2222
+q12 net-_c2-pad2_ net-_q12-pad2_ net-_q10-pad3_ Q2N2222
+q13 cathode cathode net-_q13-pad3_ Q2N2222
+q1 cathode net-_q1-pad2_ anode Q2N2222
+q6 net-_q3-pad2_ net-_q3-pad2_ anode Q2N2222
+c1  net-_c1-pad1_ cathode 20p
+r1  net-_c1-pad1_ net-_c2-pad1_ 10k
+c2  net-_c2-pad1_ net-_c2-pad2_ 30p
+r2  net-_q10-pad1_ net-_q15-pad1_ 24k
+r3  anode net-_q11-pad3_ 720
+r4  net-_c2-pad2_ net-_q15-pad1_ 24k
+r7  net-_q11-pad2_ net-_q10-pad2_ 6.6k
+r5  net-_q12-pad2_ net-_q13-pad3_ 6.6k
+r8  net-_q10-pad2_ adj 30k
+r6  net-_q10-pad2_ net-_q12-pad2_ 500
+q15 net-_q15-pad1_ net-_q15-pad1_ cathode Q2N2907A
+* Control Statements
+
+.ends LT1009
