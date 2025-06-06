@@ -4,8 +4,8 @@ import os
 
 class Welcome(QtWidgets.QWidget):
     """
-    This class contains content of dock area part of initial esim Window.
-    It creates Welcome page of eSim.
+    It contains class responsible for content of dock area part of initial esim Window.
+    It creates Welcome page of eSim as shown below in image. The library/browser/welcome.html file is used for html content.
     """
 
     def __init__(self):
