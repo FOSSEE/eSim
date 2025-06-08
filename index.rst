@@ -33,8 +33,16 @@ Welcome to eSim's documentation!
     :target: https://esim.readthedocs.io/en/latest/code/subcircuit.html
 
 .. toctree::
-   :maxdepth: 3
-   :caption: Contents:
+   :maxdepth: 2
+   :caption: Getting Started
+
+   code/overview
+   code/history
+   code/installation
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Components
 
    code/configuration
    code/browser
@@ -44,6 +52,9 @@ Welcome to eSim's documentation!
    code/projectManagement
    code/modelEditor
    code/subcircuit
+   code/ngspicetoModelica
+   code/maker
+   code/converter
 
 Indices and tables
 ==================
