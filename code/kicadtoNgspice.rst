@@ -1,5 +1,5 @@
-kicadtoNgspice Component
-========================
+KiCad to NgSpice Component
+============================
 
 .. toctree::
 	:maxdepth: 2
