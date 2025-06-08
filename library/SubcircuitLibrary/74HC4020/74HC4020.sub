@@ -1,0 +1,71 @@
+* Subcircuit Asynch_counter_sub
+.subckt Asynch_counter_sub net-_u10-pad3_ net-_u1-pad1_ net-_u10-pad4_ net-_u3-pad4_ net-_u3-pad5_ net-_u3-pad6_ net-_u3-pad7_ net-_u10-pad5_ net-_u11-pad5_ net-_u12-pad5_ net-_u13-pad5_ net-_u14-pad5_ net-_u15-pad5_ net-_u16-pad5_ net-_u17-pad5_ 
+* c:\fossee\esim\library\subcircuitlibrary\asynch_counter_sub\asynch_counter_sub.cir
+* u4  net-_u10-pad1_ net-_u1-pad2_ net-_u10-pad3_ net-_u10-pad4_ net-_u3-pad4_ net-_u4-pad6_ d_tff
+* u6  net-_u10-pad1_ net-_u4-pad6_ net-_u10-pad3_ net-_u10-pad4_ ? net-_u6-pad6_ d_tff
+* u8  net-_u10-pad1_ net-_u6-pad6_ net-_u10-pad3_ net-_u10-pad4_ ? net-_u10-pad2_ d_tff
+* u10  net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ net-_u10-pad4_ net-_u10-pad5_ net-_u10-pad6_ d_tff
+* u12  net-_u10-pad1_ net-_u10-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u12-pad5_ net-_u12-pad6_ d_tff
+* u14  net-_u10-pad1_ net-_u12-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u14-pad5_ net-_u14-pad6_ d_tff
+* u16  net-_u10-pad1_ net-_u14-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u16-pad5_ net-_u16-pad6_ d_tff
+* u5  net-_u10-pad1_ net-_u16-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u3-pad5_ net-_u5-pad6_ d_tff
+* u7  net-_u10-pad1_ net-_u5-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u3-pad6_ net-_u7-pad6_ d_tff
+* u9  net-_u10-pad1_ net-_u7-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u3-pad7_ net-_u11-pad2_ d_tff
+* u11  net-_u10-pad1_ net-_u11-pad2_ net-_u10-pad3_ net-_u10-pad4_ net-_u11-pad5_ net-_u11-pad6_ d_tff
+* u13  net-_u10-pad1_ net-_u11-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u13-pad5_ net-_u13-pad6_ d_tff
+* u15  net-_u10-pad1_ net-_u13-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u15-pad5_ net-_u15-pad6_ d_tff
+* u17  net-_u10-pad1_ net-_u15-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u17-pad5_ ? d_tff
+* u1  net-_u1-pad1_ net-_u1-pad2_ d_inverter
+* u2  net-_u2-pad1_ net-_u10-pad1_ adc_bridge_1
+v1  net-_u2-pad1_ gnd 5
+a1 net-_u10-pad1_ net-_u1-pad2_ net-_u10-pad3_ net-_u10-pad4_ net-_u3-pad4_ net-_u4-pad6_ u4
+a2 net-_u10-pad1_ net-_u4-pad6_ net-_u10-pad3_ net-_u10-pad4_ ? net-_u6-pad6_ u6
+a3 net-_u10-pad1_ net-_u6-pad6_ net-_u10-pad3_ net-_u10-pad4_ ? net-_u10-pad2_ u8
+a4 net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ net-_u10-pad4_ net-_u10-pad5_ net-_u10-pad6_ u10
+a5 net-_u10-pad1_ net-_u10-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u12-pad5_ net-_u12-pad6_ u12
+a6 net-_u10-pad1_ net-_u12-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u14-pad5_ net-_u14-pad6_ u14
+a7 net-_u10-pad1_ net-_u14-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u16-pad5_ net-_u16-pad6_ u16
+a8 net-_u10-pad1_ net-_u16-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u3-pad5_ net-_u5-pad6_ u5
+a9 net-_u10-pad1_ net-_u5-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u3-pad6_ net-_u7-pad6_ u7
+a10 net-_u10-pad1_ net-_u7-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u3-pad7_ net-_u11-pad2_ u9
+a11 net-_u10-pad1_ net-_u11-pad2_ net-_u10-pad3_ net-_u10-pad4_ net-_u11-pad5_ net-_u11-pad6_ u11
+a12 net-_u10-pad1_ net-_u11-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u13-pad5_ net-_u13-pad6_ u13
+a13 net-_u10-pad1_ net-_u13-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u15-pad5_ net-_u15-pad6_ u15
+a14 net-_u10-pad1_ net-_u15-pad6_ net-_u10-pad3_ net-_u10-pad4_ net-_u17-pad5_ ? u17
+a15 net-_u1-pad1_ net-_u1-pad2_ u1
+a16 [net-_u2-pad1_ ] [net-_u10-pad1_ ] u2
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u4 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u6 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u8 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u10 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u12 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u14 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u16 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u5 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u7 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u9 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u11 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u13 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u15 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u17 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u1 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Control Statements
+
+.ends Asynch_counter_sub
