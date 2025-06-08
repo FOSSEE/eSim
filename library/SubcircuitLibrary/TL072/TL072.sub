@@ -1,0 +1,74 @@
+* Subcircuit TL072
+* c:\fossee\esim\library\subcircuitlibrary\tl072\tl072.sub
+.subckt TL072 vout1 vin11 vin12 vee vin22 vin21 vout2 vcc
+.include NPN.lib
+.include PNP.lib
+.include PJF.lib
+.include D.lib
+j1 net-_j1-pad1_ vin11 net-_j1-pad3_ J2N3820
+j2 net-_j1-pad1_ vin12 net-_c1-pad1_ J2N3820
+q3 net-_j1-pad1_ net-_q12-pad2_ net-_q3-pad3_ Q2N2907A
+r3  vcc net-_q3-pad3_ 30r
+q1 net-_j1-pad3_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q4 net-_c1-pad1_ net-_q1-pad2_ net-_q4-pad3_ Q2N2222
+q2 vcc net-_j1-pad3_ net-_q1-pad2_ Q2N2222
+q5 vcc net-_c1-pad1_ net-_q5-pad3_ Q2N2222
+r1  net-_q1-pad3_ vee 1kr
+r4  net-_q4-pad3_ vee 1kr
+r2  net-_q1-pad2_ vee 50kr
+r5  net-_q5-pad3_ vee 50kr
+d1 net-_c1-pad1_ net-_c1-pad2_ 1N4148
+c1  net-_c1-pad1_ net-_c1-pad2_ 18pf
+q7 vcc net-_q12-pad2_ net-_q10-pad2_ Q2N2907A
+q12 vcc net-_q12-pad2_ net-_q12-pad2_ Q2N2907A
+q6 net-_q10-pad2_ net-_q10-pad2_ net-_q6-pad3_ Q2N2222
+q10 vcc net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q9 net-_q10-pad2_ net-_q6-pad3_ net-_c1-pad2_ Q2N2222
+r8  net-_q10-pad3_ net-_r10-pad1_ 100r
+r9  net-_r10-pad1_ net-_q11-pad1_ 100r
+q11 net-_q11-pad1_ net-_c1-pad2_ vee Q2N2907A
+q8 net-_c1-pad2_ net-_q5-pad3_ net-_q8-pad3_ Q2N2222
+r7  net-_q8-pad3_ vee 100r
+q13 net-_q12-pad2_ net-_j3-pad3_ net-_q13-pad3_ Q2N2222
+r11  net-_q13-pad3_ vee 5kr
+* u1  vee net-_j3-pad3_ zener
+r10  net-_r10-pad1_ vout1 200r
+r6  net-_q6-pad3_ net-_c1-pad2_ 100r
+j3 vcc vcc net-_j3-pad3_ J2N3820
+j4 net-_j4-pad1_ vin21 net-_j4-pad3_ J2N3820
+j5 net-_j4-pad1_ vin22 net-_c2-pad1_ J2N3820
+q16 net-_j4-pad1_ net-_q16-pad2_ net-_q16-pad3_ Q2N2907A
+r14  vcc net-_q16-pad3_ 30r
+q14 net-_j4-pad3_ net-_q14-pad2_ net-_q14-pad3_ Q2N2222
+q17 net-_c2-pad1_ net-_q14-pad2_ net-_q17-pad3_ Q2N2222
+q15 vcc net-_j4-pad3_ net-_q14-pad2_ Q2N2222
+q18 vcc net-_c2-pad1_ net-_q18-pad3_ Q2N2222
+r12  net-_q14-pad3_ vee 1kr
+r15  net-_q17-pad3_ vee 1kr
+r13  net-_q14-pad2_ vee 50kr
+r16  net-_q18-pad3_ vee 50kr
+d2 net-_c2-pad1_ net-_c2-pad2_ 1N4148
+c2  net-_c2-pad1_ net-_c2-pad2_ 18pf
+q20 vcc net-_q16-pad2_ net-_q19-pad1_ Q2N2907A
+q25 vcc net-_q16-pad2_ net-_q16-pad2_ Q2N2907A
+q19 net-_q19-pad1_ net-_q19-pad1_ net-_q19-pad3_ Q2N2222
+q23 vcc net-_q19-pad1_ net-_q23-pad3_ Q2N2222
+q22 net-_q19-pad1_ net-_q19-pad3_ net-_c2-pad2_ Q2N2222
+r19  net-_q23-pad3_ net-_r19-pad2_ 100r
+r20  net-_r19-pad2_ net-_q24-pad1_ 100r
+q24 net-_q24-pad1_ net-_c2-pad2_ vee Q2N2907A
+q21 net-_c2-pad2_ net-_q18-pad3_ net-_q21-pad3_ Q2N2222
+r18  net-_q21-pad3_ vee 100r
+q26 net-_q16-pad2_ net-_j6-pad3_ net-_q26-pad3_ Q2N2222
+r22  net-_q26-pad3_ vee 5kr
+* u2  vee net-_j6-pad3_ zener
+r21  net-_r19-pad2_ vout2 200r
+r17  net-_q19-pad3_ net-_c2-pad2_ 100r
+j6 vcc vcc net-_j6-pad3_ J2N3820
+a1 vee net-_j3-pad3_ u1
+a2 vee net-_j6-pad3_ u2
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u1 zener(v_breakdown=6 i_breakdown=2.0e-6 i_sat=1.0e-12 n_forward=1 limit_switch=TRUE ) 
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u2 zener(v_breakdown=6 i_breakdown=2.0e-6 i_sat=1.0e-12 n_forward=1 limit_switch=TRUE ) 
+.ends TL072
