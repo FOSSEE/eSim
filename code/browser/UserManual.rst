@@ -11,3 +11,4 @@ User Manual Component
     :alt: Screenshot of the Welcome page
     :align: left
     :scale: 100%
+
