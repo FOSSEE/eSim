@@ -1,0 +1,101 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\SN54154\SN54154.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 4/12/2025 10:26:58 AM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U11  Net-_U11-Pad1_ Net-_U11-Pad2_ G d_and		
+U5  G1_bar Net-_U11-Pad1_ d_inverter		
+U6  G2_bar Net-_U11-Pad2_ d_inverter		
+U1  A_in A_bar d_inverter		
+U7  A_bar A d_inverter		
+U2  B_in B_bar d_inverter		
+U8  B_bar B d_inverter		
+U3  C_in C_bar d_inverter		
+U9  C_bar C d_inverter		
+U4  D_in D_bar d_inverter		
+U10  D_bar D d_inverter		
+U60  G Net-_U44-Pad3_ Net-_U60-Pad3_ d_and		
+U44  A_bar Net-_U28-Pad3_ Net-_U44-Pad3_ d_and		
+U28  B_bar Net-_U12-Pad3_ Net-_U28-Pad3_ d_and		
+U12  C_bar D_bar Net-_U12-Pad3_ d_and		
+U61  G Net-_U45-Pad3_ Net-_U61-Pad3_ d_and		
+U45  A Net-_U29-Pad3_ Net-_U45-Pad3_ d_and		
+U29  B_bar Net-_U13-Pad3_ Net-_U29-Pad3_ d_and		
+U13  C_bar D_bar Net-_U13-Pad3_ d_and		
+U62  G Net-_U46-Pad3_ Net-_U62-Pad3_ d_and		
+U46  A_bar Net-_U30-Pad3_ Net-_U46-Pad3_ d_and		
+U30  B Net-_U14-Pad3_ Net-_U30-Pad3_ d_and		
+U14  C_bar D_bar Net-_U14-Pad3_ d_and		
+U15  C_bar D_bar Net-_U15-Pad3_ d_and		
+U31  B Net-_U15-Pad3_ Net-_U31-Pad3_ d_and		
+U47  A Net-_U31-Pad3_ Net-_U47-Pad3_ d_and		
+U63  G Net-_U47-Pad3_ Net-_U63-Pad3_ d_and		
+U16  C D_bar Net-_U16-Pad3_ d_and		
+U32  B_bar Net-_U16-Pad3_ Net-_U32-Pad3_ d_and		
+U48  A_bar Net-_U32-Pad3_ Net-_U48-Pad3_ d_and		
+U64  G Net-_U48-Pad3_ Net-_U64-Pad3_ d_and		
+U17  C D_bar Net-_U17-Pad3_ d_and		
+U33  B_bar Net-_U17-Pad3_ Net-_U33-Pad3_ d_and		
+U49  A Net-_U33-Pad3_ Net-_U49-Pad3_ d_and		
+U65  G Net-_U49-Pad3_ Net-_U65-Pad3_ d_and		
+U18  C D_bar Net-_U18-Pad3_ d_and		
+U34  B Net-_U18-Pad3_ Net-_U34-Pad3_ d_and		
+U50  A_bar Net-_U34-Pad3_ Net-_U50-Pad3_ d_and		
+U66  G Net-_U50-Pad3_ Net-_U66-Pad3_ d_and		
+U19  C D_bar Net-_U19-Pad3_ d_and		
+U35  B Net-_U19-Pad3_ Net-_U35-Pad3_ d_and		
+U51  A Net-_U35-Pad3_ Net-_U51-Pad3_ d_and		
+U67  G Net-_U51-Pad3_ Net-_U67-Pad3_ d_and		
+U20  C_bar D Net-_U20-Pad3_ d_and		
+U36  B_bar Net-_U20-Pad3_ Net-_U36-Pad3_ d_and		
+U52  A_bar Net-_U36-Pad3_ Net-_U52-Pad3_ d_and		
+U68  G Net-_U52-Pad3_ Net-_U68-Pad3_ d_and		
+U21  C_bar D Net-_U21-Pad3_ d_and		
+U37  B_bar Net-_U21-Pad3_ Net-_U37-Pad3_ d_and		
+U53  A Net-_U37-Pad3_ Net-_U53-Pad3_ d_and		
+U69  G Net-_U53-Pad3_ Net-_U69-Pad3_ d_and		
+U22  C_bar D Net-_U22-Pad3_ d_and		
+U38  B Net-_U22-Pad3_ Net-_U38-Pad3_ d_and		
+U54  A_bar Net-_U38-Pad3_ Net-_U54-Pad3_ d_and		
+U70  G Net-_U54-Pad3_ Net-_U70-Pad3_ d_and		
+U25  C_bar D Net-_U25-Pad3_ d_and		
+U41  B Net-_U25-Pad3_ Net-_U41-Pad3_ d_and		
+U57  A Net-_U41-Pad3_ Net-_U57-Pad3_ d_and		
+U73  G Net-_U57-Pad3_ Net-_U73-Pad3_ d_and		
+U26  C D Net-_U26-Pad3_ d_and		
+U42  B_bar Net-_U26-Pad3_ Net-_U42-Pad3_ d_and		
+U58  A_bar Net-_U42-Pad3_ Net-_U58-Pad3_ d_and		
+U74  G Net-_U58-Pad3_ Net-_U74-Pad3_ d_and		
+U23  C D Net-_U23-Pad3_ d_and		
+U39  B_bar Net-_U23-Pad3_ Net-_U39-Pad3_ d_and		
+U55  A Net-_U39-Pad3_ Net-_U55-Pad3_ d_and		
+U71  G Net-_U55-Pad3_ Net-_U71-Pad3_ d_and		
+U24  C D Net-_U24-Pad3_ d_and		
+U40  B Net-_U24-Pad3_ Net-_U40-Pad3_ d_and		
+U56  A_bar Net-_U40-Pad3_ Net-_U56-Pad3_ d_and		
+U72  G Net-_U56-Pad3_ Net-_U72-Pad3_ d_and		
+U27  C D Net-_U27-Pad3_ d_and		
+U43  B Net-_U27-Pad3_ Net-_U43-Pad3_ d_and		
+U59  A Net-_U43-Pad3_ Net-_U59-Pad3_ d_and		
+U75  G Net-_U59-Pad3_ Net-_U75-Pad3_ d_and		
+U76  Net-_U60-Pad3_ o0 d_inverter		
+U77  Net-_U61-Pad3_ o1 d_inverter		
+U78  Net-_U62-Pad3_ o2 d_inverter		
+U79  Net-_U63-Pad3_ o3 d_inverter		
+U80  Net-_U64-Pad3_ o4 d_inverter		
+U81  Net-_U65-Pad3_ o5 d_inverter		
+U82  Net-_U66-Pad3_ o6 d_inverter		
+U83  Net-_U67-Pad3_ o7 d_inverter		
+U84  Net-_U68-Pad3_ o8 d_inverter		
+U85  Net-_U69-Pad3_ o9 d_inverter		
+U86  Net-_U70-Pad3_ o10 d_inverter		
+U89  Net-_U73-Pad3_ o11 d_inverter		
+U90  Net-_U74-Pad3_ o12 d_inverter		
+U87  Net-_U71-Pad3_ o13 d_inverter		
+U88  Net-_U72-Pad3_ o14 d_inverter		
+U91  Net-_U75-Pad3_ o15 d_inverter		
+
+.end
