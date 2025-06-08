@@ -1,3 +1,5 @@
+sphinx>=5.0.0
+sphinx_rtd_theme>=1.0.0
 entrypoints==0.3
 flake8==3.7.7
 mccabe==0.6.1
