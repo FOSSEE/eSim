@@ -1,0 +1,49 @@
+app-id: org.flatpak.FOSSEE_Inst_test
+runtime: org.kde.Sdk
+runtime-version: '5.15-22.08'
+sdk: org.kde.Sdk
+base: com.riverbankcomputing.PyQt.BaseApp
+base-version: 5.15-22.08
+
+command: run.sh
+
+finish-args:
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --socket=wayland
+  - --filesystem=host-os
+  - --filesystem=host
+  - --filesystem=home
+  - --device=dri
+  - --talk-name=org.freedesktop.Flatpak
+
+files:
+  - path: /home/suchinton/verilator/*
+    read: true
+    write: true
+
+modules:
+  - name: FOSSEE_Inst_test
+    buildsystem: simple
+    build-commands:
+      - install -D FOSSEE_Inst_test.py /app/bin/FOSSEE_Inst_test.py
+      - install -D run.sh /app/bin/run.sh
+
+    sources:
+      - type: file
+        path: FOSSEE_Inst_test.py
+      - type: file
+        path: run.sh
+
+  - name: assets
+    buildsystem: simple
+    build-commands:
+      - cp -r assets/ /app/assets/
+      
+    sources:
+      - type: dir
+        path: assets/
+        dest: assets/
+  
+  - python3-py7zr.json
