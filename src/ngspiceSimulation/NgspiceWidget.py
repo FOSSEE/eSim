@@ -2,7 +2,7 @@ import os
 from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
 from frontEnd import TerminalUi
-
+from configparser import ConfigParser
 
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
