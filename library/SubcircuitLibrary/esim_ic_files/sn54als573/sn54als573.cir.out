@@ -1,0 +1,51 @@
+* c:\users\shanthipriya\esim-workspace\74ls573\74ls573.cir
+
+.include ls373.sub
+* u2  1d 2d 3d 4d 5d 6d 7d 8d net-_u2-pad9_ net-_u2-pad10_ net-_u2-pad11_ net-_u2-pad12_ net-_u2-pad13_ net-_u2-pad14_ net-_u2-pad15_ net-_u2-pad16_ adc_bridge_8
+* u3  net-_u3-pad1_ net-_u3-pad2_ net-_u3-pad3_ net-_u3-pad4_ net-_u3-pad5_ net-_u3-pad6_ net-_u3-pad7_ net-_u3-pad8_ 1q 2q 3q 4q 5q 6q 7q 8q dac_bridge_8
+* u1  oe le net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
+v3  1d gnd pulse(0 5 0 1u 1u 4m 8m)
+v4  2d gnd pulse(0 5 0m 1u 1u 4m 8m)
+v5  3d gnd pulse(0 5 0 1u 1u 4m 8m)
+v6  4d gnd pulse(0 5 0 1u 1u 4m 8m)
+v7  5d gnd pulse(0 5 0 1u 1u 4m 8m)
+v8  6d gnd pulse(0 5 0 1u 1u 4m 8m)
+v9  7d gnd pulse(0 5 0 1u 1u 4m 8m)
+v10  8d gnd pulse(0 5 0 1u 1u 4m 8m)
+* u4  1q plot_v1
+* u5  2q plot_v1
+* u6  3q plot_v1
+* u7  4q plot_v1
+* u8  5q plot_v1
+* u9  6q plot_v1
+* u10  7q plot_v1
+* u11  8q plot_v1
+x1 net-_u1-pad3_ net-_u1-pad4_ net-_u2-pad9_ net-_u2-pad10_ net-_u2-pad11_ net-_u2-pad12_ net-_u2-pad13_ net-_u2-pad14_ net-_u2-pad15_ net-_u2-pad16_ net-_u3-pad1_ net-_u3-pad2_ net-_u3-pad3_ net-_u3-pad4_ net-_u3-pad5_ net-_u3-pad6_ net-_u3-pad7_ net-_u3-pad8_ ls373
+v1 oe gnd  dc 0
+v2 le gnd  dc 5
+a1 [1d 2d 3d 4d 5d 6d 7d 8d ] [net-_u2-pad9_ net-_u2-pad10_ net-_u2-pad11_ net-_u2-pad12_ net-_u2-pad13_ net-_u2-pad14_ net-_u2-pad15_ net-_u2-pad16_ ] u2
+a2 [net-_u3-pad1_ net-_u3-pad2_ net-_u3-pad3_ net-_u3-pad4_ net-_u3-pad5_ net-_u3-pad6_ net-_u3-pad7_ net-_u3-pad8_ ] [1q 2q 3q 4q 5q 6q 7q 8q ] u3
+a3 [oe le ] [net-_u1-pad3_ net-_u1-pad4_ ] u1
+* Schematic Name:                             adc_bridge_8, NgSpice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_8, NgSpice Name: dac_bridge
+.model u3 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 10e-06 100e-03 0e-09
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(1q)
+plot v(2q)
+plot v(3q)
+plot v(4q)
+plot v(5q)
+plot v(6q)
+plot v(7q)
+plot v(8q)
+.endc
+.end
