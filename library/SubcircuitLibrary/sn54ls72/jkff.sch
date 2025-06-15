@@ -1,0 +1,230 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L d_nand U2
+U 1 1 68238979
+P 3900 2300
+F 0 "U2" H 3900 2300 60  0000 C CNN
+F 1 "d_nand" H 3950 2400 60  0000 C CNN
+F 2 "" H 3900 2300 60  0000 C CNN
+F 3 "" H 3900 2300 60  0000 C CNN
+	1    3900 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_nand U4
+U 1 1 6823899E
+P 4900 2350
+F 0 "U4" H 4900 2350 60  0000 C CNN
+F 1 "d_nand" H 4950 2450 60  0000 C CNN
+F 2 "" H 4900 2350 60  0000 C CNN
+F 3 "" H 4900 2350 60  0000 C CNN
+	1    4900 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_nand U3
+U 1 1 68238A3B
+P 3900 3500
+F 0 "U3" H 3900 3500 60  0000 C CNN
+F 1 "d_nand" H 3950 3600 60  0000 C CNN
+F 2 "" H 3900 3500 60  0000 C CNN
+F 3 "" H 3900 3500 60  0000 C CNN
+	1    3900 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_nand U5
+U 1 1 68238A41
+P 4950 3550
+F 0 "U5" H 4950 3550 60  0000 C CNN
+F 1 "d_nand" H 5000 3650 60  0000 C CNN
+F 2 "" H 4950 3550 60  0000 C CNN
+F 3 "" H 4950 3550 60  0000 C CNN
+	1    4950 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4450 2250 4350 2250
+Wire Wire Line
+	4500 3450 4350 3450
+$Comp
+L d_nand U6
+U 1 1 68238A9E
+P 6300 2400
+F 0 "U6" H 6300 2400 60  0000 C CNN
+F 1 "d_nand" H 6350 2500 60  0000 C CNN
+F 2 "" H 6300 2400 60  0000 C CNN
+F 3 "" H 6300 2400 60  0000 C CNN
+	1    6300 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_nand U7
+U 1 1 68238B01
+P 6300 3500
+F 0 "U7" H 6300 3500 60  0000 C CNN
+F 1 "d_nand" H 6350 3600 60  0000 C CNN
+F 2 "" H 6300 3500 60  0000 C CNN
+F 3 "" H 6300 3500 60  0000 C CNN
+	1    6300 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3450 2200 3450 1950
+Wire Wire Line
+	3450 1950 7250 1950
+Wire Wire Line
+	6750 2350 7600 2350
+Wire Wire Line
+	6750 3450 7650 3450
+Wire Wire Line
+	7250 1950 7250 3450
+Connection ~ 7250 3450
+Wire Wire Line
+	7100 2350 7100 3850
+Wire Wire Line
+	7100 3850 3450 3850
+Wire Wire Line
+	3450 3850 3450 3500
+Connection ~ 7100 2350
+Wire Wire Line
+	7000 2350 7000 3050
+Wire Wire Line
+	7000 3050 5850 3050
+Wire Wire Line
+	5850 3050 5850 3400
+Connection ~ 7000 2350
+Wire Wire Line
+	5850 2400 5850 2800
+Wire Wire Line
+	5850 2800 6900 2800
+Wire Wire Line
+	6900 2800 6900 3450
+Connection ~ 6900 3450
+Wire Wire Line
+	5850 2300 5350 2300
+Wire Wire Line
+	5850 3500 5400 3500
+Wire Wire Line
+	4450 2350 4400 2350
+Wire Wire Line
+	4400 2350 4400 3550
+Wire Wire Line
+	4400 3550 4500 3550
+Wire Wire Line
+	3450 2300 3000 2300
+Wire Wire Line
+	3450 3400 3000 3400
+Wire Wire Line
+	4400 2800 3000 2800
+Connection ~ 4400 2800
+$Comp
+L PORT U1
+U 1 1 68238C95
+P 2750 2300
+F 0 "U1" H 2800 2400 30  0000 C CNN
+F 1 "PORT" H 2750 2300 30  0000 C CNN
+F 2 "" H 2750 2300 60  0000 C CNN
+F 3 "" H 2750 2300 60  0000 C CNN
+	1    2750 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 68238CDA
+P 2750 2800
+F 0 "U1" H 2800 2900 30  0000 C CNN
+F 1 "PORT" H 2750 2800 30  0000 C CNN
+F 2 "" H 2750 2800 60  0000 C CNN
+F 3 "" H 2750 2800 60  0000 C CNN
+	2    2750 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 68238D13
+P 2750 3400
+F 0 "U1" H 2800 3500 30  0000 C CNN
+F 1 "PORT" H 2750 3400 30  0000 C CNN
+F 2 "" H 2750 3400 60  0000 C CNN
+F 3 "" H 2750 3400 60  0000 C CNN
+	3    2750 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 68238D5C
+P 7850 2350
+F 0 "U1" H 7900 2450 30  0000 C CNN
+F 1 "PORT" H 7850 2350 30  0000 C CNN
+F 2 "" H 7850 2350 60  0000 C CNN
+F 3 "" H 7850 2350 60  0000 C CNN
+	4    7850 2350
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 5 1 68238DF5
+P 7900 3450
+F 0 "U1" H 7950 3550 30  0000 C CNN
+F 1 "PORT" H 7900 3450 30  0000 C CNN
+F 2 "" H 7900 3450 60  0000 C CNN
+F 3 "" H 7900 3450 60  0000 C CNN
+	5    7900 3450
+	-1   0    0    1   
+$EndComp
+$EndSCHEMATC
