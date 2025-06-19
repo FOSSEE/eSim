@@ -16,7 +16,7 @@ eSim Installation on Ubuntu OS (Linux)
 
 **Step 1:** After downloading eSim, extract it using:
 
-    ``$ unzip eSim-2.4.zip``
+    ``$ unzip eSim-2.5.zip``
 
 **Step 2:** Change directories into the top-level eSim directory (where this INSTALL file can be found).
 

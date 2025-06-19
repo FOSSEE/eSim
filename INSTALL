@@ -14,7 +14,7 @@ Table of contents
     
    	i.      After downloading eSim, extract it using: 
   
-   		       $ unzip eSim-2.4.zip
+   		       $ unzip eSim-2.5.zip
 
    	ii.     Now change directories in to the top-level eSim directory (where this INSTALL file can be found).
 
@@ -39,24 +39,24 @@ Table of contents
 
 
 
-2.  eSim 2.4 installation in Windows OS
+2.  eSim installation in Windows OS
 
-    i.      Download eSim for Windows OS from "https://esim.fossee.in/". Disable the antivirus (if any).
+     i.     Download eSim for Windows OS from "https://esim.fossee.in/". Disable the antivirus (if any).
 
-    ii.     If MinGW and/or MSYS is already installed in your machine, then remove it from the
+     ii.    If MinGW and/or MSYS is already installed in your machine, then remove it from the
             PATH environment variable as it may interfere with eSim and might not work as intended.
 
     iii.    Now double click on eSim installer and then follow the instruction to install eSim.
 
-    iv.     After the installation is completed, please download and add the following file to the esim home directory(FOSSEE\eSim\ folder):
+    <!--iv.     After the installation is completed, please download and add the following file to the esim home directory(FOSSEE\eSim\ folder):
             https://github.com/FOSSEE/eSim/blob/master/src/frontEnd/TerminalUi.ui#L6
 
     v.      Please download and add the following executable to the nghdl folder(FOSSEE\eSim\nghdl\src location):
-            https://drive.google.com/file/d/17MNCCq9cG6A7fnIH-4KMUMY-yb4rW9s4/view?usp=sharing
+            https://drive.google.com/file/d/17MNCCq9cG6A7fnIH-4KMUMY-yb4rW9s4/view?usp=sharing-->
 
-    vi.     Hence the installation is completed.
+     iv.    Hence the installation is completed.
 
-    vii.    To uninstall eSim and all of its components, run the uninstaller "uninst-eSim.exe" located at 
+      v.    To uninstall eSim and all of its components, run the uninstaller "uninst-eSim.exe" located at 
             top-level eSim directory (where this INSTALL file can be found).
 
 

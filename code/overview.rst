@@ -33,7 +33,7 @@ Useful Links
 
 **eSim Manual**  
 To know everything about eSim, how it works, and its features, please download the manual from  
-`eSim Manual <https://static.fossee.in/esim/manuals/eSim_Manual_2.4.pdf>`_
+`eSim Manual <https://static.fossee.in/esim/manuals/eSim_Manual_2.5.pdf>`_
 
 **Contact**  
 For any queries regarding eSim, please write to us at  
