@@ -188,30 +188,30 @@ class NgspiceWidget(QtWidgets.QWidget):
 
     def plotFlagFunc(self,projPath,command):
         if self.plotFlag == True:
-            print("reached here too")
             if os.name == 'nt':
                 parser_nghdl = ConfigParser()
-                parser_nghdl.read(
-                    os.path.join('library', 'config', '.nghdl', 'config.ini')
-                )
-
+                config_path = os.path.join('library', 'config', '.nghdl', 'config.ini')
+                parser_nghdl.read(config_path)
                 msys_home = parser_nghdl.get('COMPILER', 'MSYS_HOME')
-
                 tempdir = os.getcwd()
                 projPath = self.obj_appconfig.current_project["ProjectName"]
                 os.chdir(projPath)
-                self.command = 'cmd /c ' + '"start /min ' + \
-                               msys_home + "/usr/bin/mintty.exe ngspice -p " + command + '"'
+                
+                self.command = (
+                'cmd /c "start /min ' +
+                msys_home + '/usr/bin/mintty.exe ngspice -p ' + command + '"'
+                )
 
-                self.process.start(self.command)
+                # Create a new QProcess for mintty
+                self.minttyProcess = QtCore.QProcess(self)
+                self.minttyProcess.start(self.command)
+
                 os.chdir(tempdir)
             else:
-                print("reached .. 4")
                 self.commandi = "cd " + projPath + \
                                 ";ngspice -r " + command.replace(".cir.out", ".raw") + \
                                 " " + command
                 self.xtermArgs = ['-hold', '-e', self.commandi]
-                print("xTerm")
 
                 self.xtermProcess = QtCore.QProcess(self)
                 self.xtermProcess.start('xterm', self.xtermArgs)
