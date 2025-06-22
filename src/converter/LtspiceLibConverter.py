@@ -23,10 +23,11 @@ class LTspiceLibConverter:
             # Construct the full path to libParser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
             print(parser_path)
-            command = f"cd {parser_path} ; python3 lib_LTspice2Kicad.py {file_path}"
-            print(f"cd {parser_path} ; python3 lib_LTspice2Kicad.py {file_path}")
+            command = ["python3", "lib_LTspice2Kicad.py", file_path]
+            print("Running command:", " ".join(command), "in", parser_path)
             try:
-                subprocess.run(command, shell=True, check=True)
+                subprocess.run(command, check=True, cwd=parser_path)
+
                 # Message box with the conversion success message
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Information)
