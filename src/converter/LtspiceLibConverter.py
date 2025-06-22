@@ -18,12 +18,20 @@ class LTspiceLibConverter:
             script_dir = os.path.dirname(os.path.abspath(__file__))
 
             # Define the relative path to parser.py from the current script's directory
-            relative_parser_path = "LTSpiceToKiCadConverter/src/Ubuntu"
+            # Check the current operating system
+            if os.name == 'nt':  # Windows
+                relative_parser_path = "LTSpiceToKiCadConverter/src/Windows"
+            else:
+                relative_parser_path = "LTSpiceToKiCadConverter/src/Ubuntu"
+
+
 
             # Construct the full path to libParser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
             print(parser_path)
-            command = ["python3", "lib_LTspice2Kicad.py", file_path]
+            # Strip the .asy extension
+            file_path_no_ext = os.path.splitext(file_path)[0]
+            command = ["python3", "lib_LTspice2Kicad.py", file_path_no_ext]
             print("Running command:", " ".join(command), "in", parser_path)
             try:
                 subprocess.run(command, check=True, cwd=parser_path)
