@@ -42,7 +42,8 @@ for component in dir:
 	if (component[-4:]==".asy") : comp.append(component)
 
 indir = directory.split("\\")
-out_file = "LTspice_" + indir[len(indir)-1] + ".lib"
+out_file = directory + "\LTspice_" + indir[len(indir)-1] + ".lib"
+print("Output Lib File: "out_file)
 outfl = codecs.open(out_file,"w");
 outfl.write("EESchema-LIBRARY Version 2.3\n#encoding utf-8\n#\n")
 
