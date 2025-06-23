@@ -25,10 +25,9 @@ class PspiceLibConverter:
             print("Parser Path:",parser_path)
 
             # Prepare the command as a list
-            # Get output path without extension (same directory as input)
-            output_base = os.path.splitext(file_path)[0]
+            output_dir = os.path.dirname(file_path)
 
-            command = ["python3", "libparser.py", file_path, output_base]
+            command = ["python3", "libparser.py", file_path, output_dir]
             print(f"Running command: {' '.join(command)} in directory: {parser_path}")
 
             try:
