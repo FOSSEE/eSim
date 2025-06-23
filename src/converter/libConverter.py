@@ -28,7 +28,7 @@ class PspiceLibConverter:
             # Get output path without extension (same directory as input)
             output_base = os.path.splitext(file_path)[0]
 
-            command = ["python3", "parser.py", file_path, output_base]
+            command = ["python3", "libparser.py", file_path, output_base]
             print(f"Running command: {' '.join(command)} in directory: {parser_path}")
 
             try:
