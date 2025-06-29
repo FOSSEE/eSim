@@ -16,14 +16,3 @@ nghdl*
 tags
 build/
 dist/
-venv/
-venv311/
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.so
-.DS_Store
-.vscode/
-.idea/
