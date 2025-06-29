@@ -32,27 +32,29 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.treewidget.setHeaderItem(header)
         self.treewidget.setColumnHidden(1, True)
 
-        # Apply dark theme to header and background to match 'Welcome' dock
-        self.treewidget.setStyleSheet('''
-            QHeaderView::section {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                stop:0 rgba(33, 37, 51, 0.95), stop:1 rgba(20, 25, 35, 0.9));
-                color: #90caf9;  /* Soft blue */
-                font-weight: 700;
-                font-size: 17px;
-                border-radius: 0;
-                padding: 12px 0px 12px 18px;
-                letter-spacing: 0.5px;
-                
-            }
-            QTreeWidget {
-                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                    stop:0 rgba(26, 29, 41, 0.98), stop:1 rgba(15, 20, 25, 0.95));
-                color: #e8eaed;
-                border: 1px solid rgba(255, 255, 255, 0.12);
-                border-radius: 0 0 12px 12px;
-            }
-        ''')
+        # CSS
+        init_path = '../../'
+        if os.name == 'nt':
+            init_path = ''
+
+        self.treewidget.setStyleSheet(" \
+            QTreeView { border-radius: 15px; border: 1px \
+            solid gray; padding: 5px; width: 200px; height: 150px;  }\
+            QTreeView::branch:has-siblings:!adjoins-item { \
+            border-image: url(" + init_path + "images/vline.png) 0;} \
+            QTreeView::branch:has-siblings:adjoins-item { \
+            border-image: url(" + init_path + "images/branch-more.png) 0; } \
+            QTreeView::branch:!has-children:!has-siblings:adjoins-item { \
+            border-image: url(" + init_path + "images/branch-end.png) 0; } \
+            QTreeView::branch:has-children:!has-siblings:closed, \
+            QTreeView::branch:closed:has-children:has-siblings { \
+            border-image: none; \
+            image: url(" + init_path + "images/branch-closed.png); } \
+            QTreeView::branch:open:has-children:!has-siblings, \
+            QTreeView::branch:open:has-children:has-siblings  { \
+            border-image: none; \
+            image: url(" + init_path + "images/branch-open.png); } \
+        ")
 
         for parents, children in list(
                 self.obj_appconfig.project_explorer.items()):
