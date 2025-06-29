@@ -1,0 +1,595 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:CBTL02043A-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L d_or U1
+U 1 1 6846DA56
+P 1800 6750
+F 0 "U1" H 1800 6750 60  0000 C CNN
+F 1 "d_or" H 1800 6850 60  0000 C CNN
+F 2 "" H 1800 6750 60  0000 C CNN
+F 3 "" H 1800 6750 60  0000 C CNN
+	1    1800 6750
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U2
+U 1 1 6846DB07
+P 2600 6700
+F 0 "U2" H 2600 6600 60  0000 C CNN
+F 1 "d_inverter" H 2600 6850 60  0000 C CNN
+F 2 "" H 2650 6650 60  0000 C CNN
+F 3 "" H 2650 6650 60  0000 C CNN
+	1    2600 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U3
+U 1 1 6846DBAB
+P 4150 7150
+F 0 "U3" H 4150 7050 60  0000 C CNN
+F 1 "d_inverter" H 4150 7300 60  0000 C CNN
+F 2 "" H 4200 7100 60  0000 C CNN
+F 3 "" H 4200 7100 60  0000 C CNN
+	1    4150 7150
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_and U4
+U 1 1 6846DC30
+P 4950 7250
+F 0 "U4" H 4950 7250 60  0000 C CNN
+F 1 "d_and" H 5000 7350 60  0000 C CNN
+F 2 "" H 4950 7250 60  0000 C CNN
+F 3 "" H 4950 7250 60  0000 C CNN
+	1    4950 7250
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 15 1 6846EF12
+P 8150 1800
+F 0 "U5" H 8200 1900 30  0000 C CNN
+F 1 "PORT" H 8150 1800 30  0000 C CNN
+F 2 "" H 8150 1800 60  0000 C CNN
+F 3 "" H 8150 1800 60  0000 C CNN
+	15   8150 1800
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U5
+U 20 1 6846F162
+P 6300 5900
+F 0 "U5" H 6350 6000 30  0000 C CNN
+F 1 "PORT" H 6300 5900 30  0000 C CNN
+F 2 "" H 6300 5900 60  0000 C CNN
+F 3 "" H 6300 5900 60  0000 C CNN
+	20   6300 5900
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 13 1 6846F206
+P 8150 4100
+F 0 "U5" H 8200 4200 30  0000 C CNN
+F 1 "PORT" H 8150 4100 30  0000 C CNN
+F 2 "" H 8150 4100 60  0000 C CNN
+F 3 "" H 8150 4100 60  0000 C CNN
+	13   8150 4100
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U5
+U 10 1 6846F261
+P 6300 6350
+F 0 "U5" H 6350 6450 30  0000 C CNN
+F 1 "PORT" H 6300 6350 30  0000 C CNN
+F 2 "" H 6300 6350 60  0000 C CNN
+F 3 "" H 6300 6350 60  0000 C CNN
+	10   6300 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 8 1 6846F2BA
+P 1850 4750
+F 0 "U5" H 1900 4850 30  0000 C CNN
+F 1 "PORT" H 1850 4750 30  0000 C CNN
+F 2 "" H 1850 4750 60  0000 C CNN
+F 3 "" H 1850 4750 60  0000 C CNN
+	8    1850 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 12 1 6846F317
+P 8150 5250
+F 0 "U5" H 8200 5350 30  0000 C CNN
+F 1 "PORT" H 8150 5250 30  0000 C CNN
+F 2 "" H 8150 5250 60  0000 C CNN
+F 3 "" H 8150 5250 60  0000 C CNN
+	12   8150 5250
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U5
+U 7 1 6846F372
+P 1850 3600
+F 0 "U5" H 1900 3700 30  0000 C CNN
+F 1 "PORT" H 1850 3600 30  0000 C CNN
+F 2 "" H 1850 3600 60  0000 C CNN
+F 3 "" H 1850 3600 60  0000 C CNN
+	7    1850 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 5 1 6846F3DB
+P 6350 7400
+F 0 "U5" H 6400 7500 30  0000 C CNN
+F 1 "PORT" H 6350 7400 30  0000 C CNN
+F 2 "" H 6350 7400 60  0000 C CNN
+F 3 "" H 6350 7400 60  0000 C CNN
+	5    6350 7400
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 1 1 6846F446
+P 6300 6100
+F 0 "U5" H 6350 6200 30  0000 C CNN
+F 1 "PORT" H 6300 6100 30  0000 C CNN
+F 2 "" H 6300 6100 60  0000 C CNN
+F 3 "" H 6300 6100 60  0000 C CNN
+	1    6300 6100
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 2 1 6846F50E
+P 1000 5950
+F 0 "U5" H 1050 6050 30  0000 C CNN
+F 1 "PORT" H 1000 5950 30  0000 C CNN
+F 2 "" H 1000 5950 60  0000 C CNN
+F 3 "" H 1000 5950 60  0000 C CNN
+	2    1000 5950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 3 1 6846F56B
+P 1850 1300
+F 0 "U5" H 1900 1400 30  0000 C CNN
+F 1 "PORT" H 1850 1300 30  0000 C CNN
+F 2 "" H 1850 1300 60  0000 C CNN
+F 3 "" H 1850 1300 60  0000 C CNN
+	3    1850 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 4 1 6846F5C6
+P 1850 2450
+F 0 "U5" H 1900 2550 30  0000 C CNN
+F 1 "PORT" H 1850 2450 30  0000 C CNN
+F 2 "" H 1850 2450 60  0000 C CNN
+F 3 "" H 1850 2450 60  0000 C CNN
+	4    1850 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 6 1 6846F62D
+P 6350 7150
+F 0 "U5" H 6400 7250 30  0000 C CNN
+F 1 "PORT" H 6350 7150 30  0000 C CNN
+F 2 "" H 6350 7150 60  0000 C CNN
+F 3 "" H 6350 7150 60  0000 C CNN
+	6    6350 7150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 9 1 6846F69E
+P 1000 5650
+F 0 "U5" H 1050 5750 30  0000 C CNN
+F 1 "PORT" H 1000 5650 30  0000 C CNN
+F 2 "" H 1000 5650 60  0000 C CNN
+F 3 "" H 1000 5650 60  0000 C CNN
+	9    1000 5650
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 11 1 6846F70D
+P 6300 6650
+F 0 "U5" H 6350 6750 30  0000 C CNN
+F 1 "PORT" H 6300 6650 30  0000 C CNN
+F 2 "" H 6300 6650 60  0000 C CNN
+F 3 "" H 6300 6650 60  0000 C CNN
+	11   6300 6650
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 14 1 6846F780
+P 8150 2950
+F 0 "U5" H 8200 3050 30  0000 C CNN
+F 1 "PORT" H 8150 2950 30  0000 C CNN
+F 2 "" H 8150 2950 60  0000 C CNN
+F 3 "" H 8150 2950 60  0000 C CNN
+	14   8150 2950
+	-1   0    0    1   
+$EndComp
+NoConn ~ 6550 6650
+NoConn ~ 6550 6350
+NoConn ~ 6600 7150
+NoConn ~ 6600 7400
+NoConn ~ 6550 6100
+NoConn ~ 6550 5900
+Wire Wire Line
+	4450 7150 4500 7150
+Wire Wire Line
+	2250 6700 2300 6700
+Wire Wire Line
+	1050 6650 1350 6650
+Wire Wire Line
+	1350 6750 1350 7150
+Wire Wire Line
+	1050 7150 3850 7150
+Wire Wire Line
+	2900 6700 3800 6700
+Connection ~ 1350 7150
+Wire Wire Line
+	4500 7250 3050 7250
+Wire Wire Line
+	3050 7250 3050 6400
+Wire Wire Line
+	3050 6400 1250 6400
+Wire Wire Line
+	1250 6400 1250 6650
+Connection ~ 1250 6650
+Wire Wire Line
+	5400 7200 5450 7200
+Wire Wire Line
+	3800 6700 3800 6600
+Wire Wire Line
+	5450 7200 5450 6900
+Wire Wire Line
+	5450 6900 3750 6900
+Wire Wire Line
+	3750 6900 3750 6500
+$Comp
+L PORT U5
+U 17 1 6846F1AF
+P 4750 3600
+F 0 "U5" H 4800 3700 30  0000 C CNN
+F 1 "PORT" H 4750 3600 30  0000 C CNN
+F 2 "" H 4750 3600 60  0000 C CNN
+F 3 "" H 4750 3600 60  0000 C CNN
+	17   4750 3600
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U5
+U 19 1 6846F113
+P 4750 1300
+F 0 "U5" H 4800 1400 30  0000 C CNN
+F 1 "PORT" H 4750 1300 30  0000 C CNN
+F 2 "" H 4750 1300 60  0000 C CNN
+F 3 "" H 4750 1300 60  0000 C CNN
+	19   4750 1300
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U5
+U 18 1 6846EFB4
+P 4750 2450
+F 0 "U5" H 4800 2550 30  0000 C CNN
+F 1 "PORT" H 4750 2450 30  0000 C CNN
+F 2 "" H 4750 2450 60  0000 C CNN
+F 3 "" H 4750 2450 60  0000 C CNN
+	18   4750 2450
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U5
+U 16 1 6846EF6F
+P 4750 4750
+F 0 "U5" H 4800 4850 30  0000 C CNN
+F 1 "PORT" H 4750 4750 30  0000 C CNN
+F 2 "" H 4750 4750 60  0000 C CNN
+F 3 "" H 4750 4750 60  0000 C CNN
+	16   4750 4750
+	-1   0    0    1   
+$EndComp
+$Comp
+L Bidirectional_switch X1
+U 1 1 68472267
+P 3150 1050
+F 0 "X1" H 3000 850 60  0000 C CNN
+F 1 "Bidirectional_switch" H 3200 1050 60  0000 C CNN
+F 2 "" H 3200 1050 60  0001 C CNN
+F 3 "" H 3200 1050 60  0001 C CNN
+	1    3150 1050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Bidirectional_switch X2
+U 1 1 68472312
+P 3150 2200
+F 0 "X2" H 3000 2000 60  0000 C CNN
+F 1 "Bidirectional_switch" H 3200 2200 60  0000 C CNN
+F 2 "" H 3200 2200 60  0001 C CNN
+F 3 "" H 3200 2200 60  0001 C CNN
+	1    3150 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Bidirectional_switch X4
+U 1 1 6847236D
+P 3200 3350
+F 0 "X4" H 3050 3150 60  0000 C CNN
+F 1 "Bidirectional_switch" H 3250 3350 60  0000 C CNN
+F 2 "" H 3250 3350 60  0001 C CNN
+F 3 "" H 3250 3350 60  0001 C CNN
+	1    3200 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L Bidirectional_switch X3
+U 1 1 68472423
+P 3150 4500
+F 0 "X3" H 3000 4300 60  0000 C CNN
+F 1 "Bidirectional_switch" H 3200 4500 60  0000 C CNN
+F 2 "" H 3200 4500 60  0001 C CNN
+F 3 "" H 3200 4500 60  0001 C CNN
+	1    3150 4500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2100 1300 2600 1300
+Wire Wire Line
+	2100 2450 2600 2450
+Wire Wire Line
+	2100 3600 2650 3600
+Wire Wire Line
+	2100 4750 2600 4750
+Wire Wire Line
+	3850 4750 4500 4750
+Wire Wire Line
+	3900 3600 4500 3600
+Wire Wire Line
+	3850 2450 4500 2450
+Wire Wire Line
+	3850 1300 4500 1300
+Wire Wire Line
+	3050 1500 3900 1500
+Wire Wire Line
+	3900 1500 3900 6200
+Wire Wire Line
+	3900 4950 3050 4950
+Wire Wire Line
+	3100 3800 3900 3800
+Connection ~ 3900 3800
+Wire Wire Line
+	3050 2650 3900 2650
+Connection ~ 3900 2650
+Connection ~ 3900 4950
+$Comp
+L Bidirectional_switch X5
+U 1 1 68472F03
+P 6550 1550
+F 0 "X5" H 6400 1350 60  0000 C CNN
+F 1 "Bidirectional_switch" H 6600 1550 60  0000 C CNN
+F 2 "" H 6600 1550 60  0001 C CNN
+F 3 "" H 6600 1550 60  0001 C CNN
+	1    6550 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Bidirectional_switch X6
+U 1 1 68472F09
+P 6550 2700
+F 0 "X6" H 6400 2500 60  0000 C CNN
+F 1 "Bidirectional_switch" H 6600 2700 60  0000 C CNN
+F 2 "" H 6600 2700 60  0001 C CNN
+F 3 "" H 6600 2700 60  0001 C CNN
+	1    6550 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Bidirectional_switch X8
+U 1 1 68472F0F
+P 6600 3850
+F 0 "X8" H 6450 3650 60  0000 C CNN
+F 1 "Bidirectional_switch" H 6650 3850 60  0000 C CNN
+F 2 "" H 6650 3850 60  0001 C CNN
+F 3 "" H 6650 3850 60  0001 C CNN
+	1    6600 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Bidirectional_switch X7
+U 1 1 68472F15
+P 6550 5000
+F 0 "X7" H 6400 4800 60  0000 C CNN
+F 1 "Bidirectional_switch" H 6600 5000 60  0000 C CNN
+F 2 "" H 6600 5000 60  0001 C CNN
+F 3 "" H 6600 5000 60  0001 C CNN
+	1    6550 5000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2400 1800 6000 1800
+Wire Wire Line
+	5500 2950 6000 2950
+Wire Wire Line
+	2350 4100 6050 4100
+Wire Wire Line
+	2400 5250 6000 5250
+Wire Wire Line
+	7250 5250 7900 5250
+Wire Wire Line
+	7300 4100 7900 4100
+Wire Wire Line
+	7250 2950 7900 2950
+Wire Wire Line
+	7250 1800 7900 1800
+Wire Wire Line
+	6450 2000 7300 2000
+Wire Wire Line
+	7300 5450 6450 5450
+Wire Wire Line
+	6500 4300 7300 4300
+Connection ~ 7300 4300
+Wire Wire Line
+	6450 3150 7300 3150
+Connection ~ 7300 3150
+Connection ~ 7300 5450
+Wire Wire Line
+	7300 2000 7300 5700
+Wire Wire Line
+	7300 5700 5950 5700
+Wire Wire Line
+	5950 5700 5950 6500
+Wire Wire Line
+	2400 1800 2400 1300
+Connection ~ 2400 1300
+Wire Wire Line
+	2400 2450 2400 2850
+Wire Wire Line
+	2400 2850 5500 2850
+Wire Wire Line
+	5500 2850 5500 2950
+Connection ~ 2400 2450
+Wire Wire Line
+	2350 3600 2350 4100
+Connection ~ 2350 3600
+Wire Wire Line
+	2400 4750 2400 5250
+Connection ~ 2400 4750
+$Comp
+L dac_bridge_2 U6
+U 1 1 684737F0
+P 4800 6350
+F 0 "U6" H 4800 6350 60  0000 C CNN
+F 1 "dac_bridge_2" H 4850 6500 60  0000 C CNN
+F 2 "" H 4800 6350 60  0000 C CNN
+F 3 "" H 4800 6350 60  0000 C CNN
+	1    4800 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 6600 4350 6600
+Wire Wire Line
+	4350 6600 4350 6400
+Wire Wire Line
+	3750 6500 4200 6500
+Wire Wire Line
+	4200 6500 4200 6300
+Wire Wire Line
+	4200 6300 4350 6300
+Wire Wire Line
+	5350 6300 5850 6300
+Wire Wire Line
+	5850 6300 5850 6500
+Wire Wire Line
+	5850 6500 5950 6500
+Wire Wire Line
+	3900 6200 4450 6200
+Wire Wire Line
+	4450 6200 4450 6100
+Wire Wire Line
+	4450 6100 5350 6100
+Wire Wire Line
+	5350 6100 5350 6400
+$Comp
+L adc_bridge_2 U7
+U 1 1 684752D3
+P 2050 5900
+F 0 "U7" H 2050 5900 60  0000 C CNN
+F 1 "adc_bridge_2" H 2050 6050 60  0000 C CNN
+F 2 "" H 2050 5900 60  0000 C CNN
+F 3 "" H 2050 5900 60  0000 C CNN
+	1    2050 5900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1450 5850 1450 5650
+Wire Wire Line
+	1450 5650 1250 5650
+Wire Wire Line
+	1450 5950 1250 5950
+Wire Wire Line
+	1050 6650 1050 6150
+Wire Wire Line
+	1050 6150 2800 6150
+Wire Wire Line
+	2800 6150 2800 5850
+Wire Wire Line
+	2800 5850 2600 5850
+Wire Wire Line
+	1050 7150 1050 6750
+Wire Wire Line
+	1050 6750 850  6750
+Wire Wire Line
+	850  6750 850  6300
+Wire Wire Line
+	850  6300 2600 6300
+Wire Wire Line
+	2600 6300 2600 5950
+$EndSCHEMATC
