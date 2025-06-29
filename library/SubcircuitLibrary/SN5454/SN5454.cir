@@ -1,0 +1,43 @@
+* C:\Users\HP\OneDrive\Documents\FOSSEE\eSim\library\SubcircuitLibrary\SN5454\SN5454.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/26/25 22:20:30
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M4  Net-_M1-Pad3_ /A Net-_M4-Pad3_ /GND mosfet_n		
+M5  Net-_M4-Pad3_ /B /GND /GND mosfet_n		
+M1  /VDD /A Net-_M1-Pad3_ /VDD mosfet_p		
+M10  /VDD /B Net-_M1-Pad3_ /VDD mosfet_p		
+M13  /G1 Net-_M1-Pad3_ /GND /GND mosfet_n		
+M14  /VDD Net-_M1-Pad3_ /G1 /VDD mosfet_p		
+M6  Net-_M11-Pad3_ /C Net-_M6-Pad3_ /GND mosfet_n		
+M7  Net-_M6-Pad3_ /D /GND /GND mosfet_n		
+M2  /VDD /C Net-_M11-Pad3_ /VDD mosfet_p		
+M11  /VDD /D Net-_M11-Pad3_ /VDD mosfet_p		
+M15  /G2 Net-_M11-Pad3_ /GND /GND mosfet_n		
+M16  /VDD Net-_M11-Pad3_ /G2 /VDD mosfet_p		
+M8  Net-_M12-Pad3_ /E Net-_M8-Pad3_ /GND mosfet_n		
+M9  Net-_M8-Pad3_ /F /GND /GND mosfet_n		
+M3  /VDD /E Net-_M12-Pad3_ /VDD mosfet_p		
+M12  /VDD /F Net-_M12-Pad3_ /VDD mosfet_p		
+M17  /G3 Net-_M12-Pad3_ /GND /GND mosfet_n		
+M18  /VDD Net-_M12-Pad3_ /G3 /VDD mosfet_p		
+M20  Net-_M19-Pad3_ /G Net-_M20-Pad3_ /GND mosfet_n		
+M21  Net-_M20-Pad3_ /H /GND /GND mosfet_n		
+M19  /VDD /G Net-_M19-Pad3_ /VDD mosfet_p		
+M22  /VDD /H Net-_M19-Pad3_ /VDD mosfet_p		
+M24  /G4 Net-_M19-Pad3_ /GND /GND mosfet_n		
+M26  /VDD Net-_M19-Pad3_ /G4 /VDD mosfet_p		
+M27  /VDD /G1 Net-_M27-Pad3_ /VDD mosfet_p		
+M28  Net-_M27-Pad3_ /G2 Net-_M28-Pad3_ /VDD mosfet_p		
+M29  Net-_M28-Pad3_ /G3 Net-_M29-Pad3_ /VDD mosfet_p		
+M30  Net-_M29-Pad3_ /G4 /OUT /VDD mosfet_p		
+M23  /OUT /G1 /GND /GND mosfet_n		
+M25  /OUT /G2 /GND /GND mosfet_n		
+M31  /OUT /G3 /GND /GND mosfet_n		
+M32  /OUT /G4 /GND /GND mosfet_n		
+U1  /A /C /D /B /E /F /GND /G /H /VDD /OUT ? ? ? PORT		
+
+.end
