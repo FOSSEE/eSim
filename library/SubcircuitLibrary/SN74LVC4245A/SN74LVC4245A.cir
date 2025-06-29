@@ -1,0 +1,39 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\SN74LVC4245A\SN74LVC4245A.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/29/25 15:03:32
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X3  Net-_U1-Pad5_ Net-_M11-Pad1_ Net-_U1-Pad23_ Net-_U1-Pad11_ Net-_U1-Pad19_ Tri_Buffer		
+X4  Net-_U1-Pad6_ Net-_M11-Pad1_ Net-_U1-Pad23_ Net-_U1-Pad11_ Net-_U1-Pad18_ Tri_Buffer		
+X5  Net-_U1-Pad7_ Net-_M11-Pad1_ Net-_U1-Pad23_ Net-_U1-Pad11_ Net-_U1-Pad17_ Tri_Buffer		
+X6  Net-_U1-Pad8_ Net-_M11-Pad1_ Net-_U1-Pad23_ Net-_U1-Pad11_ Net-_U1-Pad16_ Tri_Buffer		
+X7  Net-_U1-Pad9_ Net-_M11-Pad1_ Net-_U1-Pad23_ Net-_U1-Pad11_ Net-_U1-Pad15_ Tri_Buffer		
+X8  Net-_U1-Pad10_ Net-_M11-Pad1_ Net-_U1-Pad23_ Net-_U1-Pad11_ Net-_U1-Pad14_ Tri_Buffer		
+X2  Net-_U1-Pad4_ Net-_M11-Pad1_ Net-_U1-Pad23_ Net-_U1-Pad11_ Net-_U1-Pad20_ Tri_Buffer		
+X1  Net-_U1-Pad3_ Net-_M11-Pad1_ Net-_U1-Pad23_ Net-_U1-Pad11_ Net-_U1-Pad21_ Tri_Buffer		
+X14  Net-_U1-Pad16_ Net-_M1-Pad1_ Net-_U1-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad8_ Tri_Buffer		
+X13  Net-_U1-Pad17_ Net-_M1-Pad1_ Net-_U1-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad7_ Tri_Buffer		
+X12  Net-_U1-Pad18_ Net-_M1-Pad1_ Net-_U1-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad6_ Tri_Buffer		
+X11  Net-_U1-Pad19_ Net-_M1-Pad1_ Net-_U1-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad5_ Tri_Buffer		
+X10  Net-_U1-Pad20_ Net-_M1-Pad1_ Net-_U1-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad4_ Tri_Buffer		
+X9  Net-_U1-Pad21_ Net-_M1-Pad1_ Net-_U1-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad3_ Tri_Buffer		
+X15  Net-_U1-Pad15_ Net-_M1-Pad1_ Net-_U1-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad9_ Tri_Buffer		
+X16  Net-_U1-Pad14_ Net-_M1-Pad1_ Net-_U1-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad10_ Tri_Buffer		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+M6  Net-_M1-Pad1_ Net-_M3-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+M2  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M2-Pad3_ Net-_M10-Pad3_ mosfet_p		
+M8  Net-_M2-Pad3_ Net-_M3-Pad2_ Net-_M10-Pad3_ Net-_M10-Pad3_ mosfet_p		
+M3  Net-_M3-Pad1_ Net-_M3-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+M5  Net-_M5-Pad1_ Net-_M3-Pad1_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+M9  Net-_M10-Pad1_ Net-_M1-Pad2_ Net-_M5-Pad1_ Net-_M1-Pad3_ mosfet_n		
+M11  Net-_M11-Pad1_ Net-_M10-Pad1_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+M4  Net-_M3-Pad1_ Net-_M3-Pad2_ Net-_M10-Pad3_ Net-_M10-Pad3_ mosfet_p		
+M7  Net-_M10-Pad1_ Net-_M3-Pad1_ Net-_M10-Pad3_ Net-_M10-Pad3_ mosfet_p		
+M10  Net-_M10-Pad1_ Net-_M1-Pad2_ Net-_M10-Pad3_ Net-_M10-Pad3_ mosfet_p		
+M12  Net-_M11-Pad1_ Net-_M10-Pad1_ Net-_M10-Pad3_ Net-_M10-Pad3_ mosfet_p		
+U1  Net-_U1-Pad1_ Net-_M1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_M1-Pad3_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ Net-_U1-Pad20_ Net-_U1-Pad21_ Net-_M3-Pad2_ Net-_U1-Pad23_ Net-_M10-Pad3_ PORT		
+
+.end
