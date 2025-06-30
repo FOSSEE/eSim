@@ -1,0 +1,1 @@
+<library><model_name>D</model_name><ref_model>MUR460</ref_model><param><Is>10n</Is><Rs>.0384</Rs><N>2.5</N><tt>44.4n</tt><Cjo>126.4p</Cjo><M>.52</M><Vj>1.34</Vj><Bv>1600</Bv><Ibv>1e-05</Ibv><EG>1.285</EG><XTI>.5</XTI><Iave>4</Iave><Vpk>600</Vpk></param></library>
