@@ -1,0 +1,17 @@
+* C:\Users\Chaithu\FOSSEE\eSim\library\SubcircuitLibrary\cd4007\cd4007.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 5/24/2025 4:14:00 PM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M2  /DN1 /G1 /GND /GND mosfet_n		
+M1  /vdd /G1 /DP1 /vdd mosfet_p		
+M3  /Sp2 /g2 /Dp2 /vdd mosfet_p		
+M4  /Dn2 /g2 /Sn2 /GND mosfet_n		
+M6  /DN3 /g3 /SN3 /GND mosfet_n		
+M5  /SP3 /g3 /DN3 /vdd mosfet_p		
+U1  /G1 /GND /vdd /DP1 /DN1 /g2 /Dp2 /Sn2 /Sp2 /Dn2 /g3 /SN3 /SP3 /DN3 PORT		
+
+.end
