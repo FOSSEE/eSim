@@ -15,8 +15,6 @@ class DeviceModel(QtWidgets.QWidget):
         - d   DIODE
         - j   JFET
         - m   MOSFET
-        - s   SWITCH
-        - tx  single lossy transmission line
     - Other 2 functions same as the ones in subCircuit
         - trackLibrary
         - trackLibraryWithoutButton
@@ -438,131 +436,6 @@ class DeviceModel(QtWidgets.QWidget):
                 self.grid.addWidget(jfetbox)
 
                 # Adding Device Details #
-                # Increment row and widget count
-                self.row = self.row + 1
-                self.devicemodel_dict_end[words[0]] = self.count
-                self.count = self.count + 1
-
-            elif eachline[0] == 's':
-                # print("Device Model Switch:", words[0])
-                self.devicemodel_dict_beg[words[0]] = self.count
-                switchbox = QtWidgets.QGroupBox()
-                switchgrid = QtWidgets.QGridLayout()
-                switchbox.setTitle(
-                    "Add library for Switch " +
-                    words[0] +
-                    " : " +
-                    words[5])
-                self.entry_var[self.count] = QtWidgets.QLineEdit()
-                self.entry_var[self.count].setText("")
-                # global path_name
-                try:
-                    for child in root:
-                        if child.tag == words[0]:
-                            # print("DEVICE MODEL MATCHING---", \
-                            #       child.tag, words[0])
-                            try:
-                                if child[0].text \
-                                   and os.path.exists(child[0].text):
-                                    path_name = child[0].text
-                                    self.entry_var[self.count] \
-                                        .setText(child[0].text)
-                                else:
-                                    self.entry_var[self.count].setText("")
-                            except BaseException as e:
-                                print("Error when set text of device " +
-                                      "model switch :", str(e))
-                except BaseException:
-                    pass
-
-                switchgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                self.addbtn = QtWidgets.QPushButton("Add")
-                self.addbtn.setObjectName("%d" % self.count)
-                self.addbtn.clicked.connect(self.trackLibrary)
-                self.deviceDetail[self.count] = words[0]
-
-                if self.entry_var[self.count].text() == "":
-                    pass
-                else:
-                    self.trackLibraryWithoutButton(self.count, path_name)
-
-                switchgrid.addWidget(self.addbtn, self.row, 2)
-                switchbox.setLayout(switchgrid)
-
-                # CSS
-                switchbox.setStyleSheet(" \
-                QGroupBox { border: 1px solid gray; border-radius: \
-                9px; margin-top: 0.5em; } \
-                QGroupBox::title { subcontrol-origin: margin; left:\
-                 10px; padding: 0 3px 0 3px; } \
-                ")
-
-                self.grid.addWidget(switchbox)
-
-                # Adding Device Details #
-
-                # Increment row and widget count
-                self.row = self.row + 1
-                self.devicemodel_dict_end[words[0]] = self.count
-                self.count = self.count + 1
-
-            elif eachline[0] == 'ytxl':
-                # print("Device Model ymod:", words[0])
-                self.devicemodel_dict_beg[words[0]] = self.count
-                ymodbox = QtWidgets.QGroupBox()
-                ymodgrid = QtWidgets.QGridLayout()
-                ymodbox.setTitle(
-                    "Add library for ymod " +
-                    words[0] +
-                    " : " +
-                    words[4])
-                self.entry_var[self.count] = QtWidgets.QLineEdit()
-                self.entry_var[self.count].setText("")
-                # global path_name
-                try:
-                    for child in root:
-                        if child.tag == words[0]:
-                            # print("DEVICE MODEL MATCHING---", \
-                            #       child.tag, words[0])
-                            try:
-                                if child[0].text \
-                                   and os.path.exists(child[0].text):
-                                    path_name = child[0].text
-                                    self.entry_var[self.count] \
-                                        .setText(child[0].text)
-                                else:
-                                    self.entry_var[self.count].setText("")
-                            except BaseException as e:
-                                print("Error when set text of device " +
-                                      "model ymod :", str(e))
-                except BaseException:
-                    pass
-
-                ymodgrid.addWidget(self.entry_var[self.count], self.row, 1)
-                self.addbtn = QtWidgets.QPushButton("Add")
-                self.addbtn.setObjectName("%d" % self.count)
-                self.addbtn.clicked.connect(self.trackLibrary)
-                self.deviceDetail[self.count] = words[0]
-
-                if self.entry_var[self.count].text() == "":
-                    pass
-                else:
-                    self.trackLibraryWithoutButton(self.count, path_name)
-
-                ymodgrid.addWidget(self.addbtn, self.row, 2)
-                ymodbox.setLayout(ymodgrid)
-
-                # CSS
-                ymodbox.setStyleSheet(" \
-                QGroupBox { border: 1px solid gray; border-radius: \
-                9px; margin-top: 0.5em; } \
-                QGroupBox::title { subcontrol-origin: margin; left:\
-                 10px; padding: 0 3px 0 3px; } \
-                ")
-
-                self.grid.addWidget(ymodbox)
-
-                # Adding Device Details #
 
                 # Increment row and widget count
                 self.row = self.row + 1
@@ -570,7 +443,6 @@ class DeviceModel(QtWidgets.QWidget):
                 self.count = self.count + 1
 
             elif eachline[0] == 'm':
-
                 self.devicemodel_dict_beg[words[0]] = self.count
                 mosfetbox = QtWidgets.QGroupBox()
                 mosfetgrid = QtWidgets.QGridLayout()
@@ -580,7 +452,7 @@ class DeviceModel(QtWidgets.QWidget):
                     "Add library for MOSFET " +
                     words[0] +
                     " : " +
-                    words[4])
+                    words[5])
                 self.entry_var[self.count] = QtWidgets.QLineEdit()
                 self.entry_var[self.count].setText("")
                 self.entry_var[self.count].setReadOnly(True)
@@ -640,12 +512,12 @@ class DeviceModel(QtWidgets.QWidget):
                             # print("DEVICE MODEL MATCHING---", \
                             #       child.tag, words[0])
                             while i <= end:
-                                self.entry_var[i].setText(child[i - beg].text)
+                                self.entry_var[i].setText(child[i-beg].text)
                                 if (i - beg) == 0:
                                     if os.path.exists(child[0].text):
                                         self.entry_var[i] \
-                                            .setText(child[i - beg].text)
-                                        path_name = child[i - beg].text
+                                            .setText(child[i-beg].text)
+                                        path_name = child[i-beg].text
                                     else:
                                         self.entry_var[i].setText("")
                                 i = i + 1
@@ -821,7 +693,7 @@ class DeviceModel(QtWidgets.QWidget):
         #               Sumanto Kar, sumantokar@iitb.ac.in
         #               Nagesh Karmali, nags@cse.iitb.ac.in
         #               Firuza Karmali, firuza@cse.iitb.ac.in
-        #               Rahul Paknikar, rahulp@iitb.ac.in
+        #               Rahul Paknikar, rahulp@cse.iitb.ac.in
         # GUIDED BY:
         #               Kunal Ghosh, VLSI System Design Corp.Pvt.Ltd
         #               Anagha Ghosh, VLSI System Design Corp.Pvt.Ltd
@@ -884,9 +756,9 @@ class DeviceModel(QtWidgets.QWidget):
                         outputlist.append(k)
                     if '_OR_' in str(j):
                         realoutputlist.append(k)
-                    if '_W_' in str(j) and not (k in wirelist):
+                    if '_W_' in str(j) and not(k in wirelist):
                         wirelist.append(k)
-                    if '_WR_' in str(j) and not (k in realwirelist):
+                    if '_WR_' in str(j) and not(k in realwirelist):
                         realwirelist.append(k)
 
                 netnames[-1] = netnames[-1].replace("IPAD", '')

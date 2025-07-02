@@ -10,16 +10,14 @@
 #          BUGS: ---
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
-#    MAINTAINED: Rahul Paknikar, rahulp@iitb.ac.in
+#    MAINTAINED: Rahul Paknikar, rahulp@cse.iitb.ac.in
 #                Sumanto Kar, sumantokar@iitb.ac.in
-#                Pranav P, pranavsdreams@gmail.com
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
-#      REVISION: Wednesday 07 June 2023
+#      REVISION: Tuesday 13 September 2022
 # =========================================================================
 
 import os
-import sys
 import traceback
 
 if os.name == 'nt':
@@ -30,24 +28,29 @@ else:
     init_path = '../../'
 
 from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.Qt import QSize
+
 from configuration.Appconfig import Appconfig
-from frontEnd import ProjectExplorer
-from frontEnd import Workspace
-from frontEnd import DockArea
 from projManagement.openProject import OpenProjectInfo
 from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
+from frontEnd import ProjectExplorer
+from frontEnd import Workspace
+from frontEnd import DockArea
+from frontEnd.debugging_window import Debugging_tool #MTZK#
+from frontEnd.Chatbot import ChatbotGUI  #MTZK#
+
+from PyQt5.Qt import QSize
+import shutil
+import time
+import sys
+import psutil
 
 # Its our main window of application.
-
-
 class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     global project_name
-    simulationEndSignal = QtCore.pyqtSignal(QtCore.QProcess.ExitStatus, int)
 
     def __init__(self, *args):
         """Initialize main Application window."""
@@ -55,8 +58,8 @@ class Application(QtWidgets.QMainWindow):
         # Calling __init__ of super class
         QtWidgets.QMainWindow.__init__(self, *args)
 
-        # Set slot for simulation end signal to plot simulation data
-        self.simulationEndSignal.connect(self.plotSimulationData)
+        # Flag for mode of operation. Default is set to offline mode.
+        self.online_flag = False
 
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
@@ -64,10 +67,16 @@ class Application(QtWidgets.QMainWindow):
         self.obj_kicad = Kicad(self.obj_Mainview.obj_dockarea)
         self.obj_appconfig = Appconfig()
         self.obj_validation = Validation()
+        self.chatbot_window = ChatbotGUI()     #MTZK#
+        self.debugging_tool_window = Debugging_tool()       #MTZK#
+        self.netlist=None  #MTZK#
+        self.curr_window=None #MTZK#
+        self.output_file=None #MTZK#
+        self.obj_Mainview.obj_dockarea.kicadToNgspiceWidget =None
         # Initialize all widget
         self.setCentralWidget(self.obj_Mainview)
         self.initToolBar()
-
+        self.initAITool()  #MTZK#
         self.setGeometry(self.obj_appconfig._app_xpos,
                          self.obj_appconfig._app_ypos,
                          self.obj_appconfig._app_width,
@@ -81,6 +90,7 @@ class Application(QtWidgets.QMainWindow):
         self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
+        
 
     def initToolBar(self):
         """
@@ -122,6 +132,28 @@ class Application(QtWidgets.QMainWindow):
         self.wrkspce.setShortcut('Ctrl+W')
         self.wrkspce.triggered.connect(self.change_workspace)
 
+        self.switchmode = None
+        self.validate_mode()
+        if self.online_flag is True:
+            self.switchmode = QtWidgets.QAction(QtGui.QIcon(
+                init_path + 'images/online.png'),
+                '<b>Go Offline</b>', self
+            )
+        elif self.online_flag is False:
+            self.switchmode = QtWidgets.QAction(QtGui.QIcon(
+                init_path + 'images/offline.png'),
+                '<b>Go Online</b>', self
+            )
+        elif self.online_flag is None:
+            self.switchmode = QtWidgets.QAction(QtGui.QIcon(
+                init_path + 'images/disable.png'),
+                '<b>Mode switching has been disabled. ' +
+                'Default mode set to offline</b>', self
+            )
+            self.switchmode.setEnabled(False)
+        self.switchmode.setShortcut('Ctrl+G')
+        self.switchmode.triggered.connect(self.change_mode)
+
         self.helpfile = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/helpProject.png'),
             '<b>Help</b>', self
@@ -134,24 +166,23 @@ class Application(QtWidgets.QMainWindow):
         self.topToolbar.addAction(self.openproj)
         self.topToolbar.addAction(self.closeproj)
         self.topToolbar.addAction(self.wrkspce)
+        self.topToolbar.addAction(self.switchmode)
         self.topToolbar.addAction(self.helpfile)
 
-        # ## This part is meant for SoC Generation which is currently  ##
-        # ## under development and will be will be required in future. ##
-        # self.soc = QtWidgets.QToolButton(self)
-        # self.soc.setText('Generate SoC')
-        # self.soc.setToolTip(
-        #     '<b>SPICE to Verilog Conversion</b><br>' + \
-        #     '<br>The feature is under development.' + \
-        #     '<br>It will be released soon.' + \
-        #     '<br><br>Thank you for your patience!!!'
-        # )
-        # self.soc.setStyleSheet(" \
-        # QWidget { border-radius: 15px; border: 1px \
-        #     solid gray; padding: 10px; margin-left: 20px; } \
-        # ")
-        # self.soc.clicked.connect(self.showSoCRelease)
-        # self.topToolbar.addWidget(self.soc)
+        self.soc = QtWidgets.QToolButton(self)
+        self.soc.setText('Generate SoC')
+        self.soc.setToolTip(
+            '<b>SPICE to Verilog Conversion</b><br>' + \
+            '<br>The feature is under development.' + \
+            '<br>It will be released soon.' + \
+            '<br><br>Thank you for your patience!!!'
+        )
+        self.soc.setStyleSheet(" \
+        QWidget { border-radius: 15px; border: 1px \
+            solid gray; padding: 10px; margin-left: 20px; } \
+        ")
+        self.soc.clicked.connect(self.showSoCRelease)
+        self.topToolbar.addWidget(self.soc)
 
         # This part is setting fossee logo to the right
         # corner in the application window.
@@ -225,12 +256,6 @@ class Application(QtWidgets.QMainWindow):
         )
         self.omoptim.triggered.connect(self.open_OMoptim)
 
-        self.conToeSim = QtWidgets.QAction(
-            QtGui.QIcon(init_path + 'images/icon.png'),
-            '<b>Schematics converter</b>', self
-        )
-        self.conToeSim.triggered.connect(self.open_conToeSim)
-
         # Adding Action Widget to tool bar
         self.lefttoolbar = QtWidgets.QToolBar('Left ToolBar')
         self.addToolBar(QtCore.Qt.LeftToolBarArea, self.lefttoolbar)
@@ -243,9 +268,93 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.nghdl)
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
-        self.lefttoolbar.addAction(self.conToeSim)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
+
+    def initAITool(self):  #MTZK#
+        self.debug_button = QtWidgets.QPushButton(self, icon=QtGui.QIcon(init_path + 'images/chatbot.png'))
+        self.debug_button.setIconSize(QtCore.QSize(40, 40))
+        self.debug_button.setGeometry(self.width() - 90, self.height() - 90, 60, 60)
+        self.debug_button.setStyleSheet("border-radius: 30px;")
+        self.debug_button.clicked.connect(self.showChatOptions)
+
+    def openDebuggingTool(self):  #MTZK#
+        if not hasattr(self, 'debugging_tool_window') or not self.debugging_tool_window.isVisible():
+            self.debugging_tool_window.setWindowModality(QtCore.Qt.WindowModal)
+            self.debugging_tool_window.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.WindowStaysOnTopHint)
+            self.debugging_tool_window.show()
+            self.obj_appconfig.print_info('Debugging Tool function is called') 
+        else:
+            self.debugging_tool_window.raise_()
+            self.debugging_tool_window.activateWindow()
+        self.debugging_tool_window.move(self.width() - 30, self.height() - 30)
+        self.debugging_tool_window.debug_button.clicked.connect(self.passpara)
+        self.debugging_tool_window.debug_button.clicked.connect(self.passwin)
+        self.debugging_tool_window.debug_button.clicked.connect(self.debugging_tool_window.suggest)
+
+    def passpara(self):    #MTZK#
+        if self.debugging_tool_window.type!=3:
+            if self.obj_Mainview.obj_projectExplorer.filePath.endswith('.cir.out'):
+                if self.obj_Mainview.obj_projectExplorer.textwindow.isVisible():
+                    self.curr_window=self.obj_Mainview.obj_projectExplorer.textwindow
+                    self.debugging_tool_window.type=1
+                    self.projDir = self.obj_appconfig.current_project["ProjectName"]
+                    self.projName = os.path.basename(self.projDir)
+                    self.netlist = os.path.join(
+                            self.projDir, self.projName + ".cir.out"
+                        )
+                    return
+                
+            if self.obj_Mainview.obj_dockarea.kicadToNgspiceWidget is not None and self.obj_Mainview.obj_dockarea.kicadToNgspiceWidget.isVisible() :
+                self.curr_window=self.obj_Mainview.obj_dockarea.kicadToNgspiceWidget
+                self.debugging_tool_window.type=2
+                self.projDir = self.obj_appconfig.current_project["ProjectName"]
+                self.projName = os.path.basename(self.projDir)
+                self.netlist = os.path.join(
+                        self.projDir, self.projName + ".cir"
+                    )
+    def passwin(self):
+        self.debugging_tool_window.setNgspiceWindow(self.curr_window,self.netlist)   #MTZK#pass kicadtoNgspice to debgging tool
+        
+    def resizeEvent(self, event):   #MTZK#
+        """
+        Adjust debug button position during window resize.
+        """
+        super().resizeEvent(event)
+        self.debug_button.move(self.width() - 90, self.height() - 90) 
+
+    def showChatOptions(self):   #MTZK#
+        """
+        Displays a popup menu with options: Chatbot or Debugging Tool.
+        """
+        menu = QtWidgets.QMenu(self)
+        chatbot_action = menu.addAction("Chatbot")
+        debugging_action = menu.addAction("Debugging Tool")
+        chatbot_action.triggered.connect(self.openChatbot)
+        debugging_action.triggered.connect(self.openDebuggingTool)
+        menu.exec_(QtGui.QCursor.pos())
+        
+    def openChatbot(self):  # MTZK#
+        if not hasattr(self, 'chatbot_window') or not self.chatbot_window.isVisible():
+            self.chatbot_window.setWindowModality(QtCore.Qt.WindowModal)
+            self.chatbot_window.setWindowFlags(QtCore.Qt.Dialog | QtCore.Qt.WindowStaysOnTopHint)
+            self.chatbot_window.show()
+            self.obj_appconfig.print_info('Chat Bot function is called')
+            
+        else:
+            self.chatbot_window.raise_()
+            self.chatbot_window.activateWindow()
+
+        self.chatbot_window.move(self.width() - 90, self.height() - 90)
+
+    def showSoCRelease(self):
+        msg = '<b>SPICE to Verilog Conversion</b><br>' + \
+            '<br>The feature is under development.' + \
+            '<br>It will be released soon.' + \
+            '<br><br>Thank you for your patience!!!'
+        QtWidgets.QMessageBox.information(
+            self, 'SoC Generation', msg, QtWidgets.QMessageBox.Ok
+        )
 
     def closeEvent(self, event):
         '''
@@ -298,6 +407,17 @@ class Application(QtWidgets.QMainWindow):
 
         elif reply == QtWidgets.QMessageBox.No:
             event.ignore()
+
+        """
+        Ensure chatbot and debugging tool close when the main window closes.  #MTZK#
+        """
+        if self.chatbot_window.isVisible():
+            self.chatbot_window.close()
+            
+        if self.debugging_tool_window.isVisible():
+            self.debugging_tool_window.close()
+
+        event.accept()
 
     def new_project(self):
         """This function call New Project Info class."""
@@ -378,6 +498,149 @@ class Application(QtWidgets.QMainWindow):
         self.hide()
         self.obj_workspace.show()
 
+    def validate_mode(self):
+        """
+        This functions checks whether proper fp-lib-table* files are \
+        available or not. If not, then move appropriate files from \
+        library/supportFiles folder and set `self.online_flag` accordingly.
+
+        @params
+
+        @return
+            None
+        """
+        remove = False
+
+        if self.obj_appconfig.kicad_path is not None:
+
+            if not os.path.exists(
+                self.obj_appconfig.kicad_path + "/fp-lib-table"
+            ):
+                remove = True
+            elif os.path.exists(self.obj_appconfig.kicad_path +
+                                "/fp-lib-table-offline"):
+                if os.path.exists(self.obj_appconfig.kicad_path +
+                                  "/fp-lib-table-online"):
+                    remove = True
+                    os.remove(self.obj_appconfig.kicad_path +
+                              "/fp-lib-table")
+                else:
+                    self.online_flag = True
+            else:
+                if not os.path.exists(self.obj_appconfig.kicad_path +
+                                      "/fp-lib-table-online"):
+                    remove = True
+                    os.remove(self.obj_appconfig.kicad_path +
+                              "/fp-lib-table")
+                else:
+                    self.online_flag = False
+
+            if remove:
+                # Remove invalid files
+                if os.path.exists(
+                    self.obj_appconfig.kicad_path + "/fp-lib-table-offline"
+                ):
+                    os.remove(self.obj_appconfig.kicad_path +
+                              "/fp-lib-table-offline")
+
+                if os.path.exists(
+                    self.obj_appconfig.kicad_path + "/fp-lib-table-online"
+                ):
+                    os.remove(self.obj_appconfig.kicad_path +
+                              "/fp-lib-table-online")
+
+                # Restore original files
+                shutil.copy(
+                    init_path + 'library/supportFiles/fp-lib-table-online',
+                    self.obj_appconfig.kicad_path + "/"
+                )
+                shutil.copy(
+                    init_path + 'library/supportFiles/fp-lib-table',
+                    self.obj_appconfig.kicad_path + "/"
+                )
+
+                self.online_flag = False
+        else:
+            self.online_flag = None
+
+    def change_mode(self):
+        """
+        - This function is used for changing mode of operation for KiCad. \
+        - There are three modes of operation :
+            - online
+            - offline
+            - disable
+
+        - If none of the KiCad tools (associated with eSim) are \
+          open, then validate this mode by calling the function \
+          `validate_mode` and depending on online_flag, swap \
+          appropriate fp-lib-table files.
+        - If any of the KiCad tools (associated with eSim) is open, \
+          then ask user to close all these tools.
+        - If `online_flag` is `None`, then disable this feature.
+
+        @params
+
+        @return
+            None
+        """
+        if not self.obj_kicad.check_open_schematic():
+            self.validate_mode()
+            if self.online_flag is True:
+                os.rename(
+                    self.obj_appconfig.kicad_path + "/fp-lib-table",
+                    self.obj_appconfig.kicad_path +
+                    "/fp-lib-table-online"
+                )
+                os.rename(
+                    self.obj_appconfig.kicad_path +
+                    "/fp-lib-table-offline",
+                    self.obj_appconfig.kicad_path + "/fp-lib-table"
+                )
+                self.switchmode.setIcon(
+                    QtGui.QIcon(init_path + 'images/offline.png')
+                )
+                self.switchmode.setText('<b>Go Online</b>')
+                self.switchmode.setEnabled(True)
+                self.online_flag = False
+
+            elif self.online_flag is False:
+                os.rename(
+                    self.obj_appconfig.kicad_path + "/fp-lib-table",
+                    self.obj_appconfig.kicad_path +
+                    "/fp-lib-table-offline"
+                )
+                os.rename(
+                    self.obj_appconfig.kicad_path +
+                    "/fp-lib-table-online",
+                    self.obj_appconfig.kicad_path + "/fp-lib-table"
+                )
+                self.switchmode.setIcon(
+                    QtGui.QIcon(init_path + 'images/online.png')
+                )
+                self.switchmode.setText('<b>Go Offline</b>')
+                self.switchmode.setEnabled(True)
+                self.online_flag = True
+
+            elif self.online_flag is None:
+                self.switchmode.setIcon(
+                    QtGui.QIcon(init_path + 'images/disable.png')
+                )
+                self.switchmode.setText(
+                    '<b>Mode switching has been ' +
+                    'disabled. Default mode set to offline</b>.'
+                )
+                self.switchmode.setEnabled(False)
+        else:
+            self.msg = QtWidgets.QErrorMessage()
+            self.msg.setWindowTitle("Error Message")
+            self.msg.setModal(True)
+            self.msg.showMessage(
+                'Please save and close all the KiCad ' +
+                'windows first, then change the mode'
+            )
+            self.msg.exec_()
+
     def help_project(self):
         """
         This function opens usermanual in dockarea.
@@ -391,59 +654,117 @@ class Application(QtWidgets.QMainWindow):
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
-    @QtCore.pyqtSlot(QtCore.QProcess.ExitStatus, int)
-    def plotSimulationData(self, exitCode, exitStatus):
-        """Enables interaction for new simulation and
-           displays the plotter dock where graphs can be plotted.
-        """
-        self.ngspice.setEnabled(True)
-        self.conversion.setEnabled(True)
-        self.closeproj.setEnabled(True)
-        self.wrkspce.setEnabled(True)
-
-        if exitStatus == QtCore.QProcess.NormalExit and exitCode == 0:
+    def checkIfProcessRunning(self, processName):
+        '''
+        Check if there is any running process
+        that contains the given name processName.
+        '''
+        # Iterate over the all the running process
+        for proc in psutil.process_iter():
             try:
-                self.obj_Mainview.obj_dockarea.plottingEditor()
-            except Exception as e:
-                self.msg = QtWidgets.QErrorMessage()
-                self.msg.setModal(True)
-                self.msg.setWindowTitle("Error Message")
-                self.msg.showMessage(
-                    'Data could not be plotted. Please try again.'
-                )
-                self.msg.exec_()
-                print("Exception Message:", str(e), traceback.format_exc())
-                self.obj_appconfig.print_error('Exception Message : '
-                                               + str(e))
+                # Check if process name contains the given name string.
+                if processName.lower() in proc.name().lower():
+                    return True
+            except (psutil.NoSuchProcess,
+                    psutil.AccessDenied, psutil.ZombieProcess):
+                pass
+        return False
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
-        projDir = self.obj_appconfig.current_project["ProjectName"]
+        self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
-        if projDir is not None:
-            projName = os.path.basename(projDir)
-            ngspiceNetlist = os.path.join(projDir, projName + ".cir.out")
+        if self.projDir is not None:
 
-            if not os.path.isfile(ngspiceNetlist):
+            # Edited by Sumanto Kar 25/08/2021
+            if self.obj_Mainview.obj_dockarea.ngspiceEditor(
+                    self.projDir) is False:
                 print(
                     "Netlist file (*.cir.out) not found."
                 )
+
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
                 self.msg.showMessage(
-                    'Netlist (*.cir.out) not found.'
+                    'Netlist file (*.cir.out) not found.'
                 )
                 self.msg.exec_()
                 return
 
-            self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                projName, ngspiceNetlist, self.simulationEndSignal)
+            currTime = time.time()
+            count = 0
+            while True:
+                try:
+                    # if os.name == 'nt':
+                    #     proc = 'mintty'
+                    # else:
+                    #     proc = 'xterm'
 
-            self.ngspice.setEnabled(False)
-            self.conversion.setEnabled(False)
-            self.closeproj.setEnabled(False)
-            self.wrkspce.setEnabled(False)
+                    # Edited by Sumanto Kar 25/08/2021
+                    if os.name != 'nt' and \
+                            self.checkIfProcessRunning('xterm') is False:
+                        self.handle_error()
+                        self.msg = QtWidgets.QErrorMessage()
+                        self.msg.setModal(True)
+                        self.msg.setWindowTitle("Warning Message")
+                        self.msg.showMessage(
+                            'Simulation was interrupted/failed. '
+                            'Please close all the Ngspice windows '
+                            'and then rerun the simulation.'
+                        )
+                        self.msg.exec_()
+                        
+
+
+                        return
+
+                    st = os.stat(os.path.join(self.projDir, "plot_data_i.txt"))
+                    if st.st_mtime >= currTime:
+                        break
+                except Exception:
+                    pass
+                time.sleep(1)
+
+                # Fail Safe ===>
+                count += 1
+                if count >= 10:
+                    print(
+                        "Ngspice taking too long for simulation. "
+                        "Check netlist file (*.cir.out) "
+                        "to change simulation parameters."
+                    )
+                    self.handle_error()
+                    self.msg = QtWidgets.QErrorMessage()
+                    self.msg.setModal(True)
+                    self.msg.setWindowTitle("Warning Message")
+                    self.msg.showMessage(
+                        'Ngspice taking too long for simulation. '
+                        'Check netlist file (*.cir.out) '
+                        'to change simulation parameters.'
+                    )
+                    self.msg.exec_()
+                   
+
+                    return
+
+            # Calling Python Plotting
+            try:
+                self.obj_Mainview.obj_dockarea.plottingEditor()
+            except Exception as e:
+                self.handle_error()
+                self.msg = QtWidgets.QErrorMessage()
+                self.msg.setModal(True)
+                self.msg.setWindowTitle("Error Message")
+                self.msg.showMessage(
+                    'Error while opening python plotting Editor.'
+                    ' Please look at console for more details.'
+                )
+                self.msg.exec_()
+                print("Exception Message:", str(e), traceback.format_exc())
+                self.obj_appconfig.print_error('Exception Message : ' + str(e))
+              
+
 
         else:
             self.msg = QtWidgets.QErrorMessage()
@@ -455,6 +776,14 @@ class Application(QtWidgets.QMainWindow):
             )
             self.msg.exec_()
 
+    def handle_error(self):   #MTZK#
+        self.output_file = os.path.join(self.projDir, "ngspice_filtered_output.txt")  # Define output file
+        if self.chatbot_window.isVisible():
+            self.chatbot_window.debug_error(self.output_file)
+        if self.debugging_tool_window.isVisible():
+            self.debugging_tool_window.type=3
+            self.netlist=self.output_file
+        
     def open_subcircuit(self):
         """
         This function opens 'subcircuit' option in left-tool-bar.
@@ -546,7 +875,7 @@ class Application(QtWidgets.QMainWindow):
                     # Creating a command for Ngspice to Modelica converter
                     self.cmd1 = "
                         python3 ../ngspicetoModelica/NgspicetoModelica.py "\
-                            + self.ngspiceNetlist
+                            +self.ngspiceNetlist
                     self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
                     self.obj_workThread1.start()
                     if self.obj_validation.validateTool("OMEdit"):
@@ -644,11 +973,6 @@ class Application(QtWidgets.QMainWindow):
             self.obj_appconfig.print_info(self.msgContent)
             self.msg.exec_()
 
-    def open_conToeSim(self):
-        print("Function : Schematics converter")
-        self.obj_appconfig.print_info('Schematics converter is called')
-        self.obj_Mainview.obj_dockarea.eSimConverter()
-
 # This class initialize the Main View of Application
 class MainView(QtWidgets.QWidget):
     """
@@ -711,8 +1035,6 @@ class MainView(QtWidgets.QWidget):
         self.leftSplit.setSizes([int(self.width() / 4.5), self.height()])
         self.middleSplit.setSizes([self.width(), int(self.height() / 2)])
         self.setLayout(self.mainLayout)
-
-
 # It is main function of the module and starts the application
 def main(args):
     """

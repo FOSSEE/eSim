@@ -24,9 +24,7 @@ class TrackWidget:
     op_check = []
     # Track widget for Model detail
     modelTrack = []
-    microcontrollerTrack = []
     model_entry_var = {}
-    microcontroller_var = {}
 
     # Track Widget for Device Model detail
     deviceModelTrack = {}
