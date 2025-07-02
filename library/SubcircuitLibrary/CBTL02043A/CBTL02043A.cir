@@ -1,0 +1,25 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CBTL02043A\CBTL02043A.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/09/25 23:46:03
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ d_or		
+U2  Net-_U1-Pad3_ Net-_U2-Pad2_ d_inverter		
+U3  Net-_U1-Pad2_ Net-_U3-Pad2_ d_inverter		
+U4  Net-_U3-Pad2_ Net-_U1-Pad1_ Net-_U4-Pad3_ d_and		
+U5  ? Net-_U5-Pad2_ Net-_U5-Pad3_ Net-_U5-Pad4_ ? ? Net-_U5-Pad7_ Net-_U5-Pad8_ Net-_U5-Pad9_ ? ? Net-_U5-Pad12_ Net-_U5-Pad13_ Net-_U5-Pad14_ Net-_U5-Pad15_ Net-_U5-Pad16_ Net-_U5-Pad17_ Net-_U5-Pad18_ Net-_U5-Pad19_ ? PORT		
+X1  Net-_U5-Pad3_ Net-_U5-Pad19_ Net-_U6-Pad4_ Bidirectional_switch		
+X2  Net-_U5-Pad4_ Net-_U5-Pad18_ Net-_U6-Pad4_ Bidirectional_switch		
+X4  Net-_U5-Pad7_ Net-_U5-Pad17_ Net-_U6-Pad4_ Bidirectional_switch		
+X3  Net-_U5-Pad8_ Net-_U5-Pad16_ Net-_U6-Pad4_ Bidirectional_switch		
+X5  Net-_U5-Pad3_ Net-_U5-Pad15_ Net-_U6-Pad3_ Bidirectional_switch		
+X6  Net-_U5-Pad4_ Net-_U5-Pad14_ Net-_U6-Pad3_ Bidirectional_switch		
+X8  Net-_U5-Pad7_ Net-_U5-Pad13_ Net-_U6-Pad3_ Bidirectional_switch		
+X7  Net-_U5-Pad8_ Net-_U5-Pad12_ Net-_U6-Pad3_ Bidirectional_switch		
+U6  Net-_U4-Pad3_ Net-_U2-Pad2_ Net-_U6-Pad3_ Net-_U6-Pad4_ dac_bridge_2		
+U7  Net-_U5-Pad9_ Net-_U5-Pad2_ Net-_U1-Pad1_ Net-_U1-Pad2_ adc_bridge_2		
+
+.end
