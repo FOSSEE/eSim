@@ -1,0 +1,65 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD4035BM\CD4035BM.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/11/25 13:18:31
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U3  Net-_U1-Pad3_ Net-_U15-Pad1_ d_inverter		
+M3  Net-_M1-Pad3_ Net-_M10-Pad2_ Net-_M1-Pad1_ VDD mosfet_p		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ VSS mosfet_n		
+U9  Net-_U15-Pad1_ Net-_M10-Pad2_ dac_bridge_1		
+U15  Net-_U15-Pad1_ Net-_U14-Pad1_ d_inverter		
+U14  Net-_U14-Pad1_ Net-_M1-Pad2_ dac_bridge_1		
+M4  Net-_M1-Pad3_ Net-_M1-Pad2_ Net-_M2-Pad1_ VDD mosfet_p		
+M2  Net-_M2-Pad1_ Net-_M10-Pad2_ Net-_M1-Pad3_ VSS mosfet_n		
+U4  Net-_U16-Pad5_ Net-_U1-Pad4_ Net-_U10-Pad1_ d_nand		
+U5  Net-_U16-Pad5_ Net-_U2-Pad2_ Net-_U10-Pad2_ d_and		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_nor		
+U2  Net-_U1-Pad5_ Net-_U2-Pad2_ d_inverter		
+U16  Net-_U13-Pad2_ Net-_U16-Pad2_ Net-_U1-Pad17_ Net-_U12-Pad2_ Net-_U16-Pad5_ Net-_U16-Pad6_ d_dff		
+M7  Net-_M5-Pad3_ Net-_M10-Pad2_ Net-_M5-Pad1_ VDD mosfet_p		
+M5  Net-_M5-Pad1_ Net-_M5-Pad2_ Net-_M5-Pad3_ VSS mosfet_n		
+U22  Net-_U15-Pad1_ Net-_U21-Pad1_ d_inverter		
+U21  Net-_U21-Pad1_ Net-_M5-Pad2_ dac_bridge_1		
+M8  Net-_M5-Pad3_ Net-_M5-Pad2_ Net-_M6-Pad1_ VDD mosfet_p		
+M6  Net-_M6-Pad1_ Net-_M10-Pad2_ Net-_M5-Pad3_ VSS mosfet_n		
+U23  Net-_U20-Pad2_ Net-_U16-Pad2_ Net-_U1-Pad17_ Net-_U12-Pad2_ ? Net-_U23-Pad6_ d_dff		
+U24  Net-_U23-Pad6_ Net-_U24-Pad2_ d_buffer		
+U17  Net-_U16-Pad6_ Net-_U17-Pad2_ d_buffer		
+M11  Net-_M10-Pad3_ Net-_M10-Pad2_ Net-_M11-Pad3_ VDD mosfet_p		
+M9  Net-_M11-Pad3_ Net-_M12-Pad2_ Net-_M10-Pad3_ VSS mosfet_n		
+U29  Net-_U15-Pad1_ Net-_U28-Pad1_ d_inverter		
+U28  Net-_U28-Pad1_ Net-_M12-Pad2_ dac_bridge_1		
+M12  Net-_M10-Pad3_ Net-_M12-Pad2_ Net-_M10-Pad1_ VDD mosfet_p		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M10-Pad3_ VSS mosfet_n		
+U30  Net-_U27-Pad2_ Net-_U16-Pad2_ Net-_U1-Pad17_ Net-_U12-Pad2_ ? Net-_U30-Pad6_ d_dff		
+U31  Net-_U30-Pad6_ Net-_U31-Pad2_ d_buffer		
+M15  Net-_M13-Pad3_ Net-_M10-Pad2_ Net-_M13-Pad1_ VDD mosfet_p		
+M13  Net-_M13-Pad1_ Net-_M13-Pad2_ Net-_M13-Pad3_ VSS mosfet_n		
+U36  Net-_U15-Pad1_ Net-_U35-Pad1_ d_inverter		
+U35  Net-_U35-Pad1_ Net-_M13-Pad2_ dac_bridge_1		
+M16  Net-_M13-Pad3_ Net-_M13-Pad2_ Net-_M14-Pad1_ VDD mosfet_p		
+M14  Net-_M14-Pad1_ Net-_M10-Pad2_ Net-_M13-Pad3_ VSS mosfet_n		
+U37  Net-_U34-Pad2_ Net-_U16-Pad2_ Net-_U1-Pad17_ Net-_U12-Pad2_ ? Net-_U37-Pad6_ d_dff		
+U38  Net-_U37-Pad6_ Net-_U38-Pad2_ d_buffer		
+U6  Net-_U1-Pad6_ Net-_U16-Pad2_ d_inverter		
+U7  Net-_U1-Pad7_ Net-_U12-Pad1_ d_inverter		
+U12  Net-_U12-Pad1_ Net-_U12-Pad2_ d_buffer		
+U8  Net-_U1-Pad8_ Net-_U18-Pad2_ d_inverter		
+U1  VDD VSS Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_M1-Pad1_ Net-_M5-Pad1_ Net-_M11-Pad3_ Net-_M13-Pad1_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ PORT		
+U18  Net-_U17-Pad2_ Net-_U18-Pad2_ Net-_U1-Pad13_ d_xor		
+U25  Net-_U24-Pad2_ Net-_U18-Pad2_ Net-_U1-Pad14_ d_xor		
+U32  Net-_U31-Pad2_ Net-_U18-Pad2_ Net-_U1-Pad15_ d_xor		
+U39  Net-_U38-Pad2_ Net-_U18-Pad2_ Net-_U1-Pad16_ d_xor		
+U34  Net-_M13-Pad3_ Net-_U34-Pad2_ adc_bridge_1		
+U27  Net-_M10-Pad3_ Net-_U27-Pad2_ adc_bridge_1		
+U20  Net-_M5-Pad3_ Net-_U20-Pad2_ adc_bridge_1		
+U13  Net-_M1-Pad3_ Net-_U13-Pad2_ adc_bridge_1		
+U19  Net-_U17-Pad2_ Net-_M6-Pad1_ dac_bridge_1		
+U26  Net-_U24-Pad2_ Net-_M10-Pad1_ dac_bridge_1		
+U33  Net-_U31-Pad2_ Net-_M14-Pad1_ dac_bridge_1		
+U11  Net-_U10-Pad3_ Net-_M2-Pad1_ dac_bridge_1		
+
+.end
