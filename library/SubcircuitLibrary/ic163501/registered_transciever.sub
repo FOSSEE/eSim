@@ -1,0 +1,54 @@
+* Subcircuit registered_transciever
+.subckt registered_transciever net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ 
+* c:\users\chaithu\fossee\esim\library\subcircuitlibrary\registered_transciever\registered_transciever.cir
+* u5  net-_u1-pad3_ net-_u1-pad4_ net-_u5-pad3_ d_or
+* u4  net-_u3-pad2_ net-_u1-pad4_ net-_u2-pad2_ d_or
+* u3  net-_u1-pad3_ net-_u3-pad2_ d_inverter
+* u2  net-_u1-pad1_ net-_u2-pad2_ net-_u2-pad3_ d_ff
+* u6  net-_u2-pad3_ net-_u5-pad3_ net-_u6-pad3_ d_ff
+* u7  net-_u6-pad3_ net-_u1-pad2_ net-_u1-pad5_ tristate_buff
+* u10  net-_u1-pad8_ net-_u1-pad7_ net-_u10-pad3_ d_or
+* u11  net-_u11-pad1_ net-_u1-pad7_ net-_u11-pad3_ d_or
+* u12  net-_u1-pad8_ net-_u11-pad1_ d_inverter
+* u13  net-_u1-pad5_ net-_u11-pad3_ net-_u13-pad3_ d_ff
+* u9  net-_u13-pad3_ net-_u10-pad3_ net-_u8-pad1_ d_ff
+* u8  net-_u8-pad1_ net-_u1-pad6_ net-_u1-pad1_ tristate_buff
+a1 [net-_u1-pad3_ net-_u1-pad4_ ] net-_u5-pad3_ u5
+a2 [net-_u3-pad2_ net-_u1-pad4_ ] net-_u2-pad2_ u4
+a3 net-_u1-pad3_ net-_u3-pad2_ u3
+a4 [net-_u1-pad1_ ] [net-_u2-pad2_ ] [net-_u2-pad3_ ] u2
+a5 [net-_u2-pad3_ ] [net-_u5-pad3_ ] [net-_u6-pad3_ ] u6
+a6 [net-_u6-pad3_ ] [net-_u1-pad2_ ] [net-_u1-pad5_ ] u7
+a7 [net-_u1-pad8_ net-_u1-pad7_ ] net-_u10-pad3_ u10
+a8 [net-_u11-pad1_ net-_u1-pad7_ ] net-_u11-pad3_ u11
+a9 net-_u1-pad8_ net-_u11-pad1_ u12
+a10 [net-_u1-pad5_ ] [net-_u11-pad3_ ] [net-_u13-pad3_ ] u13
+a11 [net-_u13-pad3_ ] [net-_u10-pad3_ ] [net-_u8-pad1_ ] u9
+a12 [net-_u8-pad1_ ] [net-_u1-pad6_ ] [net-_u1-pad1_ ] u8
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u5 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u4 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_ff, NgSpice Name: d_ff
+.model u2 d_ff(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             d_ff, NgSpice Name: d_ff
+.model u6 d_ff(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             tristate_buff, NgSpice Name: tristate_buff
+.model u7 tristate_buff(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u10 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u11 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u12 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_ff, NgSpice Name: d_ff
+.model u13 d_ff(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             d_ff, NgSpice Name: d_ff
+.model u9 d_ff(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             tristate_buff, NgSpice Name: tristate_buff
+.model u8 tristate_buff(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Control Statements
+
+.ends registered_transciever

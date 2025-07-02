@@ -1,0 +1,34 @@
+* C:\Users\Chaithu\FOSSEE\eSim\library\SubcircuitLibrary\ixdd414\ixdd414.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 6/3/2025 2:42:19 PM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M1  Net-_D1-Pad2_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_D1-Pad2_ mosfet_p		
+M2  Net-_M1-Pad3_ Net-_M17-Pad1_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+U1  Net-_D1-Pad2_ Net-_D1-Pad1_ Net-_D3-Pad1_ Net-_D2-Pad1_ Net-_M1-Pad3_ PORT		
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D2  Net-_D2-Pad1_ Net-_D1-Pad1_ eSim_Diode		
+M3  Net-_M10-Pad2_ Net-_D1-Pad1_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+M4  Net-_D1-Pad2_ Net-_D1-Pad1_ Net-_M10-Pad2_ Net-_D1-Pad2_ mosfet_p		
+R1  Net-_D1-Pad2_ Net-_D3-Pad1_ 200k		
+D4  Net-_D2-Pad1_ Net-_D3-Pad1_ eSim_Diode		
+D3  Net-_D3-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+M6  Net-_D1-Pad2_ Net-_D3-Pad1_ Net-_M5-Pad1_ Net-_D1-Pad2_ mosfet_p		
+M5  Net-_M5-Pad1_ Net-_D3-Pad1_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+M8  Net-_D1-Pad2_ Net-_M5-Pad1_ Net-_M8-Pad3_ Net-_D1-Pad2_ mosfet_p		
+M9  Net-_M8-Pad3_ Net-_M10-Pad2_ Net-_M10-Pad1_ Net-_D1-Pad2_ mosfet_p		
+M7  Net-_M10-Pad1_ Net-_M5-Pad1_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+M12  Net-_D1-Pad2_ Net-_M10-Pad1_ Net-_M1-Pad2_ Net-_D1-Pad2_ mosfet_p		
+M11  Net-_M1-Pad2_ Net-_M10-Pad1_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+M13  Net-_D1-Pad2_ Net-_M10-Pad2_ Net-_M13-Pad3_ Net-_D1-Pad2_ mosfet_p		
+M16  Net-_D1-Pad2_ Net-_D3-Pad1_ Net-_M13-Pad3_ Net-_D1-Pad2_ mosfet_p		
+M18  Net-_D1-Pad2_ Net-_M13-Pad3_ Net-_M17-Pad1_ Net-_D1-Pad2_ mosfet_p		
+M15  Net-_M14-Pad3_ Net-_M10-Pad2_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+M14  Net-_M13-Pad3_ Net-_D3-Pad1_ Net-_M14-Pad3_ Net-_D2-Pad1_ mosfet_n		
+M17  Net-_M17-Pad1_ Net-_M13-Pad3_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+
+.end

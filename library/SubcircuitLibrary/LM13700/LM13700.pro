@@ -1,4 +1,4 @@
-update=09/24/22 18:32:27
+update=5/22/2025 9:56:33 AM
 version=1
 last_client=eeschema
 [general]
@@ -69,13 +69,15 @@ LibName35=eSim_Sources
 LibName36=eSim_Subckt
 LibName37=eSim_Nghdl
 LibName38=eSim_Ngveri
+LibName39=eSim_SKY130
+LibName40=eSim_SKY130_Subckts
 [schematic_editor]
 version=1
 PageLayoutDescrFile=
 PlotDirectoryName=
 SubpartIdSeparator=0
 SubpartFirstId=65
-NetFmtName=
+NetFmtName=Spice
 SpiceForceRefPrefix=0
 SpiceUseNetNumbers=0
 LabSize=60
