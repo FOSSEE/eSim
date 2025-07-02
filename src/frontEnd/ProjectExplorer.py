@@ -430,4 +430,3 @@ class ProjectExplorer(QtWidgets.QWidget):
                         'contain space between them'
                     )
                     msg.exec_()
-                    
