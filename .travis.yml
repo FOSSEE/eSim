@@ -9,5 +9,7 @@ git:
 python:
     - "3.6"
 
+install: skip
+
 script:
     - find . -name \*.py -print0 | sort -z | xargs -r0 flake8
