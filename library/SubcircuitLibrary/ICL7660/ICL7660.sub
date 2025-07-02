@@ -1,0 +1,11 @@
+* Subcircuit ICL7660
+.subckt ICL7660 ? /cap+ gnd gnd gnd /vin ? /out 
+* c:\users\hp\onedrive\documents\fossee\esim\library\subcircuitlibrary\icl7660\icl7660.cir
+.include D.lib
+c1  /vin /cap+ 100u
+d1 /cap+ gnd 1N4148
+d2 /out /cap+ 1N4148
+c2  /out gnd 100u
+* Control Statements
+
+.ends ICL7660
