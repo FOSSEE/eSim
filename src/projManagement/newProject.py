@@ -97,7 +97,6 @@ class NewProjectInfo(QtWidgets.QWidget):
                 self.msg.exec_()
 
             # New KiCad v6 file extension
-        if f is not None:
             f.write("schematicFile " + self.projName + ".kicad_sch\n")
             f.close()
 
