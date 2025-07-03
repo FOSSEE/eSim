@@ -2,7 +2,7 @@
 ![GitHub](https://img.shields.io/github/license/fossee/esim?color=blue)
 ![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
-![Travis (.com)](https://app.travis-ci.com/Eyantra698Sumanto/eSim.svg?token=FpafaaAY5poGJYqTfxxR&branch=master)](https://app.travis-ci.com/Eyantra698Sumanto/eSim)
+![Travis (.com)](https://img.shields.io/travis/com/Eyantra698Sumanto/eSim)
 [![Documentation Status](https://readthedocs.org/projects/esim/badge/?version=latest)](https://esim.readthedocs.io/en/latest/?badge=latest)
 [![GitHub forks](https://img.shields.io/github/forks/fossee/esim)](https://github.com/fossee/esim/network)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/fossee/esim)
