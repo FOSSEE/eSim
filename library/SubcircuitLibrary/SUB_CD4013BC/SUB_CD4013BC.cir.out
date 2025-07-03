@@ -1,0 +1,82 @@
+* c:\fossee\esim\library\subcircuitlibrary\sub_cd4013bc\sub_cd4013bc.cir
+
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m9 vdd net-_m23-pad2_ net-_m10-pad1_ vdd CMOSP W=100u L=100u M=1
+m8 net-_m10-pad3_ net-_m1-pad3_ vss vss CMOSN W=100u L=100u M=1
+m10 net-_m10-pad1_ net-_m1-pad3_ net-_m10-pad3_ vdd CMOSP W=100u L=100u M=1
+m7 net-_m10-pad3_ net-_m23-pad2_ vss vss CMOSN W=100u L=100u M=1
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ vss CMOSN W=100u L=100u M=1
+m2 net-_m1-pad3_ vdd net-_m1-pad1_ vdd CMOSP W=100u L=100u M=1
+m15 vdd net-_m11-pad2_ net-_m15-pad3_ vdd CMOSP W=100u L=100u M=1
+m16 net-_m15-pad3_ net-_m10-pad3_ net-_m11-pad1_ vdd CMOSP W=100u L=100u M=1
+m14 net-_m11-pad1_ net-_m10-pad3_ vss vss CMOSN W=100u L=100u M=1
+m11 net-_m11-pad1_ net-_m11-pad2_ vss vss CMOSN W=100u L=100u M=1
+m17 net-_m10-pad3_ vdd net-_m17-pad3_ vss CMOSN W=100u L=100u M=1
+m18 net-_m17-pad3_ net-_m1-pad2_ net-_m10-pad3_ vdd CMOSP W=100u L=100u M=1
+m21 vdd net-_m11-pad2_ net-_m21-pad3_ vdd CMOSP W=100u L=100u M=1
+m22 net-_m21-pad3_ net-_m17-pad3_ net-_m19-pad1_ vdd CMOSP W=100u L=100u M=1
+m20 net-_m19-pad1_ net-_m17-pad3_ vss vss CMOSN W=100u L=100u M=1
+m19 net-_m19-pad1_ net-_m11-pad2_ vss vss CMOSN W=100u L=100u M=1
+m28 vdd net-_m23-pad2_ net-_m28-pad3_ vdd CMOSP W=100u L=100u M=1
+m29 net-_m28-pad3_ net-_m19-pad1_ net-_m23-pad1_ vdd CMOSP W=100u L=100u M=1
+m25 net-_m23-pad1_ net-_m19-pad1_ vss vss CMOSN W=100u L=100u M=1
+m23 net-_m23-pad1_ net-_m23-pad2_ vss vss CMOSN W=100u L=100u M=1
+m26 net-_m17-pad3_ net-_m1-pad2_ net-_m23-pad1_ vss CMOSN W=100u L=100u M=1
+m30 net-_m23-pad1_ vdd net-_m17-pad3_ vdd CMOSP W=100u L=100u M=1
+m32 vdd net-_m19-pad1_ net-_m31-pad1_ vdd CMOSP W=100u L=100u M=1
+m31 net-_m31-pad1_ net-_m19-pad1_ vss vss CMOSN W=100u L=100u M=1
+m27 vdd net-_m17-pad3_ net-_m24-pad1_ vdd CMOSP W=100u L=100u M=1
+m24 net-_m24-pad1_ net-_m17-pad3_ vss vss CMOSN W=100u L=100u M=1
+m12 net-_m1-pad3_ vdd net-_m11-pad1_ vss CMOSN W=100u L=100u M=1
+m13 net-_m11-pad1_ net-_m1-pad2_ net-_m1-pad3_ vdd CMOSP W=100u L=100u M=1
+m4 vdd net-_m3-pad2_ net-_m1-pad2_ vdd CMOSP W=100u L=100u M=1
+m3 net-_m1-pad2_ net-_m3-pad2_ vss vss CMOSN W=100u L=100u M=1
+m6 vdd net-_m1-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m5 vdd net-_m1-pad2_ vss vss CMOSN W=100u L=100u M=1
+m34 net-_m33-pad3_ net-_m24-pad1_ vss vss CMOSN W=100u L=100u M=1
+m33 vdd net-_m24-pad1_ net-_m33-pad3_ vdd CMOSP W=100u L=100u M=1
+* u1  vdd vss net-_m23-pad2_ net-_m11-pad2_ net-_m3-pad2_ net-_m1-pad1_ net-_m33-pad3_ net-_m24-pad1_ net-_m41-pad2_ net-_m45-pad2_ net-_m37-pad2_ net-_m35-pad1_ net-_m67-pad1_ net-_m58-pad1_ port
+m43 vdd net-_m41-pad2_ net-_m43-pad3_ vdd CMOSP W=100u L=100u M=1
+m42 net-_m41-pad1_ net-_m35-pad3_ vss vss CMOSN W=100u L=100u M=1
+m44 net-_m43-pad3_ net-_m35-pad3_ net-_m41-pad1_ vdd CMOSP W=100u L=100u M=1
+m41 net-_m41-pad1_ net-_m41-pad2_ vss vss CMOSN W=100u L=100u M=1
+m35 net-_m35-pad1_ net-_m35-pad2_ net-_m35-pad3_ vss CMOSN W=100u L=100u M=1
+m36 net-_m35-pad3_ vdd net-_m35-pad1_ vdd CMOSP W=100u L=100u M=1
+m49 vdd net-_m45-pad2_ net-_m49-pad3_ vdd CMOSP W=100u L=100u M=1
+m50 net-_m49-pad3_ net-_m41-pad1_ net-_m45-pad1_ vdd CMOSP W=100u L=100u M=1
+m48 net-_m45-pad1_ net-_m41-pad1_ vss vss CMOSN W=100u L=100u M=1
+m45 net-_m45-pad1_ net-_m45-pad2_ vss vss CMOSN W=100u L=100u M=1
+m51 net-_m41-pad1_ vdd net-_m51-pad3_ vss CMOSN W=100u L=100u M=1
+m52 net-_m51-pad3_ net-_m35-pad2_ net-_m41-pad1_ vdd CMOSP W=100u L=100u M=1
+m55 vdd net-_m45-pad2_ net-_m55-pad3_ vdd CMOSP W=100u L=100u M=1
+m56 net-_m55-pad3_ net-_m51-pad3_ net-_m53-pad1_ vdd CMOSP W=100u L=100u M=1
+m54 net-_m53-pad1_ net-_m51-pad3_ vss vss CMOSN W=100u L=100u M=1
+m53 net-_m53-pad1_ net-_m45-pad2_ vss vss CMOSN W=100u L=100u M=1
+m62 vdd net-_m41-pad2_ net-_m62-pad3_ vdd CMOSP W=100u L=100u M=1
+m63 net-_m62-pad3_ net-_m53-pad1_ net-_m57-pad1_ vdd CMOSP W=100u L=100u M=1
+m59 net-_m57-pad1_ net-_m53-pad1_ vss vss CMOSN W=100u L=100u M=1
+m57 net-_m57-pad1_ net-_m41-pad2_ vss vss CMOSN W=100u L=100u M=1
+m60 net-_m51-pad3_ net-_m35-pad2_ net-_m57-pad1_ vss CMOSN W=100u L=100u M=1
+m64 net-_m57-pad1_ vdd net-_m51-pad3_ vdd CMOSP W=100u L=100u M=1
+m66 vdd net-_m53-pad1_ net-_m65-pad1_ vdd CMOSP W=100u L=100u M=1
+m65 net-_m65-pad1_ net-_m53-pad1_ vss vss CMOSN W=100u L=100u M=1
+m61 vdd net-_m51-pad3_ net-_m58-pad1_ vdd CMOSP W=100u L=100u M=1
+m58 net-_m58-pad1_ net-_m51-pad3_ vss vss CMOSN W=100u L=100u M=1
+m46 net-_m35-pad3_ vdd net-_m45-pad1_ vss CMOSN W=100u L=100u M=1
+m47 net-_m45-pad1_ net-_m35-pad2_ net-_m35-pad3_ vdd CMOSP W=100u L=100u M=1
+m38 vdd net-_m37-pad2_ net-_m35-pad2_ vdd CMOSP W=100u L=100u M=1
+m37 net-_m35-pad2_ net-_m37-pad2_ vss vss CMOSN W=100u L=100u M=1
+m40 vdd net-_m35-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m39 vdd net-_m35-pad2_ vss vss CMOSN W=100u L=100u M=1
+m67 net-_m67-pad1_ net-_m58-pad1_ vss vss CMOSN W=100u L=100u M=1
+m68 vdd net-_m58-pad1_ net-_m67-pad1_ vdd CMOSP W=100u L=100u M=1
+.tran 5e-12 200e-06 1e-06
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

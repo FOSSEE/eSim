@@ -1,0 +1,59 @@
+* C:\Users\HP\OneDrive\Documents\FOSSEE\eSim\library\SubcircuitLibrary\TLC2272\TLC2272.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/09/25 19:52:26
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M1  Net-_M1-Pad1_ /INV_1 Net-_M1-Pad3_ /VDD mosfet_p		
+M9  Net-_M1-Pad1_ /NON_INV_1 Net-_M11-Pad2_ /VDD mosfet_p		
+M7  /VDD Net-_M13-Pad2_ Net-_M1-Pad1_ /VDD mosfet_p		
+M13  /VDD Net-_M13-Pad2_ Net-_M11-Pad1_ /VDD mosfet_p		
+M3  Net-_M1-Pad3_ Net-_M1-Pad3_ Net-_M3-Pad3_ /VSS mosfet_n		
+M5  Net-_M11-Pad2_ Net-_M1-Pad3_ Net-_M5-Pad3_ /VSS mosfet_n		
+R1  Net-_M3-Pad3_ /VSS 3k		
+R3  Net-_M5-Pad3_ /VSS 3k		
+M11  Net-_M11-Pad1_ Net-_M11-Pad2_ /VSS /VSS mosfet_n		
+M15  Net-_M11-Pad1_ Net-_M11-Pad1_ /VSS /VSS mosfet_n		
+M17  Net-_M17-Pad1_ Net-_M11-Pad1_ /VSS /VSS mosfet_n		
+M19  /VDD Net-_M17-Pad1_ Net-_M17-Pad1_ /VDD mosfet_p		
+M21  Net-_M11-Pad2_ Net-_M21-Pad2_ /VSS /VSS mosfet_n		
+M23  /OUT_1 Net-_M11-Pad2_ Net-_M21-Pad2_ /VSS mosfet_n		
+M25  /VDD Net-_M17-Pad1_ /OUT_1 /VDD mosfet_p		
+R5  Net-_C1-Pad1_ Net-_M11-Pad2_ 10k		
+C1  Net-_C1-Pad1_ /OUT_1 30p		
+R7  Net-_M21-Pad2_ /VSS 3k		
+M27  /VDD Net-_M13-Pad2_ Net-_M13-Pad2_ /VDD mosfet_p		
+M33  /VDD Net-_M13-Pad2_ Net-_M29-Pad2_ /VDD mosfet_p		
+M29  Net-_M13-Pad2_ Net-_M29-Pad2_ Net-_M29-Pad3_ /VSS mosfet_n		
+M31  Net-_M29-Pad2_ Net-_M29-Pad2_ Net-_D1-Pad1_ /VSS mosfet_n		
+R9  Net-_M29-Pad3_ /VSS 3k		
+D1  Net-_D1-Pad1_ /VSS eSim_Diode		
+M2  Net-_M10-Pad1_ /INV_2 Net-_M2-Pad3_ /VDD mosfet_p		
+M10  Net-_M10-Pad1_ /NON_INV_2 Net-_M10-Pad3_ /VDD mosfet_p		
+M8  /VDD Net-_M14-Pad2_ Net-_M10-Pad1_ /VDD mosfet_p		
+M14  /VDD Net-_M14-Pad2_ Net-_M12-Pad1_ /VDD mosfet_p		
+M4  Net-_M2-Pad3_ Net-_M2-Pad3_ Net-_M4-Pad3_ /VSS mosfet_n		
+M6  Net-_M10-Pad3_ Net-_M2-Pad3_ Net-_M6-Pad3_ /VSS mosfet_n		
+R2  Net-_M4-Pad3_ /VSS 3k		
+R4  Net-_M6-Pad3_ /VSS 3k		
+M12  Net-_M12-Pad1_ Net-_M10-Pad3_ /VSS /VSS mosfet_n		
+M16  Net-_M12-Pad1_ Net-_M12-Pad1_ /VSS /VSS mosfet_n		
+M18  Net-_M18-Pad1_ Net-_M12-Pad1_ /VSS /VSS mosfet_n		
+M20  /VDD Net-_M18-Pad1_ Net-_M18-Pad1_ /VDD mosfet_p		
+M22  Net-_M10-Pad3_ Net-_M22-Pad2_ /VSS /VSS mosfet_n		
+M24  /OUT_2 Net-_M10-Pad3_ Net-_M22-Pad2_ /VSS mosfet_n		
+M26  /VDD Net-_M18-Pad1_ /OUT_2 /VDD mosfet_p		
+R6  Net-_C2-Pad1_ Net-_M10-Pad3_ 10k		
+C2  Net-_C2-Pad1_ /OUT_2 30p		
+R8  Net-_M22-Pad2_ /VSS 3k		
+M28  /VDD Net-_M14-Pad2_ Net-_M14-Pad2_ /VDD mosfet_p		
+M34  /VDD Net-_M14-Pad2_ Net-_M30-Pad2_ /VDD mosfet_p		
+M30  Net-_M14-Pad2_ Net-_M30-Pad2_ Net-_M30-Pad3_ /VSS mosfet_n		
+M32  Net-_M30-Pad2_ Net-_M30-Pad2_ Net-_D2-Pad1_ /VSS mosfet_n		
+R10  Net-_M30-Pad3_ /VSS 3k		
+D2  Net-_D2-Pad1_ /VSS eSim_Diode		
+U1  /VDD /INV_1 /NON_INV_1 /VSS /INV_2 /NON_INV_2 /OUT_2 /OUT_1 PORT		
+
+.end
