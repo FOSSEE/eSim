@@ -12,6 +12,6 @@ python:
 install:
   - pip install flake8
 
-#script:
+script: true
 #  - find . -name \*.py -print0 | sort -z | xargs -r0 flake8
 
