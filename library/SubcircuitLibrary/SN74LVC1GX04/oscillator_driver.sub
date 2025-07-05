@@ -1,0 +1,17 @@
+* Subcircuit oscillator_driver
+.subckt oscillator_driver ? net-_c101-pad2_ net-_m1-pad2_ net-_m1-pad1_ net-_m2-pad3_ net-_c101-pad1_ 
+* /home/kamalesh/downloads/esim-2.3/library/subcircuitlibrary/oscillator_driver/oscillator_driver.cir
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m2 net-_m1-pad1_ net-_m1-pad2_ net-_m2-pad3_ net-_m2-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m3 net-_m3-pad1_ net-_m1-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m4 net-_m3-pad1_ net-_m1-pad1_ net-_m2-pad3_ net-_m2-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m5 net-_m5-pad1_ net-_m3-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m6 net-_m5-pad1_ net-_m3-pad1_ net-_m2-pad3_ net-_m2-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m7 net-_c101-pad1_ net-_m5-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m8 net-_c101-pad1_ net-_m5-pad1_ net-_m2-pad3_ net-_m2-pad3_ CMOSP W=1.6u L=0.8u M=8.89
+c101  net-_c101-pad1_ net-_c101-pad2_ 1u
+* Control Statements
+
+.ends oscillator_driver

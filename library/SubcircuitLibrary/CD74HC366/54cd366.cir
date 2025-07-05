@@ -1,0 +1,77 @@
+* /home/kamalesh/Downloads/eSim-2.3/library/SubcircuitLibrary/54cd366/54cd366.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Sat Apr 12 16:41:33 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M7  Net-_C101-Pad1_ Net-_M1-Pad1_ Net-_M7-Pad3_ Net-_M7-Pad3_ mosfet_n		
+M10  Net-_C101-Pad1_ Net-_M10-Pad2_ Net-_M10-Pad3_ Net-_M10-Pad3_ mosfet_p		
+M9  Net-_M10-Pad3_ Net-_M8-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M8  Net-_M7-Pad3_ Net-_M8-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M5  Net-_M10-Pad2_ Net-_M1-Pad1_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M6  Net-_M10-Pad2_ Net-_M1-Pad1_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M3  Net-_M1-Pad1_ Net-_M103-Pad2_ Net-_M2-Pad1_ Net-_M2-Pad1_ mosfet_p		
+M2  Net-_M2-Pad1_ Net-_M1-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M4  Net-_M1-Pad1_ Net-_M103-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+C101  Net-_C101-Pad1_ Net-_C101-Pad2_ 10p		
+M139  Net-_C104-Pad1_ Net-_M121-Pad1_ Net-_M139-Pad3_ Net-_M139-Pad3_ mosfet_n		
+M142  Net-_C104-Pad1_ Net-_M133-Pad1_ Net-_M141-Pad1_ Net-_M141-Pad1_ mosfet_p		
+M141  Net-_M141-Pad1_ Net-_M140-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M140  Net-_M139-Pad3_ Net-_M140-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M133  Net-_M133-Pad1_ Net-_M121-Pad1_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M134  Net-_M133-Pad1_ Net-_M121-Pad1_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M123  Net-_M121-Pad1_ Net-_M103-Pad2_ Net-_M122-Pad1_ Net-_M122-Pad1_ mosfet_p		
+M122  Net-_M122-Pad1_ Net-_M1-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M121  Net-_M121-Pad1_ Net-_M1-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M130  Net-_M121-Pad1_ Net-_M103-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+C104  Net-_C104-Pad1_ Net-_C101-Pad2_ 10p		
+M113  Net-_C102-Pad1_ Net-_M101-Pad1_ Net-_M113-Pad3_ Net-_M113-Pad3_ mosfet_n		
+M116  Net-_C102-Pad1_ Net-_M109-Pad1_ Net-_M115-Pad1_ Net-_M115-Pad1_ mosfet_p		
+M115  Net-_M115-Pad1_ Net-_M114-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M114  Net-_M113-Pad3_ Net-_M114-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M109  Net-_M109-Pad1_ Net-_M101-Pad1_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M110  Net-_M109-Pad1_ Net-_M101-Pad1_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M103  Net-_M101-Pad1_ Net-_M103-Pad2_ Net-_M102-Pad1_ Net-_M102-Pad1_ mosfet_p		
+M102  Net-_M102-Pad1_ Net-_M1-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M101  Net-_M101-Pad1_ Net-_M1-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M107  Net-_M101-Pad1_ Net-_M103-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+C102  Net-_C102-Pad1_ Net-_C101-Pad2_ 10p		
+M143  Net-_C105-Pad1_ Net-_M124-Pad1_ Net-_M143-Pad3_ Net-_M143-Pad3_ mosfet_n		
+M146  Net-_C105-Pad1_ Net-_M135-Pad1_ Net-_M145-Pad1_ Net-_M145-Pad1_ mosfet_p		
+M145  Net-_M145-Pad1_ Net-_M144-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M144  Net-_M143-Pad3_ Net-_M144-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M135  Net-_M135-Pad1_ Net-_M124-Pad1_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M136  Net-_M135-Pad1_ Net-_M124-Pad1_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M126  Net-_M124-Pad1_ Net-_M103-Pad2_ Net-_M125-Pad1_ Net-_M125-Pad1_ mosfet_p		
+M125  Net-_M125-Pad1_ Net-_M1-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M124  Net-_M124-Pad1_ Net-_M1-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M131  Net-_M124-Pad1_ Net-_M103-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+C105  Net-_C105-Pad1_ Net-_C101-Pad2_ 10p		
+M117  Net-_C103-Pad1_ Net-_M104-Pad1_ Net-_M117-Pad3_ Net-_M117-Pad3_ mosfet_n		
+M120  Net-_C103-Pad1_ Net-_M111-Pad1_ Net-_M119-Pad1_ Net-_M119-Pad1_ mosfet_p		
+M119  Net-_M119-Pad1_ Net-_M118-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M118  Net-_M117-Pad3_ Net-_M118-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M111  Net-_M111-Pad1_ Net-_M104-Pad1_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M112  Net-_M111-Pad1_ Net-_M104-Pad1_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M106  Net-_M104-Pad1_ Net-_M103-Pad2_ Net-_M105-Pad1_ Net-_M105-Pad1_ mosfet_p		
+M105  Net-_M105-Pad1_ Net-_M1-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M104  Net-_M104-Pad1_ Net-_M1-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M108  Net-_M104-Pad1_ Net-_M103-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+C103  Net-_C103-Pad1_ Net-_C101-Pad2_ 10p		
+M147  Net-_C106-Pad1_ Net-_M127-Pad1_ Net-_M147-Pad3_ Net-_M147-Pad3_ mosfet_n		
+M150  Net-_C106-Pad1_ Net-_M137-Pad1_ Net-_M149-Pad1_ Net-_M149-Pad1_ mosfet_p		
+M149  Net-_M149-Pad1_ Net-_M148-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M148  Net-_M147-Pad3_ Net-_M148-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M137  Net-_M137-Pad1_ Net-_M127-Pad1_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M138  Net-_M137-Pad1_ Net-_M127-Pad1_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M129  Net-_M127-Pad1_ Net-_M103-Pad2_ Net-_M128-Pad1_ Net-_M128-Pad1_ mosfet_p		
+M128  Net-_M128-Pad1_ Net-_M1-Pad2_ Net-_M102-Pad3_ Net-_M102-Pad3_ mosfet_p		
+M127  Net-_M127-Pad1_ Net-_M1-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+M132  Net-_M127-Pad1_ Net-_M103-Pad2_ Net-_C101-Pad2_ Net-_C101-Pad2_ mosfet_n		
+C106  Net-_C106-Pad1_ Net-_C101-Pad2_ 10p		
+U101  Net-_M1-Pad2_ Net-_M8-Pad2_ Net-_C101-Pad1_ Net-_M140-Pad2_ Net-_C104-Pad1_ Net-_M114-Pad2_ Net-_C102-Pad1_ Net-_C101-Pad2_ Net-_C105-Pad1_ Net-_M144-Pad2_ Net-_C103-Pad1_ Net-_M118-Pad2_ Net-_C106-Pad1_ Net-_M148-Pad2_ Net-_M103-Pad2_ Net-_M102-Pad3_ PORT		
+
+.end
