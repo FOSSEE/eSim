@@ -1,0 +1,56 @@
+* c:\fossee\esim\library\subcircuitlibrary\mc10h160\mc10h160.cir
+
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ d_xor
+* u2  net-_u10-pad5_ net-_u10-pad6_ net-_u11-pad2_ d_xor
+* u3  net-_u10-pad7_ net-_u10-pad9_ net-_u3-pad3_ d_xor
+* u4  net-_u10-pad10_ net-_u10-pad11_ net-_u4-pad3_ d_xor
+* u5  net-_u10-pad12_ net-_u10-pad13_ net-_u5-pad3_ d_xor
+* u6  net-_u10-pad14_ net-_u10-pad15_ net-_u12-pad2_ d_xor
+* u7  net-_u11-pad3_ net-_u3-pad3_ net-_u7-pad3_ d_xor
+* u8  net-_u4-pad3_ net-_u5-pad3_ net-_u12-pad1_ d_xor
+* u9  net-_u7-pad3_ net-_u12-pad3_ net-_u10-pad2_ d_xor
+* u10  ? net-_u10-pad2_ net-_u1-pad1_ net-_u1-pad2_ net-_u10-pad5_ net-_u10-pad6_ net-_u10-pad7_ ? net-_u10-pad9_ net-_u10-pad10_ net-_u10-pad11_ net-_u10-pad12_ net-_u10-pad13_ net-_u10-pad14_ net-_u10-pad15_ ? port
+* u11  net-_u1-pad3_ net-_u11-pad2_ net-_u11-pad3_ d_xor
+* u12  net-_u12-pad1_ net-_u12-pad2_ net-_u12-pad3_ d_xor
+a1 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u1-pad3_ u1
+a2 [net-_u10-pad5_ net-_u10-pad6_ ] net-_u11-pad2_ u2
+a3 [net-_u10-pad7_ net-_u10-pad9_ ] net-_u3-pad3_ u3
+a4 [net-_u10-pad10_ net-_u10-pad11_ ] net-_u4-pad3_ u4
+a5 [net-_u10-pad12_ net-_u10-pad13_ ] net-_u5-pad3_ u5
+a6 [net-_u10-pad14_ net-_u10-pad15_ ] net-_u12-pad2_ u6
+a7 [net-_u11-pad3_ net-_u3-pad3_ ] net-_u7-pad3_ u7
+a8 [net-_u4-pad3_ net-_u5-pad3_ ] net-_u12-pad1_ u8
+a9 [net-_u7-pad3_ net-_u12-pad3_ ] net-_u10-pad2_ u9
+a10 [net-_u1-pad3_ net-_u11-pad2_ ] net-_u11-pad3_ u11
+a11 [net-_u12-pad1_ net-_u12-pad2_ ] net-_u12-pad3_ u12
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u1 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u2 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u3 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u4 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u5 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u6 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u7 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u8 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u9 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u11 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u12 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
