@@ -28,6 +28,7 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.obj_validation = Validation()
         self.treewidget = QtWidgets.QTreeWidget()
         self.window = QtWidgets.QVBoxLayout()
+        self.fs_watcher = QtCore.QFileSystemWatcher()
         header = QtWidgets.QTreeWidgetItem(["Projects", "path"])
         self.treewidget.setHeaderItem(header)
         self.treewidget.setColumnHidden(1, True)
@@ -68,13 +69,22 @@ class ProjectExplorer(QtWidgets.QWidget):
                     QtWidgets.QTreeWidgetItem(
                         parentnode, [files, os.path.join(parents, files)]
                     )
+                self.fs_watcher.addPath(parents)
         self.window.addWidget(self.treewidget)
+        self.fs_watcher.directoryChanged.connect(self.handleDirectoryChanged)
         self.treewidget.expanded.connect(self.refreshInstant)
         self.treewidget.doubleClicked.connect(self.openProject)
         self.treewidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.treewidget.customContextMenuRequested.connect(self.openMenu)
         self.setLayout(self.window)
         self.show()
+    
+    def handleDirectoryChanged(self, path):
+        for i in range(self.treewidget.topLevelItemCount()):
+            item = self.treewidget.topLevelItem(i)
+            if item.text(1) == path and item.isExpanded():
+                index = self.treewidget.indexFromItem(item)
+                self.refreshProject(indexItem=index)
 
     def refreshInstant(self):
         for i in range(self.treewidget.topLevelItemCount()):
