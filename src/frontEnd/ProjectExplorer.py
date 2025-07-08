@@ -120,6 +120,8 @@ class ProjectExplorer(QtWidgets.QWidget):
             deleteproject.triggered.connect(self.removeProject)
             refreshproject = menu.addAction(self.tr("Refresh"))
             refreshproject.triggered.connect(self.refreshProject)
+            deletepermanent = menu.addAction(self.tr("Delete Project"))
+            deletepermanent.triggered.connect(self.deleteProject)
         elif level == 1:
             openfile = menu.addAction(self.tr("Open"))
             openfile.triggered.connect(self.openProject)
@@ -430,3 +432,66 @@ class ProjectExplorer(QtWidgets.QWidget):
                         'contain space between them'
                     )
                     msg.exec_()
+
+    def deleteProject(self):
+        """
+        This function deletes the project folder from disk (either to trash or permanently) and updates the explorer.
+        """
+        from PyQt5.QtWidgets import QMessageBox
+        import shutil
+        try:
+            import send2trash
+            has_send2trash = True
+        except ImportError:
+            has_send2trash = False
+        self.indexItem = self.treewidget.currentIndex()
+        filePath = str(
+            self.indexItem.sibling(self.indexItem.row(), 1).data()
+        )
+        projectName = str(self.indexItem.data())
+        if not os.path.exists(filePath):
+            msg = QtWidgets.QErrorMessage(self)
+            msg.setModal(True)
+            msg.setWindowTitle("Error Message")
+            msg.showMessage('Selected project does not exist.')
+            msg.exec_()
+            return
+        # Ask user for confirmation and method
+        msgBox = QMessageBox(self)
+        msgBox.setWindowTitle("Delete Project")
+        msgBox.setText(f"Do you want to delete the project '{projectName}'?\nThis will remove the project folder from disk.")
+        trashBtn = msgBox.addButton("Send to Trash", QMessageBox.AcceptRole)
+        permBtn = msgBox.addButton("Delete Permanently", QMessageBox.DestructiveRole)
+        cancelBtn = msgBox.addButton(QMessageBox.Cancel)
+        msgBox.setDefaultButton(cancelBtn)
+        msgBox.exec_()
+        if msgBox.clickedButton() == cancelBtn:
+            return
+        try:
+            if msgBox.clickedButton() == trashBtn and has_send2trash:
+                send2trash.send2trash(filePath)
+            elif msgBox.clickedButton() == permBtn or not has_send2trash:
+                shutil.rmtree(filePath)
+            else:
+                return
+        except Exception as e:
+            err = QtWidgets.QErrorMessage(self)
+            err.setModal(True)
+            err.setWindowTitle("Error Message")
+            err.showMessage(f"Failed to delete project: {e}")
+            err.exec_()
+            return
+        # Remove from explorer and config
+        self.int = self.indexItem.row()
+        self.treewidget.takeTopLevelItem(self.int)
+        if self.obj_appconfig.current_project["ProjectName"] == filePath:
+            self.obj_appconfig.current_project["ProjectName"] = None
+        if filePath in self.obj_appconfig.project_explorer:
+            del self.obj_appconfig.project_explorer[filePath]
+            json.dump(self.obj_appconfig.project_explorer,
+                      open(self.obj_appconfig.dictPath["path"], 'w'))
+        # Info message
+        info = QMessageBox(self)
+        info.setWindowTitle("Project Deleted")
+        info.setText(f"Project '{projectName}' has been deleted.")
+        info.exec_()
