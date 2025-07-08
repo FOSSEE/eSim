@@ -349,6 +349,8 @@ class Application(QtWidgets.QMainWindow):
                 self.obj_Mainview.obj_projectExplorer.addTreeNode(
                     directory, filelist
                 )
+                self.obj_appconfig.current_project["ProjectName"] = directory
+                self.obj_appconfig.save_current_project()
                 updated = True
 
         if not updated:
@@ -370,6 +372,8 @@ class Application(QtWidgets.QMainWindow):
             directory, filelist = self.project.body()
             self.obj_Mainview.obj_projectExplorer.addTreeNode(
                 directory, filelist)
+            self.obj_appconfig.current_project["ProjectName"] = directory
+            self.obj_appconfig.save_current_project()
         except BaseException:
             pass
 
@@ -398,6 +402,7 @@ class Application(QtWidgets.QMainWindow):
                     pass
             self.obj_Mainview.obj_dockarea.closeDock()
             self.obj_appconfig.current_project['ProjectName'] = None
+            self.obj_appconfig.save_current_project()
             self.systemTrayIcon.showMessage(
                 'Close', 'Current project ' +
                 os.path.basename(current_project) + ' is Closed.'
@@ -871,6 +876,14 @@ def main(args):
     app.setApplicationName("eSim")
 
     appView = Application()
+    last_project_path = appView.obj_appconfig.load_last_project()
+    if last_project_path:
+        try:
+            open_proj = OpenProjectInfo()
+            directory, filelist = open_proj.body(last_project_path)
+            appView.obj_Mainview.obj_projectExplorer.addTreeNode(directory, filelist)
+        except Exception as e:
+            print("Could not restore last project:", str(e))
     appView.hide()
 
     splash_pix = QtGui.QPixmap(init_path + 'images/splash_screen_esim.png')
