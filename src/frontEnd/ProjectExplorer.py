@@ -1,6 +1,9 @@
 from PyQt5 import QtCore, QtWidgets
 import os
 import json
+import shutil
+from datetime import datetime
+from pathlib import Path
 from configuration.Appconfig import Appconfig
 from projManagement.Validation import Validation
 
@@ -133,6 +136,8 @@ class ProjectExplorer(QtWidgets.QWidget):
         elif level == 1:
             openfile = menu.addAction(self.tr("Open"))
             openfile.triggered.connect(self.openProject)
+            snapshot = menu.addAction(self.tr("Snapshot"))
+            snapshot.triggered.connect(self.takeSnapshot)
 
         menu.exec_(self.treewidget.viewport().mapToGlobal(position))
 
@@ -440,3 +445,32 @@ class ProjectExplorer(QtWidgets.QWidget):
                         'contain space between them'
                     )
                     msg.exec_()
+
+    def set_time_explorer(self, time_explorer_widget):
+        self.time_explorer = time_explorer_widget
+
+    def takeSnapshot(self):
+        index = self.treewidget.currentIndex()
+        file_path = str(index.sibling(index.row(), 1).data()) 
+        file_name = os.path.basename(file_path)
+
+        if not os.path.isfile(file_path):
+            QtWidgets.QMessageBox.warning(self, "Snapshot Failed", "Selected item is not a file.")
+            return
+
+        project_path = self.obj_appconfig.current_project["ProjectName"]
+        project_name = os.path.basename(project_path)
+
+        snapshot_dir = os.path.join(Path.home(), ".esim", "history", project_name)
+        os.makedirs(snapshot_dir, exist_ok=True)
+
+        formatted_time = datetime.now().strftime("%I.%M %p %d-%m-%Y")
+        snapshot_name = f"{file_name}({formatted_time})"
+        snapshot_path = os.path.join(snapshot_dir, snapshot_name)
+
+        shutil.copy2(file_path, snapshot_path)
+
+        if hasattr(self, 'time_explorer'):
+            self.time_explorer.add_snapshot(file_name, formatted_time)
+        else:
+            print(f"Snapshot taken: {snapshot_path}")
