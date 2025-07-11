@@ -1,0 +1,39 @@
+* Subcircuit SC_TLV1701
+.subckt SC_TLV1701 net-_q1-pad2_ net-_i1-pad1_ net-_q4-pad2_ net-_q15-pad1_ net-_i2-pad2_ 
+* c:\fossee2\esim\library\subcircuitlibrary\sc_tlv1701\sc_tlv1701.cir
+.include NPN.lib
+.include PNP.lib
+q1 net-_i2-pad2_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q4 net-_i2-pad2_ net-_q4-pad2_ net-_q4-pad3_ Q2N2222
+q2 net-_q12-pad3_ net-_i1-pad2_ net-_i2-pad1_ Q2N2907A
+q3 net-_q10-pad3_ net-_i3-pad2_ net-_i2-pad1_ Q2N2907A
+q5 net-_i1-pad1_ net-_q1-pad2_ net-_q5-pad3_ Q2N2907A
+q8 net-_i1-pad1_ net-_q4-pad2_ net-_q8-pad3_ Q2N2907A
+q6 net-_q11-pad3_ net-_i4-pad1_ net-_i5-pad2_ Q2N2222
+q7 net-_q7-pad1_ net-_i6-pad1_ net-_i5-pad2_ Q2N2222
+q9 net-_q10-pad1_ net-_q11-pad2_ net-_q7-pad1_ Q2N2907A
+q11 net-_q11-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2907A
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q12 net-_q11-pad1_ net-_q10-pad2_ net-_q12-pad3_ Q2N2222
+q13 net-_i1-pad1_ net-_q11-pad1_ net-_i7-pad1_ Q2N2907A
+q14 net-_i2-pad2_ net-_i7-pad1_ net-_i8-pad2_ Q2N2222
+q15 net-_q15-pad1_ net-_i8-pad2_ net-_i1-pad1_ Q2N2222
+r1  net-_q1-pad3_ net-_i1-pad2_ 10k
+r2  net-_q4-pad3_ net-_i3-pad2_ 10k
+i2 net-_i2-pad1_ net-_i2-pad2_  dc 55u
+i1 net-_i1-pad1_ net-_i1-pad2_  dc 55u
+i3 net-_i1-pad1_ net-_i3-pad2_  dc 55u
+r3  net-_i4-pad1_ net-_q5-pad3_ 10k
+r4  net-_i6-pad1_ net-_q8-pad3_ 10k
+i5 net-_i1-pad1_ net-_i5-pad2_  dc 55u
+r5  net-_q10-pad3_ net-_i1-pad1_ 10k
+r8  net-_i1-pad1_ net-_q12-pad3_ 10k
+i8 net-_i1-pad1_ net-_i8-pad2_  dc 55u
+i4 net-_i4-pad1_ net-_i2-pad2_  dc 55u
+i6 net-_i6-pad1_ net-_i2-pad2_  dc 55u
+r6  net-_q7-pad1_ net-_i2-pad2_ 10k
+r7  net-_i2-pad2_ net-_q11-pad3_ 10k
+i7 net-_i7-pad1_ net-_i2-pad2_  dc 55u
+* Control Statements
+
+.ends SC_TLV1701

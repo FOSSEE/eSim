@@ -1,0 +1,43 @@
+* Subcircuit SC_MC33171
+.subckt SC_MC33171 net-_d1-pad2_ net-_q4-pad2_ net-_q11-pad2_ net-_q10-pad1_ net-_q7-pad3_ net-_q18-pad3_ net-_q1-pad3_ ? 
+* c:\fossee2\esim\library\subcircuitlibrary\sc_mc33171\sc_mc33171.cir
+.include NPN.lib
+.include PNP.lib
+.include D.lib
+q1 net-_i1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q3 net-_q3-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q6 net-_q6-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q9 net-_q11-pad3_ net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q12 net-_q10-pad3_ net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q14 net-_d2-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q2 net-_q10-pad1_ net-_i1-pad1_ net-_q1-pad2_ Q2N2907A
+q4 net-_q10-pad1_ net-_q4-pad2_ net-_q3-pad1_ Q2N2907A
+q5 net-_d1-pad1_ net-_q3-pad1_ net-_c1-pad2_ Q2N2907A
+q8 net-_c2-pad2_ net-_q11-pad3_ net-_c1-pad1_ Q2N2907A
+q11 net-_q10-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2907A
+q16 net-_q1-pad3_ net-_d2-pad1_ net-_c2-pad1_ Q2N2222
+q18 net-_d2-pad1_ net-_c2-pad1_ net-_q18-pad3_ Q2N2222
+q19 net-_q19-pad1_ net-_c2-pad1_ net-_i2-pad1_ Q2N2222
+q17 net-_c2-pad1_ net-_q13-pad3_ net-_q10-pad1_ Q2N2222
+q15 net-_d2-pad2_ ? net-_q10-pad1_ Q2N2222
+q13 net-_d2-pad1_ net-_q10-pad3_ net-_q13-pad3_ Q2N2222
+q7 net-_c2-pad2_ net-_d1-pad1_ net-_q7-pad3_ Q2N2222
+c1  net-_c1-pad1_ net-_c1-pad2_ 0.8p
+r1  net-_q6-pad1_ net-_c1-pad2_ 10k
+r3  net-_q6-pad1_ net-_c1-pad1_ 10k
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r2  net-_d1-pad2_ net-_q10-pad1_ 10k
+r4  net-_q7-pad3_ net-_q10-pad1_ 10k
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+r6  net-_d2-pad2_ net-_c2-pad1_ 10k
+r7  net-_c2-pad1_ net-_q18-pad3_ 10k
+d3 net-_c2-pad1_ net-_d2-pad2_ 1N4148
+r8  net-_q19-pad1_ net-_q18-pad3_ 10k
+c2  net-_c2-pad1_ net-_c2-pad2_ 100u
+q10 net-_q10-pad1_ net-_c2-pad2_ net-_q10-pad3_ Q2N2907A
+r5  net-_q13-pad3_ net-_q10-pad1_ 10k
+i1 net-_i1-pad1_ gnd  dc 500u
+i2 net-_i2-pad1_ gnd  dc 10p
+* Control Statements
+
+.ends SC_MC33171
