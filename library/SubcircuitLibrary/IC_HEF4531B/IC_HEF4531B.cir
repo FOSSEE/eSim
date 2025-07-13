@@ -1,0 +1,41 @@
+* E:\IC_HEF4531B\IC_HEF4531B.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/24/25 12:08:05
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U15-Pad9_ Net-_U15-Pad10_ Net-_U15-Pad11_ Net-_U15-Pad12_ Net-_U15-Pad13_ Net-_U15-Pad14_ Net-_U15-Pad15_ Net-_U15-Pad16_ Net-_U14-Pad6_ Net-_U14-Pad7_ Net-_U14-Pad8_ Net-_U14-Pad9_ Net-_U14-Pad10_ ? ? Net-_U16-Pad1_ HEF4531B		
+U15  I0 I1 I2 I3 I4 I5 I6 I7 Net-_U15-Pad9_ Net-_U15-Pad10_ Net-_U15-Pad11_ Net-_U15-Pad12_ Net-_U15-Pad13_ Net-_U15-Pad14_ Net-_U15-Pad15_ Net-_U15-Pad16_ adc_bridge_8		
+U14  I8 I9 I10 I11 I12 Net-_U14-Pad6_ Net-_U14-Pad7_ Net-_U14-Pad8_ Net-_U14-Pad9_ Net-_U14-Pad10_ adc_bridge_5		
+U16  Net-_U16-Pad1_ OUT dac_bridge_1		
+U17  OUT plot_v1		
+v1  I0 GND pulse		
+v2  I1 GND pulse		
+v3  I2 GND pulse		
+v4  I3 GND pulse		
+v5  I4 GND pulse		
+v6  I5 GND pulse		
+v7  I6 GND pulse		
+v8  I7 GND pulse		
+v9  I8 GND pulse		
+v10  I9 GND pulse		
+v11  I10 GND pulse		
+v12  I11 GND pulse		
+v13  I12 GND pulse		
+U8  I7 plot_v1		
+U9  I8 plot_v1		
+U10  I9 plot_v1		
+U11  I10 plot_v1		
+U12  I11 plot_v1		
+U13  I12 plot_v1		
+U7  I6 plot_v1		
+U6  I5 plot_v1		
+U5  I4 plot_v1		
+U4  I3 plot_v1		
+U3  I2 plot_v1		
+U2  I1 plot_v1		
+U1  I0 plot_v1		
+
+.end
