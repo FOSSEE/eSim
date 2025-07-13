@@ -383,24 +383,49 @@ class plotWindow(QtWidgets.QMainWindow):
         # Only apply stylesheet for dark mode
         if self.is_dark_theme:
             self.setStyleSheet(DARK_STYLESHEET)
-            QtWidgets.QToolTip.setStyleSheet('''
-                QToolTip {
-                    background-color: #23272e;
-                    color: #fff;
-                    border: 1px solid #388bfd;
-                    border-radius: 6px;
-                    font-size: 13px;
-                    padding: 6px;
-                }
-            ''')
+            # Set global tooltip style for dark mode
+            app = QtWidgets.QApplication.instance()
+            if app:
+                app.setStyleSheet('''
+                    QToolTip {
+                        background-color: #23272e;
+                        color: #fff;
+                        border: 1px solid #388bfd;
+                        border-radius: 6px;
+                        font-size: 13px;
+                        padding: 6px;
+                    }
+                ''')
         else:
             self.setStyleSheet(LIGHT_STYLESHEET)  # Use light stylesheet for light mode
+            # Reset tooltip style for light mode
+            app = QtWidgets.QApplication.instance()
+            if app:
+                app.setStyleSheet('')
         self.createMainFrame()
 
     def toggle_theme(self):
         """Toggle between light and dark themes."""
         self.is_dark_theme = not self.is_dark_theme
         self.setStyleSheet(DARK_STYLESHEET if self.is_dark_theme else LIGHT_STYLESHEET)
+        
+        # Update tooltip styling based on theme
+        app = QtWidgets.QApplication.instance()
+        if app:
+            if self.is_dark_theme:
+                app.setStyleSheet('''
+                    QToolTip {
+                        background-color: #23272e;
+                        color: #fff;
+                        border: 1px solid #388bfd;
+                        border-radius: 6px;
+                        font-size: 13px;
+                        padding: 6px;
+                    }
+                ''')
+            else:
+                app.setStyleSheet('')
+        
         self.update_plot_theme()
 
     def update_plot_theme(self):
