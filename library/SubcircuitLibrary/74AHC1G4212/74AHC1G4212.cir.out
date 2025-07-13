@@ -1,0 +1,33 @@
+* d:\fossee\esim\library\subcircuitlibrary\74ahc1g4212\74ahc1g4212.cir
+
+.include dff.sub
+x1 net-_x1-pad1_ net-_u1-pad2_ ? net-_x1-pad1_ ? ? dff
+x2 net-_x2-pad1_ net-_x1-pad1_ ? net-_x2-pad1_ ? ? dff
+x3 net-_x3-pad1_ net-_x2-pad1_ ? net-_x3-pad1_ ? ? dff
+x4 net-_x4-pad1_ net-_x3-pad1_ ? net-_x4-pad1_ ? ? dff
+x5 ? net-_x4-pad1_ ? net-_x5-pad4_ ? net-_x5-pad4_ dff
+x6 net-_x6-pad1_ net-_x5-pad4_ ? net-_x6-pad1_ ? ? dff
+x7 net-_x7-pad1_ net-_x6-pad1_ ? net-_x7-pad1_ ? ? dff
+x8 net-_x8-pad1_ net-_x7-pad1_ ? net-_x8-pad1_ ? ? dff
+x9 net-_x10-pad2_ net-_x8-pad1_ ? net-_x10-pad2_ ? ? dff
+x10 net-_x10-pad1_ net-_x10-pad2_ ? net-_x10-pad1_ ? ? dff
+x11 net-_x11-pad1_ net-_x10-pad1_ ? net-_x11-pad1_ ? ? dff
+x12 net-_u3-pad1_ net-_x11-pad1_ ? net-_u3-pad1_ ? ? dff
+* u3  net-_u3-pad1_ net-_u1-pad4_ d_inverter
+* u2  net-_u1-pad1_ net-_u1-pad2_ d_inverter
+* u1  net-_u1-pad1_ net-_u1-pad2_ ? net-_u1-pad4_ ? port
+a1 net-_u3-pad1_ net-_u1-pad4_ u3
+a2 net-_u1-pad1_ net-_u1-pad2_ u2
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
