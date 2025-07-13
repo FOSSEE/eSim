@@ -1,0 +1,25 @@
+* Subcircuit TL560C
+.subckt TL560C net-_q1-pad2_ net-_q2-pad3_ net-_q6-pad3_ net-_r3-pad1_ net-_q9-pad1_ 
+* e:\fossee\esim\library\subcircuitlibrary\tl560c\tl560c.cir
+.include NPN.lib
+.include PNP.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q1-pad3_ Q2N2222
+r1  net-_q1-pad3_ net-_q6-pad3_ 5k
+q2 net-_q2-pad1_ net-_q1-pad1_ net-_q2-pad3_ Q2N2907A
+q4 net-_q4-pad1_ net-_q3-pad1_ net-_q2-pad3_ Q2N2907A
+r2  net-_q6-pad2_ net-_q2-pad1_ 1.3k
+q6 net-_q3-pad2_ net-_q6-pad2_ net-_q6-pad3_ Q2N2222
+q5 net-_q5-pad1_ net-_q4-pad1_ net-_q1-pad3_ Q2N2222
+r3  net-_r3-pad1_ net-_q3-pad2_ 2.5k
+r5  net-_q6-pad3_ net-_r3-pad1_ 3k
+r4  net-_r3-pad1_ net-_q2-pad3_ 1.7k
+q7 net-_q7-pad1_ net-_q5-pad1_ net-_q2-pad3_ Q2N2907A
+r6  net-_q8-pad1_ net-_q2-pad3_ 0.3k
+q8 net-_q8-pad1_ net-_q7-pad1_ net-_q8-pad3_ Q2N2222
+r7  net-_q9-pad2_ net-_q8-pad3_ 0.2k
+q9 net-_q9-pad1_ net-_q9-pad2_ net-_q6-pad3_ Q2N2222
+r8  net-_q6-pad3_ net-_q9-pad2_ 3k
+* Control Statements
+
+.ends TL560C

@@ -1,0 +1,23 @@
+* e:\ic_tl560c\ic_tl560c.cir
+
+.include TL560C.sub
+x1 in net-_r1-pad1_ gnd ? out TL560C
+r1  net-_r1-pad1_ in 100k
+r2  in gnd 500k
+r3  net-_r1-pad1_ out 10k
+v2 net-_r1-pad1_ gnd  dc 5
+v1  net-_c1-pad2_ gnd sine(0 1 1k 0 0)
+* u2  out plot_v1
+* u1  in plot_v1
+c1  in net-_c1-pad2_ 0.047u
+.tran 1e-06 10e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+plot v(in)
+.endc
+.end
