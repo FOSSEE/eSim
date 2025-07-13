@@ -54,6 +54,75 @@ class DockArea(QtWidgets.QMainWindow):
         # Set document mode for modern look
         self.setDocumentMode(True)
 
+        # Set custom style for dock widgets and tabs
+        self.setStyleSheet("""
+            QDockWidget {
+                border: 1px solid #23273a;
+                border-radius: 4px;
+                margin-top: 4px;
+            }
+            
+            QDockWidget::title {
+                text-align: center;
+                background: #ffffff;
+                color: #2c3e50;
+                padding: 6px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+                font-weight: bold;
+                font-size: 9pt;
+                border: none;
+            }
+            
+            QTabBar::tab {
+                background: #808080;
+                color: #2c3e50;
+                border: 1px solid #e1e4e8;
+                border-bottom: none;
+                border-top-left-radius: 12px;
+                border-top-right-radius: 12px;
+                min-width: 180px;
+                max-width: 400px;
+                font-weight: 600;
+                font-size: 8pt;
+                letter-spacing: 0.3px;
+                padding: 6px 24px;
+                margin-right: 4px;
+            }
+            
+            QTabBar::tab:selected {
+                background: #8c8c8c;
+                color: #1976d2;
+                border: 1.5px solid #1976d2;
+                border-bottom: 2px solid #1976d2;
+            }
+            
+            QTabBar::tab:hover:!selected {
+                background:#e3f0fc;
+                color: #1976d2;
+            }
+            
+            # QTabWidget::pane {
+            #     border: 1px solid #23273a;
+            #     border-radius: 4px;
+            #     background: #181b24;
+            # }
+            
+            QTabWidget::tab-bar {
+                alignment: center;
+            }
+
+            # QTabBar::close-button {
+            #     image: url(close.png);
+            #     subcontrol-position: right;
+            # }
+            
+            # QTabBar::close-button:hover {
+            #     background: #ff4444;
+            #     border-radius: 2px;
+            # }
+        """)
+
         for dockName in dockList:
             dock[dockName] = QtWidgets.QDockWidget(dockName)
             dock[dockName].setFeatures(QtWidgets.QDockWidget.DockWidgetMovable | 
@@ -484,9 +553,27 @@ class DockArea(QtWidgets.QMainWindow):
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName + str(count)])
         self.tabifyDockWidget(dock['Welcome'], dock[dockName + str(count)])
 
+        # CSS
+        dock[dockName + str(count)].setStyleSheet(" \
+        .QWidget { border-radius: 15px; border: 1px solid gray;\
+            padding: 5px; width: 200px; height: 150px;  } \
+        ")
+
         dock[dockName + str(count)].setVisible(True)
         dock[dockName + str(count)].setFocus()
         dock[dockName + str(count)].raise_()
+
+        # --- Ensure the correct theme is applied immediately ---
+        # Find the Application parent and get the current theme
+        app_parent = self.parent()
+        is_dark_theme = False
+        while app_parent is not None:
+            if hasattr(app_parent, 'is_dark_theme'):
+                is_dark_theme = app_parent.is_dark_theme
+                break
+            app_parent = app_parent.parent() if hasattr(app_parent, 'parent') else None
+        if hasattr(self, 'makerchip_instance') and hasattr(self.makerchip_instance, 'set_theme'):
+            self.makerchip_instance.set_theme(is_dark_theme)
 
         count = count + 1
 
