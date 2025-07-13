@@ -1,0 +1,78 @@
+* Subcircuit SN74LS396
+.subckt SN74LS396 /1 /2 /3 /4 /5 /6 /7 ? /9 /10 /11 /12 /13 /14 /15 ? 
+* d:\fossee\esim\library\subcircuitlibrary\sn74ls396\sn74ls396.cir
+* u3  /3 net-_u1-pad2_ ? ? net-_u3-pad5_ net-_u11-pad1_ d_dff
+* u7  net-_u3-pad5_ net-_u1-pad2_ ? ? ? net-_u12-pad2_ d_dff
+* u4  /6 net-_u1-pad2_ ? ? net-_u4-pad5_ net-_u13-pad1_ d_dff
+* u8  net-_u4-pad5_ net-_u1-pad2_ ? ? ? net-_u14-pad2_ d_dff
+* u5  /9 net-_u1-pad2_ ? ? net-_u5-pad5_ net-_u15-pad1_ d_dff
+* u9  net-_u5-pad5_ net-_u1-pad2_ ? ? ? net-_u16-pad2_ d_dff
+* u6  /12 net-_u1-pad2_ ? ? net-_u10-pad1_ net-_u17-pad1_ d_dff
+* u10  net-_u10-pad1_ net-_u1-pad2_ ? ? ? net-_u10-pad6_ d_dff
+* u13  net-_u13-pad1_ net-_u11-pad2_ /5 d_nor
+* u14  net-_u11-pad2_ net-_u14-pad2_ /4 d_nor
+* u15  net-_u15-pad1_ net-_u11-pad2_ /10 d_nor
+* u16  net-_u11-pad2_ net-_u16-pad2_ /11 d_nor
+* u11  net-_u11-pad1_ net-_u11-pad2_ /2 d_nor
+* u12  net-_u11-pad2_ net-_u12-pad2_ /1 d_nor
+* u17  net-_u17-pad1_ net-_u11-pad2_ /13 d_nor
+* u18  net-_u11-pad2_ net-_u10-pad6_ /14 d_nor
+* u2  /15 net-_u11-pad2_ d_buffer
+* u1  /7 net-_u1-pad2_ d_inverter
+a1 /3 net-_u1-pad2_ ? ? net-_u3-pad5_ net-_u11-pad1_ u3
+a2 net-_u3-pad5_ net-_u1-pad2_ ? ? ? net-_u12-pad2_ u7
+a3 /6 net-_u1-pad2_ ? ? net-_u4-pad5_ net-_u13-pad1_ u4
+a4 net-_u4-pad5_ net-_u1-pad2_ ? ? ? net-_u14-pad2_ u8
+a5 /9 net-_u1-pad2_ ? ? net-_u5-pad5_ net-_u15-pad1_ u5
+a6 net-_u5-pad5_ net-_u1-pad2_ ? ? ? net-_u16-pad2_ u9
+a7 /12 net-_u1-pad2_ ? ? net-_u10-pad1_ net-_u17-pad1_ u6
+a8 net-_u10-pad1_ net-_u1-pad2_ ? ? ? net-_u10-pad6_ u10
+a9 [net-_u13-pad1_ net-_u11-pad2_ ] /5 u13
+a10 [net-_u11-pad2_ net-_u14-pad2_ ] /4 u14
+a11 [net-_u15-pad1_ net-_u11-pad2_ ] /10 u15
+a12 [net-_u11-pad2_ net-_u16-pad2_ ] /11 u16
+a13 [net-_u11-pad1_ net-_u11-pad2_ ] /2 u11
+a14 [net-_u11-pad2_ net-_u12-pad2_ ] /1 u12
+a15 [net-_u17-pad1_ net-_u11-pad2_ ] /13 u17
+a16 [net-_u11-pad2_ net-_u10-pad6_ ] /14 u18
+a17 /15 net-_u11-pad2_ u2
+a18 /7 net-_u1-pad2_ u1
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u3 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u7 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u4 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u8 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u5 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u9 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u6 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u10 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u13 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u14 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u15 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u16 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u11 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u12 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u17 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u18 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u2 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u1 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends SN74LS396
