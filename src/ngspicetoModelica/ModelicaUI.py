@@ -21,7 +21,13 @@ class OpenModelicaEditor(QtWidgets.QWidget):
         self.ngspiceNetlist = os.path.join(
             self.projDir, self.projName + ".cir.out")
         self.modelicaNetlist = os.path.join(self.projDir, "*.mo")
-        self.map_json = Appconfig.modelica_map_json
+        
+        # Handle the case where modelica_map_json might be None
+        try:
+            self.map_json = Appconfig.modelica_map_json
+        except AttributeError:
+            self.map_json = None
+            print("Warning: Modelica map JSON not available")
 
         self.grid = QtWidgets.QGridLayout()
         self.FileEdit = QtWidgets.QLineEdit()

@@ -61,18 +61,19 @@ class Validation:
             :projDir        => Contains path of the new projDir created
 
         @return
-            :"CHECKEXIST"   => If smae project name folder exists
-            :"CHECKNAME"    => If space is there in name
+            :"CHECKEXIST"   => If same project name folder exists
+            :"CHECKNAME"    => If space is there in project name
             :"VALID"        => If valid project name given
         """
         print("Function: Validating New Project Information")
 
         # Checking existence of project with same name
-        projName = os.path.basename(projDir)
         if os.path.exists(projDir):
             return "CHECKEXIST"  # Project with name already exist
         else:
             # Check Proper name for project. It should not have space
+            # Extract only the project name (basename) from the full path
+            projName = os.path.basename(projDir)
             if re.search(r"\s", projName):
                 return "CHECKNAME"
             else:
@@ -220,4 +221,4 @@ class Validation:
             return True
 
         print("Last line not found:", last_line)
-        return False
+        return false

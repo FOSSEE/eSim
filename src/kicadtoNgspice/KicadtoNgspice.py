@@ -230,7 +230,41 @@ class MainWindow(QtWidgets.QWidget):
         self.microcontrollerTab.setWidgetResizable(True)
 
         self.tabWidget = QtWidgets.QTabWidget()
-        # self.tabWidget.TabShape(QtWidgets.QTabWidget.Rounded)
+        # Apply custom stylesheet to ensure tab text is not cropped and matches Makerchip/NgVeri style
+        self.tabWidget.setStyleSheet('''
+            QTabWidget::pane {
+                border: 2px solid #23273a;
+                border-radius: 14px;
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #23273a, stop:1 #181b24);
+            }
+            QTabBar::tab {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #23273a, stop:1 #181b24);
+                color: #e8eaed;
+                border: 1px solid #40c4ff;
+                border-bottom: none;
+                border-top-left-radius: 8px;
+                border-top-right-radius: 8px;
+                padding: 12px 28px;
+                margin-right: 2px;
+                font-size: 14px;
+                font-weight: bold;
+                min-width: 150px;
+                max-width: 300px;
+            }
+            QTabBar::tab:selected {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #40c4ff, stop:1 #1976d2);
+                color: #181b24;
+                border: 1px solid #40c4ff;
+                border-bottom: none;
+            }
+            QTabBar::tab:hover:!selected {
+                background: #1976d2;
+                color: #fff;
+            }
+        ''')
         self.tabWidget.addTab(self.analysisTab, "Analysis")
         self.tabWidget.addTab(self.sourceTab, "Source Details")
         self.tabWidget.addTab(self.modelTab, "Ngspice Model")

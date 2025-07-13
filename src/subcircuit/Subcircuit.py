@@ -29,26 +29,61 @@ class Subcircuit(QtWidgets.QWidget):
         self.splitter = QtWidgets.QSplitter()
         self.splitter.setOrientation(QtCore.Qt.Vertical)
 
+        # Create buttons with proper sizing and styling
         self.newbtn = QtWidgets.QPushButton('New Subcircuit Schematic')
         self.newbtn.setToolTip('<b>To create new Subcircuit Schematic</b>')
-        self.newbtn.setFixedSize(200, 40)
+        self.newbtn.setMinimumWidth(250)  # Increased width
+        self.newbtn.setMinimumHeight(45)  # Increased height
+        self.newbtn.setStyleSheet("""
+            QPushButton {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #40c4ff, stop:1 #1976d2);
+                color: #181b24;
+                border: 1px solid #40c4ff;
+                border-radius: 10px;
+                padding: 10px 20px;
+                font-size: 14px;
+                font-weight: bold;
+                text-align: center;
+            }
+            QPushButton:hover {
+                background: #1976d2;
+                color: #fff;
+                border: 1.5px solid #1976d2;
+            }
+            QPushButton:pressed {
+                background: #23273a;
+                color: #40c4ff;
+                border: 1.5px solid #40c4ff;
+            }
+        """)
         self.newbtn.clicked.connect(self.newsch)
+
         self.editbtn = QtWidgets.QPushButton('Edit Subcircuit Schematic')
         self.editbtn.setToolTip('<b>To edit existing Subcircuit Schematic</b>')
-        self.editbtn.setFixedSize(200, 40)
+        self.editbtn.setMinimumWidth(250)  # Increased width
+        self.editbtn.setMinimumHeight(45)  # Increased height
+        self.editbtn.setStyleSheet(self.newbtn.styleSheet())
         self.editbtn.clicked.connect(self.editsch)
+
         self.convertbtn = QtWidgets.QPushButton('Convert Kicad to Ngspice')
-        self.convertbtn.setToolTip(
-            '<b>To convert Subcircuit Kicad Netlist to Ngspice Netlist</b>')
-        self.convertbtn.setFixedSize(200, 40)
+        self.convertbtn.setToolTip('<b>To convert Subcircuit Kicad Netlist to Ngspice Netlist</b>')
+        self.convertbtn.setMinimumWidth(250)  # Increased width
+        self.convertbtn.setMinimumHeight(45)  # Increased height
+        self.convertbtn.setStyleSheet(self.newbtn.styleSheet())
         self.convertbtn.clicked.connect(self.convertsch)
+
         self.uploadbtn = QtWidgets.QPushButton('Upload a Subcircuit')
-        self.uploadbtn.setToolTip(
-                '<b>To Upload a subcircuit</b>')
-        self.uploadbtn.setFixedSize(180, 38)
+        self.uploadbtn.setToolTip('<b>To Upload a subcircuit</b>')
+        self.uploadbtn.setMinimumWidth(250)  # Increased width
+        self.uploadbtn.setMinimumHeight(45)  # Increased height
+        self.uploadbtn.setStyleSheet(self.newbtn.styleSheet())
         self.uploadbtn.clicked.connect(self.uploadSub)
 
+        # Create layout with proper spacing
         self.hbox = QtWidgets.QHBoxLayout()
+        self.hbox.setSpacing(15)  # Add spacing between buttons
+        self.hbox.setContentsMargins(15, 15, 15, 15)  # Add margins around buttons
         self.hbox.addWidget(self.newbtn)
         self.hbox.addWidget(self.editbtn)
         self.hbox.addWidget(self.convertbtn)
@@ -56,6 +91,8 @@ class Subcircuit(QtWidgets.QWidget):
         self.hbox.addStretch(1)
 
         self.vbox = QtWidgets.QVBoxLayout()
+        self.vbox.setSpacing(15)  # Add vertical spacing
+        self.vbox.setContentsMargins(15, 15, 15, 15)  # Add margins
         self.vbox.addLayout(self.hbox)
         self.vbox.addStretch(1)
 

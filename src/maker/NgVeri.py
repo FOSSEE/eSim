@@ -41,10 +41,11 @@ class NgVeri(QtWidgets.QWidget):
     '''
         This class create the NgVeri Tab
     '''
-    def __init__(self, filecount):
+    def __init__(self, filecount, is_dark_theme=False):
         QtWidgets.QWidget.__init__(self)
         # Maker.addverilog(self)
         self.obj_Appconfig = Appconfig()
+        self.is_dark_theme = is_dark_theme
 
         if os.name == 'nt':
             self.home = os.path.join('library', 'config')
@@ -77,7 +78,73 @@ class NgVeri(QtWidgets.QWidget):
         self.grid.addWidget(self.createoptionsBox(), 0, 0, QtCore.Qt.AlignTop)
         self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
+        # Apply initial theme styling
+        self.apply_theme_styling()
+
         self.show()
+
+    def apply_theme_styling(self):
+        """Apply theme styling to the NgVeri widget."""
+        self.setObjectName("ngveri_widget")
+        
+        if self.is_dark_theme:
+            self.setStyleSheet("""
+                QWidget { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #23273a, stop:1 #181b24); color: #e8eaed; }
+                QGroupBox { border: 2px solid #40c4ff; border-radius: 14px; margin-top: 1em; padding: 15px; background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #23273a, stop:1 #181b24); color: #e8eaed; }
+                QGroupBox::title { subcontrol-origin: margin; left: 15px; padding: 0 5px; color: #40c4ff; font-weight: bold; font-size: 14px; }
+                QPushButton { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #40c4ff, stop:1 #1976d2); color: #181b24; border: 1px solid #40c4ff; min-height: 35px; min-width: 120px; padding: 8px 15px; border-radius: 10px; font-weight: 700; font-size: 12px; }
+                QPushButton:hover { background: #1976d2; color: #fff; border: 1.5px solid #1976d2; }
+                QPushButton:pressed { background: #23273a; color: #40c4ff; border: 1.5px solid #40c4ff; }
+                QPushButton:disabled { background: #23273a; color: #888; border: 1px solid #23273a; }
+                QTextEdit { background: #23273a; color: #e8eaed; border: 1px solid #40c4ff; border-radius: 8px; padding: 10px; font-size: 12px; font-family: 'Consolas', 'Monaco', monospace; }
+                QComboBox { background: #23273a; color: #e8eaed; border: 1px solid #40c4ff; border-radius: 8px; padding: 5px 10px; min-height: 30px; font-size: 12px; }
+                QComboBox:hover { border: 1.5px solid #1976d2; }
+                QComboBox::drop-down { border: none; width: 20px; }
+                QComboBox::down-arrow { width: 12px; height: 12px; }
+                QLineEdit { background: #23273a; color: #e8eaed; border: 1px solid #40c4ff; border-radius: 8px; padding: 8px 12px; min-height: 30px; font-size: 12px; }
+                QLineEdit:focus { border: 1.5px solid #1976d2; }
+                QLabel { color: #e8eaed; }
+            """)
+        else:
+            self.setStyleSheet("""
+                QWidget { background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:1 #f8f9fa); color: #2c3e50; }
+                QGroupBox { border: 2px solid #1976d2; border-radius: 14px; margin-top: 1em; padding: 15px; background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #ffffff, stop:1 #f8f9fa); color: #2c3e50; }
+                QGroupBox::title { subcontrol-origin: margin; left: 15px; padding: 0 5px; color: #1976d2; font-weight: bold; font-size: 14px; }
+                QPushButton {
+                    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #f5f7fa, stop:1 #e3e8ee);
+                    color: #1976d2;
+                    border: 1px solid #b0bec5;
+                    min-height: 35px;
+                    min-width: 120px;
+                    padding: 8px 15px;
+                    border-radius: 10px;
+                    font-weight: 700;
+                    font-size: 12px;
+                }
+                QPushButton:hover {
+                    background: #e3e8ee;
+                    color: #1565c0;
+                    border: 1.5px solid #1976d2;
+                }
+                QPushButton:pressed {
+                    background: #cfd8dc;
+                    color: #1976d2;
+                    border: 1.5px solid #1976d2;
+                }
+                QPushButton:disabled {
+                    background: #e1e4e8;
+                    color: #7f8c8d;
+                    border: 1px solid #e1e4e8;
+                }
+                QTextEdit { background: #ffffff; color: #2c3e50; border: 1px solid #1976d2; border-radius: 8px; padding: 10px; font-size: 12px; font-family: 'Consolas', 'Monaco', monospace; }
+                QComboBox { background: #ffffff; color: #2c3e50; border: 1px solid #1976d2; border-radius: 8px; padding: 5px 10px; min-height: 30px; font-size: 12px; }
+                QComboBox:hover { border: 1.5px solid #1565c0; }
+                QComboBox::drop-down { border: none; width: 20px; }
+                QComboBox::down-arrow { width: 12px; height: 12px; }
+                QLineEdit { background: #ffffff; color: #2c3e50; border: 1px solid #1976d2; border-radius: 8px; padding: 8px 12px; min-height: 30px; font-size: 12px; }
+                QLineEdit:focus { border: 1.5px solid #1565c0; }
+                QLabel { color: #2c3e50; }
+            """)
 
     def addverilog(self):
         '''
@@ -231,8 +298,11 @@ class NgVeri(QtWidgets.QWidget):
         self.optionsbox = QtWidgets.QGroupBox()
         self.optionsbox.setTitle("Select Options")
         self.optionsgrid = QtWidgets.QGridLayout()
-
         self.optionsgroupbtn = QtWidgets.QButtonGroup()
+
+        # Set margins and spacing for better layout
+        self.optionsgrid.setContentsMargins(15, 20, 15, 15)
+        self.optionsgrid.setSpacing(15)
 
         self.addverilogbutton = QtWidgets.QPushButton(
             "Convert Verilog to Ngspice")
@@ -243,30 +313,23 @@ class NgVeri(QtWidgets.QWidget):
         self.optionsgroupbtn.addButton(self.addverilogbutton)
         self.addverilogbutton.clicked.connect(self.addverilog)
         self.optionsgrid.addWidget(self.addverilogbutton, 0, 1)
-        # self.optionsbox.setLayout(self.optionsgrid)
-        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
         self.addfilebutton = QtWidgets.QPushButton("Add dependency files")
         self.optionsgroupbtn.addButton(self.addfilebutton)
         self.addfilebutton.clicked.connect(self.addfile)
         self.optionsgrid.addWidget(self.addfilebutton, 0, 2)
-        # self.optionsbox.setLayout(self.optionsgrid)
-        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
         self.addfolderbutton = QtWidgets.QPushButton("Add dependency folder")
         self.optionsgroupbtn.addButton(self.addfolderbutton)
         self.addfolderbutton.clicked.connect(self.addfolder)
         self.optionsgrid.addWidget(self.addfolderbutton, 0, 3)
-        # self.optionsbox.setLayout(self.optionsgrid)
-        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
         self.clearTerminalBtn = QtWidgets.QPushButton("Clear Terminal")
         self.optionsgroupbtn.addButton(self.clearTerminalBtn)
         self.clearTerminalBtn.clicked.connect(self.clearTerminal)
         self.optionsgrid.addWidget(self.clearTerminalBtn, 0, 4)
-        self.optionsbox.setLayout(self.optionsgrid)
-        # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
 
+        self.optionsbox.setLayout(self.optionsgrid)
         return self.optionsbox
 
     def edit_modlst(self, text):
@@ -338,21 +401,14 @@ class NgVeri(QtWidgets.QWidget):
             QtWidgets.QMessageBox.Cancel)
 
         if ret == QtWidgets.QMessageBox.Ok:
-            try: 
-                file_path = os.path.join(init_path, "library/tlv/lint_off.txt")
-                with open(file_path, 'r') as file:
-                    data = file.readlines()
-                data = [line for line in data if line.strip() != text]
-                with open(file_path, 'w') as file:
-                    file.writelines(data)
-                    
-            except Exception as e:
-                QtWidgets.QMessageBox.warning(
-                    None,
-                    "Warning",
-                    f"Could not remove lint_off entry '{text}'",
-                    QtWidgets.QMessageBox.Ok
-                )
+            file = open(init_path + "library/tlv/lint_off.txt", 'r')
+            data = file.readlines()
+            file.close()
+
+            data.remove(text + "\n")
+            file = open(init_path + "library/tlv/lint_off.txt", 'w')
+            for item in data:
+                file.write(item)
 
     def add_lint_off(self):
         '''
@@ -379,14 +435,15 @@ class NgVeri(QtWidgets.QWidget):
         '''
         self.trbox = QtWidgets.QGroupBox()
         self.trbox.setTitle("Terminal")
-        # self.trbox.setDisabled(True)
-        # self.trbox.setVisible(False)
         self.trgrid = QtWidgets.QGridLayout()
         self.trbox.setLayout(self.trgrid)
         self.count = 0
 
+        # Set margins and spacing for better layout
+        self.trgrid.setContentsMargins(15, 20, 15, 15)
+        self.trgrid.setSpacing(15)
+
         self.start = QtWidgets.QLabel("Terminal")
-        # self.trgrid.addWidget(self.start, 2,0)
         self.entry_var[self.count] = QtWidgets.QTextEdit()
         self.entry_var[self.count].setReadOnly(1)
         self.trgrid.addWidget(self.entry_var[self.count], 1, 1, 5, 3)
@@ -405,6 +462,7 @@ class NgVeri(QtWidgets.QWidget):
         self.entry_var[self.count].activated[str].connect(self.edit_modlst)
         self.trgrid.addWidget(self.entry_var[self.count], 1, 4, 1, 2)
         self.count += 1
+
         self.entry_var[self.count] = QtWidgets.QComboBox()
         self.entry_var[self.count].addItem("Remove lint_off")
 
@@ -421,23 +479,23 @@ class NgVeri(QtWidgets.QWidget):
         self.entry_var[self.count].activated[str].connect(self.lint_off_edit)
         self.trgrid.addWidget(self.entry_var[self.count], 2, 4, 1, 2)
         self.count += 1
+
         self.entry_var[self.count] = QtWidgets.QLineEdit(self)
         self.trgrid.addWidget(self.entry_var[self.count], 3, 4)
-        self.entry_var[self.count].setMaximumWidth(100)
+        self.entry_var[self.count].setMaximumWidth(200)
         self.count += 1
+
         self.entry_var[self.count] = QtWidgets.QPushButton("Add lint_off")
-        self.entry_var[self.count].setMaximumWidth(100)
+        self.entry_var[self.count].setMaximumWidth(150)
         self.trgrid.addWidget(self.entry_var[self.count], 3, 5)
         self.entry_var[self.count].clicked.connect(self.add_lint_off)
 
         self.count += 1
 
-        # CSS
-        self.trbox.setStyleSheet(" \
-        QGroupBox { border: 1px solid gray; border-radius: \
-        9px; margin-top: 0.5em; } \
-        QGroupBox::title { subcontrol-origin: margin; left: \
-         10px; padding: 0 3px 0 3px; } \
-        ")
-
+        self.trbox.setLayout(self.trgrid)
         return self.trbox
+
+    def set_theme(self, is_dark_theme):
+        """Update the theme and re-apply styling."""
+        self.is_dark_theme = is_dark_theme
+        self.apply_theme_styling()
