@@ -1,0 +1,248 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:IC_811M-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L TL811M X1
+U 1 1 6845BEBA
+P 6450 4500
+F 0 "X1" H 6500 3950 60  0000 C CNN
+F 1 "TL811M" H 6500 5050 60  0000 C CNN
+F 2 "" H 6450 4500 60  0001 C CNN
+F 3 "" H 6450 4500 60  0001 C CNN
+	1    6450 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R1
+U 1 1 6845BF00
+P 5000 4000
+F 0 "R1" H 5050 4130 50  0000 C CNN
+F 1 "50k" H 5050 3950 50  0000 C CNN
+F 2 "" H 5050 3980 30  0000 C CNN
+F 3 "" V 5050 4050 30  0000 C CNN
+	1    5000 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R2
+U 1 1 6845BF41
+P 5000 4250
+F 0 "R2" H 5050 4380 50  0000 C CNN
+F 1 "50k" H 5050 4200 50  0000 C CNN
+F 2 "" H 5050 4230 30  0000 C CNN
+F 3 "" V 5050 4300 30  0000 C CNN
+	1    5000 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L DC v2
+U 1 1 6845C1D6
+P 5750 6150
+F 0 "v2" H 5550 6250 60  0000 C CNN
+F 1 "DC" H 5550 6100 60  0000 C CNN
+F 2 "R1" H 5450 6150 60  0000 C CNN
+F 3 "" H 5750 6150 60  0000 C CNN
+	1    5750 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L DC v3
+U 1 1 6845C210
+P 6300 6150
+F 0 "v3" H 6100 6250 60  0000 C CNN
+F 1 "DC" H 6100 6100 60  0000 C CNN
+F 2 "R1" H 6000 6150 60  0000 C CNN
+F 3 "" H 6300 6150 60  0000 C CNN
+	1    6300 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR01
+U 1 1 6845C27E
+P 5600 5800
+F 0 "#PWR01" H 5600 5550 50  0001 C CNN
+F 1 "GND" H 5600 5650 50  0000 C CNN
+F 2 "" H 5600 5800 50  0001 C CNN
+F 3 "" H 5600 5800 50  0001 C CNN
+	1    5600 5800
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR02
+U 1 1 6845C2C0
+P 5950 5200
+F 0 "#PWR02" H 5950 4950 50  0001 C CNN
+F 1 "GND" H 5950 5050 50  0000 C CNN
+F 2 "" H 5950 5200 50  0001 C CNN
+F 3 "" H 5950 5200 50  0001 C CNN
+	1    5950 5200
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR03
+U 1 1 6845C2DD
+P 5750 6700
+F 0 "#PWR03" H 5750 6450 50  0001 C CNN
+F 1 "GND" H 5750 6550 50  0000 C CNN
+F 2 "" H 5750 6700 50  0001 C CNN
+F 3 "" H 5750 6700 50  0001 C CNN
+	1    5750 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR04
+U 1 1 6845C2FA
+P 6300 6700
+F 0 "#PWR04" H 6300 6450 50  0001 C CNN
+F 1 "GND" H 6300 6550 50  0000 C CNN
+F 2 "" H 6300 6700 50  0001 C CNN
+F 3 "" H 6300 6700 50  0001 C CNN
+	1    6300 6700
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U1
+U 1 1 6845C3CC
+P 7050 4450
+F 0 "U1" H 7050 4950 60  0000 C CNN
+F 1 "plot_v1" H 7250 4800 60  0000 C CNN
+F 2 "" H 7050 4450 60  0000 C CNN
+F 3 "" H 7050 4450 60  0000 C CNN
+	1    7050 4450
+	0    1    1    0   
+$EndComp
+Text GLabel 7150 4150 1    60   Input ~ 0
+OUT
+$Comp
+L plot_v1 U2
+U 1 1 6845DA75
+P 4200 4300
+F 0 "U2" H 4200 4800 60  0000 C CNN
+F 1 "plot_v1" H 4400 4650 60  0000 C CNN
+F 2 "" H 4200 4300 60  0000 C CNN
+F 3 "" H 4200 4300 60  0000 C CNN
+	1    4200 4300
+	0    -1   -1   0   
+$EndComp
+Text GLabel 4250 4150 1    60   Input ~ 0
+IN
+$Comp
+L pulse v1
+U 1 1 6845C0E1
+P 4450 4800
+F 0 "v1" H 4250 4900 60  0000 C CNN
+F 1 "pulse" H 4250 4750 60  0000 C CNN
+F 2 "R1" H 4150 4800 60  0000 C CNN
+F 3 "" H 4450 4800 60  0000 C CNN
+	1    4450 4800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5950 3950 5950 4100
+Wire Wire Line
+	5200 4200 5950 4200
+Wire Wire Line
+	4900 3950 4450 3950
+Wire Wire Line
+	4450 3950 4450 4350
+Wire Wire Line
+	4450 4200 4900 4200
+Wire Wire Line
+	5950 4300 5600 4300
+Wire Wire Line
+	5600 4300 5600 5800
+Wire Wire Line
+	5950 4400 5600 4400
+Connection ~ 5600 4400
+Wire Wire Line
+	5950 4550 5750 4550
+Wire Wire Line
+	5750 4550 5750 5700
+Wire Wire Line
+	5950 4650 5850 4650
+Wire Wire Line
+	5850 4650 5850 5700
+Wire Wire Line
+	5950 5000 5950 5200
+Wire Wire Line
+	5600 4850 5950 4850
+Connection ~ 5600 4850
+Connection ~ 4450 4200
+Wire Wire Line
+	4450 5250 4450 5550
+Wire Wire Line
+	4450 5550 5600 5550
+Connection ~ 5600 5550
+Wire Wire Line
+	5850 5700 6300 5700
+Wire Wire Line
+	5750 6600 5750 6700
+Wire Wire Line
+	6300 6600 6300 6700
+Wire Wire Line
+	6950 4450 7250 4450
+Wire Wire Line
+	7150 4150 7150 4450
+Connection ~ 7150 4450
+Wire Wire Line
+	4000 4300 4450 4300
+Connection ~ 4450 4300
+Wire Wire Line
+	4250 4150 4250 4300
+Connection ~ 4250 4300
+Wire Wire Line
+	5200 3950 5950 3950
+$EndSCHEMATC

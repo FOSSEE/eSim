@@ -1,0 +1,22 @@
+* e:\ic_811m\ic_811m.cir
+
+.include 811M.sub
+x1 net-_r2-pad2_ net-_r1-pad2_ net-_x1-pad3_ gnd ? out net-_x1-pad7_ gnd gnd gnd 811M
+r1  in net-_r1-pad2_ 50k
+r2  in net-_r2-pad2_ 50k
+v2 net-_x1-pad7_ gnd  dc -5
+v3 net-_x1-pad3_ gnd  dc 10
+* u1  out plot_v1
+* u2  in plot_v1
+v1  in gnd pulse(0 2.5 1ms 1us 1us 4ms 10ms)
+.tran 1e-06 10e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+plot v(in)
+.endc
+.end
