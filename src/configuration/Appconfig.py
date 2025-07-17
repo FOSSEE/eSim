@@ -110,3 +110,26 @@ class Appconfig(QtWidgets.QWidget):
 
     def print_error(self, error):
         self.noteArea['Note'].append('[ERROR]: ' + error)
+
+    def save_current_project(self):
+        try:
+            path = os.path.join(self.user_home, ".esim", "last_project.json")
+            with open(path, "w") as f:
+                json.dump(self.current_project, f)
+        except Exception as e:
+            print("Failed to save current project:", str(e))
+
+    def load_last_project(self):
+        try:
+            path = os.path.join(self.user_home, ".esim", "last_project.json")
+            with open(path, "r") as f:
+                data = json.load(f)
+                project_path = data.get("ProjectName", None)
+                if project_path and os.path.exists(project_path):
+                    self.current_project["ProjectName"] = project_path
+                    return project_path
+                else:
+                    print("Project path does not exist: ", project_path)
+        except Exception as e:
+            print("Error: ", str(e))
+        return None
