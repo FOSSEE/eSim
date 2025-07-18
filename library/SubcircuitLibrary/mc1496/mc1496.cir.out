@@ -1,0 +1,25 @@
+* c:\fossee\esim\library\subcircuitlibrary\mc1496\mc1496.cir
+
+.include NPN.lib
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q5 net-_q5-pad1_ net-_q5-pad2_ net-_q2-pad3_ Q2N2222
+q6 net-_q2-pad1_ net-_q5-pad2_ net-_q6-pad3_ Q2N2222
+q9 net-_q5-pad1_ net-_q2-pad2_ net-_q6-pad3_ Q2N2222
+q3 net-_q2-pad3_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+q4 net-_q3-pad3_ net-_q1-pad1_ net-_q4-pad3_ Q2N2222
+q7 net-_q6-pad3_ net-_q7-pad2_ net-_q7-pad3_ Q2N2222
+q8 net-_q7-pad3_ net-_q1-pad1_ net-_q8-pad3_ Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad1_ net-_q1-pad3_ Q2N2222
+r2  net-_q4-pad3_ net-_r1-pad2_ 500
+r1  net-_q1-pad3_ net-_r1-pad2_ 500
+r3  net-_q8-pad3_ net-_r1-pad2_ 500
+* u1  net-_q7-pad2_ net-_q7-pad3_ net-_q3-pad3_ net-_q3-pad2_ net-_q1-pad1_ net-_q2-pad1_ ? net-_q2-pad2_ ? net-_q5-pad2_ ? net-_q5-pad1_ ? net-_r1-pad2_ port
+.tran 0.1e-06 10e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
