@@ -536,27 +536,7 @@ class FosseHelpWidget(QWidget):
     
     def load_default_esim_faq(self):
         """Load default eSIM FAQ data"""
-        esim_faq_data = [
-            ("How do I activate my eSIM?", "Open the eSIM app → 'My Plans' → 'Activate New Plan' → Scan QR code from your purchase email → Follow setup instructions. Your eSIM will be active within minutes."),
-            
-            ("Which devices work with eSIM?", "Compatible devices: iPhone XS/XR and newer, iPad Pro (3rd gen+), iPad Air (3rd gen+), iPad mini (5th gen+), Google Pixel 3+, Samsung Galaxy S20+, and most recent Android devices with eSIM support."),
-            
-            ("How many countries does eSIM cover?", "eSIM provides coverage in 200+ countries worldwide including Europe, Asia, Americas, Africa, and Oceania. Check specific coverage in the app's 'Browse Plans' section."),
-            
-            ("What data plans are available?", "Flexible plans available: Daily (100MB-1GB), Weekly (1GB-10GB), Monthly (3GB-50GB), Regional multi-country plans. Starting from $3 with no hidden fees."),
-            
-            ("How do I check my data usage?", "Open eSIM app → Main dashboard shows current usage under 'Usage Overview' → 'My Plans' section displays remaining data, plan expiry, and usage history."),
-            
-            ("Can I use eSIM with my regular SIM?", "Yes! eSIM works alongside your physical SIM card. Use dual SIM functionality - keep your home SIM for calls/texts and eSIM for data while traveling."),
-            
-            ("My eSIM won't connect. What should I do?", "Troubleshooting: 1) Check device compatibility 2) Verify coverage area 3) Restart device 4) Toggle airplane mode 5) Enable eSIM in Settings → Cellular 6) Contact 24/7 support if issues persist."),
-            
-            ("How do I add more data to my plan?", "In eSIM app: 'My Plans' → Select active plan → 'Top Up' or 'Extend Plan' → Choose additional data/time → Complete payment. Updates immediately without new QR code."),
-            
-            ("What is the refund policy?", "30-day money-back guarantee for unused plans. Full refund available if you haven't activated your plan or used less than 10MB of data. Contact support for refund requests."),
-            
-            ("How do I contact support?", "Multiple support channels: 1) In-app chat (24/7) 2) Email: support@esim.com 3) App help center 4) Website live chat. Multilingual support with 2-4 hour response time."),
-        ]
+        esim_faq_data = []
         
         self.qa_data = esim_faq_data
         self.populate_qa_widgets()
