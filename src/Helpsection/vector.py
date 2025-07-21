@@ -5,7 +5,7 @@ import os
 import pandas as pd
 
 # Load the CSV data
-df = pd.read_csv("esim_help.csv")
+df = pd.read_csv("resources/esim_help.csv")
 
 # Initialize embeddings
 embeddings = OllamaEmbeddings(model="mxbai-embed-large")

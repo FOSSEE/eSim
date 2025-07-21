@@ -7,7 +7,7 @@ from subcircuit.Subcircuit import Subcircuit
 from maker.makerchip import makerchip
 from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
-from browser.UserManual import UserManual
+from Helpsection.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt

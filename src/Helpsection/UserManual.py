@@ -9,10 +9,10 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                             QTabWidget, QStyle, QToolButton, QTextBrowser)
 from PyQt5.QtCore import Qt, QPropertyAnimation, QEasingCurve, pyqtSignal, QSize, QThread, QUrl
 from PyQt5.QtGui import QFont, QPalette, QColor, QIcon
-from browser.main import get_bot_response
+from Helpsection.local_bot import get_bot_response
 
 class ExpandableQAWidget(QFrame):
-   
+    """Custom widget for expandable Q&A pairs with eSIM app theme (improved visuals)"""
     
     def __init__(self, question, answer, parent=None):
         super().__init__(parent)
