@@ -3,3 +3,11 @@ flake8==3.7.7
 mccabe==0.6.1
 pycodestyle==2.5.0
 pyflakes==2.1.1
+Flask==3.1.1
+langchain-ollama==0.3.3
+langchain-core==0.3.65
+langchain-chroma==0.2.4
+pandas==2.3.0
+requests==2.32.4
+uuid==1.30
+secrets==1.0.0

@@ -7,7 +7,7 @@ from subcircuit.Subcircuit import Subcircuit
 from maker.makerchip import makerchip
 from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
-from browser.UserManual import UserManual
+from Helpsection.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt
@@ -495,32 +495,35 @@ class DockArea(QtWidgets.QMainWindow):
         count = count + 1
 
     def usermanual(self):
-        """This function creates a widget for user manual."""
-        global count
+        dock_name = 'Help Section'
+        
+        # If the dock already exists, bring it to the front
+        if dock_name in dock and dock[dock_name].isVisible():
+            dock[dock_name].setFocus()
+            dock[dock_name].raise_()
+            return
+
         self.usermanualWidget = QtWidgets.QWidget()
         self.usermanualLayout = QtWidgets.QVBoxLayout()
         self.usermanualLayout.addWidget(UserManual())
 
         self.usermanualWidget.setLayout(self.usermanualLayout)
-        dock['User Manual-' +
-             str(count)] = QtWidgets.QDockWidget('User Manual-' + str(count))
-        dock['User Manual-' + str(count)].setWidget(self.usermanualWidget)
+        dock[dock_name] = QtWidgets.QDockWidget(dock_name)
+        dock[dock_name].setWidget(self.usermanualWidget)
         self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
-                           dock['User Manual-' + str(count)])
+                           dock[dock_name])
         self.tabifyDockWidget(dock['Welcome'],
-                              dock['User Manual-' + str(count)])
+                              dock[dock_name])
 
         # CSS
-        dock['User Manual-' + str(count)].setStyleSheet(" \
+        dock[dock_name].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray;\
             padding: 5px; width: 200px; height: 150px;  } \
         ")
 
-        dock['User Manual-' + str(count)].setVisible(True)
-        dock['User Manual-' + str(count)].setFocus()
-        dock['User Manual-' + str(count)].raise_()
-
-        count = count + 1
+        dock[dock_name].setVisible(True)
+        dock[dock_name].setFocus()
+        dock[dock_name].raise_()
 
     def modelicaEditor(self, projDir):
         """This function sets up the UI for ngspice to modelica conversion."""
