@@ -1,0 +1,28 @@
+* c:\fossee\esim\library\subcircuitlibrary\uaf42\uaf42.cir
+
+.include lm_741.sub
+x1 ? net-_r1-pad2_ net-_r2-pad2_ v- ? net-_r3-pad2_ v+ ? lm_741
+x2 ? net-_c1-pad2_ gnd v- ? net-_c1-pad1_ v+ ? lm_741
+x3 ? net-_c2-pad2_ gnd v- ? net-_c2-pad1_ v+ ? lm_741
+r2  gnd net-_r2-pad2_ 50k
+r4  net-_r2-pad2_ net-_c1-pad1_ 50k
+r3  net-_r1-pad2_ net-_r3-pad2_ 50k
+r6  net-_r1-pad2_ net-_c2-pad1_ 50k
+c1  net-_c1-pad1_ net-_c1-pad2_ 1n
+c2  net-_c2-pad1_ net-_c2-pad2_ 1n
+r5  net-_r3-pad2_ net-_c1-pad2_ 316k
+r7  net-_c1-pad1_ net-_c2-pad2_ 316k
+x4 ? net-_r8-pad2_ gnd v- ? net-_r9-pad2_ v+ ? lm_741
+r8  net-_c1-pad1_ net-_r8-pad2_ 10k
+r9  net-_r8-pad2_ net-_r9-pad2_ 100k
+r1  net-_r1-pad1_ net-_r1-pad2_ 50k
+* u1  net-_r1-pad1_ net-_r3-pad2_ net-_c1-pad1_ net-_c2-pad1_ net-_r9-pad2_ v+ v- port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
