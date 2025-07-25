@@ -1,0 +1,15 @@
+* C:\Users\pavithra\eSim-Workspace\CD4049_test\CD4049_test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/29/25 23:38:42
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v2  Net-_X1-Pad1_ GND DC		
+v1  in GND pulse		
+U1  OUT plot_v1		
+X1  Net-_X1-Pad1_ OUT in ? ? ? ? GND ? ? ? ? ? ? ? ? CD4049		
+U2  in plot_v1		
+
+.end

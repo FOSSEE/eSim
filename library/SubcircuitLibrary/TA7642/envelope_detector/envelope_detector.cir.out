@@ -1,0 +1,24 @@
+* AM Envelope Detector
+
+* AM signal: 50mV carrier, 40mV modulated at 1kHz, carrier at 1MHz
+v1 in 0 AM(0.05 0.04 1k 1Meg 0 0)
+
+* Diode model
+.model D1 D (IS=1e-14)
+
+* Envelope detector
+D1 in out D1
+C1 out 0 0.047u
+R1 out 0 10k
+
+* Transient analysis for 10ms
+.tran 0.1u 10m
+
+* Control Statements
+.control
+run
+plot v(in) 
+plot v(out)
+.endc
+
+.end

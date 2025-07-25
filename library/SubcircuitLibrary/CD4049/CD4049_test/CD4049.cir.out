@@ -1,0 +1,63 @@
+* c:\fossee\esim\library\subcircuitlibrary\cd4049\cd4049.cir
+
+.include PMOS-5um.lib
+.include NMOS-5um.lib
+.include D.lib
+d2 net-_d1-pad1_ net-_d2-pad2_ 1N4148
+d5 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d3 net-_d1-pad1_ net-_d2-pad2_ 1N4148
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d4 net-_d1-pad1_ net-_d4-pad2_ 1N4148
+m2 net-_m1-pad1_ net-_d4-pad2_ net-_d1-pad2_ net-_d1-pad2_ mos_p W=100u L=100u M=1
+m1 net-_m1-pad1_ net-_d4-pad2_ net-_d1-pad1_ net-_d1-pad1_ mos_n W=100u L=100u M=1
+r1  net-_d2-pad2_ net-_d4-pad2_ 1k
+* u1  net-_d1-pad2_ net-_m1-pad1_ net-_d2-pad2_ net-_m3-pad1_ net-_d7-pad2_ net-_m5-pad1_ net-_d12-pad2_ net-_d1-pad1_ net-_d17-pad2_ net-_m7-pad1_ net-_d22-pad2_ net-_m10-pad1_ ? net-_d27-pad2_ net-_m11-pad1_ ? port
+d7 net-_d1-pad1_ net-_d7-pad2_ 1N4148
+d10 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d8 net-_d1-pad1_ net-_d7-pad2_ 1N4148
+d6 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d9 net-_d1-pad1_ net-_d9-pad2_ 1N4148
+m4 net-_m3-pad1_ net-_d9-pad2_ net-_d1-pad2_ net-_d1-pad2_ mos_p W=100u L=100u M=1
+m3 net-_m3-pad1_ net-_d9-pad2_ net-_d1-pad1_ net-_d1-pad1_ mos_n W=100u L=100u M=1
+r2  net-_d7-pad2_ net-_d9-pad2_ 1k
+d12 net-_d1-pad1_ net-_d12-pad2_ 1N4148
+d15 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d13 net-_d1-pad1_ net-_d12-pad2_ 1N4148
+d11 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d14 net-_d1-pad1_ net-_d14-pad2_ 1N4148
+m6 net-_m5-pad1_ net-_d14-pad2_ net-_d1-pad2_ net-_d1-pad2_ mos_p W=100u L=100u M=1
+m5 net-_m5-pad1_ net-_d14-pad2_ net-_d1-pad1_ net-_d1-pad1_ mos_n W=100u L=100u M=1
+r3  net-_d12-pad2_ net-_d14-pad2_ 1k
+d17 net-_d1-pad1_ net-_d17-pad2_ 1N4148
+d20 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d18 net-_d1-pad1_ net-_d17-pad2_ 1N4148
+d16 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d19 net-_d1-pad1_ net-_d19-pad2_ 1N4148
+m8 net-_m7-pad1_ net-_d19-pad2_ net-_d1-pad2_ net-_d1-pad2_ mos_p W=100u L=100u M=1
+m7 net-_m7-pad1_ net-_d19-pad2_ net-_d1-pad1_ net-_d1-pad1_ mos_n W=100u L=100u M=1
+r4  net-_d17-pad2_ net-_d19-pad2_ 1k
+d22 net-_d1-pad1_ net-_d22-pad2_ 1N4148
+d25 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d23 net-_d1-pad1_ net-_d22-pad2_ 1N4148
+d21 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d24 net-_d1-pad1_ net-_d24-pad2_ 1N4148
+m10 net-_m10-pad1_ net-_d24-pad2_ net-_d1-pad2_ net-_d1-pad2_ mos_p W=100u L=100u M=1
+m9 net-_m10-pad1_ net-_d24-pad2_ net-_d1-pad1_ net-_d1-pad1_ mos_n W=100u L=100u M=1
+r5  net-_d22-pad2_ net-_d24-pad2_ 1k
+d27 net-_d1-pad1_ net-_d27-pad2_ 1N4148
+d30 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d28 net-_d1-pad1_ net-_d27-pad2_ 1N4148
+d26 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d29 net-_d1-pad1_ net-_d29-pad2_ 1N4148
+m12 net-_m11-pad1_ net-_d29-pad2_ net-_d1-pad2_ net-_d1-pad2_ mos_p W=100u L=100u M=1
+m11 net-_m11-pad1_ net-_d29-pad2_ net-_d1-pad1_ net-_d1-pad1_ mos_n W=100u L=100u M=1
+r6  net-_d27-pad2_ net-_d29-pad2_ 1k
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

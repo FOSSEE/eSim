@@ -1,0 +1,37 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\MC14076B\MC14076B.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/20/25 17:48:20
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U19  Net-_U11-Pad3_ Net-_U12-Pad3_ Net-_U19-Pad3_ d_or		
+U11  Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ d_and		
+U12  Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U12-Pad3_ d_and		
+U5  Net-_U12-Pad2_ Net-_U11-Pad2_ d_inverter		
+U2  Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U12-Pad2_ d_nand		
+U20  Net-_U13-Pad3_ Net-_U14-Pad3_ Net-_U20-Pad3_ d_or		
+U13  Net-_U13-Pad1_ Net-_U11-Pad2_ Net-_U13-Pad3_ d_and		
+U14  Net-_U14-Pad1_ Net-_U12-Pad2_ Net-_U14-Pad3_ d_and		
+U21  Net-_U15-Pad3_ Net-_U16-Pad3_ Net-_U21-Pad3_ d_or		
+U15  Net-_U15-Pad1_ Net-_U11-Pad2_ Net-_U15-Pad3_ d_and		
+U16  Net-_U16-Pad1_ Net-_U12-Pad2_ Net-_U16-Pad3_ d_and		
+U22  Net-_U17-Pad3_ Net-_U18-Pad3_ Net-_U10-Pad1_ d_or		
+U17  Net-_U10-Pad4_ Net-_U11-Pad2_ Net-_U17-Pad3_ d_and		
+U18  Net-_U18-Pad1_ Net-_U12-Pad2_ Net-_U18-Pad3_ d_and		
+U3  Net-_U27-Pad7_ Net-_U10-Pad2_ d_inverter		
+U4  Net-_U27-Pad15_ Net-_U10-Pad3_ d_inverter		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ d_nand		
+U6  Net-_U1-Pad3_ Net-_U23-Pad1_ d_inverter		
+U24  Net-_U23-Pad1_ Net-_U24-Pad2_ Net-_U24-Pad3_ tristate_inverter		
+U23  Net-_U23-Pad1_ Net-_U23-Pad2_ Net-_U23-Pad3_ tristate_inverter		
+U25  Net-_U23-Pad1_ Net-_U25-Pad2_ Net-_U25-Pad3_ tristate_inverter		
+U26  Net-_U23-Pad1_ Net-_U10-Pad5_ Net-_U26-Pad3_ tristate_inverter		
+U27  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U24-Pad3_ Net-_U23-Pad3_ Net-_U25-Pad3_ Net-_U26-Pad3_ Net-_U27-Pad7_ ? Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U18-Pad1_ Net-_U16-Pad1_ Net-_U14-Pad1_ Net-_U12-Pad1_ Net-_U27-Pad15_ ? PORT		
+U7  Net-_U19-Pad3_ Net-_U10-Pad2_ Net-_U10-Pad3_ Net-_U11-Pad1_ Net-_U24-Pad2_ d_flip		
+U8  Net-_U20-Pad3_ Net-_U10-Pad2_ Net-_U10-Pad3_ Net-_U13-Pad1_ Net-_U23-Pad2_ d_flip		
+U9  Net-_U21-Pad3_ Net-_U10-Pad2_ Net-_U10-Pad3_ Net-_U15-Pad1_ Net-_U25-Pad2_ d_flip		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ Net-_U10-Pad4_ Net-_U10-Pad5_ d_flip		
+
+.end

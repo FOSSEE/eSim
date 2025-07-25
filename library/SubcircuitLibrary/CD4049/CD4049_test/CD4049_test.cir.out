@@ -1,0 +1,18 @@
+* c:\users\pavithra\esim-workspace\cd4049_test\cd4049_test.cir
+
+.include CD4049.sub
+v2 net-_x1-pad1_ gnd  dc 5
+v1  in gnd pulse(0 5 2m 0.1n 0.1n 1m 2m)
+* u1  out plot_v1
+x1 net-_x1-pad1_ out in ? ? ? ? gnd ? ? ? ? ? ? ? ? CD4049
+* u2  in plot_v1
+.tran 10e-06 10e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)+ 6 v(in)
+.endc
+.end

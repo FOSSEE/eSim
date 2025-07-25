@@ -1,0 +1,59 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD4049\CD4049.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/29/25 20:29:52
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+D2  Net-_D1-Pad1_ Net-_D2-Pad2_ eSim_Diode		
+D5  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D3  Net-_D1-Pad1_ Net-_D2-Pad2_ eSim_Diode		
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D4  Net-_D1-Pad1_ Net-_D4-Pad2_ eSim_Diode		
+M2  Net-_M1-Pad1_ Net-_D4-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ eSim_MOS_P		
+M1  Net-_M1-Pad1_ Net-_D4-Pad2_ Net-_D1-Pad1_ Net-_D1-Pad1_ eSim_MOS_N		
+R1  Net-_D2-Pad2_ Net-_D4-Pad2_ 1k		
+U1  Net-_D1-Pad2_ Net-_M1-Pad1_ Net-_D2-Pad2_ Net-_M3-Pad1_ Net-_D7-Pad2_ Net-_M5-Pad1_ Net-_D12-Pad2_ Net-_D1-Pad1_ Net-_D17-Pad2_ Net-_M7-Pad1_ Net-_D22-Pad2_ Net-_M10-Pad1_ ? Net-_D27-Pad2_ Net-_M11-Pad1_ ? PORT		
+D7  Net-_D1-Pad1_ Net-_D7-Pad2_ eSim_Diode		
+D10  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D8  Net-_D1-Pad1_ Net-_D7-Pad2_ eSim_Diode		
+D6  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D9  Net-_D1-Pad1_ Net-_D9-Pad2_ eSim_Diode		
+M4  Net-_M3-Pad1_ Net-_D9-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ eSim_MOS_P		
+M3  Net-_M3-Pad1_ Net-_D9-Pad2_ Net-_D1-Pad1_ Net-_D1-Pad1_ eSim_MOS_N		
+R2  Net-_D7-Pad2_ Net-_D9-Pad2_ 1k		
+D12  Net-_D1-Pad1_ Net-_D12-Pad2_ eSim_Diode		
+D15  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D13  Net-_D1-Pad1_ Net-_D12-Pad2_ eSim_Diode		
+D11  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D14  Net-_D1-Pad1_ Net-_D14-Pad2_ eSim_Diode		
+M6  Net-_M5-Pad1_ Net-_D14-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ eSim_MOS_P		
+M5  Net-_M5-Pad1_ Net-_D14-Pad2_ Net-_D1-Pad1_ Net-_D1-Pad1_ eSim_MOS_N		
+R3  Net-_D12-Pad2_ Net-_D14-Pad2_ 1k		
+D17  Net-_D1-Pad1_ Net-_D17-Pad2_ eSim_Diode		
+D20  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D18  Net-_D1-Pad1_ Net-_D17-Pad2_ eSim_Diode		
+D16  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D19  Net-_D1-Pad1_ Net-_D19-Pad2_ eSim_Diode		
+M8  Net-_M7-Pad1_ Net-_D19-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ eSim_MOS_P		
+M7  Net-_M7-Pad1_ Net-_D19-Pad2_ Net-_D1-Pad1_ Net-_D1-Pad1_ eSim_MOS_N		
+R4  Net-_D17-Pad2_ Net-_D19-Pad2_ 1k		
+D22  Net-_D1-Pad1_ Net-_D22-Pad2_ eSim_Diode		
+D25  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D23  Net-_D1-Pad1_ Net-_D22-Pad2_ eSim_Diode		
+D21  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D24  Net-_D1-Pad1_ Net-_D24-Pad2_ eSim_Diode		
+M10  Net-_M10-Pad1_ Net-_D24-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ eSim_MOS_P		
+M9  Net-_M10-Pad1_ Net-_D24-Pad2_ Net-_D1-Pad1_ Net-_D1-Pad1_ eSim_MOS_N		
+R5  Net-_D22-Pad2_ Net-_D24-Pad2_ 1k		
+D27  Net-_D1-Pad1_ Net-_D27-Pad2_ eSim_Diode		
+D30  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D28  Net-_D1-Pad1_ Net-_D27-Pad2_ eSim_Diode		
+D26  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D29  Net-_D1-Pad1_ Net-_D29-Pad2_ eSim_Diode		
+M12  Net-_M11-Pad1_ Net-_D29-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ eSim_MOS_P		
+M11  Net-_M11-Pad1_ Net-_D29-Pad2_ Net-_D1-Pad1_ Net-_D1-Pad1_ eSim_MOS_N		
+R6  Net-_D27-Pad2_ Net-_D29-Pad2_ 1k		
+
+.end

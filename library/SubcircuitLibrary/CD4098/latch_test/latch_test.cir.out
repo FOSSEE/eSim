@@ -1,0 +1,33 @@
+* c:\users\pavithra\esim-workspace\latch_test\latch_test.cir
+
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ cd4098_latch
+v4 net-_u5-pad1_ gnd  dc 5
+* u2  c r rst net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ adc_bridge_3
+v1  c gnd pulse(0 5 0 0.1n 0.1n 2m 4m)
+v2  r gnd pulse(0 0 0 0.1n 0.1n 3m 5m)
+v3  rst gnd pulse(0 5 0 0.1n 0.1n 3m 10m)
+* u3  net-_u1-pad5_ q dac_bridge_1
+* u4  q plot_v1
+* u5  net-_u5-pad1_ net-_u1-pad1_ adc_bridge_1
+a1 [net-_u1-pad1_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u1-pad4_ ] [net-_u1-pad5_ ] u1
+a2 [c r rst ] [net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ ] u2
+a3 [net-_u1-pad5_ ] [q ] u3
+a4 [net-_u5-pad1_ ] [net-_u1-pad1_ ] u5
+* Schematic Name:                             cd4098_latch, NgSpice Name: cd4098_latch
+.model u1 cd4098_latch(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             adc_bridge_3, NgSpice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u3 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-06 10e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(rst )+6v(r)+12v(c)+18v(q)
+.endc
+.end
