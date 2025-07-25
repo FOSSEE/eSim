@@ -1,0 +1,213 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:MC14016B-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L d_inverter U1
+U 1 1 68590916
+P 2650 3150
+F 0 "U1" H 2650 3050 60  0000 C CNN
+F 1 "d_inverter" H 2650 3300 60  0000 C CNN
+F 2 "" H 2700 3100 60  0000 C CNN
+F 3 "" H 2700 3100 60  0000 C CNN
+	1    2650 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U2
+U 1 1 68590952
+P 3650 3150
+F 0 "U2" H 3650 3050 60  0000 C CNN
+F 1 "d_inverter" H 3650 3300 60  0000 C CNN
+F 2 "" H 3700 3100 60  0000 C CNN
+F 3 "" H 3700 3100 60  0000 C CNN
+	1    3650 3150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2950 3150 3350 3150
+$Comp
+L eSim_MOS_P M1
+U 1 1 685909B0
+P 5800 3150
+F 0 "M1" H 5750 3200 50  0000 R CNN
+F 1 "eSim_MOS_P" H 5850 3300 50  0000 R CNN
+F 2 "" H 6050 3250 29  0000 C CNN
+F 3 "" H 5850 3150 60  0000 C CNN
+	1    5800 3150
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_MOS_N M2
+U 1 1 68590A0A
+P 6000 3950
+F 0 "M2" H 6000 3800 50  0000 R CNN
+F 1 "eSim_MOS_N" H 6100 3900 50  0000 R CNN
+F 2 "" H 6300 3650 29  0000 C CNN
+F 3 "" H 6100 3750 60  0000 C CNN
+	1    6000 3950
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	5600 3300 5600 3750
+Wire Wire Line
+	6000 3300 6000 3750
+$Comp
+L dac_bridge_1 U3
+U 1 1 68590B03
+P 4750 3200
+F 0 "U3" H 4750 3200 60  0000 C CNN
+F 1 "dac_bridge_1" H 4750 3350 60  0000 C CNN
+F 2 "" H 4750 3200 60  0000 C CNN
+F 3 "" H 4750 3200 60  0000 C CNN
+	1    4750 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3950 3150 4150 3150
+$Comp
+L PORT U5
+U 2 1 68590BE8
+P 1900 3150
+F 0 "U5" H 1950 3250 30  0000 C CNN
+F 1 "PORT" H 1900 3150 30  0000 C CNN
+F 2 "" H 1900 3150 60  0000 C CNN
+F 3 "" H 1900 3150 60  0000 C CNN
+	2    1900 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 1 1 68590C23
+P 4750 3550
+F 0 "U5" H 4800 3650 30  0000 C CNN
+F 1 "PORT" H 4750 3550 30  0000 C CNN
+F 2 "" H 4750 3550 60  0000 C CNN
+F 3 "" H 4750 3550 60  0000 C CNN
+	1    4750 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 4 1 68590C48
+P 5300 3400
+F 0 "U5" H 5350 3500 30  0000 C CNN
+F 1 "PORT" H 5300 3400 30  0000 C CNN
+F 2 "" H 5300 3400 60  0000 C CNN
+F 3 "" H 5300 3400 60  0000 C CNN
+	4    5300 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 3 1 68590C87
+P 6450 3500
+F 0 "U5" H 6500 3600 30  0000 C CNN
+F 1 "PORT" H 6450 3500 30  0000 C CNN
+F 2 "" H 6450 3500 60  0000 C CNN
+F 3 "" H 6450 3500 60  0000 C CNN
+	3    6450 3500
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U5
+U 5 1 68590CB0
+P 5300 3650
+F 0 "U5" H 5350 3750 30  0000 C CNN
+F 1 "PORT" H 5300 3650 30  0000 C CNN
+F 2 "" H 5300 3650 60  0000 C CNN
+F 3 "" H 5300 3650 60  0000 C CNN
+	5    5300 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2150 3150 2350 3150
+$Comp
+L dac_bridge_1 U4
+U 1 1 68592608
+P 4800 4300
+F 0 "U4" H 4800 4300 60  0000 C CNN
+F 1 "dac_bridge_1" H 4800 4450 60  0000 C CNN
+F 2 "" H 4800 4300 60  0000 C CNN
+F 3 "" H 4800 4300 60  0000 C CNN
+	1    4800 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5300 3150 5650 3150
+Wire Wire Line
+	5650 3150 5650 3000
+Wire Wire Line
+	5650 3000 5800 3000
+Wire Wire Line
+	3200 3150 3200 4250
+Wire Wire Line
+	3200 4250 4200 4250
+Connection ~ 3200 3150
+Wire Wire Line
+	5350 4250 5800 4250
+Wire Wire Line
+	5800 4250 5800 4050
+Wire Wire Line
+	5550 3650 5650 3650
+Wire Wire Line
+	5550 3400 5650 3400
+Wire Wire Line
+	5000 3550 5600 3550
+Connection ~ 5600 3550
+Wire Wire Line
+	6200 3500 6000 3500
+Connection ~ 6000 3500
+$EndSCHEMATC

@@ -1,0 +1,35 @@
+* c:\users\pavithra\esim-workspace\mc14016b_test\mc14016b_test.cir
+
+.include MC14016B_quad.sub
+v3  in gnd sine(0 5 1k 0 0)
+v4  net-_x1-pad4_ gnd sine(0 5 1k 0 0)
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
+v1  net-_u1-pad1_ gnd pulse(0 5 0 0.1n 0.1n 1m 2m)
+v2  net-_u1-pad2_ gnd pulse(0 5 0 0.1n 0.1n 1m 2m)
+* u3  out plot_v1
+v5 net-_x1-pad14_ gnd  dc 5
+* u6  cont net-_u6-pad2_ net-_u6-pad3_ net-_u6-pad4_ adc_bridge_2
+v9  cont gnd pulse(0 5 0 0.1n 0.1n 1m  2m)
+v8  net-_u6-pad2_ gnd pulse(0 5 0 0.1n 0.1n 1m 2m)
+* u2  net-_u2-pad_ plot_v1
+* u4  net-_u4-pad_ plot_v1
+* u5  net-_u5-pad_ plot_v1
+v6  net-_x1-pad8_ gnd sine(0 5 1k 0 0)
+v7  net-_x1-pad11_ gnd sine(0 5  1k 0 0)
+x1 in out net-_u2-pad_ net-_x1-pad4_ net-_u1-pad3_ net-_u1-pad4_ gnd net-_x1-pad8_ net-_u5-pad~_ net-_u4-pad_ net-_x1-pad11_ net-_u6-pad4_ net-_u6-pad3_ net-_x1-pad14_ MC14016B_quad
+a1 [net-_u1-pad1_ net-_u1-pad2_ ] [net-_u1-pad3_ net-_u1-pad4_ ] u1
+a2 [cont net-_u6-pad2_ ] [net-_u6-pad3_ net-_u6-pad4_ ] u6
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u6 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-06 10e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)+6v(in)+12v(cont)
+.endc
+.end

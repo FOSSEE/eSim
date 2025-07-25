@@ -1,0 +1,38 @@
+* c:\users\pavithra\esim-workspace\ta7642_test\ta7642_test.cir
+
+.include TA7642.sub
+
+* Input AM Signal (reduced amplitude)
+v1 in 0 AM(0.05 0.04 1k 1Meg 0 0)
+r1 in gnd 75
+c1 net-_c1-pad1_ in 0.01u
+
+* Power Supply (Safe for TA7642)
+v2 vcc gnd DC 1.4
+
+* TA7642 Instance
+x1 gnd net-_c1-pad1_ vout TA7642
+
+* Output stage
+r2 net-_c1-pad1_ vout 100k
+r3 vout vcc 1.5k
+r4 vout gnd 100k
+c2 gnd vout 1u
+
+* Probes
+* u1  vout plot_v1
+* u2  in plot_v1
+
+* Transient Analysis
+.tran 0.1u 10m 0
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(vout)
+plot v(in)
+.endc
+
+.end

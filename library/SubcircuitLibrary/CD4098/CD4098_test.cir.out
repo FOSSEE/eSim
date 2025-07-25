@@ -1,0 +1,43 @@
+ * c:\users\pavithra\esim-workspace\cd4098_test\cd4098_test.cir
+
+.include CD4098.sub
+* u1  trig rst net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
+v1  trig gnd pulse(0 5 2 0.1n 0.1n 0.125 3)
+v2  rst gnd pulse(5 0 1 0.1n 0.1n 0.3 3)
+c1  net-_c1-pad1_ net-_c1-pad2_ 1u
+r1  net-_r1-pad1_ net-_c1-pad2_ 5k
+* u4  net-_u4-pad1_ net-_u4-pad2_ q q_bar dac_bridge_2
+* u5  q plot_v1
+* u6  q_bar plot_v1
+* u2  rst plot_v1
+* u3  trig plot_v1
+x1 net-_u1-pad3_ net-_u7-pad2_ net-_u1-pad4_ net-_u4-pad1_ net-_u4-pad2_ net-_r1-pad1_ gnd net-_c1-pad1_ net-_u8-pad2_ net-_u7-pad2_ CD4098
+* u7  net-_u7-pad1_ net-_u7-pad2_ adc_bridge_1
+v3 net-_u7-pad1_ gnd  dc 5
+* u8  net-_c1-pad2_ net-_u8-pad2_ adc_bridge_1
+r2  net-_c1-pad2_ net-_c1-pad1_ 1k
+v4 net-_r1-pad1_ gnd  dc 0
+a1 [trig rst ] [net-_u1-pad3_ net-_u1-pad4_ ] u1
+a2 [net-_u4-pad1_ net-_u4-pad2_ ] [q q_bar ] u4
+a3 [net-_u7-pad1_ ] [net-_u7-pad2_ ] u7
+a4 [net-_c1-pad2_ ] [net-_u8-pad2_ ] u8
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_2, NgSpice Name: dac_bridge
+.model u4 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u8 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-00 3e-00 0e-00
+.ic V(q)=0
+.ic V(q_bar)=5
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(q)+6 v(q_bar)+12v(rst)+18 v(trig)
+.endc
+.end

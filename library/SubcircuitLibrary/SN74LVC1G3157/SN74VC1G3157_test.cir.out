@@ -1,0 +1,24 @@
+* c:\users\pavithra\esim-workspace\sn74vc1g3157_test\sn74vc1g3157_test.cir
+
+.include SN74LVC1G3157.sub
+v1 net-_x1-pad3_ gnd  dc 1
+v2 net-_x1-pad1_ gnd  dc 3
+* u2  s net-_u2-pad2_ adc_bridge_1
+v3  s gnd pulse(5 0 0 0.5n 0.5n 1m 2m)
+* u3  out plot_v1
+* u1  s plot_v1
+x1 net-_x1-pad1_ gnd net-_x1-pad3_ out vcc net-_u2-pad2_ SN74LVC1G3157
+a1 [s ] [net-_u2-pad2_ ] u2
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 10e-06 10e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+ 
+plot v(s) + 6 v(out)
+.endc
+.end
