@@ -1,0 +1,21 @@
+* C:\Users\pavithra\eSim-Workspace\LM3900_test\LM3900_test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/29/25 15:21:32
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R1  Net-_C1-Pad1_ Net-_R1-Pad2_ 10k		
+R2  Net-_R2-Pad1_ Net-_R2-Pad2_ 39k		
+R3  Net-_R1-Pad2_ Net-_C2-Pad2_ 100k		
+R4  out GND 10k		
+C1  Net-_C1-Pad1_ in 1u		
+C2  out Net-_C2-Pad2_ 1u		
+v1  in GND sine		
+v2  Net-_R2-Pad1_ GND DC		
+U2  out plot_v1		
+U1  in plot_v1		
+X1  Net-_R1-Pad2_ Net-_R2-Pad2_ Net-_C2-Pad2_ Net-_R2-Pad1_ GND LM3900		
+
+.end
