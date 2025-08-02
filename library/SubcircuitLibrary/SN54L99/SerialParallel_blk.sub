@@ -1,0 +1,33 @@
+* Subcircuit SerialParallel_blk
+.subckt SerialParallel_blk net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/serialparallel_blk/serialparallel_blk.cir
+.include CMOS_Buf.sub
+.include 4_in_and.sub
+.include SRFF.sub
+.include 3_in_and.sub
+.include CMOS_INVTR.sub
+.include NOR_3.sub
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pd2nw_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__r+c.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__linear.model.spice"
+.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pw2nd_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__inductors.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__pnp.model.spice"
+x5 net-_u1-pad7_ net-_x13-pad7_ net-_u1-pad1_ net-_u1-pad3_ net-_u1-pad8_ net-_u1-pad6_ net-_x5-pad7_ 4_in_and
+x3 net-_u1-pad3_ net-_u1-pad5_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad4_ net-_x3-pad6_ 3_in_and
+x8 net-_x5-pad7_ net-_x3-pad6_ net-_x11-pad3_ net-_u1-pad8_ net-_u1-pad7_ net-_x10-pad4_ NOR_3
+x6 net-_u1-pad7_ net-_x1-pad4_ net-_u1-pad9_ net-_u1-pad3_ net-_u1-pad8_ net-_u1-pad6_ net-_x6-pad7_ 4_in_and
+x4 net-_u1-pad3_ net-_u1-pad5_ net-_u1-pad7_ net-_u1-pad8_ net-_x2-pad4_ net-_x4-pad6_ 3_in_and
+x9 net-_x11-pad4_ net-_x6-pad7_ net-_x10-pad3_ net-_u1-pad8_ net-_u1-pad7_ net-_x4-pad6_ NOR_3
+x10 net-_u1-pad7_ net-_u1-pad8_ net-_x10-pad3_ net-_x10-pad4_ CMOS_Buf
+x11 net-_u1-pad7_ net-_u1-pad8_ net-_x11-pad3_ net-_x11-pad4_ CMOS_Buf
+x12 net-_x12-pad1_ net-_u1-pad7_ net-_u1-pad8_ net-_x12-pad4_ CMOS_INVTR
+x7 net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad3_ net-_x12-pad1_ CMOS_Buf
+x13 net-_x10-pad3_ net-_x12-pad4_ net-_x11-pad3_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_x13-pad7_ SRFF
+x1 net-_u1-pad2_ net-_u1-pad7_ net-_u1-pad8_ net-_x1-pad4_ CMOS_INVTR
+x2 net-_u1-pad4_ net-_u1-pad7_ net-_u1-pad8_ net-_x2-pad4_ CMOS_INVTR
+* s c m o d e
+* Control Statements
+
+.ends SerialParallel_blk
