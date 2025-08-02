@@ -1,0 +1,330 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L sky130_fd_pr__pfet_01v8 SC1
+U 1 1 68676C8E
+P 3950 1650
+F 0 "SC1" H 4000 1950 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 4250 1737 50  0000 R CNN
+F 2 "" H 3950 150 50  0001 C CNN
+F 3 "" H 3950 1650 50  0001 C CNN
+	1    3950 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC2
+U 1 1 68676CCD
+P 4900 1650
+F 0 "SC2" H 4950 1950 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 5200 1737 50  0000 R CNN
+F 2 "" H 4900 150 50  0001 C CNN
+F 3 "" H 4900 1650 50  0001 C CNN
+	1    4900 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC7
+U 1 1 68676D7A
+P 5500 1650
+F 0 "SC7" H 5550 1950 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 5800 1737 50  0000 R CNN
+F 2 "" H 5500 150 50  0001 C CNN
+F 3 "" H 5500 1650 50  0001 C CNN
+	1    5500 1650
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC8
+U 1 1 68676DC9
+P 6450 1650
+F 0 "SC8" H 6500 1950 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 6750 1737 50  0000 R CNN
+F 2 "" H 6450 150 50  0001 C CNN
+F 3 "" H 6450 1650 50  0001 C CNN
+	1    6450 1650
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC3
+U 1 1 68676F1A
+P 5000 2500
+F 0 "SC3" H 5050 2800 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 5300 2587 50  0000 R CNN
+F 2 "" H 5000 1000 50  0001 C CNN
+F 3 "" H 5000 2500 50  0001 C CNN
+	1    5000 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC4
+U 1 1 68676F92
+P 5000 3150
+F 0 "SC4" H 5050 3450 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 5300 3237 50  0000 R CNN
+F 2 "" H 5000 1650 50  0001 C CNN
+F 3 "" H 5000 3150 50  0001 C CNN
+	1    5000 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC5
+U 1 1 68676FE3
+P 5400 3800
+F 0 "SC5" H 5450 4100 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 5700 3887 50  0000 R CNN
+F 2 "" H 5400 2300 50  0001 C CNN
+F 3 "" H 5400 3800 50  0001 C CNN
+	1    5400 3800
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC6
+U 1 1 68677050
+P 5400 4450
+F 0 "SC6" H 5450 4750 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 5700 4537 50  0000 R CNN
+F 2 "" H 5400 2950 50  0001 C CNN
+F 3 "" H 5400 4450 50  0001 C CNN
+	1    5400 4450
+	-1   0    0    -1  
+$EndComp
+Connection ~ 6200 1300
+Wire Wire Line
+	6200 1650 6200 1300
+Wire Wire Line
+	6350 1650 6200 1650
+Connection ~ 4200 1300
+Wire Wire Line
+	4200 1650 4200 1300
+Wire Wire Line
+	4050 1650 4200 1650
+Connection ~ 5250 1300
+Wire Wire Line
+	5250 1650 5250 1300
+Wire Wire Line
+	5400 1650 5250 1650
+Connection ~ 5150 1300
+Wire Wire Line
+	5150 1650 5150 1300
+Wire Wire Line
+	5000 1650 5150 1650
+Connection ~ 5300 1300
+Wire Wire Line
+	5300 1350 5300 1300
+Connection ~ 5100 1300
+Wire Wire Line
+	5100 1350 5100 1300
+Wire Wire Line
+	6250 1300 6250 1350
+Wire Wire Line
+	4150 1300 6250 1300
+Wire Wire Line
+	4150 1350 4150 1300
+Wire Wire Line
+	5200 4100 5200 4150
+Wire Wire Line
+	5200 3450 5200 3500
+Wire Wire Line
+	5200 2800 5200 2850
+Connection ~ 5200 2000
+Wire Wire Line
+	5200 2200 5200 2000
+Connection ~ 5300 2000
+Wire Wire Line
+	5300 1950 5300 2000
+Connection ~ 5100 2000
+Wire Wire Line
+	5100 1950 5100 2000
+Wire Wire Line
+	6250 2000 6250 1950
+Wire Wire Line
+	4150 2000 6250 2000
+Wire Wire Line
+	4150 1950 4150 2000
+Wire Wire Line
+	5100 2500 5250 2500
+Wire Wire Line
+	5250 2500 5250 3550
+Wire Wire Line
+	5250 3550 5100 3550
+Wire Wire Line
+	5100 3550 5100 4750
+Wire Wire Line
+	5050 4750 5200 4750
+Wire Wire Line
+	5300 4450 5100 4450
+Connection ~ 5100 4450
+Wire Wire Line
+	5300 3800 5100 3800
+Connection ~ 5100 3800
+Wire Wire Line
+	5100 3150 5250 3150
+Connection ~ 5250 3150
+Wire Wire Line
+	3650 1650 3650 2500
+Wire Wire Line
+	3650 2500 4700 2500
+Wire Wire Line
+	4700 3150 4500 3150
+Wire Wire Line
+	4500 3150 4500 1650
+Wire Wire Line
+	4500 1650 4600 1650
+Wire Wire Line
+	5800 1650 5800 3800
+Wire Wire Line
+	5800 3800 5700 3800
+Wire Wire Line
+	5700 4450 6750 4450
+Wire Wire Line
+	6750 4450 6750 1650
+$Comp
+L PORT U1
+U 1 1 68677A45
+P 3350 1850
+F 0 "U1" H 3400 1950 30  0000 C CNN
+F 1 "PORT" H 3350 1850 30  0000 C CNN
+F 2 "" H 3350 1850 60  0000 C CNN
+F 3 "" H 3350 1850 60  0000 C CNN
+	1    3350 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 68677B5F
+P 4200 2150
+F 0 "U1" H 4250 2250 30  0000 C CNN
+F 1 "PORT" H 4200 2150 30  0000 C CNN
+F 2 "" H 4200 2150 60  0000 C CNN
+F 3 "" H 4200 2150 60  0000 C CNN
+	2    4200 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 68677BC8
+P 5650 2100
+F 0 "U1" H 5700 2200 30  0000 C CNN
+F 1 "PORT" H 5650 2100 30  0000 C CNN
+F 2 "" H 5650 2100 60  0000 C CNN
+F 3 "" H 5650 2100 60  0000 C CNN
+	5    5650 2100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 68677C7B
+P 6100 2850
+F 0 "U1" H 6150 2950 30  0000 C CNN
+F 1 "PORT" H 6100 2850 30  0000 C CNN
+F 2 "" H 6100 2850 60  0000 C CNN
+F 3 "" H 6100 2850 60  0000 C CNN
+	6    6100 2850
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 7 1 68677D10
+P 6450 2850
+F 0 "U1" H 6500 2950 30  0000 C CNN
+F 1 "PORT" H 6450 2850 30  0000 C CNN
+F 2 "" H 6450 2850 60  0000 C CNN
+F 3 "" H 6450 2850 60  0000 C CNN
+	7    6450 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 68677DD2
+P 4800 4750
+F 0 "U1" H 4850 4850 30  0000 C CNN
+F 1 "PORT" H 4800 4750 30  0000 C CNN
+F 2 "" H 4800 4750 60  0000 C CNN
+F 3 "" H 4800 4750 60  0000 C CNN
+	3    4800 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 68677EED
+P 4950 1200
+F 0 "U1" H 5000 1300 30  0000 C CNN
+F 1 "PORT" H 4950 1200 30  0000 C CNN
+F 2 "" H 4950 1200 60  0000 C CNN
+F 3 "" H 4950 1200 60  0000 C CNN
+	4    4950 1200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 1200 5200 1300
+Connection ~ 5200 1300
+Wire Wire Line
+	3600 1850 3650 1850
+Connection ~ 3650 1850
+Wire Wire Line
+	4450 2150 4500 2150
+Connection ~ 4500 2150
+Wire Wire Line
+	5400 2100 5200 2100
+Connection ~ 5200 2100
+Wire Wire Line
+	5850 2850 5800 2850
+Connection ~ 5800 2850
+Wire Wire Line
+	6700 2850 6750 2850
+Connection ~ 6750 2850
+Connection ~ 5100 4750
+$EndSCHEMATC
