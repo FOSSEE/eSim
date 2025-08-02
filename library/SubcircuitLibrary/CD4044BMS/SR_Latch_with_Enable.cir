@@ -1,0 +1,19 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/SR_Latch_with_Enable/SR_Latch_with_Enable.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Sat Jun 14 11:07:47 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X3  Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_SC1-Pad3_ Net-_SC2-Pad3_ Net-_X3-Pad5_ NAND_Latch		
+X5  Net-_X2-Pad4_ Net-_SC2-Pad3_ Net-_SC1-Pad3_ Net-_SC1-Pad2_ Net-_X3-Pad5_ NAND_2		
+X4  Net-_X1-Pad4_ Net-_SC2-Pad3_ Net-_SC1-Pad3_ Net-_X3-Pad5_ Net-_SC2-Pad2_ NOR_2		
+SC1  Net-_SC1-Pad1_ Net-_SC1-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__pfet_01v8		
+SC2  Net-_SC1-Pad1_ Net-_SC2-Pad2_ Net-_SC2-Pad3_ Net-_SC2-Pad3_ sky130_fd_pr__nfet_01v8		
+X1  Net-_U1-Pad2_ Net-_SC1-Pad3_ Net-_SC2-Pad3_ Net-_X1-Pad4_ CMOS_INVTR		
+X2  Net-_X1-Pad4_ Net-_SC1-Pad3_ Net-_SC2-Pad3_ Net-_X2-Pad4_ CMOS_INVTR		
+U1  Net-_SC1-Pad3_ Net-_U1-Pad2_ Net-_SC2-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_SC1-Pad1_ PORT		
+scmode1  SKY130mode		
+
+.end

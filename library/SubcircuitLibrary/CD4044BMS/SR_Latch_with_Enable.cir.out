@@ -1,0 +1,26 @@
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/sr_latch_with_enable/sr_latch_with_enable.cir
+
+.include CMOS_INVTR.sub
+.include NOR_2.sub
+.include NAND_2.sub
+.include NAND_Latch.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+x3 net-_u1-pad4_ net-_u1-pad5_ net-_sc1-pad3_ net-_sc2-pad3_ net-_x3-pad5_ NAND_Latch
+x5 net-_x2-pad4_ net-_sc2-pad3_ net-_sc1-pad3_ net-_sc1-pad2_ net-_x3-pad5_ NAND_2
+x4 net-_x1-pad4_ net-_sc2-pad3_ net-_sc1-pad3_ net-_x3-pad5_ net-_sc2-pad2_ NOR_2
+xsc1 net-_sc1-pad1_ net-_sc1-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc2 net-_sc1-pad1_ net-_sc2-pad2_ net-_sc2-pad3_ net-_sc2-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+x1 net-_u1-pad2_ net-_sc1-pad3_ net-_sc2-pad3_ net-_x1-pad4_ CMOS_INVTR
+x2 net-_x1-pad4_ net-_sc1-pad3_ net-_sc2-pad3_ net-_x2-pad4_ CMOS_INVTR
+* u1  net-_sc1-pad3_ net-_u1-pad2_ net-_sc2-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_sc1-pad1_ port
+* s c m o d e
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

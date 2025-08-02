@@ -1,0 +1,21 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/Decoder_38_Address_Latch_storage/Decoder_38_Address_Latch_storage.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Sat Jun 14 09:52:10 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ /Vdd /Gnd Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ /D Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ PORT		
+scmode1  SKY130mode		
+X2  /D Net-_X2-Pad2_ Net-_U1-Pad11_ /Gnd /Vdd Net-_U1-Pad3_ ? D_Latch		
+X1  /D Net-_X1-Pad2_ Net-_U1-Pad11_ /Gnd /Vdd Net-_U1-Pad1_ ? D_Latch		
+X3  /D Net-_X3-Pad2_ Net-_U1-Pad11_ /Gnd /Vdd Net-_U1-Pad2_ ? D_Latch		
+X4  /D Net-_X4-Pad2_ Net-_U1-Pad11_ /Gnd /Vdd Net-_U1-Pad4_ ? D_Latch		
+X8  /D Net-_X8-Pad2_ Net-_U1-Pad11_ /Gnd /Vdd Net-_U1-Pad10_ ? D_Latch		
+X7  /D Net-_X7-Pad2_ Net-_U1-Pad11_ /Gnd /Vdd Net-_U1-Pad9_ ? D_Latch		
+X6  /D Net-_X6-Pad2_ Net-_U1-Pad11_ /Gnd /Vdd Net-_U1-Pad8_ ? D_Latch		
+X5  /D Net-_X5-Pad2_ Net-_U1-Pad11_ /Gnd /Vdd Net-_U1-Pad7_ ? D_Latch		
+X9  Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ Net-_U1-Pad16_ /Vdd /Vdd Net-_X7-Pad2_ Net-_X5-Pad2_ Net-_X1-Pad2_ Net-_X8-Pad2_ Net-_X6-Pad2_ Net-_X3-Pad2_ Net-_X2-Pad2_ Net-_X4-Pad2_ Decoder_38		
+
+.end

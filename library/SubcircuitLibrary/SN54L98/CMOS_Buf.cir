@@ -1,0 +1,14 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/CMOS_Buf/CMOS_Buf.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Sun Jul  6 10:50:24 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ PORT		
+scmode1  SKY130mode		
+X1  Net-_U1-Pad3_ Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_X1-Pad4_ CMOS_INVTR		
+X2  Net-_X1-Pad4_ Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad4_ CMOS_INVTR		
+
+.end

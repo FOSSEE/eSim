@@ -1,0 +1,34 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/TG_D_Latch_ctrl/TG_D_Latch_ctrl.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Jun 23 11:40:14 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  /clock /polarity /Vdd /Gnd /Out PORT		
+scmode1  SKY130mode		
+SC5  Net-_SC10-Pad1_ Net-_SC1-Pad1_ /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC10  Net-_SC10-Pad1_ /clock /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC1  Net-_SC1-Pad1_ /polarity /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC13  Net-_SC13-Pad1_ Net-_SC10-Pad1_ /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC2  Net-_SC1-Pad1_ /polarity /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+SC7  Net-_SC10-Pad1_ Net-_SC1-Pad1_ Net-_SC7-Pad3_ Net-_SC7-Pad3_ sky130_fd_pr__nfet_01v8		
+SC9  Net-_SC7-Pad3_ /clock /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+SC14  Net-_SC13-Pad1_ Net-_SC10-Pad1_ /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+SC6  Net-_SC12-Pad1_ Net-_SC3-Pad1_ /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC12  Net-_SC12-Pad1_ /polarity /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC3  Net-_SC3-Pad1_ /clock /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC15  Net-_SC15-Pad1_ Net-_SC12-Pad1_ /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC4  Net-_SC3-Pad1_ /clock /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+SC8  Net-_SC12-Pad1_ Net-_SC3-Pad1_ Net-_SC11-Pad1_ Net-_SC11-Pad1_ sky130_fd_pr__nfet_01v8		
+SC11  Net-_SC11-Pad1_ /polarity /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+SC16  Net-_SC15-Pad1_ Net-_SC12-Pad1_ /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+SC18  Net-_SC18-Pad1_ Net-_SC13-Pad1_ /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC19  Net-_SC17-Pad1_ Net-_SC15-Pad1_ Net-_SC18-Pad1_ Net-_SC18-Pad1_ sky130_fd_pr__pfet_01v8		
+SC21  /Out Net-_SC17-Pad1_ /Vdd /Vdd sky130_fd_pr__pfet_01v8		
+SC17  Net-_SC17-Pad1_ Net-_SC13-Pad1_ /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+SC20  Net-_SC17-Pad1_ Net-_SC15-Pad1_ /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+SC22  /Out Net-_SC17-Pad1_ /Gnd /Gnd sky130_fd_pr__nfet_01v8		
+
+.end

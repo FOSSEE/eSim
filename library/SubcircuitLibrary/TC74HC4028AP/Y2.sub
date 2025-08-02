@@ -1,0 +1,11 @@
+* Subcircuit Y2
+.subckt Y2 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/y2/y2.cir
+.include Y0.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+x1 net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad1_ net-_u1-pad7_ net-_u1-pad5_ net-_u1-pad6_ Y0
+* s c m o d e
+* Control Statements
+
+.ends Y2

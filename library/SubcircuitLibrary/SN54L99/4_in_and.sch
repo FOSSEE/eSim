@@ -1,0 +1,196 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L 3_in_and X1
+U 1 1 686CC60C
+P 5250 2300
+F 0 "X1" H 5350 2300 60  0000 C CNN
+F 1 "3_in_and" H 5300 2000 60  0000 C CNN
+F 2 "" H 5850 2150 60  0001 C CNN
+F 3 "" H 5850 2150 60  0001 C CNN
+	1    5250 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L 2_in_and X2
+U 1 1 686CC667
+P 6200 2350
+F 0 "X2" H 6250 2350 60  0000 C CNN
+F 1 "2_in_and" H 6200 2100 60  0000 C CNN
+F 2 "" H 6950 2200 60  0001 C CNN
+F 3 "" H 6950 2200 60  0001 C CNN
+	1    6200 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5800 2150 5800 2200
+Wire Wire Line
+	4750 2150 5800 2150
+Wire Wire Line
+	4900 2150 4900 2100
+Wire Wire Line
+	5800 2450 5800 2500
+Wire Wire Line
+	4750 2450 5800 2450
+Wire Wire Line
+	4900 2450 4900 2500
+Wire Wire Line
+	5800 2400 5650 2400
+Wire Wire Line
+	5650 2400 5650 2600
+Wire Wire Line
+	5650 2600 4750 2600
+Wire Wire Line
+	4900 2400 4750 2400
+Wire Wire Line
+	4900 2300 4750 2300
+Wire Wire Line
+	4900 2200 4750 2200
+Connection ~ 4900 2150
+Connection ~ 4900 2450
+$Comp
+L PORT U1
+U 1 1 686CC71D
+P 4500 2100
+F 0 "U1" H 4550 2200 30  0000 C CNN
+F 1 "PORT" H 4500 2100 30  0000 C CNN
+F 2 "" H 4500 2100 60  0000 C CNN
+F 3 "" H 4500 2100 60  0000 C CNN
+	1    4500 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 686CC7AC
+P 4500 2200
+F 0 "U1" H 4550 2300 30  0000 C CNN
+F 1 "PORT" H 4500 2200 30  0000 C CNN
+F 2 "" H 4500 2200 60  0000 C CNN
+F 3 "" H 4500 2200 60  0000 C CNN
+	2    4500 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 686CC80F
+P 4500 2300
+F 0 "U1" H 4550 2400 30  0000 C CNN
+F 1 "PORT" H 4500 2300 30  0000 C CNN
+F 2 "" H 4500 2300 60  0000 C CNN
+F 3 "" H 4500 2300 60  0000 C CNN
+	3    4500 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 686CC8BF
+P 4500 2400
+F 0 "U1" H 4550 2500 30  0000 C CNN
+F 1 "PORT" H 4500 2400 30  0000 C CNN
+F 2 "" H 4500 2400 60  0000 C CNN
+F 3 "" H 4500 2400 60  0000 C CNN
+	4    4500 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 686CC9C0
+P 4500 2500
+F 0 "U1" H 4550 2600 30  0000 C CNN
+F 1 "PORT" H 4500 2500 30  0000 C CNN
+F 2 "" H 4500 2500 60  0000 C CNN
+F 3 "" H 4500 2500 60  0000 C CNN
+	5    4500 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 686CC9F9
+P 4500 2600
+F 0 "U1" H 4550 2700 30  0000 C CNN
+F 1 "PORT" H 4500 2600 30  0000 C CNN
+F 2 "" H 4500 2600 60  0000 C CNN
+F 3 "" H 4500 2600 60  0000 C CNN
+	6    4500 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 7 1 686CCA50
+P 6900 2350
+F 0 "U1" H 6950 2450 30  0000 C CNN
+F 1 "PORT" H 6900 2350 30  0000 C CNN
+F 2 "" H 6900 2350 60  0000 C CNN
+F 3 "" H 6900 2350 60  0000 C CNN
+	7    6900 2350
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4750 2150 4750 2100
+Wire Wire Line
+	4750 2450 4750 2500
+$Comp
+L SKY130mode scmode1
+U 1 1 686CCB41
+P 7350 3350
+F 0 "scmode1" H 7350 3500 98  0000 C CNB
+F 1 "SKY130mode" H 7350 3250 118 0000 C CNB
+F 2 "" H 7350 3500 60  0001 C CNN
+F 3 "" H 7350 3500 60  0001 C CNN
+	1    7350 3350
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
