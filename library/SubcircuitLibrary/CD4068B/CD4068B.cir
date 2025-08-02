@@ -1,0 +1,43 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/CD4068B/CD4068B.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Jun 25 11:08:04 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+SC6  Net-_SC6-Pad1_ Net-_SC1-Pad2_ Net-_SC12-Pad3_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC7  Net-_SC7-Pad1_ Net-_SC2-Pad2_ Net-_SC6-Pad1_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC8  Net-_SC8-Pad1_ Net-_SC4-Pad2_ Net-_SC7-Pad1_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC9  Net-_SC1-Pad1_ Net-_SC10-Pad2_ Net-_SC8-Pad1_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC10  Net-_SC1-Pad1_ Net-_SC10-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+SC4  Net-_SC1-Pad1_ Net-_SC4-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+SC2  Net-_SC1-Pad1_ Net-_SC2-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+SC1  Net-_SC1-Pad1_ Net-_SC1-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+SC12  Net-_SC12-Pad1_ Net-_SC12-Pad2_ Net-_SC12-Pad3_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC13  Net-_SC13-Pad1_ Net-_SC13-Pad2_ Net-_SC12-Pad1_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC14  Net-_SC14-Pad1_ Net-_SC11-Pad2_ Net-_SC13-Pad1_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC15  Net-_SC11-Pad1_ Net-_SC15-Pad2_ Net-_SC14-Pad1_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC16  Net-_SC11-Pad1_ Net-_SC15-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+SC11  Net-_SC11-Pad1_ Net-_SC11-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+SC5  Net-_SC11-Pad1_ Net-_SC13-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+SC3  Net-_SC11-Pad1_ Net-_SC12-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+X9  Net-_SC17-Pad1_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_X10-Pad1_ CMOS_INVTR		
+X10  Net-_X10-Pad1_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_U1-Pad11_ CMOS_INVTR		
+X1  Net-_U1-Pad1_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_SC1-Pad2_ CMOS_INVTR		
+X2  Net-_U1-Pad2_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_SC2-Pad2_ CMOS_INVTR		
+X3  Net-_U1-Pad3_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_SC4-Pad2_ CMOS_INVTR		
+X4  Net-_U1-Pad4_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_SC10-Pad2_ CMOS_INVTR		
+X5  Net-_U1-Pad5_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_SC12-Pad2_ CMOS_INVTR		
+X6  Net-_U1-Pad6_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_SC13-Pad2_ CMOS_INVTR		
+X7  Net-_U1-Pad7_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_SC11-Pad2_ CMOS_INVTR		
+X8  Net-_U1-Pad8_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_SC15-Pad2_ CMOS_INVTR		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_U1-Pad11_ Net-_U1-Pad12_ PORT		
+SC17  Net-_SC17-Pad1_ Net-_SC1-Pad1_ Net-_SC12-Pad3_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC20  Net-_SC17-Pad1_ Net-_SC11-Pad1_ Net-_SC12-Pad3_ Net-_SC12-Pad3_ sky130_fd_pr__pfet_01v8		
+SC18  Net-_SC17-Pad1_ Net-_SC1-Pad1_ Net-_SC18-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+SC19  Net-_SC18-Pad3_ Net-_SC11-Pad1_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__nfet_01v8		
+scmode1  SKY130mode		
+X11  Net-_SC17-Pad1_ Net-_SC12-Pad3_ Net-_SC1-Pad3_ Net-_U1-Pad12_ CMOS_INVTR		
+
+.end
