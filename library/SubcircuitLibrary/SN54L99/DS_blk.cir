@@ -1,0 +1,18 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/DS_blk/DS_blk.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Jul 10 11:45:04 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U1-Pad6_ Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad7_ Net-_X1-Pad5_ 2_in_and		
+X2  Net-_U1-Pad6_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad7_ Net-_X2-Pad5_ 2_in_and		
+X3  Net-_X1-Pad5_ Net-_U1-Pad7_ Net-_U1-Pad6_ Net-_X2-Pad5_ Net-_X3-Pad5_ NOR_2		
+X4  Net-_X3-Pad5_ Net-_X4-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ D_FF		
+scmode1  SKY130mode		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ PORT		
+X5  Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad5_ Net-_X5-Pad4_ CMOS_Buf		
+X6  Net-_X5-Pad4_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_X4-Pad2_ CMOS_INVTR		
+
+.end

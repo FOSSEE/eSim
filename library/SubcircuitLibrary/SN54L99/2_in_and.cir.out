@@ -1,0 +1,18 @@
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/2_in_and/2_in_and.cir
+
+.include CMOS_INVTR.sub
+.include NAND_2.sub
+
+x1 net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad1_ net-_x1-pad4_ net-_u1-pad4_ NAND_2
+x2 net-_x1-pad4_ net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad5_ CMOS_INVTR
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ port
+* s c m o d e
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
