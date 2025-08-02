@@ -1,0 +1,28 @@
+* Subcircuit SN74ABT337
+.subckt SN74ABT337 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/sn74abt337/sn74abt337.cir
+.include TFF_SR.sub
+.include tri_state.sub
+.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__pnp.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pw2nd_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__linear.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pd2nw_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__r+c.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__inductors.model.spice"
+x4 net-_u1-pad2_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad5_ ? net-_u1-pad4_ net-_x12-pad1_ ? TFF_SR
+x3 net-_u1-pad2_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad5_ ? net-_u1-pad4_ net-_x11-pad1_ ? TFF_SR
+x2 net-_u1-pad2_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad5_ ? net-_u1-pad4_ net-_x10-pad1_ ? TFF_SR
+x1 net-_u1-pad2_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad5_ ? net-_u1-pad4_ net-_x1-pad7_ ? TFF_SR
+* s c m o d e
+x5 net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad1_ net-_u1-pad6_ tri_state
+x6 net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad1_ net-_u1-pad7_ tri_state
+x7 net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad1_ net-_u1-pad8_ tri_state
+x8 net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad1_ net-_u1-pad9_ tri_state
+x9 net-_x1-pad7_ net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad1_ net-_u1-pad10_ tri_state
+x10 net-_x10-pad1_ net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad1_ net-_u1-pad11_ tri_state
+x11 net-_x11-pad1_ net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad1_ net-_u1-pad12_ tri_state
+x12 net-_x12-pad1_ net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad1_ net-_u1-pad13_ tri_state
+* Control Statements
+
+.ends SN74ABT337
