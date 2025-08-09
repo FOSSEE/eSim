@@ -867,6 +867,8 @@ def main(args):
     by this function.
     """
     print("Starting eSim......")
+    # Set non-native dialogs globally
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_DontUseNativeDialogs, True)
     app = QtWidgets.QApplication(args)
     app.setApplicationName("eSim")
 
