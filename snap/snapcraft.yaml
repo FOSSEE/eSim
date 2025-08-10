@@ -289,7 +289,7 @@ parts:
   # copyKicadLibrary
   eSim-library:
    after: [symbols]
-   source: eSim
+   source: .
    plugin: nil
    override-build: |
      mkdir -p $CRAFT_PART_INSTALL/usr/share/kicad/symbols
@@ -306,7 +306,7 @@ parts:
   esim:
     after: [kicad]
     plugin: nil
-    source: eSim
+    source: .
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/eSim
       sed -i '1i #!/usr/bin/env python3' $SNAPCRAFT_PART_SRC/src/frontEnd/Application.py 
@@ -413,6 +413,9 @@ parts:
     build-packages:
       - libxft-dev
       - libfreetype6-dev
+    override-pull: |
+      craftctl default
+      git apply $CRAFT_PROJECT_DIR/patches/001-src-ngspice-ghdl-Use-non-native-file-browser.patch
     override-build: |
       tar xvf nghdl-simulator-source.tar.xz
       cd nghdl-simulator-source/
