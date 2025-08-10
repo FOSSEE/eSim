@@ -413,9 +413,6 @@ parts:
     build-packages:
       - libxft-dev
       - libfreetype6-dev
-    override-pull: |
-      craftctl default
-      git apply $CRAFT_PROJECT_DIR/patches/001-src-ngspice-ghdl-Use-non-native-file-browser.patch
     override-build: |
       tar xvf nghdl-simulator-source.tar.xz
       cd nghdl-simulator-source/
@@ -432,7 +429,10 @@ parts:
   nghdl:
     after: [kicad]
     plugin: nil
-    source: nghdl
+    source: https://github.com/FOSSEE/nghdl.git
+    override-pull: |
+      craftctl default
+      git apply $CRAFT_PROJECT_DIR/patches/0001-src-ngspice-ghdl-Use-non-native-file-browser.patch
     override-build: |
       mkdir -p $CRAFT_PART_INSTALL/nghdl
       cp -r $CRAFT_PART_SRC/src $CRAFT_PART_INSTALL/nghdl/
