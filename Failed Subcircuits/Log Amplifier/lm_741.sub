@@ -1,0 +1,40 @@
+* Subcircuit lm_741
+.subckt lm_741 net-_q7-pad3_ net-_q2-pad2_ net-_q1-pad2_ net-_q12-pad3_ net-_q8-pad3_ net-_q20-pad3_ net-_q10-pad3_ ? 
+* c:\users\malli\esim\src\subcircuitlibrary\lm_741\lm_741.cir
+.include npn_1.lib
+.include pnp_1.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ npn_1
+q2 net-_q1-pad1_ net-_q2-pad2_ net-_q2-pad3_ npn_1
+q6 net-_q3-pad2_ net-_q13-pad1_ net-_q1-pad3_ pnp_1
+q5 net-_c1-pad2_ net-_q13-pad1_ net-_q2-pad3_ pnp_1
+q3 net-_q10-pad3_ net-_q3-pad2_ net-_q3-pad3_ npn_1
+q4 net-_q1-pad1_ net-_q1-pad1_ net-_q10-pad3_ pnp_1
+q9 net-_q13-pad1_ net-_q1-pad1_ net-_q10-pad3_ pnp_1
+q8 net-_c1-pad2_ net-_q3-pad3_ net-_q8-pad3_ npn_1
+q7 net-_q3-pad2_ net-_q3-pad3_ net-_q7-pad3_ npn_1
+r1  net-_q7-pad3_ net-_q12-pad3_ 1k
+r2  net-_q3-pad3_ net-_q12-pad3_ 50k
+r3  net-_q8-pad3_ net-_q12-pad3_ 1k
+q12 net-_q12-pad1_ net-_q12-pad1_ net-_q12-pad3_ npn_1
+q13 net-_q13-pad1_ net-_q12-pad1_ net-_q13-pad3_ npn_1
+r4  net-_q13-pad3_ net-_q12-pad3_ 5k
+r11  net-_q10-pad1_ net-_q12-pad1_ 39k
+q10 net-_q10-pad1_ net-_q10-pad1_ net-_q10-pad3_ pnp_1
+q11 net-_c1-pad1_ net-_q10-pad1_ net-_q10-pad3_ pnp_1
+q14 net-_c1-pad1_ net-_q14-pad2_ net-_q14-pad3_ npn_1
+r8  net-_c1-pad1_ net-_q14-pad2_ 4.5k
+r7  net-_q14-pad3_ net-_q14-pad2_ 7.5k
+c1  net-_c1-pad1_ net-_c1-pad2_ 30p
+q16 net-_q14-pad3_ net-_c1-pad2_ net-_q15-pad2_ npn_1
+q15 net-_q14-pad3_ net-_q15-pad2_ net-_q15-pad3_ npn_1
+r5  net-_q15-pad2_ net-_q12-pad3_ 50k
+r6  net-_q15-pad3_ net-_q12-pad3_ 50
+q17 net-_c1-pad2_ net-_q15-pad3_ net-_q12-pad3_ npn_1
+q18 net-_q10-pad3_ net-_c1-pad1_ net-_q18-pad3_ npn_1
+q20 net-_c1-pad1_ net-_q18-pad3_ net-_q20-pad3_ npn_1
+r9  net-_q18-pad3_ net-_q20-pad3_ 25
+r10  net-_q20-pad3_ net-_q19-pad3_ 50
+q19 net-_q12-pad3_ net-_q14-pad3_ net-_q19-pad3_ pnp_1
+* Control Statements
+
+.ends lm_741
