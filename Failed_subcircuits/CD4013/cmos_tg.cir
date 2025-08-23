@@ -1,0 +1,13 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\cmos_tg\cmos_tg.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/22/22 18:31:42
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M2  Net-_M1-Pad3_ Net-_M2-Pad2_ Net-_M1-Pad1_ Net-_M1-Pad2_ mosfet_p		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ GND mosfet_n		
+U1  Net-_M1-Pad1_ Net-_M2-Pad2_ Net-_M1-Pad2_ Net-_M1-Pad3_ PORT		
+
+.end

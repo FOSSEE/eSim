@@ -1,0 +1,43 @@
+* C:\Users\arpit\coding\esim_projects\CD_4027\CD_4027.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/30/22 00:04:20
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X4  Set Vdd GND Net-_X14-Pad1_ inv		
+X1  J GND Vdd Net-_X1-Pad4_ buf		
+X2  K Vdd GND Net-_X2-Pad4_ inv		
+X3  Clock Vdd GND Net-_X11-Pad2_ inv		
+X6  Net-_X11-Pad2_ Vdd GND Net-_X11-Pad3_ inv		
+X7  Net-_X17-Pad4_ Vdd GND Net-_X7-Pad4_ inv		
+X8  Net-_X1-Pad4_ Net-_X17-Pad4_ GND Vdd Net-_X10-Pad1_ or		
+X9  Net-_X7-Pad4_ Net-_X2-Pad4_ GND Vdd Net-_X10-Pad4_ or		
+X10  Net-_X10-Pad1_ GND Vdd Net-_X10-Pad4_ Net-_X10-Pad5_ and		
+X11  Net-_X10-Pad5_ Net-_X11-Pad2_ Net-_X11-Pad3_ Net-_X11-Pad4_ TG		
+X12  Net-_X11-Pad4_ Vdd GND Net-_X12-Pad4_ Net-_X12-Pad5_ nand		
+X13  Net-_X13-Pad1_ Net-_X11-Pad3_ Net-_X11-Pad2_ Net-_X11-Pad4_ TG		
+X14  Net-_X14-Pad1_ Vdd GND Net-_X13-Pad1_ Net-_X12-Pad4_ nand		
+X15  Net-_X15-Pad1_ Net-_X11-Pad3_ Net-_X11-Pad2_ Net-_X12-Pad4_ TG		
+X17  Net-_X14-Pad1_ Vdd GND Net-_X17-Pad4_ Net-_X15-Pad1_ nand		
+X16  Net-_X15-Pad1_ Net-_X11-Pad2_ Net-_X11-Pad3_ Net-_X16-Pad4_ TG		
+X18  Net-_X17-Pad4_ Vdd GND Net-_X16-Pad4_ Net-_X12-Pad5_ nand		
+X19  Net-_X17-Pad4_ GND Vdd Q buf		
+X20  Net-_X16-Pad4_ GND Vdd Qbar buf		
+X5  Reset Vdd GND Net-_X12-Pad5_ inv		
+v6  Vdd GND DC		
+v3  Set GND pulse		
+v4  J GND pulse		
+v5  K GND pulse		
+v1  Reset GND pulse		
+v2  Clock GND pulse		
+U5  Set plot_v1		
+U1  J plot_v1		
+U2  K plot_v1		
+U3  Reset plot_v1		
+U4  Clock plot_v1		
+U6  Q plot_v1		
+U7  Qbar plot_v1		
+
+.end
