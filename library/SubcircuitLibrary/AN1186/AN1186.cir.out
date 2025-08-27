@@ -1,0 +1,56 @@
+* c:\fossee\esim\library\subcircuitlibrary\an1186\an1186.cir
+
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ d_flop
+* u5  net-_u1-pad4_ net-_u1-pad2_ net-_u1-pad3_ net-_u3-pad11_ d_flop
+* u7  net-_u3-pad11_ net-_u1-pad2_ net-_u1-pad3_ net-_u10-pad1_ d_flop
+* u10  net-_u10-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u10-pad4_ d_flop
+* u2  net-_u2-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u2-pad4_ d_flop
+* u6  net-_u6-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u3-pad6_ d_flop
+* u8  net-_u3-pad6_ net-_u1-pad2_ net-_u1-pad3_ net-_u11-pad1_ d_flop
+* u11  net-_u11-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u11-pad4_ d_flop
+* u12  net-_u11-pad4_ net-_u12-pad2_ net-_u1-pad1_ d_xor
+* u4  net-_u10-pad4_ net-_u1-pad1_ net-_u2-pad1_ d_xor
+* u9  net-_u2-pad4_ net-_u1-pad1_ net-_u6-pad1_ d_xor
+* u3  net-_u1-pad2_ net-_u1-pad3_ net-_u12-pad2_ net-_u11-pad4_ net-_u11-pad1_ net-_u3-pad6_ ? net-_u2-pad4_ net-_u10-pad4_ net-_u10-pad1_ net-_u3-pad11_ net-_u1-pad4_ ? ? port
+a1 [net-_u1-pad1_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u1-pad4_ ] u1
+a2 [net-_u1-pad4_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u3-pad11_ ] u5
+a3 [net-_u3-pad11_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u10-pad1_ ] u7
+a4 [net-_u10-pad1_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u10-pad4_ ] u10
+a5 [net-_u2-pad1_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u2-pad4_ ] u2
+a6 [net-_u6-pad1_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u3-pad6_ ] u6
+a7 [net-_u3-pad6_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u11-pad1_ ] u8
+a8 [net-_u11-pad1_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] [net-_u11-pad4_ ] u11
+a9 [net-_u11-pad4_ net-_u12-pad2_ ] net-_u1-pad1_ u12
+a10 [net-_u10-pad4_ net-_u1-pad1_ ] net-_u2-pad1_ u4
+a11 [net-_u2-pad4_ net-_u1-pad1_ ] net-_u6-pad1_ u9
+* Schematic Name:                             d_flop, NgSpice Name: d_flop
+.model u1 d_flop(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_flop, NgSpice Name: d_flop
+.model u5 d_flop(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_flop, NgSpice Name: d_flop
+.model u7 d_flop(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_flop, NgSpice Name: d_flop
+.model u10 d_flop(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_flop, NgSpice Name: d_flop
+.model u2 d_flop(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_flop, NgSpice Name: d_flop
+.model u6 d_flop(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_flop, NgSpice Name: d_flop
+.model u8 d_flop(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_flop, NgSpice Name: d_flop
+.model u11 d_flop(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u12 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u4 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u9 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,5 +1,5 @@
-ngspiceSimulation component
-===========================
+NgSpice Simulation component
+==============================
 
 .. toctree::
 	:maxdepth: 2

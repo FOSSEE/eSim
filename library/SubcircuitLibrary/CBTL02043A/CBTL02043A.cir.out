@@ -1,0 +1,45 @@
+* c:\fossee\esim\library\subcircuitlibrary\cbtl02043a\cbtl02043a.cir
+
+.include bidirectional_switch.sub
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ d_or
+* u2  net-_u1-pad3_ net-_u2-pad2_ d_inverter
+* u3  net-_u1-pad2_ net-_u3-pad2_ d_inverter
+* u4  net-_u3-pad2_ net-_u1-pad1_ net-_u4-pad3_ d_and
+* u5  ? net-_u5-pad2_ net-_u5-pad3_ net-_u5-pad4_ ? ? net-_u5-pad7_ net-_u5-pad8_ net-_u5-pad9_ ? ? net-_u5-pad12_ net-_u5-pad13_ net-_u5-pad14_ net-_u5-pad15_ net-_u5-pad16_ net-_u5-pad17_ net-_u5-pad18_ net-_u5-pad19_ ? port
+x1 net-_u5-pad3_ net-_u5-pad19_ net-_u6-pad4_ bidirectional_switch
+x2 net-_u5-pad4_ net-_u5-pad18_ net-_u6-pad4_ bidirectional_switch
+x4 net-_u5-pad7_ net-_u5-pad17_ net-_u6-pad4_ bidirectional_switch
+x3 net-_u5-pad8_ net-_u5-pad16_ net-_u6-pad4_ bidirectional_switch
+x5 net-_u5-pad3_ net-_u5-pad15_ net-_u6-pad3_ bidirectional_switch
+x6 net-_u5-pad4_ net-_u5-pad14_ net-_u6-pad3_ bidirectional_switch
+x8 net-_u5-pad7_ net-_u5-pad13_ net-_u6-pad3_ bidirectional_switch
+x7 net-_u5-pad8_ net-_u5-pad12_ net-_u6-pad3_ bidirectional_switch
+* u6  net-_u4-pad3_ net-_u2-pad2_ net-_u6-pad3_ net-_u6-pad4_ dac_bridge_2
+* u7  net-_u5-pad9_ net-_u5-pad2_ net-_u1-pad1_ net-_u1-pad2_ adc_bridge_2
+a1 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u1-pad3_ u1
+a2 net-_u1-pad3_ net-_u2-pad2_ u2
+a3 net-_u1-pad2_ net-_u3-pad2_ u3
+a4 [net-_u3-pad2_ net-_u1-pad1_ ] net-_u4-pad3_ u4
+a5 [net-_u4-pad3_ net-_u2-pad2_ ] [net-_u6-pad3_ net-_u6-pad4_ ] u6
+a6 [net-_u5-pad9_ net-_u5-pad2_ ] [net-_u1-pad1_ net-_u1-pad2_ ] u7
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u1 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             dac_bridge_2, NgSpice Name: dac_bridge
+.model u6 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,80 @@
+* /home/kamalesh/downloads/esim-2.3/library/subcircuitlibrary/54cd366/54cd366.cir
+
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+m7 net-_c101-pad1_ net-_m1-pad1_ net-_m7-pad3_ net-_m7-pad3_ CMOSN W=0.8u L=0.18u M=4.44
+m10 net-_c101-pad1_ net-_m10-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m9 net-_m10-pad3_ net-_m8-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m8 net-_m7-pad3_ net-_m8-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m5 net-_m10-pad2_ net-_m1-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m6 net-_m10-pad2_ net-_m1-pad1_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m3 net-_m1-pad1_ net-_m103-pad2_ net-_m2-pad1_ net-_m2-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m2 net-_m2-pad1_ net-_m1-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m4 net-_m1-pad1_ net-_m103-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+c101  net-_c101-pad1_ net-_c101-pad2_ 10p
+m139 net-_c104-pad1_ net-_m121-pad1_ net-_m139-pad3_ net-_m139-pad3_ CMOSN W=0.8u L=0.18u M=4.44
+m142 net-_c104-pad1_ net-_m133-pad1_ net-_m141-pad1_ net-_m141-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m141 net-_m141-pad1_ net-_m140-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m140 net-_m139-pad3_ net-_m140-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m133 net-_m133-pad1_ net-_m121-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m134 net-_m133-pad1_ net-_m121-pad1_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m123 net-_m121-pad1_ net-_m103-pad2_ net-_m122-pad1_ net-_m122-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m122 net-_m122-pad1_ net-_m1-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m121 net-_m121-pad1_ net-_m1-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m130 net-_m121-pad1_ net-_m103-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+c104  net-_c104-pad1_ net-_c101-pad2_ 10p
+m113 net-_c102-pad1_ net-_m101-pad1_ net-_m113-pad3_ net-_m113-pad3_ CMOSN W=0.8u L=0.18u M=4.44
+m116 net-_c102-pad1_ net-_m109-pad1_ net-_m115-pad1_ net-_m115-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m115 net-_m115-pad1_ net-_m114-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m114 net-_m113-pad3_ net-_m114-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m109 net-_m109-pad1_ net-_m101-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m110 net-_m109-pad1_ net-_m101-pad1_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m103 net-_m101-pad1_ net-_m103-pad2_ net-_m102-pad1_ net-_m102-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m102 net-_m102-pad1_ net-_m1-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m101 net-_m101-pad1_ net-_m1-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m107 net-_m101-pad1_ net-_m103-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+c102  net-_c102-pad1_ net-_c101-pad2_ 10p
+m143 net-_c105-pad1_ net-_m124-pad1_ net-_m143-pad3_ net-_m143-pad3_ CMOSN W=0.8u L=0.18u M=4.44
+m146 net-_c105-pad1_ net-_m135-pad1_ net-_m145-pad1_ net-_m145-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m145 net-_m145-pad1_ net-_m144-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m144 net-_m143-pad3_ net-_m144-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m135 net-_m135-pad1_ net-_m124-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m136 net-_m135-pad1_ net-_m124-pad1_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m126 net-_m124-pad1_ net-_m103-pad2_ net-_m125-pad1_ net-_m125-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m125 net-_m125-pad1_ net-_m1-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m124 net-_m124-pad1_ net-_m1-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4..44
+m131 net-_m124-pad1_ net-_m103-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+c105  net-_c105-pad1_ net-_c101-pad2_ 10p
+m117 net-_c103-pad1_ net-_m104-pad1_ net-_m117-pad3_ net-_m117-pad3_ CMOSN W=0.8u L=0.18u M=4.44
+m120 net-_c103-pad1_ net-_m111-pad1_ net-_m119-pad1_ net-_m119-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m119 net-_m119-pad1_ net-_m118-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m118 net-_m117-pad3_ net-_m118-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m111 net-_m111-pad1_ net-_m104-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m112 net-_m111-pad1_ net-_m104-pad1_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m106 net-_m104-pad1_ net-_m103-pad2_ net-_m105-pad1_ net-_m105-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m105 net-_m105-pad1_ net-_m1-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m104 net-_m104-pad1_ net-_m1-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m108 net-_m104-pad1_ net-_m103-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+c103  net-_c103-pad1_ net-_c101-pad2_ 10p
+m147 net-_c106-pad1_ net-_m127-pad1_ net-_m147-pad3_ net-_m147-pad3_ CMOSN W=0.8u L=0.18u M=4.44
+m150 net-_c106-pad1_ net-_m137-pad1_ net-_m149-pad1_ net-_m149-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m149 net-_m149-pad1_ net-_m148-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m148 net-_m147-pad3_ net-_m148-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m137 net-_m137-pad1_ net-_m127-pad1_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m138 net-_m137-pad1_ net-_m127-pad1_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m129 net-_m127-pad1_ net-_m103-pad2_ net-_m128-pad1_ net-_m128-pad1_ CMOSP W=1.6u L=0.18u M=8.89
+m128 net-_m128-pad1_ net-_m1-pad2_ net-_m102-pad3_ net-_m102-pad3_ CMOSP W=1.6u L=0.18u M=8.89
+m127 net-_m127-pad1_ net-_m1-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+m132 net-_m127-pad1_ net-_m103-pad2_ net-_c101-pad2_ net-_c101-pad2_ CMOSN W=0.8u L=0.18u M=4.44
+c106  net-_c106-pad1_ net-_c101-pad2_ 10p
+* u101  net-_m1-pad2_ net-_m8-pad2_ net-_c101-pad1_ net-_m140-pad2_ net-_c104-pad1_ net-_m114-pad2_ net-_c102-pad1_ net-_c101-pad2_ net-_c105-pad1_ net-_m144-pad2_ net-_c103-pad1_ net-_m118-pad2_ net-_c106-pad1_ net-_m148-pad2_ net-_m103-pad2_ net-_m102-pad3_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

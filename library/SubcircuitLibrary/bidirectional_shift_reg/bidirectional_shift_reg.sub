@@ -1,0 +1,27 @@
+* Subcircuit bidirectional_shift_reg
+.subckt bidirectional_shift_reg net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ 
+* c:\fossee\esim\library\subcircuitlibrary\bidirectional_shift_reg\bidirectional_shift_reg.cir
+.include mux4.sub
+* u2  net-_u2-pad1_ net-_u1-pad1_ net-_u1-pad8_ net-_u1-pad14_ dff_rst
+* u5  net-_u5-pad1_ net-_u1-pad1_ net-_u1-pad8_ net-_u1-pad13_ dff_rst
+* u6  net-_u6-pad1_ net-_u1-pad1_ net-_u1-pad8_ net-_u1-pad12_ dff_rst
+* u8  net-_u8-pad1_ net-_u1-pad1_ net-_u1-pad8_ net-_u1-pad11_ dff_rst
+x4 net-_u1-pad10_ net-_u1-pad9_ net-_u1-pad12_ net-_u1-pad7_ net-_u1-pad2_ net-_u1-pad11_ net-_u8-pad1_ mux4
+x3 net-_u1-pad10_ net-_u1-pad9_ net-_u1-pad13_ net-_u1-pad11_ net-_u1-pad4_ net-_u1-pad12_ net-_u6-pad1_ mux4
+x2 net-_u1-pad10_ net-_u1-pad9_ net-_u1-pad14_ net-_u1-pad12_ net-_u1-pad5_ net-_u1-pad13_ net-_u5-pad1_ mux4
+x1 net-_u1-pad10_ net-_u1-pad9_ net-_u1-pad3_ net-_u1-pad13_ net-_u1-pad6_ net-_u1-pad14_ net-_u2-pad1_ mux4
+a1 [net-_u2-pad1_ ] [net-_u1-pad1_ ] [net-_u1-pad8_ ] [net-_u1-pad14_ ] u2
+a2 [net-_u5-pad1_ ] [net-_u1-pad1_ ] [net-_u1-pad8_ ] [net-_u1-pad13_ ] u5
+a3 [net-_u6-pad1_ ] [net-_u1-pad1_ ] [net-_u1-pad8_ ] [net-_u1-pad12_ ] u6
+a4 [net-_u8-pad1_ ] [net-_u1-pad1_ ] [net-_u1-pad8_ ] [net-_u1-pad11_ ] u8
+* Schematic Name:                             dff_rst, NgSpice Name: dff_rst
+.model u2 dff_rst(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             dff_rst, NgSpice Name: dff_rst
+.model u5 dff_rst(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             dff_rst, NgSpice Name: dff_rst
+.model u6 dff_rst(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             dff_rst, NgSpice Name: dff_rst
+.model u8 dff_rst(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Control Statements
+
+.ends bidirectional_shift_reg

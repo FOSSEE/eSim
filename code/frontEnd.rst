@@ -9,4 +9,4 @@ Front-End Component
 	frontEnd/DockArea
 	frontEnd/ProjectExplorer
 	frontEnd/Workspace
-
+	frontEnd/TerminalUI

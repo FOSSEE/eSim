@@ -1,45 +1,41 @@
-* c:\fossee\esim\library\subcircuitlibrary\lm13700\lm13700.cir
+* c:\users\chaithu\fossee\esim\library\subcircuitlibrary\lm13700\lm13700.cir
 
 .include D.lib
 .include PNP.lib
 .include NPN.lib
-q3 net-_q2-pad1_ net-_d4-pad2_ /v+ Q2N2907A
-d4 /v+ net-_d4-pad2_ 1N4148
-q6 net-_q10-pad2_ net-_q2-pad1_ net-_d4-pad2_ Q2N2907A
-q7 net-_q5-pad1_ net-_d5-pad2_ /v+ Q2N2907A
-d5 /v+ net-_d5-pad2_ 1N4148
-q9 /output net-_q5-pad1_ net-_d5-pad2_ Q2N2907A
-q11 /v+ /buffer_input net-_q11-pad3_ Q2N2222
-q12 /v+ net-_q11-pad3_ /buffer_output Q2N2222
-q2 net-_q2-pad1_ /input- net-_q2-pad3_ Q2N2222
-q5 net-_q5-pad1_ /input+ net-_q2-pad3_ Q2N2222
-d3 /diode_bias /input+ 1N4148
-d1 /diode_bias /input- 1N4148
-q4 net-_q2-pad3_ /amp_bias_input net-_d2-pad1_ Q2N2222
-q1 /amp_bias_input net-_d2-pad1_ /v- Q2N2222
-d2 net-_d2-pad1_ /v- 1N4148
+q1 net-_q1-pad1_ /input_-_ net-_q1-pad3_ Q2N2222
+q5 net-_q5-pad1_ /input_+_ net-_q1-pad3_ Q2N2222
+d1 /diodebias /input_-_ 1N4148
+q4 net-_q1-pad3_ /ampbiasinput net-_d2-pad1_ Q2N2222
+q2 /ampbiasinput net-_d2-pad1_ /v_-_ Q2N2222
+d2 net-_d2-pad1_ /v_-_ 1N4148
+d4 /diodebias /input_+_ 1N4148
+q3 net-_q1-pad1_ net-_d3-pad2_ /v_+_ Q2N2907A
+q6 net-_q10-pad2_ net-_q1-pad1_ net-_d3-pad2_ Q2N2907A
+d3 /v_+_ net-_d3-pad2_ 1N4148
+q8 net-_q10-pad2_ net-_d6-pad1_ /v_-_ Q2N2222
 q10 /output net-_q10-pad2_ net-_d6-pad1_ Q2N2222
-q8 net-_q10-pad2_ net-_d6-pad1_ /v- Q2N2222
-d6 net-_d6-pad1_ /v- 1N4148
-q15 net-_q14-pad1_ net-_d10-pad2_ /v+ Q2N2907A
-d10 /v+ net-_d10-pad2_ 1N4148
-q18 net-_q18-pad1_ net-_q14-pad1_ net-_d10-pad2_ Q2N2907A
-q19 net-_q17-pad1_ net-_d11-pad2_ /v+ Q2N2907A
-d11 /v+ net-_d11-pad2_ 1N4148
-q21 /output net-_q17-pad1_ net-_d11-pad2_ Q2N2907A
-q23 /v+ /bufer_input net-_q23-pad3_ Q2N2222
-q24 /v+ net-_q23-pad3_ /buffer_output Q2N2222
-q14 net-_q14-pad1_ /input- net-_q14-pad3_ Q2N2222
-q17 net-_q17-pad1_ /input+ net-_q14-pad3_ Q2N2222
-d9 /diode_bias /input+ 1N4148
-d7 /diode_bias /input- 1N4148
-q16 net-_q14-pad3_ /amp_bias_input net-_d8-pad1_ Q2N2222
-q13 /amp_bias_input net-_d8-pad1_ /v- Q2N2222
-d8 net-_d8-pad1_ /v- 1N4148
-q22 /output net-_q18-pad1_ net-_d12-pad1_ Q2N2222
-q20 net-_q18-pad1_ net-_d12-pad1_ /v- Q2N2222
-d12 net-_d12-pad1_ /v- 1N4148
-* u1  /v+ /diode_bias /input- /input+ /amp_bias_input /v- /output /diode_bias /input- /input+ /amp_bias_input /buffer_output /buffer_input /output /buffer_output /bufer_input port
+d6 net-_d6-pad1_ /v_-_ 1N4148
+q9 /output net-_q5-pad1_ net-_d5-pad2_ Q2N2907A
+q7 net-_q5-pad1_ net-_d5-pad2_ /v_+_ Q2N2907A
+d5 /v_+_ net-_d5-pad2_ 1N4148
+q11 net-_q11-pad1_ /input2_-_ net-_q11-pad3_ Q2N2222
+q15 net-_q15-pad1_ /input2_+_ net-_q11-pad3_ Q2N2222
+d7 /diodebias2 /input2_-_ 1N4148
+q14 net-_q11-pad3_ /ampbiasinput2 net-_d8-pad1_ Q2N2222
+q12 /ampbiasinput2 net-_d8-pad1_ /v_-_ Q2N2222
+d8 net-_d8-pad1_ /v_-_ 1N4148
+d10 /diodebias2 /input2_+_ 1N4148
+q13 net-_q11-pad1_ net-_d9-pad2_ /v_+_ Q2N2907A
+q16 net-_q16-pad1_ net-_q11-pad1_ net-_d9-pad2_ Q2N2907A
+d9 /v_+_ net-_d9-pad2_ 1N4148
+q18 net-_q16-pad1_ net-_d12-pad1_ /v_-_ Q2N2222
+q20 /output2 net-_q16-pad1_ net-_d12-pad1_ Q2N2222
+d12 net-_d12-pad1_ /v_-_ 1N4148
+q19 /output2 net-_q15-pad1_ net-_d11-pad2_ Q2N2907A
+q17 net-_q15-pad1_ net-_d11-pad2_ /v_+_ Q2N2907A
+d11 /v_+_ net-_d11-pad2_ 1N4148
+* u1  /diodebias /input_-_ /v_+_ /v_-_ /ampbiasinput /input_+_ /diodebias2 /input2_-_ /output /ampbiasinput2 /input2_+_ /output2 port
 .tran 0e-00 0e-00 0e-00
 
 * Control Statements 
