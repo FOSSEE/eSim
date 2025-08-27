@@ -1,0 +1,38 @@
+* C:\Users\HP\OneDrive\Documents\FOSSEE\eSim\library\SubcircuitLibrary\TLV2221\TLV2221.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/09/25 15:16:10
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M1  Net-_M1-Pad1_ /INV Net-_M1-Pad3_ /VDD mosfet_p		
+M5  Net-_M1-Pad1_ /NON_INV Net-_M11-Pad1_ /VDD mosfet_p		
+M2  Net-_M1-Pad3_ Net-_M1-Pad3_ Net-_M2-Pad3_ /VSS mosfet_n		
+M4  Net-_M11-Pad1_ Net-_M1-Pad3_ Net-_M4-Pad3_ /VSS mosfet_n		
+R1  Net-_M2-Pad3_ /VSS 3k		
+R2  Net-_M4-Pad3_ /VSS 3k		
+M3  /VDD Net-_M14-Pad2_ Net-_M1-Pad1_ /VDD mosfet_p		
+M7  /VDD Net-_M14-Pad2_ Net-_M6-Pad1_ /VDD mosfet_p		
+M6  Net-_M6-Pad1_ Net-_M11-Pad1_ /VSS /VSS mosfet_n		
+M10  /VDD Net-_C1-Pad2_ Net-_C1-Pad2_ /VDD mosfet_p		
+M9  Net-_M13-Pad2_ Net-_M6-Pad1_ /VSS /VSS mosfet_n		
+R3  Net-_M6-Pad1_ Net-_C1-Pad1_ 100k		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 30p		
+M8  Net-_M6-Pad1_ Net-_M6-Pad1_ /VSS /VSS mosfet_n		
+R4  Net-_C1-Pad2_ Net-_M13-Pad2_ 39k		
+M13  /VDD Net-_M13-Pad2_ /OUT /VDD mosfet_p		
+M12  /OUT Net-_M11-Pad1_ Net-_M11-Pad2_ /VSS mosfet_n		
+M11  Net-_M11-Pad1_ Net-_M11-Pad2_ /VSS /VSS mosfet_n		
+C2  Net-_C2-Pad1_ /OUT 30p		
+R5  Net-_C2-Pad1_ Net-_M11-Pad1_ 10k		
+M14  /VDD Net-_M14-Pad2_ Net-_M14-Pad2_ /VDD mosfet_p		
+M17  /VDD Net-_M14-Pad2_ Net-_M15-Pad2_ /VDD mosfet_p		
+M15  Net-_M14-Pad2_ Net-_M15-Pad2_ Net-_M15-Pad3_ /VSS mosfet_n		
+M16  Net-_M15-Pad2_ Net-_M15-Pad2_ Net-_D1-Pad1_ /VSS mosfet_n		
+R6  Net-_M11-Pad2_ /VSS 3k		
+R7  Net-_M15-Pad3_ /VSS 3k		
+D1  Net-_D1-Pad1_ /VSS eSim_Diode		
+U1  /VDD /INV /NON_INV /VSS /OUT PORT		
+
+.end

@@ -1,0 +1,427 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L 1_CD4010B X1
+U 1 1 6852BC74
+P 5150 1300
+F 0 "X1" H 5550 1100 60  0000 C CNN
+F 1 "1_CD4010B" H 5300 1300 48  0000 C CNN
+F 2 "" H 5200 1300 60  0001 C CNN
+F 3 "" H 5200 1300 60  0001 C CNN
+	1    5150 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L 1_CD4010B X2
+U 1 1 6852BCDB
+P 5150 2450
+F 0 "X2" H 5550 2250 60  0000 C CNN
+F 1 "1_CD4010B" H 5300 2450 48  0000 C CNN
+F 2 "" H 5200 2450 60  0001 C CNN
+F 3 "" H 5200 2450 60  0001 C CNN
+	1    5150 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L 1_CD4010B X3
+U 1 1 6852BD00
+P 5200 3450
+F 0 "X3" H 5600 3250 60  0000 C CNN
+F 1 "1_CD4010B" H 5350 3450 48  0000 C CNN
+F 2 "" H 5250 3450 60  0001 C CNN
+F 3 "" H 5250 3450 60  0001 C CNN
+	1    5200 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L 1_CD4010B X4
+U 1 1 6852BD29
+P 5300 4550
+F 0 "X4" H 5700 4350 60  0000 C CNN
+F 1 "1_CD4010B" H 5450 4550 48  0000 C CNN
+F 2 "" H 5350 4550 60  0001 C CNN
+F 3 "" H 5350 4550 60  0001 C CNN
+	1    5300 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L 1_CD4010B X5
+U 1 1 6852BD4E
+P 5400 5650
+F 0 "X5" H 5800 5450 60  0000 C CNN
+F 1 "1_CD4010B" H 5550 5650 48  0000 C CNN
+F 2 "" H 5450 5650 60  0001 C CNN
+F 3 "" H 5450 5650 60  0001 C CNN
+	1    5400 5650
+	1    0    0    -1  
+$EndComp
+$Comp
+L 1_CD4010B X6
+U 1 1 6852BD7F
+P 5450 6750
+F 0 "X6" H 5850 6550 60  0000 C CNN
+F 1 "1_CD4010B" H 5600 6750 48  0000 C CNN
+F 2 "" H 5500 6750 60  0001 C CNN
+F 3 "" H 5500 6750 60  0001 C CNN
+	1    5450 6750
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 6852BE34
+P 4300 1300
+F 0 "U1" H 4350 1400 30  0000 C CNN
+F 1 "PORT" H 4300 1300 30  0000 C CNN
+F 2 "" H 4300 1300 60  0000 C CNN
+F 3 "" H 4300 1300 60  0000 C CNN
+	1    4300 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 6852BE83
+P 4300 2450
+F 0 "U1" H 4350 2550 30  0000 C CNN
+F 1 "PORT" H 4300 2450 30  0000 C CNN
+F 2 "" H 4300 2450 60  0000 C CNN
+F 3 "" H 4300 2450 60  0000 C CNN
+	2    4300 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 6852BF08
+P 4300 3450
+F 0 "U1" H 4350 3550 30  0000 C CNN
+F 1 "PORT" H 4300 3450 30  0000 C CNN
+F 2 "" H 4300 3450 60  0000 C CNN
+F 3 "" H 4300 3450 60  0000 C CNN
+	3    4300 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 6852BF87
+P 4350 4550
+F 0 "U1" H 4400 4650 30  0000 C CNN
+F 1 "PORT" H 4350 4550 30  0000 C CNN
+F 2 "" H 4350 4550 60  0000 C CNN
+F 3 "" H 4350 4550 60  0000 C CNN
+	4    4350 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 6852BFCE
+P 4450 5650
+F 0 "U1" H 4500 5750 30  0000 C CNN
+F 1 "PORT" H 4450 5650 30  0000 C CNN
+F 2 "" H 4450 5650 60  0000 C CNN
+F 3 "" H 4450 5650 60  0000 C CNN
+	5    4450 5650
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 6852C053
+P 4600 6750
+F 0 "U1" H 4650 6850 30  0000 C CNN
+F 1 "PORT" H 4600 6750 30  0000 C CNN
+F 2 "" H 4600 6750 60  0000 C CNN
+F 3 "" H 4600 6750 60  0000 C CNN
+	6    4600 6750
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 7 1 6852C0EE
+P 6500 1300
+F 0 "U1" H 6550 1400 30  0000 C CNN
+F 1 "PORT" H 6500 1300 30  0000 C CNN
+F 2 "" H 6500 1300 60  0000 C CNN
+F 3 "" H 6500 1300 60  0000 C CNN
+	7    6500 1300
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 8 1 6852C12D
+P 6500 2450
+F 0 "U1" H 6550 2550 30  0000 C CNN
+F 1 "PORT" H 6500 2450 30  0000 C CNN
+F 2 "" H 6500 2450 60  0000 C CNN
+F 3 "" H 6500 2450 60  0000 C CNN
+	8    6500 2450
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 9 1 6852C1CC
+P 6600 3400
+F 0 "U1" H 6650 3500 30  0000 C CNN
+F 1 "PORT" H 6600 3400 30  0000 C CNN
+F 2 "" H 6600 3400 60  0000 C CNN
+F 3 "" H 6600 3400 60  0000 C CNN
+	9    6600 3400
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 10 1 6852C229
+P 6600 4550
+F 0 "U1" H 6650 4650 30  0000 C CNN
+F 1 "PORT" H 6600 4550 30  0000 C CNN
+F 2 "" H 6600 4550 60  0000 C CNN
+F 3 "" H 6600 4550 60  0000 C CNN
+	10   6600 4550
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 11 1 6852C320
+P 6600 5650
+F 0 "U1" H 6650 5750 30  0000 C CNN
+F 1 "PORT" H 6600 5650 30  0000 C CNN
+F 2 "" H 6600 5650 60  0000 C CNN
+F 3 "" H 6600 5650 60  0000 C CNN
+	11   6600 5650
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 12 1 6852C3CF
+P 6650 6750
+F 0 "U1" H 6700 6850 30  0000 C CNN
+F 1 "PORT" H 6650 6750 30  0000 C CNN
+F 2 "" H 6650 6750 60  0000 C CNN
+F 3 "" H 6650 6750 60  0000 C CNN
+	12   6650 6750
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 13 1 6852C612
+P 8100 800
+F 0 "U1" H 8150 900 30  0000 C CNN
+F 1 "PORT" H 8100 800 30  0000 C CNN
+F 2 "" H 8100 800 60  0000 C CNN
+F 3 "" H 8100 800 60  0000 C CNN
+	13   8100 800 
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 14 1 6852C69B
+P 8100 1150
+F 0 "U1" H 8150 1250 30  0000 C CNN
+F 1 "PORT" H 8100 1150 30  0000 C CNN
+F 2 "" H 8100 1150 60  0000 C CNN
+F 3 "" H 8100 1150 60  0000 C CNN
+	14   8100 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 15 1 6852C6DE
+P 8100 1500
+F 0 "U1" H 8150 1600 30  0000 C CNN
+F 1 "PORT" H 8100 1500 30  0000 C CNN
+F 2 "" H 8100 1500 60  0000 C CNN
+F 3 "" H 8100 1500 60  0000 C CNN
+	15   8100 1500
+	1    0    0    -1  
+$EndComp
+Text GLabel 8800 750  2    60   Input ~ 0
+VCC
+Text GLabel 8850 1100 2    60   Input ~ 0
+VDD
+Text GLabel 8900 1500 2    60   Input ~ 0
+GND
+Wire Wire Line
+	8350 800  8550 800 
+Wire Wire Line
+	8550 800  8550 750 
+Wire Wire Line
+	8550 750  8800 750 
+Wire Wire Line
+	8350 1150 8750 1150
+Wire Wire Line
+	8750 1150 8750 1100
+Wire Wire Line
+	8750 1100 8850 1100
+Wire Wire Line
+	8350 1500 8900 1500
+Wire Wire Line
+	4550 1300 4750 1300
+Wire Wire Line
+	5900 1300 6250 1300
+Wire Wire Line
+	4550 2450 4750 2450
+Wire Wire Line
+	5900 2450 6250 2450
+Wire Wire Line
+	4550 3450 4800 3450
+Wire Wire Line
+	5950 3450 6200 3450
+Wire Wire Line
+	6200 3450 6200 3400
+Wire Wire Line
+	6200 3400 6350 3400
+Wire Wire Line
+	4600 4550 4900 4550
+Wire Wire Line
+	6050 4550 6350 4550
+Wire Wire Line
+	4700 5650 5000 5650
+Wire Wire Line
+	6150 5650 6350 5650
+Wire Wire Line
+	4850 6750 5050 6750
+Wire Wire Line
+	6200 6750 6400 6750
+Text GLabel 5350 850  2    60   Input ~ 0
+VCC
+Text GLabel 5350 2000 2    60   Input ~ 0
+VCC
+Text GLabel 5450 3050 2    60   Input ~ 0
+VCC
+Text GLabel 5550 4150 2    60   Input ~ 0
+VCC
+Text GLabel 5650 5200 2    60   Input ~ 0
+VCC
+Text GLabel 5700 6350 2    60   Input ~ 0
+VCC
+Wire Wire Line
+	5500 6350 5700 6350
+Wire Wire Line
+	5450 5250 5450 5200
+Wire Wire Line
+	5450 5200 5650 5200
+Wire Wire Line
+	5350 4150 5550 4150
+Wire Wire Line
+	5250 3050 5450 3050
+Wire Wire Line
+	5200 2050 5200 2000
+Wire Wire Line
+	5200 2000 5350 2000
+Wire Wire Line
+	5200 900  5200 850 
+Wire Wire Line
+	5200 850  5350 850 
+Text GLabel 5550 1750 2    60   Input ~ 0
+VDD
+Text GLabel 5550 2800 2    60   Input ~ 0
+VDD
+Text GLabel 5600 3850 2    60   Input ~ 0
+VDD
+Text GLabel 5700 4900 2    60   Input ~ 0
+VDD
+Text GLabel 5850 6050 2    60   Input ~ 0
+VDD
+Text GLabel 5900 7200 2    60   Input ~ 0
+VDD
+Wire Wire Line
+	5700 7100 5700 7200
+Wire Wire Line
+	5700 7200 5900 7200
+Wire Wire Line
+	5650 6000 5650 6050
+Wire Wire Line
+	5650 6050 5850 6050
+Wire Wire Line
+	5550 4900 5700 4900
+Wire Wire Line
+	5450 3800 5450 3850
+Wire Wire Line
+	5450 3850 5600 3850
+Wire Wire Line
+	5400 2800 5550 2800
+Wire Wire Line
+	5400 1650 5400 1750
+Wire Wire Line
+	5400 1750 5550 1750
+Text GLabel 4900 1850 0    60   Input ~ 0
+GND
+Wire Wire Line
+	4900 1850 5050 1850
+Wire Wire Line
+	5050 1850 5050 1800
+Text GLabel 4950 3000 0    60   Input ~ 0
+GND
+Text GLabel 5100 4050 0    60   Input ~ 0
+GND
+Text GLabel 4950 5100 0    60   Input ~ 0
+GND
+Text GLabel 5100 6150 0    60   Input ~ 0
+GND
+Text GLabel 5150 7250 0    60   Input ~ 0
+GND
+Wire Wire Line
+	5150 7250 5350 7250
+Wire Wire Line
+	5100 6150 5300 6150
+Wire Wire Line
+	4950 5100 5200 5100
+Wire Wire Line
+	5200 5100 5200 5050
+Wire Wire Line
+	5100 4050 5100 3950
+Wire Wire Line
+	4950 3000 5050 3000
+Wire Wire Line
+	5050 3000 5050 2950
+$EndSCHEMATC

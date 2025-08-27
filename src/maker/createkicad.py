@@ -189,9 +189,14 @@ class AutoSchematic:
     def createSym(self):
         '''
             creating the symbol
+            (pins snapped to KiCad-6 grid)
         '''
-        self.dist_port = 2.54         # Distance between two ports (mil)
-        self.inc_size = 2.54          # Increment size of a block (mil)
+        self.grid = 0.635
+        self.dist_port = 4 * self.grid         # Distance between two ports # 100 mil (= 2.54 mm)
+        self.inc_size = self.dist_port      # Increment size of a block (mil)
+        def snap(val):
+                snapped = round(float(val) / self.grid) * self.grid
+                return f"{snapped:.3f}"
         cwd = os.getcwd()
         os.chdir(self.lib_loc)
         print("Changing directory to ", self.lib_loc)
@@ -250,7 +255,7 @@ class AutoSchematic:
 
         draw_pos = \
             [w.replace('comp_name', f"{self.modelname}_0_1") for w in draw_pos]
-        draw_pos[8] = str(float(draw_pos[8]) +           # previously it is (-)
+        draw_pos[8] = snap(float(draw_pos[8]) +           # previously it is (-)
                           float(self.findBlockSize() * self.inc_size))
         draw_pos_rec = draw_pos[8]
 
@@ -265,6 +270,8 @@ class AutoSchematic:
         input_port = input_port.split()
         output_port = self.template["output_port"]
         output_port = output_port.split()
+        input_port[3] = snap(float(input_port[3]))
+        output_port[3] = snap(float(output_port[3]))
         inputs = self.portInfo[0: self.input_length]
         outputs = self.portInfo[self.input_length:]
         inputName = []
@@ -298,7 +305,7 @@ class AutoSchematic:
                 input_port[9] = f"\"{inputName[i]}\""
                 input_port[13] = f"\"{str(i + 1)}\""
                 input_port[4] = \
-                    str(float(input_port[4]) - float(self.dist_port))
+                    snap(float(input_port[4]) - float(self.dist_port))
                 input_list = ' '.join(input_port)
                 port_list.append(input_list)
                 j = j + 1
@@ -307,7 +314,7 @@ class AutoSchematic:
                 output_port[9] = f"\"{outputName[i - inputs]}\""
                 output_port[13] = f"\"{str(i + 1)}\""
                 output_port[4] = \
-                    str(float(output_port[4]) - float(self.dist_port))
+                    snap(float(output_port[4]) - float(self.dist_port))
                 output_list = ' '.join(output_port)
                 port_list.append(output_list)
 

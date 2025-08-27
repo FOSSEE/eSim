@@ -1,0 +1,13 @@
+{% extends "!layout.html" %}
+
+{% block sidebartitle %}
+  <div style="width: 50%; padding: 0; margin: 0; margin-left: 69px;">
+    <img src="{{ pathto('_static/logo.png', 1) }}"
+         alt="My Logo"
+         style="width: 100%; height: auto; display: block;" />
+    <div class="verison" style="color: #111; font-weight: bold; margin-bottom: 20px;">
+        eSim 2.5
+    </div>
+  </div>
+  {{ super() }}
+{% endblock %}

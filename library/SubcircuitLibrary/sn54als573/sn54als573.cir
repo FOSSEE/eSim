@@ -1,0 +1,32 @@
+* C:\Users\Shanthipriya\eSim-Workspace\74ls573\74ls573.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/30/25 14:02:47
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U2  1D 2D 3D 4D 5D 6D 7D 8D Net-_U2-Pad9_ Net-_U2-Pad10_ Net-_U2-Pad11_ Net-_U2-Pad12_ Net-_U2-Pad13_ Net-_U2-Pad14_ Net-_U2-Pad15_ Net-_U2-Pad16_ adc_bridge_8		
+U3  Net-_U3-Pad1_ Net-_U3-Pad2_ Net-_U3-Pad3_ Net-_U3-Pad4_ Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ 1Q 2Q 3Q 4Q 5Q 6Q 7Q 8Q dac_bridge_8		
+U1  oe LE Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2		
+v3  1D GND pulse		
+v4  2D GND pulse		
+v5  3D GND pulse		
+v6  4D GND pulse		
+v7  5D GND pulse		
+v8  6D GND pulse		
+v9  7D GND pulse		
+v10  8D GND pulse		
+U4  1Q plot_v1		
+U5  2Q plot_v1		
+U6  3Q plot_v1		
+U7  4Q plot_v1		
+U8  5Q plot_v1		
+U9  6Q plot_v1		
+U10  7Q plot_v1		
+U11  8Q plot_v1		
+x1  Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U2-Pad9_ Net-_U2-Pad10_ Net-_U2-Pad11_ Net-_U2-Pad12_ Net-_U2-Pad13_ Net-_U2-Pad14_ Net-_U2-Pad15_ Net-_U2-Pad16_ Net-_U3-Pad1_ Net-_U3-Pad2_ Net-_U3-Pad3_ Net-_U3-Pad4_ Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ ls573		
+v1  oe GND DC		
+v2  LE GND DC		
+
+.end

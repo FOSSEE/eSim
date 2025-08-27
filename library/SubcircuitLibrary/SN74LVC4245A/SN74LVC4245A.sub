@@ -1,0 +1,37 @@
+* Subcircuit SN74LVC4245A
+.subckt SN74LVC4245A net-_u1-pad1_ net-_m1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_m1-pad3_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ net-_u1-pad20_ net-_u1-pad21_ net-_m3-pad2_ net-_u1-pad23_ net-_m10-pad3_ 
+* c:\fossee\esim\library\subcircuitlibrary\sn74lvc4245a\sn74lvc4245a.cir
+.include Tri_state_buffer.sub
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+x3 net-_u1-pad5_ net-_m11-pad1_ net-_u1-pad23_ net-_u1-pad11_ net-_u1-pad19_ Tri_state_buffer
+x4 net-_u1-pad6_ net-_m11-pad1_ net-_u1-pad23_ net-_u1-pad11_ net-_u1-pad18_ Tri_state_buffer
+x5 net-_u1-pad7_ net-_m11-pad1_ net-_u1-pad23_ net-_u1-pad11_ net-_u1-pad17_ Tri_state_buffer
+x6 net-_u1-pad8_ net-_m11-pad1_ net-_u1-pad23_ net-_u1-pad11_ net-_u1-pad16_ Tri_state_buffer
+x7 net-_u1-pad9_ net-_m11-pad1_ net-_u1-pad23_ net-_u1-pad11_ net-_u1-pad15_ Tri_state_buffer
+x8 net-_u1-pad10_ net-_m11-pad1_ net-_u1-pad23_ net-_u1-pad11_ net-_u1-pad14_ Tri_state_buffer
+x2 net-_u1-pad4_ net-_m11-pad1_ net-_u1-pad23_ net-_u1-pad11_ net-_u1-pad20_ Tri_state_buffer
+x1 net-_u1-pad3_ net-_m11-pad1_ net-_u1-pad23_ net-_u1-pad11_ net-_u1-pad21_ Tri_state_buffer
+x14 net-_u1-pad16_ net-_m1-pad1_ net-_u1-pad1_ net-_u1-pad13_ net-_u1-pad8_ Tri_state_buffer
+x13 net-_u1-pad17_ net-_m1-pad1_ net-_u1-pad1_ net-_u1-pad13_ net-_u1-pad7_ Tri_state_buffer
+x12 net-_u1-pad18_ net-_m1-pad1_ net-_u1-pad1_ net-_u1-pad13_ net-_u1-pad6_ Tri_state_buffer
+x11 net-_u1-pad19_ net-_m1-pad1_ net-_u1-pad1_ net-_u1-pad13_ net-_u1-pad5_ Tri_state_buffer
+x10 net-_u1-pad20_ net-_m1-pad1_ net-_u1-pad1_ net-_u1-pad13_ net-_u1-pad4_ Tri_state_buffer
+x9 net-_u1-pad21_ net-_m1-pad1_ net-_u1-pad1_ net-_u1-pad13_ net-_u1-pad3_ Tri_state_buffer
+x15 net-_u1-pad15_ net-_m1-pad1_ net-_u1-pad1_ net-_u1-pad13_ net-_u1-pad9_ Tri_state_buffer
+x16 net-_u1-pad14_ net-_m1-pad1_ net-_u1-pad1_ net-_u1-pad13_ net-_u1-pad10_ Tri_state_buffer
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m6 net-_m1-pad1_ net-_m3-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m2 net-_m1-pad1_ net-_m1-pad2_ net-_m2-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m8 net-_m2-pad3_ net-_m3-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m3 net-_m3-pad1_ net-_m3-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m5 net-_m5-pad1_ net-_m3-pad1_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m9 net-_m10-pad1_ net-_m1-pad2_ net-_m5-pad1_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m11 net-_m11-pad1_ net-_m10-pad1_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m4 net-_m3-pad1_ net-_m3-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m7 net-_m10-pad1_ net-_m3-pad1_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m10 net-_m10-pad1_ net-_m1-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m12 net-_m11-pad1_ net-_m10-pad1_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+* Control Statements
+
+.ends SN74LVC4245A

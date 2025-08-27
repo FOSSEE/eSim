@@ -21,60 +21,66 @@ libDescr  = 'EESchema-LIBRARY Version 4.7  Date: \n#encoding utf-8\n'
 nameAppend  = '_PSPICE'
 REMOVEDCOMPONENTS = ['TITLEBLK', 'PARAM', 'readme', 'VIEWPOINT', 'LIB', 'copyright', 'WATCH1', 'VECTOR', 'NODESET1']
 
-for fcounter in range(1, len(sys.argv[1:])+1):
-	input_file = open(sys.argv[fcounter], 'r+')
-	fbasename = os.path.basename(sys.argv[fcounter])
-	flname = fbasename[:fbasename.find('.')] + '.lib'
-	flib = open(flname, 'w+')				#Write .lib header:
-	print('Library file name: ',flname)
+input_file_path = sys.argv[1]
+output_dir = sys.argv[2]
 
-	flib.write(libDescr)
+# Prepare input/output
+input_file = open(input_file_path, 'r')
+fbasename = os.path.basename(input_file_path)
+flname = fbasename[:fbasename.find('.')] + '.lib'
+flpath = os.path.join(output_dir, flname)
+os.makedirs(output_dir, exist_ok=True)
 
-	line = skipTo(input_file,'*symbol')
-	print('Parser',line)
-	'''
+flib = open(flpath, 'w+')  # Output .lib file
+
+print('Library file name: ', flname)
+
+
+line = skipTo(input_file,'*symbol')
+print('Parser',line)
+'''
+while(line != '' and '*symbol' not in line):
+	line = input_file.readline().strip()
+	print(line)
+'''
+
+while(line != '__ERROR__'):
+	#print(input_file.tell())
+	#print('Compo line',line)
+	d = line.find(' ')
+	cnametmp = line[d+1:]
+	#print('cnametmp',cnametmp)
+	d = cnametmp.find(' ')
+	if d == -1:
+		cname = cnametmp
+	else:
+		cname = cnametmp[0:d]
+
+	#print('cname->',cname)
+
+	fileTMP	= open(input_file_path)
+	c = Component(fileTMP, cname)
+	#print(c.ref)
+	fixComp(c)
+	#print('After fixComp',cname, 'ref=', c.ref)
+
+	write = True
+
+	for i in range(len(REMOVEDCOMPONENTS)):			#Don't let these components be saved.
+		if cname == REMOVEDCOMPONENTS[i]:
+			write = False
+			break
+	#print('write->', write)
+	#print('line->', line)
+	if write:
+		c.type_ = c.type_ + nameAppend
+		c.print(flib)
+
+	'''line = input_file.readline().strip()
 	while(line != '' and '*symbol' not in line):
 		line = input_file.readline().strip()
 		print(line)
 	'''
-
-	while(line != '__ERROR__'):
-		#print(input_file.tell())
-		#print('Compo line',line)
-		d = line.find(' ')
-		cnametmp = line[d+1:]
-		#print('cnametmp',cnametmp)
-		d = cnametmp.find(' ')
-		if d == -1:
-			cname = cnametmp
-		else:
-			cname = cnametmp[0:d]
-
-		#print('cname->',cname)
-
-		fileTMP	= open(sys.argv[fcounter])
-		c = Component(fileTMP, cname)
-		#print(c.ref)
-		fixComp(c)
-		#print('After fixComp',cname, 'ref=', c.ref)
-
-		write = True
-
-		for i in range(len(REMOVEDCOMPONENTS)):			#Don't let these components be saved.
-			if cname == REMOVEDCOMPONENTS[i]:
-				write = False
-				break
-		#print('write->', write)
-		#print('line->', line)
-		if write:
-			c.type_ = c.type_ + nameAppend
-			c.print(flib)
-
-		'''line = input_file.readline().strip()
-		while(line != '' and '*symbol' not in line):
-			line = input_file.readline().strip()
-			print(line)
-		'''
-		line = skipTo(input_file, '*symbol')
-	flib.write('#\n#End Library\n')
-	flib.close()
+	line = skipTo(input_file, '*symbol')
+flib.write('#\n#End Library\n')
+flib.close()

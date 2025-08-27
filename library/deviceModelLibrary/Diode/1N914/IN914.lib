@@ -1,0 +1,1 @@
+.MODEL IN914 D( Is=2.52n Rs=0.568 N=1.752 tt=20n Cjo=4p M=0.4 Vj=1 Ibv=1.000E-04 )

@@ -21,6 +21,7 @@
 import os
 import sys
 import traceback
+import webbrowser
 
 if os.name == 'nt':
     from frontEnd import pathmagic  # noqa:F401
@@ -57,6 +58,9 @@ class Application(QtWidgets.QMainWindow):
 
         # Set slot for simulation end signal to plot simulation data
         self.simulationEndSignal.connect(self.plotSimulationData)
+
+        #the plotFlag
+        self.plotFlag = False
 
         # Creating require Object
         self.obj_workspace = Workspace.Workspace()
@@ -129,12 +133,21 @@ class Application(QtWidgets.QMainWindow):
         self.helpfile.setShortcut('Ctrl+H')
         self.helpfile.triggered.connect(self.help_project)
 
+        # added devDocs logo and called functions
+        self.devdocs = QtWidgets.QAction(
+            QtGui.QIcon(init_path + 'images/dev_docs.png'),
+            '<b>Dev Docs</b>', self
+        )
+        self.devdocs.setShortcut('Ctrl+D')
+        self.devdocs.triggered.connect(self.dev_docs)
+
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
         self.topToolbar.addAction(self.closeproj)
         self.topToolbar.addAction(self.wrkspce)
         self.topToolbar.addAction(self.helpfile)
+        self.topToolbar.addAction(self.devdocs)
 
         # ## This part is meant for SoC Generation which is currently  ##
         # ## under development and will be will be required in future. ##
@@ -188,7 +201,7 @@ class Application(QtWidgets.QMainWindow):
             QtGui.QIcon(init_path + 'images/ngspice.png'),
             '<b>Simulate</b>', self
         )
-        self.ngspice.triggered.connect(self.open_ngspice)
+        self.ngspice.triggered.connect(self.plotFlagPopBox)
 
         self.model = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/model.png'),
@@ -227,7 +240,7 @@ class Application(QtWidgets.QMainWindow):
 
         self.conToeSim = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/icon.png'),
-            '<b>Schematics converter</b>', self
+            '<b>Schematic converter</b>', self
         )
         self.conToeSim.triggered.connect(self.open_conToeSim)
 
@@ -246,6 +259,27 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.conToeSim)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
+
+    def plotFlagPopBox(self):
+        """This function displays a pop-up box with message- Do you want Ngspice plots? and oprions Yes and NO.
+        
+        If the user clicks on Yes, both the NgSpice and python plots are displayed and if No is clicked then only the python plots."""
+
+        msg_box = QtWidgets.QMessageBox(self)
+        msg_box.setWindowTitle("Ngspice Plots")
+        msg_box.setText("Do you want Ngspice plots?")
+        
+        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.YesRole)
+        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.NoRole)
+
+        msg_box.exec_()
+
+        if msg_box.clickedButton() == yes_button:
+            self.plotFlag = True  
+        else:
+            self.plotFlag = False  
+
+        self.open_ngspice()
 
     def closeEvent(self, event):
         '''
@@ -391,6 +425,15 @@ class Application(QtWidgets.QMainWindow):
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
+    def dev_docs(self):
+        """
+        This function guides the user to readthedocs website for the developer docs
+        """
+        print("Function : DevDocs")
+        self.obj_appconfig.print_info('DevDocs is called')
+        print("Current Project is : ", self.obj_appconfig.current_project)
+        webbrowser.open("https://esim.readthedocs.io/en/latest/index.html")
+
     @QtCore.pyqtSlot(QtCore.QProcess.ExitStatus, int)
     def plotSimulationData(self, exitCode, exitStatus):
         """Enables interaction for new simulation and
@@ -438,7 +481,7 @@ class Application(QtWidgets.QMainWindow):
                 return
 
             self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                projName, ngspiceNetlist, self.simulationEndSignal)
+                projName, ngspiceNetlist, self.simulationEndSignal, self.plotFlag)
 
             self.ngspice.setEnabled(False)
             self.conversion.setEnabled(False)
@@ -645,8 +688,8 @@ class Application(QtWidgets.QMainWindow):
             self.msg.exec_()
 
     def open_conToeSim(self):
-        print("Function : Schematics converter")
-        self.obj_appconfig.print_info('Schematics converter is called')
+        print("Function : Schematic converter")
+        self.obj_appconfig.print_info('Schematic converter is called')
         self.obj_Mainview.obj_dockarea.eSimConverter()
 
 # This class initialize the Main View of Application
@@ -679,16 +722,120 @@ class MainView(QtWidgets.QWidget):
         # Area to be included in MainView
         self.noteArea = QtWidgets.QTextEdit()
         self.noteArea.setReadOnly(True)
+
+        # Set explicit scrollbar policy
+        self.noteArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.noteArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+
         self.obj_appconfig.noteArea['Note'] = self.noteArea
         self.obj_appconfig.noteArea['Note'].append(
             '        eSim Started......')
         self.obj_appconfig.noteArea['Note'].append('Project Selected : None')
         self.obj_appconfig.noteArea['Note'].append('\n')
-        # CSS
-        self.noteArea.setStyleSheet(" \
-        QWidget { border-radius: 15px; border: 1px \
-            solid gray; padding: 5px; } \
-        ")
+
+        # Enhanced CSS with proper scrollbar styling
+        self.noteArea.setStyleSheet("""
+        QTextEdit {
+            border-radius: 15px;
+            border: 1px solid gray;
+            padding: 5px;
+            background-color: white;
+        }
+    
+        QScrollBar:vertical {
+            border: 1px solid #999999;
+            background: #f0f0f0;
+            width: 16px;
+            margin: 16px 0 16px 0;
+            border-radius: 3px;
+        }
+    
+        QScrollBar::handle:vertical {
+            background: #606060;
+            min-height: 20px;
+            border-radius: 3px;
+            margin: 1px;
+        }
+    
+        QScrollBar::handle:vertical:hover {
+            background: #505050;
+        }
+    
+        QScrollBar::add-line:vertical {
+            border: 1px solid #999999;
+            background: #d0d0d0;
+            height: 15px;
+            width: 16px;
+            subcontrol-position: bottom;
+            subcontrol-origin: margin;
+            border-radius: 2px;
+        }
+    
+        QScrollBar::sub-line:vertical {
+            border: 1px solid #999999;
+            background: #d0d0d0;
+            height: 15px;
+            width: 16px;
+            subcontrol-position: top;
+            subcontrol-origin: margin;
+            border-radius: 2px;
+        }
+    
+        QScrollBar::add-line:vertical:hover,
+        QScrollBar::sub-line:vertical:hover {
+            background: #c0c0c0;
+        }
+    
+        QScrollBar::add-page:vertical,
+        QScrollBar::sub-page:vertical {
+            background: none;
+        }
+    
+        QScrollBar::up-arrow:vertical {
+            width: 8px;
+            height: 8px;
+            background-color: #606060;
+        }
+    
+        QScrollBar::down-arrow:vertical {
+            width: 8px;
+            height: 8px;
+            background-color: #606060;
+        }
+    
+        QScrollBar:horizontal {
+            border: 1px solid #999999;
+            background: #f0f0f0;
+            height: 16px;
+            margin: 0 16px 0 16px;
+            border-radius: 3px;
+        }
+    
+        QScrollBar::handle:horizontal {
+            background: #606060;
+            min-width: 20px;
+            border-radius: 3px;
+            margin: 1px;
+        }
+    
+        QScrollBar::handle:horizontal:hover {
+            background: #505050;
+        }
+    
+        QScrollBar::add-line:horizontal,
+        QScrollBar::sub-line:horizontal {
+            border: 1px solid #999999;
+            background: #d0d0d0;
+            width: 15px;
+            height: 16px;
+                border-radius: 2px;
+        }
+    
+        QScrollBar::add-line:horizontal:hover,
+            QScrollBar::sub-line:horizontal:hover {
+                background: #c0c0c0;
+            }
+        """)
 
         self.obj_dockarea = DockArea.DockArea()
         self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()

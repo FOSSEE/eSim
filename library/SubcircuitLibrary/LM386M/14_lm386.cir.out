@@ -1,0 +1,35 @@
+* c:\fossee\esim\library\subcircuitlibrary\14_lm386\14_lm386.cir
+
+.include D.lib
+.include NPN.lib
+.include PNP.lib
+q2 net-_q2-pad1_ net-_q1-pad3_ net-_q2-pad3_ Q2N2907A
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q3 net-_q2-pad1_ net-_q2-pad1_ net-_q1-pad1_ Q2N2222
+q5 net-_q4-pad1_ net-_q5-pad2_ net-_q5-pad3_ Q2N2907A
+q4 net-_q4-pad1_ net-_q2-pad1_ net-_q1-pad1_ Q2N2222
+q6 net-_q1-pad1_ net-_q6-pad2_ net-_q5-pad2_ Q2N2907A
+q7 net-_d2-pad2_ net-_q4-pad1_ net-_q1-pad1_ Q2N2222
+q8 net-_q10-pad2_ net-_d2-pad2_ net-_q10-pad1_ Q2N2907A
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q1-pad1_ Q2N2222
+r1  net-_q1-pad2_ net-_q1-pad1_ 50k
+r4  net-_q2-pad3_ net-_r4-pad2_ 150
+r5  net-_r4-pad2_ net-_q5-pad3_ 1.35k
+r6  net-_q5-pad3_ net-_q10-pad1_ 15k
+r3  net-_r2-pad2_ net-_q2-pad3_ 15k
+r2  net-_q9-pad1_ net-_r2-pad2_ 15k
+r7  net-_q6-pad2_ net-_q1-pad1_ 50k
+d2 net-_d1-pad2_ net-_d2-pad2_ 1N4148
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r8  net-_q9-pad1_ net-_d1-pad1_ 1.35k
+q9 net-_q9-pad1_ net-_d1-pad1_ net-_q10-pad1_ Q2N2222
+* u1  net-_q5-pad3_ net-_q1-pad2_ net-_q6-pad2_ net-_q1-pad1_ net-_q10-pad1_ net-_q9-pad1_ net-_r2-pad2_ net-_r4-pad2_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

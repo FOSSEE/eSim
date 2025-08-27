@@ -1,0 +1,39 @@
+* C:\Users\HP\OneDrive\Documents\FOSSEE\eSim\library\SubcircuitLibrary\TLV2211\TLV2211.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/18/25 22:33:24
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad4_ mosfet_p		
+M5  Net-_M1-Pad1_ Net-_M5-Pad2_ Net-_M11-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M2  Net-_M1-Pad3_ Net-_M1-Pad3_ Net-_M2-Pad3_ Net-_D1-Pad2_ mosfet_n		
+M3  Net-_M11-Pad1_ Net-_M1-Pad3_ Net-_M3-Pad3_ Net-_D1-Pad2_ mosfet_n		
+M4  Net-_M1-Pad4_ Net-_M14-Pad2_ Net-_M1-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M7  Net-_M1-Pad4_ Net-_M14-Pad2_ Net-_M6-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M6  Net-_M6-Pad1_ Net-_M11-Pad1_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M10  Net-_M1-Pad4_ Net-_C1-Pad2_ Net-_C1-Pad2_ Net-_M1-Pad4_ mosfet_p		
+R4  Net-_C1-Pad2_ Net-_M13-Pad2_ 39k		
+M8  Net-_M6-Pad1_ Net-_M6-Pad1_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M9  Net-_M13-Pad2_ Net-_M6-Pad1_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M13  Net-_M1-Pad4_ Net-_M13-Pad2_ Net-_C2-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M11  Net-_M11-Pad1_ Net-_M11-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+R3  Net-_C1-Pad1_ Net-_M6-Pad1_ 100k		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 30p		
+M12  Net-_C2-Pad2_ Net-_M11-Pad1_ Net-_M11-Pad2_ Net-_D1-Pad2_ mosfet_n		
+R5  Net-_C2-Pad1_ Net-_M11-Pad1_ 300k		
+C2  Net-_C2-Pad1_ Net-_C2-Pad2_ 600p		
+M14  Net-_M1-Pad4_ Net-_M14-Pad2_ Net-_M14-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M17  Net-_M1-Pad4_ Net-_M14-Pad2_ Net-_M15-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M15  Net-_M14-Pad2_ Net-_M15-Pad2_ Net-_M15-Pad3_ Net-_D1-Pad2_ mosfet_n		
+M16  Net-_M15-Pad2_ Net-_M15-Pad2_ Net-_D2-Pad1_ Net-_D1-Pad2_ mosfet_n		
+R1  Net-_M2-Pad3_ Net-_D1-Pad2_ 3k		
+R2  Net-_M3-Pad3_ Net-_D1-Pad2_ 3k		
+R6  Net-_M11-Pad2_ Net-_D1-Pad2_ 50k		
+R7  Net-_M15-Pad3_ Net-_D1-Pad1_ 50k		
+D2  Net-_D2-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+U1  Net-_M1-Pad4_ Net-_M1-Pad2_ Net-_M5-Pad2_ Net-_D1-Pad2_ Net-_C2-Pad2_ PORT		
+
+.end
