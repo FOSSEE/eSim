@@ -1,0 +1,201 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:SLOA024B_LowPass-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L lm_741 X1
+U 1 1 685A3869
+P 6150 3500
+F 0 "X1" H 5950 3500 60  0000 C CNN
+F 1 "lm_741" H 6050 3250 60  0000 C CNN
+F 2 "" H 6150 3500 60  0000 C CNN
+F 3 "" H 6150 3500 60  0000 C CNN
+	1    6150 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R1
+U 1 1 685A38EC
+P 4200 3400
+F 0 "R1" H 4250 3530 50  0000 C CNN
+F 1 "4.99k" H 4250 3350 50  0000 C CNN
+F 2 "" H 4250 3380 30  0000 C CNN
+F 3 "" V 4250 3450 30  0000 C CNN
+	1    4200 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R2
+U 1 1 685A391B
+P 4950 3400
+F 0 "R2" H 5000 3530 50  0000 C CNN
+F 1 "12.1k" H 5000 3350 50  0000 C CNN
+F 2 "" H 5000 3380 30  0000 C CNN
+F 3 "" V 5000 3450 30  0000 C CNN
+	1    4950 3400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5150 3350 5600 3350
+Wire Wire Line
+	4400 3350 4850 3350
+Wire Wire Line
+	4100 3350 3800 3350
+$Comp
+L capacitor C1
+U 1 1 685A399A
+P 5350 3850
+F 0 "C1" H 5375 3950 50  0000 L CNN
+F 1 "10n" H 5375 3750 50  0000 L CNN
+F 2 "" H 5388 3700 30  0000 C CNN
+F 3 "" H 5350 3850 60  0000 C CNN
+	1    5350 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5350 3700 5350 3350
+Connection ~ 5350 3350
+Wire Wire Line
+	6700 3500 7550 3500
+$Comp
+L capacitor C2
+U 1 1 685A3AA0
+P 5550 2500
+F 0 "C2" H 5575 2600 50  0000 L CNN
+F 1 "82n" H 5575 2400 50  0000 L CNN
+F 2 "" H 5588 2350 30  0000 C CNN
+F 3 "" H 5550 2500 60  0000 C CNN
+	1    5550 2500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4650 3350 4650 2500
+Wire Wire Line
+	4650 2500 5400 2500
+Connection ~ 4650 3350
+Wire Wire Line
+	5700 2500 6850 2500
+Wire Wire Line
+	6850 2500 6850 3500
+Connection ~ 6850 3500
+Wire Wire Line
+	5600 3600 5600 4450
+Wire Wire Line
+	5600 4450 6800 4450
+Wire Wire Line
+	6800 4450 6800 3500
+Connection ~ 6800 3500
+Wire Wire Line
+	5350 4000 5350 4300
+$Comp
+L GND #PWR01
+U 1 1 685A3B77
+P 5350 4300
+F 0 "#PWR01" H 5350 4050 50  0001 C CNN
+F 1 "GND" H 5350 4150 50  0000 C CNN
+F 2 "" H 5350 4300 50  0001 C CNN
+F 3 "" H 5350 4300 50  0001 C CNN
+	1    5350 4300
+	1    0    0    -1  
+$EndComp
+NoConn ~ 6100 3100
+NoConn ~ 6200 3150
+$Comp
+L PORT U1
+U 1 1 685A3D93
+P 3550 3350
+F 0 "U1" H 3600 3450 30  0000 C CNN
+F 1 "PORT" H 3550 3350 30  0000 C CNN
+F 2 "" H 3550 3350 60  0000 C CNN
+F 3 "" H 3550 3350 60  0000 C CNN
+	1    3550 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 685A3DFE
+P 6000 2800
+F 0 "U1" H 6050 2900 30  0000 C CNN
+F 1 "PORT" H 6000 2800 30  0000 C CNN
+F 2 "" H 6000 2800 60  0000 C CNN
+F 3 "" H 6000 2800 60  0000 C CNN
+	2    6000 2800
+	0    1    1    0   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 685A3E35
+P 7800 3500
+F 0 "U1" H 7850 3600 30  0000 C CNN
+F 1 "PORT" H 7800 3500 30  0000 C CNN
+F 2 "" H 7800 3500 60  0000 C CNN
+F 3 "" H 7800 3500 60  0000 C CNN
+	3    7800 3500
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 4 1 685A3E82
+P 6000 4200
+F 0 "U1" H 6050 4300 30  0000 C CNN
+F 1 "PORT" H 6000 4200 30  0000 C CNN
+F 2 "" H 6000 4200 60  0000 C CNN
+F 3 "" H 6000 4200 60  0000 C CNN
+	4    6000 4200
+	0    -1   -1   0   
+$EndComp
+Text Notes 4950 1900 0    60   ~ 0
+Sallen-Key Low Pass Filter - UNITY GAIN
+$EndSCHEMATC
