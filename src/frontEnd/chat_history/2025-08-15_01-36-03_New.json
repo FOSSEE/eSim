@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-08-15_01-36-03",
+  "title": "New",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is esim?"
+    },
+    {
+      "role": "bot",
+      "content": "Esim is an electronics simulation tool used for PCB (Printed Circuit Board) and circuit design. It allows users to create digital models of electronic circuits, including components, connections, and functions.\n\nEsim provides a range of features that enable users to simulate electronic circuits with high accuracy and speed. Some of the key features of Esim include:\n  * Digital modeling: Esim allows users to create digital models of electronic circuits, including components, connections, and functions.\n  * High accuracy and speed: Esim provides a range of features that enable users to simulate electronic circuits with high accuracy and speed. These features include:\n  * Automatic circuit generation: Esim automatically generates digital circuits based on the user's specifications for components, connections, and functions.\n  * Customizable simulation parameters: Esim allows users to customize simulation parameters such as time steps, frequency bands, and other relevant factors that affect the performance of the simulated electronic circuits.\nIn summary, Esim is an advanced electronics simulation tool that enables users to create digital models of electronic circuits, including components, connections, and functions. With its high accuracy and speed features, Esim provides a powerful platform for circuit design and analysis, making it an essential tool in the field of electronics engineering."
+    }
+  ]
+}
