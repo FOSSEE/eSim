@@ -1,0 +1,11 @@
+# 1. Clone your fork
+git clone https://github.com/YOUR_USERNAME/eSim-Nicholas-Coutinho-Submission.git
+cd eSim-Nicholas-Coutinho-Submission
+
+# 2. Copy all your submission files into the repo
+cp -r ../eSim-Semester-Long-Internship-Autumn-2025-Submission-Task-5-Nicholas-Coutinho/* .
+
+# 3. Stage, commit, and push
+git add .
+git commit -m "Added internship project files (Task 5 submission)"
+git push origin master
