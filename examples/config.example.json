@@ -1,0 +1,8 @@
+{
+  "esim_root": "/opt/esim",
+  "custom_paths": [],
+  "preferred_pkgmgr": null,
+  "env": {
+    "ESIM_HOME": "/opt/esim"
+  }
+}
