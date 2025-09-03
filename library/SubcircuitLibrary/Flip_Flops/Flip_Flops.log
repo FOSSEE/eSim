@@ -1,4 +1,0 @@
-Circuit: * C:\Users\Aditya\eSim-Workspace\Flip_Flops\Flip_Flops.cir
-
-Fatal Error: Unknown subcircuit called in:
-   x1 clk net-_x1-pad2_ d net-_x1-pad4_ gnd net-_x1-pad6_ q qb d_flip_flop

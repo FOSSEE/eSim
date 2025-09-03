@@ -1,1 +1,0 @@
-.MODEL MUR460 D( Is=10n Rs=.0384 N=2.5 tt=44.4n Cjo=126.4p M=.52 Vj=1.34 Bv=1600 Ibv=1e-05 EG=1.285 XTI=.5 Iave=4 Vpk=600 )

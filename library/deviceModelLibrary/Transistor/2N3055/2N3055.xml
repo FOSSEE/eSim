@@ -1,1 +1,0 @@
-<library><model_name>NPN</model_name><ref_model>2N3055</ref_model><param><Bf>73</Bf><Br>2.66</Br><Rb>0.81</Rb><Rc>0.0856</Rc><Re>0.000856</Re><CJC>1000P</CJC><PC>0.75</PC><MC>0.33</MC><Tr>0.5703U</Tr><Is>2.37E-8</Is><CJE>415P</CJE><PE>0.75</PE><ME>0.5</ME><TF>99.52N</TF><NE>1.26</NE><IK>1</IK><Vceo>60</Vceo><Icrating>10</Icrating><mfg>STMicro</mfg></param></library>
