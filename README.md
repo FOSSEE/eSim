@@ -1,6 +1,6 @@
 # eSim Tool Manager (ETM)
 
-eSim Tool Manager (ETM) is a lightweight Python utility that automates the setup, installation, updating, and configuration of external tools required by eSim. It simplifies managing dependencies for tools like Ngspice, KiCad, Verilator, and GHDL, allowing you to focus on circuit design and simulation.
+eSim Tool Manager (ETM) is a lightweight Python utility that simplifies managing dependencies for external tools required by eSim, such as Ngspice, KiCad, Verilator, and GHDL. While ETM supports manual and automated workflows, this version fully automates the setup, installation, updating, and configuration processes—letting you focus entirely on circuit design and simulation.
 
 ---
 
