@@ -1,1 +1,0 @@
-<library><model_name>NJF</model_name><ref_model>LS5907</ref_model><param><Beta>0.10m</Beta><Betatce>-0.5</Betatce><Rd>16</Rd><Rs>20</Rs><Lambda>4.14m</Lambda><Vto>-1.99</Vto><Vtotc>-2.5m</Vtotc><Is>1.14f</Is><Xti>0</Xti><Cgd>1p</Cgd><M>500m</M><Pb>0.8</Pb><Fc>.5</Fc><Cgs>1p</Cgs><Kf>0</Kf><Af>1</Af><Mfg>Linear_Systems</Mfg></param></library>
