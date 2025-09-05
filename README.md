@@ -2,7 +2,7 @@
 
 ---
 
-## Features
+## Features 
 
 - **Tool Installation** – Install supported tools via system package managers.
 - **Update Management** – Check for and upgrade installed tools.
