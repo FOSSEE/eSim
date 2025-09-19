@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-08-15_01-42-17",
+  "title": "new",
+  "messages": [
+    {
+      "role": "user",
+      "content": "What is esim?"
+    },
+    {
+      "role": "bot",
+      "content": "Esim is an electronics simulation tool used for PCB (Printed Circuit Board) and circuit design. It allows designers to create digital designs of electronic circuits, including components such as transistors, diodes, and capacitors.\n\nEsim provides a range of features and capabilities that allow designers to create complex electronic circuits with ease. Some of the key features and capabilities of Esim include:\n  * Digital design: Esim allows designers to create digital designs of electronic circuits, including components such as transistors, diodes, and capacitors.\n  * Simulation tools: Esim provides a range of simulation tools that allow designers to test their electronic circuits in real-world conditions. Some of the key simulation tools and capabilities provided by Esim include:\n  * Oscilloscope: Esim provides an oscilloscope tool that allows designers to visualize and analyze the electrical behavior of their electronic circuits.\n  * Power supply simulation: Esim provides a range of power supply simulation tools that allow designers to test the electrical performance of their power supplies in real-world conditions. Some of the key power supply simulation tools and capabilities provided by Esim include:\n  * Power supply model simulation: Esim provides a range of power supply model simulation tools that allow designers to test the electrical behavior of their power supplies in real-world conditions. Some of the key power supply model simulation tools and capabilities provided by Esim include:\n  * Voltage drop measurement simulation: Esim provides a range of voltage drop measurement simulation tools that allow designers to test the electrical behavior of their power supplies in real-world conditions. Some of the key voltage drop measurement simulation tools and capabilities provided by Esim include:\n  * Current measurement simulation: Esim provides a range of current measurement simulation tools that allow designers to test the electrical behavior of their power supplies in real-world conditions. Some of the key current measurement simulation tools and capabilities provided by Esim include:\n  * Power factor calculation simulation: Esim provides a range of power factor calculation simulation tools that allow designers to test the electrical behavior of their power supplies in real-world conditions. Some of the key power factor calculation simulation tools and capabilities provided by Esim include:\n  * Resistance measurement simulation: Esim provides a range of resistance measurement simulation tools that allow designers to test the electrical behavior of their power supplies in real-world conditions. Some of the key resistance measurement simulation tools and capabilities provided by Esim include:"
+    }
+  ]
+}
