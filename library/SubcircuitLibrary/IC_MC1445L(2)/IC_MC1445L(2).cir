@@ -1,0 +1,19 @@
+* E:\IC_MC1445L(2)\IC_MC1445L(2).cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/04/25 20:41:15
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  GND Net-_R1-Pad1_ GND GND GND OUT_-_ OUT_+_ Net-_X1-Pad8_ Net-_X1-Pad9_ MC1445L		
+v1  Net-_R1-Pad1_ GND sine		
+R1  Net-_R1-Pad1_ GND 51		
+v2  Net-_X1-Pad8_ GND DC		
+v3  Net-_X1-Pad9_ GND DC		
+U1  OUT_-_ plot_db		
+U2  OUT_+_ plot_db		
+R2  GND OUT_-_ 2.5k		
+R3  OUT_+_ GND 2.5k		
+
+.end
