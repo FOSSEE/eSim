@@ -1,0 +1,54 @@
+* c:\users\chand\esim\fossee\esim\library\subcircuitlibrary\sn74ls38\sn74ls38.cir
+
+.include NPN.lib
+.include D.lib
+q3 net-_q11-pad2_ net-_q3-pad2_ net-_d3-pad2_ Q2N2222
+q7 net-_q11-pad2_ net-_q3-pad2_ net-_d7-pad2_ Q2N2222
+d3 gnd net-_d3-pad2_ 1N4148
+d7 gnd net-_d7-pad2_ 1N4148
+q11 net-_q11-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+q15 net-_q15-pad1_ net-_q11-pad3_ gnd Q2N2222
+r9  vcc net-_q11-pad1_ 600
+r15  vcc net-_q15-pad1_ 1k
+r10  net-_q11-pad3_ gnd 400
+r3  vcc net-_q3-pad2_ 4k
+q4 net-_q12-pad2_ net-_q4-pad2_ net-_d4-pad2_ Q2N2222
+q8 net-_q12-pad2_ net-_q4-pad2_ net-_d8-pad2_ Q2N2222
+d4 gnd net-_d4-pad2_ 1N4148
+d8 gnd net-_d8-pad2_ 1N4148
+q12 net-_q12-pad1_ net-_q12-pad2_ net-_q12-pad3_ Q2N2222
+q16 net-_q16-pad1_ net-_q12-pad3_ gnd Q2N2222
+r11  vcc net-_q12-pad1_ 600
+r16  vcc net-_q16-pad1_ 1k
+r12  net-_q12-pad3_ gnd 400
+r4  vcc net-_q4-pad2_ 4k
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_d1-pad2_ Q2N2222
+q5 net-_q1-pad1_ net-_q1-pad2_ net-_d5-pad2_ Q2N2222
+d1 gnd net-_d1-pad2_ 1N4148
+d5 gnd net-_d5-pad2_ 1N4148
+q9 net-_q9-pad1_ net-_q1-pad1_ net-_q13-pad2_ Q2N2222
+q13 net-_q13-pad1_ net-_q13-pad2_ gnd Q2N2222
+r5  vcc net-_q9-pad1_ 600
+r13  vcc net-_q13-pad1_ 1k
+r6  net-_q13-pad2_ gnd 400
+r1  vcc net-_q1-pad2_ 4k
+q2 net-_q10-pad2_ net-_q2-pad2_ net-_d2-pad2_ Q2N2222
+q6 net-_q10-pad2_ net-_q2-pad2_ net-_d6-pad2_ Q2N2222
+d2 gnd net-_d2-pad2_ 1N4148
+d6 gnd net-_d6-pad2_ 1N4148
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q14 net-_q14-pad1_ net-_q10-pad3_ gnd Q2N2222
+r7  vcc net-_q10-pad1_ 600
+r14  vcc net-_q14-pad1_ 600
+r8  net-_q10-pad3_ gnd 400
+r2  vcc net-_q2-pad2_ 4k
+* u1  net-_d7-pad2_ net-_d3-pad2_ net-_q15-pad1_ net-_d8-pad2_ net-_d4-pad2_ net-_q16-pad1_ gnd net-_d5-pad2_ net-_d1-pad2_ net-_q13-pad1_ net-_d6-pad2_ net-_d2-pad2_ net-_q14-pad1_ vcc port
+.tran 0e-12 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
