@@ -68,11 +68,12 @@ class Validation:
         print("Function: Validating New Project Information")
 
         # Checking existence of project with same name
+        projName = os.path.basename(projDir)
         if os.path.exists(projDir):
             return "CHECKEXIST"  # Project with name already exist
         else:
             # Check Proper name for project. It should not have space
-            if re.search(r"\s", projDir):
+            if re.search(r"\s", projName):
                 return "CHECKNAME"
             else:
                 return "VALID"
