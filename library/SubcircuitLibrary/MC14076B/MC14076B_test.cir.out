@@ -1,0 +1,59 @@
+* c:\users\pavithra\esim-workspace\mc14076b_test\mc14076b_test.cir
+
+.include MC14076B.sub
+* u6  net-_u6-pad1_ net-_u6-pad2_ net-_u6-pad3_ net-_u6-pad4_ adc_bridge_2
+v1 net-_u6-pad1_ gnd  dc 0
+v3 net-_u6-pad2_ gnd  dc 0
+* u8  net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ w x y z dac_bridge_4
+* u10  net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ net-_u10-pad4_ adc_bridge_2
+v6 net-_u10-pad1_ gnd  dc 0
+v5 net-_u10-pad2_ gnd  dc 0
+* u11  rst a b c d net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ net-_u11-pad9_ net-_u11-pad10_ adc_bridge_5
+v7  d gnd pulse(0 5 50n 0.1n 0.1n 1m 9m)
+v8  c gnd pulse(5 0 50n 0.1n 0.1n 2m 8m)
+v9  b gnd pulse(0 5 50n 0.1n 0.1n 1m 9m)
+v10  a gnd pulse(5 80n 2m 0.1n 0.1n 2m 8m)
+v11  rst gnd pulse(0 5 0 0.1n 0.1n 4m 9m)
+* u9  net-_u9-pad1_ net-_u9-pad2_ adc_bridge_1
+v4 net-_u9-pad1_ gnd  dc 9
+* u4  w plot_v1
+* u2  x plot_v1
+* u1  y plot_v1
+* u3  z plot_v1
+* u7  clk net-_u7-pad2_ adc_bridge_1
+v2  clk gnd pulse(0 5 0 0.1n 0.1n 1m 2m)
+* u5  clk plot_v1
+* u12  rst plot_v1
+* u13  a plot_v1
+* u14  b plot_v1
+* u15  c plot_v1
+* u16  d plot_v1
+x1 net-_u6-pad3_ net-_u6-pad4_ net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ net-_u7-pad2_ gnd net-_u10-pad4_ net-_u10-pad3_ net-_u11-pad10_ net-_u11-pad9_ net-_u11-pad8_ net-_u11-pad7_ net-_u11-pad6_ net-_u9-pad2_ MC14076B
+a1 [net-_u6-pad1_ net-_u6-pad2_ ] [net-_u6-pad3_ net-_u6-pad4_ ] u6
+a2 [net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ ] [w x y z ] u8
+a3 [net-_u10-pad1_ net-_u10-pad2_ ] [net-_u10-pad3_ net-_u10-pad4_ ] u10
+a4 [rst a b c d ] [net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ net-_u11-pad9_ net-_u11-pad10_ ] u11
+a5 [net-_u9-pad1_ ] [net-_u9-pad2_ ] u9
+a6 [clk ] [net-_u7-pad2_ ] u7
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u6 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_4, NgSpice Name: dac_bridge
+.model u8 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u10 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_5, NgSpice Name: adc_bridge
+.model u11 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u9 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-06 10e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(w)+10v(x)+20 v(y)+30 v(z)+40v(clk)+50 v(rst)+60 v(a)+70 v(b)+80v(c)+90v(d)
+.endc
+.end
