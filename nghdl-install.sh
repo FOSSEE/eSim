@@ -1,1 +1,0 @@
-nghdl-install.sh
