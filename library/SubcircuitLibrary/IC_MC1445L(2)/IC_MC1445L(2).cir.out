@@ -1,0 +1,23 @@
+* e:\ic_mc1445l(2)\ic_mc1445l(2).cir
+
+.include MC1445L.sub
+x1 gnd net-_r1-pad1_ gnd gnd gnd out_-_ out_+_ net-_x1-pad8_ net-_x1-pad9_ MC1445L
+v1  net-_r1-pad1_ gnd sine(0 0.1 0.8k 0 0)
+r1  net-_r1-pad1_ gnd 51
+v2 net-_x1-pad8_ gnd  dc 5
+v3 net-_x1-pad9_ gnd  dc -5
+* u1  out_-_ plot_db
+* u2  out_+_ plot_db
+r2  gnd out_-_ 2.5k
+r3  out_+_ gnd 2.5k
+.tran 1e-06 5e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot db(out_-_)
+plot db(out_+_)
+.endc
+.end
