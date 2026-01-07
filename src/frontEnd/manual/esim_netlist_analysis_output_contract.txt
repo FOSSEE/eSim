@@ -1,244 +1,52 @@
-Reference
-======================================
+ESIM COPILOT NETLIST ANALYSIS OUTPUT CONTRACT
+=============================================
 
-TABLE OF CONTENTS
-1. eSim Overview & Workflow
-2. Schematic Design (KiCad) & Netlist Generation
-3. SPICE Netlist Rules & Syntax
-4. Simulation Types & Commands
-5. Components & Libraries
-6. Common Errors & Troubleshooting
-7. IC Availability & Knowledge
+This file defines HOW the chatbot MUST respond.
 
-======================================================================
-1. ESIM OVERVIEW & WORKFLOW
-======================================================================
-eSim is an open-source EDA tool for circuit design, simulation, and PCB layout.
-It integrates KiCad (schematic), NgSpice (simulation), and Python (automation).
+--------------------------------------------------
+1. INPUT SOURCE
+--------------------------------------------------
 
-1.1 ESIM USER INTERFACE & TOOLBAR ICONS (FROM TOP TO BOTTOM):
-----------------------------------------------------------------------
-1. NEW PROJECT (Menu > New Project)
-   - Function: Creates a new project folder in ~/eSim-Workspace.
-   - Note: Project name must not have spaces.
+The chatbot MUST rely ONLY on FACT blocks like:
 
-2. OPEN SCHEMATIC (Icon: Circuit Diagram)
-   - Function: Launches KiCad Eeschema (Schematic Editor).
-   - Usage:
-     - If new project: Confirms creation of schematic.
-     - If existing: Opens last saved schematic.
-   - Key Step: Use "Place Symbol" (A) to add components from eSim_Devices.
+[FACT NET_SYNTAX_VALID=YES]
+[FACT FLOATING_NODES=NONE]
+[FACT MISSING_MODELS=BC547]
+...
 
-3. CONVERT KICAD TO NGSPICE (Icon: Gear/Converter)
-   - Function: Converts the KiCad netlist (.cir) into an NgSpice-compatible netlist (.cir.out).
-   - Prerequisite: You MUST generate the netlist in KiCad first!
-   - Features (Tabs inside this tool):
-     a. Analysis: Set simulation type (.tran, .dc, .ac, .op).
-     b. Source Details: Set values for SINE, PULSE, AC, DC sources.
-     c. Ngspice Model: Add parameters for logic gates/flip-flops.
-     d. Device Modeling: Link diode/transistor models to symbols.
-     e. Subcircuits: Link subcircuit files to 'X' components.
-   - Action: Click "Convert" to generate the final simulation file.
+The raw netlist is FOR REFERENCE ONLY.
 
-4. SIMULATION (Icon: Play Button/Waveform)
-   - Function: Launches NgSpice console and plotting window.
-   - Usage: Click "Simulate" after successful conversion. 
-   - Output: Shows plots and simulation logs.
+--------------------------------------------------
+2. OUTPUT SECTIONS (MANDATORY)
+--------------------------------------------------
 
-5. MODEL BUILDER / DEVICE MODELING (Icon: Diode/Graph)
-   - Function: Create custom SPICE models from datasheet parameters.
-   - Supported Devices: Diode, BJT, MOSFET, IGBT, JFET.
-   - Usage: Enter datasheet values (Is, Rs, Cjo) -> Calculate -> Save Model.
+The chatbot MUST output EXACTLY these sections:
 
-6. SUBCIRCUIT MAKER (Icon: Chip/IC)
-   - Function: Convert a schematic into a reusable block (.sub file).
-   - Usage: Create a schematic with ports -> Generate Netlist -> Click Subcircuit Maker.
+1. Syntax / SPICE rule errors
+2. Topology / connection problems
+3. Simulation setup issues (.ac/.tran/.op etc.)
+4. Summary
 
-7. OPENMODELICA (Icon: OM Logo)
-   - Function: Mixed-signal simulation for mechanical-electrical systems.
+--------------------------------------------------
+3. RULES
+--------------------------------------------------
 
-8. MAKERCHIP (Icon: Chip with 'M')
-   - Function: Cloud-based Verilog/FPGA design.
+• If a FACT is NONE → DO NOT invent issues
+• If a FACT is present → MUST report it
+• Ground issues only if BOTH node0 and GND missing
+• Count ALL issues in Summary
 
-STANDARD WORKFLOW:
-1. Open eSim → New Project.
-2. Open Schematic (Icon 1) → Draw Circuit → Generate Netlist (File > Export > Netlist).
-3. Convert (Icon 2) → Set Analysis/Source values → Click Convert.
-4. Simulate (Icon 3) → View waveforms.
+--------------------------------------------------
+4. SUMMARY FORMAT
+--------------------------------------------------
 
-KEY SHORTCUTS:
-- A: Add Component
-- W: Add Wire
-- M: Move
-- R: Rotate
-- V: Edit Value
-- P: Add Power/Ground
-- Delete: Remove item
-- Esc: Cancel action
+"Total issues detected: X
+ - Floating nodes: Y
+ - Missing models: Z
+ - Missing subcircuits: A
+ - Voltage conflicts: B
+ - Missing analysis: C"
 
-======================================================================
-1.2 HANDLING FOLLOW-UP QUESTIONS
-======================================================================
-- Context Awareness: eSim workflow is linear (Schematic -> Netlist -> Convert -> Simulate).
-- If user asks "What next?" after drawing a schematic, the answer is "Generate Netlist".
-- If user asks "What next?" after converting, the answer is "Simulate".
-
-======================================================================
-2. SCHEMATIC DESIGN (KICAD) & NETLIST GENERATION
-======================================================================
-GROUND REQUIREMENT:
-- SPICE requires a node "0" as ground reference.
-- ALWAYS use the "GND" symbol from the "power" library.
-- Do NOT use other grounds (Earth, Chassis) for simulation reference.
-
-FLOATING NODES:
-- Every node must connect to at least two components.
-- A node connecting to only one pin is "floating" and causes errors.
-- Fix: Connect the pin or use a "No Connect" flag (X) if intentional (but careful with simulation).
-
-ADDING SOURCES:
-- DC Voltage: eSim_Sources:vsource (set DC value)
-- AC Voltage: eSim_Sources:vac (set magnitude/phase)
-- Sine Wave: eSim_Sources:vsin (set offset, amplitude, freq)
-- Pulse: eSim_Sources:vpulse (set V1, V2, delay, rise/fall, width, period)
-
-HOW TO GENERATE THE NETLIST (STEP-BY-STEP):
-This is the most critical step to bridge Schematic and Simulation.
-
-Method 1: Top Toolbar (Easiest)
-1. Look for the "Generate Netlist" icon in the top toolbar.
-   (It typically looks like a page with text 'NET' or a green plug icon).
-2. Click it to open the Export Netlist dialog.
-
-Method 2: Menu Bar (If icon is missing)
-1. Go to "File" menu.
-2. Select "Export".
-3. Click "Netlist...".
-   (Note: In some older versions, this may be under "Tools" → "Generate Netlist File").
-
-IN THE NETLIST DIALOG:
-1. Click the "Spice" tab (Do not use Pcbnew tab).
-2. Ensure "Default" format is selected.
-3. Click the "Generate Netlist" button.
-4. A save dialog appears:
-   - Ensure the filename is `<project_name>.cir`.
-   - Save it inside your project folder.
-5. Close the dialog and close Schematic Editor.
-
-BACK IN ESIM:
-1. Select your project in the explorer.
-2. Click the "Convert KiCad to NgSpice" button on the toolbar.
-3. If successful, you can now proceed to "Simulate".
-
-======================================================================
-3. SPICE NETLIST RULES & SYNTAX
-======================================================================
-A netlist is a text file describing connections. eSim generates it automatically.
-
-COMPONENT PREFIXES (First letter matters!):
-- R: Resistor (R1, R2)
-- C: Capacitor (C1)
-- L: Inductor (L1)
-- D: Diode (D1)
-- Q: BJT Transistor (Q1)
-- M: MOSFET (M1)
-- V: Voltage Source (V1)
-- I: Current Source (I1)
-- X: Subcircuit/IC (X1)
-
-SYNTAX EXAMPLES:
-Resistor:  R1 node1 node2 1k
-Capacitor: C1 node1 0 10u
-Diode:     D1 anode cathode 1N4007
-BJT (NPN): Q1 collector base emitter BC547
-MOSFET:    M1 drain gate source bulk IRF540
-Subcircuit: X1 node1 node2 ... subckt_name
-
-RULES:
-- Floating Nodes: Fatal error.
-- Voltage Loop: Two ideal voltage sources in parallel = Error.
-- Model Definitions: Every diode/transistor needs a .model statement.
-- Subcircuits: Every 'X' component needs a .subckt definition.
-
-======================================================================
-4. SIMULATION TYPES & COMMANDS
-======================================================================
-You must define at least one analysis type in your netlist.
-
-A. TRANSIENT ANALYSIS (.tran)
-- Time-domain simulation (like an oscilloscope).
-- Syntax: .tran <step_size> <stop_time>
-- Example: .tran 1u 10m (1ms to 10ms)
-- Use for: waveforms, pulses, switching circuits.
-
-B. DC ANALYSIS (.dc)
-- Sweeps a source voltage/current.
-- Syntax: .dc <source> <start> <stop> <increment>
-- Example: .dc V1 0 5 0.1 (Sweep V1 from 0 to 5V)
-- Use for: I-V curves, transistor characteristics.
-
-C. AC ANALYSIS (.ac)
-- Frequency response (Bode plot).
-- Syntax: .ac <scale> <points> <start_freq> <stop_freq>
-- Example: .ac dec 10 10 100k (10 points/decade, 10Hz-100kHz)
-- Use for: Filters, amplifiers gain/phase.
-
-D. OPERATING POINT (.op)
-- Calculates DC bias points (steady state).
-- Syntax: .op
-- Result: Lists voltage at every node and current in sources.
-
-======================================================================
-5. COMPONENTS & LIBRARIES
-======================================================================
-LIBRARY PATH: /usr/share/kicad/library/
-
-COMMON LIBRARIES:
-- eSim_Devices: R, C, L, D, Q, M (Main library)
-- power: GND, VCC, +5V (Power symbols)
-- eSim_Sources: vsource, vsin, vpulse (Signal sources)
-- eSim_Subckt: OpAmps (LM741, LM358), Timers (NE555), Regulators (LM7805)
-
-HOW TO ADD MODELS:
-1. Right-click component → Properties
-2. Edit "Spice_Model" field
-3. Paste .model or .subckt reference
-
-MODEL EXAMPLES (Copy-Paste):
-.model 1N4007 D(Is=1e-14 Rs=0.1 Bv=1000)
-.model BC547 NPN(Bf=200 Is=1e-14 Vaf=100)
-.model 2N2222 NPN(Bf=255 Is=1e-14)
-
-======================================================================
-6. COMMON ERRORS & TROUBLESHOOTING
-======================================================================
-ERROR: "Singular Matrix" / "Gmin stepping failed"
-- Cause: Floating node, perfect switch, or bad circuit loop.
-- Fix 1: Check for unconnected pins.
-- Fix 2: Add 1GΩ resistor to ground at floating nodes.
-- Fix 3: Add .options gmin=1e-10 to netlist.
-
-ERROR: "Model not found" / "Subcircuit not found"
-- Cause: Component used (e.g., Q1) but no .model defined.
-- Fix: Add the missing .model or .subckt definition to the netlist or schematic.
-
-ERROR: "Project does not contain Kicad netlist file"
-- Cause: You forgot to generate the netlist in KiCad or didn't save it as .cir.
-- Fix: Go back to Schematic, click File > Export > Netlist, and save as <project>.cir.
-
-ERROR: "Permission denied"
-- Fix: Run eSim as administrator (sudo) or fix workspace permissions.
-
-======================================================================
-7. IC AVAILABILITY & KNOWLEDGE
-======================================================================
-SUPPORTED ICs (via eSim_Subckt library):
-- Op-Amps: LM741, LM358, LM324, TL082, AD844
-- Timers: NE555, LM555
-- Regulators: LM7805, LM7812, LM7905, LM317
-- Logic: 7400, 7402, 7404, 7408, 7432, 7486, 7474 (Flip-Flop)
-- Comparators: LM311, LM339
-- Optocouplers: 4N35, PC817
-
-Status: All listed above are "Completed" and verified for eSim.
-"""
+--------------------------------------------------
+END OF FILE
+--------------------------------------------------
