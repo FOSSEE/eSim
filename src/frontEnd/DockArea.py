@@ -12,11 +12,12 @@ from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt
 import os
+from frontEnd.Chatbot import create_chatbot_dock
 from converter.pspiceToKicad import PspiceConverter
 from converter.ltspiceToKicad import LTspiceConverter
 from converter.LtspiceLibConverter import LTspiceLibConverter
 from converter.libConverter import PspiceLibConverter
-from converter.browseSchematic import browse_path
+from converter.browseSchematics import browse_path
 dockList = ['Welcome']
 count = 1
 dock = {}
@@ -127,14 +128,14 @@ class DockArea(QtWidgets.QMainWindow):
             )
         count = count + 1
 
-    def ngspiceEditor(self, projName, netlist, simEndSignal, plotFlag):
+    def ngspiceEditor(self, projName, netlist, simEndSignal,chatbot):
         """ This function creates widget for Ngspice window."""
         global count
         self.ngspiceWidget = QtWidgets.QWidget()
 
         self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(netlist, simEndSignal, plotFlag)
+            NgspiceWidget(netlist, simEndSignal,chatbot)
         )
 
         # Adding to main Layout
@@ -172,7 +173,7 @@ class DockArea(QtWidgets.QMainWindow):
         """This function creates a widget for eSimConverter."""
         global count
 
-        dockName = 'Schematic Converter-'
+        dockName = 'Schematics Converter-'
 
         self.eConWidget = QtWidgets.QWidget()
         self.eConLayout = QVBoxLayout()  # QVBoxLayout for the main layout
@@ -205,7 +206,7 @@ class DockArea(QtWidgets.QMainWindow):
         upload_button2.clicked.connect(lambda: self.pspiceLib_converter.upload_file_Pspice(file_path_text_box.text()))
         button_layout.addWidget(upload_button2)
 
-        upload_button1 = QPushButton("Convert Pspice schematic")
+        upload_button1 = QPushButton("Convert Pspice schematics")
         upload_button1.setFixedSize(180, 30)
         upload_button1.clicked.connect(lambda: self.pspice_converter.upload_file_Pspice(file_path_text_box.text()))
         button_layout.addWidget(upload_button1)
@@ -215,7 +216,7 @@ class DockArea(QtWidgets.QMainWindow):
         upload_button3.clicked.connect(lambda: self.ltspiceLib_converter.upload_file_LTspice(file_path_text_box.text()))
         button_layout.addWidget(upload_button3)
 
-        upload_button = QPushButton("Convert LTspice schematic")
+        upload_button = QPushButton("Convert LTspice schematics")
         upload_button.setFixedSize(184, 30)
         upload_button.clicked.connect(lambda: self.ltspice_converter.upload_file_LTspice(file_path_text_box.text()))
         button_layout.addWidget(upload_button)
@@ -267,9 +268,9 @@ class DockArea(QtWidgets.QMainWindow):
                     <p>
                         <b>Pspice to eSim </b> will convert the PSpice Schematic and Library files to KiCad Schematic and
                         Library files respectively with proper mapping of the components and the wiring. By this way one 
-                        will be able to simulate their schematic in PSpice and get the PCB layout in KiCad.</b> 
+                        will be able to simulate their schematics in PSpice and get the PCB layout in KiCad.</b> 
                         <br/><br/>
-                        <b>LTspice to eSim </b> will convert symbols and schematic from LTspice to Kicad.The goal is to design and
+                        <b>LTspice to eSim </b> will convert symbols and schematics from LTspice to Kicad.The goal is to design and
                         simulate under LTspice and to automatically transfer the circuit under Kicad to draw the PCB.</b>
                     </p>
                 </body>
@@ -569,3 +570,17 @@ class DockArea(QtWidgets.QMainWindow):
         self.temp = self.obj_appconfig.current_project['ProjectName']
         for dockwidget in self.obj_appconfig.dock_dict[self.temp]:
             dockwidget.close()
+
+    def chatbotEditor(self):
+        """
+        Creates the eSim Copilot (Chatbot) dock.
+        """
+        global count
+
+        self.chatbot_dock = create_chatbot_dock(self)
+
+        self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, self.chatbot_dock)
+
+        self.chatbot_dock.setVisible(True)
+        self.chatbot_dock.raise_()
+        
