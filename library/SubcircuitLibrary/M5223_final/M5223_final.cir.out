@@ -1,0 +1,15 @@
+* c:\fossee\esim\library\subcircuitlibrary\m5223_final\m5223_final.cir
+
+.include M5223_My.sub
+x1 net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad8_ net-_u1-pad1_ M5223_My
+x2 net-_u1-pad6_ net-_u1-pad5_ net-_u1-pad4_ net-_u1-pad8_ net-_u1-pad7_ M5223_My
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
