@@ -1,0 +1,13 @@
+* Subcircuit TIP122_sub
+.subckt TIP122_sub net-_q1-pad2_ net-_d1-pad1_ net-_d1-pad2_ 
+.title kicad schematic
+.include NPN.lib
+.include D.lib
+r1 net-_q1-pad2_ net-_q1-pad3_ 8k
+q1 net-_d1-pad2_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r2 net-_q1-pad3_ net-_d1-pad1_ 0.12k
+q2 net-_d1-pad2_ net-_q1-pad3_ net-_d1-pad1_ Q2N2222
+* Control Statements
+
+.ends TIP122_sub
