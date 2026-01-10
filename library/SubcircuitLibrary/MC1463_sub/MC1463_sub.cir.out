@@ -1,0 +1,56 @@
+.title kicad schematic
+
+.include NPN.lib
+.include D.lib
+.include PNP.lib
+* u1 net-_q5-pad2_ net-_q1-pad2_ net-_q6-pad2_ net-_d9-pad2_ net-_q11-pad3_ net-_q11-pad1_ net-_d6-pad1_ net-_q10-pad2_ net-_i3-pad1_ gnd port
+q8 net-_d6-pad1_ net-_d5-pad2_ net-_q8-pad3_ Q2N2907A
+i5 net-_i5-pad1_ net-_d9-pad2_ 1m
+q10 gnd net-_q10-pad2_ net-_i5-pad1_ Q2N2222
+q9 net-_q8-pad3_ net-_i3-pad1_ net-_i5-pad1_ Q2N2222
+r7 net-_q8-pad3_ gnd 100
+r6 net-_d5-pad1_ gnd 100
+d5 net-_d5-pad1_ net-_d5-pad2_ 1N4148
+q1 net-_d1-pad1_ net-_q1-pad2_ gnd Q2N2907A
+r3 net-_q2-pad2_ net-_d3-pad2_ 12k
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+d3 net-_d2-pad2_ net-_d3-pad2_ 1N4148
+r2 net-_d2-pad1_ gnd 1k
+q6 gnd net-_q6-pad2_ net-_i3-pad1_ Q2N2222
+i4 net-_d5-pad2_ net-_d9-pad2_ 1m
+i2 net-_i2-pad1_ net-_d9-pad2_ 1m
+i3 net-_i3-pad1_ net-_d9-pad2_ 1m
+q12 net-_q11-pad1_ net-_d6-pad1_ net-_q11-pad2_ Q2N2222
+d6 net-_d6-pad1_ net-_d6-pad2_ 1N4148
+d7 net-_d6-pad2_ net-_d7-pad2_ 1N4148
+q11 net-_q11-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+d8 net-_d7-pad2_ net-_d8-pad2_ 1N4148
+d9 net-_d8-pad2_ net-_d9-pad2_ 1N4148
+r5 net-_q4-pad1_ gnd 6.8k
+q2 gnd net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q5 gnd net-_q5-pad2_ net-_q4-pad2_ Q2N2222
+q7 net-_q6-pad2_ net-_d5-pad2_ net-_q4-pad1_ Q2N2907A
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_i2-pad1_ Q2N2222
+q3 gnd net-_q2-pad3_ net-_i2-pad1_ Q2N2222
+* u2 net-_d1-pad2_ gnd zener
+* u3 net-_d1-pad1_ gnd zener
+d4 net-_d4-pad1_ net-_d1-pad1_ 1N4148
+r4 net-_d4-pad1_ net-_q2-pad2_ 12k
+r1 net-_d9-pad2_ net-_d1-pad2_ 3k
+i1 net-_d1-pad1_ net-_d9-pad2_ 1m
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+a1 net-_d1-pad2_ gnd u2
+a2 net-_d1-pad1_ gnd u3
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u2 zener(v_breakdown=5.7 i_breakdown=2.0e-3 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u3 zener(v_breakdown=5.7 i_breakdown=2.0e-3 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

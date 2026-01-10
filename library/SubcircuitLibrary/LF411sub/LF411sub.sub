@@ -1,0 +1,24 @@
+* Subcircuit LF411sub
+.subckt LF411sub net-_j2-pad2_ net-_j1-pad2_ net-_i1-pad1_ net-_q2-pad3_ net-_q3-pad3_ 
+.title kicad schematic
+.include PJF.lib
+.include D.lib
+.include PNP.lib
+.include NPN.lib
+r1 net-_q2-pad3_ net-_d1-pad2_ 100m
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+i1 net-_i1-pad1_ net-_j1-pad1_ 100u
+j2 net-_c1-pad1_ net-_j2-pad2_ net-_j1-pad1_ J2N3820
+j1 net-_j1-pad1_ net-_j1-pad2_ net-_d1-pad1_ J2N3820
+i2 net-_i1-pad1_ net-_d2-pad1_ 200u
+q3 net-_i1-pad1_ net-_d2-pad1_ net-_q3-pad3_ Q2N2222
+q4 net-_q2-pad3_ net-_c1-pad2_ net-_q3-pad3_ Q2N2907A
+c1 net-_c1-pad1_ net-_c1-pad2_ 15p
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+d3 net-_d2-pad2_ net-_c1-pad2_ 1N4148
+q1 net-_c1-pad1_ net-_d1-pad1_ net-_q1-pad3_ Q2N2222
+r2 net-_q2-pad3_ net-_q1-pad3_ 3.3k
+q2 net-_c1-pad2_ net-_c1-pad1_ net-_q2-pad3_ Q2N2222
+* Control Statements
+
+.ends LF411sub
