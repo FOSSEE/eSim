@@ -1,0 +1,15 @@
+<library>
+  <model_name>D</model_name>
+  <ref_model>OA90</ref_model>
+  <param>
+    <Is>5e-7</Is>
+    <N>1.35</N>
+    <Rs>5</Rs>
+    <Bv>60</Bv>
+    <Ibv>10m</Ibv>
+    <Cjo>0.7p</Cjo>
+    <Vj>0.15</Vj>
+    <M>0.3</M>
+    <tt>150n</tt>
+  </param>
+</library>

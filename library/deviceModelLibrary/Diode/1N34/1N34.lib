@@ -1,0 +1,1 @@
+.MODEL 1N34 D( Is=0.2n N=2.19 Rs=0.084 bv=60 Ibv=15u Cjo=4.82p Vj=0.75 M=0.333 tt=144n )
