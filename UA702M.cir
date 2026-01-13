@@ -1,0 +1,23 @@
+.title KiCad schematic
+R6 Net-_M6-Pad1_ vcc 10k
+R8 lag_comp lead_comp 10k
+R7 Net-_M5-Pad2_ gnd 10k
+M7 vcc Net-_M6-Pad1_ lead_comp _vcc eSim_MOS_N
+U1 gnd inv_input noninv_input _vcc lead_comp lag_comp output vcc PORT
+M5 Net-_M5-Pad1_ Net-_M5-Pad2_ Net-_M3-Pad2_ _vcc eSim_MOS_N
+R5 _vcc Net-_M5-Pad1_ 10k
+R1 Net-_M1-Pad1_ Net-_M2-Pad1_ 10k
+R2 Net-_M2-Pad1_ vcc 10k
+M6 Net-_M6-Pad1_ Net-_M4-Pad3_ gnd _vcc eSim_MOS_N
+R4 Net-_M4-Pad3_ Net-_M2-Pad1_ 10k
+R10 _vcc Net-_R10-Pad2_ 240
+M8 lag_comp Net-_M3-Pad2_ Net-_M8-Pad3_ _vcc eSim_MOS_N
+R11 Net-_R10-Pad2_ output 2.6k
+M9 vcc lag_comp output _vcc eSim_MOS_N
+R9 Net-_R10-Pad2_ Net-_M8-Pad3_ 10k
+R3 _vcc Net-_M3-Pad1_ 10k
+M3 Net-_M3-Pad1_ Net-_M3-Pad2_ Net-_M1-Pad3_ _vcc eSim_MOS_N
+M4 Net-_M1-Pad3_ noninv_input Net-_M4-Pad3_ _vcc eSim_MOS_N
+M2 Net-_M2-Pad1_ Net-_M1-Pad1_ gnd _vcc eSim_MOS_N
+M1 Net-_M1-Pad1_ inv_input Net-_M1-Pad3_ _vcc eSim_MOS_N
+.end
