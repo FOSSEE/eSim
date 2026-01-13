@@ -1,0 +1,46 @@
+* Cleaned KiCad / eSim netlist - corrected for ngspice
+
+.title Cleaned MOS circuit
+
+* supply
+V1 vcc 0 12
+
+* include your BSIM models (CMOSN and CMOSP)
+.include models.spi
+
+* simple diode replacement for eSim diode
+.model Ddef D(Is=1n Rs=1 Cjo=1p M=0.3)
+
+* ---- RENAMED NETS ----
+* KiCad names cleaned to standard syntax
+
+* Diodes
+D2 vcc net_D2 Ddef
+D3 vcc net_D3 Ddef
+D4 net_D4 0 Ddef
+D1 bias_current 0 Ddef
+
+* PMOS devices
+M2 net_M1_p1 net_D2 vcc vcc CMOSP W=20u L=1u
+M3 net_D2 net_M1_p1 net_M3_p3 vcc CMOSP W=20u L=1u
+M6 net_M5_p3 net_D3 vcc vcc CMOSP W=20u L=1u
+M8 net_D3 net_M5_p3 output vcc CMOSP W=20u L=1u
+
+* NMOS devices
+M1 net_M1_p1 input1 net_M1_p3 0 CMOSN W=10u L=1u
+M5 net_M1_p3 input2 net_M5_p3 0 CMOSN W=10u L=1u
+M4 net_M1_p3 bias_current 0 0 CMOSN W=10u L=1u
+M7 0 net_D4 net_M3_p3 0 CMOSN W=10u L=1u
+M9 output net_M3_p3 net_D4 0 CMOSN W=10u L=1u
+
+* ---- FLOATING NODE FIX ----
+R_fix_in1 input1 0 1G
+R_fix_in2 input2 0 1G
+R_fix_bias bias_current 0 1G
+R_fix_out output 0 1G
+
+* analysis
+.op
+.tran 1m 10m
+
+.end
