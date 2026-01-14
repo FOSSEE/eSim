@@ -1,0 +1,23 @@
+.title KiCad schematic
+M5 Net-_M1-Pad1_ Net-_M10-Pad2_ gnd gnd mosfet_n
+M10 Net-_M1-Pad1_ Net-_M10-Pad2_ Net-_M10-Pad3_ Net-_M10-Pad3_ mosfet_p
+M8 Net-_M8-Pad1_ Net-_M3-Pad2_ Net-_M7-Pad1_ Net-_M7-Pad1_ mosfet_p
+M9 Net-_M10-Pad3_ Net-_M4-Pad2_ Net-_M8-Pad1_ Net-_M8-Pad1_ mosfet_p
+M6 Net-_M6-Pad1_ Net-_M1-Pad2_ Net-_M16-Pad3_ Net-_M16-Pad3_ mosfet_p
+M7 Net-_M7-Pad1_ Net-_M2-Pad2_ Net-_M6-Pad1_ Net-_M6-Pad1_ mosfet_p
+M3 Net-_M1-Pad1_ Net-_M3-Pad2_ gnd gnd mosfet_n
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ gnd gnd mosfet_n
+M4 Net-_M1-Pad1_ Net-_M4-Pad2_ gnd gnd mosfet_n
+M2 Net-_M1-Pad1_ Net-_M2-Pad2_ gnd gnd mosfet_n
+M11 Net-_M11-Pad1_ Net-_M11-Pad2_ gnd gnd mosfet_n
+M13 Net-_M11-Pad1_ Net-_M13-Pad2_ gnd gnd mosfet_n
+M12 Net-_M11-Pad1_ Net-_M12-Pad2_ gnd gnd mosfet_n
+M17 Net-_M17-Pad1_ Net-_M12-Pad2_ Net-_M16-Pad1_ Net-_M16-Pad1_ mosfet_p
+M16 Net-_M16-Pad1_ Net-_M11-Pad2_ Net-_M16-Pad3_ Net-_M16-Pad3_ mosfet_p
+M20 Net-_M11-Pad1_ Net-_M15-Pad2_ Net-_M19-Pad1_ Net-_M19-Pad1_ mosfet_p
+U1 Net-_M1-Pad2_ Net-_M2-Pad2_ Net-_M3-Pad2_ Net-_M11-Pad2_ Net-_M1-Pad1_ Net-_M11-Pad1_ gnd Net-_M12-Pad2_ Net-_M13-Pad2_ Net-_M14-Pad2_ Net-_M15-Pad2_ Net-_M4-Pad2_ Net-_M10-Pad2_ Net-_M16-Pad3_ PORT
+M15 Net-_M11-Pad1_ Net-_M15-Pad2_ gnd gnd mosfet_n
+M19 Net-_M19-Pad1_ Net-_M14-Pad2_ Net-_M18-Pad1_ Net-_M18-Pad1_ mosfet_p
+M18 Net-_M18-Pad1_ Net-_M13-Pad2_ Net-_M17-Pad1_ Net-_M17-Pad1_ mosfet_p
+M14 Net-_M11-Pad1_ Net-_M14-Pad2_ gnd gnd mosfet_n
+.end
