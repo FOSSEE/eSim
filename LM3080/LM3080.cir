@@ -1,0 +1,17 @@
+.title KiCad schematic
+D2 vcc Net-_D2-Pad2_ eSim_Diode
+M1 Net-_M1-Pad1_ input1 Net-_M1-Pad3_ gnd eSim_MOS_N
+U4 input1 input2 gnd bias_input output vcc PORT
+M2 Net-_M1-Pad1_ Net-_D2-Pad2_ vcc vcc eSim_MOS_P
+M3 Net-_D2-Pad2_ Net-_M1-Pad1_ Net-_M3-Pad3_ vcc eSim_MOS_P
+M5 Net-_M1-Pad3_ Net-_M5-Pad2_ Net-_M5-Pad3_ gnd eSim_MOS_N
+M6 Net-_M5-Pad3_ Net-_D3-Pad2_ vcc vcc eSim_MOS_P
+M7 gnd Net-_D4-Pad1_ Net-_M3-Pad3_ gnd eSim_MOS_N
+D4 Net-_D4-Pad1_ gnd eSim_Diode
+M9 output Net-_M3-Pad3_ Net-_D4-Pad1_ gnd eSim_MOS_N
+M8 Net-_D3-Pad2_ Net-_M5-Pad3_ output vcc eSim_MOS_P
+D3 vcc Net-_D3-Pad2_ eSim_Diode
+D1 bias_input gnd eSim_Diode
+R1 input2 Net-_M5-Pad2_ 1G
+M4 Net-_M1-Pad3_ bias_input gnd gnd eSim_MOS_N
+.end
