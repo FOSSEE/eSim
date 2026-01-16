@@ -75,12 +75,15 @@ pip install -r requirements.txt
 
 pip install hdlparse==1.0.4
 
+## Ingest manuals for RAG 
+```bash
+cd src
+python Ingest.py
 
 ## Running the Application
 ```bash
 cd src/frontEnd
 python Application.py
-
 
 ## Common Warnings (Safe to Ignore)
 
