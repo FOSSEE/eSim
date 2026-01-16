@@ -44,7 +44,7 @@ def ingest_pdfs(manuals_directory: str) -> None:
             with open(path, "r", encoding="utf-8") as f:
                 text = f.read()
 
-            raw_sections = text.split("======================================")
+            raw_sections = text.split("\n\n")
             
             documents, embeddings, metadatas, ids = [], [], [], []
             
