@@ -17,7 +17,7 @@ from converter.pspiceToKicad import PspiceConverter
 from converter.ltspiceToKicad import LTspiceConverter
 from converter.LtspiceLibConverter import LTspiceLibConverter
 from converter.libConverter import PspiceLibConverter
-from converter.browseSchematics import browse_path
+from converter.browseSchematic import browse_path
 dockList = ['Welcome']
 count = 1
 dock = {}
