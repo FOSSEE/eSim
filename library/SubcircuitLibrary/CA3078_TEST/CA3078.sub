@@ -1,0 +1,38 @@
+* Subcircuit CA3078
+.subckt CA3078 net-_d7-pad1_ net-_q3-pad2_ net-_q1-pad2_ net-_d1-pad2_ net-_d1-pad1_ net-_q15-pad3_ net-_d2-pad1_ net-_d9-pad2_ 
+.title kicad schematic
+.include D.lib
+.include NPN.lib
+.include PNP.lib
+q5 net-_d7-pad1_ net-_d4-pad1_ net-_d1-pad2_ Q2N2222
+q2 net-_q1-pad3_ net-_d1-pad1_ net-_d1-pad2_ Q2N2222
+d4 net-_d4-pad1_ net-_d1-pad2_ 1N4148
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d3 net-_d2-pad1_ net-_d3-pad2_ 1N4148
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+q1 net-_d2-pad2_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q3 net-_d3-pad2_ net-_q3-pad2_ net-_q1-pad3_ Q2N2222
+d5 net-_d5-pad1_ net-_d4-pad1_ 1N4148
+q4 net-_d5-pad1_ net-_d2-pad2_ net-_d2-pad1_ Q2N2907A
+q6 net-_d7-pad1_ net-_d3-pad2_ net-_d2-pad1_ Q2N2907A
+q7 net-_d6-pad2_ net-_d1-pad1_ net-_d1-pad2_ Q2N2222
+d6 net-_d2-pad1_ net-_d6-pad2_ 1N4148
+q17 net-_q15-pad3_ net-_q16-pad1_ net-_q12-pad2_ Q2N2907A
+r1 net-_q12-pad2_ net-_d2-pad1_ 50
+q16 net-_q16-pad1_ net-_q10-pad1_ net-_q15-pad3_ Q2N2222
+q12 net-_d6-pad2_ net-_q12-pad2_ net-_d2-pad1_ Q2N2907A
+q10 net-_q10-pad1_ net-_d6-pad2_ net-_d2-pad1_ Q2N2907A
+q11 net-_q11-pad1_ net-_d9-pad1_ net-_q10-pad1_ Q2N2907A
+q15 net-_q15-pad1_ net-_d9-pad2_ net-_q15-pad3_ Q2N2907A
+q14 net-_d7-pad1_ net-_q14-pad2_ net-_d1-pad2_ Q2N2222
+q13 net-_q10-pad1_ net-_q11-pad1_ net-_d9-pad2_ Q2N2222
+q18 net-_q15-pad3_ net-_q15-pad1_ net-_q14-pad2_ Q2N2222
+r2 net-_d1-pad2_ net-_q14-pad2_ 50
+d9 net-_d9-pad1_ net-_d9-pad2_ 1N4148
+d7 net-_d7-pad1_ net-_d7-pad2_ 1N4148
+q9 net-_d9-pad2_ net-_d7-pad2_ net-_d1-pad2_ Q2N2222
+d8 net-_d7-pad2_ net-_d1-pad2_ 1N4148
+q8 net-_d2-pad1_ net-_d7-pad1_ net-_d7-pad2_ Q2N2222
+* Control Statements
+
+.ends CA3078
