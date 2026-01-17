@@ -4,11 +4,12 @@ import os
 import re
 import json
 from typing import Dict, Any, Tuple, List
-
+from sklearn.metrics.pairwise import cosine_similarity
 from .error_solutions import get_error_solution
 from .image_handler import analyze_and_extract
 from .ollama_runner import run_ollama
 from .knowledge_base import search_knowledge
+from .ollama_runner import get_embedding
 
 # ==================== ESIM WORKFLOW KNOWLEDGE ====================
 
@@ -113,8 +114,39 @@ def clear_history() -> None:
     LAST_IMAGE_CONTEXT = {}
     LAST_NETLIST_ISSUES = {}
 
-
 # ==================== ESIM ERROR LOGIC ====================
+
+def answer_with_rag_fallback(user_input: str) -> str:
+    """
+    Try to answer using eSim manuals (RAG).
+    If nothing relevant is found, fallback to Ollama.
+    """
+
+    rag_context = search_knowledge(user_input)
+
+    if rag_context.strip():
+        prompt = f"""
+You are eSim Copilot.
+
+Use ONLY the following official eSim documentation
+to answer the question. Do NOT invent information.
+
+{rag_context}
+
+Question:
+{user_input}
+
+Answer clearly and step-by-step.
+"""
+        return run_ollama(prompt)
+
+    # Fallback: general LLM answer
+    prompt = f"""
+Answer the following question clearly:
+
+{user_input}
+"""
+    return run_ollama(prompt)
 
 def detect_esim_errors(image_context: Dict[str, Any], user_input: str) -> str:
     """
@@ -136,13 +168,11 @@ def detect_esim_errors(image_context: Dict[str, Any], user_input: str) -> str:
     for err in raw_errors:
         err_lower = err.lower()
 
-        # 1. Filter "No ground" if ground is actually detected
         if "ground" in err_lower and (
             "gnd" in context_text or "ground" in context_text or " 0 " in context_text
         ):
             continue
 
-        # 2. Filter "Floating node" if it refers to Vin/Vout labels
         if "floating" in err_lower and (
             "vin" in err_lower or "vout" in err_lower or "label" in err_lower
         ):
@@ -240,7 +270,6 @@ def _history_to_text(history: List[Dict[str, str]] | None, max_turns: int = 6) -
         if u:
             lines.append(f"[Turn {i}] User: {u}")
         if b:
-            # Truncate very long bot responses to save token space
             if len(b) > 300:
                 b = b[:300] + "..."
             lines.append(f"[Turn {i}] Assistant: {b}")
@@ -262,12 +291,10 @@ def _is_follow_up_question(user_input: str, history: List[Dict[str, str]] | None
     if len(words) <= 7:
         return True
     
-    # Questions with pronouns (referring to previous context)
     pronouns = ["it", "that", "this", "those", "these", "they", "them"]
     if any(pronoun in words for pronoun in pronouns):
         return True
     
-    # Continuation phrases
     continuations = [
         "what next", "next step", "after that", "and then", "then what",
         "what about", "how about", "what if", "but why", "why not"
@@ -275,13 +302,56 @@ def _is_follow_up_question(user_input: str, history: List[Dict[str, str]] | None
     if any(phrase in user_lower for phrase in continuations):
         return True
     
-    # Question words at start without enough context
     question_starters = ["why", "how", "where", "when", "what", "which"]
     if words[0] in question_starters and len(words) <= 5:
         return True
     
     return False
+import numpy as np
 
+def is_semantic_topic_switch(
+    user_input: str,
+    history: list,
+    threshold: float = 0.30
+) -> bool:
+    """
+    Detect topic switch using embedding similarity.
+    Returns True if new question is unrelated to previous assistant reply.
+    """
+
+    if not history:
+        return False
+
+    last_assistant_msg = None
+    for item in reversed(history):
+        if item.get("role") == "assistant":
+            last_assistant_msg = item.get("content")
+            break
+
+    if not last_assistant_msg:
+        return False
+
+    try:
+        emb_new = get_embedding(user_input)
+        emb_prev = get_embedding(last_assistant_msg)
+
+        if not emb_new or not emb_prev:
+            return False
+
+        emb_new = np.array(emb_new)
+        emb_prev = np.array(emb_prev)
+
+        similarity = np.dot(emb_new, emb_prev) / (
+            np.linalg.norm(emb_new) * np.linalg.norm(emb_prev)
+        )
+
+        print(f"[COPILOT] Semantic similarity = {similarity:.3f}")
+
+        return similarity < threshold
+
+    except Exception as e:
+        print(f"[COPILOT] Topic switch check failed: {e}")
+        return False
 
 # ==================== QUESTION CLASSIFICATION ====================
 
@@ -294,15 +364,12 @@ def classify_question_type(user_input: str, has_image_context: bool,
     """
     user_lower = user_input.lower()
 
-    # Explicit netlist block
     if "[ESIM_NETLIST_START]" in user_input:
         return "netlist"
 
-    # Image: new upload
     if _is_image_query(user_input):
         return "image_query"
 
-    # Follow-up about image
     if has_image_context:
         follow_phrases = [
             "this circuit", "that circuit", "in this schematic",
@@ -312,17 +379,20 @@ def classify_question_type(user_input: str, has_image_context: bool,
         if any(p in user_lower for p in follow_phrases):
             return "follow_up_image"
 
-    # Simple greeting
     greetings = ["hello", "hi", "hey", "howdy", "greetings"]
     user_words = user_lower.strip().split()
     if len(user_words) <= 3 and any(g in user_words for g in greetings):
         return "greeting"
 
-    # Detect generic follow-up (needs history)
-    if _is_follow_up_question(user_input, history):
-        return "follow_up"
+    is_followup = _is_follow_up_question(user_input, history)
+    if is_semantic_topic_switch(user_input, history):
+        print("[COPILOT] Topic switch detected (semantic)")
+        is_followup = False
 
-    # eSim-related keywords
+    if not is_followup:
+        history.clear()
+        LAST_IMAGE_CONTEXT = None
+
     esim_keywords = [
         "esim", "kicad", "ngspice", "spice", "simulation", "netlist",
         "schematic", "convert", "gnd", "ground", ".model", ".subckt",
@@ -331,7 +401,6 @@ def classify_question_type(user_input: str, has_image_context: bool,
     if any(keyword in user_lower for keyword in esim_keywords):
         return "esim"
 
-    # Error-related
     error_keywords = [
         "error", "fix", "problem", "issue", "warning", "missing",
         "not working", "failed", "crash"
@@ -355,13 +424,12 @@ def handle_greeting() -> str:
 
 
 def handle_simple_question(user_input: str) -> str:
-    prompt = (
-        "You are an electronics expert. Answer this question concisely (2-3 sentences max).\n"
-        "Use your general electronics knowledge. Do NOT make up eSim-specific commands.\n\n"
-        f"Question: {user_input}\n\n"
-        "Answer (brief and factual):"
-    )
-    return run_ollama(prompt, mode="default")
+    """
+    Handles standalone questions.
+    Uses RAG first, then falls back to Ollama.
+    keep in mind that your a copilot of eSim an EDA tool
+    """
+    return answer_with_rag_fallback(user_input)
 
 
 def handle_follow_up(user_input: str,
@@ -376,7 +444,6 @@ def handle_follow_up(user_input: str,
     if not history_text:
         return "I need more context. Could you provide more details about your question?"
     
-    # Get minimal RAG context (only if keywords detected)
     rag_context = ""
     user_lower = user_input.lower()
     if any(kw in user_lower for kw in ["model", "spice", "ground", "error", "netlist"]):
@@ -423,7 +490,6 @@ def handle_esim_question(user_input: str,
     """
     user_lower = user_input.lower()
 
-    # Fast path: known ngspice error messages → structured fixes
     sol = get_error_solution(user_input)
     if sol and sol.get("description") != "General schematic error":
         fixes = "\n".join(f"- {f}" for f in sol.get("fixes", []))
@@ -435,12 +501,10 @@ def handle_esim_question(user_input: str,
         )
         if cmd:
             answer += f"**eSim action:** {cmd}\n"
-        return answer
+        return answer_with_rag_fallback(user_input)
 
-    # Build history text
     history_text = _history_to_text(history, max_turns=6)
 
-    # RAG context
     rag_context = search_knowledge(user_input, n_results=5)
 
     image_context_str = ""
@@ -491,7 +555,6 @@ def handle_image_query(user_input: str) -> Tuple[str, Dict[str, Any]]:
     if extraction.get("error"):
         return f"Analysis Failed: {extraction['error']}", {}
 
-    # No follow-up question → summary
     if not question:
         error_report = detect_esim_errors(extraction, "")
 
@@ -519,7 +582,6 @@ def handle_image_query(user_input: str) -> Tuple[str, Dict[str, Any]]:
 
         return summary, extraction
 
-    # There is a textual question about this image
     return handle_follow_up_image_question(question, extraction), extraction
 
 
@@ -576,14 +638,12 @@ def handle_input(user_input: str,
     if not user_input:
         return "Please enter a query."
 
-    # Special case: raw netlist block
     if "[ESIM_NETLIST_START]" in user_input:
         raw_reply = run_ollama(user_input)
         cleaned = clean_response_raw(raw_reply)
         LAST_BOT_REPLY = cleaned
         return cleaned
 
-    # Classify
     question_type = classify_question_type(
         user_input, bool(LAST_IMAGE_CONTEXT), history
     )
@@ -602,15 +662,13 @@ def handle_input(user_input: str,
         elif question_type == "follow_up_image":
             response = handle_follow_up_image_question(user_input, LAST_IMAGE_CONTEXT)
 
-        elif question_type == "follow_up":
-            # NEW: Dedicated follow-up handler
-            response = handle_follow_up(user_input, LAST_IMAGE_CONTEXT, history)
-
         elif question_type == "simple":
             response = handle_simple_question(user_input)
 
-        else:  # "esim" or fallback
-            response = handle_esim_question(user_input, LAST_IMAGE_CONTEXT, history)
+        elif question_type == "follow_up" and history:
+            response = handle_follow_up(user_input, LAST_IMAGE_CONTEXT, history)
+        else:
+            response = handle_simple_question(user_input)
 
         LAST_BOT_REPLY = response
         return response
@@ -637,7 +695,6 @@ class ESIMCopilotWrapper:
     def analyze_schematic(self, query: str) -> str:
         return self.handle_input(query)
 
-# Global wrapper so history persists across calls from GUI
 _GLOBAL_WRAPPER = ESIMCopilotWrapper()
 
 
