@@ -1,0 +1,43 @@
+* c:\users\ajay\onedrive\desktop\fossee2.3\esim\library\subcircuitlibrary\ca3085\ca3085.cir
+
+.include D.lib
+.include PNP.lib
+.include NPN.lib
+r1  net-_d2-pad1_ net-_d1-pad1_ 40k
+* u2  net-_d3-pad2_ net-_d1-pad1_ zener
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q1 net-_d1-pad2_ net-_q1-pad2_ net-_d2-pad2_ Q2N2907A
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+* u3  net-_d3-pad2_ net-_d1-pad2_ zener
+q2 net-_q1-pad2_ net-_d2-pad2_ net-_d2-pad1_ Q2N2907A
+q3 net-_q1-pad2_ net-_d1-pad2_ ? Q2N2222
+r2  ? net-_q4-pad2_ 4k
+r3  net-_q4-pad2_ net-_d3-pad1_ 1.5k
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_q4-pad3_ Q2N2222
+q5 net-_q4-pad1_ net-_d4-pad2_ net-_d2-pad1_ Q2N2907A
+d4 net-_d2-pad1_ net-_d4-pad2_ 1N4148
+q7 net-_q10-pad2_ net-_q4-pad1_ net-_d4-pad2_ Q2N2907A
+q8 net-_q10-pad2_ net-_q8-pad2_ net-_q4-pad3_ Q2N2222
+q6 net-_q4-pad3_ net-_d3-pad1_ net-_d3-pad2_ Q2N2222
+q10 net-_d2-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q9 net-_q10-pad2_ net-_q9-pad2_ net-_q9-pad3_ Q2N2222
+r4  net-_q9-pad2_ net-_q11-pad3_ 1.5k
+q11 net-_q11-pad1_ net-_q10-pad3_ net-_q11-pad3_ Q2N2222
+r5  net-_d2-pad1_ net-_q11-pad1_ 500
+* u1  net-_q11-pad3_ net-_q11-pad1_ net-_d2-pad1_ net-_d3-pad2_ net-_q4-pad2_ net-_q8-pad2_ net-_q10-pad2_ net-_q9-pad3_ port
+a1 net-_d3-pad2_ net-_d1-pad1_ u2
+a2 net-_d3-pad2_ net-_d1-pad2_ u3
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u2 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u3 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
