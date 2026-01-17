@@ -74,6 +74,8 @@ pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 
 pip install hdlparse==1.0.4
+pip install paddlepaddle==2.5.2 \
+  -f https://www.paddlepaddle.org.cn/whl/linux/mkl/avx/stable.html
 
 ## Ingest manuals for RAG 
 ```bash
