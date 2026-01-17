@@ -4,7 +4,7 @@ import json,time
 
 # Model configuration
 VISION_MODELS = {"primary": "minicpm-v:latest"}
-TEXT_MODELS = {"default": "llama3.1:8b"}
+TEXT_MODELS = {"default": "qwen2.5:3b"}
 EMBED_MODEL = "nomic-embed-text" 
 
 ollama_client = ollama.Client(
