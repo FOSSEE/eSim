@@ -80,7 +80,7 @@ pip install paddlepaddle==2.5.2 \
 ## Ingest manuals for RAG 
 ```bash
 cd src
-python Ingest.py
+python ingest.py
 
 ## Running the Application
 ```bash
