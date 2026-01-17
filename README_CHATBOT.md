@@ -38,9 +38,26 @@ python --version
 sudo apt update
 sudo apt upgrade
 
-sudo apt install ngspice
-sudo apt install portaudio19-dev
-sudo apt install libgl1 libglib2.0-0
+sudo apt update
+sudo apt install -y \
+  libxcb-xinerama0 \
+  libxcb-cursor0 \
+  libxkbcommon-x11-0 \
+  libxcb-icccm4 \
+  libxcb-image0 \
+  libxcb-keysyms1 \
+  libxcb-render-util0 \
+  libxcb-xinput0 \
+  libxcb-shape0 \
+  libxcb-randr0 \
+  libxcb-util1 \
+  libgl1 \
+  libglib2.0-0
+
+## Clone the Repository
+
+git clone <https://github.com/HARIOM-BEEP/eSim>
+cd eSim-master
 
 ## Ollama (LLM Backend)
 ```bash
@@ -69,13 +86,25 @@ source ~/.bashrc
 
 python3.10 -m venv venv
 source venv/bin/activate
-pip install --upgrade pip setuptools wheel
+pip uninstall -y pip
+python -m ensurepip
+python -m pip install pip==22.3.1
+python -m pip install setuptools==65.5.0 wheel==0.38.4
+
+python -m pip install hdlparse==1.0.4 --no-build-isolation
 
 pip install -r requirements.txt
 
-pip install hdlparse==1.0.4
 pip install paddlepaddle==2.5.2 \
   -f https://www.paddlepaddle.org.cn/whl/linux/mkl/avx/stable.html
+
+pip uninstall -y opencv-python opencv-contrib-python opencv-python-headless
+pip install opencv-python-headless==4.6.0.66
+
+## Before running eSim
+
+unset QT_PLUGIN_PATH
+export QT_QPA_PLATFORM=xcb
 
 ## Ingest manuals for RAG 
 ```bash
