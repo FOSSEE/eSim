@@ -218,39 +218,45 @@ function installDependency
     pip3 install volare
 }
 
-
 function copyKicadLibrary
 {
+    echo "Extracting custom KiCad Library..."
 
-    #Extract custom KiCad Library
-    tar -xJf library/kicadLibrary.tar.xz
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    BASE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 
-    if [ -d ~/.config/kicad/6.0 ];then
+    LIB_ARCHIVE="$BASE_DIR/library/kicadLibrary.tar.xz"
+
+    if [ ! -f "$LIB_ARCHIVE" ]; then
+        echo "ERROR: KiCad library archive not found at $LIB_ARCHIVE"
+        exit 1
+    fi
+
+    tar -xJf "$LIB_ARCHIVE" -C "$BASE_DIR"
+
+    if [ ! -d "$BASE_DIR/kicadLibrary" ]; then
+        echo "ERROR: Extraction failed, kicadLibrary folder not created"
+        exit 1
+    fi
+
+    if [ -d ~/.config/kicad/6.0 ]; then
         echo "kicad config folder already exists"
-    else 
-        echo ".config/kicad/6.0 does not exist"
+    else
+        echo "Creating ~/.config/kicad/6.0"
         mkdir -p ~/.config/kicad/6.0
     fi
 
-    # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
-    echo "symbol table copied in the directory"
+    # Copy symbol table
+    cp "$BASE_DIR/kicadLibrary/template/sym-lib-table" ~/.config/kicad/6.0/
+    echo "symbol table copied"
 
-    # Copy KiCad symbols made for eSim
-    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
+    # Copy eSim symbols
+    sudo cp -r "$BASE_DIR/kicadLibrary/eSim-symbols/"* /usr/share/kicad/symbols/
 
-    set +e      # Temporary disable exit on error
-    trap "" ERR # Do not trap on error of any command
-    
-    # Remove extracted KiCad Library - not needed anymore
-    rm -rf kicadLibrary
+    # Cleanup
+    rm -rf "$BASE_DIR/kicadLibrary"
 
-    set -e      # Re-enable exit on error
-    trap error_exit ERR
-
-    #Change ownership from Root to the User
     sudo chown -R $USER:$USER /usr/share/kicad/symbols/
-
 }
 
 
