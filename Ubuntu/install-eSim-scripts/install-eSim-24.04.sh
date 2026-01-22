@@ -1,165 +1,81 @@
 #!/bin/bash
-set -e
-set -E
+#=============================================================================
+#          FILE: install-eSim.sh
+# 
+#         USAGE: ./install-eSim.sh --install 
+#                            OR
+#                ./install-eSim.sh --uninstall
+#                
+#   DESCRIPTION: Installation script for eSim EDA Suite
+#
+#       OPTIONS: ---
+#  REQUIREMENTS: ---
+#          BUGS: ---
+#         NOTES: ---
+#       AUTHORS: Fahim Khan, Rahul Paknikar, Saurabh Bansode,
+#                Sumanto Kar, Partha Singha Roy, Jayanth Tatineni,
+#                Anshul Verma, Shiva Krishna Sangati, Harsha Narayana P
+#  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
+#       CREATED: Sunday 25 May 2025 17:40
+#      REVISION: ---
+#=============================================================================
 
-# ================== GLOBAL PATH RESOLUTION ==================
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-UBUNTU_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-ESIM_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
-
-config_dir="$HOME/.esim"
-config_file="config.ini"
-eSim_Home="$ESIM_ROOT"
-
-echo "==========================================="
-echo "eSim Root   = $ESIM_ROOT"
-echo "Ubuntu Dir  = $UBUNTU_DIR"
-echo "Script Dir  = $SCRIPT_DIR"
-echo "==========================================="
-
-# ============================================================
-
-error_exit() {
-    echo -e "\n\n❌ ERROR — installation aborted\n"
-    exit 1
-}
-trap error_exit ERR
-
-# ============================================================
-createConfigFile() {
-    mkdir -p "$config_dir"
-    rm -f "$config_dir/$config_file"
-    touch "$config_dir/$config_file"
-
-    cat <<EOF >> "$config_dir/$config_file"
-[eSim]
-eSim_HOME = $eSim_Home
-LICENSE = %(eSim_HOME)s/LICENSE
-KicadLib = %(eSim_HOME)s/Ubuntu/library/kicadLibrary.tar.xz
-IMAGES = %(eSim_HOME)s/Ubuntu/images
-VERSION = %(eSim_HOME)s/VERSION
-MODELICA_MAP_JSON = %(eSim_HOME)s/Ubuntu/library/ngspicetoModelica/Mapping.json
-EOF
+# Function to detect Ubuntu version and full version string
+get_ubuntu_version() {
+    VERSION_ID=$(grep "^VERSION_ID" /etc/os-release | cut -d '"' -f 2)
+    FULL_VERSION=$(lsb_release -d | grep -oP '\d+\.\d+\.\d+')
+    echo "Detected Ubuntu Version: $FULL_VERSION"
 }
 
-# ============================================================
-installNghdl() {
-    echo "Installing NGHDL..."
+# Function to choose and run the appropriate script
+run_version_script() {
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/install-eSim-scripts"
+    
+    # Decide script based on full version
+    case $VERSION_ID in
+        "22.04")
+            if [[ "$FULL_VERSION" == "22.04.4" ]]; then
+                SCRIPT="$SCRIPT_DIR/install-eSim-22.04.sh"
+            else
+                SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            fi
+            ;;
+        "23.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            ;;
+        "24.04" | "25.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
+            ;;
+        *)
+            echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
+            exit 1
+            ;;
+    esac
 
-    cd "$UBUNTU_DIR"
-
-    if [ ! -f nghdl.zip ]; then
-        echo "ERROR: nghdl.zip missing in $UBUNTU_DIR"
-        exit 1
-    fi
-
-    unzip -o nghdl.zip
-
-    if [ ! -d nghdl ]; then
-        echo "ERROR: nghdl folder missing after unzip"
-        exit 1
-    fi
-
-    cd nghdl
-    chmod +x install-nghdl.sh
-    ./install-nghdl.sh --install
-    cd "$ESIM_ROOT"
-}
-
-# ============================================================
-copyKicadLibrary() {
-    echo "Installing KiCad libraries..."
-
-    LIB="$UBUNTU_DIR/library/kicadLibrary.tar.xz"
-    cd "$UBUNTU_DIR"
-
-    if [ ! -f "$LIB" ]; then
-        echo "ERROR: $LIB not found"
-        exit 1
-    fi
-
-    tar -xJf "$LIB"
-
-    mkdir -p ~/.config/kicad/6.0
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
-
-    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
-    sudo chown -R $USER:$USER /usr/share/kicad/symbols/
-
-    rm -rf kicadLibrary
-    cd "$ESIM_ROOT"
-}
-
-# ============================================================
-installKicad() {
-    echo "Installing KiCad..."
-
-    sudo rm -f /etc/apt/sources.list.d/kicad*
-    sudo apt update
-
-    UBUNTU_VER=$(lsb_release -rs)
-
-    if [[ "$UBUNTU_VER" == 25.* ]]; then
-        sudo apt install -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-        return
-    fi
-
-    if [[ "$UBUNTU_VER" == "24.04" ]]; then
-        PPA="kicad/kicad-8.0-releases"
+    # Run the script if found
+    if [[ -f "$SCRIPT" ]]; then
+        echo "Running script: $SCRIPT $ARGUMENT"
+        bash "$SCRIPT" "$ARGUMENT"
     else
-        PPA="kicad/kicad-6.0-releases"
+        echo "Installation script not found: $SCRIPT"
+        exit 1
     fi
-
-    sudo add-apt-repository -y "ppa:$PPA"
-    sudo apt update
-    sudo apt install -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
 }
 
-# ============================================================
-installDependencies() {
-    sudo apt update
-    sudo apt install -y python3-virtualenv python3-pip python3-psutil python3-pyqt5 python3-matplotlib python3-setuptools xterm xz-utils
+# --- Main Execution Starts Here ---
 
-    virtualenv "$config_dir/env"
-    source "$config_dir/env/bin/activate"
-
-    pip install --upgrade pip
-    pip install watchdog makerchip-app sandpiper-saas hdlparse matplotlib PyQt5 volare
-    pip install https://github.com/hdl/pyhdlparser/tarball/master
-}
-
-# ============================================================
-createDesktop() {
-    cat <<EOF > esim-start.sh
-#!/bin/bash
-cd $ESIM_ROOT/src/frontEnd
-source $config_dir/env/bin/activate
-python3 Application.py
-EOF
-
-    chmod +x esim-start.sh
-    sudo cp esim-start.sh /usr/bin/esim
-    rm esim-start.sh
-}
-
-# ============================================================
-# MAIN
-# ============================================================
-
-if [ "$1" != "--install" ]; then
-    echo "Usage: ./install-eSim.sh --install"
+# Validate argument
+if [[ $# -ne 1 ]]; then
+    echo "Usage: $0 --install | --uninstall"
     exit 1
 fi
 
-createConfigFile
-installDependencies
-installKicad
-copyKicadLibrary
-installNghdl
-createDesktop
+ARGUMENT=$1
+if [[ "$ARGUMENT" != "--install" && "$ARGUMENT" != "--uninstall" ]]; then
+    echo "Invalid argument: $ARGUMENT"
+    echo "Usage: $0 --install | --uninstall"
+    exit 1
+fi
 
-echo "==========================================="
-echo "eSim installed successfully"
-echo "Run:  esim"
-echo "==========================================="
-
+get_ubuntu_version
+run_version_script

@@ -19,7 +19,10 @@
 #       CREATED: Wednesday 15 July 2015 15:26
 #      REVISION: Sunday 25 May 2025 17:40
 #=============================================================================
- 
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"/.. && pwd)"
+KICAD_CONFIG="/home/vishal/.config/kicad/6.0"
+
+
 sudo apt install -y libxcb-xinerama0 libxcb1 libx11-xcb1 libxcb-glx0 libxcb-util1 libxrender1 libxi6 libxrandr2 libqt5gui5 libqt5core5a libqt5widgets5
 
 # Creating the Virtual Environment
@@ -140,9 +143,13 @@ function installNghdl
 {
 
     echo "Installing NGHDL..........................."
-    unzip -o nghdl.zip
-    cd nghdl/
-    chmod +x install-nghdl.sh
+
+cd "$BASE_DIR"
+unzip -o nghdl.zip
+cd nghdl
+
+chmod +x install-nghdl.sh
+
 
     # Do not trap on error of any command. Let NGHDL script handle its own errors.
     trap "" ERR
@@ -183,22 +190,33 @@ function installSky130Pdk
 
 function installKicad
 {
-
     echo "Installing KiCad..........................."
+      sudo rm -f /etc/apt/sources.list.d/kicad*
+    sudo add-apt-repository --remove ppa:kicad/kicad-6.0-releases -y 2>/dev/null
+    sudo add-apt-repository --remove ppa:kicad/kicad-8.0-releases -y 2>/dev/null
+    sudo apt-get update
 
-    kicadppa="kicad/kicad-6.0-releases"
-    findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
-    if [ -z "$findppa" ]; then
-        echo "Adding KiCad-6 ppa to local apt-repository"
-        sudo add-apt-repository -y ppa:kicad/kicad-6.0-releases
-        sudo apt-get update
-    else
-        echo "KiCad-6 is available in synaptic"
+    ubuntu_version=$(lsb_release -rs)
+
+    if [[ "$ubuntu_version" == "25.04" ]]; then
+        echo "Ubuntu 25.04 detected — using official Ubuntu repository"
+        sudo apt update
+        sudo apt install -y kicad
+        return
     fi
 
-    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    if [[ "$ubuntu_version" == "24.04" ]]; then
+        echo "Ubuntu 24.04 detected — using KiCad 8 PPA"
+        sudo add-apt-repository -y ppa:kicad/kicad-8.0-releases
+        sudo apt update
+        sudo apt install -y kicad
+        return
+    fi
 
+    echo "Unsupported Ubuntu version for KiCad"
+    exit 1
 }
+
 
 
 function installDependency
@@ -229,7 +247,7 @@ function installDependency
     pip install matplotlib
 
     echo "Installing Distutils......................."
-    sudo apt-get install -y python3-distutils
+
 
     # Install NgVeri Depedencies
     echo "Installing Pip3............................"
@@ -256,7 +274,8 @@ function copyKicadLibrary
 {
 
     #Extract custom KiCad Library
-    tar -xJf library/kicadLibrary.tar.xz
+tar xf "$BASE_DIR/library/kicadLibrary.tar.xz" -C /usr/share/kicad
+
 
     if [ -d ~/.config/kicad/6.0 ];then
         echo "kicad config folder already exists"
@@ -266,11 +285,16 @@ function copyKicadLibrary
     fi
 
     # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
+
+cp "$BASE_DIR/library/kicadLibrary/template/sym-lib-table" "$KICAD_CONFIG/sym-lib-table"
+
+
     echo "symbol table copied in the directory"
 
     # Copy KiCad symbols made for eSim
-    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
+    mkdir -p "$KICAD_CONFIG/symbols"
+cp "$BASE_DIR/library/kicadLibrary/eSim-symbols/"* "$KICAD_CONFIG/symbols/"
+
 
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command

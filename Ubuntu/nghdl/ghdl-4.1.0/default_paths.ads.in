@@ -1,0 +1,48 @@
+--  GHDL driver paths  -*- ada -*-.
+--  Copyright (C) 2002, 2003, 2004, 2005 Tristan Gingold
+--
+--  This program is free software: you can redistribute it and/or modify
+--  it under the terms of the GNU General Public License as published by
+--  the Free Software Foundation, either version 2 of the License, or
+--  (at your option) any later version.
+--
+--  This program is distributed in the hope that it will be useful,
+--  but WITHOUT ANY WARRANTY; without even the implied warranty of
+--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--  GNU General Public License for more details.
+--
+--  You should have received a copy of the GNU General Public License
+--  along with this program.  If not, see <gnu.org/licenses>.
+
+package Default_Paths is
+
+   --  Accept long lines.
+   pragma Style_Checks ("M999");
+
+   Install_Prefix : constant String :=
+     "@INSTALL_PREFIX@";
+   LibDir_Suffix : constant String :=
+     "@LIBDIR_SUFFIX@";
+   LibGhdlDir_Suffix : constant String :=
+     "@LIBGHDLDIR_SUFFIX@";
+   IncDir_Suffix : constant String :=
+     "@INCDIR_SUFFIX@";
+
+   Compiler_Gcc : constant String :=
+     "@COMPILER_GCC@";
+   Compiler_Mcode : constant String :=
+     "@COMPILER_MCODE@";
+   Compiler_Llvm : constant String :=
+     "@COMPILER_LLVM@";
+   Compiler_Debug : constant String :=
+     "@COMPILER_DEBUG@";
+   Post_Processor : constant String :=
+     "@POST_PROCESSOR@";
+
+   Shared_Library_Extension : constant String := "@SOEXT@";
+   Executable_Extension : constant String := "@EXEEXT@";
+   Default_Pie : constant Boolean := "@default_pic@" = String'("true");
+
+   Backend_Version : constant String :=
+     "@backend_version@";
+end Default_Paths;

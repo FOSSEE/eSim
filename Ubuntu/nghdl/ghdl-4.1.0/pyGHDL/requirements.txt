@@ -1,0 +1,4 @@
+-r libghdl/requirements.txt
+-r dom/requirements.txt
+-r lsp/requirements.txt
+-r cli/requirements.txt

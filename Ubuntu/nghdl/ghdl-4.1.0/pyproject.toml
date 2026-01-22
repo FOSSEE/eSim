@@ -1,0 +1,10 @@
+[build-system]
+requires = [
+    "pyTooling >= 4.0.1, <5.0",
+    "setuptools >= 62.3.3",
+    "wheel >= 0.38.1"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.black]
+line-length = 120
