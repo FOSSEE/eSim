@@ -1,0 +1,29 @@
+* c:\fossee\esim\library\subcircuitlibrary\ic_lm339\ic_lm339.cir
+
+.include NPN.lib
+.include PNP.lib
+.include D.lib
+q1 gnd net-_d1-pad1_ net-_d1-pad2_ Q2N2907A
+q2 net-_q2-pad1_ net-_d1-pad2_ net-_d2-pad1_ Q2N2907A
+q5 net-_q4-pad1_ net-_d3-pad2_ net-_d2-pad1_ Q2N2907A
+q6 gnd net-_d4-pad1_ net-_d3-pad2_ Q2N2907A
+q3 net-_q2-pad1_ net-_q2-pad1_ net-_q3-pad3_ Q2N2222
+q4 net-_q4-pad1_ net-_q2-pad1_ net-_q3-pad3_ Q2N2222
+q7 net-_i2-pad1_ net-_q4-pad1_ net-_q3-pad3_ Q2N2222
+q8 net-_q8-pad1_ net-_i2-pad1_ net-_q3-pad3_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d2-pad1_ net-_d1-pad2_ 1N4148
+d3 net-_d2-pad1_ net-_d3-pad2_ 1N4148
+d4 net-_d4-pad1_ net-_d3-pad2_ 1N4148
+i1  net-_d2-pad1_ net-_i1-pad2_ 80u
+i2  net-_i2-pad1_ net-_i1-pad2_ 80u
+* u1  net-_d1-pad1_ net-_d4-pad1_ net-_i1-pad2_ net-_q8-pad1_ net-_q3-pad3_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
