@@ -1,0 +1,557 @@
+#!/usr/bin/env python3
+# pylint: disable=C0103,C0114,C0115,C0116,R0912,R0914,R0915,R1702,W0125
+######################################################################
+
+import argparse
+import os
+import re
+import subprocess
+import sys
+# from pprint import pprint, pformat
+
+######################################################################
+
+
+def process():
+    unlink_outputs()
+
+    bison_version_check()
+    supports_report = Bison_Version >= 2.3
+
+    clean_input(Args.input, tmp_prefix() + ".y")
+
+    # Run bison
+    command = (
+        Args.yacc + (" -t" if Args.debug else "") +
+        (" -d" if Args.definitions else "") +
+        (" -k" if Args.token_table else "") + (" -v" if Args.verbose else "") +
+        (" --report=itemset --report=lookahead" if
+         (Args.verbose and supports_report) else "")
+        # -p required for GLR parsers; they write to -p basename, not -o
+        + ((" -p " + Args.name_prefix) if Args.name_prefix else "") + " -b " +
+        tmp_prefix() + " -o " + tmp_prefix() + ".c" + " " + tmp_prefix() +
+        ".y")
+
+    print("  " + command)
+    status = subprocess.call(command, shell=True)
+    if status != 0:
+        unlink_outputs()
+        sys.exit("bisonpre: %Error: " + Args.yacc + " version " +
+                 Bison_Version + " run failed due to errors\n")
+
+    clean_output(tmp_prefix() + ".output",
+                 output_prefix() + ".output", True, False)
+    warning_check(output_prefix() + ".output")
+
+    clean_output(tmp_prefix() + ".c", output_prefix() + ".c", False, True)
+    clean_output(tmp_prefix() + ".h", output_prefix() + ".h", False, True)
+    unlink_tmp()
+
+
+def tmp_prefix():
+    return output_prefix() + "_pretmp"
+
+
+def output_prefix():
+    if Args.output:
+        o = re.sub(r'\.[^.]*$', '', Args.output)
+        return o
+    return Args.file_prefix + ".tab"
+
+
+def unlink_ok(filename):
+    try:
+        os.unlink(filename)
+    except OSError:
+        pass
+
+
+def unlink_tmp():
+    unlink_ok(tmp_prefix() + ".c")
+    unlink_ok(tmp_prefix() + ".h")
+    unlink_ok(tmp_prefix() + ".output")
+
+
+def unlink_outputs():
+    unlink_tmp()
+    unlink_ok(output_prefix() + ".c")
+    unlink_ok(output_prefix() + ".h")
+    # We don't remove .output file, as it's useful for debugging errors
+
+
+def bison_version_check():
+    sp = subprocess.Popen(Args.yacc + " --version",
+                          shell=True,
+                          stdout=subprocess.PIPE)
+    out = str(sp.stdout.read())
+    match = re.search(r'([0-9]+\.[0-9]+)', out)
+    if match:
+        v = float(match.group(1))
+        if v < 1.875:
+            sys.exit("bisonpre: %Error: '" + Args.yacc + "' is version " + v +
+                     "; version 1.875 or newer is required\n")
+        global Bison_Version  # pylint: disable=global-variable-undefined
+        Bison_Version = v
+        return
+
+    sys.exit("bisonpre: %Error: '" + Args.yacc +
+             "' is not installed, or not working\n")
+
+
+def clean_output(filename, outname, is_output, is_c):
+    print("  edit " + filename + " " + outname)
+
+    with open(filename) as fh:
+        lines = fh.readlines()
+
+    basename = re.sub(r'.*/', '', tmp_prefix() + ".")
+    basename = re.escape(basename)
+    newbase = re.sub(r'.*/', '', Args.input)
+    newbase = re.sub(r'\.y', '.', newbase)
+
+    if is_output:
+        state_line = {}
+        lineno = 0
+        for line in lines:
+            lineno += 1
+            # We add a colon so it's easy to search for the definition
+            match = re.match(r'^state (\d+)\s*', line)
+            if match:
+                state_line[match.group(1)] = lineno
+        out = []
+        for line in lines:
+            match = re.match(r'^State (\d+) (conflicts)', line)
+            if match:
+                line = line.rstrip()
+                if match.group(1) in state_line:
+                    line += " // line " + state_line[match.group(1)]
+                line += "\n"
+            out.append(line)
+        lines = out
+        out = []
+
+    if is_c:
+        token_values = {}
+        for line in lines:
+            if re.search(r'enum\s+yytokentype',
+                         line) and not re.search(r';', line):
+                match = re.search(r'\b(\S+) = (\d+)', line)
+                if match:
+                    token_values[match.group(2)] = match.group(1)
+        out = []
+        for line in lines:
+            if _enaline(line) and re.search(r'BISONPRE_TOKEN_NAMES', line):
+                out.append(line)
+                for tv in sorted(token_values.keys()):
+                    out.append("\tcase %d: return \"%s\";\n" %
+                               (tv, token_values[tv]))
+                continue
+            out.append(line)
+        lines = out
+        out = []
+
+    with open(outname, "w") as fh:
+        for line in lines:
+            # Fix filename refs
+            line = re.sub(basename, newbase, line)
+            # Fix bison 2.3 and GCC 4.2.1
+            line = re.sub(r'\(YY_\("', '(YY_((char*)"', line)
+            # Fix bison 2.3 glr-parser warning about yyerrorloc.YYTYPE::yydummy uninit
+            line = re.sub(r'(YYLTYPE yyerrloc;)',
+                          r'\1 yyerrloc.yydummy=0;/*bisonpre*/', line)
+            # Fix bison 3.6.1 unexpected nested-comment
+            line = re.sub(r'/\* "/\*.*\*/"  \*/', '', line)
+            fh.write(line)
+
+
+def warning_check(filename):
+    with open(filename) as fh:
+        linenum = 0
+        for line in fh:
+            linenum += 1
+            if re.search(r'(conflicts|warning:|^useless)',
+                         line,
+                         flags=re.IGNORECASE):
+                sys.exit("%Error: " + filename + ":" + str(linenum) + ": " +
+                         line + "\n")
+
+
+######################################################################
+
+
+def clean_input(filename, outname):
+    print("  edit " + filename + " " + outname)
+
+    global Filename  # pylint: disable=global-variable-undefined
+    Filename = filename
+
+    with open(filename) as fh:
+        lines = fh.readlines()
+
+    # Find "%tokens<type>:"
+    # Find "rule<type>:" and replace with just "rule:"
+    global Rules  # pylint: disable=global-variable-undefined
+    Rules = {}
+
+    types = {}
+    tokens = {}
+    last_rule = None
+    section = 1
+    if True:
+        linesin = lines
+        lines = []
+        lineno = 0
+        for line in linesin:
+            lineno += 1
+            #  ^/ to prevent comments from matching
+            if re.match(r'^[a-zA-Z0-9_<>]+:[^/]*[a-zA-Z]', line):
+                sys.exit("%Error: " + filename + ":" + str(lineno) +
+                         ": Move text on rule line to next line: " + line +
+                         "\n")
+
+            matcha = re.match(r'^([a-zA-Z0-9_]+)<(\S*)>(.*)$',
+                              line,
+                              flags=re.DOTALL)
+            matchb = re.match(r'^([a-zA-Z0-9_]+):', line)
+
+            if re.match(r'^%%', line):
+                section += 1
+                if section == 2:
+                    last_rule = None
+            elif matcha:
+                name = matcha.group(1)
+                dtype = matcha.group(2)
+                line = name + matcha.group(3)
+                if name in Rules:
+                    sys.exit("%Error: " + filename + ":" + str(lineno) +
+                             ": Redeclaring '" + name + "': " + line)
+                if dtype not in types:
+                    types[dtype] = {}
+                types[dtype][name] = 1
+                Rules[name] = {
+                    'name': name,
+                    'type': dtype,
+                    'rules_and_productions': "",
+                    'subrules': {}
+                }
+                if last_rule:
+                    sys.exit("%Error: " + filename + ":" + str(lineno) +
+                             ": Unterminated previous rule\n")
+                last_rule = name
+            elif matchb:
+                name = matchb.group(1)
+                if name not in ('public', 'private'):
+                    if name in Rules:
+                        sys.exit("%Error: " + filename + ":" + str(lineno) +
+                                 ": Redeclaring '" + name + "': " + line)
+                    Rules[name] = {
+                        'name': name,
+                        'type': "",
+                        'rules_and_productions': "",
+                        'subrules': {}
+                    }
+                    if last_rule:
+                        sys.exit("%Error: " + filename + ":" + str(lineno) +
+                                 ": Unterminated previous rule\n")
+                    last_rule = name
+
+            lines.append(line)
+            # Now clean the line and extract some more info
+            cline = re.sub(r'//.*$', '\n', line)
+            if re.match(r'^\s*;', cline):
+                if not last_rule:
+                    sys.exit("%Error: " + filename + ":" + str(lineno) +
+                             ": Stray semicolon\n")
+                last_rule = None
+            elif last_rule:
+                Rules[last_rule]['rules_and_productions'] += cline
+
+            match = re.match(r'^%token\s*<(\S+)>\s*(\S+)', cline)
+            if match:
+                dtype = match.group(1)
+                tok = match.group(2)
+                if tok in tokens:
+                    sys.exit("%Error: " + filename + ":" + str(lineno) +
+                             ": Redeclaring '" + tok + "': " + line)
+                tokens[tok] = dtype
+
+            for tok in re.split(r'[^a-zA-Z0-9_]+', cline):
+                if last_rule and re.match(r'^[a-zA-Z]', tok):
+                    # print("TT "+last_rule+" "+tok+"\n")
+                    Rules[last_rule]['subrules'][tok] = 1
+
+    # pprint(Rules)
+
+    # Replace BISONPRE_VERSION(ver,,...) with expanded list
+    if True:
+        linesin = lines
+        lines = []
+        lineno = 0
+        for line in linesin:
+            lineno += 1
+            if _enaline(line) and re.search(r'BISONPRE_VERSION', line):
+                #                       1           2 3            4
+                match = re.search(
+                    r'BISONPRE_VERSION\((\S+)\s*,\s*((\S+)\s*,)?\s*([^\),]+)\)\s*$',
+                    line)
+                if not match:
+                    sys.exit("%Error: " + filename + ":" + str(lineno) +
+                             ": Bad form of BISONPRE_VERSION: " + line)
+                ver = match.group(1)
+                ver_max = match.group(3)
+                cmd = match.group(4)
+                if Bison_Version >= float(ver) and (
+                        not ver_max or Bison_Version <= float(ver_max)):
+                    line = cmd + "\n"
+                else:
+                    line = "//NOP: " + line
+            lines.append(line)
+
+    # Replace BISONPRE_NOT(type,...) with expanded list
+    if True:
+        linesin = lines
+        lines = []
+        lineno = 0
+        for line in linesin:
+            lineno += 1
+            if _enaline(line) and re.search(r'BISONPRE_NOT', line):
+                match = re.search(
+                    r'(.*)BISONPRE_NOT\((\S+)\)\s*(\{[^}]+})\s*(.*)$',
+                    line,
+                    flags=re.DOTALL)
+                if not match:
+                    sys.exit("%Error: " + filename + ":" + str(lineno) +
+                             ": Bad form of BISONPRE_NOT: " + line)
+                line = match.group(1) + match.group(4)
+                endtok = match.group(2)
+                action = match.group(3)
+                endtoks = endtok.split(',')
+                for etok in endtoks:
+                    if etok not in tokens:
+                        sys.exit("%Error: " + filename + ":" + str(lineno) +
+                                 ": Can't find definition for token: " + etok +
+                                 "\n")
+                # Push it all onto one line to avoid error messages changing
+                pipe = ""
+                for tok in sorted(tokens.keys()):
+                    hit = False
+                    for etok in endtoks:
+                        if tok == etok:
+                            hit = True
+                            break
+                    if not hit and endtok != tok:
+                        line += "\t" + pipe + " " + tok + " " + action
+                        pipe = "|"
+                line += "\n"
+            lines.append(line)
+
+    # Replace BISONPRE_COPY(type,{code})
+    if True:
+        linesin = lines
+        lines = []
+        lineno = 0
+        for line in linesin:
+            lineno += 1
+            if _enaline(line) and re.search(r'BISONPRE_COPY', line):
+                line = _bisonpre_copy(line, lineno, 0)
+            lines.append(line)
+
+    # Replace ~[x]~  - must be after BISONPRE_COPY expansion
+    if True:
+        linesin = lines
+        lines = []
+        lineno = 0
+        for line in linesin:
+            lineno += 1
+            line = re.sub(r'~[a-zA-Z0-9_]+~', '', line)
+            lines.append(line)
+
+    # Find "BISONPRE_TYPES"
+    if True:
+        linesin = lines
+        lines = []
+        lineno = 0
+        needmore = 0
+        for line in linesin:
+            lineno += 1
+            if _enaline(line) and re.search(r'//BISONPRE_TYPES', line):
+                lines.append(line)
+                for typen in sorted(types.keys()):
+                    if not typen:
+                        continue
+                    line = "%type<" + typen + ">\t"
+                    for rule in sorted(types[typen].keys()):
+                        line += " " + rule
+                    line += "\n"
+                    lines.append(line)
+                    needmore += 1
+            elif needmore > 0:
+                # Bison doesn't have a #line directive, so we need somewhere to insert into
+                line = re.sub(r'^\s*//.*$', '', line)
+                if not re.match(r'^\s*$', line):
+                    sys.exit(
+                        "%Error: " + filename + ":" + str(lineno) + ": Need " +
+                        needmore +
+                        " more blank lines to keep line numbers are constant\n"
+                    )
+                needmore -= 1
+            else:
+                lines.append(line)
+
+    with open(outname, "w") as fh:
+        for line in lines:
+            fh.write(line)
+
+
+def _bisonpre_copy(text, lineno, depth):
+    while re.search(r'BISONPRE_COPY', text):
+        match = re.match(
+            # 1                2         3             4            5
+            r'(.*)BISONPRE_COPY(_ONCE)?\((\S+)\s*,\s*\{([^}]*)}\s*\)(.*)',
+            text,
+            flags=re.DOTALL)
+        if not match:
+            sys.exit("%Error: " + Filename + ":" + str(lineno) +
+                     ": Bad form of BISONPRE_NOT: " + text)
+        text = match.group(1) + '{HERE}' + match.group(5)
+        once = match.group(2)
+        rule = match.group(3)
+        code = match.group(4)
+        if rule not in Rules:
+            sys.exit("%Error: " + Filename + ":" + str(lineno) +
+                     ": Can't find definition for rule: " + rule)
+        if depth > 0 and once:
+            # _ONCE means don't inherit
+            text = re.sub(r'\|[ \t]+{HERE}', '', text)  # Don't OR in nothing
+            text = re.sub(r'{HERE}', '', text)
+        else:
+            # Push it all onto one line to avoid error messages changing
+            insert = Rules[rule]['rules_and_productions']
+            insert = re.sub(r'^\S+:', '', insert)  # Strip rule name
+            # Recurse so BISONPRE under B
+            for op in code.split(';'):
+                if re.match(r'^\s*$', op):
+                    continue
+                match = re.match(r'^\s*s/(.*?)/(.*?)/g\s*$', op)
+                if not match:
+                    sys.exit("%Error: " + Filename + ":" + str(lineno) +
+                             ": Didn't understand replacement: " + op)
+                left = match.group(1)
+                right = match.group(2)
+                insert = re.sub(left, right, insert)
+
+            insert = re.sub(r'[ \t\n]+\n', "\n", insert)
+            insert = re.sub(r'\n', " ",
+                            insert)  # Optional - preserve line numbering
+            text = re.sub(r'{HERE}', insert, text)
+        depth += 1
+    return text
+
+
+def _enaline(line):
+    return not re.search(r'//UN', line)
+
+
+######################################################################
+# main
+
+parser = argparse.ArgumentParser(
+    allow_abbrev=False,
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+    description=
+    """Bisonpre is a wrapper for the Bison YACC replacement.  Input to Bison is
+preprocessed with substitution as described below under EXTENSIONS.  Output
+from Bison is checked for additional errors, and corrected to work around
+various compile warnings.""",
+    epilog="""
+BISON GRAMMAR EXTENSIONS
+
+  //BISONPRE_TYPES
+
+    This is expanded into %type declarations.
+
+  ~[a-z]+~
+
+    Any text matching ~[a-z]+~ is removed.  This allows optional text to be
+    used only when the rule containing the ~~ is used in a BISONPRE_COPY.
+
+  rule_label<type>:
+
+    This allows the label declaring a rule to also specify the type of the
+    rule.  The type will be inserted where /*BISONPRE_TYPES*/ is
+    encountered.
+
+  BISONPRE_COPY(rule, {code})
+
+    Copy the rules and productions from the specified rule, filter through
+    the Python code provided in the {} and insert here into the output
+    file.
+
+  BISONPRE_COPY_ONCE(rule, {code})
+
+    As with BISONPRE_COPY, but if called from underneath another
+    BISONPRE_COPY rule, ignore it.
+
+  BISONPRE_NOT(token[, token...])
+
+    Create a rule that matches every token except for those specified.
+
+  BISONPRE_VERSION(ver, cmd)
+
+    If the bison version is >= the specified version, include the given
+    command.
+
+Copyright 2002-2021 by Wilson Snyder. This program is free software; you
+can redistribute it and/or modify it under the terms of either the GNU
+Lesser General Public License Version 3 or the Perl Artistic License
+Version 2.0.
+
+SPDX-License-Identifier: LGPL-3.0-only OR Artistic-2.0""")
+
+# Local options
+parser.add_argument('--yacc',
+                    action='store',
+                    default='bison',
+                    help='name of the bison executable, defaults to "bison"')
+
+# Arguments passed through to bison
+parser.add_argument('-b',
+                    '--file-prefix',
+                    action='store',
+                    help='Passed to bison.')
+parser.add_argument('-d',
+                    '--definitions',
+                    action='store_true',
+                    help='Passed to bison.')
+parser.add_argument('-k',
+                    '--token-table',
+                    action='store_true',
+                    help='Passed to bison.')
+parser.add_argument('-o',
+                    '--output',
+                    action='store',
+                    required=True,
+                    help='Passed to bison. Sets output file name')
+parser.add_argument('-p',
+                    '--name-prefix',
+                    action='store',
+                    help='Passed to bison.')
+parser.add_argument('-t',
+                    '--debug',
+                    action='store_true',
+                    help='Passed to bison.')
+parser.add_argument('-v',
+                    '--verbose',
+                    action='store_true',
+                    help='Passed to bison.')
+
+parser.add_argument('input', help='Passed to bison. Input grammar file.')
+
+Args = parser.parse_args()
+
+process()
+
+######################################################################
+# Local Variables:
+# compile-command: "./bisonpre "
+# End:

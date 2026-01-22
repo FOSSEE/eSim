@@ -1,0 +1,108 @@
+#!/usr/bin/env python3
+# pylint: disable=C0103,C0114,C0116,eval-used
+######################################################################
+
+import argparse
+import re
+import sys
+# from pprint import pprint
+
+Items = []
+
+######################################################################
+
+
+def read_keys(filename):
+    with open(filename) as fh:
+        for line in fh:
+            line = re.sub(r'\/\/.*$', '', line)
+            if re.match(r'^\s*$', line):
+                continue
+            if re.search(r'^\s*VLCOVGEN_ITEM', line):
+                match = re.search(r'^\s*VLCOVGEN_ITEM *\( *"([^"]+)" *\)',
+                                  line)
+                if not match:
+                    sys.exit("%Error: " + filename +
+                             ": vlcovgen misformed VLCOVGEN_ITEM line")
+                code = "{" + match.group(1) + "}"
+                data = eval(code)
+                # pprint(data)
+                Items.append(data)
+
+
+######################################################################
+
+
+def lint():
+    shorts = {}
+    for item in Items:
+        if item['short'] in shorts:
+            sys.exit("%Error: vlcovgen duplicate short code: " + item['short'])
+        shorts[item['short']] = True
+
+
+def write_keys(filename):
+    orig = []
+    out = []
+
+    with open(filename) as fh:
+        deleting = False
+        for line in fh:
+            orig.append(line)
+            if re.search(r'VLCOVGEN_CIK_AUTO_EDIT_BEGIN', line):
+                deleting = True
+                out.append(line)
+                for keyref in sorted(Items, key=lambda a: a['name']):
+                    out.append("#define VL_CIK_%s \"%s\"\n" %
+                               (keyref['name'].upper(), keyref['short']))
+            elif re.search(r'VLCOVGEN_SHORT_AUTO_EDIT_BEGIN', line):
+                deleting = True
+                out.append(line)
+                for keyref in sorted(Items, key=lambda a: a['name']):
+                    out.append(
+                        "        if (key == \"%s\") return VL_CIK_%s;\n" %
+                        (keyref['name'], keyref['name'].upper()))
+            elif re.search(r'VLCOVGEN_.*AUTO_EDIT_END', line):
+                deleting = False
+                out.append(line)
+            elif not deleting:
+                out.append(line)
+
+    ok = "".join(out) == "".join(orig)
+    if not ok:
+        with open(filename, "w") as fhw:
+            fhw.write("".join(out))
+
+
+######################################################################
+######################################################################
+
+parser = argparse.ArgumentParser(
+    allow_abbrev=False,
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+    description=
+    """Generate verilated_cov headers to reduce C++ code duplication.""",
+    epilog=
+    """Copyright 2002-2021 by Wilson Snyder. This program is free software; you
+can redistribute it and/or modify it under the terms of either the GNU
+Lesser General Public License Version 3 or the Perl Artistic License
+Version 2.0.
+
+SPDX-License-Identifier: LGPL-3.0-only OR Artistic-2.0""")
+
+parser.add_argument('--srcdir',
+                    action='store',
+                    help='directory containing Verilator sources')
+
+parser.set_defaults(srcdir=".")
+
+Args = parser.parse_args()
+
+read_keys(Args.srcdir + "/../include/verilated_cov_key.h")
+lint()
+write_keys(Args.srcdir + "/../include/verilated_cov_key.h")
+
+######################################################################
+# Local Variables:
+# compile-command: "./vlcovgen --srcdir ."
+# End:
