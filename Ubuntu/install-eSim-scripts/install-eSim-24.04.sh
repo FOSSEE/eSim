@@ -61,24 +61,26 @@ function createConfigFile
 
 function installNghdl
 {
-
     echo "Installing NGHDL..........................."
-    unzip -o nghdl.zip
-    cd nghdl/
+
+    # NGHDL is already included as a folder in newer releases
+    if [ ! -d "nghdl" ]; then
+        echo "ERROR: nghdl directory not found"
+        exit 1
+    fi
+
+    cd nghdl
     chmod +x install-nghdl.sh
 
-    # Do not trap on error of any command. Let NGHDL script handle its own errors.
+    # Let NGHDL handle its own errors
     trap "" ERR
-
-    ./install-nghdl.sh --install       # Install NGHDL
-        
-    # Set trap again to error_exit function to exit on errors
+    ./install-nghdl.sh --install
     trap error_exit ERR
 
     ngspiceFlag=1
-    cd ../
-
+    cd ..
 }
+
 
 
 function installSky130Pdk
