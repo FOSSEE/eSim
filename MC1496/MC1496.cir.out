@@ -1,0 +1,54 @@
+.title kicad schematic
+
+.include NMOS-180nm.lib
+.include userDiode.lib
+
+* ---------- Power Supplies ----------
+* define a 5V DC supply between VDD and GND
+VDD vdd 0 DC 5
+VEE vee 0 DC 0
+Vbias bias 0 DC 1.2
+
+* ---------- Input Sources ----------
+* give each input node a small signal so they’re not floating
+Vsig1 signal_input_1 0 SIN(0 1 1k)
+Vsig2 signal_input_2 0 SIN(0 1 1k)
+Vcar1 carrier_input_1 0 SIN(0 1 10k)
+Vcar2 carrier_input_2 0 SIN(0 1 10k)
+
+* ---------- Circuit ----------
+r1 vee net-_r1-pad2_ 500k
+d1 bias net-_r1-pad2_ D1N750
+r2 vee net-_m3-pad3_ 500k
+m3 gain_adjust_2 bias net-_m3-pad3_ vee CMOSN W=100u L=100u M=1
+m2 net-_m1-pad3_ signal_input_1 gain_adjust_2 vee CMOSN W=100u L=100u M=1
+m4 net-_m1-pad3_ carrier_input_1 output1 vee CMOSN W=100u L=100u M=1
+m1 output1 carrier_input_2 net-_m1-pad3_ vee CMOSN W=100u L=100u M=1
+m6 gain_adjust_1 bias net-_m6-pad3_ vee CMOSN W=100u L=100u M=1
+r3 vee net-_m6-pad3_ 500k
+m7 gain_adjust_1 signal_input_2 net-_m5-pad3_ vee CMOSN W=100u L=100u M=1
+m8 net-_m5-pad3_ carrier_input_2 output1 vee CMOSN W=100u L=100u M=1
+m5 output1 carrier_input_1 net-_m5-pad3_ vee CMOSN W=100u L=100u M=1
+
+.option method=gear reltol=0.01 abstol=1e-6 itl1=1000
+.ic v(bias)=1.2
+
+.tran 0.1ms 50ms
+
+* ---------- Control Section ----------
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+
+* Plot useful nodes (these exist now)
+plot v(bias)
+plot v(signal_input_1)
+plot v(signal_input_2)
+plot v(carrier_input_1)
+plot v(carrier_input_2)
+plot v(output1)
+plot v(gain_adjust_1)
+plot v(gain_adjust_2)
+.endc
+.end
