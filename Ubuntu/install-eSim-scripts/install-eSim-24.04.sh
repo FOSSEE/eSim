@@ -107,6 +107,11 @@ function installSky130Pdk
 function installKicad
 {
     echo "Installing KiCad..........................."
+	    # Purge broken KiCad PPAs 
+    sudo rm -f /etc/apt/sources.list.d/kicad*
+    sudo add-apt-repository --remove ppa:kicad/kicad-6.0-releases -y 2>/dev/null
+    sudo add-apt-repository --remove ppa:kicad/kicad-8.0-releases -y 2>/dev/null
+    sudo apt-get update
 
     ubuntu_version=$(lsb_release -rs)
     ubuntu_codename=$(lsb_release -cs)
