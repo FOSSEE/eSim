@@ -63,23 +63,31 @@ function installNghdl
 {
     echo "Installing NGHDL..........................."
 
-    # NGHDL is already included as a folder in newer releases
-    if [ ! -d "nghdl" ]; then
-        echo "ERROR: nghdl directory not found"
+    ESIM_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+    UBUNTU_DIR="$ESIM_DIR/Ubuntu"
+
+    echo "Using NGHDL from: $UBUNTU_DIR"
+
+    cd "$UBUNTU_DIR" || { echo "ERROR: Ubuntu directory not found"; exit 1; }
+
+    if [ ! -f nghdl.zip ]; then
+        echo "ERROR: nghdl.zip not found in $UBUNTU_DIR"
         exit 1
     fi
 
-    cd nghdl
+    unzip -o nghdl.zip
+
+    if [ ! -d nghdl ]; then
+        echo "ERROR: nghdl directory not created after unzip"
+        exit 1
+    fi
+
+    cd nghdl || exit 1
     chmod +x install-nghdl.sh
-
-    # Let NGHDL handle its own errors
-    trap "" ERR
     ./install-nghdl.sh --install
-    trap error_exit ERR
-
-    ngspiceFlag=1
-    cd ..
+    cd "$ESIM_DIR"
 }
+
 
 
 
