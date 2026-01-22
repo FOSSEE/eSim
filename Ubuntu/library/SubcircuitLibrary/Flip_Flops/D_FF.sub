@@ -1,0 +1,34 @@
+* Subcircuit D_FF
+.subckt D_FF net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ 
+* c:\fossee\esim\library\subcircuitlibrary\d_ff\d_ff.cir
+.include NAND.sub
+.include NOT.sub
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+x1 net-_u1-pad2_ net-_x1-pad2_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x5 net-_x1-pad2_ net-_x10-pad1_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x9 net-_m1-pad1_ net-_x16-pad2_ net-_m5-pad3_ net-_u1-pad6_ net-_u1-pad5_ NAND
+x10 net-_x10-pad1_ net-_m5-pad3_ net-_m3-pad1_ net-_u1-pad6_ net-_u1-pad5_ NAND
+x11 net-_x10-pad1_ net-_m5-pad1_ net-_x11-pad3_ net-_u1-pad6_ net-_u1-pad5_ NAND
+x16 net-_x11-pad3_ net-_x16-pad2_ net-_m7-pad1_ net-_u1-pad6_ net-_u1-pad5_ NAND
+x2 net-_u1-pad3_ net-_x2-pad2_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x6 net-_x2-pad2_ net-_m1-pad3_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x3 net-_u1-pad4_ net-_x3-pad2_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x7 net-_x3-pad2_ net-_x16-pad2_ net-_u1-pad6_ net-_u1-pad5_ NOT
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+m2 net-_m1-pad1_ net-_m2-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m3 net-_m3-pad1_ net-_m2-pad2_ net-_m1-pad1_ net-_m3-pad1_ CMOSP W=100u L=100u M=1
+m4 net-_m3-pad1_ net-_m1-pad2_ net-_m1-pad1_ net-_m1-pad1_ CMOSN W=100u L=100u M=1
+m5 net-_m5-pad1_ net-_m2-pad2_ net-_m5-pad3_ net-_m5-pad1_ CMOSP W=100u L=100u M=1
+m6 net-_m5-pad1_ net-_m1-pad2_ net-_m5-pad3_ net-_m5-pad3_ CMOSN W=100u L=100u M=1
+m7 net-_m7-pad1_ net-_m1-pad2_ net-_m5-pad1_ net-_m7-pad1_ CMOSP W=100u L=100u M=1
+m8 net-_m7-pad1_ net-_m2-pad2_ net-_m5-pad1_ net-_m5-pad1_ CMOSN W=100u L=100u M=1
+x12 net-_x11-pad3_ net-_x12-pad2_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x14 net-_x12-pad2_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x13 net-_m7-pad1_ net-_x13-pad2_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x15 net-_x13-pad2_ net-_u1-pad8_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x4 net-_u1-pad1_ net-_m2-pad2_ net-_u1-pad6_ net-_u1-pad5_ NOT
+x8 net-_m2-pad2_ net-_m1-pad2_ net-_u1-pad6_ net-_u1-pad5_ NOT
+* Control Statements
+
+.ends D_FF

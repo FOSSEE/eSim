@@ -1,0 +1,9 @@
+* Subcircuit Buffer
+.subckt Buffer net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ 
+* c:\fossee\esim\library\subcircuitlibrary\buffer\buffer.cir
+.include NOT.sub
+x1 net-_u1-pad1_ net-_x1-pad2_ net-_u1-pad3_ net-_u1-pad4_ NOT
+x2 net-_x1-pad2_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ NOT
+* Control Statements
+
+.ends Buffer

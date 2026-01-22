@@ -1,0 +1,49 @@
+* /home/saurabh/desktop/test_pwm/test_pwm.cir
+
+.include lm_741.sub
+v2  net-_x1-pad7_ gnd 9v
+* u1  d plot_v1
+x1 ? rc2 pwl_in net-_x1-pad4_ ? d net-_x1-pad7_ ? lm_741
+r3  q rc1 1k
+* u3  rc1 plot_v1
+c1  gnd rc1 47u
+* u8  net-_u2-pad3_ q dac_bridge_1
+* u9  q plot_v1
+* u7  clk plot_v1
+v5  net-_u5-pad1_ gnd pulse(0 10 10u 10u 20u 5m 10m)
+* u6  d net-_u2-pad2_ adc_bridge_1
+* u5  net-_u5-pad1_ clk adc_bridge_1
+v3  net-_x1-pad4_ gnd -9v
+v1  pwl_in gnd pwl(0 2 499.9m 2 500m 1 999.99m 1 1000m 1)
+* u4  pwl_in plot_v1
+r1  rc1 rc2 100
+* u10  rc2 plot_v1
+c2  gnd rc2 100u
+* u2  clk net-_u2-pad2_ net-_u2-pad3_ customblock
+a1 [net-_u2-pad3_ ] [q ] u8
+a2 [d ] [net-_u2-pad2_ ] u6
+a3 [net-_u5-pad1_ ] [clk ] u5
+a4 [clk ] [net-_u2-pad2_ ] [net-_u2-pad3_ ] u2
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u8 dac_bridge(out_undef=0.5 t_rise=1.0e-9 out_high=5.0 input_load=1.0e-12 out_low=0.0 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u6 adc_bridge(fall_delay=1.0e-9 in_high=2.0 in_low=1.0 rise_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u5 adc_bridge(fall_delay=1.0e-9 in_high=2.0 in_low=1.0 rise_delay=1.0e-9 ) 
+* Schematic Name:                             customblock, NgSpice Name: customblock
+.model u2 customblock(fall_delay=1.0e-9 instance_id=1 rise_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 1e-03 1e-00 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(d)
+plot v(rc1)
+*plot v(q)
+plot v(clk)
+*plot v(pwl_in)
+plot v(rc2) v(pwl_in) v(q)
+.endc
+.end

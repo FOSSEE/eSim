@@ -1,0 +1,54 @@
+* /home/fossee/downloads/labmigration/lm_solve/basicgates/basicgates.cir
+
+r3  a gnd 1000
+r2  out gnd 1000
+r1  b gnd 1000
+* u2  net-_u1-pad3_ net-_u1-pad4_ net-_u2-pad3_ d_and
+* u3  net-_u1-pad3_ net-_u1-pad4_ net-_u3-pad3_ d_or
+* u4  net-_u2-pad3_ net-_u3-pad3_ net-_u4-pad3_ d_nor
+* u5  net-_u2-pad3_ net-_u3-pad3_ net-_u5-pad3_ d_nand
+* u6  net-_u4-pad3_ net-_u6-pad2_ d_inverter
+* u7  net-_u5-pad3_ net-_u6-pad2_ net-_u7-pad3_ d_xor
+* u8  net-_u7-pad3_ out dac_bridge_1
+* u1  a b net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
+v2  a gnd pulse(0 5 0.1u 0.1u 0.1u 2u 20u)
+v1  b gnd pulse(5 0 0.1u 0.1u 0.1u 2u 20u)
+* u9  a plot_v1
+* u10  b plot_v1
+* u11  out plot_v1
+a1 [net-_u1-pad3_ net-_u1-pad4_ ] net-_u2-pad3_ u2
+a2 [net-_u1-pad3_ net-_u1-pad4_ ] net-_u3-pad3_ u3
+a3 [net-_u2-pad3_ net-_u3-pad3_ ] net-_u4-pad3_ u4
+a4 [net-_u2-pad3_ net-_u3-pad3_ ] net-_u5-pad3_ u5
+a5 net-_u4-pad3_ net-_u6-pad2_ u6
+a6 [net-_u5-pad3_ net-_u6-pad2_ ] net-_u7-pad3_ u7
+a7 [net-_u7-pad3_ ] [out ] u8
+a8 [a b ] [net-_u1-pad3_ net-_u1-pad4_ ] u1
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u2 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_or, NgSpice Name: d_or
+.model u3 d_or(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u4 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_nand, NgSpice Name: d_nand
+.model u5 d_nand(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u6 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_xor, NgSpice Name: d_xor
+.model u7 d_xor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: dac_bridge_1, NgSpice Name: dac_bridge
+.model u8 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name: adc_bridge_2, NgSpice Name: adc_bridge
+.model u1 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+.tran 10e-06 30e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(a)
+plot v(b)
+plot v(out)
+.endc
+.end

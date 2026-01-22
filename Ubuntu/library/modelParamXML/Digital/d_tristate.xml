@@ -1,0 +1,12 @@
+<model>
+<name>d_tristate</name>
+<type>Digital</type>
+<node_number>3</node_number>
+<title>Add Parameters for Tristate Buffer</title>
+<split>None</split>
+<param>
+	<delay default ="1.0e-9">Enter Delay (default=1.0e-9)</delay>
+	<input_load default ="1.0e-12">Enter Input Load (default=1.0e-12)</input_load>
+	<enable_load default ="1.0e-12">Enter Enable Load (default=1.0e-12)</enable_load>
+</param>
+</model>

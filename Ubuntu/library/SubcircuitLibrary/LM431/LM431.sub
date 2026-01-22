@@ -1,0 +1,25 @@
+* Subcircuit LM431
+.subckt LM431 net-_q1-pad2_ net-_c2-pad1_ net-_q2-pad3_ 
+* c:\fossee\esim\library\subcircuitlibrary\lm431\lm431.cir
+.include NPN.lib
+.include PNP.lib
+r1  net-_q1-pad3_ net-_q2-pad1_ 12k
+r2  net-_q2-pad2_ net-_q2-pad1_ 800
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+r3  net-_q1-pad3_ net-_q3-pad1_ 12k
+q3 net-_q3-pad1_ net-_q2-pad1_ net-_q3-pad3_ Q2N2222
+r4  net-_q3-pad3_ net-_q2-pad3_ 640
+r5  net-_q3-pad1_ net-_c1-pad1_ 2.5k
+c1  net-_c1-pad1_ net-_c1-pad2_ 0.1nf
+q4 net-_c1-pad2_ net-_c1-pad1_ net-_q2-pad3_ Q2N2222
+q5 net-_c1-pad2_ net-_c1-pad2_ net-_c2-pad1_ Q2N2907A
+c2  net-_c2-pad1_ net-_c2-pad2_ 0.1nf
+q6 net-_c2-pad1_ net-_c2-pad2_ net-_q6-pad3_ Q2N2222
+r6  net-_q6-pad3_ net-_q2-pad3_ 1k
+q7 net-_c2-pad1_ net-_q6-pad3_ net-_q7-pad3_ Q2N2222
+r7  net-_q7-pad3_ net-_q2-pad3_ 3.3
+q1 net-_c2-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q8 net-_c2-pad2_ net-_c1-pad2_ net-_c2-pad1_ Q2N2907A
+* Control Statements
+
+.ends LM431

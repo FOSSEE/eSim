@@ -1,0 +1,20 @@
+v2  8 0 pulse(0 5 0 0 0 2 20)
+v1  4 0 pulse(5 0 0 0 0 2 20)
+.model u12 d_xor
+.model u12adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u12dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+.model u8 d_or
+.model u8adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u8dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+.model u7 d_and
+.model u7adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u7dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+.model u9 d_nor
+.model u9adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u9dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+.model u11 d_inverter
+.model u11adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u11dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)
+.model u10 d_nand
+.model u10adc adc_bridge(in_low=0.8 in_high=2.0)
+.model u10dac dac_bridge(out_low=0.25 out_high=5.0 out_undef=1.8 t_rise=0.5e-9 t_fall=0.5e-9)

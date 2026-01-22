@@ -1,0 +1,20 @@
+* eeschema netlist version 1.1 (spice format) creation date: wed jun 24 11:31:48 2015
+
+* u2  1 4 3 d_xor
+* u3  1 4 2 d_and
+* u1  1 4 3 2 port
+a1 [1 4 ] 3 u2
+a2 [1 4 ] 2 u3
+* Schematic Name: d_xor, NgSpice Name: d_xor
+.model u2 d_xor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u3 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+.ac lin 0 0Hz 0Hz
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

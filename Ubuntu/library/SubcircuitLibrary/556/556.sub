@@ -1,0 +1,9 @@
+* Subcircuit 556
+.subckt 556 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ 
+* c:\esim\esim\src\subcircuitlibrary\556\556.cir
+.include lm555n.sub
+x1 net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad5_ net-_u1-pad4_ net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad1_ net-_u1-pad14_ lm555n
+x2 net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ lm555n
+* Control Statements
+
+.ends 556

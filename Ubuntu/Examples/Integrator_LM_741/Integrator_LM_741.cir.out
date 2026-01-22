@@ -1,0 +1,25 @@
+* /home/mallikarjuna/esim-workspace/741_7_integrator/741_7_integrator.cir
+
+.include lm_741.sub
+r1  in net-_c1-pad2_ 10k
+c1  out net-_c1-pad2_ 0.47u
+v3  net-_r3-pad2_ gnd -15
+v2  net-_x1-pad7_ gnd +15
+* u1  in plot_v1
+* u2  out plot_v1
+r2  out gnd 100
+v1  in gnd sine(0 2 50 0 0)
+r3  net-_r3-pad1_ net-_r3-pad2_ 1k
+r4  net-_r3-pad2_ net-_r4-pad2_ 1.8533k
+x1 net-_r3-pad1_ net-_c1-pad2_ gnd net-_r3-pad2_ net-_r4-pad2_ out net-_x1-pad7_ ? lm_741
+.tran 100e-06 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

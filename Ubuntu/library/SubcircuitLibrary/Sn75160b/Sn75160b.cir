@@ -1,0 +1,29 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\Sn75160b\Sn75160b.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 04/12/25 13:54:31
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U8  Net-_U1-Pad8_ /TE Net-_U1-Pad3_ tristate_buffer_active_low		
+U4  Net-_U1-Pad3_ /PE ? Net-_U1-Pad8_ buffer_4pin		
+U2  Net-_U1-Pad1_ /PE d_buffer		
+U3  Net-_U1-Pad2_ /TE d_buffer		
+U9  Net-_U1-Pad7_ /TE Net-_U1-Pad4_ tristate_buffer_active_low		
+U5  Net-_U1-Pad4_ /PE ? Net-_U1-Pad7_ buffer_4pin		
+U10  Net-_U1-Pad9_ /TE Net-_U1-Pad5_ tristate_buffer_active_low		
+U6  Net-_U1-Pad5_ /PE ? Net-_U1-Pad9_ buffer_4pin		
+U11  Net-_U1-Pad10_ /TE Net-_U1-Pad6_ tristate_buffer_active_low		
+U7  Net-_U1-Pad6_ /PE ? Net-_U1-Pad10_ buffer_4pin		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ GND GND PORT		
+U16  Net-_U1-Pad16_ /TE Net-_U1-Pad11_ tristate_buffer_active_low		
+U12  Net-_U1-Pad11_ /PE ? Net-_U1-Pad16_ buffer_4pin		
+U17  Net-_U1-Pad15_ /TE Net-_U1-Pad12_ tristate_buffer_active_low		
+U13  Net-_U1-Pad12_ /PE ? Net-_U1-Pad15_ buffer_4pin		
+U18  Net-_U1-Pad17_ /TE Net-_U1-Pad13_ tristate_buffer_active_low		
+U14  Net-_U1-Pad13_ /PE ? Net-_U1-Pad17_ buffer_4pin		
+U19  Net-_U1-Pad18_ /TE Net-_U1-Pad14_ tristate_buffer_active_low		
+U15  Net-_U1-Pad14_ /PE ? Net-_U1-Pad18_ buffer_4pin		
+
+.end

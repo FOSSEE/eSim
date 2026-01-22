@@ -1,0 +1,70 @@
+* Subcircuit 5bit_DACa
+.subckt 5bit_DACa /vrefh /vrefl /d0 /d1 /d2 /d3 /d4 /vdd /vout 
+* c:\fossee\esim\library\subcircuitlibrary\5bit_daca\5bit_daca.cir
+.include switch.sub
+r1  /vrefh net-_r1-pad2_ 250
+r2  net-_r1-pad2_ net-_r2-pad2_ 250
+r3  net-_r2-pad2_ net-_r3-pad2_ 250
+r4  net-_r3-pad2_ net-_r4-pad2_ 250
+r5  net-_r4-pad2_ net-_r5-pad2_ 250
+r6  net-_r5-pad2_ net-_r6-pad2_ 250
+r7  net-_r6-pad2_ net-_r7-pad2_ 250
+r8  net-_r7-pad2_ net-_r8-pad2_ 250
+r9  net-_r8-pad2_ net-_r10-pad1_ 250
+r10  net-_r10-pad1_ net-_r10-pad2_ 250
+r11  net-_r10-pad2_ net-_r11-pad2_ 250
+r12  net-_r11-pad2_ net-_r12-pad2_ 250
+r13  net-_r12-pad2_ net-_r13-pad2_ 250
+r14  net-_r13-pad2_ net-_r14-pad2_ 250
+r15  net-_r14-pad2_ net-_r15-pad2_ 250
+r16  net-_r15-pad2_ net-_r16-pad2_ 250
+r32  /vrefl net-_r31-pad1_ 250
+r31  net-_r31-pad1_ net-_r30-pad1_ 250
+r30  net-_r30-pad1_ net-_r29-pad1_ 250
+r29  net-_r29-pad1_ net-_r28-pad1_ 250
+r28  net-_r28-pad1_ net-_r27-pad1_ 250
+r27  net-_r27-pad1_ net-_r26-pad1_ 250
+r26  net-_r26-pad1_ net-_r25-pad1_ 250
+r25  net-_r25-pad1_ net-_r24-pad1_ 250
+r24  net-_r24-pad1_ net-_r23-pad1_ 250
+r23  net-_r23-pad1_ net-_r22-pad1_ 250
+r22  net-_r22-pad1_ net-_r21-pad1_ 250
+r21  net-_r21-pad1_ net-_r20-pad1_ 250
+r20  net-_r20-pad1_ net-_r19-pad1_ 250
+r19  net-_r19-pad1_ net-_r18-pad1_ 250
+r18  net-_r18-pad1_ net-_r17-pad1_ 250
+r17  net-_r17-pad1_ net-_r16-pad2_ 250
+x1 /d0 /vdd net-_r1-pad2_ net-_r2-pad2_ net-_x1-pad5_ switch
+x2 /d0 /vdd net-_r3-pad2_ net-_r4-pad2_ net-_x11-pad4_ switch
+x3 /d0 /vdd net-_r5-pad2_ net-_r6-pad2_ net-_x12-pad3_ switch
+x4 /d0 /vdd net-_r7-pad2_ net-_r8-pad2_ net-_x12-pad4_ switch
+x5 /d0 /vdd net-_r10-pad1_ net-_r10-pad2_ net-_x13-pad3_ switch
+x6 /d0 /vdd net-_r11-pad2_ net-_r12-pad2_ net-_x13-pad4_ switch
+x7 /d0 /vdd net-_r13-pad2_ net-_r14-pad2_ net-_x14-pad3_ switch
+x8 /d0 /vdd net-_r15-pad2_ net-_r16-pad2_ net-_x14-pad4_ switch
+x9 /d0 /vdd net-_r17-pad1_ net-_r18-pad1_ net-_x15-pad3_ switch
+x10 /d0 /vdd net-_r19-pad1_ net-_r20-pad1_ net-_x10-pad5_ switch
+x110 /d0 /vdd net-_r21-pad1_ net-_r22-pad1_ net-_x110-pad5_ switch
+x120 /d0 /vdd net-_r23-pad1_ net-_r24-pad1_ net-_x120-pad5_ switch
+x130 /d0 /vdd net-_r25-pad1_ net-_r26-pad1_ net-_x130-pad5_ switch
+x140 /d0 /vdd net-_r27-pad1_ net-_r28-pad1_ net-_x140-pad5_ switch
+x150 /d0 /vdd net-_r29-pad1_ net-_r30-pad1_ net-_x150-pad5_ switch
+x160 /d0 /vdd net-_r31-pad1_ /vrefl net-_x160-pad5_ switch
+x11 /d1 /vdd net-_x1-pad5_ net-_x11-pad4_ net-_x11-pad5_ switch
+x12 /d1 /vdd net-_x12-pad3_ net-_x12-pad4_ net-_x12-pad5_ switch
+x13 /d1 /vdd net-_x13-pad3_ net-_x13-pad4_ net-_x13-pad5_ switch
+x14 /d1 /vdd net-_x14-pad3_ net-_x14-pad4_ net-_x14-pad5_ switch
+x15 /d1 /vdd net-_x15-pad3_ net-_x10-pad5_ net-_x15-pad5_ switch
+x16 /d1 /vdd net-_x110-pad5_ net-_x120-pad5_ net-_x16-pad5_ switch
+x17 /d1 /vdd net-_x130-pad5_ net-_x140-pad5_ net-_x17-pad5_ switch
+x18 /d1 /vdd net-_x150-pad5_ net-_x160-pad5_ net-_x18-pad5_ switch
+x21 /d2 /vdd net-_x11-pad5_ net-_x12-pad5_ net-_x21-pad5_ switch
+x24 /d2 /vdd net-_x17-pad5_ net-_x18-pad5_ net-_x24-pad5_ switch
+x22 /d2 /vdd net-_x13-pad5_ net-_x14-pad5_ net-_x22-pad5_ switch
+x23 /d2 /vdd net-_x15-pad5_ net-_x16-pad5_ net-_x23-pad5_ switch
+x31 /d3 /vdd net-_x21-pad5_ net-_x22-pad5_ net-_x31-pad5_ switch
+x32 /d3 /vdd net-_x23-pad5_ net-_x24-pad5_ net-_x32-pad5_ switch
+x41 /d4 /vdd net-_x31-pad5_ net-_x32-pad5_ /vout switch
+* Control Statements
+
+.ends 5bit_DACa
