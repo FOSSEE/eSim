@@ -32,23 +32,25 @@ run_version_script() {
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/install-nghdl-scripts"
     
     # Decide script based on full version
-   case $VERSION_ID in
-    "22.04")
-        SCRIPT="$SCRIPT_DIR/install-nghdl-22.04.sh"
-        ;;
-    "23.04")
-        SCRIPT="$SCRIPT_DIR/install-nghdl-23.04.sh"
-        ;;
-    "24.04"|"25.04")
-        echo "Ubuntu $VERSION_ID detected — using 24.04 NGHDL installer"
-        SCRIPT="$SCRIPT_DIR/install-nghdl-24.04.sh"
-        ;;
-    *)
-        echo "Unsupported Ubuntu version: $VERSION_ID — trying 24.04 installer"
-        SCRIPT="$SCRIPT_DIR/install-nghdl-24.04.sh"
-        ;;
-esac
-
+    case $VERSION_ID in
+        "22.04")
+            if [[ "$FULL_VERSION" == "22.04.4" ]]; then
+                SCRIPT="$SCRIPT_DIR/install-nghdl-22.04.sh"
+            else
+                SCRIPT="$SCRIPT_DIR/install-nghdl-23.04.sh"
+            fi
+            ;;
+        "23.04")
+            SCRIPT="$SCRIPT_DIR/install-nghdl-23.04.sh"
+            ;;
+        "24.04")
+            SCRIPT="$SCRIPT_DIR/install-nghdl-24.04.sh"
+            ;;
+        *)
+            echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
+            exit 1
+            ;;
+    esac
 
     # Run the script if found
     if [[ -f "$SCRIPT" ]]; then
