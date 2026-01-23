@@ -47,6 +47,9 @@ The installer utilizes a restrictive whitelist of supported OS versions. It lack
 ### Operational Impact
 **Blocker**: Prevents 100% of installations on the target OS.
 
+### Evidence
+![Installer blocked on Ubuntu 25](screenshots/Bug1.png)
+
 ### Resolution Strategy & Implementation
 Map the new OS version to the existing, binary-compatible installation routine for Ubuntu 24.04.
 
@@ -85,6 +88,10 @@ Correct the command syntax to ensure the package `xz-utils` is installed.
 
 ### Technical Root Cause Analysis
 The installer attempts to inject an external PPA (`ppa:kicad/kicad-6.0-releases`). Launchpad does not build this PPA for Ubuntu 25.04 (Plucky), leading to immediate HTTP 404 errors during package retrieval.
+
+### Evidence
+![KiCad PPA 404](screenshots/bug3.png)
+
 
 ### Resolution Strategy & Implementation
 Ubuntu 25.04 natively provides a compatible KiCad version. The fix involves detecting the OS version and bypassing PPA injection in favor of the official upstream repository.
@@ -133,6 +140,10 @@ sudo apt-get update
 
 ### Technical Root Cause Analysis
 The installation scripts rely on relative directory paths (assuming execution from `Ubuntu/`), but the entry point script executes them from `~/eSim`. This causes `file not found` errors for resources.
+
+### Evidence
+![KiCad library path error](screenshots/bug5.png)
+
 
 ### Resolution Strategy & Implementation
 Implement dynamic path resolution using `${BASH_SOURCE[0]}` to establish an absolute `BASE_DIR`.
@@ -193,6 +204,10 @@ Correct the source path to use the absolute `BASE_DIR`.
 ### Technical Root Cause Analysis
 Execution context misuse: The script attempts to unzip a file present in a subdirectory without changing into that directory first.
 
+### Evidence
+![NGHDL zip missing](screenshots/bug8.png)
+
+
 ### Resolution Strategy & Implementation
 Force a directory change to `BASE_DIR` before invoking `unzip`.
 
@@ -211,6 +226,10 @@ chmod +x install-nghdl.sh
 
 ### Technical Root Cause Analysis
 The `libcanberra-gtk-module` library has been deprecated and effectively removed from the Ubuntu 25.04 package repositories.
+
+### Evidence
+![libcanberra missing](screenshots/bug9.png)
+
 
 ### Resolution Strategy & Implementation
 Remove the deprecated dependency from the installation manifest.
@@ -233,6 +252,10 @@ Aborting Installation...
 
 ### Technical Root Cause Analysis
 Ubuntu 25.04 defaults to **LLVM 20**. The GHDL 4.1 build configuration script (`configure`) does not support LLVM versions >15 without explicit overrides, and crashes when parsing the version string "20".
+
+### Evidence
+![LLVM 20 breaks GHDL](screenshots/bug10.png)
+
 
 ### Resolution Strategy & Implementation
 **Toolchain Side-loading**: Install **LLVM 18** (supported) alongside LLVM 20 and explicitly point the GHDL build environment to the LLVM 18 binaries (`llvm-config-18`).
@@ -271,6 +294,10 @@ Ubuntu 25.04 defaults to **LLVM 20**. The GHDL 4.1 build configuration script (`
 ### Technical Root Cause Analysis
 `--with-llvm` is a deprecated flag that does not accept valid paths in newer configuration scripts.
 
+### Evidence
+![Wrong configure flag](screenshots/bug11.png)
+
+
 ### Resolution Strategy & Implementation
 Use the specific path-override flag for `llvm-config`.
 
@@ -306,6 +333,10 @@ The desktop entry file (`/usr/bin/esim`) hardcodes a path to `/src/frontEnd` tha
 ### Technical Root Cause Analysis
 Python 3.13 on Ubuntu 25 enforces **PEP 668** (externally managed environments), preventing global `pip` installs. The application fails because it cannot find required modules (`hdlparse`) in the system path.
 
+### Evidence
+![hdlparse missing](screenshots/bug13.png)
+
+
 ### Resolution Strategy & Implementation
 **Environment Encapsulation**: Create a dedicated Virtual Environment (`venv`) for eSim and install dependencies there. Update the launcher to explicitly source this environment.
 
@@ -324,6 +355,11 @@ python Application.py
 ```
 
 ---
+
+## Final Working State (After All Fixes)
+
+![eSim running on Ubuntu 25.04](screenshots/esimgui.png)
+
 
 ## 3. Skills Demonstrated & Conclusion
 
