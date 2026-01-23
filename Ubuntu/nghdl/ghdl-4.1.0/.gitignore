@@ -1,0 +1,89 @@
+# Ada outputs
+*~
+*.ali
+*.o
+b~*.ad?
+
+# Generated files on windows.
+*.exe
+*.dll
+/build/
+/scripts/msys2-*/logpipe.*
+/scripts/msys2-*/*.log*
+/scripts/msys2-*/src/
+/scripts/msys2-*/pkg/
+
+# Generated files on Linux
+config.status
+default_paths.ads
+elf_arch.ads
+ghdl1-*
+ghdl.gpr
+ghdl_llvm
+ghdl_mcode
+ghdlsynth_maybe.ads
+grt-backtraces-impl.ads
+grt-files
+grt-files.in
+grt.lst
+lib/
+libghdl-*.so
+libghdl.a
+libghdl.bind
+libghdl.link
+libghdlvpi.so
+libgrt.a
+/Makefile
+ortho_code-x86-flags.ads
+run-bind.adb
+run-bind.ads
+src/version.ads
+version.ads
+version.tmp
+
+# GDB outputs
+.gdb_history
+
+# GHDL outputs
+*.v87
+*.v93
+*.v08
+*.cf
+e~*.lst
+
+# GHDLs testsuite
+/testsuite/get_entities
+/testsuite/test_ok
+/testsuite/gna/**/*.out
+/testsuite/vpi/**/*.out
+/testsuite/synth/**/*.out
+/testsuite/synth/sns01/*.ref
+/testsuite/synth/snsuns01/*.ref
+/testsuite/gna/issue1392/char_arr_file.txt
+/testsuite/synth/issue1079/syn_test.raw
+/testsuite/synth/issue1254/simple.vhdl
+*.log
+*.err
+syn_*.vhdl
+
+# Python cache and object files
+__pycache__/
+*.py[cod]
+
+# Python installation packages
+dist/
+pyGHDL.egg-info/
+
+# Coverage.py
+.coverage
+.cov
+coverage.xml
+
+# Sphinx
+doc/_build/
+doc/_theme/
+doc/pyGHDL/**/*.*
+!doc/pyGHDL/index.rst
+
+# IntelliJ project files
+/.idea/workspace.xml

@@ -1,0 +1,20 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\ULN2004\ULN2004.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/24/25 08:54:57
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+Q1  /COM Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+Q2  /COM Net-_Q1-Pad3_ GND eSim_NPN		
+R3  Net-_Q1-Pad3_ GND 3k		
+R2  Net-_Q1-Pad2_ Net-_Q1-Pad3_ 7.2k		
+D2  /COM /COM eSim_Diode		
+D3  GND /COM eSim_Diode		
+D1  GND Net-_D1-Pad2_ eSim_Diode		
+C1  /COM GND 15p		
+R1  Net-_D1-Pad2_ Net-_Q1-Pad2_ 10.5k		
+U1  Net-_D1-Pad2_ /COM /COM PORT		
+
+.end

@@ -1,37 +1,51 @@
-eSim Installer (Ubuntu OS)
-====
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/fossee/esim?color=blueviolet)
+![GitHub](https://img.shields.io/github/license/fossee/esim?color=blue)
+![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
+[![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
+![Travis (.org)](https://img.shields.io/travis/fossee/esim)
+[![Documentation Status](https://readthedocs.org/projects/esim/badge/?version=latest)](https://esim.readthedocs.io/en/latest/?badge=latest)
+[![GitHub forks](https://img.shields.io/github/forks/fossee/esim)](https://github.com/fossee/esim/network)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/fossee/esim)
+![GitHub contributors](https://img.shields.io/github/contributors/fossee/esim)
 
-It contains the documentation to package eSim for Ubuntu OS.
+## eSim
 
-> Note: If planning to freeze the eSim source code for a target platform (Ubuntu OS), then refer this [documentation](executable.md). Remember to update the installer script to work with this executable!
+[eSim](https://esim.fossee.in/) is an open source EDA tool for circuit design, simulation, analysis and PCB design, developed by [FOSSEE Team](https://www.fossee.in/) at [IIT Bombay](https://www.iitb.ac.in/).
+It is an integrated tool build using open source softwares such as KiCad, Ngspice and GHDL.
 
+## Releases and Installation
+eSim is released for the following distributions (operating systems):
+* Ubuntu 18.04, 20.04 LTS versions.
+* Microsoft Windows 8, 10 and 11.
 
-## How to package eSim for Ubuntu OS?
+To use eSim on your machine having above distributions, please refer to link [here](https://esim.fossee.in/downloads) for installation and other guidelines.
 
-1. Take the `master` branch containing the source code. Rename the folder to `eSim-<version>`.
+> Note for other distributions: You can refer [`installers`](https://github.com/fossee/eSim/tree/installers) branch for documentation on packaging (for above mentioned distributions) to build installers for your operating system in a similar way. For providing your build, please check the `Contribution` section mentioned below.
 
-2. Add the installer script `install-eSim.sh` from `installers` branch to `eSim-<version>` folder.
+## Features
+* An open-source EDA tool.
+* Perform Circuit Design.
+* Perform Simulation.
+* Perform Layout Design.
+* Model and Subcircuit builder.
+* Support for Mixed-Signal Simulations including Microcontrollers.
+* eSim has been successfully ported to low cost FOSSEE [laptop](https://laptop.fossee.in/)
 
-3. Add the eSim executable (if available) in `eSim-<version>` folder. Also, remove following files from this folder:
-	- `.git` folder
-	- `.github` folder
-	- `code` folder
-	- `src` folder (Applicable only if eSim executable is used)
-	- conf.py
-	- setup.py
-	- index.rst
-	- requirement.txt
-	- .gitignore
-	- .travis.yml
-    - `library/browser/User-Manual/figures` folder
-    - library/browser/User-Manual/eSim.html
+## Open-Source Softwares Used
+* [Python](https://www.python.org/)
+* [KiCad](https://www.kicad.org/)
+* [NGHDL](https://github.com/fossee/nghdl/)
+* [Makerchip](https://www.makerchip.com/)
+* [SkyWater SKY130 PDK](https://skywater-pdk.rtfd.io/)
 
-4. Add eSim user manual `eSim_Manual_<version>.pdf` at location `library/browser/User-Manual`.
+## eSim Manual
+To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.5.pdf)
 
-5. Add the zip file of `NGHDL` (`nghdl.zip`) in the eSim folder.
+## Contact
+For any queries regarding eSim please write us on at this [email address](mailto:contact-esim@fossee.in).
 
-> Note: Refer this [documentation](https://github.com/fossee/nghdl/tree/installers/Ubuntu/README.md) on packaging of NGHDL for Ubuntu OS.
+## Contribution
+Please refer [here](https://github.com/FOSSEE/eSim/blob/master/CONTRIBUTION.md) for further details.
 
-6. Compress `kicadLibrary` folder to a `tar.xz` format and then remove that folder.
-
-7. Compress `eSim-<version>` to a zip format for distribution.
+## License
+It is developed by FOSSEE Team at IIT Bombay and is released under GNU GPL License.

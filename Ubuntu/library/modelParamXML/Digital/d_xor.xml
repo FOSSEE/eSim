@@ -1,0 +1,12 @@
+<model>
+<name>d_xor</name>
+<type>Digital</type>
+<node_number>3</node_number>
+<title>Add Parameters for Xor Gate</title>
+<split>2-V:1-NV</split>
+<param>
+	<rise_delay default ="1.0e-9">Enter Rise Delay (default=1.0e-9)</rise_delay>
+	<fall_delay default ="1.0e-9">Enter Fall Delay (default=1.0e-9)</fall_delay>
+	<input_load default ="1.0e-12">Enter Input Load (default=1.0e-12)</input_load>
+</param>
+</model>

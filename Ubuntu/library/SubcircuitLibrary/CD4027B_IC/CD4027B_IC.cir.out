@@ -1,0 +1,23 @@
+* c:\users\aditya\esim-workspace\cd4027b_ic\cd4027b_ic.cir
+
+.include CD4027B_IC.sub
+v1  j1 gnd pulse(5 5 0 1u 1u 5m 5m)
+v2  clk gnd pulse(0 5 0 1u 1u 5m 10m)
+v4  k1 gnd pulse(5 5 0 1u 1u 5m 5m)
+v6  k2 gnd pulse(5 5 0 1u 1u 5m 5m)
+v5  j2 gnd pulse(5 5 0 1u 1u 5m 5m)
+r1  q2 gnd 1000k
+r2  qb1 gnd 1000k
+v3 net-_x1-pad16_ gnd  dc 5
+x1 q2 qb2 qb1 gnd k2 j2 gnd gnd gnd j1 k1 gnd clk qb1 q1 net-_x1-pad16_ CD4027B_IC
+r4  qb2 gnd 1000k
+r3  gnd q1 1000k
+.tran 0.01e-03 60e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

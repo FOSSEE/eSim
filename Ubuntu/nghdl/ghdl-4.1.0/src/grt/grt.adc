@@ -1,0 +1,58 @@
+--  GHDL Run Time (GRT) - Configuration pragmas.
+--  Copyright (C) 2002 - 2014 Tristan Gingold
+--
+--  This program is free software: you can redistribute it and/or modify
+--  it under the terms of the GNU General Public License as published by
+--  the Free Software Foundation, either version 2 of the License, or
+--  (at your option) any later version.
+--
+--  This program is distributed in the hope that it will be useful,
+--  but WITHOUT ANY WARRANTY; without even the implied warranty of
+--  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+--  GNU General Public License for more details.
+--
+--  You should have received a copy of the GNU General Public License
+--  along with this program.  If not, see <gnu.org/licenses>.
+--
+--  As a special exception, if other files instantiate generics from this
+--  unit, or you link this unit with other files to produce an executable,
+--  this unit does not by itself cause the resulting executable to be
+--  covered by the GNU General Public License. This exception does not
+--  however invalidate any other reasons why the executable file might be
+--  covered by the GNU Public License.
+
+--  The GRT library is built with a lot of restrictions.
+--  The purpose of these restrictions (mainly No_Run_Time) is not to link with
+--  the GNAT run time library.  The user does not need to download or compile
+--  it.
+--
+--  However, GRT works without these restrictions.  If you want to use GRT
+--  in Ada, you may compile GRT without these restrictions (remove the -gnatec
+--  flag).
+--
+--  This files is *not* names gnat.adc, in order to ease the possibility of
+--  not using it.
+pragma Restrictions (No_Exception_Handlers);
+pragma Restrictions (No_Exception_Propagation);
+pragma Restrictions (No_Secondary_Stack);
+pragma Restrictions (No_Dispatch);
+pragma Restrictions (No_Io);
+pragma Restrictions (No_Finalization);
+pragma restrictions (no_dependence => Ada.Tags);
+pragma restrictions (no_dependence => GNAT);
+pragma Restrictions (Max_Tasks => 0);
+pragma Restrictions (No_Task_Hierarchy);
+pragma Restrictions (No_Implicit_Heap_Allocations);
+pragma Restrictions (No_Initialize_Scalars);
+pragma Suppress (Overflow_Check);
+
+pragma Restrictions (No_Secondary_Stack);
+
+--  Too strong:
+-- pragma Restrictions (No_Elaboration_Code);
+
+--  Would be nice, but not allowed.
+-- pragma Restrictions (No_Multiple_Elaboration);
+
+--  Not supported by crippled gnat.
+-- pragma No_Run_Time;

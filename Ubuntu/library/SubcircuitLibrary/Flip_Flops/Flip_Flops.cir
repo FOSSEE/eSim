@@ -1,0 +1,18 @@
+* C:\Users\Aditya\eSim-Workspace\Flip_Flops\Flip_Flops.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/03/24 12:03:16
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  D GND pulse		
+v2  clk GND pulse		
+v3  PRE GND DC		
+v4  CLR GND DC		
+R1  Q GND 1000k		
+R2  Qb GND 1000k		
+v5  VCC GND DC		
+X1  clk PRE D CLR GND VCC Q Qb D_Flip_Flop		
+
+.end

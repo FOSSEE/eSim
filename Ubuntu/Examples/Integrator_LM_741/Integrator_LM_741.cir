@@ -1,0 +1,21 @@
+* /home/mallikarjuna/eSim-Workspace/741_7_integrator/741_7_integrator.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Sat Jun  8 10:56:45 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R1  in Net-_C1-Pad2_ 10k		
+C1  out Net-_C1-Pad2_ 0.47u		
+v3  Net-_R3-Pad2_ GND -15		
+v2  Net-_X1-Pad7_ GND +15		
+U1  in plot_v1		
+U2  out plot_v1		
+R2  out GND 100		
+v1  in GND sine		
+R3  Net-_R3-Pad1_ Net-_R3-Pad2_ 1k		
+R4  Net-_R3-Pad2_ Net-_R4-Pad2_ 1.8533k		
+X1  Net-_R3-Pad1_ Net-_C1-Pad2_ GND Net-_R3-Pad2_ Net-_R4-Pad2_ out Net-_X1-Pad7_ ? lm_741		
+
+.end

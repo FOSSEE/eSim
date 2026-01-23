@@ -1,0 +1,12 @@
+<model>
+<name>gain</name>
+<type>Analog</type>
+<node_number>2</node_number>
+<title>Add Parameters for model Gain</title>
+<split>None</split>
+<param>
+	<in_offset default="0.0">Enter offset for input (default=0.0)</in_offset>
+	<gain vector="1" default="1.0">Enter gain (default=1.0)</gain>
+	<out_offset default="0.0">Enter offset for output (default=0.0)</out_offset>
+</param>
+</model>

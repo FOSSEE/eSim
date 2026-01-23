@@ -1,0 +1,15 @@
+TYPE __ghdl_integer IS SIGNED (32);
+
+PUBLIC FUNCTION test_arg (v : __ghdl_integer) RETURN __ghdl_integer
+DECLARE
+  LOCAL VAR w : __ghdl_integer;
+BEGIN
+  w := v;
+  DECLARE
+    LOCAL VAR z : __ghdl_integer;
+  BEGIN
+    z := v +# w;
+    w := z;
+  END;
+  RETURN w;
+END;

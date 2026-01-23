@@ -1,0 +1,32 @@
+<library>
+<model_name>NMOS</model_name>
+<ref_model>mos_n</ref_model>
+<param>
+<TPG>1</TPG>
+<TOX>9.5n </TOX>
+<CJ>550u </CJ>
+<ETA>0.02125 </ETA>
+<VMAX>1.8E05</VMAX>
+<GAMMA>0.62</GAMMA>
+<CGSO>0.3n </CGSO>
+<LD>50n </LD>
+<MJSW>0.35 </MJSW>
+<PB>1.1</PB>
+<CGBO>0.45n </CGBO>
+<XJ>0.2U </XJ>
+<CGDO>0.3n </CGDO>
+<KAPPA>0.1 </KAPPA>
+<LEVEL>3 </LEVEL>
+<VTO>0.6 </VTO>
+<NFS>7.20E11 </NFS>
+<THETA>0.23 </THETA>
+<CJSW>0.3n </CJSW>
+<PHI>0.7 </PHI>
+<RSH>2.0 </RSH>
+<MJ>0.6 </MJ>
+<UO>420</UO>
+<KP>156u </KP>
+<DELTA>0.88</DELTA>
+<NSUB>1.40E17</NSUB>
+</param>
+</library>

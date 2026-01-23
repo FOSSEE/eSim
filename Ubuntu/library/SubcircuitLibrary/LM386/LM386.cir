@@ -1,0 +1,31 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\LM386\LM386.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/24/22 20:52:17
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+Q3  Net-_Q2-Pad1_ Net-_Q2-Pad1_ Net-_Q1-Pad1_ eSim_NPN		
+Q4  Net-_Q4-Pad1_ Net-_Q2-Pad1_ Net-_Q1-Pad1_ eSim_NPN		
+Q2  Net-_Q2-Pad1_ Net-_Q1-Pad3_ Net-_Q2-Pad3_ eSim_PNP		
+Q5  Net-_Q4-Pad1_ Net-_Q5-Pad2_ Net-_Q5-Pad3_ eSim_PNP		
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_PNP		
+Q6  Net-_Q1-Pad1_ Net-_Q6-Pad2_ Net-_Q5-Pad2_ eSim_PNP		
+Q8  Net-_Q10-Pad2_ Net-_D2-Pad2_ Net-_Q10-Pad1_ eSim_PNP		
+Q10  Net-_Q10-Pad1_ Net-_Q10-Pad2_ Net-_Q1-Pad1_ eSim_NPN		
+Q7  Net-_D2-Pad2_ Net-_Q4-Pad1_ Net-_Q1-Pad1_ eSim_NPN		
+Q9  Net-_Q9-Pad1_ Net-_D1-Pad1_ Net-_Q10-Pad1_ eSim_NPN		
+D2  Net-_D1-Pad2_ Net-_D2-Pad2_ eSim_Diode		
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+R5  Net-_Q2-Pad3_ Net-_R5-Pad2_ 150		
+R6  Net-_R5-Pad2_ Net-_Q5-Pad3_ 1.35k		
+R4  Net-_R3-Pad2_ Net-_Q2-Pad3_ 15k		
+R3  Net-_Q9-Pad1_ Net-_R3-Pad2_ 15k		
+R7  Net-_Q5-Pad3_ Net-_Q10-Pad1_ 17k		
+R2  Net-_Q6-Pad2_ Net-_Q1-Pad1_ 50k		
+R1  Net-_Q1-Pad2_ Net-_Q1-Pad1_ 50k		
+R8  Net-_Q9-Pad1_ Net-_D1-Pad1_ 1.5k		
+U1  Net-_Q5-Pad3_ Net-_Q1-Pad2_ Net-_Q6-Pad2_ Net-_Q1-Pad1_ Net-_Q10-Pad1_ Net-_Q9-Pad1_ Net-_R3-Pad2_ Net-_R5-Pad2_ PORT		
+
+.end

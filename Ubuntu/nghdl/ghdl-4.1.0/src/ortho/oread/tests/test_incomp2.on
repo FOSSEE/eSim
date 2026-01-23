@@ -1,0 +1,17 @@
+TYPE int IS SIGNED (32);
+TYPE bool IS BOOLEAN { false, true };
+
+TYPE rec IS RECORD;
+
+TYPE incomp_ptr IS ACCESS rec;
+
+TYPE rec IS RECORD
+  nxt : incomp_ptr;
+  val : int;
+END RECORD;
+
+PUBLIC FUNCTION eq (l : incomp_ptr; r : incomp_ptr) RETURN bool
+DECLARE
+BEGIN
+   RETURN bool'(l.ALL.val = r.ALL.val);
+END;

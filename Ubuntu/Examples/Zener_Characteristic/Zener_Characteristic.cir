@@ -1,0 +1,15 @@
+* /home/fossee/eSim-Workspace/Zener_Characteristic/Zener_Characteristic.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Fri Feb 19 15:58:44 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  in GND DC		
+R1  in Net-_R1-Pad2_ 1k		
+U2  Net-_R1-Pad2_ out plot_i2		
+U3  out plot_v1		
+U1  GND out zener		
+
+.end

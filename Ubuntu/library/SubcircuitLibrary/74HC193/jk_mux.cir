@@ -1,0 +1,15 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\jk_mux\jk_mux.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 3/7/2025 10:48:37 PM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U3  Net-_U3-Pad1_ Net-_U3-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ d_jkff		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ PORT		
+U2  Net-_U1-Pad1_ Net-_U2-Pad2_ d_inverter		
+X1  Net-_U1-Pad4_ Net-_U1-Pad1_ Net-_U1-Pad3_ Net-_U3-Pad1_ mux		
+X2  Net-_U1-Pad4_ Net-_U2-Pad2_ Net-_U1-Pad2_ Net-_U3-Pad2_ mux		
+
+.end

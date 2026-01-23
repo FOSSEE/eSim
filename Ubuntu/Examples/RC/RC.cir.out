@@ -1,0 +1,18 @@
+* /home/fossee/esim-workspace/rc/rc.cir
+
+r1  in out 1k
+c1  out gnd 10u
+v1  in gnd pwl(0m 0 0.5m 5 50m 5 50.5m 0 100m 0)
+* u1  in plot_v1
+* u2  out plot_v1
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

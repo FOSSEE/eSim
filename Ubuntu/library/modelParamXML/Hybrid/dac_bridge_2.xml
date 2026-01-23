@@ -1,0 +1,15 @@
+<model>
+<name>dac_bridge</name>
+<type>Hybrid</type>
+<node_number>2</node_number>
+<title>Add Parameters for DAC</title>
+<split>2-V:2-V</split>
+<param>
+	<out_low default ="0.0">Enter value for out_low (default=0.0)</out_low>
+	<out_high default ="5.0">Enter value for out_high (default=5.0)</out_high>
+	<out_undef default ="0.5">Enter value for out_undef (default=0.5)</out_undef>
+	<input_load default ="1.0e-12">Enter value for input load (default=1.0e-12)</input_load>
+	<t_rise default ="1.0e-9">Enter the Rise Time (default=1.0e-9)</t_rise>
+	<t_fall default ="1.0e-9">Enter the Fall Time (default=1.0e-9)</t_fall>
+</param>
+</model>

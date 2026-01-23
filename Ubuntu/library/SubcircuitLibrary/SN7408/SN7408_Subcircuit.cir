@@ -1,0 +1,79 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\SN7408_Subcircuit\SN7408_Subcircuit.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 02/09/25 22:43:20
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R1  Net-_R1-Pad1_ Net-_Q1-Pad2_ 4k		
+R3  Net-_R1-Pad1_ Net-_D5-Pad1_ 2k		
+R7  Net-_R1-Pad1_ Net-_Q11-Pad2_ 1.6k		
+R11  Net-_R1-Pad1_ Net-_Q11-Pad1_ 130		
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_D1-Pad2_ eSim_NPN		
+Q2  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_D3-Pad2_ eSim_NPN		
+D1  GNDPWR Net-_D1-Pad2_ eSim_Diode		
+D3  GNDPWR Net-_D3-Pad2_ eSim_Diode		
+Q5  Net-_D5-Pad1_ Net-_Q1-Pad1_ Net-_Q5-Pad3_ eSim_NPN		
+Q7  Net-_D5-Pad2_ Net-_Q5-Pad3_ GNDPWR eSim_NPN		
+D5  Net-_D5-Pad1_ Net-_D5-Pad2_ eSim_Diode		
+Q9  Net-_Q11-Pad2_ Net-_D5-Pad2_ Net-_Q12-Pad2_ eSim_NPN		
+Q11  Net-_Q11-Pad1_ Net-_Q11-Pad2_ Net-_D7-Pad1_ eSim_NPN		
+Q12  Net-_D7-Pad2_ Net-_Q12-Pad2_ GNDPWR eSim_NPN		
+D7  Net-_D7-Pad1_ Net-_D7-Pad2_ eSim_Diode		
+R4  Net-_Q5-Pad3_ GNDPWR 800		
+R8  Net-_Q12-Pad2_ GNDPWR 1k		
+U1  Net-_D1-Pad2_ Net-_D3-Pad2_ Net-_D2-Pad2_ Net-_D4-Pad2_ Net-_D7-Pad2_ Net-_D8-Pad2_ Net-_R1-Pad1_ GNDPWR Net-_D9-Pad2_ Net-_D10-Pad2_ Net-_D15-Pad2_ Net-_D13-Pad2_ Net-_D16-Pad2_ Net-_D14-Pad2_ PORT		
+R2  Net-_R1-Pad1_ Net-_Q3-Pad2_ 4k		
+R5  Net-_R1-Pad1_ Net-_D6-Pad1_ 2k		
+R9  Net-_R1-Pad1_ Net-_Q10-Pad1_ 1.6k		
+R12  Net-_R1-Pad1_ Net-_Q13-Pad1_ 130		
+Q3  Net-_Q3-Pad1_ Net-_Q3-Pad2_ Net-_D2-Pad2_ eSim_NPN		
+Q4  Net-_Q3-Pad1_ Net-_Q3-Pad2_ Net-_D4-Pad2_ eSim_NPN		
+D2  GNDPWR Net-_D2-Pad2_ eSim_Diode		
+D4  GNDPWR Net-_D4-Pad2_ eSim_Diode		
+Q6  Net-_D6-Pad1_ Net-_Q3-Pad1_ Net-_Q6-Pad3_ eSim_NPN		
+Q8  Net-_D6-Pad2_ Net-_Q6-Pad3_ GNDPWR eSim_NPN		
+D6  Net-_D6-Pad1_ Net-_D6-Pad2_ eSim_Diode		
+Q10  Net-_Q10-Pad1_ Net-_D6-Pad2_ Net-_Q10-Pad3_ eSim_NPN		
+Q13  Net-_Q13-Pad1_ Net-_Q10-Pad1_ Net-_D8-Pad1_ eSim_NPN		
+Q14  Net-_D8-Pad2_ Net-_Q10-Pad3_ GNDPWR eSim_NPN		
+D8  Net-_D8-Pad1_ Net-_D8-Pad2_ eSim_Diode		
+R6  Net-_Q6-Pad3_ GNDPWR 800		
+R10  Net-_Q10-Pad3_ GNDPWR 1k		
+R23  Net-_R1-Pad1_ Net-_Q25-Pad2_ 4k		
+R19  Net-_R1-Pad1_ Net-_D11-Pad1_ 2k		
+R15  Net-_R1-Pad1_ Net-_Q15-Pad2_ 1.6k		
+R13  Net-_R1-Pad1_ Net-_Q15-Pad1_ 130		
+Q25  Net-_Q23-Pad2_ Net-_Q25-Pad2_ Net-_D15-Pad2_ eSim_NPN		
+Q26  Net-_Q23-Pad2_ Net-_Q25-Pad2_ Net-_D13-Pad2_ eSim_NPN		
+D15  GNDPWR Net-_D15-Pad2_ eSim_Diode		
+D13  GNDPWR Net-_D13-Pad2_ eSim_Diode		
+Q23  Net-_D11-Pad1_ Net-_Q23-Pad2_ Net-_Q21-Pad2_ eSim_NPN		
+Q21  Net-_D11-Pad2_ Net-_Q21-Pad2_ GNDPWR eSim_NPN		
+D11  Net-_D11-Pad1_ Net-_D11-Pad2_ eSim_Diode		
+Q19  Net-_Q15-Pad2_ Net-_D11-Pad2_ Net-_Q16-Pad2_ eSim_NPN		
+Q15  Net-_Q15-Pad1_ Net-_Q15-Pad2_ Net-_D9-Pad1_ eSim_NPN		
+Q16  Net-_D9-Pad2_ Net-_Q16-Pad2_ GNDPWR eSim_NPN		
+D9  Net-_D9-Pad1_ Net-_D9-Pad2_ eSim_Diode		
+R20  Net-_Q21-Pad2_ GNDPWR 800		
+R16  Net-_Q16-Pad2_ GNDPWR 1k		
+R24  Net-_R1-Pad1_ Net-_Q27-Pad2_ 4k		
+R21  Net-_R1-Pad1_ Net-_D12-Pad1_ 2k		
+R17  Net-_R1-Pad1_ Net-_Q17-Pad2_ 1.6k		
+R14  Net-_R1-Pad1_ Net-_Q17-Pad1_ 130		
+Q27  Net-_Q24-Pad2_ Net-_Q27-Pad2_ Net-_D16-Pad2_ eSim_NPN		
+Q28  Net-_Q24-Pad2_ Net-_Q27-Pad2_ Net-_D14-Pad2_ eSim_NPN		
+D16  GNDPWR Net-_D16-Pad2_ eSim_Diode		
+D14  GNDPWR Net-_D14-Pad2_ eSim_Diode		
+Q24  Net-_D12-Pad1_ Net-_Q24-Pad2_ Net-_Q22-Pad2_ eSim_NPN		
+Q22  Net-_D12-Pad2_ Net-_Q22-Pad2_ GNDPWR eSim_NPN		
+D12  Net-_D12-Pad1_ Net-_D12-Pad2_ eSim_Diode		
+Q20  Net-_Q17-Pad2_ Net-_D12-Pad2_ Net-_Q18-Pad2_ eSim_NPN		
+Q17  Net-_Q17-Pad1_ Net-_Q17-Pad2_ Net-_D10-Pad1_ eSim_NPN		
+Q18  Net-_D10-Pad2_ Net-_Q18-Pad2_ GNDPWR eSim_NPN		
+D10  Net-_D10-Pad1_ Net-_D10-Pad2_ eSim_Diode		
+R22  Net-_Q22-Pad2_ GNDPWR 800		
+R18  Net-_Q18-Pad2_ GNDPWR 1k		
+
+.end

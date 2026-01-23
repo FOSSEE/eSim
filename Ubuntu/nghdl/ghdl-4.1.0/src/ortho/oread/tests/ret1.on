@@ -1,0 +1,7 @@
+TYPE __ghdl_integer IS SIGNED (32);
+
+PUBLIC FUNCTION test_assign () RETURN __ghdl_integer
+DECLARE
+BEGIN
+  RETURN __ghdl_integer'[5];
+END;

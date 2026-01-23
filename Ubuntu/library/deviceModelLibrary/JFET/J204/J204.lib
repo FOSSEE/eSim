@@ -1,0 +1,1 @@
+.MODEL J204 NJF( Beta=1.004m Betatce=-.5 Rd=1  Rs=1  Lambda=3.333m Vto=-1.139 Vtotc=-2.5m Is=29.04f Isr=281.9f N=1 Nr=2 Xti=3 Alpha=698u Vk=270.4 Cgd=3.58p M=.3601 Pb=1 Fc=.5 Cgs=5.4p Kf=165E-18 Af=1 )

@@ -1,0 +1,247 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:Diffamp_INA106-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L lm_741 X1
+U 1 1 62D11E03
+P 5050 3650
+F 0 "X1" H 4850 3650 60  0000 C CNN
+F 1 "lm_741" H 4950 3400 60  0000 C CNN
+F 2 "" H 5050 3650 60  0000 C CNN
+F 3 "" H 5050 3650 60  0000 C CNN
+	1    5050 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R1
+U 1 1 62D11E04
+P 3450 3550
+F 0 "R1" H 3500 3680 50  0000 C CIB
+F 1 "100k" H 3500 3500 50  0000 C CNN
+F 2 "" H 3500 3530 30  0000 C CNN
+F 3 "" V 3500 3600 30  0000 C CNN
+	1    3450 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R2
+U 1 1 62D11E05
+P 3450 3800
+F 0 "R2" H 3500 3930 50  0000 C CIB
+F 1 "100k" H 3500 3750 50  0000 C CNN
+F 2 "" H 3500 3780 30  0000 C CNN
+F 3 "" V 3500 3850 30  0000 C CNN
+	1    3450 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R4
+U 1 1 62D11E06
+P 5300 3050
+F 0 "R4" H 5350 3180 50  0000 C CIB
+F 1 "10k" H 5350 3000 50  0000 C CNN
+F 2 "" H 5350 3030 30  0000 C CNN
+F 3 "" V 5350 3100 30  0000 C CNN
+	1    5300 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R3
+U 1 1 62D11E07
+P 4200 4400
+F 0 "R3" H 4250 4530 50  0000 C CIB
+F 1 "10k" H 4250 4350 50  0000 C CNN
+F 2 "" H 4250 4380 30  0000 C CNN
+F 3 "" V 4250 4450 30  0000 C CNN
+	1    4200 4400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5500 3000 6650 3000
+Wire Wire Line
+	3650 3750 4500 3750
+Wire Wire Line
+	3650 3500 4500 3500
+Wire Wire Line
+	4900 4100 4900 4350
+Wire Wire Line
+	4250 3000 5200 3000
+Wire Wire Line
+	4250 3000 4250 3500
+Connection ~ 4250 3500
+Wire Wire Line
+	4250 4300 4250 3750
+Connection ~ 4250 3750
+Wire Wire Line
+	4800 3150 4900 3150
+Wire Wire Line
+	4900 3150 4900 3200
+Wire Wire Line
+	2700 3500 3350 3500
+Wire Wire Line
+	2700 3750 3350 3750
+Wire Wire Line
+	3750 4650 4250 4650
+Wire Wire Line
+	4250 4650 4250 4600
+Text Label 2900 3500 0    60   Italic 0
+-IN
+Text Label 2900 3750 0    60   Italic 0
++IN
+Text Label 4850 3150 0    60   ~ 12
+V+
+Text Label 4900 4200 0    60   ~ 12
+V-
+Text Label 6350 3000 0    60   ~ 0
+Sense
+Text Label 3900 4650 0    60   ~ 0
+REF
+Text Label 6350 3650 0    49   Italic 0
+Output
+NoConn ~ 5000 3250
+NoConn ~ 5100 3300
+Wire Wire Line
+	4900 4350 4850 4350
+$Comp
+L PORT U1
+U 3 1 62D11F12
+P 2450 3750
+F 0 "U1" H 2500 3850 30  0000 C CNN
+F 1 "PORT" H 2450 3750 30  0000 C CNN
+F 2 "" H 2450 3750 60  0000 C CNN
+F 3 "" H 2450 3750 60  0000 C CNN
+	3    2450 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 62D11F93
+P 3500 4650
+F 0 "U1" H 3550 4750 30  0000 C CNN
+F 1 "PORT" H 3500 4650 30  0000 C CNN
+F 2 "" H 3500 4650 60  0000 C CNN
+F 3 "" H 3500 4650 60  0000 C CNN
+	1    3500 4650
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 62D1202E
+P 2450 3500
+F 0 "U1" H 2500 3600 30  0000 C CNN
+F 1 "PORT" H 2450 3500 30  0000 C CNN
+F 2 "" H 2450 3500 60  0000 C CNN
+F 3 "" H 2450 3500 60  0000 C CNN
+	2    2450 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 62D12099
+P 6900 3000
+F 0 "U1" H 6950 3100 30  0000 C CNN
+F 1 "PORT" H 6900 3000 30  0000 C CNN
+F 2 "" H 6900 3000 60  0000 C CNN
+F 3 "" H 6900 3000 60  0000 C CNN
+	5    6900 3000
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 7 1 62D12114
+P 4550 3150
+F 0 "U1" H 4600 3250 30  0000 C CNN
+F 1 "PORT" H 4550 3150 30  0000 C CNN
+F 2 "" H 4550 3150 60  0000 C CNN
+F 3 "" H 4550 3150 60  0000 C CNN
+	7    4550 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 8 1 62D121A7
+P 6200 4250
+F 0 "U1" H 6250 4350 30  0000 C CNN
+F 1 "PORT" H 6200 4250 30  0000 C CNN
+F 2 "" H 6200 4250 60  0000 C CNN
+F 3 "" H 6200 4250 60  0000 C CNN
+	8    6200 4250
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 4 1 62D121EE
+P 4600 4350
+F 0 "U1" H 4650 4450 30  0000 C CNN
+F 1 "PORT" H 4600 4350 30  0000 C CNN
+F 2 "" H 4600 4350 60  0000 C CNN
+F 3 "" H 4600 4350 60  0000 C CNN
+	4    4600 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 62D1221F
+P 6900 3650
+F 0 "U1" H 6950 3750 30  0000 C CNN
+F 1 "PORT" H 6900 3650 30  0000 C CNN
+F 2 "" H 6900 3650 60  0000 C CNN
+F 3 "" H 6900 3650 60  0000 C CNN
+	6    6900 3650
+	-1   0    0    1   
+$EndComp
+NoConn ~ 5950 4250
+Wire Wire Line
+	5600 3650 6650 3650
+$EndSCHEMATC

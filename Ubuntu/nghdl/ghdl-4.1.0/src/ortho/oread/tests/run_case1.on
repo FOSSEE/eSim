@@ -1,0 +1,13 @@
+TYPE __ghdl_index_type IS UNSIGNED (32);
+TYPE __ghdl_bool_type IS BOOLEAN {false, true};
+
+PUBLIC FUNCTION main (a : __ghdl_index_type) RETURN __ghdl_index_type
+DECLARE
+BEGIN
+  CASE a IS
+    WHEN 1 =>
+      RETURN 2;
+    WHEN DEFAULT =>
+      RETURN 0;
+  END CASE;
+END;

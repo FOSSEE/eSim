@@ -1,0 +1,48 @@
+* /home/fossee/esim-workspace/jk_flipflop/jk_flipflop.cir
+
+v1 j gnd  dc 5
+v3 k gnd  dc 0
+r1  out gnd 1k
+r2  nout gnd 1k
+* u2  j plot_v1
+* u1  clk plot_v1
+* u3  k plot_v1
+* u4  out plot_v1
+* u5  nout plot_v1
+* u6  j clk k net-_u6-pad4_ net-_u6-pad5_ net-_u6-pad6_ adc_bridge_3
+* u7  net-_u7-pad1_ net-_u7-pad2_ out nout dac_bridge_2
+* u9  net-_u6-pad4_ net-_u6-pad6_ net-_u6-pad5_ net-_u8-pad2_ net-_u10-pad2_ net-_u7-pad1_ net-_u7-pad2_ d_jkff
+* u8  net-_u8-pad1_ net-_u8-pad2_ adc_bridge_1
+* u10  net-_u10-pad1_ net-_u10-pad2_ adc_bridge_1
+v4  net-_u8-pad1_ gnd 0
+v5  net-_u10-pad1_ gnd 0
+v2  clk gnd pulse(0 5 1m 1m 1m 20 40)
+a1 [j clk k ] [net-_u6-pad4_ net-_u6-pad5_ net-_u6-pad6_ ] u6
+a2 [net-_u7-pad1_ net-_u7-pad2_ ] [out nout ] u7
+a3 net-_u6-pad4_ net-_u6-pad6_ net-_u6-pad5_ net-_u8-pad2_ net-_u10-pad2_ net-_u7-pad1_ net-_u7-pad2_ u9
+a4 [net-_u8-pad1_ ] [net-_u8-pad2_ ] u8
+a5 [net-_u10-pad1_ ] [net-_u10-pad2_ ] u10
+* Schematic Name: adc_bridge_3, NgSpice Name: adc_bridge
+.model u6 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: dac_bridge_2, NgSpice Name: dac_bridge
+.model u7 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name: d_jkff, NgSpice Name: d_jkff
+.model u9 d_jkff(ic=0 set_delay=1.0e-9 set_load=1.0e-12 reset_load=1.0e-12 clk_delay=1.0e-9 clk_load=1.0e-12 reset_delay=1.0 rise_delay=1.0e-9 jk_load=1.0e-12 fall_delay=1.0e-9 ) 
+* Schematic Name: adc_bridge_1, NgSpice Name: adc_bridge
+.model u8 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: adc_bridge_1, NgSpice Name: adc_bridge
+.model u10 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+.tran 10e-00 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(j)
+plot v(clk)
+plot v(k)
+plot v(out)
+plot v(nout)
+.endc
+.end

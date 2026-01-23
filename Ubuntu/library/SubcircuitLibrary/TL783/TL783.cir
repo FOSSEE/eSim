@@ -1,0 +1,17 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\TL783\TL783.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 02/01/25 21:18:33
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  ? Net-_M1-Pad3_ Net-_U1-PadOUT_ GND ? Net-_M1-Pad2_ ? ? lm_741		
+U1  Net-_R1-Pad2_ Net-_U1-PadOUT_ zener		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+R1  Net-_M1-Pad3_ Net-_R1-Pad2_ 1k		
+R2  Net-_R1-Pad2_ GND 39k		
+U2  Net-_M1-Pad1_ Net-_M1-Pad3_ Net-_R1-Pad2_ PORT		
+v1  Net-_M1-Pad1_ GND 53		
+
+.end

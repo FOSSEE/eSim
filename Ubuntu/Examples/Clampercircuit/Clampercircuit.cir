@@ -1,0 +1,20 @@
+* /home/fossee/eSim-Workspace/Clampercircuit/Clampercircuit.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Feb 29 18:25:22 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  in_neg GND sine		
+C1  out_neg in_neg 1n		
+D1  out_neg GND D		
+v2  in_pos GND sine		
+C2  out_pos in_pos 1n		
+D2  GND out_pos D		
+U1  in_neg plot_v1		
+U2  out_neg plot_v1		
+U3  in_pos plot_v1		
+U4  out_pos plot_v1		
+
+.end

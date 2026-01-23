@@ -1,0 +1,21 @@
+* /home/ash98/Downloads/eSim-master/Examples/Monostable555/Monostable555.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Dec 26 15:51:03 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  GND in out Net-_R1-Pad1_ Net-_C2-Pad1_ vc vc Net-_R1-Pad1_ LM555N		
+C1  vc GND 1u		
+U3  vc IC		
+C2  Net-_C2-Pad1_ GND 0.01u		
+v2  in GND pulse		
+R1  Net-_R1-Pad1_ vc 1k		
+R2  out GND 1k		
+U4  out plot_v1		
+v1  Net-_R1-Pad1_ GND DC		
+U5  in plot_v1		
+U2  vc plot_v1		
+
+.end

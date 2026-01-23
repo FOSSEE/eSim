@@ -1,0 +1,35 @@
+* C:\Users\Aditya\eSim-Workspace\MC1496_IC1\MC1496_IC1.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/29/24 18:06:25
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  SIG Net-_R7-Pad1_ Net-_R7-Pad2_ Net-_R2-Pad1_ Net-_U5-Pad1_ OUT_p ? Net-_C3-Pad2_ ? Net-_C2-Pad2_ ? OUT_n ? Net-_X1-Pad14_ MC1496		
+R7  Net-_R7-Pad1_ Net-_R7-Pad2_ 1k		
+R9  Net-_C2-Pad2_ Net-_C3-Pad2_ 51		
+R10  Net-_C3-Pad2_ GND 1k		
+R11  Net-_C4-Pad2_ Net-_C3-Pad2_ 1k		
+R2  Net-_R2-Pad1_ Net-_C1-Pad1_ 10k		
+R1  SIG Net-_C1-Pad1_ 10k		
+R3  SIG GND 51		
+R6  Net-_R2-Pad1_ GND 51		
+R8  Net-_R8-Pad1_ GND 6.8k		
+R4  OUT_p Net-_C4-Pad2_ 3.9k		
+R5  Net-_C4-Pad2_ OUT_n 3.9k		
+v3  Net-_C4-Pad2_ GND DC		
+v2  Net-_X1-Pad14_ GND DC		
+v1  SIG GND sine		
+v4  CAR GND sine		
+U4  CAR plot_v1		
+U1  SIG plot_v1		
+U2  OUT_p plot_v1		
+U3  OUT_n plot_v1		
+C1  Net-_C1-Pad1_ GND 0.47u		
+C2  CAR Net-_C2-Pad2_ 0.1u		
+C3  GND Net-_C3-Pad2_ 0.1u		
+C4  GND Net-_C4-Pad2_ 2.47u		
+U5  Net-_U5-Pad1_ Net-_R8-Pad1_ plot_i2		
+
+.end
