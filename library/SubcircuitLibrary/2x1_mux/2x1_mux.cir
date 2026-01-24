@@ -1,0 +1,19 @@
+.title KiCad schematic
+U101 Net-_U101-Pad1_ Net-_U101-Pad2_ Net-_U101-Pad3_ Net-_U101-Pad4_ Net-_U101-Pad5_ Net-_U101-Pad6_ Net-_U101-Pad7_ unconnected-_U101-Pad8_ Net-_U101-Pad9_ Net-_U101-Pad10_ Net-_U101-Pad11_ Net-_U101-Pad12_ Net-_U101-Pad13_ Net-_U101-Pad14_ Net-_U101-Pad15_ unconnected-_U101-Pad16_ PORT
+U102 Net-_U101-Pad15_ Net-_U102-Pad2_ d_inverter
+U103 Net-_U101-Pad1_ Net-_U103-Pad2_ d_inverter
+U104 Net-_U102-Pad2_ Net-_U104-Pad2_ d_buffer
+U105 Net-_U103-Pad2_ Net-_U105-Pad2_ d_inverter
+U106 Net-_U106-Pad1_ Net-_U106-Pad2_ Net-_U101-Pad12_ d_or
+X108 Net-_U101-Pad13_ Net-_U105-Pad2_ Net-_U104-Pad2_ Net-_U106-Pad2_ 3_and
+X107 Net-_U101-Pad14_ Net-_U103-Pad2_ Net-_U104-Pad2_ Net-_U106-Pad1_ 3_and
+X106 Net-_U101-Pad10_ Net-_U105-Pad2_ Net-_U104-Pad2_ Net-_U107-Pad2_ 3_and
+X104 Net-_U101-Pad6_ Net-_U105-Pad2_ Net-_U104-Pad2_ Net-_U108-Pad2_ 3_and
+X105 Net-_U101-Pad11_ Net-_U103-Pad2_ Net-_U104-Pad2_ Net-_U107-Pad1_ 3_and
+U107 Net-_U107-Pad1_ Net-_U107-Pad2_ Net-_U101-Pad9_ d_or
+U108 Net-_U108-Pad1_ Net-_U108-Pad2_ Net-_U101-Pad7_ d_or
+U109 Net-_U109-Pad1_ Net-_U109-Pad2_ Net-_U101-Pad4_ d_or
+X101 Net-_U101-Pad2_ Net-_U103-Pad2_ Net-_U104-Pad2_ Net-_U109-Pad1_ 3_and
+X102 Net-_U101-Pad3_ Net-_U105-Pad2_ Net-_U104-Pad2_ Net-_U109-Pad2_ 3_and
+X103 Net-_U101-Pad5_ Net-_U103-Pad2_ Net-_U104-Pad2_ Net-_U108-Pad1_ 3_and
+.end
