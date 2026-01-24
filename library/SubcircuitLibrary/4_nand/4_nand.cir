@@ -1,0 +1,11 @@
+.title KiCad schematic
+U109 Net-_U107-Pad3_ Net-_U107-Pad3_ Net-_U109-Pad3_ d_nand
+U106 Net-_U102-Pad3_ Net-_U103-Pad3_ Net-_U106-Pad3_ d_nand
+U107 Net-_U104-Pad3_ Net-_U105-Pad3_ Net-_U107-Pad3_ d_nand
+U108 Net-_U106-Pad3_ Net-_U106-Pad3_ Net-_U108-Pad3_ d_nand
+U101 Net-_U104-Pad1_ Net-_U104-Pad2_ unconnected-_U101-Pad3_ Net-_U105-Pad1_ Net-_U105-Pad2_ Net-_U109-Pad3_ unconnected-_U101-Pad7_ Net-_U108-Pad3_ Net-_U102-Pad1_ Net-_U102-Pad2_ unconnected-_U101-Pad11_ Net-_U103-Pad1_ Net-_U103-Pad2_ unconnected-_U101-Pad14_ PORT
+U105 Net-_U105-Pad1_ Net-_U105-Pad2_ Net-_U105-Pad3_ d_nand
+U104 Net-_U104-Pad1_ Net-_U104-Pad2_ Net-_U104-Pad3_ d_nand
+U102 Net-_U102-Pad1_ Net-_U102-Pad2_ Net-_U102-Pad3_ d_nand
+U103 Net-_U103-Pad1_ Net-_U103-Pad2_ Net-_U103-Pad3_ d_nand
+.end
