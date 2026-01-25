@@ -1,0 +1,22 @@
+.title KiCad schematic
+U19 Net-_U15-Pad5_ Net-_U10-Pad2_ Net-_U19-Pad3_ d_tristate
+U15 Net-_U15-Pad1_ Net-_U12-Pad2_ unconnected-_U15-Pad3_ Net-_U10-Pad2_ Net-_U15-Pad5_ Net-_U10-Pad2_ d_dlatch
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ Net-_U2-Pad5_ Net-_U10-Pad3_ Net-_U2-Pad7_ Net-_U2-Pad8_ Net-_U11-Pad3_ unconnected-_U2-Pad10_ Net-_U1-Pad1_ Net-_U16-Pad3_ Net-_U12-Pad1_ Net-_U13-Pad1_ Net-_U17-Pad3_ Net-_U18-Pad3_ Net-_U14-Pad1_ Net-_U15-Pad1_ Net-_U19-Pad3_ unconnected-_U2-Pad20_ PORT
+U18 Net-_U14-Pad5_ Net-_U10-Pad2_ Net-_U18-Pad3_ d_tristate
+U14 Net-_U14-Pad1_ Net-_U12-Pad2_ unconnected-_U14-Pad3_ Net-_U10-Pad2_ Net-_U14-Pad5_ unconnected-_U14-Pad6_ d_dlatch
+U13 Net-_U13-Pad1_ Net-_U12-Pad2_ unconnected-_U13-Pad3_ Net-_U10-Pad2_ Net-_U13-Pad5_ unconnected-_U13-Pad6_ d_dlatch
+U17 Net-_U13-Pad5_ Net-_U10-Pad2_ Net-_U17-Pad3_ d_tristate
+U8 Net-_U4-Pad5_ Net-_U10-Pad2_ Net-_U2-Pad2_ d_tristate
+U5 Net-_U2-Pad4_ Net-_U12-Pad2_ unconnected-_U5-Pad3_ Net-_U10-Pad2_ Net-_U5-Pad5_ unconnected-_U5-Pad6_ d_dlatch
+U9 Net-_U5-Pad5_ Net-_U10-Pad2_ Net-_U2-Pad5_ d_tristate
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ d_inverter
+U3 Net-_U1-Pad2_ Net-_U12-Pad2_ d_inverter
+U4 Net-_U2-Pad3_ Net-_U12-Pad2_ unconnected-_U4-Pad3_ Net-_U10-Pad2_ Net-_U4-Pad5_ unconnected-_U4-Pad6_ d_dlatch
+U7 Net-_U2-Pad8_ Net-_U12-Pad2_ unconnected-_U7-Pad3_ Net-_U10-Pad2_ Net-_U11-Pad1_ unconnected-_U7-Pad6_ d_dlatch
+U6 Net-_U2-Pad7_ Net-_U12-Pad2_ unconnected-_U6-Pad3_ Net-_U10-Pad2_ Net-_U10-Pad1_ unconnected-_U6-Pad6_ d_dlatch
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_tristate
+U11 Net-_U11-Pad1_ Net-_U10-Pad2_ Net-_U11-Pad3_ d_tristate
+U20 Net-_U2-Pad1_ Net-_U10-Pad2_ d_buffer
+U16 Net-_U12-Pad5_ Net-_U10-Pad2_ Net-_U16-Pad3_ d_tristate
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ unconnected-_U12-Pad3_ Net-_U10-Pad2_ Net-_U12-Pad5_ unconnected-_U12-Pad6_ d_dlatch
+.end

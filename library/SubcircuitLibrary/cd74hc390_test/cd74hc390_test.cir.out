@@ -1,0 +1,44 @@
+.title kicad schematic
+
+.include CD74HC390.sub
+* u3 net-_u3-pad1_ gnd net-_u3-pad3_ net-_u3-pad4_ adc_bridge_2
+* u4 clk_a clk_b unconnected-_u4-pad3_ net-_u4-pad4_ adc_bridge_2
+r4 d gnd 1k
+* u9 d plot_v1
+* u8 c plot_v1
+* u6 b plot_v1
+r3 c gnd 1k
+r1 a gnd 1k
+r2 b gnd 1k
+* u1 clk_a plot_v1
+v2 clk_b gnd pulse(0v 5v 0 1ps 1ps 100ns 200ns)
+v1 clk_a gnd pulse(0v 5v 0 1ps 1ps 100ns 200ns)
+v3 net-_u3-pad1_ gnd  dc 5v
+* u2 clk_b plot_v1
+* u7 a plot_v1
+x1 net-_u5-pad1_ net-_u3-pad4_ net-_x1-pad3_ net-_u4-pad4_ net-_u5-pad3_ net-_u5-pad2_ net-_u5-pad1_ net-_u3-pad4_ unconnected-_x1-pad9_ unconnected-_x1-pad10_ unconnected-_x1-pad11_ unconnected-_x1-pad12_ unconnected-_x1-pad13_ unconnected-_x1-pad14_ unconnected-_x1-pad15_ net-_u3-pad3_ CD74HC390
+* u5 net-_u5-pad1_ net-_u5-pad2_ net-_u5-pad3_ net-_x1-pad3_ d c b a dac_bridge_4
+a1 [net-_u3-pad1_ gnd ] [net-_u3-pad3_ net-_u3-pad4_ ] u3
+a2 [clk_a clk_b ] [unconnected-_u4-pad3_ net-_u4-pad4_ ] u4
+a3 [net-_u5-pad1_ net-_u5-pad2_ net-_u5-pad3_ net-_x1-pad3_ ] [d c b a ] u5
+* Schematic Name:                             adc_bridge_2, Ngspice Name: adc_bridge
+.model u3 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_4, Ngspice Name: dac_bridge
+.model u5 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-09 2000e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(d)
+plot v(c)
+plot v(b)
+plot v(clk_a)
+plot v(clk_b)
+plot v(a)
+.endc
+.end

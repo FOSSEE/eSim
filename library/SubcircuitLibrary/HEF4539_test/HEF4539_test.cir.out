@@ -1,0 +1,38 @@
+.title kicad schematic
+
+.include HEF4539_sub.sub
+r1 gnd b 1k
+x1 net-_u1-pad8_ net-_u16-pad4_ net-_u1-pad8_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad5_ net-_x1-pad7_ net-_u1-pad8_ net-_u8-pad1_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u16-pad3_ net-_u1-pad8_ net-_u1-pad7_ HEF4539_sub
+* u47 s1 plot_v1
+* u46 s0 plot_v1
+* u16 s0 s1 net-_u16-pad3_ net-_u16-pad4_ adc_bridge_2
+* u1 net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ adc_bridge_4
+v1 net-_u1-pad1_ gnd  dc 5v
+v3 s1 gnd pulse(0v 5v 200ms 1ps 1ps 200ms 400ms)
+v2 s0 gnd pulse(0v 5v 100ms 1ps 1ps 100ms 200ms)
+* u44 b plot_v1
+r2 gnd a 1k
+* u8 net-_u8-pad1_ net-_x1-pad7_ b a dac_bridge_2
+* u45 a plot_v1
+a1 [s0 s1 ] [net-_u16-pad3_ net-_u16-pad4_ ] u16
+a2 [net-_u1-pad1_ gnd net-_u1-pad1_ gnd ] [net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ ] u1
+a3 [net-_u8-pad1_ net-_x1-pad7_ ] [b a ] u8
+* Schematic Name:                             adc_bridge_2, Ngspice Name: adc_bridge
+.model u16 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_4, Ngspice Name: adc_bridge
+.model u1 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_2, Ngspice Name: dac_bridge
+.model u8 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-03 500e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(s1)
+plot v(s0)
+plot v(b)
+plot v(a)
+.endc
+.end

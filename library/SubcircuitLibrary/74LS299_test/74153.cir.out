@@ -1,0 +1,40 @@
+* c:\users\malli\esim\src\subcircuitlibrary\74153\74153.cir
+
+.include 4_and.sub
+.include 4_OR.sub
+* u2  net-_u1-pad12_ net-_u2-pad2_ d_inverter
+* u3  net-_u1-pad11_ net-_u3-pad2_ d_inverter
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ port
+* u35  net-_u1-pad5_ net-_u35-pad2_ d_inverter
+* u34  net-_u1-pad10_ net-_u34-pad2_ d_inverter
+x8 net-_u2-pad2_ net-_u3-pad2_ net-_u1-pad1_ net-_u35-pad2_ net-_x2-pad1_ 4_and
+x9 net-_u1-pad12_ net-_u3-pad2_ net-_u1-pad2_ net-_u35-pad2_ net-_x2-pad2_ 4_and
+x4 net-_u2-pad2_ net-_u1-pad11_ net-_u1-pad3_ net-_u35-pad2_ net-_x2-pad3_ 4_and
+x10 net-_u1-pad12_ net-_u1-pad11_ net-_u1-pad4_ net-_u35-pad2_ net-_x10-pad5_ 4_and
+x5 net-_u2-pad2_ net-_u3-pad2_ net-_u1-pad6_ net-_u34-pad2_ net-_x1-pad1_ 4_and
+x6 net-_u1-pad12_ net-_u3-pad2_ net-_u1-pad7_ net-_u34-pad2_ net-_x1-pad2_ 4_and
+x3 net-_u2-pad2_ net-_u1-pad11_ net-_u1-pad8_ net-_u34-pad2_ net-_x1-pad3_ 4_and
+x7 net-_u1-pad12_ net-_u1-pad11_ net-_u1-pad9_ net-_u34-pad2_ net-_x1-pad4_ 4_and
+x1 net-_x1-pad1_ net-_x1-pad2_ net-_x1-pad3_ net-_x1-pad4_ net-_u1-pad14_ 4_OR
+x2 net-_x2-pad1_ net-_x2-pad2_ net-_x2-pad3_ net-_x10-pad5_ net-_u1-pad13_ 4_OR
+a1 net-_u1-pad12_ net-_u2-pad2_ u2
+a2 net-_u1-pad11_ net-_u3-pad2_ u3
+a3 net-_u1-pad5_ net-_u35-pad2_ u35
+a4 net-_u1-pad10_ net-_u34-pad2_ u34
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u35 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u34 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
