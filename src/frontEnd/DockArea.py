@@ -1,5 +1,5 @@
 from PyQt5 import QtCore, QtWidgets
-from ngspiceSimulation.pythonPlotting import plotWindow
+from ngspiceSimulation import plotWindow
 from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
 from modelEditor.ModelEditor import ModelEditorclass
@@ -40,6 +40,8 @@ class DockArea(QtWidgets.QMainWindow):
         """This act as constructor for class DockArea."""
         QtWidgets.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
+        # Track plotting docks
+        self.active_plotting_docks = set()
 
         for dockName in dockList:
             dock[dockName] = QtWidgets.QDockWidget(dockName)
@@ -59,6 +61,27 @@ class DockArea(QtWidgets.QMainWindow):
 
         # self.tabifyDockWidget(dock['Notes'],dock['Blank'])
         self.show()
+
+    def get_main_view_reference(self):
+        """Get reference to the MainView widget."""
+        parent = self.parent()
+        while parent:
+            if hasattr(parent, 'collapse_console_area'):
+                return parent
+            parent = parent.parent()
+        return None
+
+    def on_dock_activated(self, dock_widget):
+        """Handle when any dock becomes active."""
+        main_view = self.get_main_view_reference()
+        if not main_view:
+            return
+            
+        # Check if activated dock is a plotting dock
+        if dock_widget in self.active_plotting_docks:
+            main_view.collapse_console_area()
+        else:
+            main_view.restore_console_area()
 
     def createTestEditor(self):
         """This function create widget for Library Editor"""
@@ -115,10 +138,24 @@ class DockArea(QtWidgets.QMainWindow):
                            dock[dockName + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
                               dock[dockName + str(count)])
+        
+        # Track this as a plotting dock
+        self.active_plotting_docks.add(dock[dockName + str(count)])
+        
+        # Connect to tab change signal
+        try:
+            self.tabifiedDockWidgetActivated.connect(self.on_dock_activated)
+        except:
+            pass  # In case signal is already connected
 
         dock[dockName + str(count)].setVisible(True)
         dock[dockName + str(count)].setFocus()
         dock[dockName + str(count)].raise_()
+
+        # Collapse console immediately
+        main_view = self.get_main_view_reference()
+        if main_view:
+            QtCore.QTimer.singleShot(100, main_view.collapse_console_area)
 
         temp = self.obj_appconfig.current_project['ProjectName']
         if temp:

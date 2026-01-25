@@ -859,6 +859,21 @@ class MainView(QtWidgets.QWidget):
         self.middleSplit.setSizes([self.width(), int(self.height() / 2)])
         self.setLayout(self.mainLayout)
 
+    def collapse_console_area(self):
+        """Collapse the console area to minimal height."""
+        current_sizes = self.middleSplit.sizes()
+        total_height = sum(current_sizes)
+        minimal_console_height = 0
+        dock_area_height = total_height - minimal_console_height
+        self.middleSplit.setSizes([dock_area_height, minimal_console_height])
+
+    def restore_console_area(self):
+        """Restore the console area to normal height."""
+        total_height = sum(self.middleSplit.sizes())
+        dock_area_height = int(total_height * 0.7)  # 70% for dock area
+        console_height = total_height - dock_area_height  # 30% for console
+        self.middleSplit.setSizes([dock_area_height, console_height])
+
 
 # It is main function of the module and starts the application
 def main(args):
