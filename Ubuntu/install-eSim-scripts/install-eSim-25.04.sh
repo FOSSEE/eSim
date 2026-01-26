@@ -145,7 +145,7 @@ function installKicad
     if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
         echo "Adding KiCad PPA to local apt repository: $kicadppa"
         sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt-get update
+        sudo apt-get update || true
     else
         echo "KiCad PPA is already present in sources."
     fi
