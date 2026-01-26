@@ -1,0 +1,16 @@
+.title kicad schematic
+
+.include LT1002.sub
+vv1 vin gnd sin(2.5 1.0 1k)
+v2 net-_x1-pad7_ gnd  dc 5
+v3 net-_x1-pad5_ gnd  dc 5
+x1 unconnected-_x1-pad1_ unconnected-_x1-pad2_ vout vin net-_x1-pad5_ vout net-_x1-pad7_ unconnected-_x1-pad8_ unconnected-_x1-pad9_ net-_x1-pad10_ net-_x1-pad11_ net-_x1-pad12_ net-_x1-pad13_ net-_x1-pad14_ LT1002
+.tran 1e-06 5e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

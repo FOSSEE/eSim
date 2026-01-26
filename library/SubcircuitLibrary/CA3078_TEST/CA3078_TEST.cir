@@ -1,0 +1,9 @@
+.title KiCad schematic
+R4 Net-_R4-Pad1_ vout 10k
+v2 Net-_X1-Pad7_ GND DC
+U2 vout plot_v1
+R1 GND Net-_R1-Pad2_ 10k
+Vv1 vin GND sin(2.5 1 1k)
+X1 unconnected-_X1-Pad1_ Net-_R4-Pad1_ vin GND Net-_R1-Pad2_ vout Net-_X1-Pad7_ unconnected-_X1-Pad8_ CA3078
+U1 vin plot_v1
+.end

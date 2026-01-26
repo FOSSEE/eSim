@@ -1,0 +1,6 @@
+.title KiCad schematic
+Vv1 vin GND sin(2.5 1.0 1k)
+v2 Net-_X1-Pad7_ GND DC
+v3 Net-_X1-Pad5_ GND DC
+X1 unconnected-_X1-Pad1_ unconnected-_X1-Pad2_ vout vin Net-_X1-Pad5_ vout Net-_X1-Pad7_ unconnected-_X1-Pad8_ unconnected-_X1-Pad9_ Net-_X1-Pad10_ Net-_X1-Pad11_ Net-_X1-Pad12_ Net-_X1-Pad13_ Net-_X1-Pad14_ LT1002
+.end

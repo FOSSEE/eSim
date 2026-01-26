@@ -1,0 +1,18 @@
+.title kicad schematic
+
+.include LM7810.sub
+c1 vin gnd 1u
+vv2 vout gnd sin(5 1 50)
+x1 vin gnd v0ut LM7810
+r1 gnd v0ut 1k
+c2 v0ut gnd 0.1u
+vv1 vin gnd sin(10 2 50)
+.tran 100e-06 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
