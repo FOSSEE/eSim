@@ -66,6 +66,18 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.redoSimulationButton.clicked.connect(self.redoSimulation)
 
         self.simulationCancelled = False
+
+        # --- Force correct theme and size immediately ---
+        # Try to get the current theme from parent if possible
+        is_dark_theme = True
+        app_parent = self.parent()
+        while app_parent is not None:
+            if hasattr(app_parent, 'is_dark_theme'):
+                is_dark_theme = app_parent.is_dark_theme
+                break
+            app_parent = app_parent.parent() if hasattr(app_parent, 'parent') else None
+        self.set_theme(is_dark_theme)
+
         self.show()
 
     def cancelSimulation(self):
@@ -128,14 +140,9 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.qProcess.start('ngspice', self.args)
 
     def changeColor(self):
-        """Toggles the :class:`Ui_Form` console between dark mode
-                        and light mode
-        """
+        """Toggles the :class:`Ui_Form` console between dark mode and light mode"""
         if self.darkColor is True:
-            self.simulationConsole.setStyleSheet("QTextEdit {\n \
-                background-color: white;\n \
-                color: black;\n \
-            }")
+            # Remove direct stylesheet, let set_theme handle it
             self.lightDarkModeButton.setIcon(
                 QtGui.QIcon(
                     os.path.join(
@@ -146,10 +153,7 @@ class TerminalUi(QtWidgets.QMainWindow):
                 )
             self.darkColor = False
         else:
-            self.simulationConsole.setStyleSheet("QTextEdit {\n \
-                background-color: rgb(36, 31, 49);\n \
-                color: white;\n \
-            }")
+            # Remove direct stylesheet, let set_theme handle it
             self.lightDarkModeButton.setIcon(
                 QtGui.QIcon(
                     os.path.join(
@@ -159,3 +163,22 @@ class TerminalUi(QtWidgets.QMainWindow):
                     )
                 )
             self.darkColor = True
+        # Always call set_theme to update the full UI
+        self.set_theme(self.darkColor)
+
+    def set_theme(self, is_dark_theme):
+        """Update the theme and re-apply styling to all widgets (no local stylesheet, only icon and font changes)."""
+        self.darkColor = is_dark_theme
+        if is_dark_theme:
+            self.lightDarkModeButton.setIcon(QtGui.QIcon(os.path.join(self.iconDir, 'light_mode.png')))
+        else:
+            self.lightDarkModeButton.setIcon(QtGui.QIcon(os.path.join(self.iconDir, 'light_mode.png')))
+        # Enforce button sizes and fonts to match app
+        btn_font = QtGui.QFont("Fira Sans", 18, QtGui.QFont.Bold)
+        for btn in [self.redoSimulationButton, self.cancelSimulationButton]:
+            btn.setMinimumHeight(56)
+            btn.setMinimumWidth(140)
+            btn.setFont(btn_font)
+        self.lightDarkModeButton.setMinimumSize(35, 35)
+        self.lightDarkModeButton.setMaximumSize(35, 35)
+        self.lightDarkModeButton.setFont(QtGui.QFont("Fira Sans", 16, QtGui.QFont.Bold))

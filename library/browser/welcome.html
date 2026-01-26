@@ -1,56 +1,222 @@
+<!DOCTYPE html>
 <html>
-
     <head>
         <style>
+            :root {
+                /* Dark theme variables */
+                --dark-bg-primary: #23273a;
+                --dark-bg-secondary: #181b24;
+                --dark-text-primary: #e8eaed;
+                --dark-text-secondary: #b0b3b8;
+                --dark-accent: #40c4ff;
+                --dark-link-hover: #61dafb;
+                --dark-border: #2a2f42;
+                --dark-shadow: rgba(64, 196, 255, 0.08);
+
+                /* Light theme variables */
+                --light-bg-primary: #ffffff;
+                --light-bg-secondary: #f5f7fa;
+                --light-text-primary: #2c3e50;
+                --light-text-secondary: #7f8c8d;
+                --light-accent: #1976d2;
+                --light-link-hover: #1565c0;
+                --light-border: #e1e4e8;
+                --light-shadow: rgba(0, 0, 0, 0.1);
+
+                /* Base font sizes - will scale with browser zoom */
+                --base-font-size: 1em;
+                --heading-font-size: 1.5em;
+                --text-font-size: 1.1em;
+            }
+
             body {
-            	font-family: sans-serif;
-            	margin: 0px;
-            	padding: 0px;
-            	background-color: #efefef;
+                font-family: 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+                margin: 0;
+                padding: 0;
+                background: linear-gradient(135deg, var(--dark-bg-primary) 0%, var(--dark-bg-secondary) 100%);
+                color: var(--dark-text-primary);
+                transition: all 0.3s ease;
+                font-size: var(--base-font-size);
             }
 
-            h1{
-            	font-weight: bold;
-            	font-size: 22pt;
-            	color: #eeeeee;
-            	padding: 10px;
-            	background-color: #165982;
-            	border: 4px outset  #0E324B;
+            body.light-theme {
+                background: linear-gradient(135deg, var(--light-bg-primary) 0%, var(--light-bg-secondary) 100%);
+                color: var(--light-text-primary);
             }
 
-            p{
-            	margin: 0px 10px 0px 10px;
-                font-size: 13pt;
-                line-height: 125%;
+            h1 {
+                font-weight: bold;
+                font-size: var(--heading-font-size);
+                color: var(--dark-accent);
+                padding: 18px 24px 12px 24px;
+                background: linear-gradient(90deg, var(--dark-bg-primary) 0%, var(--dark-bg-secondary) 100%);
+                border-radius: 16px 16px 0 0;
+                border: none;
+                margin: 0 0 18px 0;
+                letter-spacing: 0.5px;
+                transition: all 0.3s ease;
+                width: 100%;
+                text-align: center;
             }
 
-            pre{
-            	margin: 0px 10px 0px 10px;
-            	font-family: monospaced;
-            	font-size: 10pt;
+            .light-theme h1 {
+                background: linear-gradient(90deg, var(--light-bg-primary) 0%, var(--light-bg-secondary) 100%);
+                color: var(--light-accent);
             }
-            #license{
-            	font-size:8pt;
+
+            p {
+                margin: 0px 24px 18px 24px;
+                font-size: var(--text-font-size);
+                line-height: 1.7;
+                color: var(--dark-text-primary);
+                font-weight: 600;
+                transition: all 0.3s ease;
+                width: 100%;
+                text-align: center;
+            }
+
+            .light-theme p {
+                color: var(--light-text-primary);
+            }
+
+            a {
+                color: var(--dark-accent);
+                text-decoration: none;
+                font-weight: 600;
+                transition: color 0.2s;
+                position: relative;
+                font-size: inherit;
+            }
+
+            .light-theme a {
+                color: var(--light-accent);
+            }
+
+            a::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 2px;
+                bottom: -2px;
+                left: 0;
+                background-color: var(--dark-accent);
+                transform: scaleX(0);
+                transform-origin: bottom right;
+                transition: transform 0.3s ease;
+            }
+
+            .light-theme a::after {
+                background-color: var(--light-accent);
+            }
+
+            a:hover {
+                color: var(--dark-link-hover);
+            }
+
+            .light-theme a:hover {
+                color: var(--light-link-hover);
+            }
+
+            a:hover::after {
+                transform: scaleX(1);
+                transform-origin: bottom left;
+            }
+
+            #license {
+                color: var(--dark-text-secondary);
+                transition: all 0.3s ease;
+                width: 100%;
+                text-align: center;
+                margin-top: 8px;
+                font-size: var(--text-font-size);
+            }
+
+            .light-theme #license {
+                color: var(--light-text-secondary);
+            }
+
+            .about-container {
+                background: linear-gradient(135deg, var(--dark-bg-primary) 0%, var(--dark-bg-secondary) 100%);
+                border-radius: 18px;
+                box-shadow: 0 4px 32px var(--dark-shadow);
+                max-width: 700px;
+                margin: 40px auto 0 auto;
+                padding: 32px 0 32px 0;
+                transition: all 0.3s ease;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .light-theme .about-container {
+                background: linear-gradient(135deg, var(--light-bg-primary) 0%, var(--light-bg-secondary) 100%);
+                box-shadow: 0 4px 32px var(--light-shadow);
+            }
+
+            .logo {
+                margin: 0 0 24px 0;
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .logo img {
+                width: 100px;
+                height: 100px;
+                border-radius: 16px;
+                box-shadow: 0 4px 16px var(--dark-shadow);
+                transition: all 0.3s ease;
+            }
+
+            .light-theme .logo img {
+                box-shadow: 0 4px 16px var(--light-shadow);
+            }
+
+            .highlight {
+                color: var(--dark-accent);
+                font-weight: 700;
+                transition: all 0.3s ease;
+                font-size: inherit;
+            }
+
+            .light-theme .highlight {
+                color: var(--light-accent);
+            }
+
+            /* Ensure all text elements scale with zoom */
+            * {
+                -webkit-text-size-adjust: 100%;
+                -moz-text-size-adjust: 100%;
+                -ms-text-size-adjust: 100%;
+                text-size-adjust: 100%;
             }
         </style>
-    <head>
+    </head>
 
     <body>
-        <h1>About eSim</h1>
-        <center><img src="../../images/logo.png" alt="eSim logo" height="100" width="100"></center>
-        <br/> 
-        <p align="justify">
-            <b>eSim</b> is an open source EDA tool for circuit design, simulation, analysis and PCB design. It is an integrated tool built using open source softwares such as KiCad (<a href="https://www.kicad.org">https://www.kicad.org/</a>), Ngspice (<a href="https://ngspice.sourceforge.io/">https://ngspice.sourceforge.io/</a>), GHDL (<a href="http://ghdl.free.fr">http://ghdl.free.fr</a>), Verilator (<a href="https://www.veripool.org/verilator/">https://www.veripool.org/verilator/</a>), Makerchip IDE (<a href="https://www.makerchip.com/">https://www.makerchip.com/</a>), and SkyWater SKY130 PDK (<a href="https://skywater-pdk.rtfd.io/">https://skywater-pdk.rtfd.io/</a>). eSim source is released under <b>GNU General Public License.</b> 
-        </p>
-        <br/>
-        <p>
-            This tool is developed by the <b>eSim Team at FOSSEE, IIT Bombay</b>. To know more about eSim, please visit: <a href="https://esim.fossee.in">https://esim.fossee.in/</a>.
-        </p>
-        <br/>
-        <p>
-            To discuss more about eSim, please visit: <a href="https://forums.fossee.in">https://forums.fossee.in/</a>
-        </p>
-        <br/>
+        <div class="about-container">
+            <h1>About eSim</h1>
+            <center class="logo"><img src="../../images/logo.png" alt="eSim logo" height="100" width="100"></center>
+            <p>
+                <span class="highlight">eSim</span> is an open source EDA tool for circuit design, simulation, analysis and PCB design. It is an integrated tool built using open source softwares such as 
+                <a href="https://www.kicad.org/">KiCad</a>,
+                <a href="https://ngspice.sourceforge.io/">Ngspice</a>,
+                <a href="http://ghdl.free.fr">GHDL</a>,
+                <a href="https://www.veripool.org/verilator/">Verilator</a>,
+                <a href="https://www.makerchip.com/">Makerchip IDE</a>, and
+                <a href="https://skywater-pdk.rtfd.io/">SkyWater SKY130 PDK</a>.
+                eSim source is released under <span class="highlight">GNU General Public License.</span>
+            </p>
+            <p>
+                This tool is developed by the <span class="highlight">eSim Team at FOSSEE, IIT Bombay</span>.<br>
+                To know more about eSim, please visit:
+                <a href="https://esim.fossee.in/">https://esim.fossee.in/</a>.
+            </p>
+            <p>
+                To discuss more about eSim, please visit:
+                <a href="https://forums.fossee.in/">https://forums.fossee.in/</a>
+            </p>
+        </div>
     </body>
-    
 </html>

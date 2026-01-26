@@ -16,3 +16,4 @@ nghdl*
 tags
 build/
 dist/
+venv311/
