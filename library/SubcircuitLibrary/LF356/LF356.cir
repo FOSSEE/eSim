@@ -1,0 +1,47 @@
+.title KiCad schematic
+D105 Net-_D105-Pad1_ Net-_D103-Pad2_ diode
+QN109 Net-_J111-Pad3_ Net-_D104-Pad1_ Net-_C101-Pad2_ npn
+D104 Net-_D104-Pad1_ Net-_C101-Pad2_ diode
+J109 Net-_J107-Pad2_ Net-_J107-Pad2_ Net-_D102-Pad1_ jfet_p
+QN106 Net-_J105-Pad2_ Net-_C102-Pad2_ Net-_QN105-Pad2_ npn
+D103 Net-_D103-Pad1_ Net-_D103-Pad2_ diode
+QN108 Net-_J105-Pad2_ Net-_C102-Pad1_ Net-_D103-Pad1_ npn
+QP104 Net-_J107-Pad2_ Net-_J107-Pad2_ Net-_J105-Pad2_ pnp
+D101 Net-_D101-Pad1_ Net-_C101-Pad2_ diode
+J110 Net-_D103-Pad2_ Net-_D103-Pad2_ Net-_D104-Pad1_ jfet_p
+QN107 Net-_D103-Pad2_ Net-_D102-Pad1_ Net-_C101-Pad2_ npn
+D102 Net-_D102-Pad1_ Net-_C101-Pad2_ diode
+QP102 Net-_J101-Pad1_ Net-_J107-Pad2_ Net-_J105-Pad2_ pnp
+QP103 Net-_J107-Pad1_ Net-_J107-Pad2_ Net-_J105-Pad2_ pnp
+J108 Net-_J107-Pad2_ Net-_J107-Pad2_ Net-_D101-Pad1_ jfet_p
+J107 Net-_J107-Pad1_ Net-_J107-Pad2_ Net-_C102-Pad1_ jfet_p
+U101 Net-_J106-Pad1_ Net-_J103-Pad2_ Net-_J101-Pad2_ Net-_C101-Pad2_ Net-_J105-Pad1_ Net-_D105-Pad1_ Net-_J105-Pad2_ unconnected-_U101-Pad8_ PORT
+C102 Net-_C102-Pad1_ Net-_C102-Pad2_ 10p
+QP101 Net-_C101-Pad2_ Net-_QN105-Pad1_ Net-_C102-Pad2_ pnp
+J105 Net-_J105-Pad1_ Net-_J105-Pad2_ Net-_C102-Pad2_ jfet_p
+J106 Net-_J106-Pad1_ Net-_J105-Pad2_ Net-_J106-Pad3_ jfet_p
+C101 Net-_C101-Pad1_ Net-_C101-Pad2_ 10p
+R101 Net-_C101-Pad2_ Net-_QN101-Pad3_ 1K
+QN103 Net-_J105-Pad2_ Net-_QN102-Pad3_ Net-_QN103-Pad3_ npn
+QN105 Net-_QN105-Pad1_ Net-_QN105-Pad2_ Net-_QN105-Pad3_ npn
+QN102 Net-_J105-Pad2_ Net-_J106-Pad3_ Net-_QN102-Pad3_ npn
+QN101 Net-_J101-Pad1_ Net-_QN101-Pad2_ Net-_QN101-Pad3_ npn
+J101 Net-_J101-Pad1_ Net-_J101-Pad2_ Net-_C102-Pad2_ jfet_p
+J103 Net-_J101-Pad1_ Net-_J103-Pad2_ Net-_C101-Pad1_ jfet_p
+J102 Net-_C102-Pad2_ Net-_C102-Pad2_ Net-_C101-Pad2_ jfet_p
+J104 Net-_C101-Pad1_ Net-_C101-Pad1_ Net-_C101-Pad2_ jfet_p
+R105 Net-_C101-Pad2_ Net-_QN105-Pad2_ 5K
+R104 Net-_QN105-Pad3_ Net-_QN101-Pad2_ 30
+QN104 Net-_QN101-Pad2_ Net-_D101-Pad1_ Net-_C101-Pad2_ npn
+R102 Net-_C101-Pad2_ Net-_QN102-Pad3_ 5K
+R103 Net-_QN101-Pad2_ Net-_QN103-Pad3_ 30
+QN113 Net-_C102-Pad1_ Net-_D106-Pad1_ Net-_D105-Pad1_ npn
+QN110 Net-_J105-Pad2_ Net-_D103-Pad1_ Net-_J111-Pad1_ npn
+D106 Net-_D106-Pad1_ Net-_C102-Pad1_ diode
+R106 Net-_C101-Pad2_ Net-_QN111-Pad3_ 3K
+R107 Net-_C101-Pad2_ Net-_QN112-Pad3_ 50
+J111 Net-_J111-Pad1_ Net-_D103-Pad2_ Net-_J111-Pad3_ jfet_p
+R108 Net-_D105-Pad1_ Net-_D106-Pad1_ 25
+QN112 Net-_D106-Pad1_ Net-_QN111-Pad3_ Net-_QN112-Pad3_ npn
+QN111 Net-_J105-Pad2_ Net-_J111-Pad3_ Net-_QN111-Pad3_ npn
+.end

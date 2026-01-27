@@ -1,20 +1,57 @@
-* C:\FOSSEE\eSim\library\SubcircuitLibrary\3_nor\3_nor.cir
-
-* EESchema Netlist Version 1.1 (Spice format) creation date: 06/13/25 12:25:06
-
-* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
-* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
-
-* Sheet Name: /
-M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
-M5  Net-_M1-Pad1_ Net-_M3-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
-M6  Net-_M1-Pad1_ Net-_M4-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
-M2  Net-_M2-Pad1_ Net-_M1-Pad2_ Net-_M2-Pad3_ Net-_M2-Pad1_ eSim_MOS_P		
-M3  Net-_M2-Pad3_ Net-_M3-Pad2_ Net-_M3-Pad3_ Net-_M2-Pad1_ eSim_MOS_P		
-M4  Net-_M3-Pad3_ Net-_M4-Pad2_ Net-_M1-Pad1_ Net-_M2-Pad1_ eSim_MOS_P		
-U4  Net-_U3-Pad2_ Net-_U1-Pad6_ d_buffer		
-U3  Net-_M1-Pad1_ Net-_U3-Pad2_ adc_bridge_1		
-U2  Net-_U1-Pad3_ Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_M1-Pad2_ Net-_M3-Pad2_ Net-_M4-Pad2_ dac_bridge_3		
-U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_M2-Pad1_ Net-_M1-Pad3_ Net-_U1-Pad6_ PORT		
-
+.title KiCad schematic
+R112 Net-_QN116-Pad1_ Net-_R113-Pad1_ 130
+U101 Net-_D101-Pad2_ Net-_D102-Pad2_ Net-_D105-Pad2_ Net-_D106-Pad2_ Net-_D107-Pad2_ Net-_D108-Pad2_ Net-_D109-Pad1_ Net-_D112-Pad2_ Net-_D109-Pad2_ Net-_D110-Pad2_ Net-_D111-Pad2_ Net-_D104-Pad2_ Net-_D103-Pad2_ Net-_R113-Pad1_ PORT
+QN113 Net-_QN112-Pad1_ Net-_QN109-Pad1_ Net-_QN112-Pad3_ npn
+R110 Net-_QN112-Pad1_ Net-_R113-Pad1_ 1.6K
+QN111 Net-_QN111-Pad1_ Net-_QN111-Pad2_ Net-_D107-Pad2_ npn
+QN110 Net-_QN110-Pad1_ Net-_QN110-Pad2_ Net-_D106-Pad2_ npn
+R108 Net-_R113-Pad1_ Net-_QN110-Pad2_ 4K
+QN115 Net-_D108-Pad2_ Net-_QN112-Pad3_ Net-_D109-Pad1_ npn
+D108 Net-_D108-Pad1_ Net-_D108-Pad2_ diode
+D109 Net-_D109-Pad1_ Net-_D109-Pad2_ diode
+R109 Net-_R113-Pad1_ Net-_QN111-Pad2_ 4K
+QN116 Net-_QN116-Pad1_ Net-_QN112-Pad1_ Net-_D108-Pad1_ npn
+QN112 Net-_QN112-Pad1_ Net-_QN111-Pad1_ Net-_QN112-Pad3_ npn
+R111 Net-_D109-Pad1_ Net-_QN112-Pad3_ 1K
+QN114 Net-_QN112-Pad1_ Net-_QN110-Pad1_ Net-_QN112-Pad3_ npn
+R105 Net-_D109-Pad1_ Net-_QN104-Pad3_ 1K
+R106 Net-_QN108-Pad1_ Net-_R113-Pad1_ 130
+QN109 Net-_QN109-Pad1_ Net-_QN109-Pad2_ Net-_D105-Pad2_ npn
+R107 Net-_R113-Pad1_ Net-_QN109-Pad2_ 4K
+D105 Net-_D109-Pad1_ Net-_D105-Pad2_ diode
+D104 Net-_D104-Pad1_ Net-_D104-Pad2_ diode
+QN108 Net-_QN108-Pad1_ Net-_QN104-Pad1_ Net-_D104-Pad1_ npn
+R104 Net-_QN104-Pad1_ Net-_R113-Pad1_ 1.6K
+QN105 Net-_QN104-Pad1_ Net-_QN101-Pad1_ Net-_QN104-Pad3_ npn
+D106 Net-_D109-Pad1_ Net-_D106-Pad2_ diode
+D107 Net-_D109-Pad1_ Net-_D107-Pad2_ diode
+QN106 Net-_QN104-Pad1_ Net-_QN102-Pad1_ Net-_QN104-Pad3_ npn
+QN107 Net-_D104-Pad2_ Net-_QN104-Pad3_ Net-_D109-Pad1_ npn
+D110 Net-_D109-Pad1_ Net-_D110-Pad2_ diode
+QN118 Net-_QN118-Pad1_ Net-_QN118-Pad2_ Net-_D110-Pad2_ npn
+R113 Net-_R113-Pad1_ Net-_QN117-Pad2_ 4K
+R114 Net-_R113-Pad1_ Net-_QN118-Pad2_ 4K
+QN117 Net-_QN117-Pad1_ Net-_QN117-Pad2_ Net-_D109-Pad2_ npn
+QN121 Net-_QN120-Pad1_ Net-_QN117-Pad1_ Net-_QN121-Pad3_ npn
+R115 Net-_R113-Pad1_ Net-_QN119-Pad2_ 4K
+D111 Net-_D109-Pad1_ Net-_D111-Pad2_ diode
+QN119 Net-_QN119-Pad1_ Net-_QN119-Pad2_ Net-_D111-Pad2_ npn
+QN120 Net-_QN120-Pad1_ Net-_QN119-Pad1_ Net-_QN121-Pad3_ npn
+QN122 Net-_QN120-Pad1_ Net-_QN118-Pad1_ Net-_QN121-Pad3_ npn
+R117 Net-_D109-Pad1_ Net-_QN121-Pad3_ 1K
+R118 Net-_QN124-Pad1_ Net-_R113-Pad1_ 130
+QN124 Net-_QN124-Pad1_ Net-_QN120-Pad1_ Net-_D112-Pad1_ npn
+D112 Net-_D112-Pad1_ Net-_D112-Pad2_ diode
+R116 Net-_QN120-Pad1_ Net-_R113-Pad1_ 1.6K
+QN123 Net-_D112-Pad2_ Net-_QN121-Pad3_ Net-_D109-Pad1_ npn
+R102 Net-_R113-Pad1_ Net-_QN102-Pad2_ 4K
+QN102 Net-_QN102-Pad1_ Net-_QN102-Pad2_ Net-_D102-Pad2_ npn
+R103 Net-_R113-Pad1_ Net-_QN103-Pad2_ 4K
+D102 Net-_D109-Pad1_ Net-_D102-Pad2_ diode
+QN103 Net-_QN103-Pad1_ Net-_QN103-Pad2_ Net-_D103-Pad2_ npn
+D103 Net-_D109-Pad1_ Net-_D103-Pad2_ diode
+QN104 Net-_QN104-Pad1_ Net-_QN103-Pad1_ Net-_QN104-Pad3_ npn
+D101 Net-_D109-Pad1_ Net-_D101-Pad2_ diode
+R101 Net-_R113-Pad1_ Net-_QN101-Pad2_ 4K
+QN101 Net-_QN101-Pad1_ Net-_QN101-Pad2_ Net-_D101-Pad2_ npn
 .end
