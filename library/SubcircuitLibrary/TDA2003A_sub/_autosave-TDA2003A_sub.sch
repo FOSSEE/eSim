@@ -1,0 +1,937 @@
+EESchema Schematic File Version 5
+EELAYER 36 0
+EELAYER END
+$Descr A3 16535 11693
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+Comment5 ""
+Comment6 ""
+Comment7 ""
+Comment8 ""
+Comment9 ""
+$EndDescr
+Connection ~ 1840 6860
+Connection ~ 1840 7240
+Connection ~ 1840 9480
+Connection ~ 2890 3570
+Connection ~ 2890 4350
+Connection ~ 3490 3570
+Connection ~ 3490 5160
+Connection ~ 3490 7210
+Connection ~ 3490 9480
+Connection ~ 3890 3570
+Connection ~ 3890 5650
+Connection ~ 3890 6250
+Connection ~ 3890 9480
+Connection ~ 5030 6250
+Connection ~ 5030 9480
+Connection ~ 5460 5850
+Connection ~ 5460 6950
+Connection ~ 5460 9480
+Connection ~ 6230 6950
+Connection ~ 6230 9480
+Connection ~ 6940 3570
+Connection ~ 6940 7310
+Connection ~ 6940 9480
+Connection ~ 7910 5850
+Connection ~ 7910 6950
+Connection ~ 8870 5570
+Connection ~ 9450 3570
+Connection ~ 9450 4700
+Connection ~ 9450 5130
+Connection ~ 9450 7080
+Connection ~ 9450 9480
+Connection ~ 10070 5130
+Connection ~ 10070 9480
+Connection ~ 10590 3570
+Connection ~ 10590 4370
+Connection ~ 10590 4620
+Connection ~ 10590 5830
+Connection ~ 10590 6950
+Connection ~ 11090 3570
+Connection ~ 11090 5020
+Connection ~ 11800 3570
+Connection ~ 12150 3570
+Connection ~ 12150 6290
+Connection ~ 12720 3570
+Connection ~ 13370 4360
+Connection ~ 13370 4870
+Connection ~ 13370 9480
+Connection ~ 13830 6290
+Connection ~ 14440 3580
+Connection ~ 14440 4360
+Connection ~ 14440 5750
+Connection ~ 14440 6290
+Connection ~ 14440 6950
+Connection ~ 14440 9480
+Wire Wire Line
+	1390 4700 1390 7040
+Wire Wire Line
+	1390 4700 9450 4700
+Wire Wire Line
+	1390 7440 1390 9480
+Wire Wire Line
+	1390 9480 1840 9480
+Wire Wire Line
+	1690 7240 1840 7240
+Wire Wire Line
+	1840 5650 3890 5650
+Wire Wire Line
+	1840 6330 1840 5650
+Wire Wire Line
+	1840 6630 1840 6860
+Wire Wire Line
+	1840 6860 1840 7240
+Wire Wire Line
+	1840 7240 1840 7790
+Wire Wire Line
+	1840 8090 1840 9480
+Wire Wire Line
+	1840 9480 3490 9480
+Wire Wire Line
+	2420 3570 2420 4150
+Wire Wire Line
+	2420 3570 2890 3570
+Wire Wire Line
+	2420 4550 2420 6860
+Wire Wire Line
+	2420 6860 1840 6860
+Wire Wire Line
+	2720 4350 2890 4350
+Wire Wire Line
+	2890 3570 2890 3830
+Wire Wire Line
+	2890 3570 3490 3570
+Wire Wire Line
+	2890 4130 2890 4350
+Wire Wire Line
+	2890 4350 2890 5200
+Wire Wire Line
+	2890 5500 2890 5860
+Wire Wire Line
+	2890 6360 2890 6540
+Wire Wire Line
+	2890 7040 2890 7210
+Wire Wire Line
+	2890 7210 3490 7210
+Wire Wire Line
+	3490 3570 3490 3710
+Wire Wire Line
+	3490 3570 3890 3570
+Wire Wire Line
+	3490 4610 3490 5160
+Wire Wire Line
+	3490 5160 3590 5160
+Wire Wire Line
+	3490 7210 3490 5160
+Wire Wire Line
+	3490 7210 3490 7370
+Wire Wire Line
+	3490 7870 3490 9480
+Wire Wire Line
+	3490 9480 3890 9480
+Wire Wire Line
+	3890 3570 6940 3570
+Wire Wire Line
+	3890 4960 3890 3570
+Wire Wire Line
+	3890 5360 3890 5650
+Wire Wire Line
+	3890 5650 3890 5680
+Wire Wire Line
+	3890 5650 4680 5650
+Wire Wire Line
+	3890 5980 3890 6250
+Wire Wire Line
+	3890 6250 3890 6610
+Wire Wire Line
+	3890 6250 4430 6250
+Wire Wire Line
+	3890 6910 3890 7210
+Wire Wire Line
+	3890 7510 3890 9480
+Wire Wire Line
+	3890 9480 5030 9480
+Wire Wire Line
+	4680 4780 5460 4780
+Wire Wire Line
+	4680 5650 4680 4780
+Wire Wire Line
+	4730 6250 5030 6250
+Wire Wire Line
+	5030 6250 5030 9480
+Wire Wire Line
+	5030 6250 5160 6250
+Wire Wire Line
+	5030 9480 5030 9610
+Wire Wire Line
+	5030 9480 5460 9480
+Wire Wire Line
+	5460 4780 5460 4860
+Wire Wire Line
+	5460 5760 5460 5850
+Wire Wire Line
+	5460 5850 5460 6050
+Wire Wire Line
+	5460 5850 7910 5850
+Wire Wire Line
+	5460 6450 5460 6950
+Wire Wire Line
+	5460 6950 5460 9480
+Wire Wire Line
+	5460 6950 6230 6950
+Wire Wire Line
+	5460 9480 5460 9600
+Wire Wire Line
+	5460 9480 6230 9480
+Wire Wire Line
+	6230 6950 6230 7110
+Wire Wire Line
+	6230 6950 7250 6950
+Wire Wire Line
+	6230 7510 6230 9480
+Wire Wire Line
+	6230 9480 6940 9480
+Wire Wire Line
+	6530 7310 6940 7310
+Wire Wire Line
+	6940 3570 6940 4100
+Wire Wire Line
+	6940 3570 9450 3570
+Wire Wire Line
+	6940 4400 6940 7310
+Wire Wire Line
+	6940 7310 6940 7610
+Wire Wire Line
+	6940 7910 6940 9480
+Wire Wire Line
+	6940 9480 9450 9480
+Wire Wire Line
+	7550 6950 7910 6950
+Wire Wire Line
+	7910 5570 7910 5850
+Wire Wire Line
+	7910 5570 7990 5570
+Wire Wire Line
+	7910 5850 7910 6540
+Wire Wire Line
+	7910 5850 8570 5850
+Wire Wire Line
+	7910 6840 7910 6950
+Wire Wire Line
+	7910 6950 10590 6950
+Wire Wire Line
+	8290 5570 8870 5570
+Wire Wire Line
+	8870 5130 9450 5130
+Wire Wire Line
+	8870 5570 8870 5130
+Wire Wire Line
+	8870 5570 9150 5570
+Wire Wire Line
+	8870 5650 8870 5570
+Wire Wire Line
+	8870 6050 8870 7460
+Wire Wire Line
+	9150 7460 8870 7460
+Wire Wire Line
+	9450 3570 10590 3570
+Wire Wire Line
+	9450 3700 9450 3570
+Wire Wire Line
+	9450 4700 9450 4600
+Wire Wire Line
+	9450 5130 9450 4700
+Wire Wire Line
+	9450 5130 9450 5370
+Wire Wire Line
+	9450 5130 10070 5130
+Wire Wire Line
+	9450 5770 9450 7080
+Wire Wire Line
+	9450 7080 9450 7260
+Wire Wire Line
+	9450 7660 9450 9480
+Wire Wire Line
+	9450 9480 10070 9480
+Wire Wire Line
+	10070 5130 10070 7500
+Wire Wire Line
+	10070 5130 10290 5130
+Wire Wire Line
+	10070 7900 10070 9480
+Wire Wire Line
+	10070 9480 13370 9480
+Wire Wire Line
+	10370 7700 12720 7700
+Wire Wire Line
+	10590 3570 11090 3570
+Wire Wire Line
+	10590 4070 10590 3570
+Wire Wire Line
+	10590 4370 10590 4360
+Wire Wire Line
+	10590 4620 10590 4370
+Wire Wire Line
+	10590 4620 10790 4620
+Wire Wire Line
+	10590 4930 10590 4620
+Wire Wire Line
+	10590 5330 10590 5830
+Wire Wire Line
+	10590 5830 10590 6950
+Wire Wire Line
+	10590 6950 14440 6950
+Wire Wire Line
+	11090 3570 11800 3570
+Wire Wire Line
+	11090 4420 11090 3570
+Wire Wire Line
+	11090 4820 11090 5020
+Wire Wire Line
+	11090 5020 11090 5160
+Wire Wire Line
+	11090 5460 11090 5830
+Wire Wire Line
+	11090 5830 10590 5830
+Wire Wire Line
+	11500 7080 9450 7080
+Wire Wire Line
+	11800 3570 12150 3570
+Wire Wire Line
+	11800 6090 11800 3570
+Wire Wire Line
+	11800 6490 11800 6880
+Wire Wire Line
+	11800 7280 11800 7480
+Wire Wire Line
+	11800 7480 14140 7480
+Wire Wire Line
+	12100 6290 12150 6290
+Wire Wire Line
+	12150 3570 12720 3570
+Wire Wire Line
+	12150 3800 12150 3570
+Wire Wire Line
+	12150 6290 12150 4700
+Wire Wire Line
+	12150 6290 12270 6290
+Wire Wire Line
+	12570 6290 12840 6290
+Wire Wire Line
+	12720 3570 14440 3570
+Wire Wire Line
+	12720 4160 12720 3570
+Wire Wire Line
+	12720 4560 12720 7700
+Wire Wire Line
+	13020 4360 13370 4360
+Wire Wire Line
+	13140 6290 13830 6290
+Wire Wire Line
+	13370 4360 13370 4870
+Wire Wire Line
+	13370 4360 13720 4360
+Wire Wire Line
+	13370 4870 13370 8160
+Wire Wire Line
+	13370 9060 13370 9480
+Wire Wire Line
+	13370 9480 14440 9480
+Wire Wire Line
+	13830 4870 13370 4870
+Wire Wire Line
+	13830 5180 13830 4870
+Wire Wire Line
+	13830 5680 13830 5970
+Wire Wire Line
+	13830 6290 13830 6270
+Wire Wire Line
+	13830 6290 14440 6290
+Wire Wire Line
+	14020 4360 14440 4360
+Wire Wire Line
+	14140 5020 11090 5020
+Wire Wire Line
+	14440 3570 14440 3580
+Wire Wire Line
+	14440 3580 14440 3750
+Wire Wire Line
+	14440 4050 14440 4360
+Wire Wire Line
+	14440 4360 14440 4820
+Wire Wire Line
+	14440 5220 14440 5750
+Wire Wire Line
+	14440 5750 14440 6290
+Wire Wire Line
+	14440 6290 14440 6950
+Wire Wire Line
+	14440 6950 14440 7280
+Wire Wire Line
+	14440 7680 14440 9480
+Wire Wire Line
+	14750 9480 14440 9480
+Wire Wire Line
+	14910 5750 14440 5750
+Wire Wire Line
+	14990 3580 14440 3580
+$Comp
+L eSim_Devices:resistor R1
+U 1 1 00000000
+P 1790 6430
+F 0 "R1" V 1790 6590 50  0000 L CNN
+F 1 "10k" V 1890 6590 50  0000 L CNN
+F 2 "" H 1840 6410 30  0000 C CNN
+F 3 "" V 1840 6480 30  0000 C CNN
+	1    1790 6430
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:resistor R2
+U 1 1 00000000
+P 1790 7890
+F 0 "R2" V 1790 8050 50  0000 L CNN
+F 1 "10k" V 1890 8050 50  0000 L CNN
+F 2 "" H 1840 7870 30  0000 C CNN
+F 3 "" V 1840 7940 30  0000 C CNN
+	1    1790 7890
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:resistor R3
+U 1 1 00000000
+P 2840 3930
+F 0 "R3" V 2840 4090 50  0000 L CNN
+F 1 "10k" V 2940 4090 50  0000 L CNN
+F 2 "" H 2890 3910 30  0000 C CNN
+F 3 "" V 2890 3980 30  0000 C CNN
+	1    2840 3930
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:resistor R4
+U 1 1 00000000
+P 2840 5300
+F 0 "R4" V 2840 5460 50  0000 L CNN
+F 1 "10k" V 2940 5460 50  0000 L CNN
+F 2 "" H 2890 5280 30  0000 C CNN
+F 3 "" V 2890 5350 30  0000 C CNN
+	1    2840 5300
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:resistor R5
+U 1 1 00000000
+P 3840 5780
+F 0 "R5" V 3840 5940 50  0000 L CNN
+F 1 "10k" V 3940 5940 50  0000 L CNN
+F 2 "" H 3890 5760 30  0000 C CNN
+F 3 "" V 3890 5830 30  0000 C CNN
+	1    3840 5780
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:resistor R6
+U 1 1 00000000
+P 4630 6200
+F 0 "R6" H 4680 6000 50  0000 C CNN
+F 1 "10k" H 4680 6100 50  0000 C CNN
+F 2 "" H 4680 6180 30  0000 C CNN
+F 3 "" V 4680 6250 30  0000 C CNN
+	1    4630 6200
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:resistor R7
+U 1 1 00000000
+P 6890 4200
+F 0 "R7" V 6890 4360 50  0000 L CNN
+F 1 "10k" V 6990 4360 50  0000 L CNN
+F 2 "" H 6940 4180 30  0000 C CNN
+F 3 "" V 6940 4250 30  0000 C CNN
+	1    6890 4200
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:resistor R8
+U 1 1 00000000
+P 7450 6900
+F 0 "R8" H 7500 6700 50  0000 C CNN
+F 1 "10k" H 7500 6800 50  0000 C CNN
+F 2 "" H 7500 6880 30  0000 C CNN
+F 3 "" V 7500 6950 30  0000 C CNN
+	1    7450 6900
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:resistor R9
+U 1 1 00000000
+P 13780 6070
+F 0 "R9" V 13780 6190 50  0000 L CNN
+F 1 "10k" V 13880 6190 50  0000 L CNN
+F 2 "" H 13830 6050 30  0000 C CNN
+F 3 "" V 13830 6120 30  0000 C CNN
+	1    13780 6070
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:resistor R10
+U 1 1 00000000
+P 14390 3850
+F 0 "R10" V 14390 4010 50  0000 L CNN
+F 1 "10k" V 14490 4010 50  0000 L CNN
+F 2 "" H 14440 3830 30  0000 C CNN
+F 3 "" V 14440 3900 30  0000 C CNN
+	1    14390 3850
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U5
+U 1 1 00000000
+P 5030 9860
+F 0 "U5" V 5080 9980 30  0000 L CNN
+F 1 "PORT" V 4980 9980 30  0000 L CNN
+F 2 "" H 5030 9860 60  0000 C CNN
+F 3 "" H 5030 9860 60  0000 C CNN
+	1    5030 9860
+	0    1    -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U5
+U 2 1 00000000
+P 5460 9850
+F 0 "U5" V 5510 9940 30  0000 L CNN
+F 1 "PORT" V 5410 9940 30  0000 L CNN
+F 2 "" H 5460 9850 60  0000 C CNN
+F 3 "" H 5460 9850 60  0000 C CNN
+	2    5460 9850
+	0    1    -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U5
+U 3 1 00000000
+P 15000 9480
+F 0 "U5" H 14850 9505 30  0000 R CNN
+F 1 "PORT" H 14850 9405 30  0000 R CNN
+F 2 "" H 15000 9480 60  0000 C CNN
+F 3 "" H 15000 9480 60  0000 C CNN
+	3    15000 9480
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U5
+U 4 1 00000000
+P 15160 5750
+F 0 "U5" H 15020 5775 30  0000 R CNN
+F 1 "PORT" H 15020 5675 30  0000 R CNN
+F 2 "" H 15160 5750 60  0000 C CNN
+F 3 "" H 15160 5750 60  0000 C CNN
+	4    15160 5750
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U5
+U 5 1 00000000
+P 15240 3580
+F 0 "U5" H 15080 3605 30  0000 R CNN
+F 1 "PORT" H 15080 3505 30  0000 R CNN
+F 2 "" H 15240 3580 60  0000 C CNN
+F 3 "" H 15240 3580 60  0000 C CNN
+	5    15240 3580
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D1
+U 1 1 00000000
+P 3890 6760
+F 0 "D1" V 3842 6910 50  0000 L CNN
+F 1 "eSim_Diode" V 3942 6910 50  0000 L CNN
+F 2 "" H 3890 6760 60  0000 C CNN
+F 3 "" H 3890 6760 60  0000 C CNN
+	1    3890 6760
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D2
+U 1 1 00000000
+P 3890 7360
+F 0 "D2" V 3842 7510 50  0000 L CNN
+F 1 "eSim_Diode" V 3942 7510 50  0000 L CNN
+F 2 "" H 3890 7360 60  0000 C CNN
+F 3 "" H 3890 7360 60  0000 C CNN
+	1    3890 7360
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D3
+U 1 1 00000000
+P 6940 7760
+F 0 "D3" V 6892 7910 50  0000 L CNN
+F 1 "eSim_Diode" V 6992 7910 50  0000 L CNN
+F 2 "" H 6940 7760 60  0000 C CNN
+F 3 "" H 6940 7760 60  0000 C CNN
+	1    6940 7760
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D4
+U 1 1 00000000
+P 10590 4220
+F 0 "D4" V 10610 3820 50  0000 L CNN
+F 1 "eSim_Diode" V 10710 3630 50  0000 L CNN
+F 2 "" H 10590 4220 60  0000 C CNN
+F 3 "" H 10590 4220 60  0000 C CNN
+	1    10590 4220
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D5
+U 1 1 00000000
+P 11090 5310
+F 0 "D5" V 11150 5040 50  0000 L CNN
+F 1 "eSim_Diode" V 11250 4850 50  0000 L CNN
+F 2 "" H 11090 5310 60  0000 C CNN
+F 3 "" H 11090 5310 60  0000 C CNN
+	1    11090 5310
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D6
+U 1 1 00000000
+P 12420 6290
+F 0 "D6" H 12470 5990 50  0000 L CNN
+F 1 "eSim_Diode" H 12300 6080 50  0000 L CNN
+F 2 "" H 12420 6290 60  0000 C CNN
+F 3 "" H 12420 6290 60  0000 C CNN
+	1    12420 6290
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D7
+U 1 1 00000000
+P 12990 6290
+F 0 "D7" H 12910 6010 50  0000 L CNN
+F 1 "eSim_Diode" H 12770 6110 50  0000 L CNN
+F 2 "" H 12990 6290 60  0000 C CNN
+F 3 "" H 12990 6290 60  0000 C CNN
+	1    12990 6290
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D8
+U 1 1 00000000
+P 13870 4360
+F 0 "D8" H 13870 4080 50  0000 L CNN
+F 1 "eSim_Diode" H 13730 4180 50  0000 L CNN
+F 2 "" H 13870 4360 60  0000 C CNN
+F 3 "" H 13870 4360 60  0000 C CNN
+	1    13870 4360
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:capacitor C1
+U 1 1 00000000
+P 7910 6690
+F 0 "C1" H 8050 6740 50  0000 L CNN
+F 1 "10p" H 8050 6640 50  0000 L CNN
+F 2 "" H 7948 6540 30  0000 C CNN
+F 3 "" H 7910 6690 60  0000 C CNN
+	1    7910 6690
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:capacitor C2
+U 1 1 00000000
+P 8140 5570
+F 0 "C2" V 7870 5570 50  0000 C CNN
+F 1 "10p" V 7970 5570 50  0000 C CNN
+F 2 "" H 8178 5420 30  0000 C CNN
+F 3 "" H 8140 5570 60  0000 C CNN
+	1    8140 5570
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Analog:zener U1
+U 1 1 00000000
+P 2890 6160
+F 0 "U1" V 3015 6320 60  0000 L CNN
+F 1 "zener" V 2865 6320 60  0000 L CNN
+F 2 "" H 2940 6160 60  0000 C CNN
+F 3 "" H 2940 6160 60  0000 C CNN
+	1    2890 6160
+	0    1    -1   0   
+$EndComp
+$Comp
+L eSim_Analog:zener U2
+U 1 1 00000000
+P 2890 6840
+F 0 "U2" V 3015 6990 60  0000 L CNN
+F 1 "zener" V 2865 6990 60  0000 L CNN
+F 2 "" H 2940 6840 60  0000 C CNN
+F 3 "" H 2940 6840 60  0000 C CNN
+	1    2890 6840
+	0    1    -1   0   
+$EndComp
+$Comp
+L eSim_Analog:zener U3
+U 1 1 00000000
+P 3490 7670
+F 0 "U3" V 3615 7820 60  0000 L CNN
+F 1 "zener" V 3465 7820 60  0000 L CNN
+F 2 "" H 3540 7670 60  0000 C CNN
+F 3 "" H 3540 7670 60  0000 C CNN
+	1    3490 7670
+	0    1    -1   0   
+$EndComp
+$Comp
+L eSim_Analog:zener U4
+U 1 1 00000000
+P 13830 5480
+F 0 "U4" V 13955 5630 60  0000 L CNN
+F 1 "zener" V 13805 5630 60  0000 L CNN
+F 2 "" H 13880 5480 60  0000 C CNN
+F 3 "" H 13880 5480 60  0000 C CNN
+	1    13830 5480
+	0    1    -1   0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q1
+U 1 1 00000000
+P 1490 7240
+F 0 "Q1" H 1690 7290 50  0000 L CNN
+F 1 "eSim_NPN" H 1690 7190 50  0000 L CNN
+F 2 "" H 1690 7340 29  0000 C CNN
+F 3 "" H 1490 7240 60  0000 C CNN
+	1    1490 7240
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q2
+U 1 1 00000000
+P 2520 4350
+F 0 "Q2" H 2720 4300 50  0000 L CNN
+F 1 "eSim_PNP" H 2720 4400 50  0000 L CNN
+F 2 "" H 2720 4450 29  0000 C CNN
+F 3 "" H 2520 4350 60  0000 C CNN
+	1    2520 4350
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q3
+U 1 1 00000000
+P 3790 5160
+F 0 "Q3" H 3990 5210 50  0000 L CNN
+F 1 "eSim_NPN" H 3990 5110 50  0000 L CNN
+F 2 "" H 3990 5260 29  0000 C CNN
+F 3 "" H 3790 5160 60  0000 C CNN
+	1    3790 5160
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q4
+U 1 1 00000000
+P 5360 6250
+F 0 "Q4" H 5560 6300 50  0000 L CNN
+F 1 "eSim_NPN" H 5560 6200 50  0000 L CNN
+F 2 "" H 5560 6350 29  0000 C CNN
+F 3 "" H 5360 6250 60  0000 C CNN
+	1    5360 6250
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q5
+U 1 1 00000000
+P 6330 7310
+F 0 "Q5" H 6560 7360 50  0000 L CNN
+F 1 "eSim_NPN" H 6560 7260 50  0000 L CNN
+F 2 "" H 6530 7410 29  0000 C CNN
+F 3 "" H 6330 7310 60  0000 C CNN
+	1    6330 7310
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q6
+U 1 1 00000000
+P 8770 5850
+F 0 "Q6" H 8970 5900 50  0000 L CNN
+F 1 "eSim_NPN" H 8970 5800 50  0000 L CNN
+F 2 "" H 8970 5950 29  0000 C CNN
+F 3 "" H 8770 5850 60  0000 C CNN
+	1    8770 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q7
+U 1 1 00000000
+P 9350 5570
+F 0 "Q7" H 9550 5620 50  0000 L CNN
+F 1 "eSim_NPN" H 9550 5520 50  0000 L CNN
+F 2 "" H 9550 5670 29  0000 C CNN
+F 3 "" H 9350 5570 60  0000 C CNN
+	1    9350 5570
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q8
+U 1 1 00000000
+P 9350 7460
+F 0 "Q8" H 9550 7510 50  0000 L CNN
+F 1 "eSim_NPN" H 9550 7410 50  0000 L CNN
+F 2 "" H 9550 7560 29  0000 C CNN
+F 3 "" H 9350 7460 60  0000 C CNN
+	1    9350 7460
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q9
+U 1 1 00000000
+P 10170 7700
+F 0 "Q9" H 10370 7750 50  0000 L CNN
+F 1 "eSim_NPN" H 10370 7650 50  0000 L CNN
+F 2 "" H 10370 7800 29  0000 C CNN
+F 3 "" H 10170 7700 60  0000 C CNN
+	1    10170 7700
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q10
+U 1 1 00000000
+P 10490 5130
+F 0 "Q10" H 10700 5180 50  0000 L CNN
+F 1 "eSim_NPN" H 10700 5080 50  0000 L CNN
+F 2 "" H 10690 5230 29  0000 C CNN
+F 3 "" H 10490 5130 60  0000 C CNN
+	1    10490 5130
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q11
+U 1 1 00000000
+P 10990 4620
+F 0 "Q11" H 11200 4570 50  0000 L CNN
+F 1 "eSim_PNP" H 11200 4670 50  0000 L CNN
+F 2 "" H 11190 4720 29  0000 C CNN
+F 3 "" H 10990 4620 60  0000 C CNN
+	1    10990 4620
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q12
+U 1 1 00000000
+P 11700 7080
+F 0 "Q12" H 11910 7030 50  0000 L CNN
+F 1 "eSim_PNP" H 11910 7130 50  0000 L CNN
+F 2 "" H 11900 7180 29  0000 C CNN
+F 3 "" H 11700 7080 60  0000 C CNN
+	1    11700 7080
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q13
+U 1 1 00000000
+P 11900 6290
+F 0 "Q13" H 12110 6340 50  0000 L CNN
+F 1 "eSim_NPN" H 12110 6240 50  0000 L CNN
+F 2 "" H 12100 6390 29  0000 C CNN
+F 3 "" H 11900 6290 60  0000 C CNN
+	1    11900 6290
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q14
+U 1 1 00000000
+P 12820 4360
+F 0 "Q14" H 13070 4300 50  0000 L CNN
+F 1 "eSim_PNP" H 12980 4410 50  0000 L CNN
+F 2 "" H 13020 4460 29  0000 C CNN
+F 3 "" H 12820 4360 60  0000 C CNN
+	1    12820 4360
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q15
+U 1 1 00000000
+P 14340 5020
+F 0 "Q15" H 14540 5070 50  0000 L CNN
+F 1 "eSim_NPN" H 14540 4970 50  0000 L CNN
+F 2 "" H 14540 5120 29  0000 C CNN
+F 3 "" H 14340 5020 60  0000 C CNN
+	1    14340 5020
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q16
+U 1 1 00000000
+P 14340 7480
+F 0 "Q16" H 14540 7530 50  0000 L CNN
+F 1 "eSim_NPN" H 14540 7430 50  0000 L CNN
+F 2 "" H 14540 7580 29  0000 C CNN
+F 3 "" H 14340 7480 60  0000 C CNN
+	1    14340 7480
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:dc I1
+U 1 1 00000000
+P 3490 4160
+F 0 "I1" H 3700 4285 60  0000 L CNN
+F 1 "2m" H 3700 4135 60  0000 L CNN
+F 2 "R1" H 3700 3985 60  0000 L CNN
+F 3 "" H 3490 4160 60  0000 C CNN
+	1    3490 4160
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:dc I2
+U 1 1 00000000
+P 5460 5310
+F 0 "I2" H 5650 5435 60  0000 L CNN
+F 1 "2m" H 5650 5285 60  0000 L CNN
+F 2 "R1" H 5650 5135 60  0000 L CNN
+F 3 "" H 5460 5310 60  0000 C CNN
+	1    5460 5310
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:dc I3
+U 1 1 00000000
+P 9450 4150
+F 0 "I3" H 9660 4275 60  0000 L CNN
+F 1 "dc" H 9660 4125 60  0000 L CNN
+F 2 "R1" H 9660 3975 60  0000 L CNN
+F 3 "" H 9450 4150 60  0000 C CNN
+	1    9450 4150
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:dc I4
+U 1 1 00000000
+P 12150 4250
+F 0 "I4" H 11850 4380 60  0000 L CNN
+F 1 "dc" H 11850 4230 60  0000 L CNN
+F 2 "R1" H 11850 4080 60  0000 L CNN
+F 3 "" H 12150 4250 60  0000 C CNN
+	1    12150 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:dc I5
+U 1 1 00000000
+P 13370 8610
+F 0 "I5" H 13580 8735 60  0000 L CNN
+F 1 "dc" H 13580 8585 60  0000 L CNN
+F 2 "R1" H 13580 8440 60  0000 L CNN
+F 3 "" H 13370 8610 60  0000 C CNN
+	1    13370 8610
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

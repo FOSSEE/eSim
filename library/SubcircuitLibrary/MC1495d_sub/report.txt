@@ -1,0 +1,45 @@
+Annotated eSim_Diode as D1.
+Annotated eSim_Diode as D2.
+Annotated eSim_Diode as D3.
+Annotated eSim_Diode as D4.
+Annotated eSim_NPN as Q1.
+Annotated eSim_NPN as Q2.
+Annotated eSim_NPN as Q3.
+Annotated eSim_NPN as Q4.
+Annotated eSim_NPN as Q5.
+Annotated eSim_NPN as Q6.
+Annotated eSim_NPN as Q7.
+Annotated eSim_NPN as Q8.
+Annotated eSim_NPN as Q9.
+Annotated eSim_NPN as Q10.
+Annotated eSim_NPN as Q11.
+Annotated eSim_NPN as Q12.
+Annotated eSim_NPN as Q13.
+Annotated eSim_NPN as Q14.
+Annotated eSim_NPN as Q15.
+Annotated eSim_NPN as Q16.
+Annotated 4k as R1.
+Annotated 500 as R2.
+Annotated 500 as R3.
+Annotated 4k as R4.
+Annotated 500 as R5.
+Annotated 500 as R6.
+Annotated 4k as R7.
+Annotated 500 as R8.
+Annotated 500 as R9.
+Annotated 4k as R10.
+Annotated PORT (unit A) as U1A.
+Annotated PORT (unit B) as U1B.
+Annotated PORT (unit C) as U1C.
+Annotated PORT (unit D) as U1D.
+Annotated PORT (unit E) as U1E.
+Annotated PORT (unit F) as U1F.
+Annotated PORT (unit G) as U1G.
+Annotated PORT (unit M) as U1M.
+Annotated PORT (unit N) as U1N.
+Annotated PORT (unit L) as U1L.
+Annotated PORT (unit K) as U1K.
+Annotated PORT (unit J) as U1J.
+Annotated PORT (unit H) as U1H.
+Annotated PORT (unit I) as U1I.
+Annotation complete.

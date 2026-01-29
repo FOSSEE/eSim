@@ -1,0 +1,57 @@
+* Subcircuit LM12CL_sub
+.subckt LM12CL_sub net-_r1-pad1_ net-_r2-pad1_ net-_c2-pad2_ net-_i3-pad1_ net-_c4-pad1_ 
+.title kicad schematic
+.include NPN.lib
+.include D.lib
+.include PNP.lib
+r5 net-_c4-pad1_ net-_q5-pad3_ 4k
+r6 net-_c4-pad1_ net-_q16-pad3_ 20k
+c1 net-_c1-pad1_ net-_c1-pad2_ 100p
+r8 net-_c4-pad1_ net-_c1-pad2_ 10k
+q6 net-_c3-pad1_ net-_q16-pad3_ net-_c1-pad1_ Q2N2222
+r7 net-_c4-pad1_ net-_c1-pad1_ 4k
+q7 net-_i3-pad1_ net-_d3-pad2_ net-_c3-pad1_ Q2N2222
+q16 net-_i3-pad1_ net-_d3-pad2_ net-_q16-pad3_ Q2N2222
+d3 net-_c3-pad1_ net-_d3-pad2_ 1N4148
+d4 net-_d4-pad1_ net-_d4-pad2_ 1N4148
+d5 net-_d4-pad2_ net-_d5-pad2_ 1N4148
+i4 net-_i3-pad1_ net-_d4-pad1_ 1m
+q11 net-_i3-pad1_ net-_d4-pad1_ net-_q11-pad3_ Q2N2222
+q13 net-_q13-pad1_ net-_q10-pad1_ net-_c4-pad1_ Q2N2907A
+q10 net-_q10-pad1_ net-_d7-pad2_ net-_c4-pad1_ Q2N2907A
+r14 net-_q13-pad1_ net-_c2-pad2_ 0.15
+c2 net-_c1-pad2_ net-_c2-pad2_ 20p
+r13 net-_c2-pad2_ net-_q11-pad3_ 200
+d6 net-_d5-pad2_ net-_d6-pad2_ 1N4148
+r12 net-_q10-pad1_ net-_c2-pad2_ 200
+r16 net-_q14-pad2_ net-_i3-pad1_ 1
+r15 net-_c2-pad2_ net-_q12-pad3_ 0.15
+q12 net-_i3-pad1_ net-_q11-pad3_ net-_q12-pad3_ Q2N2222
+q14 net-_c4-pad1_ net-_q14-pad2_ net-_c2-pad2_ Q2N2222
+c4 net-_c4-pad1_ net-_c3-pad1_ 50p
+r9 net-_c4-pad1_ net-_q8-pad3_ 20k
+r10 net-_q8-pad3_ net-_q9-pad2_ 3k
+q9 net-_d7-pad2_ net-_q9-pad2_ net-_q9-pad3_ Q2N2222
+r11 net-_c4-pad1_ net-_q9-pad3_ 50
+d7 net-_d6-pad2_ net-_d7-pad2_ 1N4148
+q8 net-_i3-pad1_ net-_c3-pad1_ net-_q8-pad3_ Q2N2222
+c3 net-_c3-pad1_ net-_c2-pad2_ 5p
+q3 net-_d3-pad2_ net-_i2-pad1_ net-_q3-pad3_ Q2N2907A
+q2 net-_i3-pad1_ net-_d2-pad2_ net-_i2-pad1_ Q2N2222
+d2 net-_c4-pad1_ net-_d2-pad2_ 1N4148
+r17 net-_c4-pad1_ net-_q15-pad2_ 1
+q15 net-_i3-pad1_ net-_q15-pad2_ net-_c2-pad2_ Q2N2907A
+i1 net-_i1-pad1_ net-_c4-pad1_ 15u
+q5 net-_d3-pad2_ net-_q16-pad3_ net-_q5-pad3_ Q2N2222
+i2 net-_i2-pad1_ net-_c4-pad1_ 15u
+r4 net-_q4-pad3_ net-_i3-pad2_ 5k
+q4 net-_c3-pad1_ net-_i1-pad1_ net-_q4-pad3_ Q2N2907A
+r3 net-_q3-pad3_ net-_i3-pad2_ 5k
+i3 net-_i3-pad1_ net-_i3-pad2_ 80u
+q1 net-_i3-pad1_ net-_d1-pad2_ net-_i1-pad1_ Q2N2222
+r1 net-_r1-pad1_ net-_d1-pad2_ 3k
+r2 net-_r2-pad1_ net-_d2-pad2_ 3k
+d1 net-_c4-pad1_ net-_d1-pad2_ 1N4148
+* Control Statements
+
+.ends LM12CL_sub

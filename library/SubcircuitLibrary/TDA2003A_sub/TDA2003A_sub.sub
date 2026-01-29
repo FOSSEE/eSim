@@ -1,0 +1,66 @@
+* Subcircuit TDA2003A_sub
+.subckt TDA2003A_sub net-_d2-pad2_ net-_d2-pad2_ net-_d2-pad2_ net-_c1-pad2_ net-_d4-pad1_ 
+.title kicad schematic
+.include D.lib
+.include NPN.lib
+.include PNP.lib
+q2 net-_q1-pad2_ net-_q2-pad2_ net-_d4-pad1_ Q2N2907A
+* u1 net-_u1-padin_ net-_r4-pad2_ zener
+r4 net-_q2-pad2_ net-_r4-pad2_ 15k
+* u2 net-_q3-pad2_ net-_u1-padin_ zener
+r3 net-_d4-pad1_ net-_q2-pad2_ 15k
+q4 net-_c1-pad1_ net-_d2-pad2_ net-_d2-pad2_ Q2N2222
+i2 net-_q3-pad3_ net-_c1-pad1_ 2m
+r6 net-_d2-pad2_ net-_d1-pad1_ 100k
+r5 net-_q3-pad3_ net-_d1-pad1_ 100k
+q3 net-_d4-pad1_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+i1 net-_d4-pad1_ net-_q3-pad2_ 3m
+r7 net-_d4-pad1_ net-_d3-pad1_ 47k
+i3 net-_d4-pad1_ net-_c2-pad1_ 2m
+c2 net-_c2-pad1_ net-_c1-pad1_ 10p
+c1 net-_c1-pad1_ net-_c1-pad2_ 10p
+r8 net-_c1-pad2_ net-_d2-pad2_ 47k
+q6 net-_c2-pad1_ net-_c1-pad1_ net-_q6-pad3_ Q2N2222
+q7 net-_c2-pad1_ net-_c2-pad1_ net-_q12-pad2_ Q2N2222
+q9 net-_c2-pad1_ net-_q14-pad1_ net-_d2-pad2_ Q2N2222
+q8 net-_q12-pad2_ net-_q6-pad3_ net-_d2-pad2_ Q2N2222
+r1 net-_q3-pad3_ net-_q1-pad2_ 47k
+q1 net-_c2-pad1_ net-_q1-pad2_ net-_d2-pad2_ Q2N2222
+r2 net-_q1-pad2_ net-_d2-pad2_ 47k
+* u3 net-_d2-pad2_ net-_q3-pad2_ zener
+d2 net-_d1-pad2_ net-_d2-pad2_ 1N4148
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q12 net-_q12-pad1_ net-_q12-pad2_ net-_q12-pad3_ Q2N2907A
+i5 net-_d8-pad2_ net-_d2-pad2_ 50m
+q16 net-_c1-pad2_ net-_q12-pad1_ net-_d2-pad2_ Q2N2222
+d6 net-_d6-pad1_ net-_d6-pad2_ 1N4148
+d7 net-_d6-pad2_ net-_c1-pad2_ 1N4148
+q15 net-_d8-pad1_ net-_d5-pad1_ net-_c1-pad2_ Q2N2222
+q14 net-_q14-pad1_ net-_d8-pad2_ net-_d4-pad1_ Q2N2907A
+i4 net-_d4-pad1_ net-_d6-pad1_ 25m
+r10 net-_d4-pad1_ net-_d8-pad1_ 10
+d8 net-_d8-pad1_ net-_d8-pad2_ 1N4148
+* u4 net-_r9-pad1_ net-_d8-pad2_ zener
+r9 net-_r9-pad1_ net-_c1-pad2_ 22k
+q11 net-_d5-pad1_ net-_d4-pad2_ net-_d4-pad1_ Q2N2907A
+q10 net-_d4-pad2_ net-_c2-pad1_ net-_c1-pad2_ Q2N2222
+d5 net-_d5-pad1_ net-_c1-pad2_ 1N4148
+q13 net-_d4-pad1_ net-_d6-pad1_ net-_q12-pad3_ Q2N2222
+d4 net-_d4-pad1_ net-_d4-pad2_ 1N4148
+d3 net-_d3-pad1_ net-_d2-pad2_ 1N4148
+q5 net-_d2-pad2_ net-_d3-pad1_ net-_d2-pad2_ Q2N2222
+a1 net-_u1-padin_ net-_r4-pad2_ u1
+a2 net-_q3-pad2_ net-_u1-padin_ u2
+a3 net-_d2-pad2_ net-_q3-pad2_ u3
+a4 net-_r9-pad1_ net-_d8-pad2_ u4
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u1 zener(v_breakdown=6.8 i_breakdown=0.005 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u2 zener(v_breakdown=6.8 i_breakdown=0.005 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u3 zener(v_breakdown=6.8 i_breakdown=0.005 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u4 zener(v_breakdown=6.8 i_breakdown=0.005 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Control Statements
+
+.ends TDA2003A_sub

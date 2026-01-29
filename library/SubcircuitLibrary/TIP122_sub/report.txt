@@ -1,0 +1,9 @@
+Annotated eSim_Diode as D1.
+Annotated eSim_NPN as Q1.
+Annotated eSim_NPN as Q2.
+Annotated 8k as R1.
+Annotated 0.12k as R2.
+Annotated PORT (unit A) as U1A.
+Annotated PORT (unit B) as U1B.
+Annotated PORT (unit C) as U1C.
+Annotation complete.
