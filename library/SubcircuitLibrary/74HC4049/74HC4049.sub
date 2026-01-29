@@ -1,0 +1,30 @@
+* Subcircuit 74HC4049
+.subckt 74HC4049 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ 
+* c:\fossee\esim\library\subcircuitlibrary\74hc4049\74hc4049.cir
+* u2  net-_u1-pad1_ net-_u1-pad7_ d_inverter
+* u3  net-_u1-pad2_ net-_u1-pad8_ d_inverter
+* u4  net-_u1-pad3_ net-_u1-pad9_ d_inverter
+* u5  net-_u1-pad4_ net-_u1-pad10_ d_inverter
+* u6  net-_u1-pad5_ net-_u1-pad11_ d_inverter
+* u7  net-_u1-pad6_ net-_u1-pad12_ d_inverter
+a1 net-_u1-pad1_ net-_u1-pad7_ u2
+a2 net-_u1-pad2_ net-_u1-pad8_ u3
+a3 net-_u1-pad3_ net-_u1-pad9_ u4
+a4 net-_u1-pad4_ net-_u1-pad10_ u5
+a5 net-_u1-pad5_ net-_u1-pad11_ u6
+a6 net-_u1-pad6_ net-_u1-pad12_ u7
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u5 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u6 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74HC4049
