@@ -1,57 +1,31 @@
 ## eSim 2.5 Installation Issues on Ubuntu 25.xx (Internship Task 4)
 
-This document describes the issues encountered while installing **eSim 2.5** on **Ubuntu 25.xx** (VirtualBox) and the steps taken to analyze and resolve them.
-
----
+This document describes the issues encountered while installing eSim 2.5 on Ubuntu 25.xx (VirtualBox) and the steps taken to analyze and resolve them.
 
 ### Issue 1: DNS Resolution Failure in VirtualBox
-
-**Problem**
 - Ubuntu 25.xx VM was unable to resolve domain names.
 - Commands such as `ping google.com` and GitHub access failed.
 - This blocked package installation and repository access.
 
-**Root Cause**
+#### Root Cause
 - Ubuntu 25.xx uses `systemd-resolved`.
-- `/etc/resolv.conf` is a stub resolver and does not contain real DNS entries.
-- DNS was not automatically assigned in the VirtualBox NAT environment.
+- `/etc/resolv.conf` is a stub resolver.
+- DNS was not assigned correctly in VirtualBox NAT.
 
-**Fix Applied**
-- Configured DNS explicitly using `systemd-resolved`:
-- Restarted the resolver service:
-
-- Network connectivity was restored successfully.
-
-**Result**
-- Internet access started working.
-- GitHub and package repositories became accessible.
-
----
+#### Fix Applied
+- DNS configured explicitly using `systemd-resolved`.
+- Resolver service restarted.
+- Network connectivity restored.
 
 ### Issue 2: setup.py Installation Failure
+- `python3 setup.py install` failed due to:
+  - setuptools deprecation warnings
+  - permission denied in `/usr/local/lib`
 
-**Problem**
-- Running `python3 setup.py install` failed.
-- Errors included:
-- `setuptools` deprecation warnings
-- Permission denied while writing to `/usr/local/lib`
+#### Resolution
+- Deprecated setup.py installation avoided.
+- Issue documented as per modern Python packaging practices.
 
-**Analysis**
-- Direct use of `setup.py install` is deprecated.
-- System-wide installation requires elevated permissions.
-- Modern Python packaging discourages this method.
-
-**Resolution**
-- The issue was documented instead of forcing installation.
-- Deprecated installation method was avoided.
-- Modern tools such as `pip` and `pyproject.toml`-based builds were recommended.
-
----
-
-### Conclusion
-
-This task involved identifying real compatibility and environment issues on Ubuntu 25.xx.
-One major issue (DNS resolution) was fixed, and another critical issue (deprecated installation method) was analyzed and documented with proper technical reasoning.
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/fossee/esim?color=blueviolet)
 ![GitHub](https://img.shields.io/github/license/fossee/esim?color=blue)
