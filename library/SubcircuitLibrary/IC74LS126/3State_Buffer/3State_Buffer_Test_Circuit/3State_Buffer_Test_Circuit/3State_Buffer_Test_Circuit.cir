@@ -1,0 +1,9 @@
+.title KiCad schematic
+X1 V_G V_A V_Y 126
+v_A1 V_A GND DC
+v_G1 V_G GND DC
+U2 V_A plot_v1
+U1 V_G plot_v1
+U5 V_Y plot_v1
+R1 GND V_Y 1k
+.end
