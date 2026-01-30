@@ -1,0 +1,12 @@
+* Subcircuit CA3045
+.subckt CA3045 net-_q1-pad3_ net-_q1-pad2_ net-_q1-pad1_ net-_q2-pad2_ net-_q2-pad3_ net-_q3-pad2_ net-_q3-pad1_ net-_q3-pad3_ net-_q5-pad2_ net-_q5-pad1_ net-_q5-pad3_ net-_q4-pad2_ net-_q4-pad1_ net-_q4-pad3_ 
+* d:\fossee\esim\library\subcircuitlibrary\ca3045\ca3045.cir
+.include BC107.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ BC107
+q2 net-_q1-pad1_ net-_q2-pad2_ net-_q2-pad3_ BC107
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q3-pad3_ BC107
+q5 net-_q5-pad1_ net-_q5-pad2_ net-_q5-pad3_ BC107
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_q4-pad3_ BC107
+* Control Statements
+
+.ends CA3045
