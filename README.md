@@ -1,3 +1,58 @@
+## eSim 2.5 Installation Issues on Ubuntu 25.xx (Internship Task 4)
+
+This document describes the issues encountered while installing **eSim 2.5** on **Ubuntu 25.xx** (VirtualBox) and the steps taken to analyze and resolve them.
+
+---
+
+### Issue 1: DNS Resolution Failure in VirtualBox
+
+**Problem**
+- Ubuntu 25.xx VM was unable to resolve domain names.
+- Commands such as `ping google.com` and GitHub access failed.
+- This blocked package installation and repository access.
+
+**Root Cause**
+- Ubuntu 25.xx uses `systemd-resolved`.
+- `/etc/resolv.conf` is a stub resolver and does not contain real DNS entries.
+- DNS was not automatically assigned in the VirtualBox NAT environment.
+
+**Fix Applied**
+- Configured DNS explicitly using `systemd-resolved`:
+- Restarted the resolver service:
+
+- Network connectivity was restored successfully.
+
+**Result**
+- Internet access started working.
+- GitHub and package repositories became accessible.
+
+---
+
+### Issue 2: setup.py Installation Failure
+
+**Problem**
+- Running `python3 setup.py install` failed.
+- Errors included:
+- `setuptools` deprecation warnings
+- Permission denied while writing to `/usr/local/lib`
+
+**Analysis**
+- Direct use of `setup.py install` is deprecated.
+- System-wide installation requires elevated permissions.
+- Modern Python packaging discourages this method.
+
+**Resolution**
+- The issue was documented instead of forcing installation.
+- Deprecated installation method was avoided.
+- Modern tools such as `pip` and `pyproject.toml`-based builds were recommended.
+
+---
+
+### Conclusion
+
+This task involved identifying real compatibility and environment issues on Ubuntu 25.xx.
+One major issue (DNS resolution) was fixed, and another critical issue (deprecated installation method) was analyzed and documented with proper technical reasoning.
+
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/fossee/esim?color=blueviolet)
 ![GitHub](https://img.shields.io/github/license/fossee/esim?color=blue)
 ![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
