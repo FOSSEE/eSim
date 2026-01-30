@@ -1,0 +1,7 @@
+.title KiCad schematic
+X2 Net-_U1-Pad5_ Net-_U1-Pad4_ Net-_U1-Pad3_ 4066
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ GND Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ GND PORT
+X4 Net-_U1-Pad12_ Net-_U1-Pad11_ Net-_U1-Pad10_ 4066
+X3 Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_U1-Pad9_ 4066
+X1 Net-_U1-Pad13_ Net-_U1-Pad1_ Net-_U1-Pad2_ 4066
+.end

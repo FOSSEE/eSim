@@ -1,0 +1,11 @@
+.title KiCad schematic
+U2 E Net-_U2-Pad2_ adc_bridge_1
+v_Y1 Y GND DC
+v_E1 E GND DC
+U1 E plot_v1
+R1 GND Z 20k
+U4 Z plot_v1
+v1 Net-_X1-Pad14_ GND 5
+X1 unconnected-_X1-Pad1_ unconnected-_X1-Pad2_ Z Y Net-_U2-Pad2_ unconnected-_X1-Pad6_ GND unconnected-_X1-Pad8_ unconnected-_X1-Pad9_ unconnected-_X1-Pad10_ unconnected-_X1-Pad11_ unconnected-_X1-Pad12_ unconnected-_X1-Pad13_ Net-_X1-Pad14_ 74HC4066
+U3 Y plot_v1
+.end

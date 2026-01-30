@@ -1,0 +1,64 @@
+* Subcircuit SN5473
+.subckt SN5473 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ gnd net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ gnd net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ 
+.title kicad schematic
+.include 3_and.sub
+.include 4_and.sub
+x2 net-_u1-pad12_ net-_u5-pad2_ net-_u1-pad2_ net-_u7-pad1_ 3_and
+x3 net-_u1-pad12_ net-_u1-pad1_ net-_u1-pad2_ net-_u7-pad2_ 3_and
+* u7 net-_u7-pad1_ net-_u7-pad2_ net-_u1-pad13_ d_nor
+x4 net-_u1-pad1_ net-_u1-pad14_ net-_u1-pad13_ net-_u1-pad2_ net-_u6-pad1_ 4_and
+* u6 net-_u6-pad1_ net-_u3-pad1_ d_inverter
+* u12 net-_u12-pad1_ net-_u12-pad2_ d_inverter
+x7 net-_u1-pad9_ net-_u1-pad5_ net-_u1-pad6_ net-_u13-pad2_ 3_and
+x6 net-_u1-pad9_ net-_u11-pad2_ net-_u1-pad6_ net-_u13-pad1_ 3_and
+x1 net-_u1-pad12_ net-_u1-pad3_ net-_u1-pad1_ net-_u5-pad1_ 3_and
+* u5 net-_u5-pad1_ net-_u5-pad2_ d_inverter
+* u3 net-_u3-pad1_ net-_u1-pad13_ net-_u2-pad2_ d_and
+* u2 net-_u2-pad1_ net-_u2-pad2_ net-_u1-pad12_ d_nor
+* u4 net-_u1-pad1_ net-_u1-pad13_ net-_u2-pad1_ d_and
+* u9 net-_u12-pad2_ net-_u1-pad8_ net-_u8-pad2_ d_and
+* u8 net-_u10-pad3_ net-_u8-pad2_ net-_u1-pad9_ d_nor
+* u11 net-_u11-pad1_ net-_u11-pad2_ d_inverter
+x5 net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad5_ net-_u11-pad1_ 3_and
+* u10 net-_u1-pad5_ net-_u1-pad8_ net-_u10-pad3_ d_and
+* u13 net-_u13-pad1_ net-_u13-pad2_ net-_u1-pad8_ d_nor
+x8 net-_u1-pad5_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad6_ net-_u12-pad1_ 4_and
+a1 [net-_u7-pad1_ net-_u7-pad2_ ] net-_u1-pad13_ u7
+a2 net-_u6-pad1_ net-_u3-pad1_ u6
+a3 net-_u12-pad1_ net-_u12-pad2_ u12
+a4 net-_u5-pad1_ net-_u5-pad2_ u5
+a5 [net-_u3-pad1_ net-_u1-pad13_ ] net-_u2-pad2_ u3
+a6 [net-_u2-pad1_ net-_u2-pad2_ ] net-_u1-pad12_ u2
+a7 [net-_u1-pad1_ net-_u1-pad13_ ] net-_u2-pad1_ u4
+a8 [net-_u12-pad2_ net-_u1-pad8_ ] net-_u8-pad2_ u9
+a9 [net-_u10-pad3_ net-_u8-pad2_ ] net-_u1-pad9_ u8
+a10 net-_u11-pad1_ net-_u11-pad2_ u11
+a11 [net-_u1-pad5_ net-_u1-pad8_ ] net-_u10-pad3_ u10
+a12 [net-_u13-pad1_ net-_u13-pad2_ ] net-_u1-pad8_ u13
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u7 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u6 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u12 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u5 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u2 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u9 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u8 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u11 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u10 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u13 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends SN5473

@@ -1,0 +1,68 @@
+.title kicad schematic
+
+.include 74LS251.sub
+v_i6 v_i6 gnd  dc 0
+v_i7 v_i7 gnd  dc 0
+v_s0 v_s0 gnd  dc 5
+v_s1 v_s1 gnd  dc 5
+v_s2 v_s2 gnd  dc 5
+v_i4 v_i4 gnd  dc 0
+v_i5 v_i5 gnd  dc 5
+v_e1 v_e gnd  dc 0
+r1 gnd v_y 1k
+* u6 v_y plot_v1
+v_i0 v_i0 gnd  dc 5
+v_i2 v_i2 gnd  dc 0
+v_i1 v_i1 gnd  dc 5
+* u10 v_i4 v_i5 v_i6 v_i7 v_s0 v_s1 v_s2 net-_u10-pad8_ net-_u10-pad9_ net-_u10-pad10_ net-_u10-pad11_ net-_u10-pad12_ net-_u10-pad13_ net-_u10-pad14_ adc_bridge_7
+v1 net-_v1-pad1_ gnd 5
+* u11 v_s2 plot_v1
+x1 net-_u7-pad6_ net-_u7-pad7_ net-_u7-pad8_ net-_u7-pad9_ net-_u8-pad2_ net-_u8-pad1_ net-_u7-pad10_ gnd net-_u10-pad14_ net-_u10-pad13_ net-_u10-pad12_ net-_u10-pad11_ net-_u10-pad10_ net-_u10-pad9_ net-_u10-pad8_ net-_v1-pad1_ 74LS251
+* u7 v_i3 v_i2 v_i1 v_i0 v_e net-_u7-pad6_ net-_u7-pad7_ net-_u7-pad8_ net-_u7-pad9_ net-_u7-pad10_ adc_bridge_5
+* u5 v_e plot_v1
+* u14 v_i7 plot_v1
+* u15 v_i6 plot_v1
+* u16 v_i5 plot_v1
+* u17 v_i4 plot_v1
+* u13 v_s0 plot_v1
+* u12 v_s1 plot_v1
+r2 gnd v_w 1k
+* u8 net-_u8-pad1_ net-_u8-pad2_ v_w v_y dac_bridge_2
+* u9 v_w plot_v1
+v_i3 v_i3 gnd  dc 0
+* u3 v_i1 plot_v1
+* u4 v_i0 plot_v1
+* u2 v_i2 plot_v1
+* u1 v_i3 plot_v1
+a1 [v_i4 v_i5 v_i6 v_i7 v_s0 v_s1 v_s2 ] [net-_u10-pad8_ net-_u10-pad9_ net-_u10-pad10_ net-_u10-pad11_ net-_u10-pad12_ net-_u10-pad13_ net-_u10-pad14_ ] u10
+a2 [v_i3 v_i2 v_i1 v_i0 v_e ] [net-_u7-pad6_ net-_u7-pad7_ net-_u7-pad8_ net-_u7-pad9_ net-_u7-pad10_ ] u7
+a3 [net-_u8-pad1_ net-_u8-pad2_ ] [v_w v_y ] u8
+* Schematic Name:                             adc_bridge_7, Ngspice Name: adc_bridge
+.model u10 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_5, Ngspice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_2, Ngspice Name: dac_bridge
+.model u8 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 20e-00 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(v_y)
+plot v(v_s2)
+plot v(v_e)
+plot v(v_i7)
+plot v(v_i6)
+plot v(v_i5)
+plot v(v_i4)
+plot v(v_s0)
+plot v(v_s1)
+plot v(v_w)
+plot v(v_i1)
+plot v(v_i0)
+plot v(v_i2)
+plot v(v_i3)
+.endc
+.end

@@ -1,0 +1,40 @@
+.title kicad schematic
+
+.include 74HC386.sub
+* u5 v_1a v_1b v_2a v_2b net-_u5-pad5_ net-_u5-pad6_ net-_u5-pad7_ net-_u5-pad8_ adc_bridge_4
+* u2 v_1b plot_v1
+* u3 v_2a plot_v1
+* u4 v_2b plot_v1
+* u1 v_1a plot_v1
+r2 gnd v_2y 1k
+* u8 v_2y plot_v1
+* u7 net-_u7-pad1_ net-_u7-pad2_ v_2y v_1y dac_bridge_2
+r1 gnd v_1y 1k
+* u6 v_1y plot_v1
+v1 net-_x1-pad14_ gnd 5
+x1 net-_u5-pad5_ net-_u5-pad6_ net-_u7-pad2_ net-_u7-pad1_ net-_u5-pad7_ net-_u5-pad8_ gnd unconnected-_x1-pad8_ unconnected-_x1-pad9_ unconnected-_x1-pad10_ unconnected-_x1-pad11_ unconnected-_x1-pad12_ unconnected-_x1-pad13_ net-_x1-pad14_ 74HC386
+v_1a1 v_1a gnd  dc 5
+v_1b1 v_1b gnd  dc 5
+v_2b1 v_2b gnd  dc 0
+v_2a1 v_2a gnd  dc 5
+a1 [v_1a v_1b v_2a v_2b ] [net-_u5-pad5_ net-_u5-pad6_ net-_u5-pad7_ net-_u5-pad8_ ] u5
+a2 [net-_u7-pad1_ net-_u7-pad2_ ] [v_2y v_1y ] u7
+* Schematic Name:                             adc_bridge_4, Ngspice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_2, Ngspice Name: dac_bridge
+.model u7 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 20e-00 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(v_1b)
+plot v(v_2a)
+plot v(v_2b)
+plot v(v_1a)
+plot v(v_2y)
+plot v(v_1y)
+.endc
+.end

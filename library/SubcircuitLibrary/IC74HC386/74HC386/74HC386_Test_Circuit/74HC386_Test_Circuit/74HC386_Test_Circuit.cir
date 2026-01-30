@@ -1,0 +1,18 @@
+.title KiCad schematic
+U5 V_1A V_1B V_2A V_2B Net-_U5-Pad5_ Net-_U5-Pad6_ Net-_U5-Pad7_ Net-_U5-Pad8_ adc_bridge_4
+U2 V_1B plot_v1
+U3 V_2A plot_v1
+U4 V_2B plot_v1
+U1 V_1A plot_v1
+R2 GND V_2Y 1k
+U8 V_2Y plot_v1
+U7 Net-_U7-Pad1_ Net-_U7-Pad2_ V_2Y V_1Y dac_bridge_2
+R1 GND V_1Y 1k
+U6 V_1Y plot_v1
+v1 Net-_X1-Pad14_ GND 5
+X1 Net-_U5-Pad5_ Net-_U5-Pad6_ Net-_U7-Pad2_ Net-_U7-Pad1_ Net-_U5-Pad7_ Net-_U5-Pad8_ GND unconnected-_X1-Pad8_ unconnected-_X1-Pad9_ unconnected-_X1-Pad10_ unconnected-_X1-Pad11_ unconnected-_X1-Pad12_ unconnected-_X1-Pad13_ Net-_X1-Pad14_ 74HC386
+v_1A1 V_1A GND DC
+v_1B1 V_1B GND DC
+v_2B1 V_2B GND DC
+v_2A1 V_2A GND DC
+.end

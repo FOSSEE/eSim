@@ -1,0 +1,23 @@
+.title KiCad schematic
+X5 Net-_U1-Pad15_ Net-_U1-Pad1_ Net-_U1-Pad5_ Net-_U5-Pad2_ 3_and
+X4 Net-_U1-Pad5_ Net-_U4-Pad2_ Net-_U1-Pad15_ Net-_U5-Pad1_ 3_and
+U5 Net-_U5-Pad1_ Net-_U5-Pad2_ Net-_U1-Pad6_ d_nor
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ GND Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ GND PORT
+X6 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U4-Pad1_ 4_and
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ d_inverter
+U8 Net-_U8-Pad1_ Net-_U8-Pad2_ d_inverter
+X12 Net-_U1-Pad13_ Net-_U1-Pad12_ Net-_U1-Pad10_ Net-_U1-Pad9_ Net-_U8-Pad1_ 4_and
+X11 Net-_U1-Pad14_ Net-_U1-Pad13_ Net-_U1-Pad9_ Net-_U9-Pad2_ 3_and
+U9 Net-_U9-Pad1_ Net-_U9-Pad2_ Net-_U1-Pad7_ d_nor
+X10 Net-_U1-Pad9_ Net-_U8-Pad2_ Net-_U1-Pad14_ Net-_U9-Pad1_ 3_and
+X7 Net-_U1-Pad7_ Net-_U1-Pad14_ Net-_U1-Pad11_ Net-_U1-Pad13_ Net-_U7-Pad1_ 4_and
+U7 Net-_U7-Pad1_ Net-_U7-Pad2_ d_inverter
+X9 Net-_U1-Pad10_ Net-_U1-Pad13_ Net-_U1-Pad7_ Net-_U6-Pad1_ 3_and
+X2 Net-_U1-Pad4_ Net-_U3-Pad2_ Net-_U1-Pad6_ Net-_U2-Pad2_ 3_and
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U1-Pad5_ d_nor
+X3 Net-_U1-Pad4_ Net-_U1-Pad1_ Net-_U1-Pad6_ Net-_U2-Pad1_ 3_and
+U6 Net-_U6-Pad1_ Net-_U6-Pad2_ Net-_U1-Pad9_ d_nor
+X8 Net-_U1-Pad10_ Net-_U7-Pad2_ Net-_U1-Pad7_ Net-_U6-Pad2_ 3_and
+U3 Net-_U3-Pad1_ Net-_U3-Pad2_ d_inverter
+X1 Net-_U1-Pad6_ Net-_U1-Pad15_ Net-_U1-Pad3_ Net-_U1-Pad1_ Net-_U3-Pad1_ 4_and
+.end
