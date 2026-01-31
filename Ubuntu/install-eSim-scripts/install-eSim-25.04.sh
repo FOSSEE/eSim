@@ -309,6 +309,11 @@ function copyKicadLibrary
 function createDesktopStartScript
 {    
 
+    local user_home="$HOME"
+    if [ -n "$SUDO_USER" ] && [ -d "/home/$SUDO_USER" ]; then
+        user_home="/home/$SUDO_USER"
+    fi
+
     # Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
     echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
@@ -344,15 +349,15 @@ function createDesktopStartScript
     # Copy desktop icon file to share applications
     sudo cp -vp esim.desktop /usr/share/applications/
     # Copy desktop icon file to Desktop
-    cp -vp esim.desktop $HOME/Desktop/
+    cp -vp esim.desktop "$user_home/Desktop/"
 
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
     # Make esim.desktop file as trusted application
-    gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
+    gio set "$user_home/Desktop/esim.desktop" "metadata::trusted" true
     # Set Permission and Execution bit
-    chmod a+x $HOME/Desktop/esim.desktop
+    chmod a+x "$user_home/Desktop/esim.desktop"
 
     # Remove local copy of esim.desktop file
     rm esim.desktop
@@ -399,12 +404,6 @@ if [ $option == "--install" ];then
     if [ $getProxy == "y" -o $getProxy == "Y" ];then
         echo -n 'Proxy Hostname :'
         read proxyHostname
-            local user_home="$HOME"
-            if [ -n "$SUDO_USER" ] && [ -d "/home/$SUDO_USER" ]; then
-                user_home="/home/$SUDO_USER"
-            fi
-
-
         echo -n 'Proxy Port :'
         read proxyPort
 
@@ -438,15 +437,12 @@ if [ $option == "--install" ];then
         echo "Please select the right option"
         exit 0    
     fi
-            cp -vp esim.desktop "$user_home/Desktop/"
     createConfigFile
     installDependency
     installKicad
     copyKicadLibrary
     installNghdl
-            gio set "$user_home/Desktop/esim.desktop" "metadata::trusted" true
     createDesktopStartScript
-            chmod a+x "$user_home/Desktop/esim.desktop"
     if [ $? -ne 0 ];then
         echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
         exit 0
