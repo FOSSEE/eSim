@@ -129,7 +129,8 @@ function installKicad
         use_kicad_ppa=true
 
         # Ubuntu 25.04 does not provide libgit2-1.8; avoid PPA if missing.
-        if apt-cache policy libgit2-1.8 | grep -q "Candidate: (none)"; then
+        libgit2_policy=$(apt-cache policy libgit2-1.8 2>&1 || true)
+        if echo "$libgit2_policy" | grep -Eq "Candidate: \(none\)|Unable to locate package"; then
             echo "libgit2-1.8 not available. Falling back to Ubuntu KiCad repo."
             use_kicad_ppa=false
         fi
