@@ -1,0 +1,22 @@
+.title KiCad schematic
+U6 Net-_V_RESET2-Pad1_ Net-_V_DATA2-Pad1_ V_CLK2 Net-_V_SET2-Pad1_ Net-_U6-Pad5_ Net-_U6-Pad6_ Net-_U6-Pad7_ Net-_U6-Pad8_ adc_bridge_4
+U5 Net-_U5-Pad1_ Net-_U5-Pad2_ V_Q2 V_Q2n dac_bridge_2
+U8 V_Q2 plot_v1
+U7 V_Q2n plot_v1
+U10 V_CLK2 plot_v1
+U1 V_Q1 plot_v1
+U3 Net-_V_RESET1-Pad1_ Net-_V_DATA1-Pad1_ V_CLK1 Net-_V_SET1-Pad1_ Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ adc_bridge_4
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ V_Q1 V_Q1n dac_bridge_2
+V_RESET1 Net-_V_RESET1-Pad1_ GND DC
+U2 V_Q1n plot_v1
+X1 Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U4-Pad1_ Net-_U4-Pad2_ GND Net-_U5-Pad2_ Net-_U5-Pad1_ Net-_U6-Pad8_ Net-_U6-Pad7_ Net-_U6-Pad6_ Net-_U6-Pad5_ Net-_X1-Pad14_ 74HC74A
+v1 Net-_X1-Pad14_ GND 5
+V_RESET2 Net-_V_RESET2-Pad1_ GND DC
+V_DATA2 Net-_V_DATA2-Pad1_ GND DC
+V_SET2 Net-_V_SET2-Pad1_ GND DC
+V_CLK2 V_CLK2 GND pulse
+V_SET1 Net-_V_SET1-Pad1_ GND DC
+V_DATA1 Net-_V_DATA1-Pad1_ GND DC
+U9 V_CLK1 plot_v1
+V_CLK1 V_CLK1 GND pulse
+.end
