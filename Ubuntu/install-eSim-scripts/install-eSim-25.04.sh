@@ -21,9 +21,14 @@
 #=============================================================================
 
 # All variables goes here
-config_dir="$HOME/.esim"
+script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
+eSim_Home=$(cd "$script_dir/../.." && pwd)
+user_home="$HOME"
+if [ -n "$SUDO_USER" ] && [ -d "/home/$SUDO_USER" ]; then
+    user_home="/home/$SUDO_USER"
+fi
+config_dir="$user_home/.esim"
 config_file="config.ini"
-eSim_Home=`pwd`
 ngspiceFlag=0
 
 ## All Functions goes here
@@ -210,6 +215,7 @@ function installDependency
    
     echo "Creating virtual environment to isolate packages "
     virtualenv $config_dir/env
+    sudo chown -R "$user_home":"$user_home" "$config_dir"
     
     echo "Starting the virtual env..................."
     source $config_dir/env/bin/activate
