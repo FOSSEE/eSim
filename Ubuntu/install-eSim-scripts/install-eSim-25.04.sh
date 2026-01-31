@@ -349,6 +349,7 @@ function createDesktopStartScript
     # Copy desktop icon file to share applications
     sudo cp -vp esim.desktop /usr/share/applications/
     # Copy desktop icon file to Desktop
+    mkdir -p "$user_home/Desktop"
     cp -vp esim.desktop "$user_home/Desktop/"
 
     set +e      # Temporary disable exit on error
@@ -366,7 +367,11 @@ function createDesktopStartScript
     trap error_exit ERR
 
     # Copying logo.png to .esim directory to access as icon
-    cp -vp images/logo.png $config_dir
+    if [ -f images/logo.png ]; then
+        cp -vp images/logo.png $config_dir
+    else
+        echo "Warning: images/logo.png not found. Skipping icon copy."
+    fi
 
 }
 
