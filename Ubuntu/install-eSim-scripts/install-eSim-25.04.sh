@@ -158,9 +158,11 @@ function installKicad
             echo "KiCad PPA is already present in sources."
         fi
     else
-        if grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+        if grep -Rqs "kicad-8.0-releases" /etc/apt/sources.list /etc/apt/sources.list.d 2>/dev/null; then
             echo "Removing KiCad PPA due to libgit2 dependency mismatch."
             sudo add-apt-repository -r -y "ppa:$kicadppa" || true
+            sudo rm -f /etc/apt/sources.list.d/kicad-ubuntu-kicad-8_0-releases-*.sources \
+                /etc/apt/sources.list.d/kicad-ubuntu-kicad-8_0-releases-*.list || true
             sudo apt-get update || true
         fi
     fi
