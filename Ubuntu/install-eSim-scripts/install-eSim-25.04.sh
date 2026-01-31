@@ -362,8 +362,10 @@ function createDesktopStartScript
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
 
-    # Make esim.desktop file as trusted application
-    gio set "$user_home/Desktop/esim.desktop" "metadata::trusted" true
+    # Make esim.desktop file as trusted application (best-effort)
+    if command -v gio >/dev/null 2>&1; then
+        gio set "$user_home/Desktop/esim.desktop" "metadata::trusted" true 2>/dev/null || true
+    fi
     # Set Permission and Execution bit
     chmod a+x "$user_home/Desktop/esim.desktop"
 
