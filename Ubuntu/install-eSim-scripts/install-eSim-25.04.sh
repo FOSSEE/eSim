@@ -330,10 +330,25 @@ function createDesktopStartScript
     fi
 
     # Generating new esim-start.sh
-    echo '#!/bin/bash' > esim-start.sh
-    echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
-    echo "source $config_dir/env/bin/activate" >> esim-start.sh
-    echo "python3 Application.py" >> esim-start.sh
+    cat > esim-start.sh <<EOF
+#!/bin/bash
+app_dir="${eSim_Home}/src/frontEnd"
+app_entry="\${app_dir}/Application.py"
+if [ ! -f "\$app_entry" ]; then
+    app_dir="${eSim_Home}"
+    app_entry="\${app_dir}/Application.py"
+fi
+
+if [ ! -f "\$app_entry" ]; then
+    echo "Error: eSim application not found at ${eSim_Home}."
+    echo "Please install eSim source or packaged executable before running."
+    exit 1
+fi
+
+cd "\$app_dir" || exit 1
+source "${config_dir}/env/bin/activate"
+python3 "\$(basename "\$app_entry")"
+EOF
 
     # Make it executable
     sudo chmod 755 esim-start.sh
