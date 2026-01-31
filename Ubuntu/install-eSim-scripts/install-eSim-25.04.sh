@@ -194,6 +194,11 @@ function installDependency
 
     # Update apt repository
     echo "Updating apt index files..................."
+    if grep -Rqs "file:/cdrom" /etc/apt/sources.list /etc/apt/sources.list.d 2>/dev/null; then
+        sudo sed -i 's|^deb cdrom:|# deb cdrom:|g' /etc/apt/sources.list 2>/dev/null || true
+        sudo sed -i '/file:\/cdrom/ s/^/# /' /etc/apt/sources.list.d/*.sources 2>/dev/null || true
+        sudo rm -f /etc/apt/sources.list.d/*cdrom*.list /etc/apt/sources.list.d/*cdrom*.sources 2>/dev/null || true
+    fi
     sudo apt-get update
     
     set -e      # Re-enable exit on error
