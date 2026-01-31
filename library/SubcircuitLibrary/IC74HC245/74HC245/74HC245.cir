@@ -1,0 +1,22 @@
+.title KiCad schematic
+X11 Net-_U1-Pad16_ Net-_U67-Pad3_ Net-_U1-Pad4_ buffer_tri
+X14 Net-_U1-Pad18_ Net-_U67-Pad3_ Net-_U1-Pad2_ buffer_tri
+X13 Net-_U1-Pad17_ Net-_U67-Pad3_ Net-_U1-Pad3_ buffer_tri
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ GND Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ GND PORT
+X15 Net-_U1-Pad15_ Net-_U67-Pad3_ Net-_U1-Pad5_ buffer_tri
+X9 Net-_U1-Pad12_ Net-_U67-Pad3_ Net-_U1-Pad8_ buffer_tri
+X16 Net-_U1-Pad11_ Net-_U67-Pad3_ Net-_U1-Pad9_ buffer_tri
+X10 Net-_U1-Pad14_ Net-_U67-Pad3_ Net-_U1-Pad6_ buffer_tri
+X12 Net-_U1-Pad13_ Net-_U67-Pad3_ Net-_U1-Pad7_ buffer_tri
+X4 Net-_U1-Pad4_ Net-_U11-Pad3_ Net-_U1-Pad16_ buffer_tri
+X5 Net-_U1-Pad5_ Net-_U11-Pad3_ Net-_U1-Pad15_ buffer_tri
+X2 Net-_U1-Pad3_ Net-_U11-Pad3_ Net-_U1-Pad17_ buffer_tri
+X1 Net-_U1-Pad2_ Net-_U11-Pad3_ Net-_U1-Pad18_ buffer_tri
+U67 Net-_U1-Pad1_ Net-_U1-Pad19_ Net-_U67-Pad3_ d_nand
+U11 Net-_U1-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ d_and
+U2 Net-_U1-Pad19_ Net-_U11-Pad2_ d_inverter
+X8 Net-_U1-Pad7_ Net-_U11-Pad3_ Net-_U1-Pad13_ buffer_tri
+X6 Net-_U1-Pad6_ Net-_U11-Pad3_ Net-_U1-Pad14_ buffer_tri
+X3 Net-_U1-Pad8_ Net-_U11-Pad3_ Net-_U1-Pad12_ buffer_tri
+X7 Net-_U1-Pad9_ Net-_U11-Pad3_ Net-_U1-Pad11_ buffer_tri
+.end
