@@ -1,0 +1,28 @@
+.title KiCad schematic
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ adc_bridge_5
+U10 Net-_X1-Pad15_ Net-_U2-Pad3_ d_inverter
+U9 Net-_X1-Pad2_ Net-_U2-Pad1_ d_inverter
+X1 Net-_U1-Pad6_ Net-_X1-Pad2_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_v1-Pad1_ Net-_U2-Pad2_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U2-Pad5_ Net-_U3-Pad8_ Net-_U3-Pad7_ GND Net-_U3-Pad6_ Net-_U2-Pad4_ Net-_X1-Pad15_ Net-_U3-Pad5_ 74LS83
+U4 S1 plot_v1
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ Net-_U2-Pad5_ S3 S2 S4 C4 S1 dac_bridge_5
+U3 Net-_U3-Pad1_ Net-_U3-Pad2_ Net-_U3-Pad3_ Net-_U3-Pad4_ Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ adc_bridge_4
+R2 GND C4 1k
+U6 S4 plot_v1
+U8 S3 plot_v1
+U7 S2 plot_v1
+U5 C4 plot_v1
+R5 GND S3 1k
+R4 GND S2 1k
+R3 GND S4 1k
+VA3 Net-_U1-Pad2_ GND DC
+VB3 Net-_U1-Pad3_ GND DC
+VA4 Net-_U1-Pad1_ GND DC
+v1 Net-_v1-Pad1_ GND 5
+VA2 Net-_U1-Pad5_ GND DC
+VB2 Net-_U1-Pad4_ GND DC
+R1 GND S1 1k
+VB4 Net-_U3-Pad1_ GND DC
+VC0 Net-_U3-Pad2_ GND DC
+VB1 Net-_U3-Pad3_ GND DC
+VA1 Net-_U3-Pad4_ GND DC
+.end
