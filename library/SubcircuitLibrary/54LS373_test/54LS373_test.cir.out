@@ -1,0 +1,45 @@
+.title kicad schematic
+
+.include 54LS373_s.sub
+* u3 clk plot_v1
+* u4 d oc clk net-_u4-pad4_ net-_u4-pad5_ net-_u4-pad6_ adc_bridge_3
+* u2 oc plot_v1
+* u1 d plot_v1
+v3 clk gnd pulse(0v 5v 0 1ns 1ns 10ms 20ms)
+v1 d gnd pulse(0v 5v 0 1ns 1ns 5ms 10ms)
+v2 oc gnd pulse(0v 5v 0 1ns 1ns 12ms 25ms)
+r8 8q gnd 1k
+r7 7q gnd 1k
+r4 4q gnd 1k
+r5 5q gnd 1k
+r6 6q gnd 1k
+* u5 net-_u5-pad1_ net-_u5-pad2_ net-_u5-pad3_ 3q 2q dout dac_bridge_3
+v5 net-_x1-pad20_ gnd  dc 5v
+x1 net-_u4-pad5_ net-_u5-pad3_ net-_u4-pad4_ net-_u4-pad4_ net-_u5-pad2_ net-_u5-pad1_ net-_u4-pad4_ net-_u4-pad4_ net-_u8-pad5_ unconnected-_x1-pad10_ net-_u4-pad6_ net-_u8-pad4_ net-_u4-pad4_ net-_u4-pad4_ net-_u8-pad3_ net-_u8-pad2_ net-_u4-pad4_ net-_u4-pad4_ net-_u8-pad1_ net-_x1-pad20_ 54LS373_s
+* u6 dout plot_v1
+r1 dout gnd 1k
+r3 3q gnd 1k
+r2 2q gnd 1k
+* u8 net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ net-_u8-pad5_ 8q 7q 6q 5q 4q dac_bridge_5
+a1 [d oc clk ] [net-_u4-pad4_ net-_u4-pad5_ net-_u4-pad6_ ] u4
+a2 [net-_u5-pad1_ net-_u5-pad2_ net-_u5-pad3_ ] [3q 2q dout ] u5
+a3 [net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ net-_u8-pad5_ ] [8q 7q 6q 5q 4q ] u8
+* Schematic Name:                             adc_bridge_3, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_3, Ngspice Name: dac_bridge
+.model u5 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_5, Ngspice Name: dac_bridge
+.model u8 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-03 50e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(clk)
+plot v(oc)
+plot v(d)
+plot v(dout)
+.endc
+.end

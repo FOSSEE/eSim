@@ -1,0 +1,44 @@
+.title kicad schematic
+
+.include 54LS374_sub.sub
+* u3 clk plot_v1
+* u4 d oc clk net-_u4-pad4_ net-_u4-pad5_ net-_u4-pad6_ adc_bridge_3
+* u14 net-_u14-pad1_ net-_u14-pad2_ net-_u14-pad3_ 3q 2q dout dac_bridge_3
+r2 2q gnd 1k
+r3 3q gnd 1k
+* u19 dout plot_v1
+* u25 net-_u25-pad1_ net-_u25-pad2_ net-_u25-pad3_ net-_u25-pad4_ net-_u25-pad5_ 8q 7q 6q 5q 4q dac_bridge_5
+r1 dout gnd 1k
+r4 4q gnd 1k
+r6 6q gnd 1k
+r5 5q gnd 1k
+r8 8q gnd 1k
+r7 7q gnd 1k
+x1 net-_u4-pad5_ net-_u14-pad3_ net-_u4-pad4_ net-_u4-pad4_ net-_u14-pad2_ net-_u14-pad1_ net-_u4-pad4_ net-_u4-pad4_ net-_u25-pad5_ unconnected-_x1-pad10_ net-_u4-pad6_ net-_u25-pad4_ net-_u4-pad4_ net-_u4-pad4_ net-_u25-pad3_ net-_u25-pad2_ net-_u4-pad4_ net-_u4-pad4_ net-_u25-pad1_ unconnected-_x1-pad20_ 54LS374_sub
+* u1 d plot_v1
+* u2 oc plot_v1
+v2 oc gnd pulse(0v 5v 0 1ps 1ps 40ms 80ms)
+v3 clk gnd pulse(0v 5v 0 1ps 1ps 5ms 10ms)
+v1 d gnd pulse(0v 5v 0 1ps 1ps 12ms 25ms)
+a1 [d oc clk ] [net-_u4-pad4_ net-_u4-pad5_ net-_u4-pad6_ ] u4
+a2 [net-_u14-pad1_ net-_u14-pad2_ net-_u14-pad3_ ] [3q 2q dout ] u14
+a3 [net-_u25-pad1_ net-_u25-pad2_ net-_u25-pad3_ net-_u25-pad4_ net-_u25-pad5_ ] [8q 7q 6q 5q 4q ] u25
+* Schematic Name:                             adc_bridge_3, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_3, Ngspice Name: dac_bridge
+.model u14 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_5, Ngspice Name: dac_bridge
+.model u25 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(clk)
+plot v(dout)
+plot v(d)
+plot v(oc)
+.endc
+.end

@@ -1,0 +1,20 @@
+.title KiCad schematic
+U2 Net-_U2-Pad1_ GND Net-_X1-Pad13_ Net-_X1-Pad14_ adc_bridge_2
+U1 S1 S0 Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2
+U6 S0 plot_v1
+U5 S1 plot_v1
+v3 Net-_U2-Pad1_ GND DC
+v2 S0 GND pulse
+v1 S1 GND pulse
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ SHIFT_LEFT SHIFT_RIGHT dac_bridge_2
+U3 unconnected-_U3-Pad1_ CLOCK SERIAL_IN Net-_U3-Pad4_ Net-_U3-Pad5_ Net-_U3-Pad6_ adc_bridge_3
+U10 SHIFT_LEFT plot_v1
+R2 SHIFT_LEFT GND 1k
+R1 SHIFT_RIGHT GND 1k
+U7 CLOCK plot_v1
+U8 SHIFT_RIGHT plot_v1
+v5 SERIAL_IN GND pulse
+v4 CLOCK GND pulse
+U9 SERIAL_IN plot_v1
+X1 Net-_U1-Pad4_ Net-_X1-Pad14_ Net-_X1-Pad14_ Net-_X1-Pad14_ Net-_X1-Pad13_ Net-_X1-Pad14_ Net-_X1-Pad14_ Net-_U4-Pad1_ Net-_X1-Pad14_ Net-_X1-Pad14_ Net-_U3-Pad4_ Net-_U3-Pad5_ Net-_X1-Pad13_ Net-_X1-Pad14_ Net-_X1-Pad13_ Net-_X1-Pad13_ Net-_U4-Pad2_ Net-_U3-Pad6_ Net-_U1-Pad3_ Net-_X1-Pad13_ 74LS299
+.end
