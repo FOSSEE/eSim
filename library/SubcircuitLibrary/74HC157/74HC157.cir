@@ -1,20 +1,22 @@
-* C:\FOSSEE\eSim\library\SubcircuitLibrary\74HC157\74HC157.cir
-
-* EESchema Netlist Version 1.1 (Spice format) creation date: 5/10/2025 5:51:02 PM
-
-* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
-* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
-
-* Sheet Name: /
-X1  Net-_U1-Pad9_ Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U3-Pad1_ mux		
-X2  Net-_U1-Pad9_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U4-Pad1_ mux		
-X3  Net-_U1-Pad9_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U5-Pad1_ mux		
-X4  Net-_U1-Pad9_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U6-Pad1_ mux		
-U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ PORT		
-U3  Net-_U3-Pad1_ Net-_U2-Pad2_ Net-_U1-Pad11_ d_and		
-U4  Net-_U4-Pad1_ Net-_U2-Pad2_ Net-_U1-Pad12_ d_and		
-U5  Net-_U5-Pad1_ Net-_U2-Pad2_ Net-_U1-Pad13_ d_and		
-U6  Net-_U6-Pad1_ Net-_U2-Pad2_ Net-_U1-Pad14_ d_and		
-U2  Net-_U1-Pad10_ Net-_U2-Pad2_ d_inverter		
-
+.title KiCad schematic
+U1 /1 /2 /3 /4 /5 /6 /7 unconnected-_U1-Pad8_ /9 /10 /11 /12 /13 /14 /15 unconnected-_U1-Pad16_ PORT
+U16 /15 Net-_U16-Pad2_ d_inverter
+U17 Net-_U13-Pad2_ Net-_U17-Pad2_ d_inverter
+U15 /1 Net-_U15-Pad2_ d_inverter
+U14 /15 Net-_U14-Pad2_ d_inverter
+U19 Net-_U16-Pad2_ Net-_U17-Pad2_ Net-_U19-Pad3_ d_and
+U18 Net-_U14-Pad2_ Net-_U15-Pad2_ Net-_U18-Pad3_ d_and
+U13 /1 Net-_U13-Pad2_ d_inverter
+U22 /5 Net-_U18-Pad3_ Net-_U22-Pad3_ d_and
+U23 /6 Net-_U19-Pad3_ Net-_U23-Pad3_ d_and
+U24 /11 Net-_U18-Pad3_ Net-_U24-Pad3_ d_and
+U25 /10 Net-_U19-Pad3_ Net-_U25-Pad3_ d_and
+U29 Net-_U22-Pad3_ Net-_U23-Pad3_ /7 d_or
+U21 /3 Net-_U19-Pad3_ Net-_U21-Pad3_ d_and
+U28 Net-_U20-Pad3_ Net-_U21-Pad3_ /4 d_or
+U20 /2 Net-_U18-Pad3_ Net-_U20-Pad3_ d_and
+U31 Net-_U26-Pad3_ Net-_U27-Pad3_ /12 d_or
+U26 /14 Net-_U18-Pad3_ Net-_U26-Pad3_ d_and
+U27 /13 Net-_U19-Pad3_ Net-_U27-Pad3_ d_and
+U30 Net-_U24-Pad3_ Net-_U25-Pad3_ /9 d_or
 .end
