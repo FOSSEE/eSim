@@ -138,6 +138,48 @@ python run_esim_docker.py --build
 
 ---
 
+## For Maintainers
+
+This section explains how to set up the automated build pipeline.
+
+### Setting up GitHub Actions
+
+1. Copy the workflow file to the repository root:
+   ```
+   docker-launcher/github-workflow/docker-launcher-build.yml
+   → .github/workflows/docker-launcher-build.yml
+   ```
+
+2. Update the Docker image URL in `run_esim_docker.py` (line 21):
+   ```python
+   DOCKER_IMAGE = "ghcr.io/fossee/esim-docker-launcher:latest"
+   ```
+
+### Creating a Release
+
+**Option 1: Manual trigger**
+1. Go to Actions tab on GitHub
+2. Select "Build and Release" workflow
+3. Click "Run workflow"
+
+**Option 2: Using tags**
+```bash
+git tag docker-launcher-v1.0.0
+git push origin docker-launcher-v1.0.0
+```
+
+Both methods will build executables for Windows, Linux, and macOS, then create a GitHub Release with download links.
+
+### Build Triggers
+
+| Event | Builds Docker | Builds Executables |
+|-------|--------------|-------------------|
+| Tag `docker-launcher-v*` | Yes | Yes |
+| Manual workflow dispatch | Yes | Yes |
+| PR modifying `docker-launcher/` | Yes | No |
+
+---
+
 ## Credits
 
 - **eSim** - FOSSEE Team, IIT Bombay
