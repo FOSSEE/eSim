@@ -1,0 +1,64 @@
+.title kicad schematic
+
+* u10 net-_u10-pad1_ net-_u10-pad2_ net-_u1-pad11_ d_tristate
+* u9 net-_u3-pad3_ net-_u10-pad2_ net-_u1-pad14_ d_tristate
+* u11 net-_u11-pad1_ net-_u10-pad2_ net-_u1-pad5_ d_tristate
+* u13 net-_u13-pad1_ net-_u10-pad2_ net-_u1-pad7_ d_tristate
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ unconnected-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ unconnected-_u1-pad16_ port
+* u12 net-_u12-pad1_ net-_u10-pad2_ net-_u1-pad9_ d_tristate
+* u14 net-_u14-pad1_ net-_u10-pad2_ net-_u1-pad2_ d_tristate
+* u3 net-_u1-pad12_ net-_u1-pad15_ net-_u3-pad3_ d_nor
+* u2 net-_u1-pad4_ net-_u10-pad2_ d_inverter
+* u6 net-_u1-pad12_ net-_u1-pad10_ net-_u12-pad1_ d_nor
+* u4 net-_u1-pad12_ net-_u1-pad13_ net-_u10-pad1_ d_nor
+* u8 net-_u1-pad12_ net-_u1-pad1_ net-_u14-pad1_ d_nor
+* u7 net-_u1-pad12_ net-_u1-pad6_ net-_u13-pad1_ d_nor
+* u5 net-_u1-pad12_ net-_u1-pad3_ net-_u11-pad1_ d_nor
+a1 net-_u10-pad1_ net-_u10-pad2_ net-_u1-pad11_ u10
+a2 net-_u3-pad3_ net-_u10-pad2_ net-_u1-pad14_ u9
+a3 net-_u11-pad1_ net-_u10-pad2_ net-_u1-pad5_ u11
+a4 net-_u13-pad1_ net-_u10-pad2_ net-_u1-pad7_ u13
+a5 net-_u12-pad1_ net-_u10-pad2_ net-_u1-pad9_ u12
+a6 net-_u14-pad1_ net-_u10-pad2_ net-_u1-pad2_ u14
+a7 [net-_u1-pad12_ net-_u1-pad15_ ] net-_u3-pad3_ u3
+a8 net-_u1-pad4_ net-_u10-pad2_ u2
+a9 [net-_u1-pad12_ net-_u1-pad10_ ] net-_u12-pad1_ u6
+a10 [net-_u1-pad12_ net-_u1-pad13_ ] net-_u10-pad1_ u4
+a11 [net-_u1-pad12_ net-_u1-pad1_ ] net-_u14-pad1_ u8
+a12 [net-_u1-pad12_ net-_u1-pad6_ ] net-_u13-pad1_ u7
+a13 [net-_u1-pad12_ net-_u1-pad3_ ] net-_u11-pad1_ u5
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u10 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u9 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u11 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u13 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u12 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u14 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u3 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u6 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u4 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u8 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u7 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u5 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

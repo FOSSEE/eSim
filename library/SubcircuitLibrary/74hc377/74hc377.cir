@@ -1,0 +1,69 @@
+.title KiCad schematic
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ unconnected-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ unconnected-_U1-Pad20_ PORT
+U37 Net-_U1-Pad13_ Net-_U35-Pad1_ d_buffer
+U33 Net-_U13-Pad2_ Net-_U33-Pad2_ d_inverter
+U41 Net-_U13-Pad2_ Net-_U41-Pad2_ d_inverter
+U30 Net-_U1-Pad8_ Net-_U28-Pad1_ d_buffer
+U47 Net-_U47-Pad1_ Net-_U43-Pad3_ Net-_U47-Pad3_ d_or
+U65 Net-_U65-Pad1_ Net-_U64-Pad2_ Net-_U61-Pad1_ d_and
+U64 Net-_U13-Pad2_ Net-_U64-Pad2_ d_inverter
+U61 Net-_U61-Pad1_ Net-_U59-Pad3_ Net-_U61-Pad3_ d_or
+U53 Net-_U53-Pad1_ Net-_U51-Pad3_ Net-_U53-Pad3_ d_or
+U57 Net-_U57-Pad1_ Net-_U56-Pad2_ Net-_U53-Pad1_ d_and
+U51 Net-_U51-Pad1_ Net-_U13-Pad2_ Net-_U51-Pad3_ d_and
+U42 Net-_U40-Pad5_ Net-_U41-Pad2_ Net-_U39-Pad1_ d_and
+U43 Net-_U43-Pad1_ Net-_U13-Pad2_ Net-_U43-Pad3_ d_and
+U35 Net-_U35-Pad1_ Net-_U13-Pad2_ Net-_U35-Pad3_ d_and
+U34 Net-_U32-Pad5_ Net-_U33-Pad2_ Net-_U31-Pad1_ d_and
+U28 Net-_U28-Pad1_ Net-_U13-Pad2_ Net-_U28-Pad3_ d_and
+U31 Net-_U31-Pad1_ Net-_U28-Pad3_ Net-_U31-Pad3_ d_or
+U39 Net-_U39-Pad1_ Net-_U35-Pad3_ Net-_U39-Pad3_ d_or
+U52 Net-_U1-Pad17_ Net-_U51-Pad1_ d_buffer
+U44 Net-_U1-Pad14_ Net-_U43-Pad1_ d_buffer
+U60 Net-_U1-Pad18_ Net-_U59-Pad1_ d_buffer
+U59 Net-_U59-Pad1_ Net-_U13-Pad2_ Net-_U59-Pad3_ d_and
+U56 Net-_U13-Pad2_ Net-_U56-Pad2_ d_inverter
+U49 Net-_U49-Pad1_ Net-_U48-Pad2_ Net-_U47-Pad1_ d_and
+U48 Net-_U13-Pad2_ Net-_U48-Pad2_ d_inverter
+U40 Net-_U39-Pad3_ Net-_U38-Pad2_ unconnected-_U40-Pad3_ unconnected-_U40-Pad4_ Net-_U40-Pad5_ unconnected-_U40-Pad6_ d_dff
+U32 Net-_U31-Pad3_ Net-_U29-Pad2_ unconnected-_U32-Pad3_ unconnected-_U32-Pad4_ Net-_U32-Pad5_ unconnected-_U32-Pad6_ d_dff
+U29 Net-_U12-Pad1_ Net-_U29-Pad2_ d_inverter
+U27 Net-_U24-Pad5_ Net-_U1-Pad6_ d_buffer
+U36 Net-_U32-Pad5_ Net-_U1-Pad9_ d_buffer
+U38 Net-_U12-Pad1_ Net-_U38-Pad2_ d_inverter
+U55 Net-_U12-Pad1_ Net-_U55-Pad2_ d_inverter
+U46 Net-_U12-Pad1_ Net-_U46-Pad2_ d_inverter
+U50 Net-_U47-Pad3_ Net-_U46-Pad2_ unconnected-_U50-Pad3_ unconnected-_U50-Pad4_ Net-_U49-Pad1_ unconnected-_U50-Pad6_ d_dff
+U58 Net-_U53-Pad3_ Net-_U55-Pad2_ unconnected-_U58-Pad3_ unconnected-_U58-Pad4_ Net-_U57-Pad1_ unconnected-_U58-Pad6_ d_dff
+U66 Net-_U61-Pad3_ Net-_U63-Pad2_ unconnected-_U66-Pad3_ unconnected-_U66-Pad4_ Net-_U65-Pad1_ unconnected-_U66-Pad6_ d_dff
+U63 Net-_U12-Pad1_ Net-_U63-Pad2_ d_inverter
+U62 Net-_U57-Pad1_ Net-_U1-Pad16_ d_buffer
+U67 Net-_U65-Pad1_ Net-_U1-Pad19_ d_buffer
+U54 Net-_U49-Pad1_ Net-_U1-Pad15_ d_buffer
+U45 Net-_U40-Pad5_ Net-_U1-Pad12_ d_buffer
+U15 Net-_U15-Pad1_ Net-_U13-Pad3_ Net-_U15-Pad3_ d_or
+U9 Net-_U13-Pad2_ Net-_U10-Pad2_ d_inverter
+U5 Net-_U5-Pad1_ Net-_U13-Pad2_ Net-_U5-Pad3_ d_and
+U18 Net-_U16-Pad5_ Net-_U17-Pad2_ Net-_U15-Pad1_ d_and
+U13 Net-_U13-Pad1_ Net-_U13-Pad2_ Net-_U13-Pad3_ d_and
+U17 Net-_U13-Pad2_ Net-_U17-Pad2_ d_inverter
+U23 Net-_U23-Pad1_ Net-_U21-Pad3_ Net-_U23-Pad3_ d_or
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_and
+U7 Net-_U10-Pad3_ Net-_U5-Pad3_ Net-_U7-Pad3_ d_or
+U21 Net-_U21-Pad1_ Net-_U13-Pad2_ Net-_U21-Pad3_ d_and
+U26 Net-_U24-Pad5_ Net-_U25-Pad2_ Net-_U23-Pad1_ d_and
+U16 Net-_U15-Pad3_ Net-_U12-Pad2_ unconnected-_U16-Pad3_ unconnected-_U16-Pad4_ Net-_U16-Pad5_ unconnected-_U16-Pad6_ d_dff
+U24 Net-_U23-Pad3_ Net-_U20-Pad2_ unconnected-_U24-Pad3_ unconnected-_U24-Pad4_ Net-_U24-Pad5_ unconnected-_U24-Pad6_ d_dff
+U20 Net-_U12-Pad1_ Net-_U20-Pad2_ d_inverter
+U19 Net-_U16-Pad5_ Net-_U1-Pad5_ d_buffer
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ d_inverter
+U8 Net-_U7-Pad3_ Net-_U3-Pad2_ unconnected-_U8-Pad3_ unconnected-_U8-Pad4_ Net-_U10-Pad1_ unconnected-_U8-Pad6_ d_dff
+U4 Net-_U1-Pad11_ Net-_U12-Pad1_ d_inverter
+U3 Net-_U12-Pad1_ Net-_U3-Pad2_ d_inverter
+U11 Net-_U10-Pad1_ Net-_U1-Pad2_ d_buffer
+U14 Net-_U1-Pad4_ Net-_U13-Pad1_ d_buffer
+U22 Net-_U1-Pad7_ Net-_U21-Pad1_ d_buffer
+U25 Net-_U13-Pad2_ Net-_U25-Pad2_ d_inverter
+U2 Net-_U1-Pad1_ Net-_U13-Pad2_ d_inverter
+U6 Net-_U1-Pad3_ Net-_U5-Pad1_ d_buffer
+.end

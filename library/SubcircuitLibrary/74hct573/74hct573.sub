@@ -1,0 +1,110 @@
+* Subcircuit 74hct573
+.subckt 74hct573 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ gnd net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ gnd 
+.title kicad schematic
+* u17 net-_u16-pad2_ net-_u11-pad2_ unconnected-_u17-pad3_ unconnected-_u17-pad4_ unconnected-_u17-pad5_ net-_u17-pad6_ d_dlatch
+* u14 net-_u13-pad2_ net-_u11-pad2_ unconnected-_u14-pad3_ unconnected-_u14-pad4_ unconnected-_u14-pad5_ net-_u14-pad6_ d_dlatch
+* u13 net-_u1-pad5_ net-_u13-pad2_ d_inverter
+* u10 net-_u1-pad4_ net-_u10-pad2_ d_inverter
+* u11 net-_u10-pad2_ net-_u11-pad2_ unconnected-_u11-pad3_ unconnected-_u11-pad4_ unconnected-_u11-pad5_ net-_u11-pad6_ d_dlatch
+* u16 net-_u1-pad6_ net-_u16-pad2_ d_inverter
+* u12 net-_u11-pad6_ net-_u12-pad2_ net-_u1-pad17_ d_tristate
+* u18 net-_u17-pad6_ net-_u12-pad2_ net-_u1-pad15_ d_tristate
+* u15 net-_u14-pad6_ net-_u12-pad2_ net-_u1-pad16_ d_tristate
+* u19 net-_u1-pad7_ net-_u19-pad2_ d_inverter
+* u20 net-_u19-pad2_ net-_u11-pad2_ unconnected-_u20-pad3_ unconnected-_u20-pad4_ unconnected-_u20-pad5_ net-_u20-pad6_ d_dlatch
+* u26 net-_u25-pad2_ net-_u11-pad2_ unconnected-_u26-pad3_ unconnected-_u26-pad4_ unconnected-_u26-pad5_ net-_u26-pad6_ d_dlatch
+* u25 net-_u1-pad9_ net-_u25-pad2_ d_inverter
+* u23 net-_u22-pad2_ net-_u11-pad2_ unconnected-_u23-pad3_ unconnected-_u23-pad4_ unconnected-_u23-pad5_ net-_u23-pad6_ d_dlatch
+* u22 net-_u1-pad8_ net-_u22-pad2_ d_inverter
+* u21 net-_u20-pad6_ net-_u12-pad2_ net-_u1-pad14_ d_tristate
+* u24 net-_u23-pad6_ unconnected-_u24-pad2_ net-_u1-pad13_ d_tristate
+* u27 net-_u26-pad6_ net-_u12-pad2_ net-_u1-pad12_ d_tristate
+* u4 net-_u1-pad1_ net-_u12-pad2_ d_inverter
+* u3 net-_u1-pad11_ net-_u11-pad2_ d_inverter
+* u9 net-_u8-pad6_ net-_u12-pad2_ net-_u1-pad18_ d_tristate
+* u6 net-_u5-pad6_ net-_u12-pad2_ net-_u1-pad19_ d_tristate
+* u5 net-_u2-pad2_ net-_u11-pad2_ unconnected-_u5-pad3_ unconnected-_u5-pad4_ unconnected-_u5-pad5_ net-_u5-pad6_ d_dlatch
+* u2 net-_u1-pad2_ net-_u2-pad2_ d_inverter
+* u8 net-_u7-pad2_ net-_u11-pad2_ unconnected-_u8-pad3_ unconnected-_u8-pad4_ unconnected-_u8-pad5_ net-_u8-pad6_ d_dlatch
+* u7 net-_u1-pad3_ net-_u7-pad2_ d_inverter
+a1 net-_u16-pad2_ net-_u11-pad2_ unconnected-_u17-pad3_ unconnected-_u17-pad4_ unconnected-_u17-pad5_ net-_u17-pad6_ u17
+a2 net-_u13-pad2_ net-_u11-pad2_ unconnected-_u14-pad3_ unconnected-_u14-pad4_ unconnected-_u14-pad5_ net-_u14-pad6_ u14
+a3 net-_u1-pad5_ net-_u13-pad2_ u13
+a4 net-_u1-pad4_ net-_u10-pad2_ u10
+a5 net-_u10-pad2_ net-_u11-pad2_ unconnected-_u11-pad3_ unconnected-_u11-pad4_ unconnected-_u11-pad5_ net-_u11-pad6_ u11
+a6 net-_u1-pad6_ net-_u16-pad2_ u16
+a7 net-_u11-pad6_ net-_u12-pad2_ net-_u1-pad17_ u12
+a8 net-_u17-pad6_ net-_u12-pad2_ net-_u1-pad15_ u18
+a9 net-_u14-pad6_ net-_u12-pad2_ net-_u1-pad16_ u15
+a10 net-_u1-pad7_ net-_u19-pad2_ u19
+a11 net-_u19-pad2_ net-_u11-pad2_ unconnected-_u20-pad3_ unconnected-_u20-pad4_ unconnected-_u20-pad5_ net-_u20-pad6_ u20
+a12 net-_u25-pad2_ net-_u11-pad2_ unconnected-_u26-pad3_ unconnected-_u26-pad4_ unconnected-_u26-pad5_ net-_u26-pad6_ u26
+a13 net-_u1-pad9_ net-_u25-pad2_ u25
+a14 net-_u22-pad2_ net-_u11-pad2_ unconnected-_u23-pad3_ unconnected-_u23-pad4_ unconnected-_u23-pad5_ net-_u23-pad6_ u23
+a15 net-_u1-pad8_ net-_u22-pad2_ u22
+a16 net-_u20-pad6_ net-_u12-pad2_ net-_u1-pad14_ u21
+a17 net-_u23-pad6_ unconnected-_u24-pad2_ net-_u1-pad13_ u24
+a18 net-_u26-pad6_ net-_u12-pad2_ net-_u1-pad12_ u27
+a19 net-_u1-pad1_ net-_u12-pad2_ u4
+a20 net-_u1-pad11_ net-_u11-pad2_ u3
+a21 net-_u8-pad6_ net-_u12-pad2_ net-_u1-pad18_ u9
+a22 net-_u5-pad6_ net-_u12-pad2_ net-_u1-pad19_ u6
+a23 net-_u2-pad2_ net-_u11-pad2_ unconnected-_u5-pad3_ unconnected-_u5-pad4_ unconnected-_u5-pad5_ net-_u5-pad6_ u5
+a24 net-_u1-pad2_ net-_u2-pad2_ u2
+a25 net-_u7-pad2_ net-_u11-pad2_ unconnected-_u8-pad3_ unconnected-_u8-pad4_ unconnected-_u8-pad5_ net-_u8-pad6_ u8
+a26 net-_u1-pad3_ net-_u7-pad2_ u7
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u17 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u14 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u13 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u10 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u11 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u16 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u12 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u18 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u15 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u19 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u20 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u26 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u25 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u23 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u22 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u21 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u24 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u27 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u9 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u6 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u5 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u8 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74hct573
