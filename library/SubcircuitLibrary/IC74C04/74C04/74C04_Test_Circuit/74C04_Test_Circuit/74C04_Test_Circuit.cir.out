@@ -1,0 +1,44 @@
+.title kicad schematic
+
+.include 74C04.sub
+v1 in2a gnd pulse(0 5 0 10n 10n 5m 10m)
+v2 in3a gnd pulse(0 5 0 10n 10n 5m 10m)
+* u1 in2a plot_v1
+* u2 in3a plot_v1
+* u3 ina plot_v1
+* u4 out3a plot_v1
+* u7 in6a plot_v1
+* u12 in4a plot_v1
+v7 net-_x1-pad14_ gnd 5
+* u11 out6a plot_v1
+* u10 out4a plot_v1
+* u9 out5a plot_v1
+v6 in4a gnd pulse(0 5 0 10n 10n 5m 10m)
+* u8 in5a plot_v1
+v5 in5a gnd pulse(0 5 0 10n 10n 5m 10m)
+v3 ina gnd pulse(0 5 0 10n 10n 5m 10m)
+x1 ina outa in2a out2a in3a out3a gnd out4a in4a out5a in5a out6a in6a net-_x1-pad14_ 74C04
+* u5 out2a plot_v1
+v4 in6a gnd pulse(0 5 0 10n 10n 5m 10m)
+* u6 outa plot_v1
+.tran 5e-03 30e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in2a)
+plot v(in3a)
+plot v(ina)
+plot v(out3a)
+plot v(in6a)
+plot v(in4a)
+plot v(out6a)
+plot v(out4a)
+plot v(out5a)
+plot v(in5a)
+plot v(out2a)
+plot v(outa)
+.endc
+.end

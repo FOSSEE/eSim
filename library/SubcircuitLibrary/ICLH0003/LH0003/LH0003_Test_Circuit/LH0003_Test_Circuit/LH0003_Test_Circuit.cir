@@ -1,0 +1,15 @@
+.title KiCad schematic
+C2 Net-_C2-Pad1_ Net-_C2-Pad2_ 90p
+X1 Net-_C2-Pad1_ Net-_X1-Pad2_ Net-_X1-Pad3_ Net-_X1-Pad4_ Net-_C1-Pad1_ unconnected-_X1-Pad6_ GND out Net-_X1-Pad9_ Net-_C2-Pad2_ LH0003
+C1 Net-_C1-Pad1_ GND 90p
+U1 out plot_v1
+v3 Net-_X1-Pad9_ GND 15
+R1 Net-_X1-Pad4_ out 3k
+C4 Net-_X1-Pad4_ out 100p
+R2 GND out 10k
+v2 GND Net-_X1-Pad3_ 15
+U2 IN plot_v1
+v1 IN GND sine
+R3 IN Net-_X1-Pad2_ 1k
+C3 IN Net-_X1-Pad2_ 100p
+.end

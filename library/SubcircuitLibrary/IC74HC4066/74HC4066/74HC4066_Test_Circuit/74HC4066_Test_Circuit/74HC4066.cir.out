@@ -1,0 +1,17 @@
+.title kicad schematic
+
+.include 4066.sub
+x2 net-_u1-pad5_ net-_u1-pad4_ net-_u1-pad3_ 4066
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ gnd net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ gnd port
+x4 net-_u1-pad12_ net-_u1-pad11_ net-_u1-pad10_ 4066
+x3 net-_u1-pad6_ net-_u1-pad8_ net-_u1-pad9_ 4066
+x1 net-_u1-pad13_ net-_u1-pad1_ net-_u1-pad2_ 4066
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

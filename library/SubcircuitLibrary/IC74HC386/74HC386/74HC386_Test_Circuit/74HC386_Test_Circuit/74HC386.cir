@@ -1,0 +1,19 @@
+.title KiCad schematic
+U16 Net-_U12-Pad3_ Net-_U1-Pad10_ d_inverter
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ GND Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ GND PORT
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U12-Pad3_ d_xnor
+U5 Net-_U1-Pad6_ Net-_U11-Pad2_ d_inverter
+U8 Net-_U1-Pad12_ Net-_U13-Pad1_ d_inverter
+U9 Net-_U1-Pad13_ Net-_U13-Pad2_ d_inverter
+U13 Net-_U13-Pad1_ Net-_U13-Pad2_ Net-_U13-Pad3_ d_xnor
+U7 Net-_U1-Pad9_ Net-_U12-Pad2_ d_inverter
+U6 Net-_U1-Pad8_ Net-_U12-Pad1_ d_inverter
+U17 Net-_U13-Pad3_ Net-_U1-Pad11_ d_inverter
+U15 Net-_U11-Pad3_ Net-_U1-Pad4_ d_inverter
+U14 Net-_U10-Pad3_ Net-_U1-Pad3_ d_inverter
+U11 Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ d_xnor
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_xnor
+U4 Net-_U1-Pad5_ Net-_U11-Pad1_ d_inverter
+U2 Net-_U1-Pad1_ Net-_U10-Pad1_ d_inverter
+U3 Net-_U1-Pad2_ Net-_U10-Pad2_ d_inverter
+.end

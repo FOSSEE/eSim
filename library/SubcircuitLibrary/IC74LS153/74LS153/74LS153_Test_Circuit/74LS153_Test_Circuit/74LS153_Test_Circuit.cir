@@ -1,0 +1,22 @@
+.title KiCad schematic
+U10 A GC B C3 C2 C1 C0 Net-_U10-Pad8_ Net-_U10-Pad9_ Net-_U10-Pad10_ Net-_U10-Pad11_ Net-_U10-Pad12_ Net-_U10-Pad13_ Net-_U10-Pad14_ adc_bridge_7
+v1 Net-_X1-Pad16_ GND 5
+X1 Net-_U10-Pad9_ Net-_U10-Pad10_ Net-_U10-Pad11_ Net-_U10-Pad12_ Net-_U10-Pad13_ Net-_U10-Pad14_ Net-_U9-Pad1_ GND unconnected-_X1-Pad9_ unconnected-_X1-Pad10_ unconnected-_X1-Pad11_ unconnected-_X1-Pad12_ unconnected-_X1-Pad13_ Net-_U10-Pad8_ unconnected-_X1-Pad15_ Net-_X1-Pad16_ 74LS153
+U9 Net-_U9-Pad1_ OUT dac_bridge_1
+U8 OUT plot_v1
+R1 GND OUT 1k
+V_B1 B GND DC
+V_C0 C0 GND DC
+V_C1 C1 GND DC
+V_C2 C2 GND DC
+V_C3 C3 GND DC
+U7 C0 plot_v1
+U5 C2 plot_v1
+U6 C1 plot_v1
+U4 C3 plot_v1
+U1 A plot_v1
+U3 B plot_v1
+U2 GC plot_v1
+V_GC1 GC GND DC
+V_A1 A GND DC
+.end
