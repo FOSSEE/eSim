@@ -242,6 +242,15 @@ function installDependency
 
     echo "Upgrading Pip.............................."
     pip install --upgrade pip
+
+    echo "Installing Gtk Canberra modules..........................."
+    if apt-cache show libcanberra-gtk-module >/dev/null 2>&1; then
+        sudo apt-get install -y libcanberra-gtk-module
+    elif apt-cache show libcanberra-gtk3-module >/dev/null 2>&1; then
+        sudo apt-get install -y libcanberra-gtk3-module
+    else
+        echo "Warning: libcanberra-gtk-module not available. Skipping."
+    fi
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
