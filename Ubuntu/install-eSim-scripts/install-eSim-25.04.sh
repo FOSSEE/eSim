@@ -88,7 +88,11 @@ function installNghdl
     # Do not trap on error of any command. Let NGHDL script handle its own errors.
     trap "" ERR
 
-    ./install-nghdl.sh --install       # Install NGHDL
+    if [[ "$(lsb_release -rs)" == "25.04" ]] && [ -f "install-nghdl-scripts/install-nghdl-24.04.sh" ]; then
+        ./install-nghdl-scripts/install-nghdl-24.04.sh --install
+    else
+        ./install-nghdl.sh --install       # Install NGHDL
+    fi
         
     # Set trap again to error_exit function to exit on errors
     trap error_exit ERR
