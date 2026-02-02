@@ -1,0 +1,1 @@
+.MODEL 1N750 D( Is=2n Rs=2 Ikf=0.1 N=1.75 Xti=3 Eg=1.11 Cjo=80p M=0.33 Vj=0.75 Fc=0.5 Nr=2 Bv=4.7 Ibv=5m Nbv=1.5 Ibvl=0.5m Nbvl=2 Tbv1=0.002 Isr=1n )

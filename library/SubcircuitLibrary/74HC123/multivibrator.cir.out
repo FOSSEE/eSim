@@ -1,0 +1,58 @@
+* c:\fossee\esim\library\subcircuitlibrary\multivibrator\multivibrator.cir
+
+* u7  net-_u5-pad2_ net-_u4-pad2_ net-_u1-pad6_ net-_u7-pad4_ net-_u11-pad1_ ? d_tff
+* u4  net-_u1-pad4_ net-_u4-pad2_ adc_bridge_1
+r4  net-_c2-pad1_ net-_r4-pad2_ 100k
+c2  net-_c2-pad1_ net-_c2-pad2_ 150n
+* u11  net-_u11-pad1_ net-_c2-pad1_ dac_bridge_1
+* u5  net-_r2-pad2_ net-_u5-pad2_ adc_bridge_1
+* u9  net-_c2-pad2_ net-_u7-pad4_ adc_bridge_1
+r2  net-_r2-pad1_ net-_r2-pad2_ 10k
+* u6  net-_u3-pad2_ net-_u2-pad2_ net-_u1-pad5_ net-_u6-pad4_ net-_u10-pad1_ ? d_tff
+* u2  net-_u1-pad3_ net-_u2-pad2_ adc_bridge_1
+r3  net-_c1-pad1_ net-_r3-pad2_ 100k
+c1  net-_c1-pad1_ net-_c1-pad2_ 150n
+* u10  net-_u10-pad1_ net-_c1-pad1_ dac_bridge_1
+* u3  net-_r1-pad2_ net-_u3-pad2_ adc_bridge_1
+* u8  net-_c1-pad2_ net-_u6-pad4_ adc_bridge_1
+r1  net-_r1-pad1_ net-_r1-pad2_ 10k
+* u1  net-_r2-pad1_ net-_r1-pad1_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_c1-pad2_ net-_c2-pad2_ net-_r3-pad2_ net-_r4-pad2_ port
+a1 net-_u5-pad2_ net-_u4-pad2_ net-_u1-pad6_ net-_u7-pad4_ net-_u11-pad1_ ? u7
+a2 [net-_u1-pad4_ ] [net-_u4-pad2_ ] u4
+a3 [net-_u11-pad1_ ] [net-_c2-pad1_ ] u11
+a4 [net-_r2-pad2_ ] [net-_u5-pad2_ ] u5
+a5 [net-_c2-pad2_ ] [net-_u7-pad4_ ] u9
+a6 net-_u3-pad2_ net-_u2-pad2_ net-_u1-pad5_ net-_u6-pad4_ net-_u10-pad1_ ? u6
+a7 [net-_u1-pad3_ ] [net-_u2-pad2_ ] u2
+a8 [net-_u10-pad1_ ] [net-_c1-pad1_ ] u10
+a9 [net-_r1-pad2_ ] [net-_u3-pad2_ ] u3
+a10 [net-_c1-pad2_ ] [net-_u6-pad4_ ] u8
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u7 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u4 adc_bridge(in_low=1.0 in_high=5 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u11 dac_bridge(out_low=0.0 out_high=5 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=5 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u9 adc_bridge(in_low=1.0 in_high=5 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_tff, NgSpice Name: d_tff
+.model u6 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=5 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u10 dac_bridge(out_low=0.0 out_high=5 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=5 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u8 adc_bridge(in_low=1.0 in_high=5 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

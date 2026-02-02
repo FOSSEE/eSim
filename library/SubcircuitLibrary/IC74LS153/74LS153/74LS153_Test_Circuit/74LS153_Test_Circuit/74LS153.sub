@@ -1,0 +1,42 @@
+* Subcircuit 74LS153
+.subckt 74LS153 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ gnd net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ gnd 
+.title kicad schematic
+.include 4_and.sub
+.include 4_OR.sub
+* u6 net-_u1-pad15_ net-_x5-pad4_ d_inverter
+x2 net-_x1-pad1_ net-_u2-pad2_ net-_u5-pad2_ net-_u1-pad5_ net-_x2-pad5_ 4_and
+x1 net-_x1-pad1_ net-_u2-pad2_ net-_u3-pad2_ net-_u1-pad6_ net-_x1-pad5_ 4_and
+x3 net-_x1-pad1_ net-_u4-pad2_ net-_u3-pad2_ net-_u1-pad4_ net-_x3-pad5_ 4_and
+* u4 net-_u2-pad2_ net-_u4-pad2_ d_inverter
+* u5 net-_u3-pad2_ net-_u5-pad2_ d_inverter
+* u2 net-_u1-pad2_ net-_u2-pad2_ d_inverter
+* u3 net-_u1-pad14_ net-_u3-pad2_ d_inverter
+x9 net-_x1-pad5_ net-_x2-pad5_ net-_x3-pad5_ net-_x4-pad5_ net-_u1-pad7_ 4_OR
+x6 net-_u1-pad11_ net-_u2-pad2_ net-_u5-pad2_ net-_x5-pad4_ net-_x10-pad2_ 4_and
+x5 net-_u1-pad10_ net-_u2-pad2_ net-_u3-pad2_ net-_x5-pad4_ net-_x10-pad1_ 4_and
+x4 net-_x1-pad1_ net-_u4-pad2_ net-_u5-pad2_ net-_u1-pad3_ net-_x4-pad5_ 4_and
+x10 net-_x10-pad1_ net-_x10-pad2_ net-_x10-pad3_ net-_x10-pad4_ net-_u1-pad9_ 4_OR
+x8 net-_u1-pad13_ net-_u4-pad2_ net-_u5-pad2_ net-_x5-pad4_ net-_x10-pad4_ 4_and
+x7 net-_u1-pad12_ net-_u4-pad2_ net-_u3-pad2_ net-_x5-pad4_ net-_x10-pad3_ 4_and
+* u7 net-_u1-pad1_ net-_x1-pad1_ d_inverter
+a1 net-_u1-pad15_ net-_x5-pad4_ u6
+a2 net-_u2-pad2_ net-_u4-pad2_ u4
+a3 net-_u3-pad2_ net-_u5-pad2_ u5
+a4 net-_u1-pad2_ net-_u2-pad2_ u2
+a5 net-_u1-pad14_ net-_u3-pad2_ u3
+a6 net-_u1-pad1_ net-_x1-pad1_ u7
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u6 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u5 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74LS153
