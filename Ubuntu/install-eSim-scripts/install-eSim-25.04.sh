@@ -24,12 +24,34 @@ ubuntu_version="24.04"
 #=============================================================================
 
 # All variables goes here
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+eSim_Home="$(cd "$SCRIPT_DIR/.." && pwd)"
+
 config_dir="$HOME/.esim"
 config_file="config.ini"
-eSim_Home=`pwd`
 ngspiceFlag=0
 
+
 ## All Functions goes here
+
+check_kicad_library() {
+    KICAD_LIB_ARCHIVE="$eSim_Home/library/kicadLibrary.tar.xz"
+
+    if [[ ! -f "$KICAD_LIB_ARCHIVE" ]]; then
+        echo "ERROR: KiCad library archive missing:"
+        echo "  $KICAD_LIB_ARCHIVE"
+        echo
+        echo "Possible reasons:"
+        echo "  • Git LFS files not pulled"
+        echo "  • Incomplete repository clone"
+        echo
+        echo "Try running:"
+        echo "  git lfs install"
+        echo "  git lfs pull"
+        error_exit
+    fi
+}
+
 
 error_exit()
 {
@@ -105,59 +127,22 @@ function installSky130Pdk
     sudo chown -R $USER:$USER /usr/share/local/sky130_fd_pr/
 
 }
-
-
 function installKicad
 {
-    echo "Installing KiCad..........................."
+    echo "Installing KiCad for Ubuntu 25.04 (official repositories only)"
 
-    # Detect Ubuntu version
-    ubuntu_version=$(lsb_release -rs)
+    sudo apt-get update
 
-    # Define KiCad PPAs based on Ubuntu version
-    if [[ "$ubuntu_version" == "24.04" ]]; then
-        echo "Ubuntu 24.04 detected."
-        kicadppa="kicad/kicad-8.0-releases"
-
-        # Check if KiCad is installed using dpkg-query for the main package
-        if dpkg -s kicad &>/dev/null; then
-            installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
-            if [[ "$installed_version" != "8" ]]; then
-                echo "A different version of KiCad ($installed_version) is installed."
-                read -p "Do you want to remove it and install KiCad 8.0? (yes/no): " response
-
-                if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
-                    echo "Removing KiCad $installed_version..."
-                    sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-                    sudo apt-get autoremove -y
-                else
-                    echo "Exiting installation. KiCad $installed_version remains installed."
-                    exit 1
-                fi
-            else
-                echo "KiCad 8.0 is already installed."
-                exit 0
-            fi
-        fi
-
-    else
-        kicadppa="kicad/kicad-6.0-releases"
-    fi
-
-    # Check if the PPA is already added
-    if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-        echo "Adding KiCad PPA to local apt repository: $kicadppa"
-        sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt-get update
-    else
-        echo "KiCad PPA is already present in sources."
-    fi
-
-    # Install KiCad packages
-    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    sudo apt-get install -y \
+        kicad \
+        kicad-footprints \
+        kicad-libraries \
+        kicad-symbols \
+        kicad-templates
 
     echo "KiCad installation completed successfully!"
 }
+
 
 
 function installDependency
@@ -228,6 +213,7 @@ function installDependency
 
     echo "Installing volare"
     sudo apt-get install -y xz-utils
+
     pip3 install volare
 }
 
@@ -236,6 +222,9 @@ function copyKicadLibrary
 {
 
     #Extract custom KiCad Library
+   
+   check_kicad_library
+
     tar -xJf library/kicadLibrary.tar.xz
 
     if [ -d ~/.config/kicad/6.0 ];then
