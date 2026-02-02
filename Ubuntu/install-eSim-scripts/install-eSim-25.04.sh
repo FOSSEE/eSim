@@ -96,6 +96,14 @@ function installNghdl
         ubuntu_version=$(. /etc/os-release; echo "${VERSION_ID:-}")
     fi
 
+    if [[ "$ubuntu_version" == "25.04" ]]; then
+        for nghdl_script in "install-nghdl.sh" "install-nghdl-scripts/install-nghdl-24.04.sh"; do
+            if [ -f "$nghdl_script" ] && grep -q "libcanberra-gtk-module" "$nghdl_script"; then
+                sed -i 's/libcanberra-gtk-module/libcanberra-gtk3-module/g' "$nghdl_script"
+            fi
+        done
+    fi
+
     if [[ "$ubuntu_version" == "25.04" ]] && [ -f "install-nghdl-scripts/install-nghdl-24.04.sh" ]; then
         chmod +x install-nghdl-scripts/install-nghdl-24.04.sh
         ./install-nghdl-scripts/install-nghdl-24.04.sh --install
