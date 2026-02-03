@@ -1,0 +1,7 @@
+.title KiCad schematic
+U1 vout plot_v1
+X1 vout Net-_R2-Pad2_ GND LM335
+R2 GND Net-_R2-Pad2_ 10k
+Vv1 Net-_R1-Pad1_ GND sin(0 1 1k)
+R1 Net-_R1-Pad1_ vout 2.2k
+.end

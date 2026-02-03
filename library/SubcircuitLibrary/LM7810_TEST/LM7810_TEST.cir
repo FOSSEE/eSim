@@ -1,0 +1,8 @@
+.title KiCad schematic
+C1 VIN GND 1u
+Vv2 vout GND sin(5 1 50)
+X1 VIN GND V0UT LM7810
+R1 GND V0UT 1k
+C2 V0UT GND 0.1u
+Vv1 VIN GND sin(10 2 50)
+.end

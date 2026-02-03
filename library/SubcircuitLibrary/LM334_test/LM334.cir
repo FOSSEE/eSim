@@ -1,0 +1,12 @@
+.title KiCad schematic
+U1 Net-_Q2-Pad3_ Net-_Q1-Pad3_ Net-_C1-Pad2_ PORT
+Q8 Net-_Q1-Pad3_ Net-_Q1-Pad1_ Net-_Q2-Pad3_ eSim_PNP
+Q6 Net-_Q1-Pad3_ Net-_Q1-Pad1_ Net-_Q2-Pad3_ eSim_PNP
+Q1 Net-_Q1-Pad1_ Net-_C1-Pad1_ Net-_Q1-Pad3_ eSim_NPN
+Q3 Net-_Q3-Pad1_ Net-_Q1-Pad1_ Net-_Q2-Pad3_ eSim_PNP
+Q2 Net-_C1-Pad1_ Net-_Q1-Pad1_ Net-_Q2-Pad3_ eSim_PNP
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 50p
+Q4 Net-_C1-Pad1_ Net-_Q3-Pad1_ Net-_C1-Pad2_ eSim_NPN
+Q7 Net-_Q3-Pad1_ Net-_Q3-Pad1_ Net-_Q1-Pad3_ eSim_NPN
+Q5 Net-_Q3-Pad1_ Net-_Q3-Pad1_ Net-_Q1-Pad3_ eSim_NPN
+.end
