@@ -1,0 +1,72 @@
+.title KiCad schematic
+M22 Net-_M20-Pad3_ timing_capacitor Net-_M21-Pad1_ vco_input_ eSim_MOS_P
+M21 Net-_M21-Pad1_ Net-_M16-Pad3_ Net-_M21-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+U1 gnd input2 input3 vco_output vco_input_ reference_output vco_control_voltage_ timing_capacitor Timing_Resisitor VCC PORT
+R28 input2 vco_input_ 1Meg
+R27 input3 Net-_M1-Pad3_ 1Meg
+R5 Net-_M1-Pad2_ Net-_M1-Pad4_ 13k
+R8 Net-_M17-Pad1_ Net-_M11-Pad3_ 1k
+M11 vco_input_ Net-_M1-Pad1_ Net-_M11-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+R3 Net-_M8-Pad1_ Net-_M1-Pad4_ 200k
+M8 Net-_M8-Pad1_ Net-_M37-Pad2_ Net-_M4-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M4 Net-_M1-Pad3_ Net-_M1-Pad3_ Net-_M4-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M9 Net-_M4-Pad3_ vco_input_ Net-_M10-Pad1_ Net-_M1-Pad4_ eSim_MOS_N
+M10 Net-_M10-Pad1_ Net-_M1-Pad2_ Net-_M10-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M5 Net-_M1-Pad3_ Net-_M1-Pad2_ Net-_M10-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M7 Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M10-Pad1_ Net-_M1-Pad4_ eSim_MOS_N
+M3 Net-_M10-Pad3_ Net-_M1-Pad1_ Net-_M1-Pad1_ Net-_M1-Pad4_ eSim_MOS_N
+R1 Net-_M1-Pad1_ vco_input_ 7.2k
+M2 Net-_M1-Pad1_ Net-_M10-Pad3_ Net-_M10-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M6 vco_input_ Net-_M1-Pad2_ Net-_M1-Pad2_ Net-_M1-Pad4_ eSim_MOS_N
+R2 Net-_M10-Pad3_ vco_input_ 7.2k
+R4 Net-_M1-Pad2_ vco_input_ 5.7k
+R25 vco_input_ Net-_M39-Pad2_ 4.3k
+R23 vco_input_ Net-_M36-Pad1_ 16k
+M39 Net-_M1-Pad4_ Net-_M39-Pad2_ vco_input_ Net-_M1-Pad4_ eSim_MOS_N
+M32 Net-_M30-Pad3_ Net-_M30-Pad3_ Net-_M32-Pad3_ vco_input_ eSim_MOS_P
+R15 Net-_M30-Pad3_ Net-_M24-Pad3_ 530k
+M24 Net-_M21-Pad3_ Net-_M21-Pad3_ Net-_M24-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M30 Net-_M1-Pad4_ Net-_M30-Pad2_ Net-_M30-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M34 Net-_M30-Pad2_ Net-_M32-Pad3_ Net-_M32-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+R19 Net-_M1-Pad4_ Net-_M30-Pad2_ 7k
+M27 Net-_M25-Pad3_ Net-_M27-Pad2_ Net-_M27-Pad2_ vco_input_ eSim_MOS_P
+M29 vco_input_ Net-_M27-Pad2_ Net-_M29-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+R20 Net-_M1-Pad4_ Net-_M33-Pad3_ 2.6k
+R18 vco_input_ Net-_M31-Pad2_ 4.7k
+M31 Net-_M27-Pad2_ Net-_M31-Pad2_ Net-_M31-Pad3_ vco_input_ eSim_MOS_P
+R17 Net-_M1-Pad4_ Net-_M29-Pad3_ 8.4k
+M26 vco_input_ Net-_M25-Pad3_ Net-_M26-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M28 Net-_M27-Pad2_ Net-_M26-Pad3_ Net-_M1-Pad4_ Net-_M1-Pad4_ eSim_MOS_N
+M38 Net-_M32-Pad3_ Net-_M38-Pad2_ Net-_M36-Pad1_ Net-_M1-Pad4_ eSim_MOS_N
+M33 Net-_M31-Pad2_ Net-_M29-Pad3_ Net-_M33-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M35 vco_input_ Net-_M31-Pad3_ vco_output Net-_M1-Pad4_ eSim_MOS_N
+M36 Net-_M36-Pad1_ vco_output gnd vco_input_ eSim_MOS_P
+R21 Net-_M1-Pad4_ vco_output 4.6k
+R24 Net-_M32-Pad3_ Net-_M38-Pad2_ 5.8k
+M40 Net-_M38-Pad2_ Net-_M39-Pad2_ Net-_M36-Pad1_ vco_input_ eSim_MOS_P
+M37 Net-_M37-Pad1_ Net-_M37-Pad2_ Net-_M25-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+R22 Net-_M1-Pad4_ Net-_M37-Pad1_ 2.4k
+R16 VCC Net-_M27-Pad2_ 6.5k
+M25 VCC timing_capacitor Net-_M25-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M41 Net-_M39-Pad2_ Net-_M37-Pad2_ Net-_M41-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+R26 Net-_M41-Pad3_ Net-_M1-Pad4_ 200k
+M19 Timing_Resisitor Net-_M13-Pad2_ Net-_M18-Pad2_ Net-_M13-Pad2_ eSim_MOS_P
+M16 Net-_M16-Pad1_ Net-_M16-Pad1_ Net-_M16-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M20 Net-_M18-Pad2_ Net-_M18-Pad2_ Net-_M20-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M17 Net-_M17-Pad1_ Net-_M37-Pad2_ Net-_M17-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+M23 Net-_M23-Pad1_ Net-_M21-Pad3_ Net-_M16-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+R13 Net-_M17-Pad3_ Net-_M1-Pad4_ 205k
+R14 Net-_M30-Pad3_ Net-_M23-Pad1_ 530k
+M12 Net-_M37-Pad2_ Net-_M37-Pad2_ Net-_M12-Pad3_ Net-_M1-Pad4_ eSim_MOS_N
+R10 Net-_M12-Pad3_ Net-_M1-Pad4_ 200k
+R11 Net-_M37-Pad2_ Net-_R11-Pad2_ 8.1k
+M18 Net-_M16-Pad1_ Net-_M18-Pad2_ Net-_M13-Pad2_ Net-_M1-Pad4_ eSim_MOS_N
+R12 Net-_M17-Pad1_ Net-_M14-Pad1_ 1k
+M15 Timing_Resisitor vco_control_voltage_ Net-_M13-Pad2_ Net-_M1-Pad4_ eSim_MOS_N
+R6 reference_output Net-_R11-Pad2_ 3.8k
+M13 Net-_M1-Pad4_ Net-_M13-Pad2_ vco_control_voltage_ Net-_M1-Pad4_ eSim_MOS_N
+R7 reference_output vco_input_ 1.75k
+M14 Net-_M14-Pad1_ Net-_M10-Pad3_ vco_control_voltage_ Net-_M1-Pad4_ eSim_MOS_N
+R9 vco_control_voltage_ vco_input_ 3.6k
+.end

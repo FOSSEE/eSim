@@ -1,0 +1,53 @@
+.title kicad schematic
+
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+.include userDiode.lib
+r6 gnd net-_m7-pad2_ 4k
+c1 net-_c1-pad1_ net-_c1-pad2_ 10uf
+r5 net-_c1-pad1_ net-_m5-pad3_ 4k
+* u1 v1 v1 output port
+* u2 v1 plot_v1
+m3 v1 net-_d1-pad2_ net-_m2-pad1_ net-_m11-pad1_ CMOSP W=100u L=100u M=1
+* u3 v1 plot_v1
+r1 net-_m1-pad2_ v1 0k
+r4 net-_c1-pad2_ v1 0k
+m6 net-_m5-pad1_ net-_d1-pad1_ net-_m11-pad1_ net-_m11-pad1_ CMOSP W=100u L=100u M=1
+m2 net-_m2-pad1_ net-_d1-pad1_ net-_m11-pad1_ net-_m11-pad1_ CMOSP W=100u L=100u M=1
+v1 gnd net-_m11-pad1_ 12v
+m5 net-_m5-pad1_ net-_m5-pad1_ net-_m5-pad3_ gnd CMOSN W=100u L=100u M=1
+m10 output net-_m10-pad2_ net-_m10-pad3_ gnd CMOSN W=100u L=100u M=1
+m8 net-_m10-pad3_ net-_m5-pad3_ net-_c1-pad1_ gnd CMOSN W=100u L=100u M=1
+m9 net-_c1-pad1_ net-_c1-pad2_ net-_m7-pad2_ gnd CMOSN W=100u L=100u M=1
+r7 net-_m10-pad3_ net-_m5-pad1_ 4k
+m7 gnd net-_m7-pad2_ net-_c1-pad2_ gnd CMOSN W=100u L=100u M=1
+m4 net-_c1-pad2_ net-_m1-pad2_ net-_m4-pad3_ gnd CMOSN W=100u L=100u M=1
+r3 gnd net-_m4-pad3_ 4k
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad2_ gnd CMOSN W=100u L=100u M=1
+r2 gnd net-_m1-pad1_ 4k
+m14 net-_m14-pad1_ net-_d1-pad1_ net-_m11-pad1_ net-_m11-pad1_ CMOSP W=100u L=100u M=1
+r11 net-_m14-pad1_ net-_m13-pad2_ 0k
+m11 net-_m11-pad1_ net-_m10-pad3_ net-_m10-pad2_ gnd CMOSN W=100u L=100u M=1
+r10 net-_m13-pad1_ net-_m13-pad2_ 4k
+m16 net-_m14-pad1_ net-_m13-pad1_ gnd gnd CMOSN W=100u L=100u M=1
+m13 net-_m13-pad1_ net-_m13-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+r12 net-_m14-pad1_ net-_m13-pad2_ 0k
+d1 net-_d1-pad1_ net-_d1-pad2_ D1N750
+m17 net-_d1-pad2_ net-_m14-pad1_ gnd gnd CMOSN W=100u L=100u M=1
+m15 net-_m14-pad1_ net-_m14-pad1_ net-_m14-pad1_ net-_m14-pad1_ CMOSP W=100u L=100u M=1
+* u4 output plot_v1
+m12 net-_m12-pad1_ net-_c1-pad1_ gnd net-_m11-pad1_ CMOSP W=100u L=100u M=1
+r8 net-_m12-pad1_ net-_m10-pad2_ 4k
+r9 output net-_m10-pad2_ 4k
+.tran 0.1e-03 10e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(v1)
+plot v(v1)
+plot v(output)
+.endc
+.end

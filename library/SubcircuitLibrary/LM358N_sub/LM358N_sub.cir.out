@@ -1,0 +1,54 @@
+.title kicad schematic
+
+.include NPN.lib
+.include PNP.lib
+i5 net-_i1-pad1_ net-_q15-pad3_ 6u
+q15 net-_q15-pad1_ net-_q14-pad3_ net-_q15-pad3_ Q2N2907A
+* u1 net-_q10-pad3_ net-_q1-pad2_ net-_q6-pad2_ gnd net-_q19-pad2_ net-_q14-pad2_ net-_q23-pad3_ net-_i1-pad1_ port
+q14 gnd net-_q14-pad2_ net-_q14-pad3_ Q2N2907A
+q16 net-_q15-pad1_ net-_q15-pad1_ gnd Q2N2222
+q23 net-_c2-pad2_ net-_q23-pad2_ net-_q23-pad3_ Q2N2222
+q24 net-_i1-pad1_ net-_c2-pad2_ net-_q24-pad3_ Q2N2222
+i7 net-_i1-pad1_ net-_c2-pad2_ 100u
+q25 net-_i1-pad1_ net-_q24-pad3_ net-_q23-pad2_ Q2N2222
+r4 net-_q23-pad3_ net-_q23-pad2_ 50
+q22 net-_c2-pad2_ net-_q21-pad3_ gnd Q2N2222
+i8 net-_q23-pad3_ gnd 50u
+q26 gnd net-_c2-pad2_ net-_q23-pad3_ Q2N2907A
+q20 gnd net-_c2-pad1_ net-_q20-pad3_ Q2N2907A
+r3 gnd net-_q21-pad3_ 1k
+q21 net-_i1-pad1_ net-_q20-pad3_ net-_q21-pad3_ Q2N2222
+q18 net-_c2-pad1_ net-_q18-pad2_ net-_q15-pad3_ Q2N2907A
+c2 net-_c2-pad1_ net-_c2-pad2_ 30p
+i6 net-_i1-pad1_ net-_q20-pad3_ 4.0u
+q17 net-_c2-pad1_ net-_q15-pad1_ gnd Q2N2222
+q19 gnd net-_q19-pad2_ net-_q18-pad2_ Q2N2907A
+i1 net-_i1-pad1_ net-_q2-pad3_ 6u
+c1 net-_c1-pad1_ net-_c1-pad2_ 30p
+r2 net-_q10-pad3_ net-_q10-pad2_ 50
+q11 net-_i1-pad1_ net-_c1-pad2_ net-_q11-pad3_ Q2N2222
+q12 net-_i1-pad1_ net-_q11-pad3_ net-_q10-pad2_ Q2N2222
+q9 net-_c1-pad2_ net-_q8-pad3_ gnd Q2N2222
+q8 net-_i1-pad1_ net-_q7-pad3_ net-_q8-pad3_ Q2N2222
+r1 gnd net-_q8-pad3_ 1k
+q10 net-_c1-pad2_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+i2 net-_i1-pad1_ net-_q7-pad3_ 4.0u
+i3 net-_i1-pad1_ net-_c1-pad2_ 100u
+q13 gnd net-_c1-pad2_ net-_q10-pad3_ Q2N2907A
+i4 net-_q10-pad3_ gnd 50u
+q7 gnd net-_c1-pad1_ net-_q7-pad3_ Q2N2907A
+q4 net-_c1-pad1_ net-_q2-pad1_ gnd Q2N2222
+q3 net-_q2-pad1_ net-_q2-pad1_ gnd Q2N2222
+q1 gnd net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q5 net-_c1-pad1_ net-_q5-pad2_ net-_q2-pad3_ Q2N2907A
+q6 gnd net-_q6-pad2_ net-_q5-pad2_ Q2N2907A
+q2 net-_q2-pad1_ net-_q1-pad3_ net-_q2-pad3_ Q2N2907A
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

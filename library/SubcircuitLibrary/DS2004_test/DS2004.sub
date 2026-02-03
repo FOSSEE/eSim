@@ -1,0 +1,50 @@
+* Subcircuit DS2004
+.subckt DS2004 net-_r1-pad1_ net-_r2-pad1_ net-_r3-pad1_ net-_r4-pad1_ net-_r14-pad1_ net-_r15-pad1_ net-_r13-pad1_ net-_q12-pad3_ net-_d1-pad2_ net-_d5-pad1_ net-_d7-pad1_ net-_d6-pad1_ net-_d4-pad1_ net-_d3-pad1_ net-_d2-pad1_ net-_d1-pad1_ 
+.title kicad schematic
+.include NPN.lib
+.include D.lib
+d6 net-_d6-pad1_ net-_d1-pad2_ 1N4148
+q10 net-_d6-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+r14 net-_r14-pad1_ net-_q10-pad2_ 10.5k
+r20 net-_q10-pad3_ net-_q12-pad3_ 3k
+q13 net-_d6-pad1_ net-_q10-pad3_ net-_q12-pad3_ Q2N2222
+r17 net-_q10-pad2_ net-_q10-pad3_ 7.2k
+r15 net-_r15-pad1_ net-_q11-pad2_ 10.5k
+d7 net-_d7-pad1_ net-_d1-pad2_ 1N4148
+r21 net-_q11-pad3_ net-_q12-pad3_ 3k
+q14 net-_d7-pad1_ net-_q11-pad3_ net-_q12-pad3_ Q2N2222
+q11 net-_d7-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+r18 net-_q11-pad2_ net-_q11-pad3_ 7.2k
+q12 net-_d5-pad1_ net-_q12-pad2_ net-_q12-pad3_ Q2N2222
+r13 net-_r13-pad1_ net-_q9-pad2_ 10.5k
+d5 net-_d5-pad1_ net-_d1-pad2_ 1N4148
+q9 net-_d5-pad1_ net-_q9-pad2_ net-_q12-pad2_ Q2N2222
+r19 net-_q12-pad2_ net-_q12-pad3_ 3k
+r16 net-_q9-pad2_ net-_q12-pad2_ 7.2k
+q7 net-_d3-pad1_ net-_q3-pad3_ net-_q12-pad3_ Q2N2222
+d4 net-_d4-pad1_ net-_d1-pad2_ 1N4148
+q8 net-_d4-pad1_ net-_q4-pad3_ net-_q12-pad3_ Q2N2222
+d3 net-_d3-pad1_ net-_d1-pad2_ 1N4148
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q6 net-_d2-pad1_ net-_q2-pad3_ net-_q12-pad3_ Q2N2222
+q1 net-_d1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q5 net-_d1-pad1_ net-_q1-pad3_ net-_q12-pad3_ Q2N2222
+d2 net-_d2-pad1_ net-_d1-pad2_ 1N4148
+q2 net-_d2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+r6 net-_q2-pad2_ net-_q2-pad3_ 7.2k
+r10 net-_q2-pad3_ net-_q12-pad3_ 3k
+r9 net-_q1-pad3_ net-_q12-pad3_ 3k
+r5 net-_q1-pad2_ net-_q1-pad3_ 7.2k
+r1 net-_r1-pad1_ net-_q1-pad2_ 10.5k
+r2 net-_r2-pad1_ net-_q2-pad2_ 10.5k
+r11 net-_q3-pad3_ net-_q12-pad3_ 3k
+q3 net-_d3-pad1_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+r3 net-_r3-pad1_ net-_q3-pad2_ 10.5k
+r12 net-_q4-pad3_ net-_q12-pad3_ 3k
+q4 net-_d4-pad1_ net-_q4-pad2_ net-_q4-pad3_ Q2N2222
+r8 net-_q4-pad2_ net-_q4-pad3_ 7.2k
+r7 net-_q3-pad2_ net-_q3-pad3_ 7.2k
+r4 net-_r4-pad1_ net-_q4-pad2_ 10.5k
+* Control Statements
+
+.ends DS2004

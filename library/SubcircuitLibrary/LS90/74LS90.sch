@@ -1,0 +1,494 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:ls90-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L d_jkff U7
+U 1 1 69244D7F
+P 2900 2900
+F 0 "U7" H 2900 2900 60  0000 C CNN
+F 1 "d_jkff" H 2950 3050 60  0000 C CNN
+F 2 "" H 2900 2900 60  0000 C CNN
+F 3 "" H 2900 2900 60  0000 C CNN
+	1    2900 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_jkff U12
+U 1 1 69244D80
+P 7650 3000
+F 0 "U12" H 7650 3000 60  0000 C CNN
+F 1 "d_jkff" H 7700 3150 60  0000 C CNN
+F 2 "" H 7650 3000 60  0000 C CNN
+F 3 "" H 7650 3000 60  0000 C CNN
+	1    7650 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_jkff U10
+U 1 1 69244D81
+P 5200 2950
+F 0 "U10" H 5200 2950 60  0000 C CNN
+F 1 "d_jkff" H 5250 3100 60  0000 C CNN
+F 2 "" H 5200 2950 60  0000 C CNN
+F 3 "" H 5200 2950 60  0000 C CNN
+	1    5200 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_nand U3
+U 1 1 69244D82
+P 1400 4350
+F 0 "U3" H 1400 4350 60  0000 C CNN
+F 1 "d_nand" H 1450 4450 60  0000 C CNN
+F 2 "" H 1400 4350 60  0000 C CNN
+F 3 "" H 1400 4350 60  0000 C CNN
+	1    1400 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_nand U6
+U 1 1 69244D83
+P 2350 1150
+F 0 "U6" H 2350 1150 60  0000 C CNN
+F 1 "d_nand" H 2400 1250 60  0000 C CNN
+F 2 "" H 2350 1150 60  0000 C CNN
+F 3 "" H 2350 1150 60  0000 C CNN
+	1    2350 1150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2900 1100 2900 2150
+Wire Wire Line
+	5200 1100 5200 2200
+Connection ~ 2900 1100
+Wire Wire Line
+	7650 1100 7650 2250
+Connection ~ 5200 1100
+Wire Wire Line
+	10050 1100 10050 2250
+Connection ~ 7650 1100
+Wire Wire Line
+	1850 4300 10050 4300
+Wire Wire Line
+	2900 4300 2900 3700
+Wire Wire Line
+	5200 4300 5200 3750
+Connection ~ 2900 4300
+Wire Wire Line
+	7650 4300 7650 3800
+Connection ~ 5200 4300
+Wire Wire Line
+	10050 4300 10050 3800
+Connection ~ 7650 4300
+Wire Wire Line
+	9250 3000 8900 3000
+Wire Wire Line
+	8900 3000 8900 5000
+Wire Wire Line
+	4400 2950 4250 2950
+Wire Wire Line
+	4250 2950 4250 5000
+Wire Wire Line
+	8900 5000 3750 5000
+$Comp
+L d_srff U15
+U 1 1 69244D84
+P 10050 3000
+F 0 "U15" H 10050 3000 60  0000 C CNN
+F 1 "d_srff" H 10100 3150 60  0000 C CNN
+F 2 "" H 10050 3000 60  0000 C CNN
+F 3 "" H 10050 3000 60  0000 C CNN
+	1    10050 3000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4400 2550 4100 2550
+Wire Wire Line
+	4100 2550 4100 5250
+Wire Wire Line
+	11000 5250 11000 3450
+Wire Wire Line
+	11000 3450 10850 3450
+Wire Wire Line
+	6000 2550 6650 2550
+Wire Wire Line
+	6200 3000 6850 3000
+$Comp
+L adc_bridge_1 U5
+U 1 1 69244D86
+P 1500 2950
+F 0 "U5" H 1500 2950 60  0000 C CNN
+F 1 "adc_bridge_1" H 1500 3100 60  0000 C CNN
+F 2 "" H 1500 2950 60  0000 C CNN
+F 3 "" H 1500 2950 60  0000 C CNN
+	1    1500 2950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2050 2900 2100 2900
+$Comp
+L adc_bridge_1 U8
+U 1 1 69244D88
+P 3200 5050
+F 0 "U8" H 3200 5050 60  0000 C CNN
+F 1 "adc_bridge_1" H 3200 5200 60  0000 C CNN
+F 2 "" H 3200 5050 60  0000 C CNN
+F 3 "" H 3200 5050 60  0000 C CNN
+	1    3200 5050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 5000 2350 5000
+Wire Wire Line
+	2350 5000 2350 5150
+Wire Wire Line
+	4100 5250 11000 5250
+Connection ~ 4250 5000
+Wire Wire Line
+	4500 1900 4650 1900
+Connection ~ 6200 2550
+$Comp
+L d_and U14
+U 1 1 69244D8D
+P 9050 2100
+F 0 "U14" H 9050 2100 60  0000 C CNN
+F 1 "d_and" H 9100 2200 60  0000 C CNN
+F 2 "" H 9050 2100 60  0000 C CNN
+F 3 "" H 9050 2100 60  0000 C CNN
+	1    9050 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 2550 6650 2000
+Wire Wire Line
+	6650 2000 8600 2000
+Wire Wire Line
+	9250 2600 9000 2600
+Wire Wire Line
+	9000 2600 9000 2300
+Wire Wire Line
+	9000 2300 9850 2300
+Wire Wire Line
+	9850 2300 9850 2050
+Wire Wire Line
+	9850 2050 9500 2050
+Wire Wire Line
+	9250 3450 9050 3450
+Wire Wire Line
+	9050 3450 9050 3950
+Wire Wire Line
+	9050 3950 11050 3950
+Wire Wire Line
+	11050 2600 10850 2600
+Connection ~ 11050 2600
+$Comp
+L adc_bridge_2 U2
+U 1 1 69244D90
+P 1250 1100
+F 0 "U2" H 1250 1100 60  0000 C CNN
+F 1 "adc_bridge_2" H 1250 1250 60  0000 C CNN
+F 2 "" H 1250 1100 60  0000 C CNN
+F 3 "" H 1250 1100 60  0000 C CNN
+	1    1250 1100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 1100 10050 1100
+Wire Wire Line
+	1900 1050 1800 1050
+Wire Wire Line
+	1900 1150 1800 1150
+$Comp
+L adc_bridge_2 U4
+U 1 1 69244D91
+P 1450 5100
+F 0 "U4" H 1450 5100 60  0000 C CNN
+F 1 "adc_bridge_2" H 1450 5250 60  0000 C CNN
+F 2 "" H 1450 5100 60  0000 C CNN
+F 3 "" H 1450 5100 60  0000 C CNN
+	1    1450 5100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2000 5050 2150 5050
+Wire Wire Line
+	2150 5050 2150 4800
+Wire Wire Line
+	2150 4800 650  4800
+Wire Wire Line
+	650  4800 650  4250
+Wire Wire Line
+	650  4250 950  4250
+Wire Wire Line
+	2000 5150 2250 5150
+Wire Wire Line
+	2250 5150 2250 4700
+Wire Wire Line
+	2250 4700 750  4700
+Wire Wire Line
+	750  4700 750  4350
+Wire Wire Line
+	750  4350 950  4350
+Wire Wire Line
+	850  5050 550  5050
+Wire Wire Line
+	550  5050 550  5500
+Wire Wire Line
+	550  5500 900  5500
+Wire Wire Line
+	850  5150 750  5150
+Wire Wire Line
+	750  5150 750  5350
+Wire Wire Line
+	750  5350 1550 5350
+Wire Wire Line
+	750  1600 450  1600
+Wire Wire Line
+	450  1600 450  1050
+Wire Wire Line
+	450  1050 650  1050
+Wire Wire Line
+	650  1150 550  1150
+Wire Wire Line
+	550  1150 550  1500
+Wire Wire Line
+	550  1500 1300 1500
+$Comp
+L dac_bridge_1 U9
+U 1 1 69244D9A
+P 3950 1950
+F 0 "U9" H 3950 1950 60  0000 C CNN
+F 1 "dac_bridge_1" H 3950 2100 60  0000 C CNN
+F 2 "" H 3950 1950 60  0000 C CNN
+F 3 "" H 3950 1950 60  0000 C CNN
+	1    3950 1950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3350 1900 3200 1900
+Wire Wire Line
+	3200 1900 3200 2200
+Wire Wire Line
+	3200 2200 3900 2200
+Wire Wire Line
+	3900 2200 3900 2500
+Wire Wire Line
+	3900 2500 3700 2500
+$Comp
+L dac_bridge_1 U11
+U 1 1 69244D9B
+P 6800 1750
+F 0 "U11" H 6800 1750 60  0000 C CNN
+F 1 "dac_bridge_1" H 6800 1900 60  0000 C CNN
+F 2 "" H 6800 1750 60  0000 C CNN
+F 3 "" H 6800 1750 60  0000 C CNN
+	1    6800 1750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6200 1700 6200 3000
+Wire Wire Line
+	7350 1700 7500 1700
+Wire Wire Line
+	8600 2100 8550 2100
+Wire Wire Line
+	8550 2100 8550 2600
+Wire Wire Line
+	8550 2600 8450 2600
+Wire Wire Line
+	11050 3950 11050 2350
+$Comp
+L dac_bridge_1 U16
+U 1 1 69245575
+P 11100 1750
+F 0 "U16" H 11100 1750 60  0000 C CNN
+F 1 "dac_bridge_1" H 11100 1900 60  0000 C CNN
+F 2 "" H 11100 1750 60  0000 C CNN
+F 3 "" H 11100 1750 60  0000 C CNN
+	1    11100 1750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L dac_bridge_1 U13
+U 1 1 6924568D
+P 8700 1600
+F 0 "U13" H 8700 1600 60  0000 C CNN
+F 1 "dac_bridge_1" H 8700 1750 60  0000 C CNN
+F 2 "" H 8700 1600 60  0000 C CNN
+F 3 "" H 8700 1600 60  0000 C CNN
+	1    8700 1600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 1550 8000 1550
+Wire Wire Line
+	8000 1550 8000 2250
+Wire Wire Line
+	8000 2250 8550 2250
+Connection ~ 8550 2250
+$Comp
+L PORT U1
+U 2 1 692457C8
+P 1000 1600
+F 0 "U1" H 1050 1700 30  0000 C CNN
+F 1 "PORT" H 1000 1600 30  0000 C CNN
+F 2 "" H 1000 1600 60  0000 C CNN
+F 3 "" H 1000 1600 60  0000 C CNN
+	2    1000 1600
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 4 1 69245997
+P 1550 1500
+F 0 "U1" H 1600 1600 30  0000 C CNN
+F 1 "PORT" H 1550 1500 30  0000 C CNN
+F 2 "" H 1550 1500 60  0000 C CNN
+F 3 "" H 1550 1500 60  0000 C CNN
+	4    1550 1500
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 1 1 69245A68
+P 600 2900
+F 0 "U1" H 650 3000 30  0000 C CNN
+F 1 "PORT" H 600 2900 30  0000 C CNN
+F 2 "" H 600 2900 60  0000 C CNN
+F 3 "" H 600 2900 60  0000 C CNN
+	1    600  2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	850  2900 900  2900
+$Comp
+L PORT U1
+U 7 1 69245DC2
+P 4900 1900
+F 0 "U1" H 4950 2000 30  0000 C CNN
+F 1 "PORT" H 4900 1900 30  0000 C CNN
+F 2 "" H 4900 1900 60  0000 C CNN
+F 3 "" H 4900 1900 60  0000 C CNN
+	7    4900 1900
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 8 1 69245FF7
+P 7750 1700
+F 0 "U1" H 7800 1800 30  0000 C CNN
+F 1 "PORT" H 7750 1700 30  0000 C CNN
+F 2 "" H 7750 1700 60  0000 C CNN
+F 3 "" H 7750 1700 60  0000 C CNN
+	8    7750 1700
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 6924619A
+P 1150 5500
+F 0 "U1" H 1200 5600 30  0000 C CNN
+F 1 "PORT" H 1150 5500 30  0000 C CNN
+F 2 "" H 1150 5500 60  0000 C CNN
+F 3 "" H 1150 5500 60  0000 C CNN
+	3    1150 5500
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 5 1 692461F8
+P 1800 5350
+F 0 "U1" H 1850 5450 30  0000 C CNN
+F 1 "PORT" H 1800 5350 30  0000 C CNN
+F 2 "" H 1800 5350 60  0000 C CNN
+F 3 "" H 1800 5350 60  0000 C CNN
+	5    1800 5350
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 6 1 6924634B
+P 2600 5150
+F 0 "U1" H 2650 5250 30  0000 C CNN
+F 1 "PORT" H 2600 5150 30  0000 C CNN
+F 2 "" H 2600 5150 60  0000 C CNN
+F 3 "" H 2600 5150 60  0000 C CNN
+	6    2600 5150
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 9 1 692469DB
+P 9500 1550
+F 0 "U1" H 9550 1650 30  0000 C CNN
+F 1 "PORT" H 9500 1550 30  0000 C CNN
+F 2 "" H 9500 1550 60  0000 C CNN
+F 3 "" H 9500 1550 60  0000 C CNN
+	9    9500 1550
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 10 1 69246E26
+P 10800 1200
+F 0 "U1" H 10850 1300 30  0000 C CNN
+F 1 "PORT" H 10800 1200 30  0000 C CNN
+F 2 "" H 10800 1200 60  0000 C CNN
+F 3 "" H 10800 1200 60  0000 C CNN
+	10   10800 1200
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

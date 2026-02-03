@@ -1,0 +1,1 @@
+.MODEL OA90 D( Is=0.5u N=1.35 Rs=5 bv=60 Ibv=0.01 Cjo=0.7p Vj=0.15 M=0.30 tt=150n )

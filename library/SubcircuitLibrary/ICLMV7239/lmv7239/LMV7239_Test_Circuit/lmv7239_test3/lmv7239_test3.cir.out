@@ -1,0 +1,48 @@
+.title kicad schematic
+
+.include PNP.lib
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+.include NPN.lib
+r9 gnd net-_q10-pad3_ 5k
+r8 gnd net-_q2-pad1_ 2k
+q10 net-_i4-pad2_ net-_i4-pad2_ net-_q10-pad3_ Q2N2222
+i5 net-_i5-pad1_ gnd 500u
+q9 net-_q12-pad2_ net-_i4-pad2_ net-_q2-pad1_ Q2N2222
+q4 net-_q4-pad1_ vref net-_i1-pad1_ Q2N2222
+r3 vin net-_i2-pad1_ 1k
+q3 net-_q3-pad1_ vref net-_i2-pad2_ Q2N2907A
+q2 net-_q2-pad1_ vin net-_i2-pad2_ Q2N2907A
+i2 net-_i2-pad1_ net-_i2-pad2_ 200u
+r10 net-_m1-pad2_ net-_i2-pad1_ 10k
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_i2-pad1_ net-_i2-pad1_ CMOSP W=100u L=100u M=1
+q12 net-_m4-pad2_ net-_q12-pad2_ net-_i5-pad1_ Q2N2222
+r11 net-_m4-pad2_ net-_i2-pad1_ 10k
+q11 net-_m1-pad2_ net-_q11-pad2_ net-_i5-pad1_ Q2N2222
+m4 out net-_m4-pad2_ net-_i2-pad1_ net-_i2-pad1_ CMOSP W=100u L=100u M=1
+q6 net-_q4-pad1_ net-_i3-pad1_ net-_q11-pad2_ Q2N2907A
+r6 gnd net-_q3-pad1_ 2k
+r5 net-_q4-pad1_ net-_i2-pad1_ 50k
+r4 net-_q5-pad3_ net-_i2-pad1_ 50k
+q7 net-_q11-pad2_ net-_i4-pad2_ net-_q3-pad1_ Q2N2222
+q5 net-_i3-pad1_ net-_i3-pad1_ net-_q5-pad3_ Q2N2907A
+i3 net-_i3-pad1_ gnd 300u
+m2 net-_m1-pad1_ net-_m1-pad1_ gnd gnd CMOSN W=100u L=100u M=1
+v1 net-_i2-pad1_ gnd 5
+m3 out net-_m1-pad1_ gnd gnd CMOSN W=100u L=100u M=1
+r7 net-_q1-pad1_ net-_i2-pad1_ 20k
+i4 net-_i2-pad1_ net-_i4-pad2_ 1m
+q8 net-_q1-pad1_ net-_i3-pad1_ net-_q12-pad2_ Q2N2907A
+i1 net-_i1-pad1_ gnd 400u
+q1 net-_q1-pad1_ vin net-_i1-pad1_ Q2N2222
+r2 gnd vref 1k
+r1 vref net-_i2-pad1_ 3k
+.tran 1e-00 10e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

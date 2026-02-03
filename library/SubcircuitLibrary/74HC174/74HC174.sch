@@ -1,0 +1,240 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L d_dff U2
+U 1 1 696302AE
+P 5750 1950
+F 0 "U2" H 5750 1950 60  0000 C CNN
+F 1 "d_dff" H 5750 2100 60  0000 C CNN
+F 2 "" H 5750 1950 60  0000 C CNN
+F 3 "" H 5750 1950 60  0000 C CNN
+	1    5750 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_dff U3
+U 1 1 6963030C
+P 5750 3500
+F 0 "U3" H 5750 3500 60  0000 C CNN
+F 1 "d_dff" H 5750 3650 60  0000 C CNN
+F 2 "" H 5750 3500 60  0000 C CNN
+F 3 "" H 5750 3500 60  0000 C CNN
+	1    5750 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 69630365
+P 4750 2650
+F 0 "U1" H 4800 2750 30  0000 C CNN
+F 1 "PORT" H 4750 2650 30  0000 C CNN
+F 2 "" H 4750 2650 60  0000 C CNN
+F 3 "" H 4750 2650 60  0000 C CNN
+	1    4750 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 696303A5
+P 4750 1600
+F 0 "U1" H 4800 1700 30  0000 C CNN
+F 1 "PORT" H 4750 1600 30  0000 C CNN
+F 2 "" H 4750 1600 60  0000 C CNN
+F 3 "" H 4750 1600 60  0000 C CNN
+	2    4750 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 696303D0
+P 4750 2250
+F 0 "U1" H 4800 2350 30  0000 C CNN
+F 1 "PORT" H 4750 2250 30  0000 C CNN
+F 2 "" H 4750 2250 60  0000 C CNN
+F 3 "" H 4750 2250 60  0000 C CNN
+	3    4750 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 696303F3
+P 4750 1150
+F 0 "U1" H 4800 1250 30  0000 C CNN
+F 1 "PORT" H 4750 1150 30  0000 C CNN
+F 2 "" H 4750 1150 60  0000 C CNN
+F 3 "" H 4750 1150 60  0000 C CNN
+	4    4750 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 6963041C
+P 6800 1600
+F 0 "U1" H 6850 1700 30  0000 C CNN
+F 1 "PORT" H 6800 1600 30  0000 C CNN
+F 2 "" H 6800 1600 60  0000 C CNN
+F 3 "" H 6800 1600 60  0000 C CNN
+	5    6800 1600
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 6 1 69630461
+P 6800 2250
+F 0 "U1" H 6850 2350 30  0000 C CNN
+F 1 "PORT" H 6800 2250 30  0000 C CNN
+F 2 "" H 6800 2250 60  0000 C CNN
+F 3 "" H 6800 2250 60  0000 C CNN
+	6    6800 2250
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 7 1 69630490
+P 4750 4300
+F 0 "U1" H 4800 4400 30  0000 C CNN
+F 1 "PORT" H 4750 4300 30  0000 C CNN
+F 2 "" H 4750 4300 60  0000 C CNN
+F 3 "" H 4750 4300 60  0000 C CNN
+	7    4750 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 8 1 696304DD
+P 4750 3150
+F 0 "U1" H 4800 3250 30  0000 C CNN
+F 1 "PORT" H 4750 3150 30  0000 C CNN
+F 2 "" H 4750 3150 60  0000 C CNN
+F 3 "" H 4750 3150 60  0000 C CNN
+	8    4750 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 9 1 6963050A
+P 4750 3800
+F 0 "U1" H 4800 3900 30  0000 C CNN
+F 1 "PORT" H 4750 3800 30  0000 C CNN
+F 2 "" H 4750 3800 60  0000 C CNN
+F 3 "" H 4750 3800 60  0000 C CNN
+	9    4750 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 10 1 6963054F
+P 4750 2850
+F 0 "U1" H 4800 2950 30  0000 C CNN
+F 1 "PORT" H 4750 2850 30  0000 C CNN
+F 2 "" H 4750 2850 60  0000 C CNN
+F 3 "" H 4750 2850 60  0000 C CNN
+	10   4750 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 11 1 69630584
+P 6800 3150
+F 0 "U1" H 6850 3250 30  0000 C CNN
+F 1 "PORT" H 6800 3150 30  0000 C CNN
+F 2 "" H 6800 3150 60  0000 C CNN
+F 3 "" H 6800 3150 60  0000 C CNN
+	11   6800 3150
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 12 1 696305B9
+P 6800 3800
+F 0 "U1" H 6850 3900 30  0000 C CNN
+F 1 "PORT" H 6800 3800 30  0000 C CNN
+F 2 "" H 6800 3800 60  0000 C CNN
+F 3 "" H 6800 3800 60  0000 C CNN
+	12   6800 3800
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5750 2650 5750 2550
+Wire Wire Line
+	5000 2650 5750 2650
+Wire Wire Line
+	5000 2250 5200 2250
+Wire Wire Line
+	5000 1600 5200 1600
+Wire Wire Line
+	5000 1150 5750 1150
+Wire Wire Line
+	5750 1150 5750 1300
+Wire Wire Line
+	6300 1600 6550 1600
+Wire Wire Line
+	6300 2250 6550 2250
+Wire Wire Line
+	5000 3150 5200 3150
+Wire Wire Line
+	6300 3150 6550 3150
+Wire Wire Line
+	6550 3800 6300 3800
+Wire Wire Line
+	5000 3800 5200 3800
+Wire Wire Line
+	5750 4100 5750 4300
+Wire Wire Line
+	5750 4300 5000 4300
+Wire Wire Line
+	5000 2850 5750 2850
+$EndSCHEMATC

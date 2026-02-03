@@ -1,0 +1,14 @@
+.title KiCad schematic
+X1 A B C GND F E D Net-_X1-Pad8_ CD40107BE
+U2 B plot_v1
+U3 C plot_v1
+U1 A plot_v1
+v2 B GND DC
+v1 A GND DC
+U6 D plot_v1
+v4 E GND DC
+v3 Net-_X1-Pad8_ GND DC
+v5 D GND DC
+U5 E plot_v1
+U4 F plot_v1
+.end

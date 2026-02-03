@@ -1,0 +1,142 @@
+EESchema Schematic File Version 5
+EELAYER 36 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+Comment5 ""
+Comment6 ""
+Comment7 ""
+Comment8 ""
+Comment9 ""
+$EndDescr
+$Comp
+L eSim_Devices:eSim_PNP Q?
+U 1 1 00000000
+P 3100 2100
+F 0 "Q?" H 3300 2050 50  0000 L CNN
+F 1 "eSim_PNP" H 3300 2150 50  0000 L CNN
+F 2 "" H 3300 2200 29  0000 C CNN
+F 3 "" H 3100 2100 60  0000 C CNN
+	1    3100 2100
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q?
+U 1 1 00000000
+P 3400 4400
+F 0 "Q?" H 3600 4350 50  0000 L CNN
+F 1 "eSim_PNP" H 3600 4450 50  0000 L CNN
+F 2 "" H 3600 4500 29  0000 C CNN
+F 3 "" H 3400 4400 60  0000 C CNN
+	1    3400 4400
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q?
+U 1 1 00000000
+P 3650 2900
+F 0 "Q?" H 3850 2850 50  0000 L CNN
+F 1 "eSim_PNP" H 3850 2950 50  0000 L CNN
+F 2 "" H 3850 3000 29  0000 C CNN
+F 3 "" H 3650 2900 60  0000 C CNN
+	1    3650 2900
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q?
+U 1 1 00000000
+P 4650 4400
+F 0 "Q?" H 4850 4350 50  0000 L CNN
+F 1 "eSim_PNP" H 4850 4450 50  0000 L CNN
+F 2 "" H 4850 4500 29  0000 C CNN
+F 3 "" H 4650 4400 60  0000 C CNN
+	1    4650 4400
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q?
+U 1 1 00000000
+P 6350 3050
+F 0 "Q?" H 6550 3000 50  0000 L CNN
+F 1 "eSim_PNP" H 6550 3100 50  0000 L CNN
+F 2 "" H 6550 3150 29  0000 C CNN
+F 3 "" H 6350 3050 60  0000 C CNN
+	1    6350 3050
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q?
+U 1 1 00000000
+P 6350 4750
+F 0 "Q?" H 6550 4800 50  0000 L CNN
+F 1 "eSim_NPN" H 6550 4700 50  0000 L CNN
+F 2 "" H 6550 4850 29  0000 C CNN
+F 3 "" H 6350 4750 60  0000 C CNN
+	1    6350 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q?
+U 1 1 00000000
+P 7250 3050
+F 0 "Q?" H 7450 3000 50  0000 L CNN
+F 1 "eSim_PNP" H 7450 3100 50  0000 L CNN
+F 2 "" H 7450 3150 29  0000 C CNN
+F 3 "" H 7250 3050 60  0000 C CNN
+	1    7250 3050
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q?
+U 1 1 00000000
+P 7500 4750
+F 0 "Q?" H 7700 4800 50  0000 L CNN
+F 1 "eSim_NPN" H 7700 4700 50  0000 L CNN
+F 2 "" H 7700 4850 29  0000 C CNN
+F 3 "" H 7500 4750 60  0000 C CNN
+	1    7500 4750
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q?
+U 1 1 00000000
+P 9250 2650
+F 0 "Q?" H 9450 2700 50  0000 L CNN
+F 1 "eSim_NPN" H 9450 2600 50  0000 L CNN
+F 2 "" H 9450 2750 29  0000 C CNN
+F 3 "" H 9250 2650 60  0000 C CNN
+	1    9250 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_PNP Q?
+U 1 1 00000000
+P 9250 4100
+F 0 "Q?" H 9450 4050 50  0000 L CNN
+F 1 "eSim_PNP" H 9450 4150 50  0000 L CNN
+F 2 "" H 9450 4200 29  0000 C CNN
+F 3 "" H 9250 4100 60  0000 C CNN
+	1    9250 4100
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Subckt:LM556 X?
+U 1 1 00000000
+P 7550 1850
+F 0 "X?" H 7550 2450 50  0000 C CNN
+F 1 "LM556" H 7550 2350 50  0000 C CNN
+F 2 "" H 7550 1850 50  0001 C CNN
+F 3 "" H 7550 1850 50  0001 C CNN
+	1    7550 1850
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

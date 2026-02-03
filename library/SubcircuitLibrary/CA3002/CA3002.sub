@@ -1,0 +1,27 @@
+* Subcircuit CA3002
+.subckt CA3002 net-_r1-pad2_ net-_r10-pad2_ net-_r6-pad2_ net-_d1-pad1_ net-_q5-pad2_ ? net-_r11-pad2_ net-_q6-pad3_ net-_q1-pad1_ net-_q1-pad2_ 
+* c:\users\ajay\onedrive\desktop\fossee2.3\esim\library\subcircuitlibrary\ca3002\ca3002.cir
+.include NPN.lib
+.include D.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_q1-pad1_ net-_q1-pad3_ net-_q2-pad3_ Q2N2222
+r2  net-_q1-pad3_ net-_r10-pad2_ 4.8k
+r5  net-_q2-pad3_ net-_q3-pad1_ 50
+r8  net-_q3-pad1_ net-_q4-pad3_ 50
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_q4-pad3_ Q2N2222
+r9  net-_q1-pad1_ net-_q4-pad1_ 3k
+q6 net-_q1-pad1_ net-_q4-pad1_ net-_q6-pad3_ Q2N2222
+q5 net-_q1-pad1_ net-_q5-pad2_ net-_q4-pad2_ Q2N2222
+r11  net-_q6-pad3_ net-_r11-pad2_ 2k
+r10  net-_q4-pad2_ net-_r10-pad2_ 4.8k
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+r1  net-_q3-pad2_ net-_r1-pad2_ 5k
+r3  net-_q3-pad2_ net-_d1-pad1_ 2.8k
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d1-pad2_ net-_d2-pad2_ 1N4148
+r4  net-_d2-pad2_ net-_r10-pad2_ 2.2k
+r6  net-_q3-pad3_ net-_r6-pad2_ 500
+r7  net-_r6-pad2_ net-_r10-pad2_ 1k
+* Control Statements
+
+.ends CA3002

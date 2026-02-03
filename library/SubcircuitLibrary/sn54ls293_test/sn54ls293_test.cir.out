@@ -1,0 +1,37 @@
+.title kicad schematic
+
+.include SSN54LS293_SUB.sub
+x1 unconnected-_x1-pad1_ unconnected-_x1-pad2_ unconnected-_x1-pad3_ net-_u16-pad3_ net-_u16-pad2_ unconnected-_x1-pad6_ net-_u2-pad6_ net-_u16-pad4_ net-_x1-pad11_ net-_u2-pad5_ net-_x1-pad11_ unconnected-_x1-pad12_ unconnected-_x1-pad13_ net-_u2-pad4_ SSN54LS293_SUB
+* u16 net-_x1-pad11_ net-_u16-pad2_ net-_u16-pad3_ net-_u16-pad4_ a b c d dac_bridge_4
+r1 d gnd 1k
+* u2 net-_u2-pad1_ pulse gnd net-_u2-pad4_ net-_u2-pad5_ net-_u2-pad6_ adc_bridge_3
+* u1 pulse plot_v1
+v1 net-_u2-pad1_ gnd  dc 5v
+v2 pulse gnd pulse(0v 5v 0 1ps 1ps 100ms 200ms)
+r2 c gnd 1k
+* u19 b plot_v1
+* u18 c plot_v1
+* u17 d plot_v1
+r3 b gnd 1k
+* u20 a plot_v1
+r4 a gnd 1k
+a1 [net-_x1-pad11_ net-_u16-pad2_ net-_u16-pad3_ net-_u16-pad4_ ] [a b c d ] u16
+a2 [net-_u2-pad1_ pulse gnd ] [net-_u2-pad4_ net-_u2-pad5_ net-_u2-pad6_ ] u2
+* Schematic Name:                             dac_bridge_4, Ngspice Name: dac_bridge
+.model u16 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_3, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-03 3000e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(pulse)
+plot v(b)
+plot v(c)
+plot v(d)
+plot v(a)
+.endc
+.end

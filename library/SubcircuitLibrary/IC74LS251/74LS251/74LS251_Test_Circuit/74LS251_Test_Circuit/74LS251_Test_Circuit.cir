@@ -1,0 +1,35 @@
+.title KiCad schematic
+v_I6 V_I6 GND DC
+v_I7 V_I7 GND DC
+v_S0 V_S0 GND DC
+v_S1 V_S1 GND DC
+v_S2 V_S2 GND DC
+v_I4 V_I4 GND DC
+v_I5 V_I5 GND DC
+v_E1 V_E GND DC
+R1 GND V_Y 1k
+U6 V_Y plot_v1
+v_I0 V_I0 GND DC
+v_I2 V_I2 GND DC
+v_I1 V_I1 GND DC
+U10 V_I4 V_I5 V_I6 V_I7 V_S0 V_S1 V_S2 Net-_U10-Pad8_ Net-_U10-Pad9_ Net-_U10-Pad10_ Net-_U10-Pad11_ Net-_U10-Pad12_ Net-_U10-Pad13_ Net-_U10-Pad14_ adc_bridge_7
+v1 Net-_v1-Pad1_ GND 5
+U11 V_S2 plot_v1
+X1 Net-_U7-Pad6_ Net-_U7-Pad7_ Net-_U7-Pad8_ Net-_U7-Pad9_ Net-_U8-Pad2_ Net-_U8-Pad1_ Net-_U7-Pad10_ GND Net-_U10-Pad14_ Net-_U10-Pad13_ Net-_U10-Pad12_ Net-_U10-Pad11_ Net-_U10-Pad10_ Net-_U10-Pad9_ Net-_U10-Pad8_ Net-_v1-Pad1_ 74LS251
+U7 V_I3 V_I2 V_I1 V_I0 V_E Net-_U7-Pad6_ Net-_U7-Pad7_ Net-_U7-Pad8_ Net-_U7-Pad9_ Net-_U7-Pad10_ adc_bridge_5
+U5 V_E plot_v1
+U14 V_I7 plot_v1
+U15 V_I6 plot_v1
+U16 V_I5 plot_v1
+U17 V_I4 plot_v1
+U13 V_S0 plot_v1
+U12 V_S1 plot_v1
+R2 GND V_W 1k
+U8 Net-_U8-Pad1_ Net-_U8-Pad2_ V_W V_Y dac_bridge_2
+U9 V_W plot_v1
+v_I3 V_I3 GND DC
+U3 V_I1 plot_v1
+U4 V_I0 plot_v1
+U2 V_I2 plot_v1
+U1 V_I3 plot_v1
+.end

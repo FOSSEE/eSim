@@ -1,0 +1,15 @@
+.title KiCad schematic
+X3 Net-_U6-Pad5_ Net-_U5-Pad5_ Net-_U7-Pad5_ Net-_U1-Pad5_ Net-_U1-Pad2_ Net-_U7-Pad5_ Net-_U6-Pad5_ Net-_U8-Pad5_ Net-_U1-Pad15_ Net-_U1-Pad3_ Net-_U1-Pad19_ Net-_U1-Pad1_ Net-_U6-Pad1_ Net-_U7-Pad1_ IC_74153
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ unconnected-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ unconnected-_U1-Pad20_ PORT
+U6 Net-_U6-Pad1_ Net-_U1-Pad12_ unconnected-_U6-Pad3_ Net-_U1-Pad9_ Net-_U6-Pad5_ unconnected-_U6-Pad6_ d_dff
+X4 Net-_U8-Pad5_ Net-_U7-Pad5_ Net-_U1-Pad17_ Net-_U1-Pad4_ Net-_U1-Pad2_ Net-_U1-Pad17_ Net-_U8-Pad5_ Net-_U1-Pad18_ Net-_U1-Pad16_ Net-_U1-Pad3_ Net-_U1-Pad19_ Net-_U1-Pad1_ Net-_U8-Pad1_ Net-_U9-Pad1_ IC_74153
+U7 Net-_U7-Pad1_ Net-_U1-Pad12_ unconnected-_U7-Pad3_ Net-_U1-Pad9_ Net-_U7-Pad5_ unconnected-_U7-Pad6_ d_dff
+U8 Net-_U8-Pad1_ Net-_U1-Pad12_ unconnected-_U8-Pad3_ Net-_U1-Pad9_ Net-_U8-Pad5_ unconnected-_U8-Pad6_ d_dff
+U9 Net-_U9-Pad1_ Net-_U1-Pad12_ unconnected-_U9-Pad3_ Net-_U1-Pad9_ Net-_U1-Pad17_ unconnected-_U9-Pad6_ d_dff
+U4 Net-_U4-Pad1_ Net-_U1-Pad12_ unconnected-_U4-Pad3_ Net-_U1-Pad9_ Net-_U4-Pad5_ unconnected-_U4-Pad6_ d_dff
+U3 Net-_U3-Pad1_ Net-_U1-Pad12_ unconnected-_U3-Pad3_ Net-_U1-Pad9_ Net-_U3-Pad5_ unconnected-_U3-Pad6_ d_dff
+U5 Net-_U5-Pad1_ Net-_U1-Pad12_ unconnected-_U5-Pad3_ Net-_U1-Pad9_ Net-_U5-Pad5_ unconnected-_U5-Pad6_ d_dff
+X2 Net-_U4-Pad5_ Net-_U3-Pad5_ Net-_U5-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad2_ Net-_U5-Pad5_ Net-_U4-Pad5_ Net-_U6-Pad5_ Net-_U1-Pad14_ Net-_U1-Pad3_ Net-_U1-Pad19_ Net-_U1-Pad1_ Net-_U4-Pad1_ Net-_U5-Pad1_ IC_74153
+U2 Net-_U2-Pad1_ Net-_U1-Pad12_ unconnected-_U2-Pad3_ Net-_U1-Pad9_ Net-_U1-Pad8_ unconnected-_U2-Pad6_ d_dff
+X1 Net-_U1-Pad8_ Net-_U1-Pad11_ Net-_U3-Pad5_ Net-_U1-Pad7_ Net-_U1-Pad2_ Net-_U3-Pad5_ Net-_U1-Pad8_ Net-_U4-Pad5_ Net-_U1-Pad13_ Net-_U1-Pad3_ Net-_U1-Pad19_ Net-_U1-Pad1_ Net-_U2-Pad1_ Net-_U3-Pad1_ IC_74153
+.end

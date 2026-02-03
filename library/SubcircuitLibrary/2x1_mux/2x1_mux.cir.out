@@ -1,0 +1,53 @@
+.title kicad schematic
+
+.include 3_and.sub
+* u101 net-_u101-pad1_ net-_u101-pad2_ net-_u101-pad3_ net-_u101-pad4_ net-_u101-pad5_ net-_u101-pad6_ net-_u101-pad7_ unconnected-_u101-pad8_ net-_u101-pad9_ net-_u101-pad10_ net-_u101-pad11_ net-_u101-pad12_ net-_u101-pad13_ net-_u101-pad14_ net-_u101-pad15_ unconnected-_u101-pad16_ port
+* u102 net-_u101-pad15_ net-_u102-pad2_ d_inverter
+* u103 net-_u101-pad1_ net-_u103-pad2_ d_inverter
+* u104 net-_u102-pad2_ net-_u104-pad2_ d_buffer
+* u105 net-_u103-pad2_ net-_u105-pad2_ d_inverter
+* u106 net-_u106-pad1_ net-_u106-pad2_ net-_u101-pad12_ d_or
+x108 net-_u101-pad13_ net-_u105-pad2_ net-_u104-pad2_ net-_u106-pad2_ 3_and
+x107 net-_u101-pad14_ net-_u103-pad2_ net-_u104-pad2_ net-_u106-pad1_ 3_and
+x106 net-_u101-pad10_ net-_u105-pad2_ net-_u104-pad2_ net-_u107-pad2_ 3_and
+x104 net-_u101-pad6_ net-_u105-pad2_ net-_u104-pad2_ net-_u108-pad2_ 3_and
+x105 net-_u101-pad11_ net-_u103-pad2_ net-_u104-pad2_ net-_u107-pad1_ 3_and
+* u107 net-_u107-pad1_ net-_u107-pad2_ net-_u101-pad9_ d_or
+* u108 net-_u108-pad1_ net-_u108-pad2_ net-_u101-pad7_ d_or
+* u109 net-_u109-pad1_ net-_u109-pad2_ net-_u101-pad4_ d_or
+x101 net-_u101-pad2_ net-_u103-pad2_ net-_u104-pad2_ net-_u109-pad1_ 3_and
+x102 net-_u101-pad3_ net-_u105-pad2_ net-_u104-pad2_ net-_u109-pad2_ 3_and
+x103 net-_u101-pad5_ net-_u103-pad2_ net-_u104-pad2_ net-_u108-pad1_ 3_and
+a1 net-_u101-pad15_ net-_u102-pad2_ u102
+a2 net-_u101-pad1_ net-_u103-pad2_ u103
+a3 net-_u102-pad2_ net-_u104-pad2_ u104
+a4 net-_u103-pad2_ net-_u105-pad2_ u105
+a5 [net-_u106-pad1_ net-_u106-pad2_ ] net-_u101-pad12_ u106
+a6 [net-_u107-pad1_ net-_u107-pad2_ ] net-_u101-pad9_ u107
+a7 [net-_u108-pad1_ net-_u108-pad2_ ] net-_u101-pad7_ u108
+a8 [net-_u109-pad1_ net-_u109-pad2_ ] net-_u101-pad4_ u109
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u102 d_inverter(rise_delay=1n fall_delay=0.7n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u103 d_inverter(rise_delay=1n fall_delay=0.7n input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u104 d_buffer(rise_delay=2n fall_delay=2n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u105 d_inverter(rise_delay=1n fall_delay=0.7n input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u106 d_or(rise_delay=1.5n fall_delay=1.2n input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u107 d_or(rise_delay=1.5n fall_delay=1.2n input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u108 d_or(rise_delay=1.5n fall_delay=1.2n input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u109 d_or(rise_delay=1.5n fall_delay=1.2n input_load=1.0e-12 ) 
+.tran 0.1e-09 100e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

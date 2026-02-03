@@ -1,0 +1,41 @@
+.title kicad schematic
+
+.include buffer_tri.sub
+x11 net-_u1-pad16_ net-_u67-pad3_ net-_u1-pad4_ buffer_tri
+x14 net-_u1-pad18_ net-_u67-pad3_ net-_u1-pad2_ buffer_tri
+x13 net-_u1-pad17_ net-_u67-pad3_ net-_u1-pad3_ buffer_tri
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ gnd net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ gnd port
+x15 net-_u1-pad15_ net-_u67-pad3_ net-_u1-pad5_ buffer_tri
+x9 net-_u1-pad12_ net-_u67-pad3_ net-_u1-pad8_ buffer_tri
+x16 net-_u1-pad11_ net-_u67-pad3_ net-_u1-pad9_ buffer_tri
+x10 net-_u1-pad14_ net-_u67-pad3_ net-_u1-pad6_ buffer_tri
+x12 net-_u1-pad13_ net-_u67-pad3_ net-_u1-pad7_ buffer_tri
+x4 net-_u1-pad4_ net-_u11-pad3_ net-_u1-pad16_ buffer_tri
+x5 net-_u1-pad5_ net-_u11-pad3_ net-_u1-pad15_ buffer_tri
+x2 net-_u1-pad3_ net-_u11-pad3_ net-_u1-pad17_ buffer_tri
+x1 net-_u1-pad2_ net-_u11-pad3_ net-_u1-pad18_ buffer_tri
+* u67 net-_u1-pad1_ net-_u1-pad19_ net-_u67-pad3_ d_nand
+* u11 net-_u1-pad1_ net-_u11-pad2_ net-_u11-pad3_ d_and
+* u2 net-_u1-pad19_ net-_u11-pad2_ d_inverter
+x8 net-_u1-pad7_ net-_u11-pad3_ net-_u1-pad13_ buffer_tri
+x6 net-_u1-pad6_ net-_u11-pad3_ net-_u1-pad14_ buffer_tri
+x3 net-_u1-pad8_ net-_u11-pad3_ net-_u1-pad12_ buffer_tri
+x7 net-_u1-pad9_ net-_u11-pad3_ net-_u1-pad11_ buffer_tri
+a1 [net-_u1-pad1_ net-_u1-pad19_ ] net-_u67-pad3_ u67
+a2 [net-_u1-pad1_ net-_u11-pad2_ ] net-_u11-pad3_ u11
+a3 net-_u1-pad19_ net-_u11-pad2_ u2
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u67 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u11 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

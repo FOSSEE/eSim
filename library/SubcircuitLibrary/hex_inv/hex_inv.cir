@@ -1,0 +1,21 @@
+.title KiCad schematic
+U101 Net-_U101-Pad1_ Net-_U101-Pad2_ Net-_U101-Pad3_ Net-_U101-Pad4_ Net-_U101-Pad5_ Net-_U101-Pad6_ unconnected-_U101-Pad7_ Net-_U101-Pad8_ Net-_U101-Pad9_ Net-_U101-Pad10_ Net-_U101-Pad11_ Net-_U101-Pad12_ Net-_U101-Pad13_ unconnected-_U101-Pad14_ PORT
+U114 Net-_U111-Pad2_ Net-_U101-Pad6_ d_buffer
+U117 Net-_U108-Pad2_ Net-_U101-Pad8_ d_buffer
+U110 Net-_U110-Pad1_ Net-_U110-Pad2_ d_inverter
+U108 Net-_U108-Pad1_ Net-_U108-Pad2_ d_inverter
+U113 Net-_U113-Pad1_ Net-_U113-Pad2_ d_inverter
+U111 Net-_U111-Pad1_ Net-_U111-Pad2_ d_inverter
+U116 Net-_U113-Pad2_ Net-_U101-Pad2_ d_buffer
+U119 Net-_U110-Pad2_ Net-_U101-Pad4_ d_buffer
+U115 Net-_U112-Pad2_ Net-_U101-Pad10_ d_buffer
+U118 Net-_U109-Pad2_ Net-_U101-Pad12_ d_buffer
+U112 Net-_U112-Pad1_ Net-_U112-Pad2_ d_inverter
+U109 Net-_U109-Pad1_ Net-_U109-Pad2_ d_inverter
+U107 Net-_U101-Pad3_ Net-_U110-Pad1_ d_buffer
+U106 Net-_U101-Pad1_ Net-_U113-Pad1_ d_buffer
+U102 Net-_U101-Pad5_ Net-_U111-Pad1_ d_buffer
+U103 Net-_U101-Pad11_ Net-_U112-Pad1_ d_buffer
+U105 Net-_U101-Pad13_ Net-_U109-Pad1_ d_buffer
+U104 Net-_U101-Pad9_ Net-_U108-Pad1_ d_buffer
+.end
