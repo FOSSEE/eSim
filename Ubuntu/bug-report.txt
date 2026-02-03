@@ -1180,7 +1180,7 @@ commit hash : cf62465
 
 ---------------------------------------------------------------------------------
 
-bug #029 : LLVM 20.1.2 still unhandled
+bug #030 : LLVM 20.1.2 still unhandled
 log : gcc (Ubuntu 14.2.0-19ubuntu2) 14.2.0
 Copyright (C) 2024 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
@@ -1409,7 +1409,7 @@ commit message : Fix GHDL srcdir detection in NGHDL installer
 
 --------------------------------------------------------------------------------
 
-bug #034 : Incorrect eSim_Home Path in Startup Script
+bug #035 : Incorrect eSim_Home Path in Startup Script
 log : user@Ubuntu-25:~/repos/eSim/Ubuntu$ esim
 Error: eSim application not found at /home/user/repos/eSim.
 Please install eSim source or packaged executable before running.
@@ -1473,7 +1473,7 @@ commit hash : [To be filled after commit]
 
 -----------------------------------------------------------------------------------------
 
-bug #035 : Source Discovery Failure
+bug #036 : Source Discovery Failure
 log : eSim desktop entry and launcher pointed to empty directories or failed to start.
 
 
