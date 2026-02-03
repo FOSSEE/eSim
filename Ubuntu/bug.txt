@@ -1,3 +1,169 @@
+bug #001 : no version output
+
+log : user@Ubuntu-25:~/repos/eSim/Ubuntu$ ./install-eSim.sh --install
+	Detected Ubuntu Version: 
+	Unsupported Ubuntu version: 25.04 ()
+
+remark : regex issue in "install-eSim.sh" in function "get_ubuntu_version()", it used to pull version till 3 decimal places ex:"22.04.02" making all 3 mandatory resulting in no output if only 2 decimal places are pulled.
+
+solution : updated regex to make 3rd decimal place optional.
+
+changes made : file : "install-eSim.sh"
+		before : "FULL_VERSION=$(lsb_release -d | grep -oP '\d+\.\d+\.\d+')"
+		after : "FULL_VERSION=$(lsb_release -d | grep -oP '\d+\.\d+(\.\d+)?')"
+
+
+log (after change) : user@Ubuntu-25:~/repos/eSim/Ubuntu$ ./install-eSim.sh --install
+		Detected Ubuntu Version: 25.04
+		Unsupported Ubuntu version: 25.04 (25.04)
+
+commit hash : 6c023bce474449a5247918d7385c4ca5ec3822b2
+
+----------------------------------------
+
+bug #002 : 25.04 unsupported version
+
+log : user@Ubuntu-25:~/repos/eSim/Ubuntu$ ./install-eSim.sh --install
+	Detected Ubuntu Version: 25.04
+	Unsupported Ubuntu version: 25.04 (25.04)
+
+remark : the script "install-eSim.sh" doesn't support 25.04, support only for 22.04, 23.04 and 24.04.
+
+solution : added support for 25.04 with if statement addition in "install-eSim.sh" to run install-eSim-25.04.sh script for 25.04 version.
+
+changes made : file : "install-eSim.sh"
+
+		before :     case $VERSION_ID in
+        "22.04")
+            if [[ "$FULL_VERSION" == "22.04.4" ]]; then
+                SCRIPT="$SCRIPT_DIR/install-eSim-22.04.sh"
+            else
+                SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            fi
+            ;;
+        "23.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            ;;
+        "24.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
+            ;;
+        *)
+            echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
+            exit 1
+            ;;
+    esac
+
+		after :     case $VERSION_ID in
+        "22.04")
+            if [[ "$FULL_VERSION" == "22.04.4" ]]; then
+                SCRIPT="$SCRIPT_DIR/install-eSim-22.04.sh"
+            else
+                SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            fi
+            ;;
+        "23.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            ;;
+        "24.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
+            ;;
+        "25.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-25.04.sh"
+            ;;
+        *)
+            echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
+            exit 1
+            ;;
+    esac
+
+log (after change) : user@Ubuntu-25:~/repos/eSim/Ubuntu$ ./install-eSim.sh --install
+	Detected Ubuntu Version: 25.04
+	Installation script not found: /home/user/repos/eSim/Ubuntu/install-eSim-scripts/install-eSim-25.04.sh
+	
+commit hash : 297f89f9e29d18b69b20276dcac5cc7baaac16f0
+
+-----------------------------------------
+
+bug #003 : no script for 25.04
+
+log : user@Ubuntu-25:~/repos/eSim/Ubuntu$ ./install-eSim.sh --install
+	Detected Ubuntu Version: 25.04
+	Installation script not found: /home/user/repos/eSim/Ubuntu/install-eSim-scripts/install-eSim-25.04.sh
+
+remark : no installation script for Ubuntu version 25.04
+
+solution : copying script of 24.04 for 25.04 by renaming the file to install-eSim-25.04.sh and updated the version check in if statement from 24.04 to 25.04 whereever applicable
+
+changes made : file : (newFile)install-eSim-25.04.sh
+
+		before :     if [[ "$ubuntu_version" == "24.04" ]]; then
+        echo "Ubuntu 24.04 detected."
+
+		after :     if [[ "$ubuntu_version" == "25.04" ]]; then
+        echo "Ubuntu 25.04 detected."
+
+commit hash : c68082b841cfdce940b6a3254b3f3fa45d9ec9b7
+
+--------------------------------------------
+
+bug #004 : xz-utils installation failed, aborted installation
+
+log : E: Invalid operation xz-utils
+
+
+	Error! Kindly resolve above error(s) and try again.
+
+	Aborting Installation...
+
+remark : invalid command for xz-utils installation
+
+solution : updating the sudo apt-get command for instllation of xz-utils
+
+changes made : file : "install-eSim-25.04.sh"
+		before :  echo "Installing volare"
+			  sudo apt-get xz-utils
+			  pip3 install volare
+		
+		after :  echo "Installing volare"
+			 sudo apt-get install xz-utils -y xz-utils
+			 pip3 install volare
+			 
+commit hash : ed1daffcf65cdab9474c7c1ee13028990b9f0e0e
+
+----------------------------------------------
+
+bug #005 : stale CD-ROM repo reference, abort installation
+
+log : 	Err:2 file:/cdrom plucky Release
+  		File not found - /cdrom/dists/plucky/Release (2: No such file or directory)
+	E: The repository 'file:/cdrom plucky Release' no longer has a Release file.
+	N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+	N: See apt-secure(8) manpage for repository creation and user configuration details.
+	N: Some sources can be modernized. Run 'apt modernize-sources' to do so.
+
+	Error! Kindly resolve above error(s) and try again.
+
+	Aborting Installation...
+
+remark : stale CD-ROM repo reference which doesn't exist and installation abort on non critical errors
+
+solution : suppress "apt-get update" error while installation on non critical errors
+
+changes made : file : "install-eSim-25.04.sh"
+		before :     if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+        			echo "Adding KiCad PPA to local apt repository: $kicadppa"
+        			sudo add-apt-repository -y "ppa:$kicadppa"
+        			sudo apt-get update
+		
+		after :      if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+        			echo "Adding KiCad PPA to local apt repository: $kicadppa"
+        			sudo add-apt-repository -y "ppa:$kicadppa"
+        			sudo apt-get update || true
+        			
+commit hash : dbcb25b84a2c8e8b17b1fbbeb522888b9c78d9df
+
+---------------------------------------------------------
+
 bug #006 : KiCad libgit2 dependency mismatch
 log : Solving dependencies... Error!
 Some packages could not be installed. This may mean that you have
@@ -397,6 +563,8 @@ changes made :
 	sudo apt-get update
 commit hash : 5c7b88a1
  
+-------------------------------------------------------------------------------
+
 bug #016 : file:///cdrom entry not disabled
 log : Updating apt index files...................
 Ign:1 file:/cdrom plucky InRelease
@@ -1305,7 +1473,7 @@ commit hash : [To be filled after commit]
 
 -----------------------------------------------------------------------------------------
 
-bug #012 : Source Discovery Failure
+bug #035 : Source Discovery Failure
 log : eSim desktop entry and launcher pointed to empty directories or failed to start.
 
 
