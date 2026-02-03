@@ -1302,3 +1302,20 @@ cd "\$app_dir" || exit 1
 source "${config_dir}/env/bin/activate"
 python3 "$(basename "\$app_entry")"
 commit hash : [To be filled after commit]
+
+-----------------------------------------------------------------------------------------
+
+bug #012 : Source Discovery Failure
+log : eSim desktop entry and launcher pointed to empty directories or failed to start.
+
+
+Error! Kindly resolve above error(s) and try again.
+
+Aborting Installation...
+remark : The installer was pointing to empty directories because the source code was in a different path or not extracted.
+solution : Added a dynamic discovery step to locate Application.py and set paths based on the actual file system state.
+changes made : 
+	file : install-eSim-25.04.sh
+	before : createConfigFile and createDesktopStartScript used a static repo-root eSim_Home assumption.
+	after : discover Application.py under the user's home, set eSim_Home to the parent of the src directory, and use that verified path for launcher and desktop entry.
+commit hash : [To be filled after commit]
