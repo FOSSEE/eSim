@@ -162,7 +162,8 @@ function installNGHDL
     # Extracting NGHDL to Home Directory
     cd $src_dir
     tar -xJf $nghdl-source.tar.xz -C $HOME
-    mv -T $HOME/$nghdl-source $HOME/$nghdl
+    rm -rf $HOME/$nghdl
+    mv $HOME/$nghdl-source $HOME/$nghdl
 
     echo "NGHDL extracted sucessfully to $HOME"
     # Change to nghdl directory
