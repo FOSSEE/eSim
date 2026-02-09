@@ -1,0 +1,27 @@
+* c:\users\senba\esim-workspace\74hc126_test\74hc126_test.cir
+
+.include 74HC126.sub
+x1 net-_u3-pad3_ net-_u3-pad4_ net-_u4-pad1_ 74HC126
+* u3  a oebar net-_u3-pad3_ net-_u3-pad4_ adc_bridge_2
+* u4  net-_u4-pad1_ y dac_bridge_1
+v1  a gnd pulse(5 0 0 0.001 0.001 1 2)
+v2  oebar gnd pulse(0 5 0 0.001 0.001 2 4)
+* u1  a plot_v1
+* u2  oebar plot_v1
+* u5  y plot_v1
+a1 [a oebar ] [net-_u3-pad3_ net-_u3-pad4_ ] u3
+a2 [net-_u4-pad1_ ] [y ] u4
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u4 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 0.001e-00 3e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(a) + 6v(oebar) + 12v(y)
+.endc
+.end

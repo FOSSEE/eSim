@@ -1,0 +1,36 @@
+* C:\Users\senba\Desktop\FOSSEE\eSim\library\SubcircuitLibrary\74HC348\74HC348.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 11/23/25 05:45:14
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U2  Net-_U1-Pad1_ Net-_U2-Pad2_ d_inverter		
+U5  Net-_U1-Pad3_ Net-_U5-Pad2_ d_inverter		
+U8  Net-_U1-Pad5_ Net-_U8-Pad2_ d_inverter		
+U12  Net-_U1-Pad8_ Net-_U12-Pad2_ d_inverter		
+U14  Net-_U1-Pad10_ Net-_U14-Pad2_ d_inverter		
+X6  Net-_U1-Pad12_ Net-_U14-Pad2_ Net-_U12-Pad2_ Net-_X1-Pad1_ 3_and		
+U3  Net-_U2-Pad2_ Net-_U3-Pad2_ d_inverter		
+U6  Net-_U5-Pad2_ Net-_U6-Pad2_ d_inverter		
+U9  Net-_U8-Pad2_ Net-_U9-Pad2_ d_inverter		
+X1  Net-_X1-Pad1_ Net-_U6-Pad2_ Net-_U9-Pad2_ Net-_U3-Pad2_ Net-_U4-Pad1_ 4_and		
+X2  Net-_U8-Pad2_ Net-_U3-Pad2_ Net-_U6-Pad2_ Net-_X1-Pad1_ Net-_U7-Pad1_ 4_and		
+X3  Net-_U5-Pad2_ Net-_U3-Pad2_ Net-_U9-Pad2_ Net-_X1-Pad1_ Net-_U10-Pad1_ 4_and		
+X4  Net-_U8-Pad2_ Net-_U5-Pad2_ Net-_U3-Pad2_ Net-_X1-Pad1_ Net-_U11-Pad1_ 4_and		
+X5  Net-_U9-Pad2_ Net-_U6-Pad2_ Net-_U2-Pad2_ Net-_X1-Pad1_ Net-_U13-Pad1_ 4_and		
+X7  Net-_U8-Pad2_ Net-_U6-Pad2_ Net-_U2-Pad2_ Net-_X1-Pad1_ Net-_U15-Pad1_ 4_and		
+X8  Net-_U9-Pad2_ Net-_U5-Pad2_ Net-_U2-Pad2_ Net-_X1-Pad1_ Net-_U16-Pad1_ 4_and		
+X9  Net-_U8-Pad2_ Net-_U5-Pad2_ Net-_U2-Pad2_ Net-_X1-Pad1_ Net-_U17-Pad1_ 4_and		
+U4  Net-_U4-Pad1_ Net-_U1-Pad2_ d_inverter		
+U7  Net-_U7-Pad1_ Net-_U1-Pad4_ d_inverter		
+U10  Net-_U10-Pad1_ Net-_U1-Pad6_ d_inverter		
+U11  Net-_U11-Pad1_ Net-_U1-Pad7_ d_inverter		
+U13  Net-_U13-Pad1_ Net-_U1-Pad9_ d_inverter		
+U15  Net-_U15-Pad1_ Net-_U1-Pad11_ d_inverter		
+U16  Net-_U16-Pad1_ Net-_U1-Pad13_ d_inverter		
+U17  Net-_U17-Pad1_ Net-_U1-Pad14_ d_inverter		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ PORT		
+
+.end

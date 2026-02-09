@@ -1,3 +1,33 @@
+* C:\Users\senba\Desktop\FOSSEE\eSim\library\SubcircuitLibrary\74HC157\74HC157.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 10/18/25 19:10:56
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U2  Net-_U1-Pad1_ Net-_U2-Pad2_ d_inverter		
+U3  Net-_U2-Pad2_ Net-_U1-Pad2_ Net-_U11-Pad1_ d_nor		
+U4  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U10-Pad1_ d_nor		
+U5  Net-_U11-Pad1_ Net-_U1-Pad3_ Net-_U13-Pad1_ d_and		
+U6  Net-_U10-Pad1_ Net-_U1-Pad4_ Net-_U13-Pad2_ d_and		
+U7  Net-_U11-Pad1_ Net-_U1-Pad5_ Net-_U14-Pad1_ d_and		
+U8  Net-_U10-Pad1_ Net-_U1-Pad6_ Net-_U14-Pad2_ d_and		
+U9  Net-_U11-Pad1_ Net-_U1-Pad7_ Net-_U15-Pad1_ d_and		
+U10  Net-_U10-Pad1_ Net-_U1-Pad8_ Net-_U10-Pad3_ d_and		
+U11  Net-_U11-Pad1_ Net-_U1-Pad9_ Net-_U11-Pad3_ d_and		
+U12  Net-_U10-Pad1_ Net-_U1-Pad10_ Net-_U12-Pad3_ d_and		
+U13  Net-_U13-Pad1_ Net-_U13-Pad2_ Net-_U13-Pad3_ d_nor		
+U14  Net-_U14-Pad1_ Net-_U14-Pad2_ Net-_U14-Pad3_ d_nor		
+U15  Net-_U15-Pad1_ Net-_U10-Pad3_ Net-_U15-Pad3_ d_nor		
+U16  Net-_U11-Pad3_ Net-_U12-Pad3_ Net-_U16-Pad3_ d_nor		
+U17  Net-_U13-Pad3_ Net-_U1-Pad11_ d_inverter		
+U18  Net-_U14-Pad3_ Net-_U1-Pad12_ d_inverter		
+U19  Net-_U15-Pad3_ Net-_U1-Pad13_ d_inverter		
+U20  Net-_U16-Pad3_ Net-_U1-Pad14_ d_inverter		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ PORT		
+
+.end
 .title KiCad schematic
 U1 /1 /2 /3 /4 /5 /6 /7 unconnected-_U1-Pad8_ /9 /10 /11 /12 /13 /14 /15 unconnected-_U1-Pad16_ PORT
 U16 /15 Net-_U16-Pad2_ d_inverter
