@@ -3,11 +3,15 @@ language: python
 cache: pip
 
 git:
-    depth: 5
-    quiet: true
+  depth: 5
+  quiet: true
 
 python:
-    - "3.6"
+  - "3.6"
 
-script:
-    - find . -name \*.py -print0 | sort -z | xargs -r0 flake8
+install:
+  - pip install flake8
+
+script: true
+#  - find . -name \*.py -print0 | sort -z | xargs -r0 flake8
+

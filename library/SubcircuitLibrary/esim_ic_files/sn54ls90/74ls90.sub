@@ -1,0 +1,46 @@
+* Subcircuit 74ls90
+.subckt 74ls90 /r91 /clk /r01 /jk ? ? ? ? /qa /qb /qc /qd 
+* c:\users\shanthipriya\desktop\madeeasy\fossee\esim\library\subcircuitlibrary\74ls90\74ls90.cir
+* u2  /jk /jk /clk /r01 /r91 /qa ? d_jkff
+* u4  net-_u3-pad3_ net-_u3-pad3_ /clk /r01 /r91 /qb ? d_jkff
+* u8  net-_u5-pad3_ net-_u5-pad3_ /clk /r01 /r91 /qc ? d_jkff
+* u11  net-_u10-pad3_ net-_u10-pad3_ /clk /r01 /r91 /qd net-_u11-pad7_ d_jkff
+* u3  net-_u11-pad7_ /qa net-_u3-pad3_ d_and
+* u5  /qa /qb net-_u5-pad3_ d_and
+* u7  /qa /qd net-_u10-pad2_ d_and
+* u6  /qa /qb net-_u6-pad3_ d_and
+* u9  net-_u6-pad3_ /qc net-_u10-pad1_ d_and
+* u10  net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ d_or
+a1 /jk /jk /clk /r01 /r91 /qa ? u2
+a2 net-_u3-pad3_ net-_u3-pad3_ /clk /r01 /r91 /qb ? u4
+a3 net-_u5-pad3_ net-_u5-pad3_ /clk /r01 /r91 /qc ? u8
+a4 net-_u10-pad3_ net-_u10-pad3_ /clk /r01 /r91 /qd net-_u11-pad7_ u11
+a5 [net-_u11-pad7_ /qa ] net-_u3-pad3_ u3
+a6 [/qa /qb ] net-_u5-pad3_ u5
+a7 [/qa /qd ] net-_u10-pad2_ u7
+a8 [/qa /qb ] net-_u6-pad3_ u6
+a9 [net-_u6-pad3_ /qc ] net-_u10-pad1_ u9
+a10 [net-_u10-pad1_ net-_u10-pad2_ ] net-_u10-pad3_ u10
+* Schematic Name:                             d_jkff, NgSpice Name: d_jkff
+.model u2 d_jkff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 jk_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_jkff, NgSpice Name: d_jkff
+.model u4 d_jkff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 jk_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_jkff, NgSpice Name: d_jkff
+.model u8 d_jkff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 jk_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_jkff, NgSpice Name: d_jkff
+.model u11 d_jkff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 jk_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u7 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u6 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u9 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u10 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74ls90

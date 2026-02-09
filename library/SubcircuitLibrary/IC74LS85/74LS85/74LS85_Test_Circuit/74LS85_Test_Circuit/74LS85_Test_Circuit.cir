@@ -1,0 +1,24 @@
+.title KiCad schematic
+R1 GND AGB_OUT 1k
+V_AGB_IN1 V_AGB_IN GND DC
+V_AEB_IN1 V_AEB_IN GND DC
+V_ALB_IN1 V_ALB_IN GND DC
+U1 V_ALB_IN V_AEB_IN V_AGB_IN Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ adc_bridge_3
+VB1 B1 GND DC
+VA1 A1 GND DC
+VB2 B2 GND DC
+VB3 B3 GND DC
+VA3 A3 GND DC
+VA2 A2 GND DC
+R2 GND AEB_OUT 1k
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ Net-_U4-Pad3_ ALB_OUT AEB_OUT AGB_OUT dac_bridge_3
+U3 AEB_OUT plot_v1
+U2 AGB_OUT plot_v1
+R3 GND ALB_OUT 1k
+U5 ALB_OUT plot_v1
+X1 Net-_U6-Pad9_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U4-Pad3_ Net-_U4-Pad2_ Net-_U4-Pad1_ GND Net-_U6-Pad16_ Net-_U6-Pad15_ Net-_U6-Pad14_ Net-_U6-Pad13_ Net-_U6-Pad12_ Net-_U6-Pad11_ Net-_U6-Pad10_ Net-_X1-Pad16_ 74LS85
+v1 Net-_X1-Pad16_ GND 5
+U6 B3 A3 B2 A2 A1 B1 A0 B0 Net-_U6-Pad9_ Net-_U6-Pad10_ Net-_U6-Pad11_ Net-_U6-Pad12_ Net-_U6-Pad13_ Net-_U6-Pad14_ Net-_U6-Pad15_ Net-_U6-Pad16_ adc_bridge_8
+VB0 B0 GND DC
+VA0 A0 GND DC
+.end

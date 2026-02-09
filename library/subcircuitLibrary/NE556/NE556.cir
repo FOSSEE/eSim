@@ -1,0 +1,5 @@
+.title KiCad schematic
+X2 gnd discharge2 reset2 trigger2 control_voltage2 output2 threshold2 vcc DUALTIMER_COMPARATOR
+U1 discharge1 threshold1 control_voltage1 reset1 output1 trigger1 gnd trigger2 output2 reset2 control_voltage2 threshold2 discharge2 vcc PORT
+X1 gnd discharge1 reset1 trigger1 control_voltage1 output1 threshold1 vcc DUALTIMER_COMPARATOR
+.end

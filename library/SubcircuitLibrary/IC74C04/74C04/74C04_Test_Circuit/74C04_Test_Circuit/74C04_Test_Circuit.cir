@@ -1,0 +1,22 @@
+.title KiCad schematic
+v1 IN2a GND pulse
+v2 IN3a GND pulse
+U1 IN2a plot_v1
+U2 IN3a plot_v1
+U3 INa plot_v1
+U4 OUT3a plot_v1
+U7 IN6a plot_v1
+U12 IN4a plot_v1
+v7 Net-_X1-Pad14_ GND 5
+U11 OUT6a plot_v1
+U10 OUT4a plot_v1
+U9 OUT5a plot_v1
+v6 IN4a GND pulse
+U8 IN5a plot_v1
+v5 IN5a GND pulse
+v3 INa GND pulse
+X1 INa OUTa IN2a OUT2a IN3a OUT3a GND OUT4a IN4a OUT5a IN5a OUT6a IN6a Net-_X1-Pad14_ 74C04
+U5 OUT2a plot_v1
+v4 IN6a GND pulse
+U6 OUTa plot_v1
+.end

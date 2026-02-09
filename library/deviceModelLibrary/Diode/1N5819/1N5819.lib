@@ -1,0 +1,1 @@
+.MODEL 1N5819 D( Is=1u N=1.05 Rs=0.04 bv=40 Ibv=1m Cjo=110p Vj=0.20 M=0.50 tt=5n )

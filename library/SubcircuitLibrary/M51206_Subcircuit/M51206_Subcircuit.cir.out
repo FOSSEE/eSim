@@ -1,0 +1,31 @@
+* c:\fossee\esim\library\subcircuitlibrary\m51206_subcircuit\m51206_subcircuit.cir
+
+.include D.lib
+.include PNP.lib
+.include NPN.lib
+.include ZenerD1N750.lib
+q5 net-_i2-pad2_ net-_q5-pad2_ gnd Q2N2222
+q6 net-_i3-pad2_ net-_i2-pad2_ gnd Q2N2222
+q7 net-_i4-pad2_ net-_i3-pad2_ gnd Q2N2222
+q8 net-_q8-pad1_ net-_i4-pad2_ gnd Q2N2222
+q1 net-_d1-pad2_ net-_q1-pad2_ net-_i1-pad1_ Q2N2222
+q3 net-_q2-pad1_ net-_q3-pad2_ net-_i1-pad1_ Q2N2222
+q2 net-_q2-pad1_ net-_d1-pad2_ net-_d1-pad1_ Q2N2907A
+q4 net-_q4-pad1_ net-_q2-pad1_ net-_d1-pad1_ Q2N2907A
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 gnd net-_d1-pad1_ D1N750
+r1  net-_q4-pad1_ net-_q5-pad2_ 1k
+i2 net-_d1-pad1_ net-_i2-pad2_  dc 80u
+i3 net-_d1-pad1_ net-_i3-pad2_  dc 80u
+i4 net-_d1-pad1_ net-_i4-pad2_  dc 80u
+i1 net-_i1-pad1_ gnd  dc 80u
+* u1  net-_q1-pad2_ net-_q3-pad2_ net-_q8-pad1_ net-_d1-pad1_ gnd gnd gnd gnd port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

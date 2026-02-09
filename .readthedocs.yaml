@@ -13,7 +13,12 @@ build:
     # nodejs: "20"
     # rust: "1.70"
     # golang: "1.20"
-
+    #jobs:
+    #  pre_build:
+    #    - pip install -r requirements.txt
+python:
+  install:
+    - requirements: code/requirements.txt
 # Build documentation in the "docs/" directory with Sphinx
 sphinx:
   configuration: conf.py

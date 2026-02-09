@@ -1,0 +1,20 @@
+* c:\fossee\esim\library\subcircuitlibrary\cd4015bc_edge\cd4015bc_edge.cir
+
+.include dff_edge.sub
+x1 da clka qa1 ra dff_edge
+x3 qa1 clka qa2 ra dff_edge
+x5 qa2 clka qa3 ra dff_edge
+x7 qa3 clka qa4 ra dff_edge
+x2 db clkb qb1 rb dff_edge
+x4 qb1 clkb qb2 rb dff_edge
+x6 qb2 clkb qb3 rb dff_edge
+x8 qb3 clkb qb4 rb dff_edge
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -2,7 +2,7 @@
 ![GitHub](https://img.shields.io/github/license/fossee/esim?color=blue)
 ![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
 [![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
-![Travis (.org)](https://img.shields.io/travis/fossee/esim)
+![Travis (.com)](https://img.shields.io/travis/com/Eyantra698Sumanto/eSim)
 [![Documentation Status](https://readthedocs.org/projects/esim/badge/?version=latest)](https://esim.readthedocs.io/en/latest/?badge=latest)
 [![GitHub forks](https://img.shields.io/github/forks/fossee/esim)](https://github.com/fossee/esim/network)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/fossee/esim)
@@ -15,7 +15,7 @@ It is an integrated tool build using open source softwares such as KiCad, Ngspic
 
 ## Releases and Installation
 eSim is released for the following distributions (operating systems):
-* Ubuntu 18.04, 20.04 LTS versions.
+* Ubuntu 22.04, 23.04, 24.04 LTS versions.
 * Microsoft Windows 8, 10 and 11.
 
 To use eSim on your machine having above distributions, please refer to link [here](https://esim.fossee.in/downloads) for installation and other guidelines.
@@ -39,10 +39,12 @@ To use eSim on your machine having above distributions, please refer to link [he
 * [SkyWater SKY130 PDK](https://skywater-pdk.rtfd.io/)
 
 ## eSim Manual
-To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.4.pdf)
+To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.5.pdf)
 
 ## Contact
 For any queries regarding eSim please write us on at this [email address](mailto:contact-esim@fossee.in).
+
+Other Contact Details are available [here](https://esim.fossee.in/contact-us).
 
 ## Contribution
 Please refer [here](https://github.com/FOSSEE/eSim/blob/master/CONTRIBUTION.md) for further details.

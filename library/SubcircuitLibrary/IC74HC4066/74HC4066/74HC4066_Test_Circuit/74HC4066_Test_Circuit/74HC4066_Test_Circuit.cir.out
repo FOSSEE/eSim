@@ -1,0 +1,27 @@
+.title kicad schematic
+
+.include 74HC4066.sub
+* u2 e net-_u2-pad2_ adc_bridge_1
+v_y1 y gnd  dc 5
+v_e1 e gnd  dc 5
+* u1 e plot_v1
+r1 gnd z 20k
+* u4 z plot_v1
+v1 net-_x1-pad14_ gnd 5
+x1 unconnected-_x1-pad1_ unconnected-_x1-pad2_ z y net-_u2-pad2_ unconnected-_x1-pad6_ gnd unconnected-_x1-pad8_ unconnected-_x1-pad9_ unconnected-_x1-pad10_ unconnected-_x1-pad11_ unconnected-_x1-pad12_ unconnected-_x1-pad13_ net-_x1-pad14_ 74HC4066
+* u3 y plot_v1
+a1 [e ] [net-_u2-pad2_ ] u2
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 20e-00 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(e)
+plot v(z)
+plot v(y)
+.endc
+.end

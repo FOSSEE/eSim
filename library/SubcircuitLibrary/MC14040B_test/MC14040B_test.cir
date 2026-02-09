@@ -1,0 +1,33 @@
+.title KiCad schematic
+R2 Q12 GND 1k
+R8 Q9 GND 1k
+R4 Q11 GND 1k
+R6 Q10 GND 1k
+R1 Q6 GND 1k
+U25 Net-_U25-Pad1_ clock GND Net-_U25-Pad4_ Net-_U25-Pad5_ Net-_U25-Pad6_ adc_bridge_3
+U26 Net-_U26-Pad1_ Net-_U26-Pad2_ Net-_U26-Pad3_ Net-_U26-Pad4_ Net-_U26-Pad5_ Net-_U26-Pad6_ Q1 Q2 Q3 Q4 Q5 Q6 dac_bridge_6
+U1 clock plot_v1
+U28 Q6 plot_v1
+R7 Q3 GND 1k
+R5 Q4 GND 1k
+R3 Q5 GND 1k
+U30 Q5 plot_v1
+U32 Q4 plot_v1
+U36 Q2 plot_v1
+U38 Q1 plot_v1
+U34 Q3 plot_v1
+R11 Q1 GND 1k
+R9 Q2 GND 1k
+U31 Q11 plot_v1
+U29 Q12 plot_v1
+U27 Net-_U27-Pad1_ Net-_U27-Pad2_ Net-_U27-Pad3_ Net-_U27-Pad4_ Net-_U27-Pad5_ Net-_U27-Pad6_ Q7 Q8 Q9 Q10 Q11 Q12 dac_bridge_6
+X1 Net-_U27-Pad6_ Net-_U26-Pad6_ Net-_U26-Pad5_ Net-_U27-Pad1_ Net-_U26-Pad4_ Net-_U26-Pad3_ Net-_U26-Pad2_ Net-_U25-Pad6_ Net-_U26-Pad1_ Net-_U25-Pad5_ Net-_U25-Pad6_ Net-_U27-Pad3_ Net-_U27-Pad2_ Net-_U27-Pad4_ Net-_U27-Pad5_ Net-_U25-Pad4_ MC14040B
+v2 clock GND pulse
+v1 Net-_U25-Pad1_ GND DC
+R10 Q8 GND 1k
+U39 Q7 plot_v1
+R12 Q7 GND 1k
+U37 Q8 plot_v1
+U35 Q9 plot_v1
+U33 Q10 plot_v1
+.end

@@ -1,0 +1,19 @@
+* c:\fossee\esim\library\subcircuitlibrary\cd4010bq1\cd4010bq1.cir
+
+.include CD4010B_Q1.sub
+x1 net-_u1-pad1_ net-_u1-pad7_ vcc vdd gnd CD4010B_Q1
+x2 net-_u1-pad2_ net-_u1-pad8_ vcc vdd gnd CD4010B_Q1
+x3 net-_u1-pad3_ net-_u1-pad9_ vcc vdd gnd CD4010B_Q1
+x4 net-_u1-pad4_ net-_u1-pad10_ vcc vdd gnd CD4010B_Q1
+x5 net-_u1-pad5_ net-_u1-pad11_ vcc vdd gnd CD4010B_Q1
+x6 net-_u1-pad6_ net-_u1-pad12_ vcc vdd gnd CD4010B_Q1
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ vcc vdd gnd port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

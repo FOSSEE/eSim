@@ -1,0 +1,40 @@
+* C:\Users\HP\OneDrive\Documents\FOSSEE\eSim\library\SubcircuitLibrary\DM74184\DM74184.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/03/25 12:05:52
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U3  /Y6 Net-_U3-Pad2_ d_inverter		
+U4  /Y5 Net-_U4-Pad2_ d_inverter		
+U5  /Y3 Net-_U5-Pad2_ d_inverter		
+U6  /Y2 Net-_U6-Pad2_ d_inverter		
+U2  /Y1 /Y1 /A d_or		
+U1  /Y6 /Y5 /Y4 /Y3 /Y2 /Y1 ? ? ? /A /B /C /D /E PORT		
+X1  /Y6 Net-_U4-Pad2_ /Y2 Net-_X1-Pad4_ 3_and		
+X2  Net-_U3-Pad2_ Net-_U4-Pad2_ /Y2 Net-_X2-Pad4_ 3_and		
+X4  Net-_U3-Pad2_ /Y5 Net-_U6-Pad2_ Net-_X3-Pad3_ 3_and		
+U7  /Y6 /Y5 Net-_U7-Pad3_ d_and		
+X3  Net-_X1-Pad4_ Net-_X2-Pad4_ Net-_X3-Pad3_ Net-_U7-Pad3_ /B 4_OR		
+X5  /Y6 Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_X5-Pad4_ 3_and		
+X7  Net-_U3-Pad2_ Net-_U4-Pad2_ /Y3 Net-_X6-Pad2_ 3_and		
+U8  /Y3 /Y2 Net-_U8-Pad3_ d_xor		
+X8  Net-_U8-Pad3_ /Y5 Net-_U3-Pad2_ Net-_X6-Pad3_ 3_and		
+U9  /Y5 /Y6 Net-_U9-Pad3_ d_and		
+X6  Net-_X5-Pad4_ Net-_X6-Pad2_ Net-_X6-Pad3_ Net-_U9-Pad3_ /C 4_OR		
+U10  /Y5 /Y6 Net-_U10-Pad3_ d_and		
+U11  /Y4 /Y3 Net-_U11-Pad3_ d_xor		
+X9  Net-_U11-Pad3_ Net-_U4-Pad2_ /Y6 Net-_X10-Pad2_ 3_and		
+X11  Net-_U3-Pad2_ Net-_U4-Pad2_ /Y4 Net-_X10-Pad3_ 3_and		
+U12  /Y2 /Y3 Net-_U12-Pad3_ d_and		
+U14  Net-_U12-Pad3_ /Y4 Net-_U13-Pad1_ d_xor		
+X12  Net-_U13-Pad2_ /Y5 Net-_U3-Pad2_ Net-_X10-Pad4_ 3_and		
+U13  Net-_U13-Pad1_ Net-_U13-Pad2_ d_inverter		
+X10  Net-_U10-Pad3_ Net-_X10-Pad2_ Net-_X10-Pad3_ Net-_X10-Pad4_ /D 4_OR		
+U15  /Y2 /Y3 Net-_U15-Pad3_ d_and		
+U16  Net-_U15-Pad3_ /Y4 Net-_U16-Pad3_ d_or		
+U17  Net-_U17-Pad1_ /Y6 /E d_or		
+X13  Net-_U16-Pad3_ /Y5 Net-_U3-Pad2_ Net-_U17-Pad1_ 3_and		
+
+.end

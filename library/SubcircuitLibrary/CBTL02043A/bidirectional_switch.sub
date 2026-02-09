@@ -1,0 +1,23 @@
+* Subcircuit bidirectional_switch
+.subckt bidirectional_switch net-_m3-pad1_ net-_m3-pad3_ net-_m3-pad2_ 
+* c:\fossee\esim\library\subcircuitlibrary\bidirectional_switch\bidirectional_switch.cir
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+m3 net-_m3-pad1_ net-_m3-pad2_ net-_m3-pad3_ gnd CMOSN W=100u L=100u M=1
+m4 net-_m3-pad1_ net-_m4-pad2_ net-_m3-pad3_ net-_m4-pad4_ CMOSP W=100u L=100u M=1
+* u3  net-_m3-pad2_ net-_u2-pad1_ adc_bridge_1
+* u4  net-_u2-pad2_ net-_m4-pad2_ dac_bridge_1
+* u2  net-_u2-pad1_ net-_u2-pad2_ d_inverter
+v1  net-_m4-pad4_ gnd 5
+a1 [net-_m3-pad2_ ] [net-_u2-pad1_ ] u3
+a2 [net-_u2-pad2_ ] [net-_m4-pad2_ ] u4
+a3 net-_u2-pad1_ net-_u2-pad2_ u2
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u4 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends bidirectional_switch

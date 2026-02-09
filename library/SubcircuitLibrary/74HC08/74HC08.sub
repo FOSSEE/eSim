@@ -1,0 +1,22 @@
+* Subcircuit 74HC08
+.subckt 74HC08 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ ? net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ ? 
+* c:\fossee\esim\library\subcircuitlibrary\74hc08\74hc08.cir
+* u2  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ d_and
+* u3  net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ d_and
+* u4  net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad8_ d_and
+* u5  net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad11_ d_and
+a1 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u1-pad3_ u2
+a2 [net-_u1-pad4_ net-_u1-pad5_ ] net-_u1-pad6_ u3
+a3 [net-_u1-pad9_ net-_u1-pad10_ ] net-_u1-pad8_ u4
+a4 [net-_u1-pad12_ net-_u1-pad13_ ] net-_u1-pad11_ u5
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u2 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74HC08

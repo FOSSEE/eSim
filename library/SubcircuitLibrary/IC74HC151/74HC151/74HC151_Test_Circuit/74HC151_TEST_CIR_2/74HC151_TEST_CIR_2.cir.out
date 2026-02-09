@@ -1,0 +1,66 @@
+.title kicad schematic
+
+.include 74HC151.sub
+* u14 i6 plot_v1
+* u10 s2 plot_v1
+* u12 s0 plot_v1
+* u13 i7 plot_v1
+* u15 i5 plot_v1
+* u16 i4 plot_v1
+* u11 s1 plot_v1
+ven1 net-_u5-pad5_ gnd 0
+* u6 y plot_v1
+vi2 i2 gnd pulse(0 5 20 1n 1n 10 100)
+vi1 i1 gnd pulse(0 5 10 1n 1n 10 100)
+vi0 i0 gnd pulse(0 5 0 1n 1n 10 100)
+* u9 i4 i5 i6 i7 s0 s1 s2 net-_u9-pad8_ net-_u9-pad9_ net-_u9-pad10_ net-_u9-pad11_ net-_u9-pad12_ net-_u9-pad13_ net-_u9-pad14_ adc_bridge_7
+v1 net-_x1-pad16_ gnd 5
+* u7 net-_u7-pad1_ net-_u7-pad2_ y yc dac_bridge_2
+* u8 yc plot_v1
+r1 gnd y 1k
+r2 yc gnd 1k
+vs0 s0 gnd pulse(0 5 0 1n 1n 10 20)
+vs1 s1 gnd pulse(0 5 0 1n 1n 20 40)
+vi5 i5 gnd pulse(0 5 20 1n 1n 10 100)
+vi6 i6 gnd pulse(0 5 60 1n 1n 10 100)
+vi7 i7 gnd pulse(0 5 70 1n 1n 10 100)
+vs2 s2 gnd pulse(0 5 20 1n 1n 30 60)
+* u2 i2 plot_v1
+* u1 i3 plot_v1
+vi3 i3 gnd pulse(0 5 30 1n 1n 10 100)
+* u3 i1 plot_v1
+* u4 i0 plot_v1
+x1 net-_u5-pad6_ net-_u5-pad7_ net-_u5-pad8_ net-_u5-pad9_ net-_u7-pad1_ net-_u7-pad2_ net-_u5-pad10_ gnd net-_u9-pad14_ net-_u9-pad13_ net-_u9-pad12_ net-_u9-pad11_ net-_u9-pad10_ net-_u9-pad9_ net-_u9-pad8_ net-_x1-pad16_ 74HC151
+* u5 i3 i2 i1 i0 net-_u5-pad5_ net-_u5-pad6_ net-_u5-pad7_ net-_u5-pad8_ net-_u5-pad9_ net-_u5-pad10_ adc_bridge_5
+vi4 i4 gnd pulse(0 5 40 1n 1n 10 100)
+a1 [i4 i5 i6 i7 s0 s1 s2 ] [net-_u9-pad8_ net-_u9-pad9_ net-_u9-pad10_ net-_u9-pad11_ net-_u9-pad12_ net-_u9-pad13_ net-_u9-pad14_ ] u9
+a2 [net-_u7-pad1_ net-_u7-pad2_ ] [y yc ] u7
+a3 [i3 i2 i1 i0 net-_u5-pad5_ ] [net-_u5-pad6_ net-_u5-pad7_ net-_u5-pad8_ net-_u5-pad9_ net-_u5-pad10_ ] u5
+* Schematic Name:                             adc_bridge_7, Ngspice Name: adc_bridge
+.model u9 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_2, Ngspice Name: dac_bridge
+.model u7 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_5, Ngspice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 5e-00 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(i6)
+plot v(s2)
+plot v(s0)
+plot v(i7)
+plot v(i5)
+plot v(i4)
+plot v(s1)
+plot v(y)
+plot v(yc)
+plot v(i2)
+plot v(i3)
+plot v(i1)
+plot v(i0)
+.endc
+.end

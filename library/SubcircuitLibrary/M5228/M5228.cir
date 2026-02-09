@@ -1,0 +1,127 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\M5228\M5228.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/12/25 14:22:19
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+Q5  Net-_Q1-Pad3_ Net-_Q17-Pad2_ Net-_Q5-Pad3_ eSim_PNP		
+Q9  Net-_C3-Pad2_ Net-_Q9-Pad2_ Net-_Q1-Pad3_ eSim_PNP		
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_PNP		
+R3  Net-_J1-Pad1_ Net-_Q5-Pad3_ 8.7k		
+Q7  Net-_C3-Pad2_ Net-_Q1-Pad1_ Net-_Q7-Pad3_ eSim_NPN		
+Q3  Net-_Q1-Pad1_ Net-_Q1-Pad1_ Net-_C1-Pad1_ eSim_NPN		
+R1  Net-_C1-Pad1_ Net-_C1-Pad2_ 5k		
+R5  Net-_Q7-Pad3_ Net-_C1-Pad2_ 5k		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 15p		
+Q11  Net-_J1-Pad1_ Net-_C3-Pad2_ Net-_Q11-Pad3_ eSim_NPN		
+R7  Net-_Q11-Pad3_ Net-_C1-Pad2_ 50k		
+C3  Net-_C3-Pad1_ Net-_C3-Pad2_ 15p		
+D1  Net-_C3-Pad2_ Net-_C3-Pad1_ eSim_Diode		
+Q15  Net-_C3-Pad1_ Net-_Q11-Pad3_ Net-_C1-Pad2_ eSim_NPN		
+Q22  Net-_C1-Pad2_ Net-_C3-Pad1_ Net-_Q22-Pad3_ eSim_PNP		
+R12  Net-_R11-Pad2_ Net-_Q22-Pad3_ 27		
+R11  Net-_Q21-Pad3_ Net-_R11-Pad2_ 27		
+Q21  Net-_J1-Pad1_ Net-_Q13-Pad1_ Net-_Q21-Pad3_ eSim_NPN		
+R9  Net-_Q13-Pad3_ Net-_C3-Pad1_ 50k		
+Q18  Net-_Q13-Pad1_ Net-_Q13-Pad3_ Net-_C3-Pad1_ eSim_NPN		
+Q13  Net-_Q13-Pad1_ Net-_Q13-Pad1_ Net-_Q13-Pad3_ eSim_NPN		
+Q17  Net-_Q13-Pad1_ Net-_Q17-Pad2_ Net-_J1-Pad1_ eSim_PNP		
+Q25  Net-_Q17-Pad2_ Net-_Q17-Pad2_ Net-_J1-Pad1_ eSim_PNP		
+Q27  Net-_Q17-Pad2_ Net-_J1-Pad3_ Net-_Q27-Pad3_ eSim_NPN		
+R15  Net-_Q27-Pad3_ Net-_C1-Pad2_ 5.8k		
+J1  Net-_J1-Pad1_ Net-_C1-Pad2_ Net-_J1-Pad3_ jfet_n		
+R17  Net-_R11-Pad2_ Net-_R17-Pad2_ 120		
+Q30  Net-_J1-Pad3_ Net-_J1-Pad3_ Net-_Q29-Pad1_ eSim_NPN		
+Q29  Net-_Q29-Pad1_ Net-_Q29-Pad1_ Net-_C1-Pad2_ eSim_NPN		
+Q37  Net-_Q33-Pad3_ Net-_Q37-Pad2_ Net-_Q37-Pad3_ eSim_PNP		
+Q41  Net-_C7-Pad2_ Net-_Q41-Pad2_ Net-_Q33-Pad3_ eSim_PNP		
+Q33  Net-_Q33-Pad1_ Net-_Q33-Pad2_ Net-_Q33-Pad3_ eSim_PNP		
+R21  Net-_J1-Pad1_ Net-_Q37-Pad3_ 8.7k		
+Q39  Net-_C7-Pad2_ Net-_Q33-Pad1_ Net-_Q39-Pad3_ eSim_NPN		
+Q35  Net-_Q33-Pad1_ Net-_Q33-Pad1_ Net-_C5-Pad1_ eSim_NPN		
+R19  Net-_C5-Pad1_ Net-_C1-Pad2_ 5k		
+R23  Net-_Q39-Pad3_ Net-_C1-Pad2_ 5k		
+C5  Net-_C5-Pad1_ Net-_C1-Pad2_ 15p		
+Q43  Net-_J1-Pad1_ Net-_C7-Pad2_ Net-_Q43-Pad3_ eSim_NPN		
+R25  Net-_Q43-Pad3_ Net-_C1-Pad2_ 50k		
+C7  Net-_C7-Pad1_ Net-_C7-Pad2_ 15p		
+D3  Net-_C7-Pad2_ Net-_C7-Pad1_ eSim_Diode		
+Q47  Net-_C7-Pad1_ Net-_Q43-Pad3_ Net-_C1-Pad2_ eSim_NPN		
+Q54  Net-_C1-Pad2_ Net-_C7-Pad1_ Net-_Q54-Pad3_ eSim_PNP		
+R30  Net-_R29-Pad2_ Net-_Q54-Pad3_ 27		
+R29  Net-_Q53-Pad3_ Net-_R29-Pad2_ 27		
+Q53  Net-_J1-Pad1_ Net-_Q45-Pad1_ Net-_Q53-Pad3_ eSim_NPN		
+R27  Net-_Q45-Pad3_ Net-_C7-Pad1_ 50k		
+Q50  Net-_Q45-Pad1_ Net-_Q45-Pad3_ Net-_C7-Pad1_ eSim_NPN		
+Q45  Net-_Q45-Pad1_ Net-_Q45-Pad1_ Net-_Q45-Pad3_ eSim_NPN		
+Q49  Net-_Q45-Pad1_ Net-_Q37-Pad2_ Net-_J1-Pad1_ eSim_PNP		
+Q57  Net-_Q37-Pad2_ Net-_Q37-Pad2_ Net-_J1-Pad1_ eSim_PNP		
+Q59  Net-_Q37-Pad2_ Net-_J3-Pad3_ Net-_Q59-Pad3_ eSim_NPN		
+R33  Net-_Q59-Pad3_ Net-_C1-Pad2_ 5.8k		
+J3  Net-_J1-Pad1_ Net-_C1-Pad2_ Net-_J3-Pad3_ jfet_n		
+R35  Net-_R29-Pad2_ Net-_R35-Pad2_ 120		
+Q62  Net-_J3-Pad3_ Net-_J3-Pad3_ Net-_Q61-Pad1_ eSim_NPN		
+Q61  Net-_Q61-Pad1_ Net-_Q61-Pad1_ Net-_C1-Pad2_ eSim_NPN		
+Q6  Net-_Q10-Pad3_ Net-_Q19-Pad2_ Net-_Q6-Pad3_ eSim_PNP		
+Q10  Net-_C4-Pad2_ Net-_Q10-Pad2_ Net-_Q10-Pad3_ eSim_PNP		
+Q2  Net-_Q2-Pad1_ Net-_Q2-Pad2_ Net-_Q10-Pad3_ eSim_PNP		
+R4  Net-_J1-Pad1_ Net-_Q6-Pad3_ 8.7k		
+Q8  Net-_C4-Pad2_ Net-_Q2-Pad1_ Net-_Q8-Pad3_ eSim_NPN		
+Q4  Net-_Q2-Pad1_ Net-_Q2-Pad1_ Net-_C2-Pad1_ eSim_NPN		
+R2  Net-_C2-Pad1_ Net-_C1-Pad2_ 5k		
+R6  Net-_Q8-Pad3_ Net-_C1-Pad2_ 5k		
+C2  Net-_C2-Pad1_ Net-_C1-Pad2_ 15p		
+Q12  Net-_J1-Pad1_ Net-_C4-Pad2_ Net-_Q12-Pad3_ eSim_NPN		
+R8  Net-_Q12-Pad3_ Net-_C1-Pad2_ 50k		
+C4  Net-_C4-Pad1_ Net-_C4-Pad2_ 15p		
+D2  Net-_C4-Pad2_ Net-_C4-Pad1_ eSim_Diode		
+Q16  Net-_C4-Pad1_ Net-_Q12-Pad3_ Net-_C1-Pad2_ eSim_NPN		
+Q24  Net-_C1-Pad2_ Net-_C4-Pad1_ Net-_Q24-Pad3_ eSim_PNP		
+R14  Net-_R13-Pad2_ Net-_Q24-Pad3_ 27		
+R13  Net-_Q23-Pad3_ Net-_R13-Pad2_ 27		
+Q23  Net-_J1-Pad1_ Net-_Q14-Pad1_ Net-_Q23-Pad3_ eSim_NPN		
+R10  Net-_Q14-Pad3_ Net-_C4-Pad1_ 50k		
+Q20  Net-_Q14-Pad1_ Net-_Q14-Pad3_ Net-_C4-Pad1_ eSim_NPN		
+Q14  Net-_Q14-Pad1_ Net-_Q14-Pad1_ Net-_Q14-Pad3_ eSim_NPN		
+Q19  Net-_Q14-Pad1_ Net-_Q19-Pad2_ Net-_J1-Pad1_ eSim_PNP		
+Q26  Net-_Q19-Pad2_ Net-_Q19-Pad2_ Net-_J1-Pad1_ eSim_PNP		
+Q28  Net-_Q19-Pad2_ Net-_J2-Pad3_ Net-_Q28-Pad3_ eSim_NPN		
+R16  Net-_Q28-Pad3_ Net-_C1-Pad2_ 5.8k		
+J2  Net-_J1-Pad1_ Net-_C1-Pad2_ Net-_J2-Pad3_ jfet_n		
+R18  Net-_R13-Pad2_ Net-_R18-Pad2_ 120		
+Q32  Net-_J2-Pad3_ Net-_J2-Pad3_ Net-_Q31-Pad1_ eSim_NPN		
+Q31  Net-_Q31-Pad1_ Net-_Q31-Pad1_ Net-_C1-Pad2_ eSim_NPN		
+Q38  Net-_Q34-Pad3_ Net-_Q38-Pad2_ Net-_Q38-Pad3_ eSim_PNP		
+Q42  Net-_C8-Pad2_ Net-_Q42-Pad2_ Net-_Q34-Pad3_ eSim_PNP		
+Q34  Net-_Q34-Pad1_ Net-_Q34-Pad2_ Net-_Q34-Pad3_ eSim_PNP		
+R22  Net-_J1-Pad1_ Net-_Q38-Pad3_ 8.7k		
+Q40  Net-_C8-Pad2_ Net-_Q34-Pad1_ Net-_Q40-Pad3_ eSim_NPN		
+Q36  Net-_Q34-Pad1_ Net-_Q34-Pad1_ Net-_C6-Pad1_ eSim_NPN		
+R20  Net-_C6-Pad1_ Net-_C1-Pad2_ 5k		
+R24  Net-_Q40-Pad3_ Net-_C1-Pad2_ 5k		
+C6  Net-_C6-Pad1_ Net-_C1-Pad2_ 15p		
+Q44  Net-_J1-Pad1_ Net-_C8-Pad2_ Net-_Q44-Pad3_ eSim_NPN		
+R26  Net-_Q44-Pad3_ Net-_C1-Pad2_ 50k		
+C8  Net-_C8-Pad1_ Net-_C8-Pad2_ 15p		
+D4  Net-_C8-Pad2_ Net-_C8-Pad1_ eSim_Diode		
+Q48  Net-_C8-Pad1_ Net-_Q44-Pad3_ Net-_C1-Pad2_ eSim_NPN		
+Q56  Net-_C1-Pad2_ Net-_C8-Pad1_ Net-_Q56-Pad3_ eSim_PNP		
+R32  Net-_R31-Pad2_ Net-_Q56-Pad3_ 27		
+R31  Net-_Q55-Pad3_ Net-_R31-Pad2_ 27		
+Q55  Net-_J1-Pad1_ Net-_Q46-Pad1_ Net-_Q55-Pad3_ eSim_NPN		
+R28  Net-_Q46-Pad3_ Net-_C8-Pad1_ 50k		
+Q52  Net-_Q46-Pad1_ Net-_Q46-Pad3_ Net-_C8-Pad1_ eSim_NPN		
+Q46  Net-_Q46-Pad1_ Net-_Q46-Pad1_ Net-_Q46-Pad3_ eSim_NPN		
+Q51  Net-_Q46-Pad1_ Net-_Q38-Pad2_ Net-_J1-Pad1_ eSim_PNP		
+Q58  Net-_Q38-Pad2_ Net-_Q38-Pad2_ Net-_J1-Pad1_ eSim_PNP		
+Q60  Net-_Q38-Pad2_ Net-_J4-Pad3_ Net-_Q60-Pad3_ eSim_NPN		
+R34  Net-_Q60-Pad3_ Net-_C1-Pad2_ 5.8k		
+J4  Net-_J1-Pad1_ Net-_C1-Pad2_ Net-_J4-Pad3_ jfet_n		
+R36  Net-_R31-Pad2_ Net-_R36-Pad2_ 120		
+Q64  Net-_J4-Pad3_ Net-_J4-Pad3_ Net-_Q63-Pad1_ eSim_NPN		
+Q63  Net-_Q63-Pad1_ Net-_Q63-Pad1_ Net-_C1-Pad2_ eSim_NPN		
+U1  Net-_R17-Pad2_ Net-_Q1-Pad2_ Net-_Q9-Pad2_ Net-_J1-Pad1_ Net-_Q10-Pad2_ Net-_Q2-Pad2_ Net-_R18-Pad2_ Net-_R36-Pad2_ Net-_Q34-Pad2_ Net-_Q42-Pad2_ Net-_C1-Pad2_ Net-_Q41-Pad2_ Net-_Q33-Pad2_ Net-_R35-Pad2_ PORT		
+
+.end

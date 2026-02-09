@@ -1,0 +1,24 @@
+.title KiCad schematic
+M1 vcc buffer_input buffer_output gnd eSim_MOS_N
+U1 buffer_output diff_in2 diff_in3 output4 output5 output6 output7 rb8 vcc buffer_input rb11 gnd PORT
+R3 Net-_R3-Pad1_ rb11 1k
+D1 rb11 rb11 eSim_Diode
+D2 rb11 Net-_D2-Pad2_ eSim_Diode
+D3 Net-_D2-Pad2_ gnd eSim_Diode
+M4 Net-_M4-Pad1_ Net-_M2-Pad1_ vcc gnd eSim_MOS_N
+M5 vcc Net-_M3-Pad3_ Net-_M5-Pad3_ gnd eSim_MOS_N
+R11 gnd Net-_M5-Pad3_ 0.3k
+R9 Net-_M7-Pad2_ diff_in2 1k
+R6 gnd Net-_M2-Pad3_ 1k
+M3 Net-_M2-Pad3_ diff_in2 Net-_M3-Pad3_ gnd eSim_MOS_N
+R5 Net-_M2-Pad1_ Net-_R5-Pad2_ 1k
+M2 Net-_M2-Pad1_ diff_in3 Net-_M2-Pad3_ gnd eSim_MOS_N
+R10 Net-_M4-Pad1_ gnd 0.3k
+R4 Net-_M4-Pad1_ Net-_R3-Pad1_ 1k
+R7 Net-_M3-Pad3_ Net-_R5-Pad2_ 1k
+R8 diff_in2 rb11 1k
+R2 rb8 vcc 1.5k
+R1 rb11 rb8 1.5k
+M6 output4 Net-_M4-Pad1_ output5 gnd eSim_MOS_N
+M7 output6 Net-_M7-Pad2_ output7 gnd eSim_MOS_N
+.end

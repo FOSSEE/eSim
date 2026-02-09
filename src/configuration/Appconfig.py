@@ -11,6 +11,7 @@
 #         NOTES: ---
 #        AUTHOR: Fahim Khan, fahim.elex@gmail.com
 #      MODIFIED: Rahul Paknikar, rahulp@iitb.ac.in
+#                Sumanto Kar, sumantokar@iitb.ac.in
 #  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
 #       CREATED: Tuesday 24 February 2015
 #      REVISION: Thursday 29 June 2023
@@ -91,7 +92,7 @@ class Appconfig(QtWidgets.QWidget):
 
         # Application Details
         self._APPLICATION = 'eSim'
-        self._VERSION = '2.4'
+        self._VERSION = '2.5'
         self._AUTHOR = 'Fahim'
         self._REVISION = 'Rahul, Sumanto'
 

@@ -1,0 +1,36 @@
+* c:\users\ajay\onedrive\desktop\fossee2.3\esim\library\subcircuitlibrary\ca3021\ca3021.cir
+
+.include NPN.lib
+.include D.lib
+r1  net-_q1-pad1_ net-_r1-pad2_ 3.9k
+r3  net-_q1-pad2_ net-_r1-pad2_ 15k
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+r2  net-_r1-pad2_ net-_d1-pad1_ 3.9k
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r5  net-_r11-pad1_ net-_q1-pad1_ 34k
+r6  net-_r11-pad1_ net-_q3-pad1_ 0.1k
+q3 net-_q3-pad1_ net-_q1-pad1_ net-_d3-pad2_ Q2N2222
+q2 net-_q1-pad3_ net-_q2-pad2_ net-_d1-pad2_ Q2N2222
+r4  net-_q2-pad2_ net-_r4-pad2_ 5k
+r9  net-_q5-pad2_ net-_r4-pad2_ 5k
+r7  net-_d3-pad2_ net-_d1-pad2_ 3.9k
+r8  net-_r4-pad2_ net-_r8-pad2_ 5k
+q5 net-_q5-pad1_ net-_q5-pad2_ net-_d1-pad2_ Q2N2222
+r10  net-_q4-pad3_ net-_q5-pad1_ 0.75k
+q4 net-_q4-pad1_ net-_d3-pad2_ net-_q4-pad3_ Q2N2222
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+r11  net-_r11-pad1_ net-_q4-pad1_ 75k
+q6 net-_q6-pad1_ net-_q4-pad1_ net-_q6-pad3_ Q2N2222
+r12  net-_r11-pad1_ net-_q6-pad1_ 0.3k
+r13  net-_q6-pad3_ net-_d1-pad2_ 3.9k
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+* u1  net-_q1-pad2_ net-_r8-pad2_ net-_q1-pad1_ net-_d2-pad1_ net-_r11-pad1_ net-_d2-pad2_ net-_q4-pad1_ net-_q6-pad3_ net-_d3-pad1_ net-_q5-pad1_ net-_d1-pad2_ net-_q1-pad3_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

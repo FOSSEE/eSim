@@ -1,0 +1,25 @@
+.title kicad schematic
+
+.include LF356.sub
+* u1 vin plot_v1
+c1 gnd net-_c1-pad2_ 0.1u
+r1 net-_r1-pad1_ gnd 10k
+vv2 gnd net-_c1-pad2_  dc -12
+vv1 vin gnd sin(0 200m 1k)
+x1 net-_r3-pad1_ net-_r1-pad1_ vin net-_c1-pad2_ net-_r3-pad2_ vout net-_c2-pad1_ unconnected-_x1-pad8_ LF356
+c2 net-_c2-pad1_ gnd 0.1u
+r3 net-_r3-pad1_ net-_r3-pad2_ 10k
+r2 net-_r1-pad1_ vout 40k
+* u2 vout plot_v1
+vv3 net-_c2-pad1_ gnd  dc 12
+.tran 1e-06 5e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(vin)
+plot v(vout)
+.endc
+.end
