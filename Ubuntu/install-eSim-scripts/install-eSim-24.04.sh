@@ -64,6 +64,14 @@ function installNghdl
 
     echo "Installing NGHDL..........................."
     unzip -o nghdl.zip
+
+    # --- Fix NGHDL installer for Ubuntu 25.04 ---
+    # 1. Fix broken FULL_VERSION assignment if present
+    sed -i 's/FULL_VERSION=.*/FULL_VERSION="$VERSION_ID"/' nghdl/install-nghdl.sh
+
+    # 2. Allow Ubuntu 25.04 to reuse 24.04 installer
+    sed -i 's/"24.04")/"24.04" | "25.04")/' nghdl/install-nghdl.sh
+
     cd nghdl/
     chmod +x install-nghdl.sh
 
