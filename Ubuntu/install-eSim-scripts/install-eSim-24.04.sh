@@ -63,6 +63,12 @@ function installNghdl
 {
 
     echo "Installing NGHDL..........................."
+
+    # HARD EXIT: NGHDL is not supported on Ubuntu 25.04 (LLVM 20 incompatibility)
+    if [[ "$VERSION_ID" == "25.04" ]]; then
+        echo "Skipping NGHDL installation on Ubuntu 25.04 (LLVM 20 unsupported)"
+        return 0
+    fi
     unzip -o nghdl.zip
 
     # --- Fix NGHDL installer for Ubuntu 25.04 ---
@@ -76,16 +82,14 @@ function installNghdl
     sed -i 's/libcanberra-gtk-module/ /g' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
 
     # Prevent tar utime failures on restricted filesystems
-    sed -i 's/tar -x/tar --no-same-owner --no-same-permissions -x/' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
+    sed -i 's/tar -x/tar --touch --no-same-owner --no-same-permissions -x/' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
 
     cd nghdl/
     chmod +x install-nghdl.sh
 
     # Do not trap on error of any command. Let NGHDL script handle its own errors.
     trap "" ERR
-
-    ./install-nghdl.sh --install       # Install NGHDL
-        
+  
     # Set trap again to error_exit function to exit on errors
     trap error_exit ERR
 
