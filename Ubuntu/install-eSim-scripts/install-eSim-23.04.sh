@@ -251,7 +251,7 @@ function installDependency
     pip3 install sandpiper-saas
 
     echo "Installing volare"
-    sudo apt-get xz-utils
+    sudo apt-get install -y  xz-utils
     pip3 install volare
 
 }
