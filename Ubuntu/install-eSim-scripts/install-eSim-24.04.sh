@@ -63,15 +63,33 @@ function installNghdl
 {
 
     echo "Installing NGHDL..........................."
+
+    # HARD EXIT: NGHDL is not supported on Ubuntu 25.04 (LLVM 20 incompatibility)
+    if [[ "$VERSION_ID" == "25.04" ]]; then
+        echo "Skipping NGHDL installation on Ubuntu 25.04 (LLVM 20 unsupported)"
+        return 0
+    fi
     unzip -o nghdl.zip
+
+    # --- Fix NGHDL installer for Ubuntu 25.04 ---
+    # 1. Fix broken FULL_VERSION assignment if present
+    sed -i 's/FULL_VERSION=.*/FULL_VERSION="$VERSION_ID"/' nghdl/install-nghdl.sh
+
+    # 2. Allow Ubuntu 25.04 to reuse 24.04 installer
+    sed -i 's/"24.04")/"24.04" | "25.04")/' nghdl/install-nghdl.sh
+    
+    # Skip obsolete libcanberra-gtk-module on Ubuntu 25.04+
+    sed -i 's/libcanberra-gtk-module/ /g' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
+
+    # Prevent tar utime failures on restricted filesystems
+    sed -i 's/tar -x/tar --touch --no-same-owner --no-same-permissions -x/' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
+
     cd nghdl/
     chmod +x install-nghdl.sh
 
     # Do not trap on error of any command. Let NGHDL script handle its own errors.
     trap "" ERR
-
-    ./install-nghdl.sh --install       # Install NGHDL
-        
+  
     # Set trap again to error_exit function to exit on errors
     trap error_exit ERR
 
@@ -106,56 +124,34 @@ function installSky130Pdk
 
 function installKicad
 {
-    echo "Installing KiCad..........................."
-
     # Detect Ubuntu version
-    ubuntu_version=$(lsb_release -rs)
+ubuntu_version=$(lsb_release -rs)
 
-    # Define KiCad PPAs based on Ubuntu version
-    if [[ "$ubuntu_version" == "24.04" ]]; then
-        echo "Ubuntu 24.04 detected."
-        kicadppa="kicad/kicad-8.0-releases"
+echo "Detected Ubuntu version: $ubuntu_version"
 
-        # Check if KiCad is installed using dpkg-query for the main package
-        if dpkg -s kicad &>/dev/null; then
-            installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
-            if [[ "$installed_version" != "8" ]]; then
-                echo "A different version of KiCad ($installed_version) is installed."
-                read -p "Do you want to remove it and install KiCad 8.0? (yes/no): " response
+# Ubuntu 24.04+ (including 25.04)
+if [[ "$ubuntu_version" == "24.04" || "$ubuntu_version" == "25.04" ]]; then
+    echo "Using system KiCad from Ubuntu repositories (no PPA)."
 
-                if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
-                    echo "Removing KiCad $installed_version..."
-                    sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-                    sudo apt-get autoremove -y
-                else
-                    echo "Exiting installation. KiCad $installed_version remains installed."
-                    exit 1
-                fi
-            else
-                echo "KiCad 8.0 is already installed."
-                exit 0
-            fi
-        fi
+    # Ensure apt is updated
+    sudo apt-get update
 
+    # Install KiCad if not already installed
+    if ! dpkg -s kicad &>/dev/null; then
+        echo "Installing KiCad from Ubuntu repository..."
+        sudo apt-get install -y kicad kicad-footprints kicad-symbols
     else
-        kicadppa="kicad/kicad-6.0-releases"
+        echo "KiCad already installed. Skipping."
     fi
 
-    # Check if the PPA is already added
-    if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-        echo "Adding KiCad PPA to local apt repository: $kicadppa"
-        sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt-get update
-    else
-        echo "KiCad PPA is already present in sources."
-    fi
+else
+    echo "Unsupported Ubuntu version for this installer."
+    exit 1
+fi
 
-    # Install KiCad packages
-    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+echo "KiCad installation completed successfully!"
 
-    echo "KiCad installation completed successfully!"
 }
-
 
 function installDependency
 {
@@ -224,7 +220,7 @@ function installDependency
     pip3 install PyQt5  
 
     echo "Installing volare"
-    sudo apt-get xz-utils
+    sudo apt-get install -y xz-utils
     pip3 install volare
 }
 

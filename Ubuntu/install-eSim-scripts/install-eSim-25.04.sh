@@ -13,89 +13,12 @@
 #          BUGS: ---
 #         NOTES: ---
 #       AUTHORS: Fahim Khan, Rahul Paknikar, Saurabh Bansode,
-#                Sumanto Kar, Partha Singha Roy, Jayanth Tatineni,
-#                Anshul Verma
+#                Sumanto Kar, Partha Singha Roy, Harsha Narayana P, 
+#                Jayanth Tatineni, Anshul Verma
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
 #      REVISION: Sunday 25 May 2025 17:40
 #=============================================================================
- 
-sudo apt install -y libxcb-xinerama0 libxcb1 libx11-xcb1 libxcb-glx0 libxcb-util1 libxrender1 libxi6 libxrandr2 libqt5gui5 libqt5core5a libqt5widgets5
-
-# Creating the Virtual Environment
-if [ ! -d "venv" ]; then
-    echo "Creating virtual environment..."
-    
-    # Try to find a usable Python 3 version
-    PYTHON_BIN=$(which python3.11 || which python3.10 || which python3)
-
-    if [ -z "$PYTHON_BIN" ]; then
-        echo "No suitable Python 3.x found. Please install Python 3.10 or 3.11."
-        exit 1
-    fi
-
-    PYTHON_VERSION=$($PYTHON_BIN -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
-    VENV_PACKAGE="python${PYTHON_VERSION}-venv"
-    
-    # Check if the venv module is available
-    if ! $PYTHON_BIN -m venv --help > /dev/null 2>&1; then
-        echo "! venv not found for Python $PYTHON_VERSION. Attempting to install $VENV_PACKAGE..."
-        sudo apt update
-        sudo apt install -y "$VENV_PACKAGE"
-    fi
-    
-    # Try to fix ensurepip-related issues
-    
-    if ! $PYTHON_BIN -c "import ensurepip" &>/dev/null; then
-        echo "! ensurepip is missing. Installing full Python package for $PYTHON_VERSION..."
-        sudo apt install -y "python${PYTHON_VERSION}-full"
-    fi
-
-    $PYTHON_BIN -m venv venv
-    # python3.11 -m venv venv      
-else
-    echo "Virtual environment already exists."
-fi
-
-# Activate the virtual environment
-source ./venv/bin/activate
-
-# Ensure virtual environment is deactivated when script exits
-trap 'if [[ -d "venv" ]]; then deactivate; fi' EXIT
-
-# Update Sources list if necessary
-# Get Ubuntu version
-UBUNTU_VERSION=$(lsb_release -rs)
-UBUNTU_CODENAME=$(lsb_release -cs)
-
-echo "Detected Ubuntu version: $UBUNTU_VERSION ($UBUNTU_CODENAME)"
-
-# Check if running Ubuntu 23.04 (Lunar)
-if [[ "$UBUNTU_CODENAME" == "lunar" ]]; then
-    echo "Ubuntu 23.04 detected. Checking sources list..."
-
-    # Check if the old-releases mirror is already set
-    if grep -q "old-releases.ubuntu.com" /etc/apt/sources.list; then
-        echo "Old-releases mirror is already in use. No changes needed."
-    else
-        echo "Switching to old-releases mirror..."
-        
-        # Backup existing sources.list (only if not backed up before)
-        if [ ! -f /etc/apt/sources.list.bak ]; then
-            sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
-        fi
-
-        # Replace standard mirrors with old-releases
-        sudo sed -i 's|http://\(.*\).ubuntu.com/ubuntu|http://old-releases.ubuntu.com/ubuntu|g' /etc/apt/sources.list
-
-        echo "Updated sources.list to use old-releases. Running apt update..."
-        
-        # Update package lists
-        sudo apt update -y && sudo apt upgrade -y
-    fi
-else
-    echo "Not running Ubuntu 23.04, no changes needed."
-fi
 
 # All variables goes here
 config_dir="$HOME/.esim"
@@ -132,7 +55,7 @@ function createConfigFile
     echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
     echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-    
+   
 }
 
 
@@ -141,6 +64,21 @@ function installNghdl
 
     echo "Installing NGHDL..........................."
     unzip -o nghdl.zip
+
+    # --- Fix NGHDL installer for Ubuntu 25.04 ---
+    # 1. Fix broken FULL_VERSION assignment if present
+    sed -i 's/FULL_VERSION=.*/FULL_VERSION="$VERSION_ID"/' nghdl/install-nghdl.sh
+
+    # 2. Allow Ubuntu 25.04 to reuse 24.04 installer
+    sed -i 's/"24.04")/"24.04" | "25.04")/' nghdl/install-nghdl.sh
+    
+    # Skip obsolete libcanberra-gtk-module on Ubuntu 25.04+
+    sed -i 's/libcanberra-gtk-module/ /g' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
+
+    # Prevent tar utime failures on restricted filesystems
+    sed -i 's/tar -x/tar --touch --no-same-owner --no-same-permissions -x/' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
+
+
     cd nghdl/
     chmod +x install-nghdl.sh
 
@@ -178,39 +116,38 @@ function installSky130Pdk
     # Change ownership from root to the user
     sudo chown -R $USER:$USER /usr/share/local/sky130_fd_pr/
 
-
 }
 
 
-function installKicad {
-    echo "Installing KiCad..."
+function installKicad
+{
+    # Detect Ubuntu version
+ubuntu_version=$(lsb_release -rs)
 
-    ubuntu_version=$(lsb_release -rs)
+echo "Detected Ubuntu version: $ubuntu_version"
 
-    # Ubuntu 25.04: use official repo ONLY (no PPAs exist)
-    if [[ "$ubuntu_version" == "25.04" ]]; then
-        echo "Ubuntu 25.04 detected — using official repositories"
-        sudo apt update
-        sudo apt install -y kicad
-        echo "KiCad installed successfully on Ubuntu 25.04"
-        return
-    fi
+# Ubuntu 24.04+ (including 25.04)
+if [[ "$ubuntu_version" == "24.04" || "$ubuntu_version" == "25.04" ]]; then
+    echo "Using system KiCad from Ubuntu repositories (no PPA)."
 
-    # Ubuntu <= 24.04: use KiCad PPA
-    kicadppa="kicad/kicad-8.0-releases"
+    # Ensure apt is updated
+    sudo apt-get update
 
-    if ! grep -qr "$kicadppa" /etc/apt/sources.list /etc/apt/sources.list.d; then
-        echo "Adding KiCad-8 PPA to local apt repository..."
-       # sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt update
+    # Install KiCad if not already installed
+    if ! dpkg -s kicad &>/dev/null; then
+        echo "Installing KiCad from Ubuntu repository..."
+        sudo apt-get install -y kicad kicad-footprints kicad-symbols
     else
-        echo "KiCad-8 PPA is already added."
+        echo "KiCad already installed. Skipping."
     fi
 
-    echo "Installing KiCad..."
-    sudo apt install -y --no-install-recommends kicad
+else
+    echo "Unsupported Ubuntu version for this installer."
+    exit 1
+fi
 
-    echo "KiCad installation completed successfully!"
+echo "KiCad installation completed successfully!"
+
 }
 
 function installDependency
@@ -226,6 +163,18 @@ function installDependency
     set -e      # Re-enable exit on error
     trap error_exit ERR
     
+    echo "Instaling virtualenv......................."
+    sudo apt install python3-virtualenv
+   
+    echo "Creating virtual environment to isolate packages "
+    virtualenv $config_dir/env
+    
+    echo "Starting the virtual env..................."
+    source $config_dir/env/bin/activate
+
+    echo "Upgrading Pip.............................."
+    pip install --upgrade pip
+    
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
     
@@ -233,27 +182,23 @@ function installDependency
     sudo apt-get install -y python3-psutil
     
     echo "Installing PyQt5..........................."
-    #sudo apt-get install -y python3-pyqt5
-    pip install PyQt5
+    sudo apt-get install -y python3-pyqt5
 
     echo "Installing Matplotlib......................"
-    #sudo apt-get install -y python3-matplotlib
-    pip install matplotlib
+    sudo apt-get install -y python3-matplotlib
 
-    echo "Installing Distutils......................."
-    sudo apt-get install -y python3-distutils
+    echo "Installing Setuptools..................."
+    sudo apt-get install -y python3-setuptools
 
     # Install NgVeri Depedencies
     echo "Installing Pip3............................"
     sudo apt install -y python3-pip
 
     echo "Installing Watchdog........................"
-    #sudo apt install watchdog
-    pip install watchdog
+    pip3 install watchdog
 
     echo "Installing Hdlparse........................"
     pip3 install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
-    pip3 install hdlparse
 
     echo "Installing Makerchip......................."
     pip3 install makerchip-app
@@ -261,10 +206,19 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
-    echo "Installing volare"
-    sudo apt-get install -y  xz-utils
-    pip3 install volare
+   
+    echo "Installing Hdlparse......................"
+    pip3 install hdlparse
 
+    echo "Installing matplotlib................"
+    pip3 install matplotlib
+
+    echo "Installing PyQt5............."
+    pip3 install PyQt5  
+
+    echo "Installing volare"
+    sudo apt-get install -y xz-utils
+    pip3 install volare
 }
 
 
@@ -308,8 +262,9 @@ function createDesktopStartScript
 
     # Generating new esim-start.sh
     echo '#!/bin/bash' > esim-start.sh
-    echo "cd $eSim_Home/src/frontEnd || exit" >> esim-start.sh
-    echo "$eSim_Home/venv/bin/python Application.py" >> esim-start.sh
+    echo "cd $eSim_Home/src/frontEnd" >> esim-start.sh
+    echo "source $config_dir/env/bin/activate" >> esim-start.sh
+    echo "python3 Application.py" >> esim-start.sh
 
     # Make it executable
     sudo chmod 755 esim-start.sh
@@ -458,13 +413,14 @@ elif [ $option == "--uninstall" ];then
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
+	sudo rm /etc/apt/sources.list.d/kicad*
         rm -rf $HOME/.config/kicad/6.0
 
-        echo "Removing Makerchip......................."
-        pip3 uninstall -y hdlparse makerchip-app sandpiper-saas
+        echo "Removing Virtual env......................."
+        sudo rm -r $config_dir/env
 
         echo "Removing SKY130 PDK......................"
-        sudo rm -rf /usr/share/local/sky130_fd_pr
+        sudo rm -R /usr/share/local/sky130_fd_pr
 
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
@@ -483,18 +439,13 @@ elif [ $option == "--uninstall" ];then
         else
             echo -e "\nCannot find \"nghdl\" directory. Please remove it manually"
         fi
-
-        deactivate
-        
-        rm -rf venv
-
     elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
         exit 0
     else 
         echo "Please select the right option."
         exit 0
     fi
-    
+
 else 
     echo "Please select the proper operation."
     echo "--install"

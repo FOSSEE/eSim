@@ -107,23 +107,33 @@ function installSky130Pdk
 function installKicad {
     echo "Installing KiCad..."
 
+    ubuntu_version=$(lsb_release -rs)
+
+    #For ubuntu 25.04 use official repo ONLY (no PPAs exist)
+    if [[ "$ubuntu_version" == "25.04" ]]; then
+        echo "Ubuntu 25.04 detected — using official repositories"
+        sudo apt update
+        sudo apt install -y kicad
+        echo "KiCad installed successfully on Ubuntu 25.04"
+        return
+    fi
+
+    # Ubuntu <= 24.04: use KiCad PPA
     kicadppa="kicad/kicad-8.0-releases"
-    findppa=$(grep -h -r "^deb.$kicadppa" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
-    
-    if [ -z "$findppa" ]; then
+
+    if ! grep -qr "$kicadppa" /etc/apt/sources.list /etc/apt/sources.list.d; then
         echo "Adding KiCad-8 PPA to local apt repository..."
-        sudo add-apt-repository -y ppa:kicad/kicad-8.0-releases
+        sudo add-apt-repository -y "ppa:$kicadppa"
         sudo apt update
     else
         echo "KiCad-8 PPA is already added."
     fi
 
-    echo "Installing KiCad and necessary libraries..."
+    echo "Installing KiCad..."
     sudo apt install -y --no-install-recommends kicad
 
     echo "KiCad installation completed successfully!"
 }
-
 
 function installDependency {
     set +e      # Temporary disable exit on error
@@ -191,7 +201,7 @@ function installDependency {
     pip3 install PyQt5  
 
     echo "Installing volare"
-    sudo apt-get xz-utils
+    sudo apt-get install -y xz-utils
     pip3 install volare
 }
 
@@ -204,7 +214,7 @@ function copyKicadLibrary {
     trap 'echo "An error occurred! Exiting..."; exit 1' ERR
 
     echo "Extracting custom KiCad Library..."
-    tar -xJf library/kicadLibrary.tar.xz -C library || { echo "Extraction failed!"; exit 1; }
+    tar -xJf ../library/kicadLibrary.tar.xz -C ../library || { echo "Extraction failed!"; exit 1; }
 
     # Detect the latest installed KiCad version
     kicad_config_dir="$HOME/.config/kicad"
