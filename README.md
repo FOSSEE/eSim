@@ -1,3 +1,13 @@
+## Internship Task 5 Submission
+
+This fork contains my submission for Task 5 of the
+eSim Semester Long Internship Spring 2026.
+
+My submitted work is located in the following folder:
+esim-automated-tool-manager-main/
+
+
+
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/fossee/esim?color=blueviolet)
 ![GitHub](https://img.shields.io/github/license/fossee/esim?color=blue)
 ![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
