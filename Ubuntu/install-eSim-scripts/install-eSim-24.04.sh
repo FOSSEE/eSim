@@ -108,54 +108,39 @@ function installKicad
 {
     echo "Installing KiCad..........................."
 
-    # Detect Ubuntu version
     ubuntu_version=$(lsb_release -rs)
 
-    # Define KiCad PPAs based on Ubuntu version
+    # Ubuntu 25.04 → use official repository ONLY
+    if [[ "$ubuntu_version" == "25.04" ]]; then
+        echo "Ubuntu 25.04 detected — using official repositories only"
+        sudo apt update
+        sudo apt install -y kicad
+        echo "KiCad installation completed successfully!"
+        return
+    fi
+
+    # Ubuntu 24.04 → KiCad 8 PPA
     if [[ "$ubuntu_version" == "24.04" ]]; then
-        echo "Ubuntu 24.04 detected."
         kicadppa="kicad/kicad-8.0-releases"
-
-        # Check if KiCad is installed using dpkg-query for the main package
-        if dpkg -s kicad &>/dev/null; then
-            installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
-            if [[ "$installed_version" != "8" ]]; then
-                echo "A different version of KiCad ($installed_version) is installed."
-                read -p "Do you want to remove it and install KiCad 8.0? (yes/no): " response
-
-                if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
-                    echo "Removing KiCad $installed_version..."
-                    sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-                    sudo apt-get autoremove -y
-                else
-                    echo "Exiting installation. KiCad $installed_version remains installed."
-                    exit 1
-                fi
-            else
-                echo "KiCad 8.0 is already installed."
-                exit 0
-            fi
-        fi
-
     else
+        # Older supported versions
         kicadppa="kicad/kicad-6.0-releases"
     fi
 
-    # Check if the PPA is already added
-    if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-        echo "Adding KiCad PPA to local apt repository: $kicadppa"
+    # Add PPA if missing
+    if ! grep -qr "$kicadppa" /etc/apt/sources.list /etc/apt/sources.list.d; then
+        echo "Adding KiCad PPA: $kicadppa"
         sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt-get update
+        sudo apt update
     else
-        echo "KiCad PPA is already present in sources."
+        echo "KiCad PPA already present"
     fi
 
-    # Install KiCad packages
-    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    # Install KiCad
+    sudo apt install -y --no-install-recommends kicad
 
     echo "KiCad installation completed successfully!"
 }
-
 
 function installDependency
 {

@@ -182,25 +182,36 @@ function installSky130Pdk
 }
 
 
-function installKicad
-{
+function installKicad {
+    echo "Installing KiCad..."
 
-    echo "Installing KiCad..........................."
+    ubuntu_version=$(lsb_release -rs)
 
-    kicadppa="kicad/kicad-6.0-releases"
-    findppa=$(grep -h -r "^deb.*$kicadppa*" /etc/apt/sources.list* > /dev/null 2>&1 || test $? = 1)
-    if [ -z "$findppa" ]; then
-        echo "Adding KiCad-6 ppa to local apt-repository"
-        sudo add-apt-repository -y ppa:kicad/kicad-6.0-releases
-        sudo apt-get update
-    else
-        echo "KiCad-6 is available in synaptic"
+    # Ubuntu 25.04: use official repo ONLY (no PPAs exist)
+    if [[ "$ubuntu_version" == "25.04" ]]; then
+        echo "Ubuntu 25.04 detected — using official repositories"
+        sudo apt update
+        sudo apt install -y kicad
+        echo "KiCad installed successfully on Ubuntu 25.04"
+        return
     fi
 
-    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    # Ubuntu <= 24.04: use KiCad PPA
+    kicadppa="kicad/kicad-8.0-releases"
 
+    if ! grep -qr "$kicadppa" /etc/apt/sources.list /etc/apt/sources.list.d; then
+        echo "Adding KiCad-8 PPA to local apt repository..."
+        sudo add-apt-repository -y "ppa:$kicadppa"
+        sudo apt update
+    else
+        echo "KiCad-8 PPA is already added."
+    fi
+
+    echo "Installing KiCad..."
+    sudo apt install -y --no-install-recommends kicad
+
+    echo "KiCad installation completed successfully!"
 }
-
 
 function installDependency
 {
