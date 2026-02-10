@@ -106,40 +106,33 @@ function installSky130Pdk
 
 function installKicad
 {
-    echo "Installing KiCad..........................."
+    # Detect Ubuntu version
+ubuntu_version=$(lsb_release -rs)
 
-    ubuntu_version=$(lsb_release -rs)
+echo "Detected Ubuntu version: $ubuntu_version"
 
-    # Ubuntu 25.04 → use official repository ONLY
-    if [[ "$ubuntu_version" == "25.04" ]]; then
-        echo "Ubuntu 25.04 detected — using official repositories only"
-        sudo apt update
-        sudo apt install -y kicad
-        echo "KiCad installation completed successfully!"
-        return
-    fi
+# Ubuntu 24.04+ (including 25.04)
+if [[ "$ubuntu_version" == "24.04" || "$ubuntu_version" == "25.04" ]]; then
+    echo "Using system KiCad from Ubuntu repositories (no PPA)."
 
-    # Ubuntu 24.04 → KiCad 8 PPA
-    if [[ "$ubuntu_version" == "24.04" ]]; then
-        kicadppa="kicad/kicad-8.0-releases"
+    # Ensure apt is updated
+    sudo apt-get update
+
+    # Install KiCad if not already installed
+    if ! dpkg -s kicad &>/dev/null; then
+        echo "Installing KiCad from Ubuntu repository..."
+        sudo apt-get install -y kicad kicad-footprints kicad-symbols
     else
-        # Older supported versions
-        kicadppa="kicad/kicad-6.0-releases"
+        echo "KiCad already installed. Skipping."
     fi
 
-    # Add PPA if missing
-    if ! grep -qr "$kicadppa" /etc/apt/sources.list /etc/apt/sources.list.d; then
-        echo "Adding KiCad PPA: $kicadppa"
-        sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt update
-    else
-        echo "KiCad PPA already present"
-    fi
+else
+    echo "Unsupported Ubuntu version for this installer."
+    exit 1
+fi
 
-    # Install KiCad
-    sudo apt install -y --no-install-recommends kicad
+echo "KiCad installation completed successfully!"
 
-    echo "KiCad installation completed successfully!"
 }
 
 function installDependency
