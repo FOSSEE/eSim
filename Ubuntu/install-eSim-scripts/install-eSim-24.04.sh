@@ -74,6 +74,10 @@ function installNghdl
     
     # Skip obsolete libcanberra-gtk-module on Ubuntu 25.04+
     sed -i 's/libcanberra-gtk-module/ /g' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
+
+    # Prevent tar utime failures on restricted filesystems
+    sed -i 's/tar -x/tar --no-same-owner --no-same-permissions -x/' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
+
     cd nghdl/
     chmod +x install-nghdl.sh
 
