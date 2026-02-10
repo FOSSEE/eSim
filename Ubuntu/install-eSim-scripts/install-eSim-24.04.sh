@@ -71,7 +71,9 @@ function installNghdl
 
     # 2. Allow Ubuntu 25.04 to reuse 24.04 installer
     sed -i 's/"24.04")/"24.04" | "25.04")/' nghdl/install-nghdl.sh
-
+    
+    # Skip obsolete libcanberra-gtk-module on Ubuntu 25.04+
+    sed -i 's/libcanberra-gtk-module/ /g' nghdl/install-nghdl-scripts/install-nghdl-24.04.sh
     cd nghdl/
     chmod +x install-nghdl.sh
 
