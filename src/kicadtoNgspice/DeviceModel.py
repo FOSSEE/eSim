@@ -68,7 +68,24 @@ class DeviceModel(QtWidgets.QWidget):
         self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
         # print("Reading Device model details from Schematic")
-        if "sky130" in " ".join(schematicInfo):
+        # Check for IHP SG13G2 PDK first - be specific to avoid false matches
+        # Look for component lines starting with 'ihp' or models containing 'sg13_'
+        has_ihp = False
+        for line in schematicInfo:
+            words = line.split()
+            if len(words) >= 2:
+                # Check if reference starts with 'ihp' (ihp1, ihp2, etc.)
+                if words[0].startswith('ihp'):
+                    has_ihp = True
+                    break
+                # Check if model name contains 'sg13_' (sg13_lv_nmos, etc.)
+                if 'sg13_' in words[-1].lower():
+                    has_ihp = True
+                    break
+        
+        if has_ihp:
+            self.eSim_ihp(schematicInfo)
+        elif "sky130" in " ".join(schematicInfo):
             self.eSim_sky130(schematicInfo)
         else:
             self.eSim_general_libs(schematicInfo)
@@ -245,6 +262,310 @@ class DeviceModel(QtWidgets.QWidget):
                 self.count = self.count + 1
 
             self.show()
+
+    def eSim_ihp(self, schematicInfo):
+        """
+        Handle IHP SG13G2 PDK components.
+        Each IHP device gets its own library selection UI with:
+        - Library path + Add/Add Default buttons
+        - Corner selection dropdown
+        - Device parameters (W, L, nf)
+        """
+        # IHP Corner options for different device types
+        self.ihp_corner_options = {
+            'mos': ['mos_tt', 'mos_ff', 'mos_ss', 'mos_sf', 'mos_fs'],
+            'res': ['res_typ', 'res_bcs', 'res_wcs'],
+            'cap': ['cap_typ', 'cap_bcs', 'cap_wcs'],
+            'dio': ['dio_tt', 'dio_ss', 'dio_ff'],
+            'hbt': ['hbt_typ', 'hbt_bcs', 'hbt_wcs'],
+        }
+        
+        # Map model names to (corner_file, corner_type)
+        # This enables auto-detection of the correct corner library
+        self.ihp_model_to_corner = {
+            # MOS Low-Voltage
+            'sg13_lv_nmos': ('cornerMOSlv.lib', 'mos'),
+            'sg13_lv_pmos': ('cornerMOSlv.lib', 'mos'),
+            'nmoscl_2': ('cornerMOSlv.lib', 'mos'),
+            'nmoscl_4': ('cornerMOSlv.lib', 'mos'),
+            # MOS High-Voltage
+            'sg13_hv_nmos': ('cornerMOShv.lib', 'mos'),
+            'sg13_hv_pmos': ('cornerMOShv.lib', 'mos'),
+            # Resistors
+            'rppd': ('cornerRES.lib', 'res'),
+            'rhigh': ('cornerRES.lib', 'res'),
+            'rsil': ('cornerRES.lib', 'res'),
+            'ptap1': ('cornerRES.lib', 'res'),
+            'ntap1': ('cornerRES.lib', 'res'),
+            'rparasitic': ('cornerRES.lib', 'res'),
+            # Capacitors
+            'cap_cmim': ('cornerCAP.lib', 'cap'),
+            'cap_rfcmim': ('cornerCAP.lib', 'cap'),
+            'cparasitic': ('cornerCAP.lib', 'cap'),
+            # Diodes
+            'dantenna': ('cornerDIO.lib', 'dio'),
+            'dpantenna': ('cornerDIO.lib', 'dio'),
+            'dpwdnw': ('cornerDIO.lib', 'dio'),
+            'ddnwpsub': ('cornerDIO.lib', 'dio'),
+            'isolbox': ('cornerDIO.lib', 'dio'),
+            # HBT (Bipolar)
+            'npn13g2': ('cornerHBT.lib', 'hbt'),
+            'npn13g2_5t': ('cornerHBT.lib', 'hbt'),
+            'npn13g2l': ('cornerHBT.lib', 'hbt'),
+            'npn13g2l_5t': ('cornerHBT.lib', 'hbt'),
+            'npn13g2v': ('cornerHBT.lib', 'hbt'),
+            'npn13g2v_5t': ('cornerHBT.lib', 'hbt'),
+            'pnpmpa': ('cornerHBT.lib', 'hbt'),
+        }
+        
+        # Process each IHP component
+        for eachline in schematicInfo:
+            words = eachline.split()
+            if len(words) < 2:
+                continue
+                
+            # Skip non-IHP components and comments
+            if eachline[0] == '*' or eachline[0] == '.':
+                continue
+            
+            # Check if this is an IHP device
+            # Detection methods:
+            # 1. Reference starts with 'ihp' prefix
+            # 2. Model name is in our mapping dictionary
+            # 3. Model contains 'sg13' or 'npn13' or known IHP names
+            model_name = words[-1].lower() if len(words) > 1 else ""
+            is_ihp_device = (
+                eachline[0:3] == 'ihp' or  # Reference prefix
+                model_name in self.ihp_model_to_corner or  # Known model
+                'sg13' in model_name or  # SG13 MOS
+                'npn13' in model_name or  # HBT
+                model_name.startswith('cap_') or  # Capacitors
+                model_name in ['rppd', 'rhigh', 'rsil', 'ptap1', 'ntap1', 
+                              'dantenna', 'dpantenna', 'isolbox', 'pnpmpa']
+            )
+            
+            # Skip ihpmode marker lines (legacy support)
+            if eachline[0:7] == 'ihpmode':
+                continue
+                
+            if not is_ihp_device:
+                continue
+                
+            print("=========================================")
+            print("IHP Device found:", eachline)
+            
+            device_ref = words[0]  # e.g., ihp1
+            device_model = words[-1]  # e.g., sg13_lv_pmos
+            
+            # Determine corner file based on model
+            corner_file, corner_type = self.ihp_model_to_corner.get(
+                device_model.lower(), ('cornerMOSlv.lib', 'mos'))
+            
+            # Create device panel
+            self.devicemodel_dict_beg[device_ref] = self.count
+            self.deviceDetail[self.count] = device_ref
+            
+            ihpbox = QtWidgets.QGroupBox()
+            ihpgrid = QtWidgets.QGridLayout()
+            beg = self.count
+            
+            ihpbox.setTitle(f"IHP Device: {device_ref} ({device_model})")
+            
+            row = 0
+            
+            # Row 1: Library Path with Add and Add Default buttons
+            self.parameterLabel[self.count] = QtWidgets.QLabel("Library Path:")
+            ihpgrid.addWidget(self.parameterLabel[self.count], row, 0)
+            
+            self.entry_var[self.count] = QtWidgets.QLineEdit()
+            self.entry_var[self.count].setReadOnly(True)
+            self.entry_var[self.count].setObjectName(f"{beg}")
+            
+            # Store corner file info for this device
+            self.entry_var[self.count].setProperty("corner_file", corner_file)
+            self.entry_var[self.count].setProperty("device_ref", device_ref)
+            
+            # Load previous value OR set default
+            lib_path_set = False
+            for child in self.root:
+                if child.tag == device_ref:
+                    try:
+                        if child[0].text and os.path.exists(child[0].text):
+                            self.entry_var[self.count].setText(child[0].text)
+                            lib_path_set = True
+                    except:
+                        pass
+            
+            # If no previous value, auto-fill with default path
+            if not lib_path_set:
+                pdk_root = os.environ.get('PDK_ROOT',
+                    os.path.expanduser('~/ihp/IHP-Open-PDK'))
+                default_lib_path = os.path.join(pdk_root,
+                    "ihp-sg13g2/libs.tech/ngspice/models", corner_file)
+                if os.path.exists(default_lib_path):
+                    self.entry_var[self.count].setText(default_lib_path)
+            
+            ihpgrid.addWidget(self.entry_var[self.count], row, 1)
+            
+            # Add button
+            addbtn = QtWidgets.QPushButton("Add")
+            addbtn.setObjectName(f"{beg}")
+            addbtn.clicked.connect(self.trackIHPDeviceLibrary)
+            ihpgrid.addWidget(addbtn, row, 2)
+            
+            # Add Default button
+            adddefaultbtn = QtWidgets.QPushButton("Default")
+            adddefaultbtn.setObjectName(f"{beg}")
+            adddefaultbtn.setProperty("corner_file", corner_file)
+            adddefaultbtn.clicked.connect(self.trackDefaultIHPDeviceLib)
+            ihpgrid.addWidget(adddefaultbtn, row, 3)
+            
+            self.count += 1
+            row += 1
+            
+            # Row 2: Corner Selection Dropdown
+            self.parameterLabel[self.count] = QtWidgets.QLabel("Corner:")
+            ihpgrid.addWidget(self.parameterLabel[self.count], row, 0)
+            
+            corner_combo = QtWidgets.QComboBox()
+            corner_combo.setObjectName(f"{beg}")
+            corner_combo.addItems(self.ihp_corner_options.get(corner_type, ['mos_tt']))
+            corner_combo.setCurrentIndex(0)  # Default to first (typ/tt)
+            
+            # Load previous corner if exists
+            for child in self.root:
+                if child.tag == device_ref:
+                    try:
+                        if child[1].text:
+                            idx = corner_combo.findText(child[1].text)
+                            if idx >= 0:
+                                corner_combo.setCurrentIndex(idx)
+                    except:
+                        pass
+            
+            corner_combo.currentTextChanged.connect(self.ihpCornerChanged)
+            self.entry_var[self.count] = corner_combo
+            ihpgrid.addWidget(corner_combo, row, 1)
+            
+            self.count += 1
+            row += 1
+            
+            # Row 3: Device Parameters (W, L, nf)
+            self.parameterLabel[self.count] = QtWidgets.QLabel("Parameters:")
+            ihpgrid.addWidget(self.parameterLabel[self.count], row, 0)
+            
+            param_entry = QtWidgets.QLineEdit()
+            param_entry.setPlaceholderText("e.g., W=1u L=130n nf=1")
+            param_entry.setObjectName(f"{beg}")
+            
+            # Load previous parameters if exists
+            for child in self.root:
+                if child.tag == device_ref:
+                    try:
+                        if child[2].text:
+                            param_entry.setText(child[2].text)
+                    except:
+                        pass
+            
+            param_entry.textChanged.connect(self.ihpParamChanged)
+            self.entry_var[self.count] = param_entry
+            ihpgrid.addWidget(param_entry, row, 1, 1, 3)
+            
+            # Track this device with default values
+            lib_path = self.entry_var[beg].text()
+            corner = corner_combo.currentText()
+            params = param_entry.text()
+            if lib_path:
+                self.obj_trac.deviceModelTrack[device_ref] = f"{lib_path}:{corner}:{params}"
+            
+            ihpbox.setLayout(ihpgrid)
+            ihpbox.setStyleSheet("""
+                QGroupBox { border: 1px solid #4a86c7; border-radius: 9px;
+                            margin-top: 0.5em; background-color: #f0f8ff; }
+                QGroupBox::title { subcontrol-origin: margin; left: 10px;
+                                  padding: 0 3px 0 3px; color: #2c5aa0; }
+            """)
+            self.grid.addWidget(ihpbox)
+            
+            self.row += 1
+            self.devicemodel_dict_end[device_ref] = self.count
+            self.count += 1
+            
+        self.show()
+
+    def trackDefaultIHPDeviceLib(self):
+        """Set default IHP PDK library path for a specific device."""
+        sending_btn = self.sender()
+        self.widgetObjCount = int(sending_btn.objectName())
+        corner_file = sending_btn.property("corner_file")
+        
+        # Build default path
+        pdk_root = os.environ.get('PDK_ROOT',
+            os.path.expanduser('~/ihp/IHP-Open-PDK'))
+        lib_path = os.path.join(pdk_root,
+            "ihp-sg13g2/libs.tech/ngspice/models", corner_file)
+        
+        self.entry_var[self.widgetObjCount].setText(lib_path)
+        self.deviceName = self.deviceDetail[self.widgetObjCount]
+        
+        # Get corner from combo (next widget)
+        corner = self.entry_var[self.widgetObjCount + 1].currentText()
+        # Get params (next next widget)
+        params = self.entry_var[self.widgetObjCount + 2].text()
+        
+        self.obj_trac.deviceModelTrack[self.deviceName] = f"{lib_path}:{corner}:{params}"
+        print(f"IHP Default set: {self.deviceName} -> {self.obj_trac.deviceModelTrack[self.deviceName]}")
+
+    def trackIHPDeviceLibrary(self):
+        """Browse for IHP PDK library file for a specific device."""
+        sending_btn = self.sender()
+        self.widgetObjCount = int(sending_btn.objectName())
+        
+        self.libfile = QtCore.QDir.toNativeSeparators(
+            QtWidgets.QFileDialog.getOpenFileName(
+                self, "Select IHP Corner Library File",
+                os.path.expanduser("~/ihp"),
+                "Library Files (*.lib);;All Files (*)"
+            )[0]
+        )
+        
+        if not self.libfile:
+            return
+        
+        self.entry_var[self.widgetObjCount].setText(self.libfile)
+        self.deviceName = self.deviceDetail[self.widgetObjCount]
+        
+        # Get corner and params
+        corner = self.entry_var[self.widgetObjCount + 1].currentText()
+        params = self.entry_var[self.widgetObjCount + 2].text()
+        
+        self.obj_trac.deviceModelTrack[self.deviceName] = f"{self.libfile}:{corner}:{params}"
+        print(f"IHP Library set: {self.deviceName} -> {self.obj_trac.deviceModelTrack[self.deviceName]}")
+
+    def ihpCornerChanged(self, corner):
+        """Handle IHP corner selection change."""
+        sending_combo = self.sender()
+        beg = int(sending_combo.objectName())
+        self.deviceName = self.deviceDetail[beg]
+        
+        lib_path = self.entry_var[beg].text()
+        params = self.entry_var[beg + 2].text()
+        
+        if lib_path:
+            self.obj_trac.deviceModelTrack[self.deviceName] = f"{lib_path}:{corner}:{params}"
+            print(f"IHP Corner changed: {self.deviceName} -> {corner}")
+
+    def ihpParamChanged(self, params):
+        """Handle IHP parameter change."""
+        sending_entry = self.sender()
+        beg = int(sending_entry.objectName())
+        self.deviceName = self.deviceDetail[beg]
+        
+        lib_path = self.entry_var[beg].text()
+        corner = self.entry_var[beg + 1].currentText()
+        
+        if lib_path:
+            self.obj_trac.deviceModelTrack[self.deviceName] = f"{lib_path}:{corner}:{params}"
 
     def eSim_general_libs(self, schematicInfo):
         for eachline in schematicInfo:
@@ -703,7 +1024,18 @@ class DeviceModel(QtWidgets.QWidget):
         # str(self.entry_var[self.widgetObjCount].text()) + \
         #         ":" + "W=" + width + " L=" + length + " M=" + multifactor
 
-        if self.deviceName[0:6] == 'scmode':
+        if self.deviceName[0:7] == 'ihpmode':
+            # IHP mode: path:corner format
+            self.obj_trac.deviceModelTrack[self.deviceName] = \
+                self.entry_var[self.widgetObjCount].text() + \
+                ":" + str(self.entry_var[self.widgetObjCount + 1].text())
+            print("IHP mode tracked:", self.obj_trac.deviceModelTrack[self.deviceName])
+        elif self.deviceName[0:3] == 'ihp':
+            # IHP component: store parameters directly (e.g., W=1u L=130n nf=1)
+            self.obj_trac.deviceModelTrack[self.deviceName] = str(
+                self.entry_var[self.widgetObjCount].text())
+            print("IHP component tracked:", self.obj_trac.deviceModelTrack[self.deviceName])
+        elif self.deviceName[0:6] == 'scmode':
             self.obj_trac.deviceModelTrack[self.deviceName] = \
                 self.entry_var[self.widgetObjCount].text() + \
                 ":" + str(self.entry_var[self.widgetObjCount + 1].text())
