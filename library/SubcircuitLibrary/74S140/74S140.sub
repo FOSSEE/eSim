@@ -1,0 +1,38 @@
+* Subcircuit 74S140
+.subckt 74S140 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad11_ 
+.title kicad schematic
+* u19 net-_u1-pad5_ net-_u1-pad6_ net-_u19-pad3_ d_and
+* u20 net-_u1-pad7_ net-_u1-pad8_ net-_u20-pad3_ d_and
+* u23 net-_u21-pad3_ net-_u1-pad11_ d_inverter
+* u21 net-_u17-pad3_ net-_u18-pad3_ net-_u21-pad3_ d_and
+* u24 net-_u22-pad3_ net-_u1-pad9_ d_inverter
+* u22 net-_u19-pad3_ net-_u20-pad3_ net-_u22-pad3_ d_and
+* u18 net-_u1-pad3_ net-_u1-pad4_ net-_u18-pad3_ d_and
+* u17 net-_u1-pad1_ net-_u1-pad2_ net-_u17-pad3_ d_and
+a1 [net-_u1-pad5_ net-_u1-pad6_ ] net-_u19-pad3_ u19
+a2 [net-_u1-pad7_ net-_u1-pad8_ ] net-_u20-pad3_ u20
+a3 net-_u21-pad3_ net-_u1-pad11_ u23
+a4 [net-_u17-pad3_ net-_u18-pad3_ ] net-_u21-pad3_ u21
+a5 net-_u22-pad3_ net-_u1-pad9_ u24
+a6 [net-_u19-pad3_ net-_u20-pad3_ ] net-_u22-pad3_ u22
+a7 [net-_u1-pad3_ net-_u1-pad4_ ] net-_u18-pad3_ u18
+a8 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u17-pad3_ u17
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u19 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u20 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u23 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u21 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u24 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u22 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u18 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u17 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74S140
