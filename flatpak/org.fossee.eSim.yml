@@ -1,0 +1,57 @@
+# Flatpak manifest for eSim - Cross-distribution Linux support
+# Works on Fedora, Ubuntu, openSUSE, Arch Linux, and other distributions
+# See https://docs.flatpak.org/en/latest/flatpak-builder.html for build instructions
+#
+# Build: flatpak-builder build flatpak/org.fossee.eSim.yml --install --user
+# Run:   flatpak run org.fossee.eSim
+#
+# Optional: Install KiCad from Flathub for schematic editing:
+#   flatpak install flathub org.kicad.KiCad
+
+app-id: org.fossee.eSim
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+
+finish-args:
+  - --device=dri
+  - --filesystem=home
+  - --share=ipc
+  - --share=network
+  - --socket=x11
+  - --socket=wayland
+  - --env=ESIM_FLATPAK=1
+
+command: esim
+
+modules:
+  # Ngspice - circuit simulator (required for eSim simulations)
+  - name: ngspice
+    buildsystem: autotools
+    config-opts:
+      - --disable-silent-rules
+      - --enable-xspice
+      - --enable-cider
+      - --enable-openmp
+      - --with-ngshared
+    sources:
+      - type: archive
+        url: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/45.2/ngspice-45.2.tar.gz
+        sha256: ba8345f4c3774714c10f33d7da850d361cec7d14b3a295d0dc9fd96f7423812d
+
+  # eSim Python application (uses PyQt5)
+  - name: esim
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-build-isolation --prefix=/app PyQt5 numpy matplotlib scipy watchdog hdlparse psutil
+      - mkdir -p /app/share/esim
+      - cp -r src library images /app/share/esim/
+      - cp VERSION LICENSE /app/share/esim/ 2>/dev/null || true
+      - test -d /app/share/esim/library/kicadLibrary && (cd /app/share/esim/library && tar -cJf kicadLibrary.tar.xz kicadLibrary) || true
+      - install -Dm755 flatpak/esim-wrapper.sh /app/bin/esim
+      - install -Dm644 images/logo.png /app/share/icons/hicolor/256x256/apps/org.fossee.eSim.png
+      - install -Dm644 flatpak/org.fossee.eSim.desktop /app/share/applications/org.fossee.eSim.desktop
+    sources:
+      - type: dir
+        path: ..
+    no-autogen: true

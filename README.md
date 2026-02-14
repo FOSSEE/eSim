@@ -15,12 +15,20 @@ It is an integrated tool build using open source softwares such as KiCad, Ngspic
 
 ## Releases and Installation
 eSim is released for the following distributions (operating systems):
-* Ubuntu 22.04, 23.04, 24.04 LTS versions.
-* Microsoft Windows 8, 10 and 11.
+* **All Linux distributions** (Fedora, Ubuntu, openSUSE, Arch, etc.) via Flatpak
+* Ubuntu 22.04, 23.04, 24.04 LTS versions (native installer)
+* Microsoft Windows 8, 10 and 11
 
-To use eSim on your machine having above distributions, please refer to link [here](https://esim.fossee.in/downloads) for installation and other guidelines.
+**For Fedora and other Linux distributions:** Use the Flatpak method for easy installation:
+```bash
+flatpak install flathub org.fossee.eSim
+flatpak run org.fossee.eSim
+```
+Or build from source: `flatpak-builder build flatpak/org.fossee.eSim.yml --install --user`
 
-> Note for other distributions: You can refer [`installers`](https://github.com/fossee/eSim/tree/installers) branch for documentation on packaging (for above mentioned distributions) to build installers for your operating system in a similar way. For providing your build, please check the `Contribution` section mentioned below.
+**For Ubuntu and Windows:** Please refer to [downloads](https://esim.fossee.in/downloads) for installation guidelines.
+
+See [INSTALL](INSTALL) for detailed installation instructions for all platforms.
 
 ## Features
 * An open-source EDA tool.

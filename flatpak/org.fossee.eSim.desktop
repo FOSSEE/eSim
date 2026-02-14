@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=eSim
+Comment=Open source EDA tool for circuit design and simulation
+GenericName=EDA Tool
+Keywords=eda;circuit;simulation;kicad;ngspice
+Exec=esim %u
+Icon=org.fossee.eSim
+Terminal=false
+Categories=Development;Electronics;Engineering;
+StartupNotify=true
