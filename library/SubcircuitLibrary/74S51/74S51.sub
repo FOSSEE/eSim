@@ -1,0 +1,30 @@
+* Subcircuit 74S51
+.subckt 74S51 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ 
+.title kicad schematic
+* u5 net-_u32-pad3_ net-_u29-pad3_ net-_u1-pad9_ d_nor
+* u29 net-_u1-pad8_ net-_u1-pad7_ net-_u29-pad3_ d_and
+* u32 net-_u1-pad5_ net-_u1-pad6_ net-_u32-pad3_ d_and
+* u31 net-_u1-pad3_ net-_u1-pad4_ net-_u31-pad3_ d_and
+* u27 net-_u1-pad1_ net-_u1-pad2_ net-_u27-pad3_ d_and
+* u4 net-_u27-pad3_ net-_u31-pad3_ net-_u1-pad10_ d_nor
+a1 [net-_u32-pad3_ net-_u29-pad3_ ] net-_u1-pad9_ u5
+a2 [net-_u1-pad8_ net-_u1-pad7_ ] net-_u29-pad3_ u29
+a3 [net-_u1-pad5_ net-_u1-pad6_ ] net-_u32-pad3_ u32
+a4 [net-_u1-pad3_ net-_u1-pad4_ ] net-_u31-pad3_ u31
+a5 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u27-pad3_ u27
+a6 [net-_u27-pad3_ net-_u31-pad3_ ] net-_u1-pad10_ u4
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u5 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u29 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u32 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u31 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u27 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, Ngspice Name: d_nor
+.model u4 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74S51
