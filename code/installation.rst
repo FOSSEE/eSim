@@ -1,13 +1,51 @@
 Installation
 ===========================
 
-This guide will help you install eSim on both Ubuntu (Linux) and Microsoft Windows operating systems.
+This guide will help you install eSim on Ubuntu (Linux), other Linux distributions via Flatpak, and Microsoft Windows.
 
 **Table of Contents**
 
-1. `eSim installation on Ubuntu OS (Linux) <#ubuntu-installation>`_
-2. `eSim installation on Microsoft Windows OS <#windows-installation>`_
-3. `Support <#support>`_
+1. `eSim installation via Flatpak (All Linux) <#flatpak-installation>`_
+2. `eSim installation on Ubuntu OS (Linux) <#ubuntu-installation>`_
+3. `eSim installation on Microsoft Windows OS <#windows-installation>`_
+4. `Support <#support>`_
+
+.. _flatpak-installation:
+
+eSim Installation via Flatpak (Fedora, Ubuntu, openSUSE, Arch, etc.)
+--------------------------------------------------------------------
+
+The Flatpak method works on **all major Linux distributions** including Fedora, Ubuntu, Debian, openSUSE, Arch Linux, and others.
+
+**Step 1:** Install Flatpak if not already installed:
+
+   On Fedora:       ``sudo dnf install flatpak``
+   On Ubuntu:       ``sudo apt install flatpak``
+   On openSUSE:     ``sudo zypper install flatpak``
+   On Arch:         ``sudo pacman -S flatpak``
+
+**Step 2:** Add the Flathub repository:
+
+   ``flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo``
+
+**Step 3:** Install eSim:
+
+   When available on Flathub: ``flatpak install flathub org.fossee.eSim``
+
+   Or build from source: ``flatpak-builder build flatpak/org.fossee.eSim.yml --install --user``
+
+**Step 4 (Optional):** Install KiCad for schematic editing:
+
+   ``flatpak install flathub org.kicad.KiCad``
+
+**Run eSim:** ``flatpak run org.fossee.eSim`` or launch from your application menu.
+
+**Flatpak limitations:**
+
+- NGHDL and Makerchip are not included. For full NGHDL/Modelica support, use the Ubuntu native installer.
+- SKY130 PDK is not bundled. Use the Ubuntu installer for mixed-signal design with SKY130.
+- xterm and gaw are not included; external waveform viewer features may require xterm installed on the host system.
+- NGHDL KiCad symbol creation (createkicad) may not work fully due to sandbox restrictions on writing to KiCad's symbol directory.
 
 .. _ubuntu-installation:
 
