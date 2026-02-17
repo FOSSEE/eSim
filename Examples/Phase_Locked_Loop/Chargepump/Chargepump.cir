@@ -1,0 +1,20 @@
+.title KiCad schematic
+U1 Net-_U1-Pad~_ plot_v1
+M6 Net-_M5-Pad3_ Net-_M1-Pad1_ GND GND eSim_MOS_N
+v3 Net-_U1-Pad~_ GND pulse
+M5 OUT Net-_U2-Pad~_ Net-_M5-Pad3_ GND eSim_MOS_N
+M8 OUT Net-_U1-Pad~_ Net-_M7-Pad1_ Net-_v1-Pad1_ eSim_MOS_P
+M7 Net-_M7-Pad1_ Net-_M3-Pad1_ Net-_v1-Pad1_ Net-_v1-Pad1_ eSim_MOS_P
+M3 Net-_M3-Pad1_ Net-_M1-Pad1_ GND GND eSim_MOS_N
+M2 Net-_M1-Pad1_ Net-_M1-Pad1_ GND GND eSim_MOS_N
+v1 Net-_v1-Pad1_ GND DC
+M1 Net-_M1-Pad1_ Net-_v2-Pad1_ Net-_v1-Pad1_ Net-_v1-Pad1_ eSim_MOS_P
+M4 Net-_M3-Pad1_ Net-_M3-Pad1_ Net-_v1-Pad1_ Net-_v1-Pad1_ eSim_MOS_P
+v2 Net-_v2-Pad1_ GND DC
+C2 OUT GND 0.5
+R1 Net-_C1-Pad1_ OUT 10k
+U3 OUT plot_v1
+C1 Net-_C1-Pad1_ GND 5p
+v4 Net-_U2-Pad~_ GND pulse
+U2 Net-_U2-Pad~_ plot_v1
+.end

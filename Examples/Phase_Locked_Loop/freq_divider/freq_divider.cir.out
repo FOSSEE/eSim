@@ -1,0 +1,53 @@
+.title kicad schematic
+
+.lib /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+
+.include /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.ref/sg13g2_stdcell/spice/sg13g2_stdcell.spice
+
+.control
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103_nqs.osdi
+.endc
+
+* u5 b plot_v1
+* u4 net-_u4-pad1_ net-_u2-pad1_ gnd gnd b net-_u4-pad1_ d_dff
+* u6 net-_u6-pad1_ net-_u4-pad1_ gnd gnd c net-_u6-pad1_ d_dff
+* u7 c plot_v1
+* u3 a plot_v1
+* u1 net-_u1-pad~_ plot_v1
+v1 net-_u1-pad~_ gnd pulse(0 1.2 0 100p 100p 0.9n 2n)
+* u2 net-_u2-pad1_ net-_u1-pad~_ gnd gnd a net-_u2-pad1_ d_dff
+
+
+*a1 net-_u4-pad1_ net-_u2-pad1_ gnd gnd b net-_u4-pad1_ u4
+*a2 net-_u6-pad1_ net-_u4-pad1_ gnd gnd c net-_u6-pad1_ u6
+*a3 net-_u2-pad1_ net-_u1-pad~_ gnd gnd a net-_u2-pad1_ u2
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+*.model u4 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+*.model u6 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+*.model u2 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+
+v_logic VDD gnd dc 1.2
+
+X_FF1 a a_n net-_u1-pad~_ a_n VDD VDD gnd sg13g2_dfrbp_1
+
+X_FF2 b b_n a b_n VDD VDD gnd sg13g2_dfrbp_1
+
+X_FF3 c c_n b c_n VDD VDD gnd sg13g2_dfrbp_1
+
+
+.tran 100e-12 100e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(b)
+plot v(c)
+plot v(a)
+plot v(net-_u1-pad~_)
+.endc
+.end
