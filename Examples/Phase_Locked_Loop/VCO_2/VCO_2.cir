@@ -1,0 +1,23 @@
+.title KiCad schematic
+M18 OUT Net-_M15-Pad1_ Net-_M10-Pad4_ Net-_M10-Pad4_ eSim_MOS_P
+M17 OUT Net-_M15-Pad1_ GND GND eSim_MOS_N
+M15 Net-_M15-Pad1_ Net-_M11-Pad1_ GND GND eSim_MOS_N
+U1 OUT plot_v1
+M16 Net-_M15-Pad1_ Net-_M11-Pad1_ Net-_M10-Pad4_ Net-_M10-Pad4_ eSim_MOS_P
+v2 Net-_M1-Pad2_ GND DC
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ GND GND eSim_MOS_N
+M4 Net-_M3-Pad3_ Net-_M1-Pad2_ GND GND eSim_MOS_N
+M6 Net-_M10-Pad2_ Net-_M11-Pad1_ Net-_M5-Pad1_ Net-_M10-Pad4_ eSim_MOS_P
+M3 Net-_M10-Pad2_ Net-_M11-Pad1_ Net-_M3-Pad3_ GND eSim_MOS_N
+M11 Net-_M11-Pad1_ Net-_M10-Pad1_ Net-_M11-Pad3_ GND eSim_MOS_N
+M12 Net-_M11-Pad3_ Net-_M1-Pad2_ GND GND eSim_MOS_N
+M14 Net-_M11-Pad1_ Net-_M10-Pad1_ Net-_M13-Pad1_ Net-_M10-Pad4_ eSim_MOS_P
+M13 Net-_M13-Pad1_ Net-_M1-Pad1_ Net-_M10-Pad4_ Net-_M10-Pad4_ eSim_MOS_P
+v1 Net-_M10-Pad4_ GND DC
+M5 Net-_M5-Pad1_ Net-_M1-Pad1_ Net-_M10-Pad4_ Net-_M10-Pad4_ eSim_MOS_P
+M2 Net-_M1-Pad1_ Net-_M1-Pad1_ Net-_M10-Pad4_ Net-_M10-Pad4_ eSim_MOS_P
+M10 Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M10-Pad3_ Net-_M10-Pad4_ eSim_MOS_P
+M9 Net-_M10-Pad3_ Net-_M1-Pad1_ Net-_M10-Pad4_ Net-_M10-Pad4_ eSim_MOS_P
+M7 Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M7-Pad3_ GND eSim_MOS_N
+M8 Net-_M7-Pad3_ Net-_M1-Pad2_ GND GND eSim_MOS_N
+.end

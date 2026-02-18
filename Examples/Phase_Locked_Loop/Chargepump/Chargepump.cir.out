@@ -1,0 +1,44 @@
+.title kicad schematic
+
+
+.lib /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
+
+.control
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103_nqs.osdi
+.endc
+
+
+
+xm6 net-_m5-pad3_ net-_m1-pad1_ gnd gnd sg13_hv_nmos W=10u L=1u M=1
+v3 net-_u1-pad~_ gnd pulse(3.3 0 10ns 100p 100p 10ns 40ns)
+xm5 out net-_u2-pad~_ net-_m5-pad3_ gnd sg13_hv_nmos W=10u L=0.5u M=1
+xm8 out net-_u1-pad~_ net-_m7-pad1_ net-_v1-pad1_ sg13_hv_pmos W=20u L=0.5u M=1
+xm7 net-_m7-pad1_ net-_m3-pad1_ net-_v1-pad1_ net-_v1-pad1_ sg13_hv_pmos W=20u L=1u M=1
+xm3 net-_m3-pad1_ net-_m1-pad1_ gnd gnd sg13_hv_nmos W=10u L=1u M=1
+xm2 net-_m1-pad1_ net-_m1-pad1_ gnd gnd sg13_hv_nmos W=10u L=1u M=1
+v1 net-_v1-pad1_ gnd  dc 3.3v
+xm1 net-_m1-pad1_ net-_v2-pad1_ net-_v1-pad1_ net-_v1-pad1_ sg13_hv_pmos W=20u L=1u M=1
+xm4 net-_m3-pad1_ net-_m3-pad1_ net-_v1-pad1_ net-_v1-pad1_ sg13_hv_pmos W=20u L=1u M=1
+v2 net-_v2-pad1_ gnd  dc 2.7v
+c2 out gnd 5p
+r1 net-_c1-pad1_ out 1k
+* u3 out plot_v1
+c1 net-_c1-pad1_ gnd 50p
+.ic v(out)=1.5
+v4 net-_u2-pad~_ gnd pulse(0 3.3v 22ns 100p 100p 10n 40n)
+* u2 net-_u2-pad~_ plot_v1
+* u1 net-_u1-pad~_ plot_v1
+.tran 2e-09 0.1e-06 0e-00 
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(net-_u1-pad~_)
+plot v(out)
+plot v(net-_u2-pad~_)
+plot v(net-_c1-pad1_)
+.endc
+.end

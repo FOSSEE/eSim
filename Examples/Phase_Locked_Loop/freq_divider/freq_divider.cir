@@ -1,0 +1,10 @@
+.title KiCad schematic
+U5 B plot_v1
+U4 Net-_U4-Pad1_ Net-_U2-Pad1_ GND GND B Net-_U4-Pad1_ d_dff
+U6 Net-_U6-Pad1_ Net-_U4-Pad1_ GND GND C Net-_U6-Pad1_ d_dff
+U7 C plot_v1
+U3 A plot_v1
+U1 Net-_U1-Pad~_ plot_v1
+v1 Net-_U1-Pad~_ GND pulse
+U2 Net-_U2-Pad1_ Net-_U1-Pad~_ GND GND A Net-_U2-Pad1_ d_dff
+.end
