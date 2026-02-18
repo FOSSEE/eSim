@@ -1,0 +1,44 @@
+* Subcircuit CD40106B
+.subckt CD40106B net-_m1-pad2_ net-_m10-pad2_ gnd net-_m1-pad1_ net-_m13-pad2_ net-_m17-pad2_ net-_m10-pad1_ net-_m13-pad1_ net-_m25-pad2_ net-_m17-pad1_ vdd net-_m31-pad2_ net-_m25-pad1_ net-_m31-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\cd40106b\cd40106b.cir
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m4 net-_m1-pad1_ net-_m1-pad2_ net-_m3-pad1_ vdd CMOSP W=100u L=100u M=1
+m3 net-_m3-pad1_ net-_m1-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m5 gnd net-_m1-pad1_ net-_m3-pad1_ vdd CMOSP W=100u L=100u M=1
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ gnd CMOSN W=100u L=100u M=1
+m2 net-_m1-pad3_ net-_m1-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+m6 vdd net-_m1-pad1_ net-_m1-pad3_ gnd CMOSN W=100u L=100u M=1
+m16 net-_m13-pad1_ net-_m13-pad2_ net-_m15-pad1_ vdd CMOSP W=100u L=100u M=1
+m15 net-_m15-pad1_ net-_m13-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m21 gnd net-_m13-pad1_ net-_m15-pad1_ vdd CMOSP W=100u L=100u M=1
+m13 net-_m13-pad1_ net-_m13-pad2_ net-_m13-pad3_ gnd CMOSN W=100u L=100u M=1
+m14 net-_m13-pad3_ net-_m13-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+m22 vdd net-_m13-pad1_ net-_m13-pad3_ gnd CMOSN W=100u L=100u M=1
+m28 net-_m25-pad1_ net-_m25-pad2_ net-_m27-pad1_ vdd CMOSP W=100u L=100u M=1
+m27 net-_m27-pad1_ net-_m25-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m29 gnd net-_m25-pad1_ net-_m27-pad1_ vdd CMOSP W=100u L=100u M=1
+m25 net-_m25-pad1_ net-_m25-pad2_ net-_m25-pad3_ gnd CMOSN W=100u L=100u M=1
+m26 net-_m25-pad3_ net-_m25-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+m30 vdd net-_m25-pad1_ net-_m25-pad3_ gnd CMOSN W=100u L=100u M=1
+m34 net-_m31-pad1_ net-_m31-pad2_ net-_m33-pad1_ vdd CMOSP W=100u L=100u M=1
+m33 net-_m33-pad1_ net-_m31-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m35 gnd net-_m31-pad1_ net-_m33-pad1_ vdd CMOSP W=100u L=100u M=1
+m31 net-_m31-pad1_ net-_m31-pad2_ net-_m31-pad3_ gnd CMOSN W=100u L=100u M=1
+m32 net-_m31-pad3_ net-_m31-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+m36 vdd net-_m31-pad1_ net-_m31-pad3_ gnd CMOSN W=100u L=100u M=1
+m10 net-_m10-pad1_ net-_m10-pad2_ net-_m10-pad3_ vdd CMOSP W=100u L=100u M=1
+m9 net-_m10-pad3_ net-_m10-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m11 gnd net-_m10-pad1_ net-_m10-pad3_ vdd CMOSP W=100u L=100u M=1
+m7 net-_m10-pad1_ net-_m10-pad2_ net-_m12-pad3_ gnd CMOSN W=100u L=100u M=1
+m8 net-_m12-pad3_ net-_m10-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+m12 vdd net-_m10-pad1_ net-_m12-pad3_ gnd CMOSN W=100u L=100u M=1
+m20 net-_m17-pad1_ net-_m17-pad2_ net-_m19-pad1_ vdd CMOSP W=100u L=100u M=1
+m19 net-_m19-pad1_ net-_m17-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m23 gnd net-_m17-pad1_ net-_m19-pad1_ vdd CMOSP W=100u L=100u M=1
+m17 net-_m17-pad1_ net-_m17-pad2_ net-_m17-pad3_ gnd CMOSN W=100u L=100u M=1
+m18 net-_m17-pad3_ net-_m17-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+m24 vdd net-_m17-pad1_ net-_m17-pad3_ gnd CMOSN W=100u L=100u M=1
+* Control Statements
+
+.ends CD40106B
