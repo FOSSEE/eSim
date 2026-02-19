@@ -1,0 +1,64 @@
+* c:\users\chand\esim\fossee\esim\library\subcircuitlibrary\cd74fct827t\cd74fct827t.cir
+
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ one_input_tristate_buffer
+* u2  net-_u14-pad3_ net-_u1-pad2_ net-_u14-pad22_ one_input_tristate_buffer
+* u3  net-_u14-pad4_ net-_u1-pad2_ net-_u14-pad21_ one_input_tristate_buffer
+* u4  net-_u14-pad5_ net-_u1-pad2_ net-_u14-pad20_ one_input_tristate_buffer
+* u5  net-_u14-pad6_ net-_u1-pad2_ net-_u14-pad19_ one_input_tristate_buffer
+* u6  net-_u14-pad7_ net-_u1-pad2_ net-_u14-pad18_ one_input_tristate_buffer
+* u7  net-_u14-pad8_ net-_u1-pad2_ net-_u14-pad17_ one_input_tristate_buffer
+* u8  net-_u14-pad9_ net-_u1-pad2_ net-_u14-pad16_ one_input_tristate_buffer
+* u9  net-_u14-pad10_ net-_u1-pad2_ net-_u14-pad15_ one_input_tristate_buffer
+* u10  net-_u10-pad1_ net-_u1-pad2_ net-_u10-pad3_ one_input_tristate_buffer
+* u13  net-_u11-pad2_ net-_u12-pad2_ net-_u1-pad2_ d_and
+* u11  net-_u11-pad1_ net-_u11-pad2_ d_inverter
+* u12  net-_u12-pad1_ net-_u12-pad2_ d_inverter
+* u14  net-_u11-pad1_ net-_u1-pad1_ net-_u14-pad3_ net-_u14-pad4_ net-_u14-pad5_ net-_u14-pad6_ net-_u14-pad7_ net-_u14-pad8_ net-_u14-pad9_ net-_u14-pad10_ net-_u10-pad1_ ? net-_u12-pad1_ net-_u10-pad3_ net-_u14-pad15_ net-_u14-pad16_ net-_u14-pad17_ net-_u14-pad18_ net-_u14-pad19_ net-_u14-pad20_ net-_u14-pad21_ net-_u14-pad22_ net-_u1-pad3_ ? port
+a1 [net-_u1-pad1_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ ] u1
+a2 [net-_u14-pad3_ ] [net-_u1-pad2_ ] [net-_u14-pad22_ ] u2
+a3 [net-_u14-pad4_ ] [net-_u1-pad2_ ] [net-_u14-pad21_ ] u3
+a4 [net-_u14-pad5_ ] [net-_u1-pad2_ ] [net-_u14-pad20_ ] u4
+a5 [net-_u14-pad6_ ] [net-_u1-pad2_ ] [net-_u14-pad19_ ] u5
+a6 [net-_u14-pad7_ ] [net-_u1-pad2_ ] [net-_u14-pad18_ ] u6
+a7 [net-_u14-pad8_ ] [net-_u1-pad2_ ] [net-_u14-pad17_ ] u7
+a8 [net-_u14-pad9_ ] [net-_u1-pad2_ ] [net-_u14-pad16_ ] u8
+a9 [net-_u14-pad10_ ] [net-_u1-pad2_ ] [net-_u14-pad15_ ] u9
+a10 [net-_u10-pad1_ ] [net-_u1-pad2_ ] [net-_u10-pad3_ ] u10
+a11 [net-_u11-pad2_ net-_u12-pad2_ ] net-_u1-pad2_ u13
+a12 net-_u11-pad1_ net-_u11-pad2_ u11
+a13 net-_u12-pad1_ net-_u12-pad2_ u12
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u1 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u2 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u3 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u4 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u5 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u6 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u7 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u8 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u9 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u10 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u13 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u11 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u12 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
