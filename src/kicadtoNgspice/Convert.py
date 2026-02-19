@@ -641,6 +641,55 @@ class Convert:
                     # print("Found Library line")
                     index = schematicInfo.index(eachline)
                     completeLibPath = deviceLibList[words[0]]
+
+                    # Handle IHP components
+                    # Detection: ihp prefix, sg13/npn13 in model, or known IHP device names
+                    model_name = words[-1].lower() if len(words) > 1 else ""
+                    ihp_known_devices = ['rppd', 'rhigh', 'rsil', 'ptap1', 'ntap1', 
+                                        'dantenna', 'dpantenna', 'isolbox', 'pnpmpa',
+                                        'nmoscl_2', 'nmoscl_4', 'cparasitic', 'dpwdnw', 'ddnwpsub']
+                    is_ihp_device = (
+                        eachline[0:3] == 'ihp' or
+                        'sg13' in model_name or
+                        'npn13' in model_name or
+                        model_name.startswith('cap_') or
+                        model_name in ihp_known_devices
+                    )
+                    
+                    if is_ihp_device and eachline[0:7] != 'ihpmode':
+                        # Parse the per-device tracking data: lib_path:corner:params
+                        ihp_parts = completeLibPath.split(':')
+                        ihp_lib_path = ihp_parts[0] if len(ihp_parts) > 0 else ""
+                        ihp_corner = ihp_parts[1] if len(ihp_parts) > 1 else "mos_tt"
+                        ihp_params = ihp_parts[2] if len(ihp_parts) > 2 else ""
+                        
+                        print("==============================================")
+                        print(f"IHP Device: {words[0]}")
+                        print(f"  Library: {ihp_lib_path}")
+                        print(f"  Corner: {ihp_corner}")
+                        print(f"  Params: {ihp_params}")
+                        
+                        # Add .lib include for this device's corner
+                        if ihp_lib_path and os.path.exists(ihp_lib_path):
+                            lib_include = f'.lib "{ihp_lib_path}" {ihp_corner}'
+                            if lib_include not in includeLine:
+                                includeLine.append(lib_include)
+                                print(f"  Added: {lib_include}")
+                        
+                        # Convert ihp prefix to xihp and add params
+                        words[0] = words[0].replace('ihp', 'xihp')
+                        if ihp_params:
+                            words.append(ihp_params)
+                        deviceLine[index] = words
+                        print("==============================================")
+                        continue
+                    
+                    # Legacy ihpmode handling (for backward compatibility)
+                    if eachline[0:7] == 'ihpmode':
+                        deviceLine[index] = "*ihpmode (legacy)"
+                        continue
+                    
+                    # Standard processing for non-IHP components
                     (libpath, libname) = os.path.split(completeLibPath)
                     # print("Library Path :", libpath)
                     # Copying library from devicemodelLibrary to Project Path

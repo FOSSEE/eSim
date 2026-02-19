@@ -214,6 +214,7 @@
   (lib (name "eSim_Ngveri")(type "KiCad")(uri "${KICAD6_SYMBOL_DIR}/eSim_Ngveri.kicad_sym")(options "")(descr ""))
   (lib (name "eSim_Plot")(type "KiCad")(uri "${KICAD6_SYMBOL_DIR}/eSim_Plot.kicad_sym")(options "")(descr ""))
   (lib (name "eSim_Power")(type "KiCad")(uri "${KICAD6_SYMBOL_DIR}/eSim_Power.kicad_sym")(options "")(descr ""))
+  (lib (name "eSim_IHP")(type "KiCad")(uri "${KICAD6_SYMBOL_DIR}/eSim_IHP.kicad_sym")(options "")(descr "IHP SG13G2 Open PDK Symbols"))
   (lib (name "eSim_SKY130")(type "KiCad")(uri "${KICAD6_SYMBOL_DIR}/eSim_SKY130.kicad_sym")(options "")(descr ""))
   (lib (name "eSim_SKY130_Subckts")(type "KiCad")(uri "${KICAD6_SYMBOL_DIR}/eSim_SKY130_Subckts.kicad_sym")(options "")(descr ""))
   (lib (name "eSim_Sources")(type "KiCad")(uri "${KICAD6_SYMBOL_DIR}/eSim_Sources.kicad_sym")(options "")(descr ""))
