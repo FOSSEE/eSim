@@ -17,7 +17,9 @@ class ProjectExplorer(QtWidgets.QWidget):
         - for removing project.
     """
 
-    def __init__(self):
+    projectOpened = QtCore.pyqtSignal(str, str, list)
+
+    def __init__(self, is_dark_theme=False):
         """
         This method is doing following tasks:
             - Working as a constructor for class ProjectExplorer.
@@ -31,77 +33,215 @@ class ProjectExplorer(QtWidgets.QWidget):
         header = QtWidgets.QTreeWidgetItem(["Projects", "path"])
         self.treewidget.setHeaderItem(header)
         self.treewidget.setColumnHidden(1, True)
-
-        # CSS
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
-
-        self.treewidget.setStyleSheet(" \
-            QTreeView { border-radius: 15px; border: 1px \
-            solid gray; padding: 5px; width: 200px; height: 150px;  }\
-            QTreeView::branch:has-siblings:!adjoins-item { \
-            border-image: url(" + init_path + "images/vline.png) 0;} \
-            QTreeView::branch:has-siblings:adjoins-item { \
-            border-image: url(" + init_path + "images/branch-more.png) 0; } \
-            QTreeView::branch:!has-children:!has-siblings:adjoins-item { \
-            border-image: url(" + init_path + "images/branch-end.png) 0; } \
-            QTreeView::branch:has-children:!has-siblings:closed, \
-            QTreeView::branch:closed:has-children:has-siblings { \
-            border-image: none; \
-            image: url(" + init_path + "images/branch-closed.png); } \
-            QTreeView::branch:open:has-children:!has-siblings, \
-            QTreeView::branch:open:has-children:has-siblings  { \
-            border-image: none; \
-            image: url(" + init_path + "images/branch-open.png); } \
-        ")
-
+        
+        # Initialize with the correct theme
+        self.set_theme(is_dark_theme)
+        
         for parents, children in list(
                 self.obj_appconfig.project_explorer.items()):
             os.path.join(parents)
             if os.path.exists(parents):
                 pathlist = parents.split(os.sep)
-                parentnode = QtWidgets.QTreeWidgetItem(
+                QtWidgets.QTreeWidgetItem(
                     self.treewidget, [pathlist[-1], parents]
                 )
-                for files in children:
-                    QtWidgets.QTreeWidgetItem(
-                        parentnode, [files, os.path.join(parents, files)]
-                    )
+
         self.window.addWidget(self.treewidget)
         self.treewidget.expanded.connect(self.refreshInstant)
-        self.treewidget.doubleClicked.connect(self.openProject)
+        self.treewidget.itemClicked.connect(self.handleItemClicked)
+        self.treewidget.itemDoubleClicked.connect(self.handleItemDoubleClicked)
         self.treewidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.treewidget.customContextMenuRequested.connect(self.openMenu)
         self.setLayout(self.window)
         self.show()
 
+    def set_theme(self, is_dark):
+        """Sets the theme for the widget."""
+        if is_dark:
+            self.apply_dark_theme()
+        else:
+            self.apply_light_theme()
+
+    def apply_dark_theme(self):
+        """Apply dark theme to the project explorer"""
+        # Set the main widget background to match Application.py
+        self.setStyleSheet('''
+            QWidget {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #23273a, stop:1 #181b24);
+                color: #e8eaed;
+            }
+        ''')
+        # Set the tree widget styles to match Application.py
+        self.treewidget.setStyleSheet('''
+            QHeaderView::section {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #23273a, stop:1 #181b24);
+                color: #40c4ff;
+                font-weight: 700;
+                font-size: 12px;
+                border: none;
+                border-radius: 0;
+                padding: 8px 0px 8px 12px;
+                letter-spacing: 0.5px;
+            }
+            QTreeWidget {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #23273a, stop:1 #181b24);
+                color: #e8eaed;
+                border: 1px solid #23273a;
+                border-radius: 12px;
+                selection-background-color: #40c4ff;
+                selection-color: #181b24;
+                font-weight: 500;
+                font-size: 10px;
+                padding: 6px;
+            }
+            QTreeWidget::item {
+                padding: 4px;
+                border-radius: 4px;
+                margin: 1px 0px;
+                background: transparent;
+                font-size: 10px;
+            }
+            QTreeWidget::item:hover {
+                background: #2d3348;
+                color: #40c4ff;
+            }
+            QTreeWidget::item:selected {
+                background: #40c4ff;
+                color: #181b24;
+                font-weight: 600;
+            }
+            QTreeView::branch {
+                background: transparent;
+                width: 12px;
+            }
+            QTreeView::branch:has-children:!has-siblings:closed,
+            QTreeView::branch:closed:has-children:has-siblings {
+                image: url(images/branch-closed.png);
+            }
+            QTreeView::branch:open:has-children:!has-siblings,
+            QTreeView::branch:open:has-children:has-siblings {
+                image: url(images/branch-open.png);
+            }
+            QScrollBar:vertical {
+                background: #23273a;
+                width: 10px;
+                margin: 0;
+                border-radius: 5px;
+            }
+            QScrollBar::handle:vertical {
+                background: #40c4ff;
+                min-height: 20px;
+                border-radius: 5px;
+                margin: 1px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background: #1976d2;
+            }
+            QScrollBar::add-line, QScrollBar::sub-line {
+                background: none;
+                border: none;
+            }
+        ''')
+
+    def apply_light_theme(self):
+        """Apply light theme to the project explorer"""
+        # Set the main widget background
+        self.setStyleSheet('''
+            QWidget {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #ffffff, stop:1 #f8f9fa);
+                color: #2c3e50;
+            }
+        ''')
+        
+        # Set the tree widget styles
+        self.treewidget.setStyleSheet('''
+            QHeaderView::section {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #ffffff, stop:1 #f8f9fa);
+                color: #1976d2;
+                font-weight: 700;
+                font-size: 12px;
+                border: none;
+                border-radius: 0;
+                padding: 8px 0px 8px 12px;
+                letter-spacing: 0.5px;
+            }
+            QTreeWidget {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #ffffff, stop:1 #f8f9fa);
+                color: #2c3e50;
+                border: 1px solid #e1e4e8;
+                border-radius: 12px;
+                selection-background-color: #1976d2;
+                selection-color: #ffffff;
+                font-weight: 500;
+                font-size: 10px;
+                padding: 6px;
+            }
+            QTreeWidget::item {
+                padding: 4px;
+                border-radius: 4px;
+                margin: 1px 0px;
+                background: transparent;
+                font-size: 10px;
+            }
+            QTreeWidget::item:hover {
+                background: #f1f4f9;
+                color: #1976d2;
+            }
+            QTreeWidget::item:selected {
+                background: #1976d2;
+                color: #ffffff;
+                font-weight: 600;
+            }
+            QTreeView::branch {
+                background: transparent;
+                width: 12px;
+            }
+            QTreeView::branch:has-children:!has-siblings:closed,
+            QTreeView::branch:closed:has-children:has-siblings {
+                image: url(images/branch-closed.png);
+            }
+            QTreeView::branch:open:has-children:!has-siblings,
+            QTreeView::branch:open:has-children:has-siblings {
+                image: url(images/branch-open.png);
+            }
+            QScrollBar:vertical {
+                background: #f1f4f9;
+                width: 10px;
+                margin: 0;
+                border-radius: 5px;
+            }
+            QScrollBar::handle:vertical {
+                background: #1976d2;
+                min-height: 20px;
+                border-radius: 5px;
+                margin: 1px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background: #1565c0;
+            }
+            QScrollBar::add-line, QScrollBar::sub-line {
+                background: none;
+                border: none;
+            }
+        ''')
+
     def refreshInstant(self):
-        for i in range(self.treewidget.topLevelItemCount()):
-            if self.treewidget.topLevelItem(i).isExpanded():
-                index = self.treewidget.indexFromItem(
-                    self.treewidget.topLevelItem(i))
-                self.refreshProject(indexItem=index)
+        # Disabled: Do not repopulate file nodes under projects
+        pass
 
     def addTreeNode(self, parents, children):
         os.path.join(parents)
         pathlist = parents.split(os.sep)
-        parentnode = QtWidgets.QTreeWidgetItem(
+        QtWidgets.QTreeWidgetItem(
             self.treewidget, [pathlist[-1], parents]
         )
-        for files in children:
-            QtWidgets.QTreeWidgetItem(
-                parentnode, [files, os.path.join(parents, files)]
-            )
-
-        (
-            self.obj_appconfig.
-            proc_dict[self.obj_appconfig.current_project['ProjectName']]
-        ) = []
-        (
-            self.obj_appconfig.
-            dock_dict[self.obj_appconfig.current_project['ProjectName']]
-        ) = []
+        # Do NOT add file children
 
     def openMenu(self, position):
         indexes = self.treewidget.selectedIndexes()
@@ -142,6 +282,67 @@ class ProjectExplorer(QtWidgets.QWidget):
             self.textwindow.setGeometry(QtCore.QRect(400, 150, 400, 400))
             self.textwindow.setWindowTitle(filename)
 
+            # Apply dark theme and custom scrollbar
+            premium_dark_stylesheet = """
+            QWidget {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                    stop:0 #0a0e1a, stop:0.3 #1a1d29, stop:0.7 #1e2124, stop:1 #0f1419);
+                color: #e8eaed;
+                font-family: 'Fira Sans', 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+                font-size: 15px;
+                font-weight: 500;
+            }
+            QTextEdit {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #23273a, stop:1 #181b24);
+                color: #e8eaed;
+                border: 1px solid #23273a;
+                border-radius: 10px;
+                padding: 16px 20px;
+                font-weight: 500;
+                font-size: 15px;
+                selection-background-color: #40c4ff;
+                selection-color: #181b24;
+            }
+            QScrollBar:vertical, QScrollBar:horizontal {
+                background: #23273a;
+                border-radius: 6px;
+                margin: 0;
+            }
+            QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+                background: #40c4ff;
+                border-radius: 6px;
+                min-height: 30px;
+                min-width: 30px;
+                margin: 2px;
+            }
+            QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+                background: #1976d2;
+            }
+            QPushButton {
+                background: qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                    stop:0 #40c4ff, stop:1 #1976d2);
+                color: #181b24;
+                border: 1px solid #40c4ff;
+                padding: 12px 24px;
+                border-radius: 10px;
+                font-weight: 700;
+                font-size: 15px;
+                letter-spacing: 0.5px;
+            }
+            QPushButton:hover {
+                background: #1976d2;
+                color: #fff;
+                border: 1.5px solid #1976d2;
+            }
+            QPushButton:pressed {
+                background: #23273a;
+                color: #40c4ff;
+                border: 1.5px solid #40c4ff;
+            }
+            """
+            self.textwindow.setStyleSheet(premium_dark_stylesheet)
+
             self.text = QtWidgets.QTextEdit()
             self.save = QtWidgets.QPushButton('Save and Exit')
             self.save.setDisabled(True)
@@ -157,13 +358,14 @@ class ProjectExplorer(QtWidgets.QWidget):
             self.textwindow.show()
         else:
             self.refreshProject(self.filePath)
-
+            projectName = os.path.basename(self.filePath)
+            files = [f for f in os.listdir(self.filePath) if os.path.isfile(os.path.join(self.filePath, f))]
+            self.projectOpened.emit(projectName, self.filePath, files)
             self.obj_appconfig.print_info(
                 'The current project is: ' + self.filePath
             )
 
-            self.obj_appconfig.current_project["ProjectName"] = str(
-                self.filePath)
+            self.obj_appconfig.current_project["ProjectName"] = self.filePath
             (
                 self.obj_appconfig.
                 proc_dict[self.obj_appconfig.current_project['ProjectName']]
@@ -204,7 +406,6 @@ class ProjectExplorer(QtWidgets.QWidget):
         )
         self.int = self.indexItem.row()
         self.treewidget.takeTopLevelItem(self.int)
-
         if self.obj_appconfig.current_project["ProjectName"] == filePath:
             self.obj_appconfig.current_project["ProjectName"] = None
 
@@ -229,22 +430,7 @@ class ProjectExplorer(QtWidgets.QWidget):
             )
 
         if os.path.exists(filePath):
-            filelistnew = os.listdir(os.path.join(filePath))
-            if indexItem is None:
-                parentnode = self.treewidget.currentItem()
-            else:
-                parentnode = self.treewidget.itemFromIndex(self.indexItem)
-            count = parentnode.childCount()
-            for i in range(count):
-                parentnode.removeChild(parentnode.child(0))
-            for files in filelistnew:
-                QtWidgets.QTreeWidgetItem(
-                    parentnode, [files, os.path.join(filePath, files)]
-                )
-
-            self.obj_appconfig.project_explorer[filePath] = filelistnew
-            json.dump(self.obj_appconfig.project_explorer,
-                      open(self.obj_appconfig.dictPath["path"], 'w'))
+            # Disabled: Do not add file nodes under project
             return True
 
         else:
@@ -430,3 +616,55 @@ class ProjectExplorer(QtWidgets.QWidget):
                         'contain space between them'
                     )
                     msg.exec_()
+
+    def handleItemClicked(self, item, column):
+        # If the clicked item is a project (has children), open in tabs
+        if item.childCount() > 0:
+            projectName = item.text(0)
+            projectPath = item.text(1)
+            files = [item.child(i).text(0) for i in range(item.childCount())]
+            self.projectOpened.emit(projectName, projectPath, files)
+        else:
+            # If it's a file, use the old behavior
+            self.openProject()
+
+    def handleItemDoubleClicked(self, item, column):
+        # Only open a new window for editing if it's a file (no children)
+        if item.childCount() == 0:
+            filePath = item.text(1)
+            if os.path.isfile(filePath):
+                try:
+                    with open(filePath, 'r', errors='ignore') as f:
+                        content = f.read()
+                except Exception as e:
+                    QtWidgets.QMessageBox.warning(self, "Error", f"Could not open file: {e}")
+                    return
+
+                editorWindow = QtWidgets.QWidget()
+                editorWindow.setWindowTitle(os.path.basename(filePath))
+                editorWindow.setMinimumSize(600, 500)
+                layout = QtWidgets.QVBoxLayout(editorWindow)
+                textEdit = QtWidgets.QTextEdit()
+                textEdit.setText(content)
+                saveButton = QtWidgets.QPushButton('Save and Exit')
+                layout.addWidget(textEdit)
+                layout.addWidget(saveButton)
+
+                def save_and_exit():
+                    try:
+                        with open(filePath, 'w') as f:
+                            f.write(textEdit.toPlainText())
+                        editorWindow.close()
+                    except Exception as e:
+                        QtWidgets.QMessageBox.warning(editorWindow, "Error", f"Could not save file: {e}")
+
+                saveButton.clicked.connect(save_and_exit)
+                editorWindow.show()
+
+    def selectProjectNode(self, projectName):
+        for i in range(self.treewidget.topLevelItemCount()):
+            item = self.treewidget.topLevelItem(i)
+            if item.text(0) == projectName:
+                self.treewidget.setCurrentItem(item)
+                self.treewidget.scrollToItem(item)
+                break

@@ -2,7 +2,7 @@ import os
 from PyQt5 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
 from frontEnd import TerminalUi
-from configparser import ConfigParser
+
 
 # This Class creates NgSpice Window
 class NgspiceWidget(QtWidgets.QWidget):
@@ -33,6 +33,17 @@ class NgspiceWidget(QtWidgets.QWidget):
         self.terminalUi = TerminalUi.TerminalUi(self.process, self.args)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.terminalUi)
+
+        # --- Ensure the correct theme is applied immediately ---
+        app_parent = self.parent()
+        is_dark_theme = False
+        while app_parent is not None:
+            if hasattr(app_parent, 'is_dark_theme'):
+                is_dark_theme = app_parent.is_dark_theme
+                break
+            app_parent = app_parent.parent() if hasattr(app_parent, 'parent') else None
+        if hasattr(self, 'terminalUi') and hasattr(self.terminalUi, 'set_theme'):
+            self.terminalUi.set_theme(is_dark_theme)
 
         # Receiving the plotFlag
         self.plotFlag = plotFlag
@@ -188,30 +199,30 @@ class NgspiceWidget(QtWidgets.QWidget):
 
     def plotFlagFunc(self,projPath,command):
         if self.plotFlag == True:
+            print("reached here too")
             if os.name == 'nt':
                 parser_nghdl = ConfigParser()
-                config_path = os.path.join('library', 'config', '.nghdl', 'config.ini')
-                parser_nghdl.read(config_path)
+                parser_nghdl.read(
+                    os.path.join('library', 'config', '.nghdl', 'config.ini')
+                )
+
                 msys_home = parser_nghdl.get('COMPILER', 'MSYS_HOME')
+
                 tempdir = os.getcwd()
                 projPath = self.obj_appconfig.current_project["ProjectName"]
                 os.chdir(projPath)
-                
-                self.command = (
-                'cmd /c "start /min ' +
-                msys_home + '/usr/bin/mintty.exe ngspice -p ' + command + '"'
-                )
+                self.command = 'cmd /c ' + '"start /min ' + \
+                               msys_home + "/usr/bin/mintty.exe ngspice -p " + command + '"'
 
-                # Create a new QProcess for mintty
-                self.minttyProcess = QtCore.QProcess(self)
-                self.minttyProcess.start(self.command)
-
+                self.process.start(self.command)
                 os.chdir(tempdir)
             else:
+                print("reached .. 4")
                 self.commandi = "cd " + projPath + \
                                 ";ngspice -r " + command.replace(".cir.out", ".raw") + \
                                 " " + command
                 self.xtermArgs = ['-hold', '-e', self.commandi]
+                print("xTerm")
 
                 self.xtermProcess = QtCore.QProcess(self)
                 self.xtermProcess.start('xterm', self.xtermArgs)

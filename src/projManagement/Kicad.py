@@ -20,7 +20,7 @@ import os
 from . import Validation
 from configuration.Appconfig import Appconfig
 from . import Worker
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtGui, QtCore
 
 
 class Kicad:
@@ -69,6 +69,7 @@ class Kicad:
         appropriate validation checks
 
         @params
+
 
         @return
         """
@@ -245,3 +246,71 @@ class Kicad:
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')
+
+
+class KicadWidget(QtWidgets.QWidget):
+    """
+    A modern, themed QWidget for Kicad actions, matching the Application.py style.
+    This does not affect any backend logic.
+    """
+    def __init__(self, parent=None):
+        super(KicadWidget, self).__init__(parent)
+        self.setObjectName("KicadWidget")
+        self.setStyleSheet("""
+            QWidget#KicadWidget {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                    stop:0 #23273a, stop:1 #181b24);
+                border-radius: 16px;
+                border: 1.5px solid #23273a;
+            }
+            QPushButton {
+                background-color: #23273a;
+                color: #e8eaed;
+                border: 1.5px solid #353b48;
+                border-radius: 10px;
+                padding: 10px 24px;
+                font-family: 'Inter', 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+                font-size: 15px;
+                font-weight: 500;
+                letter-spacing: 0.1px;
+            }
+            QPushButton:hover {
+                background-color: #353b48;
+                color: #40c4ff;
+            }
+            QPushButton:pressed {
+                background-color: #181b24;
+                color: #40c4ff;
+            }
+            QLabel {
+                color: #e8eaed;
+                font-size: 18px;
+                font-weight: bold;
+                padding-bottom: 12px;
+            }
+        """)
+        layout = QtWidgets.QVBoxLayout()
+        layout.setSpacing(18)
+        layout.setContentsMargins(32, 32, 32, 32)
+
+        title = QtWidgets.QLabel("Kicad Project Actions")
+        title.setAlignment(QtCore.Qt.AlignCenter)
+        layout.addWidget(title)
+
+        btn_open_schematic = QtWidgets.QPushButton("Open Schematic")
+        btn_open_layout = QtWidgets.QPushButton("Open Layout")
+        btn_open_footprint = QtWidgets.QPushButton("Open Footprint Editor")
+        btn_convert_ngspice = QtWidgets.QPushButton("Convert to Ngspice")
+
+        # These are placeholders for connecting to actual logic
+        btn_open_schematic.clicked.connect(lambda: print("Open Schematic clicked"))
+        btn_open_layout.clicked.connect(lambda: print("Open Layout clicked"))
+        btn_open_footprint.clicked.connect(lambda: print("Open Footprint Editor clicked"))
+        btn_convert_ngspice.clicked.connect(lambda: print("Convert to Ngspice clicked"))
+
+        layout.addWidget(btn_open_schematic)
+        layout.addWidget(btn_open_layout)
+        layout.addWidget(btn_open_footprint)
+        layout.addWidget(btn_convert_ngspice)
+        layout.addStretch(1)
+        self.setLayout(layout)

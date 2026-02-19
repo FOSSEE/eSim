@@ -8,8 +8,17 @@ class NgMoConverter:
     def __init__(self, map_json):
         # Loading JSON file which hold the mapping information between ngspice
         # and Modelica.
-        with open(map_json) as mappingFile:
-            self.mappingData = json.load(mappingFile)
+        if map_json is None:
+            # Use default mapping if no JSON file is available
+            self.mappingData = {}
+            print("Warning: No mapping JSON file available, using default mapping")
+        else:
+            try:
+                with open(map_json) as mappingFile:
+                    self.mappingData = json.load(mappingFile)
+            except (FileNotFoundError, json.JSONDecodeError) as e:
+                print(f"Warning: Could not load mapping JSON file: {e}")
+                self.mappingData = {}
 
         self.ifMOS = False
         self.sourceDetail = []
