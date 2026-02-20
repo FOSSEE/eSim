@@ -1,0 +1,26 @@
+* CMOS inverter - Windows-safe version (no Verilog-A needed)
+.title CMOS inverter (fallback models)
+
+.global GND
+
+* Power
+VDD vdd GND DC 1.2
+
+* Input
+VIN input GND PWL(0ns 0 2ns 0 4ns 1.2 9ns 1.2 11ns 0 20ns 0)
+
+* Simple built-in MOS models
+.model NMOS NMOS (VTO=0.6 KP=100u)
+.model PMOS PMOS (VTO=-0.6 KP=40u)
+
+* Devices: D G S B
+M1 output input GND GND NMOS W=1u L=0.13u
+M2 output input vdd vdd PMOS W=2u L=0.13u
+
+.control
+tran 0.1n 40n
+run
+plot v(input) v(output)
+.endc
+
+.end

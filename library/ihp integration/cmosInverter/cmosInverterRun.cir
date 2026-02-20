@@ -1,0 +1,41 @@
+* cmos_ihp.cir   -- CMOS inverter using IHP SG13G2 PDK (try this first)
+.title CMOS inverter using IHP SG13G2 PDK
+
+* Load the corner section from the IHP PDK (defines params, includes subckt file)
+.lib "C:/Users/KEERTHANA/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib" mos_tt
+
+.global GND
+
+* Power rail (taken from KiCad node Net-_XM1-Pad1_)
+VDD Net-_XM1-Pad1_ GND DC 1.2
+
+* Input: simple PWL (toggle)
+VIN input GND PWL(0ns 0 2ns 0 4ns 1.2 9ns 1.2 11ns 0 20ns 0)
+
+* Transistor instances (Drain Gate Source Bulk Model)
+* PMOS: source & bulk -> VDD
+XM2 output input Net-_XM1-Pad1_ Net-_XM1-Pad1_ sg13_lv_pmos w=2.0u l=0.13u
+
+* NMOS: source & bulk -> GND
+XM1 output input GND GND sg13_lv_nmos w=1.0u l=0.13u
+
+* optional: probe nodes (not required by netlist)
+* U2 output plot_v1
+* U1 input plot_v1
+
+.control
+* transient sim: time step 0.1ns, total 40ns
+tran 0.1n 40n
+run
+
+* plot waveforms
+plot v(input) v(output)
+
+* print DC operating point of NMOS (optional)
+op
+let Id = @m.xm1[id]
+print Id
+
+.endc
+
+.end
