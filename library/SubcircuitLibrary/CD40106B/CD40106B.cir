@@ -1,0 +1,47 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD40106B\CD40106B.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 01/16/26 00:52:38
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M4  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M3-Pad1_ VDD eSim_MOS_P		
+M3  Net-_M3-Pad1_ Net-_M1-Pad2_ VDD VDD eSim_MOS_P		
+M5  GND Net-_M1-Pad1_ Net-_M3-Pad1_ VDD eSim_MOS_P		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ GND eSim_MOS_N		
+M2  Net-_M1-Pad3_ Net-_M1-Pad2_ GND GND eSim_MOS_N		
+M6  VDD Net-_M1-Pad1_ Net-_M1-Pad3_ GND eSim_MOS_N		
+M16  Net-_M13-Pad1_ Net-_M13-Pad2_ Net-_M15-Pad1_ VDD eSim_MOS_P		
+M15  Net-_M15-Pad1_ Net-_M13-Pad2_ VDD VDD eSim_MOS_P		
+M21  GND Net-_M13-Pad1_ Net-_M15-Pad1_ VDD eSim_MOS_P		
+M13  Net-_M13-Pad1_ Net-_M13-Pad2_ Net-_M13-Pad3_ GND eSim_MOS_N		
+M14  Net-_M13-Pad3_ Net-_M13-Pad2_ GND GND eSim_MOS_N		
+M22  VDD Net-_M13-Pad1_ Net-_M13-Pad3_ GND eSim_MOS_N		
+M28  Net-_M25-Pad1_ Net-_M25-Pad2_ Net-_M27-Pad1_ VDD eSim_MOS_P		
+M27  Net-_M27-Pad1_ Net-_M25-Pad2_ VDD VDD eSim_MOS_P		
+M29  GND Net-_M25-Pad1_ Net-_M27-Pad1_ VDD eSim_MOS_P		
+M25  Net-_M25-Pad1_ Net-_M25-Pad2_ Net-_M25-Pad3_ GND eSim_MOS_N		
+M26  Net-_M25-Pad3_ Net-_M25-Pad2_ GND GND eSim_MOS_N		
+M30  VDD Net-_M25-Pad1_ Net-_M25-Pad3_ GND eSim_MOS_N		
+M34  Net-_M31-Pad1_ Net-_M31-Pad2_ Net-_M33-Pad1_ VDD eSim_MOS_P		
+M33  Net-_M33-Pad1_ Net-_M31-Pad2_ VDD VDD eSim_MOS_P		
+M35  GND Net-_M31-Pad1_ Net-_M33-Pad1_ VDD eSim_MOS_P		
+M31  Net-_M31-Pad1_ Net-_M31-Pad2_ Net-_M31-Pad3_ GND eSim_MOS_N		
+M32  Net-_M31-Pad3_ Net-_M31-Pad2_ GND GND eSim_MOS_N		
+M36  VDD Net-_M31-Pad1_ Net-_M31-Pad3_ GND eSim_MOS_N		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M10-Pad3_ VDD eSim_MOS_P		
+M9  Net-_M10-Pad3_ Net-_M10-Pad2_ VDD VDD eSim_MOS_P		
+M11  GND Net-_M10-Pad1_ Net-_M10-Pad3_ VDD eSim_MOS_P		
+M7  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M12-Pad3_ GND eSim_MOS_N		
+M8  Net-_M12-Pad3_ Net-_M10-Pad2_ GND GND eSim_MOS_N		
+M12  VDD Net-_M10-Pad1_ Net-_M12-Pad3_ GND eSim_MOS_N		
+M20  Net-_M17-Pad1_ Net-_M17-Pad2_ Net-_M19-Pad1_ VDD eSim_MOS_P		
+M19  Net-_M19-Pad1_ Net-_M17-Pad2_ VDD VDD eSim_MOS_P		
+M23  GND Net-_M17-Pad1_ Net-_M19-Pad1_ VDD eSim_MOS_P		
+M17  Net-_M17-Pad1_ Net-_M17-Pad2_ Net-_M17-Pad3_ GND eSim_MOS_N		
+M18  Net-_M17-Pad3_ Net-_M17-Pad2_ GND GND eSim_MOS_N		
+M24  VDD Net-_M17-Pad1_ Net-_M17-Pad3_ GND eSim_MOS_N		
+U1  Net-_M1-Pad2_ Net-_M10-Pad2_ GND Net-_M1-Pad1_ Net-_M13-Pad2_ Net-_M17-Pad2_ Net-_M10-Pad1_ Net-_M13-Pad1_ Net-_M25-Pad2_ Net-_M17-Pad1_ VDD Net-_M31-Pad2_ Net-_M25-Pad1_ Net-_M31-Pad1_ PORT		
+
+.end

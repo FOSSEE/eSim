@@ -1,0 +1,61 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\PI3B3384\PI3B3384.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 01/30/26 20:25:28
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  BEA_B Net-_U1-Pad2_ adc_bridge_1		
+U6  Net-_U1-Pad2_ Net-_U11-Pad1_ d_inverter		
+M1  Net-_M1-Pad1_ BEA_B Net-_M1-Pad3_ GND eSim_MOS_N		
+M6  Net-_M1-Pad1_ Net-_M6-Pad2_ Net-_M1-Pad3_ VDD eSim_MOS_P		
+U11  Net-_U11-Pad1_ Net-_M6-Pad2_ dac_bridge_1		
+U2  BEA_B Net-_U2-Pad2_ adc_bridge_1		
+U7  Net-_U2-Pad2_ Net-_U12-Pad1_ d_inverter		
+M2  Net-_M2-Pad1_ BEA_B Net-_M2-Pad3_ GND eSim_MOS_N		
+M7  Net-_M2-Pad1_ Net-_M7-Pad2_ Net-_M2-Pad3_ VDD eSim_MOS_P		
+U12  Net-_U12-Pad1_ Net-_M7-Pad2_ dac_bridge_1		
+U3  BEA_B Net-_U3-Pad2_ adc_bridge_1		
+U8  Net-_U3-Pad2_ Net-_U13-Pad1_ d_inverter		
+M3  Net-_M3-Pad1_ BEA_B Net-_M3-Pad3_ GND eSim_MOS_N		
+M8  Net-_M3-Pad1_ Net-_M8-Pad2_ Net-_M3-Pad3_ VDD eSim_MOS_P		
+U13  Net-_U13-Pad1_ Net-_M8-Pad2_ dac_bridge_1		
+U4  BEA_B Net-_U4-Pad2_ adc_bridge_1		
+U9  Net-_U4-Pad2_ Net-_U14-Pad1_ d_inverter		
+M4  Net-_M4-Pad1_ BEA_B Net-_M4-Pad3_ GND eSim_MOS_N		
+M9  Net-_M4-Pad1_ Net-_M9-Pad2_ Net-_M4-Pad3_ VDD eSim_MOS_P		
+U14  Net-_U14-Pad1_ Net-_M9-Pad2_ dac_bridge_1		
+U17  BEB_B Net-_U17-Pad2_ adc_bridge_1		
+U22  Net-_U17-Pad2_ Net-_U22-Pad2_ d_inverter		
+M11  Net-_M11-Pad1_ BEB_B Net-_M11-Pad3_ GND eSim_MOS_N		
+M16  Net-_M11-Pad1_ Net-_M16-Pad2_ Net-_M11-Pad3_ VDD eSim_MOS_P		
+U27  Net-_U22-Pad2_ Net-_M16-Pad2_ dac_bridge_1		
+U18  BEB_B Net-_U18-Pad2_ adc_bridge_1		
+U23  Net-_U18-Pad2_ Net-_U23-Pad2_ d_inverter		
+M12  Net-_M12-Pad1_ BEB_B Net-_M12-Pad3_ GND eSim_MOS_N		
+M17  Net-_M12-Pad1_ Net-_M17-Pad2_ Net-_M12-Pad3_ VDD eSim_MOS_P		
+U28  Net-_U23-Pad2_ Net-_M17-Pad2_ dac_bridge_1		
+U19  BEB_B Net-_U19-Pad2_ adc_bridge_1		
+U24  Net-_U19-Pad2_ Net-_U24-Pad2_ d_inverter		
+M13  Net-_M13-Pad1_ BEB_B Net-_M13-Pad3_ GND eSim_MOS_N		
+M18  Net-_M13-Pad1_ Net-_M18-Pad2_ Net-_M13-Pad3_ VDD eSim_MOS_P		
+U29  Net-_U24-Pad2_ Net-_M18-Pad2_ dac_bridge_1		
+U20  BEB_B Net-_U20-Pad2_ adc_bridge_1		
+U25  Net-_U20-Pad2_ Net-_U25-Pad2_ d_inverter		
+M14  Net-_M14-Pad1_ BEB_B Net-_M14-Pad3_ GND eSim_MOS_N		
+M19  Net-_M14-Pad1_ Net-_M19-Pad2_ Net-_M14-Pad3_ VDD eSim_MOS_P		
+U30  Net-_U25-Pad2_ Net-_M19-Pad2_ dac_bridge_1		
+U5  BEA_B Net-_U10-Pad1_ adc_bridge_1		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter		
+M5  Net-_M10-Pad1_ BEA_B Net-_M10-Pad3_ GND eSim_MOS_N		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M10-Pad3_ VDD eSim_MOS_P		
+U15  Net-_U10-Pad2_ Net-_M10-Pad2_ dac_bridge_1		
+U21  BEB_B Net-_U21-Pad2_ adc_bridge_1		
+U26  Net-_U21-Pad2_ Net-_U26-Pad2_ d_inverter		
+M15  Net-_M15-Pad1_ BEB_B Net-_M15-Pad3_ GND eSim_MOS_N		
+M20  Net-_M15-Pad1_ Net-_M20-Pad2_ Net-_M15-Pad3_ VDD eSim_MOS_P		
+U31  Net-_U26-Pad2_ Net-_M20-Pad2_ dac_bridge_1		
+U16  Net-_M1-Pad1_ Net-_M2-Pad1_ Net-_M3-Pad1_ Net-_M4-Pad1_ Net-_M10-Pad1_ Net-_M1-Pad3_ Net-_M2-Pad3_ Net-_M3-Pad3_ Net-_M4-Pad3_ Net-_M10-Pad3_ Net-_M11-Pad1_ Net-_M12-Pad1_ Net-_M13-Pad1_ Net-_M14-Pad1_ Net-_M15-Pad1_ Net-_M11-Pad3_ Net-_M12-Pad3_ Net-_M13-Pad3_ Net-_M14-Pad3_ Net-_M15-Pad3_ BEB_B BEA_B VDD GND PORT		
+
+.end

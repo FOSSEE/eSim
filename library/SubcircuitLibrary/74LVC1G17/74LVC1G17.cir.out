@@ -1,0 +1,26 @@
+* c:\fossee\esim\library\subcircuitlibrary\74lvc1g17\74lvc1g17.cir
+
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m4 net-_m1-pad1_ net-_m1-pad2_ net-_m3-pad1_ vdd CMOSP W=100u L=100u M=1
+m3 net-_m3-pad1_ net-_m1-pad2_ vdd vdd CMOSP W=100u L=100u M=1
+m5 gnd net-_m1-pad1_ net-_m3-pad1_ vdd CMOSP W=100u L=100u M=1
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ gnd CMOSN W=100u L=100u M=1
+m2 net-_m1-pad3_ net-_m1-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+m6 vdd net-_m1-pad1_ net-_m1-pad3_ gnd CMOSN W=100u L=100u M=1
+m10 net-_m10-pad1_ net-_m1-pad1_ net-_m10-pad3_ vdd CMOSP W=100u L=100u M=1
+m9 net-_m10-pad3_ net-_m1-pad1_ vdd vdd CMOSP W=100u L=100u M=1
+m11 gnd net-_m10-pad1_ net-_m10-pad3_ vdd CMOSP W=100u L=100u M=1
+m7 net-_m10-pad1_ net-_m1-pad1_ net-_m12-pad3_ gnd CMOSN W=100u L=100u M=1
+m8 net-_m12-pad3_ net-_m1-pad1_ gnd gnd CMOSN W=100u L=100u M=1
+m12 vdd net-_m10-pad1_ net-_m12-pad3_ gnd CMOSN W=100u L=100u M=1
+* u1  net-_m1-pad2_ gnd vdd net-_m10-pad1_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

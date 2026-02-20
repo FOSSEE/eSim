@@ -1,0 +1,15 @@
+* c:\fossee\esim\library\subcircuitlibrary\74lvc2g00\74lvc2g00.cir
+
+.include CMOS_NAND.sub
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ CMOS_NAND
+x2 net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ CMOS_NAND
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
