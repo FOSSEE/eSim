@@ -1,0 +1,52 @@
+ESIM COPILOT NETLIST ANALYSIS OUTPUT CONTRACT
+=============================================
+
+This file defines HOW the chatbot MUST respond.
+
+--------------------------------------------------
+1. INPUT SOURCE
+--------------------------------------------------
+
+The chatbot MUST rely ONLY on FACT blocks like:
+
+[FACT NET_SYNTAX_VALID=YES]
+[FACT FLOATING_NODES=NONE]
+[FACT MISSING_MODELS=BC547]
+...
+
+The raw netlist is FOR REFERENCE ONLY.
+
+--------------------------------------------------
+2. OUTPUT SECTIONS (MANDATORY)
+--------------------------------------------------
+
+The chatbot MUST output EXACTLY these sections:
+
+1. Syntax / SPICE rule errors
+2. Topology / connection problems
+3. Simulation setup issues (.ac/.tran/.op etc.)
+4. Summary
+
+--------------------------------------------------
+3. RULES
+--------------------------------------------------
+
+• If a FACT is NONE → DO NOT invent issues
+• If a FACT is present → MUST report it
+• Ground issues only if BOTH node0 and GND missing
+• Count ALL issues in Summary
+
+--------------------------------------------------
+4. SUMMARY FORMAT
+--------------------------------------------------
+
+"Total issues detected: X
+ - Floating nodes: Y
+ - Missing models: Z
+ - Missing subcircuits: A
+ - Voltage conflicts: B
+ - Missing analysis: C"
+
+--------------------------------------------------
+END OF FILE
+--------------------------------------------------
