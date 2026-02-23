@@ -15,6 +15,8 @@
 #       AUTHORS: Fahim Khan, Rahul Paknikar, Saurabh Bansode,
 #                Sumanto Kar, Partha Singha Roy, Harsha Narayana P, 
 #                Jayanth Tatineni, Anshul Verma
+#       MENTORS: Sumanto Kar, Varad Patil, Shanti Priya K, Aditya M
+#       INTERNS: Akshay Rukade, Haripriyan R
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
 #      REVISION: Sunday 25 May 2025 17:40
@@ -101,6 +103,29 @@ function installSky130Pdk
     # Change ownership from root to the user
     sudo chown -R $USER:$USER /usr/share/local/sky130_fd_pr/
 
+}
+
+function installIhpPdk
+{
+    echo -n "Do you want to install IHP Open PDK for analog IC design? (y/n): "
+    read installIhp
+    
+    if [ "$installIhp" == "y" -o "$installIhp" == "Y" ]; then
+        echo "Installing IHP Open PDK........................"
+        
+        if [ -f "ihp/ihp-install-script.sh" ]; then
+            cd ihp/
+            chmod +x ihp-install-script.sh
+            trap "" ERR
+            ./ihp-install-script.sh --install
+            trap error_exit ERR
+            cd ../
+        else
+            echo "IHP install script not found. Skipping..."
+        fi
+    else
+        echo "Skipping IHP Open PDK installation"
+    fi
 }
 
 
@@ -399,6 +424,7 @@ if [ $option == "--install" ];then
     copyKicadLibrary
     installNghdl
     installSky130Pdk
+    installIhpPdk
     createDesktopStartScript
 
     if [ $? -ne 0 ];then
@@ -428,6 +454,14 @@ elif [ $option == "--uninstall" ];then
 
         echo "Removing SKY130 PDK......................"
         sudo rm -R /usr/share/local/sky130_fd_pr
+
+        echo "Removing IHP Open PDK...................."
+        if [ -f "ihp/install-ihp-openpdk.sh" ]; then
+            cd ihp/
+            chmod +x install-ihp-openpdk.sh
+            ./install-ihp-openpdk.sh --uninstall
+            cd ../
+        fi
 
         echo "Removing NGHDL..........................."
         rm -rf library/modelParamXML/Nghdl/*
