@@ -138,7 +138,8 @@ class PrcocessNetlist:
             words = compline.split()
             compName = words[0]
             # Ask for parameters of source
-            if compName[0] == 'v' or compName[0] == 'i':
+            # Skip IHP components that start with 'ihp' (not current sources)
+            if (compName[0] == 'v' or compName[0] == 'i') and not compName.startswith('ihp'):
                 # Find the index component from circuit
                 index = schematicInfo.index(compline)
                 if words[3] == "pulse":
