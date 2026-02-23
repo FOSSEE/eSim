@@ -1,0 +1,30 @@
+From 482bf8451ec913e8dd88851c0e6907abe0f5a9b8 Mon Sep 17 00:00:00 2001
+From: Aishwarya Sinha <aishwaryasinha3131@gmail.com>
+Date: Sun, 10 Aug 2025 14:23:34 +0530
+Subject: [PATCH]  src: ngspice-ghdl: Use non-native file browser
+
+    Native file browser is not working properly
+    with snap app. So temporarily we can use qt-based
+    file browser
+
+Signed-off-by: Aishwarya Sinha <aishwaryasinha3131@gmail.com>
+---
+ src/ngspice_ghdl.py | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/ngspice_ghdl.py b/src/ngspice_ghdl.py
+index 663c491..6e350ed 100755
+--- a/src/ngspice_ghdl.py
++++ b/src/ngspice_ghdl.py
+@@ -431,6 +431,8 @@ class FileRemover(QtWidgets.QWidget):
+ 
+ 
+ def main():
++    # Set non-native dialogs globally
++    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_DontUseNativeDialogs, True)
+     app = QtWidgets.QApplication(sys.argv)
+     if len(sys.argv) > 1:
+         if sys.argv[1] == '-e':
+-- 
+2.50.1
+

@@ -5,7 +5,7 @@ cycler==0.12.1
 entrypoints==0.3
 flake8==3.7.7
 fonttools==4.57.0
-hdlparse==1.0.4
+https://github.com/aishw31/hdlparse/tarball/python3compat
 importlib_resources==6.4.5
 kiwisolver==1.4.7
 matplotlib==3.7.5
