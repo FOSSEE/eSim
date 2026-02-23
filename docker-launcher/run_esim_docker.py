@@ -18,7 +18,7 @@ import urllib.request
 from pathlib import Path
 
 # Docker image (GitHub Container Registry)
-DOCKER_IMAGE = "ghcr.io/barun-2005/esim-docker:latest"
+DOCKER_IMAGE = "docker pull ghcr.io/fossee/esim-docker-launcher:latest"
 LOCAL_IMAGE = "esim:latest"
 CONTAINER_NAME = "esim-container"
 DOCKERFILE_DIR = Path(__file__).parent.resolve()
@@ -382,7 +382,7 @@ def build_image():
     info("Building from Dockerfile (10-15 min)...")
     print()
     try:
-        subprocess.run(["docker", "build", "-t", LOCAL_IMAGE, str(DOCKERFILE_DIR)], check=True)
+        subprocess.run(["docker", "build", "--platform", "linux/amd64", "-t", LOCAL_IMAGE, str(DOCKERFILE_DIR)], check=True)
         print()
         ok("Build complete!")
         return True
