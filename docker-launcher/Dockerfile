@@ -27,7 +27,7 @@ RUN python3 -m venv /build/venv \
     && /build/venv/bin/pip install --no-cache-dir "setuptools<58.0.0" wheel \
     && /build/venv/bin/pip install --no-cache-dir \
     matplotlib==3.7.5 numpy==1.24.4 scipy==1.10.1 \
-    PyQt5==5.15.7 pillow==10.4.0 hdlparse==1.0.4 watchdog==4.0.2
+    pillow==10.4.0 hdlparse==1.0.4 watchdog==4.0.2
 
 # Build GAW3 (analog waveform viewer) from source
 # gtkwave is digital only, gaw3 is what eSim actually uses
@@ -75,8 +75,8 @@ ENV FREETYPE_PROPERTIES="truetype:interpreter-version=40"
 
 # Install runtime packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    kicad kicad-libraries ngspice gtkwave xterm \
-    python3 python3-wxgtk4.0 \
+    kicad kicad-libraries gtkwave xterm \
+    python3 python3-wxgtk4.0 python3-pyqt5\
     libx11-6 libxext6 libxrender1 libxfixes3 libxi6 libxrandr2 \
     libxcursor1 libxinerama1 libgl1 libgl1-mesa-glx libgl1-mesa-dri \
     libxcb1 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 \
@@ -95,6 +95,104 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY --from=builder /build/gaw3-install/usr/local /usr/local/
 COPY --from=builder /build/esim ${ESIM_HOME}
 COPY --from=builder /build/venv /opt/venv
+
+# Install dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    make \
+    gnat \
+    llvm \
+    llvm-dev \
+    clang \
+    zlib1g-dev \
+    autoconf \
+    g++ \
+    flex \
+    bison \
+    wget \
+    xz-utils \
+    libxaw7 \
+    libxaw7-dev \
+    libcanberra-gtk-module \
+    libcanberra-gtk3-module \
+    && rm -rf /var/lib/apt/lists/*
+
+
+WORKDIR /opt
+
+########################################
+# Install GHDL
+########################################
+
+RUN wget https://github.com/ghdl/ghdl/archive/refs/tags/v4.1.0.tar.gz \
+    && tar -xvf v4.1.0.tar.gz \
+    && cd ghdl-4.1.0 \
+    && chmod +x configure \
+    && ./configure --with-llvm-config=/usr/bin/llvm-config \
+    && make -j$(nproc) \
+    && make install \
+    && cd /opt \
+    && rm -rf ghdl-4.1.0 v4.1.0.tar.gz
+
+
+########################################
+# Install Verilator
+########################################
+
+RUN wget https://github.com/verilator/verilator/archive/refs/tags/v4.210.tar.gz \
+    && tar -xvf v4.210.tar.gz \
+    && cd verilator-4.210 \
+    && autoconf \
+    && ./configure \
+    && make -j$(nproc) \
+    && make install \
+    && cd /opt \
+    && rm -rf verilator-4.210 v4.210.tar.gz
+
+#########################################################
+# Install NGHDL simulator
+#########################################################
+
+WORKDIR /tmp
+
+RUN apt-get update && apt-get install -y \
+    make gnat llvm llvm-dev clang \
+    zlib1g-dev autoconf g++ flex bison \
+    libxaw7 libxaw7-dev \
+    libcanberra-gtk-module libcanberra-gtk3-module \
+    wget xz-utils \
+    && rm -rf /var/lib/apt/lists/*
+
+# Download NGHDL simulator
+RUN wget https://github.com/FOSSEE/nghdl/raw/master/nghdl-simulator-source.tar.xz
+
+# Extract and rename like original installer
+RUN tar -xJf nghdl-simulator-source.tar.xz \
+    && mv nghdl-simulator-source /opt/nghdl-simulator
+
+WORKDIR /opt/nghdl-simulator
+
+RUN mkdir -p release install_dir
+
+WORKDIR /opt/nghdl-simulator/release
+
+# configure must be executable
+RUN chmod +x ../configure
+
+RUN ../configure \
+    --enable-xspice \
+    --disable-debug \
+    --prefix=/opt/nghdl-simulator/install_dir \
+    --exec-prefix=/opt/nghdl-simulator/install_dir
+
+RUN make -j$(nproc)
+
+RUN make install
+
+# link ngspice
+RUN ln -sf /opt/nghdl-simulator/install_dir/bin/ngspice /usr/bin/ngspice
+
+#########################################################
 
 # Create user
 ARG USERNAME=esim-user
@@ -115,6 +213,12 @@ RUN mkdir -p /home/${USERNAME}/.esim \
     ${USERNAME} ${USERNAME} > /home/${USERNAME}/.esim/config.ini \
     && echo '{}' > /home/${USERNAME}/.esim/modelica_map.json \
     && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.esim
+
+# Create NGHDL config 
+RUN mkdir -p /home/${USERNAME}/.nghdl \
+    && printf '[NGHDL]\nNGHDL_HOME = /home/%s/nghdl-simulator\nDIGITAL_MODEL = %%(NGHDL_HOME)s/src/xspice/icm\nRELEASE = %%(NGHDL_HOME)s/release\n\n[SRC]\nSRC_HOME = /usr/local/esim\nLICENSE = %%(SRC_HOME)s/LICENSE\n' \
+    ${USERNAME} > /home/${USERNAME}/.nghdl/config.ini \
+    && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.nghdl
 
 # Setup KiCad symbol libraries
 RUN mkdir -p /home/${USERNAME}/.config/kicad/6.0 \
