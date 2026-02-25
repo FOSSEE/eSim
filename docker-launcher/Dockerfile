@@ -18,8 +18,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgtk-3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Clone eSim
-RUN git clone --depth 1 https://github.com/FOSSEE/eSim.git /build/esim
 
 # Setup Python venv with dependencies
 # Note: setuptools<58 is needed for hdlparse which uses deprecated use_2to3
@@ -54,10 +52,14 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Asia/Kolkata
 ENV LANG=C.UTF-8
 ENV LC_ALL=C.UTF-8
+# Create user
+ARG USERNAME=esim-user
+ARG USER_UID=1000
+ARG USER_GID=1000
 
-# eSim paths
-ENV ESIM_HOME=/usr/local/esim
-ENV PYTHONPATH="${ESIM_HOME}/src:/opt/venv/lib/python3.10/site-packages"
+ENV USERNAME=${USERNAME}
+
+
 
 # VNC settings
 ENV VNC_PORT=5901
@@ -93,7 +95,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Copy built artifacts from builder stage
 COPY --from=builder /build/gaw3-install/usr/local /usr/local/
-COPY --from=builder /build/esim ${ESIM_HOME}
+# COPY --from=builder /build/esim ${ESIM_HOME}
 COPY --from=builder /build/venv /opt/venv
 
 # Install dependencies
@@ -101,21 +103,47 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     make \
     gnat \
-    llvm \
-    llvm-dev \
     clang \
+    llvm-11 \
+    llvm-11-dev \
+    llvm-11-runtime \
+    llvm-11-tools \
+    clang-11 \
     zlib1g-dev \
     autoconf \
     g++ \
     flex \
     bison \
     wget \
+    unzip \
     xz-utils \
     libxaw7 \
     libxaw7-dev \
     libcanberra-gtk-module \
     libcanberra-gtk3-module \
     && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /home/${USERNAME}/
+
+# Download eSim source
+RUN wget https://github.com/FOSSEE/eSim/archive/refs/tags/v2.5.zip
+
+# Unzip
+RUN unzip v2.5.zip
+
+# Rename folder (optional)
+RUN mv eSim-2.5 esim
+
+# eSim paths
+ENV ESIM_HOME=/home/${USERNAME}/esim
+ENV PYTHONPATH="${ESIM_HOME}/src:/opt/venv/lib/python3.10/site-packages"
+
+RUN groupadd --gid ${USER_GID} ${USERNAME} \
+    && useradd --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
+    && mkdir -p /home/${USERNAME}/workspace \
+    && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME} \
+    && chown -R ${USERNAME}:${USERNAME} ${ESIM_HOME}
+
 
 
 WORKDIR /opt
@@ -124,15 +152,15 @@ WORKDIR /opt
 # Install GHDL
 ########################################
 
-RUN wget https://github.com/ghdl/ghdl/archive/refs/tags/v4.1.0.tar.gz \
-    && tar -xvf v4.1.0.tar.gz \
+RUN wget https://github.com/FOSSEE/nghdl/raw/installers/Ubuntu/ghdl-4.1.0.tar.gz \
+    && tar -xzf ghdl-4.1.0.tar.gz \
     && cd ghdl-4.1.0 \
     && chmod +x configure \
-    && ./configure --with-llvm-config=/usr/bin/llvm-config \
+    && ./configure --with-llvm-config=/usr/bin/llvm-config-11 \
     && make -j$(nproc) \
     && make install \
     && cd /opt \
-    && rm -rf ghdl-4.1.0 v4.1.0.tar.gz
+    && rm -rf ghdl-4.1.0 ghdl-4.1.0.tar.gz
 
 
 ########################################
@@ -153,77 +181,100 @@ RUN wget https://github.com/verilator/verilator/archive/refs/tags/v4.210.tar.gz 
 # Install NGHDL simulator
 #########################################################
 
+
+
 WORKDIR /tmp
 
 RUN apt-get update && apt-get install -y \
-    make gnat llvm llvm-dev clang \
+    make gnat clang \
     zlib1g-dev autoconf g++ flex bison \
     libxaw7 libxaw7-dev \
     libcanberra-gtk-module libcanberra-gtk3-module \
-    wget xz-utils \
+    wget xz-utils git \
     && rm -rf /var/lib/apt/lists/*
 
+# Clone NGHDL source
+WORKDIR ${ESIM_HOME}/
+
+RUN git clone --depth 1 https://github.com/FOSSEE/nghdl
+
+# Create NGHDL symlink for eSim
+RUN chmod 755 /home/esim-user/esim/nghdl/src/ngspice_ghdl.py \
+    && rm -f /usr/local/bin/nghdl \
+    && ln -s /home/esim-user/esim/nghdl/src/ngspice_ghdl.py /usr/local/bin/nghdl
+
 # Download NGHDL simulator
+WORKDIR /home/${USERNAME}
 RUN wget https://github.com/FOSSEE/nghdl/raw/master/nghdl-simulator-source.tar.xz
 
-# Extract and rename like original installer
+# Extract NGHDL
 RUN tar -xJf nghdl-simulator-source.tar.xz \
-    && mv nghdl-simulator-source /opt/nghdl-simulator
+    && mv nghdl-simulator-source /home/${USERNAME}/nghdl-simulator \
+    && mkdir -p /home/${USERNAME}/nghdl-simulator/release \
+    && mkdir -p /home/${USERNAME}/nghdl-simulator/install_dir
 
-WORKDIR /opt/nghdl-simulator
+RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/nghdl-simulator \
+    && chmod -R u+w /home/${USERNAME}/nghdl-simulator
 
-RUN mkdir -p release install_dir
+WORKDIR /home/${USERNAME}/nghdl-simulator/release
 
-WORKDIR /opt/nghdl-simulator/release
-
-# configure must be executable
+# Ensure configure is executable
 RUN chmod +x ../configure
 
 RUN ../configure \
     --enable-xspice \
     --disable-debug \
-    --prefix=/opt/nghdl-simulator/install_dir \
-    --exec-prefix=/opt/nghdl-simulator/install_dir
+    --prefix=/home/${USERNAME}/nghdl-simulator/install_dir \
+    --exec-prefix=/home/${USERNAME}/nghdl-simulator/install_dir
 
 RUN make -j$(nproc)
-
 RUN make install
 
-# link ngspice
-RUN ln -sf /opt/nghdl-simulator/install_dir/bin/ngspice /usr/bin/ngspice
+# Link ngspice
+RUN ln -sf /home/${USERNAME}/nghdl-simulator/install_dir/bin/ngspice /usr/bin/ngspice
+
+RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/nghdl-simulator \
+    && chmod -R u+w /home/${USERNAME}/nghdl-simulator
+
 
 #########################################################
 
-# Create user
-ARG USERNAME=esim-user
-ARG USER_UID=1000
-ARG USER_GID=1000
 
-RUN groupadd --gid ${USER_GID} ${USERNAME} \
-    && useradd --uid ${USER_UID} --gid ${USER_GID} -m ${USERNAME} \
-    && mkdir -p /home/${USERNAME}/workspace \
-    && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME} \
-    && chown -R ${USERNAME}:${USERNAME} ${ESIM_HOME}
 
 WORKDIR ${ESIM_HOME}/src/frontEnd
 
 # Create eSim config
 RUN mkdir -p /home/${USERNAME}/.esim \
-    && printf '[DEFAULT]\nworkspace=/home/%s/eSim-Workspace\n\n[eSim]\nworkspace=/home/%s/eSim-Workspace\nkicad=/usr/bin\nngspice=/usr/bin\n' \
-    ${USERNAME} ${USERNAME} > /home/${USERNAME}/.esim/config.ini \
-    && echo '{}' > /home/${USERNAME}/.esim/modelica_map.json \
-    && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.esim
+ && printf '[DEFAULT]\n\
+eSim_HOME = /home/%s/esim\n\
+LICENSE = %%(eSim_HOME)s/LICENSE\n\
+KicadLib = %%(eSim_HOME)s/library/kicadLibrary.zip\n\
+IMAGES = %%(eSim_HOME)s/images\n\
+VERSION = %%(eSim_HOME)s/VERSION\n\
+MODELICA_MAP_JSON = %%(eSim_HOME)s/library/ngspicetoModelica/Mapping.json\n\
+\n[eSim]\n\
+workspace=/home/%s/eSim-Workspace\n\
+kicad=/usr/bin\n\
+ngspice=/usr/bin\n' \
+${USERNAME} ${USERNAME} > /home/${USERNAME}/.esim/config.ini \
+ && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.esim
 
 # Create NGHDL config 
 RUN mkdir -p /home/${USERNAME}/.nghdl \
-    && printf '[NGHDL]\nNGHDL_HOME = /home/%s/nghdl-simulator\nDIGITAL_MODEL = %%(NGHDL_HOME)s/src/xspice/icm\nRELEASE = %%(NGHDL_HOME)s/release\n\n[SRC]\nSRC_HOME = /usr/local/esim\nLICENSE = %%(SRC_HOME)s/LICENSE\n' \
-    ${USERNAME} > /home/${USERNAME}/.nghdl/config.ini \
-    && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.nghdl
+ && printf "[NGHDL]\n\
+NGHDL_HOME = /home/esim-user/nghdl-simulator\n\
+DIGITAL_MODEL = %%(NGHDL_HOME)s/src/xspice/icm\n\
+RELEASE = %%(NGHDL_HOME)s/release\n\
+\n[SRC]\n\
+SRC_HOME = /home/esim-user/esim/nghdl\n\
+LICENSE = %%(SRC_HOME)s/LICENSE\n" \
+> /home/${USERNAME}/.nghdl/config.ini \
+ && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.nghdl
 
 # Setup KiCad symbol libraries
 RUN mkdir -p /home/${USERNAME}/.config/kicad/6.0 \
     && KICAD_CONFIG=/home/${USERNAME}/.config/kicad/6.0 \
-    && ESIM_SYMLIB=/usr/local/esim/library/kicadLibrary/eSim-symbols \
+    && ESIM_SYMLIB=/home/${USERNAME}/esim/library/kicadLibrary/eSim-symbols \
     && KICAD_SYMLIB=/usr/share/kicad/symbols \
     && echo '(sym_lib_table' > ${KICAD_CONFIG}/sym-lib-table \
     && for lib in eSim_Devices eSim_Sources eSim_Analog eSim_Digital eSim_Hybrid eSim_Power eSim_Subckt eSim_Miscellaneous eSim_Plot eSim_Nghdl eSim_Ngveri eSim_SKY130 eSim_SKY130_Subckts eSim_User; do \
@@ -236,7 +287,13 @@ RUN mkdir -p /home/${USERNAME}/.config/kicad/6.0 \
     && echo '(fp_lib_table)' > ${KICAD_CONFIG}/fp-lib-table \
     && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.config
 
+# Copy eSim symbol libraries into KiCad system symbols
+RUN cp -r ${ESIM_HOME}/library/kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/ \
+    && chmod -R 755 /usr/share/kicad/symbols \
+    && chown -R ${USERNAME}:${USERNAME} /usr/share/kicad/symbols
+
 # Setup VNC with openbox + tint2 taskbar
+
 RUN mkdir -p /home/${USERNAME}/.vnc \
     && printf '#!/bin/bash\nunset SESSION_MANAGER\nunset DBUS_SESSION_BUS_ADDRESS\nexport XDG_RUNTIME_DIR=/tmp/runtime-esim-user\nmkdir -p $XDG_RUNTIME_DIR && chmod 700 $XDG_RUNTIME_DIR\ntint2 &\nexec openbox-session\n' \
     > /home/${USERNAME}/.vnc/xstartup \
@@ -258,10 +315,12 @@ RUN mkdir -p /home/${USERNAME}/.config/fontconfig \
     && chown -R ${USERNAME}:${USERNAME} /home/${USERNAME}/.config/fontconfig
 
 # Startup script
-RUN printf '#!/bin/bash\nset -e\n\n# Ensure workspace exists\nmkdir -p /home/esim-user/eSim-Workspace\ncp -rn /usr/local/esim/Examples/* /home/esim-user/eSim-Workspace/ 2>/dev/null || true\n\nif [ "$1" = "--vnc" ] || [ "$USE_VNC" = "1" ]; then\n    echo "Starting eSim in VNC mode"\n    vncserver -kill :1 2>/dev/null || true\n    export XDG_RUNTIME_DIR=/tmp/runtime-esim-user\n    mkdir -p $XDG_RUNTIME_DIR && chmod 700 $XDG_RUNTIME_DIR\n    vncserver :1 -geometry ${VNC_RESOLUTION:-1920x1080} -depth ${VNC_DEPTH:-24} -SecurityTypes None\n    sleep 3\n    websockify --web=/usr/share/novnc/ ${NOVNC_PORT:-6080} localhost:5901 &\n    echo "VNC ready at http://localhost:${NOVNC_PORT:-6080}/vnc.html"\n    export DISPLAY=:1\n    sleep 2\n    cd /usr/local/esim/src/frontEnd\n    python3 Application.py\n    tail -f /dev/null\nelse\n    echo "Starting eSim in X11 mode"\n    cd /usr/local/esim/src/frontEnd\n    exec python3 Application.py\nfi\n' \
+RUN printf '#!/bin/bash\nset -e\n\n# Ensure workspace exists\nmkdir -p /home/${USERNAME}/esim/eSim-Workspace\ncp -rn /home/${USERNAME}/esim/Examples/* /home/esim-user/eSim-Workspace/ 2>/dev/null || true\n\nif [ "$1" = "--vnc" ] || [ "$USE_VNC" = "1" ]; then\n    echo "Starting eSim in VNC mode"\n    vncserver -kill :1 2>/dev/null || true\n    export XDG_RUNTIME_DIR=/tmp/runtime-esim-user\n    mkdir -p $XDG_RUNTIME_DIR && chmod 700 $XDG_RUNTIME_DIR\n    vncserver :1 -geometry ${VNC_RESOLUTION:-1920x1080} -depth ${VNC_DEPTH:-24} -SecurityTypes None\n    sleep 3\n    websockify --web=/usr/share/novnc/ ${NOVNC_PORT:-6080} localhost:5901 &\n    echo "VNC ready at http://localhost:${NOVNC_PORT:-6080}/vnc.html"\n    export DISPLAY=:1\n    sleep 2\n    cd /home/${USERNAME}/esim/src/frontEnd\n    python3 Application.py\n    tail -f /dev/null\nelse\n    echo "Starting eSim in X11 mode"\n    cd /home/${USERNAME}/esim/src/frontEnd\n    exec python3 Application.py\nfi\n' \
     > /usr/local/bin/start-esim.sh \
     && chmod +x /usr/local/bin/start-esim.sh
 
+RUN chown -R ${USERNAME}:${USERNAME} /home/${USERNAME} \
+    && chmod -R u+rwX /home/${USERNAME}
 USER ${USERNAME}
 
 ENTRYPOINT ["/usr/local/bin/start-esim.sh"]
