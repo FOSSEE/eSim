@@ -109,6 +109,17 @@ Your projects are saved to:
 This folder is mounted into the container, so your files persist.
 
 ---
+## Steps to Copy File from Local Path to docker container
+To copy a file or folder from your local machine into a Docker container, use the ```docker cp``` command.
+
+Please follow these commands on a terminal as an example to copy a folder named ```counter```:
+```
+$ docker cp counter4bit/counter4bit.v esim-container:/home/esim-user
+$ docker exec -it -u root esim-container bash
+$ chown -R esim-user:esim-user /home/esim-user/counter
+$ chmod -R 777 /home/esim-user/counter
+```
+
 
 ## Troubleshooting
 
@@ -186,6 +197,8 @@ Both methods will build executables for Windows, Linux, and macOS, then create a
 - **KiCad** - KiCad Developers
 - **Ngspice** - Ngspice Team
 - **GAW3** - Hervé Quillévéré, Stefan Schippers
+- **Verilator** - Verilator Team
+- **GHDL** - GHDL Team
 
 Created as part of the FOSSEE Internship program.
 
