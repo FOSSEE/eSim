@@ -1,0 +1,72 @@
+* Subcircuit ULN2804
+.subckt ULN2804 net-_r1-pad2_ net-_r9-pad2_ net-_r17-pad2_ net-_r25-pad2_ net-_r5-pad2_ net-_r12-pad2_ net-_r20-pad2_ net-_r28-pad2_ gnd vcc net-_c8-pad1_ net-_c6-pad1_ net-_c4-pad1_ net-_c2-pad1_ net-_c7-pad1_ net-_c5-pad1_ net-_c3-pad1_ net-_c1-pad1_ 
+* c:\users\chand\esim\fossee\esim\library\subcircuitlibrary\uln2804\uln2804.cir
+.include D.lib
+.include NPN.lib
+q2 net-_c1-pad1_ net-_q1-pad3_ gnd Q2N2222
+q1 net-_c1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+r2  net-_q1-pad3_ net-_q1-pad2_ 7.2k
+r3  gnd net-_q1-pad3_ 3k
+r1  net-_q1-pad2_ net-_r1-pad2_ 10.5k
+c1  net-_c1-pad1_ gnd 15pf
+d1 gnd net-_c1-pad1_ 1N4148
+r4  vcc net-_c1-pad1_ 1k
+q7 net-_c3-pad1_ net-_q5-pad3_ gnd Q2N2222
+q5 net-_c3-pad1_ net-_q5-pad2_ net-_q5-pad3_ Q2N2222
+r10  net-_q5-pad3_ net-_q5-pad2_ 7.2k
+r11  gnd net-_q5-pad3_ 3k
+r9  net-_q5-pad2_ net-_r9-pad2_ 10.5k
+c3  net-_c3-pad1_ gnd 15pf
+d3 gnd net-_c3-pad1_ 1N4148
+r15  vcc net-_c3-pad1_ 1k
+q11 net-_c5-pad1_ net-_q11-pad2_ gnd Q2N2222
+q9 net-_c5-pad1_ net-_q9-pad2_ net-_q11-pad2_ Q2N2222
+r18  net-_q11-pad2_ net-_q9-pad2_ 7.2k
+r19  gnd net-_q11-pad2_ 3k
+r17  net-_q9-pad2_ net-_r17-pad2_ 10.5k
+c5  net-_c5-pad1_ gnd 15pf
+d5 gnd net-_c5-pad1_ 1N4148
+r23  vcc net-_c5-pad1_ 1k
+q15 net-_c7-pad1_ net-_q13-pad3_ gnd Q2N2222
+q13 net-_c7-pad1_ net-_q13-pad2_ net-_q13-pad3_ Q2N2222
+r26  net-_q13-pad3_ net-_q13-pad2_ 7.2k
+r27  gnd net-_q13-pad3_ 3k
+r25  net-_q13-pad2_ net-_r25-pad2_ 10.5k
+c7  net-_c7-pad1_ gnd 15pf
+d7 gnd net-_c7-pad1_ 1N4148
+r31  vcc net-_c7-pad1_ 1k
+q4 net-_c2-pad1_ net-_q3-pad3_ gnd Q2N2222
+q3 net-_c2-pad1_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+r6  net-_q3-pad3_ net-_q3-pad2_ 7.2k
+r7  gnd net-_q3-pad3_ 3k
+r5  net-_q3-pad2_ net-_r5-pad2_ 10.5k
+c2  net-_c2-pad1_ gnd 15pf
+d2 gnd net-_c2-pad1_ 1N4148
+r8  vcc net-_c2-pad1_ 1k
+q8 net-_c4-pad1_ net-_q6-pad3_ gnd Q2N2222
+q6 net-_c4-pad1_ net-_q6-pad2_ net-_q6-pad3_ Q2N2222
+r13  net-_q6-pad3_ net-_q6-pad2_ 7.2k
+r14  gnd net-_q6-pad3_ 3k
+r12  net-_q6-pad2_ net-_r12-pad2_ 10.5k
+c4  net-_c4-pad1_ gnd 15pf
+d4 gnd net-_c4-pad1_ 1N4148
+r16  vcc net-_c4-pad1_ 1k
+q12 net-_c6-pad1_ net-_q10-pad3_ gnd Q2N2222
+q10 net-_c6-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+r21  net-_q10-pad3_ net-_q10-pad2_ 7.2k
+r22  gnd net-_q10-pad3_ 3k
+r20  net-_q10-pad2_ net-_r20-pad2_ 10.5k
+c6  net-_c6-pad1_ gnd 15pf
+d6 gnd net-_c6-pad1_ 1N4148
+r24  vcc net-_c6-pad1_ 1k
+q16 net-_c8-pad1_ net-_q14-pad3_ gnd Q2N2222
+q14 net-_c8-pad1_ net-_q14-pad2_ net-_q14-pad3_ Q2N2222
+r29  net-_q14-pad3_ net-_q14-pad2_ 7.2k
+r30  gnd net-_q14-pad3_ 3k
+r28  net-_q14-pad2_ net-_r28-pad2_ 10.5k
+c8  net-_c8-pad1_ gnd 15pf
+d8 gnd net-_c8-pad1_ 1N4148
+r32  vcc net-_c8-pad1_ 1k
+* Control Statements
+
+.ends ULN2804
