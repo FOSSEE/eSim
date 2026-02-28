@@ -1,0 +1,51 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\74141\74141.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 02/21/26 15:43:02
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+Q2  Net-_Q1-Pad3_ Net-_Q10-Pad2_ Net-_Q2-Pad3_ eSim_NPN		
+Q3  Net-_Q3-Pad1_ Net-_Q1-Pad2_ Net-_Q3-Pad3_ eSim_NPN		
+Q4  Net-_Q3-Pad3_ Net-_Q10-Pad2_ Net-_Q4-Pad3_ eSim_NPN		
+Q5  Net-_Q5-Pad1_ Net-_Q1-Pad2_ Net-_Q5-Pad3_ eSim_NPN		
+Q6  Net-_Q5-Pad3_ Net-_Q10-Pad2_ Net-_Q6-Pad3_ eSim_NPN		
+Q7  Net-_Q7-Pad1_ Net-_Q1-Pad2_ Net-_Q7-Pad3_ eSim_NPN		
+Q8  Net-_Q7-Pad3_ Net-_Q10-Pad2_ Net-_Q8-Pad3_ eSim_NPN		
+Q9  Net-_Q9-Pad1_ Net-_Q1-Pad2_ Net-_Q10-Pad1_ eSim_NPN		
+Q10  Net-_Q10-Pad1_ Net-_Q10-Pad2_ Net-_Q10-Pad3_ eSim_NPN		
+U10  GND Net-_Q1-Pad1_ zener		
+U11  GND Net-_Q2-Pad3_ zener		
+U12  GND Net-_Q3-Pad1_ zener		
+U13  GND Net-_Q4-Pad3_ zener		
+U14  GND Net-_Q5-Pad1_ zener		
+U15  GND Net-_Q6-Pad3_ zener		
+U16  GND Net-_Q7-Pad1_ zener		
+U17  GND Net-_Q8-Pad3_ zener		
+U18  GND Net-_Q9-Pad1_ zener		
+U19  GND Net-_Q10-Pad3_ zener		
+X4  Net-_U22-Pad1_ Net-_U23-Pad1_ Net-_U24-Pad1_ Net-_U25-Pad1_ Net-_U4-Pad3_ Net-_U27-Pad1_ 5_and		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ d_and		
+U2  Net-_U1-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ d_and		
+U4  Net-_U1-Pad3_ Net-_U2-Pad3_ Net-_U4-Pad3_ d_nor		
+U6  Net-_U1-Pad1_ Net-_U4-Pad3_ Net-_U22-Pad1_ d_nand		
+U3  Net-_U20-Pad3_ Net-_U21-Pad1_ d_inverter		
+U5  Net-_U21-Pad1_ Net-_U26-Pad1_ d_inverter		
+X3  Net-_U23-Pad1_ Net-_U4-Pad3_ Net-_U2-Pad2_ Net-_U9-Pad1_ 3_and		
+X2  Net-_U4-Pad3_ Net-_U1-Pad2_ Net-_U23-Pad1_ Net-_U8-Pad1_ 3_and		
+X1  Net-_U1-Pad2_ Net-_U4-Pad3_ Net-_U2-Pad2_ Net-_U7-Pad1_ 3_and		
+U7  Net-_U7-Pad1_ Net-_U23-Pad1_ d_inverter		
+U8  Net-_U8-Pad1_ Net-_U24-Pad1_ d_inverter		
+U9  Net-_U9-Pad1_ Net-_U25-Pad1_ d_inverter		
+U20  Net-_Q1-Pad1_ Net-_Q2-Pad3_ Net-_U20-Pad3_ Net-_U1-Pad1_ ? Net-_U2-Pad2_ Net-_U1-Pad2_ Net-_Q8-Pad3_ Net-_Q7-Pad1_ Net-_Q3-Pad1_ Net-_Q4-Pad3_ GND Net-_Q6-Pad3_ Net-_Q5-Pad1_ Net-_Q9-Pad1_ Net-_Q10-Pad3_ PORT		
+U22  Net-_U22-Pad1_ Net-_Q1-Pad3_ dac_bridge_1		
+U23  Net-_U23-Pad1_ Net-_Q3-Pad3_ dac_bridge_1		
+U24  Net-_U24-Pad1_ Net-_Q5-Pad3_ dac_bridge_1		
+U25  Net-_U25-Pad1_ Net-_Q7-Pad3_ dac_bridge_1		
+U26  Net-_U26-Pad1_ Net-_Q1-Pad2_ dac_bridge_1		
+U27  Net-_U27-Pad1_ Net-_Q10-Pad1_ dac_bridge_1		
+U21  Net-_U21-Pad1_ Net-_Q10-Pad2_ dac_bridge_1		
+
+.end
