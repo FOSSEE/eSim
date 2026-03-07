@@ -612,8 +612,13 @@ class MainWindow(QtWidgets.QWidget):
             end = obj_devicemodel.devicemodel_dict_end[device]
 
             while it <= end:
-                ET.SubElement(attr_var, "field").text = \
-                    str(obj_devicemodel.entry_var[it].text())
+                widget = obj_devicemodel.entry_var[it]
+                # Handle both QComboBox (uses currentText) and QLineEdit (uses text)
+                if hasattr(widget, 'currentText'):
+                    widget_text = str(widget.currentText())
+                else:
+                    widget_text = str(widget.text())
+                ET.SubElement(attr_var, "field").text = widget_text
                 it = it + 1
 
         # Writing Subcircuit values

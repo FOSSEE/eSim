@@ -1,0 +1,145 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:SN74LVC2G00_ckt-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L CMOS_NAND X1
+U 1 1 696944E2
+P 6400 4100
+F 0 "X1" H 6300 3950 60  0000 C CNN
+F 1 "CMOS_NAND" H 6400 4050 60  0000 C CNN
+F 2 "" H 6400 4100 60  0001 C CNN
+F 3 "" H 6400 4100 60  0001 C CNN
+	1    6400 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L CMOS_NAND X2
+U 1 1 696944E3
+P 8300 4050
+F 0 "X2" H 8200 3900 60  0000 C CNN
+F 1 "CMOS_NAND" H 8300 4000 60  0000 C CNN
+F 2 "" H 8300 4050 60  0001 C CNN
+F 3 "" H 8300 4050 60  0001 C CNN
+	1    8300 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 69694B2A
+P 5600 3850
+F 0 "U1" H 5650 3950 30  0000 C CNN
+F 1 "PORT" H 5600 3850 30  0000 C CNN
+F 2 "" H 5600 3850 60  0000 C CNN
+F 3 "" H 5600 3850 60  0000 C CNN
+	1    5600 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 69694B55
+P 5600 4400
+F 0 "U1" H 5650 4500 30  0000 C CNN
+F 1 "PORT" H 5600 4400 30  0000 C CNN
+F 2 "" H 5600 4400 60  0000 C CNN
+F 3 "" H 5600 4400 60  0000 C CNN
+	2    5600 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 69694B72
+P 9350 4050
+F 0 "U1" H 9400 4150 30  0000 C CNN
+F 1 "PORT" H 9350 4050 30  0000 C CNN
+F 2 "" H 9350 4050 60  0000 C CNN
+F 3 "" H 9350 4050 60  0000 C CNN
+	6    9350 4050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 69694B93
+P 7500 3800
+F 0 "U1" H 7550 3900 30  0000 C CNN
+F 1 "PORT" H 7500 3800 30  0000 C CNN
+F 2 "" H 7500 3800 60  0000 C CNN
+F 3 "" H 7500 3800 60  0000 C CNN
+	4    7500 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 69694BB6
+P 7500 4350
+F 0 "U1" H 7550 4450 30  0000 C CNN
+F 1 "PORT" H 7500 4350 30  0000 C CNN
+F 2 "" H 7500 4350 60  0000 C CNN
+F 3 "" H 7500 4350 60  0000 C CNN
+	5    7500 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 69694BDD
+P 7450 4100
+F 0 "U1" H 7500 4200 30  0000 C CNN
+F 1 "PORT" H 7450 4100 30  0000 C CNN
+F 2 "" H 7450 4100 60  0000 C CNN
+F 3 "" H 7450 4100 60  0000 C CNN
+	3    7450 4100
+	-1   0    0    -1  
+$EndComp
+$EndSCHEMATC

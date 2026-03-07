@@ -86,10 +86,20 @@ class Kicad:
             self.project = os.path.join(self.projDir, self.projName)
 
             # creating a command to open schematic
-            self.cmd = "eeschema " + self.project + ".kicad_sch"  # kicad6 file
-            if not os.path.exists(self.project + ".kicad_sch") \
-                    and os.path.exists(self.project + ".sch"):
-                self.cmd = "eeschema " + self.project + ".sch"    # kicad4 file
+            schematic_file = self.project + ".kicad_sch"  # kicad6 file
+            if not os.path.exists(schematic_file) and os.path.exists(
+                    self.project + ".sch"):
+                schematic_file = self.project + ".sch"    # kicad4 file
+
+            # When running as Flatpak, use flatpak run to launch KiCad
+            # (install: flatpak install flathub org.kicad.KiCad)
+            if os.environ.get('ESIM_FLATPAK') == '1':
+                self.cmd = (
+                    "flatpak run --command=eeschema org.kicad.KiCad " +
+                    schematic_file
+                )
+            else:
+                self.cmd = "eeschema " + schematic_file
 
             self.obj_workThread.args = self.cmd
             self.obj_workThread.start()

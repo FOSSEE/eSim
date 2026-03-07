@@ -1,0 +1,47 @@
+.title KiCad schematic
+M19 Net-_M11-Pad2_ Net-_M15-Pad1_ Net-_M19-Pad3_ GND eSim_MOS_N
+M20 Net-_M19-Pad3_ Net-_C1-Pad1_ GND GND eSim_MOS_N
+M16 Net-_M15-Pad3_ Net-_C1-Pad1_ GND GND eSim_MOS_N
+M15 Net-_M15-Pad1_ Net-_M11-Pad1_ Net-_M15-Pad3_ GND eSim_MOS_N
+M12 Net-_M11-Pad3_ Net-_C1-Pad1_ GND GND eSim_MOS_N
+M11 Net-_M11-Pad1_ Net-_M11-Pad2_ Net-_M11-Pad3_ GND eSim_MOS_N
+M9 Net-_M10-Pad1_ Net-_C1-Pad1_ GND GND eSim_MOS_N
+M10 Net-_M10-Pad1_ Net-_M10-Pad1_ Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_P
+U11 Net-_C1-Pad1_ plot_v1
+v4 Net-_M10-Pad3_ GND DC
+M23 Net-_M23-Pad1_ Net-_M11-Pad2_ GND GND eSim_MOS_N
+M24 Net-_M23-Pad1_ Net-_M11-Pad2_ Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_P
+M22 Net-_M11-Pad2_ Net-_M15-Pad1_ Net-_M21-Pad1_ Net-_M10-Pad3_ eSim_MOS_P
+M21 Net-_M21-Pad1_ Net-_M10-Pad1_ Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_P
+M25 Net-_M25-Pad1_ Net-_M23-Pad1_ GND GND eSim_MOS_N
+M26 Net-_M25-Pad1_ Net-_M23-Pad1_ Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_P
+U12 Net-_M25-Pad1_ plot_v1
+R1 Net-_C2-Pad1_ Net-_C1-Pad1_ 10k
+C2 Net-_C2-Pad1_ GND 5p
+M18 Net-_M15-Pad1_ Net-_M11-Pad1_ Net-_M17-Pad1_ Net-_M10-Pad3_ eSim_MOS_P
+M17 Net-_M17-Pad1_ Net-_M10-Pad1_ Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_P
+M13 Net-_M13-Pad1_ Net-_M10-Pad1_ Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_P
+M14 Net-_M11-Pad1_ Net-_M11-Pad2_ Net-_M13-Pad1_ Net-_M10-Pad3_ eSim_MOS_P
+M2 Net-_M1-Pad1_ Net-_M1-Pad1_ GND GND eSim_MOS_N
+M3 Net-_M3-Pad1_ Net-_M1-Pad1_ GND GND eSim_MOS_N
+v2 Net-_M1-Pad3_ GND DC
+U8 Net-_U8-Pad1_ Net-_U8-Pad2_ GND GND Net-_U2-Pad~_ Net-_U8-Pad1_ d_dff
+U10 Net-_U10-Pad1_ Net-_M25-Pad1_ GND GND A Net-_U10-Pad1_ d_dff
+U9 Net-_U8-Pad2_ Net-_U10-Pad1_ GND GND B Net-_U8-Pad2_ d_dff
+U1 Net-_U1-Pad~_ plot_v1
+U4 VCC Net-_U1-Pad~_ VCC Net-_U3-Pad3_ Net-_M8-Pad2_ Net-_U4-Pad6_ d_dff
+U5 Net-_M5-Pad2_ Net-_M8-Pad2_ Net-_U3-Pad3_ d_nand
+U6 Net-_M8-Pad2_ plot_v1
+v1 Net-_U1-Pad~_ GND pulse
+M4 Net-_M3-Pad1_ Net-_M3-Pad1_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_P
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_P
+v3 Net-_M1-Pad2_ GND DC
+M8 Net-_C1-Pad1_ Net-_M8-Pad2_ Net-_M7-Pad1_ Net-_M1-Pad3_ eSim_MOS_P
+M7 Net-_M7-Pad1_ Net-_M3-Pad1_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_P
+C1 Net-_C1-Pad1_ GND 50p
+M5 Net-_C1-Pad1_ Net-_M5-Pad2_ Net-_M5-Pad3_ GND eSim_MOS_N
+M6 Net-_M5-Pad3_ Net-_M1-Pad1_ GND GND eSim_MOS_N
+U7 Net-_M5-Pad2_ plot_v1
+U3 VCC Net-_U2-Pad~_ Net-_U3-Pad3_ VCC Net-_M5-Pad2_ Net-_U3-Pad6_ d_dff
+U2 Net-_U2-Pad~_ plot_v1
+.end

@@ -4,13 +4,61 @@ eSim installation instructions
 
 Table of contents
 
-    1.  eSim installation in Ubuntu OS (LINUX)
+    1.  eSim installation via Flatpak (All Linux distributions - RECOMMENDED)
    
-    2.  eSim installation in Microsoft Windows OS
+    2.  eSim installation in Ubuntu OS (LINUX)
+   
+    3.  eSim installation in Microsoft Windows OS
 
 
+1.  eSim installation via Flatpak (Fedora, Ubuntu, openSUSE, Arch, etc.)
 
-1.  eSim installation in Ubuntu OS
+    The Flatpak method works on all major Linux distributions including
+    Fedora, Ubuntu, Debian, openSUSE, Arch Linux, and others.
+
+    i.      Install Flatpak if not already installed:
+    
+            On Fedora:      $ sudo dnf install flatpak
+            On Ubuntu:      $ sudo apt install flatpak
+            On openSUSE:    $ sudo zypper install flatpak
+            On Arch:        $ sudo pacman -S flatpak
+    
+    ii.     Add the Flathub repository (if not already added):
+    
+            $ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    
+    iii.    Install eSim:
+    
+            When available on Flathub:
+            $ flatpak install flathub org.fossee.eSim
+    
+            Or build from source:
+            $ cd eSim
+            $ flatpak-builder build flatpak/org.fossee.eSim.yml --install --user
+    
+    iv.     (Optional) Install KiCad for schematic editing:
+    
+            $ flatpak install flathub org.kicad.KiCad
+    
+    v.      Run eSim:
+    
+            $ flatpak run org.fossee.eSim
+    
+            Or launch from your application menu.
+
+    Flatpak limitations:
+    --------------------
+    - NGHDL and Makerchip are not included. For full NGHDL/Modelica support,
+      use the Ubuntu native installer.
+    - SKY130 PDK is not bundled. Use the Ubuntu installer for mixed-signal
+      design with SKY130.
+    - xterm and gaw are not included; external waveform viewer features may
+      require xterm installed on the host system.
+    - NGHDL KiCad symbol creation (createkicad) may not work fully due to
+      sandbox restrictions on writing to KiCad's symbol directory.
+
+
+2.  eSim installation in Ubuntu OS
     
    	i.      After downloading eSim, extract it using: 
   
@@ -38,8 +86,7 @@ Table of contents
     B.  Double click eSim desktop icon
 
 
-
-2.  eSim installation in Windows OS
+3.  eSim installation in Windows OS
 
      i.     Download eSim for Windows OS from "https://esim.fossee.in/". Disable the antivirus (if any).
 
@@ -57,4 +104,6 @@ Table of contents
 
 Note
 ======
-Please report any eSim installation related issue/error at "https://forums.fossee.in/"
+- Flatpak is the recommended method for Fedora, openSUSE, Arch, and other
+  non-Ubuntu Linux distributions.
+- Please report any eSim installation related issue/error at "https://forums.fossee.in/"

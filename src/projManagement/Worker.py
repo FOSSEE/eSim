@@ -18,6 +18,7 @@
 
 from PyQt5 import QtCore, QtWidgets
 import subprocess
+import shlex
 from configuration.Appconfig import Appconfig
 
 
@@ -111,7 +112,7 @@ class WorkerThread(QtCore.QThread):
 
             return
 
-        proc = subprocess.Popen(command.split())
+        proc = subprocess.Popen(shlex.split(command))
 
         if 'nghdl' in command:
             return
