@@ -100,6 +100,43 @@ Table of contents
       v.    To uninstall eSim and all of its components, run the uninstaller "uninst-eSim.exe" located at 
             top-level eSim directory (where this INSTALL file can be found).
 
+4.  AI Development Setup (Chatbot and AI Debugging Tools)
+
+    Some development branches of eSim include AI-powered tools such as
+    the chatbot module and AI-based debugging assistants. These features
+    require additional dependencies for running local language models.
+
+    i.   Create a Python virtual environment
+
+            $ python3 -m venv esim-env
+            $ source esim-env/bin/activate
+
+    ii.  Install Python dependencies
+
+            $ pip install -r requirements.txt
+            $ pip install setuptools
+
+    iii. Install required system dependency
+
+            $ sudo apt update
+            $ sudo apt install zstd
+
+    iv.  Install Ollama
+
+            $ curl -fsSL https://ollama.com/install.sh | sh
+
+    v.   Download the required language model
+
+            $ ollama pull qwen2.5-coder:3b
+
+    vi.  Verify installation
+
+            $ ollama list
+            $ ollama run qwen2.5-coder:3b
+
+    These dependencies are required for development branches that include
+    AI modules such as the chatbot located in `src/chatbot`.
+
 
 
 Note
