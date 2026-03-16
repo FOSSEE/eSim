@@ -1,0 +1,14 @@
+* Subcircuit cmos_and
+.subckt cmos_and net-_m1-pad2_ net-_m2-pad4_ net-_m1-pad3_ net-_m3-pad2_ net-_m5-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\cmos_and\cmos_and.cir
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+m4 net-_m1-pad1_ net-_m3-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+m2 net-_m1-pad1_ net-_m1-pad2_ net-_m2-pad3_ net-_m2-pad4_ CMOSN W=100u L=100u M=1
+m3 net-_m2-pad3_ net-_m3-pad2_ net-_m2-pad4_ net-_m2-pad4_ CMOSN W=100u L=100u M=1
+m6 net-_m5-pad1_ net-_m1-pad1_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+m5 net-_m5-pad1_ net-_m1-pad1_ net-_m2-pad4_ net-_m2-pad4_ CMOSN W=100u L=100u M=1
+* Control Statements
+
+.ends cmos_and
