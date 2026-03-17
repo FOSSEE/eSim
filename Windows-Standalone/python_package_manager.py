@@ -8,7 +8,8 @@ from logging_setup import log_info, log_error, log_warning
 
 # Define the virtual environment name and path
 venv_name = "toolmanagervenv"
-venv_path = os.path.join(os.getcwd(), venv_name)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+venv_path = os.path.join(BASE_DIR, venv_name)
 
 # Load pip packages from the JSON file
 def load_pip_packages():

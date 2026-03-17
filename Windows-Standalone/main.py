@@ -1,4 +1,5 @@
 import os
+import sys
 import subprocess
 import json
 from PyQt5 import QtWidgets, QtGui, QtCore
@@ -10,6 +11,12 @@ from chocolatey import check_chocolatey_directory
 
 # Path to JSON file
 JSON_FILE_PATH = os.path.join(os.getcwd(), "install_details.json")
+if not os.path.exists(JSON_FILE_PATH):
+    with open(JSON_FILE_PATH, "w") as f:
+        json.dump({
+            "important_packages": [],
+            "pip_packages": []
+        }, f)
 
 # Path to the external program
 NGSPICE_INSTALL_PROGRAM = os.path.join(os.getcwd(), "ngspice_package_manager.py")
@@ -212,64 +219,116 @@ class DependenciesInstallerApp(QtWidgets.QWidget):
             self.chocolatey_status_label.setText("Chocolatey Status: Not Installed")
             self.chocolatey_status_label.setStyleSheet("color: red;")
 
+
+
     def install_ngspice(self):
         try:
-            subprocess.run(["python", NGSPICE_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "Ngspice installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
+            self.status_label.setText("Installing Ngspice... Please wait")
+            QtWidgets.QApplication.processEvents()
+
+            subprocess.run([sys.executable, NGSPICE_INSTALL_PROGRAM], check=True)
+
+            self.status_label.setText("Ngspice Installed Successfully ✅")
+            QtWidgets.QMessageBox.information(self, "Success", "Ngspice installation completed!")
+
+            self.update_status_label()
+
         except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run Ngspice installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An error occurred: {e}")
+            QtWidgets.QMessageBox.critical(self, "Error", f"Failed: {e}")
+
+
+
+            
 
     def install_kicad(self):
         try:
-            subprocess.run(["python", KICAD_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "Kicad installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
+            self.status_label.setText("Installing Kicad... Please wait")
+            QtWidgets.QApplication.processEvents()
+
+            subprocess.run([sys.executable, KICAD_INSTALL_PROGRAM], check=True)
+
+            self.status_label.setText("Kicad Installed Successfully ✅")
+            QtWidgets.QMessageBox.information(self, "Success", "Kicad installation completed!")
+
+            self.update_status_label()
+
         except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run Kicad installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An error occurred: {e}")
+            QtWidgets.QMessageBox.critical(self, "Error", f"Failed: {e}")
+
+
+
+
 
     def install_llvm(self):
         try:
-            subprocess.run(["python", LLVM_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "LLVM installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
+            self.status_label.setText("Installing LLVM... Please wait")
+            QtWidgets.QApplication.processEvents()
+
+            subprocess.run([sys.executable, LLVM_INSTALL_PROGRAM], check=True)
+
+            self.status_label.setText("LLVM Installed Successfully ✅")
+            QtWidgets.QMessageBox.information(self, "Success", "LLVM installation completed!")
+
+            self.update_status_label()
+
         except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run LLVM installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An error occurred: {e}")
+            QtWidgets.QMessageBox.critical(self, "Error", f"Failed: {e}")
+
+
+
 
     def install_ghdl(self):
         try:
-            subprocess.run(["python", GHDL_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "GHDL installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
+            self.status_label.setText("Installing GHDL... Please wait")
+            QtWidgets.QApplication.processEvents()
+
+            subprocess.run([sys.executable, GHDL_INSTALL_PROGRAM], check=True)
+
+            self.status_label.setText("GHDL Installed Successfully ✅")
+            QtWidgets.QMessageBox.information(self, "Success", "GHDL installation completed!")
+
+            self.update_status_label()
+
         except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run GHDL installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An error occurred: {e}")
+            QtWidgets.QMessageBox.critical(self, "Error", f"Failed: {e}")
+
+
+
+
+
 
     def install_python_packages(self):
         try:
-            subprocess.run(["python", PYTHON_PACKAGES_INSTALL_PROGRAM], check=True)
+            subprocess.run([sys.executable, PYTHON_PACKAGES_INSTALL_PROGRAM], check=True)
             QtWidgets.QMessageBox.information(self, "Success", "Python packages installation started successfully!")
         except subprocess.CalledProcessError as e:
             QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run the Python Packages GUI: {e}")
         except Exception as e:
             QtWidgets.QMessageBox.critical(self, "Error", f"An unexpected error occurred: {e}")
 
+
+
+
+
+
     def install_chocolatey(self):
         try:
-            subprocess.run(["python", CHOCOLATEY_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "Chocolatey installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
+            self.status_label.setText("Installing Chocolatey... Please wait")
+            QtWidgets.QApplication.processEvents()
+
+            subprocess.run([sys.executable, CHOCOLATEY_INSTALL_PROGRAM], check=True)
+
+            self.status_label.setText("Chocolatey Installed Successfully ✅")
+            QtWidgets.QMessageBox.information(self, "Success", "Chocolatey installation completed!")
+
+            self.update_status_label()
+
         except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run Chocolatey installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An unexpected error occurred: {e}")
+            QtWidgets.QMessageBox.critical(self, "Error", f"Failed: {e}")
+
+
+
+
 
 # Main function
 def main():

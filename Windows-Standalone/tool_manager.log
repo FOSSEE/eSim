@@ -828,3 +828,252 @@
 2025-02-24 15:19:12,399 - INFO - Installing psutil in toolmanagervenv...
 2025-02-24 15:19:14,113 - INFO - Installing pyqt5 in toolmanagervenv...
 2025-02-24 15:19:17,532 - INFO - Installing matplotlib in toolmanagervenv...
+2026-03-10 00:20:25,712 - INFO - Updated existing Ngspice installation details.
+2026-03-10 00:20:25,713 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:20:25,714 - WARNING - KiCad directory not found. Marked as not installed.
+2026-03-10 00:20:25,715 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:20:25,716 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 00:20:25,717 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:20:25,717 - WARNING - LLVM directory not found. Marked as not installed.
+2026-03-10 00:20:25,718 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:20:28,417 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-10 00:20:28,418 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-10 00:20:38,668 - INFO - Updated existing Ngspice installation details.
+2026-03-10 00:20:38,669 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:21:16,847 - WARNING - KiCad directory not found. Marked as not installed.
+2026-03-10 00:21:16,848 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:21:25,844 - INFO - Fetched latest KiCad versions.
+2026-03-10 00:50:53,610 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:50:53,611 - INFO - KiCad version 9.0.7 installed successfully.
+2026-03-10 00:50:57,753 - INFO - Updated existing KiCad installation details.
+2026-03-10 00:50:57,754 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:51:17,624 - WARNING - LLVM directory not found. Marked as not installed.
+2026-03-10 00:51:17,625 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:59:39,756 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 00:59:39,756 - INFO - LLVM version 22.1.0 installed successfully.
+2026-03-10 01:01:17,701 - INFO - Updated existing LLVM installation details.
+2026-03-10 01:01:17,702 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:01:28,375 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:01:28,376 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:01:33,300 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-10 01:01:33,303 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip.
+2026-03-10 01:01:33,303 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip...
+2026-03-10 01:01:38,938 - INFO - GHDL downloaded to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip.
+2026-03-10 01:01:38,946 - INFO - Extracting C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip...
+2026-03-10 01:01:39,529 - INFO - GHDL extracted successfully to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-10 01:01:39,717 - INFO - Added C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools to the system PATH.
+2026-03-10 01:01:39,719 - INFO - GHDL version v6.0.0 installed successfully in C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-10 01:01:44,789 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:01:44,790 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:03:20,930 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:03:20,931 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:03:23,767 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-10 01:03:23,770 - INFO - Updating GHDL to the latest version.
+2026-03-10 01:03:24,462 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-10 01:03:24,464 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip.
+2026-03-10 01:03:24,464 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip...
+2026-03-10 01:03:45,895 - INFO - GHDL downloaded to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip.
+2026-03-10 01:03:45,898 - INFO - Extracting C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip...
+2026-03-10 01:03:46,371 - INFO - GHDL extracted successfully to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-10 01:03:46,541 - INFO - Added C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools to the system PATH.
+2026-03-10 01:03:46,543 - INFO - GHDL version v6.0.0 installed successfully in C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-10 01:03:51,402 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:03:51,403 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:04:02,244 - INFO - Virtual environment 'toolmanagervenv' not found. Creating one...
+2026-03-10 01:04:09,885 - INFO - Virtual environment 'toolmanagervenv' created successfully.
+2026-03-10 01:04:09,885 - INFO - Ensuring pip is installed in toolmanagervenv...
+2026-03-10 01:04:22,199 - INFO - Installing watchdog in toolmanagervenv...
+2026-03-10 01:04:26,662 - INFO - Installing https://github.com/hdl/pyhdlparser/tarball/master in toolmanagervenv...
+2026-03-10 01:04:38,453 - INFO - Installing makerchip-app in toolmanagervenv...
+2026-03-10 01:04:47,815 - INFO - Installing sandpiper-saas in toolmanagervenv...
+2026-03-10 01:04:54,465 - INFO - Installing psutil in toolmanagervenv...
+2026-03-10 01:04:59,559 - INFO - Installing pyqt5 in toolmanagervenv...
+2026-03-10 01:05:25,158 - INFO - Installing matplotlib in toolmanagervenv...
+2026-03-10 01:06:09,843 - INFO - install_details.json updated successfully.
+2026-03-10 01:06:47,353 - INFO - Ensuring pip is installed in toolmanagervenv...
+2026-03-10 01:06:53,538 - INFO - Updating watchdog in toolmanagervenv...
+2026-03-10 01:06:55,656 - INFO - Updating https://github.com/hdl/pyhdlparser/tarball/master in toolmanagervenv...
+2026-03-10 01:07:04,348 - INFO - Updating makerchip-app in toolmanagervenv...
+2026-03-10 01:07:06,738 - INFO - Updating sandpiper-saas in toolmanagervenv...
+2026-03-10 01:07:09,515 - INFO - Updating psutil in toolmanagervenv...
+2026-03-10 01:07:12,230 - INFO - Updating pyqt5 in toolmanagervenv...
+2026-03-10 01:07:14,363 - INFO - Updating matplotlib in toolmanagervenv...
+2026-03-10 01:07:40,641 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:07:40,642 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:07:46,577 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-10 01:07:46,580 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip.
+2026-03-10 01:07:46,580 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip...
+2026-03-10 01:07:50,289 - INFO - GHDL downloaded to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip.
+2026-03-10 01:07:50,294 - INFO - Extracting C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip...
+2026-03-10 01:07:50,856 - INFO - GHDL extracted successfully to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-10 01:07:51,057 - INFO - Added C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools to the system PATH.
+2026-03-10 01:07:51,059 - INFO - GHDL version v6.0.0 installed successfully in C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-10 01:08:03,710 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:08:03,711 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:08:06,542 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-10 01:08:06,545 - INFO - Updating GHDL to the latest version.
+2026-03-10 01:08:07,145 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-10 01:08:07,148 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip.
+2026-03-10 01:08:07,148 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip...
+2026-03-10 01:08:10,918 - INFO - GHDL downloaded to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip.
+2026-03-10 01:08:10,926 - INFO - Extracting C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip...
+2026-03-10 01:08:11,447 - INFO - GHDL extracted successfully to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-10 01:08:11,629 - INFO - Added C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools to the system PATH.
+2026-03-10 01:08:11,631 - INFO - GHDL version v6.0.0 installed successfully in C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-10 01:08:14,086 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:08:14,088 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:08:42,908 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:08:42,909 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:08:58,247 - INFO - Updated existing Ngspice installation details.
+2026-03-10 01:08:58,248 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:08:58,249 - INFO - Updated existing KiCad installation details.
+2026-03-10 01:08:58,249 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:08:58,250 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-10 01:08:58,251 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:08:58,251 - INFO - Updated existing LLVM installation details.
+2026-03-10 01:08:58,252 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-10 01:08:59,899 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-10 01:08:59,900 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-10 01:09:18,710 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-10 01:09:18,711 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-10 01:09:20,468 - INFO - Chocolatey is already installed. Version: 2.6.0.
+2026-03-10 01:09:20,470 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-10 01:09:29,779 - INFO - Chocolatey updated successfully.
+2026-03-10 01:09:36,341 - INFO - Chocolatey is already installed. Version: 2.6.0.
+2026-03-10 01:09:36,343 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-13 19:33:45,688 - INFO - Updated existing Ngspice installation details.
+2026-03-13 19:33:45,688 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:33:45,688 - INFO - Updated existing KiCad installation details.
+2026-03-13 19:33:45,688 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:33:45,688 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-13 19:33:45,688 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:33:45,688 - INFO - Updated existing LLVM installation details.
+2026-03-13 19:33:45,688 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:33:47,675 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-13 19:33:47,676 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-13 19:33:56,246 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-13 19:33:56,246 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:33:59,976 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-13 19:33:59,976 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip.
+2026-03-13 19:33:59,976 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip...
+2026-03-13 19:37:10,309 - INFO - GHDL downloaded to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip.
+2026-03-13 19:37:10,310 - INFO - Extracting C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip...
+2026-03-13 19:37:11,077 - INFO - GHDL extracted successfully to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-13 19:37:11,927 - INFO - Added C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools to the system PATH.
+2026-03-13 19:37:11,941 - INFO - GHDL version v6.0.0 installed successfully in C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-13 19:37:16,295 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-13 19:37:16,296 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:37:28,344 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-13 19:37:28,345 - INFO - Updating GHDL to the latest version.
+2026-03-13 19:37:28,716 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-13 19:37:28,716 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip.
+2026-03-13 19:37:28,716 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip...
+2026-03-13 19:38:46,885 - INFO - GHDL downloaded to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip.
+2026-03-13 19:38:46,886 - INFO - Extracting C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip...
+2026-03-13 19:38:47,724 - INFO - GHDL extracted successfully to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-13 19:38:48,842 - INFO - Added C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools to the system PATH.
+2026-03-13 19:38:48,886 - INFO - GHDL version v6.0.0 installed successfully in C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-13 19:38:59,031 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-13 19:38:59,031 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:39:44,216 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-13 19:39:44,217 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:39:55,991 - INFO - Updated existing KiCad installation details.
+2026-03-13 19:39:55,991 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-13 19:40:44,751 - INFO - Fetched latest KiCad versions.
+2026-03-14 19:07:10,966 - INFO - Updated existing Ngspice installation details.
+2026-03-14 19:07:10,966 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-14 19:07:10,966 - INFO - Updated existing KiCad installation details.
+2026-03-14 19:07:10,966 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-14 19:07:10,966 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-14 19:07:10,966 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-14 19:07:10,966 - INFO - Updated existing LLVM installation details.
+2026-03-14 19:07:10,966 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-14 19:07:12,895 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-14 19:07:12,896 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-16 17:11:12,898 - INFO - Updated existing Ngspice installation details.
+2026-03-16 17:11:12,899 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-16 17:11:12,900 - INFO - Updated existing KiCad installation details.
+2026-03-16 17:11:12,900 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-16 17:11:12,900 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-16 17:11:12,900 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-16 17:11:12,900 - INFO - Updated existing LLVM installation details.
+2026-03-16 17:11:12,900 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-16 17:11:14,822 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-16 17:11:14,823 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-16 17:11:20,700 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-16 17:11:20,701 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-16 17:11:22,520 - INFO - Chocolatey is already installed. Version: 2.6.0.
+2026-03-16 17:11:22,521 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-16 17:11:30,683 - INFO - Updated existing Ngspice installation details.
+2026-03-16 17:11:30,684 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-16 17:11:43,781 - INFO - Updated existing KiCad installation details.
+2026-03-16 17:11:43,781 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-16 17:12:06,499 - INFO - Fetched latest KiCad versions.
+2026-03-17 19:19:41,876 - INFO - Updated existing Ngspice installation details.
+2026-03-17 19:19:41,877 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:19:41,879 - INFO - Updated existing KiCad installation details.
+2026-03-17 19:19:41,880 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:19:41,881 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-17 19:19:41,883 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:19:41,884 - INFO - Updated existing LLVM installation details.
+2026-03-17 19:19:41,885 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:19:44,364 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-17 19:19:44,366 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-17 19:19:55,158 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-17 19:19:55,159 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-17 19:19:57,213 - INFO - Chocolatey is already installed. Version: 2.6.0.
+2026-03-17 19:19:57,214 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-17 19:20:03,351 - INFO - Attempted to install Chocolatey, but it is already installed.
+2026-03-17 19:20:11,508 - INFO - Chocolatey updated successfully.
+2026-03-17 19:20:17,031 - INFO - Chocolatey is already installed. Version: 2.6.0.
+2026-03-17 19:20:17,032 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-17 19:20:25,063 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-17 19:20:25,064 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:20:30,401 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-17 19:20:30,404 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip.
+2026-03-17 19:20:30,404 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip...
+2026-03-17 19:20:48,211 - INFO - GHDL downloaded to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip.
+2026-03-17 19:20:48,211 - INFO - Extracting C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip...
+2026-03-17 19:20:48,733 - INFO - GHDL extracted successfully to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-17 19:20:49,001 - INFO - Added C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools to the system PATH.
+2026-03-17 19:20:49,003 - INFO - GHDL version v6.0.0 installed successfully in C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-17 19:20:51,442 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-17 19:20:51,443 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:20:54,245 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-17 19:20:54,245 - INFO - Updating GHDL to the latest version.
+2026-03-17 19:20:55,202 - INFO - Fetched the latest GHDL version from GitHub API.
+2026-03-17 19:20:55,205 - INFO - Found suitable asset for Windows: https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip.
+2026-03-17 19:20:55,205 - INFO - Downloading GHDL from https://github.com/ghdl/ghdl/releases/download/v6.0.0/ghdl-mcode-6.0.0-mingw64.zip...
+2026-03-17 19:21:12,648 - INFO - GHDL downloaded to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip.
+2026-03-17 19:21:12,648 - INFO - Extracting C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools\ghdl-v6.0.0.zip...
+2026-03-17 19:21:13,172 - INFO - GHDL extracted successfully to C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-17 19:21:13,384 - INFO - Added C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools to the system PATH.
+2026-03-17 19:21:13,388 - INFO - GHDL version v6.0.0 installed successfully in C:\Users\Admin\Desktop\eSim\Windows-Standalone\tools.
+2026-03-17 19:21:16,101 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-17 19:21:16,102 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:22:51,212 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-17 19:22:51,214 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-17 19:22:53,486 - INFO - Chocolatey is already installed. Version: 2.6.0.
+2026-03-17 19:22:53,488 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-17 19:22:58,709 - INFO - Attempted to install Chocolatey, but it is already installed.
+2026-03-17 19:23:05,760 - INFO - Chocolatey updated successfully.
+2026-03-17 19:23:10,233 - INFO - Chocolatey is already installed. Version: 2.6.0.
+2026-03-17 19:23:10,235 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.6.0, Installed: Yes.
+2026-03-17 19:23:33,749 - INFO - Ensuring pip is installed in toolmanagervenv...
+2026-03-17 19:23:41,689 - INFO - Updating watchdog in toolmanagervenv...
+2026-03-17 19:23:44,457 - INFO - Updating https://github.com/hdl/pyhdlparser/tarball/master in toolmanagervenv...
+2026-03-17 19:23:56,054 - INFO - Updating makerchip-app in toolmanagervenv...
+2026-03-17 19:23:59,330 - INFO - Updating sandpiper-saas in toolmanagervenv...
+2026-03-17 19:24:02,607 - INFO - Updating psutil in toolmanagervenv...
+2026-03-17 19:24:05,416 - INFO - Updating pyqt5 in toolmanagervenv...
+2026-03-17 19:24:08,517 - INFO - Updating matplotlib in toolmanagervenv...
+2026-03-17 19:31:40,340 - INFO - Updated existing Ngspice installation details.
+2026-03-17 19:31:40,341 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:31:40,341 - INFO - Updated existing KiCad installation details.
+2026-03-17 19:31:40,342 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:31:40,343 - WARNING - GHDL directory not found. Marked as not installed.
+2026-03-17 19:31:40,344 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:31:40,344 - INFO - Updated existing LLVM installation details.
+2026-03-17 19:31:40,344 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-17 19:31:42,270 - INFO - Chocolatey directory exists. Version: 2.6.0.
+2026-03-17 19:31:42,271 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.6.0, Installed: Yes.
