@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Login - eSim Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="login-page">
+  <div class="top-logos">
+    <img src="iitb-logo1.png" alt="IIT Bombay" class="top-logo">
+    <img src="esim_logo.png" alt="eSim Logo" class="top-logo esim-logo">
+    <img src="fossee-logo.png" alt="FOSSEE" class="top-logo fossee-logo">
+  </div>
+
+  <div class="login-card">
+    <div class="login-title">eSim Tracker</div>
+    <div class="login-subtitle">Admin Login</div>
+    <div class="login-sub">Sign in to access the admin dashboard</div>
+
+    <form id="loginForm" class="login-form">
+      <div class="field">
+        <label for="adminUsername">Admin Username</label>
+        <input id="adminUsername" class="control" type="text" placeholder="Enter username" required />
+      </div>
+
+      <div class="field">
+        <label for="adminPassword">Password</label>
+        <input id="adminPassword" class="control" type="password" placeholder="Enter password" required />
+      </div>
+
+      <button type="submit" class="btn primary login-btn">Login</button>
+      <div id="loginMsg" class="login-msg"></div>
+    </form>
+  </div>
+</div>
+
+  <script>
+    const loginForm = document.getElementById("loginForm");
+    const loginMsg = document.getElementById("loginMsg");
+
+    const ADMIN_USERNAME = "admin";
+    const ADMIN_PASSWORD = "12345";
+
+    loginForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const username = document.getElementById("adminUsername").value.trim();
+      const password = document.getElementById("adminPassword").value.trim();
+
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        localStorage.setItem("adminLoggedIn", "true");
+        localStorage.setItem("ADMIN_API_URL", "http://127.0.0.1:5001");
+        localStorage.setItem("ADMIN_TOKEN", "12345");
+        window.location.href = "/index.html";
+      } else {
+        loginMsg.textContent = "Invalid admin username or password.";
+      }
+    });
+  </script>
+</body>
+</html>
