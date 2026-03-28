@@ -38,36 +38,44 @@ def save_json_data(data):
 def find_package(data, package_name):
     return next((pkg for pkg in data["important_packages"] if pkg["package_name"] == package_name), None)
 
+
+
+def get_kicad_install_path():
+    possible_paths = [
+        "C:\\Program Files\\KiCad",
+        "C:\\Program Files (x86)\\KiCad"
+    ]
+    return next((p for p in possible_paths if os.path.exists(p)), None)
+
+
+
+
 # Update installation status
 def update_installation_status_kicad():
     try:
         data = load_json_data()
         package = find_package(data, "kicad")
 
-        if package:
-            if os.path.exists(KICAD_DIR):
-                current_version = package.get("version", "-")
-                installed_date = package.get("installed_date", "-")
+        install_path = get_kicad_install_path()
 
-                # Update package details
+        if package:
+            if install_path:
                 package.update({
-                    "version": current_version,
+                    "version": package.get("version", "-"),
                     "installed": "Yes",
-                    "installed_date": installed_date,
-                    "install_directory": KICAD_DIR
+                    "installed_date": package.get("installed_date", "-"),
+                    "install_directory": install_path
                 })
-                log_info("Updated existing KiCad installation details.")
+                log_info("KiCad detected in system.")
             else:
-                # Mark as not installed
                 package.update({
                     "version": "-",
                     "installed": "No",
                     "installed_date": "-",
                     "install_directory": "-"
                 })
-                log_warning("KiCad directory not found. Marked as not installed.")
+                log_warning("KiCad not found. Marked as not installed.")
         else:
-            # Add a new entry if not present
             data["important_packages"].append({
                 "package_name": "kicad",
                 "version": "-",
@@ -75,11 +83,13 @@ def update_installation_status_kicad():
                 "installed_date": "-",
                 "install_directory": "-"
             })
-            log_info("Added new KiCad entry to installation details.")
 
         save_json_data(data)
+
     except Exception as e:
-        log_error(f"Error updating KiCad installation status: {e}")
+        log_error(f"Error updating KiCad status: {e}")
+
+
 
 def fetch_latest_versions():
     try:
@@ -104,20 +114,27 @@ def fetch_latest_versions():
         log_error(f"Failed to fetch KiCad versions: {e}")
         return ["Unknown"]
 
-def install_kicad(selected_version):
+def install_kicad(selected_version, progress_callback=None):
     try:
         if not selected_version:
-            log_warning("KiCad installation attempted without selecting a version.")
             return "Please select a version."
 
-        command = INSTALL_COMMAND(selected_version)
-        subprocess.run(command, check=True, shell=True)
+        command = f"choco install -y kicad --version={selected_version}"
+        log_info(f"Running command: {command}")
 
-        choco_lib_path = os.path.join("C:\\ProgramData\\chocolatey\\lib", "kicad")
-        if os.path.exists(KICAD_DIR):
-            shutil.rmtree(KICAD_DIR)
-        shutil.move(choco_lib_path, TOOLS_DIR)
+        #  Run with progress
+        run_command_with_progress(command, progress_callback)
 
+        # Move installed files
+        # ✅ KiCad installs in Program Files
+        kicad_install_path = "C:\\Program Files\\KiCad"
+
+        if not os.path.exists(kicad_install_path):
+            return "Installation failed: KiCad not found in Program Files."
+
+        install_directory = kicad_install_path
+
+        # Update JSON
         data = load_json_data()
         package = find_package(data, "kicad")
         installed_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -139,40 +156,56 @@ def install_kicad(selected_version):
             })
 
         save_json_data(data)
-        log_info(f"KiCad version {selected_version} installed successfully.")
-        return f"KiCad version {selected_version} installed successfully."
-    except subprocess.CalledProcessError as e:
-        log_error(f"Installation failed: {e}")
-        return f"Installation failed: {e}"
-    except Exception as e:
-        log_error(f"An error occurred during KiCad installation: {e}")
-        return f"An error occurred: {e}"
 
-def update_kicad():
+        return f"KiCad version {selected_version} installed successfully."
+
+    except Exception as e:
+        log_error(f"Error installing KiCad: {e}")
+        return f"Error: {e}"
+
+
+from dependencies import run_command_with_progress
+
+
+
+
+def update_kicad(progress_callback=None):
     latest_versions = fetch_latest_versions()
     latest_version = latest_versions[0] if latest_versions and latest_versions[0] != "Unknown" else None
 
     if not latest_version:
-        log_warning("Failed to fetch the latest version for KiCad.")
-        return "Failed to fetch the latest version."
+        return "Failed to fetch latest version."
 
     try:
-        subprocess.run(f"choco install -y kicad --version={latest_version}", shell=True, check=True)
+        command = f"choco install -y kicad --version={latest_version}"
 
-        choco_lib_path = os.path.join("C:\\ProgramData\\chocolatey\\lib", "kicad")
-        if os.path.exists(KICAD_DIR):
-            shutil.rmtree(KICAD_DIR)
-        shutil.move(choco_lib_path, TOOLS_DIR)
+        # ✅ Run with progress
+        run_command_with_progress(command, progress_callback)
 
+        # ✅ KiCad installs in Program Files
+        possible_paths = [
+            "C:\\Program Files\\KiCad",
+            "C:\\Program Files (x86)\\KiCad"
+        ]
+
+        install_directory = next((p for p in possible_paths if os.path.exists(p)), None)
+
+        if not install_directory:
+            return "Installation failed: KiCad not found in Program Files."
+
+        # ✅ FIX: define installed_date
+        installed_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # ✅ Update JSON
         data = load_json_data()
         package = find_package(data, "kicad")
-        installed_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         if package:
             package.update({
                 "version": latest_version,
+                "installed": "Yes",
                 "installed_date": installed_date,
-                "install_directory": KICAD_DIR
+                "install_directory": install_directory
             })
         else:
             data["important_packages"].append({
@@ -180,24 +213,42 @@ def update_kicad():
                 "version": latest_version,
                 "installed": "Yes",
                 "installed_date": installed_date,
-                "install_directory": KICAD_DIR
+                "install_directory": install_directory
             })
 
+        # ✅ FIX: save JSON
         save_json_data(data)
-        log_info(f"KiCad has been updated to version {latest_version}.")
-        return f"KiCad has been updated to version {latest_version}."
-    except subprocess.CalledProcessError as e:
-        log_error(f"Error occurred during KiCad update: {e}")
-        return f"Error occurred during update: {e}"
+
+        return f"KiCad updated successfully to version {latest_version}"
+
     except Exception as e:
-        log_error(f"An error occurred during KiCad update: {e}")
-        return f"An error occurred: {e}"
+        log_error(f"Error updating KiCad: {e}")
+        return f"Error: {e}"
 
 
 class KiCadInstallerApp(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.init_ui()
+
+    def get_button_style(self):
+        return """
+        QPushButton {
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid gray;
+            background-color: lightgray;
+            color: black;
+        }
+        QPushButton:hover {
+            background-color: #87CEFA;
+            border: 1px solid #4682B4;
+            color: white;
+        }
+        """
+
+
 
     def init_ui(self):
         self.setWindowTitle("KiCad Installer")
@@ -208,6 +259,14 @@ class KiCadInstallerApp(QtWidgets.QWidget):
         self.move(x, y)
 
         layout = QVBoxLayout()
+
+        from PyQt5.QtWidgets import QProgressBar
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setValue(0)
+        layout.addWidget(self.progress_bar)
+
+
+
         layout.setSpacing(10)
         layout.setContentsMargins(10, 10, 10, 10)
 
@@ -226,9 +285,12 @@ class KiCadInstallerApp(QtWidgets.QWidget):
         # Get installed version
         data = load_json_data()
         kicad_package = find_package(data, "kicad")
-        self.installed_version = (
-            kicad_package["version"] if kicad_package and kicad_package["installed"] == "Yes" else "Not Installed"
-        )
+        install_path = get_kicad_install_path()
+
+        if install_path:
+            self.installed_version = kicad_package["version"] if kicad_package else "Unknown"
+        else:
+            self.installed_version = "Not Installed"
 
         # Display installed and latest versions
         self.installed_version_label = QLabel(
@@ -278,6 +340,7 @@ class KiCadInstallerApp(QtWidgets.QWidget):
 
         # Install button
         install_button = QPushButton("Install KiCad")
+    
         install_button.setStyleSheet(self.get_button_style())
         install_button.clicked.connect(self.install_button_action)
         layout.addWidget(install_button)
@@ -304,46 +367,60 @@ class KiCadInstallerApp(QtWidgets.QWidget):
             QMessageBox.critical(self, "Error", "Please select a version.")
             return
 
-        result = install_kicad(selected_version)
+    # ✅ RESET BAR
+        self.progress_bar.setValue(0)
+
+    # ✅ Progress callback
+        def update_progress(output):
+            self.progress_bar.setValue(min(self.progress_bar.value() + 5, 95))
+            QtWidgets.QApplication.processEvents()
+
+    # ✅ Run install
+        result = install_kicad(selected_version, update_progress)
+
+    # ✅ COMPLETE
+        self.progress_bar.setValue(100)
+
         QMessageBox.information(self, "Installation Status", result)
+
+    # ✅ Reset smoothly
+        QtCore.QTimer.singleShot(1500, lambda: self.progress_bar.setValue(0))
 
         update_installation_status_kicad()
         self.update_labels()
 
     def update_button_action(self):
-        self.latest_versions = fetch_latest_versions()
-        latest_version = self.latest_versions[0] if self.latest_versions and self.latest_versions[0] != "Unknown" else None
+        self.progress_bar.setValue(0)
 
-        if not latest_version:
-            QMessageBox.critical(self, "Update Status", "Failed to fetch the latest version. Please try again later.")
-            return
+        def update_progress(output):
+            self.progress_bar.setValue(min(self.progress_bar.value() + 5, 95))
+            QtWidgets.QApplication.processEvents()
 
-        data = load_json_data()
-        package = find_package(data, "kicad")
-        installed_version = package["version"] if package and package["installed"] == "Yes" else "Not Installed"
+        result = update_kicad(update_progress)
 
-        if installed_version == latest_version:
-            QMessageBox.information(self, "Update Status", "You are already using the latest version.")
-            return
+        self.progress_bar.setValue(100)
 
-        result = update_kicad()
-        if "Error" in result:
-            QMessageBox.critical(self, "Update Status", result)
-        else:
-            QMessageBox.information(self, "Update Status", f"KiCad has been updated to version {latest_version}.")
-            update_installation_status_kicad()
-            self.update_labels()
+        QMessageBox.information(self, "Update Status", result)
+
+    # ✅ Smooth reset
+        QtCore.QTimer.singleShot(1500, lambda: self.progress_bar.setValue(0))
+
+        update_installation_status_kicad()
+        self.update_labels()
 
     def update_labels(self):
+        install_path = get_kicad_install_path()
+
         data = load_json_data()
         package = find_package(data, "kicad")
-        self.installed_version = package["version"] if package and package["installed"] == "Yes" else "Not Installed"
 
-        self.installed_version_label.setText(
-            f"Installed Version: {self.installed_version}"
-            if self.installed_version != "Not Installed"
-            else "KiCad is not installed"
-        )
+        if install_path:
+            version = package["version"] if package else "Unknown"
+            self.installed_version = version
+            self.installed_version_label.setText(f"Installed Version: {version}")
+        else:
+            self.installed_version = "Not Installed"
+            self.installed_version_label.setText("KiCad is not installed")
 
         if self.installed_version == self.latest_versions[0]:
             self.update_label.setText("You are using the latest version.")
@@ -351,25 +428,6 @@ class KiCadInstallerApp(QtWidgets.QWidget):
         else:
             self.update_label.setText("Your version is out of date. Please update.")
             self.update_label.setStyleSheet("color: red;")
-
-    def get_button_style(self):
-        return (
-            """
-            QPushButton {
-                font-size: 16px;
-                padding: 10px;
-                border-radius: 10px;
-                border: 1px solid gray;
-                background-color: lightgray;
-                color: black;
-            }
-            QPushButton:hover {
-                background-color: #87CEFA;
-                border: 1px solid #4682B4;
-                color: white;
-            }
-            """
-        )
 
     def get_dropdown_style(self):
         return (

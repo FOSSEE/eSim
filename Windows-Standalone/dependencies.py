@@ -4,6 +4,34 @@ import json
 from datetime import datetime
 from logging_setup import log_info, log_error, log_warning
 
+
+
+def run_command_with_progress(command, progress_callback=None):
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        shell=True,
+        text=True
+    )
+
+    for line in process.stdout:
+        if progress_callback:
+            progress_callback(line.strip())
+
+    process.wait()
+    return process.returncode
+
+
+
+
+
+
+
+
+
+
+
 # Load dependencies from the JSON file
 def load_dependencies():
     json_path = "install_details.json"
@@ -34,7 +62,24 @@ def install_dependencies_with_choco(dependencies):
     log_info("Installing dependencies with Chocolatey...")
     for dep in dependencies:
         log_info(f"Installing {dep}...")
-        run_command(f"choco install {dep} -y")
+
+from dependencies import run_command_with_progress  # if not already added
+
+progress = 0
+
+def progress_callback(output):
+    global progress
+    progress = min(progress + 2, 100)
+    print(f"Progress: {progress}% | {output}")
+
+    run_command_with_progress(f"choco install {dep} -y", progress_callback)
+
+
+
+def progress_callback(output):
+    print("Installing:", output)
+
+    run_command_with_progress(f"choco install {dep} -y", progress_callback)
 
 # Update the JSON file for dependencies
 def update_dependency_status():
