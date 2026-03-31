@@ -107,6 +107,8 @@ class DependenciesInstallerApp(QtWidgets.QWidget):
         self.add_button("Install LLVM", self.install_llvm, button_style)
         self.add_button("Install GHDL", self.install_ghdl, button_style)
         self.add_button("Install Python Packages", self.install_python_packages, button_style)
+        self.add_button("View Logs", self.open_logs, button_style)
+        self.add_button("Check Dependencies", self.check_dependencies_button, button_style)
         self.refresh_all()
         
 
@@ -165,7 +167,7 @@ class DependenciesInstallerApp(QtWidgets.QWidget):
 
         
         self.status_label.setText(
-            f"❌ Missing: {', '.join(missing)}\n✅ Installed: {', '.join(installed)}"
+            f" Missing: {', '.join(missing)}\n Installed: {', '.join(installed)}"
         )
 
         self.choco_label.setText(
@@ -214,12 +216,12 @@ class DependenciesInstallerApp(QtWidgets.QWidget):
 
             if process.returncode != 0:
                 print("ERROR:", stderr)
-                QtWidgets.QMessageBox.critical(self, "Error", f"{name} installation failed ❌")
+                QtWidgets.QMessageBox.critical(self, "Error", f"{name} installation failed ")
                 self.progress_bar.setValue(0)
                 return
 
             self.set_progress(100)
-            QtWidgets.QMessageBox.information(self, "Success", f"{name} Installed ✅")
+            QtWidgets.QMessageBox.information(self, "Success", f"{name} Installed ")
 
             self.refresh_all()
             self.progress_bar.setValue(0)
@@ -248,6 +250,41 @@ class DependenciesInstallerApp(QtWidgets.QWidget):
             self.run_installer("Python Packages", PYTHON_PACKAGES_INSTALL_PROGRAM)
         except Exception as e:
             QtWidgets.QMessageBox.critical(self, "Error", str(e))
+
+            
+    def open_logs(self):
+        try:
+            log_path = r"C:\Users\Admin\Desktop\eSim\Windows-Standalone\tool_manager.log"
+
+            if not os.path.exists(log_path):
+                QtWidgets.QMessageBox.warning(self, "Error", "Log file not found!")
+                return
+
+            os.startfile(log_path)  # This opens the file directly
+
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(self, "Error", str(e))
+
+
+
+    def check_dependencies_button(self):
+        try:
+            ng, kc, ll, gh, ch = self.check_dependencies()
+
+            message = (
+                f"Ngspice: {ng}\n"
+                f"KiCad: {kc}\n"
+                f"LLVM: {ll}\n"
+                f"GHDL: {gh}\n"
+                f"Chocolatey: {ch}"
+            )
+
+            QtWidgets.QMessageBox.information(self, "Dependency Status", message)
+
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(self, "Error", str(e))
+
+
 
 # ================= MAIN =================
 def main():

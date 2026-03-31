@@ -131,7 +131,67 @@ class Worker(QtCore.QThread):
 
         except Exception as e:
             self.finished.emit(str(e))
+import os
+import json
+import datetime
 
+JSON_FILE_PATH = os.path.join(os.getcwd(), "install_details.json")
+LLVM_DIR = os.path.join(os.getcwd(), "tools", "llvm")
+
+
+def update_installation_status_llvm():
+    try:
+        # Load JSON
+        if os.path.exists(JSON_FILE_PATH):
+            with open(JSON_FILE_PATH, "r") as f:
+                data = json.load(f)
+        else:
+            data = {"important_packages": []}
+
+        # Find LLVM package
+        package = None
+        for pkg in data.get("important_packages", []):
+            if pkg["package_name"] == "llvm":
+                package = pkg
+                break
+
+        # Check if installed
+        if os.path.exists(LLVM_DIR):
+            version = "-"
+            installed = "Yes"
+            install_dir = LLVM_DIR
+            date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        else:
+            version = "-"
+            installed = "No"
+            install_dir = "-"
+            date = "-"
+
+        # Update or add
+        if package:
+            package.update({
+                "version": version,
+                "installed": installed,
+                "installed_date": date,
+                "install_directory": install_dir
+            })
+        else:
+            data["important_packages"].append({
+                "package_name": "llvm",
+                "version": version,
+                "installed": installed,
+                "installed_date": date,
+                "install_directory": install_dir
+            })
+
+        # Save JSON
+        with open(JSON_FILE_PATH, "w") as f:
+            json.dump(data, f, indent=4)
+
+        print("LLVM status updated")
+
+    except Exception as e:
+        print("Error updating LLVM status:", e)
 
 # ---------------- UI ---------------- #
 class LLVMInstallerApp(QtWidgets.QWidget):

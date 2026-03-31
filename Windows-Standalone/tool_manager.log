@@ -3743,3 +3743,60 @@
 2026-03-28 16:20:18,756 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
 2026-03-28 16:22:59,663 - INFO - Updated existing LLVM installation details.
 2026-03-28 16:22:59,664 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:00:29,670 - INFO - Updated existing Ngspice installation details.
+2026-03-30 19:00:29,672 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:00:29,673 - INFO - KiCad detected in system.
+2026-03-30 19:00:29,674 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:00:29,720 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:00:31,749 - INFO - Chocolatey directory exists. Version: 2.7.0.
+2026-03-30 19:00:31,751 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:00:39,116 - INFO - Chocolatey directory exists. Version: 2.7.0.
+2026-03-30 19:00:39,118 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:00:41,056 - INFO - Chocolatey is already installed. Version: 2.7.0.
+2026-03-30 19:00:41,057 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:00:47,417 - INFO - Attempted to install Chocolatey, but it is already installed.
+2026-03-30 19:00:53,548 - INFO - Chocolatey updated successfully.
+2026-03-30 19:00:57,200 - INFO - Chocolatey is already installed. Version: 2.7.0.
+2026-03-30 19:00:57,202 - INFO - Updated chocolatey installation status in install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:00:58,989 - INFO - Updated existing Ngspice installation details.
+2026-03-30 19:00:58,990 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:00:58,990 - INFO - KiCad detected in system.
+2026-03-30 19:00:58,992 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:00:59,071 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:01:01,549 - INFO - Chocolatey directory exists. Version: 2.7.0.
+2026-03-30 19:01:01,551 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:12:19,482 - INFO - Updated existing Ngspice installation details.
+2026-03-30 19:12:19,483 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:12:19,484 - INFO - KiCad detected in system.
+2026-03-30 19:12:19,485 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:12:19,529 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:12:21,449 - INFO - Chocolatey directory exists. Version: 2.7.0.
+2026-03-30 19:12:21,450 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:16:28,928 - INFO - Updated existing Ngspice installation details.
+2026-03-30 19:16:28,929 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:16:28,930 - INFO - KiCad detected in system.
+2026-03-30 19:16:28,931 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:16:28,965 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:16:30,827 - INFO - Chocolatey directory exists. Version: 2.7.0.
+2026-03-30 19:16:30,828 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:19:21,159 - INFO - Updated existing Ngspice installation details.
+2026-03-30 19:19:21,160 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:19:21,161 - INFO - KiCad detected in system.
+2026-03-30 19:19:21,162 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:19:21,187 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:19:23,173 - INFO - Chocolatey directory exists. Version: 2.7.0.
+2026-03-30 19:19:23,174 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:19:47,294 - INFO - Updated existing Ngspice installation details.
+2026-03-30 19:19:47,295 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:19:47,296 - INFO - KiCad detected in system.
+2026-03-30 19:19:47,298 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:19:47,340 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:19:49,081 - INFO - Chocolatey directory exists. Version: 2.7.0.
+2026-03-30 19:19:49,082 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.7.0, Installed: Yes.
+2026-03-30 19:21:28,121 - INFO - Updated existing Ngspice installation details.
+2026-03-30 19:21:28,122 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:21:28,123 - INFO - KiCad detected in system.
+2026-03-30 19:21:28,124 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:21:28,154 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json.
+2026-03-30 19:21:29,918 - INFO - Chocolatey directory exists. Version: 2.7.0.
+2026-03-30 19:21:29,920 - INFO - Updated chocolatey installation status in C:\Users\Admin\Desktop\eSim\Windows-Standalone\install_details.json. Version: 2.7.0, Installed: Yes.
