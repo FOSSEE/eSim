@@ -1,0 +1,60 @@
+* /home/bhargav/downloads/esim-1.1.2/src/subcircuitlibrary/lm7812/lm7812.cir
+
+.include PNP.lib
+.include NPN.lib
+r1  net-_q16-pad1_ net-_q1-pad2_ 100k
+r2  net-_q16-pad1_ net-_q1-pad1_ 500
+r3  net-_q1-pad3_ net-_q2-pad2_ 3.3k
+r4  net-_q2-pad2_ net-_q10-pad2_ 2.7k
+* u1  net-_q10-pad3_ net-_q1-pad2_ zener
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+r5  net-_q10-pad2_ net-_q10-pad3_ 500
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q4 net-_q2-pad3_ net-_q3-pad1_ net-_q3-pad2_ Q2N2222
+r6  net-_q2-pad3_ net-_q3-pad1_ 1k
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q10-pad3_ Q2N2222
+r7  net-_q3-pad2_ net-_q10-pad3_ 6k
+q6 net-_c1-pad2_ net-_q3-pad2_ net-_q6-pad3_ Q2N2222
+r10  net-_q6-pad3_ net-_q10-pad3_ 1k
+q7 net-_q2-pad1_ net-_q12-pad1_ net-_q7-pad3_ Q2N2222
+q8 net-_q7-pad3_ net-_q12-pad3_ net-_q2-pad3_ Q2N2222
+q12 net-_q12-pad1_ net-_q12-pad2_ net-_q12-pad3_ Q2N2222
+r12  net-_q12-pad3_ net-_q2-pad3_ 6k
+r9  net-_q2-pad3_ net-_c1-pad2_ 20k
+q5 net-_q2-pad1_ net-_q2-pad1_ net-_q5-pad3_ Q2N2907A
+q9 net-_q10-pad1_ net-_q2-pad1_ net-_q9-pad3_ Q2N2907A
+r8  net-_q16-pad1_ net-_q5-pad3_ 100
+r11  net-_q16-pad1_ net-_q9-pad3_ 50
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q11 net-_c1-pad1_ net-_c1-pad2_ net-_q11-pad3_ Q2N2222
+q13 net-_c1-pad1_ net-_q11-pad3_ net-_q10-pad3_ Q2N2222
+r13  net-_q11-pad3_ net-_q10-pad3_ 6k
+c1  net-_c1-pad1_ net-_c1-pad2_ 30p
+r14  net-_q10-pad1_ net-_c1-pad1_ 6k
+q14 net-_q10-pad3_ net-_c1-pad1_ net-_q10-pad1_ Q2N2907A
+q15 net-_q10-pad1_ net-_q15-pad2_ net-_q12-pad1_ Q2N2222
+r17  net-_q12-pad2_ net-_q10-pad3_ 5k
+r16  net-_q12-pad1_ net-_q12-pad2_ 10.38k
+r15  net-_q16-pad1_ net-_r15-pad2_ 10k
+* u2  net-_q15-pad2_ net-_r15-pad2_ zener
+q16 net-_q16-pad1_ net-_q10-pad1_ net-_q16-pad3_ Q2N2222
+q17 net-_q16-pad1_ net-_q16-pad3_ net-_q17-pad3_ Q2N2222
+r18  net-_q16-pad3_ net-_q12-pad1_ 200
+r20  net-_q17-pad3_ net-_q12-pad1_ 0.3
+r19  net-_q17-pad3_ net-_q15-pad2_ 240
+* u3  net-_q16-pad1_ net-_q10-pad3_ net-_q12-pad1_ port
+a1 net-_q10-pad3_ net-_q1-pad2_ u1
+a2 net-_q15-pad2_ net-_r15-pad2_ u2
+* Schematic Name: zener, NgSpice Name: zener
+.model u1 zener(n_forward=1.0 v_breakdown=5.6 i_sat=1.0e-12 limit_switch=FALSE i_breakdown=2.0e-2 ) 
+* Schematic Name: zener, NgSpice Name: zener
+.model u2 zener(n_forward=1.0 v_breakdown=5.6 i_sat=1.0e-12 limit_switch=FALSE i_breakdown=2.0e-2 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

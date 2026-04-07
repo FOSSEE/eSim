@@ -1,0 +1,16 @@
+* /home/fossee/eSim-Workspace/Transformer/Transformer.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 23:13:47 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  Net-_R2-Pad2_ GND sine		
+R1  out GND 1k		
+R2  in Net-_R2-Pad2_ 1k		
+U1  in GND GND out TRANSFO		
+U2  in plot_v1		
+U3  out plot_v1		
+
+.end

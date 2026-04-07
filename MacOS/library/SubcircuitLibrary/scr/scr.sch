@@ -1,0 +1,242 @@
+EESchema Schematic File Version 2
+LIBS:scr-rescue
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:valves
+LIBS:scr-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date "21 aug 2014"
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Wire Wire Line
+	3600 3250 3600 3150
+Connection ~ 5550 4950
+Wire Wire Line
+	5800 3900 5800 3850
+Wire Wire Line
+	5800 3850 6150 3850
+Wire Wire Line
+	6150 3850 6150 4950
+Wire Wire Line
+	6150 4950 3600 4950
+Connection ~ 4300 4950
+Wire Wire Line
+	4300 4950 4300 4050
+Wire Wire Line
+	4300 4050 3850 4050
+Wire Wire Line
+	4700 5400 4700 5950
+Wire Wire Line
+	4250 5950 4250 5500
+Connection ~ 4250 4950
+Wire Wire Line
+	4250 4950 4250 5200
+Wire Wire Line
+	5550 3600 5550 3450
+Wire Wire Line
+	5550 4950 5550 4250
+Wire Wire Line
+	3600 4950 3600 4400
+Wire Wire Line
+	3600 2300 3600 2850
+Wire Wire Line
+	3600 2300 3150 2300
+Wire Wire Line
+	3600 4150 3600 4300
+Wire Wire Line
+	5550 4150 5550 4000
+Wire Wire Line
+	5550 2550 5550 2250
+Wire Wire Line
+	4700 4950 4700 5100
+Connection ~ 4700 4950
+Wire Wire Line
+	6650 2000 6650 5950
+Connection ~ 4700 5950
+Wire Wire Line
+	3850 4650 3850 5950
+Wire Wire Line
+	3850 5950 6650 5950
+Connection ~ 4250 5950
+Wire Wire Line
+	5800 4500 5800 5950
+Connection ~ 5800 5950
+$Comp
+L PORT U2
+U 3 1 53F4C93D
+P 6650 2250
+F 0 "U2" H 6650 2200 30  0000 C CNN
+F 1 "PORT" H 6650 2250 30  0000 C CNN
+F 2 "" H 6650 2250 60  0001 C CNN
+F 3 "" H 6650 2250 60  0001 C CNN
+	3    6650 2250
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U2
+U 2 1 53F4C934
+P 2900 2300
+F 0 "U2" H 2900 2250 30  0000 C CNN
+F 1 "PORT" H 2900 2300 30  0000 C CNN
+F 2 "" H 2900 2300 60  0001 C CNN
+F 3 "" H 2900 2300 60  0001 C CNN
+	2    2900 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U2
+U 1 1 53F4C92A
+P 6400 4950
+F 0 "U2" H 6400 4900 30  0000 C CNN
+F 1 "PORT" H 6400 4950 30  0000 C CNN
+F 2 "" H 6400 4950 60  0001 C CNN
+F 3 "" H 6400 4950 60  0001 C CNN
+	1    6400 4950
+	-1   0    0    1   
+$EndComp
+$Comp
+L CCCS F2
+U 1 1 53F4C735
+P 5750 4200
+F 0 "F2" H 5550 4300 50  0000 C CNN
+F 1 "100" H 5550 4150 50  0000 C CNN
+F 2 "" H 5750 4200 60  0001 C CNN
+F 3 "" H 5750 4200 60  0001 C CNN
+	1    5750 4200
+	0    1    1    0   
+$EndComp
+$Comp
+L DIODE D1
+U 1 1 53F4C6D9
+P 5550 3800
+F 0 "D1" H 5550 3900 40  0000 C CNN
+F 1 "D" H 5550 3700 40  0000 C CNN
+F 2 "" H 5550 3800 60  0001 C CNN
+F 3 "" H 5550 3800 60  0001 C CNN
+	1    5550 3800
+	0    1    1    0   
+$EndComp
+$Comp
+L C C1
+U 1 1 53F4C6C2
+P 4700 5250
+F 0 "C1" H 4750 5350 50  0000 L CNN
+F 1 "10u" H 4750 5150 50  0000 L CNN
+F 2 "" H 4700 5250 60  0001 C CNN
+F 3 "" H 4700 5250 60  0001 C CNN
+	1    4700 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L CCCS F1
+U 1 1 53F4C67F
+P 3800 4350
+F 0 "F1" H 3600 4450 50  0000 C CNN
+F 1 "10" H 3600 4300 50  0000 C CNN
+F 2 "" H 3800 4350 60  0001 C CNN
+F 3 "" H 3800 4350 60  0001 C CNN
+	1    3800 4350
+	0    1    1    0   
+$EndComp
+$Comp
+L dc-RESCUE-scr v1
+U 1 1 565DBF58
+P 3600 3700
+F 0 "v1" H 3400 3800 60  0000 C CNN
+F 1 "dc" H 3400 3650 60  0000 C CNN
+F 2 "R1" H 3300 3700 60  0000 C CNN
+F 3 "" H 3600 3700 60  0000 C CNN
+	1    3600 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L dc-RESCUE-scr v2
+U 1 1 565DC066
+P 5550 3000
+F 0 "v2" H 5350 3100 60  0000 C CNN
+F 1 "dc" H 5350 2950 60  0000 C CNN
+F 2 "R1" H 5250 3000 60  0000 C CNN
+F 3 "" H 5550 3000 60  0000 C CNN
+	1    5550 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L aswitch U1
+U 1 1 565DC87E
+P 6400 2100
+F 0 "U1" H 6850 2400 60  0000 C CNN
+F 1 "aswitch" H 6850 2300 60  0000 C CNN
+F 2 "" H 6850 2200 60  0000 C CNN
+F 3 "" H 6850 2200 60  0000 C CNN
+	1    6400 2100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5950 2000 6650 2000
+$Comp
+L R-RESCUE-scr R1
+U 1 1 5666B019
+P 3550 2950
+F 0 "R1" H 3600 3080 50  0000 C CNN
+F 1 "50" H 3600 3000 50  0000 C CNN
+F 2 "" H 3600 2930 30  0000 C CNN
+F 3 "" V 3600 3000 30  0000 C CNN
+	1    3550 2950
+	0    1    1    0   
+$EndComp
+$Comp
+L R-RESCUE-scr R2
+U 1 1 5666B17A
+P 4200 5300
+F 0 "R2" H 4250 5430 50  0000 C CNN
+F 1 "1" H 4250 5350 50  0000 C CNN
+F 2 "" H 4250 5280 30  0000 C CNN
+F 3 "" V 4250 5350 30  0000 C CNN
+	1    4200 5300
+	0    1    1    0   
+$EndComp
+$EndSCHEMATC

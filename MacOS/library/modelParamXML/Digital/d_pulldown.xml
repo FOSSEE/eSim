@@ -1,0 +1,10 @@
+<model>
+<name>d_pulldown</name>
+<type>Digital</type>
+<node_number>1</node_number>
+<title>Add Parameters for Pulldown</title>
+<split>None</split>
+<param>
+	<load default="1.0e-12">Enter value of Load</load>
+</param>
+</model>

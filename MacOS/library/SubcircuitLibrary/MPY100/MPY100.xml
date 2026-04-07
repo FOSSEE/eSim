@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="D">
+  <design>
+    <source>C:\Users\Aditya\eSim-Workspace\MPY100\MPY100.sch</source>
+    <date>06/06/24 17:01:28</date>
+    <tool>Eeschema 4.0.7</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title/>
+        <company/>
+        <rev/>
+        <date/>
+        <source>MPY100.sch</source>
+        <comment number="1" value=""/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="v1">
+      <value>DC</value>
+      <footprint>R1</footprint>
+      <libsource lib="eSim_Sources" part="DC"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>665446FD</tstamp>
+    </comp>
+    <comp ref="v2">
+      <value>DC</value>
+      <footprint>R1</footprint>
+      <libsource lib="eSim_Sources" part="DC"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6655AD7E</tstamp>
+    </comp>
+    <comp ref="v3">
+      <value>DC</value>
+      <footprint>R1</footprint>
+      <libsource lib="eSim_Sources" part="DC"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6655AE0D</tstamp>
+    </comp>
+    <comp ref="v4">
+      <value>DC</value>
+      <footprint>R1</footprint>
+      <libsource lib="eSim_Sources" part="DC"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>6658E251</tstamp>
+    </comp>
+    <comp ref="X1">
+      <value>MPY100</value>
+      <libsource lib="eSim_Subckt" part="MPY100"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamp>66618FC1</tstamp>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="eSim_Sources" part="DC">
+      <footprints>
+        <fp>1_pin</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">v</field>
+        <field name="Value">DC</field>
+        <field name="Footprint">R1</field>
+      </fields>
+      <pins>
+        <pin num="1" name="+" type="power_out"/>
+        <pin num="2" name="-" type="power_out"/>
+      </pins>
+    </libpart>
+    <libpart lib="eSim_Subckt" part="MPY100">
+      <fields>
+        <field name="Reference">X</field>
+        <field name="Value">MPY100</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Z1" type="input"/>
+        <pin num="2" name="Out" type="output"/>
+        <pin num="3" name="-Vcc" type="output"/>
+        <pin num="4" name="X1" type="input"/>
+        <pin num="5" name="X2" type="input"/>
+        <pin num="6" name="Z2" type="input"/>
+        <pin num="7" name="Vos" type="input"/>
+        <pin num="8" name="Y2" type="input"/>
+        <pin num="9" name="Y1" type="input"/>
+        <pin num="10" name="Vcc" type="input"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="eSim_Sources">
+      <uri>C:\FOSSEE\KiCad\share\kicad\library\eSim_Sources.lib</uri>
+    </library>
+    <library logical="eSim_Subckt">
+      <uri>C:\FOSSEE\KiCad\share\kicad\library\eSim_Subckt.lib</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="Vout">
+      <node ref="X1" pin="6"/>
+      <node ref="X1" pin="5"/>
+      <node ref="X1" pin="2"/>
+      <node ref="X1" pin="1"/>
+      <node ref="v1" pin="2"/>
+      <node ref="v3" pin="2"/>
+      <node ref="v2" pin="2"/>
+      <node ref="v4" pin="2"/>
+      <node ref="X1" pin="7"/>
+      <node ref="X1" pin="9"/>
+    </net>
+    <net code="2" name="Net-(X1-Pad3)">
+      <node ref="X1" pin="3"/>
+      <node ref="v4" pin="1"/>
+    </net>
+    <net code="3" name="Net-(X1-Pad10)">
+      <node ref="X1" pin="10"/>
+      <node ref="v1" pin="1"/>
+    </net>
+    <net code="4" name="V2">
+      <node ref="X1" pin="8"/>
+      <node ref="v3" pin="1"/>
+    </net>
+    <net code="5" name="V1">
+      <node ref="v2" pin="1"/>
+      <node ref="X1" pin="4"/>
+    </net>
+  </nets>
+</export>

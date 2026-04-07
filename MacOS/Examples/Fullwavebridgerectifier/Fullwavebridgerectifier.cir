@@ -1,0 +1,18 @@
+* /home/fossee/UpdatedExamples/Fullwavebridgerectifier/Fullwavebridgerectifier.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 21:23:57 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  in1 in2 sine		
+D1  in1 out D		
+D3  in2 out D		
+D2  GND in1 D		
+D4  GND in2 D		
+R1  out GND 1k		
+U2  out plot_v1		
+U1  in1 in2 plot_v2		
+
+.end

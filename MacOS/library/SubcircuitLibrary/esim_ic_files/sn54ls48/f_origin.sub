@@ -1,0 +1,32 @@
+* Subcircuit f_origin
+.subckt f_origin /w /x /y /z net-_u1-pad5_ 
+* c:\users\shanthipriya\desktop\madeeasy\fossee\esim\library\subcircuitlibrary\f_origin\f_origin.cir
+.include 4_OR.sub
+* u2  /y net-_u2-pad2_ d_inverter
+* u3  /z net-_u3-pad2_ d_inverter
+x1 net-_u4-pad3_ net-_u5-pad3_ net-_u6-pad3_ net-_u7-pad3_ net-_u1-pad5_ 4_OR
+* u4  net-_u2-pad2_ net-_u3-pad2_ net-_u4-pad3_ d_and
+* u5  /x net-_u2-pad2_ net-_u5-pad3_ d_and
+* u6  /x net-_u3-pad2_ net-_u6-pad3_ d_and
+* u7  /w net-_u2-pad2_ net-_u7-pad3_ d_and
+a1 /y net-_u2-pad2_ u2
+a2 /z net-_u3-pad2_ u3
+a3 [net-_u2-pad2_ net-_u3-pad2_ ] net-_u4-pad3_ u4
+a4 [/x net-_u2-pad2_ ] net-_u5-pad3_ u5
+a5 [/x net-_u3-pad2_ ] net-_u6-pad3_ u6
+a6 [/w net-_u2-pad2_ ] net-_u7-pad3_ u7
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u6 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u7 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends f_origin

@@ -1,0 +1,66 @@
+* Subcircuit CA3240_OP
+.subckt CA3240_OP net-_m4-pad2_ net-_m2-pad2_ net-_m3-pad2_ net-_d2-pad2_ net-_d1-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\ca3240_op\ca3240_op.cir
+.include PMOS-180nm.lib
+.include PNP.lib
+.include NPN.lib
+.include D.lib
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q6 net-_q6-pad1_ net-_d1-pad2_ net-_d1-pad1_ Q2N2907A
+q3 net-_m1-pad3_ net-_q1-pad1_ net-_d1-pad2_ Q2N2907A
+q7 net-_m2-pad3_ net-_q1-pad1_ net-_q6-pad1_ Q2N2907A
+q1 net-_q1-pad1_ net-_d1-pad2_ net-_d1-pad1_ Q2N2907A
+q8 net-_q13-pad1_ net-_d1-pad2_ net-_d1-pad1_ Q2N2907A
+q9 net-_c1-pad1_ net-_q1-pad1_ net-_q13-pad1_ Q2N2907A
+q2 net-_q1-pad1_ net-_m1-pad3_ net-_q2-pad3_ Q2N2222
+r1  net-_q2-pad3_ net-_d2-pad2_ 8000
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+* u1  net-_u1-padin_ net-_m2-pad2_ zener
+* u3  net-_u1-padin_ net-_m3-pad2_ zener
+* u2  net-_u1-padin_ net-_m2-pad3_ zener
+m2 net-_m2-pad1_ net-_m2-pad2_ net-_m2-pad3_ net-_m2-pad3_ CMOSP W=100u L=100u M=1
+m3 net-_m3-pad1_ net-_m3-pad2_ net-_m2-pad3_ net-_m2-pad3_ CMOSP W=100u L=100u M=1
+m1 net-_d2-pad1_ net-_d2-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+r2  net-_m2-pad1_ net-_q4-pad1_ 500
+r4  net-_m3-pad1_ net-_c1-pad2_ 500
+q4 net-_q4-pad1_ net-_m2-pad1_ net-_q4-pad3_ Q2N2222
+q5 net-_c1-pad2_ net-_m2-pad1_ net-_q5-pad3_ Q2N2222
+r3  net-_q4-pad3_ net-_d2-pad2_ 500
+r5  net-_q5-pad3_ net-_d2-pad2_ 500
+q10 net-_c1-pad1_ net-_c1-pad2_ net-_d2-pad2_ Q2N2222
+c1  net-_c1-pad1_ net-_c1-pad2_ 12p
+q11 net-_d1-pad1_ net-_c1-pad1_ net-_q11-pad3_ Q2N2222
+q13 net-_q13-pad1_ net-_q13-pad2_ net-_q13-pad3_ Q2N2222
+r7  net-_q14-pad2_ net-_q11-pad3_ 1000
+q14 net-_q13-pad3_ net-_q14-pad2_ net-_m4-pad2_ Q2N2222
+q12 net-_q11-pad3_ net-_d2-pad1_ net-_q12-pad3_ Q2N2222
+q15 net-_m4-pad2_ net-_d2-pad1_ net-_d2-pad2_ Q2N2222
+r6  net-_q12-pad3_ net-_d2-pad2_ 50
+q16 net-_m4-pad2_ net-_d4-pad1_ net-_d2-pad2_ Q2N2222
+d4 net-_d4-pad1_ net-_d4-pad2_ 1N4148
+r12  net-_d4-pad2_ net-_d2-pad2_ 30
+r8  net-_r10-pad2_ net-_q13-pad2_ 1000
+r10  net-_q13-pad3_ net-_r10-pad2_ 20
+r9  net-_r10-pad2_ net-_d3-pad2_ 50
+d3 net-_d1-pad1_ net-_d3-pad2_ 1N4148
+q17 net-_d1-pad1_ net-_q17-pad2_ net-_q17-pad3_ Q2N2222
+r11  net-_m4-pad3_ net-_q17-pad3_ 12000
+r13  net-_q17-pad2_ net-_d1-pad1_ 15000
+r14  net-_d2-pad2_ net-_r14-pad2_ 20000
+m4 net-_d4-pad1_ net-_m4-pad2_ net-_m4-pad3_ net-_m4-pad3_ CMOSP W=100u L=100u M=1
+* u4  net-_r14-pad2_ net-_q17-pad2_ zener
+a1 net-_u1-padin_ net-_m2-pad2_ u1
+a2 net-_u1-padin_ net-_m3-pad2_ u3
+a3 net-_u1-padin_ net-_m2-pad3_ u2
+a4 net-_r14-pad2_ net-_q17-pad2_ u4
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u1 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u3 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u2 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u4 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Control Statements
+
+.ends CA3240_OP

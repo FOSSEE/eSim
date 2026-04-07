@@ -1,0 +1,250 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:AND_Gate-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L eSim_MOS_P M1
+U 1 1 62B6B95F
+P 4550 1800
+F 0 "M1" H 4500 1850 50  0000 R CNN
+F 1 "eSim_MOS_P" H 4600 1950 50  0000 R CNN
+F 2 "" H 4800 1900 29  0000 C CNN
+F 3 "" H 4600 1800 60  0000 C CNN
+	1    4550 1800
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_MOS_N M2
+U 1 1 62B6B9AC
+P 4700 2250
+F 0 "M2" H 4700 2100 50  0000 R CNN
+F 1 "eSim_MOS_N" H 4800 2200 50  0000 R CNN
+F 2 "" H 5000 1950 29  0000 C CNN
+F 3 "" H 4800 2050 60  0000 C CNN
+	1    4700 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_P M4
+U 1 1 62B6B9ED
+P 5250 1800
+F 0 "M4" H 5200 1850 50  0000 R CNN
+F 1 "eSim_MOS_P" H 5300 1950 50  0000 R CNN
+F 2 "" H 5500 1900 29  0000 C CNN
+F 3 "" H 5300 1800 60  0000 C CNN
+	1    5250 1800
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_MOS_N M3
+U 1 1 62B6BA57
+P 4700 2750
+F 0 "M3" H 4700 2600 50  0000 R CNN
+F 1 "eSim_MOS_N" H 4800 2700 50  0000 R CNN
+F 2 "" H 5000 2450 29  0000 C CNN
+F 3 "" H 4800 2550 60  0000 C CNN
+	1    4700 2750
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4700 1600 6000 1600
+Wire Wire Line
+	5000 1650 5000 1600
+Connection ~ 5000 1600
+Wire Wire Line
+	4800 1650 4800 1600
+Connection ~ 4800 1600
+Wire Wire Line
+	4700 2000 5100 2000
+Wire Wire Line
+	4900 2250 4900 2000
+Connection ~ 4900 2000
+Wire Wire Line
+	4900 2650 4900 2750
+Wire Wire Line
+	5000 2600 5000 2700
+Wire Wire Line
+	5000 2700 4900 2700
+Connection ~ 4900 2700
+Wire Wire Line
+	5000 3400 5000 3100
+Wire Wire Line
+	4900 3150 6000 3150
+Wire Wire Line
+	4900 2150 5650 2150
+Connection ~ 4900 2150
+$Comp
+L eSim_MOS_N M5
+U 1 1 62B6BB39
+P 5750 2250
+F 0 "M5" H 5750 2100 50  0000 R CNN
+F 1 "eSim_MOS_N" H 5850 2200 50  0000 R CNN
+F 2 "" H 6050 1950 29  0000 C CNN
+F 3 "" H 5850 2050 60  0000 C CNN
+	1    5750 2250
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_P M6
+U 1 1 62B6BB82
+P 5800 1900
+F 0 "M6" H 5750 1950 50  0000 R CNN
+F 1 "eSim_MOS_P" H 5850 2050 50  0000 R CNN
+F 2 "" H 6050 2000 29  0000 C CNN
+F 3 "" H 5850 1900 60  0000 C CNN
+	1    5800 1900
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	5950 1700 6050 1700
+Wire Wire Line
+	6050 1700 6050 1750
+Wire Wire Line
+	6050 2600 6050 2650
+Wire Wire Line
+	6050 2650 5950 2650
+Wire Wire Line
+	5950 2100 5950 2250
+Wire Wire Line
+	5650 1900 5650 2450
+Connection ~ 5650 2150
+Wire Wire Line
+	5950 2150 6300 2150
+Connection ~ 5950 2150
+Wire Wire Line
+	6000 1600 6000 1700
+Connection ~ 5100 1600
+Connection ~ 6000 1700
+Wire Wire Line
+	6000 3150 6000 2650
+Connection ~ 5000 3150
+Connection ~ 6000 2650
+Wire Wire Line
+	4400 1800 4400 2450
+Wire Wire Line
+	4400 2450 4600 2450
+Wire Wire Line
+	5400 1800 5400 2800
+Wire Wire Line
+	5400 2800 4600 2800
+Wire Wire Line
+	4600 2800 4600 2950
+Wire Wire Line
+	4400 2100 3950 2100
+Connection ~ 4400 2100
+Wire Wire Line
+	4600 2850 3950 2850
+Connection ~ 4600 2850
+$Comp
+L PORT U1
+U 3 1 62B6BDF0
+P 3700 2850
+F 0 "U1" H 3750 2950 30  0000 C CNN
+F 1 "PORT" H 3700 2850 30  0000 C CNN
+F 2 "" H 3700 2850 60  0000 C CNN
+F 3 "" H 3700 2850 60  0000 C CNN
+	3    3700 2850
+	1    0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 1 1 62B6BE6B
+P 6550 2150
+F 0 "U1" H 6600 2250 30  0000 C CNN
+F 1 "PORT" H 6550 2150 30  0000 C CNN
+F 2 "" H 6550 2150 60  0000 C CNN
+F 3 "" H 6550 2150 60  0000 C CNN
+	1    6550 2150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 62B6BEC8
+P 3700 2100
+F 0 "U1" H 3750 2200 30  0000 C CNN
+F 1 "PORT" H 3700 2100 30  0000 C CNN
+F 2 "" H 3700 2100 60  0000 C CNN
+F 3 "" H 3700 2100 60  0000 C CNN
+	2    3700 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 62B6BF63
+P 3750 1300
+F 0 "U1" H 3800 1400 30  0000 C CNN
+F 1 "PORT" H 3750 1300 30  0000 C CNN
+F 2 "" H 3750 1300 60  0000 C CNN
+F 3 "" H 3750 1300 60  0000 C CNN
+	4    3750 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 62B6BF90
+P 3800 3400
+F 0 "U1" H 3850 3500 30  0000 C CNN
+F 1 "PORT" H 3800 3400 30  0000 C CNN
+F 2 "" H 3800 3400 60  0000 C CNN
+F 3 "" H 3800 3400 60  0000 C CNN
+	5    3800 3400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4000 1300 4900 1300
+Wire Wire Line
+	4900 1300 4900 1600
+Connection ~ 4900 1600
+Wire Wire Line
+	4050 3400 5000 3400
+$EndSCHEMATC

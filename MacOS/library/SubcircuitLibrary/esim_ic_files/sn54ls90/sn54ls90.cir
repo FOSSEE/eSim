@@ -1,0 +1,29 @@
+* C:\Users\Shanthipriya\eSim-Workspace\sn74ls90\sn74ls90.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/15/25 17:30:55
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U4-Pad2_ clock Net-_U3-Pad2_ Net-_U1-Pad2_ ? ? ? ? Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ Net-_U10-Pad4_ 54LS90		
+v3  Net-_U2-Pad1_ GND pulse		
+U2  Net-_U2-Pad1_ clock adc_bridge_1		
+U5  clock plot_v1		
+v1  Net-_U1-Pad1_ GND DC		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ adc_bridge_1		
+v2  Net-_U3-Pad1_ GND DC		
+U3  Net-_U3-Pad1_ Net-_U3-Pad2_ adc_bridge_1		
+v4  Net-_U4-Pad1_ GND DC		
+U4  Net-_U4-Pad1_ Net-_U4-Pad2_ adc_bridge_1		
+U6  QA plot_v1		
+U7  QB plot_v1		
+U8  QC plot_v1		
+U9  QD plot_v1		
+R4  QD GND 10K		
+R3  QC GND 10K		
+R2  QB GND 10K		
+R1  QA GND 10K		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ Net-_U10-Pad4_ QA QB QC QD dac_bridge_4		
+
+.end

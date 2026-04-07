@@ -1,0 +1,16 @@
+<model>
+<name>d_state</name>
+<type>Digital</type>
+<node_number>4</node_number>
+<title>Add Parameters for State Machine</title>
+<split>4-V:2-NV:8-V</split>
+<param>
+	<clk_delay default ="1.0e-9">Enter Clk Delay (default=1.0e-9)</clk_delay>
+	<reset_delay default ="1.0e-9">Enter Reset Delay (default=1.0e-9)</reset_delay>
+	<state_file default ="state.txt">Enter State File (default=state.txt)</state_file>
+	<reset_state default ="0">Enter Reset Value (default=0)</reset_state>
+	<input_load default ="1.0e-12">Enter value for Input Load (default=1.0e-12)</input_load>
+	<clk_load default ="1.0e-12">Enter value for Clk Load (default=1.0e-12)</clk_load>
+	<reset_load default ="1.0e-12">Enter value for Reset Load (default=1.0e-12)</reset_load>
+</param>
+</model>

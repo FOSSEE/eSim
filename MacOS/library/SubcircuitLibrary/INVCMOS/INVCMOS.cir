@@ -1,0 +1,15 @@
+* /home/saurabh/Downloads/eSim-1.1.2/src/SubcircuitLibrary/INVCMOS/INVCMOS.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Sun Aug 25 17:34:16 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  Net-_M1-Pad2_ Net-_C1-Pad1_ PORT		
+M1  Net-_C1-Pad1_ Net-_M1-Pad2_ GND GND eSim_MOS_N		
+M2  Net-_M2-Pad1_ Net-_M1-Pad2_ Net-_C1-Pad1_ Net-_M2-Pad1_ eSim_MOS_P		
+v1  Net-_M2-Pad1_ GND 5		
+C1  Net-_C1-Pad1_ GND 1u		
+
+.end

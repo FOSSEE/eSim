@@ -1,0 +1,1 @@
+.model GD_diode D( rs=6 n=6 )

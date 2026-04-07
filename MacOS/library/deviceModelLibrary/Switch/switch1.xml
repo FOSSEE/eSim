@@ -1,0 +1,1 @@
+<library><model_name>sw</model_name><ref_model>switch1</ref_model><param><vt>0.05</vt><vh>1</vh><ron>1</ron><roff>1e12</roff></param></library>

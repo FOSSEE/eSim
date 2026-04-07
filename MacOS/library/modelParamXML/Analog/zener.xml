@@ -1,0 +1,14 @@
+<model>
+<name>zener</name>
+<type>Analog</type>
+<node_number>2</node_number>
+<title>Add Parameters for Zener Diode</title>
+<split>None</split>
+<param>
+	<v_breakdown default="5.6">Enter Breakdown Voltage (default=5.6)</v_breakdown>
+	<i_breakdown default="2.0e-2">Enter Breakdown Current (default=2.0e-2)</i_breakdown>
+	<i_sat default="1.0e-12">Enter Saturation Current (default=1.0e-12)</i_sat>
+	<n_forward default="1.0">Enter Forward Emission Coefficient (default=1.0)</n_forward>
+	<limit_switch default="FALSE">Enter Switch for Limiting (default=FALSE)</limit_switch>
+</param>
+</model>

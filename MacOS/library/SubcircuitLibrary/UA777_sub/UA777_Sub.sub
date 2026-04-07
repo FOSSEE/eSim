@@ -1,0 +1,48 @@
+* Subcircuit UA777_Sub
+.subckt UA777_Sub net-_q6-pad1_ net-_r1-pad2_ net-_q1-pad2_ net-_q11-pad3_ net-_q3-pad1_ net-_q23-pad3_ net-_q12-pad3_ net-_q15-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\ua777_sub\ua777_sub.cir
+.include PNP.lib
+.include NPN.lib
+q2 net-_q1-pad1_ net-_q1-pad1_ net-_q12-pad3_ Q2N2907A
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q3 net-_q3-pad1_ net-_q10-pad1_ net-_q1-pad3_ Q2N2907A
+q6 net-_q6-pad1_ net-_q10-pad1_ net-_q6-pad3_ Q2N2907A
+q8 net-_q1-pad1_ net-_q8-pad2_ net-_q6-pad3_ Q2N2222
+q5 net-_q12-pad3_ net-_q3-pad1_ net-_q4-pad2_ Q2N2222
+q4 net-_q3-pad1_ net-_q4-pad2_ net-_q4-pad3_ Q2N2222
+q7 net-_q6-pad1_ net-_q4-pad2_ net-_q7-pad3_ Q2N2222
+r2  net-_q4-pad3_ net-_q11-pad3_ 1k
+r3  net-_q4-pad2_ net-_q11-pad3_ 50k
+r4  net-_q7-pad3_ net-_q11-pad3_ 1k
+q9 net-_q10-pad1_ net-_q1-pad1_ net-_q12-pad3_ Q2N2907A
+r5  net-_q13-pad1_ net-_q6-pad1_ 300
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+r6  net-_q10-pad3_ net-_q11-pad3_ 10k
+q12 net-_q12-pad1_ net-_q12-pad1_ net-_q12-pad3_ Q2N2907A
+r7  net-_q10-pad2_ net-_q12-pad1_ 40k
+q11 net-_q10-pad2_ net-_q10-pad2_ net-_q11-pad3_ Q2N2222
+q15 net-_q15-pad1_ net-_q12-pad1_ net-_q12-pad3_ Q2N2907A
+q17 net-_q17-pad1_ net-_q12-pad1_ net-_q12-pad3_ Q2N2907A
+q14 net-_q12-pad3_ net-_q13-pad1_ net-_q14-pad3_ Q2N2222
+q16 net-_q15-pad1_ net-_q14-pad3_ net-_q16-pad3_ Q2N2222
+r10  net-_q11-pad3_ net-_q16-pad3_ 100
+q13 net-_q13-pad1_ net-_q13-pad2_ net-_q11-pad3_ Q2N2222
+r9  net-_q11-pad3_ net-_q14-pad3_ 50k
+q25 net-_q12-pad3_ net-_q17-pad1_ net-_q23-pad2_ Q2N2222
+q23 net-_q17-pad1_ net-_q23-pad2_ net-_q23-pad3_ Q2N2222
+q19 net-_q17-pad1_ net-_q17-pad1_ net-_q19-pad3_ Q2N2222
+q21 net-_q17-pad1_ net-_q19-pad3_ net-_q21-pad3_ Q2N2222
+r11  net-_q19-pad3_ net-_q21-pad3_ 50k
+q22 net-_q11-pad3_ net-_q15-pad1_ net-_q21-pad3_ Q2N2907A
+q20 net-_q11-pad3_ net-_q15-pad1_ net-_q13-pad1_ Q2N2907A
+q18 net-_q13-pad2_ net-_q13-pad2_ net-_q11-pad3_ Q2N2222
+q24 net-_q13-pad2_ net-_q24-pad2_ net-_q23-pad3_ Q2N2907A
+q26 net-_q11-pad3_ net-_q21-pad3_ net-_q24-pad2_ Q2N2907A
+r12  net-_q11-pad3_ net-_q13-pad2_ 50k
+r13  net-_q23-pad2_ net-_q23-pad3_ 27
+r14  net-_q23-pad3_ net-_q24-pad2_ 22
+r1  net-_q8-pad2_ net-_r1-pad2_ 1k
+r8  net-_q8-pad2_ net-_q23-pad3_ 4k
+* Control Statements
+
+.ends UA777_Sub

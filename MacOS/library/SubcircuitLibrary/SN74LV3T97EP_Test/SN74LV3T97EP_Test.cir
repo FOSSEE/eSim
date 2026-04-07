@@ -1,0 +1,36 @@
+* C:\Users\Aditya\eSim-Workspace\SN74LV3T97EP_Test\SN74LV3T97EP_Test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/26/24 21:17:43
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v8  Net-_X1-Pad14_ GND DC		
+R1  OP_Y1 GND 10000k		
+v1  IP_A1 GND pulse		
+v2  IP_B1 GND pulse		
+v3  IP_C1 GND pulse		
+v4  IP_A2 GND pulse		
+v6  IP_A3 GND pulse		
+v7  IP_B3 GND pulse		
+v9  IP_C2 GND pulse		
+v10  IP_C3 GND pulse		
+v5  IP_B2 GND pulse		
+R2  OP_Y2 GND 10000k		
+R3  OP_Y3 GND 10000k		
+U1  IP_A1 plot_v1		
+U2  IP_B1 plot_v1		
+U3  IP_A2 plot_v1		
+U4  IP_B2 plot_v1		
+U5  IP_A3 plot_v1		
+U6  IP_B3 plot_v1		
+U7  IP_C1 plot_v1		
+U8  IP_C2 plot_v1		
+U11  IP_C3 plot_v1		
+U9  OP_Y1 plot_v1		
+U10  OP_Y2 plot_v1		
+U12  OP_Y3 plot_v1		
+X1  IP_A1 IP_B1 IP_A2 IP_B2 IP_A3 IP_B3 GND OP_Y3 IP_C3 OP_Y2 IP_C2 OP_Y1 IP_C1 Net-_X1-Pad14_ SN74LV3T97-EP(NEW)		
+
+.end

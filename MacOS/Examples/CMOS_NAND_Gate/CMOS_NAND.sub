@@ -1,0 +1,13 @@
+* Subcircuit CMOS_NAND
+.subckt CMOS_NAND net-_m1-pad2_ net-_m3-pad2_ net-_m1-pad3_ 
+* c:\fossee\esim\library\subcircuitlibrary\cmos_nand\cmos_nand.cir
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad1_ CMOSP W=2.5u L=0.5u M=1
+m4 net-_m1-pad1_ net-_m3-pad2_ net-_m1-pad3_ net-_m1-pad1_ CMOSP W=2.5u L=0.5u M=1
+m2 net-_m1-pad3_ net-_m1-pad2_ net-_m2-pad3_ gnd CMOSN W=1u L=0.5u M=1
+m3 net-_m2-pad3_ net-_m3-pad2_ gnd gnd CMOSN W=1u L=0.5u M=1
+v1 net-_m1-pad1_ gnd  dc 5
+* Control Statements
+
+.ends CMOS_NAND

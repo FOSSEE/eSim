@@ -1,0 +1,22 @@
+* /home/fossee/updatedexamples/halfwaverectifier_scr/halfwaverectifier_scr.cir
+
+.include scr.sub
+v1  in gnd sine(0 100 50 0 0)
+v2  pulse gnd pulse(0 5 4m 0 0 1m 20m)
+r1  in a 100
+* u2  in a plot_v2
+* u1  in plot_v1
+* u3  pulse plot_v1
+x1 gnd pulse a scr
+.tran 40e-06 40e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in,a)
+plot v(in)
+plot v(pulse)
+.endc
+.end

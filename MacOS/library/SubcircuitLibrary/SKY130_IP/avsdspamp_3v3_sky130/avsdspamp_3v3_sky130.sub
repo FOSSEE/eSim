@@ -1,0 +1,15 @@
+.subckt avsdspamp_3v3_sky130 vdd vin vout gnd  
+xm2 Vc net-_cds1-pad1_ net-_c2-pad1_ net-_c2-pad1_ sky130_fd_pr__nfet_01v8  
+xm1 net-_cds1-pad1_ vin net-_cds1-pad2_ net-_cds1-pad2_ sky130_fd_pr__pfet_01v8  
+r4  net-_cds1-pad2_ Vc 6.7meg;
+r5  Vc vdd 10meg;
+r3  gnd vin 100k;			
+r7  gnd vout 100meg;
+r2  vin vdd 100k;
+c1  vout Vc 100u;
+cds1  net-_cds1-pad1_ net-_cds1-pad2_ 0.1u;
+cgs1  net-_cds1-pad1_ vin 0.1u;
+cgd1  net-_cds1-pad2_ vin 0.1u;
+c2  net-_c2-pad1_ gnd 100u;
+r6  gnd net-_c2-pad1_ 1k;		for Transient analysis
+.ends

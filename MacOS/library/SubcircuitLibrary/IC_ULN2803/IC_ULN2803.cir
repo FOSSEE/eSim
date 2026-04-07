@@ -1,0 +1,75 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\IC_ULN2803\IC_ULN2803.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 03/14/23 00:06:55
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+Q2  Net-_D6-Pad2_ Net-_Q2-Pad2_ Net-_Q2-Pad3_ eSim_NPN		
+Q5  Net-_D6-Pad2_ Net-_Q2-Pad3_ E eSim_NPN		
+R2  Net-_D2-Pad2_ Net-_Q2-Pad2_ 2.7k		
+R5  Net-_Q2-Pad2_ Net-_Q2-Pad3_ 7.2k		
+R8  Net-_Q2-Pad3_ E 3k		
+D6  E Net-_D6-Pad2_ eSim_Diode		
+D8  Net-_D6-Pad2_ COM eSim_Diode		
+D2  E Net-_D2-Pad2_ eSim_Diode		
+U1  Net-_D1-Pad2_ Net-_D2-Pad2_ Net-_D3-Pad2_ Net-_D4-Pad2_ Net-_D6-Pad2_ Net-_D7-Pad2_ Net-_D10-Pad2_ Net-_D11-Pad2_ COM Net-_D12-Pad2_ E Net-_D13-Pad2_ Net-_D19-Pad2_ Net-_D15-Pad2_ Net-_D17-Pad2_ Net-_D20-Pad2_ Net-_D21-Pad2_ Net-_D23-Pad2_ PORT		
+Q3  Net-_D7-Pad2_ Net-_Q3-Pad2_ Net-_Q3-Pad3_ eSim_NPN		
+Q6  Net-_D7-Pad2_ Net-_Q3-Pad3_ E eSim_NPN		
+R3  Net-_D3-Pad2_ Net-_Q3-Pad2_ 2.7k		
+R6  Net-_Q3-Pad2_ Net-_Q3-Pad3_ 7.2k		
+R9  Net-_Q3-Pad3_ E 3k		
+D7  E Net-_D7-Pad2_ eSim_Diode		
+D9  Net-_D7-Pad2_ COM eSim_Diode		
+D3  E Net-_D3-Pad2_ eSim_Diode		
+D1  E Net-_D1-Pad2_ eSim_Diode		
+D5  Net-_D4-Pad2_ COM eSim_Diode		
+D4  E Net-_D4-Pad2_ eSim_Diode		
+R7  Net-_Q1-Pad3_ E 3k		
+R4  Net-_Q1-Pad2_ Net-_Q1-Pad3_ 7.2k		
+R1  Net-_D1-Pad2_ Net-_Q1-Pad2_ 2.7k		
+Q4  Net-_D4-Pad2_ Net-_Q1-Pad3_ E eSim_NPN		
+Q1  Net-_D4-Pad2_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+D10  E Net-_D10-Pad2_ eSim_Diode		
+D14  Net-_D13-Pad2_ COM eSim_Diode		
+D13  E Net-_D13-Pad2_ eSim_Diode		
+R16  Net-_Q10-Pad2_ E 3k		
+R11  Net-_Q7-Pad2_ Net-_Q10-Pad2_ 7.2k		
+R10  Net-_D10-Pad2_ Net-_Q7-Pad2_ 2.7k		
+Q10  Net-_D13-Pad2_ Net-_Q10-Pad2_ E eSim_NPN		
+Q7  Net-_D13-Pad2_ Net-_Q7-Pad2_ Net-_Q10-Pad2_ eSim_NPN		
+Q8  Net-_D15-Pad2_ Net-_Q8-Pad2_ Net-_Q11-Pad2_ eSim_NPN		
+Q11  Net-_D15-Pad2_ Net-_Q11-Pad2_ E eSim_NPN		
+R12  Net-_D11-Pad2_ Net-_Q8-Pad2_ 2.7k		
+R14  Net-_Q8-Pad2_ Net-_Q11-Pad2_ 7.2k		
+R17  Net-_Q11-Pad2_ E 3k		
+D15  E Net-_D15-Pad2_ eSim_Diode		
+D16  Net-_D15-Pad2_ COM eSim_Diode		
+D11  E Net-_D11-Pad2_ eSim_Diode		
+Q9  Net-_D17-Pad2_ Net-_Q9-Pad2_ Net-_Q12-Pad2_ eSim_NPN		
+Q12  Net-_D17-Pad2_ Net-_Q12-Pad2_ E eSim_NPN		
+R13  Net-_D12-Pad2_ Net-_Q9-Pad2_ 2.7k		
+R15  Net-_Q9-Pad2_ Net-_Q12-Pad2_ 7.2k		
+R18  Net-_Q12-Pad2_ E 3k		
+D17  E Net-_D17-Pad2_ eSim_Diode		
+D18  Net-_D17-Pad2_ COM eSim_Diode		
+D12  E Net-_D12-Pad2_ eSim_Diode		
+Q13  Net-_D21-Pad2_ Net-_Q13-Pad2_ Net-_Q13-Pad3_ eSim_NPN		
+Q15  Net-_D21-Pad2_ Net-_Q13-Pad3_ E eSim_NPN		
+R19  Net-_D19-Pad2_ Net-_Q13-Pad2_ 2.7k		
+R20  Net-_Q13-Pad2_ Net-_Q13-Pad3_ 7.2k		
+R23  Net-_Q13-Pad3_ E 3k		
+D21  E Net-_D21-Pad2_ eSim_Diode		
+D22  Net-_D21-Pad2_ COM eSim_Diode		
+D19  E Net-_D19-Pad2_ eSim_Diode		
+Q14  Net-_D23-Pad2_ Net-_Q14-Pad2_ Net-_Q14-Pad3_ eSim_NPN		
+Q16  Net-_D23-Pad2_ Net-_Q14-Pad3_ E eSim_NPN		
+R21  Net-_D20-Pad2_ Net-_Q14-Pad2_ 2.7k		
+R22  Net-_Q14-Pad2_ Net-_Q14-Pad3_ 7.2k		
+R24  Net-_Q14-Pad3_ E 3k		
+D23  E Net-_D23-Pad2_ eSim_Diode		
+D24  Net-_D23-Pad2_ COM eSim_Diode		
+D20  E Net-_D20-Pad2_ eSim_Diode		
+
+.end

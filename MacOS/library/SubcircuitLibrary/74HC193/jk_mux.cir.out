@@ -1,0 +1,23 @@
+* c:\fossee\esim\library\subcircuitlibrary\jk_mux\jk_mux.cir
+
+.include mux.sub
+* u3  net-_u3-pad1_ net-_u3-pad2_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ d_jkff
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ port
+* u2  net-_u1-pad1_ net-_u2-pad2_ d_inverter
+x1 net-_u1-pad4_ net-_u1-pad1_ net-_u1-pad3_ net-_u3-pad1_ mux
+x2 net-_u1-pad4_ net-_u2-pad2_ net-_u1-pad2_ net-_u3-pad2_ mux
+a1 net-_u3-pad1_ net-_u3-pad2_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ u3
+a2 net-_u1-pad1_ net-_u2-pad2_ u2
+* Schematic Name:                             d_jkff, NgSpice Name: d_jkff
+.model u3 d_jkff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 jk_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

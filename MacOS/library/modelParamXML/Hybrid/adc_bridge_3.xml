@@ -1,0 +1,13 @@
+<model>
+<name>adc_bridge</name>
+<type>Hybrid</type>
+<node_number>2</node_number>
+<title>Add Parameters for ADC</title>
+<split>3-V:3-V</split>
+<param>
+	<in_low default ="1.0">Enter value for in_low (default=1.0)</in_low>
+	<in_high default ="2.0">Enter value for in_high (default=2.0)</in_high>
+	<rise_delay default ="1.0e-9">Enter Rise Delay (default=1.0e-9)</rise_delay>
+	<fall_delay default ="1.0e-9">Enter Fall Delay (default=1.0e-9)</fall_delay>
+</param>
+</model>

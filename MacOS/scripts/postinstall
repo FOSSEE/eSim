@@ -1,0 +1,76 @@
+#!/bin/bash
+
+# ── Variables ─────────────────────────────────────────────────────────────────
+CURRENT_USER=$(stat -f "%Su" /dev/console)
+USER_HOME="/Users/$CURRENT_USER"
+#eSim
+ESIM_DIR="$USER_HOME/.esim"
+ESIM_APP="/Applications/eSim.app"
+ESIM_RESOURCES="$ESIM_APP/Contents/Resources"
+#NGHDL
+NGHDL_SRC="$ESIM_RESOURCES/nghdl"
+NGHDL_DEST="$USER_HOME/nghdl-simulator"
+NGHDL_CONFIG_DIR="$USER_HOME/.nghdl"
+
+echo "Setting up eSim for user: $CURRENT_USER"
+
+# =============================================================================
+# eSim setup
+# =============================================================================
+
+# ── Create eSim configuration ─────────────────────────────────────────────────
+mkdir -p "$ESIM_DIR"
+
+cat > "$ESIM_DIR/config.ini" << EOF
+[eSim]
+eSim_HOME = $ESIM_RESOURCES
+LICENSE = %(eSim_HOME)s/LICENSE
+KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz
+IMAGES = %(eSim_HOME)s/images
+VERSION = %(eSim_HOME)s/VERSION
+MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json
+EOF
+
+# ── Copy Examples to workspace ────────────────────────────────────────────────
+sudo cp -R "$ESIM_RESOURCES/Examples/." "$USER_HOME/eSim-Workspace/Examples/"
+
+# =============================================================================
+# NGHDL setup
+# =============================================================================
+
+# ── Extract nghdl-simulator-source.tar.xz to user home ───────────────
+if [ ! -d "$NGHDL_DEST" ]; then
+    echo "Extracting nghdl-simulator..."
+    tar -xJf "$NGHDL_SRC/nghdl-simulator-source.tar.xz" -C "$USER_HOME" || exit 1
+    mv "$USER_HOME/nghdl-simulator-source" "$USER_HOME/nghdl-simulator"
+    chown -R "$CURRENT_USER" "$NGHDL_DEST"
+    echo "nghdl-simulator extracted successfully."
+fi
+
+# ── Create ~/.nghdl/config.ini ────────────────────────────────────────────────
+echo "Creating ~/.nghdl/config.ini..."
+mkdir -p "$NGHDL_CONFIG_DIR"
+cat > "$NGHDL_CONFIG_DIR/config.ini" << EOF
+[NGHDL]
+NGHDL_HOME = $NGHDL_DEST
+DIGITAL_MODEL = %(NGHDL_HOME)s/src/xspice/icm
+RELEASE = %(NGHDL_HOME)s/release
+[SRC]
+SRC_HOME = $NGHDL_SRC
+LICENSE = %(SRC_HOME)s/LICENSE
+EOF
+
+# =============================================================================
+# Final: Set ownership, permissions, and remove quarantine attribute
+# =============================================================================
+# ── Set ownership and permissions ─────────────────────────────────────────────
+sudo chown -R "$CURRENT_USER" "$ESIM_DIR"
+sudo chown -R "$CURRENT_USER" "$NGHDL_CONFIG_DIR"
+sudo chmod +x "$ESIM_APP/Contents/Frameworks/bin/ngspice"
+sudo chown -R "$CURRENT_USER" "$USER_HOME/eSim-Workspace/Examples/"
+
+# ── Remove quarantine attribute ───────────────────────────────────────────────
+sudo xattr -rd com.apple.quarantine "$ESIM_APP"
+
+echo "eSim setup complete."
+exit 0

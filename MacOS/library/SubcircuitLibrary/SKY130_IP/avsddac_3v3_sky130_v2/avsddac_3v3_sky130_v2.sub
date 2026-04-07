@@ -1,0 +1,11 @@
+.subckt avsddac_3v3_sky130_v2 /vdd /vrefh /vrefl /d0 /d1 /d2 /d3 /d4 /d5 /d6 /d7 /d8 /d9 /vout gnd
+.include 9bit_DAC.sub
+.include switch.sub
+
+x1 /vrefh net-_x1-pad2_ /d0 /d1 /d2 /d3 /d4 /d5 /d6 /d7 /d8 /vdd net-_x1-pad13_ 9bit_DAC
+x2 net-_x1-pad2_ /vrefl /d0 /d1 /d2 /d3 /d4 /d5 /d6 /d7 /d8 /vdd net-_x2-pad13_ 9bit_DAC
+x3 /d9 /vdd net-_x1-pad13_ net-_x2-pad13_ /vout switch
+* u1  /vrefh /vrefl /d0 /d1 /d2 /d3 /d4 /d5 /d6 /d7 /d8 /d9 /vdd /vout port
+
+
+.ends

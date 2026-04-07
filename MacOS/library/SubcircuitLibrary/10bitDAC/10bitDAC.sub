@@ -1,0 +1,61 @@
+* Subcircuit 10bitDAC
+
+.subckt 10bitDAC net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ 
+* /home/sumanto/esim-2.1/library/subcircuitlibrary/10bitdac/10bitdac.cir
+r1  net-_r1-pad1_ net-_r1-pad2_ 1024k
+r2  net-_r2-pad1_ net-_r1-pad2_ 512k
+r3  net-_r3-pad1_ net-_r1-pad2_ 256k
+r4  net-_r4-pad1_ net-_r1-pad2_ 128k
+r5  net-_r5-pad1_ net-_r1-pad2_ 64k
+r6  net-_r6-pad1_ net-_r1-pad2_ 32k
+r7  net-_r7-pad1_ net-_r1-pad2_ 16k
+r9  net-_r9-pad1_ net-_r1-pad2_ 8k
+r10  net-_r10-pad1_ net-_r1-pad2_ 4k
+r11  net-_r11-pad1_ net-_r1-pad2_ 2k
+* u2  net-_r1-pad2_ gnd net-_u1-pad11_ summer
+* u3  net-_u1-pad1_ gnd net-_r1-pad1_ summer
+* u8  net-_u1-pad2_ gnd net-_r2-pad1_ summer
+* u4  net-_u1-pad3_ gnd net-_r3-pad1_ summer
+* u5  net-_u1-pad4_ gnd net-_r4-pad1_ summer
+* u9  net-_u1-pad5_ gnd net-_r5-pad1_ summer
+* u10  net-_u1-pad6_ gnd net-_r6-pad1_ summer
+* u6  net-_u1-pad7_ gnd net-_r7-pad1_ summer
+* u7  net-_u1-pad8_ gnd net-_r9-pad1_ summer
+* u12  net-_u1-pad9_ gnd net-_r10-pad1_ summer
+* u11  net-_u1-pad10_ gnd net-_r11-pad1_ summer
+a1 [net-_r1-pad2_ gnd ] net-_u1-pad11_ u2
+a2 [net-_u1-pad1_ gnd ] net-_r1-pad1_ u3
+a3 [net-_u1-pad2_ gnd ] net-_r2-pad1_ u8
+a4 [net-_u1-pad3_ gnd ] net-_r3-pad1_ u4
+a5 [net-_u1-pad4_ gnd ] net-_r4-pad1_ u5
+a6 [net-_u1-pad5_ gnd ] net-_r5-pad1_ u9
+a7 [net-_u1-pad6_ gnd ] net-_r6-pad1_ u10
+a8 [net-_u1-pad7_ gnd ] net-_r7-pad1_ u6
+a9 [net-_u1-pad8_ gnd ] net-_r9-pad1_ u7
+a10 [net-_u1-pad9_ gnd ] net-_r10-pad1_ u12
+a11 [net-_u1-pad10_ gnd ] net-_r11-pad1_ u11
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u2 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u3 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u8 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u4 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u5 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u9 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u10 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u6 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u7 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u12 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Schematic Name:                             summer, NgSpice Name: summer
+.model u11 summer(in_offset=[0.0 0.0 ] in_gain=[1.0 1.0 ] out_gain=1.0 out_offset=0.0 )
+* Control Statements
+
+.ends 10bitDAC

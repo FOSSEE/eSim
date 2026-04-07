@@ -1,0 +1,44 @@
+* c:\users\shanthipriya\desktop\madeeasy\fossee\esim\library\subcircuitlibrary\b_origin\b_origin.cir
+
+.include 3_and.sub
+.include 4_OR.sub
+* u1  /w /x /y /z net-_u1-pad5_ port
+* u2  /w net-_u2-pad2_ d_inverter
+* u3  /x net-_u3-pad2_ d_inverter
+* u4  /y net-_u4-pad2_ d_inverter
+* u5  /z net-_u5-pad2_ d_inverter
+x2 net-_u7-pad3_ net-_u8-pad3_ net-_u6-pad3_ net-_x1-pad4_ net-_u1-pad5_ 4_OR
+x1 net-_u2-pad2_ /y /z net-_x1-pad4_ 3_and
+* u6  net-_u4-pad2_ net-_u5-pad2_ net-_u6-pad3_ d_and
+* u8  net-_u3-pad2_ net-_u4-pad2_ net-_u8-pad3_ d_and
+* u7  net-_u3-pad2_ net-_u2-pad2_ net-_u7-pad3_ d_and
+a1 /w net-_u2-pad2_ u2
+a2 /x net-_u3-pad2_ u3
+a3 /y net-_u4-pad2_ u4
+a4 /z net-_u5-pad2_ u5
+a5 [net-_u4-pad2_ net-_u5-pad2_ ] net-_u6-pad3_ u6
+a6 [net-_u3-pad2_ net-_u4-pad2_ ] net-_u8-pad3_ u8
+a7 [net-_u3-pad2_ net-_u2-pad2_ ] net-_u7-pad3_ u7
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u5 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u6 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u8 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u7 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

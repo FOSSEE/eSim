@@ -1,0 +1,58 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD4049\CD4049.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 5/19/2025 10:16:37 PM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M1  g Net-_D7-Pad2_ vss vss mosfet_n		
+M3  g Net-_D7-Pad2_ vdd vdd mosfet_p		
+D7  vss Net-_D7-Pad2_ eSim_Diode		
+D3  vss a eSim_Diode		
+R1  a Net-_D7-Pad2_ resistor		
+D2  vss a eSim_Diode		
+D1  vss vdd eSim_Diode		
+D9  vss vdd eSim_Diode		
+M5  h Net-_D17-Pad2_ vss vss mosfet_n		
+M7  h Net-_D17-Pad2_ vdd vdd mosfet_p		
+D17  vss Net-_D17-Pad2_ eSim_Diode		
+D13  vss b eSim_Diode		
+R3  b Net-_D17-Pad2_ resistor		
+D12  vss b eSim_Diode		
+D11  vss vdd eSim_Diode		
+D19  vss vdd eSim_Diode		
+M9  i Net-_D27-Pad2_ vss vss mosfet_n		
+M11  i Net-_D27-Pad2_ vdd vdd mosfet_p		
+D27  vss Net-_D27-Pad2_ eSim_Diode		
+D23  vss c eSim_Diode		
+R5  c Net-_D27-Pad2_ resistor		
+D22  vss c eSim_Diode		
+D21  vss vdd eSim_Diode		
+D29  vss vdd eSim_Diode		
+M2  j Net-_D8-Pad2_ vss vss mosfet_n		
+M4  j Net-_D8-Pad2_ vdd vdd mosfet_p		
+D8  vss Net-_D8-Pad2_ eSim_Diode		
+D6  vss d eSim_Diode		
+R2  d Net-_D8-Pad2_ resistor		
+D5  vss d eSim_Diode		
+D4  vss vdd eSim_Diode		
+D10  vss vdd eSim_Diode		
+M6  k Net-_D18-Pad2_ vss vss mosfet_n		
+M8  k Net-_D18-Pad2_ vdd vdd mosfet_p		
+D18  vss Net-_D18-Pad2_ eSim_Diode		
+D16  vss e eSim_Diode		
+R4  e Net-_D18-Pad2_ resistor		
+D15  vss e eSim_Diode		
+D14  vss vdd eSim_Diode		
+D20  vss vdd eSim_Diode		
+M10  l Net-_D28-Pad2_ vss vss mosfet_n		
+M12  l Net-_D28-Pad2_ vdd vdd mosfet_p		
+D28  vss Net-_D28-Pad2_ eSim_Diode		
+D26  vss f eSim_Diode		
+R6  f Net-_D28-Pad2_ resistor		
+D25  vss f eSim_Diode		
+D24  vss vdd eSim_Diode		
+D30  vss vdd eSim_Diode		
+
+.end

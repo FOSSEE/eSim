@@ -1,0 +1,44 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# D-RESCUE-Clippercircuit
+#
+DEF D-RESCUE-Clippercircuit D 0 40 N N 1 F N
+F0 "D" 0 100 50 H V C CNN
+F1 "D-RESCUE-Clippercircuit" 0 -100 50 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+$FPLIST
+ Diode_*
+ D-Pak_TO252AA
+ *SingleDiode
+ *_Diode_*
+ *SingleDiode*
+$ENDFPLIST
+DRAW
+P 2 0 1 6 50 50 50 -50 N
+P 3 0 1 0 -50 50 50 0 -50 -50 F
+X A 1 -150 0 100 R 40 40 1 1 P
+X K 2 150 0 100 L 40 40 1 1 P
+ENDDRAW
+ENDDEF
+#
+# R-RESCUE-Clippercircuit
+#
+DEF R-RESCUE-Clippercircuit R 0 0 N Y 1 F N
+F0 "R" 50 130 50 H V C CNN
+F1 "R-RESCUE-Clippercircuit" 50 50 50 H V C CNN
+F2 "" 50 -20 30 H V C CNN
+F3 "" 50 50 30 V V C CNN
+$FPLIST
+ R_*
+ Resistor_*
+$ENDFPLIST
+DRAW
+S 150 10 -50 90 0 1 10 N
+X ~ 1 -100 50 50 R 60 60 1 1 P
+X ~ 2 200 50 50 L 60 60 1 1 P
+ENDDRAW
+ENDDEF
+#
+#End Library

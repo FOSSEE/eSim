@@ -1,0 +1,93 @@
+#!/bin/bash
+
+# ── Install Rosetta if needed ─────────────────────────────────────────────
+ARCH=$(uname -m)
+if [ "$ARCH" = "arm64" ]; then
+    if /usr/bin/pgrep oahd > /dev/null 2>&1; then
+        echo "Rosetta already installed, skipping."
+    else
+        echo "Installing Rosetta..."
+        softwareupdate --install-rosetta --agree-to-license
+        if [ $? -ne 0 ]; then
+            osascript -e 'display dialog "Failed to install Rosetta. Please install it manually and rerun this installer." buttons {"OK"} default button "OK" with icon caution'
+            exit 1
+        fi
+        echo "Rosetta installed successfully."
+    fi
+fi
+
+# ── Install/Update Command Line Tools ────────────────────────────────────────
+echo "Installing Command Line Tools..."
+xcode-select --install 2>/dev/null || echo "Command Line Tools already installed, skipping."
+if [ $? -ne 0 ]; then
+    osascript -e 'display dialog "Failed to install Command Line Tools. Please install them manually and rerun this installer." buttons {"OK"} default button "OK" with icon caution'
+    exit 1
+fi
+
+
+
+# ── Install XQuartz ──────────────────────────────────────────────────────────
+if pkgutil --pkg-info org.xquartz.X11 >/dev/null 2>&1; then
+    echo "XQuartz already installed, skipping."
+else
+    osascript -e 'display dialog "XQuartz is required and will now be downloaded and installed." buttons {"OK"} default button "OK"'
+
+    echo "Downloading XQuartz..."
+    curl -L -o /tmp/xquartz.pkg \
+        https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.8.5/XQuartz-2.8.5.pkg
+
+    if [ $? -ne 0 ]; then
+        osascript -e 'display dialog "Failed to download XQuartz. Please check your internet connection and try again." buttons {"OK"} default button "OK" with icon caution'
+        exit 1
+    fi
+
+    echo "Installing XQuartz..."
+    installer -pkg /tmp/xquartz.pkg -target /
+
+    if [ $? -ne 0 ]; then
+        osascript -e 'display dialog "Failed to install XQuartz." buttons {"OK"} default button "OK" with icon caution'
+        rm /tmp/xquartz.pkg
+        exit 1
+    fi
+
+    rm /tmp/xquartz.pkg
+    echo "XQuartz installed successfully."
+fi
+
+# ── Install KiCad ────────────────────────────────────────────────────────────
+if [ -d "/Applications/KiCad/KiCad.app" ]; then
+    echo "KiCad already installed, skipping."
+else
+    osascript -e 'display dialog "KiCad 6 is required and will now be downloaded and installed. This may take a few minutes depending on your internet connection." buttons {"OK"} default button "OK"'
+
+    echo "Downloading KiCad 6.0.11..."
+    curl -L -C - -o /tmp/kicad-6.0.11.dmg \
+        https://downloads.kicad.org/kicad/macos/explore/stable/download/kicad-unified-6.0.11-0.dmg
+
+    if [ $? -ne 0 ]; then
+        osascript -e 'display dialog "Failed to download KiCad. Please check your internet connection and try again." buttons {"OK"} default button "OK" with icon caution'
+        exit 1
+    fi
+
+    echo "Mounting KiCad DMG..."
+    hdiutil attach /tmp/kicad-6.0.11.dmg -nobrowse -quiet
+
+    if [ $? -ne 0 ]; then
+        osascript -e 'display dialog "Failed to mount KiCad installer." buttons {"OK"} default button "OK" with icon caution'
+        rm /tmp/kicad-6.0.11.dmg
+        exit 1
+    fi
+
+    echo "Copying KiCad to Applications..."
+    cp -R "/Volumes/KiCad/KiCad" /Applications/
+
+    echo "Unmounting KiCad DMG..."
+    hdiutil detach "/Volumes/KiCad" -quiet
+
+    echo "Cleaning up..."
+    rm /tmp/kicad-6.0.11.dmg
+
+    echo "KiCad installed successfully."
+fi
+
+exit 0

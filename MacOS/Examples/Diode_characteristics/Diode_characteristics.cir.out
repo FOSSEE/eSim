@@ -1,0 +1,18 @@
+* /home/fossee/esim-workspace/diode_characteristics/diode_characteristics.cir
+
+.include D.lib
+v1 in gnd  dc 1
+d1 in out 1N4148
+r1  net-_r1-pad1_ gnd 1k
+* u1  out net-_r1-pad1_ plot_i2
+v_u1 out net-_r1-pad1_ 0
+.dc v1 0e-00 1e-00 0.01e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot i(v_u1)
+.endc
+.end
