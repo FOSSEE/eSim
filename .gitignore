@@ -18,3 +18,4 @@ nghdl*
 tags
 build/
 dist/
+__pycache__/
