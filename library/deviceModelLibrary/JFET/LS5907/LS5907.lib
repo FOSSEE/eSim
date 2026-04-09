@@ -1,1 +1,0 @@
-.MODEL LS5907 NJF( Beta=0.10m Betatce=-0.5 Rd=16 Rs=20 Lambda=4.14m Vto=-1.99 Vtotc=-2.5m Is=1.14f Xti=0 Cgd=1p M=500m Pb=0.8 Fc=.5 Cgs=1p Kf=0 Af=1 Mfg=Linear_Systems )

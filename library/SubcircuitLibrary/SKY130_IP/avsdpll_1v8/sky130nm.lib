@@ -1,5 +1,0 @@
-*(tt) library
-.include "sky130_fd_pr__nfet_01v8__tt.pm3.spice"
-.include "sky130_fd_pr__pfet_01v8__tt.pm3.spice"
-.include "invariant.spice"
-.include "lod.spice"

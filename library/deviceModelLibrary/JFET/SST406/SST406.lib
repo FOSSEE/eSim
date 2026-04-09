@@ -1,1 +1,0 @@
-.MODEL SST406 NJF( Beta=1.577m Betatce=-0.5 Rd=1 Rs=1 Lambda=10m Vto=-1.316 Vtotc=-2.5m Is=33.57f  Isr=322.4f  N=1 Nr=2 Xti=3 Alpha=68.56u Vk=243.6  Cgd=5.6p M=391.6m Pb=0.5 Fc=0.5 Cgs=6.044p Kf=45920f Af=1 ls=19.73f lsr=191.3f Mfg=Linear_Systems )
