@@ -61,27 +61,134 @@ function createConfigFile
 }
 
 
+#function installNghdl
+#{
+#
+#    echo "Installing NGHDL..........................."
+#    unzip -o nghdl.zip
+#    cd nghdl/
+#    chmod +x install-nghdl.sh
+#
+#    # Do not trap on error of any command. Let NGHDL script handle its own errors.
+#    trap "" ERR
+#
+#    ./install-nghdl.sh --install       # Install NGHDL
+#        
+#    # Set trap again to error_exit function to exit on errors
+#    trap error_exit ERR
+#
+#    ngspiceFlag=1
+#    cd ../
+#
+#}
+
+#function installNghdl
+#{
+#    echo "Installing NGHDL..........................."
+#
+#    NGHDL_FILE="$eSim_Home/nghdl.zip"
+#    NGHDL_DIR="$eSim_Home/nghdl"
+#
+#    # Check if zip file exists
+#    if [ -f "$NGHDL_FILE" ]; then
+#        echo "Extracting NGHDL..."
+#        unzip -o "$NGHDL_FILE" -d "$eSim_Home"
+#
+#        # Check if folder exists after extraction
+#        if [ -d "$NGHDL_DIR" ]; then
+#            cd "$NGHDL_DIR"
+#            chmod +x install-nghdl.sh
+#
+#            # Let NGHDL script handle its own errors
+#            trap "" ERR
+#
+#            ./install-nghdl.sh --install
+#
+#            # Restore error handling
+#            trap error_exit ERR
+#
+#            cd "$eSim_Home"
+#            ngspiceFlag=1
+#        else
+#            echo "NGHDL directory not found after extraction. Skipping NGHDL setup."
+#        fi
+#
+#    else
+#        echo "NGHDL zip file not found. Skipping NGHDL installation."
+#    fi
+#}
+
+# -----------------------------------------------------------------------------
+# FIX (Issue 17 - NGHDL/LLVM/GHDL Incompatibility on Ubuntu 25.x):
+#
+# NGHDL requires GHDL v0.37 (LLVM backend) and Verilator v4.210.
+# These exact versions are NOT available on Ubuntu 25.x via apt.
+# Ubuntu 25.x ships GHDL 4.x (incompatible ABI) and LLVM 19+ (NGHDL
+# build expects LLVM 14 or earlier). Attempting to build nghdl-simulator
+# from the bundled source tarball will therefore fail at compile time.
+#
+# Additionally, the nghdl.zip file is not included in the installer
+# repository and must be supplied separately.
+#
+# Workaround for Ubuntu 25.x users:
+#   Use the Flatpak version of eSim which bundles compatible tool versions:
+#     flatpak install flathub org.fossee.eSim
+#     flatpak run org.fossee.eSim
+# -----------------------------------------------------------------------------
+
 function installNghdl
 {
-
     echo "Installing NGHDL..........................."
-    unzip -o nghdl.zip
-    cd nghdl/
-    chmod +x install-nghdl.sh
 
-    # Do not trap on error of any command. Let NGHDL script handle its own errors.
-    trap "" ERR
+    # Check Ubuntu major version — NGHDL is not compatible with Ubuntu 25.x+
+    # due to GHDL and LLVM version conflicts (see note above).
+    ubuntu_version=$(lsb_release -rs)
+    major_version=$(echo "$ubuntu_version" | cut -d. -f1)
 
-    ./install-nghdl.sh --install       # Install NGHDL
-        
-    # Set trap again to error_exit function to exit on errors
-    trap error_exit ERR
+    if [[ "$major_version" -ge 25 ]]; then
+        echo "------------------------------------------------------------"
+        echo "WARNING: NGHDL is NOT supported on Ubuntu $ubuntu_version."
+        echo "  NGHDL requires GHDL v0.37 (LLVM) and Verilator v4.210."
+        echo "  Ubuntu 25.x ships GHDL 4.x and LLVM 19+ which are"
+        echo "  incompatible with the NGHDL build system."
+        echo "  Skipping NGHDL installation."
+        echo "  For full NGHDL support, use the Flatpak version of eSim:"
+        echo "    flatpak install flathub org.fossee.eSim"
+        echo "------------------------------------------------------------"
+        return
+    fi
 
-    ngspiceFlag=1
-    cd ../
+    NGHDL_FILE="$eSim_Home/nghdl.zip"
+    NGHDL_DIR="$eSim_Home/nghdl"
 
+    # Check if zip file exists before attempting extraction
+    if [ -f "$NGHDL_FILE" ]; then
+        echo "Extracting NGHDL..."
+        unzip -o "$NGHDL_FILE" -d "$eSim_Home"
+
+        # Verify extraction produced the expected directory
+        if [ -d "$NGHDL_DIR" ]; then
+            cd "$NGHDL_DIR"
+            chmod +x install-nghdl.sh
+
+            # Let NGHDL script handle its own errors
+            trap "" ERR
+
+            ./install-nghdl.sh --install
+
+            # Restore error handling
+            trap error_exit ERR
+
+            cd "$eSim_Home"
+            ngspiceFlag=1
+        else
+            echo "NGHDL directory not found after extraction. Skipping NGHDL setup."
+        fi
+
+    else
+        echo "NGHDL zip file not found. Skipping NGHDL installation."
+    fi
 }
-
 
 function installSky130Pdk
 {
@@ -135,45 +242,104 @@ function installKicad
 
     # Detect Ubuntu version
     ubuntu_version=$(lsb_release -rs)
+    major_version=$(echo "$ubuntu_version" | cut -d. -f1)
 
-    # Define KiCad PPAs based on Ubuntu version
-    if [[ "$ubuntu_version" == "24.04" ]]; then
-        echo "Ubuntu 24.04 detected."
+    # Define KiCad PPA based on version
+    if [[ "$major_version" -ge 24 ]]; then
+        echo "Ubuntu 24 or newer detected."
         kicadppa="kicad/kicad-8.0-releases"
-
-        # Check if KiCad is installed using dpkg-query for the main package
-        if dpkg -s kicad &>/dev/null; then
-            installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
-            if [[ "$installed_version" != "8" ]]; then
-                echo "A different version of KiCad ($installed_version) is installed."
-                read -p "Do you want to remove it and install KiCad 8.0? (yes/no): " response
-
-                if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
-                    echo "Removing KiCad $installed_version..."
-                    sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-                    sudo apt-get autoremove -y
-                else
-                    echo "Exiting installation. KiCad $installed_version remains installed."
-                    exit 1
-                fi
-            else
-                echo "KiCad 8.0 is already installed."
-                exit 0
-            fi
-        fi
-
     else
+        echo "Older Ubuntu detected."
         kicadppa="kicad/kicad-6.0-releases"
     fi
 
-    # Check if the PPA is already added
-    if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-        echo "Adding KiCad PPA to local apt repository: $kicadppa"
-        sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt-get update
-    else
-        echo "KiCad PPA is already present in sources."
+    # Check if KiCad is already installed
+    if dpkg -s kicad &>/dev/null; then
+        installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
+
+        if [[ "$installed_version" == "8" ]]; then
+            echo "KiCad 8 is already installed."
+            return
+        else
+            echo "Different KiCad version ($installed_version) detected."
+
+            # Auto-remove incompatible version (no user prompt for automation)
+            echo "Removing incompatible KiCad version..."
+            sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+            sudo apt-get autoremove -y
+        fi
     fi
+
+    echo "Setting up KiCad repository..."
+
+    # Try adding PPA (preferred for KiCad 8)
+    if sudo add-apt-repository -y "ppa:$kicadppa"; then
+        echo "KiCad PPA added successfully."
+        sudo apt-get update
+        echo "Installing KiCad from PPA (preferred version)..."
+    else
+        echo "Warning: Failed to add KiCad PPA. Falling back to Ubuntu repository."
+        sudo apt-get update
+    fi
+
+    # Install KiCad (always runs)
+    sudo apt-get install -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+
+    # Verify installation
+    if command -v kicad &> /dev/null; then
+        echo "KiCad installation completed successfully!"
+    else
+        echo "Error: KiCad installation failed."
+        exit 1
+    fi
+}
+
+
+
+#    # Detect Ubuntu version
+#    ubuntu_version=$(lsb_release -rs)
+#
+#    # Define KiCad PPAs based on Ubuntu version
+#    if [[ "$ubuntu_version" == "24.04" ]]; then
+#        echo "Ubuntu 24.04 detected."
+#        kicadppa="kicad/kicad-8.0-releases"
+#
+#        # Check if KiCad is installed using dpkg-query for the main package
+#        if dpkg -s kicad &>/dev/null; then
+#            installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
+#            if [[ "$installed_version" != "8" ]]; then
+#                echo "A different version of KiCad ($installed_version) is installed."
+#                read -p "Do you want to remove it and install KiCad 8.0? (yes/no): " response
+#
+#                if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
+#                    echo "Removing KiCad $installed_version..."
+#                    sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+#                    sudo apt-get autoremove -y
+#                else
+#                    echo "Exiting installation. KiCad $installed_version remains installed."
+#                    exit 1
+#                fi
+#            else
+#                echo "KiCad 8.0 is already installed."
+#                exit 0
+#            fi
+#        fi
+#
+#    else
+#        kicadppa="kicad/kicad-6.0-releases"
+#    fi
+
+    # Check if the PPA is already added
+#    if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+#        echo "Adding KiCad PPA to local apt repository: $kicadppa"
+#        sudo add-apt-repository -y "ppa:$kicadppa"
+#        sudo apt-get update
+#    else
+#        echo "KiCad PPA is already present in sources."
+#    fi
+
+	echo "Skipping KiCad PPA (not supported for this Ubuntu version)"
+	sudo apt-get update
 
     # Install KiCad packages
     sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
@@ -226,66 +392,158 @@ function installDependency
     echo "Installing Pip3............................"
     sudo apt install -y python3-pip
 
+#   -----------------------------------------------------------------------------
+#   FIX (Issue 18 - PEP 668 / pip3 outside venv fails on Ubuntu 25.x):
+#
+#   Ubuntu 25.x enforces PEP 668 (externally-managed-environment).
+#   Calling bare 'pip3 install <pkg>' on the system Python raises:
+#     error: externally-managed-environment
+#   because the system Python is managed by apt and pip is blocked
+#   from writing into it directly.
+#
+#   All pip installs below that previously used bare 'pip3' have been
+#   changed to use 'pip' (which resolves to the active virtualenv's pip
+#   after 'source $config_dir/env/bin/activate' above).
+#   This ensures all packages are installed inside the isolated venv,
+#   not into the system Python — which is the correct behaviour anyway.
+#
+#   Original lines (removed):
+#    pip3 install watchdog
+#    pip3 install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
+#    pip3 install makerchip-app
+#    pip3 install sandpiper-saas
+#    pip3 install hdlparse
+#    pip3 install matplotlib
+#    pip3 install PyQt5
+#    pip3 install volare
+#   -----------------------------------------------------------------------------
+
     echo "Installing Watchdog........................"
-    pip3 install watchdog
+    pip install watchdog
 
     echo "Installing Hdlparse........................"
-    pip3 install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
+    pip install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
 
     echo "Installing Makerchip......................."
-    pip3 install makerchip-app
+    pip install makerchip-app
 
     echo "Installing SandPiper Saas.................."
-    pip3 install sandpiper-saas
+    pip install sandpiper-saas
 
-   
     echo "Installing Hdlparse......................"
-    pip3 install hdlparse
+    pip install hdlparse
 
     echo "Installing matplotlib................"
-    pip3 install matplotlib
+    pip install matplotlib
 
     echo "Installing PyQt5............."
-    pip3 install PyQt5  
+    pip install PyQt5
 
     echo "Installing volare"
-    sudo apt-get xz-utils
-    pip3 install volare
+    sudo apt-get install -y xz-utils || echo "xz-utils already installed"
+    pip install volare
 }
 
 
+#function copyKicadLibrary
+#{
+#
+#    #Extract custom KiCad Library
+#    tar -xJf library/kicadLibrary.tar.xz
+#
+#    if [ -d ~/.config/kicad/6.0 ];then
+#        echo "kicad config folder already exists"
+#    else 
+#        echo ".config/kicad/6.0 does not exist"
+#        mkdir -p ~/.config/kicad/6.0
+#    fi
+#
+#    # Copy symbol table for eSim custom symbols 
+#    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
+#    echo "symbol table copied in the directory"
+#
+#    # Copy KiCad symbols made for eSim
+#    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
+#
+#    set +e      # Temporary disable exit on error
+#    trap "" ERR # Do not trap on error of any command
+#    
+#    # Remove extracted KiCad Library - not needed anymore
+#    rm -rf kicadLibrary
+#
+#    set -e      # Re-enable exit on error
+#    trap error_exit ERR
+#
+#    #Change ownership from Root to the User
+#    sudo chown -R $USER:$USER /usr/share/kicad/symbols/
+#
+#}
+
 function copyKicadLibrary
 {
+    LIB_PATH="$eSim_Home/library"
+    LIB_FILE="$LIB_PATH/kicadLibrary.tar.xz"
 
-    #Extract custom KiCad Library
-    tar -xJf library/kicadLibrary.tar.xz
+    # Create library directory
+    mkdir -p "$LIB_PATH"
 
-    if [ -d ~/.config/kicad/6.0 ];then
-        echo "kicad config folder already exists"
-    else 
-        echo ".config/kicad/6.0 does not exist"
-        mkdir -p ~/.config/kicad/6.0
+    # Extract only if file exists
+    if [ -f "$LIB_FILE" ]; then
+        echo "Extracting KiCad library..."
+        tar -xJf "$LIB_FILE" -C "$LIB_PATH"
+
+        # Check if extracted folder exists
+        if [ -d "$LIB_PATH/kicadLibrary" ]; then
+
+#           -----------------------------------------------------------------------------
+#           FIX (Issue 19 - KiCad config directory hardcoded to 6.0, wrong for KiCad 8):
+#
+#           The original code always used ~/.config/kicad/6.0/ as the config directory.
+#           When KiCad 8 is installed (which is the case on Ubuntu 24+), it uses
+#           ~/.config/kicad/8.0/ instead. Copying sym-lib-table into the 6.0 path means
+#           eSim's custom symbols are never loaded by KiCad 8.
+#
+#           Original lines (removed):
+#            if [ -d ~/.config/kicad/6.0 ]; then
+#                echo "kicad config folder already exists"
+#            else
+#                echo ".config/kicad/6.0 does not exist"
+#                mkdir -p ~/.config/kicad/6.0
+#            fi
+#            cp "$LIB_PATH/kicadLibrary/template/sym-lib-table" ~/.config/kicad/6.0/
+#           -----------------------------------------------------------------------------
+
+            # Detect installed KiCad major version to resolve correct config directory
+            kicad_major=$(kicad --version 2>/dev/null | grep -oP '^\d+' || echo "8")
+            kicad_config_dir="$HOME/.config/kicad/${kicad_major}.0"
+
+            if [ -d "$kicad_config_dir" ]; then
+                echo "KiCad config folder already exists: $kicad_config_dir"
+            else
+                echo "Creating KiCad config directory: $kicad_config_dir"
+                mkdir -p "$kicad_config_dir"
+            fi
+
+            # Copy symbol table into the correct versioned config directory
+            cp "$LIB_PATH/kicadLibrary/template/sym-lib-table" "$kicad_config_dir/"
+            echo "symbol table copied"
+
+            # Copy symbols
+            sudo cp -r "$LIB_PATH/kicadLibrary/eSim-symbols/"* /usr/share/kicad/symbols/
+
+            # Cleanup
+            rm -rf "$LIB_PATH/kicadLibrary"
+
+            # Fix permissions
+            sudo chown -R $USER:$USER /usr/share/kicad/symbols/
+
+        else
+            echo "Extraction failed or folder missing. Skipping KiCad library setup."
+        fi
+
+    else
+        echo "KiCad library file not found. Skipping library setup."
     fi
-
-    # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
-    echo "symbol table copied in the directory"
-
-    # Copy KiCad symbols made for eSim
-    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
-
-    set +e      # Temporary disable exit on error
-    trap "" ERR # Do not trap on error of any command
-    
-    # Remove extracted KiCad Library - not needed anymore
-    rm -rf kicadLibrary
-
-    set -e      # Re-enable exit on error
-    trap error_exit ERR
-
-    #Change ownership from Root to the User
-    sudo chown -R $USER:$USER /usr/share/kicad/symbols/
-
 }
 
 
@@ -326,25 +584,54 @@ function createDesktopStartScript
     sudo chmod 755 esim.desktop
     # Copy desktop icon file to share applications
     sudo cp -vp esim.desktop /usr/share/applications/
-    # Copy desktop icon file to Desktop
-    cp -vp esim.desktop $HOME/Desktop/
+    
+#    # Copy desktop icon file to Desktop
+#    cp -vp esim.desktop $HOME/Desktop/
+#
+#    set +e      # Temporary disable exit on error
+#    trap "" ERR # Do not trap on error of any command
+#
+#    # Make esim.desktop file as trusted application
+#    gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
+#    # Set Permission and Execution bit
+#    chmod a+x $HOME/Desktop/esim.desktop
+#
+#    # Remove local copy of esim.desktop file
+#    rm esim.desktop
+#
+#    set -e      # Re-enable exit on error
+#    trap error_exit ERR
 
-    set +e      # Temporary disable exit on error
-    trap "" ERR # Do not trap on error of any command
+	USER_HOME=$(eval echo ~$SUDO_USER)
 
-    # Make esim.desktop file as trusted application
-    gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
-    # Set Permission and Execution bit
-    chmod a+x $HOME/Desktop/esim.desktop
+	# Copy to Desktop
+	mkdir -p "$USER_HOME/Desktop"
+	cp -vp esim.desktop "$USER_HOME/Desktop/"
 
-    # Remove local copy of esim.desktop file
-    rm esim.desktop
+	set +e
+	trap "" ERR
 
-    set -e      # Re-enable exit on error
-    trap error_exit ERR
+	# Make trusted
+#	gio set "$USER_HOME/Desktop/esim.desktop" "metadata::trusted" true
+	
+	gio set "$USER_HOME/Desktop/esim.desktop" "metadata::trusted" true 2>/dev/null || echo "Skipping gio trust setting"
+	
+	chmod a+x "$USER_HOME/Desktop/esim.desktop"
+
+	rm esim.desktop
+
+	set -e
+	trap error_exit ERR
 
     # Copying logo.png to .esim directory to access as icon
-    cp -vp images/logo.png $config_dir
+#    cp -vp images/logo.png $config_dir
+    
+    if [ -f "images/logo.png" ]; then
+    	cp -vp images/logo.png $config_dir
+    else
+	echo "Logo file not found. Skipping icon setup."
+    fi
+
 
 }
 
@@ -447,7 +734,9 @@ elif [ $option == "--uninstall" ];then
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
 	sudo rm /etc/apt/sources.list.d/kicad*
+        # Remove KiCad config for all known versions (6.0 and 8.0)
         rm -rf $HOME/.config/kicad/6.0
+        rm -rf $HOME/.config/kicad/8.0
 
         echo "Removing Virtual env......................."
         sudo rm -r $config_dir/env

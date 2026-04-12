@@ -46,10 +46,11 @@ run_version_script() {
         "24.04")
             SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
             ;;
-        *)
-            echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
-            exit 1
-            ;;
+	*)
+	    echo "Newer Ubuntu version detected: $VERSION_ID ($FULL_VERSION)"
+	    echo "Using fallback script for 24.04"
+	    SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
+	    ;;
     esac
 
     # Run the script if found
