@@ -110,6 +110,16 @@ function installNghdl
                     sed -i 's/20\.0/20.1/g' "$nghdl_script"
                 fi
             done
+            cat > ./llvm-config <<'EOF'
+#!/bin/sh
+if [ "$1" = "--version" ]; then
+    echo "20.1"
+    exit 0
+fi
+exec /usr/bin/llvm-config "$@"
+EOF
+            chmod +x ./llvm-config
+            export PATH="$PWD:$PATH"
         fi
     fi
 
