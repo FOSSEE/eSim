@@ -106,14 +106,15 @@ function installNghdl
         llvm_version=$(llvm-config --version 2>/dev/null || true)
         if [[ "$llvm_version" == 20.1.* ]]; then
             for nghdl_script in "install-nghdl.sh" "install-nghdl-scripts/install-nghdl-24.04.sh"; do
-                if [ -f "$nghdl_script" ] && grep -q "20\.0" "$nghdl_script"; then
-                    sed -i 's/20\.0/20.1/g' "$nghdl_script"
+                if [ -f "$nghdl_script" ]; then
+                    sed -i 's/20\.1/18.0/g' "$nghdl_script"
+                    sed -i 's/20\.0/18.0/g' "$nghdl_script"
                 fi
             done
             cat > ./llvm-config <<'EOF'
 #!/bin/sh
 if [ "$1" = "--version" ]; then
-    echo "20.1"
+    echo "18.0"
     exit 0
 fi
 exec /usr/bin/llvm-config "$@"
