@@ -23,8 +23,10 @@
 # All variables goes here
 script_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 eSim_Home=$(cd "$script_dir/../.." && pwd)
+user_name="$USER"
 user_home="$HOME"
 if [ -n "$SUDO_USER" ] && [ -d "/home/$SUDO_USER" ]; then
+    user_name="$SUDO_USER"
     user_home="/home/$SUDO_USER"
 fi
 config_dir="$user_home/.esim"
@@ -215,7 +217,7 @@ function installDependency
    
     echo "Creating virtual environment to isolate packages "
     virtualenv $config_dir/env
-    sudo chown -R "$user_home":"$user_home" "$config_dir"
+    sudo chown -R "$user_name":"$user_name" "$config_dir"
     
     echo "Starting the virtual env..................."
     source $config_dir/env/bin/activate
