@@ -400,19 +400,36 @@ function createDesktopStartScript
     # Generating new esim-start.sh
     cat > esim-start.sh <<EOF
 #!/bin/bash
-app_dir="${eSim_Home}/src/frontEnd"
-app_entry="\${app_dir}/Application.py"
-if [ ! -f "\$app_entry" ]; then
-    app_dir="${eSim_Home}"
-    app_entry="\${app_dir}/Application.py"
+# Dynamically determine the eSim front-end directory based on installer repo root
+REPO_ROOT="${eSim_Home}"
+candidates=(
+    "$REPO_ROOT/src/frontEnd"
+    "$REPO_ROOT/src/FrontEnd"
+    "$REPO_ROOT/frontEnd"
+    "$REPO_ROOT"
+)
+app_dir=""
+for c in "${candidates[@]}"; do
+    if [ -f "$c/Application.py" ]; then
+        app_dir="$c"
+        break
+    fi
+done
+
+if [ -z "$app_dir" ]; then
+    found=$(find "$REPO_ROOT" -maxdepth 4 -type f -name 'Application.py' -print -quit 2>/dev/null || true)
+    if [ -n "$found" ]; then
+        app_dir=$(dirname "$found")
+    fi
 fi
 
-if [ ! -f "\$app_entry" ]; then
-    echo "Error: eSim application not found at ${eSim_Home}."
+if [ -z "$app_dir" ]; then
+    echo "Error: eSim application not found under ${eSim_Home}."
     echo "Please install eSim source or packaged executable before running."
     exit 1
 fi
 
+app_entry="\$app_dir/Application.py"
 cd "\$app_dir" || exit 1
 source "${config_dir}/env/bin/activate"
 python3 "\$(basename "\$app_entry")"
