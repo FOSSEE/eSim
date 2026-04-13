@@ -88,7 +88,15 @@ function installNghdl
     # Do not trap on error of any command. Let NGHDL script handle its own errors.
     trap "" ERR
 
-    if [[ "$(lsb_release -rs)" == "25.04" ]] && [ -f "install-nghdl-scripts/install-nghdl-24.04.sh" ]; then
+    local ubuntu_version=""
+    if command -v lsb_release >/dev/null 2>&1; then
+        ubuntu_version=$(lsb_release -rs 2>/dev/null || true)
+    fi
+    if [ -z "$ubuntu_version" ] && [ -r /etc/os-release ]; then
+        ubuntu_version=$(. /etc/os-release; echo "${VERSION_ID:-}")
+    fi
+
+    if [[ "$ubuntu_version" == "25.04" ]] && [ -f "install-nghdl-scripts/install-nghdl-24.04.sh" ]; then
         ./install-nghdl-scripts/install-nghdl-24.04.sh --install
     else
         ./install-nghdl.sh --install       # Install NGHDL
