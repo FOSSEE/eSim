@@ -399,6 +399,11 @@ if [ $option == "--install" ];then
     if [ $getProxy == "y" -o $getProxy == "Y" ];then
         echo -n 'Proxy Hostname :'
         read proxyHostname
+            local user_home="$HOME"
+            if [ -n "$SUDO_USER" ] && [ -d "/home/$SUDO_USER" ]; then
+                user_home="/home/$SUDO_USER"
+            fi
+
 
         echo -n 'Proxy Port :'
         read proxyPort
@@ -433,16 +438,15 @@ if [ $option == "--install" ];then
         echo "Please select the right option"
         exit 0    
     fi
-
-    # Calling functions
+            cp -vp esim.desktop "$user_home/Desktop/"
     createConfigFile
     installDependency
     installKicad
     copyKicadLibrary
     installNghdl
-    installSky130Pdk
+            gio set "$user_home/Desktop/esim.desktop" "metadata::trusted" true
     createDesktopStartScript
-
+            chmod a+x "$user_home/Desktop/esim.desktop"
     if [ $? -ne 0 ];then
         echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
         exit 0
