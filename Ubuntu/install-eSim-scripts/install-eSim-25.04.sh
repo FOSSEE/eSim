@@ -249,8 +249,20 @@ function installDependency
 function copyKicadLibrary
 {
 
-    #Extract custom KiCad Library
-    tar -xJf library/kicadLibrary.tar.xz
+    local kicad_lib_dir=""
+    local cleanup_tmp=false
+
+    # Extract or use existing KiCad Library
+    if [ -f library/kicadLibrary.tar.xz ]; then
+        tar -xJf library/kicadLibrary.tar.xz
+        kicad_lib_dir="kicadLibrary"
+        cleanup_tmp=true
+    elif [ -d library/kicadLibrary ]; then
+        kicad_lib_dir="library/kicadLibrary"
+    else
+        echo "Warning: KiCad library archive not found. Skipping custom symbols."
+        return 0
+    fi
 
     if [ -d ~/.config/kicad/6.0 ];then
         echo "kicad config folder already exists"
@@ -260,17 +272,19 @@ function copyKicadLibrary
     fi
 
     # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
+    cp "$kicad_lib_dir/template/sym-lib-table" ~/.config/kicad/6.0/
     echo "symbol table copied in the directory"
 
     # Copy KiCad symbols made for eSim
-    sudo cp -r kicadLibrary/eSim-symbols/* /usr/share/kicad/symbols/
+    sudo cp -r "$kicad_lib_dir/eSim-symbols/"* /usr/share/kicad/symbols/
 
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
     
     # Remove extracted KiCad Library - not needed anymore
-    rm -rf kicadLibrary
+    if [ "$cleanup_tmp" = true ]; then
+        rm -rf kicadLibrary
+    fi
 
     set -e      # Re-enable exit on error
     trap error_exit ERR
