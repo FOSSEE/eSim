@@ -1,6 +1,6 @@
 # eSim Ubuntu 25.04 Port - Changelog & Commit Mapping
 
-This log tracks the 36 atomic commits made to resolve the Ubuntu 25.04 installation failures. For detailed terminal logs and code diffs for each bug, please refer to [BUG_REPORT.md](./BUG_REPORT.md).
+This log tracks the 37 atomic commits made to resolve the Ubuntu 25.04 installation failures. For detailed terminal logs and code diffs for each bug, please refer to [BUG_REPORT.md](./BUG_REPORT.md).
 
 | Bug ID | Commit Title | Category |
 | :--- | :--- | :--- |
@@ -40,3 +40,4 @@ This log tracks the 36 atomic commits made to resolve the Ubuntu 25.04 installat
 | **#034** | Fix: GHDL configure fails with incorrect srcdir | Sub-installer |
 | **#035** | Fix: Incorrect eSim_Home Path in Startup Script | Application Launch |
 | **#036** | Fix: Source Discovery Failure | Application Launch |
+| **#037** | Fix: KiCad installation via snap for Ubuntu 25.04 | Package Management |

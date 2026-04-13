@@ -1,6 +1,6 @@
 # Comprehensive Bug Report and Resolution Documentation
 
-This document details the systematic identification and resolution of 36 distinct installation bugs encountered while porting eSim to Ubuntu 25.04.
+This document details the systematic identification and resolution of 37 distinct installation bugs encountered while porting eSim to Ubuntu 25.04.
 
 ---
 
@@ -1831,5 +1831,81 @@ file : install-eSim-25.04.sh
 ```
 
 **Commit Hash:** `b556b64e`
+
+---
+
+### Bug #037: KiCad installation via snap for Ubuntu 25.04
+
+**Log:**
+```text
+Successfully installed anyio-4.13.0 h11-0.16.0 httpcore-1.0.9 httpx-0.28.1 markdown-it-py-4.0.0 mdurl-0.1.2 pcpp-1.30 pygments-2.20.0 pyyaml-6.0.3 rich-13.9.4 volare-0.20.6 zstandard-0.25.0
+Installing KiCad...........................
+Ubuntu 25.04 detected.
+Removing stale KiCad PPA entries...
+Installing KiCad 9.0.7 via snap (required for Ubuntu 25.04 due to libgit2 compatibility)...
+KiCad installation via snap completed successfully!
+```
+
+**Root Cause:** Ubuntu 25.04 cannot install KiCad 8.0 through APT because both the Ubuntu repo and the KiCad 8.0 PPA depend on `libgit2-1.8`, and that package is not available in Plucky. The installer was still hitting the APT/PPA path, so dependency resolution failed before installation could complete.
+
+**Fix:** Use snap exclusively for Ubuntu 25.04 and remove any stale KiCad PPA entries before installation. Snap bundles the runtime dependencies needed by KiCad, so the missing `libgit2-1.8` package no longer blocks setup.
+
+**Changes Made:**
+```text
+file : install-eSim-25.04.sh
+
+	if [[ "$ubuntu_version" == "25.04" ]]; then
+	    # Ubuntu 25.04 incompatibility: libgit2-1.8 doesn't exist
+	    # Both KiCad versions (8.0.8 from Ubuntu repo and 8.0.9 from PPA) require libgit2-1.8
+	    # Solution: Always use snap which bundles its own dependencies
+	    echo "Ubuntu 25.04 detected."
+
+	    # Check if KiCad already installed via snap
+	    if snap list kicad &>/dev/null 2>&1; then
+	        echo "KiCad is already installed via snap."
+	        return 0
+	    fi
+
+	    # Check if KiCad installed via APT (from previous attempts)
+	    if dpkg -s kicad &>/dev/null 2>&1; then
+	        installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
+	        if [[ "$installed_version" == "8" ]]; then
+	            echo "KiCad 8.0 is already installed via APT."
+	            return 0
+	        else
+	            echo "Older KiCad version ($installed_version) detected. Removing for snap installation..."
+	            sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates 2>/dev/null || true
+	            sudo apt-get autoremove -y 2>/dev/null || true
+	        fi
+	    fi
+
+	    # Remove any stale KiCad PPA entries to avoid dependency issues
+	    if grep -Rqs "kicad" /etc/apt/sources.list /etc/apt/sources.list.d 2>/dev/null; then
+	        echo "Removing stale KiCad PPA entries..."
+	        sudo add-apt-repository -r -y "ppa:kicad/kicad-8.0-releases" 2>/dev/null || true
+	        sudo add-apt-repository -r -y "ppa:kicad/kicad-6.0-releases" 2>/dev/null || true
+	        sudo rm -f /etc/apt/sources.list.d/kicad-* 2>/dev/null || true
+	        sudo apt-get update || true
+	    fi
+
+	    # Install KiCad via snap
+	    echo "Installing KiCad 9.0.7 via snap (required for Ubuntu 25.04 due to libgit2 compatibility)..."
+	    if command -v snap &>/dev/null; then
+	        sudo snap install kicad --channel=stable
+	        echo "KiCad installation via snap completed successfully!"
+	        return 0
+	    else
+	        echo "Error: snap is not installed on this system."
+	        echo "Cannot install KiCad on Ubuntu 25.04 without snap (libgit2-1.8 package missing)."
+	        return 1
+	    fi
+```
+
+**Verification:**
+- Ubuntu 25.04 (Plucky) only provides `libgit2-1.9`; `libgit2-1.8` is not installable
+- KiCad 9.0.7 installs through snap without APT dependency resolution failure
+- Existing KiCad PPA entries are removed first to keep the old failing path from being retried
+
+**Commit Hash:** merged into the current installers commit
 
 ---

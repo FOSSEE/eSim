@@ -173,20 +173,55 @@ function installKicad
     # Detect Ubuntu version
     ubuntu_version=$(lsb_release -rs)
 
-    # Define KiCad PPAs based on Ubuntu version
     if [[ "$ubuntu_version" == "25.04" ]]; then
+        # Ubuntu 25.04 incompatibility: libgit2-1.8 doesn't exist
+        # Both KiCad versions (8.0.8 from Ubuntu repo and 8.0.9 from PPA) require libgit2-1.8
+        # Solution: Always use snap which bundles its own dependencies
         echo "Ubuntu 25.04 detected."
-        kicadppa="kicad/kicad-8.0-releases"
-        use_kicad_ppa=true
-
-        # Ubuntu 25.04 does not provide libgit2-1.8; avoid PPA if missing.
-        libgit2_policy=$(apt-cache policy libgit2-1.8 2>&1 || true)
-        if echo "$libgit2_policy" | grep -Eq "Candidate: \(none\)|Unable to locate package"; then
-            echo "libgit2-1.8 not available. Falling back to Ubuntu KiCad repo."
-            use_kicad_ppa=false
+        
+        # Check if KiCad already installed via snap
+        if snap list kicad &>/dev/null 2>&1; then
+            echo "KiCad is already installed via snap."
+            return 0
         fi
-
-        # Check if KiCad is installed using dpkg-query for the main package
+        
+        # Check if KiCad installed via APT (from previous attempts)
+        if dpkg -s kicad &>/dev/null 2>&1; then
+            installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
+            if [[ "$installed_version" == "8" ]]; then
+                echo "KiCad 8.0 is already installed via APT."
+                return 0
+            else
+                echo "Older KiCad version ($installed_version) detected. Removing for snap installation..."
+                sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates 2>/dev/null || true
+                sudo apt-get autoremove -y 2>/dev/null || true
+            fi
+        fi
+        
+        # Remove any stale KiCad PPA entries to avoid dependency issues
+        if grep -Rqs "kicad" /etc/apt/sources.list /etc/apt/sources.list.d 2>/dev/null; then
+            echo "Removing stale KiCad PPA entries..."
+            sudo add-apt-repository -r -y "ppa:kicad/kicad-8.0-releases" 2>/dev/null || true
+            sudo add-apt-repository -r -y "ppa:kicad/kicad-6.0-releases" 2>/dev/null || true
+            sudo rm -f /etc/apt/sources.list.d/kicad-* 2>/dev/null || true
+            sudo apt-get update || true
+        fi
+        
+        # Install KiCad via snap
+        echo "Installing KiCad 9.0.7 via snap (required for Ubuntu 25.04 due to libgit2 compatibility)..."
+        if command -v snap &>/dev/null; then
+            sudo snap install kicad --channel=stable
+            echo "KiCad installation via snap completed successfully!"
+            return 0
+        else
+            echo "Error: snap is not installed on this system."
+            echo "Cannot install KiCad on Ubuntu 25.04 without snap (libgit2-1.8 package missing)."
+            return 1
+        fi
+    else
+        # For other Ubuntu versions, use PPA-based installation
+        kicadppa="kicad/kicad-6.0-releases"
+        
         if dpkg -s kicad &>/dev/null; then
             installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
             if [[ "$installed_version" != "8" ]]; then
@@ -206,13 +241,8 @@ function installKicad
                 return 0
             fi
         fi
-
-    else
-        kicadppa="kicad/kicad-6.0-releases"
-    fi
-
-    # Check if the PPA is already added
-    if [[ "$use_kicad_ppa" == true ]]; then
+        
+        # Check if the PPA is already added
         if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
             echo "Adding KiCad PPA to local apt repository: $kicadppa"
             sudo add-apt-repository -y "ppa:$kicadppa"
@@ -220,20 +250,11 @@ function installKicad
         else
             echo "KiCad PPA is already present in sources."
         fi
-    else
-        if grep -Rqs "kicad-8.0-releases" /etc/apt/sources.list /etc/apt/sources.list.d 2>/dev/null; then
-            echo "Removing KiCad PPA due to libgit2 dependency mismatch."
-            sudo add-apt-repository -r -y "ppa:$kicadppa" || true
-            sudo rm -f /etc/apt/sources.list.d/kicad-ubuntu-kicad-8_0-releases-*.sources \
-                /etc/apt/sources.list.d/kicad-ubuntu-kicad-8_0-releases-*.list || true
-            sudo apt-get update || true
-        fi
+
+        # Install KiCad packages via APT
+        sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+        echo "KiCad installation completed successfully!"
     fi
-
-    # Install KiCad packages
-    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-
-    echo "KiCad installation completed successfully!"
 }
 
 
