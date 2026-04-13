@@ -103,18 +103,21 @@ function installNghdl
             fi
         done
 
+        if [ -f "ghdl-4.1.0.tar.gz" ]; then
+            tar -xzf ghdl-4.1.0.tar.gz
+            if [ -f "ghdl-4.1.0/configure" ]; then
+                sed -i 's/check_version 18.1 \$llvm_version ||/check_version 18.1 $llvm_version ||\n       check_version 19.0 $llvm_version ||\n       check_version 20.0 $llvm_version ||\n       check_version 20.1 $llvm_version ||/' ghdl-4.1.0/configure
+            fi
+            tar -czf ghdl-4.1.0.tar.gz ghdl-4.1.0
+            rm -rf ghdl-4.1.0
+        fi
+
         llvm_version=$(llvm-config --version 2>/dev/null || true)
         if [[ "$llvm_version" == 20.1.* ]]; then
-            for nghdl_script in "install-nghdl.sh" "install-nghdl-scripts/install-nghdl-24.04.sh"; do
-                if [ -f "$nghdl_script" ]; then
-                    sed -i 's/20\.1/18.0/g' "$nghdl_script"
-                    sed -i 's/20\.0/18.0/g' "$nghdl_script"
-                fi
-            done
             cat > ./llvm-config <<'EOF'
 #!/bin/sh
 if [ "$1" = "--version" ]; then
-    echo "18.0"
+    echo "20.1"
     exit 0
 fi
 exec /usr/bin/llvm-config "$@"
