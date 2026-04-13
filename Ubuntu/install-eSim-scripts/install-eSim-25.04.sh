@@ -102,6 +102,15 @@ function installNghdl
                 sed -i 's/libcanberra-gtk-module/libcanberra-gtk3-module/g' "$nghdl_script"
             fi
         done
+
+        llvm_version=$(llvm-config --version 2>/dev/null || true)
+        if [[ "$llvm_version" == 20.1.* ]]; then
+            for nghdl_script in "install-nghdl.sh" "install-nghdl-scripts/install-nghdl-24.04.sh"; do
+                if [ -f "$nghdl_script" ] && grep -q "20\.0" "$nghdl_script"; then
+                    sed -i 's/20\.0/20.1/g' "$nghdl_script"
+                fi
+            done
+        fi
     fi
 
     if [[ "$ubuntu_version" == "25.04" ]] && [ -f "install-nghdl-scripts/install-nghdl-24.04.sh" ]; then
