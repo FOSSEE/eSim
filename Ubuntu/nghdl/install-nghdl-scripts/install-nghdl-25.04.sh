@@ -24,7 +24,8 @@ ghdl="ghdl-4.1.0"
 verilator="verilator-4.210"
 config_dir="$HOME/.nghdl"
 config_file="config.ini"
-src_dir=`pwd`
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+src_dir="$(cd "$script_dir/.." && pwd)"
 
 # Will be used to take backup of any file
 sysdate="$(date)"
@@ -65,7 +66,7 @@ function installDependency
   
     # Specific dependency for canberra-gtk modules
     echo "Installing Gtk Canberra modules..........................."
-    sudo apt install -y libcanberra-gtk-module libcanberra-gtk3-module
+    sudo apt install -y libcanberra-gtk3-module libcanberra-gtk3-module
 
     # Specific dependency for nvidia graphic cards
     echo "Installing graphics dependency for Ngspice source build"
@@ -95,18 +96,19 @@ function installGHDL
 {   
 
     echo "Installing $ghdl LLVM................................."
+    if [ -d "$src_dir/$ghdl" ]; then
+        rm -rf "$src_dir/$ghdl"
+    fi
     tar xvf $ghdl.tar.gz
     echo "$ghdl successfully extracted"
     echo "Changing directory to $ghdl installation"
-    cd $ghdl/
+    cd "$src_dir/$ghdl/"
     echo "Configuring $ghdl build as per requirements"
     chmod +x configure
     
-    # Patch GHDL configure to allow LLVM 20.x
-    sed -i 's/1[0-9]/2[0-9]/g' configure
-    
     # Other configure flags can be found at - https://github.com/ghdl/ghdl/blob/master/configure
-    ./configure --with-llvm-config=/usr/bin/llvm-config
+    ghdl_src_dir="$(pwd -P)"
+    ./configure --srcdir="$ghdl_src_dir" --with-llvm-config=/usr/bin/llvm-config
     echo "Building the install file for $ghdl LLVM"
     make -j$(nproc)
     sudo make install
@@ -157,12 +159,20 @@ function installVerilator
 function installNGHDL
 {
 
+    sudo rm -rf "$HOME/nghdl"
+    sudo rm -rf "$HOME/nghdl-simulator-source"
+
     echo "Installing NGHDL........................................"
 
     # Extracting NGHDL to Home Directory
+    # Check if existing installation exists and remove it for clean install
+    if [ -d "$HOME/$nghdl" ]; then
+        echo "Removing existing NGHDL installation..."
+        sudo rm -rf "$HOME/$nghdl"
+    fi
+    
     cd $src_dir
     tar -xJf $nghdl-source.tar.xz -C $HOME
-    rm -rf $HOME/$nghdl
     mv $HOME/$nghdl-source $HOME/$nghdl
 
     echo "NGHDL extracted sucessfully to $HOME"
