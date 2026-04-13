@@ -244,12 +244,22 @@ function installDependency
     pip install --upgrade pip
 
     echo "Installing Gtk Canberra modules..........................."
-    if apt-cache show libcanberra-gtk-module >/dev/null 2>&1; then
+    canberra_policy=$(apt-cache policy libcanberra-gtk-module 2>/dev/null || true)
+    if echo "$canberra_policy" | grep -q "Candidate: (none)"; then
+        canberra_policy=""
+    fi
+    if [ -n "$canberra_policy" ]; then
         sudo apt-get install -y libcanberra-gtk-module
-    elif apt-cache show libcanberra-gtk3-module >/dev/null 2>&1; then
-        sudo apt-get install -y libcanberra-gtk3-module
     else
-        echo "Warning: libcanberra-gtk-module not available. Skipping."
+        canberra3_policy=$(apt-cache policy libcanberra-gtk3-module 2>/dev/null || true)
+        if echo "$canberra3_policy" | grep -q "Candidate: (none)"; then
+            canberra3_policy=""
+        fi
+        if [ -n "$canberra3_policy" ]; then
+            sudo apt-get install -y libcanberra-gtk3-module
+        else
+            echo "Warning: libcanberra-gtk-module not available. Skipping."
+        fi
     fi
     
     echo "Installing Xterm..........................."
