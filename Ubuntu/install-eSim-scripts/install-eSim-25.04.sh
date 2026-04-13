@@ -216,8 +216,13 @@ function installDependency
     sudo apt install python3-virtualenv
    
     echo "Creating virtual environment to isolate packages "
-    virtualenv $config_dir/env
+    sudo mkdir -p "$config_dir"
     sudo chown -R "$user_name":"$user_name" "$config_dir"
+    if [ -d "$config_dir/env" ]; then
+        echo "Existing virtual environment found. Recreating it to fix permissions."
+        sudo rm -rf "$config_dir/env"
+    fi
+    sudo -u "$user_name" virtualenv "$config_dir/env"
     
     echo "Starting the virtual env..................."
     source $config_dir/env/bin/activate
