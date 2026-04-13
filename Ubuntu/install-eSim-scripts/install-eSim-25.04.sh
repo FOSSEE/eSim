@@ -97,6 +97,7 @@ function installNghdl
     fi
 
     if [[ "$ubuntu_version" == "25.04" ]] && [ -f "install-nghdl-scripts/install-nghdl-24.04.sh" ]; then
+        chmod +x install-nghdl-scripts/install-nghdl-24.04.sh
         ./install-nghdl-scripts/install-nghdl-24.04.sh --install
     else
         ./install-nghdl.sh --install       # Install NGHDL
