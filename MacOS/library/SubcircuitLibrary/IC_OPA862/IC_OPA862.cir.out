@@ -1,0 +1,18 @@
+* c:\fossee\esim\library\subcircuitlibrary\ic_opa862\ic_opa862.cir
+
+.include lm_741.sub
+x1 ? net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad4_ ? net-_r1-pad1_ net-_u1-pad5_ ? lm_741
+x2 ? net-_c1-pad2_ net-_u1-pad3_ net-_u1-pad4_ ? net-_c1-pad1_ net-_u1-pad5_ ? lm_741
+r1  net-_r1-pad1_ net-_c1-pad2_ 1k
+r2  net-_c1-pad2_ net-_c1-pad1_ 1k
+c1  net-_c1-pad1_ net-_c1-pad2_ 4p
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_r1-pad1_ net-_c1-pad1_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

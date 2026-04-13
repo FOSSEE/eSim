@@ -1,0 +1,4 @@
+<library>
+<model_name>NIGBT</model_name>
+<ref_model>IXGH40N60</ref_model>
+<param><TAU>287.56E-9</TAU><KF>.36047</KF><AREA>37.500E-6</AREA><AGD>18.750E-6</AGD><KP>50.034</KP><VT>4.1822</VT><CGS>31.942E-9</CGS><COXD>53.188E-9</COXD><VTD>2.6570</VTD></param></library>

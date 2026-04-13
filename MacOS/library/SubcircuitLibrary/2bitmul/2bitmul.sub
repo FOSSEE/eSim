@@ -1,0 +1,25 @@
+* Subcircuit 2bitmul
+.subckt 2bitmul net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ 
+* c:\esim\esim\src\subcircuitlibrary\2bitmul\2bitmul.cir
+.include half_adder.sub
+* u5  net-_u1-pad1_ net-_u1-pad3_ net-_u1-pad5_ d_and
+* u4  net-_u1-pad2_ net-_u1-pad3_ net-_u4-pad3_ d_and
+* u3  net-_u1-pad1_ net-_u1-pad4_ net-_u3-pad3_ d_and
+* u2  net-_u1-pad2_ net-_u1-pad4_ net-_u2-pad3_ d_and
+x2 net-_u4-pad3_ net-_u3-pad3_ net-_u1-pad6_ net-_x1-pad1_ half_adder
+x1 net-_x1-pad1_ net-_u2-pad3_ net-_u1-pad7_ net-_u1-pad8_ half_adder
+a1 [net-_u1-pad1_ net-_u1-pad3_ ] net-_u1-pad5_ u5
+a2 [net-_u1-pad2_ net-_u1-pad3_ ] net-_u4-pad3_ u4
+a3 [net-_u1-pad1_ net-_u1-pad4_ ] net-_u3-pad3_ u3
+a4 [net-_u1-pad2_ net-_u1-pad4_ ] net-_u2-pad3_ u2
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u5 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u4 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u3 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u2 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Control Statements
+
+.ends 2bitmul

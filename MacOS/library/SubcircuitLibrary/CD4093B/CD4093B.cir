@@ -1,0 +1,90 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD4093B\CD4093B.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 4/26/2025 7:27:35 PM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M2  Net-_M1-Pad3_ A GND GND mosfet_n		
+M1  Net-_M1-Pad1_ A Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+M6  Net-_M1-Pad1_ A Net-_M17-Pad3_ Net-_M17-Pad3_ mosfet_p		
+M5  Net-_M17-Pad3_ A vdd vdd mosfet_p		
+M17  GND Net-_M1-Pad1_ Net-_M17-Pad3_ Net-_M17-Pad3_ mosfet_p		
+M21  vdd Net-_M1-Pad1_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+M4  Net-_M22-Pad3_ B GND GND mosfet_n		
+M3  Net-_M18-Pad2_ B Net-_M22-Pad3_ Net-_M22-Pad3_ mosfet_n		
+M8  Net-_M18-Pad2_ B Net-_M18-Pad3_ Net-_M18-Pad3_ mosfet_p		
+M7  Net-_M18-Pad3_ B vdd vdd mosfet_p		
+M18  GND Net-_M18-Pad2_ Net-_M18-Pad3_ Net-_M18-Pad3_ mosfet_p		
+M22  vdd Net-_M18-Pad2_ Net-_M22-Pad3_ Net-_M22-Pad3_ mosfet_n		
+M27  Net-_M25-Pad1_ Net-_M1-Pad1_ vdd vdd mosfet_p		
+M25  Net-_M25-Pad1_ Net-_M1-Pad1_ GND GND mosfet_n		
+M28  Net-_M26-Pad1_ Net-_M18-Pad2_ vdd vdd mosfet_p		
+M26  Net-_M26-Pad1_ Net-_M18-Pad2_ GND GND mosfet_n		
+M35  j Net-_M25-Pad1_ Net-_M35-Pad3_ Net-_M35-Pad3_ mosfet_n		
+M37  Net-_M35-Pad3_ Net-_M26-Pad1_ GND GND mosfet_n		
+M33  j Net-_M25-Pad1_ vdd vdd mosfet_p		
+M39  j Net-_M26-Pad1_ vdd vdd mosfet_p		
+M10  Net-_M10-Pad1_ c GND GND mosfet_n		
+M9  Net-_M14-Pad1_ c Net-_M10-Pad1_ Net-_M10-Pad1_ mosfet_n		
+M14  Net-_M14-Pad1_ c Net-_M13-Pad1_ Net-_M13-Pad1_ mosfet_p		
+M13  Net-_M13-Pad1_ c vdd vdd mosfet_p		
+M19  GND Net-_M14-Pad1_ Net-_M13-Pad1_ Net-_M13-Pad1_ mosfet_p		
+M23  vdd Net-_M14-Pad1_ Net-_M10-Pad1_ Net-_M10-Pad1_ mosfet_n		
+M12  Net-_M11-Pad3_ d GND GND mosfet_n		
+M11  Net-_M11-Pad1_ d Net-_M11-Pad3_ Net-_M11-Pad3_ mosfet_n		
+M16  Net-_M11-Pad1_ d Net-_M15-Pad1_ Net-_M15-Pad1_ mosfet_p		
+M15  Net-_M15-Pad1_ d vdd vdd mosfet_p		
+M20  GND Net-_M11-Pad1_ Net-_M15-Pad1_ Net-_M15-Pad1_ mosfet_p		
+M24  vdd Net-_M11-Pad1_ Net-_M11-Pad3_ Net-_M11-Pad3_ mosfet_n		
+M31  Net-_M29-Pad1_ Net-_M14-Pad1_ vdd vdd mosfet_p		
+M29  Net-_M29-Pad1_ Net-_M14-Pad1_ GND GND mosfet_n		
+M32  Net-_M30-Pad1_ Net-_M11-Pad1_ vdd vdd mosfet_p		
+M30  Net-_M30-Pad1_ Net-_M11-Pad1_ GND GND mosfet_n		
+M36  k Net-_M29-Pad1_ Net-_M36-Pad3_ Net-_M36-Pad3_ mosfet_n		
+M38  Net-_M36-Pad3_ Net-_M30-Pad1_ GND GND mosfet_n		
+M34  k Net-_M29-Pad1_ vdd vdd mosfet_p		
+M40  k Net-_M30-Pad1_ vdd vdd mosfet_p		
+M42  Net-_M41-Pad3_ e GND GND mosfet_n		
+M41  Net-_M41-Pad1_ e Net-_M41-Pad3_ Net-_M41-Pad3_ mosfet_n		
+M46  Net-_M41-Pad1_ e Net-_M45-Pad1_ Net-_M45-Pad1_ mosfet_p		
+M45  Net-_M45-Pad1_ e vdd vdd mosfet_p		
+M49  GND Net-_M41-Pad1_ Net-_M45-Pad1_ Net-_M45-Pad1_ mosfet_p		
+M51  vdd Net-_M41-Pad1_ Net-_M41-Pad3_ Net-_M41-Pad3_ mosfet_n		
+M44  Net-_M43-Pad3_ f GND GND mosfet_n		
+M43  Net-_M43-Pad1_ f Net-_M43-Pad3_ Net-_M43-Pad3_ mosfet_n		
+M48  Net-_M43-Pad1_ f Net-_M47-Pad1_ Net-_M47-Pad1_ mosfet_p		
+M47  Net-_M47-Pad1_ f vdd vdd mosfet_p		
+M50  GND Net-_M43-Pad1_ Net-_M47-Pad1_ Net-_M47-Pad1_ mosfet_p		
+M52  vdd Net-_M43-Pad1_ Net-_M43-Pad3_ Net-_M43-Pad3_ mosfet_n		
+M55  Net-_M53-Pad1_ Net-_M41-Pad1_ vdd vdd mosfet_p		
+M53  Net-_M53-Pad1_ Net-_M41-Pad1_ GND GND mosfet_n		
+M56  Net-_M54-Pad1_ Net-_M43-Pad1_ vdd vdd mosfet_p		
+M54  Net-_M54-Pad1_ Net-_M43-Pad1_ GND GND mosfet_n		
+M58  l Net-_M53-Pad1_ Net-_M58-Pad3_ Net-_M58-Pad3_ mosfet_n		
+M59  Net-_M58-Pad3_ Net-_M54-Pad1_ GND GND mosfet_n		
+M57  l Net-_M53-Pad1_ vdd vdd mosfet_p		
+M60  l Net-_M54-Pad1_ vdd vdd mosfet_p		
+M62  Net-_M61-Pad3_ g GND GND mosfet_n		
+M61  Net-_M61-Pad1_ g Net-_M61-Pad3_ Net-_M61-Pad3_ mosfet_n		
+M66  Net-_M61-Pad1_ g Net-_M65-Pad1_ Net-_M65-Pad1_ mosfet_p		
+M65  Net-_M65-Pad1_ g vdd vdd mosfet_p		
+M69  GND Net-_M61-Pad1_ Net-_M65-Pad1_ Net-_M65-Pad1_ mosfet_p		
+M71  vdd Net-_M61-Pad1_ Net-_M61-Pad3_ Net-_M61-Pad3_ mosfet_n		
+M64  Net-_M63-Pad3_ h GND GND mosfet_n		
+M63  Net-_M63-Pad1_ h Net-_M63-Pad3_ Net-_M63-Pad3_ mosfet_n		
+M68  Net-_M63-Pad1_ h Net-_M67-Pad1_ Net-_M67-Pad1_ mosfet_p		
+M67  Net-_M67-Pad1_ h vdd vdd mosfet_p		
+M70  GND Net-_M63-Pad1_ Net-_M67-Pad1_ Net-_M67-Pad1_ mosfet_p		
+M72  vdd Net-_M63-Pad1_ Net-_M63-Pad3_ Net-_M63-Pad3_ mosfet_n		
+M75  Net-_M73-Pad1_ Net-_M61-Pad1_ vdd vdd mosfet_p		
+M73  Net-_M73-Pad1_ Net-_M61-Pad1_ GND GND mosfet_n		
+M76  Net-_M74-Pad1_ Net-_M63-Pad1_ vdd vdd mosfet_p		
+M74  Net-_M74-Pad1_ Net-_M63-Pad1_ GND GND mosfet_n		
+M78  m Net-_M73-Pad1_ Net-_M78-Pad3_ Net-_M78-Pad3_ mosfet_n		
+M79  Net-_M78-Pad3_ Net-_M74-Pad1_ GND GND mosfet_n		
+M77  m Net-_M73-Pad1_ vdd vdd mosfet_p		
+M80  m Net-_M74-Pad1_ vdd vdd mosfet_p		
+
+.end

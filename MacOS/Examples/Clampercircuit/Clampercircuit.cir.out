@@ -1,0 +1,26 @@
+* /home/fossee/esim-workspace/clampercircuit/clampercircuit.cir
+
+.include D.lib
+v1  in_neg gnd sine(0 5 50 0 0)
+c1  out_neg in_neg 1n
+d1 out_neg gnd 1N4148
+v2  in_pos gnd sine(0 5 50 0 0)
+c2  out_pos in_pos 1n
+d2 gnd out_pos 1N4148
+* u1  in_neg plot_v1
+* u2  out_neg plot_v1
+* u3  in_pos plot_v1
+* u4  out_pos plot_v1
+.tran 10e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in_neg)
+plot v(out_neg)
+plot v(in_pos)
+plot v(out_pos)
+.endc
+.end

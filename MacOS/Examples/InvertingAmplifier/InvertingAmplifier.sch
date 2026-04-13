@@ -1,0 +1,265 @@
+EESchema Schematic File Version 2
+LIBS:InvertingAmplifier-rescue
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Plot
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_User
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:transistors
+LIBS:conn
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:InvertingAmplifier-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L R R1
+U 1 1 5E7DEECC
+P 5250 3350
+F 0 "R1" H 5300 3480 50  0000 C CNN
+F 1 "1k" H 5300 3400 50  0000 C CNN
+F 2 "" H 5300 3330 30  0000 C CNN
+F 3 "" V 5300 3400 30  0000 C CNN
+	1    5250 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R3
+U 1 1 5E7DEECD
+P 6100 2850
+F 0 "R3" H 6150 2980 50  0000 C CNN
+F 1 "5k" H 6150 2900 50  0000 C CNN
+F 2 "" H 6150 2830 30  0000 C CNN
+F 3 "" V 6150 2900 30  0000 C CNN
+	1    6100 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L sine v1
+U 1 1 5E7DEECE
+P 4850 3750
+F 0 "v1" H 4650 3850 60  0000 C CNN
+F 1 "sine" H 4650 3700 60  0000 C CNN
+F 2 "R1" H 4550 3750 60  0000 C CNN
+F 3 "" H 4850 3750 60  0000 C CNN
+	1    4850 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR01
+U 1 1 5E7DEECF
+P 5600 3900
+F 0 "#PWR01" H 5600 3650 50  0001 C CNN
+F 1 "GND" H 5600 3750 50  0000 C CNN
+F 2 "" H 5600 3900 50  0000 C CNN
+F 3 "" H 5600 3900 50  0000 C CNN
+	1    5600 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR02
+U 1 1 5E7DEED0
+P 4850 4200
+F 0 "#PWR02" H 4850 3950 50  0001 C CNN
+F 1 "GND" H 4850 4050 50  0000 C CNN
+F 2 "" H 4850 4200 50  0000 C CNN
+F 3 "" H 4850 4200 50  0000 C CNN
+	1    4850 4200
+	1    0    0    -1  
+$EndComp
+Text GLabel 4900 3150 0    60   Input ~ 0
+in
+$Comp
+L R R4
+U 1 1 5E7DEED1
+P 7550 3500
+F 0 "R4" H 7600 3630 50  0000 C CNN
+F 1 "1k" H 7600 3550 50  0000 C CNN
+F 2 "" H 7600 3480 30  0000 C CNN
+F 3 "" V 7600 3550 30  0000 C CNN
+	1    7550 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR03
+U 1 1 5E7DEED2
+P 7750 3450
+F 0 "#PWR03" H 7750 3200 50  0001 C CNN
+F 1 "GND" H 7750 3300 50  0000 C CNN
+F 2 "" H 7750 3450 50  0000 C CNN
+F 3 "" H 7750 3450 50  0000 C CNN
+	1    7750 3450
+	1    0    0    -1  
+$EndComp
+Text GLabel 7500 3300 2    60   Input ~ 0
+out
+$Comp
+L R R2
+U 1 1 5E7DEED3
+P 5550 3700
+F 0 "R2" H 5600 3830 50  0000 C CNN
+F 1 "1k" H 5600 3750 50  0000 C CNN
+F 2 "" H 5600 3680 30  0000 C CNN
+F 3 "" V 5600 3750 30  0000 C CNN
+	1    5550 3700
+	0    1    1    0   
+$EndComp
+$Comp
+L plot_v1 U1
+U 1 1 5E7DEED4
+P 4950 3300
+F 0 "U1" H 4950 3800 60  0000 C CNN
+F 1 "plot_v1" H 5150 3650 60  0000 C CNN
+F 2 "" H 4950 3300 60  0000 C CNN
+F 3 "" H 4950 3300 60  0000 C CNN
+	1    4950 3300
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U2
+U 1 1 5E7DEED5
+P 7400 3400
+F 0 "U2" H 7400 3900 60  0000 C CNN
+F 1 "plot_v1" H 7600 3750 60  0000 C CNN
+F 2 "" H 7400 3400 60  0000 C CNN
+F 3 "" H 7400 3400 60  0000 C CNN
+	1    7400 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L DC v3
+U 1 1 5E7DEED6
+P 6750 2350
+F 0 "v3" H 6550 2450 60  0000 C CNN
+F 1 "12" H 6550 2300 60  0000 C CNN
+F 2 "R1" H 6450 2350 60  0000 C CNN
+F 3 "" H 6750 2350 60  0000 C CNN
+	1    6750 2350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L GND #PWR04
+U 1 1 5E7DEED7
+P 7200 2550
+F 0 "#PWR04" H 7200 2300 50  0001 C CNN
+F 1 "GND" H 7200 2400 50  0000 C CNN
+F 2 "" H 7200 2550 50  0001 C CNN
+F 3 "" H 7200 2550 50  0001 C CNN
+	1    7200 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L DC v2
+U 1 1 5E7DEED8
+P 6650 4100
+F 0 "v2" H 6450 4200 60  0000 C CNN
+F 1 "12" H 6450 4050 60  0000 C CNN
+F 2 "R1" H 6350 4100 60  0000 C CNN
+F 3 "" H 6650 4100 60  0000 C CNN
+	1    6650 4100
+	0    1    -1   0   
+$EndComp
+$Comp
+L GND #PWR05
+U 1 1 5E7DEED9
+P 7250 4100
+F 0 "#PWR05" H 7250 3850 50  0001 C CNN
+F 1 "GND" H 7250 3950 50  0000 C CNN
+F 2 "" H 7250 4100 50  0001 C CNN
+F 3 "" H 7250 4100 50  0001 C CNN
+	1    7250 4100
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4850 3300 5150 3300
+Wire Wire Line
+	5450 3300 5800 3300
+Wire Wire Line
+	6000 2800 5650 2800
+Wire Wire Line
+	5650 2800 5650 3300
+Connection ~ 5650 3300
+Wire Wire Line
+	6900 3450 7450 3450
+Wire Wire Line
+	6300 2800 7050 2800
+Wire Wire Line
+	4900 3150 4950 3150
+Wire Wire Line
+	4950 3100 4950 3300
+Connection ~ 4950 3300
+Wire Wire Line
+	7400 3200 7400 3450
+Connection ~ 7400 3450
+Wire Wire Line
+	5800 3550 5600 3550
+Wire Wire Line
+	5600 3550 5600 3600
+Wire Wire Line
+	7500 3300 7400 3300
+Connection ~ 7400 3300
+Connection ~ 4950 3150
+Wire Wire Line
+	7200 2550 7200 2350
+Wire Wire Line
+	7100 4100 7250 4100
+$Comp
+L lm_741 X1
+U 1 1 5E7DEEDA
+P 6350 3450
+F 0 "X1" H 6150 3450 60  0000 C CNN
+F 1 "lm_741" H 6250 3200 60  0000 C CNN
+F 2 "" H 6350 3450 60  0000 C CNN
+F 3 "" H 6350 3450 60  0000 C CNN
+	1    6350 3450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7050 2800 7050 3450
+Connection ~ 7050 3450
+Wire Wire Line
+	6300 2350 6200 2350
+Wire Wire Line
+	6200 2350 6200 3000
+Wire Wire Line
+	6200 3900 6200 4100
+$EndSCHEMATC

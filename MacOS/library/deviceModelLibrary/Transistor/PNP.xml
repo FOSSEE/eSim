@@ -1,0 +1,33 @@
+<library>
+<model_name>PNP</model_name>
+<ref_model>Q2N2907A</ref_model>
+<param>
+<Is>650.6E-18</Is> 
+<Xti>3 </Xti>
+<Eg>1.11 </Eg>
+<Vaf>115.7 </Vaf>
+<Bf>231.7 </Bf>
+<Ne>1.829</Ne>
+<Ise>54.81f </Ise>
+<Ikf>1.079 </Ikf>
+<Xtb>1.5 </Xtb>
+<Br>3.563 </Br>
+<Nc>2 </Nc>
+<Isc>0 </Isc>
+<Ikr>0</Ikr> 
+<Rc>.715</Rc>
+<Cjc>14.76p </Cjc>
+<Mjc>.5383 </Mjc>
+<Vjc>.75 </Vjc>
+<Fc>.5 </Fc>
+<Cje>19.82p </Cje>
+<Mje>.3357 </Mje>
+<Vje>.75</Vje>
+<Tr>111.3n </Tr>
+<Tf>603.7p </Tf>
+<Itf>.65 </Itf>
+<Vtf>5 </Vtf>
+<Xtf>1.7 </Xtf>
+<Rb>10</Rb>
+</param>
+</library>

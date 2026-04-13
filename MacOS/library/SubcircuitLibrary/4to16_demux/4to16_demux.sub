@@ -1,0 +1,43 @@
+* Subcircuit 4to16_demux
+.subckt 4to16_demux net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ ? net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ net-_u1-pad20_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ ? 
+* /home/mallikarjuna/downloads/esim-1.1.2/src/subcircuitlibrary/4to16_demux/4to16_demux.cir
+.include 5_nand.sub
+* u3  net-_u1-pad23_ net-_u3-pad2_ d_inverter
+* u4  net-_u1-pad22_ net-_u4-pad2_ d_inverter
+* u5  net-_u1-pad21_ net-_u5-pad2_ d_inverter
+* u6  net-_u1-pad20_ net-_u6-pad2_ d_inverter
+* u2  net-_u1-pad19_ net-_u1-pad18_ net-_u2-pad3_ d_nor
+x1 net-_u3-pad2_ net-_u4-pad2_ net-_u5-pad2_ net-_u6-pad2_ net-_u2-pad3_ net-_u1-pad1_ 5_nand
+x2 net-_u1-pad23_ net-_u4-pad2_ net-_u5-pad2_ net-_u6-pad2_ net-_u2-pad3_ net-_u1-pad2_ 5_nand
+x3 net-_u3-pad2_ net-_u1-pad22_ net-_u5-pad2_ net-_u6-pad2_ net-_u2-pad3_ net-_u1-pad3_ 5_nand
+x4 net-_u1-pad23_ net-_u1-pad22_ net-_u5-pad2_ net-_u6-pad2_ net-_u2-pad3_ net-_u1-pad4_ 5_nand
+x5 net-_u3-pad2_ net-_u4-pad2_ net-_u1-pad21_ net-_u6-pad2_ net-_u2-pad3_ net-_u1-pad5_ 5_nand
+x6 net-_u1-pad23_ net-_u4-pad2_ net-_u1-pad21_ net-_u6-pad2_ net-_u2-pad3_ net-_u1-pad6_ 5_nand
+x7 net-_u3-pad2_ net-_u1-pad22_ net-_u1-pad21_ net-_u6-pad2_ net-_u2-pad3_ net-_u1-pad7_ 5_nand
+x8 net-_u1-pad23_ net-_u1-pad22_ net-_u1-pad21_ net-_u6-pad2_ net-_u2-pad3_ net-_u1-pad8_ 5_nand
+x9 net-_u3-pad2_ net-_u4-pad2_ net-_u5-pad2_ net-_u1-pad20_ net-_u2-pad3_ net-_u1-pad9_ 5_nand
+x10 net-_u1-pad23_ net-_u4-pad2_ net-_u5-pad2_ net-_u1-pad20_ net-_u2-pad3_ net-_u1-pad10_ 5_nand
+x11 net-_u3-pad2_ net-_u1-pad22_ net-_u5-pad2_ net-_u1-pad20_ net-_u2-pad3_ net-_u1-pad11_ 5_nand
+x12 net-_u1-pad23_ net-_u1-pad22_ net-_u5-pad2_ net-_u1-pad20_ net-_u2-pad3_ net-_u1-pad13_ 5_nand
+x13 net-_u3-pad2_ net-_u4-pad2_ net-_u1-pad21_ net-_u1-pad20_ net-_u2-pad3_ net-_u1-pad14_ 5_nand
+x14 net-_u1-pad23_ net-_u4-pad2_ net-_u1-pad21_ net-_u1-pad20_ net-_u2-pad3_ net-_u1-pad15_ 5_nand
+x15 net-_u3-pad2_ net-_u1-pad22_ net-_u1-pad21_ net-_u1-pad20_ net-_u2-pad3_ net-_u1-pad16_ 5_nand
+x16 net-_u1-pad23_ net-_u1-pad22_ net-_u1-pad21_ net-_u1-pad20_ net-_u2-pad3_ net-_u1-pad17_ 5_nand
+a1 net-_u1-pad23_ net-_u3-pad2_ u3
+a2 net-_u1-pad22_ net-_u4-pad2_ u4
+a3 net-_u1-pad21_ net-_u5-pad2_ u5
+a4 net-_u1-pad20_ net-_u6-pad2_ u6
+a5 [net-_u1-pad19_ net-_u1-pad18_ ] net-_u2-pad3_ u2
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u5 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u6 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u2 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Control Statements
+
+.ends 4to16_demux

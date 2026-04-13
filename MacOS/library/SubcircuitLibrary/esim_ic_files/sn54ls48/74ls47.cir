@@ -1,0 +1,31 @@
+* C:\Users\Shanthipriya\Desktop\madeeasy\FOSSEE\eSim\library\SubcircuitLibrary\74ls47\74ls47.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 04/11/25 01:57:49
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X3  Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U5-Pad1_ a_origin		
+X5  Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U7-Pad1_ c_origin		
+X6  Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U8-Pad1_ d_origin		
+X7  Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U11-Pad1_ e_origin		
+X8  Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U9-Pad1_ f_origin		
+U1  /w /x /y /z Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ ? ? PORT		
+U3  /w /x /y /z Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ adc_bridge_4		
+X1  /RBI Net-_U3-Pad8_ Net-_U3-Pad7_ Net-_U3-Pad6_ Net-_U4-Pad1_ 4_OR		
+U4  Net-_U4-Pad1_ Net-_U3-Pad5_ Net-_U4-Pad3_ d_or		
+X2  /LT /BI Net-_U4-Pad3_ Net-_U10-Pad2_ 3_and		
+U5  Net-_U5-Pad1_ Net-_U10-Pad2_ Net-_U12-Pad1_ d_and		
+U6  Net-_U6-Pad1_ Net-_U10-Pad2_ Net-_U12-Pad2_ d_and		
+U7  Net-_U7-Pad1_ Net-_U10-Pad2_ Net-_U12-Pad3_ d_and		
+U8  Net-_U8-Pad1_ Net-_U10-Pad2_ Net-_U12-Pad4_ d_and		
+U11  Net-_U11-Pad1_ Net-_U10-Pad2_ Net-_U11-Pad3_ d_and		
+U9  Net-_U9-Pad1_ Net-_U10-Pad2_ Net-_U12-Pad6_ d_and		
+U2  Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ /LT /BI /RBI adc_bridge_3		
+U12  Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U12-Pad3_ Net-_U12-Pad4_ Net-_U11-Pad3_ Net-_U12-Pad6_ Net-_U10-Pad3_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ dac_bridge_7		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_and		
+X4  Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U6-Pad1_ b_origin		
+X9  Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U10-Pad1_ g_origin		
+
+.end

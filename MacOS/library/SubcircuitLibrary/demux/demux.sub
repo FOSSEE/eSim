@@ -1,0 +1,22 @@
+* Subcircuit demux
+.subckt demux /a /gnd /ebar /y2 /vcc /y1 
+* c:\fossee\esim\library\subcircuitlibrary\demux\demux.cir
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m2 /vcc /ebar net-_m1-pad1_ /vcc CMOSP W=100u L=100u M=1
+m1 net-_m1-pad1_ /ebar /gnd /gnd CMOSN W=100u L=100u M=1
+m3 /vcc net-_m1-pad1_ net-_m11-pad2_ /vcc CMOSP W=100u L=100u M=1
+m9 /vcc /a net-_m11-pad2_ /vcc CMOSP W=100u L=100u M=1
+m4 /vcc /ebar net-_m10-pad3_ /vcc CMOSP W=100u L=100u M=1
+m10 /vcc /a net-_m10-pad3_ /vcc CMOSP W=100u L=100u M=1
+m5 net-_m11-pad2_ net-_m1-pad1_ net-_m5-pad3_ /gnd CMOSN W=100u L=100u M=1
+m6 net-_m5-pad3_ /a /gnd /gnd CMOSN W=100u L=100u M=1
+m7 net-_m10-pad3_ /ebar net-_m7-pad3_ /gnd CMOSN W=100u L=100u M=1
+m8 net-_m7-pad3_ /a /gnd /gnd CMOSN W=100u L=100u M=1
+m13 /vcc net-_m11-pad2_ /y1 /vcc CMOSP W=100u L=100u M=1
+m11 /y1 net-_m11-pad2_ /gnd /gnd CMOSN W=100u L=100u M=1
+m14 /vcc net-_m10-pad3_ /y2 /vcc CMOSP W=100u L=100u M=1
+m12 /y2 net-_m10-pad3_ /gnd /gnd CMOSN W=100u L=100u M=1
+* Control Statements
+
+.ends demux

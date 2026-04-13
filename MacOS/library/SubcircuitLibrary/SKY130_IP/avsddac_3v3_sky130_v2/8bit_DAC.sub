@@ -1,0 +1,11 @@
+* Subcircuit 8bit_DAC
+.subckt 8bit_DAC /vrefh /vrefl /d0 /d1 /d2 /d3 /d4 /d5 /d6 /d7 /vdd /vout 
+* c:\fossee\esim\library\subcircuitlibrary\8bit_dac\8bit_dac.cir
+.include 7bit_DAC.sub
+.include switch.sub
+x1 /vrefh net-_x1-pad2_ /d0 /d1 /d2 /d3 /d4 /d5 /d6 /vdd net-_x1-pad11_ 7bit_DAC
+x2 net-_x1-pad2_ /vrefl /d0 /d1 /d2 /d3 /d4 /d5 /d6 /vdd net-_x2-pad11_ 7bit_DAC
+x3 /d7 /vdd net-_x1-pad11_ net-_x2-pad11_ /vout switch
+* Control Statements
+
+.ends 8bit_DAC

@@ -1,0 +1,12 @@
+* Subcircuit Diffamp_INA106
+.subckt Diffamp_INA106 /ref /-in /+in /v- /sense /output /v+ ? 
+* c:\fossee\esim\library\subcircuitlibrary\diffamp_ina106\diffamp_ina106.cir
+.include lm_741.sub
+x1 ? net-_r1-pad2_ net-_r2-pad2_ /v- ? /output /v+ ? lm_741
+r1  /-in net-_r1-pad2_ 100k
+r2  /+in net-_r2-pad2_ 100k
+r4  net-_r1-pad2_ /sense 10k
+r3  net-_r2-pad2_ /ref 10k
+* Control Statements
+
+.ends Diffamp_INA106

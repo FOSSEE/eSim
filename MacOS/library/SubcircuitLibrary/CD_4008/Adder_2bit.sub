@@ -1,0 +1,92 @@
+* Subcircuit Adder_2bit
+.subckt Adder_2bit net-_m27-pad2_ net-_m26-pad2_ net-_m10-pad2_ net-_m1-pad2_ net-_m16-pad3_ net-_m11-pad2_ net-_m64-pad1_ net-_m83-pad1_ net-_m10-pad3_ net-_m60-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\adder_2bit\adder_2bit.cir
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m18 net-_m18-pad1_ net-_m1-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m28 net-_m18-pad1_ net-_m14-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m19 net-_m19-pad1_ net-_m19-pad2_ net-_m18-pad1_ net-_m18-pad1_ CMOSP W=100u L=100u M=1
+m29 net-_m19-pad1_ net-_m10-pad2_ net-_m18-pad1_ net-_m18-pad1_ CMOSP W=100u L=100u M=1
+m67 net-_m64-pad1_ net-_m13-pad1_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m64 net-_m64-pad1_ net-_m13-pad1_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m42 net-_m19-pad1_ net-_m17-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m20 net-_m20-pad1_ net-_m1-pad2_ net-_m19-pad1_ net-_m19-pad1_ CMOSP W=100u L=100u M=1
+m30 net-_m20-pad1_ net-_m10-pad2_ net-_m19-pad1_ net-_m19-pad1_ CMOSP W=100u L=100u M=1
+m21 net-_m13-pad1_ net-_m19-pad2_ net-_m20-pad1_ net-_m20-pad1_ CMOSP W=100u L=100u M=1
+m31 net-_m13-pad1_ net-_m14-pad2_ net-_m20-pad1_ net-_m20-pad1_ CMOSP W=100u L=100u M=1
+m43 net-_m13-pad1_ net-_m11-pad2_ net-_m19-pad1_ net-_m19-pad1_ CMOSP W=100u L=100u M=1
+m13 net-_m13-pad1_ net-_m1-pad2_ net-_m13-pad3_ net-_m13-pad3_ CMOSN W=100u L=100u M=1
+m14 net-_m13-pad3_ net-_m14-pad2_ net-_m14-pad3_ net-_m14-pad3_ CMOSN W=100u L=100u M=1
+m24 net-_m13-pad1_ net-_m19-pad2_ net-_m24-pad3_ net-_m24-pad3_ CMOSN W=100u L=100u M=1
+m25 net-_m24-pad3_ net-_m10-pad2_ net-_m14-pad3_ net-_m14-pad3_ CMOSN W=100u L=100u M=1
+m17 net-_m14-pad3_ net-_m17-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m35 net-_m13-pad1_ net-_m1-pad2_ net-_m35-pad3_ net-_m35-pad3_ CMOSN W=100u L=100u M=1
+m36 net-_m35-pad3_ net-_m10-pad2_ net-_m36-pad3_ net-_m36-pad3_ CMOSN W=100u L=100u M=1
+m49 net-_m13-pad1_ net-_m19-pad2_ net-_m49-pad3_ net-_m49-pad3_ CMOSN W=100u L=100u M=1
+m50 net-_m49-pad3_ net-_m14-pad2_ net-_m36-pad3_ net-_m36-pad3_ CMOSN W=100u L=100u M=1
+m41 net-_m36-pad3_ net-_m11-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m7 net-_m19-pad2_ net-_m1-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m6 net-_m19-pad2_ net-_m1-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m61 net-_m14-pad2_ net-_m10-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m63 net-_m14-pad2_ net-_m10-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m58 net-_m17-pad2_ net-_m11-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m59 net-_m17-pad2_ net-_m11-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m3 net-_m10-pad1_ net-_m1-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m10 net-_m10-pad1_ net-_m10-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m4 net-_m11-pad1_ net-_m10-pad2_ net-_m10-pad1_ net-_m10-pad1_ CMOSP W=100u L=100u M=1
+m11 net-_m11-pad1_ net-_m11-pad2_ net-_m10-pad1_ net-_m10-pad1_ CMOSP W=100u L=100u M=1
+m5 net-_m1-pad1_ net-_m1-pad2_ net-_m11-pad1_ net-_m11-pad1_ CMOSP W=100u L=100u M=1
+m12 net-_m1-pad1_ net-_m11-pad2_ net-_m11-pad1_ net-_m11-pad1_ CMOSP W=100u L=100u M=1
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m2 net-_m1-pad3_ net-_m10-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m8 net-_m1-pad1_ net-_m10-pad2_ net-_m8-pad3_ net-_m8-pad3_ CMOSN W=100u L=100u M=1
+m9 net-_m8-pad3_ net-_m11-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m15 net-_m1-pad1_ net-_m1-pad2_ net-_m15-pad3_ net-_m15-pad3_ CMOSN W=100u L=100u M=1
+m16 net-_m15-pad3_ net-_m11-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m23 net-_m22-pad1_ net-_m1-pad1_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m22 net-_m22-pad1_ net-_m1-pad1_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m54 net-_m54-pad1_ net-_m26-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m68 net-_m54-pad1_ net-_m48-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m55 net-_m55-pad1_ net-_m37-pad1_ net-_m54-pad1_ net-_m54-pad1_ CMOSP W=100u L=100u M=1
+m69 net-_m55-pad1_ net-_m27-pad2_ net-_m54-pad1_ net-_m54-pad1_ CMOSP W=100u L=100u M=1
+m84 net-_m83-pad1_ net-_m47-pad1_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m83 net-_m83-pad1_ net-_m47-pad1_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m75 net-_m55-pad1_ net-_m53-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m56 net-_m56-pad1_ net-_m26-pad2_ net-_m55-pad1_ net-_m55-pad1_ CMOSP W=100u L=100u M=1
+m70 net-_m56-pad1_ net-_m27-pad2_ net-_m55-pad1_ net-_m55-pad1_ CMOSP W=100u L=100u M=1
+m57 net-_m47-pad1_ net-_m37-pad1_ net-_m56-pad1_ net-_m56-pad1_ CMOSP W=100u L=100u M=1
+m71 net-_m47-pad1_ net-_m48-pad2_ net-_m56-pad1_ net-_m56-pad1_ CMOSP W=100u L=100u M=1
+m76 net-_m47-pad1_ net-_m22-pad1_ net-_m55-pad1_ net-_m55-pad1_ CMOSP W=100u L=100u M=1
+m47 net-_m47-pad1_ net-_m26-pad2_ net-_m47-pad3_ net-_m47-pad3_ CMOSN W=100u L=100u M=1
+m48 net-_m47-pad3_ net-_m48-pad2_ net-_m48-pad3_ net-_m48-pad3_ CMOSN W=100u L=100u M=1
+m65 net-_m47-pad1_ net-_m37-pad1_ net-_m65-pad3_ net-_m65-pad3_ CMOSN W=100u L=100u M=1
+m66 net-_m65-pad3_ net-_m27-pad2_ net-_m48-pad3_ net-_m48-pad3_ CMOSN W=100u L=100u M=1
+m53 net-_m48-pad3_ net-_m53-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m72 net-_m47-pad1_ net-_m26-pad2_ net-_m72-pad3_ net-_m72-pad3_ CMOSN W=100u L=100u M=1
+m73 net-_m72-pad3_ net-_m27-pad2_ net-_m73-pad3_ net-_m73-pad3_ CMOSN W=100u L=100u M=1
+m77 net-_m47-pad1_ net-_m37-pad1_ net-_m77-pad3_ net-_m77-pad3_ CMOSN W=100u L=100u M=1
+m78 net-_m77-pad3_ net-_m48-pad2_ net-_m73-pad3_ net-_m73-pad3_ CMOSN W=100u L=100u M=1
+m74 net-_m73-pad3_ net-_m22-pad1_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m38 net-_m37-pad1_ net-_m26-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m37 net-_m37-pad1_ net-_m26-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m81 net-_m48-pad2_ net-_m27-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m82 net-_m48-pad2_ net-_m27-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m79 net-_m53-pad2_ net-_m22-pad1_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m80 net-_m53-pad2_ net-_m22-pad1_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m32 net-_m32-pad1_ net-_m26-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m44 net-_m32-pad1_ net-_m27-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m33 net-_m33-pad1_ net-_m27-pad2_ net-_m32-pad1_ net-_m32-pad1_ CMOSP W=100u L=100u M=1
+m45 net-_m33-pad1_ net-_m22-pad1_ net-_m32-pad1_ net-_m32-pad1_ CMOSP W=100u L=100u M=1
+m34 net-_m26-pad1_ net-_m26-pad2_ net-_m33-pad1_ net-_m33-pad1_ CMOSP W=100u L=100u M=1
+m46 net-_m26-pad1_ net-_m22-pad1_ net-_m33-pad1_ net-_m33-pad1_ CMOSP W=100u L=100u M=1
+m26 net-_m26-pad1_ net-_m26-pad2_ net-_m26-pad3_ net-_m26-pad3_ CMOSN W=100u L=100u M=1
+m27 net-_m26-pad3_ net-_m27-pad2_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m39 net-_m26-pad1_ net-_m27-pad2_ net-_m39-pad3_ net-_m39-pad3_ CMOSN W=100u L=100u M=1
+m40 net-_m39-pad3_ net-_m22-pad1_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m51 net-_m26-pad1_ net-_m26-pad2_ net-_m51-pad3_ net-_m51-pad3_ CMOSN W=100u L=100u M=1
+m52 net-_m51-pad3_ net-_m22-pad1_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+m62 net-_m60-pad1_ net-_m26-pad1_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m60 net-_m60-pad1_ net-_m26-pad1_ net-_m16-pad3_ net-_m16-pad3_ CMOSN W=100u L=100u M=1
+* Control Statements
+
+.ends Adder_2bit

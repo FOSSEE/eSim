@@ -1,0 +1,20 @@
+* /home/saurabh/installer_main_workshop/esim-1.1.2/examples/bjt_cb_config/bjt_cb_config.cir
+
+.include NPN.lib
+v1 vcb gnd  dc 12
+r1  net-_r1-pad1_ net-_q1-pad1_ 1k
+r2  net-_q1-pad3_ ie 1k
+* u_ic1  vcb net-_r1-pad1_ plot_i2
+i1 ie gnd  dc 20m
+q1 net-_q1-pad1_ gnd net-_q1-pad3_ Q2N2222
+v_u_ic1 vcb net-_r1-pad1_ 0
+.dc v1 -1e-00 5e-00 0.02e-00 i1 -1e-03 5e-03 1e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot i(v_u_ic1)
+.endc
+.end

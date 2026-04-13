@@ -1,0 +1,14 @@
+* /home/sumanto/eSim-2.1/library/SubcircuitLibrary/Clock_pulse_generator/Clock_pulse_generator.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Jan 12 16:16:30 2022
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R3  Net-_R3-Pad1_ GND 1k		
+C2  Net-_C2-Pad1_ GND 0.01u		
+X1  GND Net-_U1-Pad3_ Net-_R3-Pad1_ Net-_U1-Pad1_ Net-_C2-Pad1_ Net-_U1-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad1_ LM555N		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_R3-Pad1_ Net-_U1-Pad3_ PORT		
+
+.end

@@ -1,0 +1,19 @@
+<model>
+<name>d_srff</name>
+<type>Digital</type>
+<node_number>7</node_number>
+<title>Add Parameters for SR Flipflop</title>
+<split>None</split>
+<param>
+	<clk_delay default ="1.0e-9">Enter Clk Delay (default=1.0e-9)</clk_delay>
+	<set_delay default ="1.0e-9">Enter Set Delay (default=1.0e-9)</set_delay>
+	<reset_delay default ="1.0">Enter Reset Delay (default=1.0)</reset_delay>
+	<ic default ="0">Enter IC (default=0)</ic>
+	<sr_load default ="1.0e-12">Enter value for SR Load (default=1.0e-12)</sr_load>
+	<clk_load default ="1.0e-12">Enter value for Clk Load (default=1.0e-12)</clk_load>
+	<set_load default ="1.0e-12">Enter value for Set Load (default=1.0e-12)</set_load>
+	<reset_load default ="1.0e-12">Enter value for Reset Load (default=1.0e-12)</reset_load>
+	<rise_delay default ="1.0e-9">Enter Rise Delay (default=1.0e-9)</rise_delay>
+	<fall_delay default ="1.0e-9">Enter Fall Delay (default=1.0e-9)</fall_delay>
+</param>
+</model>

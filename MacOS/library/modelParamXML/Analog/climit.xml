@@ -1,0 +1,15 @@
+<model>
+<name>climit</name>
+<type>Analog</type>
+<node_number>4</node_number>
+<title>Add Parameters for Controlled Limiter</title>
+<split>None</split>
+<param>
+	<in_offset default="0.0">Enter offset for Input (default=0.0)</in_offset>
+	<gain default="1.0">Enter value for Gain (default=1.0)</gain>
+	<upper_delta default="0.0">Enter Output Upper Delta (default=0.0)</upper_delta>
+	<lower_delta default="0.0">Enter Output Lower Delta (default=0.0)</lower_delta>
+	<limit_range default="1.0e-6">Enter Limit Range (default=1.0e-6)</limit_range>
+	<fraction default="false">Enter Fraction (default=false)</fraction>
+</param>
+</model>

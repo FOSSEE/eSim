@@ -1,0 +1,29 @@
+* /home/bhargav/esim-workspace/7812voltageregulator/7812voltageregulator.cir
+
+.include LM7812.sub
+.include D.lib
+d1 in2 net-_c1-pad1_ 1N4148
+d2 gnd in2 1N4148
+d4 gnd in1 1N4148
+d3 in1 net-_c1-pad1_ 1N4148
+d5 gnd out 1N4148
+c1  net-_c1-pad1_ gnd 1000u
+c2  out gnd 3.3u
+r1  out gnd 1k
+v1  in1 in2 sine(0 30 50 0 0)
+* u1  in1 plot_v1
+* u2  in2 plot_v1
+* u3  out plot_v1
+x1 net-_c1-pad1_ gnd out LM7812
+.tran 100e-06 50e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in1)
+plot v(in2)
+plot v(out)
+.endc
+.end

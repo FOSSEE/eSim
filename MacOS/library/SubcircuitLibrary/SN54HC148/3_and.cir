@@ -1,0 +1,42 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\SN54HC148_IC\3_and.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/05/24 11:46:40
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X5  Net-_U1-Pad11_ Net-_X23-Pad1_ Net-_U1-Pad16_ Net-_U1-Pad8_ NOT_Gate		
+X1  Net-_U1-Pad12_ Net-_X1-Pad2_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X9  Net-_X1-Pad2_ Net-_X23-Pad2_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X3  Net-_U1-Pad1_ Net-_X10-Pad1_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X10  Net-_X10-Pad1_ Net-_X10-Pad2_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X4  Net-_U1-Pad2_ Net-_X12-Pad1_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X12  Net-_X12-Pad1_ Net-_X12-Pad2_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X2  Net-_U1-Pad3_ Net-_X11-Pad1_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X11  Net-_X11-Pad1_ Net-_X11-Pad2_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X7  Net-_U1-Pad4_ Net-_X14-Pad1_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X29  Net-_U1-Pad15_ Net-_X29-Pad2_ Net-_U1-Pad16_ Net-_U1-Pad8_ NOT_Gate		
+X30  Net-_X13-Pad9_ Net-_X30-Pad2_ Net-_U1-Pad16_ Net-_U1-Pad8_ NOT_Gate		
+X31  Net-_X29-Pad2_ Net-_X30-Pad2_ Net-_U1-Pad14_ Net-_U1-Pad16_ Net-_U1-Pad8_ OR_Gate		
+X6  Net-_U1-Pad13_ Net-_X22-Pad1_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X8  Net-_U1-Pad5_ Net-_X13-Pad9_ Net-_X1-Pad3_ Net-_U1-Pad8_ NOT_Gate		
+X14  Net-_X14-Pad1_ Net-_X13-Pad9_ Net-_X14-Pad3_ Net-_U1-Pad16_ Net-_U1-Pad8_ AND_Gate		
+X15  Net-_X11-Pad1_ Net-_X13-Pad9_ Net-_X15-Pad3_ Net-_U1-Pad16_ Net-_U1-Pad8_ AND_Gate		
+X16  Net-_X14-Pad1_ Net-_X13-Pad9_ Net-_X16-Pad3_ Net-_U1-Pad16_ Net-_U1-Pad8_ AND_Gate		
+X17  Net-_X10-Pad1_ Net-_X13-Pad9_ Net-_X17-Pad3_ Net-_U1-Pad16_ Net-_U1-Pad8_ AND_Gate		
+X18  Net-_X12-Pad1_ Net-_X13-Pad9_ Net-_X18-Pad3_ Net-_U1-Pad16_ Net-_U1-Pad8_ AND_Gate		
+X19  Net-_X11-Pad1_ Net-_X13-Pad9_ Net-_X19-Pad3_ Net-_U1-Pad16_ Net-_U1-Pad8_ AND_Gate		
+X20  Net-_X14-Pad1_ Net-_X13-Pad9_ Net-_X20-Pad3_ Net-_U1-Pad16_ Net-_U1-Pad8_ AND_Gate		
+X26  Net-_X23-Pad8_ Net-_X22-Pad7_ Net-_X21-Pad6_ Net-_X14-Pad3_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_U1-Pad9_ 4_NOR_IC		
+X27  Net-_X24-Pad7_ Net-_X25-Pad7_ Net-_X15-Pad3_ Net-_X16-Pad3_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_U1-Pad7_ 4_NOR_IC		
+X28  Net-_X17-Pad3_ Net-_X18-Pad3_ Net-_X19-Pad3_ Net-_X20-Pad3_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_U1-Pad6_ 4_NOR_IC		
+X13  Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_X13-Pad9_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_U1-Pad15_ 9_NAND		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ PORT		
+X23  Net-_X23-Pad1_ Net-_X23-Pad2_ Net-_X10-Pad2_ Net-_X11-Pad2_ Net-_X13-Pad9_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_X23-Pad8_ AND_5		
+X22  Net-_X22-Pad1_ Net-_X10-Pad2_ Net-_X11-Pad2_ Net-_X13-Pad9_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_X22-Pad7_ AND_4		
+X21  Net-_X12-Pad1_ Net-_X11-Pad2_ Net-_X13-Pad9_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_X21-Pad6_ 3_AND		
+X24  Net-_X1-Pad2_ Net-_X10-Pad2_ Net-_X12-Pad2_ Net-_X13-Pad9_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_X24-Pad7_ AND_4		
+X25  Net-_X22-Pad1_ Net-_X10-Pad2_ Net-_X12-Pad2_ Net-_X13-Pad9_ Net-_U1-Pad8_ Net-_U1-Pad16_ Net-_X25-Pad7_ AND_4		
+
+.end

@@ -1,0 +1,1 @@
+<library><model_name>NMOS</model_name><ref_model>2N7002</ref_model><param><LEVEL>1</LEVEL><VTO>1.50</VTO><KP>78.1m</KP><GAMMA>1.86</GAMMA><PHI>.75</PHI><LAMBDA>97.2u</LAMBDA><RD>0.280</RD><RS>0.280</RS><IS>140f</IS><PB>0.800</PB><MJ>0.460</MJ><CBD>9.88p</CBD><CBS>11.9p</CBS><CGSO>60.0n</CGSO><CGDO>50.0n</CGDO><CGBO>190n</CGBO></param></library>

@@ -1,0 +1,1 @@
+<library><model_name>D</model_name><ref_model>PowerDiode</ref_model><param><Vj>.75</Vj><Nbvl>14.976</Nbvl><Cjo>175p</Cjo><Rs>.25</Rs><Isr>1.859n</Isr><Eg>1.11</Eg><M>.5516</M><Nbv>1.6989</Nbv><N>1</N><Tbv1>-21.277u</Tbv1><bv>1800</bv><Fc>.5</Fc><Ikf>0</Ikf><Nr>2</Nr><Ibv>20.245m</Ibv><Is>2.2E-15</Is><Xti>3</Xti><Ibvl>1.9556m</Ibvl></param></library>

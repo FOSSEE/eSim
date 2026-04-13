@@ -1,0 +1,25 @@
+* /home/ash98/downloads/esim-1.1.3/src/subcircuitlibrary/74ls04/74ls04.cir
+
+.include Ideal_npn1.lib
+q5 net-_q5-pad1_ net-_q5-pad2_ net-_q1-pad3_ Ideal_npn2
+r5  net-_r1-pad1_ net-_q5-pad1_ 100
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Ideal_npn2
+r1  net-_r1-pad1_ net-_q1-pad1_ 100
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q1-pad3_ Ideal_npn2
+r3  net-_r1-pad1_ net-_q3-pad1_ 100
+q6 net-_q6-pad1_ net-_q6-pad2_ net-_q1-pad3_ Ideal_npn2
+r6  net-_r1-pad1_ net-_q6-pad1_ 100
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q1-pad3_ Ideal_npn2
+r2  net-_r1-pad1_ net-_q2-pad1_ 100
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_q1-pad3_ Ideal_npn2
+r4  net-_r1-pad1_ net-_q4-pad1_ 100
+* u1  net-_q1-pad2_ net-_q1-pad1_ net-_q3-pad2_ net-_q3-pad1_ net-_q5-pad2_ net-_q5-pad1_ net-_q1-pad3_ net-_q2-pad1_ net-_q2-pad2_ net-_q4-pad1_ net-_q4-pad2_ net-_q6-pad1_ net-_q6-pad2_ net-_r1-pad1_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

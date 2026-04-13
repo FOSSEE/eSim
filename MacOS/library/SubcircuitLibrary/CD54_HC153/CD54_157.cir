@@ -1,0 +1,75 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD54_157\CD54_157.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/14/22 12:01:36
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M55  Net-_M55-Pad1_ /i0_3 /vcc /vcc eSim_MOS_P		
+M60  Net-_M55-Pad1_ Net-_M58-Pad2_ /vcc /vcc eSim_MOS_P		
+M65  Net-_M55-Pad1_ Net-_M57-Pad2_ /vcc /vcc eSim_MOS_P		
+M56  /y3_bar /i1_3 Net-_M55-Pad1_ Net-_M55-Pad1_ eSim_MOS_P		
+M61  /y3_bar Net-_M58-Pad2_ Net-_M55-Pad1_ Net-_M55-Pad1_ eSim_MOS_P		
+M66  /y3_bar /s Net-_M55-Pad1_ Net-_M55-Pad1_ eSim_MOS_P		
+M57  /y3_bar Net-_M57-Pad2_ Net-_M57-Pad3_ Net-_M57-Pad3_ eSim_MOS_N		
+M58  Net-_M57-Pad3_ Net-_M58-Pad2_ Net-_M58-Pad3_ Net-_M58-Pad3_ eSim_MOS_N		
+M59  Net-_M58-Pad3_ /i0_3 Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M62  /y3_bar /s Net-_M62-Pad3_ Net-_M62-Pad3_ eSim_MOS_N		
+M63  Net-_M62-Pad3_ Net-_M58-Pad2_ Net-_M63-Pad3_ Net-_M63-Pad3_ eSim_MOS_N		
+M64  Net-_M63-Pad3_ /i1_3 Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M68  Net-_M57-Pad2_ /s Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M67  Net-_M57-Pad2_ /s /vcc /vcc eSim_MOS_P		
+M71  Net-_M58-Pad2_ /enable_bar /vcc /vcc eSim_MOS_P		
+M72  Net-_M58-Pad2_ /enable_bar Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M1  Net-_M1-Pad1_ /i0_1 /vcc /vcc eSim_MOS_P		
+M11  Net-_M1-Pad1_ Net-_M11-Pad2_ /vcc /vcc eSim_MOS_P		
+M18  Net-_M1-Pad1_ Net-_M18-Pad2_ /vcc /vcc eSim_MOS_P		
+M2  /y1_bar /i1_1 Net-_M1-Pad1_ Net-_M1-Pad1_ eSim_MOS_P		
+M12  /y1_bar Net-_M11-Pad2_ Net-_M1-Pad1_ Net-_M1-Pad1_ eSim_MOS_P		
+M19  /y1_bar /s Net-_M1-Pad1_ Net-_M1-Pad1_ eSim_MOS_P		
+M3  /y1_bar Net-_M18-Pad2_ Net-_M3-Pad3_ Net-_M3-Pad3_ eSim_MOS_N		
+M4  Net-_M3-Pad3_ Net-_M11-Pad2_ Net-_M4-Pad3_ Net-_M4-Pad3_ eSim_MOS_N		
+M5  Net-_M4-Pad3_ /i0_1 Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M15  /y1_bar /s Net-_M15-Pad3_ Net-_M15-Pad3_ eSim_MOS_N		
+M16  Net-_M15-Pad3_ Net-_M11-Pad2_ Net-_M16-Pad3_ Net-_M16-Pad3_ eSim_MOS_N		
+M17  Net-_M16-Pad3_ /i1_1 Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M26  Net-_M18-Pad2_ /s Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M25  Net-_M18-Pad2_ /s /vcc /vcc eSim_MOS_P		
+M33  Net-_M11-Pad2_ /enable_bar /vcc /vcc eSim_MOS_P		
+M34  Net-_M11-Pad2_ /enable_bar Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M6  Net-_M13-Pad1_ /i0_2 /vcc /vcc eSim_MOS_P		
+M13  Net-_M13-Pad1_ Net-_M13-Pad2_ /vcc /vcc eSim_MOS_P		
+M23  Net-_M13-Pad1_ Net-_M23-Pad2_ /vcc /vcc eSim_MOS_P		
+M7  /y2_bar /i1_2 Net-_M13-Pad1_ Net-_M13-Pad1_ eSim_MOS_P		
+M14  /y2_bar Net-_M13-Pad2_ Net-_M13-Pad1_ Net-_M13-Pad1_ eSim_MOS_P		
+M24  /y2_bar /s Net-_M13-Pad1_ Net-_M13-Pad1_ eSim_MOS_P		
+M8  /y2_bar Net-_M23-Pad2_ Net-_M8-Pad3_ Net-_M8-Pad3_ eSim_MOS_N		
+M9  Net-_M8-Pad3_ Net-_M13-Pad2_ Net-_M10-Pad1_ Net-_M10-Pad1_ eSim_MOS_N		
+M10  Net-_M10-Pad1_ /i0_2 Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M20  /y2_bar /s Net-_M20-Pad3_ Net-_M20-Pad3_ eSim_MOS_N		
+M21  Net-_M20-Pad3_ Net-_M13-Pad2_ Net-_M21-Pad3_ Net-_M21-Pad3_ eSim_MOS_N		
+M22  Net-_M21-Pad3_ /i1_2 Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M30  Net-_M23-Pad2_ /s Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M29  Net-_M23-Pad2_ /s /vcc /vcc eSim_MOS_P		
+M35  Net-_M13-Pad2_ /enable_bar /vcc /vcc eSim_MOS_P		
+M36  Net-_M13-Pad2_ /enable_bar Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M37  Net-_M37-Pad1_ /i0_4 /vcc /vcc eSim_MOS_P		
+M42  Net-_M37-Pad1_ Net-_M40-Pad2_ /vcc /vcc eSim_MOS_P		
+M47  Net-_M37-Pad1_ Net-_M39-Pad2_ /vcc /vcc eSim_MOS_P		
+M38  /y4_bar /i1_4 Net-_M37-Pad1_ Net-_M37-Pad1_ eSim_MOS_P		
+M43  /y4_bar Net-_M40-Pad2_ Net-_M37-Pad1_ Net-_M37-Pad1_ eSim_MOS_P		
+M48  /y4_bar /s Net-_M37-Pad1_ Net-_M37-Pad1_ eSim_MOS_P		
+M39  /y4_bar Net-_M39-Pad2_ Net-_M39-Pad3_ Net-_M39-Pad3_ eSim_MOS_N		
+M40  Net-_M39-Pad3_ Net-_M40-Pad2_ Net-_M40-Pad3_ Net-_M40-Pad3_ eSim_MOS_N		
+M41  Net-_M40-Pad3_ /i0_4 Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M44  /y4_bar /s Net-_M44-Pad3_ Net-_M44-Pad3_ eSim_MOS_N		
+M45  Net-_M44-Pad3_ Net-_M40-Pad2_ Net-_M45-Pad3_ Net-_M45-Pad3_ eSim_MOS_N		
+M46  Net-_M45-Pad3_ /i1_4 Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M50  Net-_M39-Pad2_ /s Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+M49  Net-_M39-Pad2_ /s /vcc /vcc eSim_MOS_P		
+M53  Net-_M40-Pad2_ /enable_bar /vcc /vcc eSim_MOS_P		
+M54  Net-_M40-Pad2_ /enable_bar Net-_M10-Pad3_ Net-_M10-Pad3_ eSim_MOS_N		
+U1  /s /i0_1 /i1_1 /y1_bar /i0_2 /i1_2 /y2_bar Net-_M10-Pad3_ /y4_bar /i1_4 /i0_4 /y3_bar /i1_3 /i0_3 /enable_bar /vcc PORT		
+
+.end

@@ -1,0 +1,19 @@
+* c:\fossee\esim\library\subcircuitlibrary\cmos_nand\cmos_nand.cir
+
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad1_ CMOSP W=2.5u L=0.5u M=1
+m4 net-_m1-pad1_ net-_m3-pad2_ net-_m1-pad3_ net-_m1-pad1_ CMOSP W=2.5u L=0.5u M=1
+m2 net-_m1-pad3_ net-_m1-pad2_ net-_m2-pad3_ gnd CMOSN W=1u L=0.5u M=1
+m3 net-_m2-pad3_ net-_m3-pad2_ gnd gnd CMOSN W=1u L=0.5u M=1
+* u1  net-_m1-pad2_ net-_m3-pad2_ net-_m1-pad3_ port
+v1 net-_m1-pad1_ gnd  dc 5
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

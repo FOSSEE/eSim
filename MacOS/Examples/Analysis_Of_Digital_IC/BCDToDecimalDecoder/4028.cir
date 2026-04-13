@@ -1,0 +1,32 @@
+* C:\Users\malli\eSim\src\SubcircuitLibrary\4028\4028.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/31/19 16:24:30
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U9  Net-_U1-Pad13_ Net-_U11-Pad1_ Net-_U16-Pad1_ d_nor		
+U10  Net-_U1-Pad10_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_nor		
+U11  Net-_U11-Pad1_ Net-_U10-Pad2_ Net-_U11-Pad3_ d_nor		
+U12  Net-_U1-Pad12_ Net-_U1-Pad11_ Net-_U12-Pad3_ d_nor		
+U6  Net-_U4-Pad2_ Net-_U1-Pad11_ Net-_U13-Pad2_ d_nor		
+U7  Net-_U1-Pad12_ Net-_U5-Pad2_ Net-_U14-Pad2_ d_nor		
+U8  Net-_U1-Pad10_ Net-_U1-Pad13_ Net-_U14-Pad1_ d_nor		
+U2  Net-_U1-Pad10_ Net-_U11-Pad1_ d_inverter		
+U3  Net-_U1-Pad13_ Net-_U10-Pad2_ d_inverter		
+U4  Net-_U1-Pad12_ Net-_U4-Pad2_ d_inverter		
+U5  Net-_U1-Pad11_ Net-_U5-Pad2_ d_inverter		
+U15  Net-_U14-Pad1_ Net-_U12-Pad3_ Net-_U1-Pad3_ d_and		
+U16  Net-_U16-Pad1_ Net-_U12-Pad3_ Net-_U1-Pad14_ d_and		
+U17  Net-_U10-Pad3_ Net-_U12-Pad3_ Net-_U1-Pad2_ d_and		
+U18  Net-_U11-Pad3_ Net-_U12-Pad3_ Net-_U1-Pad15_ d_and		
+U19  Net-_U14-Pad1_ Net-_U13-Pad2_ Net-_U1-Pad1_ d_and		
+U20  Net-_U16-Pad1_ Net-_U13-Pad2_ Net-_U1-Pad6_ d_and		
+U21  Net-_U10-Pad3_ Net-_U13-Pad2_ Net-_U1-Pad7_ d_and		
+U13  Net-_U11-Pad3_ Net-_U13-Pad2_ Net-_U1-Pad4_ d_and		
+U14  Net-_U14-Pad1_ Net-_U14-Pad2_ Net-_U1-Pad9_ d_and		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ ? Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ ? PORT		
+U22  Net-_U16-Pad1_ Net-_U14-Pad2_ Net-_U1-Pad5_ d_and		
+
+.end
