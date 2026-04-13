@@ -115,6 +115,13 @@ function installKicad
     if [[ "$ubuntu_version" == "25.04" ]]; then
         echo "Ubuntu 25.04 detected."
         kicadppa="kicad/kicad-8.0-releases"
+        use_kicad_ppa=true
+
+        # Ubuntu 25.04 does not provide libgit2-1.8; avoid PPA if missing.
+        if apt-cache policy libgit2-1.8 | grep -q "Candidate: (none)"; then
+            echo "libgit2-1.8 not available. Falling back to Ubuntu KiCad repo."
+            use_kicad_ppa=false
+        fi
 
         # Check if KiCad is installed using dpkg-query for the main package
         if dpkg -s kicad &>/dev/null; then
@@ -142,12 +149,20 @@ function installKicad
     fi
 
     # Check if the PPA is already added
-    if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
-        echo "Adding KiCad PPA to local apt repository: $kicadppa"
-        sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt-get update || true
+    if [[ "$use_kicad_ppa" == true ]]; then
+        if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+            echo "Adding KiCad PPA to local apt repository: $kicadppa"
+            sudo add-apt-repository -y "ppa:$kicadppa"
+            sudo apt-get update || true
+        else
+            echo "KiCad PPA is already present in sources."
+        fi
     else
-        echo "KiCad PPA is already present in sources."
+        if grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+            echo "Removing KiCad PPA due to libgit2 dependency mismatch."
+            sudo add-apt-repository -r -y "ppa:$kicadppa" || true
+            sudo apt-get update || true
+        fi
     fi
 
     # Install KiCad packages
