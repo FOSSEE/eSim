@@ -63,8 +63,19 @@ function installNghdl
 {
 
     echo "Installing NGHDL..........................."
-    unzip -o nghdl.zip
-    cd nghdl/
+    local nghdl_dir=""
+
+    if [ -f nghdl.zip ]; then
+        unzip -o nghdl.zip
+        nghdl_dir="nghdl"
+    elif [ -d nghdl ]; then
+        nghdl_dir="nghdl"
+    else
+        echo "Warning: nghdl.zip not found. Skipping NGHDL install."
+        return 0
+    fi
+
+    cd "$nghdl_dir" || return 1
     chmod +x install-nghdl.sh
 
     # Do not trap on error of any command. Let NGHDL script handle its own errors.
