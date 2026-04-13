@@ -23,7 +23,7 @@ It contains all the documentation for packaging eSim for distribution.
 
 As part of the eSim upgradation task, the installer has been ported to support Ubuntu 25.04. The upstream installer failed due to dependency removals, version mismatches, and strict detection logic.
 
-During debugging in a clean environment, 37 distinct installation blockers were identified and resolved through 37 atomic commits in the installers branch.
+During debugging in a clean environment, 38 distinct installation blockers were identified and resolved through 38 atomic commits in the installers branch.
 
 ## Porting Summary
 - High difficulty (15): dependency chain resolutions (LLVM/GHDL handling, NGHDL sub-installer chain, dynamic path discovery)

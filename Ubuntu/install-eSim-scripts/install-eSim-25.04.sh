@@ -32,6 +32,8 @@ fi
 config_dir="$user_home/.esim"
 config_file="config.ini"
 ngspiceFlag=0
+kicad_config_version="6.0"
+kicad_symbols_dir="/usr/share/kicad/symbols"
 
 ## All Functions goes here
 
@@ -178,6 +180,7 @@ function installKicad
         # Both KiCad versions (8.0.8 from Ubuntu repo and 8.0.9 from PPA) require libgit2-1.8
         # Solution: Always use snap which bundles its own dependencies
         echo "Ubuntu 25.04 detected."
+        kicad_config_version="9.0"
         
         # Check if KiCad already installed via snap
         if snap list kicad &>/dev/null 2>&1; then
@@ -379,19 +382,22 @@ function copyKicadLibrary
         return 0
     fi
 
-    if [ -d ~/.config/kicad/6.0 ];then
+    local kicad_config_dir="$user_home/.config/kicad/${kicad_config_version:-6.0}"
+
+    if [ -d "$kicad_config_dir" ];then
         echo "kicad config folder already exists"
     else 
-        echo ".config/kicad/6.0 does not exist"
-        mkdir -p ~/.config/kicad/6.0
+        echo ".config/kicad/${kicad_config_version:-6.0} does not exist"
+        mkdir -p "$kicad_config_dir"
     fi
 
     # Copy symbol table for eSim custom symbols 
-    cp "$kicad_lib_dir/template/sym-lib-table" ~/.config/kicad/6.0/
+    cp "$kicad_lib_dir/template/sym-lib-table" "$kicad_config_dir/"
     echo "symbol table copied in the directory"
 
     # Copy KiCad symbols made for eSim
-    sudo cp -r "$kicad_lib_dir/eSim-symbols/"* /usr/share/kicad/symbols/
+    sudo mkdir -p "$kicad_symbols_dir"
+    sudo cp -r "$kicad_lib_dir/eSim-symbols/"* "$kicad_symbols_dir/"
 
     set +e      # Temporary disable exit on error
     trap "" ERR # Do not trap on error of any command
@@ -405,7 +411,7 @@ function copyKicadLibrary
     trap error_exit ERR
 
     #Change ownership from Root to the User
-    sudo chown -R $USER:$USER /usr/share/kicad/symbols/
+    sudo chown -R $USER:$USER "$kicad_symbols_dir/"
 
 }
 
@@ -635,7 +641,7 @@ elif [ $option == "--uninstall" ];then
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
 	sudo rm /etc/apt/sources.list.d/kicad*
-        rm -rf $HOME/.config/kicad/6.0
+        rm -rf "$HOME/.config/kicad/6.0" "$HOME/.config/kicad/9.0"
 
         echo "Removing Virtual env......................."
         sudo rm -r $config_dir/env

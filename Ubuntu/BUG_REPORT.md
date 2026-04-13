@@ -1,6 +1,6 @@
 # Comprehensive Bug Report and Resolution Documentation
 
-This document details the systematic identification and resolution of 37 distinct installation bugs encountered while porting eSim to Ubuntu 25.04.
+This document details the systematic identification and resolution of 38 distinct installation bugs encountered while porting eSim to Ubuntu 25.04.
 
 ---
 
@@ -1905,6 +1905,64 @@ file : install-eSim-25.04.sh
 - Ubuntu 25.04 (Plucky) only provides `libgit2-1.9`; `libgit2-1.8` is not installable
 - KiCad 9.0.7 installs through snap without APT dependency resolution failure
 - Existing KiCad PPA entries are removed first to keep the old failing path from being retried
+
+**Commit Hash:** merged into the current installers commit
+
+---
+
+### Bug #038: KiCad custom symbol path for snap install
+
+**Log:**
+```text
+Installing KiCad via snap...
+kicad 9.0.7 from Seth Hillbrand (sethh) installed
+KiCad installation completed successfully!
+.config/kicad/6.0 does not exist
+symbol table copied in the directory
+cp: target '/usr/share/kicad/symbols/': No such file or directory
+
+
+Error! Kindly resolve above error(s) and try again.
+
+Aborting Installation...
+```
+
+**Root Cause:** The installer still assumed the KiCad 6.0 APT layout after switching Ubuntu 25.04 to snap. KiCad 9.0 on snap uses a different config version, and the system symbol directory `/usr/share/kicad/symbols/` was never created before copying the custom library files.
+
+**Fix:** Make the KiCad path handling snap-aware. On Ubuntu 25.04, use the `9.0` config directory, create the system symbol directory before copying, and keep the existing `6.0` path for older APT-based installs.
+
+**Changes Made:**
+```text
+file : install-eSim-25.04.sh
+
+	kicad_config_version="6.0"
+	kicad_symbols_dir="/usr/share/kicad/symbols"
+
+	if [[ "$ubuntu_version" == "25.04" ]]; then
+	    kicad_config_version="9.0"
+	fi
+
+	local kicad_config_dir="$user_home/.config/kicad/${kicad_config_version:-6.0}"
+	if [ -d "$kicad_config_dir" ]; then
+	    echo "kicad config folder already exists"
+	else
+	    echo ".config/kicad/${kicad_config_version:-6.0} does not exist"
+	    mkdir -p "$kicad_config_dir"
+	fi
+
+	cp "$kicad_lib_dir/template/sym-lib-table" "$kicad_config_dir/"
+	sudo mkdir -p "$kicad_symbols_dir"
+	sudo cp -r "$kicad_lib_dir/eSim-symbols/"* "$kicad_symbols_dir/"
+	sudo chown -R $USER:$USER "$kicad_symbols_dir/"
+
+	# Uninstall cleanup now removes both 6.0 and 9.0 config folders
+	rm -rf "$HOME/.config/kicad/6.0" "$HOME/.config/kicad/9.0"
+```
+
+**Verification:**
+- The snap install no longer aborts on missing `/usr/share/kicad/symbols/`
+- The custom symbol table is copied into the correct per-version KiCad config directory
+- Uninstall cleanup removes both the older APT config folder and the new snap config folder
 
 **Commit Hash:** merged into the current installers commit
 
