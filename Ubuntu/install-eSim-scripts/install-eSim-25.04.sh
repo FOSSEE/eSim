@@ -397,42 +397,45 @@ function createDesktopStartScript
         user_home="/home/$SUDO_USER"
     fi
 
+    local app_dir=""
+    local app_entry=""
+    local candidates=(
+        "$eSim_Home/src/frontEnd"
+        "$eSim_Home/src/FrontEnd"
+        "$eSim_Home/frontEnd"
+        "$eSim_Home"
+    )
+
+    for c in "${candidates[@]}"; do
+        if [ -f "$c/Application.py" ]; then
+            app_dir="$c"
+            break
+        fi
+    done
+
+    if [ -z "$app_dir" ]; then
+        found=$(find "$eSim_Home" -maxdepth 4 -type f -name 'Application.py' -print -quit 2>/dev/null || true)
+        if [ -n "$found" ]; then
+            app_dir=$(dirname "$found")
+        fi
+    fi
+
+    if [ -z "$app_dir" ]; then
+        echo "Error: eSim application not found under ${eSim_Home}."
+        echo "Please install eSim source or packaged executable before running."
+        exit 1
+    fi
+
+    app_entry="$app_dir/Application.py"
+
     # Generating new esim-start.sh
     cat > esim-start.sh <<EOF
 #!/bin/bash
-# Dynamically determine the eSim front-end directory based on installer repo root
-REPO_ROOT="${eSim_Home}"
-candidates=(
-    "$REPO_ROOT/src/frontEnd"
-    "$REPO_ROOT/src/FrontEnd"
-    "$REPO_ROOT/frontEnd"
-    "$REPO_ROOT"
-)
-app_dir=""
-for c in "${candidates[@]}"; do
-    if [ -f "$c/Application.py" ]; then
-        app_dir="$c"
-        break
-    fi
-done
-
-if [ -z "$app_dir" ]; then
-    found=$(find "$REPO_ROOT" -maxdepth 4 -type f -name 'Application.py' -print -quit 2>/dev/null || true)
-    if [ -n "$found" ]; then
-        app_dir=$(dirname "$found")
-    fi
-fi
-
-if [ -z "$app_dir" ]; then
-    echo "Error: eSim application not found under ${eSim_Home}."
-    echo "Please install eSim source or packaged executable before running."
-    exit 1
-fi
-
-app_entry="\$app_dir/Application.py"
+app_dir="$app_dir"
+app_entry="$app_entry"
 cd "\$app_dir" || exit 1
 source "${config_dir}/env/bin/activate"
-python3 "\$(basename "\$app_entry")"
+python3 "\$app_entry"
 EOF
 
     # Make it executable
@@ -449,7 +452,7 @@ EOF
     echo "Comment=EDA Tool" >> esim.desktop
     echo "GenericName=eSim" >> esim.desktop
     echo "Keywords=eda-tools" >> esim.desktop
-    echo "Exec=esim %u" >> esim.desktop
+    echo "Exec=bash -c 'cd \"$app_dir\" && source \"${config_dir}/env/bin/activate\" && python3 \"$app_entry\" %u'" >> esim.desktop
     echo "Terminal=true" >> esim.desktop
     echo "X-MultipleArgs=false" >> esim.desktop
     echo "Type=Application" >> esim.desktop
@@ -559,6 +562,32 @@ if [ $option == "--install" ];then
         echo "Please select the right option"
         exit 0    
     fi
+
+    found_app=$(find "$user_home" -type f -name "Application.py" -print -quit 2>/dev/null || true)
+    if [ -n "$found_app" ]; then
+        src_dir=""
+        current_dir=$(dirname "$found_app")
+        while [ "$current_dir" != "/" ]; do
+            if [ "$(basename "$current_dir")" = "src" ]; then
+                src_dir="$current_dir"
+                break
+            fi
+            current_dir=$(dirname "$current_dir")
+        done
+
+        if [ -n "$src_dir" ]; then
+            eSim_Home=$(dirname "$src_dir")
+        else
+            echo "Error: Application.py found at $found_app, but no src directory in its path."
+            echo "Please ensure the eSim source is extracted correctly under your home directory."
+            exit 1
+        fi
+    else
+        echo "Error: Application.py not found under $user_home."
+        echo "Please extract the eSim source within your home directory and retry."
+        exit 1
+    fi
+
     createConfigFile
     installDependency
     installKicad
