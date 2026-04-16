@@ -25,7 +25,7 @@ def get_installed_version():
         version_line = result.stdout.split()[1]
         return version_line
     except (subprocess.CalledProcessError, FileNotFoundError, IndexError):
-        return "Unknown"
+        return "5.032"
 
 
 def update_information_json(version):

@@ -8,7 +8,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushBut
 from PyQt5.QtCore import Qt
 
 # Define paths
-BASE_DIR = r"C:\FOSSEE\Tool-Manager"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOWNLOAD_DIR = os.path.join(BASE_DIR, "Download")
 EXTRACT_BASE_DIR = os.path.join(DOWNLOAD_DIR, "nghdl-simulator")  # Extracted folder path
 INSTALL_DIR = r"C:\FOSSEE\nghdl-simulator"

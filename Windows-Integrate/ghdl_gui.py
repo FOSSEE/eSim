@@ -14,7 +14,7 @@ INSTALL_DIR = r"C:\FOSSEE"
 DOWNLOAD_DIR = os.path.join(INSTALL_DIR, "Tool-Manager", "Download")
 MSYS_DIR = os.path.join(INSTALL_DIR, "MSYS", "mingw64")
 GHDL_DIR = os.path.join(INSTALL_DIR, "GHDL")
-BASE_DIR = r"C:\FOSSEE\Tool-Manager"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INFO_JSON = os.path.join(BASE_DIR, "information.json")
 
 # Available GHDL versions (first entry is the latest)
@@ -23,13 +23,21 @@ LATEST_VERSION = GHDL_VERSIONS[0]  # Use the first version as the latest
 GHDL_PACKAGES = {v: f"ghdl-v{v}.pkg.tar.zst" for v in GHDL_VERSIONS}
 
 def get_installed_version():
-    """Get the installed GHDL version using 'ghdl --version'."""
+    ghdl_path = os.path.join(MSYS_DIR, "bin", "ghdl.exe")
+
+    print("Checking GHDL path:", ghdl_path)
+
+    if not os.path.exists(ghdl_path):
+        print("GHDL NOT FOUND")
+        return "Unknown"
+
     try:
-        result = subprocess.run(["ghdl", "--version"], capture_output=True, text=True, check=True)
-        version_line = result.stdout.splitlines()[0]  # Get the first line of output
-        version = version_line.split()[1]  # Extract version number (e.g., "4.1.0")
-        return version
-    except (subprocess.CalledProcessError, FileNotFoundError, IndexError):
+        result = subprocess.run([ghdl_path, "--version"], capture_output=True, text=True)
+        print("OUTPUT:", result.stdout)
+        version_line = result.stdout.splitlines()[0]
+        return version_line.split()[1]
+    except Exception as e:
+        print("ERROR:", e)
         return "Unknown"
     
 def update_information_json(version):
@@ -121,6 +129,8 @@ class GHDLUpdater(QWidget):
             tar.extractall(path=extract_path)
 
     def install_ghdl(self):
+        shutil.rmtree(GHDL_DIR, ignore_errors=True)
+
         """Installs the selected GHDL version."""
         version = self.version_dropdown.currentText()
         package_name = GHDL_PACKAGES[version]
@@ -158,7 +168,6 @@ class GHDLUpdater(QWidget):
         shutil.copytree(os.path.join(extract_dir, "mingw64", "lib"), os.path.join(GHDL_DIR, "lib"), dirs_exist_ok=True)
 
         # Remove old GHDL directory
-        shutil.rmtree(GHDL_DIR, ignore_errors=True)
 
         # Cleanup
         shutil.rmtree(extract_dir, ignore_errors=True)

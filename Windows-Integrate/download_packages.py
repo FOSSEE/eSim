@@ -25,23 +25,29 @@ HEADERS = {
 
 # Retry settings
 MAX_RETRIES = 5
-RETRY_DELAY = 10  # seconds
+RETRY_DELAY = 3  # seconds
 
 def download_pkg_file(url, save_path):
-    """Simple direct download for .pkg.tar.zst files."""
+    """Robust streaming download for .pkg.tar.zst files."""
     if os.path.exists(save_path):
         print(f"File already exists: {save_path}, skipping download.")
         return
 
     print(f"Downloading {url}...")
+
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            response = requests.get(url, headers=HEADERS, stream=True)
-            response.raise_for_status()
-            with open(save_path, "wb") as file:
-                file.write(response.content)
+            with requests.get(url, headers=HEADERS, stream=True, timeout=30) as response:
+                response.raise_for_status()
+
+                with open(save_path, "wb") as file:
+                    for chunk in response.iter_content(chunk_size=1024 * 1024):
+                        if chunk:
+                            file.write(chunk)
+
             print(f"Downloaded successfully: {save_path}")
             return
+
         except requests.exceptions.RequestException as e:
             print(f"Attempt {attempt}/{MAX_RETRIES} failed: {e}")
             if attempt < MAX_RETRIES:
@@ -51,35 +57,69 @@ def download_pkg_file(url, save_path):
                 print(f"Download failed: {url}")
 
 def download_exe_file(url, save_path):
-    """Resumable download for large .exe files (KiCad installers) with retry support."""
-    temp_path = save_path + ".part"  # Temporary file for incomplete downloads
-    resume_header = {}
+    """Download .exe files with safe resume handling."""
 
+    temp_path = save_path + ".part"
+
+    # If final file already exists → skip
+    if os.path.exists(save_path):
+        print(f"{save_path} already downloaded.")
+        return
+
+    # If partial file exists → check size
+    resume_header = {}
     if os.path.exists(temp_path):
         downloaded_size = os.path.getsize(temp_path)
-        resume_header["Range"] = f"bytes={downloaded_size}-"
-        print(f"Resuming download for {save_path} from byte {downloaded_size}...")
-    else:
-        print(f"Starting download for {save_path}...")
 
+        try:
+            # Get total file size from server
+            response = requests.head(url, headers=HEADERS)
+            total_size = int(response.headers.get('content-length', 0))
+
+            # If already fully downloaded → rename
+            if downloaded_size >= total_size:
+                os.rename(temp_path, save_path)
+                print(f"Recovered completed file: {save_path}")
+                return
+
+            resume_header["Range"] = f"bytes={downloaded_size}-"
+            print(f"Resuming from {downloaded_size} bytes...")
+
+        except:
+            print("Resume check failed. Restarting download.")
+            os.remove(temp_path)
+
+    else:
+        print(f"Starting fresh download: {save_path}")
+
+    # Download logic
     for attempt in range(1, MAX_RETRIES + 1):
         try:
-            with requests.get(url, headers={**HEADERS, **resume_header}, stream=True) as response:
+            with requests.get(url, headers={**HEADERS, **resume_header}, stream=True, timeout=30) as response:
+
+                # If server rejects range → restart download
+                if response.status_code == 416:
+                    print("Server rejected resume. Restarting download...")
+                    if os.path.exists(temp_path):
+                        os.remove(temp_path)
+                    return download_exe_file(url, save_path)
+
                 response.raise_for_status()
 
-                with open(temp_path, "ab") as file:
-                    for chunk in response.iter_content(chunk_size=1024 * 1024):  # Download in 1MB chunks
+                mode = "ab" if "Range" in resume_header else "wb"
+
+                with open(temp_path, mode) as file:
+                    for chunk in response.iter_content(chunk_size=1024 * 1024):
                         if chunk:
                             file.write(chunk)
 
-            os.rename(temp_path, save_path)  # Rename to final file
+            os.rename(temp_path, save_path)
             print(f"Downloaded successfully: {save_path}")
             return
 
         except requests.exceptions.RequestException as e:
             print(f"Attempt {attempt}/{MAX_RETRIES} failed: {e}")
             if attempt < MAX_RETRIES:
-                print(f"Retrying in {RETRY_DELAY} seconds...")
                 time.sleep(RETRY_DELAY)
             else:
                 print(f"Download failed: {url}")

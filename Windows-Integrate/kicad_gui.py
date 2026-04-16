@@ -11,7 +11,7 @@ from PyQt5.QtCore import Qt
 INSTALL_DIR = r"C:\FOSSEE"
 DOWNLOAD_DIR = os.path.join(INSTALL_DIR, "Tool-Manager", "Download")
 KICAD_DIR = os.path.join(INSTALL_DIR, "KiCad")
-BASE_DIR = r"C:\FOSSEE\Tool-Manager"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INFO_JSON = os.path.join(BASE_DIR, "information.json")
 
 # Available KiCad versions for the user to choose (displayed as 7.0.11 and 8.0.9)
