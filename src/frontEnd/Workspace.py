@@ -130,7 +130,9 @@ class Workspace(QtWidgets.QWidget):
         else:
             user_home = os.path.expanduser('~')
 
-        file = open(os.path.join(user_home, ".esim/workspace.txt"), 'w')
+        esim_dir = os.path.join(user_home, ".esim")
+        os.makedirs(esim_dir, exist_ok=True)
+        file = open(os.path.join(esim_dir, "workspace.txt"), 'w')
         file.writelines(
             str(self.obj_appconfig.workspace_check) +
             " " + self.workspace_loc.text()

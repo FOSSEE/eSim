@@ -1,11 +1,10 @@
 from PyQt5 import QtCore, QtWidgets
+from PyQt5.QtWidgets import QDockWidget, QMessageBox,QMenu 
 import os
 import json
 from configuration.Appconfig import Appconfig
 from projManagement.Validation import Validation
 
-
-# This is main class for Project Explorer Area.
 class ProjectExplorer(QtWidgets.QWidget):
     """
     This class contains function:
@@ -104,25 +103,45 @@ class ProjectExplorer(QtWidgets.QWidget):
         ) = []
 
     def openMenu(self, position):
-        indexes = self.treewidget.selectedIndexes()
-        if len(indexes) > 0:
-            level = 0
-            index = indexes[0]
-            while index.parent().isValid():
-                index = index.parent()
-                level += 1
+        """Handle right-click context menu using QTreeWidget items."""
+        # 1. Use the correct widget name: self.treewidget
+        items = self.treewidget.selectedItems()
+        
+        level = -1
+        file_path = ""
+        
+        if len(items) > 0:
+            item = items[0]
+            file_path = item.text(1)  
+            
+            if item.parent() is None:
+                level = 0 
+            else:
+                level = 1  
 
-        menu = QtWidgets.QMenu()
+        menu = QMenu()
+        
         if level == 0:
-            renameProject = menu.addAction(self.tr("Rename Project"))
-            renameProject.triggered.connect(self.renameProject)
-            deleteproject = menu.addAction(self.tr("Remove Project"))
-            deleteproject.triggered.connect(self.removeProject)
-            refreshproject = menu.addAction(self.tr("Refresh"))
-            refreshproject.triggered.connect(self.refreshProject)
+
+            analyze_action = menu.addAction("Analyze Project Netlist")
+
+            project_name = item.text(0)
+            netlist_path = os.path.join(file_path, f"{project_name}.cir.out")
+            analyze_action.triggered.connect(lambda: self._analyze_netlist_in_copilot(netlist_path))
+            
+            rename_action = menu.addAction("Rename Project")
+            rename_action.triggered.connect(self.renameProject)
+            remove_action = menu.addAction("Remove Project")
+            remove_action.triggered.connect(self.removeProject)
+            
         elif level == 1:
-            openfile = menu.addAction(self.tr("Open"))
-            openfile.triggered.connect(self.openProject)
+
+            if file_path.endswith((".cir", ".cir.out", ".net")):
+                analyze_file_action = menu.addAction("Analyze this Netlist")
+                analyze_file_action.triggered.connect(lambda: self._analyze_netlist_in_copilot(file_path))
+
+        refresh_action = menu.addAction("Refresh")
+        refresh_action.triggered.connect(self.refreshInstant)
 
         menu.exec_(self.treewidget.viewport().mapToGlobal(position))
 
@@ -430,3 +449,35 @@ class ProjectExplorer(QtWidgets.QWidget):
                         'contain space between them'
                     )
                     msg.exec_()
+
+    def _analyze_netlist_in_copilot(self, netlist_path: str):
+        """Send selected .cir file to chatbot for analysis."""
+        try:
+            # Get the main Application window (traverse up the widget hierarchy)
+            main_window = self
+            while main_window.parent() is not None:
+                main_window = main_window.parent()
+            
+            # Find the chatbot dock
+            for dock in main_window.findChildren(QDockWidget):
+                if "Copilot" in dock.windowTitle():
+                    chatbot_widget = dock.widget()
+                    if hasattr(chatbot_widget, 'analyze_specific_netlist'):
+                        chatbot_widget.analyze_specific_netlist(netlist_path)
+                        # Show the dock if it's hidden
+                        if not dock.isVisible():
+                            dock.show()
+                        return
+            
+            QMessageBox.information(
+                self,
+                "Chatbot not open",
+                "Please open the eSim Copilot window first (View → eSim Copilot)."
+            )
+        except Exception as e:
+            print(f"[COPILOT] Failed to trigger analysis: {e}")
+            QMessageBox.warning(
+                self,
+                "Error",
+                f"Could not connect to chatbot:\n{e}"
+            )

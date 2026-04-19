@@ -1,0 +1,49 @@
+# Deploy eSim to VM and restart - COPY THIS FILE TO deploy_to_vm.ps1 and edit config below.
+# The actual deploy_to_vm.ps1 is in .gitignore (user-specific).
+#
+# Usage: .\scripts\deploy_to_vm.ps1
+# Prereq: OpenSSH client (scp, ssh) - built into Windows 10+
+
+# ============ CONFIG (edit these) ============
+$VM_HOST = "192.168.29.208"
+$VM_USER = "harvi"
+$VM_REPO = "~/work/eSim"
+# ============================================
+
+$ErrorActionPreference = "Stop"
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$RepoRoot = Split-Path -Parent $ScriptDir
+
+Write-Host "=== eSim Deploy to VM ===" -ForegroundColor Cyan
+Write-Host ""
+
+# 1. Sync code
+Write-Host "[1] Syncing code to ${VM_USER}@${VM_HOST}:${VM_REPO}..." -ForegroundColor Yellow
+$dest = "${VM_USER}@${VM_HOST}:${VM_REPO}/"
+Push-Location $RepoRoot
+try {
+    # Use scp - rsync may not be on Windows
+    scp -r -o ConnectTimeout=10 src scripts $dest
+    if ($LASTEXITCODE -ne 0) { throw "scp failed" }
+} finally {
+    Pop-Location
+}
+Write-Host "  Done." -ForegroundColor Green
+
+# 2. Kill old eSim process
+Write-Host "[2] Stopping old eSim process on VM..." -ForegroundColor Yellow
+$remoteCmd = "cd $VM_REPO && pkill -f 'python.*Application.py' 2>/dev/null; pkill -f 'python.*esim' 2>/dev/null; echo 'Done.'"
+ssh -o ConnectTimeout=10 "${VM_USER}@${VM_HOST}" $remoteCmd
+Write-Host "  Done." -ForegroundColor Green
+
+# 3. MobaXterm instructions
+Write-Host ""
+Write-Host "=== LAST STEP (do this in MobaXterm) ===" -ForegroundColor Cyan
+Write-Host ""
+Write-Host "  1. Open MobaXterm and start an SSH session to: ${VM_USER}@${VM_HOST}" -ForegroundColor White
+Write-Host "  2. Run:" -ForegroundColor White
+Write-Host ""
+Write-Host "     cd ~/work/eSim && ./scripts/launch_esim.sh" -ForegroundColor Yellow
+Write-Host ""
+Write-Host "  (MobaXterm provides X11, so the eSim GUI will display.)" -ForegroundColor Gray
+Write-Host ""

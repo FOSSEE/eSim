@@ -1,0 +1,18 @@
+# eSim Copilot AI extras (install after base requirements.txt)
+ollama
+chromadb
+psutil
+protobuf<5
+regex
+requests
+tqdm
+pyyaml
+
+# Vision (PaddleOCR + OpenCV)
+pillow==10.4.0
+opencv-python-headless==4.6.0.66
+paddleocr==2.7.0.3
+
+# Speech-to-text
+vosk
+sounddevice
