@@ -3,22 +3,22 @@
         {
             "package_name": "ngspice",
             "version": "43",
-            "installed_date": "2025-03-20 10:01:17"
+            "installed_date": "2026-04-22 00:52:43"
         },
         {
             "package_name": "kicad",
-            "version": "7.0.11",
-            "installed_date": "2025-03-20 12:29:52"
+            "version": "8.0.9",
+            "installed_date": "2026-04-21 01:46:20"
         },
         {
             "package_name": "ghdl",
             "version": "4.1.0",
-            "installed_date": "2025-03-20 10:01:42"
+            "installed_date": "2026-04-21 01:41:28"
         },
         {
             "package_name": "verilator",
-            "version": "5.032",
-            "installed_date": "2025-03-20 10:01:50"
+            "version": "Unknown",
+            "installed_date": "2026-04-10 15:49:27"
         }
     ]
 }

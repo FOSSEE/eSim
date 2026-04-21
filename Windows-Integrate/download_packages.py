@@ -1,153 +1,199 @@
+import sys
 import os
 import time
 import requests
-from PyQt5.QtWidgets import QApplication, QMessageBox
+from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QProgressBar, QMessageBox
+from PyQt5.QtCore import Qt
 
-# Define the download directory
 DOWNLOAD_DIR = r"C:\FOSSEE\Tool-Manager\Download"
 
-# URLs and their respective renamed filenames
 ghdl_packages = {
-    "https://github.com/ghdl/ghdl/releases/download/v4.1.0/mingw-w64-x86_64-ghdl-llvm-ci-1-any.pkg.tar.zst": "ghdl-v4.1.0.pkg.tar.zst",
-    "https://github.com/ghdl/ghdl/releases/download/v4.0.0/mingw-w64-x86_64-ghdl-llvm-ci-1-any.pkg.tar.zst": "ghdl-v4.0.0.pkg.tar.zst",
-    "https://github.com/ghdl/ghdl/releases/download/v3.0.0/mingw-w64-x86_64-ghdl-llvm-ci-1-any.pkg.tar.zst": "ghdl-v3.0.0.pkg.tar.zst"
+    "https://github.com/ghdl/ghdl/releases/download/v4.1.0/mingw-w64-x86_64-ghdl-llvm-ci-1-any.pkg.tar.zst": "ghdl-v4.1.0.pkg.tar.zst"
 }
 
 kicad_installers = {
-    "https://downloads.kicad.org/kicad/windows/explore/stable/download/kicad-7.0.11-rc3-x86_64.exe": "kicad-7.0.11.exe",
     "https://downloads.kicad.org/kicad/windows/explore/stable/download/kicad-8.0.9-x86_64.exe": "kicad-8.0.9.exe"
 }
 
-# User-Agent header (to bypass 403 error)
-HEADERS = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+verilator_packages = {
+    "https://github.com/verilator/verilator/releases/download/v5.016/verilator-5.016-win64.zip": "verilator.zip"
 }
+ngspice_packages = {
+    "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/42/ngspice-42_64.zip/download": "ngspice-42.zip"
+}
+HEADERS = {"User-Agent": "Mozilla/5.0"}
+MAX_RETRIES = 3
 
-# Retry settings
-MAX_RETRIES = 5
-RETRY_DELAY = 3  # seconds
 
-def download_pkg_file(url, save_path):
-    """Robust streaming download for .pkg.tar.zst files."""
-    if os.path.exists(save_path):
-        print(f"File already exists: {save_path}, skipping download.")
-        return
+class DownloadWindow(QWidget):
+    def __init__(self):
+        super().__init__()
 
-    print(f"Downloading {url}...")
+        self.setWindowTitle("Tool Manager")
+        self.setGeometry(500, 200, 400, 200)
 
-    for attempt in range(1, MAX_RETRIES + 1):
-        try:
-            with requests.get(url, headers=HEADERS, stream=True, timeout=30) as response:
-                response.raise_for_status()
+        layout = QVBoxLayout()
 
-                with open(save_path, "wb") as file:
-                    for chunk in response.iter_content(chunk_size=1024 * 1024):
-                        if chunk:
-                            file.write(chunk)
+        self.label = QLabel("Ready to Download")
+        self.label.setAlignment(Qt.AlignCenter)
 
-            print(f"Downloaded successfully: {save_path}")
+        self.progress = QProgressBar()
+        self.progress.setValue(0)
+
+        self.progress.setStyleSheet("""
+            QProgressBar {
+                border: 2px solid grey;
+                border-radius: 5px;
+                text-align: center;
+            }
+            QProgressBar::chunk {
+                background-color: #4CAF50;
+            }
+        """)
+
+        self.button = QPushButton("Start Download")
+        self.button.clicked.connect(self.start_download)
+
+        self.redownload_button = QPushButton("Re-download")
+        self.redownload_button.clicked.connect(self.force_download)
+
+        layout.addWidget(self.label)
+        layout.addWidget(self.progress)
+        layout.addWidget(self.button)
+        layout.addWidget(self.redownload_button)
+
+        self.setLayout(layout)
+
+    def update_progress(self, value):
+        self.progress.setValue(value)
+        QApplication.processEvents()
+
+    def download_file(self, url, save_path, progress_callback):
+        for attempt in range(MAX_RETRIES):
+            try:
+                with requests.get(url, headers=HEADERS, stream=True) as r:
+                    total_size = int(r.headers.get('content-length', 0))
+                    downloaded = 0
+
+                    with open(save_path, "wb") as f:
+                        for chunk in r.iter_content(1024 * 1024):
+                            if chunk:
+                                f.write(chunk)
+                                downloaded += len(chunk)
+
+                                if total_size > 0:
+                                    percent = int((downloaded / total_size) * 100)
+                                    progress_callback(percent)
+
+                                QApplication.processEvents()
+
+                return True
+
+            except Exception as e:
+                print("Retry...", e)
+                time.sleep(2)
+
+        return False
+
+    def start_download(self):
+        self.button.setEnabled(False)
+        os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+
+        all_files = []
+        all_files += list(ghdl_packages.items())
+        all_files += list(kicad_installers.items())
+        all_files += list(verilator_packages.items())
+        all_files += list(ngspice_packages.items())
+
+    # ✅ CHECK: Are all files already downloaded?
+        already_downloaded = True
+        for url, filename in all_files:
+            save_path = os.path.join(DOWNLOAD_DIR, filename)
+            if not os.path.exists(save_path):
+                already_downloaded = False
+                break
+
+        if already_downloaded:
+            QMessageBox.information(self, "Info", "All tools are already downloaded! Nothing to do.")
+            self.button.setEnabled(True)
             return
 
-        except requests.exceptions.RequestException as e:
-            print(f"Attempt {attempt}/{MAX_RETRIES} failed: {e}")
-            if attempt < MAX_RETRIES:
-                print(f"Retrying in {RETRY_DELAY} seconds...")
-                time.sleep(RETRY_DELAY)
-            else:
-                print(f"Download failed: {url}")
+    # ✅ Continue download if not all present
+        total_files = len(all_files)
+        current_file = 0
 
-def download_exe_file(url, save_path):
-    """Download .exe files with safe resume handling."""
+        for url, filename in all_files:
+            save_path = os.path.join(DOWNLOAD_DIR, filename)
 
-    temp_path = save_path + ".part"
+        # Skip already downloaded files
+            if os.path.exists(save_path):
+                current_file += 1
+                continue
 
-    # If final file already exists → skip
-    if os.path.exists(save_path):
-        print(f"{save_path} already downloaded.")
-        return
+            def file_progress(p):
+                overall = int((current_file / total_files) * 100 + (p / total_files))
+                self.update_progress(overall)
 
-    # If partial file exists → check size
-    resume_header = {}
-    if os.path.exists(temp_path):
-        downloaded_size = os.path.getsize(temp_path)
+            self.label.setText(f"Downloading: {filename}")
+            self.download_file(url, save_path, file_progress)
 
-        try:
-            # Get total file size from server
-            response = requests.head(url, headers=HEADERS)
-            total_size = int(response.headers.get('content-length', 0))
+            current_file += 1
 
-            # If already fully downloaded → rename
-            if downloaded_size >= total_size:
-                os.rename(temp_path, save_path)
-                print(f"Recovered completed file: {save_path}")
-                return
+        self.progress.setValue(100)
+        self.label.setText("Download Complete")
+        QMessageBox.information(self, "Done", "All tools downloaded successfully!")
+        self.button.setEnabled(True)
+        self.progress.setValue(0)
 
-            resume_header["Range"] = f"bytes={downloaded_size}-"
-            print(f"Resuming from {downloaded_size} bytes...")
 
-        except:
-            print("Resume check failed. Restarting download.")
-            os.remove(temp_path)
+    def force_download(self):
+        reply = QMessageBox.question(
+            self,
+            "Confirm Re-download",
+            "This will re-download all files. Continue?",
+            QMessageBox.Yes | QMessageBox.No
+        )
 
-    else:
-        print(f"Starting fresh download: {save_path}")
-
-    # Download logic
-    for attempt in range(1, MAX_RETRIES + 1):
-        try:
-            with requests.get(url, headers={**HEADERS, **resume_header}, stream=True, timeout=30) as response:
-
-                # If server rejects range → restart download
-                if response.status_code == 416:
-                    print("Server rejected resume. Restarting download...")
-                    if os.path.exists(temp_path):
-                        os.remove(temp_path)
-                    return download_exe_file(url, save_path)
-
-                response.raise_for_status()
-
-                mode = "ab" if "Range" in resume_header else "wb"
-
-                with open(temp_path, mode) as file:
-                    for chunk in response.iter_content(chunk_size=1024 * 1024):
-                        if chunk:
-                            file.write(chunk)
-
-            os.rename(temp_path, save_path)
-            print(f"Downloaded successfully: {save_path}")
+        if reply == QMessageBox.No:
             return
 
-        except requests.exceptions.RequestException as e:
-            print(f"Attempt {attempt}/{MAX_RETRIES} failed: {e}")
-            if attempt < MAX_RETRIES:
-                time.sleep(RETRY_DELAY)
-            else:
-                print(f"Download failed: {url}")
+        self.button.setEnabled(False)
+        self.redownload_button.setEnabled(False)
 
-def download_packages():
-    """Download both GHDL packages and KiCad installers."""
-    os.makedirs(DOWNLOAD_DIR, exist_ok=True)
+        os.makedirs(DOWNLOAD_DIR, exist_ok=True)
 
-    # Download GHDL packages (.pkg.tar.zst) using direct method
-    for url, filename in ghdl_packages.items():
-        save_path = os.path.join(DOWNLOAD_DIR, filename)
-        download_pkg_file(url, save_path)
+        all_files = []
+        all_files += list(ghdl_packages.items())
+        all_files += list(kicad_installers.items())
+        all_files += list(verilator_packages.items())
+        all_files += list(ngspice_packages.items())
 
-    # Download KiCad installers (.exe) using resumable method
-    for url, filename in kicad_installers.items():
-        save_path = os.path.join(DOWNLOAD_DIR, filename)
-        download_exe_file(url, save_path)
+        total_files = len(all_files)
+        current_file = 0
 
-    show_popup_message()
+        for url, filename in all_files:
+            save_path = os.path.join(DOWNLOAD_DIR, filename)
 
-def show_popup_message():
-    """Show a pop-up message after all downloads are complete."""
-    app = QApplication([])  # Create a QApplication instance
-    msg = QMessageBox()
-    msg.setIcon(QMessageBox.Information)
-    msg.setText("All packages have been downloaded successfully.")
-    msg.setWindowTitle("Download Complete")
-    msg.exec_()
+            def file_progress(p):
+                overall = int((current_file / total_files) * 100 + (p / total_files))
+                self.update_progress(overall)
+
+            self.label.setText(f"Re-downloading: {filename}")
+            self.download_file(url, save_path, file_progress)
+
+            current_file += 1
+
+        self.progress.setValue(100)
+        self.label.setText("Re-download Complete")
+        QMessageBox.information(self, "Done", "All tools re-downloaded successfully!")
+
+        self.button.setEnabled(True)
+        self.redownload_button.setEnabled(True)
+        self.progress.setValue(0)
+
 
 if __name__ == "__main__":
-    download_packages()
+    app = QApplication(sys.argv)
+    window = DownloadWindow()
+    window.show()
+    sys.exit(app.exec_())

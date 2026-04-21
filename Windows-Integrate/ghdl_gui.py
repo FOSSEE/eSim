@@ -8,6 +8,8 @@ import json
 from datetime import datetime
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QComboBox, QMessageBox
 from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QProgressBar
+from PyQt5.QtCore import QCoreApplication
 
 # Define paths
 INSTALL_DIR = r"C:\FOSSEE"
@@ -92,13 +94,31 @@ class GHDLUpdater(QWidget):
         self.version_dropdown.addItems(GHDL_VERSIONS) 
         self.version_dropdown.setStyleSheet("font-size: 14px; padding: 5px 0;")
         layout.addWidget(self.version_dropdown)
-
+       
         # Update button
         self.update_button = QPushButton("Update GHDL")
         self.update_button.clicked.connect(self.install_ghdl)
         self.update_button.setStyleSheet("font-size: 14px; padding: 10px 0;")
         layout.addWidget(self.update_button)
+         # Progress Bar (same like KiCad)
+        self.progress = QProgressBar(self)
+        self.progress.setValue(0)
+        self.progress.setTextVisible(True)
 
+# Green style (KiCad-like)
+        self.progress.setStyleSheet("""
+        QProgressBar {
+            border: 2px solid grey;
+            border-radius: 5px;
+            text-align: center;
+        }
+        QProgressBar::chunk {
+            background-color: #4CAF50;
+            width: 20px;
+        }
+        """)
+
+        layout.addWidget(self.progress)
         self.setLayout(layout)
 
     def update_status_label(self, version):
@@ -129,6 +149,8 @@ class GHDLUpdater(QWidget):
             tar.extractall(path=extract_path)
 
     def install_ghdl(self):
+        self.progress.setValue(5)
+        QCoreApplication.processEvents()
         shutil.rmtree(GHDL_DIR, ignore_errors=True)
 
         """Installs the selected GHDL version."""
@@ -143,15 +165,19 @@ class GHDLUpdater(QWidget):
             return
 
         self.extract_zst(archive_path, extract_dir)
+        self.progress.setValue(30)
+        QCoreApplication.processEvents()
 
         # Copy binaries
         shutil.copytree(os.path.join(extract_dir, "mingw64", "bin"), os.path.join(MSYS_DIR, "bin"), dirs_exist_ok=True)
         shutil.copytree(os.path.join(extract_dir, "mingw64", "lib"), os.path.join(MSYS_DIR, "lib"), dirs_exist_ok=True)
-
+        self.progress.setValue(60)
+        QCoreApplication.processEvents()
         # Copy include files from extracted include/ghdl to include
         include_src = os.path.join(extract_dir, "mingw64", "include", "ghdl")
         include_dest = os.path.join(GHDL_DIR, "include")
-
+        self.progress.setValue(80)
+        QCoreApplication.processEvents()
         os.makedirs(include_dest, exist_ok=True)
         for item in os.listdir(include_src):
             src_path = os.path.join(include_src, item)
@@ -166,7 +192,8 @@ class GHDLUpdater(QWidget):
         # Copy GHDL files
         shutil.copytree(os.path.join(extract_dir, "mingw64", "bin"), os.path.join(GHDL_DIR, "bin"), dirs_exist_ok=True)
         shutil.copytree(os.path.join(extract_dir, "mingw64", "lib"), os.path.join(GHDL_DIR, "lib"), dirs_exist_ok=True)
-
+        self.progress.setValue(90)
+        QCoreApplication.processEvents()
         # Remove old GHDL directory
 
         # Cleanup
@@ -181,10 +208,11 @@ class GHDLUpdater(QWidget):
         update_information_json(version)
         self.version_label.setText(f"Installed Version: {self.installed_version}")  # Update version label
         self.update_status_label(self.installed_version)  # Update status message
-
+        self.progress.setValue(100)
+        QCoreApplication.processEvents()
         # **Show popup message**
         QMessageBox.information(self, "Update Complete", f"The GHDL is updated to version {version}.")
-
+        self.progress.setValue(0)
 # Run the application
 if __name__ == "__main__":
     app = QApplication(sys.argv)

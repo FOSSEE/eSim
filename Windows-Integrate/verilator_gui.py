@@ -7,7 +7,8 @@ import json
 from datetime import datetime
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QComboBox, QMessageBox
 from PyQt5.QtCore import Qt
-
+from PyQt5.QtWidgets import QProgressBar
+from PyQt5.QtCore import QCoreApplication
 # Define paths
 BASE_DIR = r"C:\FOSSEE\Tool-Manager"
 DOWNLOAD_DIR = os.path.join(BASE_DIR, "Download")
@@ -81,7 +82,23 @@ class VerilatorUpdater(QWidget):
         self.update_button.clicked.connect(self.install_verilator)
         self.update_button.setStyleSheet("font-size: 14px; padding: 10px 0;")
         layout.addWidget(self.update_button)
-
+        # Progress Bar
+        self.progress = QProgressBar(self)
+        self.progress.setValue(0)
+        self.progress.setAlignment(Qt.AlignCenter)
+        self.progress.setStyleSheet("""
+            QProgressBar {
+                border: 2px solid grey;
+                border-radius: 5px;
+                text-align: center;
+                height: 25px;
+            }
+            QProgressBar::chunk {
+                background-color: #4CAF50;   /* GREEN like KiCad */
+                width: 20px;
+            }
+        """)
+        layout.addWidget(self.progress)
         self.setLayout(layout)
 
     def update_status_label(self, version):
@@ -94,12 +111,16 @@ class VerilatorUpdater(QWidget):
         else:
             self.status_label.setText("Please update. Your package is out of date.")
             self.status_label.setStyleSheet("color: red; font-size: 14px; padding: 10px 0;")
-
+            
     def extract_verilator(self, archive_path, extract_path):
         os.makedirs(extract_path, exist_ok=True)
+        self.progress.setValue(10)
+        QCoreApplication.processEvents()
         print(f"Extracting {os.path.basename(archive_path)}...")
         with py7zr.SevenZipFile(archive_path, mode='r') as archive:
             archive.extractall(DOWNLOAD_DIR)
+            self.progress.setValue(40)
+            QCoreApplication.processEvents()
         extracted_folder = os.path.join(DOWNLOAD_DIR, "verilator")
         if os.path.exists(os.path.join(extracted_folder, "verilator")):
             shutil.move(os.path.join(extracted_folder, "verilator"), extracted_folder)
@@ -110,26 +131,35 @@ class VerilatorUpdater(QWidget):
         bin_path = os.path.join(extract_dir, "bin")
         share_path = os.path.join(extract_dir, "share", "verilator")
         pkgconfig_path = os.path.join(extract_dir, "share", "pkgconfig")
-        
+        self.progress.setValue(50)
+        QCoreApplication.processEvents()
         shutil.copytree(bin_path, os.path.join(MINGW64_PATH, "bin"), dirs_exist_ok=True)
         shutil.copytree(os.path.join(share_path, "bin"), os.path.join(MINGW64_PATH, "bin"), dirs_exist_ok=True)
         shutil.copytree(os.path.join(share_path, "include"), os.path.join(MINGW64_PATH, "include"), dirs_exist_ok=True)
         shutil.copytree(os.path.join(share_path, "examples"), os.path.join(MINGW64_PATH, "examples"), dirs_exist_ok=True)
-        
+        self.progress.setValue(65)
+        QCoreApplication.processEvents()
         shutil.copy(os.path.join(share_path, "verilator-config.cmake"), MINGW64_PATH)
         shutil.copy(os.path.join(share_path, "verilator-config-version.cmake"), MINGW64_PATH)
-        
+        self.progress.setValue(80)
+        QCoreApplication.processEvents()
         if os.path.exists(pkgconfig_path):
             shutil.copytree(pkgconfig_path, os.path.join(MINGW64_PATH, "pkgconfig"), dirs_exist_ok=True)
+            self.progress.setValue(90)
+            QCoreApplication.processEvents()
             print(f"Copied 'pkgconfig' to {os.path.join(MINGW64_PATH, 'pkgconfig')}")
         else:
             print("Warning: 'pkgconfig' directory not found, skipping copy.")
         
         print("Update complete.")
         shutil.rmtree(extract_dir, ignore_errors=True)
+        self.progress.setValue(100)
+        QCoreApplication.processEvents()
         print("Extracted folder removed.")
 
     def install_verilator(self):
+        self.progress.setValue(0)
+        QCoreApplication.processEvents()
         version = self.version_dropdown.currentText()
         package_name = VERILATOR_PACKAGES[version]
         archive_path = os.path.join(DOWNLOAD_DIR, package_name)
@@ -148,8 +178,9 @@ class VerilatorUpdater(QWidget):
         self.version_label.setText(f"Installed Version: {self.installed_version}")
         self.update_status_label(self.installed_version)
         QMessageBox.information(self, "Update Complete", f"Verilator updated to version {version}.")
-
-
+        
+        self.progress.reset()
+        self.progress.setValue(0)
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = VerilatorUpdater()

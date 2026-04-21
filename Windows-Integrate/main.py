@@ -7,6 +7,12 @@ from PyQt5.QtCore import Qt
 
 
 
+
+
+
+
+
+
 LOG_FILE = r"C:\FOSSEE\Tool-Manager\logs.txt"
 
 from datetime import datetime

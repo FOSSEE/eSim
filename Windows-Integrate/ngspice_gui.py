@@ -3,10 +3,12 @@ import os
 import shutil
 import py7zr
 import json
+from PyQt5.QtWidgets import QProgressBar
+from PyQt5.QtCore import QCoreApplication
 from datetime import datetime
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QComboBox, QMessageBox
 from PyQt5.QtCore import Qt
-
+from PyQt5.QtCore import QThread, pyqtSignal
 # Define paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOWNLOAD_DIR = os.path.join(BASE_DIR, "Download")
@@ -59,7 +61,58 @@ def update_information_json(version):
 
     with open(INFO_JSON, "w") as f:
         json.dump(data, f, indent=4)
+class InstallWorker(QThread):
+    progress = pyqtSignal(int)
+    finished = pyqtSignal(bool, str)
 
+    def __init__(self, version, package_path, extracted_version_folder):
+        super().__init__()
+        self.version = version
+        self.package_path = package_path
+        self.extracted_version_folder = extracted_version_folder
+
+    def run(self):
+        try:
+            # Step 1: Extraction (0–40)
+            for i in range(0, 40, 5):
+                self.progress.emit(i)
+                self.msleep(100)
+
+            with py7zr.SevenZipFile(self.package_path, mode='r') as archive:
+                archive.extractall(EXTRACT_BASE_DIR)
+
+            # Step 2: Copy files (40–80)
+            extracted_path = os.path.join(EXTRACT_BASE_DIR, self.extracted_version_folder)
+
+            if not os.path.exists(INSTALL_DIR):
+                os.makedirs(INSTALL_DIR)
+
+            items = os.listdir(extracted_path)
+            total = len(items)
+
+            for i, item in enumerate(items):
+                src_path = os.path.join(extracted_path, item)
+                dest_path = os.path.join(INSTALL_DIR, item)
+
+                if os.path.isdir(src_path):
+                    shutil.copytree(src_path, dest_path, dirs_exist_ok=True)
+                else:
+                    shutil.copy2(src_path, dest_path)
+
+                progress_val = 40 + int((i / total) * 40)
+                self.progress.emit(progress_val)
+
+            # Step 3: Copy lib (80–100)
+            shutil.copy(LIB_FILE, DEST_DIR)
+
+            for i in range(80, 101, 5):
+                self.progress.emit(i)
+                self.msleep(50)
+
+            self.finished.emit(True, self.version)
+
+        except Exception as e:
+            self.finished.emit(False, str(e))
 
 class NgspiceUpdater(QWidget):
     def __init__(self):
@@ -98,7 +151,22 @@ class NgspiceUpdater(QWidget):
         self.update_button.clicked.connect(self.install_ngspice)
         self.update_button.setStyleSheet("font-size: 14px; padding: 5px 0;")
         layout.addWidget(self.update_button)
-
+        # Progress Bar (same like KiCad)
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.setFormat("%p%")
+        self.progress_bar.setValue(0)
+        self.progress_bar.setStyleSheet("""
+            QProgressBar {
+                border: 1px solid grey;
+                border-radius: 5px;
+                text-align: center;
+            }
+            QProgressBar::chunk {
+                background-color: #4CAF50;
+                width: 20px;
+            }
+        """)
+        layout.addWidget(self.progress_bar)
         self.setLayout(layout)
 
     def update_status_label(self, version):
@@ -112,7 +180,7 @@ class NgspiceUpdater(QWidget):
         else:
             self.status_label.setText("Please Update. Your Package is out of date.")
             self.status_label.setStyleSheet("color: red; font-size: 14px; padding: 10px 0;")
-
+    
     def extract_package(self, package_path):
         """Extract the selected Ngspice package."""
         if not os.path.exists(package_path):
@@ -175,36 +243,42 @@ class NgspiceUpdater(QWidget):
             return False
 
     def install_ngspice(self):
-        """Run the full installation process."""
+        """Run installation using thread (REAL progress)."""
+
+        self.progress_bar.setValue(0)
+        self.update_button.setEnabled(False)
+
         version = self.version_dropdown.currentText()
         package_name = PACKAGE_NAMES[version]
         package_path = os.path.join(DOWNLOAD_DIR, package_name)
-        extracted_version_folder = f"nghdl-simulator-{version}"  # Correct extracted folder
+        extracted_version_folder = f"nghdl-simulator-{version}"
 
-        # **Update UI after installation**
-        self.installed_version = version  # Set installed version to selected version
-        update_information_json(version)
-        self.version_label.setText(f"Installed Version: {self.installed_version}")  # Update version label
-        self.update_status_label(self.installed_version)  # Update status message
+    # Start worker thread
+        self.worker = InstallWorker(version, package_path, extracted_version_folder)
+        self.worker.progress.connect(self.progress_bar.setValue)
+        self.worker.finished.connect(self.install_finished)
 
-        if self.extract_package(package_path):
-            if self.copy_all_files(extracted_version_folder):
-                if self.copy_lib_file():  # Copy the missing .a file
-                    update_information_json(version)
+        self.worker.start()
 
-                    # Update displayed version
-                    self.installed_version = version
-                    self.version_label.setText(f"Installed Version: {self.installed_version}")
+    def install_finished(self, success, message):
+        self.update_button.setEnabled(True)
 
-                    QMessageBox.information(self, "Update Complete", f"Ngspice updated to version {version}!")
-                else:
-                    QMessageBox.critical(self, "Error", "Failed to copy libws2_32.a file.")
-            else:
-                QMessageBox.critical(self, "Error", "Failed to copy extracted files.")
+        if success:
+            update_information_json(message)
+            self.installed_version = message
+            self.version_label.setText(f"Installed Version: {message}")
+            self.update_status_label(message)
+
+            self.progress_bar.setValue(100)  # show completion
+
+            QMessageBox.information(self, "Success", f"Ngspice updated to {message}")
+
+        # 🔥 RESET TO 0 AFTER COMPLETION
+            self.progress_bar.setValue(0)
+
         else:
-            QMessageBox.critical(self, "Error", "Extraction failed.")
-
-
+            self.progress_bar.setValue(0)
+            QMessageBox.critical(self, "Error", message)
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     window = NgspiceUpdater()
