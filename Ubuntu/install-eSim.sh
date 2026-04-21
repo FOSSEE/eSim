@@ -26,6 +26,17 @@ get_ubuntu_version() {
     FULL_VERSION=$(lsb_release -d | grep -oP '\d+\.\d+\.\d+')
     echo "Detected Ubuntu Version: $FULL_VERSION"
 }
+# Special handling for Ubuntu 25.04 (PPAs unsupported)
+if [[ "$VERSION_ID" == "25.04" ]]; then
+    echo "Ubuntu 25.04 detected"
+    echo "Installing KiCad from official Ubuntu repositories"
+
+    sudo apt update
+    sudo apt install -y kicad
+
+    # Skip KiCad installation in child scripts
+    export SKIP_KICAD_INSTALL=true
+fi
 
 # Function to choose and run the appropriate script
 run_version_script() {
@@ -44,13 +55,18 @@ run_version_script() {
             SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
             ;;
         "24.04")
-            SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
+                 SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
+            ;;
+         "25.04")
+                 SCRIPT="$SCRIPT_DIR/install-eSim-25.04.sh"
             ;;
         *)
             echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
             exit 1
             ;;
     esac
+    
+
 
     # Run the script if found
     if [[ -f "$SCRIPT" ]]; then
