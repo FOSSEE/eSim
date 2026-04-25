@@ -5,7 +5,7 @@ cycler==0.12.1
 entrypoints==0.3
 flake8==3.7.7
 fonttools==4.57.0
-hdlparse==1.0.4
+hdlparse @ git+https://github.com/nehadhumal-dev/hdlparse.git
 importlib_resources==6.4.5
 kiwisolver==1.4.7
 matplotlib==3.7.5
@@ -30,14 +30,16 @@ sentence-transformers
 psutil
 protobuf<5
 regex
-opencv-python
+opencv-python-headless==4.6.0.66
 paddleocr==2.7.0.3
-paddlepaddle==2.5.2
+paddlepaddle==2.6.2
 vosk
 sounddevice
 requests
 tqdm
 pyyaml
-setuptools==65.5.0
 wheel
 PyQtWebEngine
+shapely
+pyclipper
+scikit-image

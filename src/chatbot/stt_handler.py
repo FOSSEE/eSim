@@ -32,39 +32,43 @@ def listen_to_mic(should_stop=lambda: False, max_silence_sec=3, samplerate=16000
     def callback(indata, frames, time_info, status):
         q.put(bytes(indata))
 
-    with sd.RawInputStream(
-        samplerate=samplerate,
-        channels=1,
-        dtype="int16",
-        blocksize=8000,
-        callback=callback,
-    ):
-        while True:
-            if should_stop():
-                return ""
+    try:
+        with sd.RawInputStream(
+            samplerate=samplerate,
+            channels=1,
+            dtype="int16",
+            blocksize=8000,
+            callback=callback,
+        ):
+            while True:
+                if should_stop():
+                    return ""
 
-            now = time.time()
+                now = time.time()
 
-            # Stop after silence
-            if not started and (now - t0) >= max_silence_sec:
-                return ""
+                # Stop after silence
+                if not started and (now - t0) >= max_silence_sec:
+                    return ""
 
-            if started and t_speech and (now - t_speech) >= phrase_limit_sec:
-                break
+                if started and t_speech and (now - t_speech) >= phrase_limit_sec:
+                    break
 
-            try:
-                data = q.get(timeout=0.2)
-            except queue.Empty:
-                continue
+                try:
+                    data = q.get(timeout=0.2)
+                except queue.Empty:
+                    continue
 
-            if rec.AcceptWaveform(data):
-                text = json.loads(rec.Result()).get("text", "").strip()
-                if text:
-                    return text
-            else:
-                partial = json.loads(rec.PartialResult()).get("partial", "").strip()
-                if partial and not started:
-                    started = True
-                    t_speech = now
+                if rec.AcceptWaveform(data):
+                    text = json.loads(rec.Result()).get("text", "").strip()
+                    if text:
+                        return text
+                else:
+                    partial = json.loads(rec.PartialResult()).get("partial", "").strip()
+                    if partial and not started:
+                        started = True
+                        t_speech = now
 
-        return json.loads(rec.FinalResult()).get("text", "").strip()
+            return json.loads(rec.FinalResult()).get("text", "").strip()
+    except Exception as e:
+        print(f"[Chatbot] Microphone not available: {e}")
+        return ""
