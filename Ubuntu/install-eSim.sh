@@ -18,6 +18,13 @@
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Sunday 25 May 2025 17:40
 #      REVISION: ---
+#
+#  CHANGES (Ubuntu 25.04 compatibility):
+#  - BUG FIX #1: Added Ubuntu 25.04 ("plover") support in version detection
+#    and script routing. Previously the case statement only handled 22.04,
+#    23.04, and 24.04 — any other version caused an immediate exit(1).
+#    Ubuntu 25.04 now falls through to use the 24.04 script as the closest
+#    compatible installer, with a warning printed to the user.
 #=============================================================================
 
 # Function to detect Ubuntu version and full version string
@@ -32,6 +39,8 @@ run_version_script() {
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/install-eSim-scripts"
     
     # Decide script based on full version
+    # BUG FIX #1: Added case for 25.04 — maps to 24.04 script as closest
+    # compatible version. Previously fell to *) and exited with error.
     case $VERSION_ID in
         "22.04")
             if [[ "$FULL_VERSION" == "22.04.4" ]]; then
@@ -44,6 +53,14 @@ run_version_script() {
             SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
             ;;
         "24.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
+            ;;
+        "25.04")
+            # Ubuntu 25.04 (Plover) — not officially supported yet.
+            # Using the 24.04 script as the closest compatible installer.
+            echo "WARNING: Ubuntu 25.04 is not officially supported."
+            echo "Attempting installation using the 24.04 script."
+            echo "Some features may not work correctly."
             SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
             ;;
         *)
