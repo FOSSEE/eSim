@@ -1,56 +1,33 @@
 # =========================================================================
-# FILE: Application.py
+#          FILE: Application.py
 #
-# USAGE: ---
+#         USAGE: ---
 #
-# DESCRIPTION: This main file use to start the Application
+#   DESCRIPTION: This main file use to start the Application
 #
-# OPTIONS: ---
-# REQUIREMENTS: ---
-# BUGS: ---
-# NOTES: ---
-# AUTHOR: Fahim Khan, fahim.elex@gmail.com
-# MAINTAINED: Rahul Paknikar, rahulp@iitb.ac.in
-# Sumanto Kar, sumantokar@iitb.ac.in
-# Pranav P, pranavsdreams@gmail.com
-# ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
-# CREATED: Tuesday 24 February 2015
-# REVISION: Wednesday 07 June 2023
+#       OPTIONS: ---
+#  REQUIREMENTS: ---
+#          BUGS: ---
+#         NOTES: ---
+#        AUTHOR: Fahim Khan, fahim.elex@gmail.com
+#    MAINTAINED: Rahul Paknikar, rahulp@iitb.ac.in
+#                Sumanto Kar, sumantokar@iitb.ac.in
+#                Pranav P, pranavsdreams@gmail.com
+#  ORGANIZATION: eSim Team at FOSSEE, IIT Bombay
+#       CREATED: Tuesday 24 February 2015
+#      REVISION: Wednesday 07 June 2023
 # =========================================================================
 
 import os
 import sys
 import traceback
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-if current_dir not in sys.path:
-    sys.path.insert(0, current_dir)
-
-# ================= GLOBAL STATE =================
-CHATBOT_AVAILABLE = False
-
-
-try:
-    if os.name == 'nt':
-        from frontEnd import pathmagic  
-        init_path = ''
-    else:
-        import pathmagic  
-        init_path = '../../'
-    print(f"[BOOT] pathmagic imported successfully, init_path='{init_path}'")
-except ImportError as e:
-    print(f"[BOOT WARNING] Could not import pathmagic: {e}")
-    print("[BOOT WARNING] Using fallback path settings")
-    
-    if os.name == 'nt':
-        init_path = ''
-    else:
-        init_path = '../../'
-
-
-os.environ['DISABLE_MODEL_SOURCE_CHECK'] = 'True'
-print("[BOOT] DISABLE_MODEL_SOURCE_CHECK set to True")
-
+if os.name == 'nt':
+    from frontEnd import pathmagic  # noqa:F401
+    init_path = ''
+else:
+    import pathmagic    # noqa:F401
+    init_path = '../../'
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.Qt import QSize
@@ -63,40 +40,42 @@ from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
+from frontEnd.Chatbot import ChatbotGUI
 from PyQt5.QtCore import QTimer
-
-try:
-    from frontEnd.Chatbot import ChatbotGUI
-    CHATBOT_AVAILABLE = True
-except ImportError:
-    CHATBOT_AVAILABLE = False
-    print("Chatbot module not available. Chatbot features will be disabled.")
+# Its our main window of application.
 
 
 class Application(QtWidgets.QMainWindow):
-
     """This class initializes all objects used in this file."""
-    global project_name
+
+    # FIX #12: Removed the `global project_name` declaration that was here.
+    # A `global` statement at class scope has no effect in Python — class bodies
+    # do not create a new scope the way functions do — and the variable was
+    # never assigned or read anywhere in the class, making it pure dead code.
+
     simulationEndSignal = QtCore.pyqtSignal(QtCore.QProcess.ExitStatus, int)
     errorDetectedSignal = QtCore.pyqtSignal(str)
 
     def __init__(self, *args):
         """Initialize main Application window."""
 
+        # Calling __init__ of super class
         QtWidgets.QMainWindow.__init__(self, *args)
 
-        # Set slot for simulation end signal
+        # Set slot for simulation end signal to plot simulation data
         self.simulationEndSignal.connect(self.plotSimulationData)
         self.errorDetectedSignal.connect(self.handleError)
-
+        # Creating require Object
         self.obj_workspace = Workspace.Workspace()
         self.obj_Mainview = MainView()
         self.obj_kicad = Kicad(self.obj_Mainview.obj_dockarea)
         self.obj_appconfig = Appconfig()
         self.obj_validation = Validation()
-            
+        self.chatbot_window = ChatbotGUI()
+        # Initialize all widget
         self.setCentralWidget(self.obj_Mainview)
         self.initToolBar()
+        self.initchatbot()
 
         self.setGeometry(self.obj_appconfig._app_xpos,
                          self.obj_appconfig._app_ypos,
@@ -112,47 +91,123 @@ class Application(QtWidgets.QMainWindow):
         self.systemTrayIcon.setIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.systemTrayIcon.setVisible(True)
 
-    def initChatbot(self):
-        """Initialize chatbot with proper context."""
-        if not CHATBOT_AVAILABLE:
-            return
-        
-        try:
-            self.chatbot_window = ChatbotGUI(self)
-            
-            self.errorDetectedSignal.connect(self.auto_debug_error)
-            
-        except Exception as e:
-            print(f"Failed to initialize chatbot: {e}")
+    def initchatbot(self):
+        """
+        This function initializes the ChatbotIcon and embeds the ChatbotGUI
+        as a dockable panel on the right side of the main window.
+        Clicking the icon toggles the panel open/closed.
+        """
+        # ── Dock widget (embedded in main window) ──────────────────────
+        self.chatbot_dock = QtWidgets.QDockWidget("🤖 eSim AI Assistant", self)
+        self.chatbot_dock.setWidget(self.chatbot_window)
+        self.chatbot_dock.setMinimumWidth(360)
+        self.chatbot_dock.setFeatures(
+            QtWidgets.QDockWidget.DockWidgetClosable |
+            QtWidgets.QDockWidget.DockWidgetMovable |
+            QtWidgets.QDockWidget.DockWidgetFloatable
+        )
+        # Style the dock title bar
+        self.chatbot_dock.setStyleSheet("""
+            QDockWidget {
+                font-weight: bold;
+                font-size: 13px;
+                color: #0055a5;
+            }
+            QDockWidget::title {
+                background: qlineargradient(
+                    x1:0, y1:0, x2:1, y2:0,
+                    stop:0 #e8f4fd, stop:1 #d0e8f8
+                );
+                padding: 6px 10px;
+                border-bottom: 2px solid #0078d4;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+            }
+        """)
+        self.addDockWidget(QtCore.Qt.RightDockWidgetArea, self.chatbot_dock)
+        self.chatbot_dock.hide()  # Hidden by default; toggled by the icon button
+        # When user closes dock via the X button, reposition the floating icon
+        self.chatbot_dock.visibilityChanged.connect(
+            lambda _: self._reposition_chatbot_icon()
+        )
 
-    def auto_debug_error(self, error_message):
-        """Automatically send simulation errors to chatbot."""
-        if not CHATBOT_AVAILABLE or not hasattr(self, 'chatbot_window'):
-            return
-        
-        self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        if not self.projDir:
-            return
-        
-        # Look for error logs
-        error_log_path = os.path.join(self.projDir, "ngspice_error.log")
-        if os.path.exists(error_log_path):
-    
-            if (hasattr(self, 'chatbot_window') and 
-                self.chatbot_window.isVisible()):
-                
-                QTimer.singleShot(1000, lambda: self.send_error_to_chatbot(error_log_path))
+        # ── Floating icon button (bottom-right corner) ──────────────────
+        self.chatboticon = QtWidgets.QPushButton(
+            self, icon=QtGui.QIcon(init_path + 'images/chatbot.png')
+        )
+        self.chatboticon.setIconSize(QtCore.QSize(30, 30))
+        self.chatboticon.setToolTip("Toggle AI Assistant")
+        self.chatboticon.setStyleSheet("""
+            QPushButton {
+                border-radius: 26px;
+                background-color: transparent;
+                border: none;
+            }
+            QPushButton:hover {
+                background-color: rgba(0, 120, 212, 0.12);
+                border: 2px solid #0078d4;
+            }
+            QPushButton:pressed {
+                background-color: rgba(0, 63, 110, 0.18);
+                border: 2px solid #003f6e;
+            }
+        """)
+        self.chatboticon.setFixedSize(52, 52)
+        self.chatboticon.clicked.connect(self.openChatbot)
+
+    def openChatbot(self):
+        """Toggle the chatbot dock panel open or closed."""
+        if self.chatbot_dock.isVisible():
+            self.chatbot_dock.hide()
+        else:
+            self.chatbot_dock.show()
+            self.chatbot_dock.raise_()
+            self.obj_appconfig.print_info('Chat Bot function is called')
+        # Reposition icon after dock visibility changes
+        self._reposition_chatbot_icon()
+
+    def _reposition_chatbot_icon(self):
+        """
+        Keep the icon in the bottom-right corner of the visible area.
+        When the dock is open, shift the icon left so it sits just
+        outside the dock panel instead of on top of it.
+
+        FIX #13: Added a max(0, ...) guard so that if the dock is very wide
+        (e.g. undocked and then re-docked at a large size), the computed x
+        coordinate cannot go negative and push the button off-screen.
+        """
+        margin = 12
+        btn_w = self.chatboticon.width()
+        btn_h = self.chatboticon.height()
+        bottom_y = self.height() - btn_h - margin
+
+        if self.chatbot_dock.isVisible():
+            dock_w = self.chatbot_dock.width()
+            # FIX #13: Clamp x to 0 so the icon never goes off-screen
+            x = max(0, self.width() - dock_w - btn_w - margin)
+        else:
+            x = self.width() - btn_w - margin
+
+        self.chatboticon.move(x, bottom_y)
+        self.chatboticon.raise_()  # Always keep on top
+
+    def resizeEvent(self, event):
+        """
+        Adjust chatbot icon button position during window resize.
+        """
+        super().resizeEvent(event)
+        self._reposition_chatbot_icon()
 
     def initToolBar(self):
         """
         This function initializes Tool Bars.
         It setups the icons, short-cuts and defining functonality for:
 
-        - Top-tool-bar (New project, Open project, Close project, \
-        Mode switch, Help option)
-        - Left-tool-bar (Open Schematic, Convert KiCad to Ngspice, \
-        Simuation, Model Editor, Subcircuit, NGHDL, Modelica \
-        Converter, OM Optimisation)
+            - Top-tool-bar (New project, Open project, Close project, \
+                Mode switch, Help option)
+            - Left-tool-bar (Open Schematic, Convert KiCad to Ngspice, \
+                Simuation, Model Editor, Subcircuit, NGHDL, Modelica \
+                Converter, OM Optimisation)
         """
         # Top Tool bar
         self.newproj = QtWidgets.QAction(
@@ -197,22 +252,11 @@ class Application(QtWidgets.QMainWindow):
         self.topToolbar.addAction(self.wrkspce)
         self.topToolbar.addAction(self.helpfile)
 
-        # ## This part is meant for SoC Generation which is currently ##
+        # ## This part is meant for SoC Generation which is currently  ##
         # ## under development and will be will be required in future. ##
         # self.soc = QtWidgets.QToolButton(self)
         # self.soc.setText('Generate SoC')
-        # self.soc.setToolTip(
-        #     '<b>SPICE to Verilog Conversion</b><br>' + \
-        #     '<br>The feature is under development.' + \
-        #     '<br>It will be released soon.' + \
-        #     '<br><br>Thank you for your patience!!!'
-        # )
-        # self.soc.setStyleSheet(" \
-        #     QWidget { border-radius: 15px; border: 1px \
-        #     solid gray; padding: 10px; margin-left: 20px; } \
-        # ")
-        # self.soc.clicked.connect(self.showSoCRelease)
-        # self.topToolbar.addWidget(self.soc)
+        # ...
 
         # This part is setting fossee logo to the right
         # corner in the application window.
@@ -291,14 +335,6 @@ class Application(QtWidgets.QMainWindow):
             '<b>Schematics converter</b>', self
         )
         self.conToeSim.triggered.connect(self.open_conToeSim)
-        # ... existing actions ...
-
-        self.copilot_action = QtWidgets.QAction(
-            QtGui.QIcon(init_path + 'images/chatbot.png'), # Ensure this icon exists or use fallback
-            '<b>eSim Copilot</b>', self
-        )
-        self.copilot_action.setToolTip("AI Circuit Assistant")
-        self.copilot_action.triggered.connect(self.openChatbot)
 
         # Adding Action Widget to tool bar
         self.lefttoolbar = QtWidgets.QToolBar('Left ToolBar')
@@ -313,8 +349,6 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.addAction(self.conToeSim)
-        self.lefttoolbar.addSeparator() 
-        self.lefttoolbar.addAction(self.copilot_action)
         self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
 
@@ -324,17 +358,17 @@ class Application(QtWidgets.QMainWindow):
         When exit button is pressed a Message box pops out with \
         exit message and buttons 'Yes', 'No'.
 
-        1. If 'Yes' is pressed:
-        - check that program (process) in procThread_list \
-        (a list made in Appconfig.py):
+            1. If 'Yes' is pressed:
+                - check that program (process) in procThread_list \
+                  (a list made in Appconfig.py):
 
-        - if available it terminates that program.
-        - if the program (process) is not available, \
-        then check it in process_obj (a list made in \
-        Appconfig.py) and if found, it closes the program.
+                    - if available it terminates that program.
+                    - if the program (process) is not available, \
+                      then check it in process_obj (a list made in \
+                      Appconfig.py) and if found, it closes the program.
 
-        2. If 'No' is pressed:
-        - the program just continues as it was doing earlier.
+            2. If 'No' is pressed:
+                - the program just continues as it was doing earlier.
         '''
         exit_msg = "Are you sure you want to exit the program?"
         exit_msg += " All unsaved data will be lost."
@@ -364,11 +398,8 @@ class Application(QtWidgets.QMainWindow):
                 self.project.close()
             except BaseException:
                 pass
-            
-            # Close chatbot if open
-            if CHATBOT_AVAILABLE and hasattr(self, 'chatbot_window') and self.chatbot_window.isVisible():
-                self.chatbot_window.close()
-            
+            if self.chatbot_dock.isVisible():
+                self.chatbot_dock.close()
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
@@ -404,41 +435,6 @@ class Application(QtWidgets.QMainWindow):
             except BaseException:
                 pass
 
-    
-    def openChatbot(self):
-        if not CHATBOT_AVAILABLE:
-            QtWidgets.QMessageBox.warning(
-                self, "Error",
-                "Chatbot unavailable. Please check backend dependencies."
-            )
-            return
-
-        try:
-            if not hasattr(self, "chatbotDock") or self.chatbotDock is None:
-                from frontEnd.Chatbot import createchatbotdock
-                self.chatbotDock = createchatbotdock(self)
-
-            self.chatbotDock.setAllowedAreas(QtCore.Qt.NoDockWidgetArea)
-            self.addDockWidget(QtCore.Qt.RightDockWidgetArea, self.chatbotDock)
-
-            self.chatbotDock.setFloating(True)
-            g = self.geometry()
-            self.chatbotDock.resize(450, 600)
-            self.chatbotDock.move(g.x() + g.width() - 470, g.y() + 50)
-            self.chatbotDock.show()
-            self.chatbotDock.raise_()
-
-            # Keep a reference to the widget for error‑debug integration
-            self.chatbot_window = self.chatbotDock.widget()
-
-            # No need to call set_project_context here anymore
-
-        except Exception as e:
-            print("Error opening chatbot:", e)
-            QtWidgets.QMessageBox.warning(
-                self, "Error", f"Could not open chatbot: {str(e)}"
-            )
-
     def open_project(self):
         """This project call Open Project Info class."""
         print("Function : Open Project")
@@ -455,12 +451,12 @@ class Application(QtWidgets.QMainWindow):
         This function closes the saved project.
         It first checks whether project (file) is present in list.
 
-        - If present:
-        - it first kills that process-id.
-        - closes that file.
-        - Shows message "Current project <path_to_file> is closed"
+            - If present:
+                - it first kills that process-id.
+                - closes that file.
+                - Shows message "Current project <path_to_file> is closed"
 
-        - If not present: pass
+            - If not present: pass
         """
         print("Function : Close Project")
         current_project = self.obj_appconfig.current_project['ProjectName']
@@ -492,10 +488,10 @@ class Application(QtWidgets.QMainWindow):
     def help_project(self):
         """
         This function opens usermanual in dockarea.
-        - It prints the message ""Function : Help""
-        - Uses print_info() method of class Appconfig
-        from Configuration/Appconfig.py file.
-        - Call method usermanual() from ./DockArea.py.
+            - It prints the message ""Function : Help""
+            - Uses print_info() method of class Appconfig
+              from Configuration/Appconfig.py file.
+            - Call method usermanual() from ./DockArea.py.
         """
         print("Function : Help")
         self.obj_appconfig.print_info('Help is called')
@@ -505,7 +501,7 @@ class Application(QtWidgets.QMainWindow):
     @QtCore.pyqtSlot(QtCore.QProcess.ExitStatus, int)
     def plotSimulationData(self, exitCode, exitStatus):
         """Enables interaction for new simulation and
-        displays the plotter dock where graphs can be plotted.
+           displays the plotter dock where graphs can be plotted.
         """
         self.ngspice.setEnabled(True)
         self.conversion.setEnabled(True)
@@ -527,39 +523,18 @@ class Application(QtWidgets.QMainWindow):
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
 
-        self.errorDetectedSignal.emit("Simulation failed.")
+                self.errorDetectedSignal.emit("Simulation failed.")
 
     def handleError(self):
-        """Slot called when a simulation error happens."""
-        if not CHATBOT_AVAILABLE:
-            return
-
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
-        if not self.projDir:
-            return
+        self.output_file = os.path.join(self.projDir, "ngspice_error.log")
+        # Auto-open the chatbot dock so the user sees the error analysis
+        if not self.chatbot_dock.isVisible():
+            self.chatbot_dock.show()
+        self.delayed_function_call()
 
-        error_log_path = os.path.join(self.projDir, "ngspice_error.log")
-
-        # Only try to send if chatbot is visible and has debug_error()
-        if (hasattr(self, 'chatbot_window') and
-            self.chatbot_window.isVisible() and
-            hasattr(self.chatbot_window, 'debug_error')):
-            # Use a small delay to ensure the error log is written
-            QTimer.singleShot(
-                1000,
-                lambda: self.send_error_to_chatbot(error_log_path)
-            )
-
-    def send_error_to_chatbot(self, error_log_path: str):
-        """Send ngspice error log to chatbot for debugging."""
-        try:
-            if os.path.exists(error_log_path):
-                with open(error_log_path, 'r') as f:
-                    error_content = f.read()
-                if error_content.strip():
-                    self.chatbot_window.debug_error(error_log_path)
-        except Exception as e:
-            print(f"Error sending to chatbot: {e}")
+    def delayed_function_call(self):
+        QTimer.singleShot(2000, lambda: self.chatbot_window.debug_error(self.output_file))
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
@@ -570,24 +545,20 @@ class Application(QtWidgets.QMainWindow):
             ngspiceNetlist = os.path.join(projDir, projName + ".cir.out")
 
             if not os.path.isfile(ngspiceNetlist):
-                print("Netlist file (*.cir.out) not found.")
+                print(
+                    "Netlist file (*.cir.out) not found."
+                )
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
-                self.msg.showMessage('Netlist (*.cir.out) not found.')
+                self.msg.showMessage(
+                    'Netlist (*.cir.out) not found.'
+                )
                 self.msg.exec_()
                 return
 
-            # Pass chatbot reference into ngspiceEditor
-            chatbot_ref = (
-                self.chatbot_window
-                if CHATBOT_AVAILABLE and hasattr(self, "chatbot_window")
-                else None
-            )
-
             self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                projName, ngspiceNetlist, self.simulationEndSignal, chatbot_ref
-            )
+                projName, ngspiceNetlist, self.simulationEndSignal, self.chatbot_window)
 
             self.ngspice.setEnabled(False)
             self.conversion.setEnabled(False)
@@ -610,9 +581,9 @@ class Application(QtWidgets.QMainWindow):
         When 'subcircuit' icon is clicked wich is present in
         left-tool-bar of main page:
 
-        - Meassge shown on screen "Subcircuit editor is called".
-        - 'subcircuiteditor()' function is called using object
-        'obj_dockarea' of class 'Mainview'.
+            - Meassge shown on screen "Subcircuit editor is called".
+            - 'subcircuiteditor()' function is called using object
+              'obj_dockarea' of class 'Mainview'.
         """
         print("Function : Subcircuit editor")
         self.obj_appconfig.print_info('Subcircuit editor is called')
@@ -623,10 +594,10 @@ class Application(QtWidgets.QMainWindow):
         This function calls NGHDL option in left-tool-bar.
         It uses validateTool() method from Validation.py:
 
-        - If 'nghdl' is present in executables list then
-        it passes command 'nghdl -e' to WorkerThread class of
-        Worker.py.
-        - If 'nghdl' is not present, then it shows error message.
+            - If 'nghdl' is present in executables list then
+              it passes command 'nghdl -e' to WorkerThread class of
+              Worker.py.
+            - If 'nghdl' is not present, then it shows error message.
         """
         print("Function : NGHDL")
         self.obj_appconfig.print_info('NGHDL is called')
@@ -651,9 +622,9 @@ class Application(QtWidgets.QMainWindow):
         When 'subcircuit' icon is clicked wich is present in
         left-tool-bar of main page:
 
-        - Meassge shown on screen "Subcircuit editor is called".
-        - 'subcircuiteditor()' function is called using object
-        'obj_dockarea' of class 'Mainview'.
+            - Meassge shown on screen "Subcircuit editor is called".
+            - 'subcircuiteditor()' function is called using object
+              'obj_dockarea' of class 'Mainview'.
         """
         print("Function : Makerchip and Verilator to Ngspice Converter")
         self.obj_appconfig.print_info('Makerchip is called')
@@ -665,9 +636,9 @@ class Application(QtWidgets.QMainWindow):
         When model editor icon is clicked which is present in
         left-tool-bar of main page:
 
-        - Meassge shown on screen "Model editor is called".
-        - 'modeleditor()' function is called using object
-        'obj_dockarea' of class 'Mainview'.
+            - Meassge shown on screen "Model editor is called".
+            - 'modeleditor()' function is called using object
+              'obj_dockarea' of class 'Mainview'.
         """
         print("Function : Model editor")
         self.obj_appconfig.print_info('Model editor is called')
@@ -689,52 +660,6 @@ class Application(QtWidgets.QMainWindow):
                 self.modelicaNetlist = os.path.join(
                     self.projDir, self.projName + ".mo"
                 )
-
-                """
-                try:
-                    # Creating a command for Ngspice to Modelica converter
-                    self.cmd1 = "
-                    python3 ../ngspicetoModelica/NgspicetoModelica.py "\
-                    + self.ngspiceNetlist
-                    self.obj_workThread1 = Worker.WorkerThread(self.cmd1)
-                    self.obj_workThread1.start()
-                    if self.obj_validation.validateTool("OMEdit"):
-                        # Creating command to run OMEdit
-                        self.cmd2 = "OMEdit "+self.modelicaNetlist
-                        self.obj_workThread2 = Worker.WorkerThread(self.cmd2)
-                        self.obj_workThread2.start()
-                    else:
-                        self.msg = QtWidgets.QMessageBox()
-                        self.msgContent = "There was an error while
-                        opening OMEdit.<br/>\
-                        Please make sure OpenModelica is installed in your\
-                        system. <br/>\
-                        To install it on Linux : Go to\
-                        <a href=https://www.openmodelica.org/download/\
-                        download-linux>OpenModelica Linux</a> and \
-                        install nigthly build release.<br/>\
-                        To install it on Windows : Go to\
-                        <a href=https://www.openmodelica.org/download/\
-                        download-windows>OpenModelica Windows</a>\
-                        and install latest version.<br/>"
-                        self.msg.setTextFormat(QtCore.Qt.RichText)
-                        self.msg.setText(self.msgContent)
-                        self.msg.setWindowTitle("Missing OpenModelica")
-                        self.obj_appconfig.print_info(self.msgContent)
-                        self.msg.exec_()
-
-                except Exception as e:
-                    self.msg = QtWidgets.QErrorMessage()
-                    self.msg.setModal(True)
-                    self.msg.setWindowTitle(
-                        "Ngspice to Modelica conversion error")
-                    self.msg.showMessage(
-                        'Unable to convert NgSpice netlist to\
-                        Modelica netlist :'+str(e))
-                    self.msg.exec_()
-                    self.obj_appconfig.print_error(str(e))
-                """
-
                 self.obj_Mainview.obj_dockarea.modelicaEditor(self.projDir)
 
             else:
@@ -760,10 +685,10 @@ class Application(QtWidgets.QMainWindow):
         """
         This function uses validateTool() method from Validation.py:
 
-        - If 'OMOptim' is present in executables list then
-        it passes command 'OMOptim' to WorkerThread class of Worker.py
-        - If 'OMOptim' is not present, then it shows error message with
-        link to download it on Linux and Windows.
+            - If 'OMOptim' is present in executables list then
+              it passes command 'OMOptim' to WorkerThread class of Worker.py
+            - If 'OMOptim' is not present, then it shows error message with
+              link to download it on Linux and Windows.
         """
         print("Function : OMOptim")
         self.obj_appconfig.print_info('OMOptim is called')
@@ -798,23 +723,21 @@ class Application(QtWidgets.QMainWindow):
         self.obj_appconfig.print_info('Schematics converter is called')
         self.obj_Mainview.obj_dockarea.eSimConverter()
 
+
 # This class initialize the Main View of Application
-
-
 class MainView(QtWidgets.QWidget):
     """
     This class defines whole view and style of main page:
 
-    - Position of tool bars:
-    - Top tool bar.
-    - Left tool bar.
-    - Project explorer Area.
-    - Dock area.
-    - Console area.
+        - Position of tool bars:
+            - Top tool bar.
+            - Left tool bar.
+        - Project explorer Area.
+        - Dock area.
+        - Console area.
     """
 
     def __init__(self, *args):
-
         # call init method of superclass
         QtWidgets.QWidget.__init__(self, *args)
 
@@ -833,12 +756,12 @@ class MainView(QtWidgets.QWidget):
         self.noteArea.setReadOnly(True)
         self.obj_appconfig.noteArea['Note'] = self.noteArea
         self.obj_appconfig.noteArea['Note'].append(
-            ' eSim Started......')
+            '        eSim Started......')
         self.obj_appconfig.noteArea['Note'].append('Project Selected : None')
         self.obj_appconfig.noteArea['Note'].append('\n')
         # CSS
         self.noteArea.setStyleSheet(" \
-            QWidget { border-radius: 15px; border: 1px \
+        QWidget { border-radius: 15px; border: 1px \
             solid gray; padding: 5px; } \
         ")
 
@@ -864,33 +787,16 @@ class MainView(QtWidgets.QWidget):
         self.middleSplit.setSizes([self.width(), int(self.height() / 2)])
         self.setLayout(self.mainLayout)
 
-    def collapse_console_area(self):
-        """Collapse the console area to minimal height."""
-        current_sizes = self.middleSplit.sizes()
-        total_height = sum(current_sizes)
-        minimal_console_height = 0
-        dock_area_height = total_height - minimal_console_height
-        self.middleSplit.setSizes([dock_area_height, minimal_console_height])
-
-    def restore_console_area(self):
-        """Restore the console area to normal height."""
-        total_height = sum(self.middleSplit.sizes())
-        dock_area_height = int(total_height * 0.7)  # 70% for dock area
-        console_height = total_height - dock_area_height  # 30% for console
-        self.middleSplit.setSizes([dock_area_height, console_height])
-
 
 # It is main function of the module and starts the application
 def main(args):
-    """The splash screen opened at the starting of screen is performed by this function."""
+    """
+    The splash screen opened at the starting of screen is performed
+    by this function.
+    """
     print("Starting eSim......")
-    # Set environment variable before creating QApplication to suppress model hoster warnings
-    os.environ['DISABLE_MODEL_SOURCE_CHECK'] = 'True'
-    # Set non-native dialogs globally
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_DontUseNativeDialogs, True)
     app = QtWidgets.QApplication(args)
     app.setApplicationName("eSim")
-
 
     appView = Application()
     appView.hide()
@@ -907,11 +813,10 @@ def main(args):
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
 
     try:
-        if os.name == 'nt':
-            user_home = os.path.join('library', 'config')
-        else:
-            user_home = os.path.expanduser('~')
-
+        # FIX #11: Both branches of the original if/else did exactly the same
+        # thing (os.path.expanduser('~')), making the conditional dead code.
+        # Simplified to a single unconditional assignment.
+        user_home = os.path.expanduser('~')
         file = open(os.path.join(user_home, ".esim/workspace.txt"), 'r')
         work = int(file.read(1))
         file.close()
@@ -924,6 +829,7 @@ def main(args):
         appView.obj_workspace.show()
 
     sys.exit(app.exec_())
+
 
 # Call main function
 if __name__ == '__main__':
