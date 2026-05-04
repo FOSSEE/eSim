@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, QtCore
+from PyQt6 import QtWidgets, QtCore
 import os
 from xml.etree import ElementTree as ET
 from . import TrackWidget
@@ -201,7 +201,7 @@ class DeviceModel(QtWidgets.QWidget):
                                "Please edit the schematic and \
                                generate netlist again"
                 self.msg.showMessage(self.content)
-                self.msg.exec_()
+                self.msg.exec()
                 return
 
             elif eachline[0:2] == 'sc' and eachline[0:6] != 'scmode':
@@ -1271,5 +1271,5 @@ Converter developed at FOSSEE, IIT Bombay\n")
         self.content = "The Verilog file has been successfully \
              generated from the SPICE netlist"
         self.msg.showMessage(self.content)
-        self.msg.exec_()
+        self.msg.exec()
         return

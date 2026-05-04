@@ -1,5 +1,5 @@
 import os
-from PyQt5 import QtWidgets, QtCore
+from PyQt6 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement.Worker import WorkerThread
 

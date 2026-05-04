@@ -2,7 +2,7 @@ import os
 import shutil
 from xml.etree import ElementTree as ET
 
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 from . import TrackWidget
 
@@ -791,7 +791,7 @@ sky130_fd_pr__model__r+c.model.spice
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Conversion failed. Please add all Subcircuits.")
-            self.msg.exec_()
+            self.msg.exec()
             raise Exception('All subcircuit directories need to be specified.')
         elif not subList:
             print("No Subcircuit Added in the schematic")
