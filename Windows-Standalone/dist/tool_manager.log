@@ -1,0 +1,8 @@
+2026-05-08 18:26:45,339 - WARNING - Error: install_details.json not found.
+2026-05-08 18:26:45,548 - WARNING - JSON file C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json not found. Using default structure.
+2026-05-08 18:26:45,548 - INFO - Added new Ngspice entry to installation details.
+2026-05-08 18:26:45,549 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-08 18:26:45,550 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-08 18:26:45,647 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-08 18:26:47,738 - INFO - Chocolatey directory exists. Version: 2.7.1.
+2026-05-08 18:26:47,739 - INFO - Updated chocolatey installation status in C:\Users\Admin\AppData\Local\Temp\_MEI116202\install_details.json. Version: 2.7.1, Installed: Yes.
