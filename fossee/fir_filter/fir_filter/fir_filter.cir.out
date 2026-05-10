@@ -1,0 +1,46 @@
+* c:\users\vlsi\esim-workspace\fir_filter\fir_filter.cir
+
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ fir_filter
+* u3  x7 x6 x5 x4 x3 x2 x1 x0 net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ adc_bridge_8
+* u2  clk0 rst0 net-_u1-pad1_ net-_u1-pad2_ adc_bridge_2
+* u4  net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ y7 y6 y5 y4 y3 y2 y1 y0 dac_bridge_8
+v9  clk0 gnd pulse(0 5 0.01n 0.01n 0.01n 70n 100n)
+v10  rst0 gnd pulse(0 5 0.01n 0.01n 0.01n 40n 50n)
+v1  x7 gnd pulse(0 5 0.01n 0.01n 0.01n 50n 100n)
+v2  x6 gnd pulse(0 5 0.01n 0.01n 0.01n 30n 50n)
+v3  x5 gnd pulse(0 5 0.01n 0.01n 0.01n 1n 2n)
+v4  x4 gnd pulse(0 5 0.01n 0.01n 0.01n 1.2u 3u)
+v5  x3 gnd pulse(0 5 0.01n 0.01n 0.01n 60n 70n)
+v6  x2 gnd pulse(0 5 0.01n 0.01n 0.01n 20n 40n)
+v7  x1 gnd pulse(0 5 0.01n 0.01n 0.01n 570n 1.2u)
+v8  x0 gnd pulse(0 5 0.01n 0.01n 0.01n 2.9u 3u)
+* u6  y7 plot_v1
+* u7  y6 plot_v1
+* u11  y5 plot_v1
+* u12  y4 plot_v1
+* u9  y3 plot_v1
+* u10  y2 plot_v1
+* u8  y1 plot_v1
+* u5  y0 plot_v1
+a1 [net-_u1-pad1_ ] [net-_u1-pad2_ ] [net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ ] [net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ ] u1
+a2 [x7 x6 x5 x4 x3 x2 x1 x0 ] [net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ ] u3
+a3 [clk0 rst0 ] [net-_u1-pad1_ net-_u1-pad2_ ] u2
+a4 [net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ ] [y7 y6 y5 y4 y3 y2 y1 y0 ] u4
+* Schematic Name:                             fir_filter, NgSpice Name: fir_filter
+.model u1 fir_filter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             adc_bridge_8, NgSpice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, NgSpice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_8, NgSpice Name: dac_bridge
+.model u4 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-09 1.717e-06 0e-09
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(y7)+6 v(y6)+12v(y5)+18 v(y4)+24  v(y3)+30 v(y2)+36 v(y1)+42 v(y0)
+.endc
+.end

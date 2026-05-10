@@ -1,0 +1,37 @@
+* C:\Users\VLSI\eSim-Workspace\booth_wallace_mul\booth_wallace_mul.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 03/03/2026 17:20:33
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U9  Net-_U10-Pad9_ Net-_U10-Pad10_ Net-_U10-Pad11_ Net-_U10-Pad12_ Net-_U10-Pad13_ Net-_U10-Pad14_ Net-_U10-Pad15_ Net-_U10-Pad16_ Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ Net-_U11-Pad4_ Net-_U11-Pad5_ Net-_U11-Pad6_ Net-_U11-Pad7_ Net-_U11-Pad8_ booth_wallace_mul		
+v6  a3 GND DC		
+v7  a2 GND DC		
+v8  a1 GND DC		
+v1  a0 GND DC		
+v2  b3 GND DC		
+v3  b2 GND DC		
+v4  b1 GND DC		
+v5  b0 GND DC		
+U10  a3 a2 a1 a0 b3 b2 b1 b0 Net-_U10-Pad9_ Net-_U10-Pad10_ Net-_U10-Pad11_ Net-_U10-Pad12_ Net-_U10-Pad13_ Net-_U10-Pad14_ Net-_U10-Pad15_ Net-_U10-Pad16_ adc_bridge_8		
+U11  Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ Net-_U11-Pad4_ Net-_U11-Pad5_ Net-_U11-Pad6_ Net-_U11-Pad7_ Net-_U11-Pad8_ p7 p6 p5 p4 p3 p2 p1 p0 dac_bridge_8		
+U6  a3 plot_v1		
+U5  a2 plot_v1		
+U2  a1 plot_v1		
+U1  a0 plot_v1		
+U7  b3 plot_v1		
+U8  b2 plot_v1		
+U4  b1 plot_v1		
+U3  b0 plot_v1		
+U12  p7 plot_v1		
+U13  p6 plot_v1		
+U14  p5 plot_v1		
+U15  p4 plot_v1		
+U16  p3 plot_v1		
+U17  p2 plot_v1		
+U18  p1 plot_v1		
+U19  p0 plot_v1		
+
+.end

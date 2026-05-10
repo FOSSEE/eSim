@@ -1,0 +1,19 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# freq_mul-RESCUE-freq_mul
+#
+DEF freq_mul-RESCUE-freq_mul U 0 40 Y Y 1 F N
+F0 "U" 2850 1800 60 H V C CNN
+F1 "freq_mul-RESCUE-freq_mul" 2850 2000 60 H V C CNN
+F2 "" 2850 1950 60 H V C CNN
+F3 "" 2850 1950 60 H V C CNN
+DRAW
+S 2350 2100 3350 1600 0 1 0 N
+X clk0 1 2150 1900 200 R 50 50 1 1 I
+X rst0 2 2150 1800 200 R 50 50 1 1 I
+X clk2x0 3 3550 1900 200 L 50 50 1 1 O
+ENDDRAW
+ENDDEF
+#
+#End Library

@@ -1,0 +1,52 @@
+* C:\Users\VLSI\eSim-Workspace\asynchronous_fifo\asynchronous_fifo.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 02/03/2026 19:49:05
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U11  Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ Net-_U11-Pad4_ Net-_U11-Pad5_ Net-_U11-Pad6_ Net-_U11-Pad7_ Net-_U11-Pad8_ Net-_U11-Pad9_ Net-_U11-Pad10_ Net-_U11-Pad11_ Net-_U11-Pad12_ Net-_U11-Pad13_ Net-_U11-Pad14_ Net-_U11-Pad15_ Net-_U11-Pad16_ Net-_U11-Pad17_ Net-_U11-Pad18_ Net-_U11-Pad19_ Net-_U11-Pad20_ Net-_U11-Pad21_ Net-_U11-Pad22_ Net-_U11-Pad23_ asynchronous_fifo		
+U17  d7 d6 d5 d4 d3 d2 d1 d0 Net-_U11-Pad6_ Net-_U11-Pad7_ Net-_U11-Pad8_ Net-_U11-Pad9_ Net-_U11-Pad10_ Net-_U11-Pad11_ Net-_U11-Pad12_ Net-_U11-Pad13_ adc_bridge_8		
+U16  wclk0 rclk0 rst0 wr_en0 rd_en0 Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ Net-_U11-Pad4_ Net-_U11-Pad5_ adc_bridge_5		
+U18  Net-_U11-Pad14_ Net-_U11-Pad15_ Net-_U11-Pad16_ Net-_U11-Pad17_ Net-_U11-Pad18_ Net-_U11-Pad19_ Net-_U11-Pad20_ Net-_U11-Pad21_ q7 q6 q5 q4 q3 q2 q1 q0 dac_bridge_8		
+U19  Net-_U11-Pad22_ Net-_U11-Pad23_ full0 empty0 dac_bridge_2		
+v11  wclk0 GND pulse		
+v12  rclk0 GND pulse		
+v13  rst0 GND pulse		
+v5  wr_en0 GND pulse		
+v6  rd_en0 GND pulse		
+v7  d7 GND pulse		
+v8  d6 GND pulse		
+v1  d5 GND pulse		
+v2  d4 GND pulse		
+v9  d3 GND pulse		
+v10  d2 GND pulse		
+v3  d1 GND pulse		
+v4  ? GND pulse		
+U2  wclk0 plot_v1		
+U1  rclk0 plot_v1		
+U3  rst0 plot_v1		
+U4  wr_en0 plot_v1		
+U6  rd_en0 plot_v1		
+U10  d7 plot_v1		
+U7  d6 plot_v1		
+U13  d5 plot_v1		
+U9  d4 plot_v1		
+U5  d3 plot_v1		
+U15  d3 plot_v1		
+U12  d2 plot_v1		
+U14  d1 plot_v1		
+U8  d0 plot_v1		
+U20  q7 plot_v1		
+U21  q6 plot_v1		
+U22  q5 plot_v1		
+U23  q4 plot_v1		
+U24  q3 plot_v1		
+U25  q2 plot_v1		
+U26  q1 plot_v1		
+U27  q0 plot_v1		
+U28  full0 plot_v1		
+U29  empty0 plot_v1		
+
+.end

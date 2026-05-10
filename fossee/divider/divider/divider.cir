@@ -1,0 +1,72 @@
+* C:\Users\VLSI\eSim-Workspace\divider\divider.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 03/03/2026 19:46:01
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U19  Net-_U19-Pad1_ Net-_U19-Pad2_ Net-_U19-Pad3_ Net-_U19-Pad4_ Net-_U19-Pad5_ Net-_U19-Pad6_ Net-_U19-Pad7_ Net-_U19-Pad8_ Net-_U19-Pad9_ Net-_U19-Pad10_ Net-_U19-Pad11_ Net-_U19-Pad12_ Net-_U19-Pad13_ Net-_U19-Pad14_ Net-_U19-Pad15_ Net-_U19-Pad16_ Net-_U19-Pad17_ Net-_U19-Pad18_ Net-_U19-Pad19_ Net-_U19-Pad20_ Net-_U19-Pad21_ Net-_U19-Pad22_ Net-_U19-Pad23_ Net-_U19-Pad24_ Net-_U19-Pad25_ Net-_U19-Pad26_ Net-_U19-Pad27_ Net-_U19-Pad28_ Net-_U19-Pad29_ Net-_U19-Pad30_ Net-_U19-Pad31_ Net-_U19-Pad32_ Net-_U19-Pad33_ Net-_U19-Pad34_ Net-_U19-Pad35_ Net-_U19-Pad36_ divider		
+v1  clk0 GND pulse		
+v2  rst0 GND pulse		
+v11  divend7 GND DC		
+v12  divend6 GND DC		
+v13  divend5 GND DC		
+v14  divend4 GND DC		
+v15  divend3 GND DC		
+v16  divend2 GND DC		
+v17  divend1 GND DC		
+v18  divend0 GND DC		
+v3  div7 GND DC		
+v4  div6 GND DC		
+v5  div5 GND DC		
+v6  div4 GND DC		
+v7  div3 GND DC		
+v8  div2 GND DC		
+v9  div1 GND DC		
+v19  GND div0 DC		
+v10  in_valid0 GND DC		
+U21  div7 div6 div5 div4 div3 div2 div1 div0 Net-_U19-Pad12_ Net-_U19-Pad13_ Net-_U19-Pad14_ Net-_U19-Pad15_ Net-_U19-Pad16_ Net-_U19-Pad17_ Net-_U19-Pad18_ Net-_U19-Pad19_ adc_bridge_8		
+U23  divend7 divend6 divend5 divend4 divend3 divend2 divend1 divend0 Net-_U19-Pad4_ Net-_U19-Pad5_ Net-_U19-Pad6_ Net-_U19-Pad7_ Net-_U19-Pad8_ Net-_U19-Pad9_ Net-_U19-Pad10_ Net-_U19-Pad11_ adc_bridge_8		
+U22  clk0 rst0 in_valid0 Net-_U19-Pad1_ Net-_U19-Pad2_ Net-_U19-Pad3_ adc_bridge_3		
+U26  Net-_U19-Pad29_ Net-_U19-Pad30_ Net-_U19-Pad31_ Net-_U19-Pad32_ Net-_U19-Pad33_ Net-_U19-Pad34_ Net-_U19-Pad35_ Net-_U19-Pad36_ r7 r6 r5 r4 r3 r2 r1 r0 dac_bridge_8		
+U25  Net-_U19-Pad21_ Net-_U19-Pad22_ Net-_U19-Pad23_ Net-_U19-Pad24_ Net-_U19-Pad25_ Net-_U19-Pad26_ Net-_U19-Pad27_ Net-_U19-Pad28_ q7 q6 q5 q4 q3 q2 q1 q0 dac_bridge_8		
+U24  Net-_U19-Pad20_ ou_valid0 dac_bridge_1		
+U13  clk0 plot_v1		
+U6  rst0 plot_v1		
+U3  in_valid0 plot_v1		
+U12  divend7 plot_v1		
+U7  divend6 plot_v1		
+U9  divend5 plot_v1		
+U4  divend4 plot_v1		
+U10  divend3 plot_v1		
+U5  divend2 plot_v1		
+U15  divend1 plot_v1		
+U1  divend0 plot_v1		
+U2  div7 plot_v1		
+U8  div6 plot_v1		
+U11  div5 plot_v1		
+U14  div4 plot_v1		
+U16  div3 plot_v1		
+U17  div2 plot_v1		
+U18  div1 plot_v1		
+U20  div0 plot_v1		
+U28  q7 plot_v1		
+U29  q6 plot_v1		
+U30  q5 plot_v1		
+U31  q4 plot_v1		
+U32  q3 plot_v1		
+U33  q2 plot_v1		
+U34  q1 plot_v1		
+U35  q0 plot_v1		
+U36  r7 plot_v1		
+U37  r6 plot_v1		
+U38  r5 plot_v1		
+U39  r4 plot_v1		
+U40  r3 plot_v1		
+U41  r2 plot_v1		
+U42  r1 plot_v1		
+U43  r0 plot_v1		
+U27  ou_valid0 plot_v1		
+
+.end

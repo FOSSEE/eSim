@@ -1,0 +1,64 @@
+* C:\Users\srinu\eSim-Workspace\gcd_seq\gcd_seq.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 03/21/26 01:12:16
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U19  Net-_U19-Pad1_ Net-_U19-Pad2_ Net-_U19-Pad3_ Net-_U19-Pad4_ Net-_U19-Pad5_ Net-_U19-Pad6_ Net-_U19-Pad7_ Net-_U19-Pad8_ Net-_U19-Pad9_ Net-_U19-Pad10_ Net-_U19-Pad11_ Net-_U19-Pad12_ Net-_U19-Pad13_ Net-_U19-Pad14_ Net-_U19-Pad15_ Net-_U19-Pad16_ Net-_U19-Pad17_ Net-_U19-Pad18_ Net-_U19-Pad19_ Net-_U19-Pad20_ Net-_U19-Pad21_ Net-_U19-Pad22_ Net-_U19-Pad23_ Net-_U19-Pad24_ Net-_U19-Pad25_ Net-_U19-Pad26_ Net-_U19-Pad27_ Net-_U19-Pad28_ gcd_seq		
+v1  clk GND pulse		
+v2  rst GND pulse		
+v3  start GND pulse		
+v12  a7 GND DC		
+v13  a6 GND DC		
+v14  a5 GND DC		
+v15  a4 GND DC		
+v16  a3 GND DC		
+v17  a2 GND DC		
+v18  a1 GND DC		
+v19  a0 GND DC		
+v4  b7 GND DC		
+v5  b6 GND DC		
+v6  b5 GND DC		
+v7  b4 GND DC		
+v8  b3 GND DC		
+v9  b2 GND DC		
+v10  b1 GND DC		
+v11  b0 GND DC		
+U24  b7 b6 b5 b4 b3 b2 b1 b0 Net-_U19-Pad12_ Net-_U19-Pad13_ Net-_U19-Pad14_ Net-_U19-Pad15_ Net-_U19-Pad16_ Net-_U19-Pad17_ Net-_U19-Pad18_ Net-_U19-Pad19_ adc_bridge_8		
+U23  a7 a6 a5 a4 a3 a2 a1 a0 Net-_U19-Pad4_ Net-_U19-Pad5_ Net-_U19-Pad6_ Net-_U19-Pad7_ Net-_U19-Pad8_ Net-_U19-Pad9_ Net-_U19-Pad10_ Net-_U19-Pad11_ adc_bridge_8		
+U22  clk rst start Net-_U19-Pad1_ Net-_U19-Pad2_ Net-_U19-Pad3_ adc_bridge_3		
+U25  Net-_U19-Pad20_ Net-_U19-Pad21_ Net-_U19-Pad22_ Net-_U19-Pad23_ Net-_U19-Pad24_ Net-_U19-Pad25_ Net-_U19-Pad26_ Net-_U19-Pad27_ g7 g6 g5 g4 g3 g2 g1 g0 dac_bridge_8		
+U26  Net-_U19-Pad28_ done dac_bridge_1		
+U27  g7 plot_v1		
+U28  g6 plot_v1		
+U31  g5 plot_v1		
+U29  g4 plot_v1		
+U32  g3 plot_v1		
+U34  g2 plot_v1		
+U30  g1 plot_v1		
+U33  g0 plot_v1		
+U35  done plot_v1		
+U13  clk plot_v1		
+U18  rst plot_v1		
+U21  start plot_v1		
+U5  a7 plot_v1		
+U7  a6 plot_v1		
+U10  a5 plot_v1		
+U12  a4 plot_v1		
+U16  a3 plot_v1		
+U14  a2 plot_v1		
+U9  a1 plot_v1		
+U8  a0 plot_v1		
+U1  b7 plot_v1		
+U2  b6 plot_v1		
+U3  b6 plot_v1		
+U4  b5 plot_v1		
+U6  b4 plot_v1		
+U11  b3 plot_v1		
+U15  b2 plot_v1		
+U17  b1 plot_v1		
+U20  b0 plot_v1		
+
+.end

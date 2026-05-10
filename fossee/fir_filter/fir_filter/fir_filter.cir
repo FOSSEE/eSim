@@ -1,0 +1,32 @@
+* C:\Users\VLSI\eSim-Workspace\fir_filter\fir_filter.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 28/02/2026 17:24:53
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ fir_filter		
+U3  x7 x6 x5 x4 x3 x2 x1 x0 Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ adc_bridge_8		
+U2  clk0 rst0 Net-_U1-Pad1_ Net-_U1-Pad2_ adc_bridge_2		
+U4  Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ y7 y6 y5 y4 y3 y2 y1 y0 dac_bridge_8		
+v9  clk0 GND pulse		
+v10  rst0 GND pulse		
+v1  x7 GND pulse		
+v2  x6 GND pulse		
+v3  x5 GND pulse		
+v4  x4 GND pulse		
+v5  x3 GND pulse		
+v6  x2 GND pulse		
+v7  x1 GND pulse		
+v8  x0 GND pulse		
+U6  y7 plot_v1		
+U7  y6 plot_v1		
+U11  y5 plot_v1		
+U12  y4 plot_v1		
+U9  y3 plot_v1		
+U10  y2 plot_v1		
+U8  y1 plot_v1		
+U5  y0 plot_v1		
+
+.end

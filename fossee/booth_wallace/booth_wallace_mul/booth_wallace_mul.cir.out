@@ -1,0 +1,54 @@
+* c:\users\vlsi\esim-workspace\booth_wallace_mul\booth_wallace_mul.cir
+
+* u9  net-_u10-pad9_ net-_u10-pad10_ net-_u10-pad11_ net-_u10-pad12_ net-_u10-pad13_ net-_u10-pad14_ net-_u10-pad15_ net-_u10-pad16_ net-_u11-pad1_ net-_u11-pad2_ net-_u11-pad3_ net-_u11-pad4_ net-_u11-pad5_ net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ booth_wallace_mul
+v6 a3 gnd  dc 0
+v7 a2 gnd  dc 5
+v8 a1 gnd  dc 5
+v1 a0 gnd  dc 5
+v2 b3 gnd  dc 0
+v3 b2 gnd  dc 5
+v4 b1 gnd  dc 5
+v5 b0 gnd  dc 5
+* u10  a3 a2 a1 a0 b3 b2 b1 b0 net-_u10-pad9_ net-_u10-pad10_ net-_u10-pad11_ net-_u10-pad12_ net-_u10-pad13_ net-_u10-pad14_ net-_u10-pad15_ net-_u10-pad16_ adc_bridge_8
+* u11  net-_u11-pad1_ net-_u11-pad2_ net-_u11-pad3_ net-_u11-pad4_ net-_u11-pad5_ net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ p7 p6 p5 p4 p3 p2 p1 p0 dac_bridge_8
+* u6  a3 plot_v1
+* u5  a2 plot_v1
+* u2  a1 plot_v1
+* u1  a0 plot_v1
+* u7  b3 plot_v1
+* u8  b2 plot_v1
+* u4  b1 plot_v1
+* u3  b0 plot_v1
+* u12  p7 plot_v1
+* u13  p6 plot_v1
+* u14  p5 plot_v1
+* u15  p4 plot_v1
+* u16  p3 plot_v1
+* u17  p2 plot_v1
+* u18  p1 plot_v1
+* u19  p0 plot_v1
+a1 [net-_u10-pad9_ net-_u10-pad10_ net-_u10-pad11_ net-_u10-pad12_ ] [net-_u10-pad13_ net-_u10-pad14_ net-_u10-pad15_ net-_u10-pad16_ ] [net-_u11-pad1_ net-_u11-pad2_ net-_u11-pad3_ net-_u11-pad4_ net-_u11-pad5_ net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ ] u9
+a2 [a3 a2 a1 a0 b3 b2 b1 b0 ] [net-_u10-pad9_ net-_u10-pad10_ net-_u10-pad11_ net-_u10-pad12_ net-_u10-pad13_ net-_u10-pad14_ net-_u10-pad15_ net-_u10-pad16_ ] u10
+a3 [net-_u11-pad1_ net-_u11-pad2_ net-_u11-pad3_ net-_u11-pad4_ net-_u11-pad5_ net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ ] [p7 p6 p5 p4 p3 p2 p1 p0 ] u11
+* Schematic Name:                             booth_wallace_mul, NgSpice Name: booth_wallace_mul
+.model u9 booth_wallace_mul(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             adc_bridge_8, NgSpice Name: adc_bridge
+.model u10 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_8, NgSpice Name: dac_bridge
+.model u11 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-09 100e-09 0e-09
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+
+set xbrushwidth=2
+plot v(a0)+6 v(a1)+12 v(a2)+18 v(a3)+24 v(b0)+30 v(b1)+36 v(b2)+42 v(b3)+48
+plot v(p0)+6 v(p1)+12 v(p2)+18 v(p3)+24 v(p4)+30 v(p5)+36 v(p6)+42 v(p7)+48
+
+
+
+.endc
+.end
