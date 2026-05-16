@@ -16,7 +16,7 @@
 #      REVISION: Sunday 26 July 2020
 # =========================================================================
 
-from PyQt5 import QtWidgets, QtCore
+from PyQt6 import QtWidgets, QtCore
 from .Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
@@ -82,13 +82,13 @@ class OpenProjectInfo(QtWidgets.QWidget):
                 "<b>Error: The project doesn't contain .proj file.</b><br/>"
                 "<b>Please select the proper project directory else you won't"
                 " be able to perform any operation</b>",
-                QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel
+                QtWidgets.QMessageBox.StandardButton.Ok | QtWidgets.QMessageBox.StandardButton.Cancel
             )
 
-            if reply == QtWidgets.QMessageBox.Ok:
+            if reply == QtWidgets.QMessageBox.StandardButton.Ok:
                 self.body()
                 self.obj_Appconfig.print_info('Open Project called')
                 self.obj_Appconfig.print_info(
                     'Current Project is ' + self.projDir)
-            elif reply == QtWidgets.QMessageBox.Cancel:
+            elif reply == QtWidgets.QMessageBox.StandardButton.Cancel:
                 self.obj_Appconfig.print_info('No Project opened')

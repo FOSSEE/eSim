@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 from projManagement.Validation import Validation
 from configuration.Appconfig import Appconfig
 from projManagement import Worker
@@ -66,7 +66,7 @@ class NewSub(QtWidgets.QWidget):
                     'Unable to create subcircuit. Please make sure ' +
                     'you have write permission on ' + self.schematic_path
                 )
-                self.msg.exec_()
+                self.msg.exec()
 
             self.obj_appconfig.current_subcircuit['SubcircuitName'] \
                 = self.schematic_path
@@ -80,7 +80,7 @@ class NewSub(QtWidgets.QWidget):
                 '" already exist.Please select the different name or delete' +
                 'existing subcircuit'
             )
-            self.msg.exec_()
+            self.msg.exec()
 
         elif self.reply == "CHECKNAME":
             self.msg = QtWidgets.QErrorMessage(self)
@@ -89,11 +89,11 @@ class NewSub(QtWidgets.QWidget):
             self.msg.showMessage(
                 'The subcircuit name should not contain space between them'
             )
-            self.msg.exec_()
+            self.msg.exec()
 
         elif self.reply == "NONE":
             self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('The subcircuit name cannot be empty')
-            self.msg.exec_()
+            self.msg.exec()

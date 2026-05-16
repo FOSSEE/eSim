@@ -30,8 +30,8 @@ else:
     import pathmagic    # noqa:F401
     init_path = '../../'
 
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.Qt import QSize
+from PyQt6 import QtGui, QtCore, QtWidgets
+from PyQt6.QtCore import QSize
 from configuration.Appconfig import Appconfig
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
@@ -98,35 +98,35 @@ class Application(QtWidgets.QMainWindow):
                 Converter, OM Optimisation)
         """
         # Top Tool bar
-        self.newproj = QtWidgets.QAction(
+        self.newproj = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/newProject.png'),
             '<b>New Project</b>', self
         )
         self.newproj.setShortcut('Ctrl+N')
         self.newproj.triggered.connect(self.new_project)
 
-        self.openproj = QtWidgets.QAction(
+        self.openproj = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/openProject.png'),
             '<b>Open Project</b>', self
         )
         self.openproj.setShortcut('Ctrl+O')
         self.openproj.triggered.connect(self.open_project)
 
-        self.closeproj = QtWidgets.QAction(
+        self.closeproj = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/closeProject.png'),
             '<b>Close Project</b>', self
         )
         self.closeproj.setShortcut('Ctrl+X')
         self.closeproj.triggered.connect(self.close_project)
 
-        self.wrkspce = QtWidgets.QAction(
+        self.wrkspce = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/workspace.ico'),
             '<b>Change Workspace</b>', self
         )
         self.wrkspce.setShortcut('Ctrl+W')
         self.wrkspce.triggered.connect(self.change_workspace)
 
-        self.helpfile = QtWidgets.QAction(
+        self.helpfile = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/helpProject.png'),
             '<b>Help</b>', self
         )
@@ -134,7 +134,7 @@ class Application(QtWidgets.QMainWindow):
         self.helpfile.triggered.connect(self.help_project)
 
         # added devDocs logo and called functions
-        self.devdocs = QtWidgets.QAction(
+        self.devdocs = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/dev_docs.png'),
             '<b>Dev Docs</b>', self
         )
@@ -170,8 +170,8 @@ class Application(QtWidgets.QMainWindow):
         # corner in the application window.
         self.spacer = QtWidgets.QWidget()
         self.spacer.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding,
-            QtWidgets.QSizePolicy.Expanding)
+            QtWidgets.QSizePolicy.Policy.Expanding,
+            QtWidgets.QSizePolicy.Policy.Expanding)
         self.topToolbar.addWidget(self.spacer)
         self.logo = QtWidgets.QLabel()
         self.logopic = QtGui.QPixmap(
@@ -179,66 +179,66 @@ class Application(QtWidgets.QMainWindow):
                 os.path.abspath(''), init_path + 'images', 'fosseeLogo.png'
             ))
         self.logopic = self.logopic.scaled(
-            QSize(150, 150), QtCore.Qt.KeepAspectRatio)
+            QSize(150, 150), QtCore.Qt.AspectRatioMode.KeepAspectRatio)
         self.logo.setPixmap(self.logopic)
         self.logo.setStyleSheet("padding:0 15px 0 0;")
         self.topToolbar.addWidget(self.logo)
 
         # Left Tool bar Action Widget
-        self.kicad = QtWidgets.QAction(
+        self.kicad = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/kicad.png'),
             '<b>Open Schematic</b>', self
         )
         self.kicad.triggered.connect(self.obj_kicad.openSchematic)
 
-        self.conversion = QtWidgets.QAction(
+        self.conversion = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/ki-ng.png'),
             '<b>Convert KiCad to Ngspice</b>', self
         )
         self.conversion.triggered.connect(self.obj_kicad.openKicadToNgspice)
 
-        self.ngspice = QtWidgets.QAction(
+        self.ngspice = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/ngspice.png'),
             '<b>Simulate</b>', self
         )
         self.ngspice.triggered.connect(self.plotFlagPopBox)
 
-        self.model = QtWidgets.QAction(
+        self.model = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/model.png'),
             '<b>Model Editor</b>', self
         )
         self.model.triggered.connect(self.open_modelEditor)
 
-        self.subcircuit = QtWidgets.QAction(
+        self.subcircuit = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/subckt.png'),
             '<b>Subcircuit</b>', self
         )
         self.subcircuit.triggered.connect(self.open_subcircuit)
 
-        self.nghdl = QtWidgets.QAction(
+        self.nghdl = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/nghdl.png'), '<b>NGHDL</b>', self
         )
         self.nghdl.triggered.connect(self.open_nghdl)
 
-        self.makerchip = QtWidgets.QAction(
+        self.makerchip = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/makerchip.png'),
             '<b>Makerchip-NgVeri</b>', self
         )
         self.makerchip.triggered.connect(self.open_makerchip)
 
-        self.omedit = QtWidgets.QAction(
+        self.omedit = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/omedit.png'),
             '<b>Modelica Converter</b>', self
         )
         self.omedit.triggered.connect(self.open_OMedit)
 
-        self.omoptim = QtWidgets.QAction(
+        self.omoptim = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/omoptim.png'),
             '<b>OM Optimisation</b>', self
         )
         self.omoptim.triggered.connect(self.open_OMoptim)
 
-        self.conToeSim = QtWidgets.QAction(
+        self.conToeSim = QtGui.QAction(
             QtGui.QIcon(init_path + 'images/icon.png'),
             '<b>Schematic converter</b>', self
         )
@@ -246,7 +246,7 @@ class Application(QtWidgets.QMainWindow):
 
         # Adding Action Widget to tool bar
         self.lefttoolbar = QtWidgets.QToolBar('Left ToolBar')
-        self.addToolBar(QtCore.Qt.LeftToolBarArea, self.lefttoolbar)
+        self.addToolBar(QtCore.Qt.ToolBarArea.LeftToolBarArea, self.lefttoolbar)
         self.lefttoolbar.addAction(self.kicad)
         self.lefttoolbar.addAction(self.conversion)
         self.lefttoolbar.addAction(self.ngspice)
@@ -257,7 +257,7 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.addAction(self.conToeSim)
-        self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
+        self.lefttoolbar.setOrientation(QtCore.Qt.Orientation.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
 
     def plotFlagPopBox(self):
@@ -269,10 +269,10 @@ class Application(QtWidgets.QMainWindow):
         msg_box.setWindowTitle("Ngspice Plots")
         msg_box.setText("Do you want Ngspice plots?")
         
-        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.YesRole)
-        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.NoRole)
+        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.ButtonRole.YesRole)
+        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.ButtonRole.NoRole)
 
-        msg_box.exec_()
+        msg_box.exec()
 
         if msg_box.clickedButton() == yes_button:
             self.plotFlag = True  
@@ -302,11 +302,11 @@ class Application(QtWidgets.QMainWindow):
         exit_msg = "Are you sure you want to exit the program?"
         exit_msg += " All unsaved data will be lost."
         reply = QtWidgets.QMessageBox.question(
-            self, 'Message', exit_msg, QtWidgets.QMessageBox.Yes,
-            QtWidgets.QMessageBox.No
+            self, 'Message', exit_msg, QtWidgets.QMessageBox.StandardButton.Yes,
+            QtWidgets.QMessageBox.StandardButton.No
         )
 
-        if reply == QtWidgets.QMessageBox.Yes:
+        if reply == QtWidgets.QMessageBox.StandardButton.Yes:
             for proc in self.obj_appconfig.procThread_list:
                 try:
                     proc.terminate()
@@ -330,7 +330,7 @@ class Application(QtWidgets.QMainWindow):
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
-        elif reply == QtWidgets.QMessageBox.No:
+        elif reply == QtWidgets.QMessageBox.StandardButton.No:
             event.ignore()
 
     def new_project(self):
@@ -444,7 +444,7 @@ class Application(QtWidgets.QMainWindow):
         self.closeproj.setEnabled(True)
         self.wrkspce.setEnabled(True)
 
-        if exitStatus == QtCore.QProcess.NormalExit and exitCode == 0:
+        if exitStatus == QtCore.QProcess.ExitStatus.NormalExit and exitCode == 0:
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
             except Exception as e:
@@ -454,7 +454,7 @@ class Application(QtWidgets.QMainWindow):
                 self.msg.showMessage(
                     'Data could not be plotted. Please try again.'
                 )
-                self.msg.exec_()
+                self.msg.exec()
                 print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
@@ -477,7 +477,7 @@ class Application(QtWidgets.QMainWindow):
                 self.msg.showMessage(
                     'Netlist (*.cir.out) not found.'
                 )
-                self.msg.exec_()
+                self.msg.exec()
                 return
 
             self.obj_Mainview.obj_dockarea.ngspiceEditor(
@@ -496,7 +496,7 @@ class Application(QtWidgets.QMainWindow):
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
 
     def open_subcircuit(self):
         """
@@ -537,7 +537,7 @@ class Application(QtWidgets.QMainWindow):
                                  'Please make sure it is installed')
             self.obj_appconfig.print_error('Error while opening NGHDL. ' +
                                            'Please make sure it is installed')
-            self.msg.exec_()
+            self.msg.exec()
 
     def open_makerchip(self):
         """
@@ -611,11 +611,11 @@ class Application(QtWidgets.QMainWindow):
                          <a href=https://www.openmodelica.org/download/\
                         download-windows>OpenModelica Windows</a>\
                          and install latest version.<br/>"
-                        self.msg.setTextFormat(QtCore.Qt.RichText)
+                        self.msg.setTextFormat(QtCore.Qt.TextFormat.RichText)
                         self.msg.setText(self.msgContent)
                         self.msg.setWindowTitle("Missing OpenModelica")
                         self.obj_appconfig.print_info(self.msgContent)
-                        self.msg.exec_()
+                        self.msg.exec()
 
                 except Exception as e:
                     self.msg = QtWidgets.QErrorMessage()
@@ -625,7 +625,7 @@ class Application(QtWidgets.QMainWindow):
                     self.msg.showMessage(
                         'Unable to convert NgSpice netlist to\
                             Modelica netlist :'+str(e))
-                    self.msg.exec_()
+                    self.msg.exec()
                     self.obj_appconfig.print_error(str(e))
                 """
 
@@ -639,7 +639,7 @@ class Application(QtWidgets.QMainWindow):
                     'Current project does not contain any Ngspice file. ' +
                     'Please create Ngspice file with extension .cir.out'
                 )
-                self.msg.exec_()
+                self.msg.exec()
         else:
             self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
@@ -648,7 +648,7 @@ class Application(QtWidgets.QMainWindow):
                 'Please select the project first. You can either ' +
                 'create a new project or open an existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
 
     def open_OMoptim(self):
         """
@@ -681,11 +681,11 @@ class Application(QtWidgets.QMainWindow):
                 "https://www.openmodelica.org/download/download-windows"
                 ">OpenModelica Windows</a> and install latest version.<br/>"
             )
-            self.msg.setTextFormat(QtCore.Qt.RichText)
+            self.msg.setTextFormat(QtCore.Qt.TextFormat.RichText)
             self.msg.setText(self.msgContent)
             self.msg.setWindowTitle("Error Message")
             self.obj_appconfig.print_info(self.msgContent)
-            self.msg.exec_()
+            self.msg.exec()
 
     def open_conToeSim(self):
         print("Function : Schematic converter")
@@ -724,8 +724,8 @@ class MainView(QtWidgets.QWidget):
         self.noteArea.setReadOnly(True)
 
         # Set explicit scrollbar policy
-        self.noteArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
-        self.noteArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
+        self.noteArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.noteArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         self.obj_appconfig.noteArea['Note'] = self.noteArea
         self.obj_appconfig.noteArea['Note'].append(
@@ -841,7 +841,7 @@ class MainView(QtWidgets.QWidget):
         self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()
 
         # Adding content to vertical middle Split.
-        self.middleSplit.setOrientation(QtCore.Qt.Vertical)
+        self.middleSplit.setOrientation(QtCore.Qt.Orientation.Vertical)
         self.middleSplit.addWidget(self.obj_dockarea)
         self.middleSplit.addWidget(self.noteArea)
 
@@ -883,7 +883,8 @@ def main(args):
     """
     print("Starting eSim......")
     # Set non-native dialogs globally
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_DontUseNativeDialogs, True)
+    # NOTE: AA_DontUseNativeDialogs removed in Qt6.
+    # Native dialog behavior is now controlled per-dialog via QFileDialog.Option.
     app = QtWidgets.QApplication(args)
     app.setApplicationName("eSim")
 
@@ -892,7 +893,7 @@ def main(args):
 
     splash_pix = QtGui.QPixmap(init_path + 'images/splash_screen_esim.png')
     splash = QtWidgets.QSplashScreen(
-        appView, splash_pix, QtCore.Qt.WindowStaysOnTopHint
+        splash_pix, QtCore.Qt.WindowType.WindowStaysOnTopHint
     )
     splash.setMask(splash_pix.mask())
     splash.setDisabled(True)
@@ -918,7 +919,7 @@ def main(args):
     else:
         appView.obj_workspace.show()
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
 # Call main function
