@@ -1,2239 +1,2914 @@
-import sys
-import os
-import re,threading
-from configuration.Appconfig import Appconfig
-from chatbot.stt_handler import listen_to_mic
-from PyQt5.QtGui import QTextCursor
-from PyQt5.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QTextEdit, QLineEdit,
-    QPushButton, QLabel, QFileDialog, QMessageBox, QApplication,
-    QDialog, QComboBox, QFormLayout, QSizePolicy,
+from chatbot.chatbot_thread import (
+    OllamaWorker, OllamaVisionWorker, MicWorker,
+    OllamaStatusWorker, ModelFetchWorker,
+    detect_topic_switch, get_stt_backend
 )
-from PyQt5.QtCore import Qt, QThread, QTimer, pyqtSignal
-from PyQt5.QtGui import QFont
-# Try multiple paths for netlist contract (frontEnd/manual, frontEnd/manuals, src/manuals)
-_CONTRACT_PATHS = [
-    os.path.join(os.path.dirname(__file__), "manual", "esim_netlist_analysis_output_contract.txt"),
-    os.path.join(os.path.dirname(__file__), "manuals", "esim_netlist_analysis_output_contract.txt"),
-    os.path.join(os.path.dirname(os.path.dirname(__file__)), "manuals", "esim_netlist_analysis_output_contract.txt"),
+from PyQt5.QtWidgets import (
+    QWidget, QHBoxLayout, QTextBrowser, QVBoxLayout,
+    QLineEdit, QPushButton, QLabel, QComboBox, QApplication,
+    QFileDialog, QDialog, QListWidget, QListWidgetItem, QFrame,
+    QScrollArea, QSlider, QInputDialog
+)
+from PyQt5.QtCore import QTimer, Qt, pyqtSignal, QSize
+from PyQt5.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
+from configuration.Appconfig import Appconfig
+from datetime import datetime
+import re
+import os
+import json
+import uuid
+import base64
+
+if os.name == 'nt':
+    from frontEnd import pathmagic  # noqa:F401
+    init_path = ''
+else:
+    import pathmagic  # noqa:F401
+    init_path = '../../'
+
+# ── Storage paths ─────────────────────────────────────────────────────────────
+_ESIM_DIR = os.path.join(os.path.expanduser('~'), '.esim')
+_HISTORY_FILE = os.path.join(_ESIM_DIR, 'chatbot_history.json')
+_SESSIONS_DIR = os.path.join(_ESIM_DIR, 'chat_sessions')
+
+_IMG_FILTER = "Images (*.png *.jpg *.jpeg *.bmp *.gif *.tiff)"
+_IMAGE_EXTS = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff', '.tif', '.webp'}
+# NgSpice logs can be 10-50 KB; sending all of it blows past num_ctx: 2048.
+# 60 lines is enough for any meaningful error message while staying well inside
+# the context window even with history prepended.
+_MAX_ERROR_LOG_LINES = 60
+# _save_history() is called after every bot response; without debouncing this
+# causes synchronous I/O on the main thread on every message.
+_SAVE_DEBOUNCE_MS = 5000
+
+WELCOME_MESSAGE = """
+<div style="margin:16px 10px 8px 10px; text-align:center;">
+    <div style="font-size:32px; margin-bottom:8px;">🤖</div>
+    <div style="font-size:16px; font-weight:bold; color:#1a1a2e; margin-bottom:6px;">
+        eSim AI Assistant
+    </div>
+    <div style="font-size:12px; color:#777; line-height:1.7; margin-bottom:16px;">
+        Ask me anything about KiCad, NgSpice,<br>
+        netlists, simulation errors, or circuit design.<br>
+        Attach an image 📎 or speak 🎤 your question.
+    </div>
+    <div style="
+        display:inline-block;
+        background:#f5f5f5;
+        border-radius:12px;
+        padding:10px 18px;
+        font-size:11px;
+        color:#999;
+        margin:0 auto;
+    ">
+        Use the sidebar to access past chats
+    </div>
+</div>
+<br>
+"""
+
+_TYPING_FRAMES = [
+    '&#x25CF;&nbsp;<span style="color:#ccc;">&#x25CF;</span>&nbsp;<span style="color:#ccc;">&#x25CF;</span>',
+    '<span style="color:#ccc;">&#x25CF;</span>&nbsp;&#x25CF;&nbsp;<span style="color:#ccc;">&#x25CF;</span>',
+    '<span style="color:#ccc;">&#x25CF;</span>&nbsp;<span style="color:#ccc;">&#x25CF;</span>&nbsp;&#x25CF;',
 ]
-NETLIST_CONTRACT = ""
-for contract_path in _CONTRACT_PATHS:
-    try:
-        with open(contract_path, "r", encoding="utf-8") as f:
-            NETLIST_CONTRACT = f.read()
-            print(f"[COPILOT] Loaded netlist contract from {contract_path}")
-            break
-    except Exception:
-        continue
-if not NETLIST_CONTRACT:
-    print("[COPILOT] Using fallback netlist contract (file not found in any path)")
-    NETLIST_CONTRACT = (
-        "You are a SPICE netlist analyzer.\n"
-        "Use the FACT lines to detect issues.\n"
-        "Output sections:\n"
-        "1. Syntax / SPICE rule errors\n"
-        "2. Topology / connection problems\n"
-        "3. Simulation setup issues (.ac/.tran/.op etc.)\n"
-        "4. Summary\n"
-        "Do NOT invent issues not present in FACT lines.\n"
+
+
+def _typing_bubble(frame=0):
+    dots = _TYPING_FRAMES[frame % 3]
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        '<td align="left" style="padding:3px 0 1px 6px;">'
+        '<table cellpadding="0" cellspacing="0"><tr>'
+        '<td style="padding:0;">'
+        '<div style="background-color:#f0f4f8;color:#0078d4;'
+        'padding:11px 20px;border-radius:20px 20px 20px 5px;'
+        'font-size:18px;line-height:1;border:1px solid #d0dce8;">'
+        f'{dots}</div></td></tr></table></td>'
+        '<td width="20%"></td></tr></table>'
     )
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-src_dir = os.path.dirname(current_dir)
-if src_dir not in sys.path:
-    sys.path.append(src_dir)
 
-from chatbot.chatbot_core import handle_input, ESIMCopilotWrapper, clear_history
+# ── Markdown renderer ─────────────────────────────────────────────────────────
 
-import subprocess
-import tempfile
-
-def _validate_netlist_with_ngspice(netlist_text: str) -> bool:
+def _render_inline(text):
     """
-    Run ngspice in batch mode to check for SYNTAX errors only.
-    Returns True if syntax is valid, False for actual parse errors.
-    Ignores model/library warnings.
+    Renders inline markdown: **bold**, *italic*, `code`, # headings, and [links](url).
     """
-    try:
-        with tempfile.NamedTemporaryFile(
-            mode='w', suffix='.cir', delete=False, encoding='utf-8'
-        ) as tmp:
-            tmp.write(netlist_text)
-            tmp_path = tmp.name
+    # Escape HTML special chars first so subsequent substitutions are safe
+    text = text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
-        result = subprocess.run(
-            ['ngspice', '-b', tmp_path],
-            capture_output=True,
-            text=True,
-            timeout=5
+    # Headings (must be processed line-by-line because they are block-level)
+    def _render_headings(t):
+        lines = t.split('\n')
+        out = []
+        for line in lines:
+            m = re.match(r'^(#{1,4})\s+(.*)', line)
+            if m:
+                level = len(m.group(1))
+                sizes = {1: '18px', 2: '16px', 3: '14px', 4: '13px'}
+                size = sizes.get(level, '13px')
+                content = m.group(2)
+                out.append(
+                    f'<span style="font-size:{size};font-weight:bold;'
+                    f'color:#1a1a2e;">{content}</span>'
+                )
+            else:
+                out.append(line)
+        return '\n'.join(out)
+
+    text = _render_headings(text)
+
+    # Bold (**text** or __text__)
+    text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
+    text = re.sub(r'__(.*?)__',     r'<b>\1</b>', text)
+
+    # Italic (*text* or _text_) — processed after bold so ** is already gone
+    text = re.sub(r'\*(.*?)\*', r'<i>\1</i>', text)
+    text = re.sub(r'_(.*?)_',   r'<i>\1</i>', text)
+
+    # Inline code (`code`)
+    text = re.sub(
+        r'`([^`]+)`',
+        r'<span style="font-family:Consolas,monospace;background-color:#e8ecf0;'
+        r'padding:1px 4px;border-radius:3px;">\1</span>',
+        text
+    )
+
+    # Markdown links [text](url)
+    text = re.sub(
+        r'\[([^\]]+)\]\((https?://[^\)]+)\)',
+        r'<a href="\2" style="color:#0078d4;">\1</a>',
+        text
+    )
+
+    text = text.replace('\n', '<br>')
+    return text
+
+
+def _render_markdown(text):
+    result = []
+    pattern = re.compile(r'```(\w*)\n?(.*?)```', re.DOTALL)
+    last_end = 0
+
+    for match in pattern.finditer(text):
+        before = text[last_end:match.start()]
+        if before:
+            result.append(_render_inline(before))
+
+        lang = match.group(1) or 'code'
+        code = (
+            match.group(2)
+            .replace('&', '&amp;')
+            .replace('<', '&lt;')
+            .replace('>', '&gt;')
+            .replace('\n', '<br>')
+            .replace(' ', '&nbsp;')
         )
+        label = f'<span style="color:#888;font-size:10px;">{lang}</span><br>' if lang else ''
+        result.append(
+            '<table width="98%" cellpadding="0" cellspacing="3"><tr>'
+            '<td style="padding:0;">'
+            '<div style="background-color:#1e1e1e;color:#d4d4d4;'
+            'font-family:Consolas,Courier New,monospace;font-size:12px;'
+            'padding:10px 14px;border-radius:10px;border-left:3px solid #0078d4;">'
+            f'{label}{code}</div></td></tr></table>'
+        )
+        last_end = match.end()
 
+    tail = text[last_end:]
+    if tail:
+        result.append(_render_inline(tail))
+    return ''.join(result)
+
+
+# ── Bubble helpers ────────────────────────────────────────────────────────────
+
+def _get_time():
+    return datetime.now().strftime("%H:%M")
+
+
+def _escape_text_preserve_breaks(text: str) -> str:
+    return (
+        text.replace('&', '&amp;')
+            .replace('<', '&lt;')
+            .replace('>', '&gt;')
+            .replace('\n', '<br>')
+    )
+
+
+def _image_thumbnail_html(b64_str: str, filename: str) -> str:
+    """Render a saved image as an inline base64 thumbnail in the chat."""
+    safe_name = filename.replace('&', '&amp;').replace('<', '&lt;')
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        '<td width="10%"></td>'
+        '<td align="right" style="padding:2px 10px 0 0;">'
+        '<table cellpadding="0" cellspacing="2"><tr>'
+        '<td style="background:#f0f6ff;border-radius:14px 14px 4px 14px;'
+        'padding:6px;text-align:center;">'
+        f'<img src="data:image/jpeg;base64,{b64_str}" '
+        f'style="max-width:160px;max-height:120px;border-radius:8px;" />'
+        f'<div style="font-size:9px;color:#888;margin-top:3px;">{safe_name}</div>'
+        '</td></tr></table>'
+        '</td></tr></table>'
+    )
+
+
+def _user_bubble(text, timestamp):
+    safe = _escape_text_preserve_breaks(text)
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        '<td width="20%"></td>'
+        '<td align="right" style="padding:4px 10px 0 0;">'
+        '<table cellpadding="0" cellspacing="2"><tr>'
+        '<td style="'
+        'background-color:#0095f6;'
+        'color:white;'
+        'padding:11px 16px;'
+        'border-radius:20px 20px 5px 20px;'
+        'font-size:13px;'
+        'line-height:1.6;'
+        '">'
+        f'{safe}'
+        '</td></tr>'
+        f'<tr><td align="right" style="color:#bbb;font-size:10px;'
+        f'padding:3px 2px 8px 0;">You &nbsp;·&nbsp; {timestamp}</td></tr>'
+        '</table>'
+        '</td></tr></table>'
+    )
+
+
+def _approx_token_count(text: str) -> int:
+    return max(1, len(text) // 4)
+
+
+def _bot_bubble(text, timestamp, response_idx):
+    rendered = _render_markdown(text)
+    copy_href  = f'copy:///{response_idx}'
+    retry_href = f'retry:///{response_idx}'
+    token_est = _approx_token_count(text)
+
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        '<td align="left" style="padding:4px 0 0 10px;">'
+        '<table cellpadding="0" cellspacing="2"><tr>'
+        '<td style="'
+        'background-color:#f0f0f0;'
+        'color:#1a1a2e;'
+        'padding:11px 16px;'
+        'border-radius:20px 20px 20px 5px;'
+        'font-size:13px;'
+        'line-height:1.6;'
+        '">'
+        f'{rendered}'
+        '</td></tr>'
+        '<tr><td>'
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        f'<td align="left" style="color:#999;font-size:10px;padding:3px 0 8px 2px;">'
+        f'eSim AI &nbsp;·&nbsp; {timestamp} &nbsp;·&nbsp; ~{token_est} tokens</td>'
+        f'<td align="right" style="padding:3px 4px 8px 0;">'
+        f'<a href="{retry_href}" style="color:#e07000;font-size:10px;'
+        f'text-decoration:none;">&#8635; Retry</a>'
+        f'&nbsp;&nbsp;'
+        f'<a href="{copy_href}" style="color:#0095f6;font-size:10px;'
+        f'text-decoration:none;">Copy</a></td>'
+        '</tr></table>'
+        '</td></tr></table>'
+        '</td>'
+        '<td width="20%"></td></tr></table>'
+    )
+
+
+def _bot_bubble_simple(text, timestamp):
+    rendered = _render_markdown(text)
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        '<td align="left" style="padding:4px 0 0 10px;">'
+        '<table cellpadding="0" cellspacing="2"><tr>'
+        '<td style="'
+        'background-color:#f0f0f0;'
+        'color:#1a1a2e;'
+        'padding:11px 16px;'
+        'border-radius:20px 20px 20px 5px;'
+        'font-size:13px;'
+        'line-height:1.6;'
+        '">'
+        f'{rendered}'
+        '</td></tr>'
+        f'<tr><td style="color:#999;font-size:10px;padding:3px 0 8px 2px;">'
+        f'eSim AI &nbsp;·&nbsp; {timestamp}</td></tr>'
+        '</table>'
+        '</td>'
+        '<td width="20%"></td></tr></table>'
+    )
+
+
+def _system_bubble(text):
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        '<td align="center" style="padding:4px 8px;">'
+        '<div style="background-color:#fff8e1;color:#7a5800;'
+        'border:1px solid #ffc107;border-radius:14px;'
+        'padding:7px 16px;font-size:11px;font-style:italic;">'
+        f'{_escape_text_preserve_breaks(text)}</div></td></tr></table>'
+    )
+
+
+def _staged_images_bubble(filenames, timestamp):
+    names_html = "".join(
+        f'<span style="background:#e0eeff;color:#0055a5;'
+        f'border-radius:8px;padding:2px 8px;margin:2px;font-size:11px;">'
+        f'📎 {_escape_text_preserve_breaks(n)}</span> '
+        for n in filenames
+    )
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        '<td width="10%"></td>'
+        '<td align="right" style="padding:2px 10px 0 0;">'
+        '<table cellpadding="0" cellspacing="2"><tr>'
+        '<td style="background-color:#f0f6ff;color:#0055a5;'
+        'padding:10px 14px;border-radius:18px 18px 4px 18px;'
+        'font-size:12px;line-height:1.8;">'
+        f'{names_html}'
+        '</td></tr>'
+        f'<tr><td align="right" style="color:#bbb;font-size:10px;'
+        f'padding:3px 2px 8px 0;">You &nbsp;·&nbsp; {timestamp}</td></tr>'
+        '</table></td></tr></table>'
+    )
+
+
+def _topic_reset_banner():
+    return (
+        '<table width="100%" cellpadding="4" cellspacing="0"><tr>'
+        '<td align="center" style="color:#aaa;font-size:10px;'
+        'border-top:1px dashed #d0dce8;padding-top:6px;">'
+        '— New topic —'
+        '</td></tr></table>'
+    )
+
+
+def _netlist_header_bubble(filename, timestamp):
+    safe = _escape_text_preserve_breaks(filename)
+    return (
+        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+        '<td width="5%"></td>'
+        '<td align="right" style="padding:2px 6px;">'
+        '<table cellpadding="0" cellspacing="0"><tr>'
+        '<td style="padding:0;">'
+        '<div style="background-color:#fff3e0;color:#b85c00;'
+        'padding:6px 14px;border-radius:16px 16px 4px 16px;'
+        'font-size:11px;border:1px solid #f0c080;">'
+        f'📄 Netlist: {safe}</div>'
+        '</td></tr>'
+        f'<tr><td align="right" style="color:#aaa;font-size:10px;'
+        f'padding:1px 2px 6px 0;">You &nbsp;·&nbsp; {timestamp}</td></tr>'
+        '</table></td></tr></table>'
+    )
+
+
+def _parse_custom_url(url):
+    scheme = url.scheme()
+    host = url.host()
+    path = url.path().strip('/')
+
+    parts = []
+    if host:
+        parts.append(host)
+    if path:
+        parts.extend([p for p in path.split('/') if p])
+
+    return scheme, parts
+
+
+def _session_kind_badge(kind: str) -> str:
+    colors = {
+        "text": ("#eef4ff", "#2d6cdf"),
+        "image": ("#eefaf0", "#1f8b4c"),
+        "netlist": ("#fff4e8", "#b86a00"),
+        "simulation_error": ("#fff0f0", "#c62828"),
+    }
+    bg, fg = colors.get(kind, ("#f0f0f0", "#666"))
+    label = {
+        "text": "Text",
+        "image": "Image",
+        "netlist": "Netlist",
+        "simulation_error": "Sim Error",
+    }.get(kind, kind.title())
+    return (
+        f'<span style="background:{bg};color:{fg};'
+        f'border-radius:8px;padding:1px 7px;font-size:9px;">{label}</span>'
+    )
+
+
+def _is_image_file(path: str) -> bool:
+    return os.path.splitext(path)[1].lower() in _IMAGE_EXTS
+
+
+# ── Smart input field ─────────────────────────────────────────────────────────
+
+class _HistoryLineEdit(QLineEdit):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._sent_history = []
+        self._hist_idx = -1
+
+    def add_to_history(self, text):
+        if text and (not self._sent_history or self._sent_history[-1] != text):
+            self._sent_history.append(text)
+        self._hist_idx = -1
+
+    def keyPressEvent(self, event: QKeyEvent):
+        if event.key() == Qt.Key_Up and self._sent_history:
+            if self._hist_idx == -1:
+                self._draft = self.text()
+                self._hist_idx = len(self._sent_history) - 1
+            elif self._hist_idx > 0:
+                self._hist_idx -= 1
+            self.setText(self._sent_history[self._hist_idx])
+            self.end(False)
+        elif event.key() == Qt.Key_Down and self._hist_idx >= 0:
+            self._hist_idx += 1
+            if self._hist_idx >= len(self._sent_history):
+                self._hist_idx = -1
+                self.setText(getattr(self, '_draft', ''))
+            else:
+                self.setText(self._sent_history[self._hist_idx])
+            self.end(False)
+        else:
+            super().keyPressEvent(event)
+
+
+# ── History viewer ────────────────────────────────────────────────────────────
+
+class ChatHistoryViewer(QDialog):
+    def __init__(self, session: dict, parent=None):
+        super().__init__(parent)
+        raw_title = session.get('title', 'Chat')
+        self.setWindowTitle(raw_title[:60])
+        self.setMinimumSize(460, 560)
+        self.resize(500, 640)
+        self.setStyleSheet("QDialog { background:#f9f9f9; }")
+
+        msgs = session.get('messages', [])
+        n_usr = sum(1 for m in msgs if m.startswith("User:"))
+        n_bot = sum(1 for m in msgs if m.startswith("Bot:"))
+        created = session.get('created_at', '')
+        updated = session.get('updated_at', '')
+        kind = session.get('kind', 'text')
+
+        root = QVBoxLayout(self)
+        root.setContentsMargins(0, 0, 0, 0)
+        root.setSpacing(0)
+
+        top_bar = QWidget()
+        top_bar.setFixedHeight(54)
+        top_bar.setStyleSheet("""
+            QWidget {
+                background:#ffffff;
+                border-bottom:1px solid #ececec;
+            }
+        """)
+        top_layout = QHBoxLayout(top_bar)
+        top_layout.setContentsMargins(16, 0, 12, 0)
+        top_layout.setSpacing(10)
+
+        title_lbl = QLabel(raw_title[:50] + ("…" if len(raw_title) > 50 else ""))
+        title_lbl.setStyleSheet(
+            "font-size:14px; font-weight:700; color:#1a1a2e; background:transparent;"
+        )
+        top_layout.addWidget(title_lbl, 1)
+
+        meta_lbl = QLabel(f"{n_usr} msg{'s' if n_usr!=1 else ''}  ·  {updated[:10]}  ·  {kind}")
+        meta_lbl.setStyleSheet("font-size:10px; color:#aaa; background:transparent;")
+        top_layout.addWidget(meta_lbl)
+
+        x_btn = QPushButton("✕")
+        x_btn.setFixedSize(26, 26)
+        x_btn.setStyleSheet("""
+            QPushButton {
+                font-size:11px; color:#888;
+                background:transparent; border:none; border-radius:13px;
+            }
+            QPushButton:hover  { background:#f0f0f0; color:#333; }
+            QPushButton:pressed{ background:#e0e0e0; }
+        """)
+        x_btn.clicked.connect(self.accept)
+        top_layout.addWidget(x_btn)
+        root.addWidget(top_bar)
+
+        browser = QTextBrowser()
+        browser.setOpenLinks(False)
+        browser.setStyleSheet("""
+            QTextBrowser {
+                background:#f9f9f9;
+                border:none;
+                padding:10px 4px;
+                font-family:'Segoe UI',Arial,sans-serif;
+                font-size:13px;
+            }
+        """)
+
+        html = ""
+        for line in msgs:
+            if line.startswith("User:"):
+                html += _user_bubble(line[5:].strip(), "")
+            elif line.startswith("Bot:"):
+                html += _bot_bubble_simple(line[4:].strip(), "")
+        browser.setHtml(html if html else "<p style='color:#aaa;text-align:center;padding:20px;'>No messages</p>")
+        QTimer.singleShot(120, lambda: browser.verticalScrollBar().setValue(browser.verticalScrollBar().maximum()))
+        root.addWidget(browser)
+
+        bot_bar = QWidget()
+        bot_bar.setFixedHeight(52)
+        bot_bar.setStyleSheet("""
+            QWidget {
+                background:#ffffff;
+                border-top:1px solid #ececec;
+            }
+        """)
+        bot_layout = QHBoxLayout(bot_bar)
+        bot_layout.setContentsMargins(16, 0, 16, 0)
+
+        info_lbl = QLabel(f"Created {created[:10]}  ·  {n_usr + n_bot} total messages")
+        info_lbl.setStyleSheet("font-size:10px; color:#bbb; background:transparent;")
+        bot_layout.addWidget(info_lbl)
+        bot_layout.addStretch()
+
+        done_btn = QPushButton("Done")
+        done_btn.setFixedHeight(32)
+        done_btn.setStyleSheet("""
+            QPushButton {
+                font-size:12px; font-weight:600;
+                padding:4px 22px;
+                background:#0095f6; color:white;
+                border:none; border-radius:16px;
+            }
+            QPushButton:hover  { background:#0082d8; }
+            QPushButton:pressed{ background:#006ab8; }
+        """)
+        done_btn.clicked.connect(self.accept)
+        bot_layout.addWidget(done_btn)
+        root.addWidget(bot_bar)
+
+
+# ── Sidebar ───────────────────────────────────────────────────────────────────
+
+class _DeleteConfirmDialog(QDialog):
+    def __init__(self, title: str, parent=None):
+        super().__init__(parent, Qt.FramelessWindowHint | Qt.Dialog)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setMinimumWidth(320)
+
+        outer = QWidget(self)
+        outer.setObjectName("card")
+        outer.setStyleSheet("""
+            QWidget#card {
+                background: #ffffff;
+                border-radius: 20px;
+                border: 1px solid #e0e0e0;
+            }
+        """)
+
+        card_layout = QVBoxLayout(outer)
+        card_layout.setContentsMargins(28, 24, 28, 20)
+        card_layout.setSpacing(14)
+
+        title_lbl = QLabel("Delete chat?")
+        title_lbl.setStyleSheet("font-size:16px; font-weight:bold; color:#1a1a2e;")
+        title_lbl.setAlignment(Qt.AlignCenter)
+        card_layout.addWidget(title_lbl)
+
+        body_lbl = QLabel(
+            f'<span style="color:#555;font-size:13px;">'
+            f'Delete &ldquo;<b>{_escape_text_preserve_breaks(title[:40])}</b>&rdquo;?<br>'
+            f'<span style="color:#999;font-size:11px;">This cannot be undone.</span></span>'
+        )
+        body_lbl.setWordWrap(True)
+        body_lbl.setAlignment(Qt.AlignCenter)
+        card_layout.addWidget(body_lbl)
+
+        div = QFrame()
+        div.setFrameShape(QFrame.HLine)
+        div.setStyleSheet("color:#f0f0f0;")
+        card_layout.addWidget(div)
+
+        btn_row = QHBoxLayout()
+        btn_row.setSpacing(10)
+
+        cancel_btn = QPushButton("Cancel")
+        cancel_btn.setFixedHeight(40)
+        cancel_btn.setStyleSheet("""
+            QPushButton {
+                font-size:13px; font-weight:600;
+                background:#f0f0f0; color:#333;
+                border:none; border-radius:20px; padding:0 24px;
+            }
+            QPushButton:hover  { background:#e0e0e0; }
+            QPushButton:pressed{ background:#d0d0d0; }
+        """)
+        cancel_btn.clicked.connect(self.reject)
+
+        delete_btn = QPushButton("Delete")
+        delete_btn.setFixedHeight(40)
+        delete_btn.setStyleSheet("""
+            QPushButton {
+                font-size:13px; font-weight:600;
+                background:#ff3b30; color:white;
+                border:none; border-radius:20px; padding:0 24px;
+            }
+            QPushButton:hover  { background:#e0302a; }
+            QPushButton:pressed{ background:#c02520; }
+        """)
+        delete_btn.clicked.connect(self.accept)
+
+        btn_row.addWidget(cancel_btn)
+        btn_row.addWidget(delete_btn)
+        card_layout.addLayout(btn_row)
+
+        main = QVBoxLayout(self)
+        main.setContentsMargins(0, 0, 0, 0)
+        main.addWidget(outer)
+
+
+class _SessionItemWidget(QWidget):
+    delete_requested = pyqtSignal(str)
+    rename_requested = pyqtSignal(str)
+
+    def __init__(self, session_id: str, title: str, date: str,
+                 msg_count: int = 0, preview: str = "", kind: str = "text", parent=None):
+        super().__init__(parent)
+        self.session_id = session_id
+        self.title = title
+        self.kind = kind
+
+        self.setMinimumHeight(78)
+        self.setStyleSheet("QWidget { background: transparent; }")
+
+        outer = QHBoxLayout(self)
+        outer.setContentsMargins(10, 8, 8, 8)
+        outer.setSpacing(10)
+
+        avatar = QLabel(title[0].upper() if title else "C")
+        avatar.setFixedSize(38, 38)
+        avatar.setAlignment(Qt.AlignCenter)
+        avatar.setStyleSheet("""
+            QLabel {
+                background: qlineargradient(
+                    x1:0, y1:0, x2:1, y2:1,
+                    stop:0 #0095f6, stop:1 #0055a5
+                );
+                color: white;
+                font-size: 14px;
+                font-weight: 700;
+                border-radius: 19px;
+            }
+        """)
+        outer.addWidget(avatar)
+
+        text_col = QVBoxLayout()
+        text_col.setSpacing(3)
+        text_col.setContentsMargins(0, 0, 0, 0)
+
+        title_row = QHBoxLayout()
+        title_row.setSpacing(4)
+        title_row.setContentsMargins(0, 0, 0, 0)
+
+        title_lbl = QLabel(title[:22] + ("…" if len(title) > 22 else ""))
+        title_lbl.setStyleSheet(
+            "font-size:12px; font-weight:700; color:#1a1a2e; background:transparent;"
+        )
+        title_row.addWidget(title_lbl, 1)
+
+        date_lbl = QLabel(date)
+        date_lbl.setStyleSheet("font-size:10px; color:#bbb; background:transparent;")
+        title_row.addWidget(date_lbl)
+        text_col.addLayout(title_row)
+
+        meta_row = QHBoxLayout()
+        meta_row.setSpacing(4)
+        meta_row.setContentsMargins(0, 0, 0, 0)
+
+        kind_lbl = QLabel()
+        kind_lbl.setText(_session_kind_badge(kind))
+        kind_lbl.setTextFormat(Qt.RichText)
+        kind_lbl.setStyleSheet("background:transparent;")
+        meta_row.addWidget(kind_lbl)
+
+        if msg_count > 0:
+            count_lbl = QLabel(str(msg_count))
+            count_lbl.setFixedSize(20, 16)
+            count_lbl.setAlignment(Qt.AlignCenter)
+            count_lbl.setStyleSheet("""
+                QLabel {
+                    background:#0095f6; color:white;
+                    font-size:9px; font-weight:700;
+                    border-radius:8px;
+                }
+            """)
+            meta_row.addWidget(count_lbl)
+        meta_row.addStretch()
+        text_col.addLayout(meta_row)
+
+        preview_text = (preview[:32] + "…") if len(preview) > 32 else preview
+        preview_lbl = QLabel(preview_text if preview_text else "No messages yet")
+        preview_lbl.setStyleSheet("font-size:11px; color:#888; background:transparent;")
+        text_col.addWidget(preview_lbl)
+
+        outer.addLayout(text_col, 1)
+
+        btn_col = QVBoxLayout()
+        btn_col.setSpacing(4)
+        btn_col.setContentsMargins(0, 0, 0, 0)
+
+        self._rename_btn = QPushButton("✎")
+        self._rename_btn.setFixedSize(28, 28)
+        self._rename_btn.setToolTip("Rename this chat")
+        self._rename_btn.setStyleSheet("""
+            QPushButton {
+                font-size:12px;
+                background:#f2f7ff;
+                color:#0055a5;
+                border:1px solid #d0e0ff;
+                border-radius:14px;
+            }
+            QPushButton:hover { background:#e6f0ff; }
+        """)
+        self._rename_btn.clicked.connect(lambda: self.rename_requested.emit(self.session_id))
+        btn_col.addWidget(self._rename_btn)
+
+        self._del_btn = QPushButton("🗑")
+        self._del_btn.setFixedSize(28, 28)
+        self._del_btn.setToolTip("Delete this chat")
+        self._del_btn.setStyleSheet("""
+            QPushButton {
+                font-size:12px;
+                background:#fff0f0;
+                color:#cc0000;
+                border:1px solid #ffd0d0;
+                border-radius:14px;
+            }
+            QPushButton:hover  { background:#ffe0e0; border:1px solid #ffb0b0; }
+            QPushButton:pressed{ background:#ffc8c8; }
+        """)
+        self._del_btn.clicked.connect(self._on_delete_clicked)
+        btn_col.addWidget(self._del_btn)
+
+        btn_col.addStretch()
+        outer.addLayout(btn_col)
+
+    def sizeHint(self):
+        return QSize(252, 78)
+
+    def _on_delete_clicked(self):
+        dlg = _DeleteConfirmDialog(self.title, self)
+        if dlg.exec_() == QDialog.Accepted:
+            self.delete_requested.emit(self.session_id)
+
+
+class ChatSidebar(QWidget):
+    new_chat_requested = pyqtSignal()
+    session_deleted = pyqtSignal(str)
+    delete_all_requested = pyqtSignal()
+    rename_requested = pyqtSignal(str)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setFixedWidth(290)
+        self._all_sessions_cache = []
+
+        self.setStyleSheet("""
+            QWidget {
+                background:#ffffff;
+                border-right:1px solid #ececec;
+            }
+        """)
+
+        root = QVBoxLayout(self)
+        root.setContentsMargins(0, 0, 0, 0)
+        root.setSpacing(0)
+
+        top = QWidget()
+        top.setFixedHeight(52)
+        top.setStyleSheet("""
+            QWidget {
+                background:#ffffff;
+                border-bottom:1px solid #f0f0f0;
+            }
+        """)
+        top_row = QHBoxLayout(top)
+        top_row.setContentsMargins(14, 0, 10, 0)
+        top_row.setSpacing(8)
+
+        title_lbl = QLabel("Chats")
+        title_lbl.setStyleSheet(
+            "font-size:16px; font-weight:700; color:#1a1a2e; background:transparent;"
+        )
+        top_row.addWidget(title_lbl, 1)
+
+        close_btn = QPushButton("✕")
+        close_btn.setFixedSize(26, 26)
+        close_btn.setStyleSheet("""
+            QPushButton {
+                font-size:11px; color:#888;
+                background:transparent; border:none; border-radius:13px;
+            }
+            QPushButton:hover  { background:#f0f0f0; color:#333; }
+            QPushButton:pressed{ background:#e0e0e0; }
+        """)
+        close_btn.clicked.connect(self.hide)
+        top_row.addWidget(close_btn)
+        root.addWidget(top)
+
+        controls = QWidget()
+        controls_layout = QVBoxLayout(controls)
+        controls_layout.setContentsMargins(12, 8, 12, 8)
+        controls_layout.setSpacing(8)
+
+        self.new_btn = QPushButton("+ New Chat")
+        self.new_btn.setFixedHeight(36)
+        self.new_btn.setStyleSheet("""
+            QPushButton {
+                font-size:12px; font-weight:600;
+                background:#0095f6; color:white;
+                border:none; border-radius:18px;
+            }
+            QPushButton:hover  { background:#0082d8; }
+            QPushButton:pressed{ background:#006ab8; }
+        """)
+        self.new_btn.clicked.connect(self.new_chat_requested)
+        controls_layout.addWidget(self.new_btn)
+
+        self.search_input = QLineEdit()
+        self.search_input.setPlaceholderText("Search chats…")
+        self.search_input.setFixedHeight(34)
+        self.search_input.setStyleSheet("""
+            QLineEdit {
+                font-size:12px;
+                padding:7px 12px;
+                border:1px solid #e0e0e0;
+                border-radius:17px;
+                background:#f7f7f7;
+                color:#1a1a2e;
+            }
+            QLineEdit:focus {
+                border:1px solid #0095f6;
+                background:#ffffff;
+            }
+        """)
+        self.search_input.textChanged.connect(self._apply_filter)
+        controls_layout.addWidget(self.search_input)
+
+        delete_all_btn = QPushButton("Delete All Chats")
+        delete_all_btn.setFixedHeight(30)
+        delete_all_btn.setStyleSheet("""
+            QPushButton {
+                font-size:11px;
+                font-weight:600;
+                background:#fff0f0;
+                color:#cc0000;
+                border:1px solid #ffd0d0;
+                border-radius:15px;
+            }
+            QPushButton:hover  { background:#ffe0e0; }
+            QPushButton:pressed{ background:#ffc8c8; }
+        """)
+        delete_all_btn.clicked.connect(self.delete_all_requested)
+        controls_layout.addWidget(delete_all_btn)
+
+        root.addWidget(controls)
+
+        sep = QFrame()
+        sep.setFrameShape(QFrame.HLine)
+        sep.setFixedHeight(1)
+        sep.setStyleSheet("QFrame { background:#f0f0f0; border:none; }")
+        root.addWidget(sep)
+
+        self.session_list = QListWidget()
+        self.session_list.setSpacing(2)
+        self.session_list.setStyleSheet("""
+            QListWidget {
+                background:#ffffff;
+                border:none;
+                outline:0;
+                padding:6px;
+            }
+            QListWidget::item {
+                border:none;
+                padding:0;
+                margin:0;
+            }
+            QListWidget::item:hover    { background:#f5f8ff; }
+            QListWidget::item:selected { background:#eaf3ff; }
+        """)
+        root.addWidget(self.session_list)
+
+        self._empty_lbl = QLabel("No saved chats yet.\nStart a conversation!")
+        self._empty_lbl.setAlignment(Qt.AlignCenter)
+        self._empty_lbl.setStyleSheet("""
+            QLabel {
+                color:#ccc; font-size:12px;
+                padding:30px 10px;
+                background:transparent;
+            }
+        """)
+        self._empty_lbl.setWordWrap(True)
+        self._empty_lbl.hide()
+        root.addWidget(self._empty_lbl)
+
+    def populate(self):
+        self._all_sessions_cache = []
+        self.session_list.clear()
+
+        if not os.path.exists(_SESSIONS_DIR):
+            self._empty_lbl.show()
+            return
+
+        for fname in os.listdir(_SESSIONS_DIR):
+            if not fname.endswith('.json'):
+                continue
+            try:
+                with open(os.path.join(_SESSIONS_DIR, fname), encoding='utf-8') as f:
+                    s = json.load(f)
+                self._all_sessions_cache.append(s)
+            except Exception:
+                pass
+
+        self._all_sessions_cache.sort(key=lambda s: s.get('updated_at', ''), reverse=True)
+        self._apply_filter()
+
+    def _apply_filter(self):
+        self.session_list.clear()
+        query = self.search_input.text().strip().lower()
+
+        filtered = []
+        for s in self._all_sessions_cache:
+            title = s.get('title', 'Chat')
+            msgs = s.get('messages', [])
+            preview = next((m[5:].strip() for m in msgs if m.startswith("User:")), "")
+            kind = s.get('kind', 'text')
+            haystack = f"{title} {preview} {kind}".lower()
+            if not query or query in haystack:
+                filtered.append(s)
+
+        if not filtered:
+            self._empty_lbl.show()
+            return
+
+        self._empty_lbl.hide()
+
+        for s in filtered:
+            sid = s['id']
+            title = s.get('title', 'Chat')
+            date = s.get('updated_at', '')[:10]
+            msgs = s.get('messages', [])
+            msg_count = sum(1 for m in msgs if m.startswith("User:"))
+            preview = next((m[5:].strip() for m in msgs if m.startswith("User:")), "")
+            kind = s.get('kind', 'text')
+
+            item = QListWidgetItem()
+            item.setData(Qt.UserRole, sid)
+            widget = _SessionItemWidget(sid, title, date, msg_count, preview, kind, self.session_list)
+            widget.delete_requested.connect(self._delete_session)
+            widget.rename_requested.connect(self.rename_requested)
+
+            item.setSizeHint(widget.sizeHint())
+            self.session_list.addItem(item)
+            self.session_list.setItemWidget(item, widget)
+
+    def upsert_session(self, session: dict):
+        """
+        Insert or update a session entry in the sidebar immediately,
+        without reading from disk. Called as soon as the first bot reply
+        arrives so the chat appears in the sidebar right away instead of
+        waiting for the debounced disk save to complete.
+        """
+        sid = session.get('id')
+        if not sid:
+            return
+
+        # Update existing entry in the cache if present, otherwise prepend it.
+        for i, s in enumerate(self._all_sessions_cache):
+            if s.get('id') == sid:
+                self._all_sessions_cache[i] = session
+                break
+        else:
+            self._all_sessions_cache.insert(0, session)
+
+        # Re-sort so the newest session stays at the top.
+        self._all_sessions_cache.sort(
+            key=lambda s: s.get('updated_at', ''), reverse=True
+        )
+        self._apply_filter()
+
+    def _delete_session(self, session_id: str):
+        path = os.path.join(_SESSIONS_DIR, f"{session_id}.json")
         try:
-            os.unlink(tmp_path)
-        except:
+            if os.path.exists(path):
+                os.remove(path)
+        except Exception:
             pass
-
-        stderr_lower = result.stderr.lower()
-        
-        syntax_errors = [
-            'syntax error',
-            'unrecognized',
-            'parse error',
-            'fatal',
-        ]
-        
-        ignore_patterns = [
-            'model',
-            'library',
-            'warning',
-            'no such file',
-            'cannot find',
-        ]
-
-        for line in stderr_lower.split('\n'):
-            if any(pattern in line for pattern in ignore_patterns):
-                continue
-            if any(err in line for err in syntax_errors):
-                print(f"[COPILOT] Syntax error: {line}")
-                return False
-
-        return True
-
-    except Exception as e:
-        print(f"[COPILOT] Validation exception: {e}")
-        return True  
+        self.session_deleted.emit(session_id)
+        self.populate()
 
 
-def _detect_missing_subcircuits(netlist_text: str) -> list:
-    """
-    Detect subcircuits that are referenced but not defined.
-    Returns list of (subckt_name, [(line_num, instance_name), ...]) tuples.
-    """
-    import re
-    
-    referenced_subckts = {}
-    defined_subckts = set()
-    lines = netlist_text.split('\n')
-    
-    for line_num, line in enumerate(lines, start=1):
-        line = line.strip()
-        if not line or line.startswith('*'):
-            continue
-        
-        if line.lower().startswith('.subckt'):
-            tokens = line.split()
-            if len(tokens) >= 2:
-                defined_subckts.add(tokens[1].upper())
-        
-        elif line.lower().startswith('.include') or line.lower().startswith('.lib'):
-            return []
-        
-        elif line[0].upper() == 'X':
-            tokens = line.split()
-            if len(tokens) < 2:
-                continue
-            
-            instance_name = tokens[0]
-            subckt_name = tokens[-1].upper()
-            
-            if '=' in subckt_name:
-                for tok in reversed(tokens[1:]):
-                    if '=' not in tok:
-                        subckt_name = tok.upper()
-                        break
-            
-            if subckt_name not in referenced_subckts:
-                referenced_subckts[subckt_name] = []
-            referenced_subckts[subckt_name].append((line_num, instance_name))
-    
-    missing = []
-    for subckt, occurrences in referenced_subckts.items():
-        if subckt not in defined_subckts:
-            missing.append((subckt, occurrences))
-    
-    return missing
+# ── Main Chatbot GUI ──────────────────────────────────────────────────────────
 
-
-def _detect_voltage_source_conflicts(netlist_text: str) -> list:
-    """
-    Detect multiple voltage sources connected to the same node pair.
-    Returns list of (node_pair, [(line_num, source_name, value), ...]) tuples.
-    """
-    import re
-    
-    voltage_sources = {}
-    lines = netlist_text.split('\n')
-    
-    for line_num, line in enumerate(lines, start=1):
-        line = line.strip()
-        if not line or line.startswith('*') or line.startswith('.'):
-            continue
-        
-        tokens = line.split()
-        if len(tokens) < 4:
-            continue
-        
-        elem_name = tokens[0]
-        if elem_name[0].upper() != 'V':
-            continue
-        
-        node_plus = tokens[1]
-        node_minus = tokens[2]
-        
-        # Normalize node names
-        node_plus = re.sub(r'[^\w\-_]', '', node_plus)
-        node_minus = re.sub(r'[^\w\-_]', '', node_minus)
-        
-        if node_plus.lower() in ['0', 'gnd', 'ground', 'vss']:
-            node_plus = '0'
-        if node_minus.lower() in ['0', 'gnd', 'ground', 'vss']:
-            node_minus = '0'
-        
-        node_pair = tuple(sorted([node_plus, node_minus]))
-        
-        # Extract value
-        value = "?"
-        for i, tok in enumerate(tokens[3:], start=3):
-            tok_upper = tok.upper()
-            if tok_upper in ['DC', 'AC', 'PULSE', 'SIN', 'PWL']:
-                if i+1 < len(tokens):
-                    value = tokens[i+1]
-                break
-            elif not tok_upper.startswith('.'):
-                value = tok
-                break
-        
-        if node_pair not in voltage_sources:
-            voltage_sources[node_pair] = []
-        voltage_sources[node_pair].append((line_num, elem_name, value))
-    
-    # Find node pairs with multiple sources
-    conflicts = []
-    for node_pair, sources in voltage_sources.items():
-        if len(sources) > 1:
-            conflicts.append((node_pair, sources))
-    
-    return conflicts
-
-def _netlist_ground_info(netlist_text: str):
-    """
-    Return (has_node0, has_gnd_label) based ONLY on actual node pins,
-    not on .tran/.ac parameters or numeric values.
-    """
-    import re
-
-    has_node0 = False
-    has_gnd_label = False
-
-    lines = netlist_text.split('\n')
-    for line in lines:
-        line = line.strip()
-        # Skip comments, control lines, empty lines
-        if not line or line.startswith('*') or line.startswith('.'):
-            continue
-
-        tokens = line.split()
-        if len(tokens) < 3:
-            continue
-
-        elem_name = tokens[0]
-        elem_type = elem_name[0].upper()
-        nodes = []
-
-        # Extract nodes based on element type
-        if elem_type in ['R', 'C', 'L']:
-            nodes = [tokens[1], tokens[2]]
-        elif elem_type in ['V', 'I']:
-            nodes = [tokens[1], tokens[2]]
-        elif elem_type == 'D':
-            nodes = [tokens[1], tokens[2]]
-        elif elem_type == 'Q':
-            if len(tokens) >= 4:
-                nodes = [tokens[1], tokens[2], tokens[3]]
-        elif elem_type == 'M':
-            if len(tokens) >= 5:
-                nodes = [tokens[1], tokens[2], tokens[3], tokens[4]]
-        elif elem_type == 'S':
-            if len(tokens) >= 5:
-                nodes = [tokens[1], tokens[2], tokens[3], tokens[4]]
-        elif elem_type == 'W':
-            if len(tokens) >= 4:
-                nodes = [tokens[1], tokens[2]]
-        elif elem_type in ['E', 'G', 'H', 'F']:
-            # Controlled sources: check if VALUE-based or linear
-            if len(tokens) >= 3:
-                # Check if VALUE keyword exists
-                has_value = any(tok.upper() == 'VALUE' for tok in tokens)
-                if has_value:
-                    # Behavioral source: only 2 output nodes
-                    nodes = [tokens[1], tokens[2]]
-                elif len(tokens) >= 5:
-                    # Linear source: 4 nodes (output pair + control pair)
-                    nodes = [tokens[1], tokens[2], tokens[3], tokens[4]]
-                else:
-                    # Fallback: at least output pair
-                    nodes = [tokens[1], tokens[2]]
-
-        elif elem_type == 'X':
-            if len(tokens) >= 3:
-                nodes = tokens[1:-1]
-
-        for node in nodes:
-            node = re.sub(r'[=\(\)].*$', '', node)
-            node = re.sub(r'[^\w\-_]', '', node)
-            if not node:
-                continue
-
-            nl = node.lower()
-            if nl == '0':
-                has_node0 = True
-            if nl in ['gnd', 'ground', 'vss']:
-                has_gnd_label = True
-
-    return has_node0, has_gnd_label
-
-def _detect_floating_nodes(netlist_text: str) -> list:
-    """Detect nodes that appear only once (floating/unconnected)."""
-    import re
-    
-    floating_nodes = []
-    node_counts = {}
-    lines = netlist_text.split('\n')
-    
-    for line_num, line in enumerate(lines, start=1):
-        line = line.strip()
-        if not line or line.startswith('*') or line.startswith('.'):
-            continue
-        
-        tokens = line.split()
-        if len(tokens) < 3:
-            continue
-        
-        elem_name = tokens[0]
-        elem_type = elem_name[0].upper()
-        nodes = []
-        
-        # Extract ONLY nodes (not model names, keywords, or source names)
-        if elem_type in ['R', 'C', 'L']:
-            nodes = [tokens[1], tokens[2]]
-        
-        elif elem_type in ['V', 'I']:
-            nodes = [tokens[1], tokens[2]]
-        
-        elif elem_type == 'D':
-            nodes = [tokens[1], tokens[2]]
-        
-        elif elem_type == 'Q':
-            if len(tokens) >= 4:
-                nodes = [tokens[1], tokens[2], tokens[3]]
-        
-        elif elem_type == 'M':
-            if len(tokens) >= 5:
-                nodes = [tokens[1], tokens[2], tokens[3], tokens[4]]
-        
-        elif elem_type == 'S':
-            if len(tokens) >= 5:
-                nodes = [tokens[1], tokens[2], tokens[3], tokens[4]]
-        
-        elif elem_type == 'W':
-            # W<name> n+ n- Vcontrol model
-            # Vcontrol is a voltage source NAME, not a node
-            if len(tokens) >= 3:
-                nodes = [tokens[1], tokens[2]]
-        
-        elif elem_type == 'T':
-            # T<name> n1+ n1- n2+ n2- Z0=val TD=val
-            # Transmission line: 4 nodes
-            if len(tokens) >= 5:
-                nodes = [tokens[1], tokens[2], tokens[3], tokens[4]]
-        
-        elif elem_type == 'B':
-            # B<name> n+ n- <I or V> = {expr}
-            # Behavioral source: 2 output nodes
-            if len(tokens) >= 3:
-                nodes = [tokens[1], tokens[2]]
-        
-        elif elem_type in ['E', 'G']:
-            # Voltage-controlled sources
-            if len(tokens) >= 3:
-                # Check if VALUE keyword exists (behavioral)
-                line_upper = line.upper()
-                if 'VALUE' in line_upper or '=' in line:
-                    # Behavioral: only 2 output nodes
-                    nodes = [tokens[1], tokens[2]]
-                elif len(tokens) >= 5:
-                    # Linear: 4 nodes (out+, out-, ctrl+, ctrl-)
-                    nodes = [tokens[1], tokens[2], tokens[3], tokens[4]]
-                else:
-                    nodes = [tokens[1], tokens[2]]
-        
-        elif elem_type == 'H':
-            if len(tokens) >= 3:
-                nodes = [tokens[1], tokens[2]]
-        
-        elif elem_type == 'F':
-            if len(tokens) >= 3:
-                nodes = [tokens[1], tokens[2]]
-        
-        elif elem_type == 'X':
-            # X<name> node1 node2 ... subckt_name [params]
-            if len(tokens) >= 3:
-                candidate_nodes = tokens[1:-1]
-                nodes = [tok for tok in candidate_nodes if '=' not in tok]
-        
-        for node in nodes:
-            node = re.sub(r'[=\(\)].*$', '', node)
-            node = re.sub(r'[^\w\-_]', '', node)
-            
-            if not node or node[0].isdigit():
-                continue
-            
-            if node.upper() in ['VALUE', 'V', 'I', 'IF', 'THEN', 'ELSE']:
-                continue
-            
-            # Normalize ground references
-            node_lower = node.lower()
-            if node_lower in ['0', 'gnd', 'ground', 'vss']:
-                node = '0'
-            
-            if node not in node_counts:
-                node_counts[node] = []
-            node_counts[node].append((line_num, elem_name))
-    
-    # Find nodes appearing only once (exclude ground)
-    for node, occurrences in node_counts.items():
-        if len(occurrences) == 1 and node != '0':
-            line_num, elem = occurrences[0]
-            floating_nodes.append((node, line_num, elem))
-    
-    return floating_nodes
-
-def _detect_missing_models(netlist_text: str) -> list:
-    """
-    Detect device models that are referenced but not defined.
-    Returns list of (model_name, [(line_num, elem_name), ...]) tuples.
-    """
-    import re
-    
-    referenced_models = {}
-    defined_models = set()
-    lines = netlist_text.split('\n')
-    
-    for line_num, line in enumerate(lines, start=1):
-        line = line.strip()
-        if not line or line.startswith('*'):
-            continue
-        
-        # Check for .model definitions
-        if line.lower().startswith('.model'):
-            tokens = line.split()
-            if len(tokens) >= 2:
-                defined_models.add(tokens[1].upper())
-        
-        # Check for .include statements (external model libraries)
-        elif line.lower().startswith('.include') or line.lower().startswith('.lib'):
-            return []
-        
-        # Extract model references from device lines
-        elif line[0].upper() in ['D', 'Q', 'M', 'J']:
-            tokens = line.split()
-            elem_name = tokens[0]
-            elem_type = elem_name[0].upper()
-            
-            if elem_type == 'D' and len(tokens) >= 4:
-                model = tokens[3].upper()
-                if model not in referenced_models:
-                    referenced_models[model] = []
-                referenced_models[model].append((line_num, elem_name))
-            
-            elif elem_type == 'Q' and len(tokens) >= 5:
-                model = tokens[-1].upper()
-                if not model[0].isdigit():
-                    if model not in referenced_models:
-                        referenced_models[model] = []
-                    referenced_models[model].append((line_num, elem_name))
-            
-            elif elem_type == 'M' and len(tokens) >= 6:
-                model = tokens[5].upper()
-                if model not in referenced_models:
-                    referenced_models[model] = []
-                referenced_models[model].append((line_num, elem_name))
-        
-        # Check for switch models
-        elif line[0].upper() in ['S', 'W']:
-            tokens = line.split()
-            if len(tokens) >= 5:
-                elem_name = tokens[0]
-                model = tokens[-1].upper()
-                if model not in referenced_models:
-                    referenced_models[model] = []
-                referenced_models[model].append((line_num, elem_name))
-    
-    # Find models that are referenced but not defined
-    missing = []
-    for model, occurrences in referenced_models.items():
-        if model not in defined_models:
-            missing.append((model, occurrences))
-    
-    return missing
-
-
-class ChatWorker(QThread):
-    response_ready = pyqtSignal(str)
-
-    def __init__(self, user_input, copilot):
-        super().__init__()
-        self.user_input = user_input
-        self.copilot = copilot
-
-    def run(self):
-        response = self.copilot.handle_input(self.user_input)
-        self.response_ready.emit(response)
-
-class MicWorker(QThread):
-    result_ready = pyqtSignal(str)
-    error_occurred = pyqtSignal(str)
+class ChatbotGUI(QWidget):
+    # Emitted from _suspend_worker's background callback to safely update
+    # the sidebar from the main thread after a background save completes.
+    _background_session_saved = pyqtSignal(dict)
 
     def __init__(self):
         super().__init__()
-        self._stop_requested = False
-        self._lock = threading.Lock()
-
-    def request_stop(self):
-        with self._lock:
-            self._stop_requested = True
-
-    def should_stop(self):
-        with self._lock:
-            return self._stop_requested
-
-    def run(self):
-        try:
-            text = listen_to_mic(should_stop=self.should_stop, max_silence_sec=3)
-            self.result_ready.emit(text)
-        except Exception as e:
-            self.error_occurred.emit(f"[Error: {e}]")
-
-# ==================== BATCH WORKER ====================
-
-class BatchWorker(QThread):
-    """Runs static FACT analysis on multiple netlists or vision on images — no LLM."""
-    file_started = pyqtSignal(int, int, str)   # idx, total, filename
-    file_done    = pyqtSignal(int, int, str, str)  # idx, total, filename, summary
-    all_done     = pyqtSignal(list)            # list of (filename, summary)
-
-    def __init__(self, mode: str, file_paths: list):
-        super().__init__()
-        self.mode = mode          # "netlist" or "image"
-        self.file_paths = file_paths
-
-    def run(self):
-        results = []
-        total = len(self.file_paths)
-        for i, path in enumerate(self.file_paths):
-            name = os.path.basename(path)
-            self.file_started.emit(i + 1, total, name)
-            if self.mode == "netlist":
-                summary = self._analyze_netlist(path)
-            else:
-                summary = self._analyze_image(path)
-            results.append((name, summary))
-            self.file_done.emit(i + 1, total, name, summary)
-        self.all_done.emit(results)
-
-    def _analyze_netlist(self, path: str) -> str:
-        try:
-            with open(path, "r", encoding="utf-8", errors="ignore") as f:
-                text = f.read()
-            floating   = _detect_floating_nodes(text)
-            missing_m  = _detect_missing_models(text)
-            missing_s  = _detect_missing_subcircuits(text)
-            conflicts  = _detect_voltage_source_conflicts(text)
-            has_n0, has_gnd = _netlist_ground_info(text)
-            issues = []
-            if not has_n0 and not has_gnd:
-                issues.append("No ground ref")
-            if floating:
-                issues.append(f"{len(floating)} floating node(s): " +
-                              ", ".join(n for n, _, _ in floating[:3]))
-            if missing_m:
-                issues.append(f"{len(missing_m)} missing model(s): " +
-                              ", ".join(m for m, _ in missing_m[:3]))
-            if missing_s:
-                issues.append(f"{len(missing_s)} missing subckt(s): " +
-                              ", ".join(s for s, _ in missing_s[:3]))
-            if conflicts:
-                issues.append(f"{len(conflicts)} voltage conflict(s)")
-            return "; ".join(issues) if issues else "OK — no static issues found"
-        except Exception as e:
-            return f"Error reading file: {e}"
-
-    def _analyze_image(self, path: str) -> str:
-        try:
-            from chatbot.image_handler import analyze_and_extract
-            result = analyze_and_extract(path)
-            if result.get("error"):
-                return f"Vision error: {result['error']}"
-            ctype      = result.get("circuit_analysis", {}).get("circuit_type", "Unknown")
-            components = result.get("components", [])
-            errors     = result.get("circuit_analysis", {}).get("design_errors", [])
-            summary    = f"Type: {ctype}; Components: {', '.join(components[:5])}"
-            if errors:
-                summary += f"; Errors: {'; '.join(errors[:2])}"
-            return summary
-        except Exception as e:
-            return f"Error: {e}"
-
-
-# ==================== MAIN CHATBOT GUI ====================
-
-class ChatbotGUI(QWidget):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.copilot = ESIMCopilotWrapper()
-        self.current_image_path = None
-        self.worker = None
-        self._mic_worker = None
-        self._batch_worker = None
-        self._is_listening = False
-
-        # Project context
-        self._project_dir = None
-        self._generation_id = 0  # used to ignore stale responses
-        self._last_assistant_response = ""  # for Copy button
-
-        # One-click fix state
-        self._last_netlist_path = None
-        self._last_facts = {}
-        self._pending_fix_check = None   # set during netlist analysis
-
-        # Real-time hints watcher
-        self._watch_active = False
-        self._watch_last_facts = None
-        self._watch_timer = QTimer(self)
-        self._watch_timer.setInterval(30_000)  # 30 s
-        self._watch_timer.timeout.connect(self._kicad_watch_tick)
-
-        self.initUI()
-    
-    def set_project_context(self, project_dir: str):
-        """Called by Application to tell chatbot which project is active."""
-        if project_dir and os.path.isdir(project_dir):
-            self._project_dir = project_dir
-            proj_name = os.path.basename(project_dir)
-            self.append_message(
-                "eSim",
-                f"Project context set to: {proj_name}\nPath: {project_dir}",
-                is_user=False,
-            )
-        else:
-            self._project_dir = None
-            self.append_message(
-                "eSim",
-                "Project context cleared or invalid.",
-                is_user=False,
-            )
-
-    def analyze_current_netlist(self):
-        """Analyze the active project's netlist."""
-
-        if self.is_bot_busy():
-            return
-        
-        if not self._project_dir:
-            try:
-                from configuration.Appconfig import Appconfig
-                obj_appconfig = Appconfig()
-                active_project = obj_appconfig.current_project.get("ProjectName")
-                if active_project and os.path.isdir(active_project):
-                    self._project_dir = active_project
-                    proj_name = os.path.basename(active_project)
-                    print(f"[COPILOT] Auto-detected active project: {active_project}")
-                    self.append_message(
-                        "eSim",
-                        f"Auto-detected project: {proj_name}\nPath: {active_project}",
-                        is_user=False,
-                    )
-            except Exception as e:
-                print(f"[COPILOT] Could not auto-detect project: {e}")
-
-        if not self._project_dir:
-            QMessageBox.warning(
-                self,
-                "No project",
-                "No active eSim project set for the chatbot.",
-            )
-            return
-
-        proj_name = os.path.basename(self._project_dir)
-
-        try:
-            all_files = os.listdir(self._project_dir)
-        except Exception as e:
-            QMessageBox.warning(self, "Error", f"Cannot read project directory:\n{e}")
-            return
-
-        cir_candidates = [f for f in all_files if f.endswith('.cir') or f.endswith('.cir.out')]
-
-        if not cir_candidates:
-            QMessageBox.warning(
-                self,
-                "Netlist not found",
-                f"Could not find any .cir or .cir.out files in:\n{self._project_dir}",
-            )
-            return
-
-        netlist_path = None
-        preferred_out = proj_name + ".cir.out"
-        if preferred_out in cir_candidates:
-            netlist_path = os.path.join(self._project_dir, preferred_out)
-        else:
-            preferred_cir = proj_name + ".cir"
-            if preferred_cir in cir_candidates:
-                netlist_path = os.path.join(self._project_dir, preferred_cir)
-            else:
-                if len(cir_candidates) > 1:
-                    from PyQt5.QtWidgets import QInputDialog
-                    item, ok = QInputDialog.getItem(
-                        self,
-                        "Select netlist file",
-                        "Multiple .cir/.cir.out files found in this project.\n"
-                        "Select the one you want to analyze:",
-                        cir_candidates,
-                        0,
-                        False,
-                    )
-                    if ok and item:
-                        netlist_path = os.path.join(self._project_dir, item)
-                elif len(cir_candidates) == 1:
-                    netlist_path = os.path.join(self._project_dir, cir_candidates[0])
-
-        if not netlist_path or not os.path.exists(netlist_path):
-            QMessageBox.warning(self, "Netlist not found", "Could not determine which netlist to use.")
-            return
-
-        netlist_name = os.path.basename(netlist_path)
-        self.append_message(
-            "eSim",
-            f"Using netlist file:\n{netlist_name}",
-            is_user=False,
-        )
-
-        try:
-            with open(netlist_path, "r", encoding="utf-8", errors="ignore") as f:
-                netlist_text = f.read()
-        except Exception as e:
-            QMessageBox.warning(self, "Error", f"Failed to read netlist:\n{e}")
-            return
-
-        # === RUN ALL DETECTORS ===
-        print(f"[COPILOT] Analyzing netlist: {netlist_path}")
-        is_syntax_valid = _validate_netlist_with_ngspice(netlist_text)
-        print(f"[COPILOT] Ngspice syntax check: {'PASS' if is_syntax_valid else 'FAIL'}")
-
-        floating_nodes = _detect_floating_nodes(netlist_text)
-        if floating_nodes:
-            print(f"[COPILOT] Found {len(floating_nodes)} floating node(s):")
-            for node, line_num, elem in floating_nodes:
-                print(f"  - Node '{node}' at line {line_num} ({elem})")
-
-        missing_models = _detect_missing_models(netlist_text)
-        if missing_models:
-            print(f"[COPILOT] Found {len(missing_models)} missing model(s):")
-            for model, occurrences in missing_models:
-                print(f"  - Model '{model}' used {len(occurrences)} time(s) but not defined")
-
-        missing_subckts = _detect_missing_subcircuits(netlist_text)
-        if missing_subckts:
-            print(f"[COPILOT] Found {len(missing_subckts)} missing subcircuit(s):")
-            for subckt, occurrences in missing_subckts:
-                print(f"  - Subcircuit '{subckt}' used {len(occurrences)} time(s) but not defined")
-
-        voltage_conflicts = _detect_voltage_source_conflicts(netlist_text)
-        if voltage_conflicts:
-            print(f"[COPILOT] Found {len(voltage_conflicts)} voltage source conflict(s):")
-            for node_pair, sources in voltage_conflicts:
-                print(f"  - Nodes {node_pair}: {len(sources)} sources")
-                for line_num, name, val in sources:
-                    print(f"    * {name} (line {line_num}, value={val})")
-
-        import re
-        text_lower = netlist_text.lower()
-
-        has_tran = ".tran" in text_lower
-        has_ac = ".ac" in text_lower
-        has_op = ".op" in text_lower
-
-        has_node0, has_gnd_label = _netlist_ground_info(netlist_text)
-
-        if not has_node0 and not has_gnd_label:
-            print("[COPILOT] WARNING: No ground reference (node 0 or GND) found!")
-
-        # Build descriptions
-        if floating_nodes:
-            floating_desc = "; ".join([f"{node} (line {line_num}, {elem})"
-                                        for node, line_num, elem in floating_nodes])
-        else:
-            floating_desc = "NONE"
-
-        if missing_models:
-            missing_desc = "; ".join([f"{model} (used {len(occs)} times)"
-                                        for model, occs in missing_models])
-        else:
-            missing_desc = "NONE"
-
-        if missing_subckts:
-            subckt_desc = "; ".join([f"{subckt} (used {len(occs)} times)"
-                                    for subckt, occs in missing_subckts])
-        else:
-            subckt_desc = "NONE"
-
-        if voltage_conflicts:
-            conflict_parts = []
-            for node_pair, sources in voltage_conflicts:
-                src_desc = ", ".join([f"{name}={val}" for _, name, val in sources])
-                conflict_parts.append(f"{node_pair}: {src_desc}")
-            voltage_conflict_desc = "; ".join(conflict_parts)
-        else:
-            voltage_conflict_desc = "NONE"
-
-        facts = [
-            f"NET_SYNTAX_VALID={'YES' if is_syntax_valid else 'NO'}",
-            f"NET_HAS_NODE_0={'YES' if has_node0 else 'NO'}",
-            f"NET_HAS_GND_LABEL={'YES' if has_gnd_label else 'NO'}",
-            f"NET_HAS_TRAN={'YES' if has_tran else 'NO'}",
-            f"NET_HAS_AC={'YES' if has_ac else 'NO'}",
-            f"NET_HAS_OP={'YES' if has_op else 'NO'}",
-            f"FLOATING_NODES={floating_desc}",
-            f"MISSING_MODELS={missing_desc}",
-            f"MISSING_SUBCKTS={subckt_desc}",
-            f"VOLTAGE_CONFLICTS={voltage_conflict_desc}",
-        ]
-
-        facts_block = "\n".join(f"[FACT {f}]" for f in facts)
-        print(f"[COPILOT] FACTS being sent:\n{facts_block}")
-
-        # === BUILD PROMPT (SIMPLIFIED USING CONTRACT FILE) ===
-
-        full_query = (
-            f"{NETLIST_CONTRACT}\n\n"
-            "=== NETLIST FACTS (MACHINE-GENERATED) ===\n"
-            "The following lines describe the analyzed netlist in a structured way.\n"
-            "Each line has the form [FACT KEY=VALUE].\n"
-            "You MUST rely ONLY on these FACTS, not on the raw netlist.\n\n"
-            f"{facts_block}\n\n"
-            "=== RAW NETLIST (FOR REFERENCE ONLY, DO NOT RE-ANALYZE TO FIND NEW ERRORS) ===\n"
-            "[ESIM_NETLIST_START]\n"
-            f"{netlist_text}\n"
-            "[ESIM_NETLIST_END]\n\n"
-            "REMINDERS:\n"
-            "- Do NOT invent issues that are not present in the FACT lines.\n"
-            "- If a FACT says NONE, you MUST NOT report any issue for that category.\n"
-            "- Follow the output format and rules described in the contract above.\n"
-        )
-
-
-        # Store facts for one-click fix
-        facts_dict = {
-            "syntax_valid":     is_syntax_valid,
-            "has_node0":        has_node0,
-            "has_gnd_label":    has_gnd_label,
-            "floating_nodes":   floating_desc,
-            "missing_models":   missing_desc,
-            "missing_subckts":  subckt_desc,
-            "voltage_conflicts": voltage_conflict_desc,
-        }
-        self._pending_fix_check = (netlist_path, facts_dict)
-
-        # Show synthetic user message
-        self.append_message(
-            "You",
-            f"Analyze current netlist of project '{proj_name}' for design mistakes, "
-            "missing connections, or bad values.",
-            is_user=True,
-        )
-
-        # Disable UI and run worker
-        self.input_field.setDisabled(True)
-        self.send_btn.setDisabled(True)
-        if hasattr(self, "attach_btn"):
-            self.attach_btn.setDisabled(True)
-        if hasattr(self, "mic_btn"):
-            self.mic_btn.setDisabled(True)
-        if hasattr(self, "analyze_netlist_btn"):
-            self.analyze_netlist_btn.setDisabled(True)
-        if hasattr(self, "clear_btn"):
-            self.clear_btn.setDisabled(True)
-        self.loading_label.show()
-
-        self._generation_id += 1
-        current_gen = self._generation_id
-
-        self.worker = ChatWorker(full_query, self.copilot)
-        self.worker.response_ready.connect(
-            lambda resp, gen=current_gen: self._handle_response_with_id(resp, gen)
-        )
-        self.worker.finished.connect(self.on_worker_finished)
-        self.worker.start()
-
-
-    def analyze_specific_netlist(self, netlist_path: str):
-        """Analyze a specific netlist file (called from ProjectExplorer context menu)."""
-
-        if self.is_bot_busy():
-            return
-
-        if not os.path.exists(netlist_path):
-            QMessageBox.warning(
-                self,
-                "File not found",
-                f"Netlist file does not exist:\n{netlist_path}",
-            )
-            return
-
-        netlist_name = os.path.basename(netlist_path)
-        self.append_message(
-            "eSim",
-            f"Analyzing specific netlist:\n{netlist_name}",
-            is_user=False,
-        )
-
-        try:
-            with open(netlist_path, "r", encoding="utf-8", errors="ignore") as f:
-                netlist_text = f.read()
-        except Exception as e:
-            QMessageBox.warning(self, "Error", f"Failed to read netlist:\n{e}")
-            return
-
-        # === RUN ALL DETECTORS (IDENTICAL TO analyze_current_netlist) ===
-        print(f"[COPILOT] Analyzing netlist: {netlist_path}")
-        is_syntax_valid = _validate_netlist_with_ngspice(netlist_text)
-        print(f"[COPILOT] Ngspice syntax check: {'PASS' if is_syntax_valid else 'FAIL'}")
-
-        floating_nodes = _detect_floating_nodes(netlist_text)
-        if floating_nodes:
-            print(f"[COPILOT] Found {len(floating_nodes)} floating node(s):")
-            for node, line_num, elem in floating_nodes:
-                print(f"  - Node '{node}' at line {line_num} ({elem})")
-
-        missing_models = _detect_missing_models(netlist_text)
-        if missing_models:
-            print(f"[COPILOT] Found {len(missing_models)} missing model(s):")
-            for model, occurrences in missing_models:
-                print(f"  - Model '{model}' used {len(occurrences)} time(s) but not defined")
-
-        missing_subckts = _detect_missing_subcircuits(netlist_text)
-        if missing_subckts:
-            print(f"[COPILOT] Found {len(missing_subckts)} missing subcircuit(s):")
-            for subckt, occurrences in missing_subckts:
-                print(f"  - Subcircuit '{subckt}' used {len(occurrences)} time(s) but not defined")
-
-        voltage_conflicts = _detect_voltage_source_conflicts(netlist_text)
-        if voltage_conflicts:
-            print(f"[COPILOT] Found {len(voltage_conflicts)} voltage source conflict(s):")
-            for node_pair, sources in voltage_conflicts:
-                print(f"  - Nodes {node_pair}: {len(sources)} sources")
-                for line_num, name, val in sources:
-                    print(f"    * {name} (line {line_num}, value={val})")
-
-        import re
-        text_lower = netlist_text.lower()
-
-        has_tran = ".tran" in text_lower
-        has_ac = ".ac" in text_lower
-        has_op = ".op" in text_lower
-
-        has_node0, has_gnd_label = _netlist_ground_info(netlist_text)
-
-        if not has_node0 and not has_gnd_label:
-            print("[COPILOT] WARNING: No ground reference (node 0 or GND) found!")
-
-        # Build descriptions (IDENTICAL TO analyze_current_netlist)
-        if floating_nodes:
-            floating_desc = "; ".join([f"{node} (line {line_num}, {elem})"
-                                    for node, line_num, elem in floating_nodes])
-        else:
-            floating_desc = "NONE"
-
-        if missing_models:
-            missing_desc = "; ".join([f"{model} (used {len(occs)} times)"
-                                    for model, occs in missing_models])
-        else:
-            missing_desc = "NONE"
-
-        if missing_subckts:
-            subckt_desc = "; ".join([f"{subckt} (used {len(occs)} times)"
-                                    for subckt, occs in missing_subckts])
-        else:
-            subckt_desc = "NONE"
-
-        if voltage_conflicts:
-            conflict_parts = []
-            for node_pair, sources in voltage_conflicts:
-                src_desc = ", ".join([f"{name}={val}" for _, name, val in sources])
-                conflict_parts.append(f"{node_pair}: {src_desc}")
-            voltage_conflict_desc = "; ".join(conflict_parts)
-        else:
-            voltage_conflict_desc = "NONE"
-
-        facts = [
-            f"NET_SYNTAX_VALID={'YES' if is_syntax_valid else 'NO'}",
-            f"NET_HAS_NODE_0={'YES' if has_node0 else 'NO'}",
-            f"NET_HAS_GND_LABEL={'YES' if has_gnd_label else 'NO'}",
-            f"NET_HAS_TRAN={'YES' if has_tran else 'NO'}",
-            f"NET_HAS_AC={'YES' if has_ac else 'NO'}",
-            f"NET_HAS_OP={'YES' if has_op else 'NO'}",
-            f"FLOATING_NODES={floating_desc}",
-            f"MISSING_MODELS={missing_desc}",
-            f"MISSING_SUBCKTS={subckt_desc}",
-            f"VOLTAGE_CONFLICTS={voltage_conflict_desc}",
-        ]
-
-        facts_block = "\n".join(f"[FACT {f}]" for f in facts)
-        print(f"[COPILOT] FACTS being sent:\n{facts_block}")
-
-        # === BUILD PROMPT (IDENTICAL TO analyze_current_netlist) ===
-        # === BUILD PROMPT (SIMPLIFIED USING CONTRACT FILE) ===
-
-        full_query = (
-            f"{NETLIST_CONTRACT}\n\n"
-            "=== NETLIST FACTS (MACHINE-GENERATED) ===\n"
-            "The following lines describe the analyzed netlist in a structured way.\n"
-            "Each line has the form [FACT KEY=VALUE].\n"
-            "You MUST rely ONLY on these FACTS, not on the raw netlist.\n\n"
-            f"{facts_block}\n\n"
-            "=== RAW NETLIST (FOR REFERENCE ONLY, DO NOT RE-ANALYZE TO FIND NEW ERRORS) ===\n"
-            "[ESIM_NETLIST_START]\n"
-            f"{netlist_text}\n"
-            "[ESIM_NETLIST_END]\n\n"
-            "REMINDERS:\n"
-            "- Do NOT invent issues that are not present in the FACT lines.\n"
-            "- If a FACT says NONE, you MUST NOT report any issue for that category.\n"
-            "- Follow the output format and rules described in the contract above.\n"
-        )
-
-        # Store facts for one-click fix
-        facts_dict = {
-            "syntax_valid":     is_syntax_valid,
-            "has_node0":        has_node0,
-            "has_gnd_label":    has_gnd_label,
-            "floating_nodes":   floating_desc,
-            "missing_models":   missing_desc,
-            "missing_subckts":  subckt_desc,
-            "voltage_conflicts": voltage_conflict_desc,
-        }
-        self._pending_fix_check = (netlist_path, facts_dict)
-
-        # Show synthetic user message
-        self.append_message(
-            "You",
-            f"Analyze netlist '{netlist_name}' for design mistakes, "
-            "missing connections, or bad values.",
-            is_user=True,
-        )
-
-        # Disable UI and run worker
-        self.input_field.setDisabled(True)
-        self.send_btn.setDisabled(True)
-        if hasattr(self, "attach_btn"):
-            self.attach_btn.setDisabled(True)
-        if hasattr(self, "mic_btn"):
-            self.mic_btn.setDisabled(True)
-        if hasattr(self, "analyze_netlist_btn"):
-            self.analyze_netlist_btn.setDisabled(True)
-        if hasattr(self, "clear_btn"):
-            self.clear_btn.setDisabled(True)
-        self.loading_label.show()
-
-        self._generation_id += 1
-        current_gen = self._generation_id
-
-        self.worker = ChatWorker(full_query, self.copilot)
-        self.worker.response_ready.connect(
-            lambda resp, gen=current_gen: self._handle_response_with_id(resp, gen)
-        )
-        self.worker.finished.connect(self.on_worker_finished)
-        self.worker.start()
-
-
-    def stop_analysis(self):
-        """Stop chat worker and mic worker safely."""
-        try:
-            # Stop mic
-            if getattr(self, "_mic_worker", None) and self._mic_worker.isRunning():
-                self._mic_worker.request_stop()
-                self._mic_worker.quit()
-                self._mic_worker.wait(200)
-                if self._mic_worker.isRunning():
-                    self._mic_worker.terminate()
-            self._reset_mic_ui()
-
-            # Stop chat worker
-            if self.worker and self.worker.isRunning():
-                self.worker.quit()
-                self.worker.wait(500)
-                if self.worker.isRunning():
-                    self.worker.terminate()
-        except Exception as e:
-            print(f"Stop analysis error: {e}")
-
-    def start_listening(self):
-        # If already listening -> stop
-        if self._mic_worker and self._mic_worker.isRunning():
-            self._mic_worker.request_stop()
-            return
-
-        # Start listening (do NOT disable mic button)
-        self.mic_btn.setStyleSheet("""
-            QPushButton { background-color: #e74c3c; color: white; border-radius: 20px; font-size: 18px; }
-        """)
-        self.mic_btn.setEnabled(True)
-        self.input_field.setPlaceholderText("Listening... (click mic to stop)")
-        QApplication.processEvents()
-
-        self._mic_worker = MicWorker()
-        self._mic_worker.result_ready.connect(self._on_mic_result)
-        self._mic_worker.error_occurred.connect(self._on_mic_error)
-        self._mic_worker.finished.connect(self._reset_mic_ui)
-        self._mic_worker.start()
-
-    def _on_mic_result(self, text):
-        self._reset_mic_ui()
-        if text and text.strip():
-            self.input_field.setText(text.strip())
-            self.input_field.setFocus()
-
-    def _on_mic_error(self, error_msg):
-        """Handle speech recognition errors."""
-        # Only show popup for REAL errors, not timeouts
-        if "[Error:" in error_msg and "No speech" not in error_msg:
-            QMessageBox.warning(self, "Microphone Error", error_msg)
-
-    def _reset_mic_ui(self):
-        self.mic_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #ffffff;
-                border: 1px solid #bdc3c7;
-                border-radius: 20px;
-                font-size: 18px;
-            }
-            QPushButton:hover {
-                background-color: #ffebee;
-                border-color: #e74c3c;
+        self.setWindowTitle("eSim AI Assistant")
+        self.setMinimumSize(420, 340)
+        self.resize(430, 350)
+        self.setAcceptDrops(True)
+
+        self.chat_history = []
+        self._retry_history = []
+        self._bot_responses = {}
+        self._response_counter = 0
+        self._last_user_text = ""
+        self._typing_frame = 0
+        self._typing_start_pos = -1
+        self._was_ollama_offline = True
+        self._mic_active = False
+        self._viewing_past_session = False
+        self._staged_images = []
+        self._temperature = 0.35
+        self._num_predict = 1024
+        self._current_session_id = str(uuid.uuid4())
+        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+        self._current_session_kind = "text"
+        self._session_title_override = None
+        self._is_generating = False
+        self._images_store = {}   # key -> [base64_str, ...] for image replay
+        self._last_image_paths = []  # image paths from last vision send (for follow-ups)
+        # batched rather than firing synchronously after every bot response.
+        self._save_pending = False
+        self._save_debounce_timer = QTimer(self)
+        self._save_debounce_timer.setSingleShot(True)
+        self._save_debounce_timer.timeout.connect(self._flush_save)
+
+        self._thinking_timer = QTimer(self)
+        self._thinking_timer.timeout.connect(self._animate_thinking)
+
+        self._typing_anim_timer = QTimer(self)
+        self._typing_anim_timer.timeout.connect(self._animate_typing_bubble)
+
+        self._status_poll_timer = QTimer(self)
+        self._status_poll_timer.timeout.connect(self._update_ollama_status)
+        self._status_poll_timer.start(5000)
+
+        self._toast = QLabel("  ✅  Copied!  ", self)
+        self._toast.setStyleSheet("""
+            QLabel {
+                background-color:#1a1a2e; color:#ffffff;
+                font-size:12px; font-weight:bold;
+                border-radius:14px; padding:4px 14px;
             }
         """)
-        self.mic_btn.setEnabled(True)
-        self.input_field.setPlaceholderText("Ask eSim Copilot...")
-        
-    def initUI(self):
-        """Initialize the Chatbot GUI Layout."""
+        self._toast.setAlignment(Qt.AlignCenter)
+        self._toast.hide()
 
-        # Main Layout
-        self.layout = QVBoxLayout()
-        self.layout.setContentsMargins(10, 10, 10, 10)
-        self.layout.setSpacing(10)
+        root = QHBoxLayout(self)
+        root.setContentsMargins(0, 0, 0, 0)
+        root.setSpacing(0)
 
-        # --- HEADER AREA (Title + Netlist + Clear Button) ---
+        self._sidebar = ChatSidebar(self)
+        self._sidebar.new_chat_requested.connect(self._new_chat)
+        self._sidebar.session_deleted.connect(self._on_session_deleted)
+        self._sidebar.delete_all_requested.connect(self._delete_all_chats)
+        self._sidebar.rename_requested.connect(self._rename_session_by_id)
+        self._sidebar.session_list.itemClicked.connect(self._on_session_clicked)
+        self._sidebar.session_list.itemDoubleClicked.connect(self._open_session_viewer)
+        self._sidebar.hide()
+        root.addWidget(self._sidebar)
+        # Route background-thread session saves through a signal so the
+        # sidebar upsert always runs on the main thread (Qt requirement).
+        self._background_session_saved.connect(self._sidebar_upsert_from_signal)
+
+        chat_container = QWidget()
+        chat_layout = QVBoxLayout(chat_container)
+        chat_layout.setContentsMargins(8, 8, 8, 8)
+        chat_layout.setSpacing(5)
+        root.addWidget(chat_container, 1)
+
         header_layout = QHBoxLayout()
+        header_layout.setSpacing(5)
 
-        title_label = QLabel("eSim Copilot")
-        title_label.setStyleSheet("font-weight: bold; font-size: 14px; color: #34495e;")
-        header_layout.addWidget(title_label)
-
-        header_layout.addStretch()  # Push buttons to the right
-
-        # NEW: Analyze Netlist button
-        self.analyze_netlist_btn = QPushButton("Netlist ▶")
-        self.analyze_netlist_btn.setFixedHeight(30)
-        self.analyze_netlist_btn.setToolTip("Analyze active project's netlist")
-        self.analyze_netlist_btn.setCursor(Qt.PointingHandCursor)
-        self.analyze_netlist_btn.setStyleSheet("""
+        self._history_btn = QPushButton("≡")
+        self._history_btn.setFixedSize(32, 32)
+        self._history_btn.setToolTip("Chat history")
+        self._history_btn.setStyleSheet("""
             QPushButton {
-                background-color: #2ecc71;
-                color: white;
-                border-radius: 15px;
-                padding: 0 10px;
-                font-size: 12px;
+                font-size:16px; border:none;
+                border-radius:8px; background:transparent; color:#555;
             }
-            QPushButton:hover {
-                background-color: #27ae60;
-            }
+            QPushButton:hover { background:#f0f0f0; color:#1a1a2e; }
+            QPushButton:pressed { background:#e0e0e0; }
         """)
-        # This method should be defined in ChatbotGUI
-        # def analyze_current_netlist(self): ...
-        self.analyze_netlist_btn.clicked.connect(self.analyze_current_netlist)
-        header_layout.addWidget(self.analyze_netlist_btn)
+        self._history_btn.clicked.connect(self._toggle_sidebar)
+        header_layout.addWidget(self._history_btn)
 
-        # Copy button (copy last assistant response to clipboard)
-        self.copy_btn = QPushButton("📋")
-        self.copy_btn.setFixedSize(30, 30)
-        self.copy_btn.setToolTip("Copy last response to clipboard")
-        self.copy_btn.setCursor(Qt.PointingHandCursor)
-        self.copy_btn.setStyleSheet("""
+        self.model_combo = QComboBox(self)
+        self.model_combo.setFixedHeight(30)
+        self.model_combo.setStyleSheet("""
+            QComboBox {
+                font-size:12px; padding:2px 10px;
+                border:1px solid #e0e0e0; border-radius:8px;
+                background:#f7f7f7; color:#1a1a2e;
+            }
+            QComboBox:focus { border:1px solid #0095f6; background:#fff; }
+            QComboBox::drop-down { border:none; width:18px; }
+        """)
+        self._populate_models()
+        header_layout.addWidget(self.model_combo)
+
+        self._refresh_models_btn = QPushButton("↻")
+        self._refresh_models_btn.setFixedSize(28, 28)
+        self._refresh_models_btn.setToolTip("Refresh available models")
+        self._refresh_models_btn.setStyleSheet("""
             QPushButton {
-                background-color: transparent;
-                border: 1px solid #ddd;
-                border-radius: 15px;
-                font-size: 14px;
+                font-size:14px; border:none;
+                border-radius:8px; background:transparent; color:#555;
             }
-            QPushButton:hover {
-                background-color: #e3f2fd;
-                border-color: #2196f3;
-            }
+            QPushButton:hover { background:#f0f0f0; color:#1a1a2e; }
         """)
-        self.copy_btn.clicked.connect(self.copy_last_response)
-        header_layout.addWidget(self.copy_btn)
+        self._refresh_models_btn.clicked.connect(self._populate_models)
+        header_layout.addWidget(self._refresh_models_btn)
 
-        # Settings button
-        self.settings_btn = QPushButton("⚙️")
-        self.settings_btn.setFixedSize(30, 30)
-        self.settings_btn.setToolTip("Model settings (text & vision model selection)")
-        self.settings_btn.setCursor(Qt.PointingHandCursor)
-        self.settings_btn.setStyleSheet("""
+        self._rename_btn = QPushButton("✎")
+        self._rename_btn.setFixedSize(28, 28)
+        self._rename_btn.setToolTip("Rename current chat")
+        self._rename_btn.setStyleSheet("""
             QPushButton {
-                background-color: transparent;
-                border: 1px solid #ddd;
-                border-radius: 15px;
-                font-size: 14px;
+                font-size:13px; border:none;
+                border-radius:8px; background:transparent; color:#555;
             }
-            QPushButton:hover { background-color: #e8f5e9; border-color: #4caf50; }
+            QPushButton:hover { background:#f0f0f0; color:#1a1a2e; }
         """)
-        self.settings_btn.clicked.connect(self.open_settings)
-        header_layout.addWidget(self.settings_btn)
+        self._rename_btn.clicked.connect(self._rename_current_chat)
+        header_layout.addWidget(self._rename_btn)
 
-        # Batch analysis button
-        self.batch_btn = QPushButton("📁")
-        self.batch_btn.setFixedSize(30, 30)
-        self.batch_btn.setToolTip("Batch analyze multiple netlists or images")
-        self.batch_btn.setCursor(Qt.PointingHandCursor)
-        self.batch_btn.setStyleSheet("""
+        self._settings_btn = QPushButton("⚙")
+        self._settings_btn.setFixedSize(28, 28)
+        self._settings_btn.setToolTip("Model settings")
+        self._settings_btn.setCheckable(True)
+        self._settings_btn.setStyleSheet("""
             QPushButton {
-                background-color: transparent;
-                border: 1px solid #ddd;
-                border-radius: 15px;
-                font-size: 14px;
+                font-size:14px; border:none;
+                border-radius:8px; background:transparent; color:#555;
             }
-            QPushButton:hover { background-color: #fff3e0; border-color: #ff9800; }
+            QPushButton:hover   { background:#f0f0f0; color:#1a1a2e; }
+            QPushButton:checked { background:#e8f0ff; color:#0095f6; }
         """)
-        self.batch_btn.clicked.connect(self.analyze_batch_files)
-        header_layout.addWidget(self.batch_btn)
+        header_layout.addWidget(self._settings_btn)
 
-        # Real-time hints watcher button
-        self.watch_btn = QPushButton("👁")
-        self.watch_btn.setFixedSize(30, 30)
-        self.watch_btn.setToolTip("Toggle real-time hints (polls active project every 30 s)")
-        self.watch_btn.setCursor(Qt.PointingHandCursor)
-        self.watch_btn.setStyleSheet("""
+        self._export_btn = QPushButton("⤓")
+        self._export_btn.setFixedSize(28, 28)
+        self._export_btn.setToolTip("Export current chat")
+        self._export_btn.setStyleSheet("""
             QPushButton {
-                background-color: transparent;
-                border: 1px solid #ddd;
-                border-radius: 15px;
-                font-size: 14px;
+                font-size:13px; border:none;
+                border-radius:8px; background:transparent; color:#555;
             }
-            QPushButton:hover { background-color: #e3f2fd; border-color: #2196f3; }
+            QPushButton:hover { background:#f0f0f0; color:#1a1a2e; }
         """)
-        self.watch_btn.clicked.connect(self.toggle_kicad_watch)
-        header_layout.addWidget(self.watch_btn)
+        self._export_btn.clicked.connect(self._export_current_chat)
+        header_layout.addWidget(self._export_btn)
 
-        # Clear button
-        self.clear_btn = QPushButton("🗑️")
-        self.clear_btn.setFixedSize(30, 30)
-        self.clear_btn.setToolTip("Clear Chat History")
-        self.clear_btn.setCursor(Qt.PointingHandCursor)
-        self.clear_btn.setStyleSheet("""
+        self._regen_btn = QPushButton("⟳")
+        self._regen_btn.setFixedSize(28, 28)
+        self._regen_btn.setToolTip("Regenerate last response")
+        self._regen_btn.setStyleSheet("""
             QPushButton {
-                background-color: transparent;
-                border: 1px solid #ddd;
-                border-radius: 15px;
-                font-size: 14px;
+                font-size:13px; border:none;
+                border-radius:8px; background:transparent; color:#555;
             }
-            QPushButton:hover {
-                background-color: #ffebee;
-                border-color: #ef9a9a;
-            }
+            QPushButton:hover { background:#f0f0f0; color:#1a1a2e; }
         """)
-        self.clear_btn.clicked.connect(self.clear_chat)
-        header_layout.addWidget(self.clear_btn)
+        self._regen_btn.clicked.connect(self._regenerate_last_response)
+        header_layout.addWidget(self._regen_btn)
 
-        self.layout.addLayout(header_layout)
+        header_layout.addStretch()
 
-        # --- CHAT DISPLAY AREA ---
-        self.chat_display = QTextEdit()
-        self.chat_display.setReadOnly(True)
-        self.chat_display.setFont(QFont("Segoe UI", 10))
+        self.ollama_status_label = QLabel(self)
+        self.ollama_status_label.setFixedHeight(24)
+        header_layout.addWidget(self.ollama_status_label)
+        self._update_ollama_status()
+
+        header_sep = QFrame()
+        header_sep.setFrameShape(QFrame.HLine)
+        header_sep.setStyleSheet("color:#ececec; margin:0;")
+        chat_layout.addLayout(header_layout)
+        chat_layout.addWidget(header_sep)
+
+        self.chat_display = QTextBrowser(self)
+        self.chat_display.setOpenLinks(False)
+        self.chat_display.setOpenExternalLinks(False)
+        self.chat_display.setHtml(WELCOME_MESSAGE)
+        self.chat_display.anchorClicked.connect(self._handle_link_click)
         self.chat_display.setStyleSheet("""
-            QTextEdit {
-                background-color: #f5f6fa;
-                border: 1px solid #dcdcdc;
-                border-radius: 8px;
-                padding: 10px;
+            QTextBrowser {
+                background-color:#fafafa;
+                border:none;
+                padding:8px 4px;
+                font-family:'Segoe UI',Arial,sans-serif;
+                font-size:13px;
+                selection-background-color:#cce4f7;
+            }
+            QScrollBar:vertical {
+                background:transparent; width:6px;
+            }
+            QScrollBar::handle:vertical {
+                background:#d0d0d0; border-radius:3px; min-height:24px;
+            }
+            QScrollBar::handle:vertical:hover { background:#a0a0a0; }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                height:0px;
             }
         """)
-        self.layout.addWidget(self.chat_display)
+        chat_layout.addWidget(self.chat_display)
 
-        # PROGRESS INDICATOR (Hidden by default)
-        self.loading_label = QLabel("⏳ eSim Copilot is thinking...")
-        self.loading_label.setAlignment(Qt.AlignCenter)
-        self.loading_label.setStyleSheet("""
-            background-color: #fff3cd; 
-            color: #856404; 
-            border: 1px solid #ffeeba;
-            border-radius: 5px;
-            padding: 5px;
-            font-weight: bold;
-        """)
-        self.loading_label.hide()
-        self.layout.addWidget(self.loading_label)
-
-        # --- ONE-CLICK FIX BUTTON (hidden until issues detected) ---
-        self._apply_fixes_btn = QPushButton("🔧 Apply Fixes to Netlist")
-        self._apply_fixes_btn.setFixedHeight(32)
-        self._apply_fixes_btn.setCursor(Qt.PointingHandCursor)
-        self._apply_fixes_btn.setToolTip(
-            "Auto-insert .options, .model stubs, and bleed resistors into the netlist"
+        status_layout = QHBoxLayout()
+        self.status_label = QLabel("", self)
+        self.status_label.setStyleSheet(
+            "color:#0095f6; font-size:11px; padding:1px 4px; background:transparent;"
         )
-        self._apply_fixes_btn.setStyleSheet("""
-            QPushButton {
-                background-color: #e74c3c;
-                color: white;
-                border-radius: 6px;
-                font-weight: bold;
-                font-size: 12px;
-            }
-            QPushButton:hover { background-color: #c0392b; }
-        """)
-        self._apply_fixes_btn.clicked.connect(self._apply_netlist_fixes)
-        self._apply_fixes_btn.hide()
-        self.layout.addWidget(self._apply_fixes_btn)
+        status_layout.addWidget(self.status_label)
+        status_layout.addStretch()
 
-        # --- INPUT AREA CONTAINER ---
+        chat_layout.addLayout(status_layout)
+
+        self._settings_panel = QWidget()
+        self._settings_panel.setVisible(False)
+        self._settings_panel.setStyleSheet("""
+            QWidget {
+                background:#f7f9fc;
+                border-top:1px solid #ececec;
+                border-bottom:1px solid #ececec;
+            }
+        """)
+        self._settings_btn.toggled.connect(lambda on: self._settings_panel.setVisible(on))
+
+        sp_layout = QHBoxLayout(self._settings_panel)
+        sp_layout.setContentsMargins(12, 8, 12, 8)
+        sp_layout.setSpacing(16)
+
+        temp_col = QVBoxLayout()
+        self._temp_label = QLabel(f"Precision  {self._temperature:.2f}")
+        self._temp_label.setStyleSheet("font-size:10px; color:#555;")
+        temp_col.addWidget(self._temp_label)
+
+        self._temp_slider = QSlider(Qt.Horizontal)
+        self._temp_slider.setRange(1, 100)
+        self._temp_slider.setValue(int(self._temperature * 100))
+        self._temp_slider.setFixedWidth(110)
+        self._temp_slider.valueChanged.connect(self._on_temp_changed)
+        temp_col.addWidget(self._temp_slider)
+        sp_layout.addLayout(temp_col)
+
+        tok_col = QVBoxLayout()
+        self._tok_label = QLabel(f"Max tokens  {self._num_predict}")
+        self._tok_label.setStyleSheet("font-size:10px; color:#555;")
+        tok_col.addWidget(self._tok_label)
+
+        self._tok_slider = QSlider(Qt.Horizontal)
+        self._tok_slider.setRange(1, 40)
+        self._tok_slider.setValue(self._num_predict // 128)
+        self._tok_slider.setFixedWidth(110)
+        self._tok_slider.valueChanged.connect(self._on_tok_changed)
+        tok_col.addWidget(self._tok_slider)
+        sp_layout.addLayout(tok_col)
+
+        sp_layout.addStretch()
+
+        reset_btn = QPushButton("Reset")
+        reset_btn.setFixedHeight(26)
+        reset_btn.setStyleSheet("""
+            QPushButton {
+                font-size:10px; padding:2px 12px;
+                background:#f0f0f0; color:#555;
+                border:none; border-radius:13px;
+            }
+        """)
+        reset_btn.clicked.connect(self._reset_settings)
+        sp_layout.addWidget(reset_btn)
+        chat_layout.addWidget(self._settings_panel)
+
         input_layout = QHBoxLayout()
-        input_layout.setSpacing(8)
 
-        # A. ATTACH BUTTON
-        self.attach_btn = QPushButton("📎")
-        self.attach_btn.setFixedSize(40, 40)
-        self.attach_btn.setToolTip("Attach Circuit Image")
-        self.attach_btn.setCursor(Qt.PointingHandCursor)
-        self.attach_btn.setStyleSheet("""
+        self.attach_button = QPushButton("📎")
+        self.attach_button.setFixedSize(38, 38)
+        self.attach_button.setToolTip(
+            "Attach image for analysis\n"
+            "Tip: install Pillow (pip install Pillow) to auto-downscale\n"
+            "large images for faster analysis"
+        )
+        self.attach_button.setStyleSheet("""
             QPushButton {
-                border: 1px solid #bdc3c7;
-                border-radius: 20px;
-                background-color: #ffffff;
-                color: #555;
-                font-size: 18px;
+                font-size:16px; background:#f0f0f0;
+                border:none; border-radius:19px;
             }
-            QPushButton:hover {
-                background-color: #ecf0f1;
-                border-color: #95a5a6;
-            }
+            QPushButton:hover  { background:#e0e8ff; }
         """)
-        self.attach_btn.clicked.connect(self.browse_image)
-        input_layout.addWidget(self.attach_btn)
+        self.attach_button.clicked.connect(self._pick_image)
+        input_layout.addWidget(self.attach_button)
 
-        # B. TEXT INPUT FIELD
-        self.input_field = QLineEdit()
-        self.input_field.setPlaceholderText("Ask eSim Copilot...")
-        self.input_field.setFixedHeight(40)
-        self.input_field.setStyleSheet("""
+        self.mic_button = QPushButton("🎤")
+        self.mic_button.setFixedSize(38, 38)
+        QTimer.singleShot(200, self._update_mic_tooltip)
+        self.mic_button.setStyleSheet("""
+            QPushButton {
+                font-size:15px; background:#f0f0f0;
+                border:none; border-radius:19px;
+            }
+            QPushButton:hover  { background:#d0f8d0; }
+        """)
+        self.mic_button.clicked.connect(self._on_mic_clicked)
+        input_layout.addWidget(self.mic_button)
+
+        self.user_input = _HistoryLineEdit(
+            self, placeholderText="Message eSim AI…  (↑↓ for history)"
+        )
+        self.user_input.setStyleSheet("""
             QLineEdit {
-                border: 1px solid #bdc3c7;
-                border-radius: 20px;
-                padding-left: 15px;
-                padding-right: 15px;
-                background-color: #ffffff;
-                font-size: 14px;
+                font-size:13px; padding:9px 14px;
+                border:1.5px solid #e0e0e0; border-radius:22px;
+                background:#f7f7f7; color:#1a1a2e;
             }
             QLineEdit:focus {
-                border: 2px solid #3498db;
+                border:1.5px solid #0095f6;
+                background:#ffffff;
             }
         """)
-        self.input_field.returnPressed.connect(self.send_message)
-        input_layout.addWidget(self.input_field)
+        self.user_input.returnPressed.connect(self.ask_ollama)
+        input_layout.addWidget(self.user_input)
 
-        # --- MIC BUTTON ---
-        self.mic_btn = QPushButton("🎤")
-        self.mic_btn.setFixedSize(40, 40)
-        self.mic_btn.setToolTip("Speak to type")
-        self.mic_btn.setCursor(Qt.PointingHandCursor)
-        self.mic_btn.setStyleSheet("""
+        self.send_button = QPushButton("Send")
+        self.send_button.setFixedHeight(38)
+        self.send_button.setStyleSheet("""
             QPushButton {
-                background-color: #ffffff;
-                border: 1px solid #bdc3c7;
-                border-radius: 20px;
-                font-size: 18px;
+                font-size:13px; font-weight:600; padding:5px 20px;
+                background-color:#0095f6; color:white;
+                border:none; border-radius:19px;
             }
-            QPushButton:hover {
-                background-color: #ffebee; /* Light red hover */
-                border-color: #e74c3c;
-            }
+            QPushButton:hover  { background-color:#0082d8; }
         """)
-        self.mic_btn.clicked.connect(self.start_listening)
-        input_layout.addWidget(self.mic_btn)
+        self.send_button.clicked.connect(self.ask_ollama)
+        input_layout.addWidget(self.send_button)
 
-        # C. SEND BUTTON
-        self.send_btn = QPushButton("➤")
-        self.send_btn.setFixedSize(40, 40)
-        self.send_btn.setToolTip("Send Message")
-        self.send_btn.setCursor(Qt.PointingHandCursor)
-        self.send_btn.setStyleSheet("""
+        self.stop_button = QPushButton("Stop")
+        self.stop_button.setFixedHeight(38)
+        self.stop_button.setStyleSheet("""
             QPushButton {
-                background-color: #3498db;
-                color: white;
-                border: none;
-                border-radius: 20px;
-                font-size: 16px;
-                padding-bottom: 2px;
-            }
-            QPushButton:hover {
-                background-color: #2980b9;
-            }
-            QPushButton:pressed {
-                background-color: #1abc9c;
+                font-size:13px; font-weight:600; padding:5px 16px;
+                background-color:#ff3b30; color:white;
+                border:none; border-radius:19px;
             }
         """)
-        self.send_btn.clicked.connect(self.send_message)
-        input_layout.addWidget(self.send_btn)
+        self.stop_button.clicked.connect(self._stop_generating)
+        self.stop_button.hide()
+        input_layout.addWidget(self.stop_button)
 
-        self.layout.addLayout(input_layout)
-
-        # --- IMAGE STATUS ROW (label + remove button) ---
-        status_layout = QHBoxLayout()
-        status_layout.setSpacing(5)
-        status_layout.setContentsMargins(0, 0, 0, 0)
-
-        self.filename_status = QLabel("No image attached")
-        self.filename_status.setStyleSheet("color: gray; font-size: 12px;")
-        self.filename_status.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
-        status_layout.addWidget(self.filename_status)
-
-        self.remove_btn = QPushButton("×")
-        self.remove_btn.setFixedSize(25, 25)
-        self.remove_btn.setStyleSheet("""
+        self.clear_button = QPushButton("Clear")
+        self.clear_button.setFixedHeight(38)
+        self.clear_button.setStyleSheet("""
             QPushButton {
-                background: #ff6b6b;
-                color: white;
-                border: none;
-                border-radius: 12px;
-                font-weight: bold;
-                font-size: 14px;
+                font-size:13px; padding:5px 14px;
+                background-color:#f0f0f0; color:#666;
+                border:none; border-radius:19px;
             }
-            QPushButton:hover { background: #ff5252; }
+            QPushButton:hover  { background-color:#ffe0e0; color:#cc0000; }
         """)
-        self.remove_btn.clicked.connect(self.remove_image)
-        self.remove_btn.hide()  # hidden by default
-        status_layout.addWidget(self.remove_btn)
+        self.clear_button.clicked.connect(self.clear_session)
+        input_layout.addWidget(self.clear_button)
 
-        status_widget = QWidget()
-        status_widget.setLayout(status_layout)
-        self.layout.addWidget(status_widget)
+        chat_layout.addLayout(input_layout)
 
-        self.setLayout(self.layout)
+        self._staging_area = QWidget()
+        self._staging_area.setStyleSheet("QWidget { background:#f5f8ff; border-radius:10px; }")
+        self._staging_area.setVisible(False)
 
-        # Initial message
-        self.append_message(
-            "eSim Copilot",
-            "Hello! I am ready to help you analyze circuits.",
-            is_user=False,
-        )
+        staging_outer = QVBoxLayout(self._staging_area)
+        staging_outer.setContentsMargins(6, 6, 6, 4)
+        staging_outer.setSpacing(4)
 
-    # ---------- IMAGE HANDLING ----------
+        staging_header = QHBoxLayout()
+        staged_lbl = QLabel("Images to send:")
+        staged_lbl.setStyleSheet("font-size:11px;color:#555;")
+        staging_header.addWidget(staged_lbl)
+        staging_header.addStretch()
 
-    def browse_image(self):
-        """Open file dialog to select image (Updates Status Label ONLY)."""
-        options = QFileDialog.Options()
-        file_path, _ = QFileDialog.getOpenFileName(
-            self,
-            "Select Circuit Image",
-            "",
-            "Images (*.png *.jpg *.jpeg *.bmp *.tiff *.gif);;All Files (*)",
-            options=options
-        )
+        clear_all_btn = QPushButton("Remove all")
+        clear_all_btn.setFixedHeight(20)
+        clear_all_btn.setStyleSheet("""
+            QPushButton {
+                font-size:10px; color:#cc0000; background:transparent;
+                border:none; padding:0 4px;
+            }
+            QPushButton:hover { text-decoration:underline; }
+        """)
+        clear_all_btn.clicked.connect(self._clear_staged_images)
+        staging_header.addWidget(clear_all_btn)
+        staging_outer.addLayout(staging_header)
 
-        if file_path:
-            self.current_image_path = file_path  # Store path internally
-            short_name = os.path.basename(file_path)
+        scroll = QScrollArea()
+        scroll.setFixedHeight(72)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        scroll.setWidgetResizable(True)
+        scroll.setStyleSheet("QScrollArea { border:none; background:transparent; }")
 
-            # Update Status Row (Visual Feedback)
-            self.filename_status.setText(f"📎 {short_name} attached")
-            self.filename_status.setStyleSheet("color: green; font-weight: bold; font-size: 12px;")
-            self.remove_btn.show()
+        self._thumb_container = QWidget()
+        self._thumb_row = QHBoxLayout(self._thumb_container)
+        self._thumb_row.setContentsMargins(0, 0, 0, 0)
+        self._thumb_row.setSpacing(6)
+        self._thumb_row.addStretch()
 
-            # Focus input so user can start typing question immediately
-            self.input_field.setFocus()
+        scroll.setWidget(self._thumb_container)
+        staging_outer.addWidget(scroll)
+        chat_layout.addWidget(self._staging_area)
 
-    def is_bot_busy(self):
-        """Check if a background worker is currently running."""
-        if hasattr(self, "worker") and self.worker is not None:
-            if self.worker.isRunning():
-                QMessageBox.warning(self, "Busy", "Chatbot is currently busy processing a request.\nPlease wait.")
-                return True
-        return False
+        self.move_to_bottom_right()
+        self._load_history()
 
+    # ── Drag & drop ───────────────────────────────────────────────────
 
-    def remove_image(self):
-        """Clear selected image (status + input tag)."""
-        self.current_image_path = None
-        self.filename_status.setText("No image attached")
-        self.filename_status.setStyleSheet("color: gray; font-size: 12px;")
-        self.remove_btn.hide()
-        
-    # ---------- CHAT / HISTORY ----------
+    def dragEnterEvent(self, event: QDragEnterEvent):
+        mime = event.mimeData()
+        if mime.hasUrls():
+            for url in mime.urls():
+                if url.isLocalFile() and _is_image_file(url.toLocalFile()):
+                    event.acceptProposedAction()
+                    return
+        event.ignore()
 
-    def clear_chat(self):
-        """Stop analysis, clear chat, and optionally export history."""
-        # 1) Stop any ongoing analysis first
-        self.stop_analysis()
-        self._generation_id += 1
-
-        # 2) Ask user about exporting history
-        reply = QMessageBox.question(
-            self,
-            "Clear History",
-            "Clear chat history?\nPress 'Yes' to export to a file first, 'No' to clear without saving.",
-            QMessageBox.Yes | QMessageBox.No | QMessageBox.Cancel
-        )
-        if reply == QMessageBox.Cancel:
+    def dropEvent(self, event: QDropEvent):
+        mime = event.mimeData()
+        if not mime.hasUrls():
+            event.ignore()
             return
-        if reply == QMessageBox.Yes:
-            self.export_history()
 
-        # 3) Clear UI
-        self.chat_display.clear()
+        added = 0
+        for url in mime.urls():
+            if not url.isLocalFile():
+                continue
+            path = url.toLocalFile()
+            if _is_image_file(path) and path not in self._staged_images:
+                self._staged_images.append(path)
+                added += 1
 
-        # 4) Clear backend memory/context
+        if added:
+            self._refresh_staging_strip()
+            self.status_label.setText(f"📎 Added {added} image{'s' if added != 1 else ''} by drag-and-drop.")
+            QTimer.singleShot(2500, lambda: self.status_label.setText(""))
+
+        event.acceptProposedAction()
+
+    # ── Sidebar / sessions ────────────────────────────────────────────
+
+    def _toggle_sidebar(self):
+        if self._sidebar.isVisible():
+            self._sidebar.hide()
+        else:
+            self._sidebar.populate()
+            self._sidebar.show()
+
+    def _refresh_sidebar_if_open(self):
+        if self._sidebar.isVisible():
+            self._sidebar.populate()
+
+    def _delete_all_chats(self):
+        dlg = _DeleteConfirmDialog("all chats", self)
+        if dlg.exec_() != QDialog.Accepted:
+            return
+
         try:
-            clear_history()
+            if os.path.exists(_SESSIONS_DIR):
+                for fname in os.listdir(_SESSIONS_DIR):
+                    if fname.endswith(".json"):
+                        os.remove(os.path.join(_SESSIONS_DIR, fname))
         except Exception:
             pass
 
-        # 5) Reset welcome line
-        self.append_message("eSim Copilot", "Chat cleared. Ready for new queries.", is_user=False)
+        self._sidebar.populate()
 
-
-    def export_history(self):
-        """Export chat to text file."""
-        text = self.chat_display.toPlainText()
-        if not text.strip():
+    def _open_session_viewer(self, item):
+        session_id = item.data(Qt.UserRole)
+        path = os.path.join(_SESSIONS_DIR, f"{session_id}.json")
+        try:
+            with open(path, encoding='utf-8') as f:
+                session = json.load(f)
+        except Exception:
             return
+        dlg = ChatHistoryViewer(session, self)
+        dlg.exec_()
 
-        file_path, _ = QFileDialog.getSaveFileName(
-            self,
-            "Export Chat History",
-            "chat_history.txt",
-            "Text Files (*.txt)"
+    def _rename_current_chat(self):
+        title, ok = QInputDialog.getText(
+            self, "Rename Chat", "New chat title:",
+            text=self._session_title_override or self._derive_session_title()
         )
-        if file_path:
-            with open(file_path, "w", encoding="utf-8") as f:
-                f.write(text)
-            QMessageBox.information(self, "Exported", f"History saved to:\n{file_path}")
+        if ok:
+            title = title.strip()
+            if title:
+                self._session_title_override = title
+                self._save_history()
+                self.status_label.setText("✏️ Chat renamed.")
+                QTimer.singleShot(2000, lambda: self.status_label.setText(""))
 
-    def send_message(self):
-        user_text = self.input_field.text().strip()
-
-        # Don't send if empty and no image
-        if not user_text and not self.current_image_path:
+    def _rename_session_by_id(self, session_id: str):
+        path = os.path.join(_SESSIONS_DIR, f"{session_id}.json")
+        try:
+            with open(path, encoding='utf-8') as f:
+                session = json.load(f)
+        except Exception:
             return
 
-        # Hide fix button when user sends a new message
-        if hasattr(self, "_apply_fixes_btn"):
-            self._apply_fixes_btn.hide()
-        self._pending_fix_check = None
-
-        full_query = user_text
-        display_text = user_text
-
-        if self.current_image_path:
-            short_name = os.path.basename(self.current_image_path)
-
-            # 1) BACKEND QUERY (hidden tag with FULL PATH)
-            full_query = f"[Image: {self.current_image_path}] {user_text}".strip()
-
-            # 2) USER-VISIBLE TEXT (show filename here, not in input box)
-            question_part = user_text if user_text else ""
-            if question_part:
-                display_text = f"📎 {short_name}\n\n{question_part}"
-            else:
-                display_text = f"📎 {short_name}"
-
-            # Reset image state & status row
-            self.current_image_path = None
-            self.filename_status.setText("No image attached")
-            self.filename_status.setStyleSheet("color: gray; font-size: 12px;")
-            self.remove_btn.hide()
-        else:
-            full_query = user_text
-            display_text = user_text
-
-        # Show user bubble with image name (if any)
-        self.append_message("You", display_text, is_user=True)
-        self.input_field.clear()
-
-        # Disable while waiting
-        self.input_field.setDisabled(True)
-        self.send_btn.setDisabled(True)
-        if hasattr(self, "attach_btn"):
-            self.attach_btn.setDisabled(True)
-        if hasattr(self, 'mic_btn'):
-            self.mic_btn.setDisabled(True)
-
-        # NEW: also disable Netlist and Clear during any answer
-        if hasattr(self, "analyze_netlist_btn"):
-            self.analyze_netlist_btn.setDisabled(True)
-        if hasattr(self, "clear_btn"):
-            self.clear_btn.setDisabled(True)
-
-        self.loading_label.show()
-
-        # NEW: bump generation id and use it to filter responses
-        self._generation_id += 1
-        current_gen = self._generation_id
-
-        self.worker = ChatWorker(full_query, self.copilot)
-        self.worker.response_ready.connect(
-            lambda resp, gen=current_gen: self._handle_response_with_id(resp, gen)
+        current_title = session.get("title", "Chat")
+        title, ok = QInputDialog.getText(
+            self, "Rename Chat", "New chat title:", text=current_title
         )
-        self.worker.finished.connect(self.on_worker_finished)
-        self.worker.start()
-
-
-    def on_worker_finished(self):
-        """Re-enable UI after worker completes."""
-        self.input_field.setEnabled(True)
-        self.send_btn.setEnabled(True)
-        if hasattr(self, 'attach_btn'):
-            self.attach_btn.setEnabled(True)
-        if hasattr(self, 'mic_btn'):
-            self.mic_btn.setEnabled(True)
-        if hasattr(self, "analyze_netlist_btn"):
-            self.analyze_netlist_btn.setEnabled(True)
-        if hasattr(self, "clear_btn"):
-            self.clear_btn.setEnabled(True)
-
-        self.loading_label.hide()
-
-        # Check whether to show the Apply Fixes button
-        if self._pending_fix_check:
-            path, facts = self._pending_fix_check
-            self._pending_fix_check = None
-            self._check_show_fixes_btn(path, facts)
-
-        self.input_field.setFocus()
-
-    def _handle_response_with_id(self, response: str, gen_id: int):
-        """Only accept responses from the current generation."""
-        if gen_id != self._generation_id:
-            # Stale response from a cancelled/cleared analysis -> ignore
+        if not ok:
             return
-        self.append_message("eSim Copilot", response, is_user=False)
-
-    def handle_response(self, response):
-        # Kept for backward compatibility if used elsewhere,
-        # but route everything through _handle_response_with_id with current id.
-        self._handle_response_with_id(response, self._generation_id)
-
-
-    @staticmethod 
-    def format_text_to_html(text):
-        """Helper to convert basic Markdown to HTML for the Qt TextEdit."""
-        import html
-        # 1. Escape existing HTML to prevent injection
-        text = html.escape(text)
-        
-        # 2. Convert **bold** to <b>bold</b>
-        text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
-        
-        # 3. Convert headers ### to <h3>
-        text = re.sub(r'###\s*(.*)', r'<h3>\1</h3>', text)
-        
-        # 4. Convert newlines to <br> for HTML rendering
-        text = text.replace('\n', '<br>')
-        return text
-
-    def copy_last_response(self):
-        """Copy last assistant response to clipboard for easy paste into netlist."""
-        if self._last_assistant_response:
-            cb = QApplication.clipboard()
-            cb.setText(self._last_assistant_response)
-            QMessageBox.information(
-                self, "Copied",
-                "Last response copied to clipboard. Paste into Spice Editor (Ctrl+V).",
-                QMessageBox.Ok,
-            )
-        else:
-            QMessageBox.information(
-                self, "Nothing to copy",
-                "No assistant response yet. Run a netlist analysis or ask a question first.",
-                QMessageBox.Ok,
-            )
-
-    def append_message(self, sender, text, is_user):
-        """Append message INSTANTLY (Text Only, No Image Rendering)."""
-        if not text:
-            return
-        if not is_user:
-            self._last_assistant_response = text
-
-        # 1. Define Headers
-        if is_user:
-            header = "<b style='color: #4cd137;'>You</b>"
-        else:
-            header = "<b style='color: #2f3640;'>eSim Copilot</b>"
-
-        cursor = self.chat_display.textCursor()
-        cursor.movePosition(QTextCursor.End)
-        
-        # 2. Insert Header
-        cursor.insertHtml(f"<br>{header}<br>")
-
-        # 3. Format Text (Bold, Newlines) but NO Image generation
-        # Use the helper function if you added it inside the class
-        formatted_text = self.format_text_to_html(text)
-        
-        # 4. Insert Text Instantly
-        cursor.insertHtml(formatted_text)
-        
-        self.chat_display.setTextCursor(cursor)
-        self.chat_display.ensureCursorVisible()
-
-    # ==================== PRIORITY 3: ONE-CLICK FIX ====================
-
-    def _check_show_fixes_btn(self, netlist_path: str, facts: dict):
-        """Show the Apply Fixes button if there are auto-fixable issues."""
-        self._last_netlist_path = netlist_path
-        self._last_facts = facts
-        has_fixes = (
-            (facts.get("missing_models",   "NONE") not in ("NONE", "")) or
-            (facts.get("floating_nodes",   "NONE") not in ("NONE", "")) or
-            (not facts.get("has_node0") and not facts.get("has_gnd_label"))
-        )
-        if has_fixes:
-            self._apply_fixes_btn.show()
-        else:
-            self._apply_fixes_btn.hide()
-
-    def _apply_netlist_fixes(self):
-        """Auto-insert fixes (options, model stubs, bleed resistors) into netlist."""
-        path  = self._last_netlist_path
-        facts = self._last_facts
-
-        if not path or not os.path.exists(path):
-            QMessageBox.warning(self, "No netlist",
-                                "No recently analyzed netlist found. Run a netlist analysis first.")
+        title = title.strip()
+        if not title:
             return
 
         try:
-            with open(path, "r", encoding="utf-8", errors="ignore") as f:
-                lines = f.readlines()
-        except Exception as e:
-            QMessageBox.warning(self, "Read error", f"Cannot read netlist:\n{e}")
+            session["title"] = title
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(session, f, ensure_ascii=False, indent=2)
+        except Exception:
             return
 
-        insertions = []
-        applied    = []
+        if session_id == self._current_session_id:
+            self._session_title_override = title
 
-        # 1. Convergence options (safe when no .options present)
-        has_options = any(".options" in l.lower() for l in lines)
-        if not has_options:
-            insertions.append(".options gmin=1e-12 reltol=0.01\n")
-            applied.append("Added `.options gmin=1e-12 reltol=0.01` (convergence helper)")
+        self._sidebar.populate()
 
-        # 2. Missing model stubs
-        missing_str = facts.get("missing_models", "NONE")
-        if missing_str and missing_str != "NONE":
-            for part in missing_str.split(";"):
-                part = part.strip()
-                model_name = part.split("(")[0].strip() if "(" in part else part
-                model_name = model_name.strip()
-                if model_name and model_name.upper() != "NONE":
-                    stub = _model_stub(model_name)
-                    insertions.append(stub + "\n")
-                    applied.append(f"Added stub: {stub}")
+    def _derive_session_title(self):
+        if self._session_title_override:
+            return self._session_title_override
+        return next(
+            (m[5:].strip()[:50] for m in self.chat_history if m.startswith("User:")),
+            "Chat"
+        )
 
-        # 3. Floating-node bleed resistors
-        floating_str = facts.get("floating_nodes", "NONE")
-        if floating_str and floating_str != "NONE":
-            for part in floating_str.split(";"):
-                node = part.strip().split(" ")[0].split("(")[0].strip()
-                if node and node != "0" and node.upper() != "NONE":
-                    line = f"Rleak_{node} {node} 0 1G\n"
-                    insertions.append(line)
-                    applied.append(f"Added bleed resistor: {line.strip()}")
+    def _rebuild_chat_html_from_history(self):
+        self.chat_display.setHtml(WELCOME_MESSAGE)
+        self._bot_responses = {}
+        self._response_counter = 0
 
-        if not insertions:
-            QMessageBox.information(self, "Nothing to fix",
-                                    "No auto-fixable issues detected in the last analysis.")
-            self._apply_fixes_btn.hide()
+        for line in self.chat_history:
+            if line.startswith("User:"):
+                self.chat_display.append(_user_bubble(line[5:].strip(), ""))
+            elif line.startswith("Bot:"):
+                idx = self._response_counter
+                text = line[4:].strip()
+                self._bot_responses[idx] = text
+                self.chat_display.append(_bot_bubble(text, "", idx))
+                self._response_counter += 1
+        self._scroll_to_bottom()
+
+    def _on_session_clicked(self, item):
+        session_id = item.data(Qt.UserRole)
+
+        # If this is the session already showing, do nothing.
+        if (session_id == self._current_session_id
+                and not self._viewing_past_session):
             return
 
-        # Confirm with user
-        msg = (f"Apply the following fixes to:\n{os.path.basename(path)}\n\n" +
-               "\n".join(f"  \u2022 {a}" for a in applied) +
-               "\n\nA backup (.bak) will be created first.")
-        reply = QMessageBox.question(self, "Apply Fixes?", msg,
-                                     QMessageBox.Yes | QMessageBox.No)
-        if reply != QMessageBox.Yes:
-            return
+        # Suspend BEFORE changing self._current_session_id so the worker
+        # snapshot captures the correct (old) session ID and history.
+        # Then flush the current session to disk so the file exists for
+        # _on_background_response to update when the worker finishes.
+        if self._is_generating:
+            self._suspend_worker(
+                session_id=self._current_session_id,
+                history=self.chat_history,
+                session_kind=self._current_session_kind,
+                images_store=self._images_store,
+            )
 
-        # Backup original
-        import shutil
+        self._save_debounce_timer.stop()
+        self._save_pending = False
+        self._save_current_session()
+
+        # Load the target session — try disk first, fall back to the
+        # in-memory sidebar cache (handles sessions not yet written to disk).
+        path = os.path.join(_SESSIONS_DIR, f"{session_id}.json")
+        session = None
         try:
-            shutil.copy2(path, path + ".bak")
+            with open(path, encoding='utf-8') as f:
+                session = json.load(f)
         except Exception:
             pass
 
-        # Insert before .end (or append)
-        new_lines = []
-        inserted  = False
-        for line in lines:
-            if line.strip().lower() == ".end" and not inserted:
-                new_lines.append("* [COPILOT AUTO-FIX]\n")
-                new_lines.extend(insertions)
-                inserted = True
-            new_lines.append(line)
-        if not inserted:
-            new_lines.append("\n* [COPILOT AUTO-FIX]\n")
-            new_lines.extend(insertions)
-            new_lines.append(".end\n")
+        if session is None:
+            for s in self._sidebar._all_sessions_cache:
+                if s.get('id') == session_id:
+                    session = s
+                    break
+
+        if session is None:
+            return
+
+        msgs    = session.get('messages', [])
+        title   = session.get('title', 'Chat')
+        created = session.get('created_at', '')
+        kind    = session.get('kind', 'text')
+
+        # Switch the active session context to the one being viewed so that
+        # if the user types a follow-up, it goes to the right session.
+        self._current_session_id      = session_id
+        self._session_created_at      = created
+        self._current_session_kind    = kind
+        self._session_title_override  = title if title != "Chat" else None
+        self.chat_history             = list(msgs)
+        self._retry_history           = list(msgs)
+        self._last_user_text          = next(
+            (m[5:].strip() for m in reversed(msgs) if m.startswith("User:")), ""
+        )
+
+        # Restore image store from session so follow-ups can re-send images
+        saved_images = session.get("images", {})
+        self._images_store = saved_images
+        self._last_image_paths = []  # original paths are gone; base64 stored instead
+
+        html = WELCOME_MESSAGE
+        html += (
+            '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+            '<td align="center" style="padding:6px 8px;">'
+            '<div style="background-color:#f0f4ff;color:#0055a5;'
+            'border:1px solid #b0c4e8;border-radius:12px;'
+            'padding:8px 16px;font-size:11px;">'
+            f'Viewing saved chat: <b>{_escape_text_preserve_breaks(title[:50])}</b>'
+            f'&nbsp;&nbsp;·&nbsp;&nbsp;{_escape_text_preserve_breaks(created)}'
+            f'&nbsp;&nbsp;·&nbsp;&nbsp;{kind}'
+            '<br><span style="color:#888;font-size:10px;">'
+            'Scroll down to see full conversation</span>'
+            '</div></td></tr></table><br>'
+        )
+
+        self._bot_responses = {}
+        local_counter = 0
+
+        # Build a flat list of saved image thumbnails in order for replay
+        all_saved_imgs = []
+        for key in sorted(saved_images.keys()):
+            all_saved_imgs.extend(saved_images[key])
+        img_replay_idx = 0
+
+        for line in msgs:
+            if line.startswith("User:"):
+                text = line[5:].strip()
+                # If this line is an image-analysis request, show the thumbnail
+                if text.startswith("[Image analysis request:"):
+                    # Show saved thumbnails for this entry
+                    while img_replay_idx < len(all_saved_imgs):
+                        fname, b64 = all_saved_imgs[img_replay_idx]
+                        html += _image_thumbnail_html(b64, fname)
+                        img_replay_idx += 1
+                        # Only consume images for this request
+                        if img_replay_idx >= len(all_saved_imgs):
+                            break
+                    # Also show any user text after the image tag
+                    user_text_part = text.split("\n", 1)[-1].strip()
+                    if user_text_part and not user_text_part.startswith("[Image"):
+                        html += _user_bubble(user_text_part, "")
+                else:
+                    html += _user_bubble(text, "")
+            elif line.startswith("Bot:"):
+                text = line[4:].strip()
+                self._bot_responses[local_counter] = text
+                html += _bot_bubble(text, "", local_counter)
+                local_counter += 1
+        self._response_counter = local_counter
+
+        self.chat_display.setHtml(html)
+        QTimer.singleShot(120, lambda: self.chat_display.verticalScrollBar().setValue(
+            self.chat_display.verticalScrollBar().maximum()
+        ))
+
+        # Load the session's messages into chat_history so follow-up questions
+        # have full context, and update the session ID so any new messages save
+        # to the correct file rather than the previous live session.
+        self.chat_history = list(msgs)
+        self._retry_history = list(msgs)
+        self._current_session_id = session_id
+        self._session_created_at = session.get('created_at', datetime.now().strftime("%Y-%m-%d %H:%M"))
+        self._current_session_kind = kind
+        self._session_title_override = session.get('title', None)
+        self._last_user_text = next(
+            (m[5:].strip() for m in reversed(msgs) if m.startswith("User:")), ""
+        )
+        self._viewing_past_session = True
+
+    def _abort_worker(self):
+        """
+        Stop the active worker immediately and discard its response.
+        Use _suspend_worker() instead when switching sessions so the
+        generation can finish silently in the background.
+        """
+        if hasattr(self, 'worker') and self.worker.isRunning():
+            self.worker.stop()
+            try:
+                self.worker.response_signal.disconnect()
+                self.worker.status_signal.disconnect()
+            except Exception:
+                pass
+            self.worker.wait(300)
+        self._stop_thinking()
+
+    def _sidebar_upsert_from_signal(self, session: dict):
+        """Slot — always called on the main thread via _background_session_saved."""
+        self._sidebar.upsert_session(session)
+
+    def _suspend_worker(self, session_id: str, history: list,
+                        session_kind: str, images_store: dict):
+        """
+        Detach the running worker from the UI and let it finish in the
+        background. When it completes, the bot reply is appended to the
+        session file on disk so the user sees the full conversation the
+        next time they open that chat from the sidebar.
+        """
+        if not (hasattr(self, 'worker') and self.worker.isRunning()):
+            self._stop_thinking()
+            return
+
+        # Snapshot everything the callback needs before self.* moves on.
+        _sid     = session_id
+        _history = list(history)
+        _kind    = session_kind
+        _images  = dict(images_store)
+        _worker  = self.worker
+        _signal  = self._background_session_saved   # Qt signal, safe to emit from thread
+
+        def _on_background_response(bot_response: str):
+            """
+            Called from the worker thread when generation finishes.
+            Saves the response to disk, then emits a signal so the sidebar
+            update happens on the main thread (direct QWidget calls from
+            worker threads cause crashes on some platforms).
+            """
+            try:
+                _history.append(f"Bot: {bot_response}")
+                path = os.path.join(_SESSIONS_DIR, f"{_sid}.json")
+
+                if os.path.exists(path):
+                    with open(path, encoding="utf-8") as fp:
+                        session = json.load(fp)
+                else:
+                    # Session file doesn't exist yet — build it from the snapshot.
+                    session = {
+                        "id":         _sid,
+                        "title":      next(
+                            (m[5:].strip()[:50] for m in _history
+                             if m.startswith("User:")), "Chat"
+                        ),
+                        "created_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                        "kind":       _kind,
+                        "images":     _images,
+                    }
+
+                session["messages"]   = _history[-40:]
+                session["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M")
+                session["kind"]       = _kind
+
+                os.makedirs(_SESSIONS_DIR, exist_ok=True)
+                with open(path, "w", encoding="utf-8") as fp:
+                    json.dump(session, fp, ensure_ascii=False, indent=2)
+
+                # Emit signal — the connected slot runs on the main thread.
+                _signal.emit(session)
+            except Exception:
+                pass
+
+        try:
+            _worker.response_signal.disconnect()
+            _worker.status_signal.disconnect()
+        except Exception:
+            pass
+
+        _worker.response_signal.connect(_on_background_response)
+        self._stop_thinking()
+
+    def _new_chat(self):
+        # Stop the debounce timer and flush the current session to disk NOW,
+        # before anything is reset, so the file is written under the correct ID.
+        self._save_debounce_timer.stop()
+        self._save_pending = False
+        if self._is_generating:
+            # Generation is running — detach it so it finishes silently and
+            # saves its reply into the current session file when it completes.
+            self._suspend_worker(
+                session_id=self._current_session_id,
+                history=self.chat_history,
+                session_kind=self._current_session_kind,
+                images_store=self._images_store,
+            )
+        else:
+            # Save current session synchronously so it lands on disk before
+            # we move on.  _save_current_session() is a no-op if chat_history
+            # is empty, so clicking New Chat on a blank window is safe.
+            self._save_current_session()
+
+        # Reset UI and state for the new blank session WITHOUT calling
+        # clear_session() — that method deletes the session file, which
+        # would erase the chat we just saved above.
+        self.chat_display.setHtml(WELCOME_MESSAGE)
+        self.chat_history = []
+        self._retry_history = []
+        self._bot_responses = {}
+        self._response_counter = 0
+        self._last_user_text = ""
+        self._viewing_past_session = False
+        self._clear_staged_images()
+        self._images_store = {}
+        self._last_image_paths = []
+        self._current_session_kind = "text"
+        self._session_title_override = None
+        self._current_session_id = str(uuid.uuid4())
+        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+        try:
+            if os.path.exists(_HISTORY_FILE):
+                os.remove(_HISTORY_FILE)
+        except Exception:
+            pass
+
+        self._sidebar.populate()
+        self._current_session_kind = "text"
+        self._session_title_override = None
+        self._sidebar.populate()
+
+    def _on_session_deleted(self, deleted_id: str):
+        if deleted_id == self._current_session_id or self._viewing_past_session:
+            self._abort_worker()
+
+            # Cancel any pending debounced save so the deleted session
+            # file cannot be re-created by a timer that was already running.
+            self._save_debounce_timer.stop()
+            self._save_pending = False
+
+            self._current_session_id = str(uuid.uuid4())
+            self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+            self._current_session_kind = "text"
+            self._session_title_override = None
+            self._viewing_past_session = False
+            self.chat_history = []
+            self._retry_history = []
+            self._bot_responses = {}
+            self._response_counter = 0
+            self._last_user_text = ""
+            self._images_store = {}
+            self._last_image_paths = []
+            try:
+                if os.path.exists(_HISTORY_FILE):
+                    os.remove(_HISTORY_FILE)
+            except Exception:
+                pass
+            self.chat_display.setHtml(WELCOME_MESSAGE)
+
+    # ── Export ────────────────────────────────────────────────────────
+
+    def _export_current_chat(self):
+        if not self.chat_history:
+            self.status_label.setText("Nothing to export.")
+            QTimer.singleShot(2500, lambda: self.status_label.setText(""))
+            return
+
+        path, _ = QFileDialog.getSaveFileName(
+            self,
+            "Export Chat",
+            os.path.join(os.path.expanduser("~"), "chat_export.txt"),
+            "Text Files (*.txt);;Markdown Files (*.md)"
+        )
+        if not path:
+            return
 
         try:
             with open(path, "w", encoding="utf-8") as f:
-                f.writelines(new_lines)
+                for line in self.chat_history:
+                    f.write(line.strip() + "\n\n")
+            self.status_label.setText("✅ Chat exported.")
+            QTimer.singleShot(2500, lambda: self.status_label.setText(""))
         except Exception as e:
-            QMessageBox.warning(self, "Write error", f"Failed to write file:\n{e}")
-            return
+            self.status_label.setText(f"❌ Export failed: {e}")
+            QTimer.singleShot(3500, lambda: self.status_label.setText(""))
 
-        self._apply_fixes_btn.hide()
-        self._last_netlist_path = None
-        self._last_facts = {}
-        self.append_message(
-            "eSim",
-            (f"Applied {len(applied)} fix(es) to {os.path.basename(path)}:\n" +
-             "\n".join(f"  \u2022 {a}" for a in applied) +
-             "\n\nBackup saved as .bak — run simulation to verify."),
-            is_user=False,
-        )
+    # ── Ollama status ────────────────────────────────────────────────
 
-    # ==================== PRIORITY 4 & 7: BATCH ANALYSIS ====================
+    def _update_ollama_status(self):
+        self._status_worker = OllamaStatusWorker()
+        self._status_worker.result_signal.connect(self._on_status_result)
+        self._status_worker.start()
 
-    def analyze_batch_files(self):
-        """Let user pick multiple netlists or images for batch static analysis."""
-        if self.is_bot_busy():
-            return
-
-        dlg = QMessageBox(self)
-        dlg.setWindowTitle("Batch Analysis")
-        dlg.setText("Select the type of files to batch analyze:")
-        netlist_btn = dlg.addButton("Netlists (.cir / .cir.out)", QMessageBox.AcceptRole)
-        image_btn   = dlg.addButton("Images (.png / .jpg)",        QMessageBox.AcceptRole)
-        dlg.addButton("Cancel",                                     QMessageBox.RejectRole)
-        dlg.exec_()
-
-        clicked = dlg.clickedButton()
-        if clicked == netlist_btn:
-            files, _ = QFileDialog.getOpenFileNames(
-                self, "Select Netlist Files", "",
-                "Netlists (*.cir *.cir.out *.net);;All Files (*)"
-            )
-            if files:
-                self._run_batch_analysis("netlist", files)
-        elif clicked == image_btn:
-            files, _ = QFileDialog.getOpenFileNames(
-                self, "Select Image Files", "",
-                "Images (*.png *.jpg *.jpeg *.bmp *.tiff);;All Files (*)"
-            )
-            if files:
-                QMessageBox.information(
-                    self, "Vision batch",
-                    f"Queuing {len(files)} image(s) for vision analysis.\n"
-                    "This may take several minutes.",
-                )
-                self._run_batch_analysis("image", files)
-
-    def _run_batch_analysis(self, mode: str, file_paths: list):
-        """Start BatchWorker and stream progress into the chat."""
-        total = len(file_paths)
-        label = "netlist(s)" if mode == "netlist" else "image(s)"
-        self.append_message(
-            "eSim",
-            f"Starting batch analysis of {total} {label}…",
-            is_user=False,
-        )
-
-        self._disable_ui_for_analysis()
-        self.loading_label.show()
-        self._apply_fixes_btn.hide()
-
-        self._batch_worker = BatchWorker(mode, file_paths)
-        self._batch_worker.file_started.connect(self._on_batch_file_started)
-        self._batch_worker.all_done.connect(lambda results: self._on_batch_done(results, mode))
-        self._batch_worker.finished.connect(self._on_batch_worker_finished)
-        self._batch_worker.start()
-
-    def _disable_ui_for_analysis(self):
-        for attr in ("input_field", "send_btn", "attach_btn", "mic_btn",
-                     "analyze_netlist_btn", "clear_btn", "batch_btn"):
-            w = getattr(self, attr, None)
-            if w:
-                w.setDisabled(True)
-
-    def _enable_ui_after_analysis(self):
-        for attr in ("input_field", "send_btn", "attach_btn", "mic_btn",
-                     "analyze_netlist_btn", "clear_btn", "batch_btn"):
-            w = getattr(self, attr, None)
-            if w:
-                w.setEnabled(True)
-
-    def _on_batch_file_started(self, idx: int, total: int, name: str):
-        self.loading_label.setText(f"⏳ Analyzing {idx}/{total}: {name}…")
-
-    def _on_batch_done(self, results: list, mode: str):
-        label = "Netlist" if mode == "netlist" else "Image"
-        lines = [f"**Batch {label} Analysis — {len(results)} file(s)**\n"]
-        ok_count  = sum(1 for _, s in results if s.startswith("OK"))
-        err_count = len(results) - ok_count
-        for name, summary in results:
-            icon = "OK" if summary.startswith("OK") else "ISSUES"
-            lines.append(f"[{icon}] {name}: {summary}")
-        lines.append(f"\nSummary: {ok_count} OK, {err_count} with issues.")
-        self.append_message("eSim", "\n".join(lines), is_user=False)
-
-    def _on_batch_worker_finished(self):
-        self.loading_label.setText("⏳ eSim Copilot is thinking…")
-        self.loading_label.hide()
-        self._enable_ui_after_analysis()
-        self.input_field.setFocus()
-
-    # ==================== PRIORITY 5: MODEL SETTINGS ====================
-
-    def open_settings(self):
-        """Open the model-selection settings dialog."""
-        from chatbot.ollama_runner import (
-            list_available_models, save_model_settings, reload_model_settings,
-            TEXT_MODELS, VISION_MODELS,
-        )
-        import chatbot.ollama_runner as runner
-
-        dlg = CopilotSettingsDialog(
-            current_text   = TEXT_MODELS.get("default", "qwen2.5:3b"),
-            current_vision = VISION_MODELS.get("primary", "minicpm-v:latest"),
-            parent         = self,
-        )
-        if dlg.exec_() == QDialog.Accepted:
-            text_m, vis_m = dlg.get_selections()
-            save_model_settings(text_m, vis_m)
-            runner.TEXT_MODELS["default"]   = text_m
-            runner.VISION_MODELS["primary"] = vis_m
-            self.append_message(
-                "eSim",
-                f"Model settings saved:\n  Text/reasoning: {text_m}\n  Vision: {vis_m}",
-                is_user=False,
-            )
-
-    # ==================== PRIORITY 8: REAL-TIME KICAD HINTS ====================
-
-    def toggle_kicad_watch(self):
-        """Start / stop the real-time hints watcher."""
-        if self._watch_active:
-            self._watch_timer.stop()
-            self._watch_active = False
-            self.watch_btn.setStyleSheet("""
-                QPushButton {
-                    background-color: transparent;
-                    border: 1px solid #ddd;
-                    border-radius: 15px;
-                    font-size: 14px;
+    def _on_status_result(self, running: bool):
+        if running:
+            self.ollama_status_label.setText("🟢 Live")
+            self.ollama_status_label.setStyleSheet("""
+                QLabel {
+                    font-size:11px; font-weight:bold; padding:2px 10px;
+                    border-radius:12px; background-color:#e6f9ee;
+                    color:#1a7f3c; border:1px solid #a3d9b5;
                 }
-                QPushButton:hover { background-color: #e3f2fd; border-color: #2196f3; }
             """)
-            self.watch_btn.setToolTip("Toggle real-time hints (polls active project every 30 s)")
-            self.append_message("eSim", "Real-time hints: OFF", is_user=False)
+            if self._was_ollama_offline:
+                self._was_ollama_offline = False
+                self._populate_models()
         else:
-            self._watch_active = True
-            self._watch_last_facts = None
-            self.watch_btn.setStyleSheet("""
-                QPushButton {
-                    background-color: #2196f3;
-                    color: white;
-                    border-radius: 15px;
-                    font-size: 14px;
+            self.ollama_status_label.setText("🔴 Offline")
+            self.ollama_status_label.setStyleSheet("""
+                QLabel {
+                    font-size:11px; font-weight:bold; padding:2px 10px;
+                    border-radius:12px; background-color:#fdecea;
+                    color:#b71c1c; border:1px solid #f5c0bc;
                 }
-                QPushButton:hover { background-color: #1565c0; }
             """)
-            self.watch_btn.setToolTip("Real-time hints: ON — click to disable")
-            self.append_message(
-                "eSim",
-                "Real-time hints: ON\nPolling active project every 30 s for static issues "
-                "(no LLM call — instant feedback).",
-                is_user=False,
-            )
-            self._kicad_watch_tick()      # run immediately
-            self._watch_timer.start()
+            self._was_ollama_offline = True
 
-    def _kicad_watch_tick(self):
-        """Timer callback: run FACT detectors on active project without calling the LLM."""
-        try:
-            from configuration.Appconfig import Appconfig
-            proj_dir = Appconfig().current_project.get("ProjectName")
-            if not proj_dir or not os.path.isdir(proj_dir):
+    # ── Typing bubble ─────────────────────────────────────────────────
+
+    # ── Typing bubble (window-switch safe) ──────────────────────────
+    #
+    # (_typing_start_pos) and used it to select-and-replace the animated
+    # dots on every timer tick.  When the user switches away from the
+    # chatbot window Qt reflows the QTextBrowser's HTML document, which
+    # shifts character positions.  On the next timer tick the cursor
+    # landed in the wrong place and deleted real chat content.
+    #
+    # New approach: insert a sentinel <a> anchor tag with a unique id
+    # ("_typing_anchor_") right before the bubble HTML.  To update or
+    # remove the bubble we search the document for that anchor using
+    # QTextDocument.find() — which is position-independent and survives
+    # any reflow — then select from the match to the end of the document.
+    # The sentinel itself is a zero-width invisible link so it never
+    # appears in the rendered output.
+
+    _TYPING_ANCHOR = '<a name="_typing_anchor_"></a>'
+
+    def _find_typing_anchor_cursor(self):
+        """Return a cursor positioned at the typing-bubble sentinel,
+        or None if the sentinel is not in the document.
+
+        PyQt5 exposes anchor names via QTextCharFormat.anchorNames()
+        (returns a list) not .anchorName() -- we handle both spellings
+        defensively so the code works across PyQt5 versions.
+        """
+        doc = self.chat_display.document()
+        block = doc.begin()
+        while block.isValid():
+            it = block.begin()
+            while not it.atEnd():
+                frag = it.fragment()
+                if frag.isValid():
+                    fmt = frag.charFormat()
+                    # PyQt5 uses anchorNames() -> list[str]
+                    # Some builds also have anchorName() -> str
+                    # We try both so it works regardless of version.
+                    try:
+                        names = fmt.anchorNames()  # PyQt5 standard
+                        matched = "_typing_anchor_" in (names or [])
+                    except AttributeError:
+                        try:
+                            matched = fmt.anchorName() == "_typing_anchor_"
+                        except AttributeError:
+                            matched = False
+                    if matched:
+                        cursor = QTextCursor(doc)
+                        cursor.setPosition(frag.position())
+                        return cursor
+                it += 1
+            block = block.next()
+        return None
+
+    def _show_typing_bubble(self):
+        self._typing_frame = 0
+        cursor = QTextCursor(self.chat_display.document())
+        cursor.movePosition(QTextCursor.End)
+        # Insert sentinel anchor + bubble in one operation so they form
+        # a contiguous block that can be fully removed later.
+        cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(0))
+        self._scroll_to_bottom()
+        self._typing_anim_timer.start(400)
+
+    def _animate_typing_bubble(self):
+        self._typing_frame = (self._typing_frame + 1) % 3
+        anchor_cursor = self._find_typing_anchor_cursor()
+        if anchor_cursor is None:
+            # Sentinel gone — stop the timer defensively
+            self._typing_anim_timer.stop()
+            return
+        # Select from the sentinel to the end of the document and replace.
+        # This is immune to any reflow that happened while the window was
+        # in the background because we locate by anchor name, not position.
+        anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+        anchor_cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(self._typing_frame))
+        # Only auto-scroll if the user is already near the bottom so we
+        # don't hijack their scroll position while they read earlier msgs.
+        sb = self.chat_display.verticalScrollBar()
+        if sb.maximum() - sb.value() < 60:
+            self._scroll_to_bottom()
+
+    def _remove_typing_bubble(self):
+        self._typing_anim_timer.stop()
+        anchor_cursor = self._find_typing_anchor_cursor()
+        if anchor_cursor is not None:
+            anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+            anchor_cursor.removeSelectedText()
+        # Legacy guard: if somehow _typing_start_pos path left stale state
+        self._typing_start_pos = -1
+
+    # ── Links ────────────────────────────────────────────────────────
+
+    def _handle_link_click(self, url):
+        scheme, parts = _parse_custom_url(url)
+
+        if scheme == 'copy':
+            if not parts:
                 return
-
-            proj_name = os.path.basename(proj_dir)
-            # Prefer .cir (pre-simulation) over .cir.out
-            candidates = [
-                os.path.join(proj_dir, proj_name + ".cir"),
-                os.path.join(proj_dir, proj_name + ".cir.out"),
-            ]
-            netlist_path = next((p for p in candidates if os.path.exists(p)), None)
-            if not netlist_path:
+            try:
+                idx = int(parts[-1])
+            except ValueError:
                 return
+            text = self._bot_responses.get(idx, "")
+            if text:
+                QApplication.clipboard().setText(text)
+                self._show_copy_toast()
 
-            with open(netlist_path, "r", encoding="utf-8", errors="ignore") as f:
-                text = f.read()
+        elif scheme == 'retry':
+            if not parts:
+                return
+            try:
+                idx = int(parts[-1])
+            except ValueError:
+                return
+            self._retry_response(idx)
 
-            floating  = _detect_floating_nodes(text)
-            missing_m = _detect_missing_models(text)
-            has_n0, has_gnd = _netlist_ground_info(text)
+        elif scheme == 'clear':
+            self.clear_session()
 
-            new_facts = {
-                "no_ground":      not has_n0 and not has_gnd,
-                "floating":       tuple(n for n, _, _ in floating),
-                "missing_models": tuple(m for m, _ in missing_m),
+    def _show_copy_toast(self):
+        self._toast.setText("  ✅  Copied!  ")
+        chat_rect = self.chat_display.geometry()
+        tw, th = 110, 30
+        x = chat_rect.x() + (chat_rect.width() - tw) // 2
+        y = chat_rect.y() + chat_rect.height() - th - 16
+        self._toast.setGeometry(x, y, tw, th)
+        self._toast.show()
+        self._toast.raise_()
+        QTimer.singleShot(1600, self._toast.hide)
+
+    # ── Images ───────────────────────────────────────────────────────
+
+    def _pick_image(self):
+        paths, _ = QFileDialog.getOpenFileNames(self, "Select Images", "", _IMG_FILTER)
+        self._stage_image_paths(paths)
+
+    def _stage_image_paths(self, paths):
+        added = 0
+        for path in paths:
+            if path and _is_image_file(path) and path not in self._staged_images:
+                self._staged_images.append(path)
+                added += 1
+        if added:
+            self._refresh_staging_strip()
+
+    def _refresh_staging_strip(self):
+        while self._thumb_row.count() > 1:
+            item = self._thumb_row.takeAt(0)
+            if item.widget():
+                item.widget().deleteLater()
+
+        for path in self._staged_images:
+            self._thumb_row.insertWidget(self._thumb_row.count() - 1, self._make_thumbnail(path))
+
+        self._staging_area.setVisible(bool(self._staged_images))
+
+    def _make_thumbnail(self, image_path: str) -> QWidget:
+        from PyQt5.QtGui import QPixmap
+
+        card = QWidget()
+        card.setFixedSize(80, 64)
+        card.setStyleSheet("""
+            QWidget {
+                background:#ffffff;
+                border:1px solid #d0d8f0;
+                border-radius:10px;
             }
+        """)
+        card_layout = QVBoxLayout(card)
+        card_layout.setContentsMargins(4, 4, 4, 2)
+        card_layout.setSpacing(2)
 
-            if new_facts == self._watch_last_facts:
-                return  # nothing changed
+        thumb_lbl = QLabel()
+        thumb_lbl.setAlignment(Qt.AlignCenter)
+        thumb_lbl.setFixedHeight(36)
+        pix = QPixmap(image_path)
+        if not pix.isNull():
+            orig_w, orig_h = pix.width(), pix.height()
+            card.setToolTip(
+                f"{os.path.basename(image_path)}\n{orig_w} × {orig_h} px"
+            )
+            pix = pix.scaled(68, 36, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+            thumb_lbl.setPixmap(pix)
+        else:
+            thumb_lbl.setText("🖼")
+            thumb_lbl.setStyleSheet("font-size:20px;background:transparent;")
+        card_layout.addWidget(thumb_lbl)
 
-            self._watch_last_facts = new_facts
+        fname = os.path.basename(image_path)
+        name_lbl = QLabel(fname[:10] + ("…" if len(fname) > 10 else ""))
+        name_lbl.setAlignment(Qt.AlignCenter)
+        name_lbl.setStyleSheet("font-size:9px;color:#555;background:transparent;")
+        card_layout.addWidget(name_lbl)
 
-            hints = []
-            fname = os.path.basename(netlist_path)
-            if new_facts["no_ground"]:
-                hints.append("  No ground reference (node 0)")
-            for node in new_facts["floating"]:
-                hints.append(f"  Floating node: {node}")
-            for model in new_facts["missing_models"]:
-                hints.append(f"  Missing model: {model}")
+        remove_btn = QPushButton("✕", card)
+        remove_btn.setFixedSize(16, 16)
+        remove_btn.move(62, 2)
+        remove_btn.setStyleSheet("""
+            QPushButton {
+                font-size:9px; font-weight:bold;
+                background:#ff3b30; color:white;
+                border:none; border-radius:8px;
+                padding:0;
+            }
+            QPushButton:hover { background:#cc2a22; }
+        """)
+        remove_btn.clicked.connect(lambda checked=False, p=image_path: self._remove_staged_image(p))
+        return card
 
-            if hints:
-                self.append_message(
-                    "Hints",
-                    f"[{fname}]\n" + "\n".join(hints),
-                    is_user=False,
-                )
-            else:
-                self.append_message(
-                    "Hints",
-                    f"[{fname}] No static issues detected.",
-                    is_user=False,
-                )
-        except Exception as e:
-            print(f"[WATCH TICK] {e}")
+    def _remove_staged_image(self, path: str):
+        if path in self._staged_images:
+            self._staged_images.remove(path)
+        self._refresh_staging_strip()
 
-    # ---------- CLEAN SHUTDOWN ----------
+    def _clear_staged_images(self):
+        self._staged_images.clear()
+        self._refresh_staging_strip()
 
-    def closeEvent(self, event):
-        """Stop analysis when the chatbot window/dock is closed."""
-        self.stop_analysis()
-        if self._watch_active:
-            self._watch_timer.stop()
-        if self._batch_worker and self._batch_worker.isRunning():
-            self._batch_worker.quit()
-            self._batch_worker.wait(300)
-        try:
-            clear_history()
-        except Exception:
-            pass
-        event.accept()
-
-    def debug_error(self, error_log_path: str):
+    def _warn_or_switch_to_vision_model(self) -> bool:
         """
-        Called by Application when a simulation error happens.
-        Reads ngspice_error.log and asks the copilot to explain + fix it in eSim.
+        Ensure a vision-capable model is selected before sending images.
+
+        Returns True if it is safe to proceed (a vision model is active),
+        or False if no vision model is installed and the request should be
+        blocked. Sending images to a text-only model causes it to fabricate
+        completely wrong answers because it cannot actually see the image.
         """
-        if not error_log_path or not os.path.exists(error_log_path):
-            QMessageBox.warning(
-                self,
-                "Error log missing",
-                f"Could not find error log at:\n{error_log_path}",
+        current = self.model_combo.currentText()
+        vision_keywords = ["llava", "bakllava", "vision", "moondream", "qwen2-vl", "minicpm-v"]
+
+        # Already on a vision model — good to go.
+        if any(k in current.lower() for k in vision_keywords):
+            return True
+
+        # Try to auto-switch to any vision model the user has installed.
+        preferred_order = ["moondream", "llava:7b", "llava", "bakllava", "llava:13b"]
+        for i in range(self.model_combo.count()):
+            name = self.model_combo.itemText(i)
+            if any(k in name.lower() for k in vision_keywords):
+                self.model_combo.setCurrentIndex(i)
+                self.chat_display.append(_system_bubble(
+                    f"Switched to vision model: {name}"
+                ))
+                self._scroll_to_bottom()
+                return True
+
+        # No vision model found — block the request and explain clearly.
+        self.chat_display.append(_system_bubble(
+            "⚠️ No vision model installed. Image analysis is not possible with the "
+            "current model — a text-only model cannot see images and will give "
+            "completely wrong answers.\n\n"
+            "Install a vision model by running this in a terminal:\n"
+            "  ollama pull llava\n\n"
+            "Then restart eSim and select llava from the model dropdown."
+        ))
+        self._scroll_to_bottom()
+        return False
+
+    # ── Mic ──────────────────────────────────────────────────────────
+
+    def _on_temp_changed(self, value: int):
+        self._temperature = round(value / 100, 2)
+        self._temp_label.setText(f"Precision  {self._temperature:.2f}")
+
+    def _on_tok_changed(self, value: int):
+        self._num_predict = value * 128
+        self._tok_label.setText(f"Max tokens  {self._num_predict}")
+
+    def _reset_settings(self):
+        self._temperature = 0.35
+        self._num_predict = 1024
+        self._temp_slider.setValue(35)
+        self._tok_slider.setValue(8)
+
+    def _update_mic_tooltip(self):
+        backend = get_stt_backend()
+        tips = {
+            "whisper": "Speak your question\n✅ Offline STT active (faster-whisper)",
+            "vosk": "Speak your question\n✅ Offline STT active (vosk)",
+            "google": "Speak your question\n⚠ Online STT only (Google)",
+            "none": "Speak your question\n❌ No STT installed",
+        }
+        self.mic_button.setToolTip(tips.get(backend, "Speak your question"))
+
+    def _on_mic_clicked(self):
+        if self._mic_active:
+            return
+        self._mic_active = True
+        self.mic_button.setEnabled(False)
+        self.status_label.setText("🎤 Starting microphone…")
+        self._mic_worker = MicWorker()
+        self._mic_worker.text_signal.connect(self._on_mic_text)
+        self._mic_worker.error_signal.connect(self._on_mic_error)
+        self._mic_worker.status_signal.connect(self._on_mic_status)
+        self._mic_worker.start()
+
+    def _on_mic_status(self, msg: str):
+        self.status_label.setText(msg)
+
+    def _on_mic_text(self, text: str):
+        self._reset_mic_button()
+        self.status_label.setText("")
+        self.user_input.setText(text)
+        self.user_input.setFocus()
+
+    def _on_mic_error(self, msg: str):
+        self._reset_mic_button()
+        self.status_label.setText(msg)
+        QTimer.singleShot(3500, lambda: self.status_label.setText(""))
+
+    def _reset_mic_button(self):
+        self._mic_active = False
+        self.mic_button.setEnabled(True)
+
+    # ── Netlist analysis ─────────────────────────────────────────────
+
+    def analyse_netlist(self, netlist_path: str):
+        if not os.path.exists(netlist_path):
+            self.chat_display.append(
+                f'<table width="100%"><tr><td style="color:#c00;font-size:12px;padding:6px;">'
+                f'❌ Netlist file not found: {_escape_text_preserve_breaks(netlist_path)}</td></tr></table>'
             )
             return
 
+        self._current_session_kind = "netlist"
+
+        ts = _get_time()
+        filename = os.path.basename(netlist_path)
+        self.chat_display.append(_netlist_header_bubble(filename, ts))
+        self._scroll_to_bottom()
+
         try:
-            with open(error_log_path, "r", encoding="utf-8", errors="ignore") as f:
-                log_text = f.read()
+            with open(netlist_path, 'r', errors='replace') as f:
+                raw_lines = f.readlines()
         except Exception as e:
-            QMessageBox.warning(self, "Error", f"Failed to read error log:\n{e}")
+            self.chat_display.append(
+                f'<table width="100%"><tr><td style="color:#c00;font-size:12px;padding:6px;">'
+                f'❌ Could not read file: {_escape_text_preserve_breaks(str(e))}</td></tr></table>'
+            )
             return
 
-        # Show trimmed log in the chat for user visibility
-        tail_lines = "\n".join(log_text.splitlines()[-40:])  # last 40 lines
-        display = (
-            "Automatic ngspice error captured from eSim:\n\n"
-            "```"
-            f"{tail_lines}\n"
-            "```"
+        components, nodes, directives = [], set(), []
+        for line in raw_lines:
+            s = line.strip()
+            if not s or s.startswith('*'):
+                continue
+            first = s[0].upper()
+            if first in 'RCLVIDQMEFGHJKTUWXZ':
+                components.append(s)
+                parts = s.split()
+                if len(parts) >= 3:
+                    nodes.update([parts[1], parts[2]])
+            elif first == '.':
+                directives.append(s)
+
+        summary = (
+            f"Netlist file: {filename}\n"
+            f"Total lines: {len(raw_lines)}\n"
+            f"Components ({len(components)}): "
+            f"{', '.join(components[:15])}{'...' if len(components) > 15 else ''}\n"
+            f"Unique nodes: {', '.join(sorted(nodes)[:20])}\n"
+            f"SPICE directives: {', '.join(directives[:10])}\n\n"
+            f"Full netlist:\n{''.join(raw_lines[:80])}"
+            f"{'[truncated]' if len(raw_lines) > 80 else ''}"
         )
-        self.append_message("eSim", display, is_user=False)
 
-        # Build a focused query for the backend
-        full_query = (
-            "The following is an ngspice error log from an eSim simulation.\n"
-            "1) Explain the exact root cause in simple terms.\n"
-            "2) Give concrete, step‑by‑step instructions to fix it INSIDE eSim "
-            "(KiCad schematic / sources / analysis settings).\n\n"
-            "[NGSPICE_ERROR_LOG_START]\n"
-            f"{log_text}\n"
-            "[NGSPICE_ERROR_LOG_END]"
+        prompt = (
+            f"Analyse this NgSpice netlist for me.\n\n{summary}\n\n"
+            "Please: (1) identify all components and their roles, "
+            "(2) describe what circuit this is and what it does, "
+            "(3) highlight any potential simulation issues, "
+            "(4) suggest any improvements."
         )
 
-        # Disable UI while analysis is running
-        self.input_field.setDisabled(True)
-        self.send_btn.setDisabled(True)
-        if hasattr(self, "attach_btn"):
-            self.attach_btn.setDisabled(True)
-        if hasattr(self, "mic_btn"):
-            self.mic_btn.setDisabled(True)
-        if hasattr(self, "analyze_netlist_btn"):
-            self.analyze_netlist_btn.setDisabled(True)
-        if hasattr(self, "clear_btn"):
-            self.clear_btn.setDisabled(True)
+        self.chat_history = (self.chat_history + [f"User: {prompt}"])[-20:]
+        self._retry_history = list(self.chat_history)
+        self._last_user_text = prompt
+        self._start_thinking()
 
-        self.loading_label.show()
-
-        # NEW: bump generation and bind response with this gen
-        self._generation_id += 1
-        current_gen = self._generation_id
-
-        self.worker = ChatWorker(full_query, self.copilot)
-        self.worker.response_ready.connect(
-            lambda resp, gen=current_gen: self._handle_response_with_id(resp, gen)
+        self.worker = OllamaWorker(
+            self.chat_history,
+            model=self.model_combo.currentText(),
+            temperature=self._temperature,
+            num_predict=self._num_predict,
         )
-        self.worker.finished.connect(self.on_worker_finished)
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
         self.worker.start()
 
-# ==================== MODULE-LEVEL HELPERS ====================
+    # ── Topic switch ─────────────────────────────────────────────────
 
-def _model_stub(model_name: str) -> str:
-    """Return a minimal SPICE .model stub inferred from the model name."""
-    n = model_name.upper()
-    if "PNP" in n:
-        return f".model {model_name} PNP(Is=1e-14 Bf=200 Vaf=100)"
-    if "NPN" in n or n.startswith("Q2N") or n.startswith("BC") or n.startswith("2N"):
-        return f".model {model_name} NPN(Is=1e-14 Bf=200 Vaf=100)"
-    if n.startswith("1N") or "DIODE" in n or (n.startswith("D") and len(n) <= 8):
-        return f".model {model_name} D(Is=1e-14 Rs=1)"
-    if "NMOS" in n or n.startswith("NMOS"):
-        return f".model {model_name} NMOS(Kp=120u Vto=1.0 Gamma=0)"
-    if "PMOS" in n or n.startswith("PMOS"):
-        return f".model {model_name} PMOS(Kp=60u Vto=-1.0 Gamma=0)"
-    # Default: assume NPN BJT
-    return f".model {model_name} NPN(Is=1e-14 Bf=200 Vaf=100)"
+    def _check_topic_switch(self, new_text: str) -> bool:
+        switched = detect_topic_switch(self._last_user_text, new_text)
+        if switched and self.chat_history:
+            self.chat_history = self.chat_history[-2:]
+            self.chat_display.append(_topic_reset_banner())
+            self._scroll_to_bottom()
+            # Clear image follow-up context when topic changes
+            self._last_image_paths = []
+        return switched
 
+    # ── Persistence ──────────────────────────────────────────────────
 
-# ==================== SETTINGS DIALOG ====================
+    def _save_history(self):
+        """
+        Schedules a debounced disk write so saves are batched rather than
+        firing synchronously after every message, preventing UI freezes.
+        """
+        self._save_pending = True
+        # Restart the timer so the window slides forward from the last change.
+        # If the user sends multiple messages quickly, only the final state is
+        # written, avoiding redundant I/O.
+        if not self._save_debounce_timer.isActive():
+            self._save_debounce_timer.start(_SAVE_DEBOUNCE_MS)
 
-class CopilotSettingsDialog(QDialog):
-    """Simple dialog for choosing text and vision models."""
+    def _flush_save(self):
+        """Perform the actual disk write when the debounce timer fires."""
+        if not self._save_pending:
+            return
+        self._save_pending = False
+        try:
+            os.makedirs(os.path.dirname(_HISTORY_FILE), exist_ok=True)
+            with open(_HISTORY_FILE, 'w', encoding='utf-8') as f:
+                json.dump(self.chat_history[-20:], f, ensure_ascii=False, indent=2)
+            self._save_current_session()
+            self._refresh_sidebar_if_open()
+        except Exception:
+            pass
 
-    def __init__(self, current_text: str, current_vision: str, parent=None):
-        super().__init__(parent)
-        self.setWindowTitle("eSim Copilot — Model Settings")
-        self.setMinimumWidth(400)
-        self.setModal(True)
+    def _save_current_session(self):
+        if not self.chat_history:
+            return
+        try:
+            os.makedirs(_SESSIONS_DIR, exist_ok=True)
+            session = {
+                "id": self._current_session_id,
+                "title": self._derive_session_title(),
+                "created_at": self._session_created_at,
+                "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "messages": self.chat_history[-40:],
+                "kind": self._current_session_kind,
+                "images": self._images_store,
+                "settings": {
+                    "temperature": self._temperature,
+                    "num_predict": self._num_predict,
+                },
+            }
+            path = os.path.join(_SESSIONS_DIR, f"{self._current_session_id}.json")
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(session, f, ensure_ascii=False, indent=2)
+            # Keep the sidebar in-memory cache in sync so the chat appears
+            # immediately without requiring a full populate() from disk.
+            self._sidebar.upsert_session(session)
+        except Exception:
+            pass
 
-        from chatbot.ollama_runner import list_available_models
-        available = list_available_models()
+    def _load_history(self):
+        """
+        On startup: if a leftover history file exists, archive it into the
+        sidebar sessions directory so the user can access it from the sidebar,
+        then delete the file.  The chat window always opens fresh.
+        """
+        if not os.path.exists(_HISTORY_FILE):
+            return
+        try:
+            with open(_HISTORY_FILE, 'r', encoding='utf-8') as f:
+                saved = json.load(f)
+            if isinstance(saved, list) and saved:
+                title = next(
+                    (m[5:].strip()[:50] for m in saved if m.startswith("User:")),
+                    "Previous session"
+                )
+                old_session = {
+                    "id":         self._current_session_id,
+                    "title":      title,
+                    "created_at": self._session_created_at,
+                    "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                    "messages":   saved[-40:],
+                    "kind":       "text",
+                    "settings": {
+                        "temperature": self._temperature,
+                        "num_predict": self._num_predict,
+                    },
+                }
+                os.makedirs(_SESSIONS_DIR, exist_ok=True)
+                sess_path = os.path.join(
+                    _SESSIONS_DIR, f"{self._current_session_id}.json"
+                )
+                with open(sess_path, 'w', encoding='utf-8') as f:
+                    json.dump(old_session, f, ensure_ascii=False, indent=2)
+        except Exception:
+            pass
+        finally:
+            try:
+                os.remove(_HISTORY_FILE)
+            except Exception:
+                pass
+        # New session ID so nothing from the old chat bleeds into the new one
+        self._current_session_id  = str(uuid.uuid4())
+        self._session_created_at  = datetime.now().strftime("%Y-%m-%d %H:%M")
 
-        # Ensure current selections appear even if Ollama is offline
-        for m in (current_text, current_vision):
-            if m not in available:
-                available.insert(0, m)
+    # ── Models ───────────────────────────────────────────────────────
 
-        layout = QVBoxLayout(self)
+    def _populate_models(self):
+        self.model_combo.clear()
+        self.model_combo.addItem("Loading models…")
+        self.model_combo.setEnabled(False)
+        self._model_worker = ModelFetchWorker()
+        self._model_worker.result_signal.connect(self._on_models_fetched)
+        self._model_worker.start()
 
-        title = QLabel("Select AI models served by Ollama")
-        title.setStyleSheet("font-weight: bold; font-size: 13px; margin-bottom: 6px;")
-        layout.addWidget(title)
+    def _on_models_fetched(self, model_names: list):
+        self.model_combo.clear()
+        for name in model_names:
+            self.model_combo.addItem(name)
 
-        form = QFormLayout()
+        preferred_order = [
+            'qwen2.5-coder:3b',
+            'llava:13b',
+            'llava:7b',
+            'llava',
+            'bakllava',
+        ]
+        chosen_idx = -1
+        for preferred in preferred_order:
+            idx = self.model_combo.findText(preferred)
+            if idx >= 0:
+                chosen_idx = idx
+                break
+        if chosen_idx >= 0:
+            self.model_combo.setCurrentIndex(chosen_idx)
 
-        self._text_combo = QComboBox()
-        self._text_combo.addItems(available)
-        idx = self._text_combo.findText(current_text)
-        if idx >= 0:
-            self._text_combo.setCurrentIndex(idx)
-        form.addRow("Text / Reasoning model:", self._text_combo)
+        self.model_combo.setEnabled(True)
 
-        self._vision_combo = QComboBox()
-        self._vision_combo.addItems(available)
-        idx = self._vision_combo.findText(current_vision)
-        if idx >= 0:
-            self._vision_combo.setCurrentIndex(idx)
-        form.addRow("Vision model:", self._vision_combo)
+    # ── Thinking / retry / regenerate ────────────────────────────────
 
-        layout.addLayout(form)
+    def _animate_thinking(self):
+        pass
 
-        note = QLabel(
-            "Changes take effect immediately.\n"
-            "Models must already be pulled in Ollama\n"
-            "(e.g. ollama pull qwen2.5:3b)."
+    def _start_thinking(self):
+        self._is_generating = True
+        self.user_input.setEnabled(False)
+        self.attach_button.setEnabled(False)
+        self.mic_button.setEnabled(False)
+        self._staging_area.setEnabled(False)
+        self.send_button.hide()
+        self.stop_button.show()
+        self.clear_button.setEnabled(False)
+        self._show_typing_bubble()
+
+    def _stop_thinking(self):
+        self._is_generating = False
+        self._remove_typing_bubble()
+        self.status_label.setText("")
+        self.user_input.setEnabled(True)
+        self.attach_button.setEnabled(True)
+        self.mic_button.setEnabled(True)
+        self._staging_area.setEnabled(True)
+        self.stop_button.hide()
+        self.send_button.show()
+        self.clear_button.setEnabled(True)
+
+    def _scroll_to_bottom(self):
+        self.chat_display.verticalScrollBar().setValue(
+            self.chat_display.verticalScrollBar().maximum()
         )
-        note.setStyleSheet("color: #666; font-size: 11px; margin-top: 6px;")
-        layout.addWidget(note)
 
-        btn_row = QHBoxLayout()
-        save_btn   = QPushButton("Save")
-        cancel_btn = QPushButton("Cancel")
-        save_btn.setDefault(True)
-        save_btn.clicked.connect(self.accept)
-        cancel_btn.clicked.connect(self.reject)
-        btn_row.addStretch()
-        btn_row.addWidget(save_btn)
-        btn_row.addWidget(cancel_btn)
-        layout.addLayout(btn_row)
+    def _stop_generating(self):
+        if hasattr(self, 'worker') and self.worker.isRunning():
+            self.worker.stop()
 
-    def get_selections(self):
-        """Return (text_model, vision_model) chosen by the user."""
-        return self._text_combo.currentText(), self._vision_combo.currentText()
+    def _retry_response(self, response_idx: int):
+        """
+        Retry the bot response at response_idx.
+        Trims chat_history back to just before that response,
+        rebuilds the UI cleanly, then re-fires the worker so the
+        new answer replaces the old one with no duplicate bubbles.
+        """
+        if self._is_generating:
+            return
 
+        # Walk chat_history counting Bot: entries to find the target,
+        # then slice everything from that point forward off.
+        bot_count = 0
+        trim_to = None
+        for i, line in enumerate(self.chat_history):
+            if line.startswith("Bot:"):
+                if bot_count == response_idx:
+                    trim_to = i
+                    break
+                bot_count += 1
 
-# ==================== DOCK FACTORY ====================
+        if trim_to is None:
+            # Fallback: trim the last bot entry
+            for i in range(len(self.chat_history) - 1, -1, -1):
+                if self.chat_history[i].startswith("Bot:"):
+                    trim_to = i
+                    break
 
-from PyQt5.QtWidgets import QDockWidget
-from PyQt5.QtCore import Qt
+        if trim_to is None or not any(
+            l.startswith("User:") for l in self.chat_history[:trim_to]
+        ):
+            self.status_label.setText("Nothing to retry.")
+            QTimer.singleShot(2000, lambda: self.status_label.setText(""))
+            return
 
-def createchatbotdock(parent=None):
-    """
-    Factory function for DockArea / Application integration.
-    Returns a QDockWidget containing a ChatbotGUI instance.
-    """
-    dock = QDockWidget("eSim Copilot", parent)
-    dock.setAllowedAreas(Qt.RightDockWidgetArea | Qt.LeftDockWidgetArea)
+        # Trim history then rebuild UI so the stale bubble is gone
+        # before the new response is appended.
+        self.chat_history = self.chat_history[:trim_to]
+        self._retry_history = list(self.chat_history)
+        self._rebuild_chat_html_from_history()
+        self._start_thinking()
 
-    chatbot_widget = ChatbotGUI(parent)
-    dock.setWidget(chatbot_widget)
-    return dock
+        # Re-use vision worker if the last user turn included images.
+        last_user = next(
+            (l for l in reversed(self.chat_history) if l.startswith("User:")), ""
+        )
+        followup_paths = [p for p in self._last_image_paths if os.path.exists(p)]
+        if followup_paths and "[Image analysis request:" in last_user:
+            prompt = last_user.split("\n", 1)[-1].strip() if "\n" in last_user else ""
+            self.worker = OllamaVisionWorker(
+                image_paths=followup_paths,
+                extra_prompt=prompt,
+                model=self.model_combo.currentText(),
+            )
+        else:
+            self.worker = OllamaWorker(
+                self._retry_history,
+                model=self.model_combo.currentText(),
+                temperature=self._temperature,
+                num_predict=self._num_predict,
+            )
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        self.worker.start()
 
+    def _retry_last(self):
+        """Legacy shim kept so any external callers don't break."""
+        if self.chat_history:
+            self._retry_response(self._response_counter - 1)
 
-# Standalone test
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    w = ChatbotGUI()
-    w.resize(500, 600)
-    w.show()
-    sys.exit(app.exec_())
+    def _regenerate_last_response(self):
+        if not self.chat_history:
+            return
 
-def create_chatbot_dock(parent=None):
-    """Factory function for DockArea integration."""
-    from PyQt5.QtWidgets import QDockWidget
-    from PyQt5.QtCore import Qt
-    
-    dock = QDockWidget("eSim Copilot", parent)
-    dock.setAllowedAreas(Qt.RightDockWidgetArea | Qt.LeftDockWidgetArea)
-    
-    chatbot_widget = ChatbotGUI(parent)
-    dock.setWidget(chatbot_widget)
-    
-    return dock
+        # Remove trailing bot response if present
+        if self.chat_history and self.chat_history[-1].startswith("Bot:"):
+            self.chat_history.pop()
+
+        # Find last user prompt
+        if not self.chat_history or not self.chat_history[-1].startswith("User:"):
+            self.status_label.setText("No previous user prompt to regenerate.")
+            QTimer.singleShot(2500, lambda: self.status_label.setText(""))
+            return
+
+        # Rebuild UI from trimmed history and retry from same state
+        self._retry_history = list(self.chat_history)
+        self._rebuild_chat_html_from_history()
+        self._start_thinking()
+
+        self.worker = OllamaWorker(
+            self._retry_history,
+            model=self.model_combo.currentText(),
+            temperature=self._temperature,
+            num_predict=self._num_predict,
+        )
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        self.worker.start()
+
+    def _on_status_update(self, msg: str):
+        self.status_label.setText(msg)
+        # Only show as chat bubble for major state changes, not every progress tick
+        if "Starting Ollama" in msg or "Ollama started" in msg:
+            self.chat_display.append(_system_bubble(msg))
+            self._scroll_to_bottom()
+
+    # ── Main chat logic ──────────────────────────────────────────────
+
+    def ask_ollama(self):
+        user_text = self.user_input.text().strip()
+        staged_paths = list(self._staged_images)
+
+        if not user_text and not staged_paths:
+            return
+
+        if self._is_generating:
+            return
+
+        if self._viewing_past_session:
+            # chat_history was already synced when the session was loaded,
+            # so no rebuild is needed — just clear the read-only flag.
+            self._viewing_past_session = False
+
+        ts = _get_time()
+
+        if staged_paths:
+            self._current_session_kind = "image"
+            if not self._warn_or_switch_to_vision_model():
+                # No vision model available — clear staged images and abort.
+                self._clear_staged_images()
+                return
+
+            fnames = [os.path.basename(p) for p in staged_paths]
+
+            if user_text:
+                self.user_input.add_to_history(user_text)
+            self.user_input.clear()
+
+            # Pass the user's text directly to the vision worker.
+            # chatbot_thread._build_schematic_vision_prompt() handles both
+            # cases: if user_text is empty it requests a general analysis;
+            # if it contains a question that question drives the response.
+            vision_extra_prompt = user_text
+
+            if user_text:
+                user_history_text = (
+                    f"[Image analysis request: {', '.join(fnames)}]\n{user_text}"
+                )
+            else:
+                user_history_text = (
+                    f"[Image analysis request: {', '.join(fnames)}]"
+                )
+
+            self.chat_history = (self.chat_history + [f"User: {user_history_text}"])[-20:]
+            self._retry_history = list(self.chat_history)
+            self._last_user_text = user_text if user_text else "image analysis"
+
+            # Read and encode images before displaying so thumbnails appear
+            # in the chat bubble immediately when the user sends.
+            img_key = ts + "_" + self._current_session_id
+            b64_list = []
+            for p in staged_paths:
+                try:
+                    with open(p, "rb") as f_img:
+                        raw = f_img.read()
+                    # Downscale for storage (reuse PIL if available)
+                    try:
+                        from PIL import Image as _PI
+                        import io as _io2
+                        img_obj = _PI.open(_io2.BytesIO(raw))
+                        img_obj.thumbnail((320, 240))
+                        if img_obj.mode not in ("RGB", "L"):
+                            img_obj = img_obj.convert("RGB")
+                        buf = _io2.BytesIO()
+                        img_obj.save(buf, format="JPEG", quality=75)
+                        raw = buf.getvalue()
+                    except Exception:
+                        pass
+                    b64_list.append((os.path.basename(p), base64.b64encode(raw).decode()))
+                except Exception:
+                    pass
+            if b64_list:
+                self._images_store[img_key] = b64_list
+
+            # Show image thumbnails inline so the user can see what was sent.
+            if b64_list:
+                for fname, b64 in b64_list:
+                    self.chat_display.append(_image_thumbnail_html(b64, fname))
+            else:
+                # Fallback to filename badges if encoding failed for all images
+                self.chat_display.append(_staged_images_bubble(fnames, ts))
+
+            if user_text:
+                self.chat_display.append(_user_bubble(user_text, ts))
+            self._scroll_to_bottom()
+
+            # Keep paths for follow-up context
+            self._last_image_paths = list(staged_paths)
+
+            self._clear_staged_images()
+            self._start_thinking()
+
+            self.worker = OllamaVisionWorker(
+                image_paths=staged_paths,
+                extra_prompt=vision_extra_prompt,
+                model=self.model_combo.currentText(),
+            )
+            self.worker.response_signal.connect(self.display_response)
+            self.worker.status_signal.connect(self._on_status_update)
+            self.worker.start()
+            return
+
+        self._current_session_kind = "text"
+        self._check_topic_switch(user_text)
+        self.chat_history = (self.chat_history + [f"User: {user_text}"])[-20:]
+        self.chat_display.append(_user_bubble(user_text, ts))
+        self._scroll_to_bottom()
+
+        self.user_input.add_to_history(user_text)
+        self.user_input.clear()
+        self._last_user_text = user_text
+        self._retry_history = list(self.chat_history)
+        self._start_thinking()
+
+        # If the user is following up on an image session, re-send the last
+        # images so the model has visual context for its answer.
+        followup_image_paths = [
+            p for p in self._last_image_paths if os.path.exists(p)
+        ]
+        if followup_image_paths and self._current_session_kind in ("image", "text"):
+            self.worker = OllamaVisionWorker(
+                image_paths=followup_image_paths,
+                extra_prompt=user_text,
+                model=self.model_combo.currentText(),
+            )
+        else:
+            self.worker = OllamaWorker(
+                self.chat_history,
+                model=self.model_combo.currentText(),
+                temperature=self._temperature,
+                num_predict=self._num_predict,
+            )
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        self.worker.start()
+
+    # ── Window / response / clear ────────────────────────────────────
+
+    def move_to_bottom_right(self):
+        # in Qt 6.  Use QApplication.primaryScreen().availableGeometry() instead.
+        screen = QApplication.primaryScreen().availableGeometry()
+        widget = self.geometry()
+        x = screen.width() - widget.width() - 10
+        y = screen.height() - widget.height() - 50
+        self.move(x, y)
+
+    def display_response(self, bot_response: str):
+        self._stop_thinking()
+        ts = _get_time()
+        idx = self._response_counter
+        self._response_counter += 1
+        self._bot_responses[idx] = bot_response
+
+        self.chat_display.append(_bot_bubble(bot_response, ts, idx))
+        self.chat_history.append(f"Bot: {bot_response}")
+        self._scroll_to_bottom()
+        self._update_ollama_status()
+
+        # Push a lightweight session entry into the sidebar immediately so
+        # the new chat appears at the top as soon as the first reply lands,
+        # without waiting for the debounced disk save (up to 5 seconds).
+        self._sidebar.upsert_session({
+            "id":         self._current_session_id,
+            "title":      self._derive_session_title(),
+            "created_at": self._session_created_at,
+            "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
+            "messages":   self.chat_history[-40:],
+            "kind":       self._current_session_kind,
+        })
+
+        self._save_history()
+
+        # (Retry is now an inline link in every bot bubble;
+        # the old navbar retry_button has been removed.)
+
+    def clear_session(self):
+        # Cancel any pending debounced save so _flush_save() can't
+        # resurrect the session file after we delete it below.
+        self._save_debounce_timer.stop()
+        self._save_pending = False
+
+        # Remove session file so it never reappears in the sidebar.
+        session_file = os.path.join(_SESSIONS_DIR, f"{self._current_session_id}.json")
+        try:
+            if os.path.exists(session_file):
+                os.remove(session_file)
+        except Exception:
+            pass
+
+        self.chat_display.setHtml(WELCOME_MESSAGE)
+        self.chat_history = []
+        self._retry_history = []
+        self._bot_responses = {}
+        self._response_counter = 0
+        self._last_user_text = ""
+        self._viewing_past_session = False
+        self._clear_staged_images()
+        self._images_store = {}
+        self._last_image_paths = []
+        self._viewing_past_session = False
+        self._current_session_kind = "text"
+        self._session_title_override = None
+
+        # Assign a fresh session ID so the next conversation starts clean
+        self._current_session_id = str(uuid.uuid4())
+        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+        try:
+            if os.path.exists(_HISTORY_FILE):
+                os.remove(_HISTORY_FILE)
+        except Exception:
+            pass
+
+        # Refresh sidebar so the cleared session disappears immediately
+        self._refresh_sidebar_if_open()
+
+    # ── Debug helpers ────────────────────────────────────────────────
+
+    def debug_ollama(self):
+        self._current_session_kind = "simulation_error"
+        self.chat_display.append(
+            '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+            '<td style="padding:0;">'
+            '<div style="background-color:#fff3cd;border-left:4px solid #e0a800;'
+            'border-radius:10px;padding:8px 14px;font-size:12px;color:#7a5800;">'
+            '<b>⚠️ Simulation Failed</b> — Analyzing error log…'
+            '</div></td></tr></table>'
+        )
+        self._scroll_to_bottom()
+        self._retry_history = list(self.chat_history)
+        self._start_thinking()
+        self.worker = OllamaWorker(
+            self.chat_history,
+            model=self.model_combo.currentText(),
+            temperature=self._temperature,
+            num_predict=self._num_predict,
+        )
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        self.worker.start()
+        self.user_input.clear()
+
+    def debug_error(self, log):
+        self.setWindowFlags(self.windowFlags())
+        self.show()
+        self.raise_()
+        self.activateWindow()
+
+        self.chat_history = []
+        self._current_session_kind = "simulation_error"
+
+        if os.path.exists(log):
+            with open(log, "r") as f:
+                lines = [ln for ln in f.readlines() if ln.strip()]
+
+            no_compat_index = next(
+                (i for i, ln in enumerate(lines) if "No compatibility mode selected!" in ln), None
+            )
+            circuit_index = next((i for i, ln in enumerate(lines) if "Circuit:" in ln), None)
+            total_cpu_index = next(
+                (i for i, ln in enumerate(lines) if "Total CPU time (seconds)" in ln), None
+            )
+
+            before_no_compat = lines[:no_compat_index] if no_compat_index else []
+            between = (
+                lines[circuit_index + 1:total_cpu_index]
+                if circuit_index is not None and total_cpu_index is not None
+                else []
+            )
+            filtered_lines = before_no_compat + between
+            # before sending to the model.  NgSpice logs can be 10-50 KB; sending
+            # all of it blows past num_ctx: 2048 and makes the model ignore the
+            # actual error.  The most actionable errors always appear at the end.
+            if len(filtered_lines) > _MAX_ERROR_LOG_LINES:
+                truncated_notice = [
+                    f"[Log truncated: showing last {_MAX_ERROR_LOG_LINES} "
+                    f"of {len(filtered_lines)} lines]\n"
+                ]
+                filtered_lines = truncated_notice + filtered_lines[-_MAX_ERROR_LOG_LINES:]
+
+            combined_text = "".join(filtered_lines)
+            # QLineEdit); display a compact summary label in the status bar instead.
+            self.status_label.setText(
+                f"🔍 Analysing error log ({len(filtered_lines)} lines)…"
+            )
+
+            self.obj_appconfig = Appconfig()
+            self.projDir = self.obj_appconfig.current_project["ProjectName"]
+            output_file = os.path.join(self.projDir, "erroroutput.txt")
+            with open(output_file, "w") as f:
+                f.writelines(filtered_lines)
+
+            self.chat_history.append(
+                f"User: I got a simulation error. Here is the log:\n{combined_text}"
+            )
+            self.debug_ollama()
