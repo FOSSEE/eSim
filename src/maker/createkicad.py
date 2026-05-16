@@ -31,7 +31,7 @@ from . import Appconfig
 import re
 import os
 import xml.etree.cElementTree as ET
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 
 class AutoSchematic:
@@ -75,10 +75,10 @@ class AutoSchematic:
                 ''' already exist. Do you want to overwrite it?</b><br/>
                 If yes press ok, else cancel it and ''' +
                 '''change the name of your verilog model.''',
-                QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Cancel
+                QtWidgets.QMessageBox.StandardButton.Ok, QtWidgets.QMessageBox.StandardButton.Cancel
             )
 
-            if ret == QtWidgets.QMessageBox.Ok:
+            if ret == QtWidgets.QMessageBox.StandardButton.Ok:
                 print("Overwriting existing libraries")
                 self.getPortInformation()
                 self.createXML()
@@ -94,7 +94,7 @@ class AutoSchematic:
                 self.parent, "Error", '''<b>A standard library already ''' +
                 '''exists with this name.</b><br/><b>Please change the ''' +
                 '''name of your verilog model and add it again.</b>''',
-                QtWidgets.QMessageBox.Ok
+                QtWidgets.QMessageBox.StandardButton.Ok
             )
 
     def getPortInformation(self):

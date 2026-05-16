@@ -16,18 +16,18 @@ from pathlib import Path
 from decimal import Decimal, getcontext
 from typing import Dict, List, Optional, Tuple, Any, Union
 
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.QtCore import Qt, QSettings, pyqtSignal
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
+from PyQt6 import QtGui, QtCore, QtWidgets
+from PyQt6.QtCore import Qt, QSettings, pyqtSignal
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                              QHBoxLayout, QListWidget, QListWidgetItem, QPushButton,
                              QCheckBox, QRadioButton, QButtonGroup, QGroupBox,
                              QLabel, QLineEdit, QSlider, QDoubleSpinBox, QMenu,
-                             QAction, QFileDialog, QColorDialog, QInputDialog,
+                             QFileDialog, QColorDialog, QInputDialog,
                              QMessageBox, QErrorMessage, QStatusBar, QStyle,
                              QSplitter, QToolButton, QWidgetAction, QGridLayout,
                              QSpacerItem, QSizePolicy,QScrollArea)
-from PyQt5.QtGui import (QColor, QBrush, QPalette, QKeySequence,
-                         QPainter, QPixmap, QFont)
+from PyQt6.QtGui import (QColor, QBrush, QPalette, QKeySequence,
+                         QPainter, QPixmap, QFont, QAction)
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -145,7 +145,7 @@ class plotWindow(QWidget):
 
         self.file_path = file_path
         self.project_name = project_name
-        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         self.setMinimumSize(400, 300)
         self.obj_appconfig = Appconfig()
         logger.info(f"Complete Project Path: {self.file_path}")
@@ -251,10 +251,10 @@ class plotWindow(QWidget):
         self.menu_bar = QtWidgets.QMenuBar(self)
         main_widget_layout.addWidget(self.menu_bar)
         content_widget = QWidget()
-        content_widget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        content_widget.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         main_layout = QHBoxLayout(content_widget)
-        self.splitter = QSplitter(Qt.Horizontal)
-        self.splitter.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.splitter = QSplitter(Qt.Orientation.Horizontal)
+        self.splitter.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         left_widget = self.create_waveform_list()
         self.splitter.addWidget(left_widget)
         center_widget = self.create_plot_area()
@@ -264,8 +264,8 @@ class plotWindow(QWidget):
         scroll_area.setWidget(right_widget)
         scroll_area.setWidgetResizable(True)
         scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
-        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         scrollbar_style = "QScrollBar:vertical{background-color:#F5F5F5;width:8px;border:none;border-radius:4px;}QScrollBar::handle:vertical{background-color:#BDBDBD;border-radius:4px;min-height:20px;margin:2px;}QScrollBar::handle:vertical:hover{background-color:#9E9E9E;}QScrollBar::add-line:vertical,QScrollBar::sub-line:vertical{height:0px;}QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical{background:transparent;}"
         scroll_area.verticalScrollBar().setStyleSheet(scrollbar_style)
         self.splitter.addWidget(scroll_area)
@@ -293,10 +293,10 @@ class plotWindow(QWidget):
         left_layout.addWidget(self.search_box)
         self.waveform_list = CustomListWidget()
         self.waveform_list.itemClicked.connect(self.on_waveform_toggle)
-        self.waveform_list.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.waveform_list.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.waveform_list.customContextMenuRequested.connect(self.show_list_context_menu)
-        self.waveform_list.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.waveform_list.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.waveform_list.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.waveform_list.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         left_layout.addWidget(self.waveform_list)
         button_layout = QHBoxLayout()
         self.select_all_btn = QPushButton("Select All")
@@ -325,7 +325,7 @@ class plotWindow(QWidget):
         self.canvas.mpl_connect('motion_notify_event', self.on_mouse_move)
         self.canvas.mpl_connect('key_press_event', self.on_key_press)
         self.canvas.mpl_connect('scroll_event', self.on_scroll)
-        self.canvas.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.canvas.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.canvas.customContextMenuRequested.connect(self.show_canvas_context_menu)
         return center_widget
 
@@ -371,7 +371,7 @@ class plotWindow(QWidget):
         timing_layout.addLayout(threshold_layout)
         spacing_layout = QHBoxLayout()
         spacing_layout.addWidget(QLabel("Spacing:"))
-        self.spacing_slider = QSlider(Qt.Horizontal)
+        self.spacing_slider = QSlider(Qt.Orientation.Horizontal)
         self.spacing_slider.setRange(100, 200)
         self.spacing_slider.setValue(120)
         self.spacing_slider.valueChanged.connect(self.on_spacing_changed)
@@ -461,15 +461,15 @@ class plotWindow(QWidget):
 
     def create_colored_icon(self, color: QColor, is_selected: bool) -> QtGui.QIcon:
         pixmap = QPixmap(18, 18)
-        pixmap.fill(Qt.transparent)
+        pixmap.fill(Qt.GlobalColor.transparent)
         painter = QPainter(pixmap)
         painter.setRenderHint(QPainter.Antialiasing)
         if is_selected:
             painter.setBrush(QBrush(color))
-            painter.setPen(Qt.NoPen)
+            painter.setPen(Qt.PenStyle.NoPen)
             painter.drawEllipse(1, 1, 16, 16)
         else:
-            painter.setBrush(Qt.NoBrush)
+            painter.setBrush(Qt.BrushStyle.NoBrush)
             pen = QtGui.QPen(QColor("#9E9E9E"))
             pen.setWidth(1)
             painter.setPen(pen)
@@ -484,7 +484,7 @@ class plotWindow(QWidget):
         saved_style = self.config.get('trace_style', {})
         for i, node_name in enumerate(self.obj_dataext.NBList):
             item = QListWidgetItem()
-            item.setData(Qt.UserRole, i)
+            item.setData(Qt.ItemDataRole.UserRole, i)
             if node_name in saved_colors:
                 self.trace_colors[i] = saved_colors[node_name]
             elif i < len(self.color):
@@ -512,7 +512,7 @@ class plotWindow(QWidget):
                 item.setHidden(text.lower() not in item.text().lower())
 
     def on_waveform_toggle(self, item: QListWidgetItem) -> None:
-        index = item.data(Qt.UserRole)
+        index = item.data(Qt.ItemDataRole.UserRole)
         self.trace_visibility[index] = item.isSelected()
         if item.isSelected() and index not in self.trace_colors:
             self.assign_trace_color(index)
@@ -554,7 +554,7 @@ class plotWindow(QWidget):
             item = self.waveform_list.item(i)
             if item and not item.isHidden():
                 item.setSelected(True)
-                index = item.data(Qt.UserRole)
+                index = item.data(Qt.ItemDataRole.UserRole)
                 self.trace_visibility[index] = True
                 if index not in self.trace_colors:
                     self.assign_trace_color(index)
@@ -568,7 +568,7 @@ class plotWindow(QWidget):
         for i in range(self.waveform_list.count()):
             item = self.waveform_list.item(i)
             if item:
-                index = item.data(Qt.UserRole)
+                index = item.data(Qt.ItemDataRole.UserRole)
                 self.update_list_item_appearance(item, index)
         self.refresh_plot()
 
@@ -599,7 +599,7 @@ class plotWindow(QWidget):
         rename_action = menu.addAction("Rename...")
         rename_action.triggered.connect(lambda: self.rename_trace(item))
         
-        index = item.data(Qt.UserRole)
+        index = item.data(Qt.ItemDataRole.UserRole)
         visible = False
         if index in self.active_traces and self.active_traces[index]:
             visible = self.active_traces[index].get_visible()
@@ -635,7 +635,7 @@ class plotWindow(QWidget):
             btn = QPushButton()
             btn.setFixedSize(24, 24)
             btn.setStyleSheet(f"QPushButton{{background-color:{color};border:1px solid #E0E0E0;border-radius:2px;}}QPushButton:hover{{border:2px solid #212121;}}")
-            btn.setCursor(Qt.PointingHandCursor)
+            btn.setCursor(Qt.CursorShape.PointingHandCursor)
             btn.clicked.connect(lambda checked, c=color: self.change_color_and_close(selected_items, c, menu))
             grid_layout.addWidget(btn, i // 4, i % 4)
         widget_action = QWidgetAction(menu)
@@ -654,7 +654,7 @@ class plotWindow(QWidget):
 
     def change_color(self, items: List[QListWidgetItem], color: str) -> None:
         for item in items:
-            index = item.data(Qt.UserRole)
+            index = item.data(Qt.ItemDataRole.UserRole)
             self.trace_colors[index] = color
             self.update_list_item_appearance(item, index)
             if index in self.active_traces and self.active_traces[index]:
@@ -684,7 +684,7 @@ class plotWindow(QWidget):
 
     def change_thickness(self, items: List[QListWidgetItem], thickness: float) -> None:
         for item in items:
-            index = item.data(Qt.UserRole)
+            index = item.data(Qt.ItemDataRole.UserRole)
             self.trace_thickness[index] = thickness
             if index in self.active_traces and self.active_traces[index]:
                 self.active_traces[index].set_linewidth(thickness)
@@ -693,7 +693,7 @@ class plotWindow(QWidget):
 
     def change_style(self, items: List[QListWidgetItem], style: str) -> None:
         for item in items:
-            index = item.data(Qt.UserRole)
+            index = item.data(Qt.ItemDataRole.UserRole)
             self.trace_style[index] = style
             if index in self.active_traces and self.active_traces[index]:
                 if style == 'steps-post':
@@ -705,7 +705,7 @@ class plotWindow(QWidget):
         self.canvas.draw()
 
     def rename_trace(self, item: QListWidgetItem) -> None:
-        index = item.data(Qt.UserRole)
+        index = item.data(Qt.ItemDataRole.UserRole)
         current_name = self.trace_names.get(index, self.obj_dataext.NBList[index])
         new_name, ok = QInputDialog.getText(self, "Rename Trace", "New name:", text=current_name)
         if ok and new_name and new_name != current_name:
@@ -716,9 +716,9 @@ class plotWindow(QWidget):
                 self.refresh_plot()
 
     def toggle_trace_visibility(self, items: List[QListWidgetItem]) -> None:
-        any_visible = any(item.data(Qt.UserRole) in self.active_traces and self.active_traces[item.data(Qt.UserRole)].get_visible() for item in items)
+        any_visible = any(item.data(Qt.ItemDataRole.UserRole) in self.active_traces and self.active_traces[item.data(Qt.ItemDataRole.UserRole)].get_visible() for item in items)
         for item in items:
-            index = item.data(Qt.UserRole)
+            index = item.data(Qt.ItemDataRole.UserRole)
             if index in self.active_traces and self.active_traces[index]:
                 self.active_traces[index].set_visible(not any_visible)
         self.canvas.draw()
@@ -735,7 +735,7 @@ class plotWindow(QWidget):
                 if hasattr(self, 'axes'):
                     options.extend([('X Label', self.axes.get_xlabel()), ('Y Label', self.axes.get_ylabel()), ('X Min', self.axes.get_xlim()[0]), ('X Max', self.axes.get_xlim()[1]), ('Y Min', self.axes.get_ylim()[0]), ('Y Max', self.axes.get_ylim()[1])])
                 dialog = _formlayout.FormDialog(options, parent=self, title='Figure Options')
-                if dialog.exec_():
+                if dialog.exec():
                     results = dialog.get_results()
                     if results:
                         self.fig.suptitle(results[0])
@@ -752,7 +752,7 @@ class plotWindow(QWidget):
             QMessageBox.information(self, "Figure Options", "Basic figure editing is available through the toolbar.")
 
     def on_timing_view_changed(self, state: int) -> None:
-        timing_enabled = state == Qt.Checked
+        timing_enabled = state == Qt.CheckState.Checked
         self.timing_box.content_area.setEnabled(timing_enabled)
         self.autoscale_check.setEnabled(not timing_enabled)
         self.refresh_plot()
