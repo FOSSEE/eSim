@@ -2,14 +2,14 @@
 NGSpice Widget Module
 
 This module provides the NgspiceWidget class for running NGSpice simulations
-within a PyQt5 application interface.
+within a PyQt6 application interface.
 """
 
 import os
 import logging
 from typing import List, Optional
-from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtCore import pyqtSignal, pyqtSlot
+from PyQt6 import QtWidgets, QtCore
+from PyQt6.QtCore import pyqtSignal, pyqtSlot
 from configuration.Appconfig import Appconfig
 from frontEnd import TerminalUi
 from configparser import ConfigParser
@@ -57,8 +57,8 @@ class NgspiceWidget(QtWidgets.QWidget):
         super().__init__()
 
         # **CRITICAL FIX**: Set expanding size policy
-        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                          QtWidgets.QSizePolicy.Expanding)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding,
+                          QtWidgets.QSizePolicy.Policy.Expanding)
 
         # Set minimum size
         self.setMinimumSize(300, 200)
@@ -109,7 +109,7 @@ class NgspiceWidget(QtWidgets.QWidget):
     def _configure_process(self) -> None:
         """Configure the NGSpice process with working directory and signals."""
         self.process.setWorkingDirectory(self.project_dir)
-        self.process.setProcessChannelMode(QtCore.QProcess.MergedChannels)
+        self.process.setProcessChannelMode(QtCore.QProcess.ProcessChannelMode.MergedChannels)
         
         # Connect process signals
         self.process.readyRead.connect(self.ready_read_all)
@@ -221,7 +221,7 @@ class NgspiceWidget(QtWidgets.QWidget):
 
         error_type = self.process.error()
         if error_type <= self.ERROR_TIMED_OUT:  # FailedToStart, Crashed, TimedOut
-            exit_status = QtCore.QProcess.CrashExit
+            exit_status = QtCore.QProcess.ExitStatus.CrashExit
         elif exit_status is None:
             exit_status = self.process.exitStatus()
 
@@ -339,18 +339,18 @@ class NgspiceWidget(QtWidgets.QWidget):
         Returns:
             True if simulation was successful, False otherwise
         """
-        return (exit_status == QtCore.QProcess.NormalExit and 
+        return (exit_status == QtCore.QProcess.ExitStatus.NormalExit and 
                 exit_code == 0 and 
-                error_type == QtCore.QProcess.UnknownError)
+                error_type == QtCore.QProcess.ProcessError.UnknownError)
 
     def _show_cancellation_message(self) -> None:
         """Display simulation cancellation message."""
         message_dialog = QtWidgets.QMessageBox()
         message_dialog.setModal(True)
-        message_dialog.setIcon(QtWidgets.QMessageBox.Warning)
+        message_dialog.setIcon(QtWidgets.QMessageBox.Icon.Warning)
         message_dialog.setWindowTitle("Warning Message")
         message_dialog.setText("Simulation was cancelled.")
-        message_dialog.setStandardButtons(QtWidgets.QMessageBox.Ok)
+        message_dialog.setStandardButtons(QtWidgets.QMessageBox.StandardButton.Ok)
         message_dialog.exec()
 
     def _show_success_message(self) -> None:
@@ -390,14 +390,14 @@ class NgspiceWidget(QtWidgets.QWidget):
             Human-readable error message
         """
         error_messages = {
-            QtCore.QProcess.FailedToStart: (
+            QtCore.QProcess.ProcessError.FailedToStart: (
                 'Simulation failed to start. '
                 'Ensure that eSim is installed correctly.'
             ),
-            QtCore.QProcess.Crashed: (
+            QtCore.QProcess.ProcessError.Crashed: (
                 'Simulation crashed. Try again later.'
             ),
-            QtCore.QProcess.Timedout: (
+            QtCore.QProcess.ProcessError.Timedout: (
                 'Simulation has timed out. Try to reduce the '
                 'simulation time or the simulation step interval.'
             )

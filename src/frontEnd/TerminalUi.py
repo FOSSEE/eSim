@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt6 import QtCore, QtGui, QtWidgets, uic
 import os
 
 
@@ -112,10 +112,10 @@ class TerminalUi(QtWidgets.QMainWindow):
         msg_box.setWindowTitle("Ngspice Plots")
         msg_box.setText("Do you want Ngspice plots?")
         
-        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.YesRole)
-        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.NoRole)
+        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.ButtonRole.YesRole)
+        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.ButtonRole.NoRole)
 
-        msg_box.exec_()
+        msg_box.exec()
 
         if msg_box.clickedButton() == yes_button:
             self.Flag = True 

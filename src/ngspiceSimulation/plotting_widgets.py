@@ -8,9 +8,9 @@ collapsible boxes and multimeter widgets.
 import logging
 from typing import Optional
 from decimal import Decimal
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QToolButton,
+from PyQt6 import QtCore, QtWidgets
+from PyQt6.QtCore import Qt
+from PyQt6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout, QToolButton,
                              QGridLayout, QLabel)
 
 # Set up logging
@@ -41,8 +41,8 @@ class CollapsibleBox(QWidget):
         
         self.title = title
         # **FIX**: Set proper size policy
-        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding,
-                          QtWidgets.QSizePolicy.Maximum)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding,
+                          QtWidgets.QSizePolicy.Policy.Maximum)
         
         self._setup_toggle_button()
         self._setup_content_area()
@@ -53,8 +53,8 @@ class CollapsibleBox(QWidget):
         """Set up the toggle button with styling and properties."""
         self.toggle_button = QToolButton()
         self.toggle_button.setStyleSheet("QToolButton { border: none; }")
-        self.toggle_button.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
-        self.toggle_button.setArrowType(Qt.DownArrow)
+        self.toggle_button.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+        self.toggle_button.setArrowType(Qt.ArrowType.DownArrow)
         self.toggle_button.setText(self.title)
         self.toggle_button.setCheckable(True)
         self.toggle_button.setChecked(True)
@@ -84,7 +84,7 @@ class CollapsibleBox(QWidget):
         Args:
             is_checked: Whether the toggle button is checked
         """
-        arrow_type = Qt.DownArrow if is_checked else Qt.RightArrow
+        arrow_type = Qt.ArrowType.DownArrow if is_checked else Qt.ArrowType.RightArrow
         self.toggle_button.setArrowType(arrow_type)
         self.content_area.setVisible(is_checked)
         
@@ -155,8 +155,8 @@ class MultimeterWidgetClass(QWidget):
         self.is_voltage = is_voltage
         
         # Set proper size policy instead of fixed geometry
-        self.setSizePolicy(QtWidgets.QSizePolicy.Fixed,
-                          QtWidgets.QSizePolicy.Fixed)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed,
+                          QtWidgets.QSizePolicy.Policy.Fixed)
         
         self._setup_ui()
         self._configure_window()
@@ -209,7 +209,7 @@ class MultimeterWidgetClass(QWidget):
             DEFAULT_WIDGET_HEIGHT
         )
         self.setWindowTitle(self.WINDOW_TITLE)
-        self.setWindowFlags(Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint)
         self.show()
 
     def update_value(self, new_rms_value: Decimal) -> None:

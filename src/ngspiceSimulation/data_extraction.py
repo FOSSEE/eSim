@@ -10,7 +10,7 @@ import os
 import logging
 from decimal import Decimal
 from typing import List, Tuple, Dict, Any, Optional
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 from configuration.Appconfig import Appconfig
 
 # Set up logging
@@ -165,7 +165,7 @@ class DataExtraction:
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Unable to open plot data files.')
-            self.msg.exec_()
+            self.msg.exec()
 
         try:
             try:
@@ -185,7 +185,7 @@ class DataExtraction:
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Unable to read Analysis File.')
-            self.msg.exec_()
+            self.msg.exec()
 
         data_params = self.numberFinder(file_path)
         lines_per_partition = int(data_params[0] + 1)
