@@ -1,0 +1,24 @@
+* Subcircuit lm3909
+.subckt lm3909 net-_r2-pad2_ net-_d1-pad2_ ? net-_d1-pad1_ net-_q1-pad1_ net-_r1-pad1_ ? net-_r2-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\lm3909\lm3909.cir
+.include NPN.lib
+.include ZenerD1N750.lib
+.include PNP.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+r1  net-_r1-pad1_ net-_q1-pad1_ 12
+r4  net-_d1-pad1_ net-_q1-pad3_ 20k
+r2  net-_r2-pad1_ net-_r2-pad2_ 6k
+r3  net-_r2-pad2_ net-_d1-pad1_ 3k
+r5  net-_q1-pad2_ net-_q2-pad2_ 20k
+r6  net-_q2-pad2_ net-_q1-pad3_ 10k
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+r7  net-_q2-pad3_ net-_r2-pad1_ 100
+r8  net-_q1-pad1_ net-_q1-pad2_ 400
+r9  net-_q1-pad2_ net-_d1-pad2_ 400
+q3 net-_d1-pad2_ net-_q3-pad2_ net-_d1-pad1_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ D1N750
+q5 net-_q2-pad1_ net-_q2-pad1_ net-_q1-pad1_ Q2N2907A
+q4 net-_q3-pad2_ net-_q2-pad1_ net-_q1-pad1_ Q2N2907A
+* Control Statements
+
+.ends lm3909
