@@ -39,9 +39,14 @@ class PspiceConverter:
 
             # Construct the full path to parser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
-            command = f"python3 {parser_path}/parser.py {file_path} {conPath}/{filename}"
+            command = [
+                "python3",
+                os.path.join(parser_path, "parser.py"),
+                file_path,
+                os.path.join(conPath, filename),
+            ]
             try:
-                subprocess.run(command, shell=True, check=True)
+                subprocess.run(command, check=True)
                 # Message box with the conversion success message
                 msg_box = QMessageBox()
                 msg_box.setIcon(QMessageBox.Icon.Information)
