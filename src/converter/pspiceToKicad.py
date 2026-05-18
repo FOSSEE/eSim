@@ -1,6 +1,7 @@
 import os
 import subprocess
 import shutil
+import sys
 from PyQt6.QtWidgets import QMessageBox
 from frontEnd import ProjectExplorer
 
@@ -40,7 +41,7 @@ class PspiceConverter:
             # Construct the full path to parser.py
             parser_path = os.path.join(script_dir, relative_parser_path)
             command = [
-                "python3",
+                sys.executable,
                 os.path.join(parser_path, "parser.py"),
                 file_path,
                 os.path.join(conPath, filename),

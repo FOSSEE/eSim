@@ -16,6 +16,7 @@ Run:  python3 -m pytest tests/test_security_p0.py -v
 
 import ast
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -449,7 +450,8 @@ class TestFixesBlockExploits(unittest.TestCase):
         for i, name in enumerate(sorted_names):
             placeholder = f"_trace_{i}_"
             if name in expr_safe:
-                expr_safe = expr_safe.replace(name, placeholder)
+                pattern = r'(?<![\w])' + re.escape(name) + r'(?![\w])'
+                expr_safe = re.sub(pattern, placeholder, expr_safe)
                 variables[placeholder] = trace_data[name]
         variables['np'] = np
 

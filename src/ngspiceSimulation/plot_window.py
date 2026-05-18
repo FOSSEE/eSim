@@ -12,6 +12,9 @@ import sys
 import json
 import traceback
 import logging
+import ast
+import operator
+import re
 from pathlib import Path
 from decimal import Decimal, getcontext
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -1143,9 +1146,6 @@ class plotWindow(QWidget):
         Raises:
             ValueError: If the expression contains unsafe constructs.
         """
-        import ast
-        import operator
-
         _SAFE_BINOPS = {
             ast.Add: operator.add,
             ast.Sub: operator.sub,
@@ -1271,7 +1271,12 @@ class plotWindow(QWidget):
                 for i, name in enumerate(sorted_names):
                     placeholder = f"_trace_{i}_"
                     if name in expr_safe:
-                        expr_safe = expr_safe.replace(name, placeholder)
+                        # Use regex with negative lookbehind/lookahead for word characters
+                        # to ensure we only replace exact trace names and not substrings
+                        # of other words. e.g. replacing 'in' should not affect 'sin(in)'.
+                        # Because trace names contain parens (v(out)), we use \w boundaries.
+                        pattern = r'(?<![\w])' + re.escape(name) + r'(?![\w])'
+                        expr_safe = re.sub(pattern, placeholder, expr_safe)
                         orig_idx = self.obj_dataext.NBList.index(name)
                         trace_variables[placeholder] = np.array(
                             self.obj_dataext.y[orig_idx], dtype=float
