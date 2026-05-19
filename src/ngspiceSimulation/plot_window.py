@@ -130,7 +130,7 @@ class CustomListWidget(QListWidget):
 
     def __init__(self, parent: Optional[QWidget] = None) -> None:
         super().__init__(parent)
-        self.setSelectionMode(QListWidget.MultiSelection)
+        self.setSelectionMode(QListWidget.SelectionMode.MultiSelection)
 
     def paintEvent(self, event: QtGui.QPaintEvent) -> None:
         super().paintEvent(event)
@@ -668,7 +668,7 @@ class plotWindow(QWidget):
         properties_action = menu.addAction("Figure Options...")
         properties_action.triggered.connect(self.open_figure_options)
         
-        menu.exec_(self.waveform_list.mapToGlobal(position))
+        menu.exec(self.waveform_list.mapToGlobal(position))
 
     def populate_color_menu(self, menu: QMenu, selected_items: List[QListWidgetItem]) -> None:
         color_widget = QWidget()

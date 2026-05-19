@@ -108,7 +108,7 @@ class NgspiceWidget(QtWidgets.QWidget):
     def _configure_process(self) -> None:
         """Configure the NGSpice process with working directory and signals."""
         self.process.setWorkingDirectory(self.project_dir)
-        self.process.setProcessChannelMode(QtCore.QProcess.SeparateChannels)
+        self.process.setProcessChannelMode(QtCore.QProcess.ProcessChannelMode.SeparateChannels)
 
         # Connect process signals
         self.process.readyReadStandardOutput.connect(self._handle_stdout)
@@ -213,7 +213,9 @@ class NgspiceWidget(QtWidgets.QWidget):
             exit_code = self.process.exitCode()
 
         error_type = self.process.error()
-        if error_type <= self.ERROR_TIMED_OUT:  # FailedToStart, Crashed, TimedOut
+        if error_type in (QtCore.QProcess.ProcessError.FailedToStart,
+                          QtCore.QProcess.ProcessError.Crashed,
+                          QtCore.QProcess.ProcessError.Timedout):
             exit_status = QtCore.QProcess.ExitStatus.CrashExit
         elif exit_status is None:
             exit_status = self.process.exitStatus()

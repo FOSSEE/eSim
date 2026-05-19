@@ -74,7 +74,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.cancelSimulationButton.setEnabled(False)
         self.redoSimulationButton.setEnabled(True)
 
-        if (self.qProcess.state() == QtCore.QProcess.NotRunning):
+        if (self.qProcess.state() == QtCore.QProcess.ProcessState.NotRunning):
             return
 
         self.simulationCancelled = True
@@ -98,7 +98,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.cancelSimulationButton.setEnabled(True)
         self.redoSimulationButton.setEnabled(False)
 
-        if (self.qProcess.state() != QtCore.QProcess.NotRunning):
+        if (self.qProcess.state() != QtCore.QProcess.ProcessState.NotRunning):
             return
 
         # To make the progressbar running
