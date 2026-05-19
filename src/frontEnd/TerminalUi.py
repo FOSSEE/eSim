@@ -122,8 +122,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         else:
             self.Flag = False  
 
-        # Emit a custom signal with name plotFlag2 depending upon the Flag
-        self.qProcess.setProperty("plotFlag2", self.Flag)
+        self.qProcess.setProperty("redoPlotFlag", self.Flag)
 
         self.qProcess.start('ngspice', self.args)
 
