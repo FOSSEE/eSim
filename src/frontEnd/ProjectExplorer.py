@@ -33,9 +33,7 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.treewidget.setColumnHidden(1, True)
 
         # CSS
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
         self.treewidget.setStyleSheet(" \
             QTreeView { border-radius: 15px; border: 1px \

@@ -320,9 +320,7 @@ class NgVeri(QtWidgets.QWidget):
           This is to remove lint_off comments needed by the verilator warnings.
           This function writes to the lint_off.txt in the library/tlv folder.
         '''
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
         if text == "Remove lint_off":
             return
@@ -359,9 +357,7 @@ class NgVeri(QtWidgets.QWidget):
             This is to add lint_off comments needed by the verilator warnings.
             This function writes to the lint_off.txt in the library/tlv folder.
         '''
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
         text = self.entry_var[3].text()
 
@@ -408,9 +404,7 @@ class NgVeri(QtWidgets.QWidget):
         self.entry_var[self.count] = QtWidgets.QComboBox()
         self.entry_var[self.count].addItem("Remove lint_off")
 
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
         self.lint_off = open(init_path + "library/tlv/lint_off.txt", 'r')
 
         self.data = self.lint_off.readlines()

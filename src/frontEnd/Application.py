@@ -23,12 +23,12 @@ import sys
 import traceback
 import webbrowser
 
-if os.name == 'nt':
+try:
     from frontEnd import pathmagic  # noqa:F401
-    init_path = ''
-else:
-    import pathmagic    # noqa:F401
-    init_path = '../../'
+except ImportError:
+    import pathmagic  # noqa:F401
+
+init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
 from PyQt6 import QtGui, QtCore, QtWidgets
 from PyQt6.QtCore import QSize

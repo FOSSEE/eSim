@@ -1056,9 +1056,7 @@ class DeviceModel(QtWidgets.QWidget):
         sending_btn = self.sender()
         self.widgetObjCount = int(sending_btn.objectName())
 
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
         self.libfile = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getOpenFileName(

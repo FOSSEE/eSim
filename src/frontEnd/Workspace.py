@@ -84,9 +84,7 @@ class Workspace(QtWidgets.QWidget):
         self.setWindowFlags(QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
 
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
         self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.setLayout(self.grid)

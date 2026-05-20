@@ -98,9 +98,7 @@ class Maker(QtWidgets.QWidget):
     # This function is to Add new verilog file
     def addverilog(self):
 
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
         self.verilogfile = QtCore.QDir.toNativeSeparators(
             QtWidgets.QFileDialog.getOpenFileName(
                 self, "Open Verilog Directory",
@@ -204,9 +202,7 @@ class Maker(QtWidgets.QWidget):
 
     # This is used to run the makerchip-app
     def runmakerchip(self):
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
         try:
             if not makerchipTOSAccepted(True):
                 return

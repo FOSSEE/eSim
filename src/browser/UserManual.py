@@ -15,13 +15,16 @@ class UserManual(QtWidgets.QWidget):
         self.vlayout = QtWidgets.QVBoxLayout()
 
         manual = 'library/browser/User-Manual/eSim_Manual_2.5.pdf'
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
+        manual_path = os.path.join(init_path, manual)
 
         if os.name == 'nt':
-            os.startfile(os.path.realpath(manual))
+            os.startfile(os.path.realpath(manual_path))
         else:
-            manual_path = '../../' + manual
+            import sys
+            opener = 'open' if sys.platform == 'darwin' else 'xdg-open'
             subprocess.Popen(
-                ['xdg-open', os.path.realpath(manual_path)], shell=False
+                [opener, os.path.realpath(manual_path)], shell=False
             )
 
         self.setLayout(self.vlayout)
