@@ -1,0 +1,36 @@
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [
+    ".git",
+    ".github",
+    ".pytest_cache",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "ASYNC", "B", "A", "C4", "SIM", "RET"]
+ignore = [
+    "E501", # Line too long (handled by formatting)
+    "RET505", # Unnecessary else after return
+]
+
+[tool.pyright]
+include = ["src"]
+exclude = ["**/node_modules", "**/__pycache__"]
+pythonVersion = "3.11"
+reportMissingImports = true
+reportMissingTypeStubs = false
+typeCheckingMode = "basic"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q --tb=short"
+testpaths = [
+    "tests",
+]
+python_files = "test_*.py"
+filterwarnings = [
+    "ignore::DeprecationWarning",
+]
