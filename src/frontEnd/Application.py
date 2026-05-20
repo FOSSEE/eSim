@@ -23,6 +23,15 @@ import sys
 import traceback
 import webbrowser
 
+# macOS Standalone PATH Injection: Ensure Homebrew binaries are accessible
+if sys.platform == 'darwin':
+    macos_paths = ['/opt/homebrew/bin', '/usr/local/bin', '/opt/local/bin']
+    current_path = os.environ.get("PATH", "")
+    new_paths = [p for p in macos_paths if p not in current_path]
+    if new_paths:
+        os.environ["PATH"] = os.pathsep.join(new_paths) + os.pathsep + current_path
+
+
 try:
     from frontEnd import pathmagic  # noqa:F401
 except ImportError:
