@@ -12,6 +12,9 @@ import sys
 import json
 import traceback
 import logging
+import ast
+import operator
+import re
 from pathlib import Path
 from decimal import Decimal, getcontext
 from typing import Dict, List, Optional, Tuple, Any
@@ -1259,7 +1262,109 @@ class plotWindow(QWidget):
     def toggle_legend(self) -> None:
         self.refresh_plot()
 
+    @staticmethod
+    def _safe_eval_expr(expr_str, variables):
+        """
+        Safely evaluate a math expression string containing only arithmetic
+        operations (+, -, *, /, **) on known trace-name variables.
+
+        Uses Python's ast module to parse the expression into a syntax tree,
+        then walks it to reject any node that is not a safe arithmetic
+        operation, numeric literal, or known variable name.
+
+        This replaces the previous eval() call which allowed arbitrary code
+        execution (file I/O, os.system, __import__, etc.).
+
+        Args:
+            expr_str: The user-supplied expression string.
+            variables: Dict mapping trace names to numpy arrays.
+
+        Returns:
+            The result of evaluating the expression (typically a numpy array).
+
+        Raises:
+            ValueError: If the expression contains unsafe constructs.
+        """
+        _SAFE_BINOPS = {
+            ast.Add: operator.add,
+            ast.Sub: operator.sub,
+            ast.Mult: operator.mul,
+            ast.Div: operator.truediv,
+            ast.Pow: operator.pow,
+            ast.FloorDiv: operator.floordiv,
+            ast.Mod: operator.mod,
+        }
+        _SAFE_UNARYOPS = {
+            ast.UAdd: operator.pos,
+            ast.USub: operator.neg,
+        }
+
+        def _eval_node(node):
+            # Numeric constants: 3, 2.5, etc.
+            if isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+                return node.value
+            # Variable names — must be a known trace name
+            if isinstance(node, ast.Name):
+                if node.id in variables:
+                    return variables[node.id]
+                raise ValueError(
+                    f"Unknown variable '{node.id}'. "
+                    f"Available traces: {list(variables.keys())}"
+                )
+            # Binary operations: a + b, a * b, etc.
+            if isinstance(node, ast.BinOp):
+                op_func = _SAFE_BINOPS.get(type(node.op))
+                if op_func is None:
+                    raise ValueError(f"Unsupported operator: {type(node.op).__name__}")
+                return op_func(_eval_node(node.left), _eval_node(node.right))
+            # Unary operations: -a, +a
+            if isinstance(node, ast.UnaryOp):
+                op_func = _SAFE_UNARYOPS.get(type(node.op))
+                if op_func is None:
+                    raise ValueError(f"Unsupported unary operator: {type(node.op).__name__}")
+                return op_func(_eval_node(node.operand))
+            # Function calls — only allow safe numpy functions
+            if isinstance(node, ast.Call):
+                if isinstance(node.func, ast.Attribute):
+                    # Allow np.abs(), np.sqrt(), np.log(), np.sin(), etc.
+                    if (isinstance(node.func.value, ast.Name)
+                            and node.func.value.id == 'np'
+                            and node.func.attr in (
+                                'abs', 'sqrt', 'log', 'log10', 'log2',
+                                'sin', 'cos', 'tan', 'exp', 'mean',
+                                'max', 'min', 'sum', 'diff',
+                            )):
+                        func = getattr(np, node.func.attr)
+                        args = [_eval_node(a) for a in node.args]
+                        return func(*args)
+                raise ValueError(
+                    f"Function calls are not allowed except: "
+                    f"np.abs, np.sqrt, np.log, np.sin, np.cos, np.tan, "
+                    f"np.exp, np.mean, np.max, np.min, np.sum, np.diff"
+                )
+            raise ValueError(
+                f"Unsafe expression element: {type(node).__name__}. "
+                f"Only arithmetic (+, -, *, /, **) on trace names is allowed."
+            )
+
+        try:
+            tree = ast.parse(expr_str, mode='eval')
+        except SyntaxError as e:
+            raise ValueError(f"Invalid expression syntax: {e}")
+
+        return _eval_node(tree.body)
+
     def plot_function(self) -> None:
+        """Plot a user-defined function expression.
+
+        Supports two formats:
+          - "trace1 vs trace2"  — X-Y plot of one trace against another
+          - Arithmetic expression — e.g. "v(out) + v(in)", "v(out) * 2"
+
+        The expression evaluator uses a safe AST-based parser that only
+        allows arithmetic operations on known trace names, preventing
+        arbitrary code execution.
+        """
         function_text = self.func_input.text()
         if not function_text:
             QMessageBox.warning(self, "Input Error", "Function input cannot be empty.")
@@ -1294,16 +1399,46 @@ class plotWindow(QWidget):
                 QMessageBox.warning(self, "Trace Not Found", f"Could not find one of the traces: {x_name}, {y_name}")
                 return
         else:
+            # Safe expression evaluation using AST-based parser.
+            # Only arithmetic operations on known trace names are allowed.
+            #
+            # Trace names like "v(out)" contain parentheses which Python's
+            # AST would parse as function calls. We substitute them with
+            # safe placeholder identifiers before parsing.
             try:
-                data_map = {
-                    name: np.array(self.obj_dataext.y[i], dtype=float)
-                    for i, name in enumerate(self.obj_dataext.NBList)
-                }
-                y_data = _safe_eval(function_text, data_map)
+                # Build placeholder mapping: sorted longest-first to avoid
+                # partial-match collisions (e.g. "v(out)" before "v(o)")
+                trace_variables = {}
+                expr_safe = function_text
+                sorted_names = sorted(
+                    self.obj_dataext.NBList, key=len, reverse=True
+                )
+                for i, name in enumerate(sorted_names):
+                    placeholder = f"_trace_{i}_"
+                    if name in expr_safe:
+                        # Use regex with negative lookbehind/lookahead for word characters
+                        # to ensure we only replace exact trace names and not substrings
+                        # of other words. e.g. replacing 'in' should not affect 'sin(in)'.
+                        # Because trace names contain parens (v(out)), we use \w boundaries.
+                        pattern = r'(?<![\w])' + re.escape(name) + r'(?![\w])'
+                        expr_safe = re.sub(pattern, placeholder, expr_safe)
+                        orig_idx = self.obj_dataext.NBList.index(name)
+                        trace_variables[placeholder] = np.array(
+                            self.obj_dataext.y[orig_idx], dtype=float
+                        )
+                # Expose 'np' so np.func() calls work
+                trace_variables['np'] = np
+
+                y_data = self._safe_eval_expr(expr_safe, trace_variables)
                 x_data = np.array(self.obj_dataext.x, dtype=float)
                 line, = self.axes.plot(x_data, y_data, label=function_text)
                 self._func_line = line
+
+            except (ValueError, TypeError) as e:
+                QMessageBox.warning(self, "Evaluation Error", f"Could not plot function: {e}")
+                return
             except Exception as e:
+                logger.error(f"Unexpected error in plot_function: {e}")
                 QMessageBox.warning(self, "Evaluation Error", f"Could not plot function: {e}")
                 return
 
