@@ -55,7 +55,7 @@ class DockArea(QtWidgets.QMainWindow):
             # CSS
             dock[dockName].setStyleSheet(" \
             QWidget { border-radius: 15px; border: 1px solid gray;\
-                padding: 5px; width: 200px; height: 150px;  } \
+                padding: 5px; } \
             ")
             self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea, dock[dockName])
 
@@ -190,8 +190,7 @@ class DockArea(QtWidgets.QMainWindow):
 
         # CSS
         dock[dockName + str(count)].setStyleSheet(" \
-        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px;\
-            width: 200px; height: 150px;  } \
+        .QWidget { border-radius: 15px; border: 1px solid gray; padding: 0px; } \
         ")
 
         dock[dockName + str(count)].setVisible(True)
@@ -331,7 +330,7 @@ class DockArea(QtWidgets.QMainWindow):
         # CSS
         dock[dockName + str(count)].setStyleSheet(" \
             .QWidget { border-radius: 15px; border: 1px solid gray;\
-                padding: 5px; width: 200px; height: 150px;  } \
+                padding: 5px; } \
             ")
 
         dock[dockName + str(count)].setVisible(True)
@@ -382,7 +381,7 @@ class DockArea(QtWidgets.QMainWindow):
         # CSS
         dock[dockName + str(count)].setStyleSheet(" \
             .QWidget { border-radius: 15px; border: 1px solid gray; \
-                padding: 5px; width: 200px; height: 150px;  } \
+                padding: 5px; } \
             ")
 
         dock[dockName + str(count)].setVisible(True)
@@ -418,7 +417,7 @@ class DockArea(QtWidgets.QMainWindow):
         # CSS
         dock[dockName + str(count)].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray;\
-            padding: 5px; width: 200px; height: 150px;  } \
+            padding: 5px; } \
         ")
 
         dock[dockName + str(count)].setVisible(True)
@@ -464,7 +463,7 @@ class DockArea(QtWidgets.QMainWindow):
             # CSS
             dock[dockName + str(count)].setStyleSheet(" \
             .QWidget { border-radius: 15px; border: 1px solid gray;\
-                padding: 5px; width: 200px; height: 150px;  } \
+                padding: 5px; } \
             ")
 
             dock[dockName + str(count)].setVisible(True)
@@ -522,7 +521,7 @@ class DockArea(QtWidgets.QMainWindow):
         # CSS
         dock[dockName + str(count)].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray;\
-            padding: 5px; width: 200px; height: 150px;  } \
+            padding: 5px; } \
         ")
 
         dock[dockName + str(count)].setVisible(True)
@@ -550,7 +549,7 @@ class DockArea(QtWidgets.QMainWindow):
         # CSS
         dock['User Manual-' + str(count)].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray;\
-            padding: 5px; width: 200px; height: 150px;  } \
+            padding: 5px; } \
         ")
 
         dock['User Manual-' + str(count)].setVisible(True)
@@ -588,7 +587,7 @@ class DockArea(QtWidgets.QMainWindow):
         # CSS
         dock[dockName + str(count)].setStyleSheet(" \
         .QWidget { border-radius: 15px; border: 1px solid gray;\
-            padding: 5px; width: 200px; height: 150px;  } \
+            padding: 5px; } \
         ")
         temp = self.obj_appconfig.current_project['ProjectName']
         if temp:

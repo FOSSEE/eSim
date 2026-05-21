@@ -23,6 +23,17 @@ import sys
 import traceback
 import webbrowser
 
+# Path and Frozen state debugging
+try:
+    with open("/tmp/esim_debug.txt", "w") as debug_file:
+        debug_file.write(f"sys.frozen: {getattr(sys, 'frozen', False)}\n")
+        if getattr(sys, 'frozen', False):
+            debug_file.write(f"sys._MEIPASS: {sys._MEIPASS}\n")
+        debug_file.write(f"__file__: {__file__}\n")
+        debug_file.write(f"dirname(__file__): {os.path.dirname(__file__)}\n")
+except Exception as e:
+    pass
+
 # macOS Standalone PATH Injection: Ensure Homebrew binaries are accessible
 if sys.platform == 'darwin':
     macos_paths = ['/opt/homebrew/bin', '/usr/local/bin', '/opt/local/bin']
@@ -88,7 +99,6 @@ class Application(QtWidgets.QMainWindow):
         self.setWindowTitle(
             self.obj_appconfig._APPLICATION + "-" + self.obj_appconfig._VERSION
         )
-        self.showMaximized()
         self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
 
         self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
@@ -904,9 +914,11 @@ def main(args):
     splash = QtWidgets.QSplashScreen(
         splash_pix, QtCore.Qt.WindowType.WindowStaysOnTopHint
     )
-    splash.setMask(splash_pix.mask())
+    if sys.platform != 'darwin':
+        splash.setMask(splash_pix.mask())
     splash.setDisabled(True)
     splash.show()
+    app.processEvents()
 
     appView.splash = splash
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
@@ -926,6 +938,7 @@ def main(args):
     if work != 0:
         appView.obj_workspace.defaultWorkspace()
     else:
+        splash.close()
         appView.obj_workspace.show()
 
     sys.exit(app.exec())

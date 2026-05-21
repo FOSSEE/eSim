@@ -52,7 +52,8 @@ fi
 
 # 4. Compile Standalone macOS Application Bundle (.app)
 echo "Compiling Standalone eSim.app..."
-pyinstaller --clean esim_mac.spec
+rm -rf dist/eSim dist/eSim.app build/esim_mac
+pyinstaller --clean -y esim_mac.spec
 
 # 5. Build Drag-and-Drop .dmg Installer Disk Image
 echo "Packaging Standalone eSim.dmg installer..."
