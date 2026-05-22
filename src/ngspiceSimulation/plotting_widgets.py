@@ -40,7 +40,6 @@ class CollapsibleBox(QWidget):
         super().__init__(parent)
         
         self.title = title
-        # **FIX**: Set proper size policy
         self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding,
                           QtWidgets.QSizePolicy.Policy.Maximum)
         
@@ -147,7 +146,6 @@ class MultimeterWidgetClass(QWidget):
         """
         super().__init__()
         
-        # **FIX**: Don't force window size, let it be managed by parent
         self.node_branch = node_branch
         self.rms_value = rms_value
         self.location_x = location_x
@@ -165,14 +163,7 @@ class MultimeterWidgetClass(QWidget):
                    f"{node_branch} = {rms_value}")
 
     def _setup_ui(self) -> None:
-        """Set up the user interface elements."""
-        # Create main container widget
-        self.multimeter_container = QWidget(self)
-        
-        # Create labels based on measurement type
         self._create_labels()
-        
-        # Set up layout
         self._setup_layout()
 
     def _create_labels(self) -> None:
@@ -191,14 +182,11 @@ class MultimeterWidgetClass(QWidget):
         self.rms_value_label = QLabel(f"{self.rms_value} {unit_text}")
 
     def _setup_layout(self) -> None:
-        """Set up the grid layout for the widget."""
         layout = QGridLayout(self)
         layout.addWidget(self.type_label, 0, 0)
         layout.addWidget(self.rms_title_label, 0, 1)
         layout.addWidget(self.node_branch_value_label, 1, 0)
         layout.addWidget(self.rms_value_label, 1, 1)
-        
-        self.multimeter_container.setLayout(layout)
 
     def _configure_window(self) -> None:
         """Configure window properties and display the widget."""

@@ -74,7 +74,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.cancelSimulationButton.setEnabled(False)
         self.redoSimulationButton.setEnabled(True)
 
-        if (self.qProcess.state() == QtCore.QProcess.NotRunning):
+        if (self.qProcess.state() == QtCore.QProcess.ProcessState.NotRunning):
             return
 
         self.simulationCancelled = True
@@ -98,7 +98,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.cancelSimulationButton.setEnabled(True)
         self.redoSimulationButton.setEnabled(False)
 
-        if (self.qProcess.state() != QtCore.QProcess.NotRunning):
+        if (self.qProcess.state() != QtCore.QProcess.ProcessState.NotRunning):
             return
 
         # To make the progressbar running
@@ -122,8 +122,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         else:
             self.Flag = False  
 
-        # Emit a custom signal with name plotFlag2 depending upon the Flag
-        self.qProcess.setProperty("plotFlag2", self.Flag)
+        self.qProcess.setProperty("redoPlotFlag", self.Flag)
 
         self.qProcess.start('ngspice', self.args)
 
