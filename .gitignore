@@ -1,20 +1,16 @@
-*.bak
-*.cir.ckt
-*.log
-*.orig
-*.net
-*.pyc
-*.rej
-_saved_*
-*.swp
-*~
-*plot_data_i.txt
-*plot_data_v.txt
-esim-start.sh
-esim.desktop
-nghdl*
-!nghdl/
-!nghdl/**
-tags
+# Build artifacts
+*.o
+*.cm
+*.so
+
+# ngspice build
+release/
 build/
-dist/
+
+# downloaded tools
+ghdl-*/
+verilator-*/
+
+# temp
+*.log
+*.tmp
