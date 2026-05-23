@@ -18,7 +18,7 @@
             "package_name": "llvm",
             "version": "-",
             "installed": "Yes",
-            "installed_date": "2026-03-30 19:21:28",
+            "installed_date": "2026-05-20 19:39:21",
             "install_directory": "C:\\Users\\Admin\\Desktop\\eSim\\Windows-Standalone\\tools\\llvm"
         },
         {
@@ -35,9 +35,9 @@
         },
         {
             "package_name": "chocolatey",
-            "version": "2.7.0",
+            "version": "2.7.2",
             "installed": "Yes",
-            "installed_date": "2026-03-30 19:21:29",
+            "installed_date": "2026-05-20 19:39:23",
             "install_directory": "C:\\ProgramData\\chocolatey"
         },
         {

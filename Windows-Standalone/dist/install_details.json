@@ -10,9 +10,9 @@
         {
             "package_name": "kicad",
             "version": "-",
-            "installed": "No",
+            "installed": "Yes",
             "installed_date": "-",
-            "install_directory": "-"
+            "install_directory": "C:\\Program Files\\KiCad"
         },
         {
             "package_name": "llvm",

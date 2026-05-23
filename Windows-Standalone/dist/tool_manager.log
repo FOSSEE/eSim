@@ -6,3 +6,45 @@
 2026-05-08 18:26:45,647 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
 2026-05-08 18:26:47,738 - INFO - Chocolatey directory exists. Version: 2.7.1.
 2026-05-08 18:26:47,739 - INFO - Updated chocolatey installation status in C:\Users\Admin\AppData\Local\Temp\_MEI116202\install_details.json. Version: 2.7.1, Installed: Yes.
+2026-05-13 12:32:51,782 - WARNING - Ngspice directory not found. Marked as not installed.
+2026-05-13 12:32:51,790 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-13 12:32:51,791 - INFO - KiCad detected in system.
+2026-05-13 12:32:51,791 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-13 12:32:51,892 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-13 12:32:54,380 - INFO - Chocolatey directory exists. Version: 2.7.1.
+2026-05-13 12:32:54,381 - INFO - Updated chocolatey installation status in C:\Users\Admin\AppData\Local\Temp\_MEI114002\install_details.json. Version: 2.7.1, Installed: Yes.
+2026-05-20 19:36:58,034 - WARNING - Ngspice directory not found. Marked as not installed.
+2026-05-20 19:36:58,035 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:36:58,036 - INFO - KiCad detected in system.
+2026-05-20 19:36:58,037 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:36:58,128 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:37:00,147 - INFO - Chocolatey directory exists. Version: 2.7.1.
+2026-05-20 19:37:00,148 - INFO - Updated chocolatey installation status in C:\Users\Admin\AppData\Local\Temp\_MEI169762\install_details.json. Version: 2.7.1, Installed: Yes.
+2026-05-20 19:49:11,815 - WARNING - Ngspice directory not found. Marked as not installed.
+2026-05-20 19:49:11,816 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:49:11,817 - INFO - KiCad detected in system.
+2026-05-20 19:49:11,818 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:49:11,907 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:49:13,896 - INFO - Chocolatey directory exists. Version: 2.7.2.
+2026-05-20 19:49:13,897 - INFO - Updated chocolatey installation status in C:\Users\Admin\AppData\Local\Temp\_MEI172162\install_details.json. Version: 2.7.2, Installed: Yes.
+2026-05-20 19:49:29,671 - WARNING - Ngspice directory not found. Marked as not installed.
+2026-05-20 19:49:29,672 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:49:29,672 - INFO - KiCad detected in system.
+2026-05-20 19:49:29,673 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:49:29,750 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:49:31,788 - INFO - Chocolatey directory exists. Version: 2.7.2.
+2026-05-20 19:49:31,789 - INFO - Updated chocolatey installation status in C:\Users\Admin\AppData\Local\Temp\_MEI18802\install_details.json. Version: 2.7.2, Installed: Yes.
+2026-05-20 19:50:19,464 - WARNING - Ngspice directory not found. Marked as not installed.
+2026-05-20 19:50:19,465 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:50:19,466 - INFO - KiCad detected in system.
+2026-05-20 19:50:19,467 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:50:19,568 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:50:21,706 - INFO - Chocolatey directory exists. Version: 2.7.2.
+2026-05-20 19:50:21,707 - INFO - Updated chocolatey installation status in C:\Users\Admin\AppData\Local\Temp\_MEI170442\install_details.json. Version: 2.7.2, Installed: Yes.
+2026-05-20 19:51:14,027 - WARNING - Ngspice directory not found. Marked as not installed.
+2026-05-20 19:51:14,028 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:51:14,029 - INFO - KiCad detected in system.
+2026-05-20 19:51:14,029 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:51:14,101 - INFO - JSON data saved to C:\Users\Admin\Desktop\eSim\Windows-Standalone\dist\install_details.json.
+2026-05-20 19:51:16,192 - INFO - Chocolatey directory exists. Version: 2.7.2.
+2026-05-20 19:51:16,193 - INFO - Updated chocolatey installation status in C:\Users\Admin\AppData\Local\Temp\_MEI4842\install_details.json. Version: 2.7.2, Installed: Yes.
