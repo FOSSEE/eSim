@@ -18,3 +18,7 @@ nghdl*
 tags
 build/
 dist/
+venv/
+__pycache__/
+.pytest_cache/
+reports/*.html
