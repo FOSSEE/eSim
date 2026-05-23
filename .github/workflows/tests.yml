@@ -1,0 +1,37 @@
+name: eSim Automated Tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-html pytest-cov
+          sudo apt update
+          sudo apt install -y ngspice
+
+      - name: Run Integration Tests
+        run: |
+          pytest --html=reports/report.html
+
+      - name: Upload HTML Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-report
+          path: reports/report.html

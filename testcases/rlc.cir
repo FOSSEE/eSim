@@ -1,0 +1,12 @@
+V1 in 0 DC 5
+R1 in out 1k
+L1 out mid 1m
+C1 mid 0 1u
+R2 mid 0 1Meg
+
+.control
+run
+.endc
+
+.tran 1ms 10ms
+.end
