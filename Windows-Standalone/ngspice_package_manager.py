@@ -9,6 +9,25 @@ from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import QVBoxLayout, QLabel, QComboBox, QPushButton, QMessageBox
 from logging_setup import log_info, log_error, log_warning
 
+
+def run_command_with_progress(command, progress_callback=None):
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
+        shell=True,
+        text=True
+    )
+
+    for line in process.stdout:
+        if progress_callback:
+            progress_callback(line.strip())
+
+    process.wait()
+    return process.returncode
+
+
+
 # Define the tools directory and JSON file path
 TOOLS_DIR = os.path.join(os.getcwd(), "tools")
 NGSPICE_DIR = os.path.join(TOOLS_DIR, "ngspice")
@@ -101,31 +120,38 @@ def get_installed_version(package_name):
     return "Not Installed"
 
 # Install ngspice
-def install_ngspice(selected_version):
+
+
+def install_ngspice(selected_version, progress_callback=None):
     try:
         if not selected_version:
-            log_warning("Ngspice installation attempted without selecting a version.")
             return "Please select a version."
 
-        command = install_command(selected_version)
-        subprocess.run(command, check=True, shell=True)
+        # Step 1: Install using Chocolatey
+        command = f"choco install ngspice --version={selected_version} -y"
+        print("Running:", command)
 
+        run_command_with_progress(command, progress_callback)
+
+        # Step 2: Check installation folder
         choco_lib_path = os.path.join("C:\\ProgramData\\chocolatey\\lib", "ngspice")
-        if not os.path.exists(choco_lib_path):
-            log_error("Installation succeeded but Ngspice directory not found.")
-            return "Installation succeeded but Ngspice directory not found."
 
+        if not os.path.exists(choco_lib_path):
+            return "Installation failed: ngspice folder not found."
+
+        # Step 3: Move to tools folder (your project logic)
         if os.path.exists(NGSPICE_DIR):
             shutil.rmtree(NGSPICE_DIR)
+
         shutil.move(choco_lib_path, TOOLS_DIR)
 
-        # Load and update JSON data
+        # Step 4: Update JSON
         data = load_json_data()
         package = find_package(data, "ngspice")
 
+        installed_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
         if package:
-            # Update package details
-            installed_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             package.update({
                 "version": selected_version,
                 "installed": "Yes",
@@ -133,24 +159,22 @@ def install_ngspice(selected_version):
                 "install_directory": NGSPICE_DIR
             })
         else:
-            # Add a new package entry
             data["important_packages"].append({
                 "package_name": "ngspice",
                 "version": selected_version,
                 "installed": "Yes",
-                "installed_date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "installed_date": installed_date,
                 "install_directory": NGSPICE_DIR
             })
 
         save_json_data(data)
-        log_info(f"Ngspice version {selected_version} installed successfully.")
+
         return f"Ngspice version {selected_version} installed successfully."
-    except subprocess.CalledProcessError as e:
-        log_error(f"Installation failed: {e}")
-        return f"Installation failed: {e}"
+
     except Exception as e:
-        log_error(f"An error occurred during installation: {e}")
-        return f"An error occurred: {e}"
+        return f"Error: {e}"
+    
+
 
 # Fetch the latest version of ngspice
 def fetch_latest_version():
@@ -189,7 +213,7 @@ def check_for_updates(installed_version, latest_version):
         return False
 
 # Update ngspice
-def update_ngspice():
+def update_ngspice(progress_callback=None):
     latest_versions = fetch_latest_version()
     latest_version = latest_versions[0] if latest_versions and latest_versions[0] != "Unknown" else None
 
@@ -198,16 +222,19 @@ def update_ngspice():
         return "Failed to fetch the latest version."
 
     try:
-        # Run the update command
-        subprocess.run(f"choco install -y ngspice --version={latest_version}", shell=True, check=True)
+        # ✅ Use progress-enabled command
+        command = f"choco install -y ngspice --version={latest_version}"
+        run_command_with_progress(command, progress_callback)
 
-        # Move the updated files to the tools directory
+        # Step 2: Move files
         choco_lib_path = os.path.join("C:\\ProgramData\\chocolatey\\lib", "ngspice")
+
         if os.path.exists(NGSPICE_DIR):
             shutil.rmtree(NGSPICE_DIR)
+
         shutil.move(choco_lib_path, TOOLS_DIR)
 
-        # Update the JSON file with the new version
+        # Step 3: Update JSON
         data = load_json_data()
         package = find_package(data, "ngspice")
         installed_date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -215,6 +242,7 @@ def update_ngspice():
         if package:
             package.update({
                 "version": latest_version,
+                "installed": "Yes",
                 "installed_date": installed_date,
                 "install_directory": NGSPICE_DIR
             })
@@ -228,11 +256,9 @@ def update_ngspice():
             })
 
         save_json_data(data)
-        log_info(f"Ngspice has been updated to version {latest_version}.")
-        return f"Ngspice has been updated to version {latest_version}."
-    except subprocess.CalledProcessError as e:
-        log_error(f"Error occurred during Ngspice update: {e}")
-        return f"Error occurred during update: {e}"
+
+        return f"Ngspice updated to version {latest_version}"
+
     except Exception as e:
         log_error(f"Error: {e}")
         return f"Error: {e}"
@@ -332,6 +358,14 @@ class NgspiceInstallerApp(QtWidgets.QWidget):
         layout.addWidget(update_button)
 
         self.setLayout(layout)
+        from PyQt5.QtWidgets import QProgressBar
+
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setValue(0)
+        layout.addWidget(self.progress_bar)
+
+    def update_progress_bar(self, output):
+        self.progress_bar.setValue(min(self.progress_bar.value() + 5, 95))
 
     def install_button_action(self):
         data = load_json_data()
@@ -347,35 +381,87 @@ class NgspiceInstallerApp(QtWidgets.QWidget):
             QMessageBox.critical(self, "Error", "Please select a version.")
             return
 
-        result = install_ngspice(selected_version)
+    # Reset progress bar
+        self.progress_bar.setValue(0)
+
+    # Progress callback (INSIDE function)
+        def update_progress(output):
+            self.progress_bar.setValue(min(self.progress_bar.value() + 5, 95))
+            QtWidgets.QApplication.processEvents()
+
+    # Run install
+        result = install_ngspice(selected_version, update_progress)
+
+        self.progress_bar.setValue(100)
+
         QMessageBox.information(self, "Installation Status", result)
 
         update_installation_status_ngspice()
         self.update_labels()
 
+    
+
+
+
+
+
     def update_button_action(self):
+    # Reset progress bar
+        self.progress_bar.setValue(0)
+
+    # Progress callback
+        def update_progress(output):
+            self.progress_bar.setValue(min(self.progress_bar.value() + 5, 95))
+            QtWidgets.QApplication.processEvents()
+
+    # Run update
+        result = update_ngspice(update_progress)
+
+    # Finish progress
+        self.progress_bar.setValue(100)
+
+    # 🔥 IMPORTANT: Refresh data AFTER update
         self.latest_versions = fetch_latest_version()
-        latest_version = self.latest_versions[0] if self.latest_versions[0] != "Unknown" else None
+        update_installation_status_ngspice()
 
-        if not latest_version:
-            QMessageBox.critical(self, "Update Status", "Failed to fetch the latest version. Please try again later.")
-            return
-
+    # Reload installed version from JSON
         data = load_json_data()
         package = find_package(data, "ngspice")
-        installed_version = package["version"] if package and package["installed"] == "Yes" else "Not Installed"
 
-        if installed_version == latest_version:
-            QMessageBox.information(self, "Update Status", "You are already using the latest version.")
-            return
-
-        result = update_ngspice()
-        if "Error" in result:
-            QMessageBox.critical(self, "Update Status", result)
+        if package and package["installed"] == "Yes":
+            self.installed_version = package["version"]
         else:
-            QMessageBox.information(self, "Update Status", f"Ngspice has been updated to version {latest_version}.")
-            update_installation_status_ngspice()
-            self.update_labels()
+            self.installed_version = "Not Installed"
+
+    # 🔥 Update UI labels
+        self.installed_version_label.setText(f"Installed Version: {self.installed_version}")
+        self.latest_version_label.setText(f"Latest Version: {self.latest_versions[0]}")
+
+    # Update status message
+        if self.installed_version == self.latest_versions[0]:
+            self.update_label.setText("You are using the latest version.")
+            self.update_label.setStyleSheet("color: green;")
+        else:
+            self.update_label.setText("Your version is out of date. Please update.")
+            self.update_label.setStyleSheet("color: red;")
+
+    # Show message
+        QMessageBox.information(self, "Update Status", result)
+
+# Progress callback
+        def update_progress(output):
+            self.progress_bar.setValue(min(self.progress_bar.value() + 5, 95))
+            QtWidgets.QApplication.processEvents()
+
+# Run update with progress
+        result = update_ngspice(update_progress)
+
+# Complete progress
+        self.progress_bar.setValue(100)
+        self.progress_bar.setValue(0)
+
+
+
 
     def update_labels(self):
         data = load_json_data()

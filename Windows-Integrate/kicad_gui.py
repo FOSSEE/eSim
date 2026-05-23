@@ -3,6 +3,7 @@ import os
 import shutil
 import subprocess
 import json
+from PyQt5.QtWidgets import QProgressBar
 from datetime import datetime
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QLabel, QPushButton, QComboBox, QMessageBox
 from PyQt5.QtCore import Qt
@@ -11,7 +12,7 @@ from PyQt5.QtCore import Qt
 INSTALL_DIR = r"C:\FOSSEE"
 DOWNLOAD_DIR = os.path.join(INSTALL_DIR, "Tool-Manager", "Download")
 KICAD_DIR = os.path.join(INSTALL_DIR, "KiCad")
-BASE_DIR = r"C:\FOSSEE\Tool-Manager"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 INFO_JSON = os.path.join(BASE_DIR, "information.json")
 
 # Available KiCad versions for the user to choose (displayed as 7.0.11 and 8.0.9)
@@ -136,12 +137,20 @@ class KiCadUpdater(QWidget):
         self.update_button.clicked.connect(self.install_kicad)
         self.update_button.setStyleSheet("font-size: 14px; padding: 10px 0;")
         layout.addWidget(self.update_button)
+          # Progress Bar
+        # Progress Bar
+        self.progress_bar = QProgressBar(self)
+        self.progress_bar.setRange(0, 100)
+        self.progress_bar.setValue(0)
+        self.progress_bar.setVisible(False)
+        layout.addWidget(self.progress_bar)
 
         self.setLayout(layout)
-
         # Check if the user is using the latest version
         self.check_for_updates()
+      
 
+        
     def check_for_updates(self):
         """Check if the installed version is the latest one."""
         if self.installed_version == LATEST_VERSION:
@@ -155,39 +164,76 @@ class KiCadUpdater(QWidget):
         """Update the status label with a message and color."""
         self.status_label.setText(message)
         self.status_label.setStyleSheet(f"color: {color}; font-size: 14px; padding: 10px 0;")
+    def update_progress_smooth(self, target):
+        import time
+        current = self.progress_bar.value()
 
+        for i in range(current, target + 1):
+            self.progress_bar.setValue(i)
+            QApplication.processEvents()
+            time.sleep(0.02)
     def install_kicad(self):
-        """Installs the selected KiCad version."""
+        self.progress_bar.setVisible(True)
+        self.progress_bar.setValue(0)
+        self.update_button.setEnabled(False)
+        QApplication.processEvents()
+
+    # Step 1
+        self.update_progress_smooth(10)
+
         version = self.version_dropdown.currentText()
         package_name = KICAD_PACKAGES[version]
         archive_path = os.path.join(DOWNLOAD_DIR, package_name)
 
+    # Step 2
+        self.update_progress_smooth(20)
+
         if not os.path.exists(archive_path):
-            self.update_status_label(f"Error: {package_name} not found in {DOWNLOAD_DIR}", "red")
+            self.update_status_label(f"Error: {package_name} not found", "red")
+            self.progress_bar.setVisible(False)
+            self.update_button.setEnabled(True)
             return
 
-        # Install logic for KiCad (silent installation)
+    # Step 3
+        self.update_progress_smooth(30)
+
         install_command = [archive_path, "/S", "/allusers", f"/D={KICAD_DIR}"]
+
         try:
-            result = subprocess.run(install_command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            print(f"Installation complete for {version}")
-        except subprocess.CalledProcessError as e:
-            self.update_status_label(f"Error during installation: {e}", "red")
+            import time
+            process = subprocess.Popen(install_command)
+
+        # Step 4
+            self.update_progress_smooth(40)
+
+            while process.poll() is None:
+                QApplication.processEvents()
+                time.sleep(0.1)
+
+        # Step 5
+            self.update_progress_smooth(70)
+
+        except Exception as e:
+            self.update_status_label(f"Error: {e}", "red")
+            self.progress_bar.setVisible(False)
+            self.update_button.setEnabled(True)
             return
 
-        # Copy libraries after installation
+    # Step 6
         copy_kicad_libraries(version)
+        self.update_progress_smooth(90)
 
-        # Update UI after installation
+    # Step 7
+        update_information_json(version)
+        self.update_progress_smooth(100)
+
         self.version_label.setText(f"Installed Version: {version}")
         self.update_status_label("Installation Complete!", "green")
 
-        # Update the version in the JSON file after successful installation
-        update_information_json(version)
+        self.progress_bar.setVisible(False)
+        self.update_button.setEnabled(True)
 
-        # Show popup message
-        QMessageBox.information(self, "Update Complete", f"The KiCad is updated to version {version}.")
-
+        QMessageBox.information(self, "Update Complete", f"Updated to {version}")  
 # Run the application
 if __name__ == "__main__":
     app = QApplication(sys.argv)

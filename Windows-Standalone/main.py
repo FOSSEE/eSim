@@ -1,17 +1,27 @@
 import os
+import sys
 import subprocess
 import json
 from PyQt5 import QtWidgets, QtGui, QtCore
+
 from ngspice_package_manager import update_installation_status_ngspice
 from kicad_package_manager import update_installation_status_kicad
 from ghdl_package_manager import update_installation_status_ghdl
 from llvm_package_manager import update_installation_status_llvm
 from chocolatey import check_chocolatey_directory
 
-# Path to JSON file
-JSON_FILE_PATH = os.path.join(os.getcwd(), "install_details.json")
 
-# Path to the external program
+# ================= PATH SETUP =================
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+JSON_FILE_PATH = os.path.join(BASE_DIR, "install_details.json")
+
+if not os.path.exists(JSON_FILE_PATH):
+    with open(JSON_FILE_PATH, "w") as f:
+        json.dump({
+            "important_packages": [],
+            "pip_packages": []
+        }, f)
+
 NGSPICE_INSTALL_PROGRAM = os.path.join(os.getcwd(), "ngspice_package_manager.py")
 KICAD_INSTALL_PROGRAM = os.path.join(os.getcwd(), "kicad_package_manager.py")
 LLVM_INSTALL_PROGRAM = os.path.join(os.getcwd(), "llvm_package_manager.py")
@@ -19,264 +29,270 @@ GHDL_INSTALL_PROGRAM = os.path.join(os.getcwd(), "ghdl_package_manager.py")
 PYTHON_PACKAGES_INSTALL_PROGRAM = os.path.join(os.getcwd(), "python_package_manager.py")
 CHOCOLATEY_INSTALL_PROGRAM = os.path.join(os.getcwd(), "chocolatey.py")
 
-update_installation_status_ngspice()
-update_installation_status_kicad()
-update_installation_status_ghdl()
-update_installation_status_llvm()
-check_chocolatey_directory(JSON_FILE_PATH)
 
+# ================= DETECTION FUNCTIONS =================
+def check_python_package(pkg):
+    try:
+        subprocess.check_output(f"pip show {pkg}", shell=True)
+        return True
+    except:
+        return False
+
+
+def is_ghdl_installed():
+    try:
+        subprocess.check_output("ghdl --version", shell=True)
+        return True
+    except:
+        return False
+
+
+# ================= MAIN UI =================
 class DependenciesInstallerApp(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
+        
 
-        # Window setup
         self.setWindowTitle("Tool Manager")
-        self.resize(400, 500)
+        self.resize(400, 550)
+
+        # Center window
         screen = QtWidgets.QApplication.primaryScreen().availableGeometry()
-        x = (screen.width() - self.width()) // 2
-        y = (screen.height() - self.height()) // 2
-        self.move(x, y)
+        self.move(
+            (screen.width() - self.width()) // 2,
+            (screen.height() - self.height()) // 2
+        )
 
-        # Layout setup
         self.layout = QtWidgets.QVBoxLayout()
-        self.layout.setSpacing(20)  # Reduce spacing between widgets
-        self.layout.setContentsMargins(20, 20, 20, 20)  # Compact layout margins
-
-        # Heading
-        self.heading = QtWidgets.QLabel("Tool Manager for eSim", self)
-        self.heading.setFont(QtGui.QFont("Arial", 12))
-        self.heading.setAlignment(QtCore.Qt.AlignCenter)
-        self.heading.setFixedHeight(40)  # Set fixed height for compactness
-        self.layout.addWidget(self.heading)
-
-
-        # Status label
-        self.status_label = QtWidgets.QLabel("", self)
-        self.status_label.setFont(QtGui.QFont("Arial", 12))
-        self.status_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.status_label.setFixedHeight(40)  # Set fixed height for compactness
-        self.layout.addWidget(self.status_label)
-
-        # Chocolatey status label
-        self.chocolatey_status_label = QtWidgets.QLabel("Chocolatey Status: Checking...", self)
-        self.chocolatey_status_label.setFont(QtGui.QFont("Arial", 12))
-        self.chocolatey_status_label.setAlignment(QtCore.Qt.AlignCenter)
-        self.chocolatey_status_label.setFixedHeight(40)  # Set fixed height for compactness
-        self.layout.addWidget(self.chocolatey_status_label)
-
-        # Button styles with hover effect
-        button_style = """
-            QPushButton {
-                font-size: 14px;
-                padding: 10px;
-                border-radius: 10px;  /* Rounded corners */
-                border: 1px solid gray;  /* Default border */
-                background-color: lightgray;  /* Default background */
-                color: black;  /* Default text color */
-            }
-            QPushButton:hover {
-                background-color: #87CEFA;  /* Light blue background on hover */
-                border: 1px solid #4682B4;  /* Steel blue border on hover */
-                color: black;  /* White text on hover */
-            }
-        """
-
-        # Chocolatey button
-        self.chocolatey_button = QtWidgets.QPushButton("Install Chocolatey", self)
-        self.chocolatey_button.setStyleSheet(button_style)
-        self.chocolatey_button.clicked.connect(self.install_chocolatey)
-        self.layout.addWidget(self.chocolatey_button)
-
-        # Ngspice button
-        self.ngspice_button = QtWidgets.QPushButton("Install Ngspice", self)
-        self.ngspice_button.setStyleSheet(button_style)
-        self.ngspice_button.clicked.connect(self.install_ngspice)
-        self.layout.addWidget(self.ngspice_button)
-
-        # Kicad button
-        self.kicad_button = QtWidgets.QPushButton("Install Kicad", self)
-        self.kicad_button.setStyleSheet(button_style)
-        self.kicad_button.clicked.connect(self.install_kicad)
-        self.layout.addWidget(self.kicad_button)
-
-        # LLVM button
-        self.llvm_button = QtWidgets.QPushButton("Install LLVM", self)
-        self.llvm_button.setStyleSheet(button_style)
-        self.llvm_button.clicked.connect(self.install_llvm)
-        self.layout.addWidget(self.llvm_button)
-
-        # GHDL button
-        self.ghdl_button = QtWidgets.QPushButton("Install GHDL", self)
-        self.ghdl_button.setStyleSheet(button_style)
-        self.ghdl_button.clicked.connect(self.install_ghdl)
-        self.layout.addWidget(self.ghdl_button)
-
-        # Python packages button
-        self.python_packages_button = QtWidgets.QPushButton("Install Python Packages", self)
-        self.python_packages_button.setStyleSheet(button_style)
-        self.python_packages_button.clicked.connect(self.install_python_packages)
-        self.layout.addWidget(self.python_packages_button)
-
         self.setLayout(self.layout)
 
-        # Update the status label
+        # Progress Bar
+        self.progress_bar = QtWidgets.QProgressBar()
+        self.progress_bar.setValue(0)
+        self.layout.addWidget(self.progress_bar)
+
+        # Heading
+        heading = QtWidgets.QLabel("Tool Manager for eSim")
+        heading.setFont(QtGui.QFont("Arial", 12))
+        heading.setAlignment(QtCore.Qt.AlignCenter)
+        self.layout.addWidget(heading)
+
+        # Status label
+        self.status_label = QtWidgets.QLabel("")
+        self.status_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.layout.addWidget(self.status_label)
+
+        # Chocolatey label
+        self.choco_label = QtWidgets.QLabel("Chocolatey Status: Checking...")
+        self.choco_label.setAlignment(QtCore.Qt.AlignCenter)
+        self.layout.addWidget(self.choco_label)
+
+        # Button Style
+        button_style = """
+        QPushButton {
+            font-size: 14px;
+            padding: 8px;
+            border-radius: 8px;
+            background-color: lightgray;
+        }
+        QPushButton:hover {
+            background-color: #87CEFA;
+        }
+        """
+
+        # Buttons
+        self.add_button("Install Chocolatey", self.install_chocolatey, button_style)
+        self.add_button("Install Ngspice", self.install_ngspice, button_style)
+        self.add_button("Install KiCad", self.install_kicad, button_style)
+        self.add_button("Install LLVM", self.install_llvm, button_style)
+        self.add_button("Install GHDL", self.install_ghdl, button_style)
+        self.add_button("Install Python Packages", self.install_python_packages, button_style)
+        self.add_button("View Logs", self.open_logs, button_style)
+        self.add_button("Check Dependencies", self.check_dependencies_button, button_style)
+        self.refresh_all()
+        
+
+    # ================= HELPERS =================
+    def add_button(self, text, func, style):
+        btn = QtWidgets.QPushButton(text)
+        btn.setStyleSheet(style)
+        btn.clicked.connect(func)
+        self.layout.addWidget(btn)
+
+    def set_progress(self, value):
+        self.progress_bar.setValue(value)
+        QtWidgets.QApplication.processEvents()
+
+    def reset_progress(self):
+        self.progress_bar.setValue(0)
+
+    def refresh_all(self):
+        # Update JSON statuses
+        update_installation_status_ngspice()
+        update_installation_status_kicad()
+        update_installation_status_llvm()
+        update_installation_status_ghdl()
+        check_chocolatey_directory(JSON_FILE_PATH)
+
         self.update_status_label()
+       
 
+    # ================= STATUS =================
     def check_dependencies(self):
-        try:
-            with open(JSON_FILE_PATH, "r") as json_file:
-                data = json.load(json_file)
-        except FileNotFoundError:
-            # Default values if the file is not found
-            data = {
-                "important_packages": [
-                    {
-                        "package_name": "ngspice",
-                        "installed": "No"
-                    },
-                    {
-                        "package_name": "kicad",
-                        "installed": "No"
-                    },
-                    {
-                        "package_name": "llvm",
-                        "installed": "No"
-                    },
-                    {
-                        "package_name": "ghdl",
-                        "installed": "No"
-                    },
-                    {
-                        "package_name": "chocolatey",
-                        "installed": "No"
-                    }
-                ]
-            }
+        with open(JSON_FILE_PATH, "r") as f:
+            data = json.load(f)
 
-        # Initialize statuses
-        ngspice_status = "No"
-        kicad_status = "No"
-        llvm_status = "No"
-        ghdl_status = "No"
-        chocolatey_status = "No"
+        status = {pkg["package_name"]: pkg["installed"]
+                  for pkg in data.get("important_packages", [])}
 
-        # Iterate over important packages to find statuses
-        for package in data.get("important_packages", []):
-            if package.get("package_name") == "ngspice":
-                ngspice_status = package.get("installed", "No")
-            elif package.get("package_name") == "kicad":
-                kicad_status = package.get("installed", "No")
-            elif package.get("package_name") == "llvm":
-                llvm_status = package.get("installed", "No")
-            elif package.get("package_name") == "ghdl":
-                ghdl_status = package.get("installed", "No")
-            elif package.get("package_name") == "chocolatey":
-                chocolatey_status = package.get("installed", "No")
+        # Override GHDL with real detection
+        status["ghdl"] = "Yes" if is_ghdl_installed() else "No"
 
-        return ngspice_status, kicad_status, llvm_status, ghdl_status, chocolatey_status
+        return (
+            status.get("ngspice", "No"),
+            status.get("kicad", "No"),
+            status.get("llvm", "No"),
+            status.get("ghdl", "No"),
+            status.get("chocolatey", "No"),
+        )
 
     def update_status_label(self):
-        ngspice_status, kicad_status, llvm_status, ghdl_status, chocolatey_status = self.check_dependencies()
+        ng, kc, ll, gh, ch = self.check_dependencies()
 
-        if ngspice_status == "Yes" and kicad_status == "Yes" and llvm_status == "Yes" and ghdl_status == "Yes":
-            self.status_label.setText("All necessary dependencies are installed.")
-            self.status_label.setStyleSheet("color: green;")
-        else:
-            missing = []
-            installed = []
-            if ngspice_status == "No":
-                missing.append("Ngspice")
-            else:
-                installed.append("Ngspice")
-            if kicad_status == "No":
-                missing.append("Kicad")
-            else:
-                installed.append("Kicad")
-            if llvm_status == "No":
-                missing.append("LLVM")
-            else:
-                installed.append("LLVM")
-            if ghdl_status == "No":
-                missing.append("GHDL")
-            else:
-                installed.append("GHDL")
+        missing = []
+        installed = []
 
-            self.status_label.setText(f"Missing: {', '.join(missing)}\nInstalled: {', '.join(installed)}")
-            self.status_label.setStyleSheet("color: red;")
+        for name, val in [("Ngspice", ng), ("KiCad", kc), ("LLVM", ll), ("GHDL", gh)]:
+            (installed if val == "Yes" else missing).append(name)
 
-        # Update Chocolatey status label
-        if chocolatey_status == "Yes":
-            self.chocolatey_status_label.setText("Chocolatey Status: Installed")
-            self.chocolatey_status_label.setStyleSheet("color: green;")
-        else:
-            self.chocolatey_status_label.setText("Chocolatey Status: Not Installed")
-            self.chocolatey_status_label.setStyleSheet("color: red;")
+        
+        self.status_label.setText(
+            f" Missing: {', '.join(missing)}\n Installed: {', '.join(installed)}"
+        )
+
+        self.choco_label.setText(
+            "Chocolatey Installed" if ch == "Yes" else "Chocolatey Not Installed"
+        )
+        self.choco_label.setStyleSheet(
+            "color: green;" if ch == "Yes" else "color: red;"
+        )
+
+
+
+    # ================= INSTALL FUNCTIONS =================
+    def run_installer(self, name, script):
+        try:
+            if not os.path.exists(script):
+                QtWidgets.QMessageBox.critical(self, "Error", f"{name} installer not found")
+                print("ERROR PATH:", script)
+                return
+
+            print("Running script:", script)
+
+            self.progress_bar.setValue(0)
+            self.status_label.setText(f"Installing {name}...")
+
+            process = subprocess.Popen(
+                [sys.executable, script],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True
+            )
+
+            for line in iter(process.stdout.readline, ''):
+                if "|" in line:
+                    value, text = line.strip().split("|", 1)
+                    try:
+                        self.set_progress(int(value.replace("%", "")))
+                    except:
+                        pass
+                    self.status_label.setText(text)
+                else:
+                    self.status_label.setText(line.strip())
+
+                QtWidgets.QApplication.processEvents()
+
+            stdout, stderr = process.communicate()
+
+            if process.returncode != 0:
+                print("ERROR:", stderr)
+                QtWidgets.QMessageBox.critical(self, "Error", f"{name} installation failed ")
+                self.progress_bar.setValue(0)
+                return
+
+            self.set_progress(100)
+            QtWidgets.QMessageBox.information(self, "Success", f"{name} Installed ")
+
+            self.refresh_all()
+            self.progress_bar.setValue(0)
+
+        except Exception as e:
+            self.progress_bar.setValue(0)
+            QtWidgets.QMessageBox.critical(self, "Error", str(e))
 
     def install_ngspice(self):
-        try:
-            subprocess.run(["python", NGSPICE_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "Ngspice installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
-        except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run Ngspice installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An error occurred: {e}")
+        self.run_installer("Ngspice", NGSPICE_INSTALL_PROGRAM)
 
     def install_kicad(self):
-        try:
-            subprocess.run(["python", KICAD_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "Kicad installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
-        except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run Kicad installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An error occurred: {e}")
+        self.run_installer("KiCad", KICAD_INSTALL_PROGRAM)
 
     def install_llvm(self):
-        try:
-            subprocess.run(["python", LLVM_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "LLVM installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
-        except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run LLVM installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An error occurred: {e}")
+        self.run_installer("LLVM", LLVM_INSTALL_PROGRAM)
 
     def install_ghdl(self):
-        try:
-            subprocess.run(["python", GHDL_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "GHDL installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
-        except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run GHDL installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An error occurred: {e}")
+        self.run_installer("GHDL", GHDL_INSTALL_PROGRAM)
+
+    def install_chocolatey(self):
+        self.run_installer("Chocolatey", CHOCOLATEY_INSTALL_PROGRAM)
 
     def install_python_packages(self):
         try:
-            subprocess.run(["python", PYTHON_PACKAGES_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "Python packages installation started successfully!")
-        except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run the Python Packages GUI: {e}")
+            self.run_installer("Python Packages", PYTHON_PACKAGES_INSTALL_PROGRAM)
         except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An unexpected error occurred: {e}")
+            QtWidgets.QMessageBox.critical(self, "Error", str(e))
 
-    def install_chocolatey(self):
+            
+    def open_logs(self):
         try:
-            subprocess.run(["python", CHOCOLATEY_INSTALL_PROGRAM], check=True)
-            QtWidgets.QMessageBox.information(self, "Success", "Chocolatey installation started successfully!")
-            self.update_status_label()  # Update status after installation attempt
-        except subprocess.CalledProcessError as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"Failed to run Chocolatey installer: {e}")
-        except Exception as e:
-            QtWidgets.QMessageBox.critical(self, "Error", f"An unexpected error occurred: {e}")
+            log_path = r"C:\Users\Admin\Desktop\eSim\Windows-Standalone\tool_manager.log"
 
-# Main function
+            if not os.path.exists(log_path):
+                QtWidgets.QMessageBox.warning(self, "Error", "Log file not found!")
+                return
+
+            os.startfile(log_path)  # This opens the file directly
+
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(self, "Error", str(e))
+
+
+
+    def check_dependencies_button(self):
+        try:
+            ng, kc, ll, gh, ch = self.check_dependencies()
+
+            message = (
+                f"Ngspice: {ng}\n"
+                f"KiCad: {kc}\n"
+                f"LLVM: {ll}\n"
+                f"GHDL: {gh}\n"
+                f"Chocolatey: {ch}"
+            )
+
+            QtWidgets.QMessageBox.information(self, "Dependency Status", message)
+
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(self, "Error", str(e))
+
+
+
+# ================= MAIN =================
 def main():
-    app = QtWidgets.QApplication([])
+    app = QtWidgets.QApplication(sys.argv)
     window = DependenciesInstallerApp()
     window.show()
-    app.exec_()
+    sys.exit(app.exec_())
+
 
 if __name__ == "__main__":
     main()

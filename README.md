@@ -19,7 +19,8 @@ It contains all the documentation for packaging eSim for distribution.
 ---
 
 # 📦 Tool Manager for eSim – Multi-Platform Support 
-### Developed by Pyae Sone Khant Aung
+### Developed by Pyae Sone Khant Aung & Moreshwar Naikwadi 
+
 
 This repository contains platform-specific versions of the **Tool Installation and Management System** for eSim. It supports installing, updating, and managing tools like **Ngspice**, **KiCad**, **GHDL**, **Verilator**, and more.
 

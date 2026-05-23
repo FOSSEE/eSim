@@ -1,6 +1,7 @@
 import sys
 import json
 import os
+from dependencies import run_command_with_progress
 from datetime import datetime
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import (
@@ -113,6 +114,10 @@ class ChocolateyInstaller(QMainWindow):
 
         # Layout
         layout = QVBoxLayout()
+        from PyQt5.QtWidgets import QProgressBar
+        self.progress_bar = QProgressBar()
+        self.progress_bar.setValue(0)
+        layout.addWidget(self.progress_bar)
         layout.addWidget(self.status_label)
         layout.addWidget(self.install_button)
         layout.addWidget(self.update_button)
@@ -183,7 +188,15 @@ class ChocolateyInstaller(QMainWindow):
         )
 
         try:
-            os.system(f"powershell -Command \"{install_script}\"")
+            from dependencies import run_command_with_progress
+
+            def update_progress(output):
+                self.progress_bar.setValue(min(self.progress_bar.value() + 2, 95))           
+                QApplication.processEvents()
+
+            run_command_with_progress(f"powershell -Command \"{install_script}\"", update_progress)
+            self.progress_bar.setValue(100)
+
             log_info("Chocolatey installed successfully.")
             QMessageBox.information(self, "Success", "Chocolatey installed successfully.")
             self.installed = True
@@ -200,11 +213,26 @@ class ChocolateyInstaller(QMainWindow):
 
         update_script = "choco upgrade chocolatey -y"
 
+    # Reset progress bar
+        self.progress_bar.setValue(0)
+
         try:
-            os.system(f"powershell -Command \"{update_script}\"")
+        # Progress callback
+            def update_progress(output):
+                self.progress_bar.setValue(min(self.progress_bar.value() + 5, 95))
+                QApplication.processEvents()
+
+        # Run command with progress
+            run_command_with_progress(update_script, update_progress)
+
+        # Complete progress
+            self.progress_bar.setValue(100)
+
             log_info("Chocolatey updated successfully.")
             QMessageBox.information(self, "Success", "Chocolatey updated successfully.")
+
             self.check_status()
+
         except Exception as e:
             log_error(f"Failed to update Chocolatey: {e}")
             QMessageBox.critical(self, "Error", f"Failed to update Chocolatey: {e}")
