@@ -1,7 +1,29 @@
-from chatbot.chatbot_thread import (
+import os
+import sys
+
+# Import pathmagic first to ensure 'src' is in sys.path before any local imports
+try:
+    import pathmagic  # noqa:F401
+except ImportError:
+    try:
+        from frontEnd import pathmagic  # noqa:F401
+    except ImportError:
+        # Fallback: manually add the src directory relative to this file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        src_dir = os.path.abspath(os.path.join(current_dir, '..'))
+        if src_dir not in sys.path:
+            sys.path.insert(0, src_dir)
+
+if os.name == 'nt':
+    init_path = ''
+else:
+    init_path = '../../'
+
+from chatbot.chatbot_thread import (  # type: ignore
     OllamaWorker, OllamaVisionWorker, MicWorker,
     OllamaStatusWorker, ModelFetchWorker,
-    detect_topic_switch, get_stt_backend
+    detect_topic_switch, get_stt_backend,
+    VISION_MODEL_KEYWORDS,  # EXTRACTED: shared constant, avoids duplicate keyword list
 )
 from PyQt5.QtWidgets import (
     QWidget, QHBoxLayout, QTextBrowser, QVBoxLayout,
@@ -14,17 +36,9 @@ from PyQt5.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
 from configuration.Appconfig import Appconfig
 from datetime import datetime
 import re
-import os
 import json
 import uuid
 import base64
-
-if os.name == 'nt':
-    from frontEnd import pathmagic  # noqa:F401
-    init_path = ''
-else:
-    import pathmagic  # noqa:F401
-    init_path = '../../'
 
 # ── Storage paths ─────────────────────────────────────────────────────────────
 _ESIM_DIR = os.path.join(os.path.expanduser('~'), '.esim')
@@ -217,11 +231,15 @@ def _image_thumbnail_html(b64_str: str, filename: str) -> str:
 
 def _user_bubble(text, timestamp):
     safe = _escape_text_preserve_breaks(text)
+    b64_text = base64.b64encode(text.encode('utf-8')).decode('utf-8')
     return (
         '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
         '<td width="20%"></td>'
         '<td align="right" style="padding:4px 10px 0 0;">'
         '<table cellpadding="0" cellspacing="2"><tr>'
+        '<td valign="bottom" style="padding:0 8px 12px 0;">'
+        f'<a href="edit:///{b64_text}" style="text-decoration:none;font-size:12px;color:#b0b0b0;" title="Edit prompt">✏️</a>'
+        '</td>'
         '<td style="'
         'background-color:#0095f6;'
         'color:white;'
@@ -232,7 +250,7 @@ def _user_bubble(text, timestamp):
         '">'
         f'{safe}'
         '</td></tr>'
-        f'<tr><td align="right" style="color:#bbb;font-size:10px;'
+        f'<tr><td></td><td align="right" style="color:#bbb;font-size:10px;'
         f'padding:3px 2px 8px 0;">You &nbsp;·&nbsp; {timestamp}</td></tr>'
         '</table>'
         '</td></tr></table>'
@@ -243,11 +261,33 @@ def _approx_token_count(text: str) -> int:
     return max(1, len(text) // 4)
 
 
-def _bot_bubble(text, timestamp, response_idx):
+def _bot_bubble(text, timestamp, response_idx=None):
+    """Render a bot response bubble. If response_idx is given, include Retry/Copy links."""
     rendered = _render_markdown(text)
-    copy_href  = f'copy:///{response_idx}'
-    retry_href = f'retry:///{response_idx}'
-    token_est = _approx_token_count(text)
+
+    if response_idx is not None:
+        copy_href  = f'copy:///{response_idx}'
+        retry_href = f'retry:///{response_idx}'
+        token_est = _approx_token_count(text)
+        footer = (
+            '<tr><td>'
+            '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+            f'<td align="left" style="color:#999;font-size:10px;padding:3px 0 8px 2px;">'
+            f'eSim AI &nbsp;·&nbsp; {timestamp} &nbsp;·&nbsp; ~{token_est} tokens</td>'
+            f'<td align="right" style="padding:3px 4px 8px 0;">'
+            f'<a href="{retry_href}" style="color:#e07000;font-size:10px;'
+            f'text-decoration:none;">&#8635; Retry</a>'
+            f'&nbsp;&nbsp;'
+            f'<a href="{copy_href}" style="color:#0095f6;font-size:10px;'
+            f'text-decoration:none;">Copy</a></td>'
+            '</tr></table>'
+            '</td></tr>'
+        )
+    else:
+        footer = (
+            f'<tr><td style="color:#999;font-size:10px;padding:3px 0 8px 2px;">'
+            f'eSim AI &nbsp;·&nbsp; {timestamp}</td></tr>'
+        )
 
     return (
         '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
@@ -263,41 +303,7 @@ def _bot_bubble(text, timestamp, response_idx):
         '">'
         f'{rendered}'
         '</td></tr>'
-        '<tr><td>'
-        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
-        f'<td align="left" style="color:#999;font-size:10px;padding:3px 0 8px 2px;">'
-        f'eSim AI &nbsp;·&nbsp; {timestamp} &nbsp;·&nbsp; ~{token_est} tokens</td>'
-        f'<td align="right" style="padding:3px 4px 8px 0;">'
-        f'<a href="{retry_href}" style="color:#e07000;font-size:10px;'
-        f'text-decoration:none;">&#8635; Retry</a>'
-        f'&nbsp;&nbsp;'
-        f'<a href="{copy_href}" style="color:#0095f6;font-size:10px;'
-        f'text-decoration:none;">Copy</a></td>'
-        '</tr></table>'
-        '</td></tr></table>'
-        '</td>'
-        '<td width="20%"></td></tr></table>'
-    )
-
-
-def _bot_bubble_simple(text, timestamp):
-    rendered = _render_markdown(text)
-    return (
-        '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
-        '<td align="left" style="padding:4px 0 0 10px;">'
-        '<table cellpadding="0" cellspacing="2"><tr>'
-        '<td style="'
-        'background-color:#f0f0f0;'
-        'color:#1a1a2e;'
-        'padding:11px 16px;'
-        'border-radius:20px 20px 20px 5px;'
-        'font-size:13px;'
-        'line-height:1.6;'
-        '">'
-        f'{rendered}'
-        '</td></tr>'
-        f'<tr><td style="color:#999;font-size:10px;padding:3px 0 8px 2px;">'
-        f'eSim AI &nbsp;·&nbsp; {timestamp}</td></tr>'
+        f'{footer}'
         '</table>'
         '</td>'
         '<td width="20%"></td></tr></table>'
@@ -408,6 +414,10 @@ def _is_image_file(path: str) -> bool:
 # ── Smart input field ─────────────────────────────────────────────────────────
 
 class _HistoryLineEdit(QLineEdit):
+    """Input field with command history (↑/↓) and clipboard image paste (Ctrl+V)."""
+
+    image_pasted = pyqtSignal(str)  # emits temp file path of pasted image
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._sent_history = []
@@ -419,6 +429,29 @@ class _HistoryLineEdit(QLineEdit):
         self._hist_idx = -1
 
     def keyPressEvent(self, event: QKeyEvent):
+        # ── Ctrl+V: check for clipboard image before default paste ────
+        if event.key() == Qt.Key_V and event.modifiers() & Qt.ControlModifier:
+            clipboard = QApplication.clipboard()
+            mime = clipboard.mimeData()
+            if mime and mime.hasImage():
+                image = clipboard.image()
+                if not image.isNull():
+                    import tempfile
+                    tmp_dir = os.path.join(
+                        os.path.expanduser('~'), '.esim', 'clipboard_images'
+                    )
+                    os.makedirs(tmp_dir, exist_ok=True)
+                    tmp_path = os.path.join(
+                        tmp_dir,
+                        f"paste_{datetime.now().strftime('%Y%m%d_%H%M%S')}.png"
+                    )
+                    image.save(tmp_path, "PNG")
+                    self.image_pasted.emit(tmp_path)
+                    return
+            # Fall through to default paste for text
+            super().keyPressEvent(event)
+            return
+
         if event.key() == Qt.Key_Up and self._sent_history:
             if self._hist_idx == -1:
                 self._draft = self.text()
@@ -514,7 +547,7 @@ class ChatHistoryViewer(QDialog):
             if line.startswith("User:"):
                 html += _user_bubble(line[5:].strip(), "")
             elif line.startswith("Bot:"):
-                html += _bot_bubble_simple(line[4:].strip(), "")
+                html += _bot_bubble(line[4:].strip(), "")
         browser.setHtml(html if html else "<p style='color:#aaa;text-align:center;padding:20px;'>No messages</p>")
         QTimer.singleShot(120, lambda: browser.verticalScrollBar().setValue(browser.verticalScrollBar().maximum()))
         root.addWidget(browser)
@@ -1052,9 +1085,6 @@ class ChatbotGUI(QWidget):
         self._save_debounce_timer.setSingleShot(True)
         self._save_debounce_timer.timeout.connect(self._flush_save)
 
-        self._thinking_timer = QTimer(self)
-        self._thinking_timer.timeout.connect(self._animate_thinking)
-
         self._typing_anim_timer = QTimer(self)
         self._typing_anim_timer.timeout.connect(self._animate_typing_bubble)
 
@@ -1334,10 +1364,11 @@ class ChatbotGUI(QWidget):
         self.user_input = _HistoryLineEdit(
             self, placeholderText="Message eSim AI…  (↑↓ for history)"
         )
+        self.user_input.setMinimumHeight(42)
         self.user_input.setStyleSheet("""
             QLineEdit {
-                font-size:13px; padding:9px 14px;
-                border:1.5px solid #e0e0e0; border-radius:22px;
+                font-size:14px; padding:10px 18px;
+                border:1.5px solid #e0e0e0; border-radius:21px;
                 background:#f7f7f7; color:#1a1a2e;
             }
             QLineEdit:focus {
@@ -1346,15 +1377,20 @@ class ChatbotGUI(QWidget):
             }
         """)
         self.user_input.returnPressed.connect(self.ask_ollama)
+        self.user_input.image_pasted.connect(
+            lambda path: self._stage_image_paths([path])
+        )
         input_layout.addWidget(self.user_input)
 
-        self.send_button = QPushButton("Send")
-        self.send_button.setFixedHeight(38)
+        self.send_button = QPushButton("➤")
+        self.send_button.setFixedSize(40, 40)
+        self.send_button.setToolTip("Send Message")
         self.send_button.setStyleSheet("""
             QPushButton {
-                font-size:13px; font-weight:600; padding:5px 20px;
+                font-size:18px; font-weight:600;
                 background-color:#0095f6; color:white;
-                border:none; border-radius:19px;
+                border:none; border-radius:20px;
+                padding-left: 2px;
             }
             QPushButton:hover  { background-color:#0082d8; }
         """)
@@ -1374,18 +1410,7 @@ class ChatbotGUI(QWidget):
         self.stop_button.hide()
         input_layout.addWidget(self.stop_button)
 
-        self.clear_button = QPushButton("Clear")
-        self.clear_button.setFixedHeight(38)
-        self.clear_button.setStyleSheet("""
-            QPushButton {
-                font-size:13px; padding:5px 14px;
-                background-color:#f0f0f0; color:#666;
-                border:none; border-radius:19px;
-            }
-            QPushButton:hover  { background-color:#ffe0e0; color:#cc0000; }
-        """)
-        self.clear_button.clicked.connect(self.clear_session)
-        input_layout.addWidget(self.clear_button)
+
 
         chat_layout.addLayout(input_layout)
 
@@ -1822,19 +1847,8 @@ class ChatbotGUI(QWidget):
         # clear_session() — that method deletes the session file, which
         # would erase the chat we just saved above.
         self.chat_display.setHtml(WELCOME_MESSAGE)
-        self.chat_history = []
-        self._retry_history = []
-        self._bot_responses = {}
-        self._response_counter = 0
-        self._last_user_text = ""
-        self._viewing_past_session = False
-        self._clear_staged_images()
-        self._images_store = {}
-        self._last_image_paths = []
-        self._current_session_kind = "text"
-        self._session_title_override = None
-        self._current_session_id = str(uuid.uuid4())
-        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+        # MERGED: combined all state resetting into one reusable helper
+        self._reset_session_state()
 
         try:
             if os.path.exists(_HISTORY_FILE):
@@ -1842,9 +1856,6 @@ class ChatbotGUI(QWidget):
         except Exception:
             pass
 
-        self._sidebar.populate()
-        self._current_session_kind = "text"
-        self._session_title_override = None
         self._sidebar.populate()
 
     def _on_session_deleted(self, deleted_id: str):
@@ -1856,18 +1867,8 @@ class ChatbotGUI(QWidget):
             self._save_debounce_timer.stop()
             self._save_pending = False
 
-            self._current_session_id = str(uuid.uuid4())
-            self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-            self._current_session_kind = "text"
-            self._session_title_override = None
-            self._viewing_past_session = False
-            self.chat_history = []
-            self._retry_history = []
-            self._bot_responses = {}
-            self._response_counter = 0
-            self._last_user_text = ""
-            self._images_store = {}
-            self._last_image_paths = []
+            # MERGED: combined all state resetting into one reusable helper
+            self._reset_session_state()
             try:
                 if os.path.exists(_HISTORY_FILE):
                     os.remove(_HISTORY_FILE)
@@ -1932,8 +1933,6 @@ class ChatbotGUI(QWidget):
                 }
             """)
             self._was_ollama_offline = True
-
-    # ── Typing bubble ─────────────────────────────────────────────────
 
     # ── Typing bubble (window-switch safe) ──────────────────────────
     #
@@ -2051,6 +2050,19 @@ class ChatbotGUI(QWidget):
                 return
             self._retry_response(idx)
 
+        elif scheme == 'edit':
+            if not parts:
+                return
+            try:
+                import base64
+                b64_text = parts[-1]
+                text = base64.b64decode(b64_text).decode('utf-8')
+                self._editing_prompt_text = text
+                self.user_input.setText(text)
+                self.user_input.setFocus()
+            except Exception:
+                pass
+
         elif scheme == 'clear':
             self.clear_session()
 
@@ -2153,35 +2165,49 @@ class ChatbotGUI(QWidget):
         self._staged_images.clear()
         self._refresh_staging_strip()
 
-    def _warn_or_switch_to_vision_model(self) -> bool:
+    def _auto_switch_model(self, keywords, preferred_names, label):
         """
-        Ensure a vision-capable model is selected before sending images.
-
-        Returns True if it is safe to proceed (a vision model is active),
-        or False if no vision model is installed and the request should be
-        blocked. Sending images to a text-only model causes it to fabricate
-        completely wrong answers because it cannot actually see the image.
+        Shared helper for auto-switching models.
+        Returns the index of the matched model, or -1 if none found.
         """
         current = self.model_combo.currentText()
-        vision_keywords = ["llava", "bakllava", "vision", "moondream", "qwen2-vl", "minicpm-v"]
 
-        # Already on a vision model — good to go.
-        if any(k in current.lower() for k in vision_keywords):
-            return True
+        # Already on a matching model — no switch needed.
+        if any(k in current.lower() for k in keywords):
+            return self.model_combo.currentIndex()
 
-        # Try to auto-switch to any vision model the user has installed.
-        preferred_order = ["moondream", "llava:7b", "llava", "bakllava", "llava:13b"]
-        for i in range(self.model_combo.count()):
-            name = self.model_combo.itemText(i)
-            if any(k in name.lower() for k in vision_keywords):
-                self.model_combo.setCurrentIndex(i)
+        # Try preferred model names first (exact match).
+        for preferred in preferred_names:
+            idx = self.model_combo.findText(preferred)
+            if idx >= 0:
+                self.model_combo.setCurrentIndex(idx)
                 self.chat_display.append(_system_bubble(
-                    f"Switched to vision model: {name}"
+                    f"🔄 Auto-switched to {label} model: {preferred}"
                 ))
                 self._scroll_to_bottom()
-                return True
+                return idx
 
-        # No vision model found — block the request and explain clearly.
+        # Fallback: any model containing one of the keywords.
+        for i in range(self.model_combo.count()):
+            name = self.model_combo.itemText(i)
+            if any(k in name.lower() for k in keywords):
+                self.model_combo.setCurrentIndex(i)
+                self.chat_display.append(_system_bubble(
+                    f"🔄 Auto-switched to {label} model: {name}"
+                ))
+                self._scroll_to_bottom()
+                return i
+
+        return -1
+
+    def _warn_or_switch_to_vision_model(self) -> bool:
+        """Ensure a vision model is active before sending images."""
+        # MERGED: uses shared VISION_MODEL_KEYWORDS from chatbot_thread
+        preferred = ["llava:latest", "llava", "llava:7b", "llava:13b", "bakllava", "moondream"]
+        idx = self._auto_switch_model(VISION_MODEL_KEYWORDS, preferred, "vision")
+        if idx >= 0:
+            return True
+        # No vision model found — block and explain.
         self.chat_display.append(_system_bubble(
             "⚠️ No vision model installed. Image analysis is not possible with the "
             "current model — a text-only model cannot see images and will give "
@@ -2192,6 +2218,10 @@ class ChatbotGUI(QWidget):
         ))
         self._scroll_to_bottom()
         return False
+
+    def _switch_to_text_model(self):
+        """Auto-switch to qwen2.5 for text queries."""
+        self._auto_switch_model(["qwen2.5"], [], "text")
 
     # ── Mic ──────────────────────────────────────────────────────────
 
@@ -2314,15 +2344,8 @@ class ChatbotGUI(QWidget):
         self._last_user_text = prompt
         self._start_thinking()
 
-        self.worker = OllamaWorker(
-            self.chat_history,
-            model=self.model_combo.currentText(),
-            temperature=self._temperature,
-            num_predict=self._num_predict,
-        )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+        # EXTRACTED: helper method to launch OllamaWorker
+        self._launch_text_worker(self.chat_history)
 
     # ── Topic switch ─────────────────────────────────────────────────
 
@@ -2448,31 +2471,47 @@ class ChatbotGUI(QWidget):
 
     def _on_models_fetched(self, model_names: list):
         self.model_combo.clear()
+
+        if not model_names:
+            # No models found — Ollama may be offline or has no models pulled.
+            self.model_combo.addItem("No models found")
+            self.model_combo.setEnabled(False)
+            self.status_label.setText(
+                "⚠️ No Ollama models found. Run 'ollama pull qwen2.5-coder' "
+                "in a terminal to install one."
+            )
+            return
+
         for name in model_names:
             self.model_combo.addItem(name)
 
-        preferred_order = [
-            'qwen2.5-coder:3b',
-            'llava:13b',
-            'llava:7b',
-            'llava',
-            'bakllava',
-        ]
+        # Try to default to any qwen2.5 variant
         chosen_idx = -1
-        for preferred in preferred_order:
-            idx = self.model_combo.findText(preferred)
-            if idx >= 0:
-                chosen_idx = idx
+        for i in range(self.model_combo.count()):
+            name = self.model_combo.itemText(i)
+            if "qwen2.5" in name.lower():
+                chosen_idx = i
                 break
+                
+        # If no qwen2.5, try some fallback preferred models
+        if chosen_idx == -1:
+            preferred_fallbacks = ['llava:13b', 'llava:7b', 'llava', 'bakllava']
+            for preferred in preferred_fallbacks:
+                idx = self.model_combo.findText(preferred)
+                if idx >= 0:
+                    chosen_idx = idx
+                    break
+
+        # If still nothing matched, just use the first available model
+        if chosen_idx == -1 and self.model_combo.count() > 0:
+            chosen_idx = 0
+
         if chosen_idx >= 0:
             self.model_combo.setCurrentIndex(chosen_idx)
 
         self.model_combo.setEnabled(True)
 
     # ── Thinking / retry / regenerate ────────────────────────────────
-
-    def _animate_thinking(self):
-        pass
 
     def _start_thinking(self):
         self._is_generating = True
@@ -2482,7 +2521,7 @@ class ChatbotGUI(QWidget):
         self._staging_area.setEnabled(False)
         self.send_button.hide()
         self.stop_button.show()
-        self.clear_button.setEnabled(False)
+
         self._show_typing_bubble()
 
     def _stop_thinking(self):
@@ -2495,12 +2534,51 @@ class ChatbotGUI(QWidget):
         self._staging_area.setEnabled(True)
         self.stop_button.hide()
         self.send_button.show()
-        self.clear_button.setEnabled(True)
+
 
     def _scroll_to_bottom(self):
         self.chat_display.verticalScrollBar().setValue(
             self.chat_display.verticalScrollBar().maximum()
         )
+
+    def _reset_session_state(self):
+        """EXTRACTED: Common session state resets to avoid code duplication across handlers."""
+        self.chat_history = []
+        self._retry_history = []
+        self._bot_responses = {}
+        self._response_counter = 0
+        self._last_user_text = ""
+        self._viewing_past_session = False
+        self._clear_staged_images()
+        self._images_store = {}
+        self._last_image_paths = []
+        self._current_session_kind = "text"
+        self._session_title_override = None
+        self._current_session_id = str(uuid.uuid4())
+        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    def _launch_text_worker(self, chat_history):
+        """EXTRACTED: Launch OllamaWorker with correct configuration and signal mappings."""
+        self.worker = OllamaWorker(
+            chat_history,
+            model=self.model_combo.currentText(),
+            temperature=self._temperature,
+            num_predict=self._num_predict,
+        )
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        self.worker.start()
+
+    def _launch_vision_worker(self, image_paths, extra_prompt):
+        """EXTRACTED: Launch OllamaVisionWorker with correct configuration and signal mappings."""
+        self.worker = OllamaVisionWorker(
+            image_paths=image_paths,
+            extra_prompt=extra_prompt,
+            model=self.model_combo.currentText(),
+        )
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        self.worker.start()
 
     def _stop_generating(self):
         if hasattr(self, 'worker') and self.worker.isRunning():
@@ -2555,26 +2633,13 @@ class ChatbotGUI(QWidget):
         followup_paths = [p for p in self._last_image_paths if os.path.exists(p)]
         if followup_paths and "[Image analysis request:" in last_user:
             prompt = last_user.split("\n", 1)[-1].strip() if "\n" in last_user else ""
-            self.worker = OllamaVisionWorker(
-                image_paths=followup_paths,
-                extra_prompt=prompt,
-                model=self.model_combo.currentText(),
-            )
+            # EXTRACTED: helper method to launch OllamaVisionWorker
+            self._launch_vision_worker(followup_paths, prompt)
         else:
-            self.worker = OllamaWorker(
-                self._retry_history,
-                model=self.model_combo.currentText(),
-                temperature=self._temperature,
-                num_predict=self._num_predict,
-            )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+            # EXTRACTED: helper method to launch OllamaWorker
+            self._launch_text_worker(self._retry_history)
 
-    def _retry_last(self):
-        """Legacy shim kept so any external callers don't break."""
-        if self.chat_history:
-            self._retry_response(self._response_counter - 1)
+    # REMOVED: _retry_last() — legacy shim with no callers found in codebase
 
     def _regenerate_last_response(self):
         if not self.chat_history:
@@ -2595,15 +2660,8 @@ class ChatbotGUI(QWidget):
         self._rebuild_chat_html_from_history()
         self._start_thinking()
 
-        self.worker = OllamaWorker(
-            self._retry_history,
-            model=self.model_combo.currentText(),
-            temperature=self._temperature,
-            num_predict=self._num_predict,
-        )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+        # EXTRACTED: helper method to launch OllamaWorker
+        self._launch_text_worker(self._retry_history)
 
     def _on_status_update(self, msg: str):
         self.status_label.setText(msg)
@@ -2624,10 +2682,31 @@ class ChatbotGUI(QWidget):
         if self._is_generating:
             return
 
+        # Guard: prevent sending when no valid model is available
+        selected = self.model_combo.currentText()
+        if not selected or selected == "No models found" or selected == "Loading models…":
+            self.status_label.setText(
+                "⚠️ No model available. Make sure Ollama is running "
+                "and you have pulled a model."
+            )
+            self._populate_models()
+            return
+
         if self._viewing_past_session:
             # chat_history was already synced when the session was loaded,
             # so no rebuild is needed — just clear the read-only flag.
             self._viewing_past_session = False
+
+        editing_text = getattr(self, '_editing_prompt_text', None)
+        if editing_text:
+            # We are editing an existing prompt. Find it in history and truncate.
+            for i in range(len(self.chat_history) - 1, -1, -1):
+                msg = self.chat_history[i]
+                if msg == f"User: {editing_text}" or msg.endswith(f"\n{editing_text}"):
+                    self.chat_history = self.chat_history[:i]
+                    self._rebuild_chat_html_from_history()
+                    break
+            self._editing_prompt_text = None
 
         ts = _get_time()
 
@@ -2708,18 +2787,20 @@ class ChatbotGUI(QWidget):
             self._clear_staged_images()
             self._start_thinking()
 
-            self.worker = OllamaVisionWorker(
-                image_paths=staged_paths,
-                extra_prompt=vision_extra_prompt,
-                model=self.model_combo.currentText(),
-            )
-            self.worker.response_signal.connect(self.display_response)
-            self.worker.status_signal.connect(self._on_status_update)
-            self.worker.start()
+            # EXTRACTED: helper method to launch OllamaVisionWorker
+            self._launch_vision_worker(staged_paths, vision_extra_prompt)
             return
 
-        self._current_session_kind = "text"
         self._check_topic_switch(user_text)
+
+        # The user explicitly requested that any text-only search should
+        # switch to the Qwen model. Since Qwen cannot process images,
+        # we must drop any previous image context and use the text worker.
+        self._last_image_paths.clear()
+        
+        self._current_session_kind = "text"
+        self._switch_to_text_model()
+
         self.chat_history = (self.chat_history + [f"User: {user_text}"])[-20:]
         self.chat_display.append(_user_bubble(user_text, ts))
         self._scroll_to_bottom()
@@ -2730,27 +2811,8 @@ class ChatbotGUI(QWidget):
         self._retry_history = list(self.chat_history)
         self._start_thinking()
 
-        # If the user is following up on an image session, re-send the last
-        # images so the model has visual context for its answer.
-        followup_image_paths = [
-            p for p in self._last_image_paths if os.path.exists(p)
-        ]
-        if followup_image_paths and self._current_session_kind in ("image", "text"):
-            self.worker = OllamaVisionWorker(
-                image_paths=followup_image_paths,
-                extra_prompt=user_text,
-                model=self.model_combo.currentText(),
-            )
-        else:
-            self.worker = OllamaWorker(
-                self.chat_history,
-                model=self.model_combo.currentText(),
-                temperature=self._temperature,
-                num_predict=self._num_predict,
-            )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+        # EXTRACTED: helper method to launch OllamaWorker
+        self._launch_text_worker(self.chat_history)
 
     # ── Window / response / clear ────────────────────────────────────
 
@@ -2806,22 +2868,8 @@ class ChatbotGUI(QWidget):
             pass
 
         self.chat_display.setHtml(WELCOME_MESSAGE)
-        self.chat_history = []
-        self._retry_history = []
-        self._bot_responses = {}
-        self._response_counter = 0
-        self._last_user_text = ""
-        self._viewing_past_session = False
-        self._clear_staged_images()
-        self._images_store = {}
-        self._last_image_paths = []
-        self._viewing_past_session = False
-        self._current_session_kind = "text"
-        self._session_title_override = None
-
-        # Assign a fresh session ID so the next conversation starts clean
-        self._current_session_id = str(uuid.uuid4())
-        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+        # MERGED: combined all state resetting into one reusable helper
+        self._reset_session_state()
 
         try:
             if os.path.exists(_HISTORY_FILE):
@@ -2847,15 +2895,8 @@ class ChatbotGUI(QWidget):
         self._scroll_to_bottom()
         self._retry_history = list(self.chat_history)
         self._start_thinking()
-        self.worker = OllamaWorker(
-            self.chat_history,
-            model=self.model_combo.currentText(),
-            temperature=self._temperature,
-            num_predict=self._num_predict,
-        )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+        # EXTRACTED: helper method to launch OllamaWorker
+        self._launch_text_worker(self.chat_history)
         self.user_input.clear()
 
     def debug_error(self, log):
