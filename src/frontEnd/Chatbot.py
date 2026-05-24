@@ -1,7 +1,29 @@
-from chatbot.chatbot_thread import (
+import os
+import sys
+
+# Import pathmagic first to ensure 'src' is in sys.path before any local imports
+try:
+    import pathmagic  # noqa:F401
+except ImportError:
+    try:
+        from frontEnd import pathmagic  # noqa:F401
+    except ImportError:
+        # Fallback: manually add the src directory relative to this file
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        src_dir = os.path.abspath(os.path.join(current_dir, '..'))
+        if src_dir not in sys.path:
+            sys.path.insert(0, src_dir)
+
+if os.name == 'nt':
+    init_path = ''
+else:
+    init_path = '../../'
+
+from chatbot.chatbot_thread import (  # type: ignore
     OllamaWorker, OllamaVisionWorker, MicWorker,
     OllamaStatusWorker, ModelFetchWorker,
-    detect_topic_switch, get_stt_backend
+    detect_topic_switch, get_stt_backend,
+    VISION_MODEL_KEYWORDS,  # EXTRACTED: shared constant, avoids duplicate keyword list
 )
 from PyQt5.QtWidgets import (
     QWidget, QHBoxLayout, QTextBrowser, QVBoxLayout,
@@ -14,17 +36,9 @@ from PyQt5.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
 from configuration.Appconfig import Appconfig
 from datetime import datetime
 import re
-import os
 import json
 import uuid
 import base64
-
-if os.name == 'nt':
-    from frontEnd import pathmagic  # noqa:F401
-    init_path = ''
-else:
-    import pathmagic  # noqa:F401
-    init_path = '../../'
 
 # ── Storage paths ─────────────────────────────────────────────────────────────
 _ESIM_DIR = os.path.join(os.path.expanduser('~'), '.esim')
@@ -1071,9 +1085,6 @@ class ChatbotGUI(QWidget):
         self._save_debounce_timer.setSingleShot(True)
         self._save_debounce_timer.timeout.connect(self._flush_save)
 
-        self._thinking_timer = QTimer(self)
-        self._thinking_timer.timeout.connect(self._animate_thinking)
-
         self._typing_anim_timer = QTimer(self)
         self._typing_anim_timer.timeout.connect(self._animate_typing_bubble)
 
@@ -1836,19 +1847,8 @@ class ChatbotGUI(QWidget):
         # clear_session() — that method deletes the session file, which
         # would erase the chat we just saved above.
         self.chat_display.setHtml(WELCOME_MESSAGE)
-        self.chat_history = []
-        self._retry_history = []
-        self._bot_responses = {}
-        self._response_counter = 0
-        self._last_user_text = ""
-        self._viewing_past_session = False
-        self._clear_staged_images()
-        self._images_store = {}
-        self._last_image_paths = []
-        self._current_session_kind = "text"
-        self._session_title_override = None
-        self._current_session_id = str(uuid.uuid4())
-        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+        # MERGED: combined all state resetting into one reusable helper
+        self._reset_session_state()
 
         try:
             if os.path.exists(_HISTORY_FILE):
@@ -1856,9 +1856,6 @@ class ChatbotGUI(QWidget):
         except Exception:
             pass
 
-        self._sidebar.populate()
-        self._current_session_kind = "text"
-        self._session_title_override = None
         self._sidebar.populate()
 
     def _on_session_deleted(self, deleted_id: str):
@@ -1870,18 +1867,8 @@ class ChatbotGUI(QWidget):
             self._save_debounce_timer.stop()
             self._save_pending = False
 
-            self._current_session_id = str(uuid.uuid4())
-            self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
-            self._current_session_kind = "text"
-            self._session_title_override = None
-            self._viewing_past_session = False
-            self.chat_history = []
-            self._retry_history = []
-            self._bot_responses = {}
-            self._response_counter = 0
-            self._last_user_text = ""
-            self._images_store = {}
-            self._last_image_paths = []
+            # MERGED: combined all state resetting into one reusable helper
+            self._reset_session_state()
             try:
                 if os.path.exists(_HISTORY_FILE):
                     os.remove(_HISTORY_FILE)
@@ -1946,8 +1933,6 @@ class ChatbotGUI(QWidget):
                 }
             """)
             self._was_ollama_offline = True
-
-    # ── Typing bubble ─────────────────────────────────────────────────
 
     # ── Typing bubble (window-switch safe) ──────────────────────────
     #
@@ -2217,9 +2202,9 @@ class ChatbotGUI(QWidget):
 
     def _warn_or_switch_to_vision_model(self) -> bool:
         """Ensure a vision model is active before sending images."""
-        vision_kw = ["llava", "bakllava", "vision", "moondream", "qwen2-vl", "minicpm-v"]
+        # MERGED: uses shared VISION_MODEL_KEYWORDS from chatbot_thread
         preferred = ["llava:latest", "llava", "llava:7b", "llava:13b", "bakllava", "moondream"]
-        idx = self._auto_switch_model(vision_kw, preferred, "vision")
+        idx = self._auto_switch_model(VISION_MODEL_KEYWORDS, preferred, "vision")
         if idx >= 0:
             return True
         # No vision model found — block and explain.
@@ -2359,15 +2344,8 @@ class ChatbotGUI(QWidget):
         self._last_user_text = prompt
         self._start_thinking()
 
-        self.worker = OllamaWorker(
-            self.chat_history,
-            model=self.model_combo.currentText(),
-            temperature=self._temperature,
-            num_predict=self._num_predict,
-        )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+        # EXTRACTED: helper method to launch OllamaWorker
+        self._launch_text_worker(self.chat_history)
 
     # ── Topic switch ─────────────────────────────────────────────────
 
@@ -2493,6 +2471,17 @@ class ChatbotGUI(QWidget):
 
     def _on_models_fetched(self, model_names: list):
         self.model_combo.clear()
+
+        if not model_names:
+            # No models found — Ollama may be offline or has no models pulled.
+            self.model_combo.addItem("No models found")
+            self.model_combo.setEnabled(False)
+            self.status_label.setText(
+                "⚠️ No Ollama models found. Run 'ollama pull qwen2.5-coder' "
+                "in a terminal to install one."
+            )
+            return
+
         for name in model_names:
             self.model_combo.addItem(name)
 
@@ -2513,15 +2502,16 @@ class ChatbotGUI(QWidget):
                     chosen_idx = idx
                     break
 
+        # If still nothing matched, just use the first available model
+        if chosen_idx == -1 and self.model_combo.count() > 0:
+            chosen_idx = 0
+
         if chosen_idx >= 0:
             self.model_combo.setCurrentIndex(chosen_idx)
 
         self.model_combo.setEnabled(True)
 
     # ── Thinking / retry / regenerate ────────────────────────────────
-
-    def _animate_thinking(self):
-        pass
 
     def _start_thinking(self):
         self._is_generating = True
@@ -2550,6 +2540,45 @@ class ChatbotGUI(QWidget):
         self.chat_display.verticalScrollBar().setValue(
             self.chat_display.verticalScrollBar().maximum()
         )
+
+    def _reset_session_state(self):
+        """EXTRACTED: Common session state resets to avoid code duplication across handlers."""
+        self.chat_history = []
+        self._retry_history = []
+        self._bot_responses = {}
+        self._response_counter = 0
+        self._last_user_text = ""
+        self._viewing_past_session = False
+        self._clear_staged_images()
+        self._images_store = {}
+        self._last_image_paths = []
+        self._current_session_kind = "text"
+        self._session_title_override = None
+        self._current_session_id = str(uuid.uuid4())
+        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+
+    def _launch_text_worker(self, chat_history):
+        """EXTRACTED: Launch OllamaWorker with correct configuration and signal mappings."""
+        self.worker = OllamaWorker(
+            chat_history,
+            model=self.model_combo.currentText(),
+            temperature=self._temperature,
+            num_predict=self._num_predict,
+        )
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        self.worker.start()
+
+    def _launch_vision_worker(self, image_paths, extra_prompt):
+        """EXTRACTED: Launch OllamaVisionWorker with correct configuration and signal mappings."""
+        self.worker = OllamaVisionWorker(
+            image_paths=image_paths,
+            extra_prompt=extra_prompt,
+            model=self.model_combo.currentText(),
+        )
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        self.worker.start()
 
     def _stop_generating(self):
         if hasattr(self, 'worker') and self.worker.isRunning():
@@ -2604,26 +2633,13 @@ class ChatbotGUI(QWidget):
         followup_paths = [p for p in self._last_image_paths if os.path.exists(p)]
         if followup_paths and "[Image analysis request:" in last_user:
             prompt = last_user.split("\n", 1)[-1].strip() if "\n" in last_user else ""
-            self.worker = OllamaVisionWorker(
-                image_paths=followup_paths,
-                extra_prompt=prompt,
-                model=self.model_combo.currentText(),
-            )
+            # EXTRACTED: helper method to launch OllamaVisionWorker
+            self._launch_vision_worker(followup_paths, prompt)
         else:
-            self.worker = OllamaWorker(
-                self._retry_history,
-                model=self.model_combo.currentText(),
-                temperature=self._temperature,
-                num_predict=self._num_predict,
-            )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+            # EXTRACTED: helper method to launch OllamaWorker
+            self._launch_text_worker(self._retry_history)
 
-    def _retry_last(self):
-        """Legacy shim kept so any external callers don't break."""
-        if self.chat_history:
-            self._retry_response(self._response_counter - 1)
+    # REMOVED: _retry_last() — legacy shim with no callers found in codebase
 
     def _regenerate_last_response(self):
         if not self.chat_history:
@@ -2644,15 +2660,8 @@ class ChatbotGUI(QWidget):
         self._rebuild_chat_html_from_history()
         self._start_thinking()
 
-        self.worker = OllamaWorker(
-            self._retry_history,
-            model=self.model_combo.currentText(),
-            temperature=self._temperature,
-            num_predict=self._num_predict,
-        )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+        # EXTRACTED: helper method to launch OllamaWorker
+        self._launch_text_worker(self._retry_history)
 
     def _on_status_update(self, msg: str):
         self.status_label.setText(msg)
@@ -2671,6 +2680,16 @@ class ChatbotGUI(QWidget):
             return
 
         if self._is_generating:
+            return
+
+        # Guard: prevent sending when no valid model is available
+        selected = self.model_combo.currentText()
+        if not selected or selected == "No models found" or selected == "Loading models…":
+            self.status_label.setText(
+                "⚠️ No model available. Make sure Ollama is running "
+                "and you have pulled a model."
+            )
+            self._populate_models()
             return
 
         if self._viewing_past_session:
@@ -2768,14 +2787,8 @@ class ChatbotGUI(QWidget):
             self._clear_staged_images()
             self._start_thinking()
 
-            self.worker = OllamaVisionWorker(
-                image_paths=staged_paths,
-                extra_prompt=vision_extra_prompt,
-                model=self.model_combo.currentText(),
-            )
-            self.worker.response_signal.connect(self.display_response)
-            self.worker.status_signal.connect(self._on_status_update)
-            self.worker.start()
+            # EXTRACTED: helper method to launch OllamaVisionWorker
+            self._launch_vision_worker(staged_paths, vision_extra_prompt)
             return
 
         self._check_topic_switch(user_text)
@@ -2798,15 +2811,8 @@ class ChatbotGUI(QWidget):
         self._retry_history = list(self.chat_history)
         self._start_thinking()
 
-        self.worker = OllamaWorker(
-                self.chat_history,
-                model=self.model_combo.currentText(),
-                temperature=self._temperature,
-                num_predict=self._num_predict,
-            )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+        # EXTRACTED: helper method to launch OllamaWorker
+        self._launch_text_worker(self.chat_history)
 
     # ── Window / response / clear ────────────────────────────────────
 
@@ -2862,22 +2868,8 @@ class ChatbotGUI(QWidget):
             pass
 
         self.chat_display.setHtml(WELCOME_MESSAGE)
-        self.chat_history = []
-        self._retry_history = []
-        self._bot_responses = {}
-        self._response_counter = 0
-        self._last_user_text = ""
-        self._viewing_past_session = False
-        self._clear_staged_images()
-        self._images_store = {}
-        self._last_image_paths = []
-        self._viewing_past_session = False
-        self._current_session_kind = "text"
-        self._session_title_override = None
-
-        # Assign a fresh session ID so the next conversation starts clean
-        self._current_session_id = str(uuid.uuid4())
-        self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+        # MERGED: combined all state resetting into one reusable helper
+        self._reset_session_state()
 
         try:
             if os.path.exists(_HISTORY_FILE):
@@ -2903,15 +2895,8 @@ class ChatbotGUI(QWidget):
         self._scroll_to_bottom()
         self._retry_history = list(self.chat_history)
         self._start_thinking()
-        self.worker = OllamaWorker(
-            self.chat_history,
-            model=self.model_combo.currentText(),
-            temperature=self._temperature,
-            num_predict=self._num_predict,
-        )
-        self.worker.response_signal.connect(self.display_response)
-        self.worker.status_signal.connect(self._on_status_update)
-        self.worker.start()
+        # EXTRACTED: helper method to launch OllamaWorker
+        self._launch_text_worker(self.chat_history)
         self.user_input.clear()
 
     def debug_error(self, log):

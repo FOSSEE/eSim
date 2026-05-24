@@ -58,16 +58,7 @@ def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
 
 
 # ── Connectivity / runtime helpers ───────────────────────────────────────────
-
-def _check_internet(host="8.8.8.8", port=53, timeout=2):
-    try:
-        socket.setdefaulttimeout(timeout)
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((host, port))
-        sock.close()
-        return True
-    except Exception:
-        return False
+# REMOVED: _check_internet() — dead code, never called anywhere in the codebase
 
 
 def get_stt_backend() -> str:
@@ -162,30 +153,38 @@ class OllamaStatusWorker(QThread):
         self.result_signal.emit(is_ollama_running())
 
 
+# EXTRACTED: shared model-name parser used by both ModelFetchWorker and _refresh_model_cache
+def _fetch_model_names() -> list:
+    """Call ollama.list() and return a flat list of model name strings."""
+    models_data = ollama.list()
+    raw = (models_data.get('models', [])
+           if isinstance(models_data, dict)
+           else getattr(models_data, 'models', []))
+
+    names = []
+    for m in raw:
+        name = (m.get('name') or m.get('model', '')
+                if isinstance(m, dict)
+                else getattr(m, 'model', str(m)))
+        if name:
+            names.append(name)
+    return names
+
+
 class ModelFetchWorker(QThread):
     result_signal = pyqtSignal(list)
 
     def run(self):
         try:
-            models_data = ollama.list()
-            raw = (models_data.get('models', [])
-                   if isinstance(models_data, dict)
-                   else getattr(models_data, 'models', []))
-
-            names = []
-            for m in raw:
-                name = (m.get('name') or m.get('model', '')
-                        if isinstance(m, dict)
-                        else getattr(m, 'model', str(m)))
-                if name:
-                    names.append(name)
+            # MERGED: uses shared _fetch_model_names() instead of inline duplicate
+            names = _fetch_model_names()
 
             # Keep the vision model cache warm so image sends don't block
             _refresh_model_cache()
 
-            self.result_signal.emit(names if names else ['qwen2.5-coder:1.5b'])
+            self.result_signal.emit(names if names else [])
         except Exception:
-            self.result_signal.emit(['qwen2.5-coder:1.5b'])
+            self.result_signal.emit([])
 
 
 # ── Smart token budget ───────────────────────────────────────────────────────
@@ -291,7 +290,7 @@ class OllamaWorker(QThread):
     response_signal = pyqtSignal(str)
     status_signal = pyqtSignal(str)
 
-    def __init__(self, chat_history, model="qwen2.5-coder:1.5b",
+    def __init__(self, chat_history, model="",
                  temperature=0.25, num_predict=1024):
         super().__init__()
         self.chat_history = chat_history
@@ -367,13 +366,17 @@ class OllamaWorker(QThread):
 
 # ── Vision model helpers ──────────────────────────────────────────────────────
 
+# EXTRACTED: single source of truth for vision-model keywords.
+# Imported by Chatbot.py so both files share the same list.
+VISION_MODEL_KEYWORDS = ["llava", "bakllava", "vision", "moondream", "minicpm-v", "qwen2-vl"]
+
+
 def _is_vision_model(model_name: str) -> bool:
     if not model_name:
         return False
     m = model_name.lower()
-    return any(k in m for k in [
-        "llava", "bakllava", "vision", "moondream", "minicpm-v", "qwen2-vl"
-    ])
+    # MERGED: uses shared VISION_MODEL_KEYWORDS constant
+    return any(k in m for k in VISION_MODEL_KEYWORDS)
 # QThread reads/writes don't produce a data race.
 _cache_lock = threading.Lock()
 _installed_models_cache: list = []
@@ -383,17 +386,8 @@ _installed_models_cache_valid: bool = False
 def _refresh_model_cache():
     global _installed_models_cache, _installed_models_cache_valid
     try:
-        models_data = ollama.list()
-        raw = (models_data.get('models', [])
-               if isinstance(models_data, dict)
-               else getattr(models_data, 'models', []))
-        names = []
-        for m in raw:
-            name = (m.get('name') or m.get('model', '')
-                    if isinstance(m, dict)
-                    else getattr(m, 'model', str(m)))
-            if name:
-                names.append(name)
+        # MERGED: uses shared _fetch_model_names() instead of inline duplicate
+        names = _fetch_model_names()
         with _cache_lock:
             _installed_models_cache       = names
             _installed_models_cache_valid = True
