@@ -28,7 +28,7 @@ except ImportError:
 # llava internally resizes images to 336×336 anyway.
 # Downscaling large images before sending saves encoding time and reduces
 # the number of tokens the model spends on the image.
-_MAX_IMAGE_DIM = 512   # pixels on longest side — fast, good quality
+_MAX_IMAGE_DIM = 336   # llava's native patch size — no benefit sending larger
 
 
 def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
@@ -51,7 +51,7 @@ def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
         if img.mode not in ("RGB", "L"):
             img = img.convert("RGB")
         buf = _io.BytesIO()
-        img.save(buf, format="JPEG", quality=85)
+        img.save(buf, format="JPEG", quality=70)
         return buf.getvalue()
     except Exception:
         return raw_bytes              # fall back to original on any error
@@ -139,6 +139,22 @@ def detect_topic_switch(prev_text: str, curr_text: str) -> bool:
 
 # ── Model / service background workers ───────────────────────────────────────
 
+def _ensure_ollama_running(worker) -> bool:
+    """Helper to start Ollama server if it isn't running. Returns True if ready."""
+    if not is_ollama_running():
+        worker.status_signal.emit("Starting Ollama server — please wait…")
+        started = start_ollama(stop_flag=lambda: worker._stop_requested)
+        if not started:
+            if not worker._stop_requested:
+                worker.response_signal.emit(
+                    "❌ Could not start Ollama automatically.\n"
+                    "Please open a terminal and run: ollama serve"
+                )
+            return False
+        worker.status_signal.emit("Ollama started!")
+        time.sleep(1)
+    return True
+
 class OllamaStatusWorker(QThread):
     result_signal = pyqtSignal(bool)
 
@@ -167,9 +183,9 @@ class ModelFetchWorker(QThread):
             # Keep the vision model cache warm so image sends don't block
             _refresh_model_cache()
 
-            self.result_signal.emit(names if names else ['qwen2.5-coder:3b'])
+            self.result_signal.emit(names if names else ['qwen2.5-coder:1.5b'])
         except Exception:
-            self.result_signal.emit(['qwen2.5-coder:3b'])
+            self.result_signal.emit(['qwen2.5-coder:1.5b'])
 
 
 # ── Smart token budget ───────────────────────────────────────────────────────
@@ -275,7 +291,7 @@ class OllamaWorker(QThread):
     response_signal = pyqtSignal(str)
     status_signal = pyqtSignal(str)
 
-    def __init__(self, chat_history, model="qwen2.5-coder:3b",
+    def __init__(self, chat_history, model="qwen2.5-coder:1.5b",
                  temperature=0.25, num_predict=1024):
         super().__init__()
         self.chat_history = chat_history
@@ -289,19 +305,9 @@ class OllamaWorker(QThread):
 
     def run(self):
         try:
-            if not is_ollama_running():
-                self.status_signal.emit("Starting Ollama server — please wait…")
-                started = start_ollama(stop_flag=lambda: self._stop_requested)
-                if not started:
-                    if self._stop_requested:
-                        return  # user cancelled cleanly
-                    self.response_signal.emit(
-                        "❌ Could not start Ollama automatically.\n"
-                        "Please open a terminal and run: ollama serve"
-                    )
-                    return
-                self.status_signal.emit("Ollama started! Getting response…")
-                time.sleep(1)
+            if not _ensure_ollama_running(self):
+                return
+            self.status_signal.emit("Ollama is ready! Getting response…")
 
             # Keep last 10 history lines (5 turns).
             # Sending 20 lines fills most of the context window before the
@@ -444,23 +450,14 @@ def _pick_best_vision_model(preferred: str = "") -> str:
 def _build_schematic_vision_prompt(extra_prompt: str, image_count: int) -> str:
     """
     Build the prompt sent to the vision model alongside the image(s).
-    If the user typed a question, that question drives the response.
-    If no question was given, request a general circuit analysis.
+    Kept short to minimize prompt token processing time.
     """
-    n = "this schematic" if image_count == 1 else f"these {image_count} schematics"
     if extra_prompt and extra_prompt.strip():
-        # User asked something specific - make that the primary request.
-        return (
-            f"Looking at {n}: {extra_prompt.strip()}\n\n"
-            "Base your answer on what is actually visible in the image."
-        )
+        return extra_prompt.strip()
     else:
-        # No question given - do a general analysis.
         return (
-            f"Please analyse {n}. "
-            "Identify the circuit's function, list all visible components with their "
-            "reference designators and values, name the nets and signal rails, "
-            "and flag any potential design issues you can see."
+            "Analyse this circuit image. Identify components, connections, "
+            "and its function. Flag any design issues."
         )
 
 
@@ -501,11 +498,13 @@ class OllamaVisionWorker(QThread):
             ],
             stream=True,
             options={
-                "temperature": 0.15,
-                # llava: ~576 tokens/image patch + ~200 prompt + 512 predict.
-                # 3072 gives comfortable headroom without the overhead of 4096.
-                "num_ctx": 3072,
-                "num_predict": 512,
+                "temperature": 0.1,
+                # Smaller context = faster KV-cache allocation on CPU.
+                # 2048 is enough for image patches + short prompt + response.
+                "num_ctx": 2048,
+                # Cap output to ~256 tokens for much faster responses.
+                # Most useful circuit analysis fits well within this budget.
+                "num_predict": 256,
                 "repeat_penalty": 1.05,
                 "keep_alive": "10m",
             }
@@ -531,19 +530,8 @@ class OllamaVisionWorker(QThread):
 
     def run(self):
         try:
-            if not is_ollama_running():
-                self.status_signal.emit("Starting Ollama server — please wait…")
-                started = start_ollama(stop_flag=lambda: self._stop_requested)
-                if not started:
-                    if self._stop_requested:
-                        return
-                    self.response_signal.emit(
-                        "❌ Could not start Ollama automatically.\n"
-                        "Please open a terminal and run: ollama serve"
-                    )
-                    return
-                self.status_signal.emit("Ollama started!")
-                time.sleep(1)
+            if not _ensure_ollama_running(self):
+                return
 
             if not self.image_paths:
                 self.response_signal.emit("❌ No image paths provided.")
