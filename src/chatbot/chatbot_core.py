@@ -3,12 +3,11 @@
 import os
 import re
 import json
-from typing import Dict, Any, Tuple, List
+from typing import Dict, Any, Tuple, List, Generator, Optional, Callable
 from .error_solutions import get_error_solution
 from .image_handler import analyze_and_extract
-from .ollama_runner import run_ollama
+from .ollama_runner import run_ollama, run_ollama_stream, get_embedding, CONFIG
 from .knowledge_base import search_knowledge
-from .ollama_runner import get_embedding
 
 # ==================== ESIM WORKFLOW KNOWLEDGE ====================
 
@@ -115,10 +114,12 @@ def clear_history() -> None:
 
 # ==================== ESIM ERROR LOGIC ====================
 
-def answer_with_rag_fallback(user_input: str) -> str:
+def answer_with_rag_fallback(user_input: str,
+                             on_chunk: Optional[Callable[[str], None]] = None) -> str:
     """
     Try to answer using eSim manuals (RAG).
     If nothing relevant is found, fallback to Ollama.
+    Streaming is enabled when CONFIG["streaming"]["enabled"] is true (default).
     """
 
     rag_context = search_knowledge(user_input)
@@ -137,7 +138,7 @@ Question:
 
 Answer clearly and step-by-step.
 """
-        return run_ollama(prompt)
+        return run_ollama(prompt, on_chunk=on_chunk)
 
     # Fallback: general LLM answer
     prompt = f"""
@@ -145,7 +146,7 @@ Answer the following question clearly:
 
 {user_input}
 """
-    return run_ollama(prompt)
+    return run_ollama(prompt, on_chunk=on_chunk)
 
 def detect_esim_errors(image_context: Dict[str, Any], user_input: str) -> str:
     """
@@ -257,10 +258,12 @@ def clean_response_raw(raw: str) -> str:
     return cleaned.strip()
 
 
-def _history_to_text(history: List[Dict[str, str]] | None, max_turns: int = 6) -> str:
-    """Convert history to readable text with MORE context (6 turns)."""
+def _history_to_text(history: List[Dict[str, str]] | None, max_turns: int | None = None) -> str:
+    """Convert history to readable text. max_turns defaults to CONFIG.history.context_turns."""
     if not history:
         return ""
+    if max_turns is None:
+        max_turns = int(CONFIG.get("history", {}).get("context_turns", 6))
     recent = history[-max_turns:]
     lines: List[str] = []
     for i, t in enumerate(recent, 1):
@@ -282,30 +285,30 @@ def _is_follow_up_question(user_input: str, history: List[Dict[str, str]] | None
     """
     if not history:
         return False
-    
+
     user_lower = user_input.lower().strip()
     words = user_lower.split()
-    
-    
+
     if len(words) <= 7:
         return True
-    
+
     pronouns = ["it", "that", "this", "those", "these", "they", "them"]
     if any(pronoun in words for pronoun in pronouns):
         return True
-    
+
     continuations = [
         "what next", "next step", "after that", "and then", "then what",
         "what about", "how about", "what if", "but why", "why not"
     ]
     if any(phrase in user_lower for phrase in continuations):
         return True
-    
+
     question_starters = ["why", "how", "where", "when", "what", "which"]
     if words[0] in question_starters and len(words) <= 5:
         return True
-    
+
     return False
+
 import numpy as np
 
 def is_semantic_topic_switch(
@@ -358,7 +361,7 @@ def classify_question_type(user_input: str, has_image_context: bool,
                            history: List[Dict[str, str]] | None = None) -> str:
     """
     Classify question type for smart routing.
-    Returns: 'greeting', 'simple', 'esim', 'image_query', 'follow_up_image', 
+    Returns: 'greeting', 'simple', 'esim', 'image_query', 'follow_up_image',
              'follow_up', 'netlist'
     """
     user_lower = user_input.lower()
@@ -373,7 +376,7 @@ def classify_question_type(user_input: str, has_image_context: bool,
         follow_phrases = [
             "this circuit", "that circuit", "in this schematic",
             "components here", "what is the value", "how many",
-            "the circuit", "this schematic","what","can","how"
+            "the circuit", "this schematic", "what", "can", "how"
         ]
         if any(p in user_lower for p in follow_phrases):
             return "follow_up_image"
@@ -388,9 +391,8 @@ def classify_question_type(user_input: str, has_image_context: bool,
         print("[COPILOT] Topic switch detected (semantic)")
         is_followup = False
 
-    if not is_followup:
+    if not is_followup and history is not None:
         history.clear()
-        LAST_IMAGE_CONTEXT = None
 
     esim_keywords = [
         "esim", "kicad", "ngspice", "spice", "simulation", "netlist",
@@ -422,50 +424,55 @@ def handle_greeting() -> str:
     )
 
 
-def handle_simple_question(user_input: str) -> str:
+def handle_simple_question(user_input: str,
+                           on_chunk: Optional[Callable[[str], None]] = None) -> str:
     """
     Handles standalone questions.
-    Uses RAG first, then falls back to Ollama.
-    keep in mind that your a copilot of eSim an EDA tool
+    Uses RAG first, then falls back to Ollama. Streaming-aware.
     """
-    return answer_with_rag_fallback(user_input)
+    return answer_with_rag_fallback(user_input, on_chunk=on_chunk)
 
 
 def handle_follow_up(user_input: str,
                      image_context: Dict[str, Any],
-                     history: List[Dict[str, str]] | None = None) -> str:
+                     history: List[Dict[str, str]] | None = None,
+                     on_chunk: Optional[Callable[[str], None]] = None) -> str:
     """
     Handle follow-up questions that depend on conversation history.
     This handler PRIORITIZES history over RAG.
     """
-    history_text = _history_to_text(history, max_turns=6)
-    
+    history_text = _history_to_text(history)
+
     if not history_text:
         return "I need more context. Could you provide more details about your question?"
-    
+
     rag_context = ""
     user_lower = user_input.lower()
     if any(kw in user_lower for kw in ["model", "spice", "ground", "error", "netlist"]):
-        rag_context = search_knowledge(user_input, n_results=2)
-    
+        n = int(CONFIG.get("rag", {}).get("follow_up_n_results", 2))
+        rag_context = search_knowledge(user_input, n_results=n)
+
+    follow_up_rule = CONFIG["system_rules"].get("follow_up_rule", "")
+
     prompt = (
         "You are an eSim expert assistant. The user is asking a follow-up question.\n\n"
+        f"{follow_up_rule}\n\n"
         "=== CONVERSATION HISTORY (MOST IMPORTANT) ===\n"
         f"{history_text}\n"
         "=============================================\n\n"
         f"=== CURRENT USER QUESTION (FOLLOW-UP) ===\n{user_input}\n\n"
     )
-    
+
     if rag_context:
         prompt += f"=== REFERENCE MANUAL (if needed) ===\n{rag_context}\n\n"
-    
+
     if image_context:
         prompt += (
             f"=== CURRENT CIRCUIT CONTEXT ===\n"
             f"Type: {image_context.get('circuit_analysis', {}).get('circuit_type', 'Unknown')}\n"
             f"Components: {image_context.get('components', [])}\n\n"
         )
-    
+
     prompt += (
         "CRITICAL INSTRUCTIONS:\n"
         "1. The user's question refers to the CONVERSATION HISTORY above.\n"
@@ -477,13 +484,14 @@ def handle_follow_up(user_input: str,
         "7. Keep answer concise (max 150 words).\n\n"
         "Answer:"
     )
-    
-    return run_ollama(prompt, mode="default")
+
+    return run_ollama(prompt, mode="follow_up", on_chunk=on_chunk)
 
 
 def handle_esim_question(user_input: str,
                          image_context: Dict[str, Any],
-                         history: List[Dict[str, str]] | None = None) -> str:
+                         history: List[Dict[str, str]] | None = None,
+                         on_chunk: Optional[Callable[[str], None]] = None) -> str:
     """
     Handle eSim-specific questions with RAG + conversation history.
     """
@@ -500,11 +508,12 @@ def handle_esim_question(user_input: str,
         )
         if cmd:
             answer += f"**eSim action:** {cmd}\n"
-        return answer_with_rag_fallback(user_input)
+        return answer_with_rag_fallback(user_input, on_chunk=on_chunk)
 
-    history_text = _history_to_text(history, max_turns=6)
+    history_text = _history_to_text(history)
 
-    rag_context = search_knowledge(user_input, n_results=5)
+    n_results = int(CONFIG.get("rag", {}).get("default_n_results", 5))
+    rag_context = search_knowledge(user_input, n_results=n_results)
 
     image_context_str = ""
     if image_context:
@@ -515,16 +524,19 @@ def handle_esim_question(user_input: str,
             f"Values: {image_context.get('values', {})}\n"
         )
 
+    esim_rule = CONFIG["system_rules"].get("esim_rule", "")
+
     prompt = (
         "You are an eSim expert. Answer using the workflows, manual, and conversation history.\n\n"
+        f"{esim_rule}\n\n"
         f"{ESIM_WORKFLOWS}\n\n"
         f"=== MANUAL CONTEXT ===\n{rag_context}\n"
         f"{image_context_str}\n"
     )
-    
+
     if history_text:
         prompt += f"=== CONVERSATION HISTORY ===\n{history_text}\n\n"
-    
+
     prompt += (
         f"USER QUESTION: {user_input}\n\n"
         "INSTRUCTIONS:\n"
@@ -535,7 +547,7 @@ def handle_esim_question(user_input: str,
         "Answer:"
     )
 
-    return run_ollama(prompt, mode="default")
+    return run_ollama(prompt, mode="default", on_chunk=on_chunk)
 
 
 def handle_image_query(user_input: str) -> Tuple[str, Dict[str, Any]]:
@@ -585,7 +597,8 @@ def handle_image_query(user_input: str) -> Tuple[str, Dict[str, Any]]:
 
 
 def handle_follow_up_image_question(user_input: str,
-                                    image_context: Dict[str, Any]) -> str:
+                                    image_context: Dict[str, Any],
+                                    on_chunk: Optional[Callable[[str], None]] = None) -> str:
     """
     Answer questions about an analyzed image using ONLY extracted data.
     """
@@ -613,23 +626,27 @@ def handle_follow_up_image_question(user_input: str,
         "Answer:"
     )
 
-    return run_ollama(prompt, mode="default")
+    return run_ollama(prompt, mode="default", on_chunk=on_chunk)
 
 
-def handle_netlist_analysis(user_input: str) -> str:
+def handle_netlist_analysis(user_input: str,
+                            on_chunk: Optional[Callable[[str], None]] = None) -> str:
     """
     Handle netlist analysis prompts (FACT-based prompt from GUI).
     """
-    raw_reply = run_ollama(user_input)
+    raw_reply = run_ollama(user_input, on_chunk=on_chunk)
     return clean_response_raw(raw_reply)
 
 
 # ==================== MAIN ROUTER ====================
 
 def handle_input(user_input: str,
-                 history: List[Dict[str, str]] | None = None) -> str:
+                 history: List[Dict[str, str]] | None = None,
+                 on_chunk: Optional[Callable[[str], None]] = None) -> str:
     """
-    Main router. Accepts optional conversation history for follow-up understanding.
+    Main router. Accepts optional conversation history for follow-up understanding,
+    and an optional on_chunk(text) callback that's invoked for each streamed token.
+    Returns the full assembled response.
     """
     global LAST_IMAGE_CONTEXT, LAST_BOT_REPLY
 
@@ -638,7 +655,7 @@ def handle_input(user_input: str,
         return "Please enter a query."
 
     if "[ESIM_NETLIST_START]" in user_input:
-        raw_reply = run_ollama(user_input)
+        raw_reply = run_ollama(user_input, on_chunk=on_chunk)
         cleaned = clean_response_raw(raw_reply)
         LAST_BOT_REPLY = cleaned
         return cleaned
@@ -650,24 +667,36 @@ def handle_input(user_input: str,
 
     try:
         if question_type == "netlist":
-            response = handle_netlist_analysis(user_input)
+            response = handle_netlist_analysis(user_input, on_chunk=on_chunk)
 
         elif question_type == "greeting":
             response = handle_greeting()
+            if on_chunk:
+                on_chunk(response)  # send the greeting through the stream once
 
         elif question_type == "image_query":
             response, LAST_IMAGE_CONTEXT = handle_image_query(user_input)
+            if on_chunk:
+                on_chunk(response)
 
         elif question_type == "follow_up_image":
-            response = handle_follow_up_image_question(user_input, LAST_IMAGE_CONTEXT)
+            response = handle_follow_up_image_question(
+                user_input, LAST_IMAGE_CONTEXT, on_chunk=on_chunk
+            )
 
         elif question_type == "simple":
-            response = handle_simple_question(user_input)
+            response = handle_simple_question(user_input, on_chunk=on_chunk)
 
         elif question_type == "follow_up" and history:
-            response = handle_follow_up(user_input, LAST_IMAGE_CONTEXT, history)
+            response = handle_follow_up(
+                user_input, LAST_IMAGE_CONTEXT, history, on_chunk=on_chunk
+            )
+        elif question_type == "esim":
+            response = handle_esim_question(
+                user_input, LAST_IMAGE_CONTEXT, history, on_chunk=on_chunk
+            )
         else:
-            response = handle_simple_question(user_input)
+            response = handle_simple_question(user_input, on_chunk=on_chunk)
 
         LAST_BOT_REPLY = response
         return response
@@ -678,24 +707,82 @@ def handle_input(user_input: str,
         return error_msg
 
 
+def handle_input_stream(user_input: str,
+                        history: List[Dict[str, str]] | None = None
+                        ) -> Generator[str, None, None]:
+    """
+    Streaming variant of handle_input. Yields response chunks as they arrive
+    from Ollama (or as whole strings for non-LLM branches like greeting / image).
+
+    Usage in a Qt GUI:
+        for chunk in wrapper.handle_input_stream(text):
+            append_chunk_to_chat_window(chunk)
+    """
+    import queue
+    import threading
+
+    q: "queue.Queue[Optional[str]]" = queue.Queue()
+
+    def _on_chunk(text: str) -> None:
+        q.put(text)
+
+    def _worker() -> None:
+        try:
+            handle_input(user_input, history, on_chunk=_on_chunk)
+        finally:
+            q.put(None)  # sentinel
+
+    t = threading.Thread(target=_worker, daemon=True)
+    t.start()
+
+    while True:
+        item = q.get()
+        if item is None:
+            break
+        yield item
+
+
 # ==================== WRAPPER ====================
 
 class ESIMCopilotWrapper:
     def __init__(self) -> None:
         self.history: List[Dict[str, str]] = []
+        self._max_history = int(CONFIG.get("history", {}).get("max_turns", 12))
 
-    def handle_input(self, user_input: str) -> str:
-        reply = handle_input(user_input, self.history)
+    def _trim(self) -> None:
+        if len(self.history) > self._max_history:
+            self.history = self.history[-self._max_history:]
+
+    def handle_input(self, user_input: str,
+                     on_chunk: Optional[Callable[[str], None]] = None) -> str:
+        reply = handle_input(user_input, self.history, on_chunk=on_chunk)
         self.history.append({"user": user_input, "bot": reply})
-        if len(self.history) > 12:
-            self.history = self.history[-12:]
+        self._trim()
         return reply
+
+    def handle_input_stream(self, user_input: str) -> Generator[str, None, None]:
+        """
+        Yield chunks as they arrive, then record the full reply in history.
+        """
+        collected: List[str] = []
+        for chunk in handle_input_stream(user_input, self.history):
+            collected.append(chunk)
+            yield chunk
+        full = "".join(collected).strip()
+        self.history.append({"user": user_input, "bot": full})
+        self._trim()
 
     def analyze_schematic(self, query: str) -> str:
         return self.handle_input(query)
+
 
 _GLOBAL_WRAPPER = ESIMCopilotWrapper()
 
 
 def analyze_schematic(query: str) -> str:
     return _GLOBAL_WRAPPER.handle_input(query)
+
+
+def analyze_schematic_stream(query: str) -> Generator[str, None, None]:
+    """Streaming alternative to analyze_schematic."""
+    return _GLOBAL_WRAPPER.handle_input_stream(query)

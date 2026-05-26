@@ -3,6 +3,8 @@ import json
 import queue
 import time
 
+from .ollama_runner import CONFIG
+
 try:
     import sounddevice as sd
     from vosk import Model, KaldiRecognizer
@@ -19,6 +21,14 @@ DEFAULT_VOSK_DIR = os.path.join(
     os.path.expanduser("~"), ".local", "share",
     "esim-copilot", "vosk-model-small-en-us-0.15",
 )
+
+# ==================== CONFIG-DRIVEN DEFAULTS ====================
+
+_STT_CFG = CONFIG.get("stt", {})
+DEFAULT_SAMPLERATE = int(_STT_CFG.get("samplerate", 16000))
+DEFAULT_MAX_SILENCE_SEC = int(_STT_CFG.get("max_silence_sec", 3))
+DEFAULT_PHRASE_LIMIT_SEC = int(_STT_CFG.get("phrase_limit_sec", 8))
+
 
 def _get_model():
     global _MODEL
@@ -37,13 +47,29 @@ def _get_model():
         _MODEL = Model(model_path)
     return _MODEL
 
-def listen_to_mic(should_stop=lambda: False, max_silence_sec=3, samplerate=16000, phrase_limit_sec=8) -> str:
+
+def listen_to_mic(
+    should_stop=lambda: False,
+    max_silence_sec=None,
+    samplerate=None,
+    phrase_limit_sec=None,
+) -> str:
     """
-    Offline STT using Vosk.
+    Offline STT using Vosk. All timing knobs default to values in config.json
+    (CONFIG.stt) so users can tune without touching the source.
+
     Returns recognized text, or "" if cancelled / timed out.
     """
     if not _HAS_STT:
         raise RuntimeError("Speech-to-text is not installed or failed to load.")
+
+    if max_silence_sec is None:
+        max_silence_sec = DEFAULT_MAX_SILENCE_SEC
+    if samplerate is None:
+        samplerate = DEFAULT_SAMPLERATE
+    if phrase_limit_sec is None:
+        phrase_limit_sec = DEFAULT_PHRASE_LIMIT_SEC
+
     q = queue.Queue()
     rec = KaldiRecognizer(_get_model(), samplerate)
 
