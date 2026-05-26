@@ -5,15 +5,24 @@ import io
 import time
 from typing import Dict, Any
 from PIL import Image
-MAX_IMAGE_BYTES = int(0.5*1024 * 1024)  
-from .ollama_runner import run_ollama_vision
+
+from .ollama_runner import run_ollama_vision, CONFIG
+
+# ==================== CONFIG-DRIVEN LIMITS ====================
+
+_IMG_CFG = CONFIG.get("image", {})
+MAX_IMAGE_MB = float(_IMG_CFG.get("max_size_mb", 0.5))
+MAX_IMAGE_BYTES = int(MAX_IMAGE_MB * 1024 * 1024)
+MAX_WIDTH = int(_IMG_CFG.get("max_width", 1920))
+MAX_HEIGHT = int(_IMG_CFG.get("max_height", 1080))
+VISION_MAX_RETRIES = int(_IMG_CFG.get("vision_max_retries", 2))
 
 # === IMPORT PADDLE OCR ===
 try:
     from paddleocr import PaddleOCR
     import logging
     logging.getLogger("ppocr").setLevel(logging.ERROR)
-    
+
     # CRITICAL FIX: Disabled MKLDNN and Angle Classification to prevent VM Crashes
     ocr_engine = PaddleOCR(
         use_angle_cls=False,    # <--- MUST BE FALSE TO STOP SIGABRT
@@ -21,7 +30,7 @@ try:
         use_gpu=False,          # Force CPU
         enable_mkldnn=False,    # <--- MUST BE FALSE FOR PADDLE v3 COMPATIBILITY
         use_mp=False,           # Disable multiprocessing
-        show_log=False 
+        show_log=False
     )
     HAS_PADDLE = True
     print("[INIT] PaddleOCR initialized (Safe Mode).")
@@ -40,7 +49,8 @@ def encode_image(image_path: str) -> str:
 def optimize_image_for_vision(image_path: str) -> bytes:
     """
     Resize large images to reduce vision model processing time.
-    Target: Max 1920x1080 while maintaining aspect ratio.
+    Target: Max MAX_WIDTH x MAX_HEIGHT (from config.json) while maintaining
+    aspect ratio.
     """
     try:
         img = Image.open(image_path)
@@ -48,12 +58,8 @@ def optimize_image_for_vision(image_path: str) -> bytes:
         if img.mode not in ('RGB', 'L'):
             img = img.convert('RGB')
 
-        max_width = 1920
-        max_height = 1080
-
-        if img.width > max_width or img.height > max_height:
-            # Calculate scaling factor
-            scale = min(max_width / img.width, max_height / img.height)
+        if img.width > MAX_WIDTH or img.height > MAX_HEIGHT:
+            scale = min(MAX_WIDTH / img.width, MAX_HEIGHT / img.height)
             new_size = (int(img.width * scale), int(img.height * scale))
             img = img.resize(new_size, Image.Resampling.LANCZOS)
             print(f"[IMAGE] Resized from {img.width}x{img.height} to {new_size[0]}x{new_size[1]}")
@@ -91,55 +97,41 @@ def extract_text_with_paddle(image_path: str) -> str:
         print(f"[OCR] PaddleOCR Failed: {e}")
         return ""
 
+
+def _empty_result(error: str = "", design_errors=None) -> Dict[str, Any]:
+    return {
+        "error": error,
+        "vision_summary": "",
+        "component_counts": {},
+        "circuit_analysis": {
+            "circuit_type": "Unknown",
+            "design_errors": design_errors or [],
+            "design_warnings": []
+        },
+        "components": [],
+        "values": {}
+    }
+
+
 def analyze_and_extract(image_path: str) -> Dict[str, Any]:
     """
-    Analyze schematic with image optimization, PaddleOCR text injection, and timeout handling.
-    Rejects images larger than 0.5 MB.
+    Analyze schematic with image optimization, PaddleOCR text injection, and
+    timeout handling. Rejects images larger than CONFIG.image.max_size_mb.
     """
     if not os.path.exists(image_path):
-        return {
-            "error": "Image file not found",
-            "vision_summary": "",
-            "component_counts": {},
-            "circuit_analysis": {
-                "circuit_type": "Unknown",
-                "design_errors": [],
-                "design_warnings": []
-            },
-            "components": [],
-            "values": {}
-        }
+        return _empty_result("Image file not found")
 
     try:
         file_size = os.path.getsize(image_path)
     except OSError as e:
-        return {
-            "error": f"Could not read image size: {e}",
-            "vision_summary": "",
-            "component_counts": {},
-            "circuit_analysis": {
-                "circuit_type": "Unknown",
-                "design_errors": [],
-                "design_warnings": []
-            },
-            "components": [],
-            "values": {}
-        }
+        return _empty_result(f"Could not read image size: {e}")
 
     if file_size > MAX_IMAGE_BYTES:
         size_mb = round(file_size / (1024 * 1024), 2)
-        return {
-            "error": f"Image too large ({size_mb} MB). Max allowed size is 0.5 MB.",
-            "vision_summary": "",
-            "component_counts": {},
-            "circuit_analysis": {
-                "circuit_type": "Unknown",
-                "design_errors": ["Image file size exceeded 0.5 MB limit"],
-                "design_warnings": []
-            },
-            "components": [],
-            "values": {}
-        }
+        return _empty_result(
+            f"Image too large ({size_mb} MB). Max allowed size is {MAX_IMAGE_MB} MB.",
+            design_errors=[f"Image file size exceeded {MAX_IMAGE_MB} MB limit"],
+        )
 
     # === OPTIMIZE IMAGE BEFORE SENDING ===
     print(f"[VISION] Processing image: {os.path.basename(image_path)}")
@@ -178,10 +170,9 @@ OUTPUT RULES:
 RESPOND WITH JSON ONLY.
 """
 
-    max_retries = 2
-    for attempt in range(max_retries):
+    for attempt in range(VISION_MAX_RETRIES):
         try:
-            print(f"[VISION] Attempt {attempt + 1}/{max_retries}...")
+            print(f"[VISION] Attempt {attempt + 1}/{VISION_MAX_RETRIES}...")
 
             response_text = run_ollama_vision(prompt, image_bytes)
 
@@ -224,21 +215,12 @@ RESPOND WITH JSON ONLY.
 
         except Exception as e:
             print(f"[VISION] Attempt {attempt + 1} failed: {str(e)}")
-            if attempt == max_retries - 1:
-                return {
-                    "error": f"Vision analysis failed: {str(e)}",
-                    "vision_summary": "Unable to analyze circuit image",
-                    "component_counts": {},
-                    "circuit_analysis": {
-                        "circuit_type": "Unknown",
-                        "design_errors": ["Analysis timed out or failed"],
-                        "design_warnings": []
-                    },
-                    "components": [],
-                    "values": {}
-                }
+            if attempt == VISION_MAX_RETRIES - 1:
+                return _empty_result(
+                    f"Vision analysis failed: {str(e)}",
+                    design_errors=["Analysis timed out or failed"],
+                )
             else:
-                import time
                 time.sleep(2)
 
 

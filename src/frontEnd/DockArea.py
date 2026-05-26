@@ -12,7 +12,7 @@ from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt
 import os
-from frontEnd.Chatbot import create_chatbot_dock
+from frontEnd.Chatbot import ChatbotGUI
 from converter.pspiceToKicad import PspiceConverter
 from converter.ltspiceToKicad import LTspiceConverter
 from converter.LtspiceLibConverter import LTspiceLibConverter
