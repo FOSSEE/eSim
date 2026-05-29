@@ -1,0 +1,23 @@
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/d_latch/d_latch.cir
+
+.include NAND_2.sub
+.include NAND_3.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+* u1  /le /d /re net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ port
+* s c m o d e
+x4 net-_x2-pad6_ net-_u1-pad4_ net-_u1-pad5_ net-_x1-pad1_ net-_x1-pad5_ NAND_2
+x1 net-_x1-pad1_ /le net-_u1-pad4_ net-_u1-pad5_ net-_x1-pad5_ /re NAND_3
+x2 net-_x1-pad5_ /le net-_u1-pad4_ net-_u1-pad5_ net-_x2-pad5_ net-_x2-pad6_ NAND_3
+x3 net-_x2-pad5_ /d net-_u1-pad4_ net-_u1-pad5_ net-_x2-pad6_ /re NAND_3
+x6 net-_x1-pad5_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ NAND_2
+x5 net-_u1-pad6_ net-_x2-pad5_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad7_ /re NAND_3
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

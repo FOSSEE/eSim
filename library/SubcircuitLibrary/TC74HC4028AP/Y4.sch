@@ -1,0 +1,155 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L Y0 X1
+U 1 1 68693A51
+P 5250 2700
+F 0 "X1" H 5250 2800 60  0000 C CNN
+F 1 "Y0" H 5200 2500 60  0000 C CNN
+F 2 "" H 5250 2700 60  0001 C CNN
+F 3 "" H 5250 2700 60  0001 C CNN
+	1    5250 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L SKY130mode scmode1
+U 1 1 68693A90
+P 7800 4350
+F 0 "scmode1" H 7800 4500 98  0000 C CNB
+F 1 "SKY130mode" H 7800 4250 118 0000 C CNB
+F 2 "" H 7800 4500 60  0001 C CNN
+F 3 "" H 7800 4500 60  0001 C CNN
+	1    7800 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 68693ADF
+P 4450 2600
+F 0 "U1" H 4500 2700 30  0000 C CNN
+F 1 "PORT" H 4450 2600 30  0000 C CNN
+F 2 "" H 4450 2600 60  0000 C CNN
+F 3 "" H 4450 2600 60  0000 C CNN
+	1    4450 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 68693B14
+P 4450 2700
+F 0 "U1" H 4500 2800 30  0000 C CNN
+F 1 "PORT" H 4450 2700 30  0000 C CNN
+F 2 "" H 4450 2700 60  0000 C CNN
+F 3 "" H 4450 2700 60  0000 C CNN
+	2    4450 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 68693B41
+P 4450 2800
+F 0 "U1" H 4500 2900 30  0000 C CNN
+F 1 "PORT" H 4450 2800 30  0000 C CNN
+F 2 "" H 4450 2800 60  0000 C CNN
+F 3 "" H 4450 2800 60  0000 C CNN
+	3    4450 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 68693B62
+P 5000 3050
+F 0 "U1" H 5050 3150 30  0000 C CNN
+F 1 "PORT" H 5000 3050 30  0000 C CNN
+F 2 "" H 5000 3050 60  0000 C CNN
+F 3 "" H 5000 3050 60  0000 C CNN
+	4    5000 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 68693BF5
+P 6050 2600
+F 0 "U1" H 6100 2700 30  0000 C CNN
+F 1 "PORT" H 6050 2600 30  0000 C CNN
+F 2 "" H 6050 2600 60  0000 C CNN
+F 3 "" H 6050 2600 60  0000 C CNN
+	5    6050 2600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 68693C68
+P 6050 2700
+F 0 "U1" H 6100 2800 30  0000 C CNN
+F 1 "PORT" H 6050 2700 30  0000 C CNN
+F 2 "" H 6050 2700 60  0000 C CNN
+F 3 "" H 6050 2700 60  0000 C CNN
+	6    6050 2700
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 7 1 68693C95
+P 6050 2800
+F 0 "U1" H 6100 2900 30  0000 C CNN
+F 1 "PORT" H 6050 2800 30  0000 C CNN
+F 2 "" H 6050 2800 60  0000 C CNN
+F 3 "" H 6050 2800 60  0000 C CNN
+	7    6050 2800
+	-1   0    0    -1  
+$EndComp
+$EndSCHEMATC
