@@ -1,0 +1,34 @@
+* Subcircuit MC100EL1648
+.subckt MC100EL1648 net-_q4-pad1_ net-_q3-pad1_ net-_q11-pad1_ net-_q11-pad3_ net-_d2-pad1_ net-_r6-pad2_ net-_d1-pad2_ net-_q1-pad2_ 
+* c:\users\ajay\onedrive\desktop\fossee2.3\esim\library\subcircuitlibrary\mc100el1648\mc100el1648.cir
+.include NPN.lib
+.include D.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_q1-pad2_ net-_q1-pad2_ net-_d1-pad1_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r3  net-_q1-pad3_ net-_q5-pad3_ 400
+r2  net-_q3-pad2_ net-_q1-pad1_ 1.6k
+r1  net-_q3-pad1_ net-_q3-pad2_ 800
+r4  net-_q3-pad1_ net-_q1-pad2_ 1.36k
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q1-pad1_ Q2N2222
+q4 net-_q4-pad1_ net-_q1-pad2_ net-_q4-pad3_ Q2N2222
+q6 net-_q3-pad1_ net-_q4-pad1_ net-_q4-pad3_ Q2N2222
+r5  net-_q4-pad3_ net-_q5-pad1_ 330
+q5 net-_q5-pad1_ net-_d2-pad2_ net-_q5-pad3_ Q2N2222
+r6  net-_d2-pad2_ net-_r6-pad2_ 16k
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+r7  net-_q3-pad1_ net-_d2-pad1_ 3.1k
+q7 net-_d2-pad1_ net-_q7-pad2_ net-_q7-pad3_ Q2N2222
+r8  net-_q7-pad3_ net-_q5-pad3_ 82
+q8 net-_q8-pad1_ net-_q4-pad1_ net-_q7-pad2_ Q2N2222
+r10  net-_q7-pad2_ net-_q5-pad3_ 400
+r9  net-_q3-pad1_ net-_q8-pad1_ 660
+q9 net-_q3-pad1_ net-_q8-pad1_ net-_q10-pad3_ Q2N2222
+q10 net-_q10-pad1_ net-_q1-pad1_ net-_q10-pad3_ Q2N2222
+r12  net-_q3-pad1_ net-_q10-pad1_ 167
+r11  net-_q10-pad3_ net-_q5-pad3_ 660
+q11 net-_q11-pad1_ net-_q10-pad1_ net-_q11-pad3_ Q2N2222
+r13  net-_q11-pad3_ net-_q5-pad3_ 510
+* Control Statements
+
+.ends MC100EL1648

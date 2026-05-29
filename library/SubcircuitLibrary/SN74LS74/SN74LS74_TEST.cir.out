@@ -1,0 +1,32 @@
+* c:\users\senba\esim-workspace\sn74ls74_test\sn74ls74_test.cir
+
+.include 74LS74.sub
+x1 net-_u5-pad5_ net-_u5-pad8_ net-_u5-pad7_ net-_u5-pad6_ net-_u6-pad1_ net-_u6-pad2_ 74LS74
+* u5  sdbar d clock cdbar net-_u5-pad5_ net-_u5-pad6_ net-_u5-pad7_ net-_u5-pad8_ adc_bridge_4
+v1  sdbar gnd pulse(5 0 0 0.001 0.001 1 2)
+v2  d gnd pulse(5 0 0 0.001 0.001 1 2)
+v3  clock gnd pulse(0 5 0 0.001 0.001 1 2)
+v4  cdbar gnd pulse(0 5 0 0.001 0.001 2 4)
+* u6  net-_u6-pad1_ net-_u6-pad2_ q qbar dac_bridge_2
+* u7  q plot_v1
+* u8  qbar plot_v1
+* u4  sdbar plot_v1
+* u1  d plot_v1
+* u2  clock plot_v1
+* u3  cdbar plot_v1
+a1 [sdbar d clock cdbar ] [net-_u5-pad5_ net-_u5-pad6_ net-_u5-pad7_ net-_u5-pad8_ ] u5
+a2 [net-_u6-pad1_ net-_u6-pad2_ ] [q qbar ] u6
+* Schematic Name:                             adc_bridge_4, NgSpice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_2, NgSpice Name: dac_bridge
+.model u6 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 0.001e-00 10e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(q) + 6v(qbar) + 12v(sdbar)  + 18v(d) + 24v(cdbar)
+.endc
+.end

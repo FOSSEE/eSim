@@ -1,0 +1,139 @@
+.title kicad schematic
+
+
+.lib /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.include /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.ref/sg13g2_stdcell/spice/sg13g2_stdcell.spice
+
+.control
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103_nqs.osdi
+.endc
+
+v_logic VDD gnd dc 1.2
+
+
+v1 net-_u1-pad~_ gnd pulse(0 1.2 0 100p 100p 9.9n 20n)
+
+* --------Digital Domain Standard cells-------------
+
+* --Frequency Divider---
+* Driven by VCO Output: net-_m25-pad1_
+X_DIV1 div_a div_a_n net-_m25-pad1_ div_a_n VDD VDD gnd sg13g2_dfrbp_1
+X_DIV2 div_b div_b_n div_a          div_b_n VDD VDD gnd sg13g2_dfrbp_1
+X_DIV3 net-_u2-pad~_ div_c_n div_b  div_c_n VDD VDD gnd sg13g2_dfrbp_1
+
+* ----Phase Frequency Detector---
+* --UP Flip-Flop
+X_PFD_UP QA net-_m8-pad2_ net-_u1-pad~_ VDD reset_b VDD gnd sg13g2_dfrbp_1
+
+*---Down Flip-Flop
+X_PFD_DN net-_m5-pad2_ qb_n net-_u2-pad~_ VDD reset_b VDD gnd sg13g2_dfrbp_1
+
+X_NAND reset_b QA net-_m5-pad2_ VDD gnd sg13g2_nand2_1
+
+* ----------Analog Domain---------------
+
+* ---Charge Pump -------------
+
+* Charge bias to M1
+
+v3 net-_m1-pad2_ gnd dc 0.6
+
+* PMOS Mirror & Switches 
+xm4 net-_m3-pad1_ net-_m3-pad1_ net-_m1-pad3_ net-_m1-pad3_ sg13_lv_pmos w=4u l=0.5u
+xm1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ sg13_lv_pmos w=4u l=0.5u
+*v3 net-_m1-pad2_ gnd  dc 0.7
+xm8 net-_c1-pad1_ net-_m8-pad2_ net-_m7-pad1_ net-_m1-pad3_ sg13_lv_pmos w=4u l=0.13u
+xm7 net-_m7-pad1_ net-_m3-pad1_ net-_m1-pad3_ net-_m1-pad3_ sg13_lv_pmos w=4u l=0.5u
+
+
+*NMOS Mirror & Switches
+
+xm2 net-_m1-pad1_ net-_m1-pad1_ gnd gnd sg13_lv_nmos w=2u l=0.5u
+xm3 net-_m3-pad1_ net-_m1-pad1_ gnd gnd sg13_lv_nmos w=2u l=0.5u
+xm5 net-_c1-pad1_ net-_m5-pad2_ net-_m5-pad3_ gnd sg13_lv_nmos w=2u l=0.13u
+xm6 net-_m5-pad3_ net-_m1-pad1_ gnd gnd sg13_lv_nmos w=2u l=0.5u
+
+* Loop filter
+
+r1 net-_c2-pad1_ net-_c1-pad1_ 10k
+c2 net-_c2-pad1_ gnd 5p
+c1 net-_c1-pad1_ gnd 50p
+
+*Pre-charge filter to speed up locking time
+*.ic v(net-_c1-pad1_)=0.6
+* for VCO signal to lag behind reference signal keep the initial voltage to 0v.
+.ic v(net-_c1-pad1_)=0.0
+
+* -- Voltage Controlled Oscillator-----
+
+* Current Limiters 
+
+xm10 net-_m10-pad1_ net-_m10-pad1_ net-_m10-pad3_ net-_m10-pad3_ sg13_lv_pmos w=4u l=0.5u
+xm17 net-_m17-pad1_ net-_m10-pad1_ net-_m10-pad3_ net-_m10-pad3_ sg13_lv_pmos w=4u l=0.5u
+xm13 net-_m13-pad1_ net-_m10-pad1_ net-_m10-pad3_ net-_m10-pad3_ sg13_lv_pmos w=4u l=0.5u
+xm21 net-_m21-pad1_ net-_m10-pad1_ net-_m10-pad3_ net-_m10-pad3_ sg13_lv_pmos w=4u l=0.5u
+
+xm9 net-_m10-pad1_ net-_c1-pad1_ gnd gnd sg13_lv_nmos w=2u l=0.5u
+xm12 net-_m11-pad3_ net-_c1-pad1_ gnd gnd sg13_lv_nmos w=2u l=0.5u
+xm20 net-_m19-pad3_ net-_c1-pad1_ gnd gnd sg13_lv_nmos w=2u l=0.5u
+xm16 net-_m15-pad3_ net-_c1-pad1_ gnd gnd sg13_lv_nmos w=2u l=0.5u
+
+* High Speed Inverter Stages
+
+xm22 net-_m11-pad2_ net-_m15-pad1_ net-_m21-pad1_ net-_m10-pad3_ sg13_lv_pmos w=2u l=0.13u
+xm19 net-_m11-pad2_ net-_m15-pad1_ net-_m19-pad3_ gnd sg13_lv_nmos w=1u l=0.13u
+
+xm18 net-_m15-pad1_ net-_m11-pad1_ net-_m17-pad1_ net-_m10-pad3_ sg13_lv_pmos w=2u l=0.13u
+xm15 net-_m15-pad1_ net-_m11-pad1_ net-_m15-pad3_ gnd sg13_lv_nmos w=1u l=0.13u
+
+xm14 net-_m11-pad1_ net-_m11-pad2_ net-_m13-pad1_ net-_m10-pad3_ sg13_lv_pmos w=2u l=0.13u
+xm11 net-_m11-pad1_ net-_m11-pad2_ net-_m11-pad3_ gnd sg13_lv_nmos w=1u l=0.13u
+
+* Output Buffer
+
+xm24 net-_m23-pad1_ net-_m11-pad2_ net-_m10-pad3_ net-_m10-pad3_ sg13_lv_pmos w=2u l=0.13u
+xm23 net-_m23-pad1_ net-_m11-pad2_ gnd gnd sg13_lv_nmos w=1u l=0.13u
+xm26 net-_m25-pad1_ net-_m23-pad1_ net-_m10-pad3_ net-_m10-pad3_ sg13_lv_pmos w=2u l=0.13u
+xm25 net-_m25-pad1_ net-_m23-pad1_ gnd gnd sg13_lv_nmos w=1u l=0.13u
+
+.tran 50p 2u 0
+
+* u11 net-_c1-pad1_ plot_v1
+v4 net-_m10-pad3_ gnd  dc 1.2
+
+
+* u12 net-_m25-pad1_ plot_v1
+
+v2 net-_m1-pad3_ gnd  dc 1.2
+
+
+* u8 net-_u8-pad1_ net-_u8-pad2_ gnd gnd net-_u2-pad~_ net-_u8-pad1_ d_dff
+* u10 net-_u10-pad1_ net-_m25-pad1_ gnd gnd a net-_u10-pad1_ d_dff
+* u9 net-_u8-pad2_ net-_u10-pad1_ gnd gnd b net-_u8-pad2_ d_dff
+* u1 net-_u1-pad~_ plot_v1
+* u4 vcc net-_u1-pad~_ vcc net-_u3-pad3_ net-_m8-pad2_ net-_u4-pad6_ d_dff
+* u5 net-_m5-pad2_ net-_m8-pad2_ net-_u3-pad3_ d_nand
+* u6 net-_m8-pad2_ plot_v1
+*v1 net-_u1-pad~_ gnd pulse(1.2 0 0 100p 100p 5n 10n)
+
+
+* u7 net-_m5-pad2_ plot_v1
+* u3 vcc net-_u2-pad~_ net-_u3-pad3_ vcc net-_m5-pad2_ net-_u3-pad6_ d_dff
+* u2 net-_u2-pad~_ plot_v1
+
+*.tran 10e-12 100e-09 oe-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(net-_c1-pad1_)
+plot v(net-_m25-pad1_)
+plot v(net-_u1-pad~_)
+plot v(net-_m8-pad2_)
+plot v(net-_m5-pad2_)
+plot v(net-_u2-pad~_)
+.endc
+.end

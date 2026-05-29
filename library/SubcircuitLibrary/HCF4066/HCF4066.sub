@@ -1,0 +1,41 @@
+* Subcircuit HCF4066
+.subckt HCF4066 net-_m10-pad3_ net-_c2-pad1_ net-_c1-pad1_ net-_m1-pad1_ net-_u1-pad5_ net-_u1-pad6_ gnd net-_m11-pad1_ net-_c3-pad1_ net-_c4-pad1_ net-_m12-pad1_ net-_u1-pad12_ net-_u1-pad13_ gnd 
+* c:\fossee\esim\library\subcircuitlibrary\hcf4066\hcf4066.cir
+.include INVCMOS.sub
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+m3 net-_m1-pad1_ net-_m3-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m2 net-_m1-pad3_ net-_m1-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+x1 net-_u1-pad5_ net-_m1-pad2_ INVCMOS
+x2 net-_m1-pad2_ net-_m3-pad2_ INVCMOS
+m4 net-_c1-pad1_ net-_m1-pad2_ net-_m1-pad1_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+m5 net-_c1-pad1_ net-_m3-pad2_ net-_m1-pad1_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+c1  net-_c1-pad1_ gnd 100p
+m12 net-_m12-pad1_ net-_m12-pad2_ net-_m12-pad3_ net-_m12-pad1_ CMOSP W=100u L=100u M=1
+m16 net-_m12-pad1_ net-_m16-pad2_ net-_m12-pad3_ net-_m12-pad3_ CMOSN W=100u L=100u M=1
+m14 net-_m12-pad3_ net-_m12-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+x6 net-_u1-pad12_ net-_m12-pad2_ INVCMOS
+x8 net-_m12-pad2_ net-_m16-pad2_ INVCMOS
+m18 net-_c4-pad1_ net-_m12-pad2_ net-_m12-pad1_ net-_m12-pad1_ CMOSP W=100u L=100u M=1
+m20 net-_c4-pad1_ net-_m16-pad2_ net-_m12-pad1_ net-_m12-pad3_ CMOSN W=100u L=100u M=1
+c4  net-_c4-pad1_ gnd 100p
+m6 net-_m10-pad3_ net-_m6-pad2_ net-_m10-pad4_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m8 net-_m10-pad3_ net-_m10-pad2_ net-_m10-pad4_ net-_m10-pad4_ CMOSN W=100u L=100u M=1
+m7 net-_m10-pad4_ net-_m6-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+x3 net-_u1-pad13_ net-_m6-pad2_ INVCMOS
+x4 net-_m6-pad2_ net-_m10-pad2_ INVCMOS
+m9 net-_c2-pad1_ net-_m6-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSP W=100u L=100u M=1
+m10 net-_c2-pad1_ net-_m10-pad2_ net-_m10-pad3_ net-_m10-pad4_ CMOSN W=100u L=100u M=1
+c2  net-_c2-pad1_ gnd 100p
+m11 net-_m11-pad1_ net-_m11-pad2_ net-_m11-pad3_ net-_m11-pad1_ CMOSP W=100u L=100u M=1
+m15 net-_m11-pad1_ net-_m15-pad2_ net-_m11-pad3_ net-_m11-pad3_ CMOSN W=100u L=100u M=1
+m13 net-_m11-pad3_ net-_m11-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+x5 net-_u1-pad6_ net-_m11-pad2_ INVCMOS
+x7 net-_m11-pad2_ net-_m15-pad2_ INVCMOS
+m17 net-_c3-pad1_ net-_m11-pad2_ net-_m11-pad1_ net-_m11-pad1_ CMOSP W=100u L=100u M=1
+m19 net-_c3-pad1_ net-_m15-pad2_ net-_m11-pad1_ net-_m11-pad3_ CMOSN W=100u L=100u M=1
+c3  net-_c3-pad1_ gnd 100p
+* Control Statements
+
+.ends HCF4066

@@ -1,0 +1,42 @@
+.title kicad schematic
+
+.include 74HC86.sub
+v_4b1 net-_v_4b1-pad1_ gnd  dc 5
+* u6 v_4y plot_v1
+* u5 v_3y plot_v1
+* u7 net-_v_4b1-pad1_ net-_v_4a1-pad1_ net-_v_3b1-pad1_ net-_v_3a1-pad1_ net-_u7-pad5_ net-_u7-pad6_ net-_u7-pad7_ net-_u7-pad8_ adc_bridge_4
+v1 net-_x1-pad14_ gnd 5
+v_3a1 net-_v_3a1-pad1_ gnd  dc 5
+v_3b1 net-_v_3b1-pad1_ gnd  dc 0
+v_4a1 net-_v_4a1-pad1_ gnd  dc 5
+* u4 net-_u4-pad1_ net-_u4-pad2_ net-_u4-pad3_ net-_u4-pad4_ v_4y v_3y v_2y v_1y dac_bridge_4
+* u3 v_2y plot_v1
+v_2a1 net-_v_2a1-pad1_ gnd  dc 0
+v_1b1 net-_v_1b1-pad1_ gnd  dc 0
+v_1a1 net-_v_1a1-pad1_ gnd  dc 0
+v_2b1 net-_v_2b1-pad1_ gnd  dc 5
+x1 net-_u1-pad5_ net-_u1-pad6_ net-_u4-pad4_ net-_u1-pad7_ net-_u1-pad8_ net-_u4-pad3_ gnd net-_u4-pad2_ net-_u7-pad8_ net-_u7-pad7_ net-_u4-pad1_ net-_u7-pad6_ net-_u7-pad5_ net-_x1-pad14_ 74HC86
+* u2 v_1y plot_v1
+* u1 net-_v_1a1-pad1_ net-_v_1b1-pad1_ net-_v_2a1-pad1_ net-_v_2b1-pad1_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ adc_bridge_4
+a1 [net-_v_4b1-pad1_ net-_v_4a1-pad1_ net-_v_3b1-pad1_ net-_v_3a1-pad1_ ] [net-_u7-pad5_ net-_u7-pad6_ net-_u7-pad7_ net-_u7-pad8_ ] u7
+a2 [net-_u4-pad1_ net-_u4-pad2_ net-_u4-pad3_ net-_u4-pad4_ ] [v_4y v_3y v_2y v_1y ] u4
+a3 [net-_v_1a1-pad1_ net-_v_1b1-pad1_ net-_v_2a1-pad1_ net-_v_2b1-pad1_ ] [net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ ] u1
+* Schematic Name:                             adc_bridge_4, Ngspice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_4, Ngspice Name: dac_bridge
+.model u4 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_4, Ngspice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-00 10e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(v_4y)
+plot v(v_3y)
+plot v(v_2y)
+plot v(v_1y)
+.endc
+.end

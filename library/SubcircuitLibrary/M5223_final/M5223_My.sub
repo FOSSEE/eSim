@@ -1,0 +1,27 @@
+* Subcircuit M5223_My
+.subckt M5223_My net-_q1-pad2_ net-_q6-pad2_ net-_i4-pad2_ net-_i1-pad1_ net-_i4-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\m5223_my\m5223_my.cir
+.include NPN.lib
+.include PNP.lib
+q4 net-_c1-pad2_ net-_q2-pad1_ net-_i4-pad2_ Q2N2222
+q2 net-_q2-pad1_ net-_q1-pad3_ net-_i1-pad2_ Q2N2907A
+q1 gnd net-_q1-pad2_ net-_q1-pad3_ Q2N2907A
+q5 net-_c1-pad2_ net-_q5-pad2_ net-_i1-pad2_ Q2N2907A
+q6 gnd net-_q6-pad2_ net-_q5-pad2_ Q2N2907A
+q3 net-_q2-pad1_ net-_q2-pad1_ net-_i4-pad2_ Q2N2222
+i1 net-_i1-pad1_ net-_i1-pad2_  dc 100m
+q11 net-_i1-pad1_ net-_c1-pad1_ net-_q11-pad3_ Q2N2222
+q12 net-_i1-pad1_ net-_q11-pad3_ net-_q10-pad2_ Q2N2222
+q7 net-_i4-pad2_ net-_c1-pad2_ net-_i2-pad2_ Q2N2907A
+q8 net-_i1-pad1_ net-_i2-pad2_ net-_q8-pad3_ Q2N2222
+q9 net-_c1-pad1_ net-_q8-pad3_ net-_i4-pad2_ Q2N2222
+i2 net-_i1-pad1_ net-_i2-pad2_  dc 100m
+i3 net-_i1-pad1_ net-_c1-pad1_  dc 100m
+q10 net-_c1-pad1_ net-_q10-pad2_ net-_i4-pad1_ Q2N2222
+i4 net-_i4-pad1_ net-_i4-pad2_  dc 100m
+q13 net-_i4-pad2_ net-_c1-pad1_ net-_i4-pad1_ Q2N2907A
+r3  net-_q10-pad2_ net-_i4-pad1_ 500
+c1  net-_c1-pad1_ net-_c1-pad2_ 15p
+* Control Statements
+
+.ends M5223_My

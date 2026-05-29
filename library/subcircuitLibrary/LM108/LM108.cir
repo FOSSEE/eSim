@@ -1,0 +1,59 @@
+.title KiCad schematic
+U2 /comp1 /input1 /input2 /gnd unconnected-_U2-Pad5_ /output /vcc /comp2 PORT
+M29 Net-_M29-Pad1_ Net-_M15-Pad1_ /gnd /vcc mosfet_p
+R17 /gnd Net-_M24-Pad3_ 820
+M24 Net-_M15-Pad1_ Net-_M24-Pad2_ Net-_M24-Pad3_ /gnd mosfet_n
+U8 /gnd plot_v1
+U7 /output plot_v1
+M25 Net-_M25-Pad1_ Net-_M16-Pad4_ Net-_M25-Pad3_ /gnd mosfet_n
+M26 Net-_M25-Pad3_ Net-_M15-Pad1_ /gnd /vcc mosfet_p
+R19 Net-_M27-Pad2_ /output 900
+R18 Net-_M29-Pad1_ Net-_M27-Pad2_ 240
+M27 /output Net-_M27-Pad2_ Net-_M25-Pad1_ /gnd mosfet_n
+R10 GND Net-_M18-Pad4_ 500k
+R15 Net-_M18-Pad4_ /gnd 1k
+R6 Net-_M1-Pad4_ GND 6.4k
+M17 Net-_M1-Pad4_ Net-_M17-Pad2_ Net-_M14-Pad2_ GND mosfet_n
+R9 GND Net-_M1-Pad4_ 50k
+M19 Net-_M19-Pad1_ Net-_M19-Pad2_ Net-_M14-Pad2_ GND mosfet_n
+M18 Net-_M18-Pad1_ Net-_M15-Pad2_ Net-_M15-Pad1_ Net-_M18-Pad4_ mosfet_n
+R14 Net-_M19-Pad1_ Net-_M24-Pad2_ 20k
+R12 Net-_M18-Pad4_ Net-_M19-Pad1_ 20k
+M21 Net-_M17-Pad2_ Net-_M19-Pad1_ Net-_M18-Pad4_ Net-_M18-Pad4_ mosfet_n
+R13 Net-_M17-Pad2_ Net-_M19-Pad2_ 940
+M22 Net-_M19-Pad2_ /gnd Net-_M14-Pad2_ Net-_M18-Pad4_ mosfet_n
+R16 Net-_M16-Pad4_ Net-_M25-Pad1_ 2K
+U6 /vcc plot_v1
+M28 /vcc Net-_M25-Pad1_ Net-_M27-Pad2_ /gnd mosfet_n
+v1 /vcc GND 15v
+M20 Net-_M20-Pad1_ Net-_M11-Pad3_ Net-_M15-Pad1_ Net-_M18-Pad4_ mosfet_n
+M23 Net-_M20-Pad1_ Net-_M16-Pad4_ /vcc /vcc mosfet_n
+R11 Net-_M18-Pad1_ /comp2 5.6k
+M16 /vcc Net-_M14-Pad2_ Net-_M14-Pad2_ Net-_M16-Pad4_ mosfet_p
+U5 /comp2 plot_v1
+M10 Net-_M1-Pad4_ Net-_M1-Pad4_ Net-_M10-Pad3_ Net-_M1-Pad4_ mosfet_n
+M9 Net-_M7-Pad3_ /input2 Net-_M9-Pad3_ Net-_M1-Pad4_ mosfet_n
+R1 Net-_M12-Pad2_ Net-_M1-Pad3_ 2k
+M4 /input1 /input2 Net-_M4-Pad3_ Net-_M1-Pad4_ mosfet_n
+U1 /input2 plot_v1
+R8 Net-_M14-Pad3_ /vcc 10K
+M14 Net-_M13-Pad2_ Net-_M14-Pad2_ Net-_M14-Pad3_ /vcc mosfet_p
+R7 Net-_M11-Pad1_ /vcc 10K
+R3 Net-_M8-Pad3_ /vcc 20K
+M7 /comp1 Net-_M13-Pad2_ Net-_M7-Pad3_ Net-_M1-Pad4_ mosfet_n
+M15 Net-_M15-Pad1_ Net-_M15-Pad2_ Net-_M15-Pad2_ GND mosfet_n
+M8 /comp1 /comp1 Net-_M8-Pad3_ /vcc mosfet_p
+M11 Net-_M11-Pad1_ /comp1 Net-_M11-Pad3_ /vcc mosfet_p
+R5 Net-_M10-Pad3_ Net-_M9-Pad3_ 2k
+M12 Net-_M12-Pad1_ Net-_M12-Pad2_ /gnd /vcc mosfet_p
+R2 Net-_M2-Pad3_ /vcc 20K
+U4 /comp1 plot_v1
+M1 Net-_M1-Pad1_ /input1 Net-_M1-Pad3_ Net-_M1-Pad4_ mosfet_n
+U3 /input1 plot_v1
+M6 Net-_M4-Pad3_ /input1 /input2 Net-_M1-Pad4_ mosfet_n
+R4 Net-_M4-Pad3_ Net-_M12-Pad1_ 50k
+M5 Net-_M11-Pad1_ Net-_M2-Pad1_ Net-_M15-Pad2_ /vcc mosfet_p
+M2 Net-_M2-Pad1_ Net-_M2-Pad1_ Net-_M2-Pad3_ /vcc mosfet_p
+M3 Net-_M1-Pad1_ Net-_M13-Pad2_ Net-_M2-Pad1_ Net-_M1-Pad4_ mosfet_n
+M13 Net-_M12-Pad1_ Net-_M13-Pad2_ Net-_M13-Pad2_ Net-_M1-Pad4_ mosfet_n
+.end

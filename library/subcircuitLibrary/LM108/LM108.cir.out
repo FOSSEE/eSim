@@ -1,0 +1,77 @@
+.title kicad schematic
+
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+* u2 /comp1 /input1 /input2 /gnd unconnected-_u2-pad5_ /output /vcc /comp2 port
+m29 net-_m29-pad1_ net-_m15-pad1_ /gnd /vcc CMOSP W=100u L=100u M=1
+r17 /gnd net-_m24-pad3_ 820
+m24 net-_m15-pad1_ net-_m24-pad2_ net-_m24-pad3_ /gnd CMOSN W=100u L=100u M=1
+* u8 /gnd plot_v1
+* u7 /output plot_v1
+m25 net-_m25-pad1_ net-_m16-pad4_ net-_m25-pad3_ /gnd CMOSN W=100u L=100u M=1
+m26 net-_m25-pad3_ net-_m15-pad1_ /gnd /vcc CMOSP W=100u L=100u M=1
+r19 net-_m27-pad2_ /output 900
+r18 net-_m29-pad1_ net-_m27-pad2_ 240
+m27 /output net-_m27-pad2_ net-_m25-pad1_ /gnd CMOSN W=100u L=100u M=1
+r10 gnd net-_m18-pad4_ 500k
+r15 net-_m18-pad4_ /gnd 1k
+r6 net-_m1-pad4_ gnd 6.4k
+m17 net-_m1-pad4_ net-_m17-pad2_ net-_m14-pad2_ gnd CMOSN W=100u L=100u M=1
+r9 gnd net-_m1-pad4_ 50k
+m19 net-_m19-pad1_ net-_m19-pad2_ net-_m14-pad2_ gnd CMOSN W=100u L=100u M=1
+m18 net-_m18-pad1_ net-_m15-pad2_ net-_m15-pad1_ net-_m18-pad4_ CMOSN W=100u L=100u M=1
+r14 net-_m19-pad1_ net-_m24-pad2_ 20k
+r12 net-_m18-pad4_ net-_m19-pad1_ 20k
+m21 net-_m17-pad2_ net-_m19-pad1_ net-_m18-pad4_ net-_m18-pad4_ CMOSN W=100u L=100u M=1
+r13 net-_m17-pad2_ net-_m19-pad2_ 940
+m22 net-_m19-pad2_ /gnd net-_m14-pad2_ net-_m18-pad4_ CMOSN W=100u L=100u M=1
+r16 net-_m16-pad4_ net-_m25-pad1_ 2k
+* u6 /vcc plot_v1
+m28 /vcc net-_m25-pad1_ net-_m27-pad2_ /gnd CMOSN W=100u L=100u M=1
+v1 /vcc gnd 15v
+m20 net-_m20-pad1_ net-_m11-pad3_ net-_m15-pad1_ net-_m18-pad4_ CMOSN W=100u L=100u M=1
+m23 net-_m20-pad1_ net-_m16-pad4_ /vcc /vcc CMOSN W=100u L=100u M=1
+r11 net-_m18-pad1_ /comp2 5.6k
+m16 /vcc net-_m14-pad2_ net-_m14-pad2_ net-_m16-pad4_ CMOSP W=100u L=100u M=1
+* u5 /comp2 plot_v1
+m10 net-_m1-pad4_ net-_m1-pad4_ net-_m10-pad3_ net-_m1-pad4_ CMOSN W=100u L=100u M=1
+m9 net-_m7-pad3_ /input2 net-_m9-pad3_ net-_m1-pad4_ CMOSN W=100u L=100u M=1
+r1 net-_m12-pad2_ net-_m1-pad3_ 2k
+m4 /input1 /input2 net-_m4-pad3_ net-_m1-pad4_ CMOSN W=100u L=100u M=1
+* u1 /input2 plot_v1
+r8 net-_m14-pad3_ /vcc 10k
+m14 net-_m13-pad2_ net-_m14-pad2_ net-_m14-pad3_ /vcc CMOSP W=100u L=100u M=1
+r7 net-_m11-pad1_ /vcc 10k
+r3 net-_m8-pad3_ /vcc 20k
+m7 /comp1 net-_m13-pad2_ net-_m7-pad3_ net-_m1-pad4_ CMOSN W=100u L=100u M=1
+m15 net-_m15-pad1_ net-_m15-pad2_ net-_m15-pad2_ gnd CMOSN W=100u L=100u M=1
+m8 /comp1 /comp1 net-_m8-pad3_ /vcc CMOSP W=100u L=100u M=1
+m11 net-_m11-pad1_ /comp1 net-_m11-pad3_ /vcc CMOSP W=100u L=100u M=1
+r5 net-_m10-pad3_ net-_m9-pad3_ 2k
+m12 net-_m12-pad1_ net-_m12-pad2_ /gnd /vcc CMOSP W=100u L=100u M=1
+r2 net-_m2-pad3_ /vcc 20k
+* u4 /comp1 plot_v1
+m1 net-_m1-pad1_ /input1 net-_m1-pad3_ net-_m1-pad4_ CMOSN W=100u L=100u M=1
+* u3 /input1 plot_v1
+m6 net-_m4-pad3_ /input1 /input2 net-_m1-pad4_ CMOSN W=100u L=100u M=1
+r4 net-_m4-pad3_ net-_m12-pad1_ 50k
+m5 net-_m11-pad1_ net-_m2-pad1_ net-_m15-pad2_ /vcc CMOSP W=100u L=100u M=1
+m2 net-_m2-pad1_ net-_m2-pad1_ net-_m2-pad3_ /vcc CMOSP W=100u L=100u M=1
+m3 net-_m1-pad1_ net-_m13-pad2_ net-_m2-pad1_ net-_m1-pad4_ CMOSN W=100u L=100u M=1
+m13 net-_m12-pad1_ net-_m13-pad2_ net-_m13-pad2_ net-_m1-pad4_ CMOSN W=100u L=100u M=1
+.tran 0.1e-06 100e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(/gnd)
+plot v(/output)
+plot v(/vcc)
+plot v(/comp2)
+plot v(/input2)
+plot v(/comp1)
+plot v(/input1)
+.endc
+.end

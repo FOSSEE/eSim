@@ -1,0 +1,9 @@
+.title KiCad schematic
+Vv1 vin GND sin(2.5 1 1k)
+v2 Net-_X1-Pad8_ GND DC
+R3 GND Net-_R3-Pad2_ 1meg
+R2 GND Net-_R2-Pad2_ 1meg
+R4 Net-_X1-Pad2_ vout 1mk
+R1 GND Net-_R1-Pad2_ 1meg
+X1 vout Net-_X1-Pad2_ vin GND Net-_R1-Pad2_ Net-_R2-Pad2_ Net-_R3-Pad2_ Net-_X1-Pad8_ LT1013
+.end

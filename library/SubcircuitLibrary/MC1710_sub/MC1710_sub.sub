@@ -1,0 +1,34 @@
+* Subcircuit MC1710_sub
+.subckt MC1710_sub unconnected-_u1-pad1_ net-_q7-pad2_ net-_q4-pad2_ net-_q1-pad2_ unconnected-_u1-pad5_ net-_r3-pad2_ unconnected-_u1-pad7_ unconnected-_u1-pad8_ net-_q7-pad1_ unconnected-_u1-pad10_ net-_q2-pad1_ unconnected-_u1-pad12_ unconnected-_u1-pad13_ unconnected-_u1-pad14_ 
+.title kicad schematic
+.include D.lib
+.include NPN.lib
+r2 net-_q2-pad3_ net-_q4-pad1_ 500
+r1 net-_q2-pad3_ net-_q1-pad1_ 500
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_q1-pad3_ Q2N2222
+q3 net-_q1-pad3_ net-_d1-pad1_ net-_q3-pad3_ Q2N2222
+* u2 net-_q7-pad2_ net-_q5-pad3_ zener
+q6 net-_d2-pad1_ net-_q4-pad1_ net-_q5-pad3_ Q2N2222
+r5 net-_q2-pad2_ net-_d2-pad2_ 1.1k
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+r7 net-_d2-pad2_ net-_q2-pad1_ 2.8k
+r8 net-_d2-pad1_ net-_q2-pad1_ 3.9k
+q7 net-_q7-pad1_ net-_q7-pad2_ net-_q7-pad3_ Q2N2222
+q5 net-_q2-pad2_ net-_q1-pad1_ net-_q5-pad3_ Q2N2222
+r3 net-_q3-pad3_ net-_r3-pad2_ 100
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r6 net-_d1-pad1_ net-_q7-pad3_ 1.7k
+r4 net-_r3-pad2_ net-_d1-pad2_ 68
+* u3 net-_q7-pad1_ net-_q8-pad3_ zener
+q8 net-_q2-pad1_ net-_d2-pad1_ net-_q8-pad3_ Q2N2222
+a1 net-_q7-pad2_ net-_q5-pad3_ u2
+a2 net-_q7-pad1_ net-_q8-pad3_ u3
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u2 zener(v_breakdown=5.3 i_breakdown=5.0e-3 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u3 zener(v_breakdown=0.7 i_breakdown=1.0e-3 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Control Statements
+
+.ends MC1710_sub
