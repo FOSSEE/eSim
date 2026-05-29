@@ -1,0 +1,87 @@
+* c:\users\ajay\onedrive\desktop\fossee2.3\esim\library\subcircuitlibrary\lm161\lm161.cir
+
+.include NPN.lib
+.include D.lib
+q3 net-_q3-pad1_ net-_d1-pad1_ net-_q3-pad3_ Q2N2222
+r4  net-_q3-pad1_ net-_d1-pad1_ 9k
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d1-pad2_ net-_d2-pad2_ 1N4148
+d3 net-_d2-pad2_ net-_d3-pad2_ 1N4148
+r3  net-_q3-pad3_ net-_q4-pad1_ 1450
+* u2  gnd net-_d3-pad2_ zener
+q5 net-_q3-pad1_ net-_q4-pad1_ net-_q5-pad3_ Q2N2222
+r1  net-_q3-pad3_ net-_q1-pad1_ 1450
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_q1-pad3_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+r2  net-_q2-pad3_ net-_q11-pad3_ 400
+* u3  net-_q13-pad2_ net-_q5-pad3_ zener
+q6 net-_q13-pad2_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+q7 net-_q3-pad1_ net-_q1-pad1_ net-_q7-pad3_ Q2N2222
+* u4  net-_q8-pad1_ net-_q7-pad3_ zener
+q8 net-_q8-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+q10 net-_q10-pad1_ net-_q10-pad2_ gnd Q2N2222
+q12 net-_q12-pad1_ net-_q12-pad2_ gnd Q2N2222
+q13 net-_q12-pad2_ net-_q13-pad2_ net-_q11-pad1_ Q2N2222
+r6  net-_q10-pad1_ net-_q10-pad2_ 1.3k
+r8  net-_q12-pad1_ net-_q12-pad2_ 1.3k
+r5  net-_q28-pad1_ net-_q10-pad1_ 1k
+q11 net-_q11-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+r7  net-_q28-pad1_ net-_q12-pad1_ 1k
+q9 net-_q10-pad2_ net-_q8-pad1_ net-_q11-pad1_ Q2N2222
+q14 net-_q14-pad1_ net-_q14-pad2_ net-_q10-pad1_ Q2N2222
+q15 net-_q14-pad1_ net-_q14-pad2_ net-_d5-pad2_ Q2N2222
+q17 net-_q14-pad1_ net-_q14-pad2_ net-_q17-pad3_ Q2N2222
+r9  net-_q28-pad1_ net-_q14-pad2_ 4k
+r11  net-_q28-pad1_ net-_q17-pad3_ 1.4k
+q19 net-_q17-pad3_ net-_q14-pad1_ net-_q19-pad3_ Q2N2222
+q21 net-_q17-pad3_ net-_q14-pad1_ net-_d4-pad1_ Q2N2222
+r12  net-_q19-pad3_ net-_q24-pad2_ 235
+r13  net-_q24-pad2_ gnd 800
+d4 net-_d4-pad1_ net-_d4-pad2_ 1N4148
+q24 net-_d4-pad2_ net-_q24-pad2_ gnd Q2N2222
+q23 net-_q23-pad1_ net-_q17-pad3_ net-_d4-pad1_ Q2N2222
+r14  net-_q28-pad1_ net-_q23-pad1_ 100
+d6 gnd net-_d6-pad2_ 1N4148
+d5 gnd net-_d5-pad2_ 1N4148
+q16 net-_q16-pad1_ net-_q16-pad2_ net-_q12-pad1_ Q2N2222
+q18 net-_q16-pad1_ net-_q16-pad2_ net-_d6-pad2_ Q2N2222
+q20 net-_q16-pad1_ net-_q16-pad2_ net-_q20-pad3_ Q2N2222
+r10  net-_q28-pad1_ net-_q16-pad2_ 1k
+r15  net-_q28-pad1_ net-_q20-pad3_ 1.4k
+q22 net-_q20-pad3_ net-_q16-pad1_ net-_q22-pad3_ Q2N2222
+q25 net-_q20-pad3_ net-_q16-pad1_ net-_d7-pad1_ Q2N2222
+r17  net-_q27-pad2_ net-_q22-pad3_ 235
+d7 net-_d7-pad1_ net-_d7-pad2_ 1N4148
+q27 net-_d7-pad2_ net-_q27-pad2_ gnd Q2N2222
+r16  net-_q27-pad2_ gnd 800
+q26 net-_q26-pad1_ net-_q20-pad3_ net-_d7-pad1_ Q2N2222
+r18  net-_q28-pad1_ net-_q26-pad1_ 100
+q28 net-_q28-pad1_ net-_q28-pad2_ net-_q28-pad3_ Q2N2222
+r21  net-_q28-pad1_ net-_q28-pad2_ 5k
+r19  net-_q28-pad3_ net-_q2-pad2_ 3.2k
+* u5  net-_q11-pad3_ net-_q28-pad2_ zener
+r20  net-_q2-pad2_ net-_q11-pad2_ 387
+q29 net-_q11-pad2_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+* u1  net-_q3-pad1_ ? net-_q1-pad2_ net-_q4-pad2_ ? net-_q11-pad3_ ? net-_d6-pad2_ net-_d7-pad2_ gnd net-_d4-pad2_ ? net-_d5-pad2_ net-_q28-pad1_ port
+a1 gnd net-_d3-pad2_ u2
+a2 net-_q13-pad2_ net-_q5-pad3_ u3
+a3 net-_q8-pad1_ net-_q7-pad3_ u4
+a4 net-_q11-pad3_ net-_q28-pad2_ u5
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u2 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u3 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u4 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u5 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

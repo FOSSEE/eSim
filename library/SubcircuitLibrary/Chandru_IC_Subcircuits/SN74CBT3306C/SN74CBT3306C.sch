@@ -1,0 +1,316 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:SN74CBT3306C-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Wire Wire Line
+	4350 2350 4550 2350
+Wire Wire Line
+	5050 2350 4950 2350
+Text GLabel 5950 3150 0    60   Input ~ 0
+VCC
+Text GLabel 5950 3400 0    60   Input ~ 0
+GND
+$Comp
+L dac_bridge_1 U3
+U 1 1 685BD8DE
+P 4200 2850
+F 0 "U3" H 4200 2850 60  0000 C CNN
+F 1 "dac_bridge_1" H 4200 3000 60  0000 C CNN
+F 2 "" H 4200 2850 60  0000 C CNN
+F 3 "" H 4200 2850 60  0000 C CNN
+	1    4200 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U1
+U 1 1 685BDB46
+P 3500 3250
+F 0 "U1" H 3500 3150 60  0000 C CNN
+F 1 "d_inverter" H 3500 3400 60  0000 C CNN
+F 2 "" H 3550 3200 60  0000 C CNN
+F 3 "" H 3550 3200 60  0000 C CNN
+	1    3500 3250
+	0    -1   -1   0   
+$EndComp
+Text GLabel 4500 4450 1    60   Input ~ 0
+VCC
+Text GLabel 5000 2200 2    60   Input ~ 0
+GND
+Wire Wire Line
+	4500 4450 4500 4600
+Wire Wire Line
+	4750 2650 4750 2800
+Wire Wire Line
+	3500 2950 3500 2800
+Wire Wire Line
+	3500 2800 3600 2800
+$Comp
+L adc_bridge_1 U2
+U 1 1 685BDDD9
+P 4100 3500
+F 0 "U2" H 4100 3500 60  0000 C CNN
+F 1 "adc_bridge_1" H 4100 3650 60  0000 C CNN
+F 2 "" H 4100 3500 60  0000 C CNN
+F 3 "" H 4100 3500 60  0000 C CNN
+	1    4100 3500
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3550 3550 3500 3550
+Wire Wire Line
+	4150 4700 4000 4700
+Wire Wire Line
+	4550 4700 4650 4700
+$Comp
+L PORT U4
+U 1 1 685BDEB6
+P 5100 3550
+F 0 "U4" H 5150 3650 30  0000 C CNN
+F 1 "PORT" H 5100 3550 30  0000 C CNN
+F 2 "" H 5100 3550 60  0000 C CNN
+F 3 "" H 5100 3550 60  0000 C CNN
+	1    5100 3550
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U4
+U 2 1 685BDF15
+P 4100 2350
+F 0 "U4" H 4150 2450 30  0000 C CNN
+F 1 "PORT" H 4100 2350 30  0000 C CNN
+F 2 "" H 4100 2350 60  0000 C CNN
+F 3 "" H 4100 2350 60  0000 C CNN
+	2    4100 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U4
+U 3 1 685BDF66
+P 8950 2350
+F 0 "U4" H 9000 2450 30  0000 C CNN
+F 1 "PORT" H 8950 2350 30  0000 C CNN
+F 2 "" H 8950 2350 60  0000 C CNN
+F 3 "" H 8950 2350 60  0000 C CNN
+	3    8950 2350
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U4
+U 4 1 685BDF97
+P 6350 3400
+F 0 "U4" H 6400 3500 30  0000 C CNN
+F 1 "PORT" H 6350 3400 30  0000 C CNN
+F 2 "" H 6350 3400 60  0000 C CNN
+F 3 "" H 6350 3400 60  0000 C CNN
+	4    6350 3400
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U4
+U 5 1 685BDFEC
+P 4000 4450
+F 0 "U4" H 4050 4550 30  0000 C CNN
+F 1 "PORT" H 4000 4450 30  0000 C CNN
+F 2 "" H 4000 4450 60  0000 C CNN
+F 3 "" H 4000 4450 60  0000 C CNN
+	5    4000 4450
+	0    1    1    0   
+$EndComp
+$Comp
+L PORT U4
+U 7 1 685BE0BE
+P 4350 5450
+F 0 "U4" H 4400 5550 30  0000 C CNN
+F 1 "PORT" H 4350 5450 30  0000 C CNN
+F 2 "" H 4350 5450 60  0000 C CNN
+F 3 "" H 4350 5450 60  0000 C CNN
+	7    4350 5450
+	0    -1   -1   0   
+$EndComp
+$Comp
+L PORT U4
+U 8 1 685BE0F9
+P 6350 3150
+F 0 "U4" H 6400 3250 30  0000 C CNN
+F 1 "PORT" H 6350 3150 30  0000 C CNN
+F 2 "" H 6350 3150 60  0000 C CNN
+F 3 "" H 6350 3150 60  0000 C CNN
+	8    6350 3150
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5950 3150 6100 3150
+Wire Wire Line
+	4350 5000 4350 5200
+Wire Wire Line
+	4700 3550 4850 3550
+$Comp
+L mosfet_n M2
+U 1 1 685BDC29
+P 4550 2550
+F 0 "M2" H 4550 2400 50  0000 R CNN
+F 1 "mosfet_n" H 4650 2500 50  0000 R CNN
+F 2 "" H 4850 2250 29  0000 C CNN
+F 3 "" H 4650 2350 60  0000 C CNN
+	1    4550 2550
+	0    -1   -1   0   
+$EndComp
+$Comp
+L mosfet_p M1
+U 1 1 685BDA1A
+P 4350 4850
+F 0 "M1" H 4300 4900 50  0000 R CNN
+F 1 "mosfet_p" H 4400 5000 50  0000 R CNN
+F 2 "" H 4600 4950 29  0000 C CNN
+F 3 "" H 4400 4850 60  0000 C CNN
+	1    4350 4850
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	4900 2250 4900 2200
+Wire Wire Line
+	4900 2200 5000 2200
+Wire Wire Line
+	6100 3400 5950 3400
+$Comp
+L PORT U4
+U 6 1 685BE04D
+P 8550 4700
+F 0 "U4" H 8600 4800 30  0000 C CNN
+F 1 "PORT" H 8550 4700 30  0000 C CNN
+F 2 "" H 8550 4700 60  0000 C CNN
+F 3 "" H 8550 4700 60  0000 C CNN
+	6    8550 4700
+	-1   0    0    1   
+$EndComp
+$Comp
+L dac_bridge_1 U5
+U 1 1 685C05B4
+P 7650 4750
+F 0 "U5" H 7650 4750 60  0000 C CNN
+F 1 "dac_bridge_1" H 7650 4900 60  0000 C CNN
+F 2 "" H 7650 4750 60  0000 C CNN
+F 3 "" H 7650 4750 60  0000 C CNN
+	1    7650 4750
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_buffer U7
+U 1 1 685C069C
+P 6350 4700
+F 0 "U7" H 6350 4650 60  0000 C CNN
+F 1 "d_buffer" H 6350 4750 60  0000 C CNN
+F 2 "" H 6350 4700 60  0000 C CNN
+F 3 "" H 6350 4700 60  0000 C CNN
+	1    6350 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L adc_bridge_1 U9
+U 1 1 685C07CD
+P 5250 4650
+F 0 "U9" H 5250 4650 60  0000 C CNN
+F 1 "adc_bridge_1" H 5250 4800 60  0000 C CNN
+F 2 "" H 5250 4650 60  0000 C CNN
+F 3 "" H 5250 4650 60  0000 C CNN
+	1    5250 4650
+	1    0    0    1   
+$EndComp
+$Comp
+L dac_bridge_1 U6
+U 1 1 685C0BC5
+P 8050 2400
+F 0 "U6" H 8050 2400 60  0000 C CNN
+F 1 "dac_bridge_1" H 8050 2550 60  0000 C CNN
+F 2 "" H 8050 2400 60  0000 C CNN
+F 3 "" H 8050 2400 60  0000 C CNN
+	1    8050 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_buffer U8
+U 1 1 685C0BCB
+P 6750 2350
+F 0 "U8" H 6750 2300 60  0000 C CNN
+F 1 "d_buffer" H 6750 2400 60  0000 C CNN
+F 2 "" H 6750 2350 60  0000 C CNN
+F 3 "" H 6750 2350 60  0000 C CNN
+	1    6750 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L adc_bridge_1 U10
+U 1 1 685C0BD1
+P 5650 2300
+F 0 "U10" H 5650 2300 60  0000 C CNN
+F 1 "adc_bridge_1" H 5650 2450 60  0000 C CNN
+F 2 "" H 5650 2300 60  0000 C CNN
+F 3 "" H 5650 2300 60  0000 C CNN
+	1    5650 2300
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	6200 2350 6250 2350
+Wire Wire Line
+	7400 2350 7450 2350
+Wire Wire Line
+	8600 2350 8700 2350
+Wire Wire Line
+	5800 4700 5850 4700
+Wire Wire Line
+	7000 4700 7050 4700
+Wire Wire Line
+	8200 4700 8300 4700
+$EndSCHEMATC

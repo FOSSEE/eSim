@@ -1,0 +1,55 @@
+* C:\Users\chand\esim\FOSSEE\eSim\library\SubcircuitLibrary\SN74CBT3384A\SN74CBT3384A.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/25/25 14:51:03
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ GND mosfet_n		
+M3  Net-_M3-Pad1_ Net-_M1-Pad2_ Net-_M3-Pad3_ GND mosfet_n		
+M5  Net-_M5-Pad1_ Net-_M1-Pad2_ Net-_M5-Pad3_ GND mosfet_n		
+M7  Net-_M7-Pad1_ Net-_M1-Pad2_ Net-_M7-Pad3_ GND mosfet_n		
+M9  Net-_M9-Pad1_ Net-_M1-Pad2_ Net-_M9-Pad3_ GND mosfet_n		
+M2  Net-_M2-Pad1_ Net-_M10-Pad2_ Net-_M2-Pad3_ GND mosfet_n		
+M4  Net-_M4-Pad1_ Net-_M10-Pad2_ Net-_M4-Pad3_ GND mosfet_n		
+M6  Net-_M6-Pad1_ Net-_M10-Pad2_ Net-_M6-Pad3_ GND mosfet_n		
+M8  Net-_M8-Pad1_ Net-_M10-Pad2_ Net-_M8-Pad3_ GND mosfet_n		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M10-Pad3_ GND mosfet_n		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_M1-Pad1_ Net-_M3-Pad1_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_M5-Pad1_ Net-_M7-Pad1_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_M9-Pad1_ GND Net-_U1-Pad13_ Net-_M2-Pad1_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_M4-Pad1_ Net-_M6-Pad1_ Net-_U1-Pad19_ Net-_U1-Pad20_ Net-_M8-Pad1_ Net-_M10-Pad1_ Net-_U1-Pad23_ ? PORT		
+U4  Net-_U2-Pad2_ Net-_M1-Pad2_ dac_bridge_1		
+U2  Net-_U1-Pad1_ Net-_U2-Pad2_ d_inverter		
+U5  Net-_U3-Pad2_ Net-_M10-Pad2_ dac_bridge_1		
+U3  Net-_U1-Pad13_ Net-_U3-Pad2_ d_inverter		
+U12  Net-_U12-Pad1_ Net-_U12-Pad2_ d_buffer		
+U18  Net-_U18-Pad1_ Net-_U18-Pad2_ d_buffer		
+U20  Net-_U10-Pad2_ Net-_U20-Pad2_ d_buffer		
+U22  Net-_U13-Pad2_ Net-_U22-Pad2_ d_buffer		
+U24  Net-_U15-Pad2_ Net-_U24-Pad2_ d_buffer		
+U17  Net-_U17-Pad1_ Net-_U17-Pad2_ d_buffer		
+U19  Net-_U19-Pad1_ Net-_U19-Pad2_ d_buffer		
+U21  Net-_U11-Pad2_ Net-_U21-Pad2_ d_buffer		
+U23  Net-_U14-Pad2_ Net-_U23-Pad2_ d_buffer		
+U25  Net-_U16-Pad2_ Net-_U25-Pad2_ d_buffer		
+U6  Net-_M1-Pad3_ Net-_U12-Pad1_ adc_bridge_1		
+U8  Net-_M3-Pad3_ Net-_U18-Pad1_ adc_bridge_1		
+U10  Net-_M5-Pad3_ Net-_U10-Pad2_ adc_bridge_1		
+U13  Net-_M7-Pad3_ Net-_U13-Pad2_ adc_bridge_1		
+U15  Net-_M9-Pad3_ Net-_U15-Pad2_ adc_bridge_1		
+U7  Net-_M2-Pad3_ Net-_U17-Pad1_ adc_bridge_1		
+U9  Net-_M4-Pad3_ Net-_U19-Pad1_ adc_bridge_1		
+U11  Net-_M6-Pad3_ Net-_U11-Pad2_ adc_bridge_1		
+U14  Net-_M8-Pad3_ Net-_U14-Pad2_ adc_bridge_1		
+U16  Net-_M10-Pad3_ Net-_U16-Pad2_ adc_bridge_1		
+U28  Net-_U18-Pad2_ Net-_U1-Pad5_ dac_bridge_1		
+U26  Net-_U12-Pad2_ Net-_U1-Pad2_ dac_bridge_1		
+U31  Net-_U20-Pad2_ Net-_U1-Pad6_ dac_bridge_1		
+U33  Net-_U22-Pad2_ Net-_U1-Pad9_ dac_bridge_1		
+U35  Net-_U24-Pad2_ Net-_U1-Pad10_ dac_bridge_1		
+U27  Net-_U17-Pad2_ Net-_U1-Pad15_ dac_bridge_1		
+U29  Net-_U19-Pad2_ Net-_U1-Pad16_ dac_bridge_1		
+U30  Net-_U21-Pad2_ Net-_U1-Pad19_ dac_bridge_1		
+U32  Net-_U23-Pad2_ Net-_U1-Pad20_ dac_bridge_1		
+U34  Net-_U25-Pad2_ Net-_U1-Pad23_ dac_bridge_1		
+
+.end

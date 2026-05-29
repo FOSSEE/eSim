@@ -1,0 +1,56 @@
+.title KiCad schematic
+M3 Net-_M1-Pad1_ Net-_M3-Pad2_ Net-_M3-Pad3_ Net-_M3-Pad3_ eSim_MOS_P
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ GND GND eSim_MOS_N
+U35 Net-_U21-Pad3_ Net-_M3-Pad2_ dac_bridge_1
+U34 Net-_U30-Pad3_ Net-_M1-Pad2_ dac_bridge_1
+U30 Net-_U28-Pad2_ Net-_U20-Pad2_ Net-_U30-Pad3_ d_and
+U40 Net-_U32-Pad3_ Net-_M4-Pad2_ dac_bridge_1
+M4 Net-_M4-Pad1_ Net-_M4-Pad2_ GND GND eSim_MOS_N
+M7 Net-_M4-Pad1_ Net-_M7-Pad2_ Net-_M3-Pad3_ Net-_M3-Pad3_ eSim_MOS_P
+U38 Net-_U23-Pad3_ Net-_M7-Pad2_ dac_bridge_1
+M6 Net-_M2-Pad1_ Net-_M6-Pad2_ Net-_M3-Pad3_ Net-_M3-Pad3_ eSim_MOS_P
+U19 Net-_U16-Pad2_ Net-_U19-Pad2_ d_inverter
+U27 Net-_U11-Pad2_ Net-_U27-Pad2_ d_inverter
+U25 Net-_U17-Pad2_ Net-_U25-Pad2_ d_inverter
+U24 Net-_U12-Pad2_ Net-_U13-Pad2_ Net-_U24-Pad3_ d_nand
+U22 Net-_U15-Pad1_ Net-_U22-Pad2_ Net-_U22-Pad3_ d_nand
+U26 Net-_U22-Pad2_ Net-_U26-Pad2_ d_inverter
+U18 Net-_U15-Pad2_ Net-_U18-Pad2_ d_inverter
+U36 Net-_U31-Pad3_ Net-_M2-Pad2_ dac_bridge_1
+U32 Net-_U27-Pad2_ Net-_U19-Pad2_ Net-_U32-Pad3_ d_and
+U37 Net-_U22-Pad3_ Net-_M6-Pad2_ dac_bridge_1
+U31 Net-_U26-Pad2_ Net-_U18-Pad2_ Net-_U31-Pad3_ d_and
+U29 Net-_U13-Pad2_ Net-_U29-Pad2_ d_inverter
+U33 Net-_U29-Pad2_ Net-_U25-Pad2_ Net-_U33-Pad3_ d_and
+U39 Net-_U24-Pad3_ Net-_M8-Pad2_ dac_bridge_1
+U41 Net-_U33-Pad3_ Net-_M5-Pad2_ dac_bridge_1
+U7 Net-_U2-Pad2_ Net-_U21-Pad2_ d_inverter
+U10 Net-_U1-Pad4_ Net-_U10-Pad2_ d_inverter
+U6 Net-_U1-Pad1_ Net-_U14-Pad1_ d_inverter
+U14 Net-_U14-Pad1_ Net-_U14-Pad2_ d_inverter
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ GND Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ GND PORT
+U2 Net-_U1-Pad2_ Net-_U2-Pad2_ d_inverter
+U23 Net-_U10-Pad2_ Net-_U11-Pad2_ Net-_U23-Pad3_ d_nand
+U28 Net-_U21-Pad2_ Net-_U28-Pad2_ d_inverter
+U21 Net-_U14-Pad1_ Net-_U21-Pad2_ Net-_U21-Pad3_ d_nand
+U20 Net-_U14-Pad2_ Net-_U20-Pad2_ d_inverter
+U13 Net-_U13-Pad1_ Net-_U13-Pad2_ d_inverter
+U12 Net-_U1-Pad13_ Net-_U12-Pad2_ d_inverter
+U17 Net-_U12-Pad2_ Net-_U17-Pad2_ d_inverter
+U15 Net-_U15-Pad1_ Net-_U15-Pad2_ d_inverter
+U5 Net-_U1-Pad12_ Net-_U13-Pad1_ d_inverter
+M5 Net-_M5-Pad1_ Net-_M5-Pad2_ GND GND eSim_MOS_N
+M8 Net-_M5-Pad1_ Net-_M8-Pad2_ Net-_M3-Pad3_ Net-_M3-Pad3_ eSim_MOS_P
+M2 Net-_M2-Pad1_ Net-_M2-Pad2_ GND GND eSim_MOS_N
+U45 Net-_M2-Pad1_ Net-_U1-Pad8_ adc_bridge_1
+U44 Net-_M5-Pad1_ Net-_U1-Pad11_ adc_bridge_1
+U4 Net-_U1-Pad5_ Net-_U11-Pad1_ d_inverter
+U11 Net-_U11-Pad1_ Net-_U11-Pad2_ d_inverter
+U8 Net-_U1-Pad10_ Net-_U15-Pad1_ d_inverter
+U3 Net-_U1-Pad9_ Net-_U3-Pad2_ d_inverter
+U9 Net-_U3-Pad2_ Net-_U22-Pad2_ d_inverter
+U16 Net-_U10-Pad2_ Net-_U16-Pad2_ d_inverter
+U42 Net-_M1-Pad1_ Net-_U1-Pad3_ adc_bridge_1
+v1 Net-_M3-Pad3_ GND 5
+U43 Net-_M4-Pad1_ Net-_U1-Pad6_ adc_bridge_1
+.end

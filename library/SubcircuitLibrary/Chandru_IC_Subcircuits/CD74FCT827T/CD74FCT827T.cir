@@ -1,0 +1,24 @@
+* C:\Users\chand\esim\FOSSEE\eSim\library\SubcircuitLibrary\CD74FCT827T\CD74FCT827T.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/26/25 23:36:08
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ one_input_tristate_buffer		
+U2  Net-_U14-Pad3_ Net-_U1-Pad2_ Net-_U14-Pad22_ one_input_tristate_buffer		
+U3  Net-_U14-Pad4_ Net-_U1-Pad2_ Net-_U14-Pad21_ one_input_tristate_buffer		
+U4  Net-_U14-Pad5_ Net-_U1-Pad2_ Net-_U14-Pad20_ one_input_tristate_buffer		
+U5  Net-_U14-Pad6_ Net-_U1-Pad2_ Net-_U14-Pad19_ one_input_tristate_buffer		
+U6  Net-_U14-Pad7_ Net-_U1-Pad2_ Net-_U14-Pad18_ one_input_tristate_buffer		
+U7  Net-_U14-Pad8_ Net-_U1-Pad2_ Net-_U14-Pad17_ one_input_tristate_buffer		
+U8  Net-_U14-Pad9_ Net-_U1-Pad2_ Net-_U14-Pad16_ one_input_tristate_buffer		
+U9  Net-_U14-Pad10_ Net-_U1-Pad2_ Net-_U14-Pad15_ one_input_tristate_buffer		
+U10  Net-_U10-Pad1_ Net-_U1-Pad2_ Net-_U10-Pad3_ one_input_tristate_buffer		
+U13  Net-_U11-Pad2_ Net-_U12-Pad2_ Net-_U1-Pad2_ d_and		
+U11  Net-_U11-Pad1_ Net-_U11-Pad2_ d_inverter		
+U12  Net-_U12-Pad1_ Net-_U12-Pad2_ d_inverter		
+U14  Net-_U11-Pad1_ Net-_U1-Pad1_ Net-_U14-Pad3_ Net-_U14-Pad4_ Net-_U14-Pad5_ Net-_U14-Pad6_ Net-_U14-Pad7_ Net-_U14-Pad8_ Net-_U14-Pad9_ Net-_U14-Pad10_ Net-_U10-Pad1_ ? Net-_U12-Pad1_ Net-_U10-Pad3_ Net-_U14-Pad15_ Net-_U14-Pad16_ Net-_U14-Pad17_ Net-_U14-Pad18_ Net-_U14-Pad19_ Net-_U14-Pad20_ Net-_U14-Pad21_ Net-_U14-Pad22_ Net-_U1-Pad3_ ? PORT		
+
+.end

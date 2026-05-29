@@ -1,0 +1,19 @@
+.title KiCad schematic
+U3 Net-_U3-Pad1_ GND Net-_U3-Pad3_ Net-_U3-Pad4_ adc_bridge_2
+U4 CLK_A CLK_B unconnected-_U4-Pad3_ Net-_U4-Pad4_ adc_bridge_2
+R4 D GND 1k
+U9 D plot_v1
+U8 C plot_v1
+U6 B plot_v1
+R3 C GND 1k
+R1 A GND 1k
+R2 B GND 1k
+U1 CLK_A plot_v1
+v2 CLK_B GND pulse
+v1 CLK_A GND pulse
+v3 Net-_U3-Pad1_ GND DC
+U2 CLK_B plot_v1
+U7 A plot_v1
+X1 Net-_U5-Pad1_ Net-_U3-Pad4_ Net-_X1-Pad3_ Net-_U4-Pad4_ Net-_U5-Pad3_ Net-_U5-Pad2_ Net-_U5-Pad1_ Net-_U3-Pad4_ unconnected-_X1-Pad9_ unconnected-_X1-Pad10_ unconnected-_X1-Pad11_ unconnected-_X1-Pad12_ unconnected-_X1-Pad13_ unconnected-_X1-Pad14_ unconnected-_X1-Pad15_ Net-_U3-Pad3_ CD74HC390
+U5 Net-_U5-Pad1_ Net-_U5-Pad2_ Net-_U5-Pad3_ Net-_X1-Pad3_ D C B A dac_bridge_4
+.end

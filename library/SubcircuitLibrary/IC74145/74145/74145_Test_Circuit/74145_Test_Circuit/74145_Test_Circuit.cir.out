@@ -1,0 +1,68 @@
+.title kicad schematic
+
+.include 74145.sub
+* u6 v_y5 plot_v1
+* u4 v_y3 plot_v1
+* u3 v_y2 plot_v1
+* u2 v_y1 plot_v1
+* u1 v_y0 plot_v1
+* u5 v_y4 plot_v1
+* u11 v_y9 plot_v1
+* u12 v_y8 plot_v1
+* u13 v_y7 plot_v1
+* u14 v_d plot_v1
+* u9 v_a v_b v_c v_d net-_u9-pad5_ net-_u9-pad6_ net-_u9-pad7_ net-_u9-pad8_ adc_bridge_4
+v1 net-_x1-pad16_ gnd 5
+r7 gnd v_y6 1k
+* u8 net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ net-_u8-pad5_ net-_u8-pad6_ net-_u8-pad7_ v_y0 v_y1 v_y2 v_y3 v_y4 v_y5 v_y6 dac_bridge_7
+x1 net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ net-_u8-pad5_ net-_u8-pad6_ net-_u8-pad7_ gnd net-_u10-pad3_ net-_u10-pad2_ net-_u10-pad1_ net-_u9-pad8_ net-_u9-pad7_ net-_u9-pad6_ net-_u9-pad5_ net-_x1-pad16_ 74145
+r5 gnd v_y4 1k
+r6 gnd v_y5 1k
+r4 gnd v_y3 1k
+r1 gnd v_y0 1k
+r3 gnd v_y2 1k
+r2 gnd v_y1 1k
+v_c1 v_c gnd  dc 5
+r9 gnd v_y8 1k
+r8 gnd v_y9 1k
+v_b1 v_b gnd  dc 5
+r10 gnd v_y7 1k
+v_d1 v_d gnd  dc 0
+* u10 net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ v_y9 v_y8 v_y7 dac_bridge_3
+* u17 v_a plot_v1
+* u16 v_b plot_v1
+* u15 v_c plot_v1
+v_a1 v_a gnd  dc 5
+* u7 v_y6 plot_v1
+a1 [v_a v_b v_c v_d ] [net-_u9-pad5_ net-_u9-pad6_ net-_u9-pad7_ net-_u9-pad8_ ] u9
+a2 [net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ net-_u8-pad5_ net-_u8-pad6_ net-_u8-pad7_ ] [v_y0 v_y1 v_y2 v_y3 v_y4 v_y5 v_y6 ] u8
+a3 [net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ ] [v_y9 v_y8 v_y7 ] u10
+* Schematic Name:                             adc_bridge_4, Ngspice Name: adc_bridge
+.model u9 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_7, Ngspice Name: dac_bridge
+.model u8 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_3, Ngspice Name: dac_bridge
+.model u10 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 20e-00 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(v_y5)
+plot v(v_y3)
+plot v(v_y2)
+plot v(v_y1)
+plot v(v_y0)
+plot v(v_y4)
+plot v(v_y9)
+plot v(v_y8)
+plot v(v_y7)
+plot v(v_d)
+plot v(v_a)
+plot v(v_b)
+plot v(v_c)
+plot v(v_y6)
+.endc
+.end

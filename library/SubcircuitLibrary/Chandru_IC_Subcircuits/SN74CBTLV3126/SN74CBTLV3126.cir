@@ -1,0 +1,43 @@
+* C:\Users\chand\esim\FOSSEE\eSim\library\SubcircuitLibrary\SN74CBTLV3126\SN74CBTLV3126.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/25/25 22:15:21
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ GND mosfet_n		
+M3  Net-_M1-Pad1_ Net-_M3-Pad2_ Net-_M1-Pad3_ VCC mosfet_p		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ d_inverter		
+U7  Net-_M1-Pad2_ Net-_U1-Pad1_ adc_bridge_1		
+U3  Net-_U1-Pad2_ Net-_M3-Pad2_ dac_bridge_1		
+U13  Net-_M1-Pad3_ Net-_U13-Pad2_ adc_bridge_1		
+U17  Net-_U13-Pad2_ Net-_U17-Pad2_ d_buffer		
+U21  Net-_U17-Pad2_ Net-_U21-Pad2_ dac_bridge_1		
+M4  Net-_M4-Pad1_ Net-_M4-Pad2_ Net-_M4-Pad3_ GND mosfet_n		
+M6  Net-_M4-Pad1_ Net-_M6-Pad2_ Net-_M4-Pad3_ VCC mosfet_p		
+U4  Net-_U11-Pad2_ Net-_U4-Pad2_ d_inverter		
+U11  Net-_M4-Pad2_ Net-_U11-Pad2_ adc_bridge_1		
+U8  Net-_U4-Pad2_ Net-_M6-Pad2_ dac_bridge_1		
+U15  Net-_M4-Pad3_ Net-_U15-Pad2_ adc_bridge_1		
+U19  Net-_U15-Pad2_ Net-_U19-Pad2_ d_buffer		
+U23  Net-_U19-Pad2_ Net-_U23-Pad2_ dac_bridge_1		
+M7  Net-_M7-Pad1_ Net-_M7-Pad2_ Net-_M7-Pad3_ GND mosfet_n		
+M8  Net-_M7-Pad1_ Net-_M8-Pad2_ Net-_M7-Pad3_ VCC mosfet_p		
+U6  Net-_U12-Pad2_ Net-_U10-Pad1_ d_inverter		
+U12  Net-_M7-Pad2_ Net-_U12-Pad2_ adc_bridge_1		
+U10  Net-_U10-Pad1_ Net-_M8-Pad2_ dac_bridge_1		
+U16  Net-_M7-Pad3_ Net-_U16-Pad2_ adc_bridge_1		
+U20  Net-_U16-Pad2_ Net-_U20-Pad2_ d_buffer		
+U24  Net-_U20-Pad2_ Net-_U24-Pad2_ dac_bridge_1		
+M2  Net-_M2-Pad1_ Net-_M2-Pad2_ Net-_M2-Pad3_ GND mosfet_n		
+M5  Net-_M2-Pad1_ Net-_M5-Pad2_ Net-_M2-Pad3_ VCC mosfet_p		
+U2  Net-_U2-Pad1_ Net-_U2-Pad2_ d_inverter		
+U9  Net-_M2-Pad2_ Net-_U2-Pad1_ adc_bridge_1		
+U5  Net-_U2-Pad2_ Net-_M5-Pad2_ dac_bridge_1		
+U14  Net-_M2-Pad3_ Net-_U14-Pad2_ adc_bridge_1		
+U18  Net-_U14-Pad2_ Net-_U18-Pad2_ d_buffer		
+U22  Net-_U18-Pad2_ Net-_U22-Pad2_ dac_bridge_1		
+U25  Net-_M1-Pad2_ Net-_M1-Pad1_ Net-_U21-Pad2_ Net-_M4-Pad2_ Net-_M4-Pad1_ Net-_U23-Pad2_ GND Net-_U24-Pad2_ Net-_M7-Pad1_ Net-_M7-Pad2_ Net-_U22-Pad2_ Net-_M2-Pad1_ Net-_M2-Pad2_ VCC PORT		
+
+.end

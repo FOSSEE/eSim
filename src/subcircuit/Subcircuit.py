@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt6 import QtCore, QtWidgets
 from configuration.Appconfig import Appconfig
 from projManagement.Validation import Validation
 from subcircuit.newSub import NewSub
@@ -27,7 +27,7 @@ class Subcircuit(QtWidgets.QWidget):
         self.obj_dockarea = parent
         self.layout = QtWidgets.QVBoxLayout()
         self.splitter = QtWidgets.QSplitter()
-        self.splitter.setOrientation(QtCore.Qt.Vertical)
+        self.splitter.setOrientation(QtCore.Qt.Orientation.Vertical)
 
         self.newbtn = QtWidgets.QPushButton('New Subcircuit Schematic')
         self.newbtn.setToolTip('<b>To create new Subcircuit Schematic</b>')
@@ -74,7 +74,7 @@ class Subcircuit(QtWidgets.QWidget):
                 msg.setModal(True)
                 msg.setWindowTitle("Error Message")
                 msg.showMessage('The schematic name cannot be empty')
-                msg.exec_()
+                msg.exec()
                 return
 
             self.schematic_name = (str(text))

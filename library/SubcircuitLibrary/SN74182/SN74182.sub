@@ -1,0 +1,64 @@
+* Subcircuit SN74182
+.subckt SN74182 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ ? net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ ? 
+* c:\fossee\esim\library\subcircuitlibrary\sn74182\sn74182.cir
+.include 4_and.sub
+.include 4_OR.sub
+.include 3_and.sub
+x1 net-_u1-pad6_ net-_u1-pad15_ net-_u1-pad2_ net-_u1-pad4_ net-_u1-pad7_ 4_OR
+x6 net-_u1-pad5_ net-_u1-pad14_ net-_u1-pad1_ net-_u1-pad3_ net-_x10-pad1_ 4_and
+x2 net-_u1-pad15_ net-_u1-pad5_ net-_u1-pad14_ net-_x10-pad3_ 3_and
+x7 net-_u1-pad2_ net-_u1-pad5_ net-_u1-pad14_ net-_u1-pad1_ net-_x10-pad2_ 4_and
+* u3  net-_u1-pad6_ net-_u1-pad5_ net-_u3-pad3_ d_and
+x10 net-_x10-pad1_ net-_x10-pad2_ net-_x10-pad3_ net-_u3-pad3_ net-_u1-pad10_ 4_OR
+x8 net-_u1-pad14_ net-_u1-pad1_ net-_u1-pad3_ net-_u2-pad2_ net-_x11-pad1_ 4_and
+x3 net-_u1-pad2_ net-_u1-pad14_ net-_u1-pad1_ net-_x11-pad3_ 3_and
+x9 net-_u1-pad4_ net-_u1-pad14_ net-_u1-pad1_ net-_u1-pad3_ net-_x11-pad2_ 4_and
+* u4  net-_u1-pad15_ net-_u1-pad14_ net-_u4-pad3_ d_and
+x11 net-_x11-pad1_ net-_x11-pad2_ net-_x11-pad3_ net-_u4-pad3_ net-_u11-pad1_ 4_OR
+* u11  net-_u11-pad1_ net-_u1-pad9_ d_inverter
+x4 net-_u1-pad1_ net-_u1-pad3_ net-_u2-pad2_ net-_u8-pad1_ 3_and
+x5 net-_u1-pad4_ net-_u1-pad1_ net-_u1-pad3_ net-_u8-pad2_ 3_and
+* u5  net-_u1-pad2_ net-_u1-pad1_ net-_u10-pad2_ d_and
+* u8  net-_u8-pad1_ net-_u8-pad2_ net-_u10-pad1_ d_or
+* u10  net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ d_or
+* u12  net-_u10-pad3_ net-_u1-pad11_ d_inverter
+* u2  net-_u1-pad13_ net-_u2-pad2_ d_inverter
+* u6  net-_u1-pad3_ net-_u2-pad2_ net-_u6-pad3_ d_and
+* u7  net-_u1-pad4_ net-_u1-pad3_ net-_u7-pad3_ d_and
+* u9  net-_u6-pad3_ net-_u7-pad3_ net-_u1-pad12_ d_nor
+a1 [net-_u1-pad6_ net-_u1-pad5_ ] net-_u3-pad3_ u3
+a2 [net-_u1-pad15_ net-_u1-pad14_ ] net-_u4-pad3_ u4
+a3 net-_u11-pad1_ net-_u1-pad9_ u11
+a4 [net-_u1-pad2_ net-_u1-pad1_ ] net-_u10-pad2_ u5
+a5 [net-_u8-pad1_ net-_u8-pad2_ ] net-_u10-pad1_ u8
+a6 [net-_u10-pad1_ net-_u10-pad2_ ] net-_u10-pad3_ u10
+a7 net-_u10-pad3_ net-_u1-pad11_ u12
+a8 net-_u1-pad13_ net-_u2-pad2_ u2
+a9 [net-_u1-pad3_ net-_u2-pad2_ ] net-_u6-pad3_ u6
+a10 [net-_u1-pad4_ net-_u1-pad3_ ] net-_u7-pad3_ u7
+a11 [net-_u6-pad3_ net-_u7-pad3_ ] net-_u1-pad12_ u9
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u11 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u8 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u10 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u12 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u6 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u7 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u9 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends SN74182

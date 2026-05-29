@@ -1,0 +1,14 @@
+* Subcircuit SN74LVC1G0832
+.subckt SN74LVC1G0832 net-_u1-pad1_ gnd net-_u1-pad3_ net-_u1-pad4_ gnd net-_u1-pad6_ 
+* c:\fossee\esim\library\subcircuitlibrary\sn74lvc1g0832\sn74lvc1g0832.cir
+* u2  net-_u1-pad1_ net-_u1-pad3_ net-_u2-pad3_ d_and
+* u3  net-_u2-pad3_ net-_u1-pad6_ net-_u1-pad4_ d_or
+a1 [net-_u1-pad1_ net-_u1-pad3_ ] net-_u2-pad3_ u2
+a2 [net-_u2-pad3_ net-_u1-pad6_ ] net-_u1-pad4_ u3
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u2 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, NgSpice Name: d_or
+.model u3 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends SN74LVC1G0832
