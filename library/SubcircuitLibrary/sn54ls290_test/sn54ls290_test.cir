@@ -1,0 +1,16 @@
+.title KiCad schematic
+R2 B GND 1k
+R3 D GND 1k
+R4 C GND 1k
+U28 D plot_v1
+U25 A plot_v1
+U27 B plot_v1
+U1 clk plot_v1
+v1 clk GND pulse
+U2 clk Net-_v2-Pad1_ GND Net-_U2-Pad4_ Net-_X1-Pad14_ Net-_U2-Pad6_ adc_bridge_3
+v2 Net-_v2-Pad1_ GND DC
+R1 A GND 1k
+U24 Net-_U24-Pad1_ Net-_U24-Pad2_ Net-_U24-Pad3_ Net-_U24-Pad4_ A B C D dac_bridge_4
+U26 C plot_v1
+X1 Net-_X1-Pad14_ unconnected-_X1-Pad2_ Net-_U2-Pad6_ Net-_U24-Pad3_ Net-_U24-Pad2_ unconnected-_X1-Pad6_ Net-_U2-Pad6_ Net-_U24-Pad4_ Net-_U24-Pad1_ Net-_U24-Pad4_ Net-_U2-Pad4_ Net-_X1-Pad14_ Net-_U2-Pad6_ Net-_X1-Pad14_ SN54LS290
+.end

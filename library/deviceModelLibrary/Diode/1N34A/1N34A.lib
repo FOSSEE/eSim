@@ -1,0 +1,2 @@
+.model 1N34A D(IS=2.6u RS=6.5 N=1.6 CJO=0.8p EG=0.67 BV=75 IBV=1m)
+.MODEL 1N34A_1 D( Is=0.2u N=1.30 Rs=7 bv=75 Ibv=0.018 Cjo=0.5p Vj=0.10 M=0.27 tt=144n )

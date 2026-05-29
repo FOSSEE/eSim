@@ -1,0 +1,19 @@
+* E:\IC_TL560C\IC_TL560C.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/15/25 13:16:39
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  IN Net-_R1-Pad1_ GND ? OUT TL560		
+R1  Net-_R1-Pad1_ IN 100k		
+R2  IN GND 500k		
+R3  Net-_R1-Pad1_ OUT 10k		
+v2  Net-_R1-Pad1_ GND DC		
+v1  Net-_C1-Pad2_ GND sine		
+U2  OUT plot_v1		
+U1  IN plot_v1		
+C1  IN Net-_C1-Pad2_ 0.047u		
+
+.end

@@ -1,0 +1,43 @@
+* Subcircuit MC1723
+.subckt MC1723 /curr_lim /curr_sense /inv_in /non_inv_in /vref /vee /vz /vo /vc /vcc /comp 
+* c:\fossee\esim\library\subcircuitlibrary\mc1723\mc1723.cir
+.include ZenerD1N750.lib
+.include NPN.lib
+.include NJF.lib
+.include PNP.lib
+d1 net-_d1-pad1_ /vcc D1N750
+r1  /vcc net-_q1-pad3_ 500
+q1 net-_q1-pad1_ net-_q1-pad1_ net-_q1-pad3_ Q2N2907A
+r2  net-_q1-pad1_ net-_d1-pad1_ 15k
+j1 net-_d1-pad1_ /vee /vee J2N3819
+q3 net-_c1-pad1_ net-_q1-pad1_ net-_q3-pad3_ Q2N2907A
+r3  /vcc net-_q3-pad3_ 25k
+q2 net-_c1-pad1_ net-_c1-pad2_ /vee Q2N2222
+q4 /vcc net-_c1-pad1_ net-_q1-pad1_ Q2N2222
+q5 /vcc net-_q1-pad1_ net-_q5-pad3_ Q2N2222
+r5  net-_q5-pad3_ net-_d2-pad2_ 100
+d2 net-_d2-pad1_ net-_d2-pad2_ D1N750
+r6  net-_d2-pad1_ /vee 5.0k
+r4  net-_c1-pad2_ net-_d2-pad1_ 30k
+c1  net-_c1-pad1_ net-_c1-pad2_ 5.0p
+r8  net-_q7-pad3_ /vee 300
+q7 net-_q6-pad1_ net-_q10-pad2_ net-_q7-pad3_ Q2N2222
+q6 net-_q6-pad1_ net-_q1-pad1_ net-_q6-pad3_ Q2N2907A
+r7  /vcc net-_q6-pad3_ 1.0k
+q8 /vcc net-_q6-pad1_ net-_q10-pad2_ Q2N2222
+r9  net-_q10-pad2_ /vee 20k
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+r10  net-_q10-pad3_ /vee 150
+q9 net-_q1-pad1_ /non_inv_in net-_q10-pad1_ Q2N2222
+q12 /comp /inv_in net-_q10-pad1_ Q2N2222
+q11 /comp net-_q1-pad1_ net-_q11-pad3_ Q2N2907A
+r11  /vcc net-_q11-pad3_ 1.0k
+q13 /comp /curr_lim /curr_sense Q2N2222
+q14 /vcc /comp net-_q14-pad3_ Q2N2222
+q15 /vc net-_q14-pad3_ /vo Q2N2222
+r12  net-_q14-pad3_ /vo 15k
+d3 /vz /vo D1N750
+v1 net-_d2-pad2_ /vref  dc 7
+* Control Statements
+
+.ends MC1723

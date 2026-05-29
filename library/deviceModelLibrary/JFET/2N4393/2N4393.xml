@@ -1,0 +1,1 @@
+<library><model_name>NJF</model_name><ref_model>2N4393</ref_model><param><VTO>-1.4</VTO><BETA>0.0091</BETA><LAMBDA>0.006</LAMBDA><RD>1</RD><RS>1</RS><CGS>4.1p</CGS><CGD>4.6p</CGD><PB>1</PB><IS>205f</IS><AF>1</AF><FC>0.5</FC><BETATCE>-0.5</BETATCE><N>1</N><NR>2</NR><XTI>3</XTI><VTOTC>-2.5m</VTOTC><ALPHA>21u</ALPHA><VK>1</VK><ISR>10f</ISR><KF>0.001f</KF><M>0.5</M></param></library>

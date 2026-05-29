@@ -1,0 +1,1021 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:CD4066_My-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L mosfet_p M1
+U 1 1 684BF464
+P -100 800
+F 0 "M1" H -150 850 50  0000 R CNN
+F 1 "mosfet_p" H -50 950 50  0000 R CNN
+F 2 "" H 150 900 29  0000 C CNN
+F 3 "" H -50 800 60  0000 C CNN
+	1    -100 800 
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M3
+U 1 1 684BF48A
+P 900 600
+F 0 "M3" H 900 450 50  0000 R CNN
+F 1 "mosfet_n" H 1000 550 50  0000 R CNN
+F 2 "" H 1200 300 29  0000 C CNN
+F 3 "" H 1000 400 60  0000 C CNN
+	1    900  600 
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M2
+U 1 1 684BF4E2
+P 100 1400
+F 0 "M2" H 100 1250 50  0000 R CNN
+F 1 "mosfet_n" H 200 1350 50  0000 R CNN
+F 2 "" H 400 1100 29  0000 C CNN
+F 3 "" H 200 1200 60  0000 C CNN
+	1    100  1400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	50   1000 700  1000
+Wire Wire Line
+	300  1400 300  1000
+Connection ~ 300  1000
+Wire Wire Line
+	50   600  700  600 
+Wire Wire Line
+	-250 -100 -250 1600
+Wire Wire Line
+	-450 1600 0    1600
+$Comp
+L INVCMOS X1
+U 1 1 684BF57D
+P -1200 1150
+F 0 "X1" H -1200 1150 60  0000 C CNN
+F 1 "INVCMOS" H -1650 1300 60  0000 C CNN
+F 2 "" H -1200 1150 60  0001 C CNN
+F 3 "" H -1200 1150 60  0001 C CNN
+	1    -1200 1150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	-500 1150 -250 1150
+Connection ~ -250 1150
+$Comp
+L INVCMOS X2
+U 1 1 684BF60F
+P 0 2200
+F 0 "X2" H 0   2200 60  0000 C CNN
+F 1 "INVCMOS" H -450 2350 60  0000 C CNN
+F 2 "" H 0   2200 60  0001 C CNN
+F 3 "" H 0   2200 60  0001 C CNN
+	1    0    2200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	700  2200 1000 2200
+Wire Wire Line
+	1000 2200 1000 800 
+Wire Wire Line
+	-450 2200 -450 1600
+Connection ~ -250 1600
+Wire Wire Line
+	-2300 1150 -1650 1150
+$Comp
+L mosfet_p M4
+U 1 1 684BF66B
+P 2100 650
+F 0 "M4" H 2050 700 50  0000 R CNN
+F 1 "mosfet_p" H 2150 800 50  0000 R CNN
+F 2 "" H 2350 750 29  0000 C CNN
+F 3 "" H 2150 650 60  0000 C CNN
+	1    2100 650 
+	0    1    1    0   
+$EndComp
+$Comp
+L mosfet_n M5
+U 1 1 684BF6A8
+P 2300 1600
+F 0 "M5" H 2300 1450 50  0000 R CNN
+F 1 "mosfet_n" H 2400 1550 50  0000 R CNN
+F 2 "" H 2600 1300 29  0000 C CNN
+F 3 "" H 2400 1400 60  0000 C CNN
+	1    2300 1600
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	2300 800  2300 1400
+Wire Wire Line
+	1900 800  1900 1400
+Wire Wire Line
+	1950 1300 300  1300
+Connection ~ 300  1300
+Wire Wire Line
+	600  950  600  1000
+Connection ~ 600  1000
+Wire Wire Line
+	150  950  300  950 
+Wire Wire Line
+	300  950  300  600 
+Connection ~ 300  600 
+Wire Wire Line
+	1950 900  1950 1000
+Wire Wire Line
+	400  600  400  300 
+Wire Wire Line
+	400  300  1750 300 
+Wire Wire Line
+	1750 300  1750 1100
+Wire Wire Line
+	1750 1100 1900 1100
+Connection ~ 1900 1100
+Connection ~ 400  600 
+Wire Wire Line
+	1400 -600 1400 300 
+Connection ~ 1400 300 
+Wire Wire Line
+	2100 500  2100 -100
+Wire Wire Line
+	2100 -100 -250 -100
+Connection ~ -250 800 
+Wire Wire Line
+	1000 1900 2100 1900
+Wire Wire Line
+	2100 1900 2100 1700
+Connection ~ 1000 1900
+Wire Wire Line
+	2300 1300 2700 1300
+Connection ~ 2300 1300
+Wire Wire Line
+	1400 -600 2850 -600
+$Comp
+L eSim_GND #PWR01
+U 1 1 684BFD55
+P 450 1850
+F 0 "#PWR01" H 450 1600 50  0001 C CNN
+F 1 "eSim_GND" H 450 1700 50  0000 C CNN
+F 2 "" H 450 1850 50  0001 C CNN
+F 3 "" H 450 1850 50  0001 C CNN
+	1    450  1850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	300  1800 450  1800
+Wire Wire Line
+	450  1800 450  1850
+Wire Wire Line
+	400  1750 400  1800
+Connection ~ 400  1800
+Wire Wire Line
+	1950 1000 1450 1000
+Wire Wire Line
+	1450 1000 1450 300 
+Connection ~ 1450 300 
+$Comp
+L capacitor C1
+U 1 1 684C373C
+P 2450 1700
+F 0 "C1" H 2475 1800 50  0000 L CNN
+F 1 "100p" H 2475 1600 50  0000 L CNN
+F 2 "" H 2488 1550 30  0000 C CNN
+F 3 "" H 2450 1700 60  0000 C CNN
+	1    2450 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_GND #PWR02
+U 1 1 684C3787
+P 2450 1900
+F 0 "#PWR02" H 2450 1650 50  0001 C CNN
+F 1 "eSim_GND" H 2450 1750 50  0000 C CNN
+F 2 "" H 2450 1900 50  0001 C CNN
+F 3 "" H 2450 1900 50  0001 C CNN
+	1    2450 1900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2450 1550 2450 1300
+Connection ~ 2450 1300
+Wire Wire Line
+	2450 1850 2450 1900
+$Comp
+L PORT U1
+U 5 1 684D5245
+P -2550 1150
+F 0 "U1" H -2500 1250 30  0000 C CNN
+F 1 "PORT" H -2550 1150 30  0000 C CNN
+F 2 "" H -2550 1150 60  0000 C CNN
+F 3 "" H -2550 1150 60  0000 C CNN
+	5    -2550 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 684D54B5
+P 3100 -600
+F 0 "U1" H 3150 -500 30  0000 C CNN
+F 1 "PORT" H 3100 -600 30  0000 C CNN
+F 2 "" H 3100 -600 60  0000 C CNN
+F 3 "" H 3100 -600 60  0000 C CNN
+	4    3100 -600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 684D5780
+P 2950 1300
+F 0 "U1" H 3000 1400 30  0000 C CNN
+F 1 "PORT" H 2950 1300 30  0000 C CNN
+F 2 "" H 2950 1300 60  0000 C CNN
+F 3 "" H 2950 1300 60  0000 C CNN
+	3    2950 1300
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M12
+U 1 1 684D5AF3
+P 7250 950
+F 0 "M12" H 7200 1000 50  0000 R CNN
+F 1 "mosfet_p" H 7300 1100 50  0000 R CNN
+F 2 "" H 7500 1050 29  0000 C CNN
+F 3 "" H 7300 950 60  0000 C CNN
+	1    7250 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M16
+U 1 1 684D5AF9
+P 8250 750
+F 0 "M16" H 8250 600 50  0000 R CNN
+F 1 "mosfet_n" H 8350 700 50  0000 R CNN
+F 2 "" H 8550 450 29  0000 C CNN
+F 3 "" H 8350 550 60  0000 C CNN
+	1    8250 750 
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M14
+U 1 1 684D5AFF
+P 7450 1550
+F 0 "M14" H 7450 1400 50  0000 R CNN
+F 1 "mosfet_n" H 7550 1500 50  0000 R CNN
+F 2 "" H 7750 1250 29  0000 C CNN
+F 3 "" H 7550 1350 60  0000 C CNN
+	1    7450 1550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7400 1150 8050 1150
+Wire Wire Line
+	7650 1550 7650 1150
+Connection ~ 7650 1150
+Wire Wire Line
+	7400 750  8050 750 
+Wire Wire Line
+	7100 50   7100 1750
+Wire Wire Line
+	6900 1750 7350 1750
+$Comp
+L INVCMOS X6
+U 1 1 684D5B0B
+P 6150 1300
+F 0 "X6" H 6150 1300 60  0000 C CNN
+F 1 "INVCMOS" H 5700 1450 60  0000 C CNN
+F 2 "" H 6150 1300 60  0001 C CNN
+F 3 "" H 6150 1300 60  0001 C CNN
+	1    6150 1300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6850 1300 7100 1300
+Connection ~ 7100 1300
+$Comp
+L INVCMOS X8
+U 1 1 684D5B13
+P 7350 2350
+F 0 "X8" H 7350 2350 60  0000 C CNN
+F 1 "INVCMOS" H 6900 2500 60  0000 C CNN
+F 2 "" H 7350 2350 60  0001 C CNN
+F 3 "" H 7350 2350 60  0001 C CNN
+	1    7350 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8050 2350 8350 2350
+Wire Wire Line
+	8350 2350 8350 950 
+Wire Wire Line
+	6900 2350 6900 1750
+Connection ~ 7100 1750
+Wire Wire Line
+	5050 1300 5700 1300
+$Comp
+L mosfet_p M18
+U 1 1 684D5B1E
+P 9450 800
+F 0 "M18" H 9400 850 50  0000 R CNN
+F 1 "mosfet_p" H 9500 950 50  0000 R CNN
+F 2 "" H 9700 900 29  0000 C CNN
+F 3 "" H 9500 800 60  0000 C CNN
+	1    9450 800 
+	0    1    1    0   
+$EndComp
+$Comp
+L mosfet_n M20
+U 1 1 684D5B24
+P 9650 1750
+F 0 "M20" H 9650 1600 50  0000 R CNN
+F 1 "mosfet_n" H 9750 1700 50  0000 R CNN
+F 2 "" H 9950 1450 29  0000 C CNN
+F 3 "" H 9750 1550 60  0000 C CNN
+	1    9650 1750
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	9650 950  9650 1550
+Wire Wire Line
+	9250 950  9250 1550
+Wire Wire Line
+	9300 1450 7650 1450
+Connection ~ 7650 1450
+Wire Wire Line
+	7950 1100 7950 1150
+Connection ~ 7950 1150
+Wire Wire Line
+	7500 1100 7650 1100
+Wire Wire Line
+	7650 1100 7650 750 
+Connection ~ 7650 750 
+Wire Wire Line
+	9300 1050 9300 1150
+Wire Wire Line
+	7750 750  7750 450 
+Wire Wire Line
+	7750 450  9100 450 
+Wire Wire Line
+	9100 450  9100 1250
+Wire Wire Line
+	9100 1250 9250 1250
+Connection ~ 9250 1250
+Connection ~ 7750 750 
+Wire Wire Line
+	8750 -450 8750 450 
+Connection ~ 8750 450 
+Wire Wire Line
+	9450 650  9450 50  
+Wire Wire Line
+	9450 50   7100 50  
+Connection ~ 7100 950 
+Wire Wire Line
+	8350 2050 9450 2050
+Wire Wire Line
+	9450 2050 9450 1850
+Connection ~ 8350 2050
+Wire Wire Line
+	9650 1450 10050 1450
+Connection ~ 9650 1450
+Wire Wire Line
+	8750 -450 10200 -450
+$Comp
+L eSim_GND #PWR03
+U 1 1 684D5B45
+P 7800 2000
+F 0 "#PWR03" H 7800 1750 50  0001 C CNN
+F 1 "eSim_GND" H 7800 1850 50  0000 C CNN
+F 2 "" H 7800 2000 50  0001 C CNN
+F 3 "" H 7800 2000 50  0001 C CNN
+	1    7800 2000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7650 1950 7800 1950
+Wire Wire Line
+	7800 1950 7800 2000
+Wire Wire Line
+	7750 1900 7750 1950
+Connection ~ 7750 1950
+Wire Wire Line
+	9300 1150 8800 1150
+Wire Wire Line
+	8800 1150 8800 450 
+Connection ~ 8800 450 
+$Comp
+L capacitor C4
+U 1 1 684D5B52
+P 9800 1850
+F 0 "C4" H 9825 1950 50  0000 L CNN
+F 1 "100p" H 9825 1750 50  0000 L CNN
+F 2 "" H 9838 1700 30  0000 C CNN
+F 3 "" H 9800 1850 60  0000 C CNN
+	1    9800 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_GND #PWR04
+U 1 1 684D5B58
+P 9800 2050
+F 0 "#PWR04" H 9800 1800 50  0001 C CNN
+F 1 "eSim_GND" H 9800 1900 50  0000 C CNN
+F 2 "" H 9800 2050 50  0001 C CNN
+F 3 "" H 9800 2050 50  0001 C CNN
+	1    9800 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9800 1700 9800 1450
+Connection ~ 9800 1450
+Wire Wire Line
+	9800 2000 9800 2050
+$Comp
+L PORT U1
+U 12 1 684D5B61
+P 4800 1300
+F 0 "U1" H 4850 1400 30  0000 C CNN
+F 1 "PORT" H 4800 1300 30  0000 C CNN
+F 2 "" H 4800 1300 60  0000 C CNN
+F 3 "" H 4800 1300 60  0000 C CNN
+	12   4800 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 11 1 684D5B67
+P 10450 -450
+F 0 "U1" H 10500 -350 30  0000 C CNN
+F 1 "PORT" H 10450 -450 30  0000 C CNN
+F 2 "" H 10450 -450 60  0000 C CNN
+F 3 "" H 10450 -450 60  0000 C CNN
+	11   10450 -450
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 10 1 684D5B6D
+P 10300 1450
+F 0 "U1" H 10350 1550 30  0000 C CNN
+F 1 "PORT" H 10300 1450 30  0000 C CNN
+F 2 "" H 10300 1450 60  0000 C CNN
+F 3 "" H 10300 1450 60  0000 C CNN
+	10   10300 1450
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M6
+U 1 1 684D5E75
+P -300 4450
+F 0 "M6" H -350 4500 50  0000 R CNN
+F 1 "mosfet_p" H -250 4600 50  0000 R CNN
+F 2 "" H -50 4550 29  0000 C CNN
+F 3 "" H -250 4450 60  0000 C CNN
+	1    -300 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M8
+U 1 1 684D5E7B
+P 700 4250
+F 0 "M8" H 700 4100 50  0000 R CNN
+F 1 "mosfet_n" H 800 4200 50  0000 R CNN
+F 2 "" H 1000 3950 29  0000 C CNN
+F 3 "" H 800 4050 60  0000 C CNN
+	1    700  4250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M7
+U 1 1 684D5E81
+P -100 5050
+F 0 "M7" H -100 4900 50  0000 R CNN
+F 1 "mosfet_n" H 0   5000 50  0000 R CNN
+F 2 "" H 200 4750 29  0000 C CNN
+F 3 "" H 0   4850 60  0000 C CNN
+	1    -100 5050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	-150 4650 500  4650
+Wire Wire Line
+	100  5050 100  4650
+Connection ~ 100  4650
+Wire Wire Line
+	-150 4250 500  4250
+Wire Wire Line
+	-450 3550 -450 5250
+Wire Wire Line
+	-650 5250 -200 5250
+$Comp
+L INVCMOS X3
+U 1 1 684D5E8D
+P -1400 4800
+F 0 "X3" H -1400 4800 60  0000 C CNN
+F 1 "INVCMOS" H -1850 4950 60  0000 C CNN
+F 2 "" H -1400 4800 60  0001 C CNN
+F 3 "" H -1400 4800 60  0001 C CNN
+	1    -1400 4800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	-700 4800 -450 4800
+Connection ~ -450 4800
+$Comp
+L INVCMOS X4
+U 1 1 684D5E95
+P -200 5850
+F 0 "X4" H -200 5850 60  0000 C CNN
+F 1 "INVCMOS" H -650 6000 60  0000 C CNN
+F 2 "" H -200 5850 60  0001 C CNN
+F 3 "" H -200 5850 60  0001 C CNN
+	1    -200 5850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	500  5850 800  5850
+Wire Wire Line
+	800  5850 800  4450
+Wire Wire Line
+	-650 5850 -650 5250
+Connection ~ -450 5250
+Wire Wire Line
+	-2500 4800 -1850 4800
+$Comp
+L mosfet_p M9
+U 1 1 684D5EA0
+P 1900 4300
+F 0 "M9" H 1850 4350 50  0000 R CNN
+F 1 "mosfet_p" H 1950 4450 50  0000 R CNN
+F 2 "" H 2150 4400 29  0000 C CNN
+F 3 "" H 1950 4300 60  0000 C CNN
+	1    1900 4300
+	0    1    1    0   
+$EndComp
+$Comp
+L mosfet_n M10
+U 1 1 684D5EA6
+P 2100 5250
+F 0 "M10" H 2100 5100 50  0000 R CNN
+F 1 "mosfet_n" H 2200 5200 50  0000 R CNN
+F 2 "" H 2400 4950 29  0000 C CNN
+F 3 "" H 2200 5050 60  0000 C CNN
+	1    2100 5250
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	2100 4450 2100 5050
+Wire Wire Line
+	1700 4450 1700 5050
+Wire Wire Line
+	1750 4950 100  4950
+Connection ~ 100  4950
+Wire Wire Line
+	400  4600 400  4650
+Connection ~ 400  4650
+Wire Wire Line
+	-50  4600 100  4600
+Wire Wire Line
+	100  4600 100  4250
+Connection ~ 100  4250
+Wire Wire Line
+	1750 4550 1750 4650
+Wire Wire Line
+	200  4250 200  3950
+Wire Wire Line
+	200  3950 1550 3950
+Wire Wire Line
+	1550 3950 1550 4750
+Wire Wire Line
+	1550 4750 1700 4750
+Connection ~ 1700 4750
+Connection ~ 200  4250
+Wire Wire Line
+	1200 3050 1200 3950
+Connection ~ 1200 3950
+Wire Wire Line
+	1900 4150 1900 3550
+Wire Wire Line
+	1900 3550 -450 3550
+Connection ~ -450 4450
+Wire Wire Line
+	800  5550 1900 5550
+Wire Wire Line
+	1900 5550 1900 5350
+Connection ~ 800  5550
+Wire Wire Line
+	2100 4950 2500 4950
+Connection ~ 2100 4950
+Wire Wire Line
+	1200 3050 2650 3050
+$Comp
+L eSim_GND #PWR05
+U 1 1 684D5EC7
+P 250 5500
+F 0 "#PWR05" H 250 5250 50  0001 C CNN
+F 1 "eSim_GND" H 250 5350 50  0000 C CNN
+F 2 "" H 250 5500 50  0001 C CNN
+F 3 "" H 250 5500 50  0001 C CNN
+	1    250  5500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	100  5450 250  5450
+Wire Wire Line
+	250  5450 250  5500
+Wire Wire Line
+	200  5400 200  5450
+Connection ~ 200  5450
+Wire Wire Line
+	1750 4650 1250 4650
+Wire Wire Line
+	1250 4650 1250 3950
+Connection ~ 1250 3950
+$Comp
+L capacitor C2
+U 1 1 684D5ED4
+P 2250 5350
+F 0 "C2" H 2275 5450 50  0000 L CNN
+F 1 "100p" H 2275 5250 50  0000 L CNN
+F 2 "" H 2288 5200 30  0000 C CNN
+F 3 "" H 2250 5350 60  0000 C CNN
+	1    2250 5350
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_GND #PWR06
+U 1 1 684D5EDA
+P 2250 5550
+F 0 "#PWR06" H 2250 5300 50  0001 C CNN
+F 1 "eSim_GND" H 2250 5400 50  0000 C CNN
+F 2 "" H 2250 5550 50  0001 C CNN
+F 3 "" H 2250 5550 50  0001 C CNN
+	1    2250 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2250 5200 2250 4950
+Connection ~ 2250 4950
+Wire Wire Line
+	2250 5500 2250 5550
+$Comp
+L PORT U1
+U 13 1 684D5EE3
+P -2750 4800
+F 0 "U1" H -2700 4900 30  0000 C CNN
+F 1 "PORT" H -2750 4800 30  0000 C CNN
+F 2 "" H -2750 4800 60  0000 C CNN
+F 3 "" H -2750 4800 60  0000 C CNN
+	13   -2750 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 684D5EE9
+P 2900 3050
+F 0 "U1" H 2950 3150 30  0000 C CNN
+F 1 "PORT" H 2900 3050 30  0000 C CNN
+F 2 "" H 2900 3050 60  0000 C CNN
+F 3 "" H 2900 3050 60  0000 C CNN
+	1    2900 3050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 684D5EEF
+P 2750 4950
+F 0 "U1" H 2800 5050 30  0000 C CNN
+F 1 "PORT" H 2750 4950 30  0000 C CNN
+F 2 "" H 2750 4950 60  0000 C CNN
+F 3 "" H 2750 4950 60  0000 C CNN
+	2    2750 4950
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M11
+U 1 1 684D5EF5
+P 7050 4600
+F 0 "M11" H 7000 4650 50  0000 R CNN
+F 1 "mosfet_p" H 7100 4750 50  0000 R CNN
+F 2 "" H 7300 4700 29  0000 C CNN
+F 3 "" H 7100 4600 60  0000 C CNN
+	1    7050 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M15
+U 1 1 684D5EFB
+P 8050 4400
+F 0 "M15" H 8050 4250 50  0000 R CNN
+F 1 "mosfet_n" H 8150 4350 50  0000 R CNN
+F 2 "" H 8350 4100 29  0000 C CNN
+F 3 "" H 8150 4200 60  0000 C CNN
+	1    8050 4400
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M13
+U 1 1 684D5F01
+P 7250 5200
+F 0 "M13" H 7250 5050 50  0000 R CNN
+F 1 "mosfet_n" H 7350 5150 50  0000 R CNN
+F 2 "" H 7550 4900 29  0000 C CNN
+F 3 "" H 7350 5000 60  0000 C CNN
+	1    7250 5200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7200 4800 7850 4800
+Wire Wire Line
+	7450 5200 7450 4800
+Connection ~ 7450 4800
+Wire Wire Line
+	7200 4400 7850 4400
+Wire Wire Line
+	6900 3700 6900 5400
+Wire Wire Line
+	6700 5400 7150 5400
+$Comp
+L INVCMOS X5
+U 1 1 684D5F0D
+P 5950 4950
+F 0 "X5" H 5950 4950 60  0000 C CNN
+F 1 "INVCMOS" H 5500 5100 60  0000 C CNN
+F 2 "" H 5950 4950 60  0001 C CNN
+F 3 "" H 5950 4950 60  0001 C CNN
+	1    5950 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 4950 6900 4950
+Connection ~ 6900 4950
+$Comp
+L INVCMOS X7
+U 1 1 684D5F15
+P 7150 6000
+F 0 "X7" H 7150 6000 60  0000 C CNN
+F 1 "INVCMOS" H 6700 6150 60  0000 C CNN
+F 2 "" H 7150 6000 60  0001 C CNN
+F 3 "" H 7150 6000 60  0001 C CNN
+	1    7150 6000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7850 6000 8150 6000
+Wire Wire Line
+	8150 6000 8150 4600
+Wire Wire Line
+	6700 6000 6700 5400
+Connection ~ 6900 5400
+Wire Wire Line
+	4850 4950 5500 4950
+$Comp
+L mosfet_p M17
+U 1 1 684D5F20
+P 9250 4450
+F 0 "M17" H 9200 4500 50  0000 R CNN
+F 1 "mosfet_p" H 9300 4600 50  0000 R CNN
+F 2 "" H 9500 4550 29  0000 C CNN
+F 3 "" H 9300 4450 60  0000 C CNN
+	1    9250 4450
+	0    1    1    0   
+$EndComp
+$Comp
+L mosfet_n M19
+U 1 1 684D5F26
+P 9450 5400
+F 0 "M19" H 9450 5250 50  0000 R CNN
+F 1 "mosfet_n" H 9550 5350 50  0000 R CNN
+F 2 "" H 9750 5100 29  0000 C CNN
+F 3 "" H 9550 5200 60  0000 C CNN
+	1    9450 5400
+	0    1    -1   0   
+$EndComp
+Wire Wire Line
+	9450 4600 9450 5200
+Wire Wire Line
+	9050 4600 9050 5200
+Wire Wire Line
+	9100 5100 7450 5100
+Connection ~ 7450 5100
+Wire Wire Line
+	7750 4750 7750 4800
+Connection ~ 7750 4800
+Wire Wire Line
+	7300 4750 7450 4750
+Wire Wire Line
+	7450 4750 7450 4400
+Connection ~ 7450 4400
+Wire Wire Line
+	9100 4700 9100 4800
+Wire Wire Line
+	7550 4400 7550 4100
+Wire Wire Line
+	7550 4100 8900 4100
+Wire Wire Line
+	8900 4100 8900 4900
+Wire Wire Line
+	8900 4900 9050 4900
+Connection ~ 9050 4900
+Connection ~ 7550 4400
+Wire Wire Line
+	8550 3200 8550 4100
+Connection ~ 8550 4100
+Wire Wire Line
+	9250 4300 9250 3700
+Wire Wire Line
+	9250 3700 6900 3700
+Connection ~ 6900 4600
+Wire Wire Line
+	8150 5700 9250 5700
+Wire Wire Line
+	9250 5700 9250 5500
+Connection ~ 8150 5700
+Wire Wire Line
+	9450 5100 9850 5100
+Connection ~ 9450 5100
+Wire Wire Line
+	8550 3200 10000 3200
+$Comp
+L eSim_GND #PWR07
+U 1 1 684D5F47
+P 7600 5650
+F 0 "#PWR07" H 7600 5400 50  0001 C CNN
+F 1 "eSim_GND" H 7600 5500 50  0000 C CNN
+F 2 "" H 7600 5650 50  0001 C CNN
+F 3 "" H 7600 5650 50  0001 C CNN
+	1    7600 5650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7450 5600 7600 5600
+Wire Wire Line
+	7600 5600 7600 5650
+Wire Wire Line
+	7550 5550 7550 5600
+Connection ~ 7550 5600
+Wire Wire Line
+	9100 4800 8600 4800
+Wire Wire Line
+	8600 4800 8600 4100
+Connection ~ 8600 4100
+$Comp
+L capacitor C3
+U 1 1 684D5F54
+P 9600 5500
+F 0 "C3" H 9625 5600 50  0000 L CNN
+F 1 "100p" H 9625 5400 50  0000 L CNN
+F 2 "" H 9638 5350 30  0000 C CNN
+F 3 "" H 9600 5500 60  0000 C CNN
+	1    9600 5500
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_GND #PWR08
+U 1 1 684D5F5A
+P 9600 5700
+F 0 "#PWR08" H 9600 5450 50  0001 C CNN
+F 1 "eSim_GND" H 9600 5550 50  0000 C CNN
+F 2 "" H 9600 5700 50  0001 C CNN
+F 3 "" H 9600 5700 50  0001 C CNN
+	1    9600 5700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9600 5350 9600 5100
+Connection ~ 9600 5100
+Wire Wire Line
+	9600 5650 9600 5700
+$Comp
+L PORT U1
+U 6 1 684D5F63
+P 4600 4950
+F 0 "U1" H 4650 5050 30  0000 C CNN
+F 1 "PORT" H 4600 4950 30  0000 C CNN
+F 2 "" H 4600 4950 60  0000 C CNN
+F 3 "" H 4600 4950 60  0000 C CNN
+	6    4600 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 8 1 684D5F69
+P 10250 3200
+F 0 "U1" H 10300 3300 30  0000 C CNN
+F 1 "PORT" H 10250 3200 30  0000 C CNN
+F 2 "" H 10250 3200 60  0000 C CNN
+F 3 "" H 10250 3200 60  0000 C CNN
+	8    10250 3200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 9 1 684D5F6F
+P 10100 5100
+F 0 "U1" H 10150 5200 30  0000 C CNN
+F 1 "PORT" H 10100 5100 30  0000 C CNN
+F 2 "" H 10100 5100 60  0000 C CNN
+F 3 "" H 10100 5100 60  0000 C CNN
+	9    10100 5100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_GND #PWR09
+U 1 1 684D6443
+P -1350 7650
+F 0 "#PWR09" H -1350 7400 50  0001 C CNN
+F 1 "eSim_GND" H -1350 7500 50  0000 C CNN
+F 2 "" H -1350 7650 50  0001 C CNN
+F 3 "" H -1350 7650 50  0001 C CNN
+	1    -1350 7650
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 7 1 684D673A
+P -1750 7550
+F 0 "U1" H -1700 7650 30  0000 C CNN
+F 1 "PORT" H -1750 7550 30  0000 C CNN
+F 2 "" H -1750 7550 60  0000 C CNN
+F 3 "" H -1750 7550 60  0000 C CNN
+	7    -1750 7550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	-1500 7550 -1350 7550
+Wire Wire Line
+	-1350 7550 -1350 7650
+$Comp
+L eSim_GND #PWR010
+U 1 1 684D69EA
+P -300 7600
+F 0 "#PWR010" H -300 7350 50  0001 C CNN
+F 1 "eSim_GND" H -300 7450 50  0000 C CNN
+F 2 "" H -300 7600 50  0001 C CNN
+F 3 "" H -300 7600 50  0001 C CNN
+	1    -300 7600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 14 1 684D69F0
+P -700 7500
+F 0 "U1" H -650 7600 30  0000 C CNN
+F 1 "PORT" H -700 7500 30  0000 C CNN
+F 2 "" H -700 7500 60  0000 C CNN
+F 3 "" H -700 7500 60  0000 C CNN
+	14   -700 7500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	-450 7500 -300 7500
+Wire Wire Line
+	-300 7500 -300 7600
+$EndSCHEMATC

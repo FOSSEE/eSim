@@ -1,0 +1,12 @@
+* Subcircuit INVCMOS
+.subckt INVCMOS net-_m1-pad2_ net-_c1-pad1_ 
+* /home/saurabh/downloads/esim-1.1.2/src/subcircuitlibrary/invcmos/invcmos.cir
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m1 net-_c1-pad1_ net-_m1-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+m2 net-_m2-pad1_ net-_m1-pad2_ net-_c1-pad1_ net-_m2-pad1_ CMOSP W=100u L=100u M=1
+v1  net-_m2-pad1_ gnd 5
+c1  net-_c1-pad1_ gnd 1u
+* Control Statements
+
+.ends INVCMOS

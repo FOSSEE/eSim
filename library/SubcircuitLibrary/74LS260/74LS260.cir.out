@@ -1,0 +1,34 @@
+.title kicad schematic
+
+.include NMOS-5um.lib
+.include PMOS-5um.lib
+m5 net-_m1-pad1_ net-_m10-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m10 net-_m1-pad1_ net-_m10-pad2_ net-_m10-pad3_ net-_m10-pad3_ mos_p W=100u L=100u M=1
+m8 net-_m8-pad1_ net-_m3-pad2_ net-_m7-pad1_ net-_m7-pad1_ mos_p W=100u L=100u M=1
+m9 net-_m10-pad3_ net-_m4-pad2_ net-_m8-pad1_ net-_m8-pad1_ mos_p W=100u L=100u M=1
+m6 net-_m6-pad1_ net-_m1-pad2_ net-_m16-pad3_ net-_m16-pad3_ mos_p W=100u L=100u M=1
+m7 net-_m7-pad1_ net-_m2-pad2_ net-_m6-pad1_ net-_m6-pad1_ mos_p W=100u L=100u M=1
+m3 net-_m1-pad1_ net-_m3-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m1 net-_m1-pad1_ net-_m1-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m4 net-_m1-pad1_ net-_m4-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m2 net-_m1-pad1_ net-_m2-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m11 net-_m11-pad1_ net-_m11-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m13 net-_m11-pad1_ net-_m13-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m12 net-_m11-pad1_ net-_m12-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m17 net-_m17-pad1_ net-_m12-pad2_ net-_m16-pad1_ net-_m16-pad1_ mos_p W=100u L=100u M=1
+m16 net-_m16-pad1_ net-_m11-pad2_ net-_m16-pad3_ net-_m16-pad3_ mos_p W=100u L=100u M=1
+m20 net-_m11-pad1_ net-_m15-pad2_ net-_m19-pad1_ net-_m19-pad1_ mos_p W=100u L=100u M=1
+* u1 net-_m1-pad2_ net-_m2-pad2_ net-_m3-pad2_ net-_m11-pad2_ net-_m1-pad1_ net-_m11-pad1_ gnd net-_m12-pad2_ net-_m13-pad2_ net-_m14-pad2_ net-_m15-pad2_ net-_m4-pad2_ net-_m10-pad2_ net-_m16-pad3_ port
+m15 net-_m11-pad1_ net-_m15-pad2_ gnd gnd mos_n W=100u L=100u M=1
+m19 net-_m19-pad1_ net-_m14-pad2_ net-_m18-pad1_ net-_m18-pad1_ mos_p W=100u L=100u M=1
+m18 net-_m18-pad1_ net-_m13-pad2_ net-_m17-pad1_ net-_m17-pad1_ mos_p W=100u L=100u M=1
+m14 net-_m11-pad1_ net-_m14-pad2_ gnd gnd mos_n W=100u L=100u M=1
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

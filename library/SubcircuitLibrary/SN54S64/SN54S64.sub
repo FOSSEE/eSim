@@ -1,0 +1,24 @@
+* Subcircuit SN54S64
+.subckt SN54S64 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ ? net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ ? 
+* c:\fossee\esim\library\subcircuitlibrary\sn54s64\sn54s64.cir
+.include 4_and.sub
+.include 4_OR.sub
+.include 3_and.sub
+x2 net-_u1-pad1_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_x2-pad5_ 4_and
+* u2  net-_u1-pad2_ net-_u1-pad3_ net-_u2-pad3_ d_and
+x1 net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_x1-pad4_ 3_and
+* u3  net-_u1-pad9_ net-_u1-pad10_ net-_u3-pad3_ d_and
+x3 net-_x2-pad5_ net-_u2-pad3_ net-_x1-pad4_ net-_u3-pad3_ net-_u4-pad1_ 4_OR
+* u4  net-_u4-pad1_ net-_u1-pad8_ d_inverter
+a1 [net-_u1-pad2_ net-_u1-pad3_ ] net-_u2-pad3_ u2
+a2 [net-_u1-pad9_ net-_u1-pad10_ ] net-_u3-pad3_ u3
+a3 net-_u4-pad1_ net-_u1-pad8_ u4
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u2 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends SN54S64

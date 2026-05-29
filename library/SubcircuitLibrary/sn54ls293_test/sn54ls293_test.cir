@@ -1,0 +1,16 @@
+.title KiCad schematic
+X1 unconnected-_X1-Pad1_ unconnected-_X1-Pad2_ unconnected-_X1-Pad3_ Net-_U16-Pad3_ Net-_U16-Pad2_ unconnected-_X1-Pad6_ Net-_U2-Pad6_ Net-_U16-Pad4_ Net-_X1-Pad11_ Net-_U2-Pad5_ Net-_X1-Pad11_ unconnected-_X1-Pad12_ unconnected-_X1-Pad13_ Net-_U2-Pad4_ SN54LS293
+U16 Net-_X1-Pad11_ Net-_U16-Pad2_ Net-_U16-Pad3_ Net-_U16-Pad4_ A B C D dac_bridge_4
+R1 D GND 1k
+U2 Net-_U2-Pad1_ pulse GND Net-_U2-Pad4_ Net-_U2-Pad5_ Net-_U2-Pad6_ adc_bridge_3
+U1 pulse plot_v1
+v1 Net-_U2-Pad1_ GND DC
+v2 pulse GND pulse
+R2 C GND 1k
+U19 B plot_v1
+U18 C plot_v1
+U17 D plot_v1
+R3 B GND 1k
+U20 A plot_v1
+R4 A GND 1k
+.end

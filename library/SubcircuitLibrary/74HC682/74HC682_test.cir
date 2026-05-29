@@ -1,0 +1,49 @@
+* C:\Users\senba\eSim-Workspace\74HC682_test\74HC682_test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 11/08/25 15:46:54
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U9  P0 Q0 P1 Q1 P2 Q2 P3 Q3 Net-_U9-Pad9_ Net-_U9-Pad10_ Net-_U9-Pad11_ Net-_U9-Pad12_ Net-_U9-Pad13_ Net-_U9-Pad14_ Net-_U9-Pad15_ Net-_U9-Pad16_ adc_bridge_8		
+U12  P4 Q4 P5 Q5 P6 Q6 P7 Q7 Net-_U12-Pad9_ Net-_U12-Pad10_ Net-_U12-Pad11_ Net-_U12-Pad12_ Net-_U12-Pad13_ Net-_U12-Pad14_ Net-_U12-Pad15_ Net-_U12-Pad16_ adc_bridge_8		
+U10  Net-_U10-Pad1_ PEQbar dac_bridge_1		
+U11  Net-_U11-Pad1_ PGEbar dac_bridge_1		
+v1  P0 GND pulse		
+v2  Q0 GND pulse		
+v3  P1 GND pulse		
+v4  Q1 GND pulse		
+v5  P2 GND pulse		
+v6  Q2 GND pulse		
+v7  P3 GND pulse		
+v8  Q3 GND pulse		
+v9  P4 GND pulse		
+v10  Q4 GND pulse		
+v11  P5 GND pulse		
+v12  Q5 GND pulse		
+v13  P6 GND pulse		
+v14  Q6 GND pulse		
+v15  P7 GND pulse		
+v16  Q7 GND pulse		
+U1  P0 plot_v1		
+U2  Q0 plot_v1		
+U6  P1 plot_v1		
+U3  Q1 plot_v1		
+U4  P2 plot_v1		
+U5  Q2 plot_v1		
+U7  P3 plot_v1		
+U8  Q3 plot_v1		
+U22  PEQbar plot_v1		
+U21  PGEbar plot_v1		
+U20  P4 plot_v1		
+U13  Q4 plot_v1		
+U14  P5 plot_v1		
+U15  Q5 plot_v1		
+U16  P6 plot_v1		
+U17  Q6 plot_v1		
+U18  P7 plot_v1		
+U19  Q7 plot_v1		
+X1  Net-_U9-Pad9_ Net-_U9-Pad10_ Net-_U9-Pad11_ Net-_U9-Pad12_ Net-_U9-Pad13_ Net-_U9-Pad14_ Net-_U9-Pad15_ Net-_U9-Pad16_ Net-_U12-Pad9_ Net-_U12-Pad10_ Net-_U12-Pad11_ Net-_U12-Pad12_ Net-_U12-Pad13_ Net-_U12-Pad14_ Net-_U12-Pad15_ Net-_U12-Pad16_ Net-_U10-Pad1_ Net-_U11-Pad1_ 74HC682		
+
+.end

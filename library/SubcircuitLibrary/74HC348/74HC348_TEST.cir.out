@@ -1,0 +1,42 @@
+* c:\users\senba\esim-workspace\74hc348_test\74hc348_test.cir
+
+.include 74HC348.sub
+x1 net-_u7-pad9_ net-_u8-pad1_ net-_u7-pad8_ net-_u8-pad2_ net-_u7-pad7_ net-_u8-pad3_ net-_u8-pad4_ net-_u7-pad10_ net-_u8-pad5_ net-_u7-pad11_ net-_u8-pad6_ net-_u7-pad12_ net-_u8-pad7_ net-_u8-pad8_ 74HC348
+* u7  a0 a1 a2 e1bar e2bar e3 net-_u7-pad7_ net-_u7-pad8_ net-_u7-pad9_ net-_u7-pad10_ net-_u7-pad11_ net-_u7-pad12_ adc_bridge_6
+* u8  net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ net-_u8-pad5_ net-_u8-pad6_ net-_u8-pad7_ net-_u8-pad8_ y7bar y6bar y5bar y4bar y3bar y2bar y1bar y0bar dac_bridge_8
+v1  a0 gnd pulse(5 0 3 0.001 0.001 1 2)
+v2  a1 gnd pulse(5 0 3 0.001 0.001 2 4)
+v3  a2 gnd pulse(5 0 3 0.001 0.001 4 8)
+v4  e1bar gnd pulse(0 5 0 0.001 0.001 3 6)
+v5  e2bar gnd pulse(0 5 0 0.001 0.001 3 6)
+v6  e3 gnd pulse(5 0 0 0.001 0.001 3 6)
+* u2  a0 plot_v1
+* u3  a1 plot_v1
+* u1  a2 plot_v1
+* u4  e1bar plot_v1
+* u5  e2bar plot_v1
+* u6  e3 plot_v1
+* u9  y7bar plot_v1
+* u10  y6bar plot_v1
+* u11  y5bar plot_v1
+* u12  y4bar plot_v1
+* u13  y3bar plot_v1
+* u14  y2bar plot_v1
+* u15  y1bar plot_v1
+* u16  y0bar plot_v1
+a1 [a0 a1 a2 e1bar e2bar e3 ] [net-_u7-pad7_ net-_u7-pad8_ net-_u7-pad9_ net-_u7-pad10_ net-_u7-pad11_ net-_u7-pad12_ ] u7
+a2 [net-_u8-pad1_ net-_u8-pad2_ net-_u8-pad3_ net-_u8-pad4_ net-_u8-pad5_ net-_u8-pad6_ net-_u8-pad7_ net-_u8-pad8_ ] [y7bar y6bar y5bar y4bar y3bar y2bar y1bar y0bar ] u8
+* Schematic Name:                             adc_bridge_6, NgSpice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_8, NgSpice Name: dac_bridge
+.model u8 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 0.001e-00 6e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(a0) + 6v(a1) + 12v(a2) + 18v(e1bar) + 24v(e2bar) + 30v(e3) + 36v(y7bar) + 42v(y6bar) + 48v(y5bar) + 54v(y4bar) + 60v(y3bar) + 66v(y2bar) + 72v(y1bar) + 78v(y0bar)
+.endc
+.end

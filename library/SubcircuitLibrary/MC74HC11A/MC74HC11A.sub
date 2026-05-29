@@ -1,0 +1,10 @@
+* Subcircuit MC74HC11A
+.subckt MC74HC11A net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ ? net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ ? 
+* c:\fossee\esim\library\subcircuitlibrary\mc74hc11a\mc74hc11a.cir
+.include 3_and.sub
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad13_ net-_u1-pad12_ 3_and
+x2 net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ 3_and
+x3 net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad8_ 3_and
+* Control Statements
+
+.ends MC74HC11A

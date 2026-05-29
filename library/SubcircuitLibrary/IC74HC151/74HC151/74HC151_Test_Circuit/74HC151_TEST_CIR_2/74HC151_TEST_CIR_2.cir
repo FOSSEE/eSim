@@ -1,0 +1,34 @@
+.title KiCad schematic
+U14 I6 plot_v1
+U10 S2 plot_v1
+U12 S0 plot_v1
+U13 I7 plot_v1
+U15 I5 plot_v1
+U16 I4 plot_v1
+U11 S1 plot_v1
+VEN1 Net-_U5-Pad5_ GND 0
+U6 Y plot_v1
+VI2 I2 GND pulse
+VI1 I1 GND pulse
+VI0 I0 GND pulse
+U9 I4 I5 I6 I7 S0 S1 S2 Net-_U9-Pad8_ Net-_U9-Pad9_ Net-_U9-Pad10_ Net-_U9-Pad11_ Net-_U9-Pad12_ Net-_U9-Pad13_ Net-_U9-Pad14_ adc_bridge_7
+v1 Net-_X1-Pad16_ GND 5
+U7 Net-_U7-Pad1_ Net-_U7-Pad2_ Y YC dac_bridge_2
+U8 YC plot_v1
+R1 GND Y 1k
+R2 YC GND 1k
+VS0 S0 GND pulse
+VS1 S1 GND pulse
+VI5 I5 GND pulse
+VI6 I6 GND pulse
+VI7 I7 GND pulse
+VS2 S2 GND pulse
+U2 I2 plot_v1
+U1 I3 plot_v1
+VI3 I3 GND pulse
+U3 I1 plot_v1
+U4 I0 plot_v1
+X1 Net-_U5-Pad6_ Net-_U5-Pad7_ Net-_U5-Pad8_ Net-_U5-Pad9_ Net-_U7-Pad1_ Net-_U7-Pad2_ Net-_U5-Pad10_ GND Net-_U9-Pad14_ Net-_U9-Pad13_ Net-_U9-Pad12_ Net-_U9-Pad11_ Net-_U9-Pad10_ Net-_U9-Pad9_ Net-_U9-Pad8_ Net-_X1-Pad16_ 74HC151
+U5 I3 I2 I1 I0 Net-_U5-Pad5_ Net-_U5-Pad6_ Net-_U5-Pad7_ Net-_U5-Pad8_ Net-_U5-Pad9_ Net-_U5-Pad10_ adc_bridge_5
+VI4 I4 GND pulse
+.end
