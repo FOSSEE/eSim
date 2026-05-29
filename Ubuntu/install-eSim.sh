@@ -31,6 +31,34 @@ get_ubuntu_version() {
 run_version_script() {
     SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/install-eSim-scripts"
     
+    # Decide script based on full version
+    case $VERSION_ID in
+        "22.04")
+            if [[ "$FULL_VERSION" == "22.04.4" ]]; then
+                SCRIPT="$SCRIPT_DIR/install-eSim-22.04.sh"
+            else
+                SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            fi
+            ;;
+        "23.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            ;;
+        "24.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-24.04.sh"
+            ;;
+        "25.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-25.04.sh"
+            ;;
+        *)
+            echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
+            exit 1
+            ;;
+    esac
+
+    # Run the script if found
+    if [[ -f "$SCRIPT" ]]; then
+        echo "Running script: $SCRIPT $ARGUMENT"
+        bash "$SCRIPT" "$ARGUMENT"
     echo "[eSim]" >> $config_dir/$config_file
     echo "eSim_HOME = $eSim_Home" >> $config_dir/$config_file
     echo "LICENSE = %(eSim_HOME)s/LICENSE" >> $config_dir/$config_file
