@@ -1,0 +1,34 @@
+.title KiCad schematic
+R6 gnd Net-_M7-Pad2_ 4k
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 10uf
+R5 Net-_C1-Pad1_ Net-_M5-Pad3_ 4k
+U1 offset1 INPUT1 INPUT1 gnd gnd output VCC unconnected-_U1-Pad8_ PORT
+M8 Net-_M10-Pad3_ Net-_M5-Pad3_ Net-_C1-Pad1_ gnd eSim_MOS_N
+M9 Net-_C1-Pad1_ Net-_C1-Pad2_ Net-_M7-Pad2_ gnd eSim_MOS_N
+M5 Net-_M5-Pad1_ Net-_M5-Pad1_ Net-_M5-Pad3_ gnd eSim_MOS_N
+R7 Net-_M10-Pad3_ Net-_M5-Pad1_ 4k
+M6 Net-_M5-Pad1_ Net-_D1-Pad1_ VCC VCC eSim_MOS_P
+R1 Net-_M1-Pad2_ INPUT1 0k
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad2_ gnd eSim_MOS_N
+R4 Net-_C1-Pad2_ INPUT1 0k
+M7 gnd Net-_M7-Pad2_ Net-_C1-Pad2_ gnd eSim_MOS_N
+M4 Net-_C1-Pad2_ Net-_M1-Pad2_ offset1 gnd eSim_MOS_N
+R3 gnd offset1 4k
+R2 gnd Net-_M1-Pad1_ 4k
+M2 Net-_M2-Pad1_ Net-_D1-Pad1_ VCC VCC eSim_MOS_P
+M3 INPUT1 Net-_D1-Pad2_ Net-_M2-Pad1_ VCC eSim_MOS_P
+M14 Net-_M14-Pad1_ Net-_D1-Pad1_ VCC VCC eSim_MOS_P
+R11 Net-_M14-Pad1_ Net-_M13-Pad2_ 0k
+M10 output Net-_M10-Pad2_ Net-_M10-Pad3_ gnd eSim_MOS_N
+M11 VCC Net-_M10-Pad3_ Net-_M10-Pad2_ gnd eSim_MOS_N
+R10 Net-_M13-Pad1_ Net-_M13-Pad2_ 4k
+M16 Net-_M14-Pad1_ Net-_M13-Pad1_ gnd gnd eSim_MOS_N
+M13 Net-_M13-Pad1_ Net-_M13-Pad2_ gnd gnd eSim_MOS_N
+R12 Net-_M14-Pad1_ Net-_M13-Pad2_ 0k
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode
+M15 Net-_M14-Pad1_ Net-_M14-Pad1_ Net-_M14-Pad1_ Net-_M14-Pad1_ eSim_MOS_P
+M17 Net-_D1-Pad2_ Net-_M14-Pad1_ gnd gnd eSim_MOS_N
+M12 Net-_M12-Pad1_ Net-_C1-Pad1_ gnd VCC eSim_MOS_P
+R8 Net-_M12-Pad1_ Net-_M10-Pad2_ 4k
+R9 output Net-_M10-Pad2_ 4k
+.end

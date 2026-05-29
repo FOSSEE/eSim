@@ -1,0 +1,44 @@
+.title kicad schematic
+
+* u109 net-_u107-pad3_ net-_u107-pad3_ net-_u109-pad3_ d_nand
+* u106 net-_u102-pad3_ net-_u103-pad3_ net-_u106-pad3_ d_nand
+* u107 net-_u104-pad3_ net-_u105-pad3_ net-_u107-pad3_ d_nand
+* u108 net-_u106-pad3_ net-_u106-pad3_ net-_u108-pad3_ d_nand
+* u101 net-_u104-pad1_ net-_u104-pad2_ unconnected-_u101-pad3_ net-_u105-pad1_ net-_u105-pad2_ net-_u109-pad3_ unconnected-_u101-pad7_ net-_u108-pad3_ net-_u102-pad1_ net-_u102-pad2_ unconnected-_u101-pad11_ net-_u103-pad1_ net-_u103-pad2_ unconnected-_u101-pad14_ port
+* u105 net-_u105-pad1_ net-_u105-pad2_ net-_u105-pad3_ d_nand
+* u104 net-_u104-pad1_ net-_u104-pad2_ net-_u104-pad3_ d_nand
+* u102 net-_u102-pad1_ net-_u102-pad2_ net-_u102-pad3_ d_nand
+* u103 net-_u103-pad1_ net-_u103-pad2_ net-_u103-pad3_ d_nand
+a1 [net-_u107-pad3_ net-_u107-pad3_ ] net-_u109-pad3_ u109
+a2 [net-_u102-pad3_ net-_u103-pad3_ ] net-_u106-pad3_ u106
+a3 [net-_u104-pad3_ net-_u105-pad3_ ] net-_u107-pad3_ u107
+a4 [net-_u106-pad3_ net-_u106-pad3_ ] net-_u108-pad3_ u108
+a5 [net-_u105-pad1_ net-_u105-pad2_ ] net-_u105-pad3_ u105
+a6 [net-_u104-pad1_ net-_u104-pad2_ ] net-_u104-pad3_ u104
+a7 [net-_u102-pad1_ net-_u102-pad2_ ] net-_u102-pad3_ u102
+a8 [net-_u103-pad1_ net-_u103-pad2_ ] net-_u103-pad3_ u103
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u109 d_nand(rise_delay=5n fall_delay=5n input_load=1p ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u106 d_nand(rise_delay=5n fall_delay=5n input_load=1p ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u107 d_nand(rise_delay=5n fall_delay=5n input_load=1p ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u108 d_nand(rise_delay=5n fall_delay=5n input_load=1p ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u105 d_nand(rise_delay=5n fall_delay=5n input_load=1p ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u104 d_nand(rise_delay=5n fall_delay=5n input_load=1p ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u102 d_nand(rise_delay=5n fall_delay=5n input_load=1p ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u103 d_nand(rise_delay=5n fall_delay=5n input_load=1p ) 
+.tran 0.1e-03 10e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

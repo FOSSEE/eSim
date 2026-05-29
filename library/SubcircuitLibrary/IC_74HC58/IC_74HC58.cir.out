@@ -1,0 +1,54 @@
+* e:\ic_74hc58\ic_74hc58.cir
+
+.include 74HC58.sub
+x1 net-_u11-pad6_ net-_u11-pad8_ net-_u12-pad7_ net-_u12-pad8_ net-_u12-pad9_ net-_u12-pad10_ net-_u12-pad11_ net-_u12-pad12_ net-_u11-pad5_ net-_u11-pad7_ net-_u13-pad1_ net-_u14-pad1_ 74HC58
+* u12  a1 b1 c1 d1 e1 f1 net-_u12-pad7_ net-_u12-pad8_ net-_u12-pad9_ net-_u12-pad10_ net-_u12-pad11_ net-_u12-pad12_ adc_bridge_6
+* u11  a2 b2 c2 d2 net-_u11-pad5_ net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ adc_bridge_4
+* u13  net-_u13-pad1_ y1 dac_bridge_1
+* u14  net-_u14-pad1_ y2 dac_bridge_1
+v1  a1 gnd pulse(0 5 0.01n 0.01n 0.01n 1m 2m)
+v2  b1 gnd pulse(0 5 0.01n 0.01n 0.01n 2m 4m)
+v3  c1 gnd pulse(0 5 0.01n 0.01n 0.01n 3m 6m)
+v4  d1 gnd pulse(0 5 0.01n 0.01n 0.01n 4m 8m)
+v5  e1 gnd pulse(0 5 0.01n 0.01n 0.01n 5m 10m)
+v6  f1 gnd pulse(0 5 0.01n 0.01n 0.01n 6m 12m)
+v7  a2 gnd pulse(0 5 0.01n 0.01n 0.01n 7m 14m)
+v8  b2 gnd pulse(0 5 0.01n 0.01n 0.01n 8m 16m)
+v9  c2 gnd pulse(0 5 0.01n 0.01n 0.01n 9m 18m)
+v10  d2 gnd pulse(0 5 0.01n 0.01n 0.01n 10m 20m)
+* u15  y1 plot_v1
+* u16  y2 plot_v1
+* u1  a1 plot_v1
+* u2  b1 plot_v1
+* u3  c1 plot_v1
+* u4  d1 plot_v1
+* u5  e1 plot_v1
+* u6  f1 plot_v1
+* u7  a2 plot_v1
+* u8  b2 plot_v1
+* u9  c2 plot_v1
+* u10  d2 plot_v1
+a1 [a1 b1 c1 d1 e1 f1 ] [net-_u12-pad7_ net-_u12-pad8_ net-_u12-pad9_ net-_u12-pad10_ net-_u12-pad11_ net-_u12-pad12_ ] u12
+a2 [a2 b2 c2 d2 ] [net-_u11-pad5_ net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ ] u11
+a3 [net-_u13-pad1_ ] [y1 ] u13
+a4 [net-_u14-pad1_ ] [y2 ] u14
+* Schematic Name:                             adc_bridge_6, NgSpice Name: adc_bridge
+.model u12 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_4, NgSpice Name: adc_bridge
+.model u11 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u13 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u14 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-06 20e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+set xbrushwidth=3
+plot v(y1) v(y2)+10
+plot v(a1) v(b1)+10 v(c1)+20 v(d1)+30 v(e1)+40 v(f1)+50 v(a2)+60 v(b2)+70 v(c2)+80 v(d2)+90
+.endc
+.end

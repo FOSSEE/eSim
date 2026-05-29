@@ -28,8 +28,8 @@
 
 # importing the files and libraries
 import hdlparse.verilog_parser as vlog
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QThread
+from PyQt6 import QtCore, QtWidgets
+from PyQt6.QtCore import QThread
 from configuration.Appconfig import Appconfig
 import os
 import watchdog.events
@@ -56,10 +56,10 @@ def makerchipTOSAccepted(display=True):
                        https://www.makerchip.com/terms/</a>). \
                        Have you read and do you \
                        accept these Terms of Service?",
-                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No
             )
 
-            if reply == QtWidgets.QMessageBox.Yes:
+            if reply == QtWidgets.QMessageBox.StandardButton.Yes:
                 f = open(home + "/.makerchip_accepted", "w")
                 f.close()
                 return True
@@ -90,7 +90,7 @@ class Maker(QtWidgets.QWidget):
         self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
 
-        self.grid.addWidget(self.createoptionsBox(), 0, 0, QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.createoptionsBox(), 0, 0, QtCore.Qt.AlignmentFlag.AlignTop)
         self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.show()
@@ -116,9 +116,9 @@ class Maker(QtWidgets.QWidget):
                 "Error Message",
                 "<b>No Verilog File Chosen. \
                 Please choose a verilog file.</b>",
-                QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+                QtWidgets.QMessageBox.StandardButton.Ok | QtWidgets.QMessageBox.StandardButton.Cancel)
 
-            if reply == QtWidgets.QMessageBox.Ok:
+            if reply == QtWidgets.QMessageBox.StandardButton.Ok:
                 self.addverilog()
 
                 if self.verilogfile == "":
@@ -126,7 +126,7 @@ class Maker(QtWidgets.QWidget):
 
                 self.obj_Appconfig.print_info('Add Verilog File Called')
 
-            elif reply == QtWidgets.QMessageBox.Cancel:
+            elif reply == QtWidgets.QMessageBox.StandardButton.Cancel:
                 self.obj_Appconfig.print_info('No Verilog File Chosen')
                 return
 
@@ -199,7 +199,7 @@ class Maker(QtWidgets.QWidget):
             self.msg.showMessage(
                 "Error in saving verilog file. Please check if it is chosen."
             )
-            self.msg.exec_()
+            self.msg.exec()
             print("Error in saving verilog file: " + str(err))
 
     # This is used to run the makerchip-app
@@ -228,12 +228,12 @@ class Maker(QtWidgets.QWidget):
                     To not open Makerchip IDE, click on CANCEL button. </b>\
                     <br><br> NOTE: Makerchip IDE requires an active \
                     internet connection and a browser.",
-                    QtWidgets.QMessageBox.Yes
-                    | QtWidgets.QMessageBox.No
-                    | QtWidgets.QMessageBox.Cancel)
-                if reply == QtWidgets.QMessageBox.Cancel:
+                    QtWidgets.QMessageBox.StandardButton.Yes
+                    | QtWidgets.QMessageBox.StandardButton.No
+                    | QtWidgets.QMessageBox.StandardButton.Cancel)
+                if reply == QtWidgets.QMessageBox.StandardButton.Cancel:
                     return
-                if reply == QtWidgets.QMessageBox.Yes:
+                if reply == QtWidgets.QMessageBox.StandardButton.Yes:
                     code = open(self.verilogfile).read()
                     text = code
                     filename = '.'.join(
@@ -277,7 +277,7 @@ output logic passed, output logic failed);\n'''
                             "<b>Error: File name and module \
                             name are not same. Please \
                             ensure that they are same.</b>",
-                            QtWidgets.QMessageBox.Ok)
+                            QtWidgets.QMessageBox.StandardButton.Ok)
 
                         self.obj_Appconfig.print_info(
                             'NgVeri stopped due to file \
@@ -330,7 +330,7 @@ Add \\TLV here if desired\
             self.msg.showMessage(
                 "Error in running Makerchip IDE. \
 Please check if verilog file is chosen.")
-            self.msg.exec_()
+            self.msg.exec()
             print("Error in running Makerchip IDE. \
 Please check if verilog file is chosen.")
         #   initial = self.read_file()
@@ -466,7 +466,7 @@ class Handler(watchdog.events.PatternMatchingEventHandler):
             "NgVeri File: " +
             self.verilogfile +
             " modified. Please click on Refresh")
-        msg.exec_()
+        msg.exec()
         print("NgVeri File: " + self.verilogfile +
               " modified. Please click on Refresh")
         # self.obj_Appconfig.print_info("NgVeri File:\
@@ -508,7 +508,7 @@ class Handler(watchdog.events.PatternMatchingEventHandler):
 #                         msg.showMessage(
 #                             "NgVeri File: "+self.verilogfile+"\
 # modified. Please click on Refresh")
-#                         msg.exec_()
+#                         msg.exec()
 #                         print("NgVeri File: "+self.verilogfile+"\
 # modified. Please click on Refresh")
 #                         # self.obj_Appconfig.print_info("NgVeri File: \

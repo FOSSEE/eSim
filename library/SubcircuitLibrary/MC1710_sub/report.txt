@@ -1,0 +1,35 @@
+Annotated eSim_Diode as D1.
+Annotated eSim_Diode as D2.
+Annotated eSim_NPN as Q1.
+Annotated eSim_NPN as Q2.
+Annotated eSim_NPN as Q3.
+Annotated eSim_NPN as Q4.
+Annotated eSim_NPN as Q5.
+Annotated eSim_NPN as Q6.
+Annotated eSim_NPN as Q7.
+Annotated eSim_NPN as Q8.
+Annotated 500 as R1.
+Annotated 500 as R2.
+Annotated 100 as R3.
+Annotated 68 as R4.
+Annotated 1.1k as R5.
+Annotated 1.7k as R6.
+Annotated 2.8k as R7.
+Annotated resistor as R8.
+Annotated PORT (unit D) as U1D.
+Annotated PORT (unit E) as U1E.
+Annotated PORT (unit A) as U1A.
+Annotated PORT (unit C) as U1C.
+Annotated PORT (unit F) as U1F.
+Annotated zener as U2.
+Annotated PORT (unit B) as U1B.
+Annotated zener as U3.
+Annotated PORT (unit K) as U1K.
+Annotated PORT (unit I) as U1I.
+Annotated PORT (unit N) as U1N.
+Annotated PORT (unit M) as U1M.
+Annotated PORT (unit L) as U1L.
+Annotated PORT (unit J) as U1J.
+Annotated PORT (unit H) as U1H.
+Annotated PORT (unit G) as U1G.
+Annotation complete.

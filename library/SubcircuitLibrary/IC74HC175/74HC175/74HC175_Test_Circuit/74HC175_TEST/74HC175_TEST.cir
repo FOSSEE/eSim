@@ -1,0 +1,24 @@
+.title KiCad schematic
+X1 Net-_U6-Pad8_ Net-_U5-Pad1_ Net-_U5-Pad2_ Net-_U6-Pad7_ Net-_U6-Pad6_ Net-_U5-Pad3_ Net-_U5-Pad4_ Net-_U13-Pad2_ Net-_U12-Pad2_ Net-_U7-Pad4_ Net-_U7-Pad3_ Net-_U6-Pad10_ Net-_U6-Pad9_ Net-_U7-Pad2_ Net-_U7-Pad1_ Net-_v2-Pad1_ 74HC175
+U13 GND Net-_U13-Pad2_ adc_bridge_1
+V_D2 Net-_V_D2-Pad1_ GND DC
+V_D3 Net-_V_D3-Pad1_ GND DC
+V_D0 Net-_V_D0-Pad1_ GND DC
+V_D1 Net-_V_D1-Pad1_ GND DC
+V_MR_n1 Net-_V_MR_n1-Pad1_ GND DC
+U6 Net-_V_D1-Pad1_ Net-_V_D0-Pad1_ Net-_V_MR_n1-Pad1_ Net-_V_D3-Pad1_ Net-_V_D2-Pad1_ Net-_U6-Pad6_ Net-_U6-Pad7_ Net-_U6-Pad8_ Net-_U6-Pad9_ Net-_U6-Pad10_ adc_bridge_5
+v2 Net-_v2-Pad1_ GND 5
+U5 Net-_U5-Pad1_ Net-_U5-Pad2_ Net-_U5-Pad3_ Net-_U5-Pad4_ V_Q0 V_Q0_n V_Q1_n V_Q1 dac_bridge_4
+U4 V_Q0 plot_v1
+U9 V_Q3_n plot_v1
+U10 V_Q2_n plot_v1
+U11 V_Q2 plot_v1
+U8 V_Q3 plot_v1
+V_CP1 V_CP GND pulse
+U1 V_Q1 plot_v1
+U2 V_Q1_n plot_v1
+U3 V_Q0_n plot_v1
+U12 V_CP Net-_U12-Pad2_ adc_bridge_1
+U7 Net-_U7-Pad1_ Net-_U7-Pad2_ Net-_U7-Pad3_ Net-_U7-Pad4_ V_Q3 V_Q3_n V_Q2_n V_Q2 dac_bridge_4
+U14 V_CP plot_v1
+.end

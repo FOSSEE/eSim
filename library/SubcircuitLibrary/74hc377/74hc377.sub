@@ -1,0 +1,270 @@
+* Subcircuit 74hc377
+.subckt 74hc377 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ unconnected-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ unconnected-_u1-pad20_ 
+.title kicad schematic
+* u37 net-_u1-pad13_ net-_u35-pad1_ d_buffer
+* u33 net-_u13-pad2_ net-_u33-pad2_ d_inverter
+* u41 net-_u13-pad2_ net-_u41-pad2_ d_inverter
+* u30 net-_u1-pad8_ net-_u28-pad1_ d_buffer
+* u47 net-_u47-pad1_ net-_u43-pad3_ net-_u47-pad3_ d_or
+* u65 net-_u65-pad1_ net-_u64-pad2_ net-_u61-pad1_ d_and
+* u64 net-_u13-pad2_ net-_u64-pad2_ d_inverter
+* u61 net-_u61-pad1_ net-_u59-pad3_ net-_u61-pad3_ d_or
+* u53 net-_u53-pad1_ net-_u51-pad3_ net-_u53-pad3_ d_or
+* u57 net-_u57-pad1_ net-_u56-pad2_ net-_u53-pad1_ d_and
+* u51 net-_u51-pad1_ net-_u13-pad2_ net-_u51-pad3_ d_and
+* u42 net-_u40-pad5_ net-_u41-pad2_ net-_u39-pad1_ d_and
+* u43 net-_u43-pad1_ net-_u13-pad2_ net-_u43-pad3_ d_and
+* u35 net-_u35-pad1_ net-_u13-pad2_ net-_u35-pad3_ d_and
+* u34 net-_u32-pad5_ net-_u33-pad2_ net-_u31-pad1_ d_and
+* u28 net-_u28-pad1_ net-_u13-pad2_ net-_u28-pad3_ d_and
+* u31 net-_u31-pad1_ net-_u28-pad3_ net-_u31-pad3_ d_or
+* u39 net-_u39-pad1_ net-_u35-pad3_ net-_u39-pad3_ d_or
+* u52 net-_u1-pad17_ net-_u51-pad1_ d_buffer
+* u44 net-_u1-pad14_ net-_u43-pad1_ d_buffer
+* u60 net-_u1-pad18_ net-_u59-pad1_ d_buffer
+* u59 net-_u59-pad1_ net-_u13-pad2_ net-_u59-pad3_ d_and
+* u56 net-_u13-pad2_ net-_u56-pad2_ d_inverter
+* u49 net-_u49-pad1_ net-_u48-pad2_ net-_u47-pad1_ d_and
+* u48 net-_u13-pad2_ net-_u48-pad2_ d_inverter
+* u40 net-_u39-pad3_ net-_u38-pad2_ unconnected-_u40-pad3_ unconnected-_u40-pad4_ net-_u40-pad5_ unconnected-_u40-pad6_ d_dff
+* u32 net-_u31-pad3_ net-_u29-pad2_ unconnected-_u32-pad3_ unconnected-_u32-pad4_ net-_u32-pad5_ unconnected-_u32-pad6_ d_dff
+* u29 net-_u12-pad1_ net-_u29-pad2_ d_inverter
+* u27 net-_u24-pad5_ net-_u1-pad6_ d_buffer
+* u36 net-_u32-pad5_ net-_u1-pad9_ d_buffer
+* u38 net-_u12-pad1_ net-_u38-pad2_ d_inverter
+* u55 net-_u12-pad1_ net-_u55-pad2_ d_inverter
+* u46 net-_u12-pad1_ net-_u46-pad2_ d_inverter
+* u50 net-_u47-pad3_ net-_u46-pad2_ unconnected-_u50-pad3_ unconnected-_u50-pad4_ net-_u49-pad1_ unconnected-_u50-pad6_ d_dff
+* u58 net-_u53-pad3_ net-_u55-pad2_ unconnected-_u58-pad3_ unconnected-_u58-pad4_ net-_u57-pad1_ unconnected-_u58-pad6_ d_dff
+* u66 net-_u61-pad3_ net-_u63-pad2_ unconnected-_u66-pad3_ unconnected-_u66-pad4_ net-_u65-pad1_ unconnected-_u66-pad6_ d_dff
+* u63 net-_u12-pad1_ net-_u63-pad2_ d_inverter
+* u62 net-_u57-pad1_ net-_u1-pad16_ d_buffer
+* u67 net-_u65-pad1_ net-_u1-pad19_ d_buffer
+* u54 net-_u49-pad1_ net-_u1-pad15_ d_buffer
+* u45 net-_u40-pad5_ net-_u1-pad12_ d_buffer
+* u15 net-_u15-pad1_ net-_u13-pad3_ net-_u15-pad3_ d_or
+* u9 net-_u13-pad2_ net-_u10-pad2_ d_inverter
+* u5 net-_u5-pad1_ net-_u13-pad2_ net-_u5-pad3_ d_and
+* u18 net-_u16-pad5_ net-_u17-pad2_ net-_u15-pad1_ d_and
+* u13 net-_u13-pad1_ net-_u13-pad2_ net-_u13-pad3_ d_and
+* u17 net-_u13-pad2_ net-_u17-pad2_ d_inverter
+* u23 net-_u23-pad1_ net-_u21-pad3_ net-_u23-pad3_ d_or
+* u10 net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ d_and
+* u7 net-_u10-pad3_ net-_u5-pad3_ net-_u7-pad3_ d_or
+* u21 net-_u21-pad1_ net-_u13-pad2_ net-_u21-pad3_ d_and
+* u26 net-_u24-pad5_ net-_u25-pad2_ net-_u23-pad1_ d_and
+* u16 net-_u15-pad3_ net-_u12-pad2_ unconnected-_u16-pad3_ unconnected-_u16-pad4_ net-_u16-pad5_ unconnected-_u16-pad6_ d_dff
+* u24 net-_u23-pad3_ net-_u20-pad2_ unconnected-_u24-pad3_ unconnected-_u24-pad4_ net-_u24-pad5_ unconnected-_u24-pad6_ d_dff
+* u20 net-_u12-pad1_ net-_u20-pad2_ d_inverter
+* u19 net-_u16-pad5_ net-_u1-pad5_ d_buffer
+* u12 net-_u12-pad1_ net-_u12-pad2_ d_inverter
+* u8 net-_u7-pad3_ net-_u3-pad2_ unconnected-_u8-pad3_ unconnected-_u8-pad4_ net-_u10-pad1_ unconnected-_u8-pad6_ d_dff
+* u4 net-_u1-pad11_ net-_u12-pad1_ d_inverter
+* u3 net-_u12-pad1_ net-_u3-pad2_ d_inverter
+* u11 net-_u10-pad1_ net-_u1-pad2_ d_buffer
+* u14 net-_u1-pad4_ net-_u13-pad1_ d_buffer
+* u22 net-_u1-pad7_ net-_u21-pad1_ d_buffer
+* u25 net-_u13-pad2_ net-_u25-pad2_ d_inverter
+* u2 net-_u1-pad1_ net-_u13-pad2_ d_inverter
+* u6 net-_u1-pad3_ net-_u5-pad1_ d_buffer
+a1 net-_u1-pad13_ net-_u35-pad1_ u37
+a2 net-_u13-pad2_ net-_u33-pad2_ u33
+a3 net-_u13-pad2_ net-_u41-pad2_ u41
+a4 net-_u1-pad8_ net-_u28-pad1_ u30
+a5 [net-_u47-pad1_ net-_u43-pad3_ ] net-_u47-pad3_ u47
+a6 [net-_u65-pad1_ net-_u64-pad2_ ] net-_u61-pad1_ u65
+a7 net-_u13-pad2_ net-_u64-pad2_ u64
+a8 [net-_u61-pad1_ net-_u59-pad3_ ] net-_u61-pad3_ u61
+a9 [net-_u53-pad1_ net-_u51-pad3_ ] net-_u53-pad3_ u53
+a10 [net-_u57-pad1_ net-_u56-pad2_ ] net-_u53-pad1_ u57
+a11 [net-_u51-pad1_ net-_u13-pad2_ ] net-_u51-pad3_ u51
+a12 [net-_u40-pad5_ net-_u41-pad2_ ] net-_u39-pad1_ u42
+a13 [net-_u43-pad1_ net-_u13-pad2_ ] net-_u43-pad3_ u43
+a14 [net-_u35-pad1_ net-_u13-pad2_ ] net-_u35-pad3_ u35
+a15 [net-_u32-pad5_ net-_u33-pad2_ ] net-_u31-pad1_ u34
+a16 [net-_u28-pad1_ net-_u13-pad2_ ] net-_u28-pad3_ u28
+a17 [net-_u31-pad1_ net-_u28-pad3_ ] net-_u31-pad3_ u31
+a18 [net-_u39-pad1_ net-_u35-pad3_ ] net-_u39-pad3_ u39
+a19 net-_u1-pad17_ net-_u51-pad1_ u52
+a20 net-_u1-pad14_ net-_u43-pad1_ u44
+a21 net-_u1-pad18_ net-_u59-pad1_ u60
+a22 [net-_u59-pad1_ net-_u13-pad2_ ] net-_u59-pad3_ u59
+a23 net-_u13-pad2_ net-_u56-pad2_ u56
+a24 [net-_u49-pad1_ net-_u48-pad2_ ] net-_u47-pad1_ u49
+a25 net-_u13-pad2_ net-_u48-pad2_ u48
+a26 net-_u39-pad3_ net-_u38-pad2_ unconnected-_u40-pad3_ unconnected-_u40-pad4_ net-_u40-pad5_ unconnected-_u40-pad6_ u40
+a27 net-_u31-pad3_ net-_u29-pad2_ unconnected-_u32-pad3_ unconnected-_u32-pad4_ net-_u32-pad5_ unconnected-_u32-pad6_ u32
+a28 net-_u12-pad1_ net-_u29-pad2_ u29
+a29 net-_u24-pad5_ net-_u1-pad6_ u27
+a30 net-_u32-pad5_ net-_u1-pad9_ u36
+a31 net-_u12-pad1_ net-_u38-pad2_ u38
+a32 net-_u12-pad1_ net-_u55-pad2_ u55
+a33 net-_u12-pad1_ net-_u46-pad2_ u46
+a34 net-_u47-pad3_ net-_u46-pad2_ unconnected-_u50-pad3_ unconnected-_u50-pad4_ net-_u49-pad1_ unconnected-_u50-pad6_ u50
+a35 net-_u53-pad3_ net-_u55-pad2_ unconnected-_u58-pad3_ unconnected-_u58-pad4_ net-_u57-pad1_ unconnected-_u58-pad6_ u58
+a36 net-_u61-pad3_ net-_u63-pad2_ unconnected-_u66-pad3_ unconnected-_u66-pad4_ net-_u65-pad1_ unconnected-_u66-pad6_ u66
+a37 net-_u12-pad1_ net-_u63-pad2_ u63
+a38 net-_u57-pad1_ net-_u1-pad16_ u62
+a39 net-_u65-pad1_ net-_u1-pad19_ u67
+a40 net-_u49-pad1_ net-_u1-pad15_ u54
+a41 net-_u40-pad5_ net-_u1-pad12_ u45
+a42 [net-_u15-pad1_ net-_u13-pad3_ ] net-_u15-pad3_ u15
+a43 net-_u13-pad2_ net-_u10-pad2_ u9
+a44 [net-_u5-pad1_ net-_u13-pad2_ ] net-_u5-pad3_ u5
+a45 [net-_u16-pad5_ net-_u17-pad2_ ] net-_u15-pad1_ u18
+a46 [net-_u13-pad1_ net-_u13-pad2_ ] net-_u13-pad3_ u13
+a47 net-_u13-pad2_ net-_u17-pad2_ u17
+a48 [net-_u23-pad1_ net-_u21-pad3_ ] net-_u23-pad3_ u23
+a49 [net-_u10-pad1_ net-_u10-pad2_ ] net-_u10-pad3_ u10
+a50 [net-_u10-pad3_ net-_u5-pad3_ ] net-_u7-pad3_ u7
+a51 [net-_u21-pad1_ net-_u13-pad2_ ] net-_u21-pad3_ u21
+a52 [net-_u24-pad5_ net-_u25-pad2_ ] net-_u23-pad1_ u26
+a53 net-_u15-pad3_ net-_u12-pad2_ unconnected-_u16-pad3_ unconnected-_u16-pad4_ net-_u16-pad5_ unconnected-_u16-pad6_ u16
+a54 net-_u23-pad3_ net-_u20-pad2_ unconnected-_u24-pad3_ unconnected-_u24-pad4_ net-_u24-pad5_ unconnected-_u24-pad6_ u24
+a55 net-_u12-pad1_ net-_u20-pad2_ u20
+a56 net-_u16-pad5_ net-_u1-pad5_ u19
+a57 net-_u12-pad1_ net-_u12-pad2_ u12
+a58 net-_u7-pad3_ net-_u3-pad2_ unconnected-_u8-pad3_ unconnected-_u8-pad4_ net-_u10-pad1_ unconnected-_u8-pad6_ u8
+a59 net-_u1-pad11_ net-_u12-pad1_ u4
+a60 net-_u12-pad1_ net-_u3-pad2_ u3
+a61 net-_u10-pad1_ net-_u1-pad2_ u11
+a62 net-_u1-pad4_ net-_u13-pad1_ u14
+a63 net-_u1-pad7_ net-_u21-pad1_ u22
+a64 net-_u13-pad2_ net-_u25-pad2_ u25
+a65 net-_u1-pad1_ net-_u13-pad2_ u2
+a66 net-_u1-pad3_ net-_u5-pad1_ u6
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u37 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u33 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u41 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u30 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u47 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u65 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u64 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u61 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u53 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u57 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u51 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u42 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u43 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u35 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u34 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u28 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u31 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u39 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u52 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u44 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u60 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u59 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u56 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u49 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u48 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u40 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u32 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u29 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u27 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u36 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u38 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u55 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u46 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u50 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u58 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u66 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u63 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u62 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u67 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u54 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u45 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u15 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u9 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u18 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u13 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u17 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u23 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u10 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u7 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u21 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u26 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u16 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u24 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u20 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u19 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u12 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u8 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u11 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u14 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u22 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u25 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u6 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74hc377

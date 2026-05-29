@@ -1,0 +1,47 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\ICL7611\ICL7611.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/24/25 08:09:14
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M2  Net-_C1-Pad1_ Net-_M2-Pad2_ /Bal /Bal eSim_MOS_P		
+M4  Net-_M2-Pad2_ Net-_M2-Pad2_ Net-_M4-Pad3_ Net-_M4-Pad3_ eSim_MOS_P		
+R3  /V+ /Bal 3k		
+R4  /V+ Net-_M4-Pad3_ 3k		
+M1  Net-_C1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M5  Net-_M2-Pad2_ Net-_M5-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M3  Net-_M1-Pad3_ Net-_M12-Pad2_ /V- /V- eSim_MOS_N		
+M6  Net-_M12-Pad2_ Net-_M12-Pad2_ /V- /V- eSim_MOS_N		
+M7  Net-_M12-Pad2_ Net-_M12-Pad2_ Net-_M10-Pad1_ Net-_M10-Pad1_ eSim_MOS_N		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ /V- /V- eSim_MOS_N		
+M12  Net-_M11-Pad1_ Net-_M12-Pad2_ Net-_M10-Pad1_ Net-_M10-Pad1_ eSim_MOS_N		
+M13  Net-_M11-Pad1_ Net-_M12-Pad2_ /V- /V- eSim_MOS_N		
+M15  Net-_M14-Pad1_ Net-_M12-Pad2_ /V- /V- eSim_MOS_N		
+M18  Net-_C1-Pad2_ Net-_C1-Pad2_ /V- /V- eSim_MOS_N		
+M19  /Out Net-_C1-Pad2_ /V- /V- eSim_MOS_N		
+R7  Net-_M10-Pad2_ /Iqset 470k		
+R5  /V+ Net-_M9-Pad1_ 900k		
+R6  Net-_M9-Pad1_ Net-_M8-Pad3_ 100k		
+M8  Net-_M12-Pad2_ Net-_M11-Pad1_ Net-_M8-Pad3_ Net-_M8-Pad3_ eSim_MOS_P		
+M11  Net-_M11-Pad1_ Net-_M11-Pad1_ /V+ /V+ eSim_MOS_P		
+M9  Net-_M9-Pad1_ Net-_M10-Pad2_ /V+ /V+ eSim_MOS_P		
+M14  Net-_M14-Pad1_ Net-_C1-Pad1_ /V+ /V+ eSim_MOS_P		
+M16  Net-_M14-Pad1_ Net-_M14-Pad1_ /V+ /V+ eSim_MOS_P		
+M20  /Out Net-_C1-Pad1_ /V+ /V+ eSim_MOS_P		
+M17  Net-_C1-Pad2_ Net-_M14-Pad1_ /V+ /V+ eSim_MOS_P		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 9p		
+D7  Net-_C1-Pad1_ /V+ eSim_Diode		
+C2  /Out Net-_C1-Pad1_ 33p		
+D6  /V- Net-_C1-Pad2_ eSim_Diode		
+D5  /Iqset /V+ eSim_Diode		
+D3  /Input- /V+ eSim_Diode		
+D4  /V- /Input- eSim_Diode		
+R1  /Input+ Net-_M1-Pad2_ 10k		
+D1  /Input+ /V+ eSim_Diode		
+D2  /V- /Input+ eSim_Diode		
+R2  /Input- Net-_M5-Pad2_ 10k		
+U1  /Bal /Input- /Input+ /V- Net-_M4-Pad3_ /Out /V+ /Iqset PORT		
+
+.end

@@ -1,0 +1,37 @@
+* D:\FOSSEE\eSim\library\SubcircuitLibrary\74HC563\74HC563.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/21/25 19:18:15
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U4  Net-_U4-Pad1_ Net-_U11-Pad2_ Net-_U4-Pad3_ d_tristate		
+U5  Net-_U4-Pad3_ /19 d_inverter		
+U1  /11 Net-_U1-Pad2_ d_inverter		
+U2  /1 Net-_U11-Pad2_ d_inverter		
+U8  Net-_U8-Pad1_ Net-_U11-Pad2_ Net-_U8-Pad3_ d_tristate		
+U9  Net-_U8-Pad3_ /18 d_inverter		
+U11  Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ d_tristate		
+U12  Net-_U11-Pad3_ /17 d_inverter		
+U14  Net-_U14-Pad1_ Net-_U11-Pad2_ Net-_U14-Pad3_ d_tristate		
+U15  Net-_U14-Pad3_ /16 d_inverter		
+U17  Net-_U17-Pad1_ Net-_U11-Pad2_ Net-_U17-Pad3_ d_tristate		
+U18  Net-_U17-Pad3_ /15 d_inverter		
+U20  Net-_U20-Pad1_ Net-_U11-Pad2_ Net-_U20-Pad3_ d_tristate		
+U21  Net-_U20-Pad3_ /14 d_inverter		
+U23  Net-_U23-Pad1_ Net-_U11-Pad2_ Net-_U23-Pad3_ d_tristate		
+U24  Net-_U23-Pad3_ /13 d_inverter		
+U26  Net-_U26-Pad1_ Net-_U11-Pad2_ Net-_U26-Pad3_ d_tristate		
+U27  Net-_U26-Pad3_ /12 d_inverter		
+U7  /1 /2 /3 /4 /5 /6 /7 /8 /9 ? /11 /12 /13 /14 /15 /16 /17 /18 /19 ? PORT		
+X1  /2 Net-_U1-Pad2_ ? Net-_U4-Pad1_ dlatch_own		
+X2  /3 Net-_U1-Pad2_ ? Net-_U8-Pad1_ dlatch_own		
+X3  /4 Net-_U1-Pad2_ ? Net-_U11-Pad1_ dlatch_own		
+X4  /5 Net-_U1-Pad2_ ? Net-_U14-Pad1_ dlatch_own		
+X5  /6 Net-_U1-Pad2_ ? Net-_U17-Pad1_ dlatch_own		
+X6  /7 Net-_U1-Pad2_ ? Net-_U20-Pad1_ dlatch_own		
+X7  /8 Net-_U1-Pad2_ ? Net-_U23-Pad1_ dlatch_own		
+X8  /9 Net-_U1-Pad2_ ? Net-_U26-Pad1_ dlatch_own		
+
+.end

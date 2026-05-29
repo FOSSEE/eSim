@@ -1,0 +1,15 @@
+<library>
+  <model_name>D</model_name>
+  <ref_model>1N34</ref_model>
+  <param>
+    <Is>2e-10</Is>
+    <N>2.19</N>
+    <Rs>0.084</Rs>
+    <Bv>60</Bv>
+    <Ibv>15u</Ibv>
+    <Cjo>4.82p</Cjo>
+    <Vj>0.75</Vj>
+    <M>0.333</M>
+    <tt>144n</tt>
+  </param>
+</library>

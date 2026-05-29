@@ -1,0 +1,18 @@
+* c:\fossee\esim\library\subcircuitlibrary\sloa024b_highpass\sloa024b_highpass.cir
+
+.include lm_741.sub
+c1  net-_c1-pad1_ net-_c1-pad2_ 10n
+c2  net-_c2-pad1_ net-_c1-pad1_ 10n
+r1  net-_c1-pad1_ net-_r1-pad2_ 11k
+x1 ? net-_c2-pad1_ net-_r1-pad2_ net-_u1-pad3_ ? net-_r1-pad2_ net-_u1-pad2_ ? lm_741
+r2  net-_c2-pad1_ gnd 22k
+* u1  net-_c1-pad2_ net-_u1-pad2_ net-_u1-pad3_ net-_r1-pad2_ port
+.ac dec 0 0Hz 0Hz
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,72 @@
+.title kicad schematic
+
+.include 4_and.sub
+.include 4_OR.sub
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ port
+* u27 net-_u27-pad1_ net-_u27-pad2_ d_buffer
+* u67 net-_u1-pad1_ net-_u27-pad1_ d_inverter
+* u68 net-_u1-pad15_ net-_u28-pad1_ d_inverter
+* u28 net-_u28-pad1_ net-_u28-pad2_ d_buffer
+x10 net-_x10-pad1_ net-_x10-pad2_ net-_x10-pad3_ net-_x10-pad4_ net-_u31-pad1_ 4_OR
+x8 net-_u26-pad2_ net-_u29-pad2_ net-_u1-pad12_ net-_u28-pad2_ net-_x10-pad3_ 4_and
+x6 net-_u30-pad2_ net-_u29-pad2_ net-_u1-pad13_ net-_u28-pad2_ net-_x10-pad4_ 4_and
+* u31 net-_u31-pad1_ net-_u1-pad9_ d_inverter
+x4 net-_u25-pad2_ net-_u26-pad2_ net-_u1-pad10_ net-_u28-pad2_ net-_x10-pad1_ 4_and
+x5 net-_u25-pad2_ net-_u30-pad2_ net-_u1-pad11_ net-_u28-pad2_ net-_x10-pad2_ 4_and
+x3 net-_u29-pad2_ net-_u30-pad2_ net-_u1-pad3_ net-_u27-pad2_ net-_x3-pad5_ 4_and
+x7 net-_u26-pad2_ net-_u29-pad2_ net-_u1-pad4_ net-_u27-pad2_ net-_x7-pad5_ 4_and
+* u62 net-_u62-pad1_ net-_u1-pad7_ d_inverter
+x9 net-_x1-pad5_ net-_x2-pad5_ net-_x7-pad5_ net-_x3-pad5_ net-_u62-pad1_ 4_OR
+x1 net-_u25-pad2_ net-_u26-pad2_ net-_u1-pad6_ net-_u27-pad2_ net-_x1-pad5_ 4_and
+x2 net-_u25-pad2_ net-_u30-pad2_ net-_u1-pad5_ net-_u27-pad2_ net-_x2-pad5_ 4_and
+* u30 net-_u30-pad1_ net-_u30-pad2_ d_buffer
+* u29 net-_u29-pad1_ net-_u29-pad2_ d_buffer
+* u70 net-_u26-pad2_ net-_u30-pad1_ d_inverter
+* u69 net-_u25-pad2_ net-_u29-pad1_ d_inverter
+* u25 net-_u1-pad2_ net-_u25-pad2_ d_inverter
+* u26 net-_u1-pad14_ net-_u26-pad2_ d_inverter
+a1 net-_u27-pad1_ net-_u27-pad2_ u27
+a2 net-_u1-pad1_ net-_u27-pad1_ u67
+a3 net-_u1-pad15_ net-_u28-pad1_ u68
+a4 net-_u28-pad1_ net-_u28-pad2_ u28
+a5 net-_u31-pad1_ net-_u1-pad9_ u31
+a6 net-_u62-pad1_ net-_u1-pad7_ u62
+a7 net-_u30-pad1_ net-_u30-pad2_ u30
+a8 net-_u29-pad1_ net-_u29-pad2_ u29
+a9 net-_u26-pad2_ net-_u30-pad1_ u70
+a10 net-_u25-pad2_ net-_u29-pad1_ u69
+a11 net-_u1-pad2_ net-_u25-pad2_ u25
+a12 net-_u1-pad14_ net-_u26-pad2_ u26
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u27 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u67 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u68 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u28 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u31 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u62 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u30 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u29 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u70 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u69 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u25 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u26 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

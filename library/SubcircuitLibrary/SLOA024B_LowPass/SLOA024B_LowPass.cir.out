@@ -1,0 +1,18 @@
+* d:\fossee\esim\library\subcircuitlibrary\sloa024b_lowpass\sloa024b_lowpass.cir
+
+.include lm_741.sub
+x1 ? net-_c1-pad1_ net-_c2-pad1_ net-_u1-pad4_ ? net-_c2-pad1_ net-_u1-pad2_ ? lm_741
+r1  net-_r1-pad1_ net-_c2-pad2_ 4.99k
+r2  net-_c2-pad2_ net-_c1-pad1_ 12.1k
+c1  net-_c1-pad1_ gnd 10n
+c2  net-_c2-pad1_ net-_c2-pad2_ 82n
+* u1  net-_r1-pad1_ net-_u1-pad2_ net-_c2-pad1_ net-_u1-pad4_ port
+.ac dec 0 0Hz 0Meg
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

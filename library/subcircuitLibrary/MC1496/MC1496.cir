@@ -1,0 +1,15 @@
+.title KiCad schematic
+M6 gain1 bias Net-_M6-Pad3_ gnd eSim_MOS_N
+R3 gnd Net-_M6-Pad3_ 500k
+U4 signal_input_1 gain1 gain2 signal_input_2 bias output1 unconnected-_U4-Pad7_ carrier_input_1 unconnected-_U4-Pad9_ carrier_input_2 unconnected-_U4-Pad11_ output1 unconnected-_U4-Pad13_ gnd PORT
+R2 gnd Net-_M3-Pad3_ 500k
+M2 Net-_M1-Pad3_ signal_input_1 gain2 gnd eSim_MOS_N
+M3 gain2 bias Net-_M3-Pad3_ gnd eSim_MOS_N
+M4 Net-_M1-Pad3_ carrier_input_1 output1 gnd eSim_MOS_N
+M1 output1 carrier_input_2 Net-_M1-Pad3_ gnd eSim_MOS_N
+D1 bias Net-_D1-Pad2_ eSim_Diode
+R1 gnd Net-_D1-Pad2_ 500k
+M5 output1 carrier_input_1 Net-_M5-Pad3_ gnd eSim_MOS_N
+M7 gain1 signal_input_2 Net-_M5-Pad3_ gnd eSim_MOS_N
+M8 Net-_M5-Pad3_ carrier_input_2 output1 gnd eSim_MOS_N
+.end

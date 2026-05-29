@@ -1,0 +1,42 @@
+.title Kicad Schematic VCO Circuit (Final Fixed)
+
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+
+* --- Define DC input sources so all nodes have valid potentials ---
+Vvco_in vco_input gnd 1.2
+Vinput2 input2 gnd 1.5
+Vinput3 input3 gnd 0.8
+Vvdd vdd gnd 12
+Vvcc vcc gnd 12
+
+* --- Transistors & Resistors (your circuit) ---
+m18 net-_m16-pad1_ net-_m18-pad2_ net-_m13-pad2_ gnd CMOSN W=100u L=100u M=1
+r13 net-_m17-pad3_ gnd 205k
+
+r4 net-_m1-pad2_ net-_m11-pad1_ 5.7k
+r7 reference_output net-_m11-pad1_ 1.75k
+r1 net-_m1-pad1_ net-_m11-pad1_ 7.2k
+
+m6 vco_input net-_m1-pad2_ net-_m1-pad2_ gnd CMOSN W=100u L=100u M=1
+r2 net-_m10-pad3_ net-_m11-pad1_ 7.2k
+r9 vco_control_voltage_ net-_m11-pad1_ 3.6k
+m15 timing_resisitor vco_control_voltage_ net-_m13-pad2_ gnd CMOSN W=100u L=100u M=1
+
+m36 net-_m36-pad1_ vco_output vdd net-_m11-pad1_ CMOSP W=100u L=100u M=1
+r21 gnd vco_output 4.6k
+
+* --- Power supply for biasing ---
+V1 net-_m11-pad1_ gnd 12
+
+* --- Simulation setup ---
+.tran 0.1e-03 10e-00 0e-00
+
+.control
+run
+display
+print allv > voltages.txt
+plot v(vco_input) v(vco_output) v(reference_output) v(vco_control_voltage_)
+.endc
+
+.end

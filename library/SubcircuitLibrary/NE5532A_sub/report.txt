@@ -1,0 +1,61 @@
+Annotated 36p as C1.
+Annotated 37p as C2.
+Annotated 14p as C3.
+Annotated 7p as C4.
+Annotated eSim_Diode as D1.
+Annotated eSim_Diode as D2.
+Annotated eSim_NPN as Q1.
+Annotated eSim_NPN as Q2.
+Annotated eSim_NPN as Q3.
+Annotated eSim_NPN as Q4.
+Annotated eSim_NPN as Q5.
+Annotated eSim_NPN as Q6.
+Annotated eSim_PNP as Q7.
+Annotated eSim_NPN as Q8.
+Annotated eSim_PNP as Q9.
+Annotated eSim_NPN as Q10.
+Annotated eSim_NPN as Q11.
+Annotated eSim_NPN as Q12.
+Annotated eSim_PNP as Q13.
+Annotated eSim_NPN as Q14.
+Annotated eSim_NPN as Q15.
+Annotated eSim_NPN as Q16.
+Annotated eSim_NPN as Q17.
+Annotated eSim_PNP as Q18.
+Annotated eSim_NPN as Q19.
+Annotated eSim_PNP as Q20.
+Annotated eSim_PNP as Q21.
+Annotated eSim_PNP as Q22.
+Annotated eSim_NPN as Q23.
+Annotated eSim_NPN as Q24.
+Annotated eSim_NPN as Q25.
+Annotated eSim_NPN as Q26.
+Annotated eSim_NPN as Q27.
+Annotated eSim_NPN as Q28.
+Annotated eSim_PNP as Q29.
+Annotated eSim_NPN as Q30.
+Annotated eSim_NPN as Q31.
+Annotated 10k as R1.
+Annotated 460 as R2.
+Annotated 10k as R3.
+Annotated 10k as R4.
+Annotated 10k as R5.
+Annotated 10k as R6.
+Annotated 10k as R7.
+Annotated 3k as R8.
+Annotated 1k as R9.
+Annotated 1k as R10.
+Annotated 3k as R11.
+Annotated 1k as R12.
+Annotated 1k as R13.
+Annotated 1k as R14.
+Annotated 1k as R15.
+Annotated 1k as R16.
+Annotated 15 as R17.
+Annotated 15 as R18.
+Annotated PORT (unit B) as U1B.
+Annotated PORT (unit C) as U1C.
+Annotated PORT (unit H) as U1H.
+Annotated PORT (unit D) as U1D.
+Annotated PORT (unit A) as U1A.
+Annotation complete.

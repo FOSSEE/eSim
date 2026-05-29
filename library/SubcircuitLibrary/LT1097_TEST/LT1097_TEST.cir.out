@@ -1,0 +1,19 @@
+.title kicad schematic
+
+.include LT1007.sub
+v2 net-_x1-pad7_ gnd  dc 5
+* u2 vout plot_v1
+x1 net-_x1-pad1_ vout vin gnd net-_x1-pad5_ vout net-_x1-pad7_ net-_x1-pad8_ LT1007
+* u1 vin plot_v1
+vv1 vin gnd sin(2.5 1.0 1k)
+.tran 1e-06 5e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(vout)
+plot v(vin)
+.endc
+.end
