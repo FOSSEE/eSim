@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 from projManagement.Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
@@ -47,7 +47,7 @@ class convertSub(QtWidgets.QWidget):
                     'The subcircuit does not contain any Kicad netlist file' +
                     ' for conversion.'
                 )
-                self.msg.exec_()
+                self.msg.exec()
         else:
             self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
@@ -56,4 +56,4 @@ class convertSub(QtWidgets.QWidget):
                 'Please select the subcircuit first. You can either create ' +
                 'new subcircuit or open existing subcircuit'
             )
-            self.msg.exec_()
+            self.msg.exec()

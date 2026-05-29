@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt6 import QtCore, QtGui, QtWidgets, uic
 import os
 
 
@@ -74,7 +74,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.cancelSimulationButton.setEnabled(False)
         self.redoSimulationButton.setEnabled(True)
 
-        if (self.qProcess.state() == QtCore.QProcess.NotRunning):
+        if (self.qProcess.state() == QtCore.QProcess.ProcessState.NotRunning):
             return
 
         self.simulationCancelled = True
@@ -98,7 +98,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.cancelSimulationButton.setEnabled(True)
         self.redoSimulationButton.setEnabled(False)
 
-        if (self.qProcess.state() != QtCore.QProcess.NotRunning):
+        if (self.qProcess.state() != QtCore.QProcess.ProcessState.NotRunning):
             return
 
         # To make the progressbar running
@@ -112,18 +112,17 @@ class TerminalUi(QtWidgets.QMainWindow):
         msg_box.setWindowTitle("Ngspice Plots")
         msg_box.setText("Do you want Ngspice plots?")
         
-        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.YesRole)
-        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.NoRole)
+        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.ButtonRole.YesRole)
+        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.ButtonRole.NoRole)
 
-        msg_box.exec_()
+        msg_box.exec()
 
         if msg_box.clickedButton() == yes_button:
             self.Flag = True 
         else:
             self.Flag = False  
 
-        # Emit a custom signal with name plotFlag2 depending upon the Flag
-        self.qProcess.setProperty("plotFlag2", self.Flag)
+        self.qProcess.setProperty("redoPlotFlag", self.Flag)
 
         self.qProcess.start('ngspice', self.args)
 

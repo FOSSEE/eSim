@@ -1,0 +1,56 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\SN74S163\SN74S163.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/08/25 18:43:59
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U40  Net-_U32-Pad3_ Net-_U36-Pad2_ ? ? /QA Net-_U18-Pad2_ d_dff		
+U43  Net-_U33-Pad3_ Net-_U39-Pad2_ ? ? /QB Net-_U19-Pad2_ d_dff		
+U41  Net-_U34-Pad3_ Net-_U37-Pad2_ ? ? /QC Net-_U20-Pad2_ d_dff		
+U42  Net-_U35-Pad3_ Net-_U38-Pad2_ ? ? /QD Net-_U21-Pad2_ d_dff		
+U11  /CLK Net-_U11-Pad2_ d_buffer		
+U15  Net-_U11-Pad2_ Net-_U15-Pad2_ d_inverter		
+U36  Net-_U15-Pad2_ Net-_U36-Pad2_ d_inverter		
+U39  Net-_U15-Pad2_ Net-_U39-Pad2_ d_inverter		
+U37  Net-_U15-Pad2_ Net-_U37-Pad2_ d_inverter		
+U38  Net-_U15-Pad2_ Net-_U38-Pad2_ d_inverter		
+U16  /LOAD_BAR Net-_U10-Pad2_ Net-_U16-Pad3_ d_nor		
+U17  Net-_U16-Pad3_ Net-_U10-Pad2_ Net-_U17-Pad3_ d_nor		
+U6  /CLR_BAR Net-_U10-Pad1_ d_inverter		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ d_buffer		
+U30  Net-_U16-Pad3_ /DATA_D Net-_U30-Pad3_ d_and		
+U31  Net-_U17-Pad3_ Net-_U21-Pad3_ Net-_U31-Pad3_ d_and		
+U35  Net-_U30-Pad3_ Net-_U31-Pad3_ Net-_U35-Pad3_ d_or		
+U28  /DATA_C Net-_U16-Pad3_ Net-_U28-Pad3_ d_and		
+U29  Net-_U17-Pad3_ Net-_U20-Pad3_ Net-_U29-Pad3_ d_and		
+U34  Net-_U28-Pad3_ Net-_U29-Pad3_ Net-_U34-Pad3_ d_or		
+U26  /DATA_B Net-_U16-Pad3_ Net-_U26-Pad3_ d_and		
+U27  Net-_U17-Pad3_ Net-_U19-Pad3_ Net-_U27-Pad3_ d_and		
+U33  Net-_U26-Pad3_ Net-_U27-Pad3_ Net-_U33-Pad3_ d_or		
+U24  /DATA_A Net-_U16-Pad3_ Net-_U24-Pad3_ d_and		
+U25  Net-_U18-Pad3_ Net-_U17-Pad3_ Net-_U25-Pad3_ d_and		
+U32  Net-_U24-Pad3_ Net-_U25-Pad3_ Net-_U32-Pad3_ d_or		
+U18  Net-_U12-Pad2_ Net-_U18-Pad2_ Net-_U18-Pad3_ d_xnor		
+U19  Net-_U12-Pad3_ Net-_U19-Pad2_ Net-_U19-Pad3_ d_xnor		
+U20  Net-_U13-Pad3_ Net-_U20-Pad2_ Net-_U20-Pad3_ d_xnor		
+U21  Net-_U14-Pad3_ Net-_U21-Pad2_ Net-_U21-Pad3_ d_xnor		
+U2  /ENP /ENT Net-_U12-Pad2_ d_and		
+U3  Net-_U18-Pad2_ Net-_U3-Pad2_ d_buffer		
+U7  Net-_U3-Pad2_ Net-_U12-Pad1_ d_inverter		
+U12  Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U12-Pad3_ d_and		
+X2  Net-_U21-Pad2_ Net-_U20-Pad2_ Net-_U19-Pad2_ Net-_U18-Pad2_ Net-_U22-Pad1_ 4_OR		
+U23  Net-_U22-Pad3_ /RCO d_inverter		
+U22  Net-_U22-Pad1_ Net-_U22-Pad2_ Net-_U22-Pad3_ d_or		
+U4  /ENT Net-_U4-Pad2_ d_buffer		
+U9  Net-_U4-Pad2_ Net-_U22-Pad2_ d_inverter		
+U13  Net-_U13-Pad1_ Net-_U12-Pad2_ Net-_U13-Pad3_ d_and		
+U14  Net-_U14-Pad1_ Net-_U12-Pad2_ Net-_U14-Pad3_ d_and		
+U5  Net-_U18-Pad2_ Net-_U19-Pad2_ Net-_U13-Pad1_ d_nor		
+U8  Net-_U45-Pad3_ Net-_U14-Pad1_ d_inverter		
+U1  /CLR_BAR /CLK /DATA_A /DATA_B /DATA_C /DATA_D /ENP /LOAD_BAR /ENT /QD /QC /QB /QA /RCO PORT		
+U44  Net-_U20-Pad2_ Net-_U19-Pad2_ Net-_U44-Pad3_ d_or		
+U45  Net-_U44-Pad3_ Net-_U18-Pad2_ Net-_U45-Pad3_ d_or		
+
+.end
