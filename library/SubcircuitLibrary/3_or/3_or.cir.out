@@ -1,0 +1,108 @@
+.title kicad schematic
+
+* u112 net-_u104-pad2_ net-_u106-pad2_ net-_u112-pad3_ d_nand
+* u106 net-_u101-pad4_ net-_u106-pad2_ d_inverter
+* u109 net-_u101-pad12_ net-_u109-pad2_ d_inverter
+* u101 net-_u101-pad1_ net-_u101-pad2_ net-_u101-pad3_ net-_u101-pad4_ net-_u101-pad5_ net-_u101-pad6_ unconnected-_u101-pad7_ net-_u101-pad8_ net-_u101-pad9_ net-_u101-pad10_ net-_u101-pad11_ net-_u101-pad12_ net-_u101-pad13_ unconnected-_u101-pad14_ port
+* u110 net-_u101-pad13_ net-_u110-pad2_ d_inverter
+* u107 net-_u101-pad5_ net-_u107-pad2_ d_inverter
+* u108 net-_u101-pad11_ net-_u108-pad2_ d_inverter
+* u113 net-_u108-pad2_ net-_u109-pad2_ net-_u113-pad3_ d_nand
+* u103 net-_u101-pad2_ net-_u103-pad2_ d_inverter
+* u102 net-_u101-pad1_ net-_u102-pad2_ d_inverter
+* u114 net-_u111-pad3_ net-_u111-pad3_ net-_u114-pad3_ d_nand
+* u111 net-_u102-pad2_ net-_u103-pad2_ net-_u111-pad3_ d_nand
+* u104 net-_u101-pad3_ net-_u104-pad2_ d_inverter
+* u105 net-_u101-pad8_ net-_u105-pad2_ d_inverter
+* u115 net-_u112-pad3_ net-_u112-pad3_ net-_u115-pad3_ d_nand
+* u119 net-_u116-pad3_ net-_u110-pad2_ net-_u119-pad3_ d_nand
+* u116 net-_u113-pad3_ net-_u113-pad3_ net-_u116-pad3_ d_nand
+* u125 net-_u122-pad2_ net-_u101-pad10_ d_inverter
+* u122 net-_u119-pad3_ net-_u122-pad2_ d_inverter
+* u121 net-_u118-pad3_ net-_u121-pad2_ d_inverter
+* u118 net-_u115-pad3_ net-_u107-pad2_ net-_u118-pad3_ d_nand
+* u117 net-_u114-pad3_ net-_u105-pad2_ net-_u117-pad3_ d_nand
+* u124 net-_u121-pad2_ net-_u101-pad6_ d_inverter
+* u123 net-_u120-pad2_ net-_u101-pad9_ d_inverter
+* u120 net-_u117-pad3_ net-_u120-pad2_ d_inverter
+a1 [net-_u104-pad2_ net-_u106-pad2_ ] net-_u112-pad3_ u112
+a2 net-_u101-pad4_ net-_u106-pad2_ u106
+a3 net-_u101-pad12_ net-_u109-pad2_ u109
+a4 net-_u101-pad13_ net-_u110-pad2_ u110
+a5 net-_u101-pad5_ net-_u107-pad2_ u107
+a6 net-_u101-pad11_ net-_u108-pad2_ u108
+a7 [net-_u108-pad2_ net-_u109-pad2_ ] net-_u113-pad3_ u113
+a8 net-_u101-pad2_ net-_u103-pad2_ u103
+a9 net-_u101-pad1_ net-_u102-pad2_ u102
+a10 [net-_u111-pad3_ net-_u111-pad3_ ] net-_u114-pad3_ u114
+a11 [net-_u102-pad2_ net-_u103-pad2_ ] net-_u111-pad3_ u111
+a12 net-_u101-pad3_ net-_u104-pad2_ u104
+a13 net-_u101-pad8_ net-_u105-pad2_ u105
+a14 [net-_u112-pad3_ net-_u112-pad3_ ] net-_u115-pad3_ u115
+a15 [net-_u116-pad3_ net-_u110-pad2_ ] net-_u119-pad3_ u119
+a16 [net-_u113-pad3_ net-_u113-pad3_ ] net-_u116-pad3_ u116
+a17 net-_u122-pad2_ net-_u101-pad10_ u125
+a18 net-_u119-pad3_ net-_u122-pad2_ u122
+a19 net-_u118-pad3_ net-_u121-pad2_ u121
+a20 [net-_u115-pad3_ net-_u107-pad2_ ] net-_u118-pad3_ u118
+a21 [net-_u114-pad3_ net-_u105-pad2_ ] net-_u117-pad3_ u117
+a22 net-_u121-pad2_ net-_u101-pad6_ u124
+a23 net-_u120-pad2_ net-_u101-pad9_ u123
+a24 net-_u117-pad3_ net-_u120-pad2_ u120
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u112 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u106 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u109 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u110 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u107 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u108 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u113 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u103 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u102 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u114 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u111 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u104 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u105 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u115 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u119 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u116 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u125 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u122 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u121 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u118 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_nand, Ngspice Name: d_nand
+.model u117 d_nand(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u124 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u123 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u120 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+.tran 1e-09 100e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

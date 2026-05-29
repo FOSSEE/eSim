@@ -1,0 +1,62 @@
+* Subcircuit SN54H87
+.subckt SN54H87 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ gndpwr gndpwr gndpwr gndpwr 
+* e:\fossee\esim\library\subcircuitlibrary\sn54h87\sn54h87.cir
+* u2  net-_u1-pad1_ net-_u10-pad2_ d_inverter
+* u3  net-_u1-pad2_ net-_u3-pad2_ d_inverter
+* u11  net-_u1-pad3_ net-_u10-pad2_ net-_u11-pad3_ d_nand
+* u4  net-_u3-pad2_ net-_u13-pad2_ d_inverter
+* u9  net-_u1-pad4_ net-_u10-pad2_ net-_u14-pad1_ d_nand
+* u7  net-_u3-pad2_ net-_u14-pad2_ d_inverter
+* u10  net-_u1-pad5_ net-_u10-pad2_ net-_u10-pad3_ d_nand
+* u8  net-_u3-pad2_ net-_u15-pad2_ d_inverter
+* u5  net-_u1-pad6_ net-_u10-pad2_ net-_u12-pad1_ d_nand
+* u6  net-_u3-pad2_ net-_u12-pad2_ d_inverter
+* u13  net-_u11-pad3_ net-_u13-pad2_ net-_u1-pad10_ d_xor
+* u14  net-_u14-pad1_ net-_u14-pad2_ net-_u1-pad9_ d_xor
+* u15  net-_u10-pad3_ net-_u15-pad2_ net-_u1-pad7_ d_xor
+* u12  net-_u12-pad1_ net-_u12-pad2_ net-_u1-pad8_ d_xor
+a1 net-_u1-pad1_ net-_u10-pad2_ u2
+a2 net-_u1-pad2_ net-_u3-pad2_ u3
+a3 [net-_u1-pad3_ net-_u10-pad2_ ] net-_u11-pad3_ u11
+a4 net-_u3-pad2_ net-_u13-pad2_ u4
+a5 [net-_u1-pad4_ net-_u10-pad2_ ] net-_u14-pad1_ u9
+a6 net-_u3-pad2_ net-_u14-pad2_ u7
+a7 [net-_u1-pad5_ net-_u10-pad2_ ] net-_u10-pad3_ u10
+a8 net-_u3-pad2_ net-_u15-pad2_ u8
+a9 [net-_u1-pad6_ net-_u10-pad2_ ] net-_u12-pad1_ u5
+a10 net-_u3-pad2_ net-_u12-pad2_ u6
+a11 [net-_u11-pad3_ net-_u13-pad2_ ] net-_u1-pad10_ u13
+a12 [net-_u14-pad1_ net-_u14-pad2_ ] net-_u1-pad9_ u14
+a13 [net-_u10-pad3_ net-_u15-pad2_ ] net-_u1-pad7_ u15
+a14 [net-_u12-pad1_ net-_u12-pad2_ ] net-_u1-pad8_ u12
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u11 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u9 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u10 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u8 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u5 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u6 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u13 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u14 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u15 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_xor, NgSpice Name: d_xor
+.model u12 d_xor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends SN54H87

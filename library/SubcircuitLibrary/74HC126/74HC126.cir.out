@@ -1,0 +1,44 @@
+* c:\users\senba\desktop\fossee\esim\library\subcircuitlibrary\74hc126\74hc126.cir
+
+* u2  net-_u1-pad1_ net-_u2-pad2_ d_inverter
+* u4  net-_u2-pad2_ net-_u4-pad2_ d_inverter
+* u6  net-_u4-pad2_ net-_u6-pad2_ d_inverter
+* u3  net-_u1-pad2_ net-_u3-pad2_ d_inverter
+* u5  net-_u3-pad2_ net-_u5-pad2_ d_inverter
+* u7  net-_u5-pad2_ net-_u7-pad2_ d_inverter
+* u8  net-_u6-pad2_ net-_u7-pad2_ net-_u8-pad3_ d_tristate
+* u9  net-_u8-pad3_ net-_u1-pad3_ d_inverter
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ port
+a1 net-_u1-pad1_ net-_u2-pad2_ u2
+a2 net-_u2-pad2_ net-_u4-pad2_ u4
+a3 net-_u4-pad2_ net-_u6-pad2_ u6
+a4 net-_u1-pad2_ net-_u3-pad2_ u3
+a5 net-_u3-pad2_ net-_u5-pad2_ u5
+a6 net-_u5-pad2_ net-_u7-pad2_ u7
+a7 net-_u6-pad2_ net-_u7-pad2_ net-_u8-pad3_ u8
+a8 net-_u8-pad3_ net-_u1-pad3_ u9
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u6 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u5 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, NgSpice Name: d_tristate
+.model u8 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u9 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

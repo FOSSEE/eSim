@@ -1,0 +1,13 @@
+.title KiCad schematic
+U1 vin plot_v1
+C1 GND Net-_C1-Pad2_ 0.1u
+R1 Net-_R1-Pad1_ GND 10k
+Vv2 GND Net-_C1-Pad2_ dc -12
+Vv1 vin GND sin(0 200m 1k)
+X1 Net-_R3-Pad1_ Net-_R1-Pad1_ vin Net-_C1-Pad2_ Net-_R3-Pad2_ vout Net-_C2-Pad1_ unconnected-_X1-Pad8_ LF356
+C2 Net-_C2-Pad1_ GND 0.1u
+R3 Net-_R3-Pad1_ Net-_R3-Pad2_ 10k
+R2 Net-_R1-Pad1_ vout 40k
+U2 vout plot_v1
+Vv3 Net-_C2-Pad1_ GND dc 12
+.end

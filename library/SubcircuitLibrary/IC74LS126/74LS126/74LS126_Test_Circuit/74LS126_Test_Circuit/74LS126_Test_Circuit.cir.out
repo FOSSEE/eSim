@@ -1,0 +1,20 @@
+.title kicad schematic
+
+.include 74LS126.sub
+x1 1g 1a 1y 2g 2a 2y gnd unconnected-_x1-pad8_ unconnected-_x1-pad9_ unconnected-_x1-pad10_ unconnected-_x1-pad11_ unconnected-_x1-pad12_ unconnected-_x1-pad13_ net-_x1-pad14_ 74LS126
+v1 net-_x1-pad14_ gnd 5
+v_1g1 1g gnd  dc 5
+v_1a1 1a gnd  dc 0
+v_2g1 2g gnd  dc 5
+r2 gnd 2y 10k
+v_2a1 2a gnd  dc 5
+r1 gnd 1y 10k
+.tran 20e-00 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

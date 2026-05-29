@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt6 import QtCore, QtWidgets
 from . import TrackWidget
 import os
 from xml.etree import ElementTree as ET
@@ -51,7 +51,7 @@ class Analysis(QtWidgets.QWidget):
         self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
 
-        self.grid.addWidget(self.createCheckBox(), 0, 0, QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.createCheckBox(), 0, 0, QtCore.Qt.AlignmentFlag.AlignTop)
         self.grid.addWidget(self.createACgroup(), 1, 0, 5, 0)
         self.grid.addWidget(self.createDCgroup(), 1, 0, 5, 0)
         self.grid.addWidget(self.createTRANgroup(), 1, 0, 5, 0)

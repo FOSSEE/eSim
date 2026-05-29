@@ -1,0 +1,51 @@
+* E:\IC_SN74ALS679\IC_SN74ALS679.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/03/25 11:57:02
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U19-Pad5_ Net-_U19-Pad6_ Net-_U19-Pad7_ Net-_U19-Pad8_ Net-_U20-Pad2_ Net-_U21-Pad9_ Net-_U21-Pad10_ Net-_U21-Pad11_ Net-_U21-Pad12_ Net-_U21-Pad13_ Net-_U18-Pad5_ Net-_U18-Pad6_ Net-_U18-Pad7_ Net-_U18-Pad8_ Net-_U21-Pad14_ Net-_U21-Pad15_ Net-_U21-Pad16_ ? ? Net-_U22-Pad1_ SN74ALS679		
+U21  A1 A2 A3 A4 A5 A6 A7 A8 Net-_U21-Pad9_ Net-_U21-Pad10_ Net-_U21-Pad11_ Net-_U21-Pad12_ Net-_U21-Pad13_ Net-_U21-Pad14_ Net-_U21-Pad15_ Net-_U21-Pad16_ adc_bridge_8		
+U19  P0 P1 P2 P3 Net-_U19-Pad5_ Net-_U19-Pad6_ Net-_U19-Pad7_ Net-_U19-Pad8_ adc_bridge_4		
+U20  G Net-_U20-Pad2_ adc_bridge_1		
+U18  A9 A10 A11 A12 Net-_U18-Pad5_ Net-_U18-Pad6_ Net-_U18-Pad7_ Net-_U18-Pad8_ adc_bridge_4		
+v1  A1 GND pulse		
+v2  A2 GND pulse		
+v3  A3 GND pulse		
+v4  A4 GND pulse		
+v5  A5 GND pulse		
+v6  A6 GND pulse		
+v7  A7 GND pulse		
+v8  A8 GND pulse		
+v9  A9 GND pulse		
+v10  A10 GND pulse		
+v11  A11 GND pulse		
+v12  A12 GND pulse		
+v13  P0 GND pulse		
+v14  P1 GND pulse		
+v15  P2 GND pulse		
+v16  P3 GND pulse		
+v17  G GND pulse		
+U22  Net-_U22-Pad1_ Y dac_bridge_1		
+U23  Y plot_v1		
+U1  A1 plot_v1		
+U2  A2 plot_v1		
+U3  A3 plot_v1		
+U4  A4 plot_v1		
+U5  A5 plot_v1		
+U6  A6 plot_v1		
+U7  A7 plot_v1		
+U8  A8 plot_v1		
+U9  A9 plot_v1		
+U10  A10 plot_v1		
+U11  A11 plot_v1		
+U12  A12 plot_v1		
+U13  P0 plot_v1		
+U14  P1 plot_v1		
+U15  P2 plot_v1		
+U16  P3 plot_v1		
+U17  G plot_v1		
+
+.end

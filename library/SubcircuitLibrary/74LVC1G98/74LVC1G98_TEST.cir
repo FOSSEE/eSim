@@ -1,0 +1,20 @@
+* C:\Users\senba\eSim-Workspace\74LVC1G98_TEST\74LVC1G98_TEST.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 11/15/25 10:43:21
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U4-Pad4_ Net-_U4-Pad5_ Net-_U4-Pad6_ Net-_U5-Pad1_ 74LVC1G98		
+U4  A B C Net-_U4-Pad4_ Net-_U4-Pad5_ Net-_U4-Pad6_ adc_bridge_3		
+U5  Net-_U5-Pad1_ Y dac_bridge_1		
+v1  A GND pulse		
+v2  B GND pulse		
+v3  C GND pulse		
+U1  A plot_v1		
+U2  B plot_v1		
+U3  C plot_v1		
+U6  Y plot_v1		
+
+.end

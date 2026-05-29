@@ -1,0 +1,30 @@
+.title kicad schematic
+
+.include CD40107BE_SUB.sub
+x1 a b c gnd f e d net-_x1-pad8_ CD40107BE_SUB
+* u2 b plot_v1
+* u3 c plot_v1
+* u1 a plot_v1
+v2 b gnd  dc 5v
+v1 a gnd  dc 5v
+* u6 d plot_v1
+v4 e gnd  dc 0v
+v3 net-_x1-pad8_ gnd  dc 5v
+v5 d gnd  dc 5v
+* u5 e plot_v1
+* u4 f plot_v1
+.tran 1e-03 400e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(b)
+plot v(c)
+plot v(a)
+plot v(d)
+plot v(e)
+plot v(f)
+.endc
+.end

@@ -1,0 +1,48 @@
+* Subcircuit MMC4011
+.subckt MMC4011 /a /b /j /k /c /d /vss /e /f /l /m /g /h /vdd 
+* c:\fossee\esim\library\subcircuitlibrary\mmc4011\mmc4011.cir
+.include PMOS-5um.lib
+.include NMOS-5um.lib
+m2 net-_m1-pad1_ /a /vdd /vdd mos_p W=40u L=5u M=8
+m1 net-_m1-pad1_ /a /vss /vss mos_n W=20u L=5u M=4
+m6 net-_m11-pad2_ /b /vdd /vdd mos_p W=40u L=5u M=8
+m5 net-_m11-pad2_ /b /vss /vss mos_n W=20u L=5u M=4
+m9 net-_m11-pad1_ net-_m1-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m12 net-_m12-pad1_ net-_m1-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m13 net-_m11-pad1_ net-_m11-pad2_ net-_m12-pad1_ /vdd mos_p W=40u L=5u M=8
+m11 net-_m11-pad1_ net-_m11-pad2_ /vss /vss mos_n W=20u L=5u M=4
+m18 /j net-_m11-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m17 /j net-_m11-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m22 net-_m21-pad1_ /c /vdd /vdd mos_p W=40u L=5u M=8
+m21 net-_m21-pad1_ /c /vss /vss mos_n W=20u L=5u M=4
+m26 net-_m25-pad1_ /d /vdd /vdd mos_p W=40u L=5u M=8
+m25 net-_m25-pad1_ /d /vss /vss mos_n W=20u L=5u M=4
+m29 net-_m29-pad1_ net-_m21-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m32 net-_m32-pad1_ net-_m21-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m33 net-_m29-pad1_ net-_m25-pad1_ net-_m32-pad1_ /vdd mos_p W=40u L=5u M=8
+m31 net-_m29-pad1_ net-_m25-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m38 /k net-_m29-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m37 /k net-_m29-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m4 net-_m10-pad2_ /e /vdd /vdd mos_p W=40u L=5u M=8
+m3 net-_m10-pad2_ /e /vss /vss mos_n W=20u L=5u M=4
+m8 net-_m14-pad2_ /f /vdd /vdd mos_p W=40u L=5u M=8
+m7 net-_m14-pad2_ /f /vss /vss mos_n W=20u L=5u M=4
+m10 net-_m10-pad1_ net-_m10-pad2_ /vss /vss mos_n W=20u L=5u M=4
+m15 net-_m15-pad1_ net-_m10-pad2_ /vdd /vdd mos_p W=40u L=5u M=8
+m16 net-_m10-pad1_ net-_m14-pad2_ net-_m15-pad1_ /vdd mos_p W=40u L=5u M=8
+m14 net-_m10-pad1_ net-_m14-pad2_ /vss /vss mos_n W=20u L=5u M=4
+m20 /l net-_m10-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m19 /l net-_m10-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m24 net-_m23-pad1_ /g /vdd /vdd mos_p W=40u L=5u M=8
+m23 net-_m23-pad1_ /g /vss /vss mos_n W=20u L=5u M=4
+m28 net-_m27-pad1_ /h /vdd /vdd mos_p W=40u L=5u M=8
+m27 net-_m27-pad1_ /h /vss /vss mos_n W=20u L=5u M=4
+m30 net-_m30-pad1_ net-_m23-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m35 net-_m35-pad1_ net-_m23-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m36 net-_m30-pad1_ net-_m27-pad1_ net-_m35-pad1_ /vdd mos_p W=40u L=5u M=8
+m34 net-_m30-pad1_ net-_m27-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m40 /m net-_m30-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m39 /m net-_m30-pad1_ /vss /vss mos_n W=20u L=5u M=4
+* Control Statements
+
+.ends MMC4011

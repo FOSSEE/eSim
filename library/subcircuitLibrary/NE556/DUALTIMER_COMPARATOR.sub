@@ -1,0 +1,52 @@
+* Subcircuit DUALTIMER_COMPARATOR
+.subckt DUALTIMER_COMPARATOR gnd discharge reset trigger control_voltage vout threshold gnd 
+.title kicad schematic
+.include NMOS-180nm.lib
+.include userDiode.lib
+.include PMOS-180nm.lib
+m16 net-_m14-pad2_ net-_m14-pad2_ gnd gnd CMOSP W=100u L=100u M=1
+r13 net-_d2-pad2_ gnd 10k
+m20 net-_m19-pad3_ net-_d1-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+r15 net-_m21-pad3_ gnd 4.7k
+r14 gnd net-_m21-pad3_ 100k
+r17 vout net-_m22-pad3_ 3.9k
+m22 gnd net-_d2-pad2_ net-_m22-pad3_ gnd CMOSN W=100u L=100u M=1
+d2 vout net-_d2-pad2_ D1N750
+m21 net-_d2-pad2_ net-_m21-pad2_ net-_m21-pad3_ gnd CMOSN W=100u L=100u M=1
+r10 gnd net-_m15-pad2_ 5k
+m17 net-_m17-pad1_ net-_m11-pad3_ gnd gnd CMOSN W=100u L=100u M=1
+m24 vout net-_m24-pad2_ gnd gnd CMOSN W=100u L=100u M=1
+r16 net-_m24-pad2_ net-_m21-pad3_ 220k
+m23 gnd net-_m22-pad3_ vout gnd CMOSN W=100u L=100u M=1
+m19 gnd net-_m14-pad2_ net-_m19-pad3_ gnd CMOSP W=100u L=100u M=1
+r8 control_voltage gnd 10k
+m18 gnd net-_m17-pad1_ net-_d1-pad2_ gnd CMOSN W=100u L=100u M=1
+r12 net-_m17-pad1_ net-_m21-pad2_ 4.7k
+r9 net-_m15-pad2_ control_voltage 5k
+r11 net-_d1-pad1_ net-_m14-pad2_ 5k
+d1 net-_d1-pad1_ net-_d1-pad2_ D1N750
+m5 net-_m3-pad1_ net-_m3-pad1_ net-_m5-pad3_ gnd CMOSP W=100u L=100u M=1
+m3 net-_m3-pad1_ threshold net-_m3-pad3_ gnd CMOSN W=100u L=100u M=1
+m6 net-_m6-pad1_ net-_m3-pad1_ net-_m17-pad1_ gnd CMOSP W=100u L=100u M=1
+r1 net-_m5-pad3_ gnd 4.7k
+m11 net-_m11-pad1_ net-_m10-pad1_ net-_m11-pad3_ gnd CMOSP W=100u L=100u M=1
+m15 net-_m13-pad1_ net-_m15-pad2_ net-_m13-pad2_ gnd CMOSP W=100u L=100u M=1
+m10 net-_m10-pad1_ trigger gnd gnd CMOSP W=100u L=100u M=1
+m4 net-_m3-pad1_ net-_m3-pad3_ net-_m4-pad3_ gnd CMOSN W=100u L=100u M=1
+m8 net-_m4-pad3_ net-_m7-pad1_ net-_m12-pad2_ gnd CMOSN W=100u L=100u M=1
+r3 net-_m6-pad1_ gnd 830k
+m9 gnd net-_m12-pad2_ net-_m6-pad1_ gnd CMOSP W=100u L=100u M=1
+m12 net-_m12-pad1_ net-_m12-pad2_ net-_m12-pad2_ gnd CMOSP W=100u L=100u M=1
+r5 net-_m12-pad1_ gnd 4.7k
+m14 net-_m11-pad1_ net-_m14-pad2_ net-_m14-pad3_ gnd CMOSP W=100u L=100u M=1
+r7 net-_m14-pad3_ gnd 5k
+m13 net-_m13-pad1_ net-_m13-pad2_ net-_m11-pad1_ gnd CMOSP W=100u L=100u M=1
+m2 net-_d1-pad1_ reset net-_m1-pad2_ gnd CMOSP W=100u L=100u M=1
+m1 gnd net-_m1-pad2_ discharge gnd CMOSN W=100u L=100u M=1
+m7 net-_m7-pad1_ control_voltage net-_m12-pad2_ gnd CMOSN W=100u L=100u M=1
+r2 net-_m4-pad3_ gnd 10k
+r4 gnd net-_m11-pad3_ 100k
+r6 gnd net-_m13-pad1_ 100k
+* Control Statements
+
+.ends DUALTIMER_COMPARATOR

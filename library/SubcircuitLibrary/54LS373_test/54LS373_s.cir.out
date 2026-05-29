@@ -1,0 +1,88 @@
+.title kicad schematic
+
+* u19 net-_u15-pad5_ net-_u10-pad2_ net-_u19-pad3_ d_tristate
+* u15 net-_u15-pad1_ net-_u12-pad2_ unconnected-_u15-pad3_ net-_u10-pad2_ net-_u15-pad5_ net-_u10-pad2_ d_dlatch
+* u2 net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ net-_u2-pad4_ net-_u2-pad5_ net-_u10-pad3_ net-_u2-pad7_ net-_u2-pad8_ net-_u11-pad3_ unconnected-_u2-pad10_ net-_u1-pad1_ net-_u16-pad3_ net-_u12-pad1_ net-_u13-pad1_ net-_u17-pad3_ net-_u18-pad3_ net-_u14-pad1_ net-_u15-pad1_ net-_u19-pad3_ unconnected-_u2-pad20_ port
+* u18 net-_u14-pad5_ net-_u10-pad2_ net-_u18-pad3_ d_tristate
+* u14 net-_u14-pad1_ net-_u12-pad2_ unconnected-_u14-pad3_ net-_u10-pad2_ net-_u14-pad5_ unconnected-_u14-pad6_ d_dlatch
+* u13 net-_u13-pad1_ net-_u12-pad2_ unconnected-_u13-pad3_ net-_u10-pad2_ net-_u13-pad5_ unconnected-_u13-pad6_ d_dlatch
+* u17 net-_u13-pad5_ net-_u10-pad2_ net-_u17-pad3_ d_tristate
+* u8 net-_u4-pad5_ net-_u10-pad2_ net-_u2-pad2_ d_tristate
+* u5 net-_u2-pad4_ net-_u12-pad2_ unconnected-_u5-pad3_ net-_u10-pad2_ net-_u5-pad5_ unconnected-_u5-pad6_ d_dlatch
+* u9 net-_u5-pad5_ net-_u10-pad2_ net-_u2-pad5_ d_tristate
+* u1 net-_u1-pad1_ net-_u1-pad2_ d_inverter
+* u3 net-_u1-pad2_ net-_u12-pad2_ d_inverter
+* u4 net-_u2-pad3_ net-_u12-pad2_ unconnected-_u4-pad3_ net-_u10-pad2_ net-_u4-pad5_ unconnected-_u4-pad6_ d_dlatch
+* u7 net-_u2-pad8_ net-_u12-pad2_ unconnected-_u7-pad3_ net-_u10-pad2_ net-_u11-pad1_ unconnected-_u7-pad6_ d_dlatch
+* u6 net-_u2-pad7_ net-_u12-pad2_ unconnected-_u6-pad3_ net-_u10-pad2_ net-_u10-pad1_ unconnected-_u6-pad6_ d_dlatch
+* u10 net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ d_tristate
+* u11 net-_u11-pad1_ net-_u10-pad2_ net-_u11-pad3_ d_tristate
+* u20 net-_u2-pad1_ net-_u10-pad2_ d_buffer
+* u16 net-_u12-pad5_ net-_u10-pad2_ net-_u16-pad3_ d_tristate
+* u12 net-_u12-pad1_ net-_u12-pad2_ unconnected-_u12-pad3_ net-_u10-pad2_ net-_u12-pad5_ unconnected-_u12-pad6_ d_dlatch
+a1 net-_u15-pad5_ net-_u10-pad2_ net-_u19-pad3_ u19
+a2 net-_u15-pad1_ net-_u12-pad2_ unconnected-_u15-pad3_ net-_u10-pad2_ net-_u15-pad5_ net-_u10-pad2_ u15
+a3 net-_u14-pad5_ net-_u10-pad2_ net-_u18-pad3_ u18
+a4 net-_u14-pad1_ net-_u12-pad2_ unconnected-_u14-pad3_ net-_u10-pad2_ net-_u14-pad5_ unconnected-_u14-pad6_ u14
+a5 net-_u13-pad1_ net-_u12-pad2_ unconnected-_u13-pad3_ net-_u10-pad2_ net-_u13-pad5_ unconnected-_u13-pad6_ u13
+a6 net-_u13-pad5_ net-_u10-pad2_ net-_u17-pad3_ u17
+a7 net-_u4-pad5_ net-_u10-pad2_ net-_u2-pad2_ u8
+a8 net-_u2-pad4_ net-_u12-pad2_ unconnected-_u5-pad3_ net-_u10-pad2_ net-_u5-pad5_ unconnected-_u5-pad6_ u5
+a9 net-_u5-pad5_ net-_u10-pad2_ net-_u2-pad5_ u9
+a10 net-_u1-pad1_ net-_u1-pad2_ u1
+a11 net-_u1-pad2_ net-_u12-pad2_ u3
+a12 net-_u2-pad3_ net-_u12-pad2_ unconnected-_u4-pad3_ net-_u10-pad2_ net-_u4-pad5_ unconnected-_u4-pad6_ u4
+a13 net-_u2-pad8_ net-_u12-pad2_ unconnected-_u7-pad3_ net-_u10-pad2_ net-_u11-pad1_ unconnected-_u7-pad6_ u7
+a14 net-_u2-pad7_ net-_u12-pad2_ unconnected-_u6-pad3_ net-_u10-pad2_ net-_u10-pad1_ unconnected-_u6-pad6_ u6
+a15 net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ u10
+a16 net-_u11-pad1_ net-_u10-pad2_ net-_u11-pad3_ u11
+a17 net-_u2-pad1_ net-_u10-pad2_ u20
+a18 net-_u12-pad5_ net-_u10-pad2_ net-_u16-pad3_ u16
+a19 net-_u12-pad1_ net-_u12-pad2_ unconnected-_u12-pad3_ net-_u10-pad2_ net-_u12-pad5_ unconnected-_u12-pad6_ u12
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u19 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u15 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u18 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u14 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u13 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u17 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u8 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u5 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u9 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u1 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u4 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u7 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u6 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u10 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u11 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u20 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u16 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 ) 
+* Schematic Name:                             d_dlatch, Ngspice Name: d_dlatch
+.model u12 d_dlatch(data_delay=1.0e-9 enable_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 data_load=1.0e-12 enable_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

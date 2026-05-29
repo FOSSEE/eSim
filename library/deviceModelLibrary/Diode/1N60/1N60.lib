@@ -1,0 +1,1 @@
+.MODEL 1N60 D( Is=1.38u N=2.0 Rs=50.1 bv=40 Ibv=1m Cjo=1.75p Vj=0.30 M=0.50 tt=100n )

@@ -1,0 +1,14 @@
+* Subcircuit 74HC174
+.subckt 74HC174 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ 
+* c:\fossee\esim\library\subcircuitlibrary\74hc174\74hc174.cir
+* u2  net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad1_ net-_u1-pad5_ net-_u1-pad6_ d_dff
+* u3  net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad7_ net-_u1-pad11_ net-_u1-pad12_ d_dff
+a1 net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad1_ net-_u1-pad5_ net-_u1-pad6_ u2
+a2 net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad7_ net-_u1-pad11_ net-_u1-pad12_ u3
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u2 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, NgSpice Name: d_dff
+.model u3 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Control Statements
+
+.ends 74HC174

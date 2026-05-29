@@ -1,0 +1,23 @@
+.title kicad schematic
+
+.include NPN.lib
+.include PNP.lib
+* u1 net-_q2-pad3_ net-_q1-pad3_ net-_c1-pad2_ port
+q8 net-_q1-pad3_ net-_q1-pad1_ net-_q2-pad3_ Q2N2907A
+q6 net-_q1-pad3_ net-_q1-pad1_ net-_q2-pad3_ Q2N2907A
+q1 net-_q1-pad1_ net-_c1-pad1_ net-_q1-pad3_ Q2N2222
+q3 net-_q3-pad1_ net-_q1-pad1_ net-_q2-pad3_ Q2N2907A
+q2 net-_c1-pad1_ net-_q1-pad1_ net-_q2-pad3_ Q2N2907A
+c1 net-_c1-pad1_ net-_c1-pad2_ 50p
+q4 net-_c1-pad1_ net-_q3-pad1_ net-_c1-pad2_ Q2N2222
+q7 net-_q3-pad1_ net-_q3-pad1_ net-_q1-pad3_ Q2N2222
+q5 net-_q3-pad1_ net-_q3-pad1_ net-_q1-pad3_ Q2N2222
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

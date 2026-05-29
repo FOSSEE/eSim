@@ -1,0 +1,35 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD74HC4050\CD74HC4050.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/27/25 16:18:46
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U3  /A1 Net-_U3-Pad2_ d_buffer		
+U9  Net-_U6-Pad2_ /Y1 d_buffer		
+U5  Net-_U3-Pad2_ Net-_U5-Pad2_ d_inverter		
+U6  Net-_U5-Pad2_ Net-_U6-Pad2_ d_inverter		
+U1  /Y1 /A1 /2Y /2A /3Y /3A /4A /4Y /5A /5Y /6A /6Y PORT		
+U8  /2A Net-_U10-Pad1_ d_buffer		
+U17  Net-_U12-Pad2_ /2Y d_buffer		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter		
+U12  Net-_U10-Pad2_ Net-_U12-Pad2_ d_inverter		
+U11  /3A Net-_U11-Pad2_ d_buffer		
+U19  Net-_U16-Pad2_ /3Y d_buffer		
+U15  Net-_U11-Pad2_ Net-_U15-Pad2_ d_inverter		
+U16  Net-_U15-Pad2_ Net-_U16-Pad2_ d_inverter		
+U18  /4A Net-_U18-Pad2_ d_buffer		
+U25  Net-_U22-Pad2_ /4Y d_buffer		
+U21  Net-_U18-Pad2_ Net-_U21-Pad2_ d_inverter		
+U22  Net-_U21-Pad2_ Net-_U22-Pad2_ d_inverter		
+U26  /5A Net-_U26-Pad2_ d_buffer		
+U32  Net-_U30-Pad2_ /5Y d_buffer		
+U29  Net-_U26-Pad2_ Net-_U29-Pad2_ d_inverter		
+U30  Net-_U29-Pad2_ Net-_U30-Pad2_ d_inverter		
+U31  /6A Net-_U31-Pad2_ d_buffer		
+U36  Net-_U34-Pad2_ /6Y d_buffer		
+U33  Net-_U31-Pad2_ Net-_U33-Pad2_ d_inverter		
+U34  Net-_U33-Pad2_ Net-_U34-Pad2_ d_inverter		
+
+.end
