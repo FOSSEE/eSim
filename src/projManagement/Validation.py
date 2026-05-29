@@ -67,6 +67,9 @@ class Validation:
         """
         print("Function: Validating New Project Information")
 
+        projDir = str(projDir)
+        projName = os.path.basename(os.path.normpath(projDir))
+
         # Checking existence of project with same name
         projName = os.path.basename(projDir)
         if os.path.exists(projDir):
