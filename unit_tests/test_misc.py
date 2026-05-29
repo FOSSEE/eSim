@@ -72,3 +72,23 @@ def test_fix_inst_m_reference():
     misc.fixInst(inst)
 
     assert inst.attrs[0].value == "M?"
+
+def test_fix_inst_vac_source():
+    inst = MockInst(
+        "VAC",
+        [MockAttr("V1"), MockAttr("VAC")]
+    )
+
+    misc.fixInst(inst)
+
+    assert inst.attrs[1].value == "AC"
+
+def test_fix_inst_vsin_source():
+    inst = MockInst(
+        "VSIN",
+        [MockAttr("V1"), MockAttr("VSIN")]
+    )
+
+    misc.fixInst(inst)
+
+    assert inst.attrs[1].value == "SINE"
