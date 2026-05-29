@@ -73,6 +73,7 @@ class Validation:
             return "CHECKEXIST"  # Project with name already exist
         else:
             # Check Proper name for project. It should not have space
+            projName = os.path.basename(str(projDir))
             if re.search(r"\s", projName):
                 return "CHECKNAME"
             else:
