@@ -1,0 +1,277 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L resistor R1
+U 1 1 68382208
+P 4700 3450
+F 0 "R1" H 4750 3580 50  0000 C CNN
+F 1 "10k" H 4750 3400 50  0000 C CNN
+F 2 "" H 4750 3430 30  0000 C CNN
+F 3 "" V 4750 3500 30  0000 C CNN
+	1    4700 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R2
+U 1 1 6838222B
+P 4750 3700
+F 0 "R2" H 4800 3830 50  0000 C CNN
+F 1 "39k" H 4800 3650 50  0000 C CNN
+F 2 "" H 4800 3680 30  0000 C CNN
+F 3 "" V 4800 3750 30  0000 C CNN
+	1    4750 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R3
+U 1 1 6838224D
+P 5550 2850
+F 0 "R3" H 5600 2980 50  0000 C CNN
+F 1 "100k" H 5600 2800 50  0000 C CNN
+F 2 "" H 5600 2830 30  0000 C CNN
+F 3 "" V 5600 2900 30  0000 C CNN
+	1    5550 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R4
+U 1 1 68382273
+P 6500 3900
+F 0 "R4" H 6550 4030 50  0000 C CNN
+F 1 "10k" H 6550 3850 50  0000 C CNN
+F 2 "" H 6550 3880 30  0000 C CNN
+F 3 "" V 6550 3950 30  0000 C CNN
+	1    6500 3900
+	0    1    1    0   
+$EndComp
+$Comp
+L capacitor C1
+U 1 1 6838229D
+P 4150 3400
+F 0 "C1" H 4175 3500 50  0000 L CNN
+F 1 "1u" H 4175 3300 50  0000 L CNN
+F 2 "" H 4188 3250 30  0000 C CNN
+F 3 "" H 4150 3400 60  0000 C CNN
+	1    4150 3400
+	0    1    1    0   
+$EndComp
+$Comp
+L capacitor C2
+U 1 1 683822C6
+P 6150 3550
+F 0 "C2" H 6175 3650 50  0000 L CNN
+F 1 "1u" H 6175 3450 50  0000 L CNN
+F 2 "" H 6188 3400 30  0000 C CNN
+F 3 "" H 6150 3550 60  0000 C CNN
+	1    6150 3550
+	0    1    1    0   
+$EndComp
+$Comp
+L sine v1
+U 1 1 683822F8
+P 3700 3850
+F 0 "v1" H 3500 3950 60  0000 C CNN
+F 1 "sine" H 3500 3800 60  0000 C CNN
+F 2 "R1" H 3400 3850 60  0000 C CNN
+F 3 "" H 3700 3850 60  0000 C CNN
+	1    3700 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L DC v2
+U 1 1 6838232F
+P 4400 4250
+F 0 "v2" H 4200 4350 60  0000 C CNN
+F 1 "DC" H 4200 4200 60  0000 C CNN
+F 2 "R1" H 4100 4250 60  0000 C CNN
+F 3 "" H 4400 4250 60  0000 C CNN
+	1    4400 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4650 3650 4400 3650
+Wire Wire Line
+	4400 3100 4400 3800
+Wire Wire Line
+	4950 3650 5100 3650
+Wire Wire Line
+	4900 3400 5100 3400
+Wire Wire Line
+	4300 3400 4600 3400
+Wire Wire Line
+	3700 3400 4000 3400
+Wire Wire Line
+	4400 3100 5500 3100
+Wire Wire Line
+	5500 3100 5500 3250
+Connection ~ 4400 3650
+Wire Wire Line
+	5850 3550 6000 3550
+Wire Wire Line
+	6300 3550 6550 3550
+Wire Wire Line
+	6550 3550 6550 3800
+$Comp
+L eSim_GND #PWR01
+U 1 1 6838259D
+P 6550 4300
+F 0 "#PWR01" H 6550 4050 50  0001 C CNN
+F 1 "eSim_GND" H 6550 4150 50  0000 C CNN
+F 2 "" H 6550 4300 50  0001 C CNN
+F 3 "" H 6550 4300 50  0001 C CNN
+	1    6550 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_GND #PWR02
+U 1 1 683825CA
+P 3700 4500
+F 0 "#PWR02" H 3700 4250 50  0001 C CNN
+F 1 "eSim_GND" H 3700 4350 50  0000 C CNN
+F 2 "" H 3700 4500 50  0001 C CNN
+F 3 "" H 3700 4500 50  0001 C CNN
+	1    3700 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_GND #PWR03
+U 1 1 68382602
+P 5500 4000
+F 0 "#PWR03" H 5500 3750 50  0001 C CNN
+F 1 "eSim_GND" H 5500 3850 50  0000 C CNN
+F 2 "" H 5500 4000 50  0001 C CNN
+F 3 "" H 5500 4000 50  0001 C CNN
+	1    5500 4000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5500 4000 5500 3850
+Wire Wire Line
+	3700 4300 3700 4500
+Wire Wire Line
+	6550 4100 6550 4300
+$Comp
+L eSim_GND #PWR04
+U 1 1 683827B5
+P 4400 4900
+F 0 "#PWR04" H 4400 4650 50  0001 C CNN
+F 1 "eSim_GND" H 4400 4750 50  0000 C CNN
+F 2 "" H 4400 4900 50  0001 C CNN
+F 3 "" H 4400 4900 50  0001 C CNN
+	1    4400 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4400 4700 4400 4900
+Wire Wire Line
+	5050 3400 5050 2800
+Wire Wire Line
+	5050 2800 5450 2800
+Connection ~ 5050 3400
+Wire Wire Line
+	5750 2800 5950 2800
+Wire Wire Line
+	5950 2800 5950 3550
+Connection ~ 5950 3550
+$Comp
+L plot_v1 U2
+U 1 1 68382854
+P 6550 3500
+F 0 "U2" H 6550 4000 60  0000 C CNN
+F 1 "plot_v1" H 6750 3850 60  0000 C CNN
+F 2 "" H 6550 3500 60  0000 C CNN
+F 3 "" H 6550 3500 60  0000 C CNN
+	1    6550 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U1
+U 1 1 683828BD
+P 3700 3500
+F 0 "U1" H 3700 4000 60  0000 C CNN
+F 1 "plot_v1" H 3900 3850 60  0000 C CNN
+F 2 "" H 3700 3500 60  0000 C CNN
+F 3 "" H 3700 3500 60  0000 C CNN
+	1    3700 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3700 3300 3700 3400
+Wire Wire Line
+	6550 3300 6550 3600
+Connection ~ 6550 3600
+Text GLabel 6450 3400 0    60   Input ~ 0
+out
+Wire Wire Line
+	6450 3400 6550 3400
+Connection ~ 6550 3400
+Text GLabel 3550 3350 0    60   Input ~ 0
+in
+Wire Wire Line
+	3550 3350 3700 3350
+Connection ~ 3700 3350
+$Comp
+L LM3900 X1
+U 1 1 68382FF8
+P 5450 3550
+F 0 "X1" H 5450 3150 60  0000 C CNN
+F 1 "LM3900" H 5450 4050 60  0000 C CNN
+F 2 "" H 5450 4050 60  0001 C CNN
+F 3 "" H 5450 4050 60  0001 C CNN
+	1    5450 3550
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

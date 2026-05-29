@@ -1,0 +1,24 @@
+* c:\users\malli\esim\src\subcircuitlibrary\4_or\4_or.cir
+
+* u2  net-_u1-pad1_ net-_u1-pad2_ net-_u2-pad3_ d_or
+* u3  net-_u1-pad3_ net-_u1-pad4_ net-_u3-pad3_ d_or
+* u4  net-_u2-pad3_ net-_u3-pad3_ net-_u1-pad5_ d_or
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ port
+a1 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u2-pad3_ u2
+a2 [net-_u1-pad3_ net-_u1-pad4_ ] net-_u3-pad3_ u3
+a3 [net-_u2-pad3_ net-_u3-pad3_ ] net-_u1-pad5_ u4
+* Schematic Name: d_or, NgSpice Name: d_or
+.model u2 d_or(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_or, NgSpice Name: d_or
+.model u3 d_or(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_or, NgSpice Name: d_or
+.model u4 d_or(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,21 @@
+.title KiCad schematic
+U3 CLK plot_v1
+U4 D OC CLK Net-_U4-Pad4_ Net-_U4-Pad5_ Net-_U4-Pad6_ adc_bridge_3
+U14 Net-_U14-Pad1_ Net-_U14-Pad2_ Net-_U14-Pad3_ 3Q 2Q DOUT dac_bridge_3
+R2 2Q GND 1k
+R3 3Q GND 1k
+U19 DOUT plot_v1
+U25 Net-_U25-Pad1_ Net-_U25-Pad2_ Net-_U25-Pad3_ Net-_U25-Pad4_ Net-_U25-Pad5_ 8Q 7Q 6Q 5Q 4Q dac_bridge_5
+R1 DOUT GND 1k
+R4 4Q GND 1k
+R6 6Q GND 1k
+R5 5Q GND 1k
+R8 8Q GND 1k
+R7 7Q GND 1k
+X1 Net-_U4-Pad5_ Net-_U14-Pad3_ Net-_U4-Pad4_ Net-_U4-Pad4_ Net-_U14-Pad2_ Net-_U14-Pad1_ Net-_U4-Pad4_ Net-_U4-Pad4_ Net-_U25-Pad5_ unconnected-_X1-Pad10_ Net-_U4-Pad6_ Net-_U25-Pad4_ Net-_U4-Pad4_ Net-_U4-Pad4_ Net-_U25-Pad3_ Net-_U25-Pad2_ Net-_U4-Pad4_ Net-_U4-Pad4_ Net-_U25-Pad1_ unconnected-_X1-Pad20_ 54LS374
+U1 D plot_v1
+U2 OC plot_v1
+v2 OC GND pulse
+v3 CLK GND pulse
+v1 D GND pulse
+.end

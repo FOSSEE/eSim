@@ -1,0 +1,25 @@
+.title KiCad schematic
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ PORT
+U27 Net-_U27-Pad1_ Net-_U27-Pad2_ d_buffer
+U67 Net-_U1-Pad1_ Net-_U27-Pad1_ d_inverter
+U68 Net-_U1-Pad15_ Net-_U28-Pad1_ d_inverter
+U28 Net-_U28-Pad1_ Net-_U28-Pad2_ d_buffer
+X10 Net-_X10-Pad1_ Net-_X10-Pad2_ Net-_X10-Pad3_ Net-_X10-Pad4_ Net-_U31-Pad1_ 4_OR
+X8 Net-_U26-Pad2_ Net-_U29-Pad2_ Net-_U1-Pad12_ Net-_U28-Pad2_ Net-_X10-Pad3_ 4_and
+X6 Net-_U30-Pad2_ Net-_U29-Pad2_ Net-_U1-Pad13_ Net-_U28-Pad2_ Net-_X10-Pad4_ 4_and
+U31 Net-_U31-Pad1_ Net-_U1-Pad9_ d_inverter
+X4 Net-_U25-Pad2_ Net-_U26-Pad2_ Net-_U1-Pad10_ Net-_U28-Pad2_ Net-_X10-Pad1_ 4_and
+X5 Net-_U25-Pad2_ Net-_U30-Pad2_ Net-_U1-Pad11_ Net-_U28-Pad2_ Net-_X10-Pad2_ 4_and
+X3 Net-_U29-Pad2_ Net-_U30-Pad2_ Net-_U1-Pad3_ Net-_U27-Pad2_ Net-_X3-Pad5_ 4_and
+X7 Net-_U26-Pad2_ Net-_U29-Pad2_ Net-_U1-Pad4_ Net-_U27-Pad2_ Net-_X7-Pad5_ 4_and
+U62 Net-_U62-Pad1_ Net-_U1-Pad7_ d_inverter
+X9 Net-_X1-Pad5_ Net-_X2-Pad5_ Net-_X7-Pad5_ Net-_X3-Pad5_ Net-_U62-Pad1_ 4_OR
+X1 Net-_U25-Pad2_ Net-_U26-Pad2_ Net-_U1-Pad6_ Net-_U27-Pad2_ Net-_X1-Pad5_ 4_and
+X2 Net-_U25-Pad2_ Net-_U30-Pad2_ Net-_U1-Pad5_ Net-_U27-Pad2_ Net-_X2-Pad5_ 4_and
+U30 Net-_U30-Pad1_ Net-_U30-Pad2_ d_buffer
+U29 Net-_U29-Pad1_ Net-_U29-Pad2_ d_buffer
+U70 Net-_U26-Pad2_ Net-_U30-Pad1_ d_inverter
+U69 Net-_U25-Pad2_ Net-_U29-Pad1_ d_inverter
+U25 Net-_U1-Pad2_ Net-_U25-Pad2_ d_inverter
+U26 Net-_U1-Pad14_ Net-_U26-Pad2_ d_inverter
+.end

@@ -1,0 +1,1149 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:PI3B3384-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text GLabel 850  1700 0    60   Input ~ 0
+BEA_B
+$Comp
+L adc_bridge_1 U1
+U 1 1 697CC6AA
+P 1450 800
+F 0 "U1" H 1450 800 60  0000 C CNN
+F 1 "adc_bridge_1" H 1450 950 60  0000 C CNN
+F 2 "" H 1450 800 60  0000 C CNN
+F 3 "" H 1450 800 60  0000 C CNN
+	1    1450 800 
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U6
+U 1 1 697CC6AB
+P 2350 750
+F 0 "U6" H 2350 650 60  0000 C CNN
+F 1 "d_inverter" H 2350 900 60  0000 C CNN
+F 2 "" H 2400 700 60  0000 C CNN
+F 3 "" H 2400 700 60  0000 C CNN
+	1    2350 750 
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M1
+U 1 1 697CC6AC
+P 3950 1600
+F 0 "M1" H 3950 1450 50  0000 R CNN
+F 1 "eSim_MOS_N" H 4050 1550 50  0000 R CNN
+F 2 "" H 4250 1300 29  0000 C CNN
+F 3 "" H 4050 1400 60  0000 C CNN
+	1    3950 1600
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M6
+U 1 1 697CC6AD
+P 4150 900
+F 0 "M6" H 4100 950 50  0000 R CNN
+F 1 "eSim_MOS_P" H 4200 1050 50  0000 R CNN
+F 2 "" H 4400 1000 29  0000 C CNN
+F 3 "" H 4200 900 60  0000 C CNN
+	1    4150 900 
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	3950 1050 3950 1400
+Wire Wire Line
+	4350 1050 4350 1400
+Wire Wire Line
+	2050 750  2000 750 
+Connection ~ 3950 1250
+$Comp
+L dac_bridge_1 U11
+U 1 1 697CC6AE
+P 3250 800
+F 0 "U11" H 3250 800 60  0000 C CNN
+F 1 "dac_bridge_1" H 3250 950 60  0000 C CNN
+F 2 "" H 3250 800 60  0000 C CNN
+F 3 "" H 3250 800 60  0000 C CNN
+	1    3250 800 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 750  4150 750 
+Wire Wire Line
+	4150 1700 850  1700
+Connection ~ 850  1700
+Connection ~ 4350 1200
+Text GLabel 4300 1150 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	850  1700 850  750 
+Text GLabel 850  3100 0    60   Input ~ 0
+BEA_B
+$Comp
+L adc_bridge_1 U2
+U 1 1 697CC6B9
+P 1450 2200
+F 0 "U2" H 1450 2200 60  0000 C CNN
+F 1 "adc_bridge_1" H 1450 2350 60  0000 C CNN
+F 2 "" H 1450 2200 60  0000 C CNN
+F 3 "" H 1450 2200 60  0000 C CNN
+	1    1450 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U7
+U 1 1 697CC6BA
+P 2350 2150
+F 0 "U7" H 2350 2050 60  0000 C CNN
+F 1 "d_inverter" H 2350 2300 60  0000 C CNN
+F 2 "" H 2400 2100 60  0000 C CNN
+F 3 "" H 2400 2100 60  0000 C CNN
+	1    2350 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M2
+U 1 1 697CC6BB
+P 3950 3000
+F 0 "M2" H 3950 2850 50  0000 R CNN
+F 1 "eSim_MOS_N" H 4050 2950 50  0000 R CNN
+F 2 "" H 4250 2700 29  0000 C CNN
+F 3 "" H 4050 2800 60  0000 C CNN
+	1    3950 3000
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M7
+U 1 1 697CC6BC
+P 4150 2300
+F 0 "M7" H 4100 2350 50  0000 R CNN
+F 1 "eSim_MOS_P" H 4200 2450 50  0000 R CNN
+F 2 "" H 4400 2400 29  0000 C CNN
+F 3 "" H 4200 2300 60  0000 C CNN
+	1    4150 2300
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	3950 2450 3950 2800
+Wire Wire Line
+	4350 2450 4350 2800
+Wire Wire Line
+	2050 2150 2000 2150
+Connection ~ 3950 2650
+$Comp
+L dac_bridge_1 U12
+U 1 1 697CC6BD
+P 3250 2200
+F 0 "U12" H 3250 2200 60  0000 C CNN
+F 1 "dac_bridge_1" H 3250 2350 60  0000 C CNN
+F 2 "" H 3250 2200 60  0000 C CNN
+F 3 "" H 3250 2200 60  0000 C CNN
+	1    3250 2200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 2150 4150 2150
+Wire Wire Line
+	4150 3100 850  3100
+Connection ~ 850  3100
+Connection ~ 4350 2600
+Text GLabel 4300 2550 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	850  3100 850  2150
+Text GLabel 850  4500 0    60   Input ~ 0
+BEA_B
+$Comp
+L adc_bridge_1 U3
+U 1 1 697CC6C0
+P 1450 3600
+F 0 "U3" H 1450 3600 60  0000 C CNN
+F 1 "adc_bridge_1" H 1450 3750 60  0000 C CNN
+F 2 "" H 1450 3600 60  0000 C CNN
+F 3 "" H 1450 3600 60  0000 C CNN
+	1    1450 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U8
+U 1 1 697CC6C1
+P 2350 3550
+F 0 "U8" H 2350 3450 60  0000 C CNN
+F 1 "d_inverter" H 2350 3700 60  0000 C CNN
+F 2 "" H 2400 3500 60  0000 C CNN
+F 3 "" H 2400 3500 60  0000 C CNN
+	1    2350 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M3
+U 1 1 697CC6C2
+P 3950 4400
+F 0 "M3" H 3950 4250 50  0000 R CNN
+F 1 "eSim_MOS_N" H 4050 4350 50  0000 R CNN
+F 2 "" H 4250 4100 29  0000 C CNN
+F 3 "" H 4050 4200 60  0000 C CNN
+	1    3950 4400
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M8
+U 1 1 697CC6C3
+P 4150 3700
+F 0 "M8" H 4100 3750 50  0000 R CNN
+F 1 "eSim_MOS_P" H 4200 3850 50  0000 R CNN
+F 2 "" H 4400 3800 29  0000 C CNN
+F 3 "" H 4200 3700 60  0000 C CNN
+	1    4150 3700
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	3950 3850 3950 4200
+Wire Wire Line
+	4350 3850 4350 4200
+Wire Wire Line
+	2050 3550 2000 3550
+Connection ~ 3950 4050
+$Comp
+L dac_bridge_1 U13
+U 1 1 697CC6C4
+P 3250 3600
+F 0 "U13" H 3250 3600 60  0000 C CNN
+F 1 "dac_bridge_1" H 3250 3750 60  0000 C CNN
+F 2 "" H 3250 3600 60  0000 C CNN
+F 3 "" H 3250 3600 60  0000 C CNN
+	1    3250 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 3550 4150 3550
+Wire Wire Line
+	4150 4500 850  4500
+Connection ~ 850  4500
+Connection ~ 4350 4000
+Text GLabel 4300 3950 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	850  4500 850  3550
+Text GLabel 850  5900 0    60   Input ~ 0
+BEA_B
+$Comp
+L adc_bridge_1 U4
+U 1 1 697CC6C7
+P 1450 5000
+F 0 "U4" H 1450 5000 60  0000 C CNN
+F 1 "adc_bridge_1" H 1450 5150 60  0000 C CNN
+F 2 "" H 1450 5000 60  0000 C CNN
+F 3 "" H 1450 5000 60  0000 C CNN
+	1    1450 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U9
+U 1 1 697CC6C8
+P 2350 4950
+F 0 "U9" H 2350 4850 60  0000 C CNN
+F 1 "d_inverter" H 2350 5100 60  0000 C CNN
+F 2 "" H 2400 4900 60  0000 C CNN
+F 3 "" H 2400 4900 60  0000 C CNN
+	1    2350 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M4
+U 1 1 697CC6C9
+P 3950 5800
+F 0 "M4" H 3950 5650 50  0000 R CNN
+F 1 "eSim_MOS_N" H 4050 5750 50  0000 R CNN
+F 2 "" H 4250 5500 29  0000 C CNN
+F 3 "" H 4050 5600 60  0000 C CNN
+	1    3950 5800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M9
+U 1 1 697CC6CA
+P 4150 5100
+F 0 "M9" H 4100 5150 50  0000 R CNN
+F 1 "eSim_MOS_P" H 4200 5250 50  0000 R CNN
+F 2 "" H 4400 5200 29  0000 C CNN
+F 3 "" H 4200 5100 60  0000 C CNN
+	1    4150 5100
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	3950 5250 3950 5600
+Wire Wire Line
+	4350 5250 4350 5600
+Wire Wire Line
+	2050 4950 2000 4950
+Connection ~ 3950 5450
+$Comp
+L dac_bridge_1 U14
+U 1 1 697CC6CB
+P 3250 5000
+F 0 "U14" H 3250 5000 60  0000 C CNN
+F 1 "dac_bridge_1" H 3250 5150 60  0000 C CNN
+F 2 "" H 3250 5000 60  0000 C CNN
+F 3 "" H 3250 5000 60  0000 C CNN
+	1    3250 5000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 4950 4150 4950
+Wire Wire Line
+	4150 5900 850  5900
+Connection ~ 850  5900
+Connection ~ 4350 5400
+Text GLabel 4300 5350 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	850  5900 850  4950
+Text GLabel 5150 1600 0    60   Input ~ 0
+BEB_B
+$Comp
+L adc_bridge_1 U17
+U 1 1 697CC6CE
+P 5750 700
+F 0 "U17" H 5750 700 60  0000 C CNN
+F 1 "adc_bridge_1" H 5750 850 60  0000 C CNN
+F 2 "" H 5750 700 60  0000 C CNN
+F 3 "" H 5750 700 60  0000 C CNN
+	1    5750 700 
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U22
+U 1 1 697CC6CF
+P 6650 650
+F 0 "U22" H 6650 550 60  0000 C CNN
+F 1 "d_inverter" H 6650 800 60  0000 C CNN
+F 2 "" H 6700 600 60  0000 C CNN
+F 3 "" H 6700 600 60  0000 C CNN
+	1    6650 650 
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M11
+U 1 1 697CC6D0
+P 8250 1500
+F 0 "M11" H 8250 1350 50  0000 R CNN
+F 1 "eSim_MOS_N" H 8350 1450 50  0000 R CNN
+F 2 "" H 8550 1200 29  0000 C CNN
+F 3 "" H 8350 1300 60  0000 C CNN
+	1    8250 1500
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M16
+U 1 1 697CC6D1
+P 8450 800
+F 0 "M16" H 8400 850 50  0000 R CNN
+F 1 "eSim_MOS_P" H 8500 950 50  0000 R CNN
+F 2 "" H 8700 900 29  0000 C CNN
+F 3 "" H 8500 800 60  0000 C CNN
+	1    8450 800 
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	8250 950  8250 1300
+Wire Wire Line
+	8650 950  8650 1300
+Wire Wire Line
+	6350 650  6300 650 
+Connection ~ 8250 1150
+$Comp
+L dac_bridge_1 U27
+U 1 1 697CC6D2
+P 7550 700
+F 0 "U27" H 7550 700 60  0000 C CNN
+F 1 "dac_bridge_1" H 7550 850 60  0000 C CNN
+F 2 "" H 7550 700 60  0000 C CNN
+F 3 "" H 7550 700 60  0000 C CNN
+	1    7550 700 
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 650  8450 650 
+Wire Wire Line
+	8450 1600 5150 1600
+Connection ~ 5150 1600
+Connection ~ 8650 1100
+Text GLabel 8600 1050 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	5150 1600 5150 650 
+Text GLabel 5150 3000 0    60   Input ~ 0
+BEB_B
+$Comp
+L adc_bridge_1 U18
+U 1 1 697CC6D5
+P 5750 2100
+F 0 "U18" H 5750 2100 60  0000 C CNN
+F 1 "adc_bridge_1" H 5750 2250 60  0000 C CNN
+F 2 "" H 5750 2100 60  0000 C CNN
+F 3 "" H 5750 2100 60  0000 C CNN
+	1    5750 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U23
+U 1 1 697CC6D6
+P 6650 2050
+F 0 "U23" H 6650 1950 60  0000 C CNN
+F 1 "d_inverter" H 6650 2200 60  0000 C CNN
+F 2 "" H 6700 2000 60  0000 C CNN
+F 3 "" H 6700 2000 60  0000 C CNN
+	1    6650 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M12
+U 1 1 697CC6D7
+P 8250 2900
+F 0 "M12" H 8250 2750 50  0000 R CNN
+F 1 "eSim_MOS_N" H 8350 2850 50  0000 R CNN
+F 2 "" H 8550 2600 29  0000 C CNN
+F 3 "" H 8350 2700 60  0000 C CNN
+	1    8250 2900
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M17
+U 1 1 697CC6D8
+P 8450 2200
+F 0 "M17" H 8400 2250 50  0000 R CNN
+F 1 "eSim_MOS_P" H 8500 2350 50  0000 R CNN
+F 2 "" H 8700 2300 29  0000 C CNN
+F 3 "" H 8500 2200 60  0000 C CNN
+	1    8450 2200
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	8250 2350 8250 2700
+Wire Wire Line
+	8650 2350 8650 2700
+Wire Wire Line
+	6350 2050 6300 2050
+Connection ~ 8250 2550
+$Comp
+L dac_bridge_1 U28
+U 1 1 697CC6D9
+P 7550 2100
+F 0 "U28" H 7550 2100 60  0000 C CNN
+F 1 "dac_bridge_1" H 7550 2250 60  0000 C CNN
+F 2 "" H 7550 2100 60  0000 C CNN
+F 3 "" H 7550 2100 60  0000 C CNN
+	1    7550 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 2050 8450 2050
+Wire Wire Line
+	8450 3000 5150 3000
+Connection ~ 5150 3000
+Connection ~ 8650 2500
+Text GLabel 8600 2450 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	5150 3000 5150 2050
+Text GLabel 5150 4400 0    60   Input ~ 0
+BEB_B
+$Comp
+L adc_bridge_1 U19
+U 1 1 697CC6DC
+P 5750 3500
+F 0 "U19" H 5750 3500 60  0000 C CNN
+F 1 "adc_bridge_1" H 5750 3650 60  0000 C CNN
+F 2 "" H 5750 3500 60  0000 C CNN
+F 3 "" H 5750 3500 60  0000 C CNN
+	1    5750 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U24
+U 1 1 697CC6DD
+P 6650 3450
+F 0 "U24" H 6650 3350 60  0000 C CNN
+F 1 "d_inverter" H 6650 3600 60  0000 C CNN
+F 2 "" H 6700 3400 60  0000 C CNN
+F 3 "" H 6700 3400 60  0000 C CNN
+	1    6650 3450
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M13
+U 1 1 697CC6DE
+P 8250 4300
+F 0 "M13" H 8250 4150 50  0000 R CNN
+F 1 "eSim_MOS_N" H 8350 4250 50  0000 R CNN
+F 2 "" H 8550 4000 29  0000 C CNN
+F 3 "" H 8350 4100 60  0000 C CNN
+	1    8250 4300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M18
+U 1 1 697CC6DF
+P 8450 3600
+F 0 "M18" H 8400 3650 50  0000 R CNN
+F 1 "eSim_MOS_P" H 8500 3750 50  0000 R CNN
+F 2 "" H 8700 3700 29  0000 C CNN
+F 3 "" H 8500 3600 60  0000 C CNN
+	1    8450 3600
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	8250 3750 8250 4100
+Wire Wire Line
+	8650 3750 8650 4100
+Wire Wire Line
+	6350 3450 6300 3450
+Connection ~ 8250 3950
+$Comp
+L dac_bridge_1 U29
+U 1 1 697CC6E0
+P 7550 3500
+F 0 "U29" H 7550 3500 60  0000 C CNN
+F 1 "dac_bridge_1" H 7550 3650 60  0000 C CNN
+F 2 "" H 7550 3500 60  0000 C CNN
+F 3 "" H 7550 3500 60  0000 C CNN
+	1    7550 3500
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 3450 8450 3450
+Wire Wire Line
+	8450 4400 5150 4400
+Connection ~ 5150 4400
+Connection ~ 8650 3900
+Text GLabel 8600 3850 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	5150 4400 5150 3450
+Text GLabel 5150 5800 0    60   Input ~ 0
+BEB_B
+$Comp
+L adc_bridge_1 U20
+U 1 1 697CC6E3
+P 5750 4900
+F 0 "U20" H 5750 4900 60  0000 C CNN
+F 1 "adc_bridge_1" H 5750 5050 60  0000 C CNN
+F 2 "" H 5750 4900 60  0000 C CNN
+F 3 "" H 5750 4900 60  0000 C CNN
+	1    5750 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U25
+U 1 1 697CC6E4
+P 6650 4850
+F 0 "U25" H 6650 4750 60  0000 C CNN
+F 1 "d_inverter" H 6650 5000 60  0000 C CNN
+F 2 "" H 6700 4800 60  0000 C CNN
+F 3 "" H 6700 4800 60  0000 C CNN
+	1    6650 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M14
+U 1 1 697CC6E5
+P 8250 5700
+F 0 "M14" H 8250 5550 50  0000 R CNN
+F 1 "eSim_MOS_N" H 8350 5650 50  0000 R CNN
+F 2 "" H 8550 5400 29  0000 C CNN
+F 3 "" H 8350 5500 60  0000 C CNN
+	1    8250 5700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M19
+U 1 1 697CC6E6
+P 8450 5000
+F 0 "M19" H 8400 5050 50  0000 R CNN
+F 1 "eSim_MOS_P" H 8500 5150 50  0000 R CNN
+F 2 "" H 8700 5100 29  0000 C CNN
+F 3 "" H 8500 5000 60  0000 C CNN
+	1    8450 5000
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	8250 5150 8250 5500
+Wire Wire Line
+	8650 5150 8650 5500
+Wire Wire Line
+	6350 4850 6300 4850
+Connection ~ 8250 5350
+$Comp
+L dac_bridge_1 U30
+U 1 1 697CC6E7
+P 7550 4900
+F 0 "U30" H 7550 4900 60  0000 C CNN
+F 1 "dac_bridge_1" H 7550 5050 60  0000 C CNN
+F 2 "" H 7550 4900 60  0000 C CNN
+F 3 "" H 7550 4900 60  0000 C CNN
+	1    7550 4900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8100 4850 8450 4850
+Wire Wire Line
+	8450 5800 5150 5800
+Connection ~ 5150 5800
+Connection ~ 8650 5300
+Text GLabel 8600 5250 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	5150 5800 5150 4850
+Text GLabel 850  7250 0    60   Input ~ 0
+BEA_B
+$Comp
+L adc_bridge_1 U5
+U 1 1 697CC6EA
+P 1450 6350
+F 0 "U5" H 1450 6350 60  0000 C CNN
+F 1 "adc_bridge_1" H 1450 6500 60  0000 C CNN
+F 2 "" H 1450 6350 60  0000 C CNN
+F 3 "" H 1450 6350 60  0000 C CNN
+	1    1450 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U10
+U 1 1 697CC6EB
+P 2350 6300
+F 0 "U10" H 2350 6200 60  0000 C CNN
+F 1 "d_inverter" H 2350 6450 60  0000 C CNN
+F 2 "" H 2400 6250 60  0000 C CNN
+F 3 "" H 2400 6250 60  0000 C CNN
+	1    2350 6300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M5
+U 1 1 697CC6EC
+P 3950 7150
+F 0 "M5" H 3950 7000 50  0000 R CNN
+F 1 "eSim_MOS_N" H 4050 7100 50  0000 R CNN
+F 2 "" H 4250 6850 29  0000 C CNN
+F 3 "" H 4050 6950 60  0000 C CNN
+	1    3950 7150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M10
+U 1 1 697CC6ED
+P 4150 6450
+F 0 "M10" H 4100 6500 50  0000 R CNN
+F 1 "eSim_MOS_P" H 4200 6600 50  0000 R CNN
+F 2 "" H 4400 6550 29  0000 C CNN
+F 3 "" H 4200 6450 60  0000 C CNN
+	1    4150 6450
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	3950 6600 3950 6950
+Wire Wire Line
+	4350 6600 4350 6950
+Wire Wire Line
+	2050 6300 2000 6300
+Connection ~ 3950 6800
+$Comp
+L dac_bridge_1 U15
+U 1 1 697CC6EE
+P 3250 6350
+F 0 "U15" H 3250 6350 60  0000 C CNN
+F 1 "dac_bridge_1" H 3250 6500 60  0000 C CNN
+F 2 "" H 3250 6350 60  0000 C CNN
+F 3 "" H 3250 6350 60  0000 C CNN
+	1    3250 6350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 6300 4150 6300
+Wire Wire Line
+	4150 7250 850  7250
+Connection ~ 850  7250
+Connection ~ 4350 6750
+Text GLabel 4300 6700 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	850  7250 850  6300
+Text GLabel 5200 7050 0    60   Input ~ 0
+BEB_B
+$Comp
+L adc_bridge_1 U21
+U 1 1 697CC6F1
+P 5800 6150
+F 0 "U21" H 5800 6150 60  0000 C CNN
+F 1 "adc_bridge_1" H 5800 6300 60  0000 C CNN
+F 2 "" H 5800 6150 60  0000 C CNN
+F 3 "" H 5800 6150 60  0000 C CNN
+	1    5800 6150
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U26
+U 1 1 697CC6F2
+P 6700 6100
+F 0 "U26" H 6700 6000 60  0000 C CNN
+F 1 "d_inverter" H 6700 6250 60  0000 C CNN
+F 2 "" H 6750 6050 60  0000 C CNN
+F 3 "" H 6750 6050 60  0000 C CNN
+	1    6700 6100
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_MOS_N M15
+U 1 1 697CC6F3
+P 8300 6950
+F 0 "M15" H 8300 6800 50  0000 R CNN
+F 1 "eSim_MOS_N" H 8400 6900 50  0000 R CNN
+F 2 "" H 8600 6650 29  0000 C CNN
+F 3 "" H 8400 6750 60  0000 C CNN
+	1    8300 6950
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_MOS_P M20
+U 1 1 697CC6F4
+P 8500 6250
+F 0 "M20" H 8450 6300 50  0000 R CNN
+F 1 "eSim_MOS_P" H 8550 6400 50  0000 R CNN
+F 2 "" H 8750 6350 29  0000 C CNN
+F 3 "" H 8550 6250 60  0000 C CNN
+	1    8500 6250
+	0    -1   1    0   
+$EndComp
+Wire Wire Line
+	8300 6400 8300 6750
+Wire Wire Line
+	8700 6400 8700 6750
+Wire Wire Line
+	6400 6100 6350 6100
+Connection ~ 8300 6600
+$Comp
+L dac_bridge_1 U31
+U 1 1 697CC6F5
+P 7600 6150
+F 0 "U31" H 7600 6150 60  0000 C CNN
+F 1 "dac_bridge_1" H 7600 6300 60  0000 C CNN
+F 2 "" H 7600 6150 60  0000 C CNN
+F 3 "" H 7600 6150 60  0000 C CNN
+	1    7600 6150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8150 6100 8500 6100
+Wire Wire Line
+	8500 7050 5200 7050
+Connection ~ 5200 7050
+Connection ~ 8700 6550
+Text GLabel 8650 6500 0    60   Input ~ 0
+VDD
+Wire Wire Line
+	5200 7050 5200 6100
+Wire Wire Line
+	4350 1200 4450 1200
+Wire Wire Line
+	4350 2600 4450 2600
+Wire Wire Line
+	4350 4000 4450 4000
+Wire Wire Line
+	4350 5400 4450 5400
+$Comp
+L PORT U16
+U 6 1 697D2C09
+P 4700 1200
+F 0 "U16" H 4750 1300 30  0000 C CNN
+F 1 "PORT" H 4700 1200 30  0000 C CNN
+F 2 "" H 4700 1200 60  0000 C CNN
+F 3 "" H 4700 1200 60  0000 C CNN
+	6    4700 1200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 1 1 697D2CD4
+P 3700 1250
+F 0 "U16" H 3750 1350 30  0000 C CNN
+F 1 "PORT" H 3700 1250 30  0000 C CNN
+F 2 "" H 3700 1250 60  0000 C CNN
+F 3 "" H 3700 1250 60  0000 C CNN
+	1    3700 1250
+	1    0    0    -1  
+$EndComp
+Text GLabel 4500 1400 2    60   Input ~ 0
+GND
+Wire Wire Line
+	4300 1300 4500 1300
+Wire Wire Line
+	4500 1300 4500 1400
+$Comp
+L PORT U16
+U 7 1 697D46DC
+P 4700 2600
+F 0 "U16" H 4750 2700 30  0000 C CNN
+F 1 "PORT" H 4700 2600 30  0000 C CNN
+F 2 "" H 4700 2600 60  0000 C CNN
+F 3 "" H 4700 2600 60  0000 C CNN
+	7    4700 2600
+	-1   0    0    -1  
+$EndComp
+Text GLabel 4500 2800 2    60   Input ~ 0
+GND
+Wire Wire Line
+	4300 2700 4500 2700
+Wire Wire Line
+	4500 2700 4500 2800
+$Comp
+L PORT U16
+U 8 1 697D56D8
+P 4700 4000
+F 0 "U16" H 4750 4100 30  0000 C CNN
+F 1 "PORT" H 4700 4000 30  0000 C CNN
+F 2 "" H 4700 4000 60  0000 C CNN
+F 3 "" H 4700 4000 60  0000 C CNN
+	8    4700 4000
+	-1   0    0    -1  
+$EndComp
+Text GLabel 4500 4200 2    60   Input ~ 0
+GND
+Wire Wire Line
+	4300 4100 4500 4100
+Wire Wire Line
+	4500 4100 4500 4200
+$Comp
+L PORT U16
+U 2 1 697D575B
+P 3700 2650
+F 0 "U16" H 3750 2750 30  0000 C CNN
+F 1 "PORT" H 3700 2650 30  0000 C CNN
+F 2 "" H 3700 2650 60  0000 C CNN
+F 3 "" H 3700 2650 60  0000 C CNN
+	2    3700 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 9 1 697D67D0
+P 4700 5400
+F 0 "U16" H 4750 5500 30  0000 C CNN
+F 1 "PORT" H 4700 5400 30  0000 C CNN
+F 2 "" H 4700 5400 60  0000 C CNN
+F 3 "" H 4700 5400 60  0000 C CNN
+	9    4700 5400
+	-1   0    0    -1  
+$EndComp
+Text GLabel 4500 5600 2    60   Input ~ 0
+GND
+Wire Wire Line
+	4300 5500 4500 5500
+Wire Wire Line
+	4500 5500 4500 5600
+$Comp
+L PORT U16
+U 3 1 697D6894
+P 3700 4050
+F 0 "U16" H 3750 4150 30  0000 C CNN
+F 1 "PORT" H 3700 4050 30  0000 C CNN
+F 2 "" H 3700 4050 60  0000 C CNN
+F 3 "" H 3700 4050 60  0000 C CNN
+	3    3700 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 4 1 697D6927
+P 3700 5450
+F 0 "U16" H 3750 5550 30  0000 C CNN
+F 1 "PORT" H 3700 5450 30  0000 C CNN
+F 2 "" H 3700 5450 60  0000 C CNN
+F 3 "" H 3700 5450 60  0000 C CNN
+	4    3700 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 5 1 697D811D
+P 3700 6800
+F 0 "U16" H 3750 6900 30  0000 C CNN
+F 1 "PORT" H 3700 6800 30  0000 C CNN
+F 2 "" H 3700 6800 60  0000 C CNN
+F 3 "" H 3700 6800 60  0000 C CNN
+	5    3700 6800
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 10 1 697D8891
+P 4700 6750
+F 0 "U16" H 4750 6850 30  0000 C CNN
+F 1 "PORT" H 4700 6750 30  0000 C CNN
+F 2 "" H 4700 6750 60  0000 C CNN
+F 3 "" H 4700 6750 60  0000 C CNN
+	10   4700 6750
+	-1   0    0    -1  
+$EndComp
+Text GLabel 4500 6950 2    60   Input ~ 0
+GND
+Wire Wire Line
+	4300 6850 4500 6850
+Wire Wire Line
+	4500 6850 4500 6950
+Wire Wire Line
+	4350 6750 4450 6750
+Wire Wire Line
+	8650 2500 8750 2500
+Wire Wire Line
+	8650 3900 8750 3900
+Wire Wire Line
+	8650 5300 8750 5300
+$Comp
+L PORT U16
+U 17 1 697DE4D1
+P 9000 2500
+F 0 "U16" H 9050 2600 30  0000 C CNN
+F 1 "PORT" H 9000 2500 30  0000 C CNN
+F 2 "" H 9000 2500 60  0000 C CNN
+F 3 "" H 9000 2500 60  0000 C CNN
+	17   9000 2500
+	-1   0    0    -1  
+$EndComp
+Text GLabel 8800 2700 2    60   Input ~ 0
+GND
+Wire Wire Line
+	8600 2600 8800 2600
+Wire Wire Line
+	8800 2600 8800 2700
+$Comp
+L PORT U16
+U 18 1 697DE4DA
+P 9000 3900
+F 0 "U16" H 9050 4000 30  0000 C CNN
+F 1 "PORT" H 9000 3900 30  0000 C CNN
+F 2 "" H 9000 3900 60  0000 C CNN
+F 3 "" H 9000 3900 60  0000 C CNN
+	18   9000 3900
+	-1   0    0    -1  
+$EndComp
+Text GLabel 8800 4100 2    60   Input ~ 0
+GND
+Wire Wire Line
+	8600 4000 8800 4000
+Wire Wire Line
+	8800 4000 8800 4100
+$Comp
+L PORT U16
+U 19 1 697DE4E3
+P 9000 5300
+F 0 "U16" H 9050 5400 30  0000 C CNN
+F 1 "PORT" H 9000 5300 30  0000 C CNN
+F 2 "" H 9000 5300 60  0000 C CNN
+F 3 "" H 9000 5300 60  0000 C CNN
+	19   9000 5300
+	-1   0    0    -1  
+$EndComp
+Text GLabel 8800 5500 2    60   Input ~ 0
+GND
+Wire Wire Line
+	8600 5400 8800 5400
+Wire Wire Line
+	8800 5400 8800 5500
+$Comp
+L PORT U16
+U 20 1 697DE4EC
+P 9050 6550
+F 0 "U16" H 9100 6650 30  0000 C CNN
+F 1 "PORT" H 9050 6550 30  0000 C CNN
+F 2 "" H 9050 6550 60  0000 C CNN
+F 3 "" H 9050 6550 60  0000 C CNN
+	20   9050 6550
+	-1   0    0    -1  
+$EndComp
+Text GLabel 8850 6750 2    60   Input ~ 0
+GND
+Wire Wire Line
+	8650 6650 8850 6650
+Wire Wire Line
+	8850 6650 8850 6750
+Wire Wire Line
+	8700 6550 8800 6550
+Wire Wire Line
+	8650 1100 8750 1100
+$Comp
+L PORT U16
+U 16 1 697E4B47
+P 9000 1100
+F 0 "U16" H 9050 1200 30  0000 C CNN
+F 1 "PORT" H 9000 1100 30  0000 C CNN
+F 2 "" H 9000 1100 60  0000 C CNN
+F 3 "" H 9000 1100 60  0000 C CNN
+	16   9000 1100
+	-1   0    0    -1  
+$EndComp
+Text GLabel 8800 1300 2    60   Input ~ 0
+GND
+Wire Wire Line
+	8600 1200 8800 1200
+Wire Wire Line
+	8800 1200 8800 1300
+Text GLabel 10400 1150 2    60   Input ~ 0
+BEA_B
+Text GLabel 10350 1650 2    60   Input ~ 0
+BEB_B
+$Comp
+L PORT U16
+U 15 1 697EBACD
+P 8050 6600
+F 0 "U16" H 8100 6700 30  0000 C CNN
+F 1 "PORT" H 8050 6600 30  0000 C CNN
+F 2 "" H 8050 6600 60  0000 C CNN
+F 3 "" H 8050 6600 60  0000 C CNN
+	15   8050 6600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 14 1 697EBB68
+P 8000 5350
+F 0 "U16" H 8050 5450 30  0000 C CNN
+F 1 "PORT" H 8000 5350 30  0000 C CNN
+F 2 "" H 8000 5350 60  0000 C CNN
+F 3 "" H 8000 5350 60  0000 C CNN
+	14   8000 5350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 13 1 697EBC03
+P 8000 3950
+F 0 "U16" H 8050 4050 30  0000 C CNN
+F 1 "PORT" H 8000 3950 30  0000 C CNN
+F 2 "" H 8000 3950 60  0000 C CNN
+F 3 "" H 8000 3950 60  0000 C CNN
+	13   8000 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 12 1 697EDD4C
+P 8000 2550
+F 0 "U16" H 8050 2650 30  0000 C CNN
+F 1 "PORT" H 8000 2550 30  0000 C CNN
+F 2 "" H 8000 2550 60  0000 C CNN
+F 3 "" H 8000 2550 60  0000 C CNN
+	12   8000 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 11 1 697EDDED
+P 8000 1150
+F 0 "U16" H 8050 1250 30  0000 C CNN
+F 1 "PORT" H 8000 1150 30  0000 C CNN
+F 2 "" H 8000 1150 60  0000 C CNN
+F 3 "" H 8000 1150 60  0000 C CNN
+	11   8000 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 22 1 697EDE8E
+P 10150 1150
+F 0 "U16" H 10200 1250 30  0000 C CNN
+F 1 "PORT" H 10150 1150 30  0000 C CNN
+F 2 "" H 10150 1150 60  0000 C CNN
+F 3 "" H 10150 1150 60  0000 C CNN
+	22   10150 1150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 21 1 697EDF35
+P 10100 1650
+F 0 "U16" H 10150 1750 30  0000 C CNN
+F 1 "PORT" H 10100 1650 30  0000 C CNN
+F 2 "" H 10100 1650 60  0000 C CNN
+F 3 "" H 10100 1650 60  0000 C CNN
+	21   10100 1650
+	1    0    0    -1  
+$EndComp
+Text GLabel 10450 1950 2    60   Input ~ 0
+VDD
+Text GLabel 10450 2250 2    60   Input ~ 0
+GND
+$Comp
+L PORT U16
+U 23 1 697EE226
+P 10200 1950
+F 0 "U16" H 10250 2050 30  0000 C CNN
+F 1 "PORT" H 10200 1950 30  0000 C CNN
+F 2 "" H 10200 1950 60  0000 C CNN
+F 3 "" H 10200 1950 60  0000 C CNN
+	23   10200 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U16
+U 24 1 697EE2CF
+P 10200 2250
+F 0 "U16" H 10250 2350 30  0000 C CNN
+F 1 "PORT" H 10200 2250 30  0000 C CNN
+F 2 "" H 10200 2250 60  0000 C CNN
+F 3 "" H 10200 2250 60  0000 C CNN
+	24   10200 2250
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

@@ -1,0 +1,41 @@
+* Subcircuit CD4068B
+.subckt CD4068B net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_sc12-pad3_ net-_sc1-pad3_ net-_u1-pad11_ net-_u1-pad12_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/cd4068b/cd4068b.cir
+.include CMOS_INVTR.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+xsc6 net-_sc6-pad1_ net-_sc1-pad2_ net-_sc12-pad3_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc7 net-_sc7-pad1_ net-_sc2-pad2_ net-_sc6-pad1_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc8 net-_sc8-pad1_ net-_sc4-pad2_ net-_sc7-pad1_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc9 net-_sc1-pad1_ net-_sc10-pad2_ net-_sc8-pad1_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc10 net-_sc1-pad1_ net-_sc10-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc4 net-_sc1-pad1_ net-_sc4-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc2 net-_sc1-pad1_ net-_sc2-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc1 net-_sc1-pad1_ net-_sc1-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc12 net-_sc12-pad1_ net-_sc12-pad2_ net-_sc12-pad3_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc13 net-_sc13-pad1_ net-_sc13-pad2_ net-_sc12-pad1_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc14 net-_sc14-pad1_ net-_sc11-pad2_ net-_sc13-pad1_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc15 net-_sc11-pad1_ net-_sc15-pad2_ net-_sc14-pad1_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc16 net-_sc11-pad1_ net-_sc15-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc11 net-_sc11-pad1_ net-_sc11-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc5 net-_sc11-pad1_ net-_sc13-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc3 net-_sc11-pad1_ net-_sc12-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+x9 net-_sc17-pad1_ net-_sc12-pad3_ net-_sc1-pad3_ net-_x10-pad1_ CMOS_INVTR
+x10 net-_x10-pad1_ net-_sc12-pad3_ net-_sc1-pad3_ net-_u1-pad11_ CMOS_INVTR
+x1 net-_u1-pad1_ net-_sc12-pad3_ net-_sc1-pad3_ net-_sc1-pad2_ CMOS_INVTR
+x2 net-_u1-pad2_ net-_sc12-pad3_ net-_sc1-pad3_ net-_sc2-pad2_ CMOS_INVTR
+x3 net-_u1-pad3_ net-_sc12-pad3_ net-_sc1-pad3_ net-_sc4-pad2_ CMOS_INVTR
+x4 net-_u1-pad4_ net-_sc12-pad3_ net-_sc1-pad3_ net-_sc10-pad2_ CMOS_INVTR
+x5 net-_u1-pad5_ net-_sc12-pad3_ net-_sc1-pad3_ net-_sc12-pad2_ CMOS_INVTR
+x6 net-_u1-pad6_ net-_sc12-pad3_ net-_sc1-pad3_ net-_sc13-pad2_ CMOS_INVTR
+x7 net-_u1-pad7_ net-_sc12-pad3_ net-_sc1-pad3_ net-_sc11-pad2_ CMOS_INVTR
+x8 net-_u1-pad8_ net-_sc12-pad3_ net-_sc1-pad3_ net-_sc15-pad2_ CMOS_INVTR
+xsc17 net-_sc17-pad1_ net-_sc1-pad1_ net-_sc12-pad3_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc20 net-_sc17-pad1_ net-_sc11-pad1_ net-_sc12-pad3_ net-_sc12-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc18 net-_sc17-pad1_ net-_sc1-pad1_ net-_sc18-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc19 net-_sc18-pad3_ net-_sc11-pad1_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+* s c m o d e
+x11 net-_sc17-pad1_ net-_sc12-pad3_ net-_sc1-pad3_ net-_u1-pad12_ CMOS_INVTR
+* Control Statements
+
+.ends CD4068B

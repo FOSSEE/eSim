@@ -1,0 +1,15 @@
+.title KiCad schematic
+R1 GND B 1k
+X1 Net-_U1-Pad8_ Net-_U16-Pad4_ Net-_U1-Pad8_ Net-_U1-Pad7_ Net-_U1-Pad6_ Net-_U1-Pad5_ Net-_X1-Pad7_ Net-_U1-Pad8_ Net-_U8-Pad1_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U16-Pad3_ Net-_U1-Pad8_ Net-_U1-Pad7_ HEF4539
+U47 S1 plot_v1
+U46 S0 plot_v1
+U16 S0 S1 Net-_U16-Pad3_ Net-_U16-Pad4_ adc_bridge_2
+U1 Net-_U1-Pad1_ GND Net-_U1-Pad1_ GND Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ adc_bridge_4
+v1 Net-_U1-Pad1_ GND DC
+v3 S1 GND pulse
+v2 S0 GND pulse
+U44 B plot_v1
+R2 GND A 1k
+U8 Net-_U8-Pad1_ Net-_X1-Pad7_ B A dac_bridge_2
+U45 A plot_v1
+.end

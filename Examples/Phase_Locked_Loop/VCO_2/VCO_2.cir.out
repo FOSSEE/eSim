@@ -1,0 +1,73 @@
+.title kicad schematic
+
+*.include PMOS-0.5um.lib
+*.include NMOS-0.5um.lib
+
+*Load SG13G2 HV device models at TT corner (3.3 V domain)
+.lib /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOShv.lib mos_tt
+
+*Load PSP model kernels (.osdi) before netlist evaluation 
+.control
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103_nqs.osdi
+.endc
+
+.param VCTRL=2
+
+xm18 out net-_m15-pad1_ net-_m10-pad4_ net-_m10-pad4_ sg13_hv_pmos W=3.7u L=0.35u
+xm17 out net-_m15-pad1_ gnd gnd sg13_hv_nmos W=1u L=0.35u
+xm15 net-_m15-pad1_ net-_m11-pad1_ gnd gnd sg13_hv_nmos W=1u L=0.35u
+* u1 out plot_v1
+xm16 net-_m15-pad1_ net-_m11-pad1_ net-_m10-pad4_ net-_m10-pad4_ sg13_hv_pmos W=3.7u L=0.35u
+v2 net-_m1-pad2_ gnd  dc {VCTRL}
+xm1 net-_m1-pad1_ net-_m1-pad2_ gnd gnd sg13_hv_nmos W=1u L=0.35u
+xm4 net-_m3-pad3_ net-_m1-pad2_ gnd gnd sg13_hv_nmos W=0.7u L=0.7u
+xm6 net-_m10-pad2_ net-_m11-pad1_ net-_m5-pad1_ net-_m10-pad4_ sg13_hv_pmos W=3.7u L=0.35u
+xm3 net-_m10-pad2_ net-_m11-pad1_ net-_m3-pad3_ gnd sg13_hv_nmos W=1u L=0.35u 
+xm11 net-_m11-pad1_ net-_m10-pad1_ net-_m11-pad3_ gnd sg13_hv_nmos W=1u L=0.35u
+xm12 net-_m11-pad3_ net-_m1-pad2_ gnd gnd sg13_hv_nmos W=0.7u L=0.7u
+xm14 net-_m11-pad1_ net-_m10-pad1_ net-_m13-pad1_ net-_m10-pad4_ sg13_hv_pmos W=3.7u L=0.35u
+xm13 net-_m13-pad1_ net-_m1-pad1_ net-_m10-pad4_ net-_m10-pad4_ sg13_hv_pmos W=1.85u L=0.7u
+v1 net-_m10-pad4_ gnd  dc 3.3
+xm5 net-_m5-pad1_ net-_m1-pad1_ net-_m10-pad4_ net-_m10-pad4_ sg13_hv_pmos W=1.85u L=0.7u
+xm2 net-_m1-pad1_ net-_m1-pad1_ net-_m10-pad4_ net-_m10-pad4_ sg13_hv_pmos W=3.7u L=0.35u
+xm10 net-_m10-pad1_ net-_m10-pad2_ net-_m10-pad3_ net-_m10-pad4_ sg13_hv_pmos W=3.7u L=0.35u
+xm9 net-_m10-pad3_ net-_m1-pad1_ net-_m10-pad4_ net-_m10-pad4_ sg13_hv_pmos W=1.85u L=0.7u
+xm7 net-_m10-pad1_ net-_m10-pad2_ net-_m7-pad3_ gnd sg13_hv_nmos W=1u L=0.35u
+xm8 net-_m7-pad3_ net-_m1-pad2_ gnd gnd sg13_hv_nmos W=0.7u L=0.7u
+
+
+*Gear (2nd-order) integration for stable transient behavior and to suppress numerical ringing.
+.options method=gear maxord=2 
+.save V(out) I(v1)
+*Sets the initial voltage at node out to 0.01 V at time 0.
+*Useful for kick-starting oscillations otherwise it takes some time for the oscillations to start
+.ic V(out)=0.01
+*use initial conditions by-passing DC operating point analysis with min time step of 20ps and max internal time step of 10ps.
+.tran 20p 100n 0 10p uic
+*.tran 20e-12 10e-09 0e-00
+
+*Power consumption measurement Iavg*Vdd
+.measure tran Iavg AVG I(v1) FROM=0n TO=100n
+.measure tran Pavg PARAM='-Iavg*3.3'
+
+
+*Frequency measurement at mid-rail for 3.3V logic (1.65V); rise #3 → rise #13 for cycle-to-cycle period
+.measure tran tper10 TRIG V(out) VAL=1.65 RISE=3 TARG V(out) VAL=1.65 RISE=13
+.measure tran period param='tper10/10'
+.measure tran freq   param='1/period'
+
+
+* Control Statements 
+.control
+*step param VCTRL list 1.5 1.8 2.1 2.4 2.7 3.0
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+.endc
+.end
+
+
+
+

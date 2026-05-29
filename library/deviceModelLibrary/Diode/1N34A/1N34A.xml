@@ -1,0 +1,16 @@
+<library><model_name>D</model_name><ref_model>1N34A</ref_model><param><IS>2.6u</IS><RS>6.5</RS><N>1.6</N><CJO>0.8p</CJO><EG>0.67</EG><BV>75</BV><IBV>1m</IBV></param></library>
+<library>
+  <model_name>D</model_name>
+  <ref_model>1N34A</ref_model>
+  <param>
+    <Is>2e-7</Is>
+    <N>1.3</N>
+    <Rs>7</Rs>
+    <Bv>75</Bv>
+    <Ibv>18m</Ibv>
+    <Cjo>0.5p</Cjo>
+    <Vj>0.1</Vj>
+    <M>0.27</M>
+    <tt>144n</tt>
+  </param>
+</library>

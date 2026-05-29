@@ -1,0 +1,18 @@
+.title kicad schematic
+
+.include LM335.sub
+* u1 vout plot_v1
+x1 vout net-_r2-pad2_ gnd LM335
+r2 gnd net-_r2-pad2_ 10k
+vv1 net-_r1-pad1_ gnd sin(0 1 1k)
+r1 net-_r1-pad1_ vout 2.2k
+.tran 10e-06 4e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(vout)
+.endc
+.end

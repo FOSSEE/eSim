@@ -1,0 +1,68 @@
+* c:\users\chand\esim\fossee\esim\library\subcircuitlibrary\sn74lvc1t45\sn74lvc1t45.cir
+
+* u2  net-_u11-pad2_ net-_u2-pad2_ d_inverter
+* u6  net-_u13-pad2_ net-_u3-pad1_ d_inverter
+* u5  net-_u2-pad2_ net-_u5-pad2_ d_buffer
+* u8  net-_u2-pad2_ net-_u4-pad2_ d_inverter
+* u4  net-_u3-pad2_ net-_u4-pad2_ net-_u14-pad1_ one_input_tristate_buffer
+* u9  net-_u7-pad2_ net-_u5-pad2_ net-_u12-pad1_ one_input_tristate_buffer
+* u1  net-_u1-pad1_ ? net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ port
+* u3  net-_u3-pad1_ net-_u3-pad2_ d_inverter
+* u7  net-_u10-pad2_ net-_u7-pad2_ d_inverter
+* u12  net-_u12-pad1_ net-_u1-pad1_ dac_bridge_1
+* u14  net-_u14-pad1_ net-_u1-pad6_ dac_bridge_1
+* u13  net-_u1-pad3_ net-_u13-pad2_ adc_bridge_1
+* u15  net-_u1-pad4_ net-_u10-pad1_ adc_bridge_1
+* u11  net-_u1-pad5_ net-_u11-pad2_ adc_bridge_1
+* u10  net-_u10-pad1_ net-_u10-pad2_ d_inverter
+a1 net-_u11-pad2_ net-_u2-pad2_ u2
+a2 net-_u13-pad2_ net-_u3-pad1_ u6
+a3 net-_u2-pad2_ net-_u5-pad2_ u5
+a4 net-_u2-pad2_ net-_u4-pad2_ u8
+a5 [net-_u3-pad2_ ] [net-_u4-pad2_ ] [net-_u14-pad1_ ] u4
+a6 [net-_u7-pad2_ ] [net-_u5-pad2_ ] [net-_u12-pad1_ ] u9
+a7 net-_u3-pad1_ net-_u3-pad2_ u3
+a8 net-_u10-pad2_ net-_u7-pad2_ u7
+a9 [net-_u12-pad1_ ] [net-_u1-pad1_ ] u12
+a10 [net-_u14-pad1_ ] [net-_u1-pad6_ ] u14
+a11 [net-_u1-pad3_ ] [net-_u13-pad2_ ] u13
+a12 [net-_u1-pad4_ ] [net-_u10-pad1_ ] u15
+a13 [net-_u1-pad5_ ] [net-_u11-pad2_ ] u11
+a14 net-_u10-pad1_ net-_u10-pad2_ u10
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u6 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u5 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u8 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u4 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             one_input_tristate_buffer, NgSpice Name: one_input_tristate_buffer
+.model u9 one_input_tristate_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u12 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u14 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u13 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u15 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u11 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u10 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

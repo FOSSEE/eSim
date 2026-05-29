@@ -1,0 +1,39 @@
+.title KiCad schematic
+U101 Net-_U101-Pad1_ Net-_U101-Pad2_ Net-_U101-Pad3_ Net-_U101-Pad4_ Net-_U101-Pad5_ Net-_U101-Pad6_ Net-_U101-Pad7_ unconnected-_U101-Pad8_ Net-_U101-Pad9_ Net-_U101-Pad10_ Net-_U101-Pad11_ Net-_U101-Pad12_ Net-_U101-Pad13_ Net-_U101-Pad14_ Net-_U101-Pad15_ unconnected-_U101-Pad16_ PORT
+U103 Net-_U101-Pad9_ Net-_U103-Pad2_ d_inverter
+U102 Net-_U101-Pad7_ Net-_U102-Pad2_ d_inverter
+U107 Net-_U103-Pad2_ Net-_U107-Pad2_ d_inverter
+U110 Net-_U106-Pad2_ Net-_U110-Pad2_ d_inverter
+U106 Net-_U102-Pad2_ Net-_U106-Pad2_ d_inverter
+U104 Net-_U101-Pad6_ Net-_U104-Pad2_ d_inverter
+U118 Net-_U113-Pad5_ Net-_U107-Pad2_ Net-_U104-Pad2_ Net-_U123-Pad1_ Net-_U118-Pad5_ dbar_ff
+U122 Net-_U122-Pad1_ Net-_U101-Pad4_ d_inverter
+U123 Net-_U123-Pad1_ Net-_U122-Pad1_ d_inverter
+U117 Net-_U117-Pad1_ Net-_U116-Pad1_ d_inverter
+U113 Net-_U110-Pad2_ Net-_U107-Pad2_ Net-_U104-Pad2_ Net-_U117-Pad1_ Net-_U113-Pad5_ dbar_ff
+U116 Net-_U116-Pad1_ Net-_U101-Pad5_ d_inverter
+U124 Net-_U118-Pad5_ Net-_U107-Pad2_ Net-_U104-Pad2_ Net-_U129-Pad1_ Net-_U124-Pad5_ dbar_ff
+U129 Net-_U129-Pad1_ Net-_U128-Pad1_ d_inverter
+U134 Net-_U134-Pad1_ Net-_U101-Pad10_ d_inverter
+U135 Net-_U135-Pad1_ Net-_U134-Pad1_ d_inverter
+U130 Net-_U124-Pad5_ Net-_U107-Pad2_ Net-_U104-Pad2_ Net-_U135-Pad1_ unconnected-_U130-Pad5_ dbar_ff
+U128 Net-_U128-Pad1_ Net-_U101-Pad3_ d_inverter
+U114 Net-_U111-Pad2_ Net-_U114-Pad2_ d_inverter
+U109 Net-_U101-Pad14_ Net-_U109-Pad2_ d_inverter
+U105 Net-_U101-Pad15_ Net-_U105-Pad2_ d_inverter
+U111 Net-_U105-Pad2_ Net-_U111-Pad2_ d_inverter
+U112 Net-_U108-Pad2_ Net-_U112-Pad2_ d_inverter
+U108 Net-_U101-Pad1_ Net-_U108-Pad2_ d_inverter
+U115 Net-_U114-Pad2_ Net-_U112-Pad2_ Net-_U109-Pad2_ Net-_U120-Pad1_ Net-_U115-Pad5_ dbar_ff
+U120 Net-_U120-Pad1_ Net-_U119-Pad1_ d_inverter
+U119 Net-_U119-Pad1_ Net-_U101-Pad13_ d_inverter
+U126 Net-_U126-Pad1_ Net-_U125-Pad1_ d_inverter
+U121 Net-_U115-Pad5_ Net-_U112-Pad2_ Net-_U109-Pad2_ Net-_U126-Pad1_ Net-_U121-Pad5_ dbar_ff
+U125 Net-_U125-Pad1_ Net-_U101-Pad12_ d_inverter
+U132 Net-_U132-Pad1_ Net-_U131-Pad1_ d_inverter
+U131 Net-_U131-Pad1_ Net-_U101-Pad11_ d_inverter
+U127 Net-_U121-Pad5_ Net-_U112-Pad2_ Net-_U109-Pad2_ Net-_U132-Pad1_ Net-_U127-Pad5_ dbar_ff
+U137 Net-_U137-Pad1_ Net-_U136-Pad1_ d_inverter
+U136 Net-_U136-Pad1_ Net-_U101-Pad2_ d_inverter
+U133 Net-_U127-Pad5_ Net-_U112-Pad2_ Net-_U109-Pad2_ Net-_U137-Pad1_ unconnected-_U133-Pad5_ dbar_ff
+.end

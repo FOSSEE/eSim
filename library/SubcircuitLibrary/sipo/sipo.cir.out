@@ -1,0 +1,156 @@
+.title kicad schematic
+
+* u101 net-_u101-pad1_ net-_u101-pad2_ net-_u101-pad3_ net-_u101-pad4_ net-_u101-pad5_ net-_u101-pad6_ net-_u101-pad7_ unconnected-_u101-pad8_ net-_u101-pad9_ net-_u101-pad10_ net-_u101-pad11_ net-_u101-pad12_ net-_u101-pad13_ net-_u101-pad14_ net-_u101-pad15_ unconnected-_u101-pad16_ port
+* u103 net-_u101-pad9_ net-_u103-pad2_ d_inverter
+* u102 net-_u101-pad7_ net-_u102-pad2_ d_inverter
+* u107 net-_u103-pad2_ net-_u107-pad2_ d_inverter
+* u110 net-_u106-pad2_ net-_u110-pad2_ d_inverter
+* u106 net-_u102-pad2_ net-_u106-pad2_ d_inverter
+* u104 net-_u101-pad6_ net-_u104-pad2_ d_inverter
+* u118 net-_u113-pad5_ net-_u107-pad2_ net-_u104-pad2_ net-_u123-pad1_ net-_u118-pad5_ dbar_ff
+* u122 net-_u122-pad1_ net-_u101-pad4_ d_inverter
+* u123 net-_u123-pad1_ net-_u122-pad1_ d_inverter
+* u117 net-_u117-pad1_ net-_u116-pad1_ d_inverter
+* u113 net-_u110-pad2_ net-_u107-pad2_ net-_u104-pad2_ net-_u117-pad1_ net-_u113-pad5_ dbar_ff
+* u116 net-_u116-pad1_ net-_u101-pad5_ d_inverter
+* u124 net-_u118-pad5_ net-_u107-pad2_ net-_u104-pad2_ net-_u129-pad1_ net-_u124-pad5_ dbar_ff
+* u129 net-_u129-pad1_ net-_u128-pad1_ d_inverter
+* u134 net-_u134-pad1_ net-_u101-pad10_ d_inverter
+* u135 net-_u135-pad1_ net-_u134-pad1_ d_inverter
+* u130 net-_u124-pad5_ net-_u107-pad2_ net-_u104-pad2_ net-_u135-pad1_ unconnected-_u130-pad5_ dbar_ff
+* u128 net-_u128-pad1_ net-_u101-pad3_ d_inverter
+* u114 net-_u111-pad2_ net-_u114-pad2_ d_inverter
+* u109 net-_u101-pad14_ net-_u109-pad2_ d_inverter
+* u105 net-_u101-pad15_ net-_u105-pad2_ d_inverter
+* u111 net-_u105-pad2_ net-_u111-pad2_ d_inverter
+* u112 net-_u108-pad2_ net-_u112-pad2_ d_inverter
+* u108 net-_u101-pad1_ net-_u108-pad2_ d_inverter
+* u115 net-_u114-pad2_ net-_u112-pad2_ net-_u109-pad2_ net-_u120-pad1_ net-_u115-pad5_ dbar_ff
+* u120 net-_u120-pad1_ net-_u119-pad1_ d_inverter
+* u119 net-_u119-pad1_ net-_u101-pad13_ d_inverter
+* u126 net-_u126-pad1_ net-_u125-pad1_ d_inverter
+* u121 net-_u115-pad5_ net-_u112-pad2_ net-_u109-pad2_ net-_u126-pad1_ net-_u121-pad5_ dbar_ff
+* u125 net-_u125-pad1_ net-_u101-pad12_ d_inverter
+* u132 net-_u132-pad1_ net-_u131-pad1_ d_inverter
+* u131 net-_u131-pad1_ net-_u101-pad11_ d_inverter
+* u127 net-_u121-pad5_ net-_u112-pad2_ net-_u109-pad2_ net-_u132-pad1_ net-_u127-pad5_ dbar_ff
+* u137 net-_u137-pad1_ net-_u136-pad1_ d_inverter
+* u136 net-_u136-pad1_ net-_u101-pad2_ d_inverter
+* u133 net-_u127-pad5_ net-_u112-pad2_ net-_u109-pad2_ net-_u137-pad1_ unconnected-_u133-pad5_ dbar_ff
+a1 net-_u101-pad9_ net-_u103-pad2_ u103
+a2 net-_u101-pad7_ net-_u102-pad2_ u102
+a3 net-_u103-pad2_ net-_u107-pad2_ u107
+a4 net-_u106-pad2_ net-_u110-pad2_ u110
+a5 net-_u102-pad2_ net-_u106-pad2_ u106
+a6 net-_u101-pad6_ net-_u104-pad2_ u104
+a7 [net-_u113-pad5_ ] [net-_u107-pad2_ ] [net-_u104-pad2_ ] [net-_u123-pad1_ ] [net-_u118-pad5_ ] u118
+a8 net-_u122-pad1_ net-_u101-pad4_ u122
+a9 net-_u123-pad1_ net-_u122-pad1_ u123
+a10 net-_u117-pad1_ net-_u116-pad1_ u117
+a11 [net-_u110-pad2_ ] [net-_u107-pad2_ ] [net-_u104-pad2_ ] [net-_u117-pad1_ ] [net-_u113-pad5_ ] u113
+a12 net-_u116-pad1_ net-_u101-pad5_ u116
+a13 [net-_u118-pad5_ ] [net-_u107-pad2_ ] [net-_u104-pad2_ ] [net-_u129-pad1_ ] [net-_u124-pad5_ ] u124
+a14 net-_u129-pad1_ net-_u128-pad1_ u129
+a15 net-_u134-pad1_ net-_u101-pad10_ u134
+a16 net-_u135-pad1_ net-_u134-pad1_ u135
+a17 [net-_u124-pad5_ ] [net-_u107-pad2_ ] [net-_u104-pad2_ ] [net-_u135-pad1_ ] [unconnected-_u130-pad5_ ] u130
+a18 net-_u128-pad1_ net-_u101-pad3_ u128
+a19 net-_u111-pad2_ net-_u114-pad2_ u114
+a20 net-_u101-pad14_ net-_u109-pad2_ u109
+a21 net-_u101-pad15_ net-_u105-pad2_ u105
+a22 net-_u105-pad2_ net-_u111-pad2_ u111
+a23 net-_u108-pad2_ net-_u112-pad2_ u112
+a24 net-_u101-pad1_ net-_u108-pad2_ u108
+a25 [net-_u114-pad2_ ] [net-_u112-pad2_ ] [net-_u109-pad2_ ] [net-_u120-pad1_ ] [net-_u115-pad5_ ] u115
+a26 net-_u120-pad1_ net-_u119-pad1_ u120
+a27 net-_u119-pad1_ net-_u101-pad13_ u119
+a28 net-_u126-pad1_ net-_u125-pad1_ u126
+a29 [net-_u115-pad5_ ] [net-_u112-pad2_ ] [net-_u109-pad2_ ] [net-_u126-pad1_ ] [net-_u121-pad5_ ] u121
+a30 net-_u125-pad1_ net-_u101-pad12_ u125
+a31 net-_u132-pad1_ net-_u131-pad1_ u132
+a32 net-_u131-pad1_ net-_u101-pad11_ u131
+a33 [net-_u121-pad5_ ] [net-_u112-pad2_ ] [net-_u109-pad2_ ] [net-_u132-pad1_ ] [net-_u127-pad5_ ] u127
+a34 net-_u137-pad1_ net-_u136-pad1_ u137
+a35 net-_u136-pad1_ net-_u101-pad2_ u136
+a36 [net-_u127-pad5_ ] [net-_u112-pad2_ ] [net-_u109-pad2_ ] [net-_u137-pad1_ ] [unconnected-_u133-pad5_ ] u133
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u103 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u102 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u107 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u110 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u106 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u104 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             dbar_ff, Ngspice Name: dbar_ff
+.model u118 dbar_ff(rise_delay=10n fall_delay=10n10n input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u122 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u123 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u117 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             dbar_ff, Ngspice Name: dbar_ff
+.model u113 dbar_ff(rise_delay=10n fall_delay=10n input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u116 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             dbar_ff, Ngspice Name: dbar_ff
+.model u124 dbar_ff(rise_delay=10n fall_delay=10n input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u129 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u134 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u135 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             dbar_ff, Ngspice Name: dbar_ff
+.model u130 dbar_ff(rise_delay=10n fall_delay=10n input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u128 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u114 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u109 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u105 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u111 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u112 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u108 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             dbar_ff, Ngspice Name: dbar_ff
+.model u115 dbar_ff(rise_delay=10n fall_delay=10n input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u120 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u119 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u126 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             dbar_ff, Ngspice Name: dbar_ff
+.model u121 dbar_ff(rise_delay=10n fall_delay=10n input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u125 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u132 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u131 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             dbar_ff, Ngspice Name: dbar_ff
+.model u127 dbar_ff(rise_delay=10n fall_delay=10n input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u137 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u136 d_inverter(rise_delay=5n fall_delay=5n input_load=1.0e-12 ) 
+* Schematic Name:                             dbar_ff, Ngspice Name: dbar_ff
+.model u133 dbar_ff(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+.tran 0.1e-09 50e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

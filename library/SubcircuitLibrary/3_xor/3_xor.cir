@@ -1,0 +1,19 @@
+.title KiCad schematic
+X104 Net-_U102-Pad2_ Net-_U106-Pad2_ Net-_U105-Pad2_ Net-_U109-Pad1_ 3_and
+U109 Net-_U109-Pad1_ Net-_U109-Pad2_ Net-_U109-Pad3_ d_nor
+U111 Net-_U109-Pad3_ Net-_U112-Pad2_ d_inverter
+U108 Net-_U108-Pad1_ Net-_U108-Pad2_ Net-_U108-Pad3_ d_nor
+U110 Net-_U108-Pad3_ Net-_U112-Pad1_ d_inverter
+U113 Net-_U113-Pad1_ Net-_U101-Pad4_ d_inverter
+U112 Net-_U112-Pad1_ Net-_U112-Pad2_ Net-_U113-Pad1_ d_nor
+U101 Net-_U101-Pad1_ Net-_U101-Pad2_ Net-_U101-Pad3_ Net-_U101-Pad4_ PORT
+X103 Net-_U106-Pad2_ Net-_U107-Pad2_ Net-_U103-Pad2_ Net-_U108-Pad1_ 3_and
+U106 Net-_U104-Pad2_ Net-_U106-Pad2_ d_inverter
+X101 Net-_U104-Pad2_ Net-_U107-Pad2_ Net-_U105-Pad2_ Net-_U108-Pad2_ 3_and
+U107 Net-_U102-Pad2_ Net-_U107-Pad2_ d_inverter
+X102 Net-_U103-Pad2_ Net-_U102-Pad2_ Net-_U104-Pad2_ Net-_U109-Pad2_ 3_and
+U102 Net-_U101-Pad2_ Net-_U102-Pad2_ d_buffer
+U104 Net-_U101-Pad1_ Net-_U104-Pad2_ d_buffer
+U103 Net-_U101-Pad3_ Net-_U103-Pad2_ d_buffer
+U105 Net-_U103-Pad2_ Net-_U105-Pad2_ d_inverter
+.end

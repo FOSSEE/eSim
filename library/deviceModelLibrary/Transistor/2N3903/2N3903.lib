@@ -1,0 +1,4 @@
+ .model 2N3903 NPN( Is=6.734f Xti=3 Eg=1.11 Vaf=74 Bf=200 Ne=1.5 
++ Ise=6.734f Ikf=0.284 Xtb=1.5 Br=3 Nc=2 Isc=0 Ikr=0 Rc=1 Cjc=3p 
++ Mjc=0.33 Vjc=0.75 Fc=0.5 Cje=4p Mje=0.33 Vje=0.75 Tr=100n Tf=350p 
++ Itf=0.1 Vtf=10 Xtf=1 Rb=0.56)

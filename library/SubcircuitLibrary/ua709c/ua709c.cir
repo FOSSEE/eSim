@@ -1,0 +1,33 @@
+.title KiCad schematic
+M3 Net-_M1-Pad2_ Net-_M2-Pad1_ Net-_M1-Pad3_ gnd eSim_MOS_N
+M4 vcc Net-_M1-Pad3_ Net-_M4-Pad3_ gnd eSim_MOS_N
+U1 freq_comp_b invinput noninv_input gnd freq_output output vcc freq_comp_a PORT
+R7 vcc freq_comp_a 10k
+R1 Net-_M1-Pad3_ vcc 10k
+M8 Net-_M6-Pad2_ Net-_M6-Pad2_ gnd gnd eSim_MOS_N
+R8 Net-_R10-Pad1_ Net-_M1-Pad1_ 3.6k
+R9 Net-_M6-Pad2_ Net-_R10-Pad1_ 18k
+R3 gnd Net-_M6-Pad1_ 2.4k
+M6 Net-_M6-Pad1_ Net-_M6-Pad2_ Net-_M2-Pad3_ gnd eSim_MOS_N
+M5 freq_comp_b invinput Net-_M2-Pad3_ gnd eSim_MOS_N
+M9 Net-_M9-Pad1_ Net-_M9-Pad1_ Net-_M1-Pad1_ gnd eSim_MOS_N
+R5 freq_comp_b Net-_M4-Pad3_ 25k
+R4 Net-_M2-Pad1_ Net-_M4-Pad3_ 25k
+M7 freq_comp_a freq_comp_b Net-_M10-Pad2_ gnd eSim_MOS_N
+R6 Net-_M9-Pad1_ Net-_M10-Pad2_ 3k
+M10 freq_comp_a Net-_M10-Pad2_ Net-_M1-Pad1_ gnd eSim_MOS_N
+R11 Net-_M12-Pad1_ Net-_M11-Pad3_ 1k
+R10 Net-_R10-Pad1_ Net-_M12-Pad1_ 10k
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ gnd eSim_MOS_N
+M2 Net-_M2-Pad1_ noninv_input Net-_M2-Pad3_ gnd eSim_MOS_N
+R2 Net-_M9-Pad1_ Net-_M1-Pad2_ 3k
+M12 Net-_M12-Pad1_ Net-_M1-Pad1_ freq_output gnd eSim_MOS_N
+M14 Net-_M13-Pad2_ freq_output Net-_M14-Pad3_ gnd eSim_MOS_N
+M11 vcc freq_comp_a Net-_M11-Pad3_ gnd eSim_MOS_N
+R13 output Net-_M12-Pad1_ 30k
+R15 gnd Net-_M14-Pad3_ 75k
+M13 vcc Net-_M13-Pad2_ output gnd eSim_MOS_N
+R12 Net-_M13-Pad2_ vcc 20k
+M15 output Net-_M13-Pad2_ gnd vcc eSim_MOS_P
+R14 Net-_M14-Pad3_ freq_output 10k
+.end

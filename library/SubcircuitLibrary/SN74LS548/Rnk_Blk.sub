@@ -1,0 +1,16 @@
+* Subcircuit Rnk_Blk
+.subckt Rnk_Blk net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ 
+* h:\esim\esim\library\subcircuitlibrary\rnk_blk\rnk_blk.cir
+.include MUX_21.sub
+.include DFF_CE.sub
+.include tri_state.sub
+
+* s c m o d e
+x1 net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad1_ net-_u1-pad4_ net-_u1-pad5_ net-_x1-pad6_ DFF_CE
+x2 net-_u1-pad6_ net-_x1-pad6_ net-_u1-pad1_ net-_u1-pad4_ net-_u1-pad5_ net-_x2-pad6_ MUX_21
+x3 net-_u1-pad3_ net-_u1-pad7_ net-_x2-pad6_ net-_u1-pad4_ net-_u1-pad5_ net-_x3-pad6_ DFF_CE
+x4 net-_u1-pad8_ net-_x3-pad6_ net-_x1-pad6_ net-_u1-pad4_ net-_u1-pad5_ net-_x4-pad6_ MUX_21
+x5 net-_x4-pad6_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad9_ net-_u1-pad10_ tri_state
+* Control Statements
+
+.ends Rnk_Blk

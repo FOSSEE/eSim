@@ -1,0 +1,10 @@
+.title KiCad schematic
+X1 1G 1A 1Y 2G 2A 2Y GND unconnected-_X1-Pad8_ unconnected-_X1-Pad9_ unconnected-_X1-Pad10_ unconnected-_X1-Pad11_ unconnected-_X1-Pad12_ unconnected-_X1-Pad13_ Net-_X1-Pad14_ 74LS126
+v1 Net-_X1-Pad14_ GND 5
+v_1G1 1G GND DC
+v_1A1 1A GND DC
+v_2G1 2G GND DC
+R2 GND 2Y 10k
+v_2A1 2A GND DC
+R1 GND 1Y 10k
+.end
