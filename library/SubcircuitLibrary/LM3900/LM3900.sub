@@ -1,0 +1,18 @@
+* Subcircuit LM3900
+.subckt LM3900 net-_q1-pad1_ net-_d1-pad1_ net-_i2-pad2_ net-_i1-pad2_ net-_c1-pad2_ 
+* c:\fossee\esim\library\subcircuitlibrary\lm3900\lm3900.cir
+.include PNP.lib
+.include NPN.lib
+.include D.lib
+q1 net-_q1-pad1_ net-_d1-pad1_ net-_c1-pad2_ Q2N2222
+q5 net-_i1-pad2_ net-_i1-pad1_ net-_i2-pad2_ Q2N2222
+q2 net-_c1-pad1_ net-_q1-pad1_ net-_c1-pad2_ Q2N2222
+q4 net-_c1-pad2_ net-_c1-pad1_ net-_i2-pad2_ Q2N2907A
+q3 net-_i2-pad2_ net-_c1-pad1_ net-_i1-pad1_ Q2N2907A
+d1 net-_d1-pad1_ net-_c1-pad2_ 1N4148
+i2  net-_c1-pad2_ net-_i2-pad2_ 1.3m
+i1  net-_i1-pad1_ net-_i1-pad2_ 200u
+c1  net-_c1-pad1_ net-_c1-pad2_ 10p
+* Control Statements
+
+.ends LM3900
