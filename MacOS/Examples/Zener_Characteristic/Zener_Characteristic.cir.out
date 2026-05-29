@@ -1,0 +1,22 @@
+* /home/fossee/esim-workspace/zener_characteristic/zener_characteristic.cir
+
+v1 in gnd  dc 10
+r1  in net-_r1-pad2_ 1k
+* u2  net-_r1-pad2_ out plot_i2
+* u3  out plot_v1
+* u1  gnd out zener
+v_u2 net-_r1-pad2_ out 0
+a1 gnd out u1
+* Schematic Name: zener, NgSpice Name: zener
+.model u1 zener(n_forward=1.0 v_breakdown=5.6 i_sat=1.0e-12 limit_switch=FALSE i_breakdown=2.0e-2 ) 
+.dc v1 0e-00 8e-00 0.05e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot i(v_u2)
+plot v(out)
+.endc
+.end

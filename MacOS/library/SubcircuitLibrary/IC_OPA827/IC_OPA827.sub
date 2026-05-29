@@ -1,0 +1,35 @@
+* Subcircuit IC_OPA827
+.subckt IC_OPA827 net-_j1-pad2_ net-_j1-pad1_ net-_j3-pad2_ net-_c1-pad1_ net-_q13-pad3_ 
+* c:\fossee\esim\library\subcircuitlibrary\ic_opa827\ic_opa827.cir
+.include NJF.lib
+.include NPN.lib
+.include PNP.lib
+q1 net-_c1-pad1_ net-_q1-pad2_ net-_j1-pad3_ Q2N2907A
+q3 net-_q1-pad2_ net-_q1-pad2_ net-_j2-pad3_ Q2N2907A
+q4 net-_q1-pad2_ net-_q1-pad2_ net-_j3-pad1_ Q2N2907A
+q5 net-_c2-pad2_ net-_q1-pad2_ net-_j4-pad1_ Q2N2907A
+q8 net-_q7-pad1_ net-_q7-pad1_ net-_j1-pad1_ Q2N2907A
+q9 net-_c2-pad1_ net-_q7-pad1_ net-_j1-pad1_ Q2N2907A
+q2 net-_c1-pad1_ net-_q10-pad3_ net-_q2-pad3_ Q2N2222
+q6 net-_c2-pad2_ net-_q10-pad3_ net-_q6-pad3_ Q2N2222
+q7 net-_q7-pad1_ net-_c1-pad1_ net-_q10-pad3_ Q2N2222
+q10 net-_c2-pad1_ net-_c2-pad2_ net-_q10-pad3_ Q2N2222
+q11 net-_j1-pad1_ net-_c2-pad1_ net-_q11-pad3_ Q2N2222
+q12 net-_c1-pad1_ net-_c2-pad1_ net-_q12-pad3_ Q2N2907A
+q13 net-_j1-pad1_ net-_q12-pad3_ net-_q13-pad3_ Q2N2222
+q14 net-_c1-pad1_ net-_q11-pad3_ net-_q13-pad3_ Q2N2907A
+c1  net-_c1-pad1_ net-_c1-pad1_ 0.1u
+c2  net-_c2-pad1_ net-_c2-pad2_ 0.1u
+r1  net-_q2-pad3_ net-_c1-pad1_ 200
+r2  net-_q6-pad3_ net-_c1-pad1_ 200
+j1 net-_j1-pad1_ net-_j1-pad2_ net-_j1-pad3_ J2N3819
+j2 net-_j1-pad1_ net-_j1-pad2_ net-_j2-pad3_ J2N3819
+j3 net-_j3-pad1_ net-_j3-pad2_ net-_j1-pad1_ J2N3819
+j4 net-_j4-pad1_ net-_j3-pad2_ net-_j1-pad1_ J2N3819
+r3  net-_q1-pad2_ net-_c1-pad1_ 5k
+r4  net-_q10-pad3_ net-_c1-pad1_ 5k
+r5  net-_q11-pad3_ net-_c1-pad1_ 500
+r6  net-_j1-pad1_ net-_q12-pad3_ 10
+* Control Statements
+
+.ends IC_OPA827

@@ -1,0 +1,14 @@
+<model>
+<name>aswitch</name>
+<type>Analog</type>
+<node_number>3</node_number>
+<title>Add Parameters for Analog Switch</title>
+<split>1-NV:2-V</split>
+<param>
+	<cntl_off default="0.0">Enter Control OFF value (default=0.0)</cntl_off>
+	<cntl_on default="1.0">Enter Control ON value(default=1.0)</cntl_on>
+	<r_off default="1.0e12">Enter OFF Resistance (default=1.0e12)</r_off>
+	<r_on default="1.0">Enter ON Resistance (default=1.0)</r_on>
+	<log default="TRUE">Enter Log (default=TRUE)</log>
+</param>
+</model>

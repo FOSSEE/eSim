@@ -1,0 +1,31 @@
+* Subcircuit 74HC157
+.subckt 74HC157 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ 
+* c:\fossee\esim\library\subcircuitlibrary\74hc157\74hc157.cir
+.include mux.sub
+x1 net-_u1-pad9_ net-_u1-pad1_ net-_u1-pad2_ net-_u3-pad1_ mux
+x2 net-_u1-pad9_ net-_u1-pad3_ net-_u1-pad4_ net-_u4-pad1_ mux
+x3 net-_u1-pad9_ net-_u1-pad5_ net-_u1-pad6_ net-_u5-pad1_ mux
+x4 net-_u1-pad9_ net-_u1-pad7_ net-_u1-pad8_ net-_u6-pad1_ mux
+* u3  net-_u3-pad1_ net-_u2-pad2_ net-_u1-pad11_ d_and
+* u4  net-_u4-pad1_ net-_u2-pad2_ net-_u1-pad12_ d_and
+* u5  net-_u5-pad1_ net-_u2-pad2_ net-_u1-pad13_ d_and
+* u6  net-_u6-pad1_ net-_u2-pad2_ net-_u1-pad14_ d_and
+* u2  net-_u1-pad10_ net-_u2-pad2_ d_inverter
+a1 [net-_u3-pad1_ net-_u2-pad2_ ] net-_u1-pad11_ u3
+a2 [net-_u4-pad1_ net-_u2-pad2_ ] net-_u1-pad12_ u4
+a3 [net-_u5-pad1_ net-_u2-pad2_ ] net-_u1-pad13_ u5
+a4 [net-_u6-pad1_ net-_u2-pad2_ ] net-_u1-pad14_ u6
+a5 net-_u1-pad10_ net-_u2-pad2_ u2
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u6 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74HC157

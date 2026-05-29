@@ -1,0 +1,11 @@
+* Subcircuit SN74LS00
+.subckt SN74LS00 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ ? net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ 
+* c:\fossee\esim\library\subcircuitlibrary\sn74ls00\sn74ls00.cir
+.include NAND_GATE_FINAL.sub
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad14_ NAND_GATE_FINAL
+x3 net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad14_ NAND_GATE_FINAL
+x2 net-_u1-pad10_ net-_u1-pad9_ net-_u1-pad8_ net-_u1-pad14_ NAND_GATE_FINAL
+x4 net-_u1-pad13_ net-_u1-pad12_ net-_u1-pad11_ net-_u1-pad14_ NAND_GATE_FINAL
+* Control Statements
+
+.ends SN74LS00

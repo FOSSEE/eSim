@@ -1,0 +1,24 @@
+* c:\fossee\esim\library\subcircuitlibrary\nand_gate_final\nand_gate_final.cir
+
+.include D.lib
+.include NPN.lib
+q2 net-_q1-pad1_ net-_q1-pad2_ net-_q2-pad3_ Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+r1  net-_r1-pad1_ net-_q1-pad2_ 500
+r2  net-_r1-pad1_ net-_q3-pad1_ 60k
+r4  net-_q4-pad1_ net-_r1-pad1_ 10k
+q4 net-_q4-pad1_ net-_q3-pad1_ net-_d1-pad1_ Q2N2222
+q3 net-_q3-pad1_ net-_q1-pad1_ net-_q3-pad3_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q5 net-_d1-pad2_ net-_q3-pad3_ gnd Q2N2222
+r3  net-_q3-pad3_ gnd 10k
+* u1  net-_q1-pad3_ net-_q2-pad3_ net-_d1-pad2_ net-_r1-pad1_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

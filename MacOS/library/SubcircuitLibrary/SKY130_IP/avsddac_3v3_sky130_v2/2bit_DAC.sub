@@ -1,0 +1,14 @@
+* Subcircuit 2bit_DAC
+.subckt 2bit_DAC /vrefh /vrefl /d0 /d1 /vdd /vout 
+* c:\fossee\esim\library\subcircuitlibrary\2bit_dac\2bit_dac.cir
+.include switch.sub
+r1  /vrefh net-_r1-pad2_ 250
+r2  net-_r1-pad2_ net-_r2-pad2_ 250
+r3  net-_r2-pad2_ net-_r3-pad2_ 250
+r4  net-_r3-pad2_ /vrefl 250
+x1 /d0 /vdd net-_r1-pad2_ net-_r2-pad2_ net-_x1-pad5_ switch
+x2 /d0 /vdd net-_r3-pad2_ /vrefl net-_x2-pad5_ switch
+x3 /d1 /vdd net-_x1-pad5_ net-_x2-pad5_ /vout switch
+* Control Statements
+
+.ends 2bit_DAC

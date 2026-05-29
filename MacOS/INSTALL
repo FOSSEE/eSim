@@ -1,0 +1,11 @@
+# eSim installation instruction for Developers
+
+run script files in order:
+
+1. ./build_esim.sh
+2. ./bundle_esim.sh
+3. ./create_pkg.sh
+
+# eSim installation instruction for Users
+
+double click on the eSim.pkg and follow along the process.

@@ -1,0 +1,36 @@
+* C:\Users\Aditya\eSim-Workspace\SN54HC148\SN54HC148.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 08/24/24 16:53:08
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v2  Net-_X1-Pad16_ EI DC		
+R1  EI A2 1000k		
+R2  EI A1 1000k		
+R3  EO EI 1000k		
+R4  GS EI 1000k		
+R5  A0 EI 1000k		
+X1  4 5 6 7 EI A2 A1 EI A0 0 1 2 3 GS EO Net-_X1-Pad16_ SN54HC148_IC		
+v1  4 EI pulse		
+v3  5 EI pulse		
+v4  6 EI pulse		
+v5  7 EI pulse		
+v6  0 EI pulse		
+v7  1 EI pulse		
+v9  3 EI pulse		
+v8  2 EI pulse		
+U1  4 plot_v1		
+U2  5 plot_v1		
+U3  6 plot_v1		
+U4  7 plot_v1		
+U5  A2 plot_v1		
+U6  A1 plot_v1		
+U7  A0 plot_v1		
+U8  0 plot_v1		
+U9  1 plot_v1		
+U10  2 plot_v1		
+U11  3 plot_v1		
+
+.end

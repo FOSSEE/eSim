@@ -1,0 +1,19 @@
+* C:\Users\malli\eSim\src\SubcircuitLibrary\c_gate\c_gate.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 03/26/19 19:11:36
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U2-Pad2_ Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_U6-Pad2_ Net-_U8-Pad1_ 5_and		
+U8  Net-_U8-Pad1_ Net-_U7-Pad2_ Net-_U1-Pad7_ d_and		
+U2  Net-_U1-Pad1_ Net-_U2-Pad2_ d_inverter		
+U3  Net-_U1-Pad2_ Net-_U3-Pad2_ d_inverter		
+U4  Net-_U1-Pad3_ Net-_U4-Pad2_ d_inverter		
+U5  Net-_U1-Pad4_ Net-_U5-Pad2_ d_inverter		
+U6  Net-_U1-Pad5_ Net-_U6-Pad2_ d_inverter		
+U7  Net-_U1-Pad6_ Net-_U7-Pad2_ d_inverter		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ PORT		
+
+.end

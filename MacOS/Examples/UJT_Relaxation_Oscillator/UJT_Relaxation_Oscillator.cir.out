@@ -1,0 +1,22 @@
+* /home/saurabh/esim-workspace/ujt_relaxation_oscillator/ujt_relaxation_oscillator.cir
+
+.include ujt.sub
+r1  net-_c1-pad1_ net-_r1-pad2_ 95.3k
+r2  vb2 net-_r1-pad2_ 4.7k
+r3  gnd vb1 4.7k
+c1  net-_c1-pad1_ gnd 100n
+v1 net-_r1-pad2_ gnd  dc 15
+x1 net-_c1-pad1_ vb1 vb2 ujt
+* u1  vb2 plot_v1
+* u2  vb1 plot_v1
+.tran 5e-06 10e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(vb2)
+plot v(vb1)
+.endc
+.end

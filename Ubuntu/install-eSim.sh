@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/bin/bash
 #=============================================================================
 #          FILE: install-eSim.sh
 # 
@@ -13,39 +13,23 @@
 #          BUGS: ---
 #         NOTES: ---
 #       AUTHORS: Fahim Khan, Rahul Paknikar, Saurabh Bansode,
-#                Sumanto Kar, Partha Singha Roy
+#                Sumanto Kar, Partha Singha Roy, Jayanth Tatineni,
+#                Anshul Verma, Shiva Krishna Sangati, Harsha Narayana P
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
 #      REVISION: Sunday 30 March 2024 18:40
 #=============================================================================
 
-# All variables goes here
-config_dir="$HOME/.esim"
-config_file="config.ini"
-eSim_Home=`pwd`
-ngspiceFlag=0
-
-## All Functions goes here
-
-error_exit()
-{
-
-    echo -e "\n\nError! Kindly resolve above error(s) and try again."
-    echo -e "\nAborting Installation...\n"
-
+# Function to detect Ubuntu version and full version string
+get_ubuntu_version() {
+    VERSION_ID=$(grep "^VERSION_ID" /etc/os-release | cut -d '"' -f 2)
+    FULL_VERSION=$(lsb_release -d | grep -oP '\d+\.\d+\.\d+')
+    echo "Detected Ubuntu Version: $FULL_VERSION"
 }
 
-
-function createConfigFile
-{
-
-    # Creating config.ini file and adding configuration information
-    # Check if config file is present
-    if [ -d $config_dir ];then
-        rm $config_dir/$config_file && touch $config_dir/$config_file
-    else
-        mkdir $config_dir && touch $config_dir/$config_file
-    fi
+# Function to choose and run the appropriate script
+run_version_script() {
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/install-eSim-scripts"
     
     echo "[eSim]" >> $config_dir/$config_file
     echo "eSim_HOME = $eSim_Home" >> $config_dir/$config_file
@@ -123,6 +107,7 @@ function installKicad {
     echo "KiCad installation completed successfully!"
 }
 
+# --- Main Execution Starts Here ---
 
 function installDependency {
     set +e      # Temporary disable exit on error
@@ -318,122 +303,12 @@ else
     exit 1;
 fi
 
-## Checking flags
-
-if [ $option == "--install" ];then
-
-    set -e  # Set exit option immediately on error
-    set -E  # inherit ERR trap by shell functions
-
-    # Trap on function error_exit before exiting on error
-    trap error_exit ERR
-
-
-    echo "Enter proxy details if you are connected to internet thorugh proxy"
-    
-    echo -n "Is your internet connection behind proxy? (y/n): "
-    read getProxy
-    if [ $getProxy == "y" -o $getProxy == "Y" ];then
-        echo -n 'Proxy Hostname :'
-        read proxyHostname
-
-        echo -n 'Proxy Port :'
-        read proxyPort
-
-        echo -n username@$proxyHostname:$proxyPort :
-        read username
-
-        echo -n 'Password :'
-        read -s passwd
-
-        unset http_proxy
-        unset https_proxy
-        unset HTTP_PROXY
-        unset HTTPS_PROXY
-        unset ftp_proxy
-        unset FTP_PROXY
-
-        export http_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-        export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-        export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-        export HTTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
-        export HTTPS_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
-        export ftp_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-        export FTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
-
-        echo "Install with proxy"
-
-    elif [ $getProxy == "n" -o $getProxy == "N" ];then
-        echo "Install without proxy"
-    
-    else
-        echo "Please select the right option"
-        exit 0    
-    fi
-
-    # Calling functions
-    createConfigFile
-    installDependency
-    installKicad
-    copyKicadLibrary
-    installNghdl
-    installSky130Pdk
-    createDesktopStartScript
-
-    if [ $? -ne 0 ];then
-        echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
-        exit 0
-    fi
-
-    echo "-----------------eSim Installed Successfully-----------------"
-    echo "Type \"esim\" in Terminal to launch it"
-    echo "or double click on \"eSim\" icon placed on Desktop"
-
-
-elif [ $option == "--uninstall" ];then
-    echo -n "Are you sure? It will remove eSim completely including KiCad, Makerchip, NGHDL and SKY130 PDK along with their models and libraries (y/n):"
-    read getConfirmation
-    if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
-        echo "Removing eSim............................"
-        sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim /usr/share/applications/esim.desktop
-        echo "Removing KiCad..........................."
-        sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-        sudo rm -rf /usr/share/kicad
-	sudo rm /etc/apt/sources.list.d/kicad*
-        rm -rf $HOME/.config/kicad/6.0
-
-        echo "Removing Virtual env......................."
-        sudo rm -r $config_dir/env
-
-        echo "Removing SKY130 PDK......................"
-        sudo rm -R /usr/share/local/sky130_fd_pr
-
-        echo "Removing NGHDL..........................."
-        rm -rf library/modelParamXML/Nghdl/*
-        rm -rf library/modelParamXML/Ngveri/*
-        cd nghdl/
-        if [ $? -eq 0 ];then
-        	chmod +x install-nghdl.sh
-    	    ./install-nghdl.sh --uninstall
-    	    cd ../
-    	    rm -rf nghdl
-            if [ $? -eq 0 ];then
-                echo -e "----------------eSim Uninstalled Successfully----------------"
-            else
-                echo -e "\nError while removing some files/directories in \"nghdl\". Please remove it manually"
-            fi
-        else
-            echo -e "\nCannot find \"nghdl\" directory. Please remove it manually"
-        fi
-    elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
-        exit 0
-    else 
-        echo "Please select the right option."
-        exit 0
-    fi
-
-else 
-    echo "Please select the proper operation."
-    echo "--install"
-    echo "--uninstall"
+ARGUMENT=$1
+if [[ "$ARGUMENT" != "--install" && "$ARGUMENT" != "--uninstall" ]]; then
+    echo "Invalid argument: $ARGUMENT"
+    echo "Usage: $0 --install | --uninstall"
+    exit 1
 fi
+
+get_ubuntu_version
+run_version_script

@@ -1,0 +1,50 @@
+* c:\fossee\esim\library\subcircuitlibrary\op497_subcircuit\op497_subcircuit.cir
+
+.include NPN.lib
+.include PNP.lib
+.include D.lib
+r1  net-_r1-pad1_ net-_q12-pad1_ 2.5k
+q1 net-_q1-pad1_ ? net-_q1-pad3_ Q2N2222
+q2 net-_q1-pad1_ net-_q1-pad3_ net-_q12-pad1_ Q2N2222
+q3 net-_q3-pad1_ net-_q12-pad1_ net-_c3-pad2_ Q2N2222
+r2  net-_r2-pad1_ net-_q1-pad3_ 2.5k
+r3  net-_q1-pad1_ net-_q7-pad3_ 10k
+q6 net-_q5-pad3_ net-_q1-pad3_ net-_c3-pad2_ Q2N2222
+q4 net-_c1-pad2_ net-_c1-pad1_ net-_q3-pad1_ Q2N2222
+q5 net-_c2-pad1_ net-_c1-pad1_ net-_q5-pad3_ Q2N2222
+r4  net-_c1-pad1_ net-_c1-pad2_ 10k
+r5  net-_c1-pad1_ net-_c2-pad1_ 10k
+q8 net-_c1-pad1_ net-_c1-pad1_ net-_q7-pad3_ Q2N2222
+q7 net-_c3-pad2_ net-_c3-pad2_ net-_q7-pad3_ Q2N2907A
+q9 net-_q10-pad3_ net-_q14-pad1_ net-_c3-pad2_ Q2N2222
+q10 net-_q1-pad3_ net-_c3-pad2_ net-_q10-pad3_ Q2N2907A
+q12 net-_q12-pad1_ net-_c3-pad2_ net-_q10-pad3_ Q2N2907A
+q14 net-_q14-pad1_ net-_c3-pad2_ net-_q10-pad3_ Q2N2907A
+q11 net-_q10-pad3_ net-_c3-pad2_ net-_c1-pad1_ Q2N2907A
+q13 net-_c3-pad2_ net-_c3-pad2_ net-_c1-pad1_ Q2N2907A
+c1  net-_c1-pad1_ net-_c1-pad2_ 10pf
+q15 net-_q15-pad1_ net-_c1-pad2_ net-_c1-pad1_ Q2N2907A
+q18 net-_c3-pad1_ net-_c2-pad1_ net-_c1-pad1_ Q2N2907A
+c2  net-_c2-pad1_ net-_c2-pad2_ 10pf
+r6  net-_c2-pad2_ net-_c3-pad1_ 10k
+d1 net-_c1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d1-pad2_ net-_c3-pad2_ 1N4148
+q16 net-_q15-pad1_ net-_q15-pad1_ net-_c3-pad2_ Q2N2222
+q17 net-_c3-pad1_ net-_q15-pad1_ net-_c3-pad2_ Q2N2222
+c3  net-_c3-pad1_ net-_c3-pad2_ 10uf
+q19 net-_q19-pad1_ net-_c3-pad1_ net-_c3-pad2_ Q2N2222
+q21 net-_c3-pad2_ net-_c3-pad2_ net-_d3-pad2_ Q2N2907A
+q23 net-_c3-pad2_ net-_c3-pad2_ net-_q22-pad3_ Q2N2907A
+d3 net-_c1-pad1_ net-_d3-pad2_ 1N4148
+q20 net-_c1-pad1_ net-_c1-pad1_ net-_q19-pad1_ Q2N2222
+q22 net-_c1-pad1_ net-_c1-pad1_ net-_q22-pad3_ Q2N2222
+* u1  net-_r1-pad1_ net-_r2-pad1_ net-_c1-pad1_ net-_c3-pad2_ net-_q22-pad3_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

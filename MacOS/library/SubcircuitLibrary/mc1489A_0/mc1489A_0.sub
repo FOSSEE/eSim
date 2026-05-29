@@ -1,0 +1,18 @@
+* Subcircuit mc1489A_0
+.subckt mc1489A_0 net-_r1-pad1_ net-_d1-pad2_ net-_r4-pad1_ net-_q3-pad1_ net-_d1-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\mc1489a_0\mc1489a_0.cir
+.include NPN.lib
+.include D.lib
+q1 net-_q1-pad1_ net-_d1-pad2_ net-_d1-pad1_ Q2N2222
+q2 net-_q2-pad1_ net-_q1-pad1_ net-_d1-pad1_ Q2N2222
+q3 net-_q3-pad1_ net-_q2-pad1_ net-_d1-pad1_ Q2N2222
+r2  net-_d1-pad2_ net-_d1-pad1_ 10k
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r5  net-_r4-pad1_ net-_q2-pad1_ 5k
+r4  net-_r4-pad1_ net-_q1-pad1_ 9k
+r6  net-_r4-pad1_ net-_q3-pad1_ 1.7k
+r1  net-_r1-pad1_ net-_d1-pad2_ 3.8k
+r3  net-_d1-pad2_ net-_q1-pad1_ 1.6k
+* Control Statements
+
+.ends mc1489A_0

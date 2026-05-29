@@ -1,0 +1,96 @@
+* c:\users\malli\esim\src\subcircuitlibrary\4028\4028.cir
+
+* u9  net-_u1-pad13_ net-_u11-pad1_ net-_u16-pad1_ d_nor
+* u10  net-_u1-pad10_ net-_u10-pad2_ net-_u10-pad3_ d_nor
+* u11  net-_u11-pad1_ net-_u10-pad2_ net-_u11-pad3_ d_nor
+* u12  net-_u1-pad12_ net-_u1-pad11_ net-_u12-pad3_ d_nor
+* u6  net-_u4-pad2_ net-_u1-pad11_ net-_u13-pad2_ d_nor
+* u7  net-_u1-pad12_ net-_u5-pad2_ net-_u14-pad2_ d_nor
+* u8  net-_u1-pad10_ net-_u1-pad13_ net-_u14-pad1_ d_nor
+* u2  net-_u1-pad10_ net-_u11-pad1_ d_inverter
+* u3  net-_u1-pad13_ net-_u10-pad2_ d_inverter
+* u4  net-_u1-pad12_ net-_u4-pad2_ d_inverter
+* u5  net-_u1-pad11_ net-_u5-pad2_ d_inverter
+* u15  net-_u14-pad1_ net-_u12-pad3_ net-_u1-pad3_ d_and
+* u16  net-_u16-pad1_ net-_u12-pad3_ net-_u1-pad14_ d_and
+* u17  net-_u10-pad3_ net-_u12-pad3_ net-_u1-pad2_ d_and
+* u18  net-_u11-pad3_ net-_u12-pad3_ net-_u1-pad15_ d_and
+* u19  net-_u14-pad1_ net-_u13-pad2_ net-_u1-pad1_ d_and
+* u20  net-_u16-pad1_ net-_u13-pad2_ net-_u1-pad6_ d_and
+* u21  net-_u10-pad3_ net-_u13-pad2_ net-_u1-pad7_ d_and
+* u13  net-_u11-pad3_ net-_u13-pad2_ net-_u1-pad4_ d_and
+* u14  net-_u14-pad1_ net-_u14-pad2_ net-_u1-pad9_ d_and
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ ? net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ ? port
+* u22  net-_u16-pad1_ net-_u14-pad2_ net-_u1-pad5_ d_and
+a1 [net-_u1-pad13_ net-_u11-pad1_ ] net-_u16-pad1_ u9
+a2 [net-_u1-pad10_ net-_u10-pad2_ ] net-_u10-pad3_ u10
+a3 [net-_u11-pad1_ net-_u10-pad2_ ] net-_u11-pad3_ u11
+a4 [net-_u1-pad12_ net-_u1-pad11_ ] net-_u12-pad3_ u12
+a5 [net-_u4-pad2_ net-_u1-pad11_ ] net-_u13-pad2_ u6
+a6 [net-_u1-pad12_ net-_u5-pad2_ ] net-_u14-pad2_ u7
+a7 [net-_u1-pad10_ net-_u1-pad13_ ] net-_u14-pad1_ u8
+a8 net-_u1-pad10_ net-_u11-pad1_ u2
+a9 net-_u1-pad13_ net-_u10-pad2_ u3
+a10 net-_u1-pad12_ net-_u4-pad2_ u4
+a11 net-_u1-pad11_ net-_u5-pad2_ u5
+a12 [net-_u14-pad1_ net-_u12-pad3_ ] net-_u1-pad3_ u15
+a13 [net-_u16-pad1_ net-_u12-pad3_ ] net-_u1-pad14_ u16
+a14 [net-_u10-pad3_ net-_u12-pad3_ ] net-_u1-pad2_ u17
+a15 [net-_u11-pad3_ net-_u12-pad3_ ] net-_u1-pad15_ u18
+a16 [net-_u14-pad1_ net-_u13-pad2_ ] net-_u1-pad1_ u19
+a17 [net-_u16-pad1_ net-_u13-pad2_ ] net-_u1-pad6_ u20
+a18 [net-_u10-pad3_ net-_u13-pad2_ ] net-_u1-pad7_ u21
+a19 [net-_u11-pad3_ net-_u13-pad2_ ] net-_u1-pad4_ u13
+a20 [net-_u14-pad1_ net-_u14-pad2_ ] net-_u1-pad9_ u14
+a21 [net-_u16-pad1_ net-_u14-pad2_ ] net-_u1-pad5_ u22
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u9 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u10 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u11 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u12 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u6 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u7 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_nor, NgSpice Name: d_nor
+.model u8 d_nor(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_inverter, NgSpice Name: d_inverter
+.model u5 d_inverter(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u15 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u16 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u17 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u18 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u19 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u20 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u21 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u13 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u14 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+* Schematic Name: d_and, NgSpice Name: d_and
+.model u22 d_and(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

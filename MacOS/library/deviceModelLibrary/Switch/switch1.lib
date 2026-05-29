@@ -1,0 +1,3 @@
+*****************Creation of lib file for switch****************************
+
+.model switch1 sw( vt=0.05 vh=1 ron=1 roff=1e12 )

@@ -1,0 +1,743 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:LM_7809-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L eSim_NPN Q3
+U 1 1 627E1EA8
+P 4050 5650
+F 0 "Q3" H 3950 5700 50  0000 R CNN
+F 1 "eSim_NPN" H 4000 5800 50  0000 R CNN
+F 2 "" H 4250 5750 29  0000 C CNN
+F 3 "" H 4050 5650 60  0000 C CNN
+	1    4050 5650
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q6
+U 1 1 627E1EA9
+P 4850 5650
+F 0 "Q6" H 4750 5700 50  0000 R CNN
+F 1 "eSim_NPN" H 4800 5800 50  0000 R CNN
+F 2 "" H 5050 5750 29  0000 C CNN
+F 3 "" H 4850 5650 60  0000 C CNN
+	1    4850 5650
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q4
+U 1 1 627E1EAA
+P 4350 5050
+F 0 "Q4" H 4250 5100 50  0000 R CNN
+F 1 "eSim_NPN" H 4300 5200 50  0000 R CNN
+F 2 "" H 4550 5150 29  0000 C CNN
+F 3 "" H 4350 5050 60  0000 C CNN
+	1    4350 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q14
+U 1 1 627E1EAB
+P 6100 5850
+F 0 "Q14" H 6000 5900 50  0000 R CNN
+F 1 "eSim_NPN" H 6050 6000 50  0000 R CNN
+F 2 "" H 6300 5950 29  0000 C CNN
+F 3 "" H 6100 5850 60  0000 C CNN
+	1    6100 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q11
+U 1 1 627E1EAC
+P 5500 5450
+F 0 "Q11" H 5400 5500 50  0000 R CNN
+F 1 "eSim_NPN" H 5450 5600 50  0000 R CNN
+F 2 "" H 5700 5550 29  0000 C CNN
+F 3 "" H 5500 5450 60  0000 C CNN
+	1    5500 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q5
+U 1 1 627E1EAD
+P 4550 4250
+F 0 "Q5" H 4450 4300 50  0000 R CNN
+F 1 "eSim_NPN" H 4500 4400 50  0000 R CNN
+F 2 "" H 4750 4350 29  0000 C CNN
+F 3 "" H 4550 4250 60  0000 C CNN
+	1    4550 4250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q10
+U 1 1 627E1EAE
+P 5250 3850
+F 0 "Q10" H 5150 3900 50  0000 R CNN
+F 1 "eSim_NPN" H 5200 4000 50  0000 R CNN
+F 2 "" H 5450 3950 29  0000 C CNN
+F 3 "" H 5250 3850 60  0000 C CNN
+	1    5250 3850
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q8
+U 1 1 627E1EAF
+P 4900 3500
+F 0 "Q8" H 4800 3550 50  0000 R CNN
+F 1 "eSim_NPN" H 4850 3650 50  0000 R CNN
+F 2 "" H 5100 3600 29  0000 C CNN
+F 3 "" H 4900 3500 60  0000 C CNN
+	1    4900 3500
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q1
+U 1 1 627E1EB0
+P 3600 2550
+F 0 "Q1" H 3500 2600 50  0000 R CNN
+F 1 "eSim_NPN" H 3550 2700 50  0000 R CNN
+F 2 "" H 3800 2650 29  0000 C CNN
+F 3 "" H 3600 2550 60  0000 C CNN
+	1    3600 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q2
+U 1 1 627E1EB1
+P 4050 3750
+F 0 "Q2" H 3950 3800 50  0000 R CNN
+F 1 "eSim_NPN" H 4000 3900 50  0000 R CNN
+F 2 "" H 4250 3850 29  0000 C CNN
+F 3 "" H 4050 3750 60  0000 C CNN
+	1    4050 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q9
+U 1 1 627E1EB2
+P 5050 2800
+F 0 "Q9" H 4950 2850 50  0000 R CNN
+F 1 "eSim_NPN" H 5000 2950 50  0000 R CNN
+F 2 "" H 5250 2900 29  0000 C CNN
+F 3 "" H 5050 2800 60  0000 C CNN
+	1    5050 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q16
+U 1 1 627E1EB3
+P 6600 2000
+F 0 "Q16" H 6500 2050 50  0000 R CNN
+F 1 "eSim_NPN" H 6550 2150 50  0000 R CNN
+F 2 "" H 6800 2100 29  0000 C CNN
+F 3 "" H 6600 2000 60  0000 C CNN
+	1    6600 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q17
+U 1 1 627E1EB4
+P 7250 2800
+F 0 "Q17" H 7150 2850 50  0000 R CNN
+F 1 "eSim_NPN" H 7200 2950 50  0000 R CNN
+F 2 "" H 7450 2900 29  0000 C CNN
+F 3 "" H 7250 2800 60  0000 C CNN
+	1    7250 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q13
+U 1 1 627E1EB5
+P 6000 3050
+F 0 "Q13" H 5900 3100 50  0000 R CNN
+F 1 "eSim_NPN" H 5950 3200 50  0000 R CNN
+F 2 "" H 6200 3150 29  0000 C CNN
+F 3 "" H 6000 3050 60  0000 C CNN
+	1    6000 3050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_PNP Q7
+U 1 1 627E1EB6
+P 4900 1500
+F 0 "Q7" H 4800 1550 50  0000 R CNN
+F 1 "eSim_PNP" H 4850 1650 50  0000 R CNN
+F 2 "" H 5100 1600 29  0000 C CNN
+F 3 "" H 4900 1500 60  0000 C CNN
+	1    4900 1500
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_PNP Q12
+U 1 1 627E1EB7
+P 5700 1500
+F 0 "Q12" H 5600 1550 50  0000 R CNN
+F 1 "eSim_PNP" H 5650 1650 50  0000 R CNN
+F 2 "" H 5900 1600 29  0000 C CNN
+F 3 "" H 5700 1500 60  0000 C CNN
+	1    5700 1500
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_PNP Q15
+U 1 1 627E1EB8
+P 6400 4500
+F 0 "Q15" H 6300 4550 50  0000 R CNN
+F 1 "eSim_PNP" H 6350 4650 50  0000 R CNN
+F 2 "" H 6600 4600 29  0000 C CNN
+F 3 "" H 6400 4500 60  0000 C CNN
+	1    6400 4500
+	1    0    0    1   
+$EndComp
+$Comp
+L resistor R6
+U 1 1 627E1EB9
+P 4100 4600
+F 0 "R6" H 4150 4730 50  0000 C CNN
+F 1 "1K" H 4150 4550 50  0000 C CNN
+F 2 "" H 4150 4580 30  0000 C CNN
+F 3 "" V 4150 4650 30  0000 C CNN
+	1    4100 4600
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R10
+U 1 1 627E1EBA
+P 5100 4250
+F 0 "R10" H 5150 4400 50  0000 C CNN
+F 1 "6K" H 5150 4200 50  0000 C CNN
+F 2 "" H 5150 4230 30  0000 C CNN
+F 3 "" V 5150 4300 30  0000 C CNN
+	1    5100 4250
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R11
+U 1 1 627E1EBB
+P 5100 4700
+F 0 "R11" H 5150 4850 50  0000 C CNN
+F 1 "20K" H 5150 4650 50  0000 C CNN
+F 2 "" H 5150 4680 30  0000 C CNN
+F 3 "" V 5150 4750 30  0000 C CNN
+	1    5100 4700
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R7
+U 1 1 627E1EBC
+P 4400 6050
+F 0 "R7" H 4450 6200 50  0000 C CNN
+F 1 "6K" H 4450 6000 50  0000 C CNN
+F 2 "" H 4450 6030 30  0000 C CNN
+F 3 "" V 4450 6100 30  0000 C CNN
+	1    4400 6050
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R9
+U 1 1 627E1EBD
+P 4900 6050
+F 0 "R9" H 4950 6200 50  0000 C CNN
+F 1 "1K" H 4950 6000 50  0000 C CNN
+F 2 "" H 4950 6030 30  0000 C CNN
+F 3 "" V 4950 6100 30  0000 C CNN
+	1    4900 6050
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R12
+U 1 1 627E1EBE
+P 5550 6050
+F 0 "R12" H 5600 6200 50  0000 C CNN
+F 1 "6K" H 5600 6000 50  0000 C CNN
+F 2 "" H 5600 6030 30  0000 C CNN
+F 3 "" V 5600 6100 30  0000 C CNN
+	1    5550 6050
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R18
+U 1 1 627E1EBF
+P 7300 3250
+F 0 "R18" H 7350 3400 50  0000 C CNN
+F 1 "0.3" H 7350 3200 50  0000 C CNN
+F 2 "" H 7350 3230 30  0000 C CNN
+F 3 "" V 7350 3300 30  0000 C CNN
+	1    7300 3250
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R19
+U 1 1 627E1EC0
+P 7300 4200
+F 0 "R19" H 7350 4350 50  0000 C CNN
+F 1 "385" H 7350 4150 50  0000 C CNN
+F 2 "" H 7350 4180 30  0000 C CNN
+F 3 "" V 7350 4250 30  0000 C CNN
+	1    7300 4200
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R20
+U 1 1 627E1EC1
+P 7300 5550
+F 0 "R20" H 7350 5700 50  0000 C CNN
+F 1 "293" H 7350 5500 50  0000 C CNN
+F 2 "" H 7350 5530 30  0000 C CNN
+F 3 "" V 7350 5600 30  0000 C CNN
+	1    7300 5550
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R16
+U 1 1 627E1EC2
+P 6650 3250
+F 0 "R16" H 6700 3400 50  0000 C CNN
+F 1 "200" H 6700 3200 50  0000 C CNN
+F 2 "" H 6700 3230 30  0000 C CNN
+F 3 "" V 6700 3300 30  0000 C CNN
+	1    6650 3250
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R17
+U 1 1 627E1EC3
+P 6950 3000
+F 0 "R17" H 7000 3150 50  0000 C CNN
+F 1 "240" H 7000 2950 50  0000 C CNN
+F 2 "" H 7000 2980 30  0000 C CNN
+F 3 "" V 7000 3050 30  0000 C CNN
+	1    6950 3000
+	-1   0    0    1   
+$EndComp
+$Comp
+L resistor R1
+U 1 1 627E1EC4
+P 3050 750
+F 0 "R1" H 3100 900 50  0000 C CNN
+F 1 "100K" H 3100 700 50  0000 C CNN
+F 2 "" H 3100 730 30  0000 C CNN
+F 3 "" V 3100 800 30  0000 C CNN
+	1    3050 750 
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R8
+U 1 1 627E1EC5
+P 4750 750
+F 0 "R8" H 4800 900 50  0000 C CNN
+F 1 "100" H 4800 700 50  0000 C CNN
+F 2 "" H 4800 730 30  0000 C CNN
+F 3 "" V 4800 800 30  0000 C CNN
+	1    4750 750 
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R13
+U 1 1 627E1EC6
+P 5750 750
+F 0 "R13" H 5800 900 50  0000 C CNN
+F 1 "50" H 5800 700 50  0000 C CNN
+F 2 "" H 5800 730 30  0000 C CNN
+F 3 "" V 5800 800 30  0000 C CNN
+	1    5750 750 
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R2
+U 1 1 627E1EC7
+P 3650 750
+F 0 "R2" H 3700 900 50  0000 C CNN
+F 1 "500" H 3700 700 50  0000 C CNN
+F 2 "" H 3700 730 30  0000 C CNN
+F 3 "" V 3700 800 30  0000 C CNN
+	1    3650 750 
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R15
+U 1 1 627E1EC8
+P 6150 750
+F 0 "R15" H 6200 900 50  0000 C CNN
+F 1 "10K" H 6200 700 50  0000 C CNN
+F 2 "" H 6200 730 30  0000 C CNN
+F 3 "" V 6200 800 30  0000 C CNN
+	1    6150 750 
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R3
+U 1 1 627E1EC9
+P 3650 3150
+F 0 "R3" H 3700 3280 50  0000 C CNN
+F 1 "3.3K" H 3700 3100 50  0000 C CNN
+F 2 "" H 3700 3130 30  0000 C CNN
+F 3 "" V 3700 3200 30  0000 C CNN
+	1    3650 3150
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R4
+U 1 1 627E1ECA
+P 3650 4100
+F 0 "R4" H 3700 4230 50  0000 C CNN
+F 1 "2.7K" H 3700 4050 50  0000 C CNN
+F 2 "" H 3700 4080 30  0000 C CNN
+F 3 "" V 3700 4150 30  0000 C CNN
+	1    3650 4100
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R5
+U 1 1 627E1ECB
+P 3650 5250
+F 0 "R5" H 3700 5380 50  0000 C CNN
+F 1 "500" H 3700 5200 50  0000 C CNN
+F 2 "" H 3700 5230 30  0000 C CNN
+F 3 "" V 3700 5300 30  0000 C CNN
+	1    3650 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R14
+U 1 1 627E1ECC
+P 5750 4200
+F 0 "R14" H 5800 4350 50  0000 C CNN
+F 1 "6K" H 5800 4150 50  0000 C CNN
+F 2 "" H 5800 4180 30  0000 C CNN
+F 3 "" V 5800 4250 30  0000 C CNN
+	1    5750 4200
+	0    1    1    0   
+$EndComp
+$Comp
+L capacitor C1
+U 1 1 627E1ECD
+P 5300 5100
+F 0 "C1" H 5325 5200 50  0000 L CNN
+F 1 "30pF" H 5325 5000 50  0000 L CNN
+F 2 "" H 5338 4950 30  0000 C CNN
+F 3 "" H 5300 5100 60  0000 C CNN
+	1    5300 5100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5100 3500 8800 3500
+Wire Wire Line
+	2400 650  7350 650 
+Connection ~ 3700 650 
+Connection ~ 4800 650 
+Connection ~ 5800 650 
+Connection ~ 6200 650 
+Wire Wire Line
+	3100 950  3100 4900
+Wire Wire Line
+	7350 6450 3100 6450
+Wire Wire Line
+	7350 5750 7350 6450
+Wire Wire Line
+	7350 4400 7350 5450
+Wire Wire Line
+	7350 3000 7350 3150
+Wire Wire Line
+	7350 3450 7350 4100
+Connection ~ 7350 3500
+Wire Wire Line
+	6700 3450 6700 3500
+Connection ~ 6700 3500
+Wire Wire Line
+	3400 2550 3100 2550
+Connection ~ 3100 2550
+Wire Wire Line
+	3700 950  3700 2350
+Wire Wire Line
+	3700 2750 3700 3050
+Wire Wire Line
+	3700 3350 3700 4000
+Wire Wire Line
+	3700 4300 3700 5150
+Wire Wire Line
+	3700 5450 3700 6450
+Connection ~ 3700 6450
+Wire Wire Line
+	4950 6250 4950 6450
+Connection ~ 4950 6450
+Wire Wire Line
+	5600 6250 5600 6450
+Connection ~ 5600 6450
+Wire Wire Line
+	4450 6250 4450 6450
+Connection ~ 4450 6450
+Wire Wire Line
+	5150 4050 5150 4150
+Wire Wire Line
+	5150 4450 5150 4600
+Wire Wire Line
+	5150 4900 5150 4950
+Wire Wire Line
+	5150 4950 4950 4950
+Wire Wire Line
+	4950 4950 4950 5450
+Wire Wire Line
+	4950 5850 4950 5950
+Wire Wire Line
+	4250 5650 4650 5650
+Wire Wire Line
+	4450 4450 4450 4850
+Wire Wire Line
+	4450 5250 4450 5950
+Connection ~ 4450 5650
+Wire Wire Line
+	4800 950  4800 1300
+Wire Wire Line
+	4800 1700 4800 3300
+Wire Wire Line
+	4800 3700 4800 3850
+Wire Wire Line
+	4800 3850 4450 3850
+Wire Wire Line
+	4450 3850 4450 4050
+Wire Wire Line
+	4800 3250 4150 3250
+Wire Wire Line
+	4150 3250 4150 3550
+Connection ~ 4800 3250
+Wire Wire Line
+	4150 3950 4150 4500
+Wire Wire Line
+	3850 3750 3700 3750
+Connection ~ 3700 3750
+Wire Wire Line
+	4150 4800 4150 4850
+Wire Wire Line
+	4150 4850 3950 4850
+Wire Wire Line
+	3950 4850 3950 5450
+Wire Wire Line
+	3950 5850 3950 6450
+Connection ~ 3950 6450
+Wire Wire Line
+	4150 5050 3950 5050
+Connection ~ 3950 5050
+Wire Wire Line
+	4150 4450 5150 4450
+Connection ~ 4150 4450
+Connection ~ 4450 4450
+Wire Wire Line
+	5450 3850 7150 3850
+Wire Wire Line
+	7150 3850 7150 4850
+Wire Wire Line
+	7150 4850 7350 4850
+Connection ~ 7350 4850
+Wire Wire Line
+	5800 1700 5800 4100
+Wire Wire Line
+	4950 5100 5150 5100
+Connection ~ 4950 5100
+Wire Wire Line
+	5800 4400 5800 5250
+Wire Wire Line
+	5800 5250 5600 5250
+Wire Wire Line
+	5600 5650 5600 5950
+Wire Wire Line
+	4950 5450 5300 5450
+Wire Wire Line
+	5450 5100 6200 5100
+Connection ~ 5800 5100
+Wire Wire Line
+	6200 5100 6200 5650
+Wire Wire Line
+	5900 5850 5600 5850
+Connection ~ 5600 5850
+Wire Wire Line
+	6200 6050 6200 6450
+Connection ~ 6200 6450
+Wire Wire Line
+	6700 650  6700 1800
+Connection ~ 6700 650 
+Wire Wire Line
+	6700 2200 6700 3150
+Wire Wire Line
+	7050 3050 7350 3050
+Connection ~ 7350 3050
+Wire Wire Line
+	5900 3250 5900 3500
+Connection ~ 5900 3500
+Wire Wire Line
+	6200 3050 6750 3050
+Wire Wire Line
+	6200 950  6200 1150
+Wire Wire Line
+	6700 2800 7050 2800
+Connection ~ 6700 2800
+Wire Wire Line
+	7350 650  7350 2600
+Wire Wire Line
+	5100 1500 5500 1500
+Wire Wire Line
+	5800 950  5800 1300
+Wire Wire Line
+	5300 1500 5300 1800
+Wire Wire Line
+	5300 1800 4800 1800
+Connection ~ 4800 1800
+Connection ~ 5300 1500
+Wire Wire Line
+	4850 2800 3850 2800
+Wire Wire Line
+	3850 2800 3850 4500
+Wire Wire Line
+	3850 4500 3700 4500
+Connection ~ 3700 4500
+Wire Wire Line
+	5150 3000 5150 3200
+Wire Wire Line
+	5150 3200 3800 3200
+Wire Wire Line
+	3800 3200 3800 6450
+Connection ~ 3800 6450
+Wire Wire Line
+	6500 4700 6500 6450
+Connection ~ 6500 6450
+Wire Wire Line
+	6200 4500 5800 4500
+Connection ~ 5800 4500
+Wire Wire Line
+	6500 4300 6500 4000
+Wire Wire Line
+	6500 4000 5800 4000
+Connection ~ 5800 4000
+Wire Wire Line
+	5150 2600 5150 2000
+Wire Wire Line
+	5150 2000 6400 2000
+Connection ~ 5800 2000
+Wire Wire Line
+	5900 2850 5900 2000
+Connection ~ 5900 2000
+Wire Wire Line
+	5150 3650 5150 3500
+Connection ~ 5150 3500
+Wire Wire Line
+	4750 4250 4950 4250
+Wire Wire Line
+	4950 4250 4950 4100
+Wire Wire Line
+	4950 4100 5150 4100
+Connection ~ 5150 4100
+$Comp
+L zener U3
+U 1 1 627E1ED2
+P 6200 1450
+F 0 "U3" H 6150 1350 60  0000 C CNN
+F 1 "zener" H 6200 1550 60  0000 C CNN
+F 2 "" H 6250 1450 60  0000 C CNN
+F 3 "" H 6250 1450 60  0000 C CNN
+	1    6200 1450
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6200 1650 6200 2000
+Connection ~ 6200 2000
+$Comp
+L zener U2
+U 1 1 627E1ED3
+P 3100 5200
+F 0 "U2" H 3050 5100 60  0000 C CNN
+F 1 "zener" H 3100 5300 60  0000 C CNN
+F 2 "" H 3150 5200 60  0000 C CNN
+F 3 "" H 3150 5200 60  0000 C CNN
+	1    3100 5200
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3100 6450 3100 5400
+Connection ~ 3100 650 
+$Comp
+L PORT U1
+U 1 1 627EEACD
+P 2150 650
+F 0 "U1" H 2200 750 30  0000 C CNN
+F 1 "PORT" H 2150 650 30  0000 C CNN
+F 2 "" H 2150 650 60  0000 C CNN
+F 3 "" H 2150 650 60  0000 C CNN
+	1    2150 650 
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 627EFDCA
+P 9050 3500
+F 0 "U1" H 9100 3600 30  0000 C CNN
+F 1 "PORT" H 9050 3500 30  0000 C CNN
+F 2 "" H 9050 3500 60  0000 C CNN
+F 3 "" H 9050 3500 60  0000 C CNN
+	2    9050 3500
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 627F2063
+P 5300 6800
+F 0 "U1" H 5350 6900 30  0000 C CNN
+F 1 "PORT" H 5300 6800 30  0000 C CNN
+F 2 "" H 5300 6800 60  0000 C CNN
+F 3 "" H 5300 6800 60  0000 C CNN
+	3    5300 6800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5300 6550 5300 6450
+Connection ~ 5300 6450
+$EndSCHEMATC

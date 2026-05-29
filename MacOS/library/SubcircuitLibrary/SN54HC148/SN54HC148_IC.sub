@@ -1,0 +1,45 @@
+* Subcircuit SN54HC148_IC
+.subckt SN54HC148_IC net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ 
+* c:\fossee\esim\library\subcircuitlibrary\sn54hc148_ic\sn54hc148_ic.cir
+.include AND_3.sub
+.include AND.sub
+.include OR.sub
+.include 4_NOR.sub
+.include 9_NAND.sub
+.include NOT.sub
+.include AND_5.sub
+.include AND_4.sub
+x5 net-_u1-pad11_ net-_x23-pad1_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x1 net-_u1-pad12_ net-_x1-pad2_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x9 net-_x1-pad2_ net-_x23-pad2_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x3 net-_u1-pad1_ net-_x10-pad1_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x10 net-_x10-pad1_ net-_x10-pad2_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x4 net-_u1-pad2_ net-_x12-pad1_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x12 net-_x12-pad1_ net-_x12-pad2_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x2 net-_u1-pad3_ net-_x11-pad1_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x11 net-_x11-pad1_ net-_x11-pad2_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x7 net-_u1-pad4_ net-_x14-pad1_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x29 net-_u1-pad15_ net-_x29-pad2_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x30 net-_x13-pad9_ net-_x30-pad2_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x31 net-_x29-pad2_ net-_x30-pad2_ net-_u1-pad14_ net-_u1-pad16_ net-_u1-pad8_ OR
+x6 net-_u1-pad13_ net-_x22-pad1_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x8 net-_u1-pad5_ net-_x13-pad9_ net-_u1-pad16_ net-_u1-pad8_ NOT
+x14 net-_x14-pad1_ net-_x13-pad9_ net-_x14-pad3_ net-_u1-pad16_ net-_u1-pad8_ AND
+x15 net-_x11-pad1_ net-_x13-pad9_ net-_x15-pad3_ net-_u1-pad16_ net-_u1-pad8_ AND
+x16 net-_x14-pad1_ net-_x13-pad9_ net-_x16-pad3_ net-_u1-pad16_ net-_u1-pad8_ AND
+x17 net-_x10-pad1_ net-_x13-pad9_ net-_x17-pad3_ net-_u1-pad16_ net-_u1-pad8_ AND
+x18 net-_x12-pad1_ net-_x13-pad9_ net-_x18-pad3_ net-_u1-pad16_ net-_u1-pad8_ AND
+x19 net-_x11-pad1_ net-_x13-pad9_ net-_x19-pad3_ net-_u1-pad16_ net-_u1-pad8_ AND
+x20 net-_x14-pad1_ net-_x13-pad9_ net-_x20-pad3_ net-_u1-pad16_ net-_u1-pad8_ AND
+x26 net-_x23-pad8_ net-_x22-pad7_ net-_x21-pad6_ net-_x14-pad3_ net-_u1-pad8_ net-_u1-pad16_ net-_u1-pad9_ 4_NOR
+x27 net-_x24-pad7_ net-_x25-pad7_ net-_x15-pad3_ net-_x16-pad3_ net-_u1-pad8_ net-_u1-pad16_ net-_u1-pad7_ 4_NOR
+x28 net-_x17-pad3_ net-_x18-pad3_ net-_x19-pad3_ net-_x20-pad3_ net-_u1-pad8_ net-_u1-pad16_ net-_u1-pad6_ 4_NOR
+x23 net-_x23-pad1_ net-_x23-pad2_ net-_x10-pad2_ net-_x11-pad2_ net-_x13-pad9_ net-_u1-pad8_ net-_u1-pad16_ net-_x23-pad8_ AND_5
+x22 net-_x22-pad1_ net-_x10-pad2_ net-_x11-pad2_ net-_x13-pad9_ net-_u1-pad8_ net-_u1-pad16_ net-_x22-pad7_ AND_4
+x21 net-_x12-pad1_ net-_x11-pad2_ net-_x13-pad9_ net-_u1-pad8_ net-_u1-pad16_ net-_x21-pad6_ AND_3
+x24 net-_x1-pad2_ net-_x10-pad2_ net-_x12-pad2_ net-_x13-pad9_ net-_u1-pad8_ net-_u1-pad16_ net-_x24-pad7_ AND_4
+x25 net-_x22-pad1_ net-_x10-pad2_ net-_x12-pad2_ net-_x13-pad9_ net-_u1-pad8_ net-_u1-pad16_ net-_x25-pad7_ AND_4
+x13 net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_x13-pad9_ net-_u1-pad8_ net-_u1-pad16_ net-_u1-pad15_ 9_NAND
+* Control Statements
+
+.ends SN54HC148_IC

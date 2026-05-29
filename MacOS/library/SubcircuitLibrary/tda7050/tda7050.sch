@@ -1,0 +1,209 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:tda7050-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Connection ~ 6000 2750
+Wire Wire Line
+	5750 2750 6100 2750
+Wire Wire Line
+	5500 4950 5600 4950
+Wire Wire Line
+	6700 3500 6700 3450
+Wire Wire Line
+	5750 2750 5750 4350
+Wire Wire Line
+	5750 3950 6000 3950
+Wire Wire Line
+	6000 3950 6000 3900
+Wire Wire Line
+	5750 4350 6000 4350
+Connection ~ 5750 3950
+Wire Wire Line
+	6000 2950 5300 2950
+$Comp
+L lm_741 X1
+U 1 1 678D14D5
+P 6150 3450
+F 0 "X1" H 5950 3450 60  0000 C CNN
+F 1 "lm_741" H 6050 3200 60  0000 C CNN
+F 2 "" H 6150 3450 60  0000 C CNN
+F 3 "" H 6150 3450 60  0000 C CNN
+	1    6150 3450
+	1    0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 8 1 679DC622
+P 6350 2750
+F 0 "U1" H 6400 2850 30  0000 C CNN
+F 1 "PORT" H 6350 2750 30  0000 C CNN
+F 2 "" H 6350 2750 60  0000 C CNN
+F 3 "" H 6350 2750 60  0000 C CNN
+	8    6350 2750
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 5 1 679DC653
+P 5500 5500
+F 0 "U1" H 5550 5600 30  0000 C CNN
+F 1 "PORT" H 5500 5500 30  0000 C CNN
+F 2 "" H 5500 5500 60  0000 C CNN
+F 3 "" H 5500 5500 60  0000 C CNN
+	5    5500 5500
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 679DC678
+P 5300 4700
+F 0 "U1" H 5350 4800 30  0000 C CNN
+F 1 "PORT" H 5300 4700 30  0000 C CNN
+F 2 "" H 5300 4700 60  0000 C CNN
+F 3 "" H 5300 4700 60  0000 C CNN
+	4    5300 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 679DC69F
+P 7000 4800
+F 0 "U1" H 7050 4900 30  0000 C CNN
+F 1 "PORT" H 7000 4800 30  0000 C CNN
+F 2 "" H 7000 4800 60  0000 C CNN
+F 3 "" H 7000 4800 60  0000 C CNN
+	6    7000 4800
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 679DC6C8
+P 5250 4950
+F 0 "U1" H 5300 5050 30  0000 C CNN
+F 1 "PORT" H 5250 4950 30  0000 C CNN
+F 2 "" H 5250 4950 60  0000 C CNN
+F 3 "" H 5250 4950 60  0000 C CNN
+	3    5250 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 7 1 679DC6F3
+P 6950 3500
+F 0 "U1" H 7000 3600 30  0000 C CNN
+F 1 "PORT" H 6950 3500 30  0000 C CNN
+F 2 "" H 6950 3500 60  0000 C CNN
+F 3 "" H 6950 3500 60  0000 C CNN
+	7    6950 3500
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 2 1 679DC720
+P 5300 3600
+F 0 "U1" H 5350 3700 30  0000 C CNN
+F 1 "PORT" H 5300 3600 30  0000 C CNN
+F 2 "" H 5300 3600 60  0000 C CNN
+F 3 "" H 5300 3600 60  0000 C CNN
+	2    5300 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 679DC74F
+P 5150 3350
+F 0 "U1" H 5200 3450 30  0000 C CNN
+F 1 "PORT" H 5150 3350 30  0000 C CNN
+F 2 "" H 5150 3350 60  0000 C CNN
+F 3 "" H 5150 3350 60  0000 C CNN
+	1    5150 3350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5300 2950 5300 5350
+Wire Wire Line
+	5300 5350 6000 5350
+Connection ~ 6000 5350
+Wire Wire Line
+	5750 5500 5900 5500
+Wire Wire Line
+	5900 5500 5900 5400
+Wire Wire Line
+	5900 5400 6000 5400
+Connection ~ 6000 5400
+$Comp
+L lm_741 X2
+U 1 1 678D14EC
+P 6150 4800
+F 0 "X2" H 5950 4800 60  0000 C CNN
+F 1 "lm_741" H 6050 4550 60  0000 C CNN
+F 2 "" H 6150 4800 60  0000 C CNN
+F 3 "" H 6150 4800 60  0000 C CNN
+	1    6150 4800
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	5550 3600 5600 3600
+Wire Wire Line
+	5550 4700 5600 4700
+Wire Wire Line
+	6000 5400 6000 5250
+Wire Wire Line
+	5400 3350 5600 3350
+Wire Wire Line
+	6750 4800 6700 4800
+Wire Wire Line
+	6000 3000 6000 2950
+$EndSCHEMATC

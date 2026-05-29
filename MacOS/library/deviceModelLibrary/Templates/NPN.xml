@@ -1,0 +1,33 @@
+<library>
+<model_name>NPN</model_name>
+<ref_model>Q2N2222</ref_model>
+<param>
+<Is>14.34f </Is>
+<Xti>3 </Xti>
+<Eg>1.11 </Eg>
+<Vaf>74.03 </Vaf>
+<Bf>400 </Bf>
+<Ne>1.307 </Ne>
+<Ise>14.34f </Ise>
+<Ikf>.2847 </Ikf>
+<Xtb>1.5 </Xtb>
+<Br>6.092 </Br>
+<Nc>2 </Nc>
+<Isc>0 </Isc>
+<Ikr>0 </Ikr>
+<Rc>1 </Rc>
+<Cjc>7.306p </Cjc>
+<Mjc>.3416 </Mjc>
+<Vjc>.75 </Vjc>
+<Fc>.5 </Fc>
+<Cje>22.01p </Cje>
+<Mje>.377 </Mje>
+<Vje>.75 </Vje>
+<Tr>46.91n </Tr>
+<Tf>411.1p </Tf>
+<Itf>.6 </Itf>
+<Vtf>1.7 </Vtf>
+<Xtf>3 </Xtf>
+<Rb>10 </Rb>
+</param>
+</library>

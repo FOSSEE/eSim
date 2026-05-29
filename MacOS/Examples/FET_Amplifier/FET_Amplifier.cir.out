@@ -1,0 +1,24 @@
+* /home/fossee/updatedexamples/fet_amplifier/fet_amplifier.cir
+
+.include NJF.lib
+c1  net-_c1-pad1_ in 1u
+c6  net-_c6-pad1_ gnd 0.1u
+v2 net-_r3-pad1_ gnd  dc 10
+j1 out net-_c1-pad1_ net-_c6-pad1_ J2N3819
+r3  net-_r3-pad1_ out 3k
+r2  gnd net-_c1-pad1_ 1meg
+r4  gnd net-_c6-pad1_ 470
+v1  in gnd sine(0 10m 1k 0 0)
+* u1  in plot_v1
+* u2  out plot_v1
+.tran 10e-06 10e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

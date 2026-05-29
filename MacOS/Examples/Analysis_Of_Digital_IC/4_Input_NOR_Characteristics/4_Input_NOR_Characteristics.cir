@@ -1,0 +1,42 @@
+* C:\Users\Bhargav\eSim-Workspace\4002_test\4002_test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/01/19 06:09:49
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U2-Pad1_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ ? ? ? Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ Net-_U2-Pad2_ ? IC_4002		
+U1  Net-_R1-Pad2_ Net-_R2-Pad2_ Net-_R3-Pad2_ Net-_R4-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ adc_bridge_4		
+U3  Net-_R10-Pad1_ Net-_R9-Pad1_ Net-_R8-Pad1_ Net-_R7-Pad1_ Net-_U3-Pad5_ Net-_U3-Pad6_ Net-_U3-Pad7_ Net-_U3-Pad8_ adc_bridge_4		
+U2  Net-_U2-Pad1_ Net-_U2-Pad2_ out1 out2 dac_bridge_2		
+R5  out1 GND 1k		
+R6  out2 GND 1k		
+U9  out1 plot_v1		
+U8  out2 plot_v1		
+U13  v8 plot_v1		
+U10  v7 plot_v1		
+U11  v6 plot_v1		
+U12  v5 plot_v1		
+R10  Net-_R10-Pad1_ v8 1k		
+R9  Net-_R9-Pad1_ v7 1k		
+R8  Net-_R8-Pad1_ v6 1k		
+R7  Net-_R7-Pad1_ v5 1k		
+v6  v7 GND DC		
+v5  v8 GND DC		
+v8  v5 GND DC		
+v7  v6 GND DC		
+U7  v4 plot_v1		
+U4  v3 plot_v1		
+U6  v2 plot_v1		
+U5  v1 plot_v1		
+R4  v4 Net-_R4-Pad2_ 1k		
+R3  v3 Net-_R3-Pad2_ 1k		
+R2  v2 Net-_R2-Pad2_ 1k		
+R1  v1 Net-_R1-Pad2_ 1k		
+v4  v4 GND DC		
+v3  v3 GND DC		
+v2  v2 GND DC		
+v1  v1 GND DC		
+
+.end

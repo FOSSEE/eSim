@@ -1,0 +1,19 @@
+* /home/fossee/updatedexamples/series_resonance/series_resonance.cir
+
+r1  in net-_c1-pad2_ 1
+l1  out gnd 100m
+c1  out net-_c1-pad2_ 10u
+v1 in gnd  ac 1 0
+* u1  in plot_v1
+* u2  out plot_v1
+.ac lin 20 1Hz 250Hz
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end
