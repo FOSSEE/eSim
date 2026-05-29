@@ -92,3 +92,45 @@ def test_fix_inst_vsin_source():
     misc.fixInst(inst)
 
     assert inst.attrs[1].value == "SINE"
+
+def test_fix_inst_vplot2():
+    inst = MockInst(
+        "VPLOT2",
+        [MockAttr("X1"), MockAttr("VPLOT2")]
+    )
+
+    misc.fixInst(inst)
+
+    assert inst.attrs[0].value == "U?"
+    assert inst.attrs[1].value == "VPLOT8"
+
+def test_fix_inst_vprint2():
+    inst = MockInst(
+        "VPRINT2",
+        [MockAttr("X1"), MockAttr("VPRINT2")]
+    )
+
+    misc.fixInst(inst)
+
+    assert inst.attrs[0].value == "U?"
+    assert inst.attrs[1].value == "VPRINT"
+
+def test_fix_inst_agnd():
+    inst = MockInst(
+        "AGND",
+        [MockAttr("GND")]
+    )
+
+    misc.fixInst(inst)
+
+    assert inst.type_ == "GND"
+
+def test_fix_inst_egnd():
+    inst = MockInst(
+        "EGND",
+        [MockAttr("GND")]
+    )
+
+    misc.fixInst(inst)
+
+    assert inst.type_ == "GND"
