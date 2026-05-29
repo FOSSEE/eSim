@@ -1,0 +1,159 @@
+Annotated eSim_GND as #PWR01.
+Annotated eSim_GND as #PWR02.
+Annotated eSim_GND as #PWR03.
+Annotated eSim_GND as #PWR04.
+Annotated eSim_GND as #PWR05.
+Annotated eSim_GND as #PWR06.
+Annotated eSim_GND as #PWR07.
+Annotated eSim_GND as #PWR08.
+Annotated eSim_GND as #PWR09.
+Annotated eSim_GND as #PWR010.
+Annotated eSim_GND as #PWR011.
+Annotated eSim_GND as #PWR012.
+Annotated eSim_Diode as D1.
+Annotated eSim_Diode as D2.
+Annotated eSim_Diode as D3.
+Annotated eSim_Diode as D4.
+Annotated eSim_Diode as D5.
+Annotated eSim_Diode as D6.
+Annotated eSim_Diode as D7.
+Annotated eSim_Diode as D8.
+Annotated eSim_Diode as D9.
+Annotated eSim_Diode as D10.
+Annotated eSim_Diode as D11.
+Annotated eSim_Diode as D12.
+Annotated eSim_Diode as D13.
+Annotated eSim_Diode as D14.
+Annotated eSim_Diode as D15.
+Annotated eSim_Diode as D16.
+Annotated eSim_Diode as D17.
+Annotated eSim_Diode as D18.
+Annotated eSim_Diode as D19.
+Annotated eSim_Diode as D20.
+Annotated eSim_Diode as D21.
+Annotated eSim_Diode as D22.
+Annotated eSim_Diode as D23.
+Annotated eSim_Diode as D24.
+Annotated eSim_Diode as D25.
+Annotated eSim_Diode as D26.
+Annotated eSim_Diode as D27.
+Annotated eSim_Diode as D28.
+Annotated eSim_Diode as D29.
+Annotated eSim_Diode as D30.
+Annotated eSim_Diode as D31.
+Annotated eSim_Diode as D32.
+Annotated eSim_Diode as D33.
+Annotated eSim_PNP as Q1.
+Annotated eSim_NPN as Q2.
+Annotated eSim_NPN as Q3.
+Annotated eSim_NPN as Q4.
+Annotated eSim_NPN as Q5.
+Annotated eSim_PNP as Q6.
+Annotated eSim_NPN as Q7.
+Annotated eSim_NPN as Q8.
+Annotated eSim_NPN as Q9.
+Annotated eSim_NPN as Q10.
+Annotated eSim_NPN as Q11.
+Annotated eSim_PNP as Q12.
+Annotated eSim_NPN as Q13.
+Annotated eSim_PNP as Q14.
+Annotated eSim_NPN as Q15.
+Annotated eSim_NPN as Q16.
+Annotated eSim_PNP as Q17.
+Annotated eSim_NPN as Q18.
+Annotated eSim_PNP as Q19.
+Annotated eSim_NPN as Q20.
+Annotated eSim_NPN as Q21.
+Annotated eSim_NPN as Q22.
+Annotated eSim_NPN as Q23.
+Annotated eSim_PNP as Q24.
+Annotated eSim_NPN as Q25.
+Annotated eSim_PNP as Q26.
+Annotated eSim_NPN as Q27.
+Annotated eSim_NPN as Q28.
+Annotated eSim_PNP as Q29.
+Annotated eSim_PNP as Q30.
+Annotated eSim_NPN as Q31.
+Annotated eSim_NPN as Q32.
+Annotated eSim_PNP as Q33.
+Annotated eSim_NPN as Q34.
+Annotated eSim_PNP as Q35.
+Annotated eSim_NPN as Q36.
+Annotated eSim_NPN as Q37.
+Annotated eSim_PNP as Q38.
+Annotated eSim_NPN as Q39.
+Annotated eSim_PNP as Q40.
+Annotated eSim_PNP as Q41.
+Annotated eSim_NPN as Q42.
+Annotated eSim_PNP as Q43.
+Annotated eSim_NPN as Q44.
+Annotated eSim_NPN as Q45.
+Annotated eSim_NPN as Q46.
+Annotated eSim_PNP as Q47.
+Annotated eSim_NPN as Q48.
+Annotated eSim_NPN as Q49.
+Annotated eSim_PNP as Q50.
+Annotated eSim_NPN as Q51.
+Annotated eSim_NPN as Q52.
+Annotated eSim_PNP as Q53.
+Annotated eSim_NPN as Q54.
+Annotated eSim_NPN as Q55.
+Annotated eSim_PNP as Q56.
+Annotated eSim_NPN as Q57.
+Annotated eSim_NPN as Q58.
+Annotated eSim_PNP as Q59.
+Annotated eSim_NPN as Q60.
+Annotated eSim_NPN as Q61.
+Annotated 1.7k as R1.
+Annotated 800 as R2.
+Annotated 35 as R3.
+Annotated 400 as R4.
+Annotated 35 as R5.
+Annotated 1.7k as R6.
+Annotated 800 as R7.
+Annotated 400 as R8.
+Annotated 3.5k as R9.
+Annotated 800 as R10.
+Annotated 6.2k as R11.
+Annotated 4k as R12.
+Annotated 400 as R13.
+Annotated 4k as R14.
+Annotated 5k as R15.
+Annotated 800 as R16.
+Annotated 400 as R17.
+Annotated 5k as R18.
+Annotated 800 as R19.
+Annotated 400 as R20.
+Annotated 8k as R21.
+Annotated 5k as R22.
+Annotated 800 as R23.
+Annotated 10k as R24.
+Annotated 400 as R25.
+Annotated 25k as R26.
+Annotated 5k as R27.
+Annotated 800 as R28.
+Annotated 3k as R29.
+Annotated 3k as R30.
+Annotated 5k as R31.
+Annotated 800 as R32.
+Annotated 3k as R33.
+Annotated 3k as R34.
+Annotated PORT (unit N) as U1N.
+Annotated PORT (unit M) as U1M.
+Annotated PORT (unit E) as U1E.
+Annotated PORT (unit F) as U1F.
+Annotated PORT (unit G) as U1G.
+Annotated PORT (unit H) as U1H.
+Annotated PORT (unit P) as U1P.
+Annotated PORT (unit O) as U1O.
+Annotated PORT (unit I) as U1I.
+Annotated PORT (unit J) as U1J.
+Annotated zener as U2.
+Annotated PORT (unit K) as U1K.
+Annotated zener as U3.
+Annotated PORT (unit C) as U1C.
+Annotated PORT (unit A) as U1A.
+Annotated PORT (unit L) as U1L.
+Annotated PORT (unit B) as U1B.
+Annotated PORT (unit D) as U1D.
+Annotation complete.

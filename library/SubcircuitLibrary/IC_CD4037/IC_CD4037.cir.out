@@ -1,0 +1,76 @@
+* e:\ic_cd4037\ic_cd4037.cir
+
+.include CD4037.sub
+* u6  a net-_u6-pad2_ adc_bridge_1
+* u7  b net-_u7-pad2_ adc_bridge_1
+* u8  c1 net-_u8-pad2_ adc_bridge_1
+* u9  c2 net-_u9-pad2_ adc_bridge_1
+* u10  c3 net-_u10-pad2_ adc_bridge_1
+* u11  net-_u11-pad1_ d1 dac_bridge_1
+* u12  net-_u12-pad1_ e1 dac_bridge_1
+* u13  net-_u13-pad1_ d2 dac_bridge_1
+* u14  net-_u14-pad1_ e2 dac_bridge_1
+* u15  net-_u15-pad1_ d3 dac_bridge_1
+* u16  net-_u16-pad1_ e3 dac_bridge_1
+v1  a gnd pulse(0 5 0.01n 0.01n 0.01n 10m 20m)
+v2  b gnd pulse(0 5 0.01n 0.01n 0.01n 5m 10m)
+v3  c1 gnd pulse(0 5 0.01n 0.01n 0.01n 5m 10m)
+v4  c2 gnd pulse(0 5 0.01n 0.01n 0.01n 10m 20m)
+v5  c3 gnd pulse(0 5 0.01n 0.01n 0.01n 15m 30m)
+* u17  d1 plot_v1
+* u18  e1 plot_v1
+* u19  d2 plot_v1
+* u20  e2 plot_v1
+* u21  d3 plot_v1
+* u22  e3 plot_v1
+* u1  a plot_v1
+* u2  b plot_v1
+* u3  c1 plot_v1
+* u4  c2 plot_v1
+* u5  c3 plot_v1
+x1 net-_u8-pad2_ net-_u9-pad2_ net-_u10-pad2_ net-_u7-pad2_ net-_u6-pad2_ net-_u11-pad1_ net-_u12-pad1_ net-_u13-pad1_ net-_u14-pad1_ net-_u15-pad1_ net-_u16-pad1_ CD4037
+a1 [a ] [net-_u6-pad2_ ] u6
+a2 [b ] [net-_u7-pad2_ ] u7
+a3 [c1 ] [net-_u8-pad2_ ] u8
+a4 [c2 ] [net-_u9-pad2_ ] u9
+a5 [c3 ] [net-_u10-pad2_ ] u10
+a6 [net-_u11-pad1_ ] [d1 ] u11
+a7 [net-_u12-pad1_ ] [e1 ] u12
+a8 [net-_u13-pad1_ ] [d2 ] u13
+a9 [net-_u14-pad1_ ] [e2 ] u14
+a10 [net-_u15-pad1_ ] [d3 ] u15
+a11 [net-_u16-pad1_ ] [e3 ] u16
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u6 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u8 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u9 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u10 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u11 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u12 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u13 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u14 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u15 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u16 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-06 30e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+set xbrushwidth=3
+plot v(d1) v(e1)+10 v(d2)+20 v(e2)+30 v(d3)+40 v(e3)+50
+plot v(a) v(b)+10 v(c1)+20 v(c2)+30 v(c3)+40
+.endc
+.end

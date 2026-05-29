@@ -1,0 +1,32 @@
+* c:\users\senba\desktop\fossee\esim\library\subcircuitlibrary\sn7475\sn7475.cir
+
+* u5  net-_u1-pad3_ net-_u1-pad2_ net-_u5-pad3_ d_and
+* u3  net-_u1-pad2_ net-_u3-pad2_ net-_u2-pad2_ d_and
+* u4  net-_u1-pad3_ net-_u3-pad2_ d_inverter
+* u2  net-_u1-pad4_ net-_u2-pad2_ net-_u1-pad1_ d_nor
+* u6  net-_u5-pad3_ net-_u1-pad1_ net-_u1-pad4_ d_nor
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ port
+a1 [net-_u1-pad3_ net-_u1-pad2_ ] net-_u5-pad3_ u5
+a2 [net-_u1-pad2_ net-_u3-pad2_ ] net-_u2-pad2_ u3
+a3 net-_u1-pad3_ net-_u3-pad2_ u4
+a4 [net-_u1-pad4_ net-_u2-pad2_ ] net-_u1-pad1_ u2
+a5 [net-_u5-pad3_ net-_u1-pad1_ ] net-_u1-pad4_ u6
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u2 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u6 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,46 @@
+.title KiCad schematic
+U1 gnd discharge reset trigger control_voltage vout threshold gnd PORT
+M16 Net-_M14-Pad2_ Net-_M14-Pad2_ gnd gnd pmos19
+R13 Net-_D2-Pad2_ gnd 10k
+M20 Net-_M19-Pad3_ Net-_D1-Pad2_ gnd gnd nmos18
+R15 Net-_M21-Pad3_ gnd 4.7k
+R14 gnd Net-_M21-Pad3_ 100k
+R17 vout Net-_M22-Pad3_ 3.9k
+M22 gnd Net-_D2-Pad2_ Net-_M22-Pad3_ gnd nmos21
+D2 vout Net-_D2-Pad2_ eSim_Diode
+M21 Net-_D2-Pad2_ Net-_M21-Pad2_ Net-_M21-Pad3_ gnd nmos23
+R10 gnd Net-_M15-Pad2_ 5k
+M17 Net-_M17-Pad1_ Net-_M11-Pad3_ gnd gnd nmos17
+M24 vout Net-_M24-Pad2_ gnd gnd nmos24
+R16 Net-_M24-Pad2_ Net-_M21-Pad3_ 220k
+M23 gnd Net-_M22-Pad3_ vout gnd nmos22
+M19 gnd Net-_M14-Pad2_ Net-_M19-Pad3_ gnd pmos20
+R8 control_voltage gnd 10k
+M18 gnd Net-_M17-Pad1_ Net-_D1-Pad2_ gnd nmos16
+R12 Net-_M17-Pad1_ Net-_M21-Pad2_ 4.7k
+R9 Net-_M15-Pad2_ control_voltage 5k
+R11 Net-_D1-Pad1_ Net-_M14-Pad2_ 5k
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode
+M5 Net-_M3-Pad1_ Net-_M3-Pad1_ Net-_M5-Pad3_ gnd pmos5
+M3 Net-_M3-Pad1_ threshold Net-_M3-Pad3_ gnd nmos1
+M6 Net-_M6-Pad1_ Net-_M3-Pad1_ Net-_M17-Pad1_ gnd pmos6
+R1 Net-_M5-Pad3_ gnd 4.7k
+M11 Net-_M11-Pad1_ Net-_M10-Pad1_ Net-_M11-Pad3_ gnd pmos11
+M15 Net-_M13-Pad1_ Net-_M15-Pad2_ Net-_M13-Pad2_ gnd pmos13
+M10 Net-_M10-Pad1_ trigger gnd gnd pmos10
+M4 Net-_M3-Pad1_ Net-_M3-Pad3_ Net-_M4-Pad3_ gnd nmos2
+M8 Net-_M4-Pad3_ Net-_M7-Pad1_ Net-_M12-Pad2_ gnd nmos3
+R3 Net-_M6-Pad1_ gnd 830k
+M9 gnd Net-_M12-Pad2_ Net-_M6-Pad1_ gnd pmos7
+M12 Net-_M12-Pad1_ Net-_M12-Pad2_ Net-_M12-Pad2_ gnd pmos8
+R5 Net-_M12-Pad1_ gnd 4.7k
+M14 Net-_M11-Pad1_ Net-_M14-Pad2_ Net-_M14-Pad3_ gnd pmos9
+R7 Net-_M14-Pad3_ gnd 5k
+M13 Net-_M13-Pad1_ Net-_M13-Pad2_ Net-_M11-Pad1_ gnd pmos12
+M2 Net-_D1-Pad1_ reset Net-_M1-Pad2_ gnd pmos15
+M1 gnd Net-_M1-Pad2_ discharge gnd nmos14
+M7 Net-_M7-Pad1_ control_voltage Net-_M12-Pad2_ gnd nmos4
+R2 Net-_M4-Pad3_ gnd 10k
+R4 gnd Net-_M11-Pad3_ 100k
+R6 gnd Net-_M13-Pad1_ 100k
+.end

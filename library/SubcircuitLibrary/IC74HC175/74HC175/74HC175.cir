@@ -1,0 +1,23 @@
+.title KiCad schematic
+U19 Net-_U18-Pad2_ Net-_U11-Pad2_ unconnected-_U19-Pad3_ Net-_U11-Pad4_ Net-_U19-Pad5_ Net-_U19-Pad6_ d_dff
+U16 Net-_U15-Pad6_ Net-_U1-Pad10_ d_inverter
+U17 Net-_U15-Pad5_ Net-_U1-Pad11_ d_inverter
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ GND Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U21-Pad2_ Net-_U20-Pad2_ GND PORT
+U18 Net-_U1-Pad13_ Net-_U18-Pad2_ d_inverter
+U20 Net-_U19-Pad6_ Net-_U20-Pad2_ d_inverter
+U21 Net-_U19-Pad5_ Net-_U21-Pad2_ d_inverter
+U15 Net-_U14-Pad2_ Net-_U11-Pad2_ unconnected-_U15-Pad3_ Net-_U11-Pad4_ Net-_U15-Pad5_ Net-_U15-Pad6_ d_dff
+U13 Net-_U11-Pad5_ Net-_U1-Pad6_ d_inverter
+U12 Net-_U11-Pad6_ Net-_U1-Pad7_ d_inverter
+U10 Net-_U1-Pad5_ Net-_U10-Pad2_ d_inverter
+U14 Net-_U1-Pad12_ Net-_U14-Pad2_ d_inverter
+U11 Net-_U10-Pad2_ Net-_U11-Pad2_ unconnected-_U11-Pad3_ Net-_U11-Pad4_ Net-_U11-Pad5_ Net-_U11-Pad6_ d_dff
+U8 Net-_U7-Pad6_ Net-_U1-Pad2_ d_inverter
+U9 Net-_U7-Pad5_ Net-_U1-Pad3_ d_inverter
+U6 Net-_U3-Pad2_ Net-_U11-Pad4_ d_inverter
+U5 Net-_U2-Pad2_ Net-_U11-Pad2_ d_inverter
+U3 Net-_U1-Pad1_ Net-_U3-Pad2_ d_inverter
+U2 Net-_U1-Pad9_ Net-_U2-Pad2_ d_inverter
+U4 Net-_U1-Pad4_ Net-_U4-Pad2_ d_inverter
+U7 Net-_U4-Pad2_ Net-_U11-Pad2_ unconnected-_U7-Pad3_ Net-_U11-Pad4_ Net-_U7-Pad5_ Net-_U7-Pad6_ d_dff
+.end

@@ -1,0 +1,530 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L d_inverter U10
+U 1 1 683D649F
+P 3200 700
+F 0 "U10" H 3200 600 60  0000 C CNN
+F 1 "d_inverter" H 3200 850 60  0000 C CNN
+F 2 "" H 3250 650 60  0000 C CNN
+F 3 "" H 3250 650 60  0000 C CNN
+	1    3200 700 
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U12
+U 1 1 683D64E2
+P 4000 700
+F 0 "U12" H 4000 600 60  0000 C CNN
+F 1 "d_inverter" H 4000 850 60  0000 C CNN
+F 2 "" H 4050 650 60  0000 C CNN
+F 3 "" H 4050 650 60  0000 C CNN
+	1    4000 700 
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_nor U14
+U 1 1 683D650C
+P 5350 800
+F 0 "U14" H 5350 800 60  0000 C CNN
+F 1 "d_nor" H 5400 900 60  0000 C CNN
+F 2 "" H 5350 800 60  0000 C CNN
+F 3 "" H 5350 800 60  0000 C CNN
+	1    5350 800 
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_inverter U11
+U 1 1 683D6572
+P 3250 1750
+F 0 "U11" H 3250 1650 60  0000 C CNN
+F 1 "d_inverter" H 3250 1900 60  0000 C CNN
+F 2 "" H 3300 1700 60  0000 C CNN
+F 3 "" H 3300 1700 60  0000 C CNN
+	1    3250 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_buffer U13
+U 1 1 683D65CE
+P 4250 1750
+F 0 "U13" H 4250 1700 60  0000 C CNN
+F 1 "d_buffer" H 4250 1800 60  0000 C CNN
+F 2 "" H 4250 1750 60  0000 C CNN
+F 3 "" H 4250 1750 60  0000 C CNN
+	1    4250 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_nor U15
+U 1 1 683D6644
+P 5750 1750
+F 0 "U15" H 5750 1750 60  0000 C CNN
+F 1 "d_nor" H 5800 1850 60  0000 C CNN
+F 2 "" H 5750 1750 60  0000 C CNN
+F 3 "" H 5750 1750 60  0000 C CNN
+	1    5750 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_and U16
+U 1 1 683D66AA
+P 6750 850
+F 0 "U16" H 6750 850 60  0000 C CNN
+F 1 "d_and" H 6800 950 60  0000 C CNN
+F 2 "" H 6750 850 60  0000 C CNN
+F 3 "" H 6750 850 60  0000 C CNN
+	1    6750 850 
+	1    0    0    -1  
+$EndComp
+$Comp
+L risingedge_dflipflop U2
+U 1 1 683D692D
+P 2450 4350
+F 0 "U2" H 5300 6150 60  0000 C CNN
+F 1 "risingedge_dflipflop" H 5300 6350 60  0000 C CNN
+F 2 "" H 5300 6300 60  0000 C CNN
+F 3 "" H 5300 6300 60  0000 C CNN
+	1    2450 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L risingedge_dflipflop U3
+U 1 1 683D6A64
+P 2450 4900
+F 0 "U3" H 5300 6700 60  0000 C CNN
+F 1 "risingedge_dflipflop" H 5300 6900 60  0000 C CNN
+F 2 "" H 5300 6850 60  0000 C CNN
+F 3 "" H 5300 6850 60  0000 C CNN
+	1    2450 4900
+	1    0    0    -1  
+$EndComp
+$Comp
+L risingedge_dflipflop U4
+U 1 1 683D6AAF
+P 2450 5450
+F 0 "U4" H 5300 7250 60  0000 C CNN
+F 1 "risingedge_dflipflop" H 5300 7450 60  0000 C CNN
+F 2 "" H 5300 7400 60  0000 C CNN
+F 3 "" H 5300 7400 60  0000 C CNN
+	1    2450 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L risingedge_dflipflop U5
+U 1 1 683D6B63
+P 2450 6000
+F 0 "U5" H 5300 7800 60  0000 C CNN
+F 1 "risingedge_dflipflop" H 5300 8000 60  0000 C CNN
+F 2 "" H 5300 7950 60  0000 C CNN
+F 3 "" H 5300 7950 60  0000 C CNN
+	1    2450 6000
+	1    0    0    -1  
+$EndComp
+$Comp
+L risingedge_dflipflop U6
+U 1 1 683D6F0D
+P 2450 6600
+F 0 "U6" H 5300 8400 60  0000 C CNN
+F 1 "risingedge_dflipflop" H 5300 8600 60  0000 C CNN
+F 2 "" H 5300 8550 60  0000 C CNN
+F 3 "" H 5300 8550 60  0000 C CNN
+	1    2450 6600
+	1    0    0    -1  
+$EndComp
+$Comp
+L risingedge_dflipflop U7
+U 1 1 683D6F13
+P 2450 7150
+F 0 "U7" H 5300 8950 60  0000 C CNN
+F 1 "risingedge_dflipflop" H 5300 9150 60  0000 C CNN
+F 2 "" H 5300 9100 60  0000 C CNN
+F 3 "" H 5300 9100 60  0000 C CNN
+	1    2450 7150
+	1    0    0    -1  
+$EndComp
+$Comp
+L risingedge_dflipflop U8
+U 1 1 683D6F19
+P 2450 7700
+F 0 "U8" H 5300 9500 60  0000 C CNN
+F 1 "risingedge_dflipflop" H 5300 9700 60  0000 C CNN
+F 2 "" H 5300 9650 60  0000 C CNN
+F 3 "" H 5300 9650 60  0000 C CNN
+	1    2450 7700
+	1    0    0    -1  
+$EndComp
+$Comp
+L risingedge_dflipflop U9
+U 1 1 683D6F1F
+P 2450 8250
+F 0 "U9" H 5300 10050 60  0000 C CNN
+F 1 "risingedge_dflipflop" H 5300 10250 60  0000 C CNN
+F 2 "" H 5300 10200 60  0000 C CNN
+F 3 "" H 5300 10200 60  0000 C CNN
+	1    2450 8250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3500 700  3700 700 
+Wire Wire Line
+	4300 700  4900 700 
+Wire Wire Line
+	3550 1750 3750 1750
+Wire Wire Line
+	4900 1750 5300 1750
+Wire Wire Line
+	4900 800  4650 800 
+Wire Wire Line
+	4650 800  4650 1300
+Wire Wire Line
+	4650 1300 6250 1300
+Wire Wire Line
+	6250 1300 6250 1700
+Wire Wire Line
+	6250 1700 6200 1700
+Wire Wire Line
+	5800 750  6300 750 
+Wire Wire Line
+	5300 1650 5000 1650
+Wire Wire Line
+	5000 1650 5000 1050
+Wire Wire Line
+	5000 1050 6000 1050
+Wire Wire Line
+	6000 1050 6000 750 
+Connection ~ 6000 750 
+Wire Wire Line
+	7200 800  7200 2150
+Wire Wire Line
+	7200 2150 4300 2150
+Wire Wire Line
+	4300 2150 4300 6450
+Wire Wire Line
+	4600 5350 4300 5350
+Connection ~ 4300 5350
+Wire Wire Line
+	4600 4800 4300 4800
+Connection ~ 4300 4800
+Wire Wire Line
+	4600 4200 4300 4200
+Connection ~ 4300 4200
+Wire Wire Line
+	4600 3650 4300 3650
+Connection ~ 4300 3650
+Wire Wire Line
+	4600 3100 4300 3100
+Connection ~ 4300 3100
+Wire Wire Line
+	4600 2550 4300 2550
+Connection ~ 4300 2550
+Wire Wire Line
+	4300 6450 4600 6450
+Wire Wire Line
+	4600 5900 4300 5900
+Connection ~ 4300 5900
+$Comp
+L PORT U1
+U 1 1 683D7938
+P 2350 700
+F 0 "U1" H 2400 800 30  0000 C CNN
+F 1 "PORT" H 2350 700 30  0000 C CNN
+F 2 "" H 2350 700 60  0000 C CNN
+F 3 "" H 2350 700 60  0000 C CNN
+	1    2350 700 
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 683D79D9
+P 3550 2450
+F 0 "U1" H 3600 2550 30  0000 C CNN
+F 1 "PORT" H 3550 2450 30  0000 C CNN
+F 2 "" H 3550 2450 60  0000 C CNN
+F 3 "" H 3550 2450 60  0000 C CNN
+	2    3550 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 7 1 683D7A72
+P 3500 5250
+F 0 "U1" H 3550 5350 30  0000 C CNN
+F 1 "PORT" H 3500 5250 30  0000 C CNN
+F 2 "" H 3500 5250 60  0000 C CNN
+F 3 "" H 3500 5250 60  0000 C CNN
+	7    3500 5250
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 8 1 683D7AD5
+P 3500 5850
+F 0 "U1" H 3550 5950 30  0000 C CNN
+F 1 "PORT" H 3500 5850 30  0000 C CNN
+F 2 "" H 3500 5850 60  0000 C CNN
+F 3 "" H 3500 5850 60  0000 C CNN
+	8    3500 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 9 1 683D7B26
+P 3500 6350
+F 0 "U1" H 3550 6450 30  0000 C CNN
+F 1 "PORT" H 3500 6350 30  0000 C CNN
+F 2 "" H 3500 6350 60  0000 C CNN
+F 3 "" H 3500 6350 60  0000 C CNN
+	9    3500 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 10 1 683D7BF7
+P 6550 6350
+F 0 "U1" H 6600 6450 30  0000 C CNN
+F 1 "PORT" H 6550 6350 30  0000 C CNN
+F 2 "" H 6550 6350 60  0000 C CNN
+F 3 "" H 6550 6350 60  0000 C CNN
+	10   6550 6350
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 683D7CD7
+P 3550 2950
+F 0 "U1" H 3600 3050 30  0000 C CNN
+F 1 "PORT" H 3550 2950 30  0000 C CNN
+F 2 "" H 3550 2950 60  0000 C CNN
+F 3 "" H 3550 2950 60  0000 C CNN
+	3    3550 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 683D7DFC
+P 3550 3550
+F 0 "U1" H 3600 3650 30  0000 C CNN
+F 1 "PORT" H 3550 3550 30  0000 C CNN
+F 2 "" H 3550 3550 60  0000 C CNN
+F 3 "" H 3550 3550 60  0000 C CNN
+	4    3550 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 683D8010
+P 3550 4100
+F 0 "U1" H 3600 4200 30  0000 C CNN
+F 1 "PORT" H 3550 4100 30  0000 C CNN
+F 2 "" H 3550 4100 60  0000 C CNN
+F 3 "" H 3550 4100 60  0000 C CNN
+	5    3550 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 683D8063
+P 3500 4700
+F 0 "U1" H 3550 4800 30  0000 C CNN
+F 1 "PORT" H 3500 4700 30  0000 C CNN
+F 2 "" H 3500 4700 60  0000 C CNN
+F 3 "" H 3500 4700 60  0000 C CNN
+	6    3500 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 11 1 683D828E
+P 6600 5800
+F 0 "U1" H 6650 5900 30  0000 C CNN
+F 1 "PORT" H 6600 5800 30  0000 C CNN
+F 2 "" H 6600 5800 60  0000 C CNN
+F 3 "" H 6600 5800 60  0000 C CNN
+	11   6600 5800
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 17 1 683D8353
+P 6550 2450
+F 0 "U1" H 6600 2550 30  0000 C CNN
+F 1 "PORT" H 6550 2450 30  0000 C CNN
+F 2 "" H 6550 2450 60  0000 C CNN
+F 3 "" H 6550 2450 60  0000 C CNN
+	17   6550 2450
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 12 1 683D83B4
+P 6550 5250
+F 0 "U1" H 6600 5350 30  0000 C CNN
+F 1 "PORT" H 6550 5250 30  0000 C CNN
+F 2 "" H 6550 5250 60  0000 C CNN
+F 3 "" H 6550 5250 60  0000 C CNN
+	12   6550 5250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 13 1 683D8437
+P 6550 4700
+F 0 "U1" H 6600 4800 30  0000 C CNN
+F 1 "PORT" H 6550 4700 30  0000 C CNN
+F 2 "" H 6550 4700 60  0000 C CNN
+F 3 "" H 6550 4700 60  0000 C CNN
+	13   6550 4700
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 14 1 683D84D8
+P 6550 4100
+F 0 "U1" H 6600 4200 30  0000 C CNN
+F 1 "PORT" H 6550 4100 30  0000 C CNN
+F 2 "" H 6550 4100 60  0000 C CNN
+F 3 "" H 6550 4100 60  0000 C CNN
+	14   6550 4100
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 15 1 683D8681
+P 6550 3550
+F 0 "U1" H 6600 3650 30  0000 C CNN
+F 1 "PORT" H 6550 3550 30  0000 C CNN
+F 2 "" H 6550 3550 60  0000 C CNN
+F 3 "" H 6550 3550 60  0000 C CNN
+	15   6550 3550
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 18 1 683D87A4
+P 2500 1750
+F 0 "U1" H 2550 1850 30  0000 C CNN
+F 1 "PORT" H 2500 1750 30  0000 C CNN
+F 2 "" H 2500 1750 60  0000 C CNN
+F 3 "" H 2500 1750 60  0000 C CNN
+	18   2500 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 16 1 683D8833
+P 6600 3000
+F 0 "U1" H 6650 3100 30  0000 C CNN
+F 1 "PORT" H 6600 3000 30  0000 C CNN
+F 2 "" H 6600 3000 60  0000 C CNN
+F 3 "" H 6600 3000 60  0000 C CNN
+	16   6600 3000
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	2600 700  2900 700 
+Wire Wire Line
+	2750 1750 2950 1750
+Wire Wire Line
+	3800 2450 4600 2450
+Wire Wire Line
+	3800 2950 4600 2950
+Wire Wire Line
+	4600 2950 4600 3000
+Wire Wire Line
+	3800 3550 4600 3550
+Wire Wire Line
+	3800 4100 4600 4100
+Wire Wire Line
+	3750 4700 4600 4700
+Wire Wire Line
+	3750 5250 4600 5250
+Wire Wire Line
+	3750 5850 4600 5850
+Wire Wire Line
+	4600 5850 4600 5800
+Wire Wire Line
+	3750 6350 4600 6350
+Wire Wire Line
+	6000 6350 6300 6350
+Wire Wire Line
+	6000 5800 6350 5800
+Wire Wire Line
+	6000 5250 6300 5250
+Wire Wire Line
+	6000 4700 6300 4700
+Wire Wire Line
+	6000 4100 6300 4100
+Wire Wire Line
+	6000 3550 6300 3550
+Wire Wire Line
+	6000 3000 6350 3000
+Wire Wire Line
+	6000 2450 6300 2450
+Wire Wire Line
+	6300 850  6150 850 
+Wire Wire Line
+	6150 850  6150 1200
+Wire Wire Line
+	6150 1200 6400 1200
+Wire Wire Line
+	6400 1200 6400 2050
+Wire Wire Line
+	6400 2050 2850 2050
+Wire Wire Line
+	2850 2050 2850 1750
+Connection ~ 2850 1750
+$EndSCHEMATC

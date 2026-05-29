@@ -1,0 +1,7 @@
+.title KiCad schematic
+v2 Net-_X1-Pad7_ GND DC
+U2 vout plot_v1
+X1 Net-_X1-Pad1_ vout vin GND Net-_X1-Pad5_ vout Net-_X1-Pad7_ Net-_X1-Pad8_ LT1093
+U1 vin plot_v1
+Vv1 vin GND sin(2.5 1.0 1k)
+.end

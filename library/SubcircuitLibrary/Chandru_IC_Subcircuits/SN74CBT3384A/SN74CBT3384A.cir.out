@@ -1,0 +1,159 @@
+* c:\users\chand\esim\fossee\esim\library\subcircuitlibrary\sn74cbt3384a\sn74cbt3384a.cir
+
+.include NMOS-180nm.lib
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ gnd CMOSN W=100u L=100u M=1
+m3 net-_m3-pad1_ net-_m1-pad2_ net-_m3-pad3_ gnd CMOSN W=100u L=100u M=1
+m5 net-_m5-pad1_ net-_m1-pad2_ net-_m5-pad3_ gnd CMOSN W=100u L=100u M=1
+m7 net-_m7-pad1_ net-_m1-pad2_ net-_m7-pad3_ gnd CMOSN W=100u L=100u M=1
+m9 net-_m9-pad1_ net-_m1-pad2_ net-_m9-pad3_ gnd CMOSN W=100u L=100u M=1
+m2 net-_m2-pad1_ net-_m10-pad2_ net-_m2-pad3_ gnd CMOSN W=100u L=100u M=1
+m4 net-_m4-pad1_ net-_m10-pad2_ net-_m4-pad3_ gnd CMOSN W=100u L=100u M=1
+m6 net-_m6-pad1_ net-_m10-pad2_ net-_m6-pad3_ gnd CMOSN W=100u L=100u M=1
+m8 net-_m8-pad1_ net-_m10-pad2_ net-_m8-pad3_ gnd CMOSN W=100u L=100u M=1
+m10 net-_m10-pad1_ net-_m10-pad2_ net-_m10-pad3_ gnd CMOSN W=100u L=100u M=1
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_m1-pad1_ net-_m3-pad1_ net-_u1-pad5_ net-_u1-pad6_ net-_m5-pad1_ net-_m7-pad1_ net-_u1-pad9_ net-_u1-pad10_ net-_m9-pad1_ gnd net-_u1-pad13_ net-_m2-pad1_ net-_u1-pad15_ net-_u1-pad16_ net-_m4-pad1_ net-_m6-pad1_ net-_u1-pad19_ net-_u1-pad20_ net-_m8-pad1_ net-_m10-pad1_ net-_u1-pad23_ ? port
+* u4  net-_u2-pad2_ net-_m1-pad2_ dac_bridge_1
+* u2  net-_u1-pad1_ net-_u2-pad2_ d_inverter
+* u5  net-_u3-pad2_ net-_m10-pad2_ dac_bridge_1
+* u3  net-_u1-pad13_ net-_u3-pad2_ d_inverter
+* u12  net-_u12-pad1_ net-_u12-pad2_ d_buffer
+* u18  net-_u18-pad1_ net-_u18-pad2_ d_buffer
+* u20  net-_u10-pad2_ net-_u20-pad2_ d_buffer
+* u22  net-_u13-pad2_ net-_u22-pad2_ d_buffer
+* u24  net-_u15-pad2_ net-_u24-pad2_ d_buffer
+* u17  net-_u17-pad1_ net-_u17-pad2_ d_buffer
+* u19  net-_u19-pad1_ net-_u19-pad2_ d_buffer
+* u21  net-_u11-pad2_ net-_u21-pad2_ d_buffer
+* u23  net-_u14-pad2_ net-_u23-pad2_ d_buffer
+* u25  net-_u16-pad2_ net-_u25-pad2_ d_buffer
+* u6  net-_m1-pad3_ net-_u12-pad1_ adc_bridge_1
+* u8  net-_m3-pad3_ net-_u18-pad1_ adc_bridge_1
+* u10  net-_m5-pad3_ net-_u10-pad2_ adc_bridge_1
+* u13  net-_m7-pad3_ net-_u13-pad2_ adc_bridge_1
+* u15  net-_m9-pad3_ net-_u15-pad2_ adc_bridge_1
+* u7  net-_m2-pad3_ net-_u17-pad1_ adc_bridge_1
+* u9  net-_m4-pad3_ net-_u19-pad1_ adc_bridge_1
+* u11  net-_m6-pad3_ net-_u11-pad2_ adc_bridge_1
+* u14  net-_m8-pad3_ net-_u14-pad2_ adc_bridge_1
+* u16  net-_m10-pad3_ net-_u16-pad2_ adc_bridge_1
+* u28  net-_u18-pad2_ net-_u1-pad5_ dac_bridge_1
+* u26  net-_u12-pad2_ net-_u1-pad2_ dac_bridge_1
+* u31  net-_u20-pad2_ net-_u1-pad6_ dac_bridge_1
+* u33  net-_u22-pad2_ net-_u1-pad9_ dac_bridge_1
+* u35  net-_u24-pad2_ net-_u1-pad10_ dac_bridge_1
+* u27  net-_u17-pad2_ net-_u1-pad15_ dac_bridge_1
+* u29  net-_u19-pad2_ net-_u1-pad16_ dac_bridge_1
+* u30  net-_u21-pad2_ net-_u1-pad19_ dac_bridge_1
+* u32  net-_u23-pad2_ net-_u1-pad20_ dac_bridge_1
+* u34  net-_u25-pad2_ net-_u1-pad23_ dac_bridge_1
+a1 [net-_u2-pad2_ ] [net-_m1-pad2_ ] u4
+a2 net-_u1-pad1_ net-_u2-pad2_ u2
+a3 [net-_u3-pad2_ ] [net-_m10-pad2_ ] u5
+a4 net-_u1-pad13_ net-_u3-pad2_ u3
+a5 net-_u12-pad1_ net-_u12-pad2_ u12
+a6 net-_u18-pad1_ net-_u18-pad2_ u18
+a7 net-_u10-pad2_ net-_u20-pad2_ u20
+a8 net-_u13-pad2_ net-_u22-pad2_ u22
+a9 net-_u15-pad2_ net-_u24-pad2_ u24
+a10 net-_u17-pad1_ net-_u17-pad2_ u17
+a11 net-_u19-pad1_ net-_u19-pad2_ u19
+a12 net-_u11-pad2_ net-_u21-pad2_ u21
+a13 net-_u14-pad2_ net-_u23-pad2_ u23
+a14 net-_u16-pad2_ net-_u25-pad2_ u25
+a15 [net-_m1-pad3_ ] [net-_u12-pad1_ ] u6
+a16 [net-_m3-pad3_ ] [net-_u18-pad1_ ] u8
+a17 [net-_m5-pad3_ ] [net-_u10-pad2_ ] u10
+a18 [net-_m7-pad3_ ] [net-_u13-pad2_ ] u13
+a19 [net-_m9-pad3_ ] [net-_u15-pad2_ ] u15
+a20 [net-_m2-pad3_ ] [net-_u17-pad1_ ] u7
+a21 [net-_m4-pad3_ ] [net-_u19-pad1_ ] u9
+a22 [net-_m6-pad3_ ] [net-_u11-pad2_ ] u11
+a23 [net-_m8-pad3_ ] [net-_u14-pad2_ ] u14
+a24 [net-_m10-pad3_ ] [net-_u16-pad2_ ] u16
+a25 [net-_u18-pad2_ ] [net-_u1-pad5_ ] u28
+a26 [net-_u12-pad2_ ] [net-_u1-pad2_ ] u26
+a27 [net-_u20-pad2_ ] [net-_u1-pad6_ ] u31
+a28 [net-_u22-pad2_ ] [net-_u1-pad9_ ] u33
+a29 [net-_u24-pad2_ ] [net-_u1-pad10_ ] u35
+a30 [net-_u17-pad2_ ] [net-_u1-pad15_ ] u27
+a31 [net-_u19-pad2_ ] [net-_u1-pad16_ ] u29
+a32 [net-_u21-pad2_ ] [net-_u1-pad19_ ] u30
+a33 [net-_u23-pad2_ ] [net-_u1-pad20_ ] u32
+a34 [net-_u25-pad2_ ] [net-_u1-pad23_ ] u34
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u4 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u5 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u12 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u18 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u20 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u22 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u24 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u17 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u19 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u21 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u23 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u25 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u6 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u8 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u10 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u13 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u15 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u9 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u11 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u14 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u16 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u28 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u26 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u31 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u33 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u35 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u27 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u29 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u30 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u32 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u34 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

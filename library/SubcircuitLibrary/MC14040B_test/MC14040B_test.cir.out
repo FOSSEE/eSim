@@ -1,0 +1,65 @@
+.title kicad schematic
+
+.include MC14040B_sub.sub
+r2 q12 gnd 1k
+r8 q9 gnd 1k
+r4 q11 gnd 1k
+r6 q10 gnd 1k
+r1 q6 gnd 1k
+* u25 net-_u25-pad1_ clock gnd net-_u25-pad4_ net-_u25-pad5_ net-_u25-pad6_ adc_bridge_3
+* u26 net-_u26-pad1_ net-_u26-pad2_ net-_u26-pad3_ net-_u26-pad4_ net-_u26-pad5_ net-_u26-pad6_ q1 q2 q3 q4 q5 q6 dac_bridge_6
+* u1 clock plot_v1
+* u28 q6 plot_v1
+r7 q3 gnd 1k
+r5 q4 gnd 1k
+r3 q5 gnd 1k
+* u30 q5 plot_v1
+* u32 q4 plot_v1
+* u36 q2 plot_v1
+* u38 q1 plot_v1
+* u34 q3 plot_v1
+r11 q1 gnd 1k
+r9 q2 gnd 1k
+* u31 q11 plot_v1
+* u29 q12 plot_v1
+* u27 net-_u27-pad1_ net-_u27-pad2_ net-_u27-pad3_ net-_u27-pad4_ net-_u27-pad5_ net-_u27-pad6_ q7 q8 q9 q10 q11 q12 dac_bridge_6
+x1 net-_u27-pad6_ net-_u26-pad6_ net-_u26-pad5_ net-_u27-pad1_ net-_u26-pad4_ net-_u26-pad3_ net-_u26-pad2_ net-_u25-pad6_ net-_u26-pad1_ net-_u25-pad5_ net-_u25-pad6_ net-_u27-pad3_ net-_u27-pad2_ net-_u27-pad4_ net-_u27-pad5_ net-_u25-pad4_ MC14040B_sub
+v2 clock gnd pulse(0v 5v 10ms 0 0 10ms 20ms)
+v1 net-_u25-pad1_ gnd  dc 5v
+r10 q8 gnd 1k
+* u39 q7 plot_v1
+r12 q7 gnd 1k
+* u37 q8 plot_v1
+* u35 q9 plot_v1
+* u33 q10 plot_v1
+a1 [net-_u25-pad1_ clock gnd ] [net-_u25-pad4_ net-_u25-pad5_ net-_u25-pad6_ ] u25
+a2 [net-_u26-pad1_ net-_u26-pad2_ net-_u26-pad3_ net-_u26-pad4_ net-_u26-pad5_ net-_u26-pad6_ ] [q1 q2 q3 q4 q5 q6 ] u26
+a3 [net-_u27-pad1_ net-_u27-pad2_ net-_u27-pad3_ net-_u27-pad4_ net-_u27-pad5_ net-_u27-pad6_ ] [q7 q8 q9 q10 q11 q12 ] u27
+* Schematic Name:                             adc_bridge_3, Ngspice Name: adc_bridge
+.model u25 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_6, Ngspice Name: dac_bridge
+.model u26 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_6, Ngspice Name: dac_bridge
+.model u27 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-03 4000e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(clock)
+plot v(q6)
+plot v(q5)
+plot v(q4)
+plot v(q2)
+plot v(q1)
+plot v(q3)
+plot v(q11)
+plot v(q12)
+plot v(q7)
+plot v(q8)
+plot v(q9)
+plot v(q10)
+.endc
+.end

@@ -20,7 +20,7 @@ import os
 from . import Validation
 from configuration.Appconfig import Appconfig
 from . import Worker
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 
 class Kicad:
@@ -86,10 +86,20 @@ class Kicad:
             self.project = os.path.join(self.projDir, self.projName)
 
             # creating a command to open schematic
-            self.cmd = "eeschema " + self.project + ".kicad_sch"  # kicad6 file
-            if not os.path.exists(self.project + ".kicad_sch") \
-                    and os.path.exists(self.project + ".sch"):
-                self.cmd = "eeschema " + self.project + ".sch"    # kicad4 file
+            schematic_file = self.project + ".kicad_sch"  # kicad6 file
+            if not os.path.exists(schematic_file) and os.path.exists(
+                    self.project + ".sch"):
+                schematic_file = self.project + ".sch"    # kicad4 file
+
+            # When running as Flatpak, use flatpak run to launch KiCad
+            # (install: flatpak install flathub org.kicad.KiCad)
+            if os.environ.get('ESIM_FLATPAK') == '1':
+                self.cmd = (
+                    "flatpak run --command=eeschema org.kicad.KiCad " +
+                    schematic_file
+                )
+            else:
+                self.cmd = "eeschema " + schematic_file
 
             self.obj_workThread.args = self.cmd
             self.obj_workThread.start()
@@ -101,7 +111,7 @@ class Kicad:
             self.msg.showMessage(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')
-            self.msg.exec_()
+            self.msg.exec()
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')
@@ -138,7 +148,7 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
             + 'either create new project or open an existing project')
-            self.msg.exec_()
+            self.msg.exec()
             self.obj_appconfig.print_warning('Please select the project'
             + 'first. You can either create new project or open an existing'
             + 'project')
@@ -171,7 +181,7 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
             + 'either create new project or open an existing project')
-            self.msg.exec_()
+            self.msg.exec()
             self.obj_appconfig.print_warning('Please select the project'
             + 'first. You can either create new project or open an existing'
             + 'project')
@@ -222,7 +232,7 @@ class Kicad:
                 self.obj_appconfig.print_error(
                     'The project does not contain any Kicad netlist file ' +
                     'for conversion.')
-                self.msg.exec_()
+                self.msg.exec()
 
         else:
             self.msg = QtWidgets.QErrorMessage()
@@ -231,7 +241,7 @@ class Kicad:
             self.msg.showMessage(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')
-            self.msg.exec_()
+            self.msg.exec()
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')

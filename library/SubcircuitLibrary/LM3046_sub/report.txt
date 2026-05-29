@@ -1,0 +1,20 @@
+Annotated eSim_NPN as Q1.
+Annotated eSim_NPN as Q2.
+Annotated eSim_NPN as Q3.
+Annotated eSim_NPN as Q4.
+Annotated eSim_NPN as Q5.
+Annotated PORT (unit A) as U1A.
+Annotated PORT (unit N) as U1N.
+Annotated PORT (unit B) as U1B.
+Annotated PORT (unit M) as U1M.
+Annotated PORT (unit C) as U1C.
+Annotated PORT (unit L) as U1L.
+Annotated PORT (unit K) as U1K.
+Annotated PORT (unit D) as U1D.
+Annotated PORT (unit J) as U1J.
+Annotated PORT (unit E) as U1E.
+Annotated PORT (unit F) as U1F.
+Annotated PORT (unit I) as U1I.
+Annotated PORT (unit G) as U1G.
+Annotated PORT (unit H) as U1H.
+Annotation complete.

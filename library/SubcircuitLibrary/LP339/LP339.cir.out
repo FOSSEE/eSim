@@ -1,0 +1,34 @@
+.title kicad schematic
+
+.include D.lib
+.include PNP.lib
+.include NPN.lib
+q11 net-_q11-pad1_ net-_q10-pad1_ gnd Q2N2222
+* u1 net-_d1-pad1_ net-_d4-pad1_ net-_q11-pad1_ port
+q7 net-_q7-pad1_ net-_q10-pad2_ gnd Q2N2222
+q9 net-_q10-pad1_ net-_q11-pad1_ net-_q7-pad1_ Q2N2907A
+q10 net-_q10-pad1_ net-_q10-pad2_ gnd Q2N2222
+q8 net-_q11-pad1_ net-_q7-pad1_ net-_q10-pad1_ Q2N2222
+i3 net-_i1-pad1_ net-_d3-pad1_ 0.2u
+i4 net-_i1-pad1_ net-_q7-pad1_ 6u
+d2 net-_d2-pad1_ net-_d1-pad2_ 1N4148
+i1 net-_i1-pad1_ net-_d2-pad1_ 0.2u
+i2 net-_i1-pad1_ net-_q2-pad3_ 5u
+q2 net-_q2-pad1_ net-_d1-pad2_ net-_q2-pad3_ Q2N2907A
+q1 gnd net-_d1-pad1_ net-_d1-pad2_ Q2N2907A
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+d4 net-_d4-pad1_ net-_d3-pad2_ 1N4148
+q6 gnd net-_d4-pad1_ net-_d3-pad2_ Q2N2907A
+q4 net-_q10-pad2_ net-_q2-pad1_ gnd Q2N2222
+q5 net-_q10-pad2_ net-_d3-pad2_ net-_q2-pad3_ Q2N2907A
+q3 net-_q2-pad1_ net-_q2-pad1_ gnd Q2N2222
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

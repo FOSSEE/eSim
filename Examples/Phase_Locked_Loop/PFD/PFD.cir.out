@@ -1,0 +1,51 @@
+.title kicad schematic
+
+
+.lib /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib mos_tt
+.include /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.ref/sg13g2_stdcell/spice/sg13g2_stdcell.spice
+
+.control
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103.osdi
+pre_osdi /home/fossee/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/osdi/psp103_nqs.osdi
+.endc
+
+
+v_logic VDD gnd dc 1.2
+
+* u5 net-_u5-pad1_ net-_u3-pad3_ d_inverter
+* u6 qa qa net-_u5-pad1_ d_and
+* u7 qa plot_v1
+* u8 qa plot_v1
+* u3 vcc net-_u2-pad~_ net-_u3-pad3_ vcc qa net-_u3-pad6_ d_dff
+* u2 net-_u2-pad~_ plot_v1
+* u1 net-_u1-pad~_ plot_v1
+* u4 vcc net-_u1-pad~_ vcc net-_u3-pad3_ qa net-_u4-pad6_ d_dff
+
+
+v1 net-_u1-pad~_ gnd pulse(0 1.2 4n 100p 100p 7.9n 16n)
+v2 net-_u2-pad~_ gnd pulse(0 1.2 0n 100p 100p 7.9n 16n)
+
+
+* Top D-Flip-Flop (Generates QA / "UP" pulse)
+* Pin Order: Q  Q_N  CLK  D  RESET_B  VDD  VSS
+X_FF_UP QA qa_n net-_u1-pad~_ VDD reset_b VDD gnd sg13g2_dfrbp_1
+
+X_FF_DN QB qb_n net-_u2-pad~_ VDD reset_b VDD gnd sg13g2_dfrbp_1
+
+* Reset Logic (NAND gate replacing AND + INVERTER)
+X_NAND reset_b QA QB VDD gnd sg13g2_nand2_1
+
+
+.tran 10e-12 100e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(qa)
+plot v(qb)
+plot v(net-_u2-pad~_)
+plot v(net-_u1-pad~_)
+.endc
+.end
