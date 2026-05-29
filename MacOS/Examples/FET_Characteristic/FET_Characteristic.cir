@@ -1,0 +1,14 @@
+* /home/fossee/UpdatedExamples/FET_Characteristic/FET_Characteristic.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 21:05:50 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+J1  id Net-_J1-Pad2_ GND NJF		
+vds1  Net-_U_id1-Pad1_ GND DC		
+vgs1  Net-_J1-Pad2_ GND DC		
+U_id1  Net-_U_id1-Pad1_ id plot_i2		
+
+.end

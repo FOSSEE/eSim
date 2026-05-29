@@ -1,0 +1,20 @@
+* c:\fossee\esim\library\subcircuitlibrary\74v1g14\74v1g14.cir
+
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m1 /vout /inp net-_m1-pad3_ /gnd CMOSN W=25u L=0.25u M=1
+m2 net-_m1-pad3_ /inp /gnd /gnd CMOSN W=25u L=0.25u M=1
+m3 /vcc /inp net-_m3-pad3_ /vcc CMOSP W=25u L=0.25u M=1
+m4 net-_m3-pad3_ /inp /vout /vcc CMOSP W=25u L=0.25u M=1
+m5 /gnd /vout net-_m3-pad3_ /vcc CMOSP W=25u L=0.25u M=1
+m6 /vcc /vout net-_m1-pad3_ /gnd CMOSN W=25u L=0.25u M=1
+* u1  ? /inp /gnd /vout /vcc port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

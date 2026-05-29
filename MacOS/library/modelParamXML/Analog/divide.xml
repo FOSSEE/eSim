@@ -1,0 +1,18 @@
+<model>
+<name>divide</name>
+<type>Analog</type>
+<node_number>3</node_number>
+<title>Add Parameters for Multiplier</title>
+<split>None</split>
+<param>
+	<num_offset default="0.0">Enter offset for Numerator (default=0.0)</num_offset>
+	<num_gain default="1.0">Enter gain for Numerator (default=1.0)</num_gain>
+	<den_offset default="0.0">Enter offset for Denominator (default=0.0)</den_offset>
+	<den_gain default="1.0">Enter gain for Denominator (default=1.0)</den_gain>
+	<den_lower_limit default="1.0e-10">Enter Denominator Lower Limit (default=1.0e-10)</den_lower_limit>
+	<den_domain default="1.0e-10">Enter Denominator Domain (default=1.0e-10)</den_domain>
+	<fraction default="false">Enter Fraction (default=false)</fraction>
+	<out_gain default="1.0">Enter gain for output (default=1.0)</out_gain>
+	<out_offset default="0.0">Enter offset for output (default=0.0)</out_offset>
+</param>
+</model>

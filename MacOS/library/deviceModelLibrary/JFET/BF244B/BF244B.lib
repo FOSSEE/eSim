@@ -1,0 +1,1 @@
+.MODEL BF244B NJF( Beta=1.6m Betatce=-.5 Rd=1  Rs=1  Lambda=3.1m Vto=-2.29 Vtotc=-2.5m Is=33.57f  Isr=322.4f  N=1 Nr=2 Xti=3 Alpha=311.7u Vk=243.6  Cgd=3.35p M=.3622  Pb=1 Fc=.5 Cgs=3.736p Kf=13.56E-18 Af=1 )

@@ -1,0 +1,102 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# AC
+#
+DEF AC v 0 40 Y Y 1 F N
+F0 "v" -200 100 60 H V C CNN
+F1 "AC" -200 -50 60 H V C CNN
+F2 "R1" -300 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+$FPLIST
+ 1_pin
+$ENDFPLIST
+DRAW
+A -50 0 50 1 1799 0 1 0 N 0 0 -100 0
+A 50 0 50 -1799 -1 0 1 0 N 0 0 100 0
+C 0 0 150 0 1 0 N
+X + 1 0 450 300 D 50 0 1 1 I
+X - 2 0 -450 300 U 50 0 1 1 I
+ENDDRAW
+ENDDEF
+#
+# C
+#
+DEF C C 0 10 N Y 1 F N
+F0 "C" 25 100 50 H V L CNN
+F1 "C" 25 -100 50 H V L CNN
+F2 "" 38 -150 30 H V C CNN
+F3 "" 0 0 60 H V C CNN
+$FPLIST
+ C?
+ C_????_*
+ C_????
+ SMD*_c
+ Capacitor*
+$ENDFPLIST
+DRAW
+P 2 0 1 20  -80 -30  80 -30 N
+P 2 0 1 20  -80 30  80 30 N
+X ~ 1 0 150 110 D 40 40 1 1 P
+X ~ 2 0 -150 110 U 40 40 1 1 P
+ENDDRAW
+ENDDEF
+#
+# GND
+#
+DEF GND #PWR 0 0 Y Y 1 F P
+F0 "#PWR" 0 -250 50 H I C CNN
+F1 "GND" 0 -150 50 H V C CNN
+F2 "" 0 0 50 H V C CNN
+F3 "" 0 0 50 H V C CNN
+DRAW
+P 6 0 1 0  0 0  0 -50  50 -50  0 -100  -50 -50  0 -50 N
+X GND 1 0 0 0 D 50 50 1 1 W N
+ENDDRAW
+ENDDEF
+#
+# R
+#
+DEF R R 0 0 N Y 1 F N
+F0 "R" 50 130 50 H V C CNN
+F1 "R" 50 50 50 H V C CNN
+F2 "" 50 -20 30 H V C CNN
+F3 "" 50 50 30 V V C CNN
+$FPLIST
+ R_*
+ Resistor_*
+$ENDFPLIST
+DRAW
+S 150 10 -50 90 0 1 10 N
+X ~ 1 -100 50 50 R 60 60 1 1 P
+X ~ 2 200 50 50 L 60 60 1 1 P
+ENDDRAW
+ENDDEF
+#
+# plot_log
+#
+DEF plot_log U 0 40 Y Y 1 F N
+F0 "U" 0 500 60 H V C CNN
+F1 "plot_log" 200 350 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+C 0 500 100 0 1 0 N
+X ~ ~ 0 200 200 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# plot_v1
+#
+DEF plot_v1 U 0 40 Y Y 1 F N
+F0 "U" 0 500 60 H V C CNN
+F1 "plot_v1" 200 350 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+C 0 500 100 0 1 0 N
+X ~ ~ 0 200 200 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+#End Library

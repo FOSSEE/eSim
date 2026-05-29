@@ -1,0 +1,69 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\LM723\LM723.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/28/22 22:27:49
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  Net-_J1-Pad3_ /V+ zener		
+R2  /V+ Net-_Q4-Pad3_ 900		
+R5  Net-_Q25-Pad3_ /V+ 550		
+Q4  Net-_Q14-Pad2_ Net-_Q14-Pad2_ Net-_Q4-Pad3_ eSim_PNP		
+Q5  Net-_C1-Pad2_ Net-_Q14-Pad2_ Net-_Q25-Pad3_ eSim_PNP		
+R3  Net-_Q14-Pad2_ Net-_J1-Pad3_ 22k		
+Q8  /V+ Net-_C1-Pad2_ /Vref eSim_NPN		
+Q2  /V- Net-_D1-Pad1_ Net-_Q2-Pad3_ eSim_PNP		
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+Q7  /V- Net-_C1-Pad1_ Net-_D1-Pad2_ eSim_PNP		
+Q9  Net-_C1-Pad1_ Net-_Q11-Pad1_ /Vref eSim_PNP		
+Q11  Net-_Q11-Pad1_ Net-_C2-Pad1_ /Vref eSim_PNP		
+R8  Net-_Q11-Pad1_ Net-_C2-Pad1_ 1.8k		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 10p		
+C2  Net-_C2-Pad1_ Net-_C1-Pad2_ 5p		
+U2  /V- Net-_C1-Pad2_ zener		
+R16  /V+ Net-_Q14-Pad3_ 1.8k		
+R18  Net-_Q16-Pad3_ /V+ 1.8k		
+Q14  Net-_Q14-Pad1_ Net-_Q14-Pad2_ Net-_Q14-Pad3_ eSim_PNP		
+Q16  /Compensation Net-_Q14-Pad2_ Net-_Q16-Pad3_ eSim_PNP		
+Q19  /V+ /Compensation Net-_Q19-Pad3_ eSim_NPN		
+Q23  /Vc Net-_Q19-Pad3_ /Vout eSim_NPN		
+R21  Net-_Q19-Pad3_ /Vout 15k		
+U3  /Vz /Vout zener		
+Q12  Net-_Q11-Pad1_ Net-_D2-Pad2_ Net-_Q12-Pad3_ eSim_NPN		
+Q10  Net-_C1-Pad1_ Net-_D2-Pad2_ Net-_D2-Pad1_ eSim_NPN		
+D2  Net-_D2-Pad1_ Net-_D2-Pad2_ eSim_Diode		
+R9  Net-_D2-Pad1_ Net-_Q12-Pad3_ 2k		
+R6  Net-_D2-Pad1_ Net-_R6-Pad2_ 11k		
+R7  Net-_R6-Pad2_ /V- 1k		
+Q6  Net-_J1-Pad3_ Net-_Q17-Pad2_ Net-_Q6-Pad3_ eSim_NPN		
+Q3  Net-_J1-Pad3_ Net-_J1-Pad1_ Net-_Q1-Pad2_ eSim_NPN		
+Q1  Net-_J1-Pad1_ Net-_Q1-Pad2_ /V- eSim_NPN		
+R1  Net-_Q1-Pad2_ /V- 2.4k		
+R4  Net-_Q6-Pad3_ /V- 160		
+R10  /Vref Net-_Q13-Pad1_ 409		
+R11  Net-_Q13-Pad1_ Net-_D2-Pad2_ 11.89k		
+R12  Net-_D2-Pad2_ Net-_Q15-Pad2_ 1.1k		
+R13  Net-_Q15-Pad2_ Net-_Q13-Pad2_ 380		
+R14  Net-_Q13-Pad2_ /V- 1.1k		
+Q15  Net-_Q13-Pad1_ Net-_Q15-Pad2_ Net-_Q15-Pad3_ eSim_NPN		
+R17  Net-_Q15-Pad3_ /V- 1.1k		
+Q13  Net-_Q13-Pad1_ Net-_Q13-Pad2_ Net-_Q13-Pad3_ eSim_NPN		
+R15  Net-_Q13-Pad3_ /V- 1.7k		
+Q17  Net-_Q14-Pad1_ Net-_Q17-Pad2_ Net-_Q17-Pad3_ eSim_NPN		
+R19  Net-_Q17-Pad3_ /V- 300		
+Q18  /Vref Net-_Q14-Pad1_ Net-_Q17-Pad2_ eSim_NPN		
+R20  Net-_Q17-Pad2_ /V- 10k		
+Q24  /Compensation Net-_Q24-Pad2_ /Current_sense eSim_NPN		
+R24  /Current_limit Net-_Q24-Pad2_ 400		
+Q22  /Compensation /Inverting_input Net-_Q20-Pad3_ eSim_NPN		
+Q20  /Vref /Non-inverting_input Net-_Q20-Pad3_ eSim_NPN		
+Q21  Net-_Q20-Pad3_ Net-_Q17-Pad2_ Net-_Q21-Pad3_ eSim_NPN		
+R22  Net-_Q21-Pad3_ /V- 300		
+R23  Net-_Q26-Pad3_ /V- 300		
+U4  /V+ /Vc /Vout /Vz /Vref /Compensation /Current_limit /Current_sense /Inverting_input /Non-inverting_input ? ? ? /V- PORT		
+J1  Net-_J1-Pad1_ /V- Net-_J1-Pad3_ jfet_n		
+Q25  Net-_Q2-Pad3_ Net-_Q14-Pad2_ Net-_Q25-Pad3_ eSim_PNP		
+Q26  Net-_Q20-Pad3_ Net-_Q17-Pad2_ Net-_Q26-Pad3_ eSim_NPN		
+
+.end

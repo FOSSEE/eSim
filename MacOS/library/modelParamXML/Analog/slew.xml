@@ -1,0 +1,12 @@
+<model>
+<name>slew</name>
+<type>Analog</type>
+<node_number>2</node_number>
+<title>Add Parameters for slew</title>
+<split>None</split>
+<param>
+	<rise_slope default="1.0e9">Enter Rising Slope Value (default=1.0e9)</rise_slope>
+	<fall_slop default="1.0e9">Enter Falling Slope Value (default=1.0e9)</fall_slop>
+	<range default="0.1">Enter Range (default=0.1)</range>
+</param>
+</model>

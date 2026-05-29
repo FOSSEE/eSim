@@ -1,0 +1,15 @@
+* Subcircuit LOG101
+.subckt LOG101 net-_c1-pad2_ net-_q1-pad1_ v+ v- gnd net-_c1-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\log101\log101.cir
+.include lm_741.sub
+.include NPN.lib
+x1 ? net-_q1-pad1_ gnd v- ? net-_q1-pad3_ v+ ? lm_741
+x2 ? net-_c1-pad2_ gnd v- ? net-_c1-pad1_ v+ ? lm_741
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+c1  net-_c1-pad1_ net-_c1-pad2_ 100p
+r1  net-_c1-pad1_ net-_q1-pad2_ 15.72k
+r2  net-_q1-pad2_ gnd 1k
+q2 net-_c1-pad2_ gnd net-_q1-pad3_ Q2N2222
+* Control Statements
+
+.ends LOG101

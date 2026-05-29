@@ -1,0 +1,13 @@
+<model>
+<name>summer</name>
+<type>Analog</type>
+<node_number>3</node_number>
+<title>Add Parameters for Summer</title>
+<split>2-V:1-NV</split>
+<param>
+	<in_offset vector="2" default="0.0">Enter offset for input (default=0.0)</in_offset>
+	<in_gain vector="2" default="1.0">Enter gain for input(default=1.0)</in_gain>
+	<out_gain default="1.0">Enter gain for output (default=1.0)</out_gain>
+	<out_offset default="0.0">Enter offset for output (default=0.0)</out_offset>
+</param>
+</model>

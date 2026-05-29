@@ -1,0 +1,23 @@
+* /home/bhargav/eSim-Workspace/7812VoltageRegulator/7812VoltageRegulator.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Jun 11 10:51:00 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+D1  in2 Net-_C1-Pad1_ eSim_Diode		
+D2  GND in2 eSim_Diode		
+D4  GND in1 eSim_Diode		
+D3  in1 Net-_C1-Pad1_ eSim_Diode		
+D5  GND out eSim_Diode		
+C1  Net-_C1-Pad1_ GND 1000u		
+C2  out GND 3.3u		
+R1  out GND 1k		
+v1  in1 in2 sine		
+U1  in1 plot_v1		
+U2  in2 plot_v1		
+U3  out plot_v1		
+X1  Net-_C1-Pad1_ GND out LM_7812		
+
+.end

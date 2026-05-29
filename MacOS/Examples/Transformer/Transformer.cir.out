@@ -1,0 +1,28 @@
+* /home/fossee/esim-workspace/transformer/transformer.cir
+
+v1  net-_r2-pad2_ gnd sine(0 10 50 0 0)
+r1  out gnd 1k
+r2  in net-_r2-pad2_ 1k
+* u1  in gnd gnd out transfo
+* u2  in plot_v1
+* u3  out plot_v1
+a1 (in gnd) (interNode_1 gnd) u1_primary
+a2 (out gnd) (interNode_2 gnd) u1_secondary
+a3 (interNode_1 interNode_2) u1_iron_core
+*primary lcouple
+.model u1_primary lcouple (num_turns= 310)
+*iron core
+.model u1_iron_core core (H_array = [-1000 -500 -375 -250 -188 -125 -63 0 63 125 188 250 375 500 1000] B_array = [-3.13e-3 -2.63e-3 -2.33e-3 -1.93e-3 -1.5e-3 -6.25e-4 -2.5e-4 0 2.5e-4 6.25e-4 1.5e-3 1.93e-3 2.33e-3 2.63e-3 3.13e-3] area = 1 length =0.01)
+*secondary lcouple
+.model u1_secondary lcouple (num_turns =620)
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

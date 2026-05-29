@@ -1,0 +1,20 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# dff_edge-RESCUE-CD4015BC_edge
+#
+DEF dff_edge-RESCUE-CD4015BC_edge X 0 40 Y Y 1 F N
+F0 "X" 0 0 60 H V C CNN
+F1 "dff_edge-RESCUE-CD4015BC_edge" 0 100 60 H V C CNN
+F2 "" 0 0 60 H I C CNN
+F3 "" 0 0 60 H I C CNN
+DRAW
+S -350 450 350 -350 0 1 0 N
+X D 1 -550 300 200 R 50 50 1 1 I
+X clk 2 -550 0 200 R 50 50 1 1 I C
+X Q 3 550 300 200 L 50 50 1 1 O
+X reset 5 0 -550 200 U 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+#End Library

@@ -1,0 +1,259 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:a_origin-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L PORT U1
+U 1 1 67F6CCB0
+P 2350 1300
+F 0 "U1" H 2400 1400 30  0000 C CNN
+F 1 "PORT" H 2350 1300 30  0000 C CNN
+F 2 "" H 2350 1300 60  0000 C CNN
+F 3 "" H 2350 1300 60  0000 C CNN
+	1    2350 1300
+	0    -1   1    0   
+$EndComp
+$Comp
+L PORT U1
+U 2 1 67F6CCB1
+P 3100 1300
+F 0 "U1" H 3150 1400 30  0000 C CNN
+F 1 "PORT" H 3100 1300 30  0000 C CNN
+F 2 "" H 3100 1300 60  0000 C CNN
+F 3 "" H 3100 1300 60  0000 C CNN
+	2    3100 1300
+	0    -1   1    0   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 67F6CCB2
+P 3850 1300
+F 0 "U1" H 3900 1400 30  0000 C CNN
+F 1 "PORT" H 3850 1300 30  0000 C CNN
+F 2 "" H 3850 1300 60  0000 C CNN
+F 3 "" H 3850 1300 60  0000 C CNN
+	3    3850 1300
+	0    -1   1    0   
+$EndComp
+$Comp
+L PORT U1
+U 4 1 67F6CCB3
+P 4450 1300
+F 0 "U1" H 4500 1400 30  0000 C CNN
+F 1 "PORT" H 4450 1300 30  0000 C CNN
+F 2 "" H 4450 1300 60  0000 C CNN
+F 3 "" H 4450 1300 60  0000 C CNN
+	4    4450 1300
+	0    -1   1    0   
+$EndComp
+Text Label 2350 1650 3    60   ~ 0
+w
+Text Label 3100 1700 3    60   ~ 0
+x
+Text Label 3850 1700 3    60   ~ 0
+y
+Text Label 4450 1700 3    60   ~ 0
+z
+$Comp
+L d_inverter U2
+U 1 1 67F6CCB6
+P 4100 2400
+F 0 "U2" H 4100 2300 60  0000 C CNN
+F 1 "d_inverter" H 4100 2550 60  0000 C CNN
+F 2 "" H 4150 2350 60  0000 C CNN
+F 3 "" H 4150 2350 60  0000 C CNN
+	1    4100 2400
+	0    1    1    0   
+$EndComp
+$Comp
+L d_inverter U3
+U 1 1 67F6CCB7
+P 4800 2300
+F 0 "U3" H 4800 2200 60  0000 C CNN
+F 1 "d_inverter" H 4800 2450 60  0000 C CNN
+F 2 "" H 4850 2250 60  0000 C CNN
+F 3 "" H 4850 2250 60  0000 C CNN
+	1    4800 2300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3850 1550 3850 2100
+Wire Wire Line
+	4800 1950 4450 1950
+Connection ~ 4450 1950
+Wire Wire Line
+	4800 1950 4800 2000
+Wire Wire Line
+	4100 2700 4100 4100
+Wire Wire Line
+	3100 1550 3100 3600
+Wire Wire Line
+	2350 1550 2350 4000
+$Comp
+L 4_OR X1
+U 1 1 67F6CCBC
+P 7000 3450
+F 0 "X1" H 7150 3350 60  0000 C CNN
+F 1 "4_OR" H 7150 3550 60  0000 C CNN
+F 2 "" H 7000 3450 60  0000 C CNN
+F 3 "" H 7000 3450 60  0000 C CNN
+	1    7000 3450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 2900 6650 3300
+Wire Wire Line
+	7550 3450 7950 3450
+$Comp
+L PORT U1
+U 5 1 67F6CCBD
+P 8200 3450
+F 0 "U1" H 8250 3550 30  0000 C CNN
+F 1 "PORT" H 8200 3450 30  0000 C CNN
+F 2 "" H 8200 3450 60  0000 C CNN
+F 3 "" H 8200 3450 60  0000 C CNN
+	5    8200 3450
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4100 2900 4100 2850
+Wire Wire Line
+	4100 2850 5150 2850
+Connection ~ 4100 2900
+Wire Wire Line
+	4800 2950 5150 2950
+Connection ~ 4800 2950
+Wire Wire Line
+	3100 3250 5150 3250
+Wire Wire Line
+	4100 3350 5150 3350
+Connection ~ 4100 3350
+Wire Wire Line
+	3100 3600 5150 3600
+Connection ~ 3100 3250
+Wire Wire Line
+	4800 3700 5150 3700
+Connection ~ 4800 3700
+Wire Wire Line
+	2350 4000 5150 4000
+Wire Wire Line
+	4100 4100 5150 4100
+Wire Wire Line
+	4450 1950 4450 1550
+Wire Wire Line
+	3850 2100 4100 2100
+$Comp
+L d_and U4
+U 1 1 67F6D0F4
+P 5600 2950
+F 0 "U4" H 5600 2950 60  0000 C CNN
+F 1 "d_and" H 5650 3050 60  0000 C CNN
+F 2 "" H 5600 2950 60  0000 C CNN
+F 3 "" H 5600 2950 60  0000 C CNN
+	1    5600 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_and U5
+U 1 1 67F6D131
+P 5600 3350
+F 0 "U5" H 5600 3350 60  0000 C CNN
+F 1 "d_and" H 5650 3450 60  0000 C CNN
+F 2 "" H 5600 3350 60  0000 C CNN
+F 3 "" H 5600 3350 60  0000 C CNN
+	1    5600 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_and U6
+U 1 1 67F6D172
+P 5600 3700
+F 0 "U6" H 5600 3700 60  0000 C CNN
+F 1 "d_and" H 5650 3800 60  0000 C CNN
+F 2 "" H 5600 3700 60  0000 C CNN
+F 3 "" H 5600 3700 60  0000 C CNN
+	1    5600 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L d_and U7
+U 1 1 67F6D1AD
+P 5600 4100
+F 0 "U7" H 5600 4100 60  0000 C CNN
+F 1 "d_and" H 5650 4200 60  0000 C CNN
+F 2 "" H 5600 4100 60  0000 C CNN
+F 3 "" H 5600 4100 60  0000 C CNN
+	1    5600 4100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 2900 6050 2900
+Wire Wire Line
+	6050 3300 6350 3300
+Wire Wire Line
+	6350 3300 6350 3400
+Wire Wire Line
+	6350 3400 6650 3400
+Wire Wire Line
+	6050 3650 6050 3500
+Wire Wire Line
+	6050 3500 6650 3500
+Wire Wire Line
+	6050 4050 6650 4050
+Wire Wire Line
+	6650 4050 6650 3600
+Wire Wire Line
+	4800 3700 4800 2600
+$EndSCHEMATC

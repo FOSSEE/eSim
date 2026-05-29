@@ -1,0 +1,13 @@
+* Subcircuit full_sub
+.subckt full_sub net-_u5-pad1_ net-_u5-pad2_ net-_u5-pad3_ net-_u5-pad4_ net-_u3-pad3_ 
+* c:\esim\esim\src\subcircuitlibrary\full_sub\full_sub.cir
+.include half_sub.sub
+* u3  net-_u3-pad1_ net-_u3-pad2_ net-_u3-pad3_ d_or
+x1 net-_u5-pad1_ net-_u5-pad2_ net-_x1-pad3_ net-_u3-pad1_ half_sub
+x2 net-_u5-pad3_ net-_x1-pad3_ net-_u5-pad4_ net-_u3-pad2_ half_sub
+a1 [net-_u3-pad1_ net-_u3-pad2_ ] net-_u3-pad3_ u3
+* Schematic Name: d_or, NgSpice Name: d_or
+.model u3 d_or(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 )
+* Control Statements
+
+.ends full_sub

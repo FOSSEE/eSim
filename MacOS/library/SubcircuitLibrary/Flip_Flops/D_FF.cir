@@ -1,0 +1,35 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\D_FF\D_FF.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/31/24 15:46:03
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U1-Pad2_ Net-_X1-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X5  Net-_X1-Pad2_ Net-_X10-Pad1_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X9  Net-_M1-Pad1_ Net-_X16-Pad2_ Net-_M5-Pad3_ Net-_U1-Pad6_ Net-_U1-Pad5_ NAND_Gate		
+X10  Net-_X10-Pad1_ Net-_M5-Pad3_ Net-_M3-Pad1_ Net-_U1-Pad6_ Net-_U1-Pad5_ NAND_Gate		
+X11  Net-_X10-Pad1_ Net-_M5-Pad1_ Net-_X11-Pad3_ Net-_U1-Pad6_ Net-_U1-Pad5_ NAND_Gate		
+X16  Net-_X11-Pad3_ Net-_X16-Pad2_ Net-_M7-Pad1_ Net-_U1-Pad6_ Net-_U1-Pad5_ NAND_Gate		
+X2  Net-_U1-Pad3_ Net-_X2-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X6  Net-_X2-Pad2_ Net-_M1-Pad3_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X3  Net-_U1-Pad4_ Net-_X3-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X7  Net-_X3-Pad2_ Net-_X16-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad1_ mosfet_p		
+M2  Net-_M1-Pad1_ Net-_M2-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ mosfet_n		
+M3  Net-_M3-Pad1_ Net-_M2-Pad2_ Net-_M1-Pad1_ Net-_M3-Pad1_ mosfet_p		
+M4  Net-_M3-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad1_ Net-_M1-Pad1_ mosfet_n		
+M5  Net-_M5-Pad1_ Net-_M2-Pad2_ Net-_M5-Pad3_ Net-_M5-Pad1_ mosfet_p		
+M6  Net-_M5-Pad1_ Net-_M1-Pad2_ Net-_M5-Pad3_ Net-_M5-Pad3_ mosfet_n		
+M7  Net-_M7-Pad1_ Net-_M1-Pad2_ Net-_M5-Pad1_ Net-_M7-Pad1_ mosfet_p		
+M8  Net-_M7-Pad1_ Net-_M2-Pad2_ Net-_M5-Pad1_ Net-_M5-Pad1_ mosfet_n		
+X12  Net-_X11-Pad3_ Net-_X12-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X14  Net-_X12-Pad2_ Net-_U1-Pad7_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X13  Net-_M7-Pad1_ Net-_X13-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X15  Net-_X13-Pad2_ Net-_U1-Pad8_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X4  Net-_U1-Pad1_ Net-_M2-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+X8  Net-_M2-Pad2_ Net-_M1-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad5_ NOT_Gate		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ PORT		
+
+.end

@@ -1,0 +1,16 @@
+* /home/fossee/UpdatedExamples/Series_Resonance/Series_Resonance.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 22:49:37 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R1  in Net-_C1-Pad2_ 1		
+L1  out GND 100m		
+C1  out Net-_C1-Pad2_ 10u		
+v1  in GND AC		
+U1  in plot_v1		
+U2  out plot_v1		
+
+.end

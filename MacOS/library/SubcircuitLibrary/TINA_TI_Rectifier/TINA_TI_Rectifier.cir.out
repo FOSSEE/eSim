@@ -1,0 +1,27 @@
+* c:\fossee\esim\library\subcircuitlibrary\tina_ti_rectifier\tina_ti_rectifier.cir
+
+.include lm_741.sub
+.include D.lib
+x1 ? net-_c1-pad1_ /vin /vneg ? net-_c1-pad2_ /vpos ? lm_741
+x2 ? net-_r2-pad1_ net-_d2-pad2_ /vneg ? /vout /vpos ? lm_741
+r1  /vin gnd 49.9
+r3  net-_d2-pad2_ gnd 1k
+d2 net-_c1-pad2_ net-_d2-pad2_ 1N4148
+d1 net-_c1-pad1_ net-_c1-pad2_ 1N4148
+c1  net-_c1-pad1_ net-_c1-pad2_ 47p
+r2  net-_r2-pad1_ net-_c1-pad1_ 1k
+r4  /vout net-_r2-pad1_ 1k
+c3  /vpos gnd 100p
+c5  /vpos gnd 100n
+c2  /vneg gnd 100p
+c4  /vneg gnd 100n
+* u1  /vin /vneg /vout /vpos port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

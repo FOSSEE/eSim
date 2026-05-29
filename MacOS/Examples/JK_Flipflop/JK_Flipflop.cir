@@ -1,0 +1,27 @@
+* /home/fossee/eSim-Workspace/JK_Flipflop/JK_Flipflop.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Mar  1 18:23:23 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  J GND DC		
+v3  K GND DC		
+R1  out GND 1k		
+R2  nout GND 1k		
+U2  J plot_v1		
+U1  Clk plot_v1		
+U3  K plot_v1		
+U4  out plot_v1		
+U5  nout plot_v1		
+U6  J Clk K Net-_U6-Pad4_ Net-_U6-Pad5_ Net-_U6-Pad6_ adc_bridge_3		
+U7  Net-_U7-Pad1_ Net-_U7-Pad2_ out nout dac_bridge_2		
+U9  Net-_U6-Pad4_ Net-_U6-Pad6_ Net-_U6-Pad5_ Net-_U8-Pad2_ Net-_U10-Pad2_ Net-_U7-Pad1_ Net-_U7-Pad2_ d_jkff		
+U8  Net-_U8-Pad1_ Net-_U8-Pad2_ adc_bridge_1		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ adc_bridge_1		
+v4  Net-_U8-Pad1_ GND 0		
+v5  Net-_U10-Pad1_ GND 0		
+v2  Clk GND pulse		
+
+.end

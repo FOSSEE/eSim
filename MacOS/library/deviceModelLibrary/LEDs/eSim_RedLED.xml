@@ -1,0 +1,1 @@
+<library><model_name>D</model_name><ref_model>eSim_RedLED</ref_model><param><Is>1e-10</Is><Rs>0.1</Rs><N>4.09</N><tt>4.0e-6</tt><Cjo>3e-12</Cjo><M>0.5</M><Vj>0.7</Vj><Bv>5</Bv><Ibv>10e-6</Ibv><Fc>0.5</Fc><Isr>0.0</Isr><Nr>2.0</Nr><Kf>0.0</Kf><Af>1.0</Af><Ffe>1.0</Ffe><Xti>3.0</Xti><Eg>1.11</Eg><Tbv>0.0</Tbv><Trs>0.0</Trs></param></library>

@@ -1,0 +1,25 @@
+* /home/saurabh/desktop/esim/examples/differentiator/differentiator.cir
+
+.include lm_741.sub
+v1  in gnd pwl(0m 0 0.5m 5 25m 5 25.5m -5 50m -5 50.5m 5 75m 5 75.5m -5 100m -5)
+* u1  in plot_v1
+* u2  out plot_v1
+r1  in net-_c1-pad2_ 100k
+c1  net-_c1-pad1_ net-_c1-pad2_ 10n
+r2  net-_r2-pad1_ gnd 1k
+r3  net-_c1-pad1_ out 1k
+r4  out gnd 1k
+x1 ? net-_c1-pad1_ net-_r2-pad1_ net-_x1-pad4_ ? out net-_x1-pad7_ ? lm_741
+v3 net-_x1-pad7_ gnd  dc 15
+v2 gnd net-_x1-pad4_  dc 15
+.tran 1e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

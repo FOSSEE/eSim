@@ -1,0 +1,32 @@
+<library>
+<model_name>PMOS</model_name>
+<ref_model>mos_p</ref_model>
+<param>
+<TPG>-1 </TPG>
+<TOX>9.5n </TOX>
+<CJ>950u </CJ>
+<ETA>0.025 </ETA>
+<VMAX>0.3u </VMAX>
+<GAMMA>0.52 </GAMMA>
+<CGSO>0.35n </CGSO>
+<LD>70n </LD>
+<MJSW>0.25 </MJSW>
+<PB>1 </PB>
+<CGBO>0.45n </CGBO>
+<XJ>0.2U </XJ>
+<CGDO>0.35n </CGDO>
+<KAPPA>8.0 </KAPPA>
+<LEVEL>3 </LEVEL>
+<VTO>-0.6 </VTO>
+<NFS>6.50E11 </NFS>
+<THETA>0.2 </THETA>
+<CJSW>0.2n </CJSW>
+<PHI>0.7 </PHI>
+<RSH>2.5 </RSH>
+<MJ>0.5</MJ>
+<UO>130 </UO>
+<KP>48u </KP>
+<DELTA>0.25 </DELTA>
+<NSUB>1.0E17</NSUB>
+</param>
+</library>

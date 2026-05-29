@@ -1,0 +1,27 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\CD4001\CD4001.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/25/22 15:17:26
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M5  Net-_M5-Pad1_ Net-_M2-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M2  Net-_M2-Pad1_ Net-_M2-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M6  Net-_M2-Pad1_ Net-_M6-Pad2_ Net-_M5-Pad1_ Net-_M5-Pad1_ eSim_MOS_P		
+M8  Net-_M2-Pad1_ Net-_M6-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M13  Net-_M13-Pad1_ Net-_M10-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M14  Net-_M10-Pad1_ Net-_M14-Pad2_ Net-_M13-Pad1_ Net-_M13-Pad1_ eSim_MOS_P		
+M16  Net-_M10-Pad1_ Net-_M14-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M3  Net-_M3-Pad1_ Net-_M1-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M4  Net-_M1-Pad1_ Net-_M4-Pad2_ Net-_M3-Pad1_ Net-_M3-Pad1_ eSim_MOS_P		
+M7  Net-_M1-Pad1_ Net-_M4-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M11  Net-_M11-Pad1_ Net-_M11-Pad2_ Net-_M11-Pad3_ Net-_M11-Pad3_ eSim_MOS_P		
+M9  Net-_M12-Pad1_ Net-_M11-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+M12  Net-_M12-Pad1_ Net-_M12-Pad2_ Net-_M11-Pad1_ Net-_M11-Pad1_ eSim_MOS_P		
+M15  Net-_M12-Pad1_ Net-_M12-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N		
+U1  Net-_M2-Pad2_ Net-_M6-Pad2_ Net-_M2-Pad1_ Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_M14-Pad2_ Net-_M1-Pad3_ Net-_M11-Pad2_ Net-_M12-Pad2_ Net-_M12-Pad1_ Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M4-Pad2_ Net-_M11-Pad3_ PORT		
+
+.end

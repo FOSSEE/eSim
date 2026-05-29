@@ -1,0 +1,16 @@
+* /home/sumanto/esim-2.1/library/subcircuitlibrary/clock_pulse_generator/clock_pulse_generator.cir
+
+.include lm555n.sub
+r3  net-_r3-pad1_ gnd 1k
+c2  net-_c2-pad1_ gnd 0.01u
+x1 gnd net-_u1-pad3_ net-_r3-pad1_ net-_u1-pad1_ net-_c2-pad1_ net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad1_ lm555n
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_r3-pad1_ port
+.tran 1e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

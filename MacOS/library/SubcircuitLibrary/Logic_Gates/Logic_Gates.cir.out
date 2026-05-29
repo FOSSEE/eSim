@@ -1,0 +1,21 @@
+* c:\users\aditya\esim-workspace\logic_gates\logic_gates.cir
+
+.include XOR.sub
+.include NOT.sub
+v1  a gnd pulse(0 1.8 0 1m 1m 5 10)
+v2  b gnd pulse(1.8 0 0 1m 1m 10 20)
+r1  outa gnd 1000k
+x1 a outa NOT
+x2 b outb NOT
+r2  outb gnd 1000k
+xu1 a b outc XOR
+r3  outc gnd 1000k
+.tran 0.01e-00 50e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

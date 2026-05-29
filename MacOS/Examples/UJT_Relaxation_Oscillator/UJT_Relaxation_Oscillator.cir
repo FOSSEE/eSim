@@ -1,0 +1,18 @@
+* /home/saurabh/eSim-Workspace/UJT_Relaxation_Oscillator/UJT_Relaxation_Oscillator.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Aug 28 14:50:42 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R1  Net-_C1-Pad1_ Net-_R1-Pad2_ 95.3k		
+R2  Vb2 Net-_R1-Pad2_ 4.7K		
+R3  GND Vb1 4.7k		
+C1  Net-_C1-Pad1_ GND 100n		
+v1  Net-_R1-Pad2_ GND DC		
+X1  Net-_C1-Pad1_ Vb1 Vb2 UJT		
+U1  Vb2 plot_v1		
+U2  Vb1 plot_v1		
+
+.end

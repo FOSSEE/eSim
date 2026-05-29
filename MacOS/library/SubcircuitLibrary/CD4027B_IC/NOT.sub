@@ -1,0 +1,10 @@
+* Subcircuit NOT
+.subckt NOT net-_m1-pad2_ net-_m1-pad1_ net-_m2-pad1_ net-_m1-pad3_ 
+* c:\fossee\esim\library\subcircuitlibrary\not\not.cir
+.include NMOS-180nm.lib
+.include PMOS-180nm.lib
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m2 net-_m2-pad1_ net-_m1-pad2_ net-_m1-pad1_ net-_m2-pad1_ CMOSP W=100u L=100u M=1
+* Control Statements
+
+.ends NOT

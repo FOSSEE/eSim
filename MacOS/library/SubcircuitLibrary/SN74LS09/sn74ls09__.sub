@@ -1,0 +1,104 @@
+* Subcircuit sn74ls09__
+.subckt sn74ls09__ net-_r1-pad1_ gndpwr net-_q2-pad1_ net-_u1-pad4_ net-_q5-pad1_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_q8-pad1_ net-_u1-pad10_ net-_q11-pad1_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ 
+* d:\fossee\esim\library\subcircuitlibrary\sn74ls09__\sn74ls09__.cir
+.include NPN.lib
+.include D.lib
+r1  net-_r1-pad1_ net-_q4-pad2_ 20k
+r2  net-_r1-pad1_ net-_q1-pad2_ 10k
+r3  net-_r1-pad1_ net-_q1-pad1_ 8k
+r7  net-_q1-pad3_ gndpwr 5k
+d1 net-_d1-pad1_ gndpwr 1N4148
+* u6  gndpwr net-_u1-pad7_ zener
+* u7  gndpwr net-_u1-pad4_ zener
+* u2  net-_q4-pad2_ net-_u1-pad4_ zener
+* u4  net-_q4-pad2_ net-_u1-pad7_ zener
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q4 net-_q1-pad2_ net-_q4-pad2_ net-_d1-pad1_ Q2N2222
+q2 net-_q2-pad1_ net-_q1-pad3_ gndpwr Q2N2222
+r9  net-_r1-pad1_ net-_q10-pad2_ 20k
+r10  net-_r1-pad1_ net-_q10-pad1_ 10k
+r11  net-_r1-pad1_ net-_q7-pad1_ 8k
+r15  net-_q7-pad3_ gndpwr 5k
+d3 net-_d3-pad1_ gndpwr 1N4148
+* u14  gndpwr net-_u1-pad13_ zener
+* u15  gndpwr net-_u1-pad10_ zener
+* u10  net-_q10-pad2_ net-_u1-pad10_ zener
+* u12  net-_q10-pad2_ net-_u1-pad13_ zener
+q7 net-_q7-pad1_ net-_q10-pad1_ net-_q7-pad3_ Q2N2222
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_d3-pad1_ Q2N2222
+q8 net-_q8-pad1_ net-_q7-pad3_ gndpwr Q2N2222
+r6  net-_r1-pad1_ net-_q6-pad2_ 20k
+r5  net-_r1-pad1_ net-_q3-pad2_ 10k
+r4  net-_r1-pad1_ net-_q3-pad1_ 8k
+r8  net-_q3-pad3_ gndpwr 5k
+d2 net-_d2-pad1_ gndpwr 1N4148
+* u8  gndpwr net-_u1-pad8_ zener
+* u9  gndpwr net-_u1-pad6_ zener
+* u3  net-_q6-pad2_ net-_u1-pad6_ zener
+* u5  net-_q6-pad2_ net-_u1-pad8_ zener
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+q6 net-_q3-pad2_ net-_q6-pad2_ net-_d2-pad1_ Q2N2222
+q5 net-_q5-pad1_ net-_q3-pad3_ gndpwr Q2N2222
+r14  net-_r1-pad1_ net-_q12-pad2_ 20k
+r13  net-_r1-pad1_ net-_q12-pad1_ 10k
+r12  net-_r1-pad1_ net-_q9-pad1_ 8k
+r16  net-_q11-pad2_ gndpwr 5k
+d4 net-_d4-pad1_ gndpwr 1N4148
+* u16  gndpwr net-_u1-pad14_ zener
+* u17  gndpwr net-_u1-pad12_ zener
+* u11  net-_q12-pad2_ net-_u1-pad12_ zener
+* u13  net-_q12-pad2_ net-_u1-pad14_ zener
+q9 net-_q9-pad1_ net-_q12-pad1_ net-_q11-pad2_ Q2N2222
+q12 net-_q12-pad1_ net-_q12-pad2_ net-_d4-pad1_ Q2N2222
+q11 net-_q11-pad1_ net-_q11-pad2_ gndpwr Q2N2222
+a1 gndpwr net-_u1-pad7_ u6
+a2 gndpwr net-_u1-pad4_ u7
+a3 net-_q4-pad2_ net-_u1-pad4_ u2
+a4 net-_q4-pad2_ net-_u1-pad7_ u4
+a5 gndpwr net-_u1-pad13_ u14
+a6 gndpwr net-_u1-pad10_ u15
+a7 net-_q10-pad2_ net-_u1-pad10_ u10
+a8 net-_q10-pad2_ net-_u1-pad13_ u12
+a9 gndpwr net-_u1-pad8_ u8
+a10 gndpwr net-_u1-pad6_ u9
+a11 net-_q6-pad2_ net-_u1-pad6_ u3
+a12 net-_q6-pad2_ net-_u1-pad8_ u5
+a13 gndpwr net-_u1-pad14_ u16
+a14 gndpwr net-_u1-pad12_ u17
+a15 net-_q12-pad2_ net-_u1-pad12_ u11
+a16 net-_q12-pad2_ net-_u1-pad14_ u13
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u6 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u7 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u2 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u4 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u14 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u15 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u10 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u12 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u8 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u9 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u3 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u5 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u16 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u17 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u11 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u13 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Control Statements
+
+.ends sn74ls09__

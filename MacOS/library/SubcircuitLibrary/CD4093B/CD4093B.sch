@@ -1,0 +1,1965 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:tst1-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+Text GLabel 1550 1050 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR1
+U 1 1 680CE516
+P 1550 2850
+F 0 "#PWR1" H 1550 2600 50  0001 C CNN
+F 1 "GND" H 1550 2700 50  0000 C CNN
+F 2 "" H 1550 2850 50  0001 C CNN
+F 3 "" H 1550 2850 50  0001 C CNN
+	1    1550 2850
+	1    0    0    -1  
+$EndComp
+Connection ~ 1550 1950
+Wire Wire Line
+	1650 2850 1650 2800
+Wire Wire Line
+	1550 2850 1650 2850
+Wire Wire Line
+	1550 2400 1550 2450
+Wire Wire Line
+	1650 2400 1650 2350
+Wire Wire Line
+	1550 2400 2100 2400
+Wire Wire Line
+	1650 1500 1650 1550
+Wire Wire Line
+	1550 1500 2100 1500
+Wire Wire Line
+	1550 1450 1550 1500
+Wire Wire Line
+	1650 1050 1650 1100
+Wire Wire Line
+	1550 1050 1650 1050
+$Comp
+L mosfet_n M2
+U 1 1 680CE517
+P 1350 2450
+F 0 "M2" H 1350 2300 50  0000 R CNN
+F 1 "mosfet_n" H 1450 2400 50  0000 R CNN
+F 2 "" H 1650 2150 29  0000 C CNN
+F 3 "" H 1450 2250 60  0000 C CNN
+	1    1350 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M1
+U 1 1 680CE518
+P 1350 2000
+F 0 "M1" H 1350 1850 50  0000 R CNN
+F 1 "mosfet_n" H 1450 1950 50  0000 R CNN
+F 2 "" H 1650 1700 29  0000 C CNN
+F 3 "" H 1450 1800 60  0000 C CNN
+	1    1350 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M6
+U 1 1 680CE519
+P 1400 1700
+F 0 "M6" H 1350 1750 50  0000 R CNN
+F 1 "mosfet_p" H 1450 1850 50  0000 R CNN
+F 2 "" H 1650 1800 29  0000 C CNN
+F 3 "" H 1450 1700 60  0000 C CNN
+	1    1400 1700
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M5
+U 1 1 680CE51A
+P 1400 1250
+F 0 "M5" H 1350 1300 50  0000 R CNN
+F 1 "mosfet_p" H 1450 1400 50  0000 R CNN
+F 2 "" H 1650 1350 29  0000 C CNN
+F 3 "" H 1450 1250 60  0000 C CNN
+	1    1400 1250
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	1550 1900 1550 2000
+Text GLabel 950  1950 0    60   Input ~ 0
+A
+Wire Wire Line
+	1250 1250 1250 2650
+Connection ~ 1250 1700
+Connection ~ 1250 2200
+Wire Wire Line
+	950  1950 1250 1950
+Connection ~ 1250 1950
+$Comp
+L mosfet_p M17
+U 1 1 680CE51B
+P 2250 1750
+F 0 "M17" H 2200 1800 50  0000 R CNN
+F 1 "mosfet_p" H 2300 1900 50  0000 R CNN
+F 2 "" H 2500 1850 29  0000 C CNN
+F 3 "" H 2300 1750 60  0000 C CNN
+	1    2250 1750
+	0    1    -1   0   
+$EndComp
+$Comp
+L mosfet_n M21
+U 1 1 680CE51C
+P 2450 2100
+F 0 "M21" H 2450 1950 50  0000 R CNN
+F 1 "mosfet_n" H 2550 2050 50  0000 R CNN
+F 2 "" H 2750 1800 29  0000 C CNN
+F 3 "" H 2550 1900 60  0000 C CNN
+	1    2450 2100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2250 1900 2250 2000
+Connection ~ 2250 1950
+Wire Wire Line
+	2050 2400 2050 2300
+Connection ~ 1650 2400
+Connection ~ 2050 2400
+Connection ~ 1650 1500
+Wire Wire Line
+	2050 1600 2050 1500
+Connection ~ 2050 1500
+$Comp
+L GND #PWR5
+U 1 1 680CE51D
+P 2450 1600
+F 0 "#PWR5" H 2450 1350 50  0001 C CNN
+F 1 "GND" H 2450 1450 50  0000 C CNN
+F 2 "" H 2450 1600 50  0001 C CNN
+F 3 "" H 2450 1600 50  0001 C CNN
+	1    2450 1600
+	1    0    0    -1  
+$EndComp
+Text GLabel 2450 2300 2    60   Input ~ 0
+vdd
+Text GLabel 1550 3300 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR2
+U 1 1 680CE51E
+P 1550 5100
+F 0 "#PWR2" H 1550 4850 50  0001 C CNN
+F 1 "GND" H 1550 4950 50  0000 C CNN
+F 2 "" H 1550 5100 50  0001 C CNN
+F 3 "" H 1550 5100 50  0001 C CNN
+	1    1550 5100
+	1    0    0    -1  
+$EndComp
+Connection ~ 1550 4200
+Wire Wire Line
+	1650 5100 1650 5050
+Wire Wire Line
+	1550 5100 1650 5100
+Wire Wire Line
+	1550 4650 1550 4700
+Wire Wire Line
+	1650 4650 1650 4600
+Wire Wire Line
+	1550 4650 2100 4650
+Wire Wire Line
+	1650 3750 1650 3800
+Wire Wire Line
+	1550 3750 2100 3750
+Wire Wire Line
+	1550 3700 1550 3750
+Wire Wire Line
+	1650 3300 1650 3350
+Wire Wire Line
+	1550 3300 1650 3300
+$Comp
+L mosfet_n M4
+U 1 1 680CE51F
+P 1350 4700
+F 0 "M4" H 1350 4550 50  0000 R CNN
+F 1 "mosfet_n" H 1450 4650 50  0000 R CNN
+F 2 "" H 1650 4400 29  0000 C CNN
+F 3 "" H 1450 4500 60  0000 C CNN
+	1    1350 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M3
+U 1 1 680CE520
+P 1350 4250
+F 0 "M3" H 1350 4100 50  0000 R CNN
+F 1 "mosfet_n" H 1450 4200 50  0000 R CNN
+F 2 "" H 1650 3950 29  0000 C CNN
+F 3 "" H 1450 4050 60  0000 C CNN
+	1    1350 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M8
+U 1 1 680CE521
+P 1400 3950
+F 0 "M8" H 1350 4000 50  0000 R CNN
+F 1 "mosfet_p" H 1450 4100 50  0000 R CNN
+F 2 "" H 1650 4050 29  0000 C CNN
+F 3 "" H 1450 3950 60  0000 C CNN
+	1    1400 3950
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M7
+U 1 1 680CE522
+P 1400 3500
+F 0 "M7" H 1350 3550 50  0000 R CNN
+F 1 "mosfet_p" H 1450 3650 50  0000 R CNN
+F 2 "" H 1650 3600 29  0000 C CNN
+F 3 "" H 1450 3500 60  0000 C CNN
+	1    1400 3500
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	1550 4150 1550 4250
+Text GLabel 950  4200 0    60   Input ~ 0
+B
+Wire Wire Line
+	1250 3500 1250 4900
+Connection ~ 1250 3950
+Connection ~ 1250 4450
+Wire Wire Line
+	950  4200 1250 4200
+Connection ~ 1250 4200
+$Comp
+L mosfet_p M18
+U 1 1 680CE523
+P 2250 4000
+F 0 "M18" H 2200 4050 50  0000 R CNN
+F 1 "mosfet_p" H 2300 4150 50  0000 R CNN
+F 2 "" H 2500 4100 29  0000 C CNN
+F 3 "" H 2300 4000 60  0000 C CNN
+	1    2250 4000
+	0    1    -1   0   
+$EndComp
+$Comp
+L mosfet_n M22
+U 1 1 680CE524
+P 2450 4350
+F 0 "M22" H 2450 4200 50  0000 R CNN
+F 1 "mosfet_n" H 2550 4300 50  0000 R CNN
+F 2 "" H 2750 4050 29  0000 C CNN
+F 3 "" H 2550 4150 60  0000 C CNN
+	1    2450 4350
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2250 4150 2250 4250
+Connection ~ 2250 4200
+Wire Wire Line
+	2050 4650 2050 4550
+Connection ~ 1650 4650
+Connection ~ 2050 4650
+Connection ~ 1650 3750
+Wire Wire Line
+	2050 3850 2050 3750
+Connection ~ 2050 3750
+$Comp
+L GND #PWR6
+U 1 1 680CE525
+P 2450 3850
+F 0 "#PWR6" H 2450 3600 50  0001 C CNN
+F 1 "GND" H 2450 3700 50  0000 C CNN
+F 2 "" H 2450 3850 50  0001 C CNN
+F 3 "" H 2450 3850 50  0001 C CNN
+	1    2450 3850
+	1    0    0    -1  
+$EndComp
+Text GLabel 2450 4550 2    60   Input ~ 0
+vdd
+Wire Wire Line
+	1550 1950 3150 1950
+Wire Wire Line
+	1550 4200 3150 4200
+$Comp
+L mosfet_p M27
+U 1 1 680CE526
+P 3300 1600
+F 0 "M27" H 3250 1650 50  0000 R CNN
+F 1 "mosfet_p" H 3350 1750 50  0000 R CNN
+F 2 "" H 3550 1700 29  0000 C CNN
+F 3 "" H 3350 1600 60  0000 C CNN
+	1    3300 1600
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_n M25
+U 1 1 680CE527
+P 3250 1900
+F 0 "M25" H 3250 1750 50  0000 R CNN
+F 1 "mosfet_n" H 3350 1850 50  0000 R CNN
+F 2 "" H 3550 1600 29  0000 C CNN
+F 3 "" H 3350 1700 60  0000 C CNN
+	1    3250 1900
+	1    0    0    -1  
+$EndComp
+Text GLabel 3450 1350 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR9
+U 1 1 680CE528
+P 3450 2350
+F 0 "#PWR9" H 3450 2100 50  0001 C CNN
+F 1 "GND" H 3450 2200 50  0000 C CNN
+F 2 "" H 3450 2350 50  0001 C CNN
+F 3 "" H 3450 2350 50  0001 C CNN
+	1    3450 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 1600 3150 2100
+Connection ~ 3150 1950
+Wire Wire Line
+	3450 1800 3450 1900
+Wire Wire Line
+	3450 1350 3450 1400
+Wire Wire Line
+	3450 1400 3550 1400
+Wire Wire Line
+	3550 1400 3550 1450
+Wire Wire Line
+	3450 2350 3450 2300
+Wire Wire Line
+	3450 2300 3550 2300
+Wire Wire Line
+	3550 2300 3550 2250
+$Comp
+L mosfet_p M28
+U 1 1 680CE529
+P 3300 3850
+F 0 "M28" H 3250 3900 50  0000 R CNN
+F 1 "mosfet_p" H 3350 4000 50  0000 R CNN
+F 2 "" H 3550 3950 29  0000 C CNN
+F 3 "" H 3350 3850 60  0000 C CNN
+	1    3300 3850
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_n M26
+U 1 1 680CE52A
+P 3250 4150
+F 0 "M26" H 3250 4000 50  0000 R CNN
+F 1 "mosfet_n" H 3350 4100 50  0000 R CNN
+F 2 "" H 3550 3850 29  0000 C CNN
+F 3 "" H 3350 3950 60  0000 C CNN
+	1    3250 4150
+	1    0    0    -1  
+$EndComp
+Text GLabel 3450 3600 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR10
+U 1 1 680CE52B
+P 3450 4600
+F 0 "#PWR10" H 3450 4350 50  0001 C CNN
+F 1 "GND" H 3450 4450 50  0000 C CNN
+F 2 "" H 3450 4600 50  0001 C CNN
+F 3 "" H 3450 4600 50  0001 C CNN
+	1    3450 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3150 3850 3150 4350
+Connection ~ 3150 4200
+Wire Wire Line
+	3450 4050 3450 4150
+Wire Wire Line
+	3450 3600 3450 3650
+Wire Wire Line
+	3450 3650 3550 3650
+Wire Wire Line
+	3550 3650 3550 3700
+Wire Wire Line
+	3450 4600 3450 4550
+Wire Wire Line
+	3450 4550 3550 4550
+Wire Wire Line
+	3550 4550 3550 4500
+$Comp
+L mosfet_n M35
+U 1 1 680CE52C
+P 4550 3050
+F 0 "M35" H 4550 2900 50  0000 R CNN
+F 1 "mosfet_n" H 4650 3000 50  0000 R CNN
+F 2 "" H 4850 2750 29  0000 C CNN
+F 3 "" H 4650 2850 60  0000 C CNN
+	1    4550 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M37
+U 1 1 680CE52D
+P 4950 3500
+F 0 "M37" H 4950 3350 50  0000 R CNN
+F 1 "mosfet_n" H 5050 3450 50  0000 R CNN
+F 2 "" H 5250 3200 29  0000 C CNN
+F 3 "" H 5050 3300 60  0000 C CNN
+	1    4950 3500
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M33
+U 1 1 680CE52E
+P 4300 2750
+F 0 "M33" H 4250 2800 50  0000 R CNN
+F 1 "mosfet_p" H 4350 2900 50  0000 R CNN
+F 2 "" H 4550 2850 29  0000 C CNN
+F 3 "" H 4350 2750 60  0000 C CNN
+	1    4300 2750
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M39
+U 1 1 680CE52F
+P 5150 2750
+F 0 "M39" H 5100 2800 50  0000 R CNN
+F 1 "mosfet_p" H 5200 2900 50  0000 R CNN
+F 2 "" H 5400 2850 29  0000 C CNN
+F 3 "" H 5200 2750 60  0000 C CNN
+	1    5150 2750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4450 2950 5000 2950
+Wire Wire Line
+	4750 3050 4750 2950
+Connection ~ 4750 2950
+Wire Wire Line
+	4750 3450 4850 3450
+Wire Wire Line
+	4850 3450 4850 3400
+Wire Wire Line
+	4750 3450 4750 3500
+Wire Wire Line
+	4650 3850 4650 3900
+Wire Wire Line
+	4650 3900 4750 3900
+Wire Wire Line
+	4450 2550 5000 2550
+Wire Wire Line
+	4550 2600 4550 2550
+Connection ~ 4550 2550
+Wire Wire Line
+	4900 2600 4900 2550
+Connection ~ 4900 2550
+Wire Wire Line
+	3450 1850 4150 1850
+Wire Wire Line
+	4150 1850 4150 3250
+Connection ~ 3450 1850
+Wire Wire Line
+	4150 3250 4450 3250
+Connection ~ 4150 2750
+Wire Wire Line
+	3450 4100 5050 4100
+Wire Wire Line
+	5050 4100 5050 3700
+Connection ~ 3450 4100
+Wire Wire Line
+	5050 3700 5300 3700
+Wire Wire Line
+	5300 3700 5300 2750
+Text GLabel 4550 2550 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR13
+U 1 1 680CE530
+P 4750 3900
+F 0 "#PWR13" H 4750 3650 50  0001 C CNN
+F 1 "GND" H 4750 3750 50  0000 C CNN
+F 2 "" H 4750 3900 50  0001 C CNN
+F 3 "" H 4750 3900 50  0001 C CNN
+	1    4750 3900
+	1    0    0    -1  
+$EndComp
+Text GLabel 4750 2950 1    60   Input ~ 0
+j
+Text GLabel 1600 5900 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR3
+U 1 1 680CEBC7
+P 1600 7700
+F 0 "#PWR3" H 1600 7450 50  0001 C CNN
+F 1 "GND" H 1600 7550 50  0000 C CNN
+F 2 "" H 1600 7700 50  0001 C CNN
+F 3 "" H 1600 7700 50  0001 C CNN
+	1    1600 7700
+	1    0    0    -1  
+$EndComp
+Connection ~ 1600 6800
+Wire Wire Line
+	1700 7700 1700 7650
+Wire Wire Line
+	1600 7700 1700 7700
+Wire Wire Line
+	1600 7250 1600 7300
+Wire Wire Line
+	1700 7250 1700 7200
+Wire Wire Line
+	1600 7250 2150 7250
+Wire Wire Line
+	1700 6350 1700 6400
+Wire Wire Line
+	1600 6350 2150 6350
+Wire Wire Line
+	1600 6300 1600 6350
+Wire Wire Line
+	1700 5900 1700 5950
+Wire Wire Line
+	1600 5900 1700 5900
+$Comp
+L mosfet_n M10
+U 1 1 680CEBD8
+P 1400 7300
+F 0 "M10" H 1400 7150 50  0000 R CNN
+F 1 "mosfet_n" H 1500 7250 50  0000 R CNN
+F 2 "" H 1700 7000 29  0000 C CNN
+F 3 "" H 1500 7100 60  0000 C CNN
+	1    1400 7300
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M9
+U 1 1 680CEBDE
+P 1400 6850
+F 0 "M9" H 1400 6700 50  0000 R CNN
+F 1 "mosfet_n" H 1500 6800 50  0000 R CNN
+F 2 "" H 1700 6550 29  0000 C CNN
+F 3 "" H 1500 6650 60  0000 C CNN
+	1    1400 6850
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M14
+U 1 1 680CEBE4
+P 1450 6550
+F 0 "M14" H 1400 6600 50  0000 R CNN
+F 1 "mosfet_p" H 1500 6700 50  0000 R CNN
+F 2 "" H 1700 6650 29  0000 C CNN
+F 3 "" H 1500 6550 60  0000 C CNN
+	1    1450 6550
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M13
+U 1 1 680CEBEA
+P 1450 6100
+F 0 "M13" H 1400 6150 50  0000 R CNN
+F 1 "mosfet_p" H 1500 6250 50  0000 R CNN
+F 2 "" H 1700 6200 29  0000 C CNN
+F 3 "" H 1500 6100 60  0000 C CNN
+	1    1450 6100
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	1600 6750 1600 6850
+Text GLabel 1000 6800 0    60   Input ~ 0
+c
+Wire Wire Line
+	1300 6100 1300 7500
+Connection ~ 1300 6550
+Connection ~ 1300 7050
+Wire Wire Line
+	1000 6800 1300 6800
+Connection ~ 1300 6800
+$Comp
+L mosfet_p M19
+U 1 1 680CEBF7
+P 2300 6600
+F 0 "M19" H 2250 6650 50  0000 R CNN
+F 1 "mosfet_p" H 2350 6750 50  0000 R CNN
+F 2 "" H 2550 6700 29  0000 C CNN
+F 3 "" H 2350 6600 60  0000 C CNN
+	1    2300 6600
+	0    1    -1   0   
+$EndComp
+$Comp
+L mosfet_n M23
+U 1 1 680CEBFD
+P 2500 6950
+F 0 "M23" H 2500 6800 50  0000 R CNN
+F 1 "mosfet_n" H 2600 6900 50  0000 R CNN
+F 2 "" H 2800 6650 29  0000 C CNN
+F 3 "" H 2600 6750 60  0000 C CNN
+	1    2500 6950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2300 6750 2300 6850
+Connection ~ 2300 6800
+Wire Wire Line
+	2100 7250 2100 7150
+Connection ~ 1700 7250
+Connection ~ 2100 7250
+Connection ~ 1700 6350
+Wire Wire Line
+	2100 6450 2100 6350
+Connection ~ 2100 6350
+$Comp
+L GND #PWR7
+U 1 1 680CEC0B
+P 2500 6450
+F 0 "#PWR7" H 2500 6200 50  0001 C CNN
+F 1 "GND" H 2500 6300 50  0000 C CNN
+F 2 "" H 2500 6450 50  0001 C CNN
+F 3 "" H 2500 6450 50  0001 C CNN
+	1    2500 6450
+	1    0    0    -1  
+$EndComp
+Text GLabel 2500 7150 2    60   Input ~ 0
+vdd
+Text GLabel 1600 8150 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR4
+U 1 1 680CEC13
+P 1600 9950
+F 0 "#PWR4" H 1600 9700 50  0001 C CNN
+F 1 "GND" H 1600 9800 50  0000 C CNN
+F 2 "" H 1600 9950 50  0001 C CNN
+F 3 "" H 1600 9950 50  0001 C CNN
+	1    1600 9950
+	1    0    0    -1  
+$EndComp
+Connection ~ 1600 9050
+Wire Wire Line
+	1700 9950 1700 9900
+Wire Wire Line
+	1600 9950 1700 9950
+Wire Wire Line
+	1600 9500 1600 9550
+Wire Wire Line
+	1700 9500 1700 9450
+Wire Wire Line
+	1600 9500 2150 9500
+Wire Wire Line
+	1700 8600 1700 8650
+Wire Wire Line
+	1600 8600 2150 8600
+Wire Wire Line
+	1600 8550 1600 8600
+Wire Wire Line
+	1700 8150 1700 8200
+Wire Wire Line
+	1600 8150 1700 8150
+$Comp
+L mosfet_n M12
+U 1 1 680CEC24
+P 1400 9550
+F 0 "M12" H 1400 9400 50  0000 R CNN
+F 1 "mosfet_n" H 1500 9500 50  0000 R CNN
+F 2 "" H 1700 9250 29  0000 C CNN
+F 3 "" H 1500 9350 60  0000 C CNN
+	1    1400 9550
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M11
+U 1 1 680CEC2A
+P 1400 9100
+F 0 "M11" H 1400 8950 50  0000 R CNN
+F 1 "mosfet_n" H 1500 9050 50  0000 R CNN
+F 2 "" H 1700 8800 29  0000 C CNN
+F 3 "" H 1500 8900 60  0000 C CNN
+	1    1400 9100
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M16
+U 1 1 680CEC30
+P 1450 8800
+F 0 "M16" H 1400 8850 50  0000 R CNN
+F 1 "mosfet_p" H 1500 8950 50  0000 R CNN
+F 2 "" H 1700 8900 29  0000 C CNN
+F 3 "" H 1500 8800 60  0000 C CNN
+	1    1450 8800
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M15
+U 1 1 680CEC36
+P 1450 8350
+F 0 "M15" H 1400 8400 50  0000 R CNN
+F 1 "mosfet_p" H 1500 8500 50  0000 R CNN
+F 2 "" H 1700 8450 29  0000 C CNN
+F 3 "" H 1500 8350 60  0000 C CNN
+	1    1450 8350
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	1600 9000 1600 9100
+Text GLabel 1000 9050 0    60   Input ~ 0
+d
+Wire Wire Line
+	1300 8350 1300 9750
+Connection ~ 1300 8800
+Connection ~ 1300 9300
+Wire Wire Line
+	1000 9050 1300 9050
+Connection ~ 1300 9050
+$Comp
+L mosfet_p M20
+U 1 1 680CEC43
+P 2300 8850
+F 0 "M20" H 2250 8900 50  0000 R CNN
+F 1 "mosfet_p" H 2350 9000 50  0000 R CNN
+F 2 "" H 2550 8950 29  0000 C CNN
+F 3 "" H 2350 8850 60  0000 C CNN
+	1    2300 8850
+	0    1    -1   0   
+$EndComp
+$Comp
+L mosfet_n M24
+U 1 1 680CEC49
+P 2500 9200
+F 0 "M24" H 2500 9050 50  0000 R CNN
+F 1 "mosfet_n" H 2600 9150 50  0000 R CNN
+F 2 "" H 2800 8900 29  0000 C CNN
+F 3 "" H 2600 9000 60  0000 C CNN
+	1    2500 9200
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2300 9000 2300 9100
+Connection ~ 2300 9050
+Wire Wire Line
+	2100 9500 2100 9400
+Connection ~ 1700 9500
+Connection ~ 2100 9500
+Connection ~ 1700 8600
+Wire Wire Line
+	2100 8700 2100 8600
+Connection ~ 2100 8600
+$Comp
+L GND #PWR8
+U 1 1 680CEC57
+P 2500 8700
+F 0 "#PWR8" H 2500 8450 50  0001 C CNN
+F 1 "GND" H 2500 8550 50  0000 C CNN
+F 2 "" H 2500 8700 50  0001 C CNN
+F 3 "" H 2500 8700 50  0001 C CNN
+	1    2500 8700
+	1    0    0    -1  
+$EndComp
+Text GLabel 2500 9400 2    60   Input ~ 0
+vdd
+Wire Wire Line
+	1600 6800 3200 6800
+Wire Wire Line
+	1600 9050 3200 9050
+$Comp
+L mosfet_p M31
+U 1 1 680CEC60
+P 3350 6450
+F 0 "M31" H 3300 6500 50  0000 R CNN
+F 1 "mosfet_p" H 3400 6600 50  0000 R CNN
+F 2 "" H 3600 6550 29  0000 C CNN
+F 3 "" H 3400 6450 60  0000 C CNN
+	1    3350 6450
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_n M29
+U 1 1 680CEC66
+P 3300 6750
+F 0 "M29" H 3300 6600 50  0000 R CNN
+F 1 "mosfet_n" H 3400 6700 50  0000 R CNN
+F 2 "" H 3600 6450 29  0000 C CNN
+F 3 "" H 3400 6550 60  0000 C CNN
+	1    3300 6750
+	1    0    0    -1  
+$EndComp
+Text GLabel 3500 6200 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR11
+U 1 1 680CEC6D
+P 3500 7200
+F 0 "#PWR11" H 3500 6950 50  0001 C CNN
+F 1 "GND" H 3500 7050 50  0000 C CNN
+F 2 "" H 3500 7200 50  0001 C CNN
+F 3 "" H 3500 7200 50  0001 C CNN
+	1    3500 7200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 6450 3200 6950
+Connection ~ 3200 6800
+Wire Wire Line
+	3500 6650 3500 6750
+Wire Wire Line
+	3500 6200 3500 6250
+Wire Wire Line
+	3500 6250 3600 6250
+Wire Wire Line
+	3600 6250 3600 6300
+Wire Wire Line
+	3500 7200 3500 7150
+Wire Wire Line
+	3500 7150 3600 7150
+Wire Wire Line
+	3600 7150 3600 7100
+$Comp
+L mosfet_p M32
+U 1 1 680CEC7C
+P 3350 8700
+F 0 "M32" H 3300 8750 50  0000 R CNN
+F 1 "mosfet_p" H 3400 8850 50  0000 R CNN
+F 2 "" H 3600 8800 29  0000 C CNN
+F 3 "" H 3400 8700 60  0000 C CNN
+	1    3350 8700
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_n M30
+U 1 1 680CEC82
+P 3300 9000
+F 0 "M30" H 3300 8850 50  0000 R CNN
+F 1 "mosfet_n" H 3400 8950 50  0000 R CNN
+F 2 "" H 3600 8700 29  0000 C CNN
+F 3 "" H 3400 8800 60  0000 C CNN
+	1    3300 9000
+	1    0    0    -1  
+$EndComp
+Text GLabel 3500 8450 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR12
+U 1 1 680CEC89
+P 3500 9450
+F 0 "#PWR12" H 3500 9200 50  0001 C CNN
+F 1 "GND" H 3500 9300 50  0000 C CNN
+F 2 "" H 3500 9450 50  0001 C CNN
+F 3 "" H 3500 9450 50  0001 C CNN
+	1    3500 9450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3200 8700 3200 9200
+Connection ~ 3200 9050
+Wire Wire Line
+	3500 8900 3500 9000
+Wire Wire Line
+	3500 8450 3500 8500
+Wire Wire Line
+	3500 8500 3600 8500
+Wire Wire Line
+	3600 8500 3600 8550
+Wire Wire Line
+	3500 9450 3500 9400
+Wire Wire Line
+	3500 9400 3600 9400
+Wire Wire Line
+	3600 9400 3600 9350
+$Comp
+L mosfet_n M36
+U 1 1 680CEC98
+P 4600 7900
+F 0 "M36" H 4600 7750 50  0000 R CNN
+F 1 "mosfet_n" H 4700 7850 50  0000 R CNN
+F 2 "" H 4900 7600 29  0000 C CNN
+F 3 "" H 4700 7700 60  0000 C CNN
+	1    4600 7900
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M38
+U 1 1 680CEC9E
+P 5000 8350
+F 0 "M38" H 5000 8200 50  0000 R CNN
+F 1 "mosfet_n" H 5100 8300 50  0000 R CNN
+F 2 "" H 5300 8050 29  0000 C CNN
+F 3 "" H 5100 8150 60  0000 C CNN
+	1    5000 8350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M34
+U 1 1 680CECA4
+P 4350 7600
+F 0 "M34" H 4300 7650 50  0000 R CNN
+F 1 "mosfet_p" H 4400 7750 50  0000 R CNN
+F 2 "" H 4600 7700 29  0000 C CNN
+F 3 "" H 4400 7600 60  0000 C CNN
+	1    4350 7600
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M40
+U 1 1 680CECAA
+P 5200 7600
+F 0 "M40" H 5150 7650 50  0000 R CNN
+F 1 "mosfet_p" H 5250 7750 50  0000 R CNN
+F 2 "" H 5450 7700 29  0000 C CNN
+F 3 "" H 5250 7600 60  0000 C CNN
+	1    5200 7600
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4500 7800 5050 7800
+Wire Wire Line
+	4800 7900 4800 7800
+Connection ~ 4800 7800
+Wire Wire Line
+	4800 8300 4900 8300
+Wire Wire Line
+	4900 8300 4900 8250
+Wire Wire Line
+	4800 8300 4800 8350
+Wire Wire Line
+	4700 8700 4700 8750
+Wire Wire Line
+	4700 8750 4800 8750
+Wire Wire Line
+	4500 7400 5050 7400
+Wire Wire Line
+	4600 7450 4600 7400
+Connection ~ 4600 7400
+Wire Wire Line
+	4950 7450 4950 7400
+Connection ~ 4950 7400
+Wire Wire Line
+	3500 6700 4200 6700
+Wire Wire Line
+	4200 6700 4200 8100
+Connection ~ 3500 6700
+Wire Wire Line
+	4200 8100 4500 8100
+Connection ~ 4200 7600
+Wire Wire Line
+	3500 8950 5100 8950
+Wire Wire Line
+	5100 8950 5100 8550
+Connection ~ 3500 8950
+Wire Wire Line
+	5100 8550 5350 8550
+Wire Wire Line
+	5350 8550 5350 7600
+Text GLabel 4600 7400 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR14
+U 1 1 680CECC8
+P 4800 8750
+F 0 "#PWR14" H 4800 8500 50  0001 C CNN
+F 1 "GND" H 4800 8600 50  0000 C CNN
+F 2 "" H 4800 8750 50  0001 C CNN
+F 3 "" H 4800 8750 50  0001 C CNN
+	1    4800 8750
+	1    0    0    -1  
+$EndComp
+Text GLabel 4800 7800 1    60   Input ~ 0
+k
+Text GLabel 7250 1050 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR15
+U 1 1 680CF16C
+P 7250 2850
+F 0 "#PWR15" H 7250 2600 50  0001 C CNN
+F 1 "GND" H 7250 2700 50  0000 C CNN
+F 2 "" H 7250 2850 50  0001 C CNN
+F 3 "" H 7250 2850 50  0001 C CNN
+	1    7250 2850
+	1    0    0    -1  
+$EndComp
+Connection ~ 7250 1950
+Wire Wire Line
+	7350 2850 7350 2800
+Wire Wire Line
+	7250 2850 7350 2850
+Wire Wire Line
+	7250 2400 7250 2450
+Wire Wire Line
+	7350 2400 7350 2350
+Wire Wire Line
+	7250 2400 7800 2400
+Wire Wire Line
+	7350 1500 7350 1550
+Wire Wire Line
+	7250 1500 7800 1500
+Wire Wire Line
+	7250 1450 7250 1500
+Wire Wire Line
+	7350 1050 7350 1100
+Wire Wire Line
+	7250 1050 7350 1050
+$Comp
+L mosfet_n M42
+U 1 1 680CF17D
+P 7050 2450
+F 0 "M42" H 7050 2300 50  0000 R CNN
+F 1 "mosfet_n" H 7150 2400 50  0000 R CNN
+F 2 "" H 7350 2150 29  0000 C CNN
+F 3 "" H 7150 2250 60  0000 C CNN
+	1    7050 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M41
+U 1 1 680CF183
+P 7050 2000
+F 0 "M41" H 7050 1850 50  0000 R CNN
+F 1 "mosfet_n" H 7150 1950 50  0000 R CNN
+F 2 "" H 7350 1700 29  0000 C CNN
+F 3 "" H 7150 1800 60  0000 C CNN
+	1    7050 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M46
+U 1 1 680CF189
+P 7100 1700
+F 0 "M46" H 7050 1750 50  0000 R CNN
+F 1 "mosfet_p" H 7150 1850 50  0000 R CNN
+F 2 "" H 7350 1800 29  0000 C CNN
+F 3 "" H 7150 1700 60  0000 C CNN
+	1    7100 1700
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M45
+U 1 1 680CF18F
+P 7100 1250
+F 0 "M45" H 7050 1300 50  0000 R CNN
+F 1 "mosfet_p" H 7150 1400 50  0000 R CNN
+F 2 "" H 7350 1350 29  0000 C CNN
+F 3 "" H 7150 1250 60  0000 C CNN
+	1    7100 1250
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	7250 1900 7250 2000
+Text GLabel 6650 1950 0    60   Input ~ 0
+e
+Wire Wire Line
+	6950 1250 6950 2650
+Connection ~ 6950 1700
+Connection ~ 6950 2200
+Wire Wire Line
+	6650 1950 6950 1950
+Connection ~ 6950 1950
+$Comp
+L mosfet_p M49
+U 1 1 680CF19C
+P 7950 1750
+F 0 "M49" H 7900 1800 50  0000 R CNN
+F 1 "mosfet_p" H 8000 1900 50  0000 R CNN
+F 2 "" H 8200 1850 29  0000 C CNN
+F 3 "" H 8000 1750 60  0000 C CNN
+	1    7950 1750
+	0    1    -1   0   
+$EndComp
+$Comp
+L mosfet_n M51
+U 1 1 680CF1A2
+P 8150 2100
+F 0 "M51" H 8150 1950 50  0000 R CNN
+F 1 "mosfet_n" H 8250 2050 50  0000 R CNN
+F 2 "" H 8450 1800 29  0000 C CNN
+F 3 "" H 8250 1900 60  0000 C CNN
+	1    8150 2100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7950 1900 7950 2000
+Connection ~ 7950 1950
+Wire Wire Line
+	7750 2400 7750 2300
+Connection ~ 7350 2400
+Connection ~ 7750 2400
+Connection ~ 7350 1500
+Wire Wire Line
+	7750 1600 7750 1500
+Connection ~ 7750 1500
+$Comp
+L GND #PWR17
+U 1 1 680CF1B0
+P 8150 1600
+F 0 "#PWR17" H 8150 1350 50  0001 C CNN
+F 1 "GND" H 8150 1450 50  0000 C CNN
+F 2 "" H 8150 1600 50  0001 C CNN
+F 3 "" H 8150 1600 50  0001 C CNN
+	1    8150 1600
+	1    0    0    -1  
+$EndComp
+Text GLabel 8150 2300 2    60   Input ~ 0
+vdd
+Text GLabel 7250 3300 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR16
+U 1 1 680CF1B8
+P 7250 5100
+F 0 "#PWR16" H 7250 4850 50  0001 C CNN
+F 1 "GND" H 7250 4950 50  0000 C CNN
+F 2 "" H 7250 5100 50  0001 C CNN
+F 3 "" H 7250 5100 50  0001 C CNN
+	1    7250 5100
+	1    0    0    -1  
+$EndComp
+Connection ~ 7250 4200
+Wire Wire Line
+	7350 5100 7350 5050
+Wire Wire Line
+	7250 5100 7350 5100
+Wire Wire Line
+	7250 4650 7250 4700
+Wire Wire Line
+	7350 4650 7350 4600
+Wire Wire Line
+	7250 4650 7800 4650
+Wire Wire Line
+	7350 3750 7350 3800
+Wire Wire Line
+	7250 3750 7800 3750
+Wire Wire Line
+	7250 3700 7250 3750
+Wire Wire Line
+	7350 3300 7350 3350
+Wire Wire Line
+	7250 3300 7350 3300
+$Comp
+L mosfet_n M44
+U 1 1 680CF1C9
+P 7050 4700
+F 0 "M44" H 7050 4550 50  0000 R CNN
+F 1 "mosfet_n" H 7150 4650 50  0000 R CNN
+F 2 "" H 7350 4400 29  0000 C CNN
+F 3 "" H 7150 4500 60  0000 C CNN
+	1    7050 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M43
+U 1 1 680CF1CF
+P 7050 4250
+F 0 "M43" H 7050 4100 50  0000 R CNN
+F 1 "mosfet_n" H 7150 4200 50  0000 R CNN
+F 2 "" H 7350 3950 29  0000 C CNN
+F 3 "" H 7150 4050 60  0000 C CNN
+	1    7050 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M48
+U 1 1 680CF1D5
+P 7100 3950
+F 0 "M48" H 7050 4000 50  0000 R CNN
+F 1 "mosfet_p" H 7150 4100 50  0000 R CNN
+F 2 "" H 7350 4050 29  0000 C CNN
+F 3 "" H 7150 3950 60  0000 C CNN
+	1    7100 3950
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M47
+U 1 1 680CF1DB
+P 7100 3500
+F 0 "M47" H 7050 3550 50  0000 R CNN
+F 1 "mosfet_p" H 7150 3650 50  0000 R CNN
+F 2 "" H 7350 3600 29  0000 C CNN
+F 3 "" H 7150 3500 60  0000 C CNN
+	1    7100 3500
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	7250 4150 7250 4250
+Text GLabel 6650 4200 0    60   Input ~ 0
+f
+Wire Wire Line
+	6950 3500 6950 4900
+Connection ~ 6950 3950
+Connection ~ 6950 4450
+Wire Wire Line
+	6650 4200 6950 4200
+Connection ~ 6950 4200
+$Comp
+L mosfet_p M50
+U 1 1 680CF1E8
+P 7950 4000
+F 0 "M50" H 7900 4050 50  0000 R CNN
+F 1 "mosfet_p" H 8000 4150 50  0000 R CNN
+F 2 "" H 8200 4100 29  0000 C CNN
+F 3 "" H 8000 4000 60  0000 C CNN
+	1    7950 4000
+	0    1    -1   0   
+$EndComp
+$Comp
+L mosfet_n M52
+U 1 1 680CF1EE
+P 8150 4350
+F 0 "M52" H 8150 4200 50  0000 R CNN
+F 1 "mosfet_n" H 8250 4300 50  0000 R CNN
+F 2 "" H 8450 4050 29  0000 C CNN
+F 3 "" H 8250 4150 60  0000 C CNN
+	1    8150 4350
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	7950 4150 7950 4250
+Connection ~ 7950 4200
+Wire Wire Line
+	7750 4650 7750 4550
+Connection ~ 7350 4650
+Connection ~ 7750 4650
+Connection ~ 7350 3750
+Wire Wire Line
+	7750 3850 7750 3750
+Connection ~ 7750 3750
+$Comp
+L GND #PWR18
+U 1 1 680CF1FC
+P 8150 3850
+F 0 "#PWR18" H 8150 3600 50  0001 C CNN
+F 1 "GND" H 8150 3700 50  0000 C CNN
+F 2 "" H 8150 3850 50  0001 C CNN
+F 3 "" H 8150 3850 50  0001 C CNN
+	1    8150 3850
+	1    0    0    -1  
+$EndComp
+Text GLabel 8150 4550 2    60   Input ~ 0
+vdd
+Wire Wire Line
+	7250 1950 8850 1950
+Wire Wire Line
+	7250 4200 8850 4200
+$Comp
+L mosfet_p M55
+U 1 1 680CF205
+P 9000 1600
+F 0 "M55" H 8950 1650 50  0000 R CNN
+F 1 "mosfet_p" H 9050 1750 50  0000 R CNN
+F 2 "" H 9250 1700 29  0000 C CNN
+F 3 "" H 9050 1600 60  0000 C CNN
+	1    9000 1600
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_n M53
+U 1 1 680CF20B
+P 8950 1900
+F 0 "M53" H 8950 1750 50  0000 R CNN
+F 1 "mosfet_n" H 9050 1850 50  0000 R CNN
+F 2 "" H 9250 1600 29  0000 C CNN
+F 3 "" H 9050 1700 60  0000 C CNN
+	1    8950 1900
+	1    0    0    -1  
+$EndComp
+Text GLabel 9150 1350 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR19
+U 1 1 680CF212
+P 9150 2350
+F 0 "#PWR19" H 9150 2100 50  0001 C CNN
+F 1 "GND" H 9150 2200 50  0000 C CNN
+F 2 "" H 9150 2350 50  0001 C CNN
+F 3 "" H 9150 2350 50  0001 C CNN
+	1    9150 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8850 1600 8850 2100
+Connection ~ 8850 1950
+Wire Wire Line
+	9150 1800 9150 1900
+Wire Wire Line
+	9150 1350 9150 1400
+Wire Wire Line
+	9150 1400 9250 1400
+Wire Wire Line
+	9250 1400 9250 1450
+Wire Wire Line
+	9150 2350 9150 2300
+Wire Wire Line
+	9150 2300 9250 2300
+Wire Wire Line
+	9250 2300 9250 2250
+$Comp
+L mosfet_p M56
+U 1 1 680CF221
+P 9000 3850
+F 0 "M56" H 8950 3900 50  0000 R CNN
+F 1 "mosfet_p" H 9050 4000 50  0000 R CNN
+F 2 "" H 9250 3950 29  0000 C CNN
+F 3 "" H 9050 3850 60  0000 C CNN
+	1    9000 3850
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_n M54
+U 1 1 680CF227
+P 8950 4150
+F 0 "M54" H 8950 4000 50  0000 R CNN
+F 1 "mosfet_n" H 9050 4100 50  0000 R CNN
+F 2 "" H 9250 3850 29  0000 C CNN
+F 3 "" H 9050 3950 60  0000 C CNN
+	1    8950 4150
+	1    0    0    -1  
+$EndComp
+Text GLabel 9150 3600 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR20
+U 1 1 680CF22E
+P 9150 4600
+F 0 "#PWR20" H 9150 4350 50  0001 C CNN
+F 1 "GND" H 9150 4450 50  0000 C CNN
+F 2 "" H 9150 4600 50  0001 C CNN
+F 3 "" H 9150 4600 50  0001 C CNN
+	1    9150 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8850 3850 8850 4350
+Connection ~ 8850 4200
+Wire Wire Line
+	9150 4050 9150 4150
+Wire Wire Line
+	9150 3600 9150 3650
+Wire Wire Line
+	9150 3650 9250 3650
+Wire Wire Line
+	9250 3650 9250 3700
+Wire Wire Line
+	9150 4600 9150 4550
+Wire Wire Line
+	9150 4550 9250 4550
+Wire Wire Line
+	9250 4550 9250 4500
+$Comp
+L mosfet_n M58
+U 1 1 680CF23D
+P 10250 3050
+F 0 "M58" H 10250 2900 50  0000 R CNN
+F 1 "mosfet_n" H 10350 3000 50  0000 R CNN
+F 2 "" H 10550 2750 29  0000 C CNN
+F 3 "" H 10350 2850 60  0000 C CNN
+	1    10250 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M59
+U 1 1 680CF243
+P 10650 3500
+F 0 "M59" H 10650 3350 50  0000 R CNN
+F 1 "mosfet_n" H 10750 3450 50  0000 R CNN
+F 2 "" H 10950 3200 29  0000 C CNN
+F 3 "" H 10750 3300 60  0000 C CNN
+	1    10650 3500
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M57
+U 1 1 680CF249
+P 10000 2750
+F 0 "M57" H 9950 2800 50  0000 R CNN
+F 1 "mosfet_p" H 10050 2900 50  0000 R CNN
+F 2 "" H 10250 2850 29  0000 C CNN
+F 3 "" H 10050 2750 60  0000 C CNN
+	1    10000 2750
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M60
+U 1 1 680CF24F
+P 10850 2750
+F 0 "M60" H 10800 2800 50  0000 R CNN
+F 1 "mosfet_p" H 10900 2900 50  0000 R CNN
+F 2 "" H 11100 2850 29  0000 C CNN
+F 3 "" H 10900 2750 60  0000 C CNN
+	1    10850 2750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	10150 2950 10700 2950
+Wire Wire Line
+	10450 3050 10450 2950
+Connection ~ 10450 2950
+Wire Wire Line
+	10450 3450 10550 3450
+Wire Wire Line
+	10550 3450 10550 3400
+Wire Wire Line
+	10450 3450 10450 3500
+Wire Wire Line
+	10350 3850 10350 3900
+Wire Wire Line
+	10350 3900 10450 3900
+Wire Wire Line
+	10150 2550 10700 2550
+Wire Wire Line
+	10250 2600 10250 2550
+Connection ~ 10250 2550
+Wire Wire Line
+	10600 2600 10600 2550
+Connection ~ 10600 2550
+Wire Wire Line
+	9150 1850 9850 1850
+Wire Wire Line
+	9850 1850 9850 3250
+Connection ~ 9150 1850
+Wire Wire Line
+	9850 3250 10150 3250
+Connection ~ 9850 2750
+Wire Wire Line
+	9150 4100 10750 4100
+Wire Wire Line
+	10750 4100 10750 3700
+Connection ~ 9150 4100
+Wire Wire Line
+	10750 3700 11000 3700
+Wire Wire Line
+	11000 3700 11000 2750
+Text GLabel 10250 2550 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR21
+U 1 1 680CF26D
+P 10450 3900
+F 0 "#PWR21" H 10450 3650 50  0001 C CNN
+F 1 "GND" H 10450 3750 50  0000 C CNN
+F 2 "" H 10450 3900 50  0001 C CNN
+F 3 "" H 10450 3900 50  0001 C CNN
+	1    10450 3900
+	1    0    0    -1  
+$EndComp
+Text GLabel 10450 2950 1    60   Input ~ 0
+l
+Text GLabel 12950 1050 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR22
+U 1 1 680CF4B9
+P 12950 2850
+F 0 "#PWR22" H 12950 2600 50  0001 C CNN
+F 1 "GND" H 12950 2700 50  0000 C CNN
+F 2 "" H 12950 2850 50  0001 C CNN
+F 3 "" H 12950 2850 50  0001 C CNN
+	1    12950 2850
+	1    0    0    -1  
+$EndComp
+Connection ~ 12950 1950
+Wire Wire Line
+	13050 2850 13050 2800
+Wire Wire Line
+	12950 2850 13050 2850
+Wire Wire Line
+	12950 2400 12950 2450
+Wire Wire Line
+	13050 2400 13050 2350
+Wire Wire Line
+	12950 2400 13500 2400
+Wire Wire Line
+	13050 1500 13050 1550
+Wire Wire Line
+	12950 1500 13500 1500
+Wire Wire Line
+	12950 1450 12950 1500
+Wire Wire Line
+	13050 1050 13050 1100
+Wire Wire Line
+	12950 1050 13050 1050
+$Comp
+L mosfet_n M62
+U 1 1 680CF4CA
+P 12750 2450
+F 0 "M62" H 12750 2300 50  0000 R CNN
+F 1 "mosfet_n" H 12850 2400 50  0000 R CNN
+F 2 "" H 13050 2150 29  0000 C CNN
+F 3 "" H 12850 2250 60  0000 C CNN
+	1    12750 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M61
+U 1 1 680CF4D0
+P 12750 2000
+F 0 "M61" H 12750 1850 50  0000 R CNN
+F 1 "mosfet_n" H 12850 1950 50  0000 R CNN
+F 2 "" H 13050 1700 29  0000 C CNN
+F 3 "" H 12850 1800 60  0000 C CNN
+	1    12750 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M66
+U 1 1 680CF4D6
+P 12800 1700
+F 0 "M66" H 12750 1750 50  0000 R CNN
+F 1 "mosfet_p" H 12850 1850 50  0000 R CNN
+F 2 "" H 13050 1800 29  0000 C CNN
+F 3 "" H 12850 1700 60  0000 C CNN
+	1    12800 1700
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M65
+U 1 1 680CF4DC
+P 12800 1250
+F 0 "M65" H 12750 1300 50  0000 R CNN
+F 1 "mosfet_p" H 12850 1400 50  0000 R CNN
+F 2 "" H 13050 1350 29  0000 C CNN
+F 3 "" H 12850 1250 60  0000 C CNN
+	1    12800 1250
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	12950 1900 12950 2000
+Text GLabel 12350 1950 0    60   Input ~ 0
+g
+Wire Wire Line
+	12650 1250 12650 2650
+Connection ~ 12650 1700
+Connection ~ 12650 2200
+Wire Wire Line
+	12350 1950 12650 1950
+Connection ~ 12650 1950
+$Comp
+L mosfet_p M69
+U 1 1 680CF4E9
+P 13650 1750
+F 0 "M69" H 13600 1800 50  0000 R CNN
+F 1 "mosfet_p" H 13700 1900 50  0000 R CNN
+F 2 "" H 13900 1850 29  0000 C CNN
+F 3 "" H 13700 1750 60  0000 C CNN
+	1    13650 1750
+	0    1    -1   0   
+$EndComp
+$Comp
+L mosfet_n M71
+U 1 1 680CF4EF
+P 13850 2100
+F 0 "M71" H 13850 1950 50  0000 R CNN
+F 1 "mosfet_n" H 13950 2050 50  0000 R CNN
+F 2 "" H 14150 1800 29  0000 C CNN
+F 3 "" H 13950 1900 60  0000 C CNN
+	1    13850 2100
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	13650 1900 13650 2000
+Connection ~ 13650 1950
+Wire Wire Line
+	13450 2400 13450 2300
+Connection ~ 13050 2400
+Connection ~ 13450 2400
+Connection ~ 13050 1500
+Wire Wire Line
+	13450 1600 13450 1500
+Connection ~ 13450 1500
+$Comp
+L GND #PWR24
+U 1 1 680CF4FD
+P 13850 1600
+F 0 "#PWR24" H 13850 1350 50  0001 C CNN
+F 1 "GND" H 13850 1450 50  0000 C CNN
+F 2 "" H 13850 1600 50  0001 C CNN
+F 3 "" H 13850 1600 50  0001 C CNN
+	1    13850 1600
+	1    0    0    -1  
+$EndComp
+Text GLabel 13850 2300 2    60   Input ~ 0
+vdd
+Text GLabel 12950 3300 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR23
+U 1 1 680CF505
+P 12950 5100
+F 0 "#PWR23" H 12950 4850 50  0001 C CNN
+F 1 "GND" H 12950 4950 50  0000 C CNN
+F 2 "" H 12950 5100 50  0001 C CNN
+F 3 "" H 12950 5100 50  0001 C CNN
+	1    12950 5100
+	1    0    0    -1  
+$EndComp
+Connection ~ 12950 4200
+Wire Wire Line
+	13050 5100 13050 5050
+Wire Wire Line
+	12950 5100 13050 5100
+Wire Wire Line
+	12950 4650 12950 4700
+Wire Wire Line
+	13050 4650 13050 4600
+Wire Wire Line
+	12950 4650 13500 4650
+Wire Wire Line
+	13050 3750 13050 3800
+Wire Wire Line
+	12950 3750 13500 3750
+Wire Wire Line
+	12950 3700 12950 3750
+Wire Wire Line
+	13050 3300 13050 3350
+Wire Wire Line
+	12950 3300 13050 3300
+$Comp
+L mosfet_n M64
+U 1 1 680CF516
+P 12750 4700
+F 0 "M64" H 12750 4550 50  0000 R CNN
+F 1 "mosfet_n" H 12850 4650 50  0000 R CNN
+F 2 "" H 13050 4400 29  0000 C CNN
+F 3 "" H 12850 4500 60  0000 C CNN
+	1    12750 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M63
+U 1 1 680CF51C
+P 12750 4250
+F 0 "M63" H 12750 4100 50  0000 R CNN
+F 1 "mosfet_n" H 12850 4200 50  0000 R CNN
+F 2 "" H 13050 3950 29  0000 C CNN
+F 3 "" H 12850 4050 60  0000 C CNN
+	1    12750 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M68
+U 1 1 680CF522
+P 12800 3950
+F 0 "M68" H 12750 4000 50  0000 R CNN
+F 1 "mosfet_p" H 12850 4100 50  0000 R CNN
+F 2 "" H 13050 4050 29  0000 C CNN
+F 3 "" H 12850 3950 60  0000 C CNN
+	1    12800 3950
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M67
+U 1 1 680CF528
+P 12800 3500
+F 0 "M67" H 12750 3550 50  0000 R CNN
+F 1 "mosfet_p" H 12850 3650 50  0000 R CNN
+F 2 "" H 13050 3600 29  0000 C CNN
+F 3 "" H 12850 3500 60  0000 C CNN
+	1    12800 3500
+	1    0    0    1   
+$EndComp
+Wire Wire Line
+	12950 4150 12950 4250
+Text GLabel 12350 4200 0    60   Input ~ 0
+h
+Wire Wire Line
+	12650 3500 12650 4900
+Connection ~ 12650 3950
+Connection ~ 12650 4450
+Wire Wire Line
+	12350 4200 12650 4200
+Connection ~ 12650 4200
+$Comp
+L mosfet_p M70
+U 1 1 680CF535
+P 13650 4000
+F 0 "M70" H 13600 4050 50  0000 R CNN
+F 1 "mosfet_p" H 13700 4150 50  0000 R CNN
+F 2 "" H 13900 4100 29  0000 C CNN
+F 3 "" H 13700 4000 60  0000 C CNN
+	1    13650 4000
+	0    1    -1   0   
+$EndComp
+$Comp
+L mosfet_n M72
+U 1 1 680CF53B
+P 13850 4350
+F 0 "M72" H 13850 4200 50  0000 R CNN
+F 1 "mosfet_n" H 13950 4300 50  0000 R CNN
+F 2 "" H 14150 4050 29  0000 C CNN
+F 3 "" H 13950 4150 60  0000 C CNN
+	1    13850 4350
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	13650 4150 13650 4250
+Connection ~ 13650 4200
+Wire Wire Line
+	13450 4650 13450 4550
+Connection ~ 13050 4650
+Connection ~ 13450 4650
+Connection ~ 13050 3750
+Wire Wire Line
+	13450 3850 13450 3750
+Connection ~ 13450 3750
+$Comp
+L GND #PWR25
+U 1 1 680CF549
+P 13850 3850
+F 0 "#PWR25" H 13850 3600 50  0001 C CNN
+F 1 "GND" H 13850 3700 50  0000 C CNN
+F 2 "" H 13850 3850 50  0001 C CNN
+F 3 "" H 13850 3850 50  0001 C CNN
+	1    13850 3850
+	1    0    0    -1  
+$EndComp
+Text GLabel 13850 4550 2    60   Input ~ 0
+vdd
+Wire Wire Line
+	12950 1950 14550 1950
+Wire Wire Line
+	12950 4200 14550 4200
+$Comp
+L mosfet_p M75
+U 1 1 680CF552
+P 14700 1600
+F 0 "M75" H 14650 1650 50  0000 R CNN
+F 1 "mosfet_p" H 14750 1750 50  0000 R CNN
+F 2 "" H 14950 1700 29  0000 C CNN
+F 3 "" H 14750 1600 60  0000 C CNN
+	1    14700 1600
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_n M73
+U 1 1 680CF558
+P 14650 1900
+F 0 "M73" H 14650 1750 50  0000 R CNN
+F 1 "mosfet_n" H 14750 1850 50  0000 R CNN
+F 2 "" H 14950 1600 29  0000 C CNN
+F 3 "" H 14750 1700 60  0000 C CNN
+	1    14650 1900
+	1    0    0    -1  
+$EndComp
+Text GLabel 14850 1350 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR26
+U 1 1 680CF55F
+P 14850 2350
+F 0 "#PWR26" H 14850 2100 50  0001 C CNN
+F 1 "GND" H 14850 2200 50  0000 C CNN
+F 2 "" H 14850 2350 50  0001 C CNN
+F 3 "" H 14850 2350 50  0001 C CNN
+	1    14850 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14550 1600 14550 2100
+Connection ~ 14550 1950
+Wire Wire Line
+	14850 1800 14850 1900
+Wire Wire Line
+	14850 1350 14850 1400
+Wire Wire Line
+	14850 1400 14950 1400
+Wire Wire Line
+	14950 1400 14950 1450
+Wire Wire Line
+	14850 2350 14850 2300
+Wire Wire Line
+	14850 2300 14950 2300
+Wire Wire Line
+	14950 2300 14950 2250
+$Comp
+L mosfet_p M76
+U 1 1 680CF56E
+P 14700 3850
+F 0 "M76" H 14650 3900 50  0000 R CNN
+F 1 "mosfet_p" H 14750 4000 50  0000 R CNN
+F 2 "" H 14950 3950 29  0000 C CNN
+F 3 "" H 14750 3850 60  0000 C CNN
+	1    14700 3850
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_n M74
+U 1 1 680CF574
+P 14650 4150
+F 0 "M74" H 14650 4000 50  0000 R CNN
+F 1 "mosfet_n" H 14750 4100 50  0000 R CNN
+F 2 "" H 14950 3850 29  0000 C CNN
+F 3 "" H 14750 3950 60  0000 C CNN
+	1    14650 4150
+	1    0    0    -1  
+$EndComp
+Text GLabel 14850 3600 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR27
+U 1 1 680CF57B
+P 14850 4600
+F 0 "#PWR27" H 14850 4350 50  0001 C CNN
+F 1 "GND" H 14850 4450 50  0000 C CNN
+F 2 "" H 14850 4600 50  0001 C CNN
+F 3 "" H 14850 4600 50  0001 C CNN
+	1    14850 4600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	14550 3850 14550 4350
+Connection ~ 14550 4200
+Wire Wire Line
+	14850 4050 14850 4150
+Wire Wire Line
+	14850 3600 14850 3650
+Wire Wire Line
+	14850 3650 14950 3650
+Wire Wire Line
+	14950 3650 14950 3700
+Wire Wire Line
+	14850 4600 14850 4550
+Wire Wire Line
+	14850 4550 14950 4550
+Wire Wire Line
+	14950 4550 14950 4500
+$Comp
+L mosfet_n M78
+U 1 1 680CF58A
+P 15950 3050
+F 0 "M78" H 15950 2900 50  0000 R CNN
+F 1 "mosfet_n" H 16050 3000 50  0000 R CNN
+F 2 "" H 16250 2750 29  0000 C CNN
+F 3 "" H 16050 2850 60  0000 C CNN
+	1    15950 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L mosfet_n M79
+U 1 1 680CF590
+P 16350 3500
+F 0 "M79" H 16350 3350 50  0000 R CNN
+F 1 "mosfet_n" H 16450 3450 50  0000 R CNN
+F 2 "" H 16650 3200 29  0000 C CNN
+F 3 "" H 16450 3300 60  0000 C CNN
+	1    16350 3500
+	-1   0    0    -1  
+$EndComp
+$Comp
+L mosfet_p M77
+U 1 1 680CF596
+P 15700 2750
+F 0 "M77" H 15650 2800 50  0000 R CNN
+F 1 "mosfet_p" H 15750 2900 50  0000 R CNN
+F 2 "" H 15950 2850 29  0000 C CNN
+F 3 "" H 15750 2750 60  0000 C CNN
+	1    15700 2750
+	1    0    0    1   
+$EndComp
+$Comp
+L mosfet_p M80
+U 1 1 680CF59C
+P 16550 2750
+F 0 "M80" H 16500 2800 50  0000 R CNN
+F 1 "mosfet_p" H 16600 2900 50  0000 R CNN
+F 2 "" H 16800 2850 29  0000 C CNN
+F 3 "" H 16600 2750 60  0000 C CNN
+	1    16550 2750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	15850 2950 16400 2950
+Wire Wire Line
+	16150 3050 16150 2950
+Connection ~ 16150 2950
+Wire Wire Line
+	16150 3450 16250 3450
+Wire Wire Line
+	16250 3450 16250 3400
+Wire Wire Line
+	16150 3450 16150 3500
+Wire Wire Line
+	16050 3850 16050 3900
+Wire Wire Line
+	16050 3900 16150 3900
+Wire Wire Line
+	15850 2550 16400 2550
+Wire Wire Line
+	15950 2600 15950 2550
+Connection ~ 15950 2550
+Wire Wire Line
+	16300 2600 16300 2550
+Connection ~ 16300 2550
+Wire Wire Line
+	14850 1850 15550 1850
+Wire Wire Line
+	15550 1850 15550 3250
+Connection ~ 14850 1850
+Wire Wire Line
+	15550 3250 15850 3250
+Connection ~ 15550 2750
+Wire Wire Line
+	14850 4100 16450 4100
+Wire Wire Line
+	16450 4100 16450 3700
+Connection ~ 14850 4100
+Wire Wire Line
+	16450 3700 16700 3700
+Wire Wire Line
+	16700 3700 16700 2750
+Text GLabel 15950 2550 1    60   Input ~ 0
+vdd
+$Comp
+L GND #PWR28
+U 1 1 680CF5BA
+P 16150 3900
+F 0 "#PWR28" H 16150 3650 50  0001 C CNN
+F 1 "GND" H 16150 3750 50  0000 C CNN
+F 2 "" H 16150 3900 50  0001 C CNN
+F 3 "" H 16150 3900 50  0001 C CNN
+	1    16150 3900
+	1    0    0    -1  
+$EndComp
+Text GLabel 16150 2950 1    60   Input ~ 0
+m
+$EndSCHEMATC

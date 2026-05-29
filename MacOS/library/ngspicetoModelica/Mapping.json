@@ -1,0 +1,317 @@
+{
+	"Components":{
+				"R" : "Analog.Basic.Resistor",
+				"C" : "Analog.Basic.Capacitor",
+				"L" : "Analog.Basic.Inductor",
+				"e" : "Analog.Basic.VCV",
+				"g" : "Analog.Basic.VCC",
+				"f" : "Analog.Basic.CCC",
+				"h" : "Analog.Basic.CCV",
+				"0" : "Analog.Basic.Ground",
+				"gnd" : "Analog.Basic.Ground"
+
+		},
+	"Sources":{
+		"v":{
+			"pulse" : "Analog.Sources.TrapezoidVoltage",
+			"sine" : "Analog.Sources.SineVoltage",
+			"pwl" : "Analog.Sources.TableVoltage",
+			"dc" : "Analog.Sources.ConstantVoltage",
+			"ac" : "Analog.Sources.ConstantVoltage"
+		},
+
+		"i":{
+			"dc":"Analog.Sources.ConstantCurrent"
+		}
+		
+		},
+	"Devices":{
+		"d":{
+			"import":"Spice3.Internal.DIODE",
+			"modelcard":"Spice3.Semiconductors.ModelcardDIODE",
+			"mapping":{
+
+				"is":"IS",
+				"rs":"RS",
+				"n":"N",
+				"tt":"TT",
+				"cjo":"CJO",
+				"vj":"VJ",
+				"m":"M",
+				"eg":"EG",
+				"xti":"XTI",
+				"fc":"FC",
+				"bv":"BV",
+				"ibv":"IBV",
+				"tnom":"TNOM",
+				"kf":"KF",
+				"af":"AF",
+				"g":"G"
+
+			},
+			
+			"default":{
+
+				"IS":"1e-14",
+				"RS":"0.0",
+				"N":"1.0",
+				"TT":"0.0",
+				"CJO":"0.0",
+				"VJ":"1.0",
+				"M":"0.5",
+				"EG":"1.11",
+				"XTI":"3.0",
+				"FC":"0.5",
+				"BV":"-1e40",
+				"IBV":"1e-3",
+				"TNOM":"27",
+				"KF":"0.0",
+				"AF":"1.0",
+				"G":"0"
+
+			}
+		},
+
+		"m":{
+			"import":"BondLib.Electrical.Analog.Spice",
+			"mapping":{
+			
+				"tnom":"Tnom",
+				"vto":"VT0",
+				"gamma":"GAMMA",
+				"phi":"PHI",
+				"ld":"LD",
+				"uo":"U0",
+				"lambda":"LAMBDA",
+				"tox":"TOX",
+				"pb":"PB",
+				"cj":"CJ",
+				"cjsw":"CJSW",
+				"mj":"MJ",
+				"mjsw":"MJSW",
+				"cgdo":"CGD0",
+				"js":"JS",
+				"cgbo":"CGB0",
+				"cgso":"CGS0"
+				
+			},
+			
+			"default":{
+				"Tnom":"300",
+				"VT0":"0",
+				"GAMMA":"0",
+				"PHI":"0",
+				"LD":"0",
+				"U0":"0",
+				"LAMBDA":"0",
+				"TOX":"3e-9",
+				"PB":"0.8",
+				"CJ":"0",
+				"CJSW":"1e-9",
+				"MJ":"0.33",
+				"MJSW":"0.33",
+				"CGD0":"0",
+				"JS":"0",
+				"CGB0":"0",
+				"CGS0":"0"
+
+			}
+		},	
+
+		"q":{
+			"import":"Analog.Semiconductors",
+			"mapping":{
+		
+				"bf":"Bf",
+				"br":"Br",
+				"is":"Is",
+				"vak":"Vak",
+				"tf":"Tauf",
+				"tr":"Taur",
+				"cjs":"Ccs",
+				"cje":"Cje",
+				"cjc":"Cjc",
+				"vje":"Phie",
+				"mje":"Me",
+				"vjc":"Phic",
+				"mjc":"Mc"
+		
+			},
+		
+			"default":{
+		
+				"Bf":"50",
+				"Br":"0.1",
+				"Is":"1e-16",
+				"Tauf":"1.2e-10",
+				"Taur":"5e-9",
+				"Vak":"0.02",
+				"Ccs":"1e-12",
+				"Cje":"4e-12",
+				"Cjc":"5e-13",
+				"Phie":"0.8",
+				"Me":"0.4",
+				"Phic":"0.8",
+				"Mc":"0.333"
+
+			}
+		},
+
+		"j":{
+			
+			"import":"Spice3.Internal.JFET",
+			"mapping":{
+			
+				"kf":"KF",
+				"rs":"RS",
+				"is":"IS",
+				"cgd":"CGD",
+				"vto":"VTO",
+				"rd":"RD",
+				"pb":"PB",
+				"beta":"BETA",
+				"fc":"FC",
+				"af":"AF",
+				"cgs":"CGS",
+				"lambda":"LAMBDA",
+			    "b" : "B"
+					
+			},
+
+			"default":{
+			
+				"KF":"0",
+				"RS":"0",
+				"IS":"1e-14",
+				"CGD":"0",
+				"VTO":"-2",
+				"RD":"0",
+				"PB":"1",
+				"BETA":"1e-4",
+				"FC":"0.5",
+				"AF":"1",
+				"CGS":"0",
+				"LAMBDA":"0",
+				"B":"1"
+
+			}
+		}
+	},
+	
+	"Models":{
+		"zener":{
+			"import":"Analog.Semiconductors.ZDiode",
+			"mapping":{
+				"v_breakdown":"Bv",
+				"i_breakdown":"Ibv",
+				"i_sat":"Ids",
+				"n_forward":"Nbv"
+
+			},
+			"default":{
+				"Ids":"880.5e-18",
+				"Vt":"0.025",
+				"R":"1e12",
+				"Bv":"8.1",
+				"Ibv":"0.020245",
+				"Nbv":"1.6989"
+
+			}
+
+		}
+	},
+	
+	"Units":{
+		"k":"e3",
+		"u":"e-6",
+		"p":"e-12",
+		"t":"e12",
+        "f":"e-15",
+		"g":"e9",
+		"m":"e-3",
+		"meg":"e6",
+		"n":"e-9",
+		
+        "v":"",
+        "a":"",
+        "s":"",
+        "hz":"",
+        "ohm":"",
+        "mho":"",
+        "h":"",
+
+
+        "kv":"e3",
+        "ka":"e3",
+        "ks":"e3",
+        "khz":"e3",
+        "kohm":"e3",
+        "kmho":"e3",
+        "kh":"e3",
+       
+        
+         "uv":"e-06",
+        "ua":"e-06",
+        "us":"e-06",
+        "uhz":"e-06",
+        "uohm":"e-06",
+        "umho":"e-06",
+        "uh":"e-06",
+       
+        "pv":"e-12",
+        "pa":"e-12",
+        "ps":"e-12",
+        "phz":"e-12",
+        "pohm":"e-12",
+        "pmho":"e-12",
+        "ph":"e-12",
+       
+        
+        "tv":"e12",
+        "ta":"e12",
+        "ts":"e12",
+        "thz":"e12",
+        "tohm":"e12",
+        "tmho":"e12",
+        "th":"e12",
+        
+        
+        "gv":"e9",
+        "ga":"e9",
+        "gs":"e9",
+        "ghz":"e9",
+        "gohm":"e9",
+        "gmho":"e9",
+        "gh":"e9",
+      
+        
+        "mv":"e-03",
+        "ma":"e-03",
+        "ms":"e-03",
+        "mhz":"e-03",
+        "mohm":"e-03",
+        "mmho":"e-03",
+        "mh":"e-03",
+     
+
+        "megv":"e06",
+        "mega":"e06",
+        "megs":"e06",
+        "meghz":"e06",
+        "megohm":"e06",
+        "megmho":"e06",
+        "megh":"e06",
+        
+ 
+          
+        "nv":"e-09",
+        "na":"e-09",
+        "ns":"e-09",
+        "nhz":"e-09",
+        "nohm":"e-09",
+        "nmho":"e-09",
+        "nh":"e-09"
+        
+	}
+	
+}

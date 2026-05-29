@@ -1,0 +1,33 @@
+* ========================================= *
+* IP Core Name: avsddcp_3V3                 *
+* Tech Node: 130nm                          *
+* PDK : Sky130 PDK by Google SkyWater	    *
+* Name of the author : Charaan S            *
+* Company : VLSI System Design Corporation  * 
+* ========================================= *
+
+
+.subckt avsddcp_1v8_sky130 in clk1 clk2 out gnd
+
+* === SKY130 NMOS MODELS === *
+xm1 in in v1 gnd sky130_fd_pr__nfet_01v8 w=1 l=0.18
+xm2 v1 v1 v2 gnd sky130_fd_pr__nfet_01v8 w=1 l=0.18
+xm3 v2 v2 v3 gnd sky130_fd_pr__nfet_01v8 w=1 l=0.18
+xm4 v3 v3 v4 gnd sky130_fd_pr__nfet_01v8 w=1 l=0.18
+xm5 v4 v4 out gnd sky130_fd_pr__nfet_01v8 w=1 l=0.18
+
+
+* === SKY130 CAPACITOR MODELS === *
+xc1  v1 clk1 sky130_fd_pr__cap_mim_m3_1 w=1 l=100
+xc2  v2 clk2 sky130_fd_pr__cap_mim_m3_1 w=1 l=100
+xc3  v3 clk1 sky130_fd_pr__cap_mim_m3_1 w=1 l=100
+xc4  v4 clk2 sky130_fd_pr__cap_mim_m3_1 w=1 l=100
+xcout1  out gnd sky130_fd_pr__cap_mim_m3_1 w=1 l=100
+
+
+* === SKY130 RESISTOR MODEL === *
+*xr1  out gnd gnd sky130_fd_pr__res_high_po_0p69 l=100000
+
+.ends
+
+

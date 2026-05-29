@@ -1,0 +1,77 @@
+* Subcircuit LM723
+.subckt LM723 /v+ /vc /vout /vz /vref /compensation /current_limit /current_sense /inverting_input /non-inverting_input ? ? ? /v- 
+* c:\fossee\esim\library\subcircuitlibrary\lm723\lm723.cir
+.include D.lib
+.include PNP.lib
+.include NJF.lib
+.include NPN.lib
+* u1  net-_j1-pad3_ /v+ zener
+r2  /v+ net-_q4-pad3_ 900
+r5  net-_q25-pad3_ /v+ 550
+q4 net-_q14-pad2_ net-_q14-pad2_ net-_q4-pad3_ Q2N2907A
+q5 net-_c1-pad2_ net-_q14-pad2_ net-_q25-pad3_ Q2N2907A
+r3  net-_q14-pad2_ net-_j1-pad3_ 22k
+q8 /v+ net-_c1-pad2_ /vref Q2N2222
+q2 /v- net-_d1-pad1_ net-_q2-pad3_ Q2N2907A
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q7 /v- net-_c1-pad1_ net-_d1-pad2_ Q2N2907A
+q9 net-_c1-pad1_ net-_q11-pad1_ /vref Q2N2907A
+q11 net-_q11-pad1_ net-_c2-pad1_ /vref Q2N2907A
+r8  net-_q11-pad1_ net-_c2-pad1_ 1.8k
+c1  net-_c1-pad1_ net-_c1-pad2_ 10p
+c2  net-_c2-pad1_ net-_c1-pad2_ 5p
+* u2  /v- net-_c1-pad2_ zener
+r16  /v+ net-_q14-pad3_ 1.8k
+r18  net-_q16-pad3_ /v+ 1.8k
+q14 net-_q14-pad1_ net-_q14-pad2_ net-_q14-pad3_ Q2N2907A
+q16 /compensation net-_q14-pad2_ net-_q16-pad3_ Q2N2907A
+q19 /v+ /compensation net-_q19-pad3_ Q2N2222
+q23 /vc net-_q19-pad3_ /vout Q2N2222
+r21  net-_q19-pad3_ /vout 15k
+* u3  /vz /vout zener
+q12 net-_q11-pad1_ net-_d2-pad2_ net-_q12-pad3_ Q2N2222
+q10 net-_c1-pad1_ net-_d2-pad2_ net-_d2-pad1_ Q2N2222
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+r9  net-_d2-pad1_ net-_q12-pad3_ 2k
+r6  net-_d2-pad1_ net-_r6-pad2_ 11k
+r7  net-_r6-pad2_ /v- 1k
+q6 net-_j1-pad3_ net-_q17-pad2_ net-_q6-pad3_ Q2N2222
+q3 net-_j1-pad3_ net-_j1-pad1_ net-_q1-pad2_ Q2N2222
+q1 net-_j1-pad1_ net-_q1-pad2_ /v- Q2N2222
+r1  net-_q1-pad2_ /v- 2.4k
+r4  net-_q6-pad3_ /v- 160
+r10  /vref net-_q13-pad1_ 409
+r11  net-_q13-pad1_ net-_d2-pad2_ 11.89k
+r12  net-_d2-pad2_ net-_q15-pad2_ 1.1k
+r13  net-_q15-pad2_ net-_q13-pad2_ 380
+r14  net-_q13-pad2_ /v- 1.1k
+q15 net-_q13-pad1_ net-_q15-pad2_ net-_q15-pad3_ Q2N2222
+r17  net-_q15-pad3_ /v- 1.1k
+q13 net-_q13-pad1_ net-_q13-pad2_ net-_q13-pad3_ Q2N2222
+r15  net-_q13-pad3_ /v- 1.7k
+q17 net-_q14-pad1_ net-_q17-pad2_ net-_q17-pad3_ Q2N2222
+r19  net-_q17-pad3_ /v- 300
+q18 /vref net-_q14-pad1_ net-_q17-pad2_ Q2N2222
+r20  net-_q17-pad2_ /v- 10k
+q24 /compensation net-_q24-pad2_ /current_sense Q2N2222
+r24  /current_limit net-_q24-pad2_ 400
+q22 /compensation /inverting_input net-_q20-pad3_ Q2N2222
+q20 /vref /non-inverting_input net-_q20-pad3_ Q2N2222
+q21 net-_q20-pad3_ net-_q17-pad2_ net-_q21-pad3_ Q2N2222
+r22  net-_q21-pad3_ /v- 300
+r23  net-_q26-pad3_ /v- 300
+j1 net-_j1-pad1_ /v- net-_j1-pad3_ J2N3819
+q25 net-_q2-pad3_ net-_q14-pad2_ net-_q25-pad3_ Q2N2907A
+q26 net-_q20-pad3_ net-_q17-pad2_ net-_q26-pad3_ Q2N2222
+a1 net-_j1-pad3_ /v+ u1
+a2 /v- net-_c1-pad2_ u2
+a3 /vz /vout u3
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u1 zener(v_breakdown=6.2 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u2 zener(v_breakdown=5.7 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u3 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Control Statements
+
+.ends LM723

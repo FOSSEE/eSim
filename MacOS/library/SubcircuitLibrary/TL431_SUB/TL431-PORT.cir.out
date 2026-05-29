@@ -1,0 +1,40 @@
+* c:\fossee2\esim\library\subcircuitlibrary\tl431-port\tl431-port.cir
+
+.include D.lib
+.include PNP.lib
+.include NPN.lib
+q2 net-_c2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q4 net-_c2-pad2_ net-_c2-pad2_ net-_q2-pad2_ Q2N2222
+r5  net-_c2-pad1_ net-_q7-pad3_ 800
+q7 net-_q5-pad1_ net-_q5-pad1_ net-_q7-pad3_ Q2N2907A
+q8 net-_c2-pad2_ net-_q5-pad1_ net-_q8-pad3_ Q2N2907A
+r8  net-_c2-pad1_ net-_q8-pad3_ 800
+c2  net-_c2-pad1_ net-_c2-pad2_ 20p
+q10 net-_c2-pad1_ net-_c2-pad2_ net-_q10-pad3_ Q2N2222
+r9  net-_q10-pad3_ net-_q11-pad2_ 150
+r10  net-_q11-pad2_ net-_d1-pad1_ 10k
+q11 net-_c2-pad1_ net-_q11-pad2_ net-_d1-pad1_ Q2N2222
+d2 net-_d1-pad1_ net-_c2-pad1_ 1N4148
+r2  net-_q2-pad3_ net-_r1-pad1_ 3.28k
+q5 net-_q5-pad1_ net-_q2-pad3_ net-_q5-pad3_ Q2N2222
+r6  net-_q5-pad3_ net-_c1-pad1_ 4k
+r1  net-_r1-pad1_ net-_q1-pad1_ 2.4k
+r3  net-_r1-pad1_ net-_c1-pad2_ 7.2k
+q1 net-_q1-pad1_ net-_q1-pad1_ net-_d1-pad1_ Q2N2222
+q3 net-_c1-pad2_ net-_q1-pad1_ net-_q3-pad3_ Q2N2222
+r4  net-_q3-pad3_ net-_d1-pad1_ 800
+c1  net-_c1-pad1_ net-_c1-pad2_ capacitor_polarised
+q6 net-_c1-pad1_ net-_c1-pad2_ net-_d1-pad1_ Q2N2222
+q9 net-_c2-pad2_ net-_q9-pad2_ net-_d1-pad1_ Q2N2222
+r7  net-_q1-pad1_ net-_q9-pad2_ 1k
+d1 net-_d1-pad1_ net-_c2-pad2_ 1N4148
+* u1  net-_c2-pad1_ net-_q2-pad2_ net-_d1-pad1_ port
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

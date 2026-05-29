@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "Half_Adder-rescue")(type "Legacy")(uri "${KIPRJMOD}/Half_Adder-rescue.lib")(options "")(descr ""))
+)

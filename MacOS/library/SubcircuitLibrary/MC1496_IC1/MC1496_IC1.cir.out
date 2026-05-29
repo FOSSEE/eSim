@@ -1,0 +1,43 @@
+* c:\users\aditya\esim-workspace\mc1496_ic1\mc1496_ic1.cir
+
+.include MC1496IC1.sub
+x1 sig net-_r7-pad1_ net-_r7-pad2_ net-_r2-pad1_ net-_u5-pad1_ out_p ? net-_c3-pad2_ ? net-_c2-pad2_ ? out_n ? net-_x1-pad14_ MC1496IC1
+r7  net-_r7-pad1_ net-_r7-pad2_ 1k
+r9  net-_c2-pad2_ net-_c3-pad2_ 51
+r10  net-_c3-pad2_ gnd 1k
+r11  net-_c4-pad2_ net-_c3-pad2_ 1k
+r2  net-_r2-pad1_ net-_c1-pad1_ 10k
+r1  sig net-_c1-pad1_ 10k
+r3  sig gnd 51
+r6  net-_r2-pad1_ gnd 51
+r8  net-_r8-pad1_ gnd 6.8k
+r4  out_p net-_c4-pad2_ 3.9k
+r5  net-_c4-pad2_ out_n 3.9k
+v3 net-_c4-pad2_ gnd  dc 12
+v2 net-_x1-pad14_ gnd  dc -8
+v1  sig gnd sine(0 0.7 50 0 0)
+v4  car gnd sine(0 3 1k 0 0)
+* u4  car plot_v1
+* u1  sig plot_v1
+* u2  out_p plot_v1
+* u3  out_n plot_v1
+c1  net-_c1-pad1_ gnd 0.47u
+c2  car net-_c2-pad2_ 0.1u
+c3  gnd net-_c3-pad2_ 0.1u
+c4  gnd net-_c4-pad2_ 2.47u
+* u5  net-_u5-pad1_ net-_r8-pad1_ plot_i2
+v_u5 net-_u5-pad1_ net-_r8-pad1_ 0
+.tran 0.01e-03 40e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(car)
+plot v(sig)
+plot v(out_p)
+plot v(out_n)
+plot i(v_u5)
+.endc
+.end
