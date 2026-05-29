@@ -1,0 +1,19 @@
+* c:\fossee\esim\library\subcircuitlibrary\74als10a\74als10a.cir
+
+.include CMOS_NAND.sub
+x3 net-_u1-pad5_ net-_u1-pad6_ net-_x3-pad3_ CMOS_NAND
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_x1-pad3_ CMOS_NAND
+x4 net-_x3-pad3_ net-_u1-pad7_ net-_u1-pad10_ CMOS_NAND
+x5 net-_x1-pad3_ net-_u1-pad8_ net-_u1-pad11_ CMOS_NAND
+x2 net-_u1-pad3_ net-_u1-pad4_ net-_x2-pad3_ CMOS_NAND
+x6 net-_x2-pad3_ net-_u1-pad9_ net-_u1-pad12_ CMOS_NAND
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

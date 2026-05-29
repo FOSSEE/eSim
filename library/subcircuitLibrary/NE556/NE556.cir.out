@@ -1,0 +1,15 @@
+.title kicad schematic
+
+.include DUALTIMER_COMPARATOR.sub
+x2 gnd discharge2 reset2 trigger2 control_voltage2 output2 threshold2 vcc DUALTIMER_COMPARATOR
+* u1 discharge1 threshold1 control_voltage1 reset1 output1 trigger1 gnd trigger2 output2 reset2 control_voltage2 threshold2 discharge2 vcc port
+x1 gnd discharge1 reset1 trigger1 control_voltage1 output1 threshold1 vcc DUALTIMER_COMPARATOR
+.tran 0.1e-06 100e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,22 @@
+.title kicad schematic
+
+.include 3State_Buffer.sub
+x1 v_g v_a v_y 3State_Buffer
+v_a1 v_a gnd  dc 0
+v_g1 v_g gnd  dc 5
+* u1 v_g plot_v1
+* u2 v_a plot_v1
+* u5 v_y plot_v1
+r1 gnd v_y 10k
+.tran 20e-00 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(v_g)
+plot v(v_a)
+plot v(v_y)
+.endc
+.end

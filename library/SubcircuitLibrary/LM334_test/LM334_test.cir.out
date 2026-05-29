@@ -1,0 +1,18 @@
+.title kicad schematic
+
+.include LM334.sub
+r1 net-_r1-pad1_ vout 2.2k
+* u1 vout plot_v1
+vv1 net-_r1-pad1_ gnd sin(0 1 1k)
+x1 vout net-_r2-pad2_ gnd LM334
+r2 gnd net-_r2-pad2_ 68
+.tran 10e-06 4e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(vout)
+.endc
+.end

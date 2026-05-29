@@ -1,0 +1,31 @@
+* d:\fossee\msys\dev\fossee\esim\library\subcircuitlibrary\sn54f71\sn54f71.cir
+
+.include 3_and.sub
+* u2  net-_u1-pad2_ net-_u1-pad3_ net-_u2-pad3_ d_and
+* u3  net-_u1-pad4_ net-_u1-pad5_ net-_u3-pad3_ d_and
+x2 net-_u1-pad1_ net-_u1-pad12_ net-_u1-pad13_ net-_u4-pad1_ 3_and
+x1 net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u4-pad2_ 3_and
+* u5  net-_u2-pad3_ net-_u3-pad3_ net-_u1-pad6_ d_nor
+* u4  net-_u4-pad1_ net-_u4-pad2_ net-_u1-pad8_ d_nor
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ ? net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ ? port
+a1 [net-_u1-pad2_ net-_u1-pad3_ ] net-_u2-pad3_ u2
+a2 [net-_u1-pad4_ net-_u1-pad5_ ] net-_u3-pad3_ u3
+a3 [net-_u2-pad3_ net-_u3-pad3_ ] net-_u1-pad6_ u5
+a4 [net-_u4-pad1_ net-_u4-pad2_ ] net-_u1-pad8_ u4
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u2 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u5 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u4 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

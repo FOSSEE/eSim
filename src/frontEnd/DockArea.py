@@ -1,5 +1,5 @@
-from PyQt5 import QtCore, QtWidgets
-from ngspiceSimulation.pythonPlotting import plotWindow
+from PyQt6 import QtCore, QtWidgets
+from ngspiceSimulation import plotWindow
 from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
 from modelEditor.ModelEditor import ModelEditorclass
@@ -9,8 +9,8 @@ from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
 from browser.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
-from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
+from PyQt6.QtCore import Qt
 import os
 from converter.pspiceToKicad import PspiceConverter
 from converter.ltspiceToKicad import LTspiceConverter
@@ -40,6 +40,8 @@ class DockArea(QtWidgets.QMainWindow):
         """This act as constructor for class DockArea."""
         QtWidgets.QMainWindow.__init__(self)
         self.obj_appconfig = Appconfig()
+        # Track plotting docks
+        self.active_plotting_docks = set()
 
         for dockName in dockList:
             dock[dockName] = QtWidgets.QDockWidget(dockName)
@@ -55,10 +57,31 @@ class DockArea(QtWidgets.QMainWindow):
             QWidget { border-radius: 15px; border: 1px solid gray;\
                 padding: 5px; width: 200px; height: 150px;  } \
             ")
-            self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName])
+            self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea, dock[dockName])
 
         # self.tabifyDockWidget(dock['Notes'],dock['Blank'])
         self.show()
+
+    def get_main_view_reference(self):
+        """Get reference to the MainView widget."""
+        parent = self.parent()
+        while parent:
+            if hasattr(parent, 'collapse_console_area'):
+                return parent
+            parent = parent.parent()
+        return None
+
+    def on_dock_activated(self, dock_widget):
+        """Handle when any dock becomes active."""
+        main_view = self.get_main_view_reference()
+        if not main_view:
+            return
+            
+        # Check if activated dock is a plotting dock
+        if dock_widget in self.active_plotting_docks:
+            main_view.collapse_console_area()
+        else:
+            main_view.restore_console_area()
 
     def createTestEditor(self):
         """This function create widget for Library Editor"""
@@ -74,7 +97,7 @@ class DockArea(QtWidgets.QMainWindow):
         dock['Tips-' + str(count)] = \
             QtWidgets.QDockWidget('Tips-' + str(count))
         dock['Tips-' + str(count)].setWidget(self.testWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                            dock['Tips-' + str(count)])
         self.tabifyDockWidget(
             dock['Welcome'], dock['Tips-' + str(count)])
@@ -111,14 +134,28 @@ class DockArea(QtWidgets.QMainWindow):
                                        + str(count))
         dock[dockName + str(count)] \
             .setWidget(self.plottingWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                            dock[dockName + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
                               dock[dockName + str(count)])
+        
+        # Track this as a plotting dock
+        self.active_plotting_docks.add(dock[dockName + str(count)])
+        
+        # Connect to tab change signal
+        try:
+            self.tabifiedDockWidgetActivated.connect(self.on_dock_activated)
+        except:
+            pass  # In case signal is already connected
 
         dock[dockName + str(count)].setVisible(True)
         dock[dockName + str(count)].setFocus()
         dock[dockName + str(count)].raise_()
+
+        # Collapse console immediately
+        main_view = self.get_main_view_reference()
+        if main_view:
+            QtCore.QTimer.singleShot(100, main_view.collapse_console_area)
 
         temp = self.obj_appconfig.current_project['ProjectName']
         if temp:
@@ -145,7 +182,7 @@ class DockArea(QtWidgets.QMainWindow):
                                        + str(count))
         dock[dockName + str(count)] \
             .setWidget(self.ngspiceWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                            dock[dockName + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
                               dock[dockName
@@ -183,7 +220,7 @@ class DockArea(QtWidgets.QMainWindow):
         file_path_text_box = QLineEdit()
         file_path_text_box.setFixedHeight(30)
         file_path_text_box.setFixedWidth(800)
-        file_path_layout.setAlignment(Qt.AlignCenter)
+        file_path_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         file_path_layout.addWidget(file_path_text_box)
 
         browse_button = QPushButton("Browse")
@@ -227,7 +264,7 @@ class DockArea(QtWidgets.QMainWindow):
         # lib_path_text_box = QLineEdit()
         # lib_path_text_box.setFixedHeight(30)
         # lib_path_text_box.setFixedWidth(800)
-        # lib_path_layout.setAlignment(Qt.AlignCenter)
+        # lib_path_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         # lib_path_layout.addWidget(lib_path_text_box)
 
         # browse_button1 = QPushButton("Browse lib")
@@ -279,7 +316,7 @@ class DockArea(QtWidgets.QMainWindow):
         self.description_label = QLabel()
         self.description_label.setFixedHeight(160)
         self.description_label.setFixedWidth(950)
-        self.description_label.setAlignment(Qt.AlignBottom)
+        self.description_label.setAlignment(Qt.AlignmentFlag.AlignBottom)
         self.description_label.setWordWrap(True)
         self.description_label.setText(description_html)
         self.eConLayout.addWidget(self.description_label)  # Add the description label to the layout
@@ -288,7 +325,7 @@ class DockArea(QtWidgets.QMainWindow):
 
         dock[dockName + str(count)] = QtWidgets.QDockWidget(dockName + str(count))
         dock[dockName + str(count)].setWidget(self.eConWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea, dock[dockName + str(count)])
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea, dock[dockName + str(count)])
         self.tabifyDockWidget(dock['Welcome'], dock[dockName + str(count)])
 
         # CSS
@@ -319,7 +356,7 @@ class DockArea(QtWidgets.QMainWindow):
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
             return
         projName = os.path.basename(projDir)
         dockName = f'Model Editor-{projName}-'
@@ -337,7 +374,7 @@ class DockArea(QtWidgets.QMainWindow):
                                                  + str(count))
         dock[dockName + str(count)] \
             .setWidget(self.modelwidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                            dock[dockName + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
                               dock[dockName + str(count)])
@@ -373,7 +410,7 @@ class DockArea(QtWidgets.QMainWindow):
             QtWidgets.QDockWidget(dockName + str(count))
         dock[dockName +
              str(count)].setWidget(self.kicadToNgspiceWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                            dock[dockName + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
                               dock[dockName + str(count)])
@@ -419,7 +456,7 @@ class DockArea(QtWidgets.QMainWindow):
                                                     + str(count))
             dock[dockName + str(count)] \
                 .setWidget(self.subcktWidget)
-            self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+            self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                             dock[dockName + str(count)])
             self.tabifyDockWidget(dock['Welcome'],
                                 dock[dockName + str(count)])
@@ -446,7 +483,7 @@ class DockArea(QtWidgets.QMainWindow):
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
 
     def makerchip(self):
         """This function creates a widget for different subcircuit options."""
@@ -463,7 +500,7 @@ class DockArea(QtWidgets.QMainWindow):
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
             return
         projName = os.path.basename(projDir)
         dockName = f'Makerchip-{projName}-'
@@ -477,7 +514,7 @@ class DockArea(QtWidgets.QMainWindow):
              str(count)] = QtWidgets.QDockWidget(dockName
                                                  + str(count))
         dock[dockName + str(count)].setWidget(self.makerWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                            dock[dockName + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
                               dock[dockName + str(count)])
@@ -505,7 +542,7 @@ class DockArea(QtWidgets.QMainWindow):
         dock['User Manual-' +
              str(count)] = QtWidgets.QDockWidget('User Manual-' + str(count))
         dock['User Manual-' + str(count)].setWidget(self.usermanualWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                            dock['User Manual-' + str(count)])
         self.tabifyDockWidget(dock['Welcome'],
                               dock['User Manual-' + str(count)])
@@ -538,7 +575,7 @@ class DockArea(QtWidgets.QMainWindow):
              ] = QtWidgets.QDockWidget(dockName + str(count))
         dock[dockName + str(count)] \
             .setWidget(self.modelicaWidget)
-        self.addDockWidget(QtCore.Qt.TopDockWidgetArea,
+        self.addDockWidget(QtCore.Qt.DockWidgetArea.TopDockWidgetArea,
                            dock[dockName
                                 + str(count)])
         self.tabifyDockWidget(dock['Welcome'], dock[dockName

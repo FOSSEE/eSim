@@ -1,0 +1,84 @@
+* Subcircuit SN55189
+.subckt SN55189 net-_r2-pad1_ ? net-_c2-pad1_ net-_r1-pad1_ ? net-_c1-pad1_ gnd net-_c4-pad1_ ? net-_r16-pad1_ net-_c3-pad1_ ? net-_r15-pad1_ vcc 
+* c:\users\chand\esim\fossee\esim\library\subcircuitlibrary\sn55189\sn55189.cir
+.include NPN.lib
+.include schottky.lib
+q2 net-_d4-pad2_ net-_d2-pad2_ gnd Q2N2222
+d4 net-_d2-pad2_ net-_d4-pad2_ 1N5819
+q4 net-_d6-pad2_ net-_d4-pad2_ gnd Q2N2222
+d6 net-_d4-pad2_ net-_d6-pad2_ 1N5819
+q6 net-_c2-pad1_ net-_d6-pad2_ gnd Q2N2222
+d8 net-_d6-pad2_ net-_c2-pad1_ 1N5819
+r2  net-_r2-pad1_ net-_d2-pad2_ 4k
+d2 gnd net-_d2-pad2_ 1N5819
+r5  net-_d2-pad2_ gnd 10k
+r6  net-_d2-pad2_ net-_d6-pad2_ 8.4k
+r8  vcc net-_d4-pad2_ 9k
+r10  vcc net-_d6-pad2_ 5k
+r12  vcc net-_c2-pad1_ 1.66k
+c2  net-_c2-pad1_ gnd 15pf
+d10 net-_d10-pad1_ net-_c2-pad1_ 1N5819
+d12 net-_d10-pad1_ net-_d12-pad2_ 1N5819
+d14 net-_d12-pad2_ net-_d14-pad2_ 1N5819
+d17 net-_d14-pad2_ gnd 1N5819
+r14  vcc net-_d10-pad1_ 3.9k
+q1 net-_d3-pad2_ net-_d1-pad2_ gnd Q2N2222
+d3 net-_d1-pad2_ net-_d3-pad2_ 1N5819
+q3 net-_d5-pad2_ net-_d3-pad2_ gnd Q2N2222
+d5 net-_d3-pad2_ net-_d5-pad2_ 1N5819
+q5 net-_c1-pad1_ net-_d5-pad2_ gnd Q2N2222
+d7 net-_d5-pad2_ net-_c1-pad1_ 1N5819
+r1  net-_r1-pad1_ net-_d1-pad2_ 4k
+d1 gnd net-_d1-pad2_ 1N5819
+r3  net-_d1-pad2_ gnd 10k
+r4  net-_d1-pad2_ net-_d5-pad2_ 8.4k
+r7  vcc net-_d3-pad2_ 9k
+r9  vcc net-_d5-pad2_ 5k
+r11  vcc net-_c1-pad1_ 1.66k
+c1  net-_c1-pad1_ gnd 15pf
+d9 net-_d11-pad1_ net-_c1-pad1_ 1N5819
+d11 net-_d11-pad1_ net-_d11-pad2_ 1N5819
+d13 net-_d11-pad2_ net-_d13-pad2_ 1N5819
+d15 net-_d13-pad2_ gnd 1N5819
+r13  vcc net-_d11-pad1_ 3.9k
+q8 net-_d20-pad2_ net-_d18-pad2_ gnd Q2N2222
+d20 net-_d18-pad2_ net-_d20-pad2_ 1N5819
+q10 net-_d22-pad2_ net-_d20-pad2_ gnd Q2N2222
+d22 net-_d20-pad2_ net-_d22-pad2_ 1N5819
+q12 net-_c4-pad1_ net-_d22-pad2_ gnd Q2N2222
+d24 net-_d22-pad2_ net-_c4-pad1_ 1N5819
+r16  net-_r16-pad1_ net-_d18-pad2_ 4k
+d18 gnd net-_d18-pad2_ 1N5819
+r19  net-_d18-pad2_ gnd 10k
+r20  net-_d18-pad2_ net-_d22-pad2_ 8.4k
+r22  vcc net-_d20-pad2_ 9k
+r24  vcc net-_d22-pad2_ 5k
+r26  vcc net-_c4-pad1_ 1.66k
+c4  net-_c4-pad1_ gnd 15pf
+d26 net-_d26-pad1_ net-_c4-pad1_ 1N5819
+d28 net-_d26-pad1_ net-_d28-pad2_ 1N5819
+d30 net-_d28-pad2_ net-_d30-pad2_ 1N5819
+d32 net-_d30-pad2_ gnd 1N5819
+r28  vcc net-_d26-pad1_ 3.9k
+q7 net-_d19-pad2_ net-_d16-pad2_ gnd Q2N2222
+d19 net-_d16-pad2_ net-_d19-pad2_ 1N5819
+q9 net-_d21-pad2_ net-_d19-pad2_ gnd Q2N2222
+d21 net-_d19-pad2_ net-_d21-pad2_ 1N5819
+q11 net-_c3-pad1_ net-_d21-pad2_ gnd Q2N2222
+d23 net-_d21-pad2_ net-_c3-pad1_ 1N5819
+r15  net-_r15-pad1_ net-_d16-pad2_ 4k
+d16 gnd net-_d16-pad2_ 1N5819
+r17  net-_d16-pad2_ gnd 10k
+r18  net-_d16-pad2_ net-_d21-pad2_ 8.4k
+r21  vcc net-_d19-pad2_ 9k
+r23  vcc net-_d21-pad2_ 5k
+r25  vcc net-_c3-pad1_ 1.66k
+c3  net-_c3-pad1_ gnd 15pf
+d25 net-_d25-pad1_ net-_c3-pad1_ 1N5819
+d27 net-_d25-pad1_ net-_d27-pad2_ 1N5819
+d29 net-_d27-pad2_ net-_d29-pad2_ 1N5819
+d31 net-_d29-pad2_ gnd 1N5819
+r27  vcc net-_d25-pad1_ 3.9k
+* Control Statements
+
+.ends SN55189

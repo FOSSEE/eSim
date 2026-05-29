@@ -1,0 +1,39 @@
+* c:\users\senba\esim-workspace\sn74155_test\sn74155_test.cir
+
+.include SN74155.sub
+x1 net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ net-_u2-pad4_ net-_u2-pad5_ net-_u2-pad6_ net-_u2-pad7_ net-_u2-pad8_ SN74155
+* u1  gbar c b a net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ adc_bridge_4
+* u2  net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ net-_u2-pad4_ net-_u2-pad5_ net-_u2-pad6_ net-_u2-pad7_ net-_u2-pad8_ y0 y1 y2 y3 x0 x1 x2 x3 dac_bridge_8
+v1  gbar gnd pulse(5 0 0 0.001 0.001 8 16)
+v2  c gnd pulse(5 0 0 0.001 0.001 4 8)
+v3  b gnd pulse(5 0 0 0.001 0.001 2 4)
+v4  a gnd pulse(5 0 0 0.001 0.001 1 2)
+* u3  y0 plot_v1
+* u4  y1 plot_v1
+* u5  y2 plot_v1
+* u6  y3 plot_v1
+* u7  x0 plot_v1
+* u8  x1 plot_v1
+* u9  x2 plot_v1
+* u10  x3 plot_v1
+* u12  gbar plot_v1
+* u11  c plot_v1
+* u13  b plot_v1
+* u14  a plot_v1
+a1 [gbar c b a ] [net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ ] u1
+a2 [net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ net-_u2-pad4_ net-_u2-pad5_ net-_u2-pad6_ net-_u2-pad7_ net-_u2-pad8_ ] [y0 y1 y2 y3 x0 x1 x2 x3 ] u2
+* Schematic Name:                             adc_bridge_4, NgSpice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_8, NgSpice Name: dac_bridge
+.model u2 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 0.001e-00 18e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(y0)
+plot v(y1) +  6v(y2) + 12v(y3) + 18v(x0) +24 v(x1) + 30v(x2) + 36v(x3) + 42v(gbar) + 48v(c) + 54v(b) + 60v(a)
+.endc
+.end

@@ -1,0 +1,19 @@
+.title KiCad schematic
+V_OE_N2 Net-_V_OE_N2-Pad1_ GND DC
+V_A1 Net-_V_A1-Pad1_ GND DC
+V_OE_N1 Net-_V_OE_N1-Pad1_ GND DC
+U2 Net-_V_OE_N1-Pad1_ Net-_V_A1-Pad1_ Net-_V_OE_N2-Pad1_ Net-_V_A2-Pad1_ Net-_U2-Pad5_ Net-_U2-Pad6_ Net-_U2-Pad7_ Net-_U2-Pad8_ adc_bridge_4
+V_A2 Net-_V_A2-Pad1_ GND DC
+U6 Net-_V_OE_N4-Pad1_ Net-_V_A4-Pad1_ Net-_V_OE_N3-Pad1_ Net-_V_A3-Pad1_ Net-_U6-Pad5_ Net-_U6-Pad6_ Net-_U6-Pad7_ Net-_U6-Pad8_ adc_bridge_4
+X1 Net-_U2-Pad5_ Net-_U2-Pad6_ Net-_U4-Pad2_ Net-_U2-Pad7_ Net-_U2-Pad8_ Net-_U4-Pad1_ GND Net-_U4-Pad4_ Net-_U6-Pad8_ Net-_U6-Pad7_ Net-_U4-Pad3_ Net-_U6-Pad6_ Net-_U6-Pad5_ Net-_X1-Pad14_ 74HC125
+v1 Net-_X1-Pad14_ GND DC
+V_OE_N3 Net-_V_OE_N3-Pad1_ GND DC
+V_A3 Net-_V_A3-Pad1_ GND DC
+V_A4 Net-_V_A4-Pad1_ GND DC
+V_OE_N4 Net-_V_OE_N4-Pad1_ GND DC
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ Net-_U4-Pad3_ Net-_U4-Pad4_ V_Y2 V_Y1 V_Y4 V_Y3 dac_bridge_4
+U3 V_Y2 plot_v1
+U1 V_Y1 plot_v1
+U7 V_Y4 plot_v1
+U5 V_Y3 plot_v1
+.end

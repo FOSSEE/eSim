@@ -1,0 +1,25 @@
+* C:\Users\chand\esim\FOSSEE\eSim\library\SubcircuitLibrary\SN74LVC1T45\SN74LVC1T45.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/06/25 08:32:59
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U2  Net-_U11-Pad2_ Net-_U2-Pad2_ d_inverter		
+U6  Net-_U13-Pad2_ Net-_U3-Pad1_ d_inverter		
+U5  Net-_U2-Pad2_ Net-_U5-Pad2_ d_buffer		
+U8  Net-_U2-Pad2_ Net-_U4-Pad2_ d_inverter		
+U4  Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U14-Pad1_ one_input_tristate_buffer		
+U9  Net-_U7-Pad2_ Net-_U5-Pad2_ Net-_U12-Pad1_ one_input_tristate_buffer		
+U1  Net-_U1-Pad1_ ? Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ PORT		
+U3  Net-_U3-Pad1_ Net-_U3-Pad2_ d_inverter		
+U7  Net-_U10-Pad2_ Net-_U7-Pad2_ d_inverter		
+U12  Net-_U12-Pad1_ Net-_U1-Pad1_ dac_bridge_1		
+U14  Net-_U14-Pad1_ Net-_U1-Pad6_ dac_bridge_1		
+U13  Net-_U1-Pad3_ Net-_U13-Pad2_ adc_bridge_1		
+U15  Net-_U1-Pad4_ Net-_U10-Pad1_ adc_bridge_1		
+U11  Net-_U1-Pad5_ Net-_U11-Pad2_ adc_bridge_1		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter		
+
+.end

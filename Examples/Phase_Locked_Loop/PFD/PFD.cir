@@ -1,0 +1,12 @@
+.title KiCad schematic
+U5 Net-_U5-Pad1_ Net-_U3-Pad3_ d_inverter
+U6 QA QA Net-_U5-Pad1_ d_and
+U7 QA plot_v1
+U8 QA plot_v1
+U3 VCC Net-_U2-Pad~_ Net-_U3-Pad3_ VCC QA Net-_U3-Pad6_ d_dff
+U2 Net-_U2-Pad~_ plot_v1
+U1 Net-_U1-Pad~_ plot_v1
+U4 VCC Net-_U1-Pad~_ VCC Net-_U3-Pad3_ QA Net-_U4-Pad6_ d_dff
+v1 Net-_U1-Pad~_ GND pulse
+v2 Net-_U2-Pad~_ GND pulse
+.end

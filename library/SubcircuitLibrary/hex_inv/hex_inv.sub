@@ -1,0 +1,78 @@
+* Subcircuit hex_inv
+.subckt hex_inv net-_u101-pad1_ net-_u101-pad2_ net-_u101-pad3_ net-_u101-pad4_ net-_u101-pad5_ net-_u101-pad6_ unconnected-_u101-pad7_ net-_u101-pad8_ net-_u101-pad9_ net-_u101-pad10_ net-_u101-pad11_ net-_u101-pad12_ net-_u101-pad13_ unconnected-_u101-pad14_ 
+.title kicad schematic
+* u114 net-_u111-pad2_ net-_u101-pad6_ d_buffer
+* u117 net-_u108-pad2_ net-_u101-pad8_ d_buffer
+* u110 net-_u110-pad1_ net-_u110-pad2_ d_inverter
+* u108 net-_u108-pad1_ net-_u108-pad2_ d_inverter
+* u113 net-_u113-pad1_ net-_u113-pad2_ d_inverter
+* u111 net-_u111-pad1_ net-_u111-pad2_ d_inverter
+* u116 net-_u113-pad2_ net-_u101-pad2_ d_buffer
+* u119 net-_u110-pad2_ net-_u101-pad4_ d_buffer
+* u115 net-_u112-pad2_ net-_u101-pad10_ d_buffer
+* u118 net-_u109-pad2_ net-_u101-pad12_ d_buffer
+* u112 net-_u112-pad1_ net-_u112-pad2_ d_inverter
+* u109 net-_u109-pad1_ net-_u109-pad2_ d_inverter
+* u107 net-_u101-pad3_ net-_u110-pad1_ d_buffer
+* u106 net-_u101-pad1_ net-_u113-pad1_ d_buffer
+* u102 net-_u101-pad5_ net-_u111-pad1_ d_buffer
+* u103 net-_u101-pad11_ net-_u112-pad1_ d_buffer
+* u105 net-_u101-pad13_ net-_u109-pad1_ d_buffer
+* u104 net-_u101-pad9_ net-_u108-pad1_ d_buffer
+a1 net-_u111-pad2_ net-_u101-pad6_ u114
+a2 net-_u108-pad2_ net-_u101-pad8_ u117
+a3 net-_u110-pad1_ net-_u110-pad2_ u110
+a4 net-_u108-pad1_ net-_u108-pad2_ u108
+a5 net-_u113-pad1_ net-_u113-pad2_ u113
+a6 net-_u111-pad1_ net-_u111-pad2_ u111
+a7 net-_u113-pad2_ net-_u101-pad2_ u116
+a8 net-_u110-pad2_ net-_u101-pad4_ u119
+a9 net-_u112-pad2_ net-_u101-pad10_ u115
+a10 net-_u109-pad2_ net-_u101-pad12_ u118
+a11 net-_u112-pad1_ net-_u112-pad2_ u112
+a12 net-_u109-pad1_ net-_u109-pad2_ u109
+a13 net-_u101-pad3_ net-_u110-pad1_ u107
+a14 net-_u101-pad1_ net-_u113-pad1_ u106
+a15 net-_u101-pad5_ net-_u111-pad1_ u102
+a16 net-_u101-pad11_ net-_u112-pad1_ u103
+a17 net-_u101-pad13_ net-_u109-pad1_ u105
+a18 net-_u101-pad9_ net-_u108-pad1_ u104
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u114 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u117 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u110 d_inverter(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u108 d_inverter(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u113 d_inverter(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u111 d_inverter(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u116 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u119 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u115 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u118 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u112 d_inverter(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u109 d_inverter(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u107 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u106 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u102 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u103 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u105 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u104 d_buffer(rise_delay=1n fall_delay=1n input_load=1.0e-12 )
+* Control Statements
+
+.ends hex_inv

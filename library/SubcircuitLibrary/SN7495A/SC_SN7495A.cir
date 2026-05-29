@@ -1,0 +1,37 @@
+* C:\FOSSEE2\eSim\library\SubcircuitLibrary\SC_SN7495A\SC_SN7495A.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/29/25 17:30:29
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U8  Net-_U12-Pad1_ Net-_U1-Pad1_ Net-_U8-Pad3_ d_and		
+U11  Net-_U1-Pad2_ Net-_U11-Pad2_ Net-_U11-Pad3_ d_and		
+U2  Net-_U12-Pad1_ Net-_U1-Pad9_ Net-_U2-Pad3_ d_and		
+U3  Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_U3-Pad3_ d_and		
+U9  Net-_U11-Pad3_ Net-_U8-Pad3_ Net-_U10-Pad1_ d_nor		
+U10  Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter		
+U12  Net-_U12-Pad1_ Net-_U1-Pad13_ Net-_U12-Pad3_ d_and		
+U15  Net-_U1-Pad3_ Net-_U11-Pad2_ Net-_U13-Pad1_ d_and		
+U13  Net-_U13-Pad1_ Net-_U12-Pad3_ Net-_U13-Pad3_ d_nor		
+U14  Net-_U13-Pad3_ Net-_U14-Pad2_ d_inverter		
+U16  Net-_U12-Pad1_ Net-_U1-Pad12_ Net-_U16-Pad3_ d_and		
+U19  Net-_U1-Pad4_ Net-_U11-Pad2_ Net-_U17-Pad1_ d_and		
+U17  Net-_U17-Pad1_ Net-_U16-Pad3_ Net-_U17-Pad3_ d_nor		
+U18  Net-_U17-Pad3_ Net-_U18-Pad2_ d_inverter		
+U20  Net-_U12-Pad1_ Net-_U1-Pad11_ Net-_U20-Pad3_ d_and		
+U23  Net-_U1-Pad5_ Net-_U11-Pad2_ Net-_U21-Pad1_ d_and		
+U21  Net-_U21-Pad1_ Net-_U20-Pad3_ Net-_U21-Pad3_ d_nor		
+U22  Net-_U21-Pad3_ Net-_U22-Pad2_ d_inverter		
+U5  Net-_U2-Pad3_ Net-_U3-Pad3_ Net-_U5-Pad3_ d_or		
+U7  Net-_U5-Pad3_ Net-_U7-Pad2_ d_inverter		
+U4  Net-_U1-Pad6_ Net-_U12-Pad1_ d_inverter		
+U6  Net-_U12-Pad1_ Net-_U11-Pad2_ d_inverter		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ ? Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ ? PORT		
+X1  Net-_U10-Pad2_ Net-_U10-Pad1_ Net-_U7-Pad2_ Net-_U1-Pad13_ ? SRFF_CUSTOM		
+X2  Net-_U14-Pad2_ Net-_U13-Pad3_ Net-_U7-Pad2_ Net-_U1-Pad12_ ? SRFF_CUSTOM		
+X3  Net-_U18-Pad2_ Net-_U17-Pad3_ Net-_U7-Pad2_ Net-_U1-Pad11_ ? SRFF_CUSTOM		
+X4  Net-_U22-Pad2_ Net-_U21-Pad3_ Net-_U7-Pad2_ Net-_U1-Pad10_ ? SRFF_CUSTOM		
+
+.end

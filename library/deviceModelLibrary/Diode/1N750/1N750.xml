@@ -1,0 +1,24 @@
+<library>
+  <model_name>D</model_name>
+  <ref_model>1N750</ref_model>
+  <param>
+    <Is>2n</Is>
+    <Rs>2</Rs>
+    <Ikf>0.1</Ikf>
+    <N>1.75</N>
+    <Xti>3</Xti>
+    <Eg>1.11</Eg>
+    <Cjo>80p</Cjo>
+    <M>0.33</M>
+    <Vj>0.75</Vj>
+    <Fc>0.5</Fc>
+    <Nr>2</Nr>
+    <Bv>4.7</Bv>
+    <Ibv>5m</Ibv>
+    <Nbv>1.5</Nbv>
+    <Ibvl>0.5m</Ibvl>
+    <Nbvl>2</Nbvl>
+    <Tbv1>0.002</Tbv1>
+    <Isr>1n</Isr>
+  </param>
+</library>

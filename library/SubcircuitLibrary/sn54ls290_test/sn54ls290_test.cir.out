@@ -1,0 +1,37 @@
+.title kicad schematic
+
+.include SN54LS290_sub.sub
+r2 b gnd 1k
+r3 d gnd 1k
+r4 c gnd 1k
+* u28 d plot_v1
+* u25 a plot_v1
+* u27 b plot_v1
+* u1 clk plot_v1
+v1 clk gnd pulse(0v 5v 0 1ns 1ns 100ms 200ms)
+* u2 clk net-_v2-pad1_ gnd net-_u2-pad4_ net-_x1-pad14_ net-_u2-pad6_ adc_bridge_3
+v2 net-_v2-pad1_ gnd  dc 5v
+r1 a gnd 1k
+* u24 net-_u24-pad1_ net-_u24-pad2_ net-_u24-pad3_ net-_u24-pad4_ a b c d dac_bridge_4
+* u26 c plot_v1
+x1 net-_x1-pad14_ unconnected-_x1-pad2_ net-_u2-pad6_ net-_u24-pad3_ net-_u24-pad2_ unconnected-_x1-pad6_ net-_u2-pad6_ net-_u24-pad4_ net-_u24-pad1_ net-_u24-pad4_ net-_u2-pad4_ net-_x1-pad14_ net-_u2-pad6_ net-_x1-pad14_ SN54LS290_sub
+a1 [clk net-_v2-pad1_ gnd ] [net-_u2-pad4_ net-_x1-pad14_ net-_u2-pad6_ ] u2
+a2 [net-_u24-pad1_ net-_u24-pad2_ net-_u24-pad3_ net-_u24-pad4_ ] [a b c d ] u24
+* Schematic Name:                             adc_bridge_3, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=0v in_high=5v rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_4, Ngspice Name: dac_bridge
+.model u24 dac_bridge(out_low=0v out_high=5v out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 1e-03 3000e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(d)
+plot v(a)
+plot v(b)
+plot v(clk)
+plot v(c)
+.endc
+.end

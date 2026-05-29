@@ -1,0 +1,27 @@
+.title KiCad schematic
+R4 GND c 1k
+R3 GND d 1k
+R5 GND b 1k
+U4 e plot_v1
+U6 c plot_v1
+U5 d plot_v1
+U8 a plot_v1
+R2 GND e 1k
+U10 f plot_v1
+R8 GND f 1k
+R7 GND g 1k
+R6 GND a 1k
+U9 g plot_v1
+U7 b plot_v1
+V_A1 V_A1 GND DC
+V_RBIC1 V_RBIC GND DC
+V_A2 V_A2 GND DC
+V_LTC1 V_LTC GND DC
+V_BIC1 BIC GND 5
+V_A3 V_A3 GND DC
+V_A0 V_A0 GND DC
+U1 V_A1 V_A2 V_LTC BIC V_RBIC V_A3 V_A0 Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ adc_bridge_7
+v1 Net-_v1-Pad1_ GND 5
+X1 Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ GND Net-_U2-Pad7_ Net-_U2-Pad6_ Net-_U2-Pad5_ Net-_U2-Pad4_ Net-_U2-Pad3_ Net-_U2-Pad2_ Net-_U2-Pad1_ Net-_v1-Pad1_ 74LS48
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ Net-_U2-Pad5_ Net-_U2-Pad6_ Net-_U2-Pad7_ f g a b c d e dac_bridge_7
+.end

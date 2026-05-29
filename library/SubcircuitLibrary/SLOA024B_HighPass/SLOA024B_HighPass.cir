@@ -1,0 +1,16 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\SLOA024B_HighPass\SLOA024B_HighPass.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/24/25 14:28:26
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 10n		
+C2  Net-_C2-Pad1_ Net-_C1-Pad1_ 10n		
+R1  Net-_C1-Pad1_ Net-_R1-Pad2_ 11k		
+X1  ? Net-_C2-Pad1_ Net-_R1-Pad2_ Net-_U1-Pad3_ ? Net-_R1-Pad2_ Net-_U1-Pad2_ ? lm_741		
+R2  Net-_C2-Pad1_ GND 22k		
+U1  Net-_C1-Pad2_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_R1-Pad2_ PORT		
+
+.end

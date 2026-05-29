@@ -1,0 +1,201 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:SLOA024B_HighPass-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L capacitor C1
+U 1 1 685A603D
+P 3100 2900
+F 0 "C1" H 3125 3000 50  0000 L CNN
+F 1 "10n" H 3125 2800 50  0000 L CNN
+F 2 "" H 3138 2750 30  0000 C CNN
+F 3 "" H 3100 2900 60  0000 C CNN
+	1    3100 2900
+	0    1    1    0   
+$EndComp
+$Comp
+L capacitor C2
+U 1 1 685A608F
+P 3650 2900
+F 0 "C2" H 3675 3000 50  0000 L CNN
+F 1 "10n" H 3675 2800 50  0000 L CNN
+F 2 "" H 3688 2750 30  0000 C CNN
+F 3 "" H 3650 2900 60  0000 C CNN
+	1    3650 2900
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R1
+U 1 1 685A60BB
+P 3950 2300
+F 0 "R1" H 4000 2430 50  0000 C CNN
+F 1 "11k" H 4000 2250 50  0000 C CNN
+F 2 "" H 4000 2280 30  0000 C CNN
+F 3 "" V 4000 2350 30  0000 C CNN
+	1    3950 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L lm_741 X1
+U 1 1 685A613C
+P 5000 3050
+F 0 "X1" H 4800 3050 60  0000 C CNN
+F 1 "lm_741" H 4900 2800 60  0000 C CNN
+F 2 "" H 5000 3050 60  0000 C CNN
+F 3 "" H 5000 3050 60  0000 C CNN
+	1    5000 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R2
+U 1 1 685A61B5
+P 4050 3650
+F 0 "R2" H 4100 3780 50  0000 C CNN
+F 1 "22k" H 4100 3600 50  0000 C CNN
+F 2 "" H 4100 3630 30  0000 C CNN
+F 3 "" V 4100 3700 30  0000 C CNN
+	1    4050 3650
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2700 2900 2950 2900
+Wire Wire Line
+	3250 2900 3500 2900
+Wire Wire Line
+	3800 2900 4450 2900
+Wire Wire Line
+	3850 2250 3350 2250
+Wire Wire Line
+	3350 2250 3350 2900
+Connection ~ 3350 2900
+Wire Wire Line
+	4150 2250 5800 2250
+Wire Wire Line
+	5800 2250 5800 3050
+Wire Wire Line
+	5550 3050 6450 3050
+Connection ~ 5800 3050
+Wire Wire Line
+	4100 3550 4100 2900
+Connection ~ 4100 2900
+Wire Wire Line
+	4100 3850 4100 4050
+Wire Wire Line
+	4450 3150 4400 3150
+Wire Wire Line
+	4400 3150 4400 3700
+Wire Wire Line
+	4400 3700 5650 3700
+Wire Wire Line
+	5650 3700 5650 3050
+Connection ~ 5650 3050
+$Comp
+L GND #PWR01
+U 1 1 685A6333
+P 4100 4050
+F 0 "#PWR01" H 4100 3800 50  0001 C CNN
+F 1 "GND" H 4100 3900 50  0000 C CNN
+F 2 "" H 4100 4050 50  0001 C CNN
+F 3 "" H 4100 4050 50  0001 C CNN
+	1    4100 4050
+	1    0    0    -1  
+$EndComp
+NoConn ~ 4950 2650
+NoConn ~ 5050 2700
+$Comp
+L PORT U1
+U 1 1 685A6406
+P 2450 2900
+F 0 "U1" H 2500 3000 30  0000 C CNN
+F 1 "PORT" H 2450 2900 30  0000 C CNN
+F 2 "" H 2450 2900 60  0000 C CNN
+F 3 "" H 2450 2900 60  0000 C CNN
+	1    2450 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 685A6463
+P 4850 2350
+F 0 "U1" H 4900 2450 30  0000 C CNN
+F 1 "PORT" H 4850 2350 30  0000 C CNN
+F 2 "" H 4850 2350 60  0000 C CNN
+F 3 "" H 4850 2350 60  0000 C CNN
+	2    4850 2350
+	0    1    1    0   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 685A649C
+P 4850 3750
+F 0 "U1" H 4900 3850 30  0000 C CNN
+F 1 "PORT" H 4850 3750 30  0000 C CNN
+F 2 "" H 4850 3750 60  0000 C CNN
+F 3 "" H 4850 3750 60  0000 C CNN
+	3    4850 3750
+	0    -1   -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 4 1 685A64F1
+P 6700 3050
+F 0 "U1" H 6750 3150 30  0000 C CNN
+F 1 "PORT" H 6700 3050 30  0000 C CNN
+F 2 "" H 6700 3050 60  0000 C CNN
+F 3 "" H 6700 3050 60  0000 C CNN
+	4    6700 3050
+	-1   0    0    1   
+$EndComp
+$EndSCHEMATC
