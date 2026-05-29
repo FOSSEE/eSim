@@ -1,0 +1,48 @@
+* Subcircuit CD4085B
+.subckt CD4085B /a1 /b1 /e1 /e2 /a2 /b2 /vss /c2 /d2 /inhibit1 /inhibit2 /c1 /d1 /vdd 
+* c:\fossee\esim\library\subcircuitlibrary\cd4085b\cd4085b.cir
+.include NMOS-5um.lib
+.include PMOS-5um.lib
+m3 net-_m11-pad1_ /a1 /vdd /vdd mos_p W=40u L=5u M=8
+m11 net-_m11-pad1_ /b1 /vdd /vdd mos_p W=40u L=5u M=8
+m12 net-_m11-pad1_ /a1 net-_m12-pad3_ /vss mos_n W=20u L=5u M=4
+m13 net-_m12-pad3_ /b1 /vss /vss mos_n W=20u L=5u M=4
+m4 net-_m14-pad1_ /c1 /vdd /vdd mos_p W=40u L=5u M=8
+m14 net-_m14-pad1_ /d1 /vdd /vdd mos_p W=40u L=5u M=8
+m15 net-_m14-pad1_ /c1 net-_m15-pad3_ /vss mos_n W=20u L=5u M=4
+m16 net-_m15-pad3_ /d1 /vss /vss mos_n W=20u L=5u M=4
+m18 net-_m18-pad1_ net-_m11-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m22 net-_m18-pad1_ net-_m14-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m23 net-_m18-pad1_ net-_m11-pad1_ net-_m23-pad3_ /vss mos_n W=20u L=5u M=4
+m24 net-_m23-pad3_ net-_m14-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m31 net-_m31-pad1_ /inhibit1 /vdd /vdd mos_p W=40u L=5u M=8
+m32 net-_m26-pad1_ net-_m18-pad1_ net-_m31-pad1_ /vdd mos_p W=40u L=5u M=8
+m30 net-_m26-pad1_ net-_m18-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m26 net-_m26-pad1_ /inhibit1 /vss /vss mos_n W=20u L=5u M=4
+m35 net-_m35-pad1_ net-_m26-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m36 net-_m35-pad1_ net-_m26-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m39 /e1 net-_m35-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m40 /e1 net-_m35-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m1 net-_m1-pad1_ /a2 /vdd /vdd mos_p W=40u L=5u M=8
+m5 net-_m1-pad1_ /b2 /vdd /vdd mos_p W=40u L=5u M=8
+m6 net-_m1-pad1_ /a2 net-_m6-pad3_ /vss mos_n W=20u L=5u M=4
+m7 net-_m6-pad3_ /b2 /vss /vss mos_n W=20u L=5u M=4
+m2 net-_m19-pad2_ /c2 /vdd /vdd mos_p W=40u L=5u M=8
+m8 net-_m19-pad2_ /d2 /vdd /vdd mos_p W=40u L=5u M=8
+m9 net-_m19-pad2_ /c2 net-_m10-pad1_ /vss mos_n W=20u L=5u M=4
+m10 net-_m10-pad1_ /d2 /vss /vss mos_n W=20u L=5u M=4
+m17 net-_m17-pad1_ net-_m1-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m19 net-_m17-pad1_ net-_m19-pad2_ /vdd /vdd mos_p W=40u L=5u M=8
+m20 net-_m17-pad1_ net-_m1-pad1_ net-_m20-pad3_ /vss mos_n W=20u L=5u M=4
+m21 net-_m20-pad3_ net-_m19-pad2_ /vss /vss mos_n W=20u L=5u M=4
+m28 net-_m28-pad1_ /inhibit2 /vdd /vdd mos_p W=40u L=5u M=8
+m29 net-_m25-pad1_ net-_m17-pad1_ net-_m28-pad1_ /vdd mos_p W=40u L=5u M=8
+m27 net-_m25-pad1_ net-_m17-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m25 net-_m25-pad1_ /inhibit2 /vss /vss mos_n W=20u L=5u M=4
+m33 net-_m33-pad1_ net-_m25-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m34 net-_m33-pad1_ net-_m25-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+m37 /e2 net-_m33-pad1_ /vss /vss mos_n W=20u L=5u M=4
+m38 /e2 net-_m33-pad1_ /vdd /vdd mos_p W=40u L=5u M=8
+* Control Statements
+
+.ends CD4085B
