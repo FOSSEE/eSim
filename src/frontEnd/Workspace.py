@@ -84,9 +84,7 @@ class Workspace(QtWidgets.QWidget):
         self.setWindowFlags(QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setWindowModality(QtCore.Qt.WindowModality.ApplicationModal)
 
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
         self.setWindowIcon(QtGui.QIcon(init_path + 'images/logo.png'))
         self.setLayout(self.grid)
@@ -109,6 +107,7 @@ class Workspace(QtWidgets.QWidget):
         time.sleep(1.5)
         var_appView.splash.close()
         var_appView.show()
+        QtCore.QTimer.singleShot(100, var_appView.showMaximized)
 
     def close(self, *args, **kwargs):
         self.window_open_close = 1
@@ -173,6 +172,7 @@ class Workspace(QtWidgets.QWidget):
         time.sleep(1.5)
         var_appView.splash.close()
         var_appView.show()
+        QtCore.QTimer.singleShot(100, var_appView.showMaximized)
 
     def browseLocation(self):
         print("Function : Browse Location")

@@ -13,9 +13,7 @@ class Welcome(QtWidgets.QWidget):
         self.vlayout = QtWidgets.QVBoxLayout()
         self.browser = QtWidgets.QTextBrowser()
 
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
         self.browser.setSource(QtCore.QUrl(
             init_path + "library/browser/welcome.html")

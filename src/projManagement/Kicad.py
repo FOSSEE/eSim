@@ -99,7 +99,20 @@ class Kicad:
                     schematic_file
                 )
             else:
-                self.cmd = "eeschema " + schematic_file
+                import shutil
+                import sys
+                eeschema_path = "eeschema"
+                if shutil.which("eeschema") is None and sys.platform == "darwin":
+                    kicad_app_paths = [
+                        "/Applications/KiCad/KiCad.app/Contents/MacOS/eeschema",
+                        "/Applications/KiCad.app/Contents/MacOS/eeschema"
+                    ]
+                    for path in kicad_app_paths:
+                        if os.path.exists(path):
+                            eeschema_path = path
+                            break
+                self.cmd = eeschema_path + " " + schematic_file
+
 
             self.obj_workThread.args = self.cmd
             self.obj_workThread.start()
