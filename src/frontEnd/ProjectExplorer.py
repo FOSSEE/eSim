@@ -117,13 +117,17 @@ class ProjectExplorer(QtWidgets.QWidget):
         ) = []
 
     def openMenu(self, position):
-        indexes = self.treewidget.selectedIndexes()
-        if len(indexes) > 0:
-            level = 0
-            index = indexes[0]
-            while index.parent().isValid():
-                index = index.parent()
-                level += 1
+        index = self.treewidget.indexAt(position)
+        if not index.isValid():
+            return
+
+        self.treewidget.setCurrentIndex(index)
+        level = 0
+        temp_index = index
+
+        while temp_index.parent().isValid():
+            temp_index = temp_index.parent()
+            level += 1
 
         menu = QtWidgets.QMenu()
         if level == 0:
@@ -139,7 +143,7 @@ class ProjectExplorer(QtWidgets.QWidget):
             snapshot = menu.addAction(self.tr("Snapshot"))
             snapshot.triggered.connect(self.takeSnapshot)
 
-        menu.exec_(self.treewidget.viewport().mapToGlobal(position))
+        menu.exec(self.treewidget.viewport().mapToGlobal(position))
 
     def openProject(self):
         self.indexItem = self.treewidget.currentIndex()
