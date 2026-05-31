@@ -1,0 +1,29 @@
+.title kicad schematic
+
+.include lm7805.sub
+.include D.lib
+d1 in2 net-_d1-pad2_ 1N4148
+* u1 in1 plot_v1
+* u2 in2 plot_v1
+v1 in1 in2 sine(0 24 50 0 0)
+d2 gnd in2 1N4148
+c2 out gnd 3.3u
+x1 net-_d1-pad2_ gnd out lm7805
+d5 gnd out 1N4148
+r1 out gnd 1k
+d3 in1 net-_d1-pad2_ 1N4148
+d4 gnd in1 1N4148
+c1 net-_d1-pad2_ gnd 1000u
+* u3 out plot_v1
+.tran 10e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in1)
+plot v(in2)
+plot v(out)
+.endc
+.end

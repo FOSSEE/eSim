@@ -1,0 +1,25 @@
+* /home/saurabh/Installer_Main_Workshop/eSim-1.1.2/Examples/BJT_Frequency_Response/BJT_Frequency_Response.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Aug 21 12:33:41 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  Net-_R2-Pad2_ GND DC		
+v2  in GND AC		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 40u		
+C2  GND Net-_C2-Pad2_ 100u		
+C3  out Net-_C3-Pad2_ 40u		
+R3  GND Net-_C1-Pad2_ 50k		
+R4  GND Net-_C2-Pad2_ 1.5k		
+R6  GND out 1k		
+R5  Net-_C3-Pad2_ Net-_R2-Pad2_ 2k		
+R2  Net-_C1-Pad2_ Net-_R2-Pad2_ 200k		
+R1  in Net-_C1-Pad1_ 50		
+U3  out plot_log		
+U2  out plot_phase		
+U1  in plot_v1		
+Q1  Net-_C3-Pad2_ Net-_C1-Pad2_ Net-_C2-Pad2_ eSim_NPN		
+
+.end

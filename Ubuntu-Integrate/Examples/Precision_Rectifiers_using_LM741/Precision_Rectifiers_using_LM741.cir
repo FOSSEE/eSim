@@ -1,0 +1,38 @@
+* /home/saurabh/eSim-Workspace/Precision_Rectifiers_using_LM741/Precision_Rectifiers_using_LM741.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Fri Mar 27 18:05:43 2020
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v5  in_HWR GND sine		
+R2  Net-_D2-Pad1_ in_HWR 1k		
+U2  in_HWR plot_v1		
+D4  Net-_D2-Pad2_ out_HWR eSim_Diode		
+U3  out_HWR plot_v1		
+D2  Net-_D2-Pad1_ Net-_D2-Pad2_ eSim_Diode		
+R4  out_HWR Net-_D2-Pad1_ 1k		
+R7  out_HWR GND 1k		
+X2  ? Net-_D2-Pad1_ GND Net-_X2-Pad4_ ? Net-_D2-Pad2_ Net-_X2-Pad7_ ? lm_741		
+v2  Net-_X2-Pad7_ GND 12		
+v4  in_FWR GND sine		
+U1  in_FWR plot_v1		
+U4  out_FWR plot_v1		
+X1  ? Net-_D1-Pad2_ GND Net-_X1-Pad4_ ? Net-_D1-Pad1_ Net-_X1-Pad7_ ? lm_741		
+v1  Net-_X1-Pad7_ GND 12		
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D3  Net-_D3-Pad1_ Net-_D1-Pad1_ eSim_Diode		
+X3  ? Net-_R5-Pad1_ GND Net-_X3-Pad4_ ? out_FWR Net-_X3-Pad7_ ? lm_741		
+R3  Net-_D1-Pad1_ Net-_D1-Pad2_ 1.135k		
+R1  Net-_D1-Pad2_ in_FWR 1k		
+v6  GND Net-_X2-Pad4_ 12		
+v3  GND Net-_X1-Pad4_ 12		
+v8  Net-_X3-Pad7_ GND 12		
+v7  GND Net-_X3-Pad4_ 12		
+R9  GND out_FWR 1k		
+R8  out_FWR Net-_R5-Pad1_ 1k		
+R6  Net-_R5-Pad1_ Net-_D3-Pad1_ 0.5k		
+R5  Net-_R5-Pad1_ in_FWR 1k		
+
+.end

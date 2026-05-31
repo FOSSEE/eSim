@@ -1,0 +1,62 @@
+* c:\users\malli\esim-workspace\4073_test\4073_test.cir
+
+.include 4073.sub
+x1 net-_u7-pad4_ net-_u7-pad5_ net-_u8-pad4_ net-_u8-pad5_ net-_u8-pad6_ net-_u9-pad2_ ? net-_u7-pad6_ net-_u9-pad1_ net-_u9-pad3_ net-_u10-pad6_ net-_u10-pad5_ net-_u10-pad4_ ? 4073
+* u8  a2 b2 c2 net-_u8-pad4_ net-_u8-pad5_ net-_u8-pad6_ adc_bridge_3
+* u7  a1 b1 c1 net-_u7-pad4_ net-_u7-pad5_ net-_u7-pad6_ adc_bridge_3
+* u10  a3 b3 c3 net-_u10-pad4_ net-_u10-pad5_ net-_u10-pad6_ adc_bridge_3
+* u9  net-_u9-pad1_ net-_u9-pad2_ net-_u9-pad3_ q1 q2 q3 dac_bridge_3
+v1 a1 gnd  dc 5
+v2 b1 gnd  dc 5
+v3 c1 gnd  dc 5
+v4 a2 gnd  dc 5
+v5 b2 gnd  dc 5
+v6 c2 gnd  dc 5
+v7 a3 gnd  dc 5
+v8 b3 gnd  dc 5
+v9 c3 gnd  dc 5
+* u16  b3 plot_v1
+* u12  a3 plot_v1
+* u14  c3 plot_v1
+* u2  b2 plot_v1
+* u5  c2 plot_v1
+* u4  a2 plot_v1
+* u3  c1 plot_v1
+* u6  a1 plot_v1
+* u1  b1 plot_v1
+* u13  q3 plot_v1
+* u15  q2 plot_v1
+* u11  q1 plot_v1
+a1 [a2 b2 c2 ] [net-_u8-pad4_ net-_u8-pad5_ net-_u8-pad6_ ] u8
+a2 [a1 b1 c1 ] [net-_u7-pad4_ net-_u7-pad5_ net-_u7-pad6_ ] u7
+a3 [a3 b3 c3 ] [net-_u10-pad4_ net-_u10-pad5_ net-_u10-pad6_ ] u10
+a4 [net-_u9-pad1_ net-_u9-pad2_ net-_u9-pad3_ ] [q1 q2 q3 ] u9
+* Schematic Name: adc_bridge_3, NgSpice Name: adc_bridge
+.model u8 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: adc_bridge_3, NgSpice Name: adc_bridge
+.model u7 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: adc_bridge_3, NgSpice Name: adc_bridge
+.model u10 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: dac_bridge_3, NgSpice Name: dac_bridge
+.model u9 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+.tran 10e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(b3)
+plot v(a3)
+plot v(c3)
+plot v(b2)
+plot v(c2)
+plot v(a2)
+plot v(c1)
+plot v(a1)
+plot v(b1)
+plot v(q3)
+plot v(q2)
+plot v(q1)
+.endc
+.end

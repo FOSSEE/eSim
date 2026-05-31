@@ -1,0 +1,20 @@
+* /home/fossee/updatedexamples/parallel_resonance/parallel_resonance.cir
+
+r1  out gnd 100
+l1  out gnd 100m
+c1  gnd out 10u
+v1 in gnd  ac 1 0
+r2  out in 1000
+* u1  in plot_v1
+* u3  out plot_v1
+.ac lin 20 1Hz 700Hz
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+.endc
+.end

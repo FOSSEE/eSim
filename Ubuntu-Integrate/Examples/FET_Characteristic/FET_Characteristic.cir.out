@@ -1,0 +1,18 @@
+* /home/fossee/updatedexamples/fet_characteristic/fet_characteristic.cir
+
+.include NJF.lib
+j1 id net-_j1-pad2_ gnd J2N3819
+vds1 net-_u_id1-pad1_ gnd  dc 10
+vgs1 net-_j1-pad2_ gnd  dc 0
+* u_id1  net-_u_id1-pad1_ id plot_i2
+v_u_id1 net-_u_id1-pad1_ id 0
+.dc vds1 0e-00 50e-00 10e-00 vgs1 0e-03 5e-03 1e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot i(v_u_id1)
+.endc
+.end

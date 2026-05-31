@@ -1,0 +1,20 @@
+* /home/fossee/esim-workspace/high_pass_filter/high_pass_filter.cir
+
+r1  out gnd 1k
+c1  out in 10u
+v1 in gnd  ac 10 0
+* u1  in plot_v1
+* u3  out plot_v1
+* u2  out plot_log
+.ac dec 20 1Hz 1Meg
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in)
+plot v(out)
+plot log(out)
+.endc
+.end
