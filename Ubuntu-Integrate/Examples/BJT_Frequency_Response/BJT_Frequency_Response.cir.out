@@ -1,0 +1,30 @@
+* /home/saurabh/installer_main_workshop/esim-1.1.2/examples/bjt_frequency_response/bjt_frequency_response.cir
+
+.include NPN.lib
+v1 net-_r2-pad2_ gnd  dc 10
+v2 in gnd  ac 0.5 0
+c1  net-_c1-pad1_ net-_c1-pad2_ 40u
+c2  gnd net-_c2-pad2_ 100u
+c3  out net-_c3-pad2_ 40u
+r3  gnd net-_c1-pad2_ 50k
+r4  gnd net-_c2-pad2_ 1.5k
+r6  gnd out 1k
+r5  net-_c3-pad2_ net-_r2-pad2_ 2k
+r2  net-_c1-pad2_ net-_r2-pad2_ 200k
+r1  in net-_c1-pad1_ 50
+* u3  out plot_log
+* u2  out plot_phase
+* u1  in plot_v1
+q1 net-_c3-pad2_ net-_c1-pad2_ net-_c2-pad2_ Q2N2222
+.ac dec 100 10Hz 100Meg
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot log(out)
+plot phase(out)
+plot v(in)
+.endc
+.end

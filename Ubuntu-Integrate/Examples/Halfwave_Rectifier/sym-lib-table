@@ -1,0 +1,5 @@
+(sym_lib_table
+  (version 0)
+  (lib (name "Halfwave_Rectifier-rescue")(type "Legacy")(uri "${KIPRJMOD}/Halfwave_Rectifier-rescue.lib")(options "")(descr ""))
+  (lib (name "eSim_Subckt")(type "Legacy")(uri "${KICAD8_SYMBOL_DIR}/eSim_Subckt.lib")(options "")(descr ""))
+)

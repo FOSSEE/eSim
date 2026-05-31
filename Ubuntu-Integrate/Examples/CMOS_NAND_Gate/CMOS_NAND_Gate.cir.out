@@ -1,0 +1,21 @@
+* /home/saurabh/esim-workspace/cmos_nand_gate/cmos_nand_gate.cir
+
+.include CMOS_NAND.sub
+v1  inputa gnd pulse(0 5 0 0 0 17m 33m)
+v2  inputb gnd pulse(0 5 0 0 0 10m 20m)
+* u2  inputb plot_v1
+* u1  inputa plot_v1
+* u3  out plot_v1
+x1 inputa inputb out CMOS_NAND
+.tran 0.1e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(inputb)
+plot v(inputa)
+plot v(out)
+.endc
+.end

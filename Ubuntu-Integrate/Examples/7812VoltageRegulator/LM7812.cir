@@ -1,0 +1,51 @@
+* /home/bhargav/Downloads/eSim-1.1.2/src/SubcircuitLibrary/LM7812/LM7812.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Mon Jun 10 16:26:28 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R1  Net-_Q16-Pad1_ Net-_Q1-Pad2_ 100k		
+R2  Net-_Q16-Pad1_ Net-_Q1-Pad1_ 500		
+R3  Net-_Q1-Pad3_ Net-_Q2-Pad2_ 3.3k		
+R4  Net-_Q2-Pad2_ Net-_Q10-Pad2_ 2.7k		
+U1  Net-_Q10-Pad3_ Net-_Q1-Pad2_ zener		
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+R5  Net-_Q10-Pad2_ Net-_Q10-Pad3_ 500		
+Q2  Net-_Q2-Pad1_ Net-_Q2-Pad2_ Net-_Q2-Pad3_ eSim_NPN		
+Q4  Net-_Q2-Pad3_ Net-_Q3-Pad1_ Net-_Q3-Pad2_ eSim_NPN		
+R6  Net-_Q2-Pad3_ Net-_Q3-Pad1_ 1k		
+Q3  Net-_Q3-Pad1_ Net-_Q3-Pad2_ Net-_Q10-Pad3_ eSim_NPN		
+R7  Net-_Q3-Pad2_ Net-_Q10-Pad3_ 6k		
+Q6  Net-_C1-Pad2_ Net-_Q3-Pad2_ Net-_Q6-Pad3_ eSim_NPN		
+R10  Net-_Q6-Pad3_ Net-_Q10-Pad3_ 1k		
+Q7  Net-_Q2-Pad1_ Net-_Q12-Pad1_ Net-_Q7-Pad3_ eSim_NPN		
+Q8  Net-_Q7-Pad3_ Net-_Q12-Pad3_ Net-_Q2-Pad3_ eSim_NPN		
+Q12  Net-_Q12-Pad1_ Net-_Q12-Pad2_ Net-_Q12-Pad3_ eSim_NPN		
+R12  Net-_Q12-Pad3_ Net-_Q2-Pad3_ 6k		
+R9  Net-_Q2-Pad3_ Net-_C1-Pad2_ 20k		
+Q5  Net-_Q2-Pad1_ Net-_Q2-Pad1_ Net-_Q5-Pad3_ eSim_PNP		
+Q9  Net-_Q10-Pad1_ Net-_Q2-Pad1_ Net-_Q9-Pad3_ eSim_PNP		
+R8  Net-_Q16-Pad1_ Net-_Q5-Pad3_ 100		
+R11  Net-_Q16-Pad1_ Net-_Q9-Pad3_ 50		
+Q10  Net-_Q10-Pad1_ Net-_Q10-Pad2_ Net-_Q10-Pad3_ eSim_NPN		
+Q11  Net-_C1-Pad1_ Net-_C1-Pad2_ Net-_Q11-Pad3_ eSim_NPN		
+Q13  Net-_C1-Pad1_ Net-_Q11-Pad3_ Net-_Q10-Pad3_ eSim_NPN		
+R13  Net-_Q11-Pad3_ Net-_Q10-Pad3_ 6k		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 30p		
+R14  Net-_Q10-Pad1_ Net-_C1-Pad1_ 6k		
+Q14  Net-_Q10-Pad3_ Net-_C1-Pad1_ Net-_Q10-Pad1_ eSim_PNP		
+Q15  Net-_Q10-Pad1_ Net-_Q15-Pad2_ Net-_Q12-Pad1_ eSim_NPN		
+R17  Net-_Q12-Pad2_ Net-_Q10-Pad3_ 5k		
+R16  Net-_Q12-Pad1_ Net-_Q12-Pad2_ 10.38k		
+R15  Net-_Q16-Pad1_ Net-_R15-Pad2_ 10k		
+U2  Net-_Q15-Pad2_ Net-_R15-Pad2_ zener		
+Q16  Net-_Q16-Pad1_ Net-_Q10-Pad1_ Net-_Q16-Pad3_ eSim_NPN		
+Q17  Net-_Q16-Pad1_ Net-_Q16-Pad3_ Net-_Q17-Pad3_ eSim_NPN		
+R18  Net-_Q16-Pad3_ Net-_Q12-Pad1_ 200		
+R20  Net-_Q17-Pad3_ Net-_Q12-Pad1_ 0.3		
+R19  Net-_Q17-Pad3_ Net-_Q15-Pad2_ 240		
+U3  Net-_Q16-Pad1_ Net-_Q10-Pad3_ Net-_Q12-Pad1_ PORT		
+
+.end

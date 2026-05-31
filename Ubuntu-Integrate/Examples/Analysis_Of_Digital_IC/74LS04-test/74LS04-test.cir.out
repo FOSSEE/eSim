@@ -1,0 +1,21 @@
+* /home/ash98/esim-workspace/74ls04-test/74ls04-test.cir
+
+.include 74LS04.sub
+v2 net-_x1-pad14_ gnd  dc 0.7
+v1  in1 gnd pulse(0 5 0 0 0 14e-9 28e-9)
+r2  in1 net-_r2-pad2_ 1k
+* u2  out1 plot_v1
+* u1  in1 plot_v1
+r1  out1 gnd 2k
+x1 net-_r2-pad2_ out1 ? ? ? ? gnd ? ? ? ? ? ? net-_x1-pad14_ 74LS04
+.tran 10e-12 100e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out1)
+plot v(in1)
+.endc
+.end

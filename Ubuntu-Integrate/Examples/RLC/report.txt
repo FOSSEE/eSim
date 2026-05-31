@@ -1,0 +1,18 @@
+Info: Backing up file '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/sym-lib-table' to '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/rescue-backup/sym-lib-table-2026-03-17-15-31-58'.
+Info: Backing up file '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/RLC.sch' to '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/rescue-backup/RLC-2026-03-17-15-31-58.sch'.
+Info: Backing up file '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/RLC.kicad_pro' to '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/rescue-backup/RLC-2026-03-17-15-31-58.kicad_pro'.
+Info: Backing up file '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/RLC-cache.lib' to '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/rescue-backup/RLC-cache-2026-03-17-15-31-58.lib'.
+Info: Backing up file '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/RLC-rescue.lib' to '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/rescue-backup/RLC-rescue-2026-03-17-15-31-58.lib'.
+Info: Backing up file '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/RLC-rescue.dcm' to '/home/spoken/Downloads/aaa/eSim-2.5/Examples/RLC/rescue-backup/RLC-rescue-2026-03-17-15-31-58.dcm'.
+Info: Adding library 'RLC-rescue', file '${KIPRJMOD}/RLC-rescue.lib' to project symbol library table.
+Info: Adding library 'eSim_Subckt1', file '${KICAD6_SYMBOL_DIR}/eSim_Subckt.lib' to project symbol library table.
+Symbol GND mapped to symbol library 'RLC-rescue'.
+Symbol plot_v1 mapped to symbol library 'RLC-rescue'.
+Symbol plot_v1 mapped to symbol library 'RLC-rescue'.
+Symbol C mapped to symbol library 'RLC-rescue'.
+Symbol R mapped to symbol library 'RLC-rescue'.
+Symbol L mapped to symbol library 'RLC-rescue'.
+Symbol pwl mapped to symbol library 'RLC-rescue'.
+Info: Symbol library table mapping complete!
+Info: Created project symbol library table.
+

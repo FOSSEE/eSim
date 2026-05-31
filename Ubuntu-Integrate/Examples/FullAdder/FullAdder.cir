@@ -1,0 +1,23 @@
+* /home/fossee/eSim-Workspace/FullAdder/FullAdder.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Tue Mar  1 18:16:27 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U6-Pad4_ Net-_U6-Pad5_ Net-_U6-Pad6_ Net-_U7-Pad1_ Net-_U7-Pad2_ full_adder		
+v1  in1 GND DC		
+v2  in2 GND DC		
+v3  cin GND DC		
+R1  sum GND 1k		
+R2  cout GND 1k		
+U2  in1 plot_v1		
+U1  in2 plot_v1		
+U3  cin plot_v1		
+U4  sum plot_v1		
+U5  cout plot_v1		
+U6  in1 in2 cin Net-_U6-Pad4_ Net-_U6-Pad5_ Net-_U6-Pad6_ adc_bridge_3		
+U7  Net-_U7-Pad1_ Net-_U7-Pad2_ sum cout dac_bridge_2		
+
+.end

@@ -1,0 +1,24 @@
+* /home/ash98/esim-workspace/555/555.cir
+
+.include lm555n.sub
+r3  v_out gnd 1k
+r1  net-_r1-pad1_ net-_r1-pad2_ 1k
+r2  net-_r1-pad2_ c_out 10k
+v1 net-_r1-pad1_ gnd  dc 10
+c1  c_out gnd 0.1u
+c2  net-_c2-pad1_ gnd 0.01u
+* u2  v_out plot_v1
+* u1  c_out plot_v1
+x1 gnd c_out v_out net-_r1-pad1_ net-_c2-pad1_ c_out net-_r1-pad2_ net-_r1-pad1_ lm555n
+.tran 1e-03 50e-03 0e-00
+
+* Control Statements 
+.control
+option noopalter
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(v_out)
+plot v(c_out)
+.endc
+.end

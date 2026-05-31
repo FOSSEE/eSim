@@ -1,0 +1,45 @@
+* /home/saurabh/esim-workspace/pwm_incremental/pwm_incremental.cir
+
+.include lm_741.sub
+v2  net-_x1-pad7_ gnd 9v
+* u3  d plot_v1
+x1 ? rc1 pwl_in net-_x1-pad4_ ? d net-_x1-pad7_ ? lm_741
+r1  q rc1 1k
+* u7  rc1 plot_v1
+c1  gnd rc1 1u
+* u8  net-_u2-pad3_ q dac_bridge_1
+* u9  q plot_v1
+* u6  clk plot_v1
+v4  net-_u4-pad1_ gnd pulse(0 5 10u 10u 20u 0.5m 1m)
+* u5  d net-_u2-pad2_ adc_bridge_1
+* u4  net-_u4-pad1_ clk adc_bridge_1
+v3  net-_x1-pad4_ gnd -9v
+* u1  pwl_in plot_v1
+v1  pwl_in gnd 3
+* u2  clk net-_u2-pad2_ net-_u2-pad3_ pwmincrement
+a1 [net-_u2-pad3_ ] [q ] u8
+a2 [d ] [net-_u2-pad2_ ] u5
+a3 [net-_u4-pad1_ ] [clk ] u4
+a4 [clk ] [net-_u2-pad2_ ] [net-_u2-pad3_ ] u2
+* Schematic Name: dac_bridge_1, NgSpice Name: dac_bridge
+.model u8 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-9 t_fall=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name: adc_bridge_1, NgSpice Name: adc_bridge
+.model u5 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: adc_bridge_1, NgSpice Name: adc_bridge
+.model u4 adc_bridge(fall_delay=1.0e-9 in_high=2.0 rise_delay=1.0e-9 in_low=1.0 ) 
+* Schematic Name: pwmincrement, NgSpice Name: pwmincrement
+.model u2 pwmincrement(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 instance_id=1 stop_time=100e-3 ) 
+.tran 1e-03 100e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(d)
+plot v(rc1)
+plot v(q)
+plot v(clk)
+plot v(pwl_in)
+.endc
+.end
