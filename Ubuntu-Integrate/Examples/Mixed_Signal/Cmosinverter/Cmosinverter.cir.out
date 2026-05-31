@@ -1,0 +1,45 @@
+* /home/saurabh/esim-workspace/cmosinvertor/cmosinvertor.cir
+
+.include INVCMOS.sub
+* u2  out1 plot_v1
+x1 out7 out1 INVCMOS
+x2 out1 out2 INVCMOS
+x3 out2 out3 INVCMOS
+* u3  out2 plot_v1
+* u4  out3 plot_v1
+x4 out3 out4 INVCMOS
+* u5  out4 plot_v1
+x5 out4 out5 INVCMOS
+* u6  out5 plot_v1
+x6 out5 out6 INVCMOS
+* u7  out6 plot_v1
+* u8  out7 plot_v1
+* u9  out6 net-_u1-pad1_ adc_bridge_1
+* u10  net-_u1-pad2_ out7 dac_bridge_1
+* u1  net-_u1-pad1_ net-_u1-pad2_ inverter
+a1 [out6 ] [net-_u1-pad1_ ] u9
+a2 [net-_u1-pad2_ ] [out7 ] u10
+a3 [net-_u1-pad1_ ] [net-_u1-pad2_ ] u1
+* Schematic Name: adc_bridge_1, NgSpice Name: adc_bridge
+.model u9 adc_bridge(fall_delay=1.0e-6 in_high=2.0 rise_delay=1.0e-6 in_low=1.0 ) 
+* Schematic Name: dac_bridge_1, NgSpice Name: dac_bridge
+.model u10 dac_bridge(out_undef=0.5 out_low=0.0 out_high=5.0 t_rise=1.0e-6 t_fall=1.0e-6 input_load=1.0e-12 ) 
+* Schematic Name: inverter, NgSpice Name: inverter
+.model u1 inverter(fall_delay=1.0e-6 input_load=1.0e-12 rise_delay=1.0e-6 instance_id=1 ) 
+.tran 1e-03 200e-03 0e-00
+
+* Control Statements 
+.control
+option noopalter
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out1)
+plot v(out2)
+plot v(out3)
+plot v(out4)
+plot v(out5)
+plot v(out6)
+plot v(out7)
+.endc
+.end

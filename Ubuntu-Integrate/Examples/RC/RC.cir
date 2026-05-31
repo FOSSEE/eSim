@@ -1,0 +1,5 @@
+.title KiCad schematic
+C1 out GND 10u
+Vv1 in GND PWL
+R1 in out 1k
+.end

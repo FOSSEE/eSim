@@ -1,0 +1,16 @@
+* /home/saurabh/Installer_Main_Workshop/eSim-1.1.2/Examples/BJT_Biascircuit/BJT_Biascircuit.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Aug 21 12:28:54 2019
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v1  vce GND DC		
+R1  Net-_R1-Pad1_ Net-_Q1-Pad1_ 1k		
+R2  Net-_Q1-Pad2_ ib 1k		
+U1  vce Net-_R1-Pad1_ plot_i2		
+I1  ib GND dc		
+Q1  Net-_Q1-Pad1_ Net-_Q1-Pad2_ GND eSim_NPN		
+
+.end

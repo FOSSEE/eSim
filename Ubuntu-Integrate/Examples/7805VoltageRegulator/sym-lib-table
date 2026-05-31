@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "7805VoltageRegulator-rescue")(type "Legacy")(uri "${KIPRJMOD}/7805VoltageRegulator-rescue.lib")(options "")(descr ""))
+  (lib (name "eSim_Subckt1")(type "Legacy")(uri "${KICAD6_SYMBOL_DIR}/eSim_Subckt.lib")(options "")(descr ""))
+)

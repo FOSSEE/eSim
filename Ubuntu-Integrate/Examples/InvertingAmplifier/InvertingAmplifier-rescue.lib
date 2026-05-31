@@ -1,0 +1,19 @@
+EESchema-LIBRARY Version 2.3
+#encoding utf-8
+#
+# UA741-RESCUE-InvertingAmplifier
+#
+DEF UA741-RESCUE-InvertingAmplifier X 0 40 Y Y 1 F N
+F0 "X" 150 0 60 H V C CNN
+F1 "UA741-RESCUE-InvertingAmplifier" 250 -150 60 H V C CNN
+F2 "" 0 0 60 H V C CNN
+F3 "" 0 0 60 H V C CNN
+DRAW
+P 4 0 1 0 0 150 0 -150 350 0 0 150 N
+X + 1 -200 100 200 R 50 50 1 1 I
+X - 2 -200 -100 200 R 50 50 1 1 I
+X ~ 3 550 0 200 L 50 50 1 1 O
+ENDDRAW
+ENDDEF
+#
+#End Library

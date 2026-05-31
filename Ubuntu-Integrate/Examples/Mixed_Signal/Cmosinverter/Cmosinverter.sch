@@ -1,0 +1,303 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:device
+LIBS:transistors
+LIBS:conn
+LIBS:linear
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_User
+LIBS:eSim_Plot
+LIBS:eSim_PSpice
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:Cmosinvertor-cache
+EELAYER 25 0
+EELAYER END
+$Descr A3 16535 11693
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L plot_v1 U2
+U 1 1 5D6266E9
+P 4350 1950
+F 0 "U2" H 4350 2450 60  0000 C CNN
+F 1 "plot_v1" H 4550 2300 60  0000 C CNN
+F 2 "" H 4350 1950 60  0000 C CNN
+F 3 "" H 4350 1950 60  0000 C CNN
+	1    4350 1950
+	1    0    0    -1  
+$EndComp
+Text GLabel 4350 2100 3    60   Input ~ 0
+out1
+$Comp
+L INVCMOS X1
+U 1 1 5D626E20
+P 3200 1850
+F 0 "X1" H 3200 1850 60  0000 C CNN
+F 1 "INVCMOS" H 2750 2000 60  0000 C CNN
+F 2 "" H 3200 1850 60  0001 C CNN
+F 3 "" H 3200 1850 60  0001 C CNN
+	1    3200 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L INVCMOS X2
+U 1 1 5D626E52
+P 5400 1850
+F 0 "X2" H 5400 1850 60  0000 C CNN
+F 1 "INVCMOS" H 4950 2000 60  0000 C CNN
+F 2 "" H 5400 1850 60  0001 C CNN
+F 3 "" H 5400 1850 60  0001 C CNN
+	1    5400 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L INVCMOS X3
+U 1 1 5D626EC9
+P 7000 1850
+F 0 "X3" H 7000 1850 60  0000 C CNN
+F 1 "INVCMOS" H 6550 2000 60  0000 C CNN
+F 2 "" H 7000 1850 60  0001 C CNN
+F 3 "" H 7000 1850 60  0001 C CNN
+	1    7000 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U3
+U 1 1 5D626F62
+P 6200 1950
+F 0 "U3" H 6200 2450 60  0000 C CNN
+F 1 "plot_v1" H 6400 2300 60  0000 C CNN
+F 2 "" H 6200 1950 60  0000 C CNN
+F 3 "" H 6200 1950 60  0000 C CNN
+	1    6200 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U4
+U 1 1 5D626FB9
+P 8000 1950
+F 0 "U4" H 8000 2450 60  0000 C CNN
+F 1 "plot_v1" H 8200 2300 60  0000 C CNN
+F 2 "" H 8000 1950 60  0000 C CNN
+F 3 "" H 8000 1950 60  0000 C CNN
+	1    8000 1950
+	1    0    0    -1  
+$EndComp
+Text GLabel 6200 2150 3    60   Input ~ 0
+out2
+Text GLabel 8000 2150 3    60   Input ~ 0
+out3
+$Comp
+L INVCMOS X4
+U 1 1 5D627966
+P 9050 1850
+F 0 "X4" H 9050 1850 60  0000 C CNN
+F 1 "INVCMOS" H 8600 2000 60  0000 C CNN
+F 2 "" H 9050 1850 60  0001 C CNN
+F 3 "" H 9050 1850 60  0001 C CNN
+	1    9050 1850
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U5
+U 1 1 5D627A26
+P 9950 1950
+F 0 "U5" H 9950 2450 60  0000 C CNN
+F 1 "plot_v1" H 10150 2300 60  0000 C CNN
+F 2 "" H 9950 1950 60  0000 C CNN
+F 3 "" H 9950 1950 60  0000 C CNN
+	1    9950 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L INVCMOS X5
+U 1 1 5D628061
+P 8200 3100
+F 0 "X5" H 8200 3100 60  0000 C CNN
+F 1 "INVCMOS" H 7750 3250 60  0000 C CNN
+F 2 "" H 8200 3100 60  0001 C CNN
+F 3 "" H 8200 3100 60  0001 C CNN
+	1    8200 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U6
+U 1 1 5D628068
+P 9200 3200
+F 0 "U6" H 9200 3700 60  0000 C CNN
+F 1 "plot_v1" H 9400 3550 60  0000 C CNN
+F 2 "" H 9200 3200 60  0000 C CNN
+F 3 "" H 9200 3200 60  0000 C CNN
+	1    9200 3200
+	1    0    0    -1  
+$EndComp
+Text GLabel 9200 3400 3    60   Input ~ 0
+out5
+$Comp
+L INVCMOS X6
+U 1 1 5D628071
+P 10250 3100
+F 0 "X6" H 10250 3100 60  0000 C CNN
+F 1 "INVCMOS" H 9800 3250 60  0000 C CNN
+F 2 "" H 10250 3100 60  0001 C CNN
+F 3 "" H 10250 3100 60  0001 C CNN
+	1    10250 3100
+	1    0    0    -1  
+$EndComp
+$Comp
+L plot_v1 U7
+U 1 1 5D628079
+P 11150 3200
+F 0 "U7" H 11150 3700 60  0000 C CNN
+F 1 "plot_v1" H 11350 3550 60  0000 C CNN
+F 2 "" H 11150 3200 60  0000 C CNN
+F 3 "" H 11150 3200 60  0000 C CNN
+	1    11150 3200
+	1    0    0    -1  
+$EndComp
+Text GLabel 11150 3400 3    60   Input ~ 0
+out6
+Text GLabel 9950 2100 3    60   Input ~ 0
+out4
+$Comp
+L plot_v1 U8
+U 1 1 5D636DDC
+P 14550 4000
+F 0 "U8" H 14550 4500 60  0000 C CNN
+F 1 "plot_v1" H 14750 4350 60  0000 C CNN
+F 2 "" H 14550 4000 60  0000 C CNN
+F 3 "" H 14550 4000 60  0000 C CNN
+	1    14550 4000
+	0    -1   -1   0   
+$EndComp
+Text GLabel 14750 4000 2    60   Input ~ 0
+out7
+$Comp
+L adc_bridge_1 U9
+U 1 1 5D67A9F3
+P 12300 3150
+F 0 "U9" H 12300 3150 60  0000 C CNN
+F 1 "adc_bridge_1" H 12300 3300 60  0000 C CNN
+F 2 "" H 12300 3150 60  0000 C CNN
+F 3 "" H 12300 3150 60  0000 C CNN
+	1    12300 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L dac_bridge_1 U10
+U 1 1 5D67AA64
+P 14400 3000
+F 0 "U10" H 14400 3000 60  0000 C CNN
+F 1 "dac_bridge_1" H 14400 3150 60  0000 C CNN
+F 2 "" H 14400 3000 60  0000 C CNN
+F 3 "" H 14400 3000 60  0000 C CNN
+	1    14400 3000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3900 1850 4950 1850
+Connection ~ 2550 1850
+Connection ~ 4350 1850
+Wire Wire Line
+	6100 1850 6550 1850
+Wire Wire Line
+	4350 1750 4350 2100
+Wire Wire Line
+	6200 1750 6200 2150
+Connection ~ 6200 1850
+Wire Wire Line
+	8000 1750 8000 2150
+Connection ~ 8000 1850
+Wire Wire Line
+	7700 1850 8600 1850
+Connection ~ 9950 1850
+Wire Wire Line
+	9950 1750 9950 2100
+Wire Wire Line
+	7200 3100 7750 3100
+Wire Wire Line
+	9200 3000 9200 3400
+Connection ~ 9200 3100
+Wire Wire Line
+	8900 3100 9800 3100
+Wire Wire Line
+	10950 3100 11700 3100
+Connection ~ 11150 3100
+Wire Wire Line
+	11150 3000 11150 3400
+Wire Wire Line
+	9750 1850 10400 1850
+Wire Wire Line
+	10400 1850 10400 2500
+Wire Wire Line
+	10400 2500 7200 2500
+Wire Wire Line
+	7200 2500 7200 3100
+Wire Wire Line
+	14350 4000 14750 4000
+Wire Wire Line
+	14450 4950 14450 3550
+Connection ~ 14450 4000
+Wire Wire Line
+	2550 4950 14450 4950
+Wire Wire Line
+	2550 4950 2550 1850
+Wire Wire Line
+	2550 1850 2750 1850
+Wire Wire Line
+	13850 3100 14150 3100
+Wire Wire Line
+	14150 3100 14150 2400
+Wire Wire Line
+	14150 2400 14450 2400
+$Comp
+L inverter U1
+U 1 1 5DDE38F5
+P 10500 5000
+F 0 "U1" H 13350 6800 60  0000 C CNN
+F 1 "inverter" H 13350 7000 60  0000 C CNN
+F 2 "" H 13350 6950 60  0000 C CNN
+F 3 "" H 13350 6950 60  0000 C CNN
+	1    10500 5000
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
