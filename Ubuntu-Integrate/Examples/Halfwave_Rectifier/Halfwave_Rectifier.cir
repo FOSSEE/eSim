@@ -1,5 +1,0 @@
-.title KiCad schematic
-v1 IN GND 
-R1 OUT GND 1k
-D1 IN OUT 
-.end

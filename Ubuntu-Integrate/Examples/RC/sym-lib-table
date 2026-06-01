@@ -1,5 +1,0 @@
-(sym_lib_table
-  (version 0)
-  (lib (name "RC-rescue")(type "Legacy")(uri "${KIPRJMOD}/RC-rescue.lib")(options "")(descr ""))
-  (lib (name "eSim_Subckt")(type "Legacy")(uri "${KICAD8_SYMBOL_DIR}/eSim_Subckt.lib")(options "")(descr ""))
-)
