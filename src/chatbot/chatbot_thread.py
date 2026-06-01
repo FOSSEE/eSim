@@ -1,5 +1,6 @@
 import os
 import re
+import json
 import socket
 import subprocess
 import time
@@ -23,6 +24,95 @@ except ImportError:
     _PIL_AVAILABLE = False
 
 
+# ── Built-in default prompts (used if config.json is missing) ─────────────────
+
+_DEFAULT_SYSTEM_PROMPT = """You are an expert electronics engineer and the AI assistant embedded inside eSim, an open-source EDA tool developed by FOSSEE at IIT Bombay.
+
+Your expertise includes:
+- KiCad schematic capture, symbols, labels, ERC issues, footprints
+- NgSpice simulations and SPICE netlists
+- Circuit debugging and simulation troubleshooting
+- eSim workflow: KiCad → netlist → NgSpice → analysis
+
+Rules:
+- Be practical, direct, and technically useful.
+- Match response length to question complexity.
+- For debugging, explain both WHY and HOW to fix the issue.
+- When code or SPICE is needed, use a fenced code block.
+- If uncertain, say likely / appears to be, but still provide analysis.
+"""
+
+_DEFAULT_VISION_SYSTEM_PROMPT = """You are an expert electronics engineer and the AI assistant inside eSim, an open-source EDA tool by FOSSEE at IIT Bombay.
+
+You are given one or more schematic images from eSim or KiCad. Read every visible label, net name, component reference, value, and pin number, and answer the user's question accurately and helpfully. Never refuse to analyse. Be concise and use the visible reference designators (R1, C3, U2, etc.).
+"""
+
+
+# ── Configuration layer (config.json) ─────────────────────────────────────────
+#
+# config.json sits next to this file (src/chatbot/config.json). Editing it lets
+# you change the assistant's system rules and model parameters WITHOUT touching
+# code — restart eSim and the new behaviour takes effect. If the file is missing
+# or malformed, the built-in defaults below are used so the app still runs.
+
+_CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "config.json")
+
+_DEFAULT_CONFIG = {
+    "system_rules": {
+        "text_system_prompt": _DEFAULT_SYSTEM_PROMPT,
+        "vision_system_prompt": _DEFAULT_VISION_SYSTEM_PROMPT,
+    },
+    "context_window": {
+        "text_num_ctx": 1024,
+        "vision_num_ctx": 1024,
+        "vision_num_predict": 512,
+    },
+    "sampling": {
+        "repeat_penalty": 1.08,
+        "vision_temperature": 0.15,
+        "vision_repeat_penalty": 1.05,
+    },
+    "runtime": {
+        "keep_alive": "-1m",
+    },
+    "history": {
+        "max_lines": 6,
+    },
+}
+
+
+def _deep_merge(base: dict, override: dict) -> dict:
+    out = dict(base)
+    for k, v in (override or {}).items():
+        if k in out and isinstance(out[k], dict) and isinstance(v, dict):
+            out[k] = _deep_merge(out[k], v)
+        else:
+            out[k] = v
+    return out
+
+
+def load_config() -> dict:
+    """Load config.json merged over the built-in defaults."""
+    cfg = dict(_DEFAULT_CONFIG)
+    try:
+        if os.path.isfile(_CONFIG_PATH):
+            with open(_CONFIG_PATH, "r", encoding="utf-8") as f:
+                cfg = _deep_merge(_DEFAULT_CONFIG, json.load(f))
+            print(f"[CONFIG] Loaded {_CONFIG_PATH}")
+        else:
+            print(f"[CONFIG] No config.json found at {_CONFIG_PATH} — using defaults.")
+    except Exception as e:
+        print(f"[CONFIG] Failed to read config.json ({e}) — using defaults.")
+    return cfg
+
+
+CONFIG = load_config()
+
+# Resolve the active prompts from config (with fallback to the constants).
+_SYSTEM_PROMPT = CONFIG["system_rules"].get("text_system_prompt", _DEFAULT_SYSTEM_PROMPT)
+_VISION_SYSTEM_PROMPT = CONFIG["system_rules"].get("vision_system_prompt", _DEFAULT_VISION_SYSTEM_PROMPT)
+
+
 # ── Image preprocessing ───────────────────────────────────────────────────────
 
 # llava internally resizes images to 336×336 anyway.
@@ -32,29 +122,24 @@ _MAX_IMAGE_DIM = 336   # llava's native patch size — no benefit sending larger
 
 
 def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
-    """
-    Downscale image to _MAX_IMAGE_DIM on the longest side using PIL.
-    Returns original bytes if PIL is unavailable or image is already small.
-    """
     if not _PIL_AVAILABLE:
         return raw_bytes
     try:
         img = _PilImage.open(_io.BytesIO(raw_bytes))
         w, h = img.size
         if max(w, h) <= _MAX_IMAGE_DIM:
-            return raw_bytes          # already small enough
+            return raw_bytes
         scale  = _MAX_IMAGE_DIM / max(w, h)
         new_w  = max(1, int(w * scale))
         new_h  = max(1, int(h * scale))
         img    = img.resize((new_w, new_h), _PilImage.LANCZOS)
-        # Convert to RGB (handles RGBA/P mode PNGs)
         if img.mode not in ("RGB", "L"):
             img = img.convert("RGB")
         buf = _io.BytesIO()
         img.save(buf, format="JPEG", quality=70)
         return buf.getvalue()
     except Exception:
-        return raw_bytes              # fall back to original on any error
+        return raw_bytes
 
 
 # ── Connectivity / runtime helpers ───────────────────────────────────────────
@@ -62,7 +147,6 @@ def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
 
 
 def get_stt_backend() -> str:
-    """Returns 'google' if SpeechRecognition is installed, else 'none'."""
     if _SR_AVAILABLE:
         return "google"
     return "none"
@@ -78,12 +162,6 @@ def is_ollama_running():
 
 
 def start_ollama(stop_flag=None):
-    """
-    Start Ollama server if needed.
-
-    Accepts an optional stop_flag callable so the caller can cancel startup.
-    The polling loop checks stop_flag() each second and exits early if cancelled.
-    """
     if os.name == 'nt':
         subprocess.Popen('start cmd /k "ollama serve"', shell=True)
     else:
@@ -93,7 +171,6 @@ def start_ollama(stop_flag=None):
              'gnome-terminal -- ollama serve || '
              'xterm -e "ollama serve"']
         )
-
     for _ in range(30):
         if stop_flag is not None and stop_flag():
             return False
@@ -146,6 +223,7 @@ def _ensure_ollama_running(worker) -> bool:
         time.sleep(1)
     return True
 
+
 class OllamaStatusWorker(QThread):
     result_signal = pyqtSignal(bool)
 
@@ -179,7 +257,6 @@ class ModelFetchWorker(QThread):
             # MERGED: uses shared _fetch_model_names() instead of inline duplicate
             names = _fetch_model_names()
 
-            # Keep the vision model cache warm so image sends don't block
             _refresh_model_cache()
 
             self.result_signal.emit(names if names else [])
@@ -190,13 +267,10 @@ class ModelFetchWorker(QThread):
 # ── Smart token budget ───────────────────────────────────────────────────────
 
 _COMPLEX_KEYWORDS = {
-    # netlist / SPICE
     'netlist', 'spice', 'ngspice', '.tran', '.ac', '.dc', '.model',
     'subcircuit', 'convergence', 'singular', 'timestep',
-    # debugging
     'error', 'debug', 'fix', 'wrong', 'issue', 'problem', 'fail',
     'simulate', 'simulation', 'analyse', 'analyze',
-    # circuit design
     'schematic', 'kicad', 'footprint', 'component', 'resistor',
     'capacitor', 'mosfet', 'transistor', 'opamp', 'voltage', 'current',
 }
@@ -208,80 +282,22 @@ _SIMPLE_KEYWORDS = {
 
 
 def _smart_num_predict(user_messages: list, user_override: int = 1024) -> int:
-    """
-    Choose a token budget based on message complexity rather than a flat cap.
-    This is the single biggest speed improvement: most answers need far fewer
-    tokens than the hard 1024 limit.
-
-    Tiers (all well within correct/complete answer range for each type):
-      simple question  →  256 tokens  (~1-2 min on slow CPU, ~20s on fast)
-      technical        →  512 tokens  (~2-4 min on slow CPU, ~40s on fast)
-      netlist/debug    →  768 tokens  (~3-6 min on slow CPU, ~60s on fast)
-
-    If the user has manually set a lower budget via the settings slider,
-    we always respect that as an upper bound.
-
-    Combines up to 4 recent history lines (2 user turns + their bot replies)
-    for a better complexity signal than looking at user messages alone.
-    """
-    # Combine the last 4 history lines (up to 2 user turns + their bot replies)
     combined = " ".join(
         line[5:].lower() for line in user_messages[-4:]
         if line.startswith("User:")
     )
-
-    # Check for complex technical content
     is_complex = any(kw in combined for kw in _COMPLEX_KEYWORDS)
-    # Check for simple definitional questions
     is_simple  = any(kw in combined for kw in _SIMPLE_KEYWORDS) and not is_complex
-    # Long message = detailed question = needs detailed answer
     is_long    = len(combined) > 300
 
     if is_simple and not is_long:
-        budget = 256
+        budget = 128
     elif is_complex or is_long:
-        budget = 768
+        budget = 512
     else:
-        budget = 384
+        budget = 256
 
-    # Respect the user's slider setting as a ceiling
     return min(budget, user_override)
-
-
-# ── System prompts ────────────────────────────────────────────────────────────
-
-_SYSTEM_PROMPT = """You are an expert electronics engineer and the AI assistant embedded inside eSim, an open-source EDA tool developed by FOSSEE at IIT Bombay.
-
-Your expertise includes:
-- KiCad schematic capture, symbols, labels, ERC issues, footprints
-- NgSpice simulations and SPICE netlists
-- Circuit debugging and simulation troubleshooting
-- FPGA, MCU, power, reset, SPI, pull-up/pull-down, decoupling and connector review
-- Reading partial schematic screenshots from EDA tools
-- eSim workflow: KiCad → netlist → NgSpice → analysis
-
-Rules:
-- Be practical, direct, and technically useful.
-- Match response length to question complexity.
-- For debugging, explain both WHY and HOW to fix the issue.
-- When code or SPICE is needed, use a fenced code block.
-- If the user provides a schematic image, analyze the visible block instead of giving a generic refusal.
-- If uncertain, say likely / appears to be, but still provide analysis.
-"""
-
-
-_VISION_SYSTEM_PROMPT = """You are an expert electronics engineer and the AI assistant inside eSim, an open-source EDA tool by FOSSEE at IIT Bombay.
-
-You are given one or more schematic images from eSim or KiCad. Your job is to answer the user's question about those images as accurately and helpfully as possible.
-
-Rules:
-- Read every visible label, net name, component reference, value, and pin number from the image.
-- If the user asks a specific question (e.g. "how to build this in eSim", "what does this component do", "why is this connection wrong"), answer THAT question directly and completely.
-- If no specific question is given, describe the circuit: identify its function, list components, and flag any design issues.
-- Never refuse to analyse. If parts of the image are unclear, do your best and note any uncertainty.
-- Be concise and practical. Match the length of your answer to the complexity of the question.
-- When referring to components, use their visible reference designators (R1, C3, U2, etc.).
-"""
 
 
 # ── Text chat worker ──────────────────────────────────────────────────────────
@@ -289,6 +305,7 @@ Rules:
 class OllamaWorker(QThread):
     response_signal = pyqtSignal(str)
     status_signal = pyqtSignal(str)
+    chunk_signal = pyqtSignal(str)
 
     def __init__(self, chat_history, model="",
                  temperature=0.25, num_predict=1024):
@@ -308,19 +325,21 @@ class OllamaWorker(QThread):
                 return
             self.status_signal.emit("Ollama is ready! Getting response…")
 
-            # Keep last 10 history lines (5 turns).
-            # Sending 20 lines fills most of the context window before the
-            # question is even added, forcing the model to load more tokens.
+            # config-driven history window + system prompt
+            max_lines = int(CONFIG.get("history", {}).get("max_lines", 6))
             messages = [{"role": "system", "content": _SYSTEM_PROMPT}]
-            for line in self.chat_history[-10:]:
+            for line in self.chat_history[-max_lines:]:
                 if line.startswith("User:"):
                     messages.append({"role": "user", "content": line[5:].strip()})
                 elif line.startswith("Bot:"):
                     messages.append({"role": "assistant", "content": line[4:].strip()})
 
-            # Smart token budget: short questions get fewer tokens so they
-            # finish faster; complex questions still get enough for a full answer.
             budget = _smart_num_predict(self.chat_history, self.num_predict)
+
+            # config-driven model options
+            num_ctx       = int(CONFIG.get("context_window", {}).get("text_num_ctx", 1024))
+            repeat_pen    = float(CONFIG.get("sampling", {}).get("repeat_penalty", 1.08))
+            keep_alive    = CONFIG.get("runtime", {}).get("keep_alive", "-1m")
 
             stream = ollama.chat(
                 model=self.model,
@@ -329,15 +348,9 @@ class OllamaWorker(QThread):
                 options={
                     "temperature": self.temperature,
                     "num_predict": budget,
-                    # 2048 ctx handles 5 turns of history + question comfortably.
-                    # Allocating 4096 forces Ollama to malloc a larger KV-cache,
-                    # adding 2-4s overhead before token 1 is generated.
-                    "num_ctx": 2048,
-                    "repeat_penalty": 1.08,
-                    # Keep model loaded in RAM between requests.
-                    # Without this, Ollama unloads after 5 min and the next
-                    # question pays a 30-60s reload cost.
-                    "keep_alive": "10m",
+                    "num_ctx": num_ctx,
+                    "repeat_penalty": repeat_pen,
+                    "keep_alive": keep_alive,
                 }
             )
 
@@ -346,7 +359,9 @@ class OllamaWorker(QThread):
                 if self._stop_requested:
                     bot_response += "\n\n⏹ Generation stopped."
                     break
-                bot_response += chunk["message"]["content"]
+                piece = chunk["message"]["content"]
+                bot_response += piece
+                self.chunk_signal.emit(piece)
 
             bot_response = bot_response.strip()
             if not bot_response:
@@ -377,6 +392,8 @@ def _is_vision_model(model_name: str) -> bool:
     m = model_name.lower()
     # MERGED: uses shared VISION_MODEL_KEYWORDS constant
     return any(k in m for k in VISION_MODEL_KEYWORDS)
+
+
 # QThread reads/writes don't produce a data race.
 _cache_lock = threading.Lock()
 _installed_models_cache: list = []
@@ -397,12 +414,6 @@ def _refresh_model_cache():
 
 
 def _pick_best_vision_model(preferred: str = "") -> str:
-    """
-    Pick the fastest available vision model.
-    Priority: user-selected (if vision-capable) → moondream → llava:7b → llava → llava:13b
-    Smaller/faster models come FIRST so CPU inference is quick.
-    Uses a cached model list — no blocking ollama.list() call at send time.
-    """
     with _cache_lock:
         cache_valid = _installed_models_cache_valid
         cache_copy  = list(_installed_models_cache)
@@ -414,30 +425,24 @@ def _pick_best_vision_model(preferred: str = "") -> str:
 
     installed_map = {name.lower(): name for name in cache_copy}
 
-    # If the user explicitly selected a vision model, respect that choice first
     if preferred and _is_vision_model(preferred):
         return preferred
 
-    # Prefer smaller/faster models for speed on CPU
     speed_order = [
-        "moondream",       # ~1.6 GB — fastest
-        "llava:7b",        # ~4 GB  — good balance
-        "llava",           # ~4 GB  — default tag (usually 7b)
-        "bakllava",        # ~4 GB
-        "llava:13b",       # ~8 GB  — slowest, last resort
+        "moondream",
+        "llava:7b",
+        "llava",
+        "bakllava",
+        "llava:13b",
     ]
     for cand in speed_order:
         if cand.lower() in installed_map:
             return installed_map[cand.lower()]
 
-    # Fallback: any installed vision model
     for name in cache_copy:
         if _is_vision_model(name):
             return name
 
-    # No vision-capable model is installed.
-    # Return None so the caller can show a clear error instead of
-    # sending the images to a text-only model that will hallucinate.
     return None
 
 
@@ -460,6 +465,7 @@ def _build_schematic_vision_prompt(extra_prompt: str, image_count: int) -> str:
 class OllamaVisionWorker(QThread):
     response_signal = pyqtSignal(str)
     status_signal = pyqtSignal(str)
+    chunk_signal = pyqtSignal(str)
 
     def __init__(self, image_paths=None, extra_prompt: str = "",
                  model: str = "llava", image_path: str = ""):
@@ -480,6 +486,11 @@ class OllamaVisionWorker(QThread):
         self._stop_requested = True
 
     def _chat_once(self, model_name: str, prompt: str, image_bytes_list):
+        # config-driven vision options
+        vc = CONFIG.get("context_window", {})
+        vs = CONFIG.get("sampling", {})
+        keep_alive = CONFIG.get("runtime", {}).get("keep_alive", "10m")
+
         stream = ollama.chat(
             model=model_name,
             messages=[
@@ -492,15 +503,11 @@ class OllamaVisionWorker(QThread):
             ],
             stream=True,
             options={
-                "temperature": 0.1,
-                # Smaller context = faster KV-cache allocation on CPU.
-                # 2048 is enough for image patches + short prompt + response.
-                "num_ctx": 2048,
-                # Cap output to ~256 tokens for much faster responses.
-                # Most useful circuit analysis fits well within this budget.
-                "num_predict": 256,
-                "repeat_penalty": 1.05,
-                "keep_alive": "10m",
+                "temperature": float(vs.get("vision_temperature", 0.15)),
+                "num_ctx": int(vc.get("vision_num_ctx", 1024)),
+                "num_predict": int(vc.get("vision_num_predict", 512)),
+                "repeat_penalty": float(vs.get("vision_repeat_penalty", 1.05)),
+                "keep_alive": keep_alive,
             }
         )
 
@@ -508,14 +515,13 @@ class OllamaVisionWorker(QThread):
         token_count   = 0
         for chunk in stream:
             if self._stop_requested:
-                response += "\n\n\u23f9 Generation stopped."
+                response += "\n\n⏹ Generation stopped."
                 break
             piece       = chunk["message"]["content"]
             response   += piece
             token_count += 1
+            self.chunk_signal.emit(piece)
 
-            # Emit progress every 20 tokens so the status label
-            # shows the model is actively working
             if token_count % 20 == 0:
                 self.status_signal.emit(
                     f"Generating… ({token_count} tokens so far)"
@@ -531,10 +537,6 @@ class OllamaVisionWorker(QThread):
                 self.response_signal.emit("❌ No image paths provided.")
                 return
 
-            # Load and downscale images before sending.
-            # llava resizes internally to 336px anyway; sending 4K images
-            # just wastes encoding time. Downscaling to 512px is invisible
-            # to the model but saves significant transfer overhead.
             image_bytes_list = []
             for path in self.image_paths:
                 if not os.path.exists(path):
@@ -551,9 +553,6 @@ class OllamaVisionWorker(QThread):
             vision_model = _pick_best_vision_model(self.model)
 
             if vision_model is None:
-                # No vision-capable model is installed. A text model cannot
-                # see images and will hallucinate plausible-sounding but
-                # completely fabricated answers.
                 self.response_signal.emit(
                     "❌ No vision model is installed.\n\n"
                     "Image analysis requires a vision-capable model. "
@@ -602,7 +601,6 @@ class MicWorker(QThread):
     status_signal = pyqtSignal(str)
 
     def run(self):
-        """Record from microphone and transcribe using Google Speech Recognition."""
         if not _SR_AVAILABLE:
             self.error_signal.emit(
                 "SpeechRecognition not installed.\nRun:  pip install SpeechRecognition pyaudio"
