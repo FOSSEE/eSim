@@ -146,9 +146,7 @@ class SubcircuitTab(QtWidgets.QWidget):
         # print "Object Called is ",sending_btn.objectName()
         self.widgetObjCount = int(sending_btn.objectName())
 
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
 
         self.subfile = str(
             QtCore.QDir.toNativeSeparators(

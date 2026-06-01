@@ -112,9 +112,7 @@ class ModelGeneration(QtWidgets.QWidget):
         '''
             This function calls the sandpiper to convert .tlv file to .sv file
         '''
-        init_path = '../../'
-        if os.name == 'nt':
-            init_path = ''
+        init_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) + os.sep
         # Text="Running Sandpiper............"
         print("Running Sandpiper-Saas for TLV to SV Conversion")
         self.cmd = "cp " + init_path + "library/tlv/clk_gate.v " + \

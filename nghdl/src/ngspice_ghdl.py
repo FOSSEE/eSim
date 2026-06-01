@@ -143,15 +143,7 @@ class Mainwindow(QtWidgets.QWidget):
             )
             if ret == QtWidgets.QMessageBox.Ok:
                 print("Overwriting existing model " + self.modelname)
-                if os.name == 'nt':
-                    cmd = "rmdir " + self.modelname + "/s /q"
-                else:
-                    cmd = "rm -rf " + self.modelname
-                # process = subprocess.Popen(
-                #     cmd, stdout=subprocess.PIPE,
-                #     stderr=subprocess.PIPE, shell=True
-                # )
-                subprocess.call(cmd, shell=True)
+                shutil.rmtree(self.modelname, ignore_errors=True)
                 os.mkdir(self.modelname)
             else:
                 print("Exiting application")
@@ -232,16 +224,14 @@ class Mainwindow(QtWidgets.QWidget):
         if os.name == 'nt':
             # path to msys bin directory where bash is located
             self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
-            subprocess.call(self.msys_home + "/usr/bin/bash.exe " +
-                            path + "/DUTghdl/compile.sh", shell=True)
-            subprocess.call(self.msys_hoscme + "/usr/bin/bash.exe -c " +
-                            "'chmod a+x start_server.sh'", shell=True)
-            subprocess.call(self.msys_home + "/usr/bin/bash.exe -c " +
-                            "'chmod a+x sock_pkg_create.sh'", shell=True)
+            bash_exe = os.path.join(self.msys_home, "usr", "bin", "bash.exe")
+            subprocess.call([bash_exe, os.path.join(path, "DUTghdl", "compile.sh")])
+            subprocess.call([bash_exe, "-c", "chmod a+x start_server.sh"])
+            subprocess.call([bash_exe, "-c", "chmod a+x sock_pkg_create.sh"])
         else:
-            subprocess.call("bash " + path + "/DUTghdl/compile.sh", shell=True)
-            subprocess.call("chmod a+x start_server.sh", shell=True)
-            subprocess.call("chmod a+x sock_pkg_create.sh", shell=True)
+            subprocess.call(["bash", os.path.join(path, "DUTghdl", "compile.sh")])
+            subprocess.call(["chmod", "a+x", "start_server.sh"])
+            subprocess.call(["chmod", "a+x", "sock_pkg_create.sh"])
 
         os.remove("compile.sh")
         # os.remove("ghdlserver.c")

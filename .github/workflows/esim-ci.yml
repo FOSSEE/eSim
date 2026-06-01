@@ -1,0 +1,79 @@
+name: eSim Code Quality & Testing CI
+
+on:
+  push:
+    branches: [ master, dev, main ]
+  pull_request:
+    branches: [ master, dev, main ]
+
+jobs:
+  static-analysis:
+    name: 🛡️ Static Analysis & Lints
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Linting & Security Tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff pyright bandit semgrep
+
+      - name: Run Ruff (Formatting & Style)
+        run: ruff check .
+
+      - name: Run Pyright (Strict Type Checking)
+        run: pyright src/
+        continue-on-error: true  # Non-blocking initially to allow progressive adoption
+
+      - name: Run Bandit (Security Vulnerability Scan)
+        run: bandit -r src/ -ll -ii
+
+  test-suite:
+    name: 🧪 Headless Test Suite
+    needs: static-analysis
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+      fail-fast: false
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Install System Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ngspice xvfb python3-pyqt6 libegl1-mesa-dev
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Install eSim Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov pytest-qt numpy
+
+      - name: Run Unit Tests (Headless)
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: |
+          xvfb-run --server-args="-screen 0 1024x768x24" pytest --cov=src --cov-report=xml tests/
+
+      - name: Upload Coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          flags: unittests
+          fail_ci_if_error: false
