@@ -6,7 +6,7 @@ import time
 import threading
 import ollama
 from PyQt5.QtCore import QThread, pyqtSignal
-
+from chatbot.knowledge_base import search_knowledge
 # ── Optional imports ──────────────────────────────────────────────────────────
 
 try:
@@ -307,11 +307,38 @@ class OllamaWorker(QThread):
             if not _ensure_ollama_running(self):
                 return
             self.status_signal.emit("Ollama is ready! Getting response…")
+            latest_user = ""
 
+            for line in reversed(self.chat_history):
+                if line.startswith("User:"):
+                    latest_user = line[5:].strip()
+                    break
+
+            rag_context = ""
+
+            if latest_user:
+                try:
+                    rag_context = search_knowledge(latest_user, n_results=5)
+                except Exception as e:
+                    print(f"RAG Error: {e}")
+                    rag_context = ""
             # Keep last 10 history lines (5 turns).
             # Sending 20 lines fills most of the context window before the
             # question is even added, forcing the model to load more tokens.
-            messages = [{"role": "system", "content": _SYSTEM_PROMPT}]
+            system_prompt = _SYSTEM_PROMPT
+
+            if rag_context.strip():
+                system_prompt += f"""
+
+            === ESIM REFERENCE MANUAL ===
+
+            {rag_context}
+
+            Use this documentation when answering eSim-related questions.
+            Prefer the documentation over assumptions whenever applicable.
+            """
+
+            messages = [{"role": "system", "content": system_prompt}]
             for line in self.chat_history[-10:]:
                 if line.startswith("User:"):
                     messages.append({"role": "user", "content": line[5:].strip()})
