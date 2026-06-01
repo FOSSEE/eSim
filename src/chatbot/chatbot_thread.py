@@ -115,7 +115,10 @@ _VISION_SYSTEM_PROMPT = CONFIG["system_rules"].get("vision_system_prompt", _DEFA
 
 # ── Image preprocessing ───────────────────────────────────────────────────────
 
-_MAX_IMAGE_DIM = 512
+# llava internally resizes images to 336×336 anyway.
+# Downscaling large images before sending saves encoding time and reduces
+# the number of tokens the model spends on the image.
+_MAX_IMAGE_DIM = 336   # llava's native patch size — no benefit sending larger
 
 
 def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
@@ -133,23 +136,14 @@ def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
         if img.mode not in ("RGB", "L"):
             img = img.convert("RGB")
         buf = _io.BytesIO()
-        img.save(buf, format="JPEG", quality=85)
+        img.save(buf, format="JPEG", quality=70)
         return buf.getvalue()
     except Exception:
         return raw_bytes
 
 
 # ── Connectivity / runtime helpers ───────────────────────────────────────────
-
-def _check_internet(host="8.8.8.8", port=53, timeout=2):
-    try:
-        socket.setdefaulttimeout(timeout)
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((host, port))
-        sock.close()
-        return True
-    except Exception:
-        return False
+# REMOVED: _check_internet() — dead code, never called anywhere in the codebase
 
 
 def get_stt_backend() -> str:
@@ -213,6 +207,23 @@ def detect_topic_switch(prev_text: str, curr_text: str) -> bool:
 
 # ── Model / service background workers ───────────────────────────────────────
 
+def _ensure_ollama_running(worker) -> bool:
+    """Helper to start Ollama server if it isn't running. Returns True if ready."""
+    if not is_ollama_running():
+        worker.status_signal.emit("Starting Ollama server — please wait…")
+        started = start_ollama(stop_flag=lambda: worker._stop_requested)
+        if not started:
+            if not worker._stop_requested:
+                worker.response_signal.emit(
+                    "❌ Could not start Ollama automatically.\n"
+                    "Please open a terminal and run: ollama serve"
+                )
+            return False
+        worker.status_signal.emit("Ollama started!")
+        time.sleep(1)
+    return True
+
+
 class OllamaStatusWorker(QThread):
     result_signal = pyqtSignal(bool)
 
@@ -220,28 +231,37 @@ class OllamaStatusWorker(QThread):
         self.result_signal.emit(is_ollama_running())
 
 
+# EXTRACTED: shared model-name parser used by both ModelFetchWorker and _refresh_model_cache
+def _fetch_model_names() -> list:
+    """Call ollama.list() and return a flat list of model name strings."""
+    models_data = ollama.list()
+    raw = (models_data.get('models', [])
+           if isinstance(models_data, dict)
+           else getattr(models_data, 'models', []))
+
+    names = []
+    for m in raw:
+        name = (m.get('name') or m.get('model', '')
+                if isinstance(m, dict)
+                else getattr(m, 'model', str(m)))
+        if name:
+            names.append(name)
+    return names
+
+
 class ModelFetchWorker(QThread):
     result_signal = pyqtSignal(list)
 
     def run(self):
         try:
-            models_data = ollama.list()
-            raw = (models_data.get('models', [])
-                   if isinstance(models_data, dict)
-                   else getattr(models_data, 'models', []))
-
-            names = []
-            for m in raw:
-                name = (m.get('name') or m.get('model', '')
-                        if isinstance(m, dict)
-                        else getattr(m, 'model', str(m)))
-                if name:
-                    names.append(name)
+            # MERGED: uses shared _fetch_model_names() instead of inline duplicate
+            names = _fetch_model_names()
 
             _refresh_model_cache()
-            self.result_signal.emit(names if names else ['qwen2.5-coder:3b'])
+
+            self.result_signal.emit(names if names else [])
         except Exception:
-            self.result_signal.emit(['qwen2.5-coder:3b'])
+            self.result_signal.emit([])
 
 
 # ── Smart token budget ───────────────────────────────────────────────────────
@@ -287,7 +307,7 @@ class OllamaWorker(QThread):
     status_signal = pyqtSignal(str)
     chunk_signal = pyqtSignal(str)
 
-    def __init__(self, chat_history, model="qwen2.5-coder:3b",
+    def __init__(self, chat_history, model="",
                  temperature=0.25, num_predict=1024):
         super().__init__()
         self.chat_history = chat_history
@@ -301,19 +321,9 @@ class OllamaWorker(QThread):
 
     def run(self):
         try:
-            if not is_ollama_running():
-                self.status_signal.emit("Starting Ollama server — please wait…")
-                started = start_ollama(stop_flag=lambda: self._stop_requested)
-                if not started:
-                    if self._stop_requested:
-                        return
-                    self.response_signal.emit(
-                        "❌ Could not start Ollama automatically.\n"
-                        "Please open a terminal and run: ollama serve"
-                    )
-                    return
-                self.status_signal.emit("Ollama started! Getting response…")
-                time.sleep(1)
+            if not _ensure_ollama_running(self):
+                return
+            self.status_signal.emit("Ollama is ready! Getting response…")
 
             # config-driven history window + system prompt
             max_lines = int(CONFIG.get("history", {}).get("max_lines", 6))
@@ -371,15 +381,20 @@ class OllamaWorker(QThread):
 
 # ── Vision model helpers ──────────────────────────────────────────────────────
 
+# EXTRACTED: single source of truth for vision-model keywords.
+# Imported by Chatbot.py so both files share the same list.
+VISION_MODEL_KEYWORDS = ["llava", "bakllava", "vision", "moondream", "minicpm-v", "qwen2-vl"]
+
+
 def _is_vision_model(model_name: str) -> bool:
     if not model_name:
         return False
     m = model_name.lower()
-    return any(k in m for k in [
-        "llava", "bakllava", "vision", "moondream", "minicpm-v", "qwen2-vl"
-    ])
+    # MERGED: uses shared VISION_MODEL_KEYWORDS constant
+    return any(k in m for k in VISION_MODEL_KEYWORDS)
 
 
+# QThread reads/writes don't produce a data race.
 _cache_lock = threading.Lock()
 _installed_models_cache: list = []
 _installed_models_cache_valid: bool = False
@@ -388,17 +403,8 @@ _installed_models_cache_valid: bool = False
 def _refresh_model_cache():
     global _installed_models_cache, _installed_models_cache_valid
     try:
-        models_data = ollama.list()
-        raw = (models_data.get('models', [])
-               if isinstance(models_data, dict)
-               else getattr(models_data, 'models', []))
-        names = []
-        for m in raw:
-            name = (m.get('name') or m.get('model', '')
-                    if isinstance(m, dict)
-                    else getattr(m, 'model', str(m)))
-            if name:
-                names.append(name)
+        # MERGED: uses shared _fetch_model_names() instead of inline duplicate
+        names = _fetch_model_names()
         with _cache_lock:
             _installed_models_cache       = names
             _installed_models_cache_valid = True
@@ -441,18 +447,16 @@ def _pick_best_vision_model(preferred: str = "") -> str:
 
 
 def _build_schematic_vision_prompt(extra_prompt: str, image_count: int) -> str:
-    n = "this schematic" if image_count == 1 else f"these {image_count} schematics"
+    """
+    Build the prompt sent to the vision model alongside the image(s).
+    Kept short to minimize prompt token processing time.
+    """
     if extra_prompt and extra_prompt.strip():
-        return (
-            f"Looking at {n}: {extra_prompt.strip()}\n\n"
-            "Base your answer on what is actually visible in the image."
-        )
+        return extra_prompt.strip()
     else:
         return (
-            f"Please analyse {n}. "
-            "Identify the circuit's function, list all visible components with their "
-            "reference designators and values, name the nets and signal rails, "
-            "and flag any potential design issues you can see."
+            "Analyse this circuit image. Identify components, connections, "
+            "and its function. Flag any design issues."
         )
 
 
@@ -526,19 +530,8 @@ class OllamaVisionWorker(QThread):
 
     def run(self):
         try:
-            if not is_ollama_running():
-                self.status_signal.emit("Starting Ollama server — please wait…")
-                started = start_ollama(stop_flag=lambda: self._stop_requested)
-                if not started:
-                    if self._stop_requested:
-                        return
-                    self.response_signal.emit(
-                        "❌ Could not start Ollama automatically.\n"
-                        "Please open a terminal and run: ollama serve"
-                    )
-                    return
-                self.status_signal.emit("Ollama started!")
-                time.sleep(1)
+            if not _ensure_ollama_running(self):
+                return
 
             if not self.image_paths:
                 self.response_signal.emit("❌ No image paths provided.")

@@ -131,6 +131,7 @@ class Application(QtWidgets.QMainWindow):
         self.chatbot_dock.visibilityChanged.connect(
             lambda _: self._reposition_chatbot_icon()
         )
+        self.chatbot_dock.installEventFilter(self)
 
         # ── Floating icon button (bottom-right corner) ──────────────────
         self.chatboticon = QtWidgets.QPushButton(
@@ -191,6 +192,14 @@ class Application(QtWidgets.QMainWindow):
 
         self.chatboticon.move(x, bottom_y)
         self.chatboticon.raise_()  # Always keep on top
+
+    def eventFilter(self, obj, event):
+        """
+        Detect resize events on the dock widget so the icon stays aligned.
+        """
+        if obj == self.chatbot_dock and event.type() == QtCore.QEvent.Resize:
+            self._reposition_chatbot_icon()
+        return super().eventFilter(obj, event)
 
     def resizeEvent(self, event):
         """

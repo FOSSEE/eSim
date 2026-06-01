@@ -12,7 +12,6 @@ from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
 from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
 from PyQt5.QtCore import Qt
 import os
-from frontEnd.Chatbot import ChatbotGUI
 from converter.pspiceToKicad import PspiceConverter
 from converter.ltspiceToKicad import LTspiceConverter
 from converter.LtspiceLibConverter import LTspiceLibConverter
@@ -607,17 +606,3 @@ class DockArea(QtWidgets.QMainWindow):
         self.temp = self.obj_appconfig.current_project['ProjectName']
         for dockwidget in self.obj_appconfig.dock_dict[self.temp]:
             dockwidget.close()
-
-    def chatbotEditor(self):
-        """
-        Creates the eSim Copilot (Chatbot) dock.
-        """
-        global count
-
-        self.chatbot_dock = create_chatbot_dock(self)
-
-        self.addDockWidget(QtCore.Qt.BottomDockWidgetArea, self.chatbot_dock)
-
-        self.chatbot_dock.setVisible(True)
-        self.chatbot_dock.raise_()
-        
