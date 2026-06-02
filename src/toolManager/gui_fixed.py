@@ -5,9 +5,11 @@ import ctypes
 import subprocess
 import platform
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QHBoxLayout,
-    QTableWidget, QCheckBox, QComboBox,
-    QPushButton, QLabel, QMessageBox, QTextEdit, QInputDialog, QLineEdit
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
+    QTableWidget, QTableWidgetItem, QHeaderView, QProgressBar,
+    QCheckBox, QComboBox,
+    QPushButton, QLabel, QMessageBox, QTextEdit, QInputDialog, QLineEdit,
+    QAbstractItemView
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
@@ -308,7 +310,7 @@ class ToolManagerGUI(QWidget):
             ["Tool", "Version", "Description", "Installed Version", "Status"]
         )
         self.table.verticalHeader().setVisible(False)
-        self.table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table.setColumnWidth(0, 150)
         self.table.setColumnWidth(1, 150)
         self.table.setColumnWidth(2, 400)
