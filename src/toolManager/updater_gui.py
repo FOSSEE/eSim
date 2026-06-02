@@ -4,13 +4,13 @@ import subprocess
 import json
 import os
 import re
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                              QHBoxLayout, QPushButton, QLabel, QCheckBox,
                              QComboBox, QMessageBox, QFrame, QProgressBar,
                              QTableWidget, QTableWidgetItem, QHeaderView,
                              QAbstractItemView)
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtGui import QFont
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt6.QtGui import QFont
 
 class InstallerThread(QThread):
     progress = pyqtSignal(str, int)
@@ -365,7 +365,7 @@ class PackageUpdaterWindow(QMainWindow):
         
         title_layout = QVBoxLayout()
         title = QLabel("Package Updater")
-        title.setFont(QFont("Segoe UI", 14, QFont.Bold))
+        title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setStyleSheet("color: white; background: transparent;")
         
         subtitle = QLabel("Real-time progress • Ngspice 35-43 • Ubuntu 22.04")
@@ -442,7 +442,7 @@ class PackageUpdaterWindow(QMainWindow):
         
         self.update_btn = QPushButton("Update Selected")
         self.update_btn.setFixedSize(120, 28)
-        self.update_btn.setFont(QFont("Segoe UI", 9, QFont.Bold))
+        self.update_btn.setFont(QFont("Segoe UI", 9, QFont.Weight.Bold))
         self.update_btn.setCursor(Qt.PointingHandCursor)
         self.update_btn.setStyleSheet("""
             QPushButton {
@@ -538,7 +538,7 @@ def main():
     app.setFont(QFont("Segoe UI", 9))
     window = PackageUpdaterWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
 if __name__ == '__main__':

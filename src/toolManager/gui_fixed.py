@@ -4,13 +4,13 @@ import sys
 import ctypes
 import subprocess
 import platform
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout,
     QTableWidget, QCheckBox, QComboBox,
     QPushButton, QLabel, QMessageBox, QTextEdit, QInputDialog, QLineEdit
 )
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtGui import QFont
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt6.QtGui import QFont
 import logging
 
 PYTHON     = sys.executable
@@ -145,14 +145,14 @@ class UninstallWindow(QWidget):
     def _build_ui(self):
         font_normal = QFont("Segoe UI", 11)
         font_small  = QFont("Segoe UI", 9)
-        font_bold   = QFont("Segoe UI", 11, QFont.Bold)
+        font_bold   = QFont("Segoe UI", 11, QFont.Weight.Bold)
 
         layout = QVBoxLayout(self)
         layout.setSpacing(8)
         layout.setContentsMargins(16, 14, 16, 14)
 
         title = QLabel("Uninstall Tools")
-        title.setFont(QFont("Segoe UI", 14, QFont.Bold))
+        title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setAlignment(Qt.AlignCenter)
         layout.addWidget(title)
 
@@ -293,13 +293,13 @@ class ToolManagerGUI(QWidget):
         self.check_all()
 
     def build_ui(self):
-        font_header = QFont("Segoe UI", 11, QFont.Bold)
+        font_header = QFont("Segoe UI", 11, QFont.Weight.Bold)
         font_normal = QFont("Segoe UI", 11)
 
         layout = QVBoxLayout(self)
 
         title = QLabel("Tool Manager for eSim")
-        title.setFont(QFont("Segoe UI", 15, QFont.Bold))
+        title.setFont(QFont("Segoe UI", 15, QFont.Weight.Bold))
         title.setAlignment(Qt.AlignCenter)
         layout.addWidget(title)
 
@@ -584,7 +584,7 @@ if __name__ == "__main__":
             "Click OK to relaunch as Administrator."
         )
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        if msg.exec_() == QMessageBox.Ok:
+        if msg.exec() == QMessageBox.Ok:
             relaunch_as_admin()
         sys.exit(0)
 
@@ -592,4 +592,4 @@ if __name__ == "__main__":
     setup_logging()
     gui = ToolManagerGUI()
     gui.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

@@ -5,13 +5,13 @@ import json
 import ctypes
 import subprocess
 from pathlib import Path
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout,
     QHBoxLayout, QPushButton, QLabel, QTabWidget,
     QMessageBox, QFrame, QProgressBar
 )
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtGui import QFont
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt6.QtGui import QFont
 
 # ==================== CONFIG ====================
 BASE_DIR = Path(__file__).resolve().parent
@@ -176,7 +176,7 @@ class ToolManagerWindow(QMainWindow):
         vbox = QVBoxLayout()
         vbox.setSpacing(5)
         t1 = QLabel("eSim Tool Manager")
-        t1.setFont(QFont("Arial", 24, QFont.Bold))
+        t1.setFont(QFont("Arial", 24, QFont.Weight.Bold))
         t1.setStyleSheet("color: white; background: transparent;")
         t2 = QLabel("Package Management System  •  Windows Edition")
         t2.setFont(QFont("Arial", 11))
@@ -200,7 +200,7 @@ class ToolManagerWindow(QMainWindow):
         layout.setContentsMargins(30, 12, 30, 12)
 
         lbl = QLabel("📦 Installed:")
-        lbl.setFont(QFont("Arial", 10, QFont.Bold))
+        lbl.setFont(QFont("Arial", 10, QFont.Weight.Bold))
         lbl.setStyleSheet("color: #666; background: transparent;")
         layout.addWidget(lbl)
 
@@ -288,7 +288,7 @@ class ToolManagerWindow(QMainWindow):
         pf_layout.setSpacing(6)
 
         pf_title = QLabel("Installation Progress")
-        pf_title.setFont(QFont("Arial", 9, QFont.Bold))
+        pf_title.setFont(QFont("Arial", 9, QFont.Weight.Bold))
         pf_title.setStyleSheet("color: #aaa; background: transparent;")
         pf_layout.addWidget(pf_title)
 
@@ -333,7 +333,7 @@ class ToolManagerWindow(QMainWindow):
         layout.setSpacing(10)
 
         t = QLabel(title)
-        t.setFont(QFont("Arial", 13, QFont.Bold))
+        t.setFont(QFont("Arial", 13, QFont.Weight.Bold))
         t.setStyleSheet("color: #333; background: transparent;")
         layout.addWidget(t)
 
@@ -357,7 +357,7 @@ class ToolManagerWindow(QMainWindow):
         bottom.addStretch()
 
         btn = QPushButton(btn_text)
-        btn.setFont(QFont("Arial", 11, QFont.Bold))
+        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
         btn.setCursor(Qt.PointingHandCursor)
         btn.setMinimumHeight(40)
         btn.setStyleSheet(f"""
@@ -386,7 +386,7 @@ class ToolManagerWindow(QMainWindow):
         layout.addWidget(desc)
 
         btn = QPushButton("⚙   Open Full Tool Manager")
-        btn.setFont(QFont("Arial", 11, QFont.Bold))
+        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
         btn.setCursor(Qt.PointingHandCursor)
         btn.setFixedHeight(50)
         btn.setStyleSheet("""
@@ -438,7 +438,7 @@ class ToolManagerWindow(QMainWindow):
         wl = QVBoxLayout(warn)
         wl.setContentsMargins(16, 12, 16, 12)
         wt = QLabel("⚠️  Warning")
-        wt.setFont(QFont("Arial", 12, QFont.Bold))
+        wt.setFont(QFont("Arial", 12, QFont.Weight.Bold))
         wt.setStyleSheet("color: #856404; background: transparent;")
         wd = QLabel(
             "Uninstalling packages will remove them permanently. "
@@ -518,7 +518,7 @@ class ToolManagerWindow(QMainWindow):
         layout.setSpacing(15)
         
         title = QLabel("About eSim Tool Manager")
-        title.setFont(QFont("Segoe UI", 18, QFont.Bold))
+        title.setFont(QFont("Segoe UI", 18, QFont.Weight.Bold))
         title.setStyleSheet("color: #0056b3; margin-bottom: 5px;")
         layout.addWidget(title)        
 
@@ -740,7 +740,7 @@ def main():
             "Click OK to relaunch as Administrator."
         )
         msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        if msg.exec_() == QMessageBox.Ok:
+        if msg.exec() == QMessageBox.Ok:
             relaunch_as_admin()
         sys.exit(0)
 
@@ -756,7 +756,7 @@ def main():
         (screen.width()  - win.width())  // 2,
         (screen.height() - win.height()) // 3
     )
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
 if __name__ == "__main__":
