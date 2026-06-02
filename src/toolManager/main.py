@@ -298,7 +298,7 @@ class ToolManagerWindow(QMainWindow):
             "color: #d4d4d4; background: transparent;"
         )
         self.progress_log.setWordWrap(True)
-        self.progress_log.setAlignment(Qt.AlignTop)
+        self.progress_log.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.progress_log.setMinimumHeight(60)
         pf_layout.addWidget(self.progress_log)
 
@@ -751,7 +751,7 @@ def main():
     win = ToolManagerWindow()
     win.show()
 
-    screen = app.desktop().screenGeometry()
+    screen = app.primaryScreen().geometry()
     win.move(
         (screen.width()  - win.width())  // 2,
         (screen.height() - win.height()) // 3
