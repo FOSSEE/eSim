@@ -153,12 +153,12 @@ class UninstallWindow(QWidget):
 
         title = QLabel("Uninstall Tools")
         title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
-        title.setAlignment(Qt.AlignCenter)
+        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
 
         warn = QLabel("⚠  Selected tools will be permanently removed.")
         warn.setFont(font_small)
-        warn.setAlignment(Qt.AlignCenter)
+        warn.setAlignment(Qt.AlignmentFlag.AlignCenter)
         warn.setStyleSheet("color:#e67e22;")
         layout.addWidget(warn)
 
@@ -219,9 +219,9 @@ class UninstallWindow(QWidget):
         reply = QMessageBox.question(
             self, "Confirm Uninstall",
             "Permanently uninstall:\n\n  " + "\n  ".join(selected) + "\n\nThis cannot be undone.",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply != QMessageBox.Yes:
+        if reply != QMessageBox.StandardButton.Yes:
             return
 
         self.btn_uninstall.setEnabled(False)
@@ -300,7 +300,7 @@ class ToolManagerGUI(QWidget):
 
         title = QLabel("Tool Manager for eSim")
         title.setFont(QFont("Segoe UI", 15, QFont.Weight.Bold))
-        title.setAlignment(Qt.AlignCenter)
+        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
 
         self.table = QTableWidget(len(TOOLS), 5)
@@ -341,7 +341,7 @@ class ToolManagerGUI(QWidget):
             status.setStyleSheet("color:orange;")
             self.table.setCellWidget(row, 4, status)
 
-            chk.stateChanged.connect(lambda s, c=combo: c.setEnabled(s == Qt.Checked))
+            chk.stateChanged.connect(lambda s, c=combo: c.setEnabled(s == Qt.CheckState.Checked))
             self.rows[tool] = {
                 "checkbox": chk, "combo": combo,
                 "installed": installed, "status": status
@@ -578,13 +578,13 @@ if __name__ == "__main__":
         app = QApplication(sys.argv)
         msg = QMessageBox()
         msg.setWindowTitle("Administrator Required")
-        msg.setIcon(QMessageBox.Warning)
+        msg.setIcon(QMessageBox.Icon.Warning)
         msg.setText(
             "Tool Manager needs Administrator privileges to install/update tools.\n\n"
             "Click OK to relaunch as Administrator."
         )
-        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        if msg.exec() == QMessageBox.Ok:
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        if msg.exec() == QMessageBox.StandardButton.Ok:
             relaunch_as_admin()
         sys.exit(0)
 

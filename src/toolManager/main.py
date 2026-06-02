@@ -222,7 +222,7 @@ class ToolManagerWindow(QMainWindow):
         rbtn = QPushButton("↻ Refresh")
         rbtn.setFont(QFont("Arial", 9))
         rbtn.setFixedHeight(26)
-        rbtn.setCursor(Qt.PointingHandCursor)
+        rbtn.setCursor(Qt.CursorShape.PointingHandCursor)
         rbtn.setStyleSheet("""
             QPushButton {
                 background: #e9ecef; border: 1px solid #ced4da;
@@ -358,7 +358,7 @@ class ToolManagerWindow(QMainWindow):
 
         btn = QPushButton(btn_text)
         btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
-        btn.setCursor(Qt.PointingHandCursor)
+        btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.setMinimumHeight(40)
         btn.setStyleSheet(f"""
             QPushButton {{
@@ -387,7 +387,7 @@ class ToolManagerWindow(QMainWindow):
 
         btn = QPushButton("⚙   Open Full Tool Manager")
         btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
-        btn.setCursor(Qt.PointingHandCursor)
+        btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.setFixedHeight(50)
         btn.setStyleSheet("""
             QPushButton {
@@ -459,7 +459,7 @@ class ToolManagerWindow(QMainWindow):
         def make_btn(text, color, callback):
             b = QPushButton(text)
             b.setFont(QFont("Arial", 10))
-            b.setCursor(Qt.PointingHandCursor)
+            b.setCursor(Qt.CursorShape.PointingHandCursor)
             b.setFixedHeight(46)
             dark = darken_color(color, 0.1)
             b.setStyleSheet(f"""
@@ -488,13 +488,13 @@ class ToolManagerWindow(QMainWindow):
 
         sep = QLabel("— or uninstall tools individually via Full Tool Manager —")
         sep.setFont(QFont("Arial", 9))
-        sep.setAlignment(Qt.AlignCenter)
+        sep.setAlignment(Qt.AlignmentFlag.AlignCenter)
         sep.setStyleSheet("color: #aaa;")
         layout.addWidget(sep)
 
         indiv = QPushButton("⚙   Open Full Tool Manager (Individual Uninstall)")
         indiv.setFont(QFont("Arial", 10))
-        indiv.setCursor(Qt.PointingHandCursor)
+        indiv.setCursor(Qt.CursorShape.PointingHandCursor)
         indiv.setFixedHeight(40)
         indiv.setStyleSheet("""
             QPushButton {
@@ -584,9 +584,9 @@ class ToolManagerWindow(QMainWindow):
             "  • eSim\n  • KiCad (latest)\n  • Ngspice (latest)\n\n"
             "Estimated size: ~1.5 GB\n"
             "This may take 20–40 minutes.",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_install(
                 [(t, TOOL_VERSIONS[t]) for t in ANALOG_TOOLS],
                 "Analog Mode"
@@ -601,9 +601,9 @@ class ToolManagerWindow(QMainWindow):
             "  • GHDL (latest)\n  • Verilator (latest)\n  • LLVM (latest)\n\n"
             "Estimated size: ~3.0 GB\n"
             "This may take 40–80 minutes.",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_install(
                 [(t, TOOL_VERSIONS[t]) for t in DIGITAL_TOOLS],
                 "Digital Mode"
@@ -672,9 +672,9 @@ class ToolManagerWindow(QMainWindow):
             "Uninstall digital packages?\n\n"
             "Removes: GHDL • Verilator • LLVM\n\n"
             "This cannot be undone!",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_uninstall(
                 [("ghdl","none"), ("verilator","none"), ("llvm","none")],
                 "Digital packages"
@@ -686,9 +686,9 @@ class ToolManagerWindow(QMainWindow):
             "Uninstall analog packages?\n\n"
             "Removes: KiCad • Ngspice\n\n"
             "This cannot be undone!",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_uninstall(
                 [("kicad","none"), ("ngspice","none")],
                 "Analog packages"
@@ -701,9 +701,9 @@ class ToolManagerWindow(QMainWindow):
             "Removes: eSim • KiCad • Ngspice\n"
             "         GHDL • Verilator • LLVM\n\n"
             "This cannot be undone!",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_uninstall(
                 [(t, "none") for t in DIGITAL_TOOLS],
                 "All packages"
@@ -733,14 +733,14 @@ def main():
         app = QApplication(sys.argv)
         msg = QMessageBox()
         msg.setWindowTitle("Administrator Required")
-        msg.setIcon(QMessageBox.Warning)
+        msg.setIcon(QMessageBox.Icon.Warning)
         msg.setText(
             "eSim Tool Manager needs Administrator privileges\n"
             "to install and update tools.\n\n"
             "Click OK to relaunch as Administrator."
         )
-        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        if msg.exec() == QMessageBox.Ok:
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        if msg.exec() == QMessageBox.StandardButton.Ok:
             relaunch_as_admin()
         sys.exit(0)
 

@@ -277,7 +277,7 @@ class PackageUpdaterWindow(QMainWindow):
             checkbox_widget = QWidget()
             checkbox_layout = QHBoxLayout(checkbox_widget)
             checkbox_layout.addWidget(checkbox)
-            checkbox_layout.setAlignment(Qt.AlignCenter)
+            checkbox_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
             checkbox_layout.setContentsMargins(0, 0, 0, 0)
             self.table.setCellWidget(row, 0, checkbox_widget)
             self.checkboxes[package_name] = checkbox
@@ -417,7 +417,7 @@ class PackageUpdaterWindow(QMainWindow):
         
         refresh_btn = QPushButton("🔄 Refresh")
         refresh_btn.setFixedSize(85, 26)
-        refresh_btn.setCursor(Qt.PointingHandCursor)
+        refresh_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         refresh_btn.setStyleSheet(self.get_win_button_style())
         refresh_btn.clicked.connect(self.refresh_versions)
         layout.addWidget(refresh_btn)
@@ -426,14 +426,14 @@ class PackageUpdaterWindow(QMainWindow):
         
         select_btn = QPushButton("Select All")
         select_btn.setFixedSize(75, 26)
-        select_btn.setCursor(Qt.PointingHandCursor)
+        select_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         select_btn.setStyleSheet(self.get_win_button_style())
         select_btn.clicked.connect(lambda: [cb.setChecked(True) for cb in self.checkboxes.values()])
         layout.addWidget(select_btn)
         
         deselect_btn = QPushButton("Deselect All")
         deselect_btn.setFixedSize(85, 26)
-        deselect_btn.setCursor(Qt.PointingHandCursor)
+        deselect_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         deselect_btn.setStyleSheet(self.get_win_button_style())
         deselect_btn.clicked.connect(lambda: [cb.setChecked(False) for cb in self.checkboxes.values()])
         layout.addWidget(deselect_btn)
@@ -443,7 +443,7 @@ class PackageUpdaterWindow(QMainWindow):
         self.update_btn = QPushButton("Update Selected")
         self.update_btn.setFixedSize(120, 28)
         self.update_btn.setFont(QFont("Segoe UI", 9, QFont.Weight.Bold))
-        self.update_btn.setCursor(Qt.PointingHandCursor)
+        self.update_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         self.update_btn.setStyleSheet("""
             QPushButton {
                 background-color: #0078d7;
@@ -502,9 +502,9 @@ class PackageUpdaterWindow(QMainWindow):
         reply = QMessageBox.question(self, 'Confirm',
                                     f'Update these packages?\n\n{pkg_list}\n\n'
                                     f'This will take several minutes.',
-                                    QMessageBox.Yes | QMessageBox.No)
+                                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         
-        if reply == QMessageBox.No:
+        if reply == QMessageBox.StandardButton.No:
             return
         
         self.progress_frame.show()
