@@ -18,7 +18,7 @@ if sys.platform == "win32":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='ignore')
 
-BASE_DIR = Path(r"C:\FOSSEE\Tool-Manager")
+BASE_DIR = Path(__file__).resolve().parent
 STATE_FILE = BASE_DIR / "information.json"
 BASE_DIR.mkdir(parents=True, exist_ok=True)
 

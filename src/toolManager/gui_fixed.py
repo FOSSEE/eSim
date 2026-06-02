@@ -20,7 +20,8 @@ SYSTEM     = platform.system()
 IS_WINDOWS = SYSTEM == "Windows"
 IS_LINUX   = SYSTEM == "Linux"
 
-BASE_DIR = r"C:\FOSSEE\Tool-Manager"
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 if IS_WINDOWS:
     BACKEND = os.path.join(BASE_DIR, "tool_manager_windows.py")
@@ -343,7 +344,7 @@ class ToolManagerGUI(QWidget):
             status.setStyleSheet("color:orange;")
             self.table.setCellWidget(row, 4, status)
 
-            chk.stateChanged.connect(lambda s, c=combo: c.setEnabled(s == Qt.CheckState.Checked))
+            chk.stateChanged.connect(lambda s, c=combo: c.setEnabled(s == Qt.CheckState.Checked.value))
             self.rows[tool] = {
                 "checkbox": chk, "combo": combo,
                 "installed": installed, "status": status
