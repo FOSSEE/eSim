@@ -46,7 +46,11 @@ class Appconfig(QtWidgets.QWidget):
         )
         workspace_check, home = file.readline().split(' ', 1)
         file.close()
-    except IOError:
+    except (IOError, ValueError):
+        # ValueError: workspace.txt was truncated/empty (e.g. an interrupted
+        # write left it blank), so "<check> <home>".split(' ', 1) cannot unpack
+        # into two names. Fall back to the default workspace instead of letting
+        # the exception escape the class body and abort startup.
         home = os.path.join(os.path.expanduser("~"), "eSim-Workspace")
         workspace_check = 0
 

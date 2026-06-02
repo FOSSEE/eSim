@@ -2,7 +2,7 @@ import os
 import re
 import shutil
 import json
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 class TimeExplorer(QtWidgets.QWidget):
 
@@ -81,6 +81,8 @@ class TimeExplorer(QtWidgets.QWidget):
     def clear_snapshots(self):
         selected = self.treewidget.selectedItems()
         project_name = self.current_project["ProjectName"]
+        if not project_name:
+            return
         snapshot_dir = os.path.join(self.user_home, ".esim", "history", project_name)
 
         if selected:
@@ -125,6 +127,8 @@ class TimeExplorer(QtWidgets.QWidget):
         selected_items = self.treewidget.selectedItems()
 
         project_name = self.current_project["ProjectName"]
+        if not project_name:
+            return
         snapshot_dir = os.path.join(self.user_home, ".esim", "history", project_name)
 
         if not os.path.exists(snapshot_dir):
