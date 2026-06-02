@@ -179,9 +179,9 @@ class PackageUpdaterWindow(QMainWindow):
             current_item = QTableWidgetItem(current_ver)
             current_item.setFont(QFont("Segoe UI", 9))
             if current_ver != 'Not installed':
-                current_item.setForeground(Qt.darkGreen)
+                current_item.setForeground(Qt.GlobalColor.darkGreen)
             else:
-                current_item.setForeground(Qt.red)
+                current_item.setForeground(Qt.GlobalColor.red)
             self.table.setItem(row, 2, current_item)
             
             if current_ver in self.available_versions[package_name]:
@@ -290,9 +290,9 @@ class PackageUpdaterWindow(QMainWindow):
             current_item = QTableWidgetItem(current_ver)
             current_item.setFont(QFont("Segoe UI", 9))
             if current_ver != 'Not installed':
-                current_item.setForeground(Qt.darkGreen)
+                current_item.setForeground(Qt.GlobalColor.darkGreen)
             else:
-                current_item.setForeground(Qt.red)
+                current_item.setForeground(Qt.GlobalColor.red)
             self.table.setItem(row, 2, current_item)
             
             combo = QComboBox()
