@@ -91,7 +91,13 @@ def ingest_pdfs(manuals_directory: str) -> None:
 
 # Relevance threshold: ChromaDB returns distances (L2 or cosine).
 # Lower distance = more similar. Filter out chunks with distance > threshold.
-RELEVANCE_THRESHOLD = float(os.environ.get("ESIM_RAG_RELEVANCE_THRESHOLD", "1.0"))
+# ChromaDB distances for nomic-embed-text embeddings are typically
+# in the hundreds. Results above 500 are considered insufficiently
+# relevant and are filtered out.
+RELEVANCE_THRESHOLD = float(
+    os.environ.get("ESIM_RAG_RELEVANCE_THRESHOLD", "500")
+)
+RELEVANCE_THRESHOLD = float(os.environ.get("ESIM_RAG_RELEVANCE_THRESHOLD", "500"))
 
 
 def search_knowledge(query: str, n_results: int = 4) -> str:
