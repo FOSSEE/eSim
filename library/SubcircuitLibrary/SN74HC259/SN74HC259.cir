@@ -1,0 +1,23 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/SN74HC259/SN74HC259.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Sat Jun 14 09:55:16 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X6  Net-_X11-Pad17_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X11-Pad13_ CMOS_INVTR		
+X7  Net-_X11-Pad18_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X11-Pad14_ CMOS_INVTR		
+X8  Net-_X11-Pad19_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X11-Pad15_ CMOS_INVTR		
+X9  Net-_X1-Pad4_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X11-Pad16_ CMOS_INVTR		
+X10  Net-_X10-Pad1_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X10-Pad4_ CMOS_INVTR		
+X2  Net-_U1-Pad1_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X11-Pad17_ Schmitt_Trigger		
+X3  Net-_U1-Pad2_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X11-Pad18_ Schmitt_Trigger		
+X4  Net-_U1-Pad3_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X11-Pad19_ Schmitt_Trigger		
+X1  Net-_U1-Pad4_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X1-Pad4_ Schmitt_Trigger		
+X5  Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_X10-Pad1_ Schmitt_Trigger		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ PORT		
+scmode1  SKY130mode		
+X11  Net-_U1-Pad9_ Net-_U1-Pad11_ Net-_U1-Pad10_ Net-_U1-Pad12_ Net-_U1-Pad6_ Net-_U1-Pad8_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_X10-Pad4_ Net-_U1-Pad7_ Net-_X11-Pad13_ Net-_X11-Pad14_ Net-_X11-Pad15_ Net-_X11-Pad16_ Net-_X11-Pad17_ Net-_X11-Pad18_ Net-_X11-Pad19_ Decoder_38_Address_Latch_storage		
+
+.end

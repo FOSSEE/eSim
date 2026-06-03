@@ -1,0 +1,31 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\L702\L702.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/03/25 23:21:56
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+R2  /B1 Net-_Q2-Pad2_ 340		
+R4  Net-_Q2-Pad2_ Net-_Q2-Pad3_ 7k		
+R6  Net-_Q2-Pad3_ /GND 500		
+Q2  /C1 Net-_Q2-Pad2_ Net-_Q2-Pad3_ eSim_NPN		
+Q4  /C1 Net-_Q2-Pad3_ /GND eSim_NPN		
+R8  /B4 Net-_Q6-Pad2_ 340		
+R10  Net-_Q6-Pad2_ Net-_Q6-Pad3_ 7k		
+R12  Net-_Q6-Pad3_ /GND 500		
+Q6  /C4 Net-_Q6-Pad2_ Net-_Q6-Pad3_ eSim_NPN		
+Q8  /C4 Net-_Q6-Pad3_ /GND eSim_NPN		
+R1  /B2 Net-_Q1-Pad2_ 340		
+R3  Net-_Q1-Pad2_ Net-_Q1-Pad3_ 7k		
+R5  Net-_Q1-Pad3_ /GND 500		
+Q1  /C2 Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN		
+Q3  /C2 Net-_Q1-Pad3_ /GND eSim_NPN		
+R7  /B3 Net-_Q5-Pad2_ 340		
+R9  Net-_Q5-Pad2_ Net-_Q5-Pad3_ 7k		
+R11  Net-_Q5-Pad3_ /GND 500		
+Q5  /C3 Net-_Q5-Pad2_ Net-_Q5-Pad3_ eSim_NPN		
+Q7  /C3 Net-_Q5-Pad3_ /GND eSim_NPN		
+U1  /B4 /B3 ? /C4 /C3 /GND /C2 /C1 ? /B2 /B1 PORT		
+
+.end
