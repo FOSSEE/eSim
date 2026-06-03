@@ -1,0 +1,276 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:LM3900-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L eSim_NPN Q1
+U 1 1 6835ED47
+P 3300 4550
+F 0 "Q1" H 3200 4600 50  0000 R CNN
+F 1 "eSim_NPN" H 3250 4700 50  0000 R CNN
+F 2 "" H 3500 4650 29  0000 C CNN
+F 3 "" H 3300 4550 60  0000 C CNN
+	1    3300 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q5
+U 1 1 6835ED7F
+P 5100 2650
+F 0 "Q5" H 5000 2700 50  0000 R CNN
+F 1 "eSim_NPN" H 5050 2800 50  0000 R CNN
+F 2 "" H 5300 2750 29  0000 C CNN
+F 3 "" H 5100 2650 60  0000 C CNN
+	1    5100 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q2
+U 1 1 6835EDA3
+P 3750 4050
+F 0 "Q2" H 3650 4100 50  0000 R CNN
+F 1 "eSim_NPN" H 3700 4200 50  0000 R CNN
+F 2 "" H 3950 4150 29  0000 C CNN
+F 3 "" H 3750 4050 60  0000 C CNN
+	1    3750 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PNP Q4
+U 1 1 6835EDDD
+P 4200 3650
+F 0 "Q4" H 4100 3700 50  0000 R CNN
+F 1 "eSim_PNP" H 4150 3800 50  0000 R CNN
+F 2 "" H 4400 3750 29  0000 C CNN
+F 3 "" H 4200 3650 60  0000 C CNN
+	1    4200 3650
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_PNP Q3
+U 1 1 6835EE0A
+P 4200 3000
+F 0 "Q3" H 4100 3050 50  0000 R CNN
+F 1 "eSim_PNP" H 4150 3150 50  0000 R CNN
+F 2 "" H 4400 3100 29  0000 C CNN
+F 3 "" H 4200 3000 60  0000 C CNN
+	1    4200 3000
+	1    0    0    1   
+$EndComp
+$Comp
+L eSim_Diode D1
+U 1 1 6835EE44
+P 2900 4700
+F 0 "D1" H 2900 4800 50  0000 C CNN
+F 1 "eSim_Diode" H 2900 4600 50  0000 C CNN
+F 2 "" H 2900 4700 60  0000 C CNN
+F 3 "" H 2900 4700 60  0000 C CNN
+	1    2900 4700
+	0    1    1    0   
+$EndComp
+$Comp
+L dc I2
+U 1 1 6835EE74
+P 5200 3900
+F 0 "I2" H 5000 4000 60  0000 C CNN
+F 1 "1.3m" H 5000 3850 60  0000 C CNN
+F 2 "R1" H 4900 3900 60  0000 C CNN
+F 3 "" H 5200 3900 60  0000 C CNN
+	1    5200 3900
+	1    0    0    1   
+$EndComp
+$Comp
+L dc I1
+U 1 1 6835EEBA
+P 4300 2200
+F 0 "I1" H 4100 2300 60  0000 C CNN
+F 1 "200u" H 4100 2150 60  0000 C CNN
+F 2 "R1" H 4000 2200 60  0000 C CNN
+F 3 "" H 4300 2200 60  0000 C CNN
+	1    4300 2200
+	1    0    0    1   
+$EndComp
+$Comp
+L capacitor C1
+U 1 1 6835F4C8
+P 4050 4300
+F 0 "C1" H 4075 4400 50  0000 L CNN
+F 1 "10p" H 4075 4200 50  0000 L CNN
+F 2 "" H 4088 4150 30  0000 C CNN
+F 3 "" H 4050 4300 60  0000 C CNN
+	1    4050 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3400 4350 3400 4050
+Wire Wire Line
+	2700 4050 3550 4050
+Wire Wire Line
+	3850 3850 3850 3650
+Wire Wire Line
+	3850 3650 4000 3650
+Wire Wire Line
+	4300 3200 4300 3450
+Wire Wire Line
+	4000 3650 4000 3000
+Wire Wire Line
+	4300 2650 4300 2800
+Wire Wire Line
+	4900 2650 4300 2650
+Wire Wire Line
+	4300 1750 5350 1750
+Wire Wire Line
+	5200 1750 5200 2450
+Connection ~ 5200 1750
+Wire Wire Line
+	5200 2850 5200 3450
+Wire Wire Line
+	2550 4550 3100 4550
+Wire Wire Line
+	2900 4850 5200 4850
+Wire Wire Line
+	3400 4850 3400 4750
+Wire Wire Line
+	3850 4850 3850 4250
+Connection ~ 3400 4850
+Wire Wire Line
+	4300 4850 4300 3850
+Connection ~ 3850 4850
+Wire Wire Line
+	5200 4850 5200 4350
+Connection ~ 4300 4850
+Wire Wire Line
+	4300 3300 5200 3300
+Connection ~ 5200 3300
+Connection ~ 4300 3300
+Wire Wire Line
+	4050 4150 4050 3650
+Wire Wire Line
+	4050 3650 3950 3650
+Connection ~ 3950 3650
+Wire Wire Line
+	4050 4450 4050 4850
+Connection ~ 4050 4850
+Wire Wire Line
+	2900 4950 2900 4850
+$Comp
+L PORT U1
+U 1 1 6835FDE8
+P 2450 4050
+F 0 "U1" H 2500 4150 30  0000 C CNN
+F 1 "PORT" H 2450 4050 30  0000 C CNN
+F 2 "" H 2450 4050 60  0000 C CNN
+F 3 "" H 2450 4050 60  0000 C CNN
+	1    2450 4050
+	1    0    0    -1  
+$EndComp
+Connection ~ 2900 4550
+$Comp
+L PORT U1
+U 3 1 6835FE7F
+P 5750 3400
+F 0 "U1" H 5800 3500 30  0000 C CNN
+F 1 "PORT" H 5750 3400 30  0000 C CNN
+F 2 "" H 5750 3400 60  0000 C CNN
+F 3 "" H 5750 3400 60  0000 C CNN
+	3    5750 3400
+	-1   0    0    -1  
+$EndComp
+Connection ~ 3400 4050
+$Comp
+L PORT U1
+U 5 1 6835FEF1
+P 2400 4950
+F 0 "U1" H 2450 5050 30  0000 C CNN
+F 1 "PORT" H 2400 4950 30  0000 C CNN
+F 2 "" H 2400 4950 60  0000 C CNN
+F 3 "" H 2400 4950 60  0000 C CNN
+	5    2400 4950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 3400 5500 3400
+Connection ~ 5200 3400
+$Comp
+L PORT U1
+U 4 1 6835FFC6
+P 5650 1950
+F 0 "U1" H 5700 2050 30  0000 C CNN
+F 1 "PORT" H 5650 1950 30  0000 C CNN
+F 2 "" H 5650 1950 60  0000 C CNN
+F 3 "" H 5650 1950 60  0000 C CNN
+	4    5650 1950
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	5350 1750 5350 1950
+Wire Wire Line
+	5350 1950 5400 1950
+$Comp
+L PORT U1
+U 2 1 68360C1F
+P 2300 4550
+F 0 "U1" H 2350 4650 30  0000 C CNN
+F 1 "PORT" H 2300 4550 30  0000 C CNN
+F 2 "" H 2300 4550 60  0000 C CNN
+F 3 "" H 2300 4550 60  0000 C CNN
+	2    2300 4550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2650 4950 2900 4950
+Text Label 5300 3350 0    60   ~ 0
+out
+$EndSCHEMATC
