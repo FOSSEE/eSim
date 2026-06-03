@@ -1,0 +1,3 @@
+#!/bin/sh
+cd /usr/local/share/esim
+exec python3 -m esim "$@"

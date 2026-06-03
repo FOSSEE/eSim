@@ -1,0 +1,32 @@
+Source: esim
+Section: electronics
+Priority: optional
+Maintainer: Sumanto Kar <sumanto@fossee.in>
+Build-Depends: debhelper-compat (= 13),
+               python3,
+               python3-setuptools,
+               python3-pip,
+               dh-python
+Standards-Version: 4.6.2
+Homepage: https://esim.fossee.in
+
+Package: esim
+Architecture: all
+Depends: ${misc:Depends},
+         python3 (>= 3.8),
+         kicad (>= 7.0),
+         nghdl,
+         python3-wxgtk4.0 | python3-pyqt6,
+         python3-matplotlib,
+         python3-numpy,
+         python3-scipy,
+         python3-pil,
+         python3-pyqt6,
+         python3-pyqt6.qtsvg
+Recommends: 
+Description: eSim - Open Source EDA Tool by FOSSEE, IIT Bombay
+ eSim is an integrated open-source Electronic Design Automation (EDA) tool
+ for circuit design, simulation, and PCB design. It is built on top of KiCad
+ and integrates Ngspice and NGHDL for mixed-signal and digital simulation.
+ .
+ Developed by the FOSSEE group at IIT Bombay.

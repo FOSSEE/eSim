@@ -1,0 +1,43 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+
+%:
+	dh $@
+
+override_dh_auto_clean:
+	@echo "Clean skipped"
+
+override_dh_auto_configure:
+	@echo "Configure skipped"
+
+override_dh_auto_build:
+	python3 setup.py build
+
+override_dh_auto_test:
+	@echo "Tests skipped"
+
+override_dh_usrlocal:
+	@echo "Skipping dh_usrlocal - installing files directly in /usr/local"
+
+override_dh_auto_install:
+	# Install Python package
+	python3 setup.py install --root=$(CURDIR)/debian/esim \
+		--prefix=/usr/local \
+		--install-lib=/usr/local/lib/python3/dist-packages \
+		--no-compile
+
+	# Copy full eSim folder
+	mkdir -p $(CURDIR)/debian/esim/usr/local/share/esim
+	rsync -a --exclude=debian --exclude=.git --exclude=build --exclude=dist \
+		./ $(CURDIR)/debian/esim/usr/local/share/esim/ 2>/dev/null || true
+
+	# Create launcher
+	mkdir -p $(CURDIR)/debian/esim/usr/local/bin
+	cat > $(CURDIR)/debian/esim/usr/local/bin/esim << 'LAUNCHER'
+#!/bin/sh
+cd /usr/local/share/esim
+exec python3 -m esim "$@"
+LAUNCHER
+
+	chmod +x $(CURDIR)/debian/esim/usr/local/bin/esim

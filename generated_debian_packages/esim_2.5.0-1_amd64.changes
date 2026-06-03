@@ -1,0 +1,28 @@
+Format: 1.8
+Date: Sun, 24 May 2026 18:00:00 +0530
+Source: esim
+Binary: esim
+Built-For-Profiles: noudeb
+Architecture: all
+Version: 2.5.0-1
+Distribution: unstable
+Urgency: medium
+Maintainer: Sumanto Kar <sumanto@fossee.in>
+Changed-By: Sumanto Kar <sumanto@fossee.in>
+Description:
+ esim       - eSim - Open Source EDA Tool by FOSSEE, IIT Bombay
+Changes:
+ esim (2.5.0-1) unstable; urgency=medium
+ .
+   * Initial Debian packaging for eSim 2.5.0
+   * Install under /usr/local as requested
+   * Integrated with NGHDL
+Checksums-Sha1:
+ 6b7cf977edd36e7fef1ba41120c979ac37ba3d71 98552070 esim_2.5.0-1_all.deb
+ 9a970b6bbbc42133940e54e00f332a7a1c959411 7716 esim_2.5.0-1_amd64.buildinfo
+Checksums-Sha256:
+ 2c78fc88fe907950c3c9af5e63e246aad6a884db0344966e1faace38d21d5f25 98552070 esim_2.5.0-1_all.deb
+ d3ae40ff88e0fb59d7fff6fb50fc68f64dfc2d028454f78924af578ac44118d3 7716 esim_2.5.0-1_amd64.buildinfo
+Files:
+ ba4d0b4160fe1010e3c0f70cbc89a464 98552070 electronics optional esim_2.5.0-1_all.deb
+ df7a806e2ef1933188efb29266901a0d 7716 electronics optional esim_2.5.0-1_amd64.buildinfo

@@ -1,0 +1,11 @@
+browser
+configuration
+converter
+frontEnd
+kicadtoNgspice
+maker
+modelEditor
+ngspiceSimulation
+ngspicetoModelica
+projManagement
+subcircuit

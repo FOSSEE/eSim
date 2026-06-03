@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+APP_DIR="/opt/esim"
+
+if [ -x "$APP_DIR/esim" ]; then
+    exec "$APP_DIR/esim" "$@"
+fi
+
+if [ -x "$APP_DIR/start.sh" ]; then
+    exec "$APP_DIR/start.sh" "$@"
+fi
+
+echo "eSim executable not found in $APP_DIR" >&2
+exit 1

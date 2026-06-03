@@ -1,0 +1,11 @@
+Package: esim
+Version: 1.0.0
+Section: electronics
+Priority: optional
+Architecture: amd64
+Maintainer: OpenAI <noreply@openai.com>
+Depends: bash, desktop-file-utils, hicolor-icon-theme, xdg-utils
+Description: eSim electronic design automation suite
+ eSim is an electronic design automation suite for schematic capture and
+ simulation. This Debian package is a packaging scaffold that installs the
+ application under /opt/esim and provides a launcher in /usr/bin/esim.
