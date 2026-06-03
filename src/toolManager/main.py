@@ -214,7 +214,7 @@ class ToolManagerWindow(QMainWindow):
                         f"<span style='color:#999;'>—</span>")
             l2 = QLabel(text)
             l2.setFont(QFont("Arial", 9))
-            l2.setStyleSheet("background: transparent; margin-left: 10px;")
+            l2.setStyleSheet("color: #555; background: transparent; margin-left: 10px;")
             layout.addWidget(l2)
 
         layout.addStretch()
