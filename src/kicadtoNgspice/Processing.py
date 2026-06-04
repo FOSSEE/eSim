@@ -142,6 +142,8 @@ class PrcocessNetlist:
             if (compName[0] == 'v' or compName[0] == 'i') and not compName.startswith('ihp'):
                 # Find the index component from circuit
                 index = schematicInfo.index(compline)
+                if len(words) <= 3:
+                    continue
                 if words[3] == "pulse":
                     Title = "Add parameters for pulse source " + compName
                     v1 = '  Enter initial value (Volts/Amps): '

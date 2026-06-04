@@ -447,7 +447,7 @@ class Application(QtWidgets.QMainWindow):
         webbrowser.open("https://esim.readthedocs.io/en/latest/index.html")
 
     @QtCore.pyqtSlot(QtCore.QProcess.ExitStatus, int)
-    def plotSimulationData(self, exitCode, exitStatus):
+    def plotSimulationData(self, exitStatus, exitCode):
         """Enables interaction for new simulation and
            displays the plotter dock where graphs can be plotted.
         """

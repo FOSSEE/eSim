@@ -118,12 +118,14 @@ class ProjectExplorer(QtWidgets.QWidget):
 
     def openMenu(self, position):
         indexes = self.treewidget.selectedIndexes()
-        if len(indexes) > 0:
-            level = 0
-            index = indexes[0]
-            while index.parent().isValid():
-                index = index.parent()
-                level += 1
+        if not indexes:
+            return
+
+        level = 0
+        index = indexes[0]
+        while index.parent().isValid():
+            index = index.parent()
+            level += 1
 
         menu = QtWidgets.QMenu()
         if level == 0:
@@ -139,7 +141,7 @@ class ProjectExplorer(QtWidgets.QWidget):
             snapshot = menu.addAction(self.tr("Snapshot"))
             snapshot.triggered.connect(self.takeSnapshot)
 
-        menu.exec_(self.treewidget.viewport().mapToGlobal(position))
+        menu.exec(self.treewidget.viewport().mapToGlobal(position))
 
     def openProject(self):
         self.indexItem = self.treewidget.currentIndex()
@@ -292,7 +294,7 @@ class ProjectExplorer(QtWidgets.QWidget):
 
         newBaseFileName, ok = QtWidgets.QInputDialog.getText(
             self, 'Rename Project', 'Project Name:',
-            QtWidgets.QLineEdit.Normal, self.baseFileName
+            QtWidgets.QLineEdit.EchoMode.Normal, self.baseFileName
         )
 
         if ok and newBaseFileName:
@@ -474,4 +476,3 @@ class ProjectExplorer(QtWidgets.QWidget):
             self.time_explorer.add_snapshot(file_name, formatted_time)
         else:
             print(f"Snapshot taken: {snapshot_path}")
-                    msg.exec()
