@@ -18,7 +18,7 @@ if sys.platform == "win32":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='ignore')
 
-BASE_DIR = Path(r"C:\FOSSEE\Tool-Manager")
+BASE_DIR = Path(__file__).resolve().parent
 STATE_FILE = BASE_DIR / "information.json"
 BASE_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -342,11 +342,11 @@ def find_llvm_fixed(version=None):
 
 def find_pyqt_fixed(version=None):
     try:
-        result = run_cmd_safe([sys.executable, "-c", "import PyQt5.QtCore; print(PyQt5.QtCore.PYQT_VERSION_STR)"])
+        result = run_cmd_safe([sys.executable, "-c", "import PyQt6.QtCore; print(PyQt6.QtCore.PYQT_VERSION_STR)"])
         if result and result.returncode == 0:
             found_ver = result.stdout.strip()
             if version is None or found_ver.startswith(str(version)):
-                return "PyQt5", found_ver
+                return "PyQt6", found_ver
     except:
         pass
     
@@ -360,13 +360,13 @@ def find_pyqt_fixed(version=None):
         pass
     
     try:
-        result = run_cmd_safe([sys.executable, "-m", "pip", "show", "PyQt5"])
+        result = run_cmd_safe([sys.executable, "-m", "pip", "show", "PyQt6"])
         if result and result.returncode == 0:
             for line in result.stdout.split('\n'):
                 if line.lower().startswith('version:'):
                     found_ver = line.split(':')[1].strip()
                     if version is None or found_ver.startswith(str(version)):
-                        return "PyQt5", found_ver
+                        return "PyQt6", found_ver
     except:
         pass
     
@@ -916,7 +916,7 @@ def install_pyqt(target_version, upgrade=False):
     if target_version.startswith("6.") or target_version == "latest":
         package = "PyQt6"
     else:
-        package = "PyQt5"
+        package = "PyQt6"
     
     if target_version == "latest":
         cmd = [sys.executable, "-m", "pip", "install", package, "--upgrade"]

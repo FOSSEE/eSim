@@ -4,13 +4,15 @@ import sys
 import ctypes
 import subprocess
 import platform
-from PyQt5.QtWidgets import (
-    QApplication, QWidget, QVBoxLayout, QHBoxLayout,
-    QTableWidget, QCheckBox, QComboBox,
-    QPushButton, QLabel, QMessageBox, QTextEdit, QInputDialog, QLineEdit
+from PyQt6.QtWidgets import (
+    QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
+    QTableWidget, QTableWidgetItem, QHeaderView, QProgressBar,
+    QCheckBox, QComboBox,
+    QPushButton, QLabel, QMessageBox, QTextEdit, QInputDialog, QLineEdit,
+    QAbstractItemView
 )
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtGui import QFont
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt6.QtGui import QFont
 import logging
 
 PYTHON     = sys.executable
@@ -18,7 +20,8 @@ SYSTEM     = platform.system()
 IS_WINDOWS = SYSTEM == "Windows"
 IS_LINUX   = SYSTEM == "Linux"
 
-BASE_DIR = r"C:\FOSSEE\Tool-Manager"
+import os
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 if IS_WINDOWS:
     BACKEND = os.path.join(BASE_DIR, "tool_manager_windows.py")
@@ -145,20 +148,20 @@ class UninstallWindow(QWidget):
     def _build_ui(self):
         font_normal = QFont("Segoe UI", 11)
         font_small  = QFont("Segoe UI", 9)
-        font_bold   = QFont("Segoe UI", 11, QFont.Bold)
+        font_bold   = QFont("Segoe UI", 11, QFont.Weight.Bold)
 
         layout = QVBoxLayout(self)
         layout.setSpacing(8)
         layout.setContentsMargins(16, 14, 16, 14)
 
         title = QLabel("Uninstall Tools")
-        title.setFont(QFont("Segoe UI", 14, QFont.Bold))
-        title.setAlignment(Qt.AlignCenter)
+        title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
+        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
 
         warn = QLabel("⚠  Selected tools will be permanently removed.")
         warn.setFont(font_small)
-        warn.setAlignment(Qt.AlignCenter)
+        warn.setAlignment(Qt.AlignmentFlag.AlignCenter)
         warn.setStyleSheet("color:#e67e22;")
         layout.addWidget(warn)
 
@@ -219,9 +222,9 @@ class UninstallWindow(QWidget):
         reply = QMessageBox.question(
             self, "Confirm Uninstall",
             "Permanently uninstall:\n\n  " + "\n  ".join(selected) + "\n\nThis cannot be undone.",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply != QMessageBox.Yes:
+        if reply != QMessageBox.StandardButton.Yes:
             return
 
         self.btn_uninstall.setEnabled(False)
@@ -293,14 +296,14 @@ class ToolManagerGUI(QWidget):
         self.check_all()
 
     def build_ui(self):
-        font_header = QFont("Segoe UI", 11, QFont.Bold)
+        font_header = QFont("Segoe UI", 11, QFont.Weight.Bold)
         font_normal = QFont("Segoe UI", 11)
 
         layout = QVBoxLayout(self)
 
         title = QLabel("Tool Manager for eSim")
-        title.setFont(QFont("Segoe UI", 15, QFont.Bold))
-        title.setAlignment(Qt.AlignCenter)
+        title.setFont(QFont("Segoe UI", 15, QFont.Weight.Bold))
+        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
 
         self.table = QTableWidget(len(TOOLS), 5)
@@ -308,7 +311,7 @@ class ToolManagerGUI(QWidget):
             ["Tool", "Version", "Description", "Installed Version", "Status"]
         )
         self.table.verticalHeader().setVisible(False)
-        self.table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table.setColumnWidth(0, 150)
         self.table.setColumnWidth(1, 150)
         self.table.setColumnWidth(2, 400)
@@ -341,7 +344,7 @@ class ToolManagerGUI(QWidget):
             status.setStyleSheet("color:orange;")
             self.table.setCellWidget(row, 4, status)
 
-            chk.stateChanged.connect(lambda s, c=combo: c.setEnabled(s == Qt.Checked))
+            chk.stateChanged.connect(lambda s, c=combo: c.setEnabled(s == Qt.CheckState.Checked.value))
             self.rows[tool] = {
                 "checkbox": chk, "combo": combo,
                 "installed": installed, "status": status
@@ -578,13 +581,13 @@ if __name__ == "__main__":
         app = QApplication(sys.argv)
         msg = QMessageBox()
         msg.setWindowTitle("Administrator Required")
-        msg.setIcon(QMessageBox.Warning)
+        msg.setIcon(QMessageBox.Icon.Warning)
         msg.setText(
             "Tool Manager needs Administrator privileges to install/update tools.\n\n"
             "Click OK to relaunch as Administrator."
         )
-        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        if msg.exec_() == QMessageBox.Ok:
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        if msg.exec() == QMessageBox.StandardButton.Ok:
             relaunch_as_admin()
         sys.exit(0)
 
@@ -592,4 +595,4 @@ if __name__ == "__main__":
     setup_logging()
     gui = ToolManagerGUI()
     gui.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

@@ -4,13 +4,13 @@ import subprocess
 import json
 import os
 import re
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                              QHBoxLayout, QPushButton, QLabel, QCheckBox,
                              QComboBox, QMessageBox, QFrame, QProgressBar,
                              QTableWidget, QTableWidgetItem, QHeaderView,
                              QAbstractItemView)
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtGui import QFont
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt6.QtGui import QFont
 
 class InstallerThread(QThread):
     progress = pyqtSignal(str, int)
@@ -179,9 +179,9 @@ class PackageUpdaterWindow(QMainWindow):
             current_item = QTableWidgetItem(current_ver)
             current_item.setFont(QFont("Segoe UI", 9))
             if current_ver != 'Not installed':
-                current_item.setForeground(Qt.darkGreen)
+                current_item.setForeground(Qt.GlobalColor.darkGreen)
             else:
-                current_item.setForeground(Qt.red)
+                current_item.setForeground(Qt.GlobalColor.red)
             self.table.setItem(row, 2, current_item)
             
             if current_ver in self.available_versions[package_name]:
@@ -260,8 +260,8 @@ class PackageUpdaterWindow(QMainWindow):
         
         self.table.horizontalHeader().setStretchLastSection(True)
         self.table.verticalHeader().setVisible(False)
-        self.table.setSelectionBehavior(QAbstractItemView.SelectRows)
-        self.table.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.table.setSelectionBehavior(QAbstractItemView.SelectionBehavior.SelectRows)
+        self.table.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.table.setAlternatingRowColors(True)
         self.table.setShowGrid(True)
         
@@ -277,7 +277,7 @@ class PackageUpdaterWindow(QMainWindow):
             checkbox_widget = QWidget()
             checkbox_layout = QHBoxLayout(checkbox_widget)
             checkbox_layout.addWidget(checkbox)
-            checkbox_layout.setAlignment(Qt.AlignCenter)
+            checkbox_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
             checkbox_layout.setContentsMargins(0, 0, 0, 0)
             self.table.setCellWidget(row, 0, checkbox_widget)
             self.checkboxes[package_name] = checkbox
@@ -290,9 +290,9 @@ class PackageUpdaterWindow(QMainWindow):
             current_item = QTableWidgetItem(current_ver)
             current_item.setFont(QFont("Segoe UI", 9))
             if current_ver != 'Not installed':
-                current_item.setForeground(Qt.darkGreen)
+                current_item.setForeground(Qt.GlobalColor.darkGreen)
             else:
-                current_item.setForeground(Qt.red)
+                current_item.setForeground(Qt.GlobalColor.red)
             self.table.setItem(row, 2, current_item)
             
             combo = QComboBox()
@@ -365,7 +365,7 @@ class PackageUpdaterWindow(QMainWindow):
         
         title_layout = QVBoxLayout()
         title = QLabel("Package Updater")
-        title.setFont(QFont("Segoe UI", 14, QFont.Bold))
+        title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setStyleSheet("color: white; background: transparent;")
         
         subtitle = QLabel("Real-time progress • Ngspice 35-43 • Ubuntu 22.04")
@@ -417,7 +417,7 @@ class PackageUpdaterWindow(QMainWindow):
         
         refresh_btn = QPushButton("🔄 Refresh")
         refresh_btn.setFixedSize(85, 26)
-        refresh_btn.setCursor(Qt.PointingHandCursor)
+        refresh_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         refresh_btn.setStyleSheet(self.get_win_button_style())
         refresh_btn.clicked.connect(self.refresh_versions)
         layout.addWidget(refresh_btn)
@@ -426,14 +426,14 @@ class PackageUpdaterWindow(QMainWindow):
         
         select_btn = QPushButton("Select All")
         select_btn.setFixedSize(75, 26)
-        select_btn.setCursor(Qt.PointingHandCursor)
+        select_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         select_btn.setStyleSheet(self.get_win_button_style())
         select_btn.clicked.connect(lambda: [cb.setChecked(True) for cb in self.checkboxes.values()])
         layout.addWidget(select_btn)
         
         deselect_btn = QPushButton("Deselect All")
         deselect_btn.setFixedSize(85, 26)
-        deselect_btn.setCursor(Qt.PointingHandCursor)
+        deselect_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         deselect_btn.setStyleSheet(self.get_win_button_style())
         deselect_btn.clicked.connect(lambda: [cb.setChecked(False) for cb in self.checkboxes.values()])
         layout.addWidget(deselect_btn)
@@ -442,8 +442,8 @@ class PackageUpdaterWindow(QMainWindow):
         
         self.update_btn = QPushButton("Update Selected")
         self.update_btn.setFixedSize(120, 28)
-        self.update_btn.setFont(QFont("Segoe UI", 9, QFont.Bold))
-        self.update_btn.setCursor(Qt.PointingHandCursor)
+        self.update_btn.setFont(QFont("Segoe UI", 9, QFont.Weight.Bold))
+        self.update_btn.setCursor(Qt.CursorShape.PointingHandCursor)
         self.update_btn.setStyleSheet("""
             QPushButton {
                 background-color: #0078d7;
@@ -502,9 +502,9 @@ class PackageUpdaterWindow(QMainWindow):
         reply = QMessageBox.question(self, 'Confirm',
                                     f'Update these packages?\n\n{pkg_list}\n\n'
                                     f'This will take several minutes.',
-                                    QMessageBox.Yes | QMessageBox.No)
+                                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
         
-        if reply == QMessageBox.No:
+        if reply == QMessageBox.StandardButton.No:
             return
         
         self.progress_frame.show()
@@ -538,7 +538,7 @@ def main():
     app.setFont(QFont("Segoe UI", 9))
     window = PackageUpdaterWindow()
     window.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
 if __name__ == '__main__':

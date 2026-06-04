@@ -18,3 +18,7 @@ nghdl*
 tags
 build/
 dist/
+
+# Tool Manager dynamically created folders
+src/toolManager/bin/
+src/toolManager/ghdl/

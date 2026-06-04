@@ -5,13 +5,13 @@ import json
 import ctypes
 import subprocess
 from pathlib import Path
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout,
     QHBoxLayout, QPushButton, QLabel, QTabWidget,
     QMessageBox, QFrame, QProgressBar
 )
-from PyQt5.QtCore import Qt, QThread, pyqtSignal
-from PyQt5.QtGui import QFont
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
+from PyQt6.QtGui import QFont
 
 # ==================== CONFIG ====================
 BASE_DIR = Path(__file__).resolve().parent
@@ -176,7 +176,7 @@ class ToolManagerWindow(QMainWindow):
         vbox = QVBoxLayout()
         vbox.setSpacing(5)
         t1 = QLabel("eSim Tool Manager")
-        t1.setFont(QFont("Arial", 24, QFont.Bold))
+        t1.setFont(QFont("Arial", 24, QFont.Weight.Bold))
         t1.setStyleSheet("color: white; background: transparent;")
         t2 = QLabel("Package Management System  •  Windows Edition")
         t2.setFont(QFont("Arial", 11))
@@ -200,7 +200,7 @@ class ToolManagerWindow(QMainWindow):
         layout.setContentsMargins(30, 12, 30, 12)
 
         lbl = QLabel("📦 Installed:")
-        lbl.setFont(QFont("Arial", 10, QFont.Bold))
+        lbl.setFont(QFont("Arial", 10, QFont.Weight.Bold))
         lbl.setStyleSheet("color: #666; background: transparent;")
         layout.addWidget(lbl)
 
@@ -214,7 +214,7 @@ class ToolManagerWindow(QMainWindow):
                         f"<span style='color:#999;'>—</span>")
             l2 = QLabel(text)
             l2.setFont(QFont("Arial", 9))
-            l2.setStyleSheet("background: transparent; margin-left: 10px;")
+            l2.setStyleSheet("color: #555; background: transparent; margin-left: 10px;")
             layout.addWidget(l2)
 
         layout.addStretch()
@@ -222,7 +222,7 @@ class ToolManagerWindow(QMainWindow):
         rbtn = QPushButton("↻ Refresh")
         rbtn.setFont(QFont("Arial", 9))
         rbtn.setFixedHeight(26)
-        rbtn.setCursor(Qt.PointingHandCursor)
+        rbtn.setCursor(Qt.CursorShape.PointingHandCursor)
         rbtn.setStyleSheet("""
             QPushButton {
                 background: #e9ecef; border: 1px solid #ced4da;
@@ -288,7 +288,7 @@ class ToolManagerWindow(QMainWindow):
         pf_layout.setSpacing(6)
 
         pf_title = QLabel("Installation Progress")
-        pf_title.setFont(QFont("Arial", 9, QFont.Bold))
+        pf_title.setFont(QFont("Arial", 9, QFont.Weight.Bold))
         pf_title.setStyleSheet("color: #aaa; background: transparent;")
         pf_layout.addWidget(pf_title)
 
@@ -298,7 +298,7 @@ class ToolManagerWindow(QMainWindow):
             "color: #d4d4d4; background: transparent;"
         )
         self.progress_log.setWordWrap(True)
-        self.progress_log.setAlignment(Qt.AlignTop)
+        self.progress_log.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.progress_log.setMinimumHeight(60)
         pf_layout.addWidget(self.progress_log)
 
@@ -333,7 +333,7 @@ class ToolManagerWindow(QMainWindow):
         layout.setSpacing(10)
 
         t = QLabel(title)
-        t.setFont(QFont("Arial", 13, QFont.Bold))
+        t.setFont(QFont("Arial", 13, QFont.Weight.Bold))
         t.setStyleSheet("color: #333; background: transparent;")
         layout.addWidget(t)
 
@@ -357,8 +357,8 @@ class ToolManagerWindow(QMainWindow):
         bottom.addStretch()
 
         btn = QPushButton(btn_text)
-        btn.setFont(QFont("Arial", 11, QFont.Bold))
-        btn.setCursor(Qt.PointingHandCursor)
+        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
+        btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.setMinimumHeight(40)
         btn.setStyleSheet(f"""
             QPushButton {{
@@ -386,8 +386,8 @@ class ToolManagerWindow(QMainWindow):
         layout.addWidget(desc)
 
         btn = QPushButton("⚙   Open Full Tool Manager")
-        btn.setFont(QFont("Arial", 11, QFont.Bold))
-        btn.setCursor(Qt.PointingHandCursor)
+        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
+        btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.setFixedHeight(50)
         btn.setStyleSheet("""
             QPushButton {
@@ -438,7 +438,7 @@ class ToolManagerWindow(QMainWindow):
         wl = QVBoxLayout(warn)
         wl.setContentsMargins(16, 12, 16, 12)
         wt = QLabel("⚠️  Warning")
-        wt.setFont(QFont("Arial", 12, QFont.Bold))
+        wt.setFont(QFont("Arial", 12, QFont.Weight.Bold))
         wt.setStyleSheet("color: #856404; background: transparent;")
         wd = QLabel(
             "Uninstalling packages will remove them permanently. "
@@ -459,7 +459,7 @@ class ToolManagerWindow(QMainWindow):
         def make_btn(text, color, callback):
             b = QPushButton(text)
             b.setFont(QFont("Arial", 10))
-            b.setCursor(Qt.PointingHandCursor)
+            b.setCursor(Qt.CursorShape.PointingHandCursor)
             b.setFixedHeight(46)
             dark = darken_color(color, 0.1)
             b.setStyleSheet(f"""
@@ -488,13 +488,13 @@ class ToolManagerWindow(QMainWindow):
 
         sep = QLabel("— or uninstall tools individually via Full Tool Manager —")
         sep.setFont(QFont("Arial", 9))
-        sep.setAlignment(Qt.AlignCenter)
+        sep.setAlignment(Qt.AlignmentFlag.AlignCenter)
         sep.setStyleSheet("color: #aaa;")
         layout.addWidget(sep)
 
         indiv = QPushButton("⚙   Open Full Tool Manager (Individual Uninstall)")
         indiv.setFont(QFont("Arial", 10))
-        indiv.setCursor(Qt.PointingHandCursor)
+        indiv.setCursor(Qt.CursorShape.PointingHandCursor)
         indiv.setFixedHeight(40)
         indiv.setStyleSheet("""
             QPushButton {
@@ -518,7 +518,7 @@ class ToolManagerWindow(QMainWindow):
         layout.setSpacing(15)
         
         title = QLabel("About eSim Tool Manager")
-        title.setFont(QFont("Segoe UI", 18, QFont.Bold))
+        title.setFont(QFont("Segoe UI", 18, QFont.Weight.Bold))
         title.setStyleSheet("color: #0056b3; margin-bottom: 5px;")
         layout.addWidget(title)        
 
@@ -584,9 +584,9 @@ class ToolManagerWindow(QMainWindow):
             "  • eSim\n  • KiCad (latest)\n  • Ngspice (latest)\n\n"
             "Estimated size: ~1.5 GB\n"
             "This may take 20–40 minutes.",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_install(
                 [(t, TOOL_VERSIONS[t]) for t in ANALOG_TOOLS],
                 "Analog Mode"
@@ -601,9 +601,9 @@ class ToolManagerWindow(QMainWindow):
             "  • GHDL (latest)\n  • Verilator (latest)\n  • LLVM (latest)\n\n"
             "Estimated size: ~3.0 GB\n"
             "This may take 40–80 minutes.",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_install(
                 [(t, TOOL_VERSIONS[t]) for t in DIGITAL_TOOLS],
                 "Digital Mode"
@@ -672,9 +672,9 @@ class ToolManagerWindow(QMainWindow):
             "Uninstall digital packages?\n\n"
             "Removes: GHDL • Verilator • LLVM\n\n"
             "This cannot be undone!",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_uninstall(
                 [("ghdl","none"), ("verilator","none"), ("llvm","none")],
                 "Digital packages"
@@ -686,9 +686,9 @@ class ToolManagerWindow(QMainWindow):
             "Uninstall analog packages?\n\n"
             "Removes: KiCad • Ngspice\n\n"
             "This cannot be undone!",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_uninstall(
                 [("kicad","none"), ("ngspice","none")],
                 "Analog packages"
@@ -701,9 +701,9 @@ class ToolManagerWindow(QMainWindow):
             "Removes: eSim • KiCad • Ngspice\n"
             "         GHDL • Verilator • LLVM\n\n"
             "This cannot be undone!",
-            QMessageBox.Yes | QMessageBox.No, QMessageBox.No
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No
         )
-        if reply == QMessageBox.Yes:
+        if reply == QMessageBox.StandardButton.Yes:
             self._run_uninstall(
                 [(t, "none") for t in DIGITAL_TOOLS],
                 "All packages"
@@ -733,14 +733,14 @@ def main():
         app = QApplication(sys.argv)
         msg = QMessageBox()
         msg.setWindowTitle("Administrator Required")
-        msg.setIcon(QMessageBox.Warning)
+        msg.setIcon(QMessageBox.Icon.Warning)
         msg.setText(
             "eSim Tool Manager needs Administrator privileges\n"
             "to install and update tools.\n\n"
             "Click OK to relaunch as Administrator."
         )
-        msg.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        if msg.exec_() == QMessageBox.Ok:
+        msg.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
+        if msg.exec() == QMessageBox.StandardButton.Ok:
             relaunch_as_admin()
         sys.exit(0)
 
@@ -751,12 +751,12 @@ def main():
     win = ToolManagerWindow()
     win.show()
 
-    screen = app.desktop().screenGeometry()
+    screen = app.primaryScreen().geometry()
     win.move(
         (screen.width()  - win.width())  // 2,
         (screen.height() - win.height()) // 3
     )
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
 if __name__ == "__main__":
