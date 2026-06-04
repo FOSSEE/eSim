@@ -36,14 +36,17 @@ modules:
       - --with-ngshared
     sources:
       - type: archive
-        url: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/45.2/ngspice-45.2.tar.gz
-        sha256: ba8345f4c3774714c10f33d7da850d361cec7d14b3a295d0dc9fd96f7423812d
+        url: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/old-releases/43/ngspice-43.tar.gz
+        sha256: 14dd6a6f08531f2051c13ae63790a45708bd43f3e77886a6a84898c297b13699
 
   # eSim Python application (uses PyQt5)
   - name: esim
     buildsystem: simple
+    build-options:
+      build-args:
+        - --share=network
     build-commands:
-      - pip3 install --no-build-isolation --prefix=/app PyQt5 numpy matplotlib scipy watchdog hdlparse psutil
+      - pip3 install --no-build-isolation --prefix=/app  numpy matplotlib scipy watchdog  psutil
       - mkdir -p /app/share/esim
       - cp -r src library images /app/share/esim/
       - cp VERSION LICENSE /app/share/esim/ 2>/dev/null || true

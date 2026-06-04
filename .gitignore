@@ -18,3 +18,4 @@ nghdl*
 tags
 build/
 dist/
+.flatpak-builder/
