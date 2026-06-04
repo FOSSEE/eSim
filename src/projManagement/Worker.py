@@ -100,7 +100,7 @@ class WorkerThread(QtCore.QThread):
         procThread = Appconfig()
         projDir = procThread.current_project["ProjectName"]
 
-        if (projDir is None) and ('nghdl' not in command):
+        if (projDir is None) and ('nghdl' not in command) and ('toolManager' not in command):
             msg = QtWidgets.QErrorMessage()
             msg.setModal(True)
             msg.setWindowTitle("Error Message")
@@ -114,7 +114,7 @@ class WorkerThread(QtCore.QThread):
 
         proc = subprocess.Popen(shlex.split(command))
 
-        if 'nghdl' in command:
+        if 'nghdl' in command or 'toolManager' in command:
             return
 
         self.my_workers.append(proc)

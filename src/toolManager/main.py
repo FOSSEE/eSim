@@ -48,8 +48,16 @@ def is_admin():
 
 def relaunch_as_admin():
     script = str(Path(__file__).resolve())
+    
+    # Swap to pythonw.exe to suppress the black console window
+    python_exe = PYTHON
+    if python_exe.lower().endswith("python.exe"):
+        pythonw_exe = python_exe[:-10] + "pythonw.exe"
+        if os.path.exists(pythonw_exe):
+            python_exe = pythonw_exe
+
     ctypes.windll.shell32.ShellExecuteW(
-        None, "runas", PYTHON, f'"{script}"', None, 1
+        None, "runas", python_exe, f'"{script}"', None, 1
     )
 
 def load_installed_versions():
@@ -730,18 +738,9 @@ class ToolManagerWindow(QMainWindow):
 
 def main():
     if sys.platform == "win32" and not is_admin():
-        app = QApplication(sys.argv)
-        msg = QMessageBox()
-        msg.setWindowTitle("Administrator Required")
-        msg.setIcon(QMessageBox.Icon.Warning)
-        msg.setText(
-            "eSim Tool Manager needs Administrator privileges\n"
-            "to install and update tools.\n\n"
-            "Click OK to relaunch as Administrator."
-        )
-        msg.setStandardButtons(QMessageBox.StandardButton.Ok | QMessageBox.StandardButton.Cancel)
-        if msg.exec() == QMessageBox.StandardButton.Ok:
-            relaunch_as_admin()
+        # Note: We deliberately skip a manual PyQt consent dialog here because
+        # Windows will natively prompt the user with a UAC shield anyway.
+        relaunch_as_admin()
         sys.exit(0)
 
     app = QApplication(sys.argv)

@@ -141,6 +141,14 @@ class Application(QtWidgets.QMainWindow):
         self.devdocs.setShortcut('Ctrl+D')
         self.devdocs.triggered.connect(self.dev_docs)
 
+        # added Tool Manager action
+        self.toolmanager = QtGui.QAction(
+            QtGui.QIcon(init_path + 'images/toolmanager.png'),
+            '<b>Tool Manager</b>', self
+        )
+        self.toolmanager.setShortcut('Ctrl+T')
+        self.toolmanager.triggered.connect(self.open_toolmanager)
+
         self.topToolbar = self.addToolBar('Top Tool Bar')
         self.topToolbar.addAction(self.newproj)
         self.topToolbar.addAction(self.openproj)
@@ -148,6 +156,7 @@ class Application(QtWidgets.QMainWindow):
         self.topToolbar.addAction(self.wrkspce)
         self.topToolbar.addAction(self.helpfile)
         self.topToolbar.addAction(self.devdocs)
+        self.topToolbar.addAction(self.toolmanager)
 
         # ## This part is meant for SoC Generation which is currently  ##
         # ## under development and will be will be required in future. ##
@@ -433,6 +442,27 @@ class Application(QtWidgets.QMainWindow):
         self.obj_appconfig.print_info('DevDocs is called')
         print("Current Project is : ", self.obj_appconfig.current_project)
         webbrowser.open("https://esim.readthedocs.io/en/latest/index.html")
+
+    def open_toolmanager(self):
+        """
+        This function launches the Tool Manager subsystem.
+        """
+        self.obj_appconfig.print_info('Tool Manager is called')
+        
+        # Prevent thread leak: ignore clicks if Tool Manager is already running
+        if hasattr(self, 'obj_workThread_tm') and self.obj_workThread_tm and self.obj_workThread_tm.isRunning():
+            self.obj_appconfig.print_info('Tool Manager is already running.')
+            return
+
+        # Build the command to run the Tool Manager using the current Python executable
+        tool_manager_path = os.path.join(init_path, "src", "toolManager", "main.py")
+        self.cmd_tm = f'"{sys.executable}" "{tool_manager_path}"'
+        self.obj_workThread_tm = Worker.WorkerThread(self.cmd_tm)
+        
+        # Cleanup reference when thread finishes
+        self.obj_workThread_tm.finished.connect(lambda: setattr(self, 'obj_workThread_tm', None))
+        
+        self.obj_workThread_tm.start()
 
     @QtCore.pyqtSlot(QtCore.QProcess.ExitStatus, int)
     def plotSimulationData(self, exitCode, exitStatus):
