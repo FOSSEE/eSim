@@ -16,7 +16,7 @@
 #      REVISION: Sunday 26 July 2020
 # =========================================================================
 
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 from .Validation import Validation
 from configuration.Appconfig import Appconfig
 import os
@@ -64,7 +64,9 @@ class NewProjectInfo(QtWidgets.QWidget):
         self.workspace = self.obj_appconfig.default_workspace['workspace']
         # self.projName = self.projEdit.text()
         # Remove leading and trailing space
-        self.projName = str(self.projName).rstrip().lstrip()
+        # self.projName = str(self.projName).rstrip().lstrip()
+        # Remove leading and trailing spaces AND replace internal spaces with underscores
+        self.projName = str(self.projName).strip().replace(" ", "_")
 
         self.projDir = os.path.join(self.workspace, str(self.projName))
 
@@ -92,7 +94,7 @@ class NewProjectInfo(QtWidgets.QWidget):
                     'Unable to create project. Please make sure you have ' +
                     'write permission on ' + self.workspace
                 )
-                self.msg.exec_()
+                self.msg.exec()
 
             # New KiCad v6 file extension
             f.write("schematicFile " + self.projName + ".kicad_sch\n")
@@ -124,7 +126,7 @@ class NewProjectInfo(QtWidgets.QWidget):
                 '" already exist.Please select the different name or delete' +
                 ' existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
             return None, None
 
         elif self.reply == "CHECKNAME":
@@ -133,7 +135,7 @@ class NewProjectInfo(QtWidgets.QWidget):
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'The project name should not contain space between them')
-            self.msg.exec_()
+            self.msg.exec()
             return None, None
 
         elif self.reply == "NONE":
@@ -141,7 +143,7 @@ class NewProjectInfo(QtWidgets.QWidget):
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('The project name cannot be empty')
-            self.msg.exec_()
+            self.msg.exec()
             return None, None
 
     def cancelProject(self):

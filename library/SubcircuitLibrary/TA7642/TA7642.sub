@@ -1,0 +1,36 @@
+* Subcircuit TA7642
+.subckt TA7642 net-_q10-pad3_ net-_q1-pad2_ net-_q1-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\ta7642\ta7642.cir
+.include NPN.lib
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_c1-pad2_ Q2N2222
+q2 net-_c1-pad2_ net-_q2-pad2_ net-_q10-pad3_ Q2N2222
+c1  net-_c1-pad1_ net-_c1-pad2_ 12p
+r2  net-_c1-pad1_ net-_q4-pad2_ 3.3k
+r3  net-_q1-pad1_ net-_q3-pad1_ 12k
+r4  net-_q3-pad1_ net-_q4-pad2_ 12k
+q3 net-_q3-pad1_ net-_q2-pad2_ net-_q10-pad3_ Q2N2222
+r1  net-_q3-pad1_ net-_q2-pad2_ 5.6k
+r5  net-_q1-pad1_ net-_c2-pad2_ 12k
+q4 net-_c2-pad2_ net-_q4-pad2_ net-_q10-pad3_ Q2N2222
+c2  net-_c2-pad1_ net-_c2-pad2_ 12p
+r6  net-_q1-pad1_ net-_c3-pad2_ 12k
+q5 net-_c3-pad2_ net-_c2-pad1_ net-_q10-pad3_ Q2N2222
+r9  net-_q1-pad1_ net-_q6-pad1_ 12k
+r7  net-_c2-pad1_ net-_q6-pad1_ 12k
+q6 net-_q6-pad1_ net-_q6-pad2_ net-_q10-pad3_ Q2N2222
+r8  net-_q6-pad1_ net-_q6-pad2_ 12k
+r10  net-_q6-pad1_ net-_c3-pad1_ 12k
+c3  net-_c3-pad1_ net-_c3-pad2_ 12p
+r11  net-_q1-pad1_ net-_c4-pad2_ 12k
+q7 net-_c4-pad2_ net-_c3-pad1_ net-_q10-pad3_ Q2N2222
+r13  net-_q1-pad1_ net-_q8-pad1_ 12k
+q8 net-_q8-pad1_ net-_q8-pad2_ net-_q10-pad3_ Q2N2222
+r12  net-_q8-pad1_ net-_q8-pad2_ 12k
+c4  net-_c4-pad1_ net-_c4-pad2_ 23p
+r14  net-_q8-pad1_ net-_c4-pad1_ 74k
+r15  net-_q1-pad1_ net-_q10-pad2_ 12k
+q9 net-_q10-pad2_ net-_c4-pad1_ net-_q10-pad3_ Q2N2222
+q10 net-_q1-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+* Control Statements
+
+.ends TA7642

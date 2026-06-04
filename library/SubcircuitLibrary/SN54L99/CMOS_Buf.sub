@@ -1,0 +1,17 @@
+* Subcircuit CMOS_Buf
+.subckt CMOS_Buf net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/cmos_buf/cmos_buf.cir
+.include CMOS_INVTR.sub
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__linear.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pw2nd_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pd2nw_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__inductors.model.spice"
+.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__r+c.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__pnp.model.spice"
+* s c m o d e
+x1 net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad2_ net-_x1-pad4_ CMOS_INVTR
+x2 net-_x1-pad4_ net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad4_ CMOS_INVTR
+* Control Statements
+
+.ends CMOS_Buf

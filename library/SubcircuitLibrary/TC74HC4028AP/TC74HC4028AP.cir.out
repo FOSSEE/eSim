@@ -1,0 +1,35 @@
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/tc74hc4028ap/tc74hc4028ap.cir
+
+.include Y5.sub
+.include Y1.sub
+.include Y2.sub
+.include Y8.sub
+.include Y4.sub
+.include Y9.sub
+.include Y7.sub
+.include Y3.sub
+.include Y6.sub
+.include Y0.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+x1 /a_bar /b_bar /gnd /vd net-_u1-pad5_ /c_bar /d_bar Y0
+x4 /vd /a /b_bar /gnd /c_bar /d_bar net-_u1-pad10_ Y1
+x6 /vd /a_bar /b /gnd /c_bar /d_bar net-_u1-pad15_ Y2
+x9 /vd /a /b /gnd /c_bar /d_bar net-_u1-pad19_ Y3
+x2 /vd /a_bar /b_bar /gnd /c /d_bar net-_u1-pad7_ Y4
+x5 /vd /a /b_bar /gnd /c /d_bar net-_u1-pad13_ Y5
+x7 /vd /a_bar /b /gnd /c /d_bar net-_u1-pad16_ Y6
+x10 /vd /a /b /gnd /c /d_bar net-_u1-pad20_ Y7
+x8 /vd /a /b_bar /gnd /c_bar /d net-_u1-pad17_ Y9
+* s c m o d e
+* u1  /vd /a_bar /b_bar /d_bar net-_u1-pad5_ /a net-_u1-pad7_ /gnd net-_u1-pad9_ net-_u1-pad10_ /c /c_bar net-_u1-pad13_ /b net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ /d net-_u1-pad19_ net-_u1-pad20_ port
+x3 /vd /a_bar /b_bar /gnd /c_bar /d net-_u1-pad9_ Y8
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

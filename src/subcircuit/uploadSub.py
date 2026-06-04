@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, QtCore
+from PyQt6 import QtWidgets, QtCore
 from configuration.Appconfig import Appconfig
 from projManagement.Validation import Validation
 import os
@@ -48,7 +48,7 @@ class UploadSub(QtWidgets.QWidget):
             self.msg.setModal(True)
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage("Please ensure that filename ends with .sub")
-            self.msg.exec_()
+            self.msg.exec()
             print("Invalid filename")
             return
 
@@ -63,7 +63,7 @@ class UploadSub(QtWidgets.QWidget):
                 create_subcircuit + " ** and ends with **.ends " +
                 create_subcircuit + " **"
             )
-            self.msg.exec_()
+            self.msg.exec()
             print("Invalid file format")
             return
 
@@ -99,7 +99,7 @@ class UploadSub(QtWidgets.QWidget):
             msg.showMessage(
                 "The project already exist. Please select "
                 "a different name or delete existing project")
-            msg.exec_()
+            msg.exec()
 
         elif reply == "CHECKNAME":
             print("Name can not contain space between them")
@@ -109,4 +109,4 @@ class UploadSub(QtWidgets.QWidget):
             msg.setWindowTitle("Error Message")
             msg.showMessage(
                 'The project name should not contain space between them')
-            msg.exec_()
+            msg.exec()

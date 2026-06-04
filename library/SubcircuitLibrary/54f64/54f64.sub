@@ -1,0 +1,30 @@
+* Subcircuit 54f64
+.subckt 54f64 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ 
+* c:\fossee\esim\library\subcircuitlibrary\54f64\54f64.cir
+.include 4_and.sub
+.include 3_and.sub
+* u6  net-_u1-pad3_ net-_u1-pad2_ net-_u2-pad1_ d_and
+x1 net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u2-pad2_ 3_and
+* u5  net-_u1-pad9_ net-_u1-pad10_ net-_u4-pad1_ d_and
+* u4  net-_u4-pad1_ net-_u4-pad2_ net-_u3-pad1_ d_nor
+* u2  net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ d_nor
+* u3  net-_u3-pad1_ net-_u2-pad3_ net-_u1-pad8_ d_nor
+x2 net-_u1-pad13_ net-_u1-pad12_ net-_u1-pad11_ net-_u1-pad1_ net-_u4-pad2_ 4_and
+a1 [net-_u1-pad3_ net-_u1-pad2_ ] net-_u2-pad1_ u6
+a2 [net-_u1-pad9_ net-_u1-pad10_ ] net-_u4-pad1_ u5
+a3 [net-_u4-pad1_ net-_u4-pad2_ ] net-_u3-pad1_ u4
+a4 [net-_u2-pad1_ net-_u2-pad2_ ] net-_u2-pad3_ u2
+a5 [net-_u3-pad1_ net-_u2-pad3_ ] net-_u1-pad8_ u3
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u6 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u4 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u2 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u3 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 54f64

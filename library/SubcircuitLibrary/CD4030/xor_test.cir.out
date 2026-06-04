@@ -1,0 +1,20 @@
+* c:\users\pavithra\esim-workspace\xor_test\xor_test.cir
+
+.include CD4030.sub
+v1  a gnd pulse(0 5 2m 0.1n 0.1n 1m 2m)
+v2  b gnd pulse(0 5 4m 0.1n 0.1n 2m 4m)
+* u4  j plot_v1
+v9 net-_x1-pad14_ gnd  dc 5
+* u1  a plot_v1
+* u2  b plot_v1
+x1 a b j ? ? ? gnd ? ? ? ? ? ? net-_x1-pad14_ CD4030
+.tran 10e-06 10e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(j)+6v(a)+12v(b)
+.endc
+.end

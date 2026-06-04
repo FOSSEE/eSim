@@ -1,0 +1,23 @@
+* Subcircuit SN74HC259
+.subckt SN74HC259 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/sn74hc259/sn74hc259.cir
+.include CMOS_INVTR.sub
+.include Schmitt_Trigger.sub
+.include Decoder_38_Address_Latch_storage.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+x6 net-_x11-pad17_ net-_u1-pad6_ net-_u1-pad8_ net-_x11-pad13_ CMOS_INVTR
+x7 net-_x11-pad18_ net-_u1-pad6_ net-_u1-pad8_ net-_x11-pad14_ CMOS_INVTR
+x8 net-_x11-pad19_ net-_u1-pad6_ net-_u1-pad8_ net-_x11-pad15_ CMOS_INVTR
+x9 net-_x1-pad4_ net-_u1-pad6_ net-_u1-pad8_ net-_x11-pad16_ CMOS_INVTR
+x10 net-_x10-pad1_ net-_u1-pad6_ net-_u1-pad8_ net-_x10-pad4_ CMOS_INVTR
+x2 net-_u1-pad1_ net-_u1-pad6_ net-_u1-pad8_ net-_x11-pad17_ Schmitt_Trigger
+x3 net-_u1-pad2_ net-_u1-pad6_ net-_u1-pad8_ net-_x11-pad18_ Schmitt_Trigger
+x4 net-_u1-pad3_ net-_u1-pad6_ net-_u1-pad8_ net-_x11-pad19_ Schmitt_Trigger
+x1 net-_u1-pad4_ net-_u1-pad6_ net-_u1-pad8_ net-_x1-pad4_ Schmitt_Trigger
+x5 net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad8_ net-_x10-pad1_ Schmitt_Trigger
+* s c m o d e
+x11 net-_u1-pad9_ net-_u1-pad11_ net-_u1-pad10_ net-_u1-pad12_ net-_u1-pad6_ net-_u1-pad8_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_x10-pad4_ net-_u1-pad7_ net-_x11-pad13_ net-_x11-pad14_ net-_x11-pad15_ net-_x11-pad16_ net-_x11-pad17_ net-_x11-pad18_ net-_x11-pad19_ Decoder_38_Address_Latch_storage
+* Control Statements
+
+.ends SN74HC259

@@ -2,321 +2,294 @@
 """
 Data extraction module for NGSpice simulation results.
 
-This module handles the extraction and processing of simulation data from NGSpice
-output files, supporting AC, DC, and Transient analysis types.
+Parses plot_data_v.txt and plot_data_i.txt produced by ngspice.
+
+Transient / DC format:
+  * /path/to/circuit.cir          <- marks start of each column group
+  Transient Analysis  date        <- analysis type line
+  ----...                         <- separator
+  Index   time   node1   node2    <- header (parts[1]=x-axis, parts[2:]=node names)
+  ----...
+  0\tt0\tv1\tv2\t                 <- data rows (tab-separated, trailing \t)
+  ...
+  54\tt54\tv1\tv2\t
+                                  <- blank line
+  Index   time   node1   node2    <- page-break header (every ~55 rows, same group)
+  ----...
+  55\tt55\tv1\tv2\t
+  ...
+  * /path/to/circuit.cir          <- new column group (circuit with many nodes)
+  Transient Analysis  date
+  Index   time   node3   node4
+  0\tt0\tv3\tv4\t                 <- same time axis, new node values
+
+AC format (differs from Transient/DC):
+  Each node value is split into TWO tab columns per row:
+    real_part,\timaginary_part
+  The real_part has a trailing comma (ngspice artifact).
+  Example: 0\t1.0e+03\t9.96e+00,\t-4.50e+00\t
+  Only the real part is stored; the imaginary part is discarded,
+  matching the original implementation behaviour.
 """
 
 import os
 import logging
-from decimal import Decimal
-from typing import List, Tuple, Dict, Any, Optional
-from PyQt5 import QtWidgets
+import numpy as np
+from typing import List, Tuple, Optional
+from PyQt6 import QtWidgets
 from configuration.Appconfig import Appconfig
 
-# Set up logging
 logger = logging.getLogger(__name__)
 
 
 class DataExtraction:
-    """
-    Extracts and processes simulation data from NGSpice output files.
-    
-    This class handles reading and parsing voltage and current data from
-    NGSpice simulation output files for different analysis types.
-    """
-    
-    # Analysis type constants
+    """Extracts simulation data from NGSpice output files."""
+
     AC_ANALYSIS = 0
     TRANSIENT_ANALYSIS = 1
     DC_ANALYSIS = 2
 
     def __init__(self) -> None:
-        """Initialize the DataExtraction instance."""
         self.obj_appconfig = Appconfig()
-        self.data: List[str] = []
-        # consists of all the columns of data belonging to nodes and branches
-        self.y: List[List[Decimal]] = []  # stores y-axis data
-        self.x: List[Decimal] = []  # stores x-axis data
-        # Add the missing instance variables
+        self.x: np.ndarray = np.array([], dtype=np.float64)
+        self.y: List[np.ndarray] = []
         self.NBList: List[str] = []
         self.NBIList: List[str] = []
         self.volts_length: int = 0
+        self.data: List[str] = []       # kept for backward compat
+        self.analysisType: int = self.TRANSIENT_ANALYSIS
+        self.dec: int = 0
 
-    def numberFinder(self, file_path: str) -> List[int]:
+    # ------------------------------------------------------------------
+    # Internal helpers
+    # ------------------------------------------------------------------
+
+    def _parse_plot_file(
+        self, filepath: str, is_ac: bool = False
+    ) -> Tuple[np.ndarray, str, List[str], List[np.ndarray]]:
         """
-        Analyze simulation files to determine data structure parameters.
-        
-        Args:
-            file_path: Path to the directory containing simulation files
-            
-        Returns:
-            List containing [lines_per_node, voltage_nodes, analysis_type, 
-                           dec_flag, current_branches]
+        Parse one ngspice plot file.
+
+        Returns (x_array, x_name, names, arrays) where names and arrays are
+        parallel lists — one entry per output column in file order.
+
+        Duplicate column names (ngspice truncates long node names so two
+        distinct nodes can share the same string) are preserved as separate
+        entries; each gets its own data list keyed by position, not by name.
+
+        is_ac=True: each node occupies 2 tab columns ("real,  imag"); only
+        the real part is kept (comma stripped), imaginary discarded.
+
+        Line dispatch:
+        - starts with digit      -> data row (fast path)
+        - stripped starts with * -> new column group incoming
+        - stripped starts with - -> separator, skip
+        - stripped starts 'Index'-> column header (new group or page-break)
+        - everything else        -> analysis-type banner, skip
         """
-        # Opening Analysis file
-        with open(os.path.join(file_path, "analysis")) as analysis_file:
-            self.analysisInfo = analysis_file.read()
-        self.analysisInfo = self.analysisInfo.split(" ")
+        x_list: List[float] = []
+        all_names: List[str] = []           # output channel names (duplicates kept)
+        all_data: List[List[float]] = []    # parallel data lists, one per channel
 
-        # Reading data file for voltage
-        with open(os.path.join(file_path, "plot_data_v.txt")) as voltage_file:
-            self.voltData = voltage_file.read()
+        x_name: str = 'time'
+        # Indices into all_data for the columns of the current group.
+        # On a page-break (same group, same header) we reuse the same indices.
+        current_indices: Optional[List[int]] = None
+        new_group_incoming: bool = False
+        collecting_x: bool = True
+        cols_per_node: int = 2 if is_ac else 1
 
-        self.voltData = self.voltData.split("\n")
+        try:
+            with open(filepath, 'r') as f:
+                for line in f:
+                    # ---- Fast path: data rows always start with a digit ----
+                    if line and line[0].isdigit():
+                        if current_indices is None:
+                            continue
+                        parts = line.split('\t')
+                        if len(parts) < 2 + cols_per_node * len(current_indices):
+                            continue
+                        try:
+                            x_val = float(parts[1])
+                            if collecting_x:
+                                x_list.append(x_val)
+                            for i, idx in enumerate(current_indices):
+                                if is_ac:
+                                    raw = parts[2 + 2 * i].rstrip(',')
+                                else:
+                                    raw = parts[2 + i]
+                                all_data[idx].append(float(raw))
+                        except (ValueError, IndexError):
+                            continue
+                        continue
 
-        # Initializing variable
-        # 'lines_per_node' gives no. of lines of data for each node/branch
-        # 'partitions_per_voltage_node' gives the no of partitions for a single voltage node
-        # 'voltage_node_count' gives total number of voltage
-        # 'current_branch_count' gives total number of current
+                    # ---- Non-data lines ----
+                    stripped = line.strip()
+                    if not stripped:
+                        continue
 
-        lines_per_node = partitions_per_voltage_node = voltage_node_count = current_branch_count = 0
+                    if stripped[0] == '*':
+                        new_group_incoming = True
+                        if current_indices is not None:
+                            collecting_x = False
+                        continue
 
-        # Finding total number of voltage node
-        for line in self.voltData[3:]:
-            # it has possible names of voltage nodes in NgSpice
-            if "Index" in line:  # "V(" in line or "x1" in line or "u3" in line:
-                voltage_node_count += 1
+                    if stripped[0] == '-':
+                        continue
 
-        # Reading Current Source Data
-        with open(os.path.join(file_path, "plot_data_i.txt")) as current_file:
-            self.currentData = current_file.read()
-        self.currentData = self.currentData.split("\n")
+                    if stripped.startswith('Index'):
+                        parts = stripped.split()
+                        if new_group_incoming:
+                            x_name = parts[1]
+                            col_names = parts[2:]
+                            current_indices = []
+                            for name in col_names:
+                                all_names.append(name)
+                                all_data.append([])
+                                current_indices.append(len(all_data) - 1)
+                            new_group_incoming = False
+                        # else: page-break — same group, same columns, same indices
+                        continue
 
-        # Finding Number of Branch
-        for line in self.currentData[3:]:
-            if "#branch" in line:
-                current_branch_count += 1
+        except OSError as e:
+            logger.error(f"Cannot open {filepath}: {e}")
+            raise
 
-        self.dec = 0
+        x_arr = np.array(x_list, dtype=np.float64)
+        arrays = [np.array(d, dtype=np.float64) for d in all_data]
 
-        # For AC
-        if self.analysisInfo[0][-3:] == ".ac":
-            self.analysisType = self.AC_ANALYSIS
-            if "dec" in self.analysisInfo:
-                self.dec = 1
+        logger.debug(
+            f"Parsed {filepath}: {len(x_arr)} x-pts, "
+            f"{len(arrays)} channels, x_name='{x_name}'"
+        )
+        return x_arr, x_name, all_names, arrays
 
-            for line in self.voltData[3:]:
-                lines_per_node += 1  # 'lines_per_node' gives no. of lines of data for each node/branch
-                if "Index" in line:
-                    partitions_per_voltage_node += 1
-                # 'partitions_per_voltage_node' gives the no of partitions for a single voltage node
-                logger.debug(f"partitions_per_voltage_node: {partitions_per_voltage_node}")
-                if "AC" in line:  # DC for dc files and AC for ac ones
-                    break
+    def _detect_analysis_type(self, file_path: str) -> Tuple[int, int]:
+        """
+        Read the 'analysis' file and return (analysis_type, dec_flag).
 
-        elif ".tran" in self.analysisInfo:
-            self.analysisType = self.TRANSIENT_ANALYSIS
-            for line in self.voltData[3:]:
-                lines_per_node += 1
-                if "Index" in line:
-                    partitions_per_voltage_node += 1
-                # 'partitions_per_voltage_node' gives the no of partitions for a single voltage node
-                logger.debug(f"partitions_per_voltage_node: {partitions_per_voltage_node}")
-                if "Transient" in line:  # DC for dc files and AC for ac ones
-                    break
+        dec_flag=1 means AC analysis uses decade (log) frequency sweep.
+        """
+        analysis_file = os.path.join(file_path, "analysis")
+        with open(analysis_file, 'r') as f:
+            content = f.read().strip()
 
-        # For DC:
-        else:
-            self.analysisType = self.DC_ANALYSIS
-            for line in self.voltData[3:]:
-                lines_per_node += 1
-                if "Index" in line:
-                    partitions_per_voltage_node += 1
-                # 'partitions_per_voltage_node' gives the no of partitions for a single voltage node
-                logger.debug(f"partitions_per_voltage_node: {partitions_per_voltage_node}")
-                if "DC" in line:  # DC for dc files and AC for ac ones
-                    break
+        tokens = content.split()
+        dec = 0
 
-        voltage_node_count = voltage_node_count // partitions_per_voltage_node  # voltage_node_count gives the no of voltage nodes
-        current_branch_count = current_branch_count // partitions_per_voltage_node  # current_branch_count gives the no of branches
+        if not tokens:
+            logger.warning("analysis file is empty, defaulting to Transient")
+            return self.TRANSIENT_ANALYSIS, 0
 
-        analysis_params = [lines_per_node, voltage_node_count, self.analysisType, self.dec, current_branch_count]
+        first = tokens[0].lower()
 
-        return analysis_params
+        if first.endswith('.ac'):
+            if 'dec' in tokens:
+                dec = 1
+            return self.AC_ANALYSIS, dec
+
+        if '.tran' in tokens:
+            return self.TRANSIENT_ANALYSIS, dec
+
+        return self.DC_ANALYSIS, dec
+
+    # ------------------------------------------------------------------
+    # Public interface (matches what plot_window.py expects)
+    # ------------------------------------------------------------------
 
     def openFile(self, file_path: str) -> List[int]:
         """
-        Open and process simulation data files.
-        
-        Args:
-            file_path: Path to the directory containing simulation files
-            
+        Open and process both simulation data files.
+
         Returns:
-            List containing [analysis_type, dec_flag]
-            
-        Raises:
-            Exception: If files cannot be read or processed
+            [analysis_type, dec_flag]
+            where analysis_type is AC_ANALYSIS=0, TRANSIENT_ANALYSIS=1, DC_ANALYSIS=2
+            and dec_flag=1 for log-scale AC sweep, 0 otherwise.
+
+        Populates:
+            self.x          - 1-D numpy array of x-axis values (time/freq/sweep)
+            self.y          - list of 1-D numpy arrays, one per node/branch
+            self.NBList     - list of all node+branch names (voltage first, then current)
+            self.NBIList    - list of current branch names only
+            self.volts_length - number of voltage nodes
         """
         try:
-            with open(os.path.join(file_path, "plot_data_i.txt")) as current_file:
-                all_current_data = current_file.read()
+            v_path = os.path.join(file_path, "plot_data_v.txt")
+            i_path = os.path.join(file_path, "plot_data_i.txt")
 
-            all_current_data = all_current_data.split("\n")
-            self.NBIList = []
+            # ---- Detect analysis type ----
+            analysis_type, dec = self._detect_analysis_type(file_path)
+            self.analysisType = analysis_type
+            self.dec = dec
+            is_ac = (analysis_type == self.AC_ANALYSIS)
 
-            with open(os.path.join(file_path, "plot_data_v.txt")) as voltage_file:
-                all_voltage_data = voltage_file.read()
+            # ---- Parse voltage file ----
+            x_arr, x_name, v_names, v_arrays = self._parse_plot_file(v_path, is_ac=is_ac)
 
-        except Exception as e:
-            logger.error(f"Exception reading files: {e}")
-            self.obj_appconfig.print_error(f'Exception Message: {e}')
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Error Message")
-            self.msg.showMessage('Unable to open plot data files.')
-            self.msg.exec_()
-
-        try:
+            # ---- Parse current file (graceful if missing or empty) ----
+            i_names: List[str] = []
+            i_arrays: List[np.ndarray] = []
             try:
-                for token in all_current_data[3].split(" "):
-                    if len(token) > 0:
-                        self.NBIList.append(token)
-                self.NBIList = self.NBIList[2:]
-                current_list_length = len(self.NBIList)
-            except (IndexError, AttributeError) as e:
-                logger.warning(f"Error parsing current data: {e}")
-                self.NBIList = []
-                current_list_length = 0
+                _, _, i_names, i_arrays = self._parse_plot_file(i_path, is_ac=is_ac)
+            except OSError:
+                logger.warning(f"Current file not found or unreadable: {i_path}")
+            except Exception as e:
+                logger.warning(f"Could not parse current file: {e}")
+
+            # ---- Populate public attributes ----
+            self.x = x_arr
+            self.volts_length = len(v_names)
+            self.NBIList = i_names
+            self.NBList = v_names + i_names
+            self.y = v_arrays + i_arrays
+
+            # self.data kept as non-empty so numVals() won't crash on old
+            # callers that still reach for data[0] - we give it one dummy row
+            # with the right column count so numVals()[0] is correct.
+            dummy_cols = '\t'.join(['0.0'] * len(self.NBList))
+            self.data = [dummy_cols]
+
+            _analysis_name = {
+                self.AC_ANALYSIS: 'AC',
+                self.TRANSIENT_ANALYSIS: 'Tran',
+                self.DC_ANALYSIS: 'DC',
+            }.get(analysis_type, '?')
+            logger.info(
+                f"openFile done | analysis={_analysis_name} "
+                f"| {len(v_names)} V-nodes, {len(i_names)} I-branches "
+                f"| {len(x_arr)} data points"
+            )
+            logger.info(f"NBList: {self.NBList}")
+
+            return [analysis_type, dec]
+
         except Exception as e:
-            logger.error(f"Exception parsing current data: {e}")
-            self.obj_appconfig.print_error(f'Exception Message: {e}')
-            self.msg = QtWidgets.QErrorMessage()
-            self.msg.setModal(True)
-            self.msg.setWindowTitle("Error Message")
-            self.msg.showMessage('Unable to read Analysis File.')
-            self.msg.exec_()
-
-        data_params = self.numberFinder(file_path)
-        lines_per_partition = int(data_params[0] + 1)
-        voltage_node_count = int(data_params[1])
-        analysis_type = data_params[2]
-        current_branch_count = data_params[4]
-
-        analysis_info = [analysis_type, data_params[3]]
-        self.NBList = []
-        all_voltage_data = all_voltage_data.split("\n")
-        for token in all_voltage_data[3].split(" "):
-            if len(token) > 0:
-                self.NBList.append(token)
-        self.NBList = self.NBList[2:]
-        voltage_list_length = len(self.NBList)
-        logger.info(f"NBLIST: {self.NBList}")
-
-        processed_current_data = []
-        voltage_column_count = len(all_voltage_data[5].split("\t"))
-        current_column_count = len(all_current_data[5].split("\t"))
-
-        full_data = []
-
-        # Creating list of data:
-        if analysis_type < 3:
-            for voltage_node_index in range(1, voltage_node_count):
-                for token in all_voltage_data[3 + voltage_node_index * lines_per_partition].split(" "):
-                    if len(token) > 0:
-                        self.NBList.append(token)
-                self.NBList.pop(voltage_list_length)
-                self.NBList.pop(voltage_list_length)
-                voltage_list_length = len(self.NBList)
-
-            for current_branch_index in range(1, current_branch_count):
-                for token in all_current_data[3 + current_branch_index * lines_per_partition].split(" "):
-                    if len(token) > 0:
-                        self.NBIList.append(token)
-                self.NBIList.pop(current_list_length)
-                self.NBIList.pop(current_list_length)
-                current_list_length = len(self.NBIList)
-
-            partition_row_index = 0
-            data_row_index = 0
-            combined_row_index = 0
-
-            for line in all_current_data[5:lines_per_partition - 1]:
-                if len(line.split("\t")) == current_column_count:
-                    current_row = line.split("\t")
-                    current_row.pop(0)
-                    current_row.pop(0)
-                    current_row.pop()
-                    if analysis_type == 0:  # not in trans
-                        current_row.pop()
-
-                    for current_partition_index in range(1, current_branch_count):
-                        additional_current_line = all_current_data[5 + current_partition_index * lines_per_partition + data_row_index].split("\t")
-                        additional_current_line.pop(0)
-                        additional_current_line.pop(0)
-                        if analysis_type == 0:
-                            additional_current_line.pop()  # not required for dc
-                        additional_current_line.pop()
-                        current_row = current_row + additional_current_line
-
-                    full_data.append(current_row)
-
-                data_row_index += 1
-
-            for line in all_voltage_data[5:lines_per_partition - 1]:
-                if len(line.split("\t")) == voltage_column_count:
-                    voltage_row = line.split("\t")
-                    voltage_row.pop()
-                    if analysis_type == 0:
-                        voltage_row.pop()
-                    for voltage_partition_index in range(1, voltage_node_count):
-                        additional_voltage_line = all_voltage_data[5 + voltage_partition_index * lines_per_partition + partition_row_index].split("\t")
-                        additional_voltage_line.pop(0)
-                        additional_voltage_line.pop(0)
-                        if analysis_type == 0:
-                            additional_voltage_line.pop()  # not required for dc
-                        if self.NBList[len(self.NBList) - 1] == 'v-sweep':
-                            self.NBList.pop()
-                            additional_voltage_line.pop()
-
-                        additional_voltage_line.pop()
-                        voltage_row = voltage_row + additional_voltage_line
-                    voltage_row = voltage_row + full_data[combined_row_index]
-                    combined_row_index += 1
-
-                    combined_row_str = "\t".join(voltage_row[1:])
-                    combined_row_str = combined_row_str.replace(",", "")
-                    self.data.append(combined_row_str)
-
-                partition_row_index += 1
-
-        self.volts_length = len(self.NBList)
-        self.NBList = self.NBList + self.NBIList
-
-        logger.info(f"Analysis info: {analysis_info}")
-        return analysis_info
-
-    def numVals(self) -> List[int]:
-        """
-        Get the number of data columns and voltage nodes.
-        
-        Returns:
-            List containing [total_columns, voltage_node_count]
-        """
-        total_columns = len(self.data[0].split("\t"))
-        voltage_node_count = self.volts_length
-        return [total_columns, voltage_node_count]
+            logger.error(f"openFile failed: {e}", exc_info=True)
+            self.obj_appconfig.print_error(f'DataExtraction error: {e}')
+            try:
+                msg = QtWidgets.QErrorMessage()
+                msg.setModal(True)
+                msg.setWindowTitle("Error Message")
+                msg.showMessage(f'Unable to open plot data files:\n{e}')
+                msg.exec()
+            except Exception:
+                pass
+            return [self.TRANSIENT_ANALYSIS, 0]
 
     def computeAxes(self) -> None:
         """
-        Compute x and y axis data from the processed simulation data.
-        
-        This method extracts the time/frequency data (x-axis) and 
-        voltage/current data (y-axis) from the processed data.
+        No-op: x and y are already numpy arrays populated by openFile().
+        Kept for backward compatibility with plot_window.py call sequence.
         """
-        if not self.data:
-            logger.warning("No data available for axis computation")
-            return
+        # plot_window.py calls: openFile() -> computeAxes() -> numVals()
+        # In the old implementation computeAxes() built self.x and self.y
+        # from self.data. Now openFile() does it all directly.
+        pass
 
-        num_columns = len(self.data[0].split("\t"))
-        self.y = []
-        first_row_values = self.data[0].split("\t")
-        for column_index in range(1, num_columns):
-            self.y.append([Decimal(first_row_values[column_index])])
-        for row in self.data[1:]:
-            row_values = row.split("\t")
-            for column_index in range(1, num_columns):
-                self.y[column_index - 1].append(Decimal(row_values[column_index]))
-        for row in self.data:
-            row_values = row.split("\t")
-            self.x.append(Decimal(row_values[0]))
+    def numVals(self) -> List[int]:
+        """
+        Return [total_node_count, voltage_node_count].
+
+        plot_window.py only uses index [1] (volts_length).
+        """
+        return [len(self.y), self.volts_length]
