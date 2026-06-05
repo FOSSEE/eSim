@@ -1,0 +1,121 @@
+.title KiCad schematic
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U12-Pad3_ Net-_U12-Pad4_ Net-_U12-Pad5_ Net-_U12-Pad6_ Net-_U12-Pad7_ Net-_U12-Pad8_ Net-_U12-Pad9_ Net-_U12-Pad10_ Net-_U12-Pad11_ Net-_U12-Pad12_ Net-_U12-Pad13_ Net-_U12-Pad14_ Net-_U12-Pad15_ Net-_U12-Pad16_ Net-_U12-Pad17_ Net-_U12-Pad18_ Net-_U12-Pad19_ Net-_U12-Pad20_ Net-_U12-Pad21_ Net-_U12-Pad22_ Net-_U12-Pad23_ Net-_U12-Pad24_ Net-_U12-Pad25_ Net-_U12-Pad26_ Net-_U12-Pad27_ Net-_U12-Pad28_ Net-_U12-Pad29_ Net-_U12-Pad30_ Net-_U12-Pad31_ Net-_U12-Pad32_ Net-_U12-Pad33_ Net-_U12-Pad34_ Net-_U12-Pad35_ Net-_U12-Pad36_ Net-_U12-Pad37_ Net-_U12-Pad38_ Net-_U12-Pad39_ Net-_U12-Pad40_ Net-_U12-Pad41_ Net-_U12-Pad42_ Net-_U12-Pad43_ Net-_U10-Pad16_ Net-_U10-Pad15_ Net-_U10-Pad14_ Net-_U10-Pad13_ Net-_U10-Pad12_ Net-_U10-Pad11_ Net-_U10-Pad10_ Net-_U10-Pad9_ Net-_U11-Pad16_ Net-_U11-Pad15_ Net-_U11-Pad14_ Net-_U11-Pad13_ Net-_U11-Pad12_ Net-_U11-Pad11_ Net-_U11-Pad10_ Net-_U11-Pad9_ Net-_U12-Pad60_ Net-_U12-Pad61_ Net-_U12-Pad62_ Net-_U12-Pad63_ Net-_U12-Pad64_ Net-_U12-Pad65_ Net-_U12-Pad66_ Net-_U12-Pad67_ Net-_U12-Pad68_ Net-_U12-Pad69_ Net-_U12-Pad70_ Net-_U12-Pad71_ Net-_U12-Pad72_ Net-_U12-Pad73_ Net-_U12-Pad74_ Net-_U12-Pad75_ pid_core
+U11 Net-_PORT60-Pad1_ Net-_PORT59-Pad1_ Net-_PORT58-Pad1_ Net-_PORT57-Pad1_ Net-_PORT56-Pad1_ Net-_PORT55-Pad1_ Net-_PORT54-Pad1_ Net-_PORT53-Pad1_ Net-_U11-Pad9_ Net-_U11-Pad10_ Net-_U11-Pad11_ Net-_U11-Pad12_ Net-_U11-Pad13_ Net-_U11-Pad14_ Net-_U11-Pad15_ Net-_U11-Pad16_ adc_bridge_8
+U10 Net-_PORT52-Pad1_ Net-_PORT51-Pad1_ Net-_PORT50-Pad1_ Net-_PORT49-Pad1_ Net-_PORT48-Pad1_ Net-_PORT47-Pad1_ Net-_PORT46-Pad1_ Net-_PORT45-Pad1_ Net-_U10-Pad9_ Net-_U10-Pad10_ Net-_U10-Pad11_ Net-_U10-Pad12_ Net-_U10-Pad13_ Net-_U10-Pad14_ Net-_U10-Pad15_ Net-_U10-Pad16_ adc_bridge_8
+PORT58 Net-_PORT58-Pad1_ ana_fb2
+PORT59 Net-_PORT59-Pad1_ ana_fb1
+PORT56 Net-_PORT56-Pad1_ ana_fb4
+PORT60 Net-_PORT60-Pad1_ ana_fb0
+PORT57 Net-_PORT57-Pad1_ ana_fb3
+PORT55 Net-_PORT55-Pad1_ ana_fb5
+PORT54 Net-_PORT54-Pad1_ ana_fb6
+PORT52 Net-_PORT52-Pad1_ ana_fb8
+PORT53 Net-_PORT53-Pad1_ ana_fb7
+PORT48 Net-_PORT48-Pad1_ ana_fb12
+PORT49 Net-_PORT49-Pad1_ ana_fb11
+PORT50 Net-_PORT50-Pad1_ ana_fb10
+PORT51 Net-_PORT51-Pad1_ ana_fb9
+U5 Net-_PORT12-Pad1_ Net-_PORT11-Pad1_ Net-_PORT10-Pad1_ Net-_PORT9-Pad1_ Net-_PORT8-Pad1_ Net-_PORT7-Pad1_ Net-_PORT6-Pad1_ Net-_PORT5-Pad1_ Net-_U12-Pad11_ Net-_U12-Pad10_ Net-_U12-Pad9_ Net-_U12-Pad8_ Net-_U12-Pad7_ Net-_U12-Pad6_ Net-_U12-Pad5_ Net-_U12-Pad4_ adc_bridge_8
+U6 Net-_PORT20-Pad1_ Net-_PORT19-Pad1_ Net-_PORT18-Pad1_ Net-_PORT17-Pad1_ Net-_PORT16-Pad1_ Net-_PORT15-Pad1_ Net-_PORT14-Pad1_ Net-_PORT13-Pad1_ Net-_U12-Pad19_ Net-_U12-Pad18_ Net-_U12-Pad17_ Net-_U12-Pad16_ Net-_U12-Pad15_ Net-_U12-Pad14_ Net-_U12-Pad13_ Net-_U12-Pad12_ adc_bridge_8
+U3 Net-_PORT3-Pad1_ Net-_U12-Pad2_ adc_bridge_1
+PORT2 Net-_PORT2-Pad1_ ana_clk
+U1 Net-_PORT1-Pad1_ Net-_U1-Pad2_ adc_bridge_1
+PORT4 Net-_PORT4-Pad1_ ana_enable
+U4 Net-_PORT4-Pad1_ Net-_U12-Pad3_ adc_bridge_1
+PORT1 Net-_PORT1-Pad1_ ana_fault
+PORT3 Net-_PORT3-Pad1_ ana_rst_n
+U2 Net-_PORT2-Pad1_ Net-_U12-Pad1_ adc_bridge_1
+PORT20 Net-_PORT20-Pad1_ ana_ki0
+PORT19 Net-_PORT19-Pad1_ ana_ki1
+PORT16 Net-_PORT16-Pad1_ ana_ki4
+PORT17 Net-_PORT17-Pad1_ ana_ki3
+PORT18 Net-_PORT18-Pad1_ ana_ki2
+PORT15 Net-_PORT15-Pad1_ ana_ki5
+PORT5 Net-_PORT5-Pad1_ ana_kp7
+PORT7 Net-_PORT7-Pad1_ ana_kp5
+PORT9 Net-_PORT9-Pad1_ ana_kp3
+PORT6 Net-_PORT6-Pad1_ ana_kp6
+PORT8 Net-_PORT8-Pad1_ ana_kp4
+PORT13 Net-_PORT13-Pad1_ ana_ki7
+PORT12 Net-_PORT12-Pad1_ ana_kp0
+PORT11 Net-_PORT11-Pad1_ ana_kp1
+PORT14 Net-_PORT14-Pad1_ ana_ki6
+PORT10 Net-_PORT10-Pad1_ ana_kp2
+U9 Net-_PORT44-Pad1_ Net-_PORT43-Pad1_ Net-_PORT42-Pad1_ Net-_PORT41-Pad1_ Net-_PORT40-Pad1_ Net-_PORT39-Pad1_ Net-_PORT38-Pad1_ Net-_PORT37-Pad1_ Net-_U12-Pad43_ Net-_U12-Pad42_ Net-_U12-Pad41_ Net-_U12-Pad40_ Net-_U12-Pad39_ Net-_U12-Pad38_ Net-_U12-Pad37_ Net-_U12-Pad36_ adc_bridge_8
+PORT38 Net-_PORT38-Pad1_ ana_sp6
+PORT40 Net-_PORT40-Pad1_ ana_sp4
+PORT37 Net-_PORT37-Pad1_ ana_sp7
+PORT39 Net-_PORT39-Pad1_ ana_sp5
+PORT41 Net-_PORT41-Pad1_ ana_sp3
+PORT42 Net-_PORT42-Pad1_ ana_sp2
+PORT45 Net-_PORT45-Pad1_ ana_fb15
+PORT47 Net-_PORT47-Pad1_ ana_fb13
+PORT46 Net-_PORT46-Pad1_ ana_fb14
+PORT44 Net-_PORT44-Pad1_ ana_sp0
+PORT43 Net-_PORT43-Pad1_ ana_sp1
+U8 Net-_PORT36-Pad1_ Net-_PORT35-Pad1_ Net-_PORT34-Pad1_ Net-_PORT33-Pad1_ Net-_PORT32-Pad1_ Net-_PORT31-Pad1_ Net-_PORT30-Pad1_ Net-_PORT29-Pad1_ Net-_U12-Pad35_ Net-_U12-Pad34_ Net-_U12-Pad33_ Net-_U12-Pad32_ Net-_U12-Pad31_ Net-_U12-Pad30_ Net-_U12-Pad29_ Net-_U12-Pad28_ adc_bridge_8
+PORT21 Net-_PORT21-Pad1_ ana_kd7
+U7 Net-_PORT28-Pad1_ Net-_PORT27-Pad1_ Net-_PORT26-Pad1_ Net-_PORT25-Pad1_ Net-_PORT24-Pad1_ Net-_PORT23-Pad1_ Net-_PORT22-Pad1_ Net-_PORT21-Pad1_ Net-_U12-Pad27_ Net-_U12-Pad26_ Net-_U12-Pad25_ Net-_U12-Pad24_ Net-_U12-Pad23_ Net-_U12-Pad22_ Net-_U12-Pad21_ Net-_U12-Pad20_ adc_bridge_8
+PORT22 Net-_PORT22-Pad1_ ana_kd6
+PORT23 Net-_PORT23-Pad1_ ana_kd5
+PORT24 Net-_PORT24-Pad1_ ana_kd4
+PORT25 Net-_PORT25-Pad1_ ana_kd3
+PORT35 Net-_PORT35-Pad1_ ana_sp9
+PORT30 Net-_PORT30-Pad1_ ana_sp14
+PORT33 Net-_PORT33-Pad1_ ana_sp11
+PORT34 Net-_PORT34-Pad1_ ana_sp10
+PORT32 Net-_PORT32-Pad1_ ana_sp12
+PORT31 Net-_PORT31-Pad1_ ana_sp13
+PORT36 Net-_PORT36-Pad1_ ana_sp8
+PORT28 Net-_PORT28-Pad1_ ana_kd0
+PORT27 Net-_PORT27-Pad1_ ana_kd1
+PORT29 Net-_PORT29-Pad1_ ana_sp15
+PORT26 Net-_PORT26-Pad1_ ana_kd2
+PORT78 Net-_PORT78-Pad1_ ana_dead_time6
+PORT79 Net-_PORT79-Pad1_ ana_dead_time5
+PORT77 Net-_PORT77-Pad1_ ana_dead_time7
+PORT80 Net-_PORT80-Pad1_ ana_dead_time4
+PORT82 Net-_PORT82-Pad1_ ana_dead_time2
+PORT81 Net-_PORT81-Pad1_ ana_dead_time3
+PORT84 Net-_PORT84-Pad1_ ana_dead_time0
+U15 Net-_PORT84-Pad1_ Net-_PORT83-Pad1_ Net-_PORT82-Pad1_ Net-_PORT81-Pad1_ Net-_PORT80-Pad1_ Net-_PORT79-Pad1_ Net-_PORT78-Pad1_ Net-_PORT77-Pad1_ Net-_U15-Pad9_ Net-_U15-Pad10_ Net-_U15-Pad11_ Net-_U15-Pad12_ Net-_U15-Pad13_ Net-_U15-Pad14_ Net-_U15-Pad15_ Net-_U15-Pad16_ adc_bridge_8
+PORT83 Net-_PORT83-Pad1_ ana_dead_time1
+U16 Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U12-Pad3_ Net-_U1-Pad2_ Net-_U13-Pad16_ Net-_U13-Pad15_ Net-_U13-Pad14_ Net-_U13-Pad13_ Net-_U13-Pad12_ Net-_U13-Pad11_ Net-_U13-Pad10_ Net-_U13-Pad9_ Net-_U14-Pad16_ Net-_U14-Pad15_ Net-_U14-Pad14_ Net-_U14-Pad13_ Net-_U14-Pad12_ Net-_U14-Pad11_ Net-_U14-Pad10_ Net-_U14-Pad9_ Net-_U12-Pad60_ Net-_U12-Pad61_ Net-_U12-Pad62_ Net-_U12-Pad63_ Net-_U12-Pad64_ Net-_U12-Pad65_ Net-_U12-Pad66_ Net-_U12-Pad67_ Net-_U12-Pad68_ Net-_U12-Pad69_ Net-_U12-Pad70_ Net-_U12-Pad71_ Net-_U12-Pad72_ Net-_U12-Pad73_ Net-_U12-Pad74_ Net-_U12-Pad75_ Net-_U15-Pad16_ Net-_U15-Pad15_ Net-_U15-Pad14_ Net-_U15-Pad13_ Net-_U15-Pad12_ Net-_U15-Pad11_ Net-_U15-Pad10_ Net-_U15-Pad9_ Net-_U16-Pad45_ Net-_U16-Pad46_ advanced_pwm
+PORT85 Net-_PORT85-Pad1_ ana_hall_state2
+PORT87 Net-_PORT87-Pad1_ ana_hall_state0
+U17 Net-_PORT87-Pad1_ Net-_PORT86-Pad1_ Net-_PORT85-Pad1_ Net-_U17-Pad4_ Net-_U17-Pad5_ Net-_U17-Pad6_ adc_bridge_3
+PORT86 Net-_PORT86-Pad1_ ana_hall_state1
+PORT61 Net-_PORT61-Pad1_ ana_period15
+PORT65 Net-_PORT65-Pad1_ ana_period11
+PORT64 Net-_PORT64-Pad1_ ana_period12
+PORT63 Net-_PORT63-Pad1_ ana_period13
+PORT62 Net-_PORT62-Pad1_ ana_period14
+U14 Net-_PORT76-Pad1_ Net-_PORT75-Pad1_ Net-_PORT74-Pad1_ Net-_PORT73-Pad1_ Net-_PORT72-Pad1_ Net-_PORT71-Pad1_ Net-_PORT70-Pad1_ Net-_PORT69-Pad1_ Net-_U14-Pad9_ Net-_U14-Pad10_ Net-_U14-Pad11_ Net-_U14-Pad12_ Net-_U14-Pad13_ Net-_U14-Pad14_ Net-_U14-Pad15_ Net-_U14-Pad16_ adc_bridge_8
+U13 Net-_PORT68-Pad1_ Net-_PORT67-Pad1_ Net-_PORT66-Pad1_ Net-_PORT65-Pad1_ Net-_PORT64-Pad1_ Net-_PORT63-Pad1_ Net-_PORT62-Pad1_ Net-_PORT61-Pad1_ Net-_U13-Pad9_ Net-_U13-Pad10_ Net-_U13-Pad11_ Net-_U13-Pad12_ Net-_U13-Pad13_ Net-_U13-Pad14_ Net-_U13-Pad15_ Net-_U13-Pad16_ adc_bridge_8
+PORT68 Net-_PORT68-Pad1_ ana_period8
+PORT66 Net-_PORT66-Pad1_ ana_period10
+PORT67 Net-_PORT67-Pad1_ ana_period9
+PORT75 Net-_PORT75-Pad1_ ana_period1
+PORT74 Net-_PORT74-Pad1_ ana_period2
+PORT72 Net-_PORT72-Pad1_ ana_period4
+PORT73 Net-_PORT73-Pad1_ ana_period3
+PORT70 Net-_PORT70-Pad1_ ana_period6
+PORT69 Net-_PORT69-Pad1_ ana_period7
+PORT76 Net-_PORT76-Pad1_ ana_period0
+PORT71 Net-_PORT71-Pad1_ ana_period5
+U25 Net-_U18-Pad14_ Net-_PORT94-Pad1_ dac_bridge_1
+U24 Net-_U18-Pad13_ Net-_PORT93-Pad1_ dac_bridge_1
+PORT88 Net-_PORT88-Pad1_ ana_ah
+PORT94 Net-_PORT94-Pad1_ ana_hall_error
+PORT91 Net-_PORT91-Pad1_ ana_bl
+PORT89 Net-_PORT89-Pad1_ ana_al
+PORT93 Net-_PORT93-Pad1_ ana_cl
+PORT92 Net-_PORT92-Pad1_ ana_ch
+PORT90 Net-_PORT90-Pad1_ ana_bh
+U22 Net-_U18-Pad11_ Net-_PORT91-Pad1_ dac_bridge_1
+U23 Net-_U18-Pad12_ Net-_PORT92-Pad1_ dac_bridge_1
+U21 Net-_U18-Pad10_ Net-_PORT90-Pad1_ dac_bridge_1
+U18 Net-_U12-Pad3_ Net-_U1-Pad2_ Net-_U17-Pad6_ Net-_U17-Pad5_ Net-_U17-Pad4_ Net-_U16-Pad45_ Net-_U16-Pad46_ Net-_U18-Pad8_ Net-_U18-Pad9_ Net-_U18-Pad10_ Net-_U18-Pad11_ Net-_U18-Pad12_ Net-_U18-Pad13_ Net-_U18-Pad14_ bldc_commutator
+U19 Net-_U18-Pad8_ Net-_PORT88-Pad1_ dac_bridge_1
+U20 Net-_U18-Pad9_ Net-_PORT89-Pad1_ dac_bridge_1
+.end

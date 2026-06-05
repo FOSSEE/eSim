@@ -1,0 +1,58 @@
+* ==========================================
+* XSPICE MODEL DEFINITIONS 
+* ==========================================
+* --- ADC Models ---
+.model adc_bridge_1 adc_bridge(in_low=1.5 in_high=3.5 rise_delay=1e-9 fall_delay=1e-9)
+.model adc_bridge_3 adc_bridge(in_low=1.5 in_high=3.5 rise_delay=1e-9 fall_delay=1e-9)
+.model adc_bridge_8 adc_bridge(in_low=1.5 in_high=3.5 rise_delay=1e-9 fall_delay=1e-9)
+
+* --- DAC Models ---
+.model dac_bridge_1 dac_bridge(out_low=0.0 out_high=5.0 out_undef=2.5 t_rise=1u t_fall=1u)
+
+* --- NgVeri Custom Core Models ---
+.model pid_core pid_core
+.model advanced_pwm advanced_pwm
+.model bldc_commutator bldc_commutator
+
+* ==============================================================================
+* commutator_sub.sub 
+* ==============================================================================
+.subckt commutator_sub ana_fault ana_clk ana_rst_n ana_enable ana_kp7 ana_kp6 ana_kp5 ana_kp4 ana_kp3 ana_kp2 ana_kp1 ana_kp0 ana_ki7 ana_ki6 ana_ki5 ana_ki4 ana_ki3 ana_ki2 ana_ki1 ana_ki0 ana_kd7 ana_kd6 ana_kd5 ana_kd4 ana_kd3 ana_kd2 ana_kd1 ana_kd0 ana_sp15 ana_sp14 ana_sp13 ana_sp12 ana_sp11 ana_sp10 ana_sp9 ana_sp8 ana_sp7 ana_sp6 ana_sp5 ana_sp4 ana_sp3 ana_sp2 ana_sp1 ana_sp0 ana_fb15 ana_fb14 ana_fb13 ana_fb12 ana_fb11 ana_fb10 ana_fb9 ana_fb8 ana_fb7 ana_fb6 ana_fb5 ana_fb4 ana_fb3 ana_fb2 ana_fb1 ana_fb0 ana_period15 ana_period14 ana_period13 ana_period12 ana_period11 ana_period10 ana_period9 ana_period8 ana_period7 ana_period6 ana_period5 ana_period4 ana_period3 ana_period2 ana_period1 ana_period0 ana_dead_time7 ana_dead_time6 ana_dead_time5 ana_dead_time4 ana_dead_time3 ana_dead_time2 ana_dead_time1 ana_dead_time0 ana_hall_state2 ana_hall_state1 ana_hall_state0 ana_ah ana_al ana_bh ana_bl ana_ch ana_cl ana_hall_error
+
+A11 [ ana_fb0 ana_fb1 ana_fb2 ana_fb3 ana_fb4 ana_fb5 ana_fb6 ana_fb7 ] [ Net-_U11-Pad9_ Net-_U11-Pad10_ Net-_U11-Pad11_ Net-_U11-Pad12_ Net-_U11-Pad13_ Net-_U11-Pad14_ Net-_U11-Pad15_ Net-_U11-Pad16_ ] adc_bridge_8
+A10 [ ana_fb8 ana_fb9 ana_fb10 ana_fb11 ana_fb12 ana_fb13 ana_fb14 ana_fb15 ] [ Net-_U10-Pad9_ Net-_U10-Pad10_ Net-_U10-Pad11_ Net-_U10-Pad12_ Net-_U10-Pad13_ Net-_U10-Pad14_ Net-_U10-Pad15_ Net-_U10-Pad16_ ] adc_bridge_8
+A5 [ ana_kp0 ana_kp1 ana_kp2 ana_kp3 ana_kp4 ana_kp5 ana_kp6 ana_kp7 ] [ Net-_U12-Pad11_ Net-_U12-Pad10_ Net-_U12-Pad9_ Net-_U12-Pad8_ Net-_U12-Pad7_ Net-_U12-Pad6_ Net-_U12-Pad5_ Net-_U12-Pad4_ ] adc_bridge_8
+A6 [ ana_ki0 ana_ki1 ana_ki2 ana_ki3 ana_ki4 ana_ki5 ana_ki6 ana_ki7 ] [ Net-_U12-Pad19_ Net-_U12-Pad18_ Net-_U12-Pad17_ Net-_U12-Pad16_ Net-_U12-Pad15_ Net-_U12-Pad14_ Net-_U12-Pad13_ Net-_U12-Pad12_ ] adc_bridge_8
+A9 [ ana_sp0 ana_sp1 ana_sp2 ana_sp3 ana_sp4 ana_sp5 ana_sp6 ana_sp7 ] [ Net-_U12-Pad43_ Net-_U12-Pad42_ Net-_U12-Pad41_ Net-_U12-Pad40_ Net-_U12-Pad39_ Net-_U12-Pad38_ Net-_U12-Pad37_ Net-_U12-Pad36_ ] adc_bridge_8
+A8 [ ana_sp8 ana_sp9 ana_sp10 ana_sp11 ana_sp12 ana_sp13 ana_sp14 ana_sp15 ] [ Net-_U12-Pad35_ Net-_U12-Pad34_ Net-_U12-Pad33_ Net-_U12-Pad32_ Net-_U12-Pad31_ Net-_U12-Pad30_ Net-_U12-Pad29_ Net-_U12-Pad28_ ] adc_bridge_8
+A7 [ ana_kd0 ana_kd1 ana_kd2 ana_kd3 ana_kd4 ana_kd5 ana_kd6 ana_kd7 ] [ Net-_U12-Pad27_ Net-_U12-Pad26_ Net-_U12-Pad25_ Net-_U12-Pad24_ Net-_U12-Pad23_ Net-_U12-Pad22_ Net-_U12-Pad21_ Net-_U12-Pad20_ ] adc_bridge_8
+A15 [ ana_dead_time0 ana_dead_time1 ana_dead_time2 ana_dead_time3 ana_dead_time4 ana_dead_time5 ana_dead_time6 ana_dead_time7 ] [ Net-_U15-Pad9_ Net-_U15-Pad10_ Net-_U15-Pad11_ Net-_U15-Pad12_ Net-_U15-Pad13_ Net-_U15-Pad14_ Net-_U15-Pad15_ Net-_U15-Pad16_ ] adc_bridge_8
+A14 [ ana_period0 ana_period1 ana_period2 ana_period3 ana_period4 ana_period5 ana_period6 ana_period7 ] [ Net-_U14-Pad9_ Net-_U14-Pad10_ Net-_U14-Pad11_ Net-_U14-Pad12_ Net-_U14-Pad13_ Net-_U14-Pad14_ Net-_U14-Pad15_ Net-_U14-Pad16_ ] adc_bridge_8
+A13 [ ana_period8 ana_period9 ana_period10 ana_period11 ana_period12 ana_period13 ana_period14 ana_period15 ] [ Net-_U13-Pad9_ Net-_U13-Pad10_ Net-_U13-Pad11_ Net-_U13-Pad12_ Net-_U13-Pad13_ Net-_U13-Pad14_ Net-_U13-Pad15_ Net-_U13-Pad16_ ] adc_bridge_8
+A17 [ ana_hall_state0 ana_hall_state1 ana_hall_state2 ] [ Net-_U17-Pad4_ Net-_U17-Pad5_ Net-_U17-Pad6_ ] adc_bridge_3
+
+A3 [ ana_rst_n ] [ Net-_U12-Pad2_ ] adc_bridge_1
+A1 [ ana_fault ] [ Net-_U1-Pad2_ ] adc_bridge_1
+A4 [ ana_enable ] [ Net-_U12-Pad3_ ] adc_bridge_1
+A2 [ ana_clk ] [ Net-_U12-Pad1_ ] adc_bridge_1
+
+A25 [ Net-_U18-Pad14_ ] [ ana_hall_error ] dac_bridge_1
+A24 [ Net-_U18-Pad13_ ] [ ana_cl ] dac_bridge_1
+A22 [ Net-_U18-Pad11_ ] [ ana_bl ] dac_bridge_1
+A23 [ Net-_U18-Pad12_ ] [ ana_ch ] dac_bridge_1
+A21 [ Net-_U18-Pad10_ ] [ ana_bh ] dac_bridge_1
+A19 [ Net-_U18-Pad8_ ] [ ana_ah ] dac_bridge_1
+A20 [ Net-_U18-Pad9_ ] [ ana_al ] dac_bridge_1
+
+* --- DIGITAL NGVERI CORES ---
+
+* pid_core: [clk] [rst_n] [enable] [kp] [ki] [kd] [setpoint] [feedback] [control_out]
+A12 [Net-_U12-Pad1_] [Net-_U12-Pad2_] [Net-_U12-Pad3_] [Net-_U12-Pad4_ Net-_U12-Pad5_ Net-_U12-Pad6_ Net-_U12-Pad7_ Net-_U12-Pad8_ Net-_U12-Pad9_ Net-_U12-Pad10_ Net-_U12-Pad11_] [Net-_U12-Pad12_ Net-_U12-Pad13_ Net-_U12-Pad14_ Net-_U12-Pad15_ Net-_U12-Pad16_ Net-_U12-Pad17_ Net-_U12-Pad18_ Net-_U12-Pad19_] [Net-_U12-Pad20_ Net-_U12-Pad21_ Net-_U12-Pad22_ Net-_U12-Pad23_ Net-_U12-Pad24_ Net-_U12-Pad25_ Net-_U12-Pad26_ Net-_U12-Pad27_] [Net-_U12-Pad28_ Net-_U12-Pad29_ Net-_U12-Pad30_ Net-_U12-Pad31_ Net-_U12-Pad32_ Net-_U12-Pad33_ Net-_U12-Pad34_ Net-_U12-Pad35_ Net-_U12-Pad36_ Net-_U12-Pad37_ Net-_U12-Pad38_ Net-_U12-Pad39_ Net-_U12-Pad40_ Net-_U12-Pad41_ Net-_U12-Pad42_ Net-_U12-Pad43_] [Net-_U10-Pad16_ Net-_U10-Pad15_ Net-_U10-Pad14_ Net-_U10-Pad13_ Net-_U10-Pad12_ Net-_U10-Pad11_ Net-_U10-Pad10_ Net-_U10-Pad9_ Net-_U11-Pad16_ Net-_U11-Pad15_ Net-_U11-Pad14_ Net-_U11-Pad13_ Net-_U11-Pad12_ Net-_U11-Pad11_ Net-_U11-Pad10_ Net-_U11-Pad9_] [Net-_U12-Pad60_ Net-_U12-Pad61_ Net-_U12-Pad62_ Net-_U12-Pad63_ Net-_U12-Pad64_ Net-_U12-Pad65_ Net-_U12-Pad66_ Net-_U12-Pad67_ Net-_U12-Pad68_ Net-_U12-Pad69_ Net-_U12-Pad70_ Net-_U12-Pad71_ Net-_U12-Pad72_ Net-_U12-Pad73_ Net-_U12-Pad74_ Net-_U12-Pad75_] pid_core
+
+* advanced_pwm: [clk] [rst_n] [enable] [fault_n] [period] [duty_cycle] [dead_time] [pwm_h] [pwm_l]
+A16 [Net-_U12-Pad1_] [Net-_U12-Pad2_] [Net-_U12-Pad3_] [Net-_U1-Pad2_] [Net-_U13-Pad16_ Net-_U13-Pad15_ Net-_U13-Pad14_ Net-_U13-Pad13_ Net-_U13-Pad12_ Net-_U13-Pad11_ Net-_U13-Pad10_ Net-_U13-Pad9_ Net-_U14-Pad16_ Net-_U14-Pad15_ Net-_U14-Pad14_ Net-_U14-Pad13_ Net-_U14-Pad12_ Net-_U14-Pad11_ Net-_U14-Pad10_ Net-_U14-Pad9_] [Net-_U12-Pad60_ Net-_U12-Pad61_ Net-_U12-Pad62_ Net-_U12-Pad63_ Net-_U12-Pad64_ Net-_U12-Pad65_ Net-_U12-Pad66_ Net-_U12-Pad67_ Net-_U12-Pad68_ Net-_U12-Pad69_ Net-_U12-Pad70_ Net-_U12-Pad71_ Net-_U12-Pad72_ Net-_U12-Pad73_ Net-_U12-Pad74_ Net-_U12-Pad75_] [Net-_U15-Pad16_ Net-_U15-Pad15_ Net-_U15-Pad14_ Net-_U15-Pad13_ Net-_U15-Pad12_ Net-_U15-Pad11_ Net-_U15-Pad10_ Net-_U15-Pad9_] [Net-_U16-Pad45_] [Net-_U16-Pad46_] advanced_pwm
+
+* bldc_commutator: [enable] [fault_n] [hall_state] [master_pwm_h] [master_pwm_l] [ah] [al] [bh] [bl] [ch] [cl] [hall_error]
+A18 [Net-_U12-Pad3_] [Net-_U1-Pad2_] [Net-_U17-Pad6_ Net-_U17-Pad5_ Net-_U17-Pad4_] [Net-_U16-Pad45_] [Net-_U16-Pad46_] [Net-_U18-Pad8_] [Net-_U18-Pad9_] [Net-_U18-Pad10_] [Net-_U18-Pad11_] [Net-_U18-Pad12_] [Net-_U18-Pad13_] [Net-_U18-Pad14_] bldc_commutator
+
+.ends commutator_sub

@@ -1,0 +1,52 @@
+.title kicad schematic
+
+.include commutator_sub.sub
+.include 1N4148.lib
+.include MOSFET_2N7002.lib
+vv1 net-_u1-pad2_ gnd pulse(0 5 1u 1n 1n 0.5u 1u)
+vv7 net-_u1-pad3_ gnd pulse(0 5 2.1u 1n 1n 10 10)
+xu1 +5v net-_u1-pad2_ net-_u1-pad3_ +5v +5v gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd +5v gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd +5v +5v gnd gnd +5v gnd gnd gnd gnd gnd gnd gnd gnd +5v gnd hall_state2 hall_state1 hall_state0 ana_ah ana_al net-_u1-pad90_ ana_bl net-_u1-pad92_ net-_u1-pad93_ hall_error commutator_sub
+vv4 hall_state1 gnd pulse(0 5 0.4m 1n 1n 0.6m 1.2m)
+vv3 hall_state2 gnd pulse(0 5 0.8m 1n 1n 0.6m 1.2m)
+vv5 hall_state0 gnd pulse(0 5 0 1n 1n 0.6m 1.2m)
+c5 net-_l1-pad2_ net-_l2-pad1_ 1nf
+l2 net-_l2-pad1_ net-_l1-pad2_ 1mh
+d2 gnd /phase_b 1N4148
+r9 ana_bl net-_m4-pad2_ 10
+r2 /phase_b net-_l2-pad1_ 1
+c2 /phase_b gnd 1nf
+m4 /phase_b net-_m4-pad2_ gnd gnd 2N7002 W=100u L=100u M=1
+r8 net-_u1-pad93_ ana_cl 10
+r6 net-_u1-pad92_ ana_ch 10
+c3 /phase_c gnd 1nf
+d3 gnd /phase_c 1N4148
+m6 /phase_c ana_cl gnd gnd 2N7002 W=100u L=100u M=1
+d6 /phase_c net-_d4-pad2_ 1N4148
+m5 net-_d4-pad2_ ana_ch /phase_c /phase_c 2N7002 W=100u L=100u M=1
+r3 /phase_c net-_l3-pad1_ 1
+l3 net-_l3-pad1_ net-_l1-pad2_ 1mh
+c6 net-_l1-pad2_ net-_l3-pad1_ 1nf
+m1 net-_d4-pad2_ net-_m1-pad2_ /phase_a /phase_a 2N7002 W=100u L=100u M=1
+m2 /phase_a net-_m2-pad2_ gnd gnd 2N7002 W=100u L=100u M=1
+m3 net-_d4-pad2_ ana_bh /phase_b /phase_b 2N7002 W=100u L=100u M=1
+d1 gnd /phase_a 1N4148
+r7 net-_u1-pad90_ ana_bh 10
+r5 ana_al net-_m2-pad2_ 10
+d5 /phase_b net-_d4-pad2_ 1N4148
+v2 +5v gnd 5v
+v6 net-_d4-pad2_ gnd 1v
+r4 ana_ah net-_m1-pad2_ 10
+c1 /phase_a gnd 1nf
+r1 /phase_a net-_l1-pad1_ 1
+d4 /phase_a net-_d4-pad2_ 1N4148
+l1 net-_l1-pad1_ net-_l1-pad2_ 1mh
+c4 net-_l1-pad2_ net-_l1-pad1_ 1nf
+.tran 0.1e-06 2e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

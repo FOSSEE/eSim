@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "bldc_commutator")(type "KiCad")(uri "${KIPRJMOD}/bldc_commutator.kicad_sym")(options "")(descr ""))
+)

@@ -1,0 +1,41 @@
+.title KiCad schematic
+.include "C:\eSim_Workpace\commutator_sub\commutator_sub.sub"
+Vv1 Net-_U1-Pad2_ GND pulse(0 5 1u 1n 1n 0.5u 1u)
+Vv7 Net-_U1-Pad3_ GND pulse(0 5 2.1u 1n 1n 10 10)
+XU1 +5V Net-_U1-Pad2_ Net-_U1-Pad3_ +5V +5V GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND +5V GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND +5V +5V GND GND +5V GND GND GND GND GND GND GND GND +5V GND hall_state2 hall_state1 hall_state0 ana_ah ana_al Net-_U1-Pad90_ ana_bl Net-_U1-Pad92_ Net-_U1-Pad93_ hall_error commutator_sub
+Vv4 hall_state1 GND pulse(0 5 0.4m 1n 1n 0.6m 1.2m)
+Vv3 hall_state2 GND pulse(0 5 0.8m 1n 1n 0.6m 1.2m)
+Vv5 hall_state0 GND pulse(0 5 0 1n 1n 0.6m 1.2m)
+C5 Net-_L1-Pad2_ Net-_L2-Pad1_ 1nF
+L2 Net-_L2-Pad1_ Net-_L1-Pad2_ 1mH
+D2 GND /Phase_B D
+R9 ana_bl Net-_M4-Pad2_ 10
+R2 /Phase_B Net-_L2-Pad1_ 1
+C2 /Phase_B GND 1nF
+M4 /Phase_B Net-_M4-Pad2_ GND GND mosfet_n
+R8 Net-_U1-Pad93_ ana_cl 10
+R6 Net-_U1-Pad92_ ana_ch 10
+C3 /Phase_C GND 1nF
+D3 GND /Phase_C D
+M6 /Phase_C ana_cl GND GND mosfet_n
+D6 /Phase_C Net-_D4-Pad2_ D
+M5 Net-_D4-Pad2_ ana_ch /Phase_C /Phase_C mosfet_n
+R3 /Phase_C Net-_L3-Pad1_ 1
+L3 Net-_L3-Pad1_ Net-_L1-Pad2_ 1mH
+C6 Net-_L1-Pad2_ Net-_L3-Pad1_ 1nF
+M1 Net-_D4-Pad2_ Net-_M1-Pad2_ /Phase_A /Phase_A mosfet_n
+M2 /Phase_A Net-_M2-Pad2_ GND GND mosfet_n
+M3 Net-_D4-Pad2_ ana_bh /Phase_B /Phase_B mosfet_n
+D1 GND /Phase_A D
+R7 Net-_U1-Pad90_ ana_bh 10
+R5 ana_al Net-_M2-Pad2_ 10
+D5 /Phase_B Net-_D4-Pad2_ D
+v2 +5V GND 5V
+v6 Net-_D4-Pad2_ GND 1V
+R4 ana_ah Net-_M1-Pad2_ 10
+C1 /Phase_A GND 1nF
+R1 /Phase_A Net-_L1-Pad1_ 1
+D4 /Phase_A Net-_D4-Pad2_ D
+L1 Net-_L1-Pad1_ Net-_L1-Pad2_ 1mH
+C4 Net-_L1-Pad2_ Net-_L1-Pad1_ 1nF
+.end
