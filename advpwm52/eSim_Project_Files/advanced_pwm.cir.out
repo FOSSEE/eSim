@@ -1,0 +1,38 @@
+.title kicad schematic
+
+* u5 net-_u1-pad45_ /pwm_h dac_bridge_1
+* u7 /pwm_l /pwm_h port
+* u1 net-_u1-pad1_ net-_u1-pad43_ net-_u1-pad43_ net-_u1-pad43_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad43_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad43_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad43_ net-_u1-pad10_ net-_u1-pad45_ net-_u1-pad46_ advanced_pwm
+* u6 net-_u1-pad46_ /pwm_l dac_bridge_1
+* u2 gnd net-_u1-pad10_ adc_bridge_1
+vv1 net-_u3-pad1_ gnd pulse(0 5 0 1n 1n 1u 2u)
+v2 net-_u4-pad1_ gnd 5v
+* u3 net-_u3-pad1_ net-_u1-pad1_ adc_bridge_1
+* u4 net-_u4-pad1_ net-_u1-pad43_ adc_bridge_1
+a1 [net-_u1-pad45_ ] [/pwm_h ] u5
+a2 [net-_u1-pad1_ ] [net-_u1-pad43_ ] [net-_u1-pad43_ ] [net-_u1-pad43_ ] [net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad43_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ ] [net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad43_ net-_u1-pad10_ net-_u1-pad10_ ] [net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad43_ net-_u1-pad10_ ] [net-_u1-pad45_ ] [net-_u1-pad46_ ] u1
+a3 [net-_u1-pad46_ ] [/pwm_l ] u6
+a4 [gnd ] [net-_u1-pad10_ ] u2
+a5 [net-_u3-pad1_ ] [net-_u1-pad1_ ] u3
+a6 [net-_u4-pad1_ ] [net-_u1-pad43_ ] u4
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u5 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             advanced_pwm, Ngspice Name: advanced_pwm
+.model u1 advanced_pwm(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u6 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 10e-09 50e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

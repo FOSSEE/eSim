@@ -1,0 +1,11 @@
+.title KiCad schematic
+U5 Net-_U1-Pad45_ /pwm_h dac_bridge_1
+U7 /pwm_l /pwm_h PORT
+U1 Net-_U1-Pad1_ Net-_U1-Pad43_ Net-_U1-Pad43_ Net-_U1-Pad43_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad43_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad43_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad43_ Net-_U1-Pad10_ Net-_U1-Pad45_ Net-_U1-Pad46_ advanced_pwm
+U6 Net-_U1-Pad46_ /pwm_l dac_bridge_1
+U2 GND Net-_U1-Pad10_ adc_bridge_1
+Vv1 Net-_U3-Pad1_ GND pulse(0 5 0 1n 1n 1u 2u)
+v2 Net-_U4-Pad1_ GND 5V
+U3 Net-_U3-Pad1_ Net-_U1-Pad1_ adc_bridge_1
+U4 Net-_U4-Pad1_ Net-_U1-Pad43_ adc_bridge_1
+.end
