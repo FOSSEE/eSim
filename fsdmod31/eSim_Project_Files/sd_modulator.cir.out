@@ -1,0 +1,22 @@
+.title kicad schematic
+
+.include sd_modulator_sub.sub
+v3 net-_u1-pad10_ gnd 5v
+vv1 net-_u1-pad1_ gnd pulse(0 5 0 1n 1n 49n 100n)
+vv2 net-_u1-pad2_ gnd pulse(0 5 150n 1n 1n 2m 3m)
+r1 sd_out filtered_sd_out 1k
+xu1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ net-_u1-pad10_ sd_out sd_modulator_sub
+* u2 sd_out plot_v1
+c1 filtered_sd_out gnd 100nf
+* u3 filtered_sd_out plot_v1
+.tran 1e-09 1e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(sd_out)
+plot v(filtered_sd_out)
+.endc
+.end

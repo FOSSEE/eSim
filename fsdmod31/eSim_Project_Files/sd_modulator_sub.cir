@@ -1,0 +1,18 @@
+.title KiCad schematic
+U3 Net-_PORT10-Pad1_ Net-_PORT9-Pad1_ Net-_PORT8-Pad1_ Net-_PORT7-Pad1_ Net-_PORT6-Pad1_ Net-_PORT5-Pad1_ Net-_PORT4-Pad1_ Net-_PORT3-Pad1_ Net-_U3-Pad9_ Net-_U3-Pad10_ Net-_U3-Pad11_ Net-_U3-Pad12_ Net-_U3-Pad13_ Net-_U3-Pad14_ Net-_U3-Pad15_ Net-_U3-Pad16_ adc_bridge_8
+U5 Net-_U4-Pad11_ Net-_PORT11-Pad1_ dac_bridge_1
+U4 Net-_U1-Pad2_ Net-_U2-Pad2_ Net-_U3-Pad16_ Net-_U3-Pad15_ Net-_U3-Pad14_ Net-_U3-Pad13_ Net-_U3-Pad12_ Net-_U3-Pad11_ Net-_U3-Pad10_ Net-_U3-Pad9_ Net-_U4-Pad11_ sd_modulator
+PORT11 Net-_PORT11-Pad1_ ana_sd_out
+U1 Net-_PORT1-Pad1_ Net-_U1-Pad2_ adc_bridge_1
+U2 Net-_PORT2-Pad1_ Net-_U2-Pad2_ adc_bridge_1
+PORT6 Net-_PORT6-Pad1_ ana_in4
+PORT9 Net-_PORT9-Pad1_ ana_in1
+PORT10 Net-_PORT10-Pad1_ ana_in0
+PORT7 Net-_PORT7-Pad1_ ana_in3
+PORT8 Net-_PORT8-Pad1_ ana_in2
+PORT5 Net-_PORT5-Pad1_ ana_in5
+PORT3 Net-_PORT3-Pad1_ ana_in7
+PORT2 Net-_PORT2-Pad1_ ana_rst_n
+PORT4 Net-_PORT4-Pad1_ ana_in6
+PORT1 Net-_PORT1-Pad1_ ana_clk
+.end

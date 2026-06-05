@@ -1,0 +1,38 @@
+* ==========================================
+* XSPICE MODEL DEFINITIONS 
+* ==========================================
+* --- ADC Models ---
+* Standard bridge for clk, rst, and data bits
+.model adc_bridge_sd adc_bridge(in_low=1.5 in_high=3.5 rise_delay=1e-9 fall_delay=1e-9)
+
+* --- DAC Models ---
+* High-speed bridge for 10MHz PDM output (1ns transitions)
+.model dac_bridge_sd dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.0 t_rise=1n t_fall=1n)
+
+* --- NgVeri Custom Core Models ---
+.model sd_modulator sd_modulator
+
+* ==============================================================================
+* sd_modulator_sub.sub
+* ==============================================================================
+.subckt sd_modulator_sub ana_clk ana_rst_n ana_in7 ana_in6 ana_in5 ana_in4 ana_in3 ana_in2 ana_in1 ana_in0 ana_sd_out
+
+* --- ADC Bridges (Inputs) ---
+* Mapping analog ports to internal digital nodes
+A1 [ ana_clk ]   [ d_clk ]   adc_bridge_sd
+A2 [ ana_rst_n ] [ d_rst_n ] adc_bridge_sd
+
+* 8-Bit Data Input Bridge (MSB to LSB)
+A3 [ ana_in7 ana_in6 ana_in5 ana_in4 ana_in3 ana_in2 ana_in1 ana_in0 ] 
++  [ d7 d6 d5 d4 d3 d2 d1 d0 ] adc_bridge_sd
+
+* --- sd_modulator core ---
+* Instance of your Verilog-compiled XSPICE model
+* Ports: clk, rst_n, [7:0] digital_val_in, sigma_delta_out
+A4 [d_clk] [d_rst_n] [d7 d6 d5 d4 d3 d2 d1 d0] [d_sd_out] sd_modulator
+
+* --- DAC Bridge (Output) ---
+* Converting digital PDM stream to 5V analog pulses for the RC filter
+A5 [ d_sd_out ] [ ana_sd_out ] dac_bridge_sd
+
+.ends sd_modulator_sub

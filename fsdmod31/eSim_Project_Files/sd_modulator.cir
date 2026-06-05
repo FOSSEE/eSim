@@ -1,0 +1,11 @@
+.title KiCad schematic
+.include "C:\eSim_Workpace\sd_modulator_sub\sd_modulator_sub.sub"
+v3 Net-_U1-Pad10_ GND 5V
+Vv1 Net-_U1-Pad1_ GND pulse(0 5 0 1n 1n 49n 100n)
+Vv2 Net-_U1-Pad2_ GND pulse(0 5 150n 1n 1n 2m 3m)
+R1 sd_out filtered_sd_out 1k
+XU1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ Net-_U1-Pad10_ sd_out sd_modulator_sub
+U2 sd_out plot_v1
+C1 filtered_sd_out GND 100nf
+U3 filtered_sd_out plot_v1
+.end
