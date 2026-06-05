@@ -1,0 +1,36 @@
+.title KiCad schematic
+.include "MOSFET_2N7002.lib"
+U7 Net-_R1-Pad1_ Net-_R1-Pad1_ GND GND Net-_R1-Pad1_ Net-_R1-Pad1_ GND GND Net-_U6-Pad12_ Net-_U6-Pad13_ Net-_U6-Pad14_ Net-_U6-Pad15_ Net-_U6-Pad16_ Net-_U6-Pad17_ Net-_U6-Pad18_ Net-_U6-Pad19_ adc_bridge_8
+U3 Net-_R1-Pad1_ GND Net-_R1-Pad1_ GND Net-_R1-Pad1_ GND Net-_R1-Pad1_ Net-_U3-Pad8_ Net-_U3-Pad9_ Net-_U3-Pad10_ Net-_U3-Pad11_ Net-_U3-Pad12_ Net-_U3-Pad13_ Net-_U3-Pad14_ adc_bridge_7
+Vv3 Net-_U2-Pad1_ GND pulse(0 5 20u 100n 100n 200u 1m)
+U1 Net-_R1-Pad1_ Net-_U1-Pad2_ adc_bridge_1
+Vv4 Net-_U15-Pad1_ GND pulse(5 0 0 1n 1n 5u 10m)
+U11 Net-_R1-Pad1_ GND GND Net-_R1-Pad1_ Net-_R1-Pad1_ GND GND Net-_R1-Pad1_ Net-_U11-Pad9_ Net-_U11-Pad10_ Net-_U11-Pad11_ Net-_U11-Pad12_ Net-_U11-Pad13_ Net-_U11-Pad14_ Net-_U11-Pad15_ Net-_U11-Pad16_ adc_bridge_8
+U5 Net-_U16-Pad1_ Net-_U5-Pad2_ adc_bridge_1
+U4 Net-_U15-Pad1_ Net-_U4-Pad2_ adc_bridge_1
+U6 Net-_U5-Pad2_ Net-_U4-Pad2_ Net-_U2-Pad2_ Net-_U1-Pad2_ Net-_U3-Pad8_ Net-_U3-Pad9_ Net-_U3-Pad10_ Net-_U3-Pad11_ Net-_U3-Pad12_ Net-_U3-Pad13_ Net-_U3-Pad14_ Net-_U6-Pad12_ Net-_U6-Pad13_ Net-_U6-Pad14_ Net-_U6-Pad15_ Net-_U6-Pad16_ Net-_U6-Pad17_ Net-_U6-Pad18_ Net-_U6-Pad19_ Net-_U6-Pad20_ Net-_U6-Pad21_ Net-_U10-Pad1_ Net-_U21-Pad1_ Net-_U21-Pad2_ Net-_U21-Pad3_ Net-_U21-Pad4_ Net-_U21-Pad5_ Net-_U21-Pad6_ Net-_U21-Pad7_ Net-_U21-Pad8_ Net-_U22-Pad1_ unconnected-_U6-Pad32_ i2c_master_core
+U8 /SDA_Bus Net-_U6-Pad20_ adc_bridge_1
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ adc_bridge_1
+M3 /SDA_Bus Net-_M3-Pad2_ GND GND 2N7002
+Vv1 Net-_U16-Pad1_ GND pulse(0 5 0 100n 100n 400n 1u)
+C1 /SCL_Bus GND 33pF
+U10 Net-_U10-Pad1_ Net-_M1-Pad2_ dac_bridge_1
+U9 Net-_U6-Pad21_ Net-_M2-Pad2_ dac_bridge_1
+M1 /SCL_Bus Net-_M1-Pad2_ GND GND 2N7002
+M2 /SDA_Bus Net-_M2-Pad2_ GND GND 2N7002
+R2 Net-_R1-Pad1_ /SDA_Bus 3.3k
+R1 Net-_R1-Pad1_ /SCL_Bus 3.3k
+C2 /SDA_Bus GND 33pF
+v2 Net-_R1-Pad1_ GND 5V
+U14 /SDA_Bus Net-_U14-Pad2_ adc_bridge_1
+U13 /SCL_Bus Net-_U13-Pad2_ adc_bridge_1
+U16 Net-_U16-Pad1_ Net-_U16-Pad2_ adc_bridge_1
+U15 Net-_U15-Pad1_ Net-_U15-Pad2_ adc_bridge_1
+U12 Net-_U12-Pad1_ Net-_M3-Pad2_ dac_bridge_1
+U18 Net-_R1-Pad1_ GND Net-_R1-Pad1_ GND Net-_R1-Pad1_ GND Net-_R1-Pad1_ Net-_U17-Pad3_ Net-_U17-Pad4_ Net-_U17-Pad5_ Net-_U17-Pad6_ Net-_U17-Pad7_ Net-_U17-Pad8_ Net-_U17-Pad9_ adc_bridge_7
+U17 Net-_U16-Pad2_ Net-_U15-Pad2_ Net-_U17-Pad3_ Net-_U17-Pad4_ Net-_U17-Pad5_ Net-_U17-Pad6_ Net-_U17-Pad7_ Net-_U17-Pad8_ Net-_U17-Pad9_ Net-_U11-Pad9_ Net-_U11-Pad10_ Net-_U11-Pad11_ Net-_U11-Pad12_ Net-_U11-Pad13_ Net-_U11-Pad14_ Net-_U11-Pad15_ Net-_U11-Pad16_ Net-_U13-Pad2_ Net-_U14-Pad2_ Net-_U12-Pad1_ Net-_U17-Pad21_ Net-_U17-Pad22_ Net-_U17-Pad23_ Net-_U17-Pad24_ Net-_U17-Pad25_ Net-_U17-Pad26_ Net-_U17-Pad27_ Net-_U17-Pad28_ Net-_U17-Pad29_ i2c_slave_core
+U22 Net-_U22-Pad1_ /M_rx_valid0 dac_bridge_1
+U21 Net-_U21-Pad1_ Net-_U21-Pad2_ Net-_U21-Pad3_ Net-_U21-Pad4_ Net-_U21-Pad5_ Net-_U21-Pad6_ Net-_U21-Pad7_ Net-_U21-Pad8_ /M_rx_data0 /M_rx_data1 /M_rx_data2 /M_rx_data3 /M_rx_data4 /M_rx_data5 /M_rx_data6 /M_rx_data7 dac_bridge_8
+U20 Net-_U17-Pad29_ /S_rx_valid0 dac_bridge_1
+U19 Net-_U17-Pad21_ Net-_U17-Pad22_ Net-_U17-Pad23_ Net-_U17-Pad24_ Net-_U17-Pad25_ Net-_U17-Pad26_ Net-_U17-Pad27_ Net-_U17-Pad28_ /S_rx_data0 /S_rx_data1 /S_rx_data2 /S_rx_data3 /S_rx_data4 /S_rx_data5 /S_rx_data6 /S_rx_data7 dac_bridge_8
+.end

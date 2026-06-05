@@ -1,0 +1,7 @@
+* 115mA, 60V, N-channel Enhancement Mode MOSFET
+* Capacitive parasitics reduced to eliminate I2C bus switching spikes.
+* All DC parameters unchanged: VTO, KP, GAMMA, PHI, LAMBDA, RD, RS, IS, PB, MJ
+.MODEL 2N7002 NMOS( LEVEL=1 VTO=1.50 KP=78.1m GAMMA=1.86
++ PHI=.75 LAMBDA=97.2u RD=0.280 RS=0.280
++ IS=140f PB=0.800 MJ=0.460 CBD=0.1p
++ CBS=0.1p CGSO=1.0n CGDO=1.0n CGBO=1.0n )
