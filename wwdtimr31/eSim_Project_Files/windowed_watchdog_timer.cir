@@ -1,0 +1,18 @@
+.title KiCad schematic
+U1 GND Net-_U1-Pad2_ GND GND Net-_U1-Pad2_ Net-_U1-Pad2_ GND GND Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ adc_bridge_8
+U5 Net-_U5-Pad1_ Net-_U5-Pad2_ adc_bridge_1
+Vv1 Net-_U4-Pad1_ GND pulse(0 5 0 0.1u 0.1u 0.4u 1u)
+Vv2 Net-_U5-Pad1_ GND pulse(0 5 2u 0.1u 0.1u 100m 200m)
+U6 Net-_U6-Pad1_ Net-_U6-Pad2_ adc_bridge_1
+Vv3 Net-_U6-Pad1_ GND pulse(0 5 3u 0.1u 0.1u 100m 200m)
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ adc_bridge_1
+U8 Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_U6-Pad2_ Net-_U1-Pad16_ Net-_U1-Pad15_ Net-_U1-Pad14_ Net-_U1-Pad13_ Net-_U1-Pad12_ Net-_U1-Pad11_ Net-_U1-Pad10_ Net-_U1-Pad9_ Net-_U2-Pad16_ Net-_U2-Pad15_ Net-_U2-Pad14_ Net-_U2-Pad13_ Net-_U2-Pad12_ Net-_U2-Pad11_ Net-_U2-Pad10_ Net-_U2-Pad9_ Net-_U3-Pad16_ Net-_U3-Pad15_ Net-_U3-Pad14_ Net-_U3-Pad13_ Net-_U3-Pad12_ Net-_U3-Pad11_ Net-_U3-Pad10_ Net-_U3-Pad9_ Net-_U7-Pad2_ Net-_U8-Pad29_ Net-_U10-Pad1_ Net-_U11-Pad1_ wwdt_core
+v5 Net-_U1-Pad2_ GND 5V
+U10 Net-_U10-Pad1_ /V_WARN dac_bridge_1
+U9 Net-_U8-Pad29_ /V_RESET dac_bridge_1
+U11 Net-_U11-Pad1_ /V_WINDOW dac_bridge_1
+U2 GND GND Net-_U1-Pad2_ GND Net-_U1-Pad2_ GND GND GND Net-_U2-Pad9_ Net-_U2-Pad10_ Net-_U2-Pad11_ Net-_U2-Pad12_ Net-_U2-Pad13_ Net-_U2-Pad14_ Net-_U2-Pad15_ Net-_U2-Pad16_ adc_bridge_8
+U3 Net-_U1-Pad2_ GND Net-_U1-Pad2_ GND GND Net-_U1-Pad2_ GND Net-_U1-Pad2_ Net-_U3-Pad9_ Net-_U3-Pad10_ Net-_U3-Pad11_ Net-_U3-Pad12_ Net-_U3-Pad13_ Net-_U3-Pad14_ Net-_U3-Pad15_ Net-_U3-Pad16_ adc_bridge_8
+U7 Net-_U7-Pad1_ Net-_U7-Pad2_ adc_bridge_1
+Vv4 Net-_U7-Pad1_ GND pulse(0 5 40u 100n 100n 5u 200m)
+.end
