@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "svpwm_subcircuit")(type "KiCad")(uri "${KIPRJMOD}/svpwm_subcircuit.kicad_sym")(options "")(descr ""))
+)

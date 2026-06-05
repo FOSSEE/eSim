@@ -1,0 +1,72 @@
+.title kicad schematic
+.options method=gear
+
+.include svpwm_subcircuit.sub
+.include schottky.lib
+.include MOSFET_2N7002.lib
+m6 /phase_w net-_c13-pad1_ gnd gnd 2N7002 W=100u L=100u M=1
+c12 net-_c12-pad1_ /phase_w 1nf
+c13 net-_c13-pad1_ gnd 1nf
+d6 gnd /phase_w 1N5819
+c6 net-_c6-pad1_ /phase_w 1nf
+c5 net-_c5-pad1_ net-_c1-pad2_ 1nf
+r16 gnd net-_c6-pad1_ 100
+d8 net-_c7-pad1_ gnd 1N5819
+r19 net-_l2-pad1_ net-_c7-pad1_ 10k
+c7 net-_c7-pad1_ gnd 10nf
+l3 net-_l3-pad1_ net-_c7-pad1_ 2mh
+r3 /phase_w net-_l3-pad1_ 1k
+r20 net-_l3-pad1_ net-_c7-pad1_ 10k
+r1 /phase_u net-_l1-pad1_ 1k
+r2 /phase_v net-_l2-pad1_ 1k
+r4 net-_c7-pad1_ gnd 1meg
+l2 net-_l2-pad1_ net-_c7-pad1_ 2mh
+r18 net-_l1-pad1_ net-_c7-pad1_ 10k
+d7 net-_c7-pad1_ net-_c1-pad2_ 1N5819
+l1 net-_l1-pad1_ net-_c7-pad1_ 2mh
+r17 net-_r17-pad1_ net-_c1-pad2_ 0.1
+r11 /phase_u net-_c1-pad1_ 100
+r5 net-_r5-pad1_ net-_c10-pad1_ 100
+v3 net-_r17-pad1_ gnd 12v
+m3 net-_c1-pad2_ net-_c9-pad1_ /phase_v /phase_v 2N7002 W=100u L=100u M=1
+c15 /phase_v gnd 1nf
+c3 net-_c3-pad1_ net-_c1-pad2_ 1nf
+c9 net-_c9-pad1_ /phase_v 1nf
+c10 net-_c10-pad1_ /phase_u 1nf
+r13 /phase_v net-_c3-pad1_ 100
+c2 net-_c2-pad1_ /phase_u 1nf
+d3 /phase_v net-_c1-pad2_ 1N5819
+r10 net-_r10-pad1_ net-_c9-pad1_ 100
+d2 gnd /phase_u 1N5819
+r9 net-_r9-pad1_ net-_c8-pad1_ 100
+r12 gnd net-_c2-pad1_ 100
+d1 /phase_u net-_c1-pad2_ 1N5819
+m1 net-_c1-pad2_ net-_c10-pad1_ /phase_u /phase_u 2N7002 W=100u L=100u M=1
+c1 net-_c1-pad1_ net-_c1-pad2_ 1nf
+m2 /phase_u net-_c8-pad1_ gnd gnd 2N7002 W=100u L=100u M=1
+c16 /phase_u gnd 1nf
+c8 net-_c8-pad1_ gnd 1nf
+m5 net-_c1-pad2_ net-_c12-pad1_ /phase_w /phase_w 2N7002 W=100u L=100u M=1
+d5 /phase_w net-_c1-pad2_ 1N5819
+r8 net-_r8-pad1_ net-_c13-pad1_ 100
+c14 /phase_w gnd 1nf
+c11 net-_c11-pad1_ gnd 1nf
+m4 /phase_v net-_c11-pad1_ gnd gnd 2N7002 W=100u L=100u M=1
+r6 net-_r6-pad1_ net-_c11-pad1_ 100
+r7 net-_r7-pad1_ net-_c12-pad1_ 100
+d4 gnd /phase_v 1N5819
+c4 net-_c4-pad1_ /phase_v 1nf
+r15 /phase_w net-_c5-pad1_ 100
+r14 gnd net-_c4-pad1_ 100
+vv2 net-_u1-pad2_ gnd pulse(0 5 1u 1n 1n 10 20)
+xu1 net-_u1-pad1_ net-_u1-pad2_ net-_r5-pad1_ net-_r9-pad1_ net-_r10-pad1_ net-_r6-pad1_ net-_r7-pad1_ net-_r8-pad1_ svpwm_subcircuit
+vv1 net-_u1-pad1_ gnd pulse(0 5 0 1n 1n 100n 200n)
+
+.save v("/phase_u") v("/phase_v") v("/phase_w") l1#branch l2#branch l3#branch
+.tran 10e-06 5e-03 0e-00 200e-9 uic
+
+* Control Statements 
+.control
+run
+.endc
+.end

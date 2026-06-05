@@ -1,0 +1,60 @@
+.title KiCad schematic
+.include "C:\eSim_Workpace\svpwm_subcircuit\svpwm_subcircuit.sub"
+M6 /phase_w Net-_C13-Pad1_ GND GND mosfet_n
+C12 Net-_C12-Pad1_ /phase_w 1nF
+C13 Net-_C13-Pad1_ GND 1nF
+D6 GND /phase_w diode
+C6 Net-_C6-Pad1_ /phase_w 1nF
+C5 Net-_C5-Pad1_ Net-_C1-Pad2_ 1nF
+R16 GND Net-_C6-Pad1_ 100
+D8 Net-_C7-Pad1_ GND diode
+R19 Net-_L2-Pad1_ Net-_C7-Pad1_ 10K
+C7 Net-_C7-Pad1_ GND 10nF
+L3 Net-_L3-Pad1_ Net-_C7-Pad1_ 2mH
+R3 /phase_w Net-_L3-Pad1_ 1k
+R20 Net-_L3-Pad1_ Net-_C7-Pad1_ 10K
+R1 /phase_u Net-_L1-Pad1_ 1k
+R2 /phase_v Net-_L2-Pad1_ 1k
+R4 Net-_C7-Pad1_ GND 1MEG
+L2 Net-_L2-Pad1_ Net-_C7-Pad1_ 2mH
+R18 Net-_L1-Pad1_ Net-_C7-Pad1_ 10K
+D7 Net-_C7-Pad1_ Net-_C1-Pad2_ diode
+L1 Net-_L1-Pad1_ Net-_C7-Pad1_ 2mH
+R17 Net-_R17-Pad1_ Net-_C1-Pad2_ 0.1
+R11 /phase_u Net-_C1-Pad1_ 100
+R5 Net-_R5-Pad1_ Net-_C10-Pad1_ 100
+v3 Net-_R17-Pad1_ GND 12V
+M3 Net-_C1-Pad2_ Net-_C9-Pad1_ /phase_v /phase_v mosfet_n
+C15 /phase_v GND 1nF
+C3 Net-_C3-Pad1_ Net-_C1-Pad2_ 1nF
+C9 Net-_C9-Pad1_ /phase_v 1nF
+C10 Net-_C10-Pad1_ /phase_u 1nF
+R13 /phase_v Net-_C3-Pad1_ 100
+C2 Net-_C2-Pad1_ /phase_u 1nF
+D3 /phase_v Net-_C1-Pad2_ diode
+R10 Net-_R10-Pad1_ Net-_C9-Pad1_ 100
+D2 GND /phase_u diode
+R9 Net-_R9-Pad1_ Net-_C8-Pad1_ 100
+R12 GND Net-_C2-Pad1_ 100
+D1 /phase_u Net-_C1-Pad2_ diode
+M1 Net-_C1-Pad2_ Net-_C10-Pad1_ /phase_u /phase_u mosfet_n
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 1nF
+M2 /phase_u Net-_C8-Pad1_ GND GND mosfet_n
+C16 /phase_u GND 1nF
+C8 Net-_C8-Pad1_ GND 1nF
+M5 Net-_C1-Pad2_ Net-_C12-Pad1_ /phase_w /phase_w mosfet_n
+D5 /phase_w Net-_C1-Pad2_ diode
+R8 Net-_R8-Pad1_ Net-_C13-Pad1_ 100
+C14 /phase_w GND 1nF
+C11 Net-_C11-Pad1_ GND 1nF
+M4 /phase_v Net-_C11-Pad1_ GND GND mosfet_n
+R6 Net-_R6-Pad1_ Net-_C11-Pad1_ 100
+R7 Net-_R7-Pad1_ Net-_C12-Pad1_ 100
+D4 GND /phase_v diode
+C4 Net-_C4-Pad1_ /phase_v 1nF
+R15 /phase_w Net-_C5-Pad1_ 100
+R14 GND Net-_C4-Pad1_ 100
+Vv2 Net-_U1-Pad2_ GND pulse(0 5 1u 1n 1n 10 20)
+XU1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_R5-Pad1_ Net-_R9-Pad1_ Net-_R10-Pad1_ Net-_R6-Pad1_ Net-_R7-Pad1_ Net-_R8-Pad1_ svpwm_subcircuit
+Vv1 Net-_U1-Pad1_ GND pulse(0 5 0 1n 1n 100n 200n)
+.end

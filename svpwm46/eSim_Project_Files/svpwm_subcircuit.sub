@@ -1,0 +1,39 @@
+* ==========================================
+* XSPICE MODEL DEFINITIONS 
+* ==========================================
+* --- ADC Models ---
+.model adc_bridge_1 adc_bridge(in_low=1.5 in_high=3.5 rise_delay=1e-9 fall_delay=1e-9)
+
+* --- DAC Models ---
+.model dac_bridge_lowside dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.0 t_rise=200n t_fall=200n)
+.model dac_bridge_highside dac_bridge(out_low=0.0 out_high=17.0 out_undef=0.0 t_rise=200n t_fall=200n)
+
+* --- NgVeri Custom Core Models ---
+.model svpwm svpwm
+.model svpwm_ref_gen svpwm_ref_gen
+
+* ==============================================================================
+* svpwm_subcircuit.sub
+* ==============================================================================
+.subckt svpwm_subcircuit ana_clk ana_rst_n ana_u_high ana_u_low ana_v_high ana_v_low ana_w_high ana_w_low
+
+* --- ADC Bridges ---
+A1 [ ana_clk ]   [ Net-_U7-Pad1_ ] adc_bridge_1
+A2 [ ana_rst_n ] [ Net-_U7-Pad2_ ] adc_bridge_1
+
+* --- svpwm_ref_gen core ---
+A3 [Net-_U7-Pad1_] [Net-_U7-Pad2_] [Net-_U7-Pad3_ Net-_U7-Pad4_ Net-_U7-Pad5_ Net-_U7-Pad6_ Net-_U7-Pad7_ Net-_U7-Pad8_ Net-_U7-Pad9_ Net-_U7-Pad10_ Net-_U7-Pad11_ Net-_U7-Pad12_ Net-_U7-Pad13_ Net-_U7-Pad14_ Net-_U7-Pad15_ Net-_U7-Pad16_ Net-_U7-Pad17_ Net-_U7-Pad18_] [Net-_U7-Pad19_ Net-_U7-Pad20_ Net-_U7-Pad21_ Net-_U7-Pad22_ Net-_U7-Pad23_ Net-_U7-Pad24_ Net-_U7-Pad25_ Net-_U7-Pad26_ Net-_U7-Pad27_ Net-_U7-Pad28_ Net-_U7-Pad29_ Net-_U7-Pad30_ Net-_U7-Pad31_ Net-_U7-Pad32_ Net-_U7-Pad33_ Net-_U7-Pad34_] svpwm_ref_gen
+
+* --- svpwm core ---
+* FIX: The 6 output ports are now in individual brackets matching the Verilog header
+A7 [Net-_U7-Pad1_] [Net-_U7-Pad2_] [Net-_U7-Pad3_ Net-_U7-Pad4_ Net-_U7-Pad5_ Net-_U7-Pad6_ Net-_U7-Pad7_ Net-_U7-Pad8_ Net-_U7-Pad9_ Net-_U7-Pad10_ Net-_U7-Pad11_ Net-_U7-Pad12_ Net-_U7-Pad13_ Net-_U7-Pad14_ Net-_U7-Pad15_ Net-_U7-Pad16_ Net-_U7-Pad17_ Net-_U7-Pad18_] [Net-_U7-Pad19_ Net-_U7-Pad20_ Net-_U7-Pad21_ Net-_U7-Pad22_ Net-_U7-Pad23_ Net-_U7-Pad24_ Net-_U7-Pad25_ Net-_U7-Pad26_ Net-_U7-Pad27_ Net-_U7-Pad28_ Net-_U7-Pad29_ Net-_U7-Pad30_ Net-_U7-Pad31_ Net-_U7-Pad32_ Net-_U7-Pad33_ Net-_U7-Pad34_] [Net-_U7-Pad35_] [Net-_U7-Pad36_] [Net-_U10-Pad1_] [Net-_U11-Pad1_] [Net-_U12-Pad1_] [Net-_U13-Pad1_] svpwm
+
+* --- DAC Bridges ---
+A8  [ Net-_U7-Pad35_ ] [ ana_u_high ] dac_bridge_highside
+A9  [ Net-_U7-Pad36_ ] [ ana_u_low ]  dac_bridge_lowside
+A10 [ Net-_U10-Pad1_ ] [ ana_v_high ] dac_bridge_highside
+A11 [ Net-_U11-Pad1_ ] [ ana_v_low ]  dac_bridge_lowside
+A12 [ Net-_U12-Pad1_ ] [ ana_w_high ] dac_bridge_highside
+A13 [ Net-_U13-Pad1_ ] [ ana_w_low ]  dac_bridge_lowside
+
+.ends svpwm_subcircuit

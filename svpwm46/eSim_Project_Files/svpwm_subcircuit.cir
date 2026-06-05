@@ -1,0 +1,20 @@
+.title KiCad schematic
+U9 Net-_U7-Pad36_ Net-_PORT36-Pad1_ dac_bridge_1
+U8 Net-_U7-Pad35_ Net-_PORT35-Pad1_ dac_bridge_1
+U11 Net-_U11-Pad1_ Net-_PORT38-Pad1_ dac_bridge_1
+U10 Net-_U10-Pad1_ Net-_PORT37-Pad1_ dac_bridge_1
+U13 Net-_U13-Pad1_ Net-_PORT40-Pad1_ dac_bridge_1
+U12 Net-_U12-Pad1_ Net-_PORT39-Pad1_ dac_bridge_1
+PORT36 Net-_PORT36-Pad1_ ana_u_low
+PORT39 Net-_PORT39-Pad1_ ana_w_high
+PORT35 Net-_PORT35-Pad1_ ana_u_high
+PORT38 Net-_PORT38-Pad1_ ana_v_low
+PORT37 Net-_PORT37-Pad1_ ana_v_high
+PORT40 Net-_PORT40-Pad1_ ana_w_low
+U7 Net-_U7-Pad1_ Net-_U7-Pad2_ Net-_U7-Pad3_ Net-_U7-Pad4_ Net-_U7-Pad5_ Net-_U7-Pad6_ Net-_U7-Pad7_ Net-_U7-Pad8_ Net-_U7-Pad9_ Net-_U7-Pad10_ Net-_U7-Pad11_ Net-_U7-Pad12_ Net-_U7-Pad13_ Net-_U7-Pad14_ Net-_U7-Pad15_ Net-_U7-Pad16_ Net-_U7-Pad17_ Net-_U7-Pad18_ Net-_U7-Pad19_ Net-_U7-Pad20_ Net-_U7-Pad21_ Net-_U7-Pad22_ Net-_U7-Pad23_ Net-_U7-Pad24_ Net-_U7-Pad25_ Net-_U7-Pad26_ Net-_U7-Pad27_ Net-_U7-Pad28_ Net-_U7-Pad29_ Net-_U7-Pad30_ Net-_U7-Pad31_ Net-_U7-Pad32_ Net-_U7-Pad33_ Net-_U7-Pad34_ Net-_U7-Pad35_ Net-_U7-Pad36_ Net-_U10-Pad1_ Net-_U11-Pad1_ Net-_U12-Pad1_ Net-_U13-Pad1_ svpwm
+U3 Net-_U7-Pad1_ Net-_U7-Pad2_ Net-_U7-Pad3_ Net-_U7-Pad4_ Net-_U7-Pad5_ Net-_U7-Pad6_ Net-_U7-Pad7_ Net-_U7-Pad8_ Net-_U7-Pad9_ Net-_U7-Pad10_ Net-_U7-Pad11_ Net-_U7-Pad12_ Net-_U7-Pad13_ Net-_U7-Pad14_ Net-_U7-Pad15_ Net-_U7-Pad16_ Net-_U7-Pad17_ Net-_U7-Pad18_ Net-_U7-Pad19_ Net-_U7-Pad20_ Net-_U7-Pad21_ Net-_U7-Pad22_ Net-_U7-Pad23_ Net-_U7-Pad24_ Net-_U7-Pad25_ Net-_U7-Pad26_ Net-_U7-Pad27_ Net-_U7-Pad28_ Net-_U7-Pad29_ Net-_U7-Pad30_ Net-_U7-Pad31_ Net-_U7-Pad32_ Net-_U7-Pad33_ Net-_U7-Pad34_ svpwm_ref_gen
+U1 Net-_PORT1-Pad1_ Net-_U7-Pad1_ adc_bridge_1
+U2 Net-_PORT2-Pad1_ Net-_U7-Pad2_ adc_bridge_1
+PORT1 Net-_PORT1-Pad1_ ana_clk
+PORT2 Net-_PORT2-Pad1_ ana_rst_n
+.end
