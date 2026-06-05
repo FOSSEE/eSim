@@ -1,0 +1,15 @@
+.title KiCad schematic
+U1 /ana_clk Net-_U1-Pad2_ adc_bridge_1
+U3 /ana_enable Net-_U3-Pad2_ adc_bridge_1
+U2 /ana_rst_n Net-_U2-Pad2_ adc_bridge_1
+U4 /ana_pha_in Net-_U4-Pad2_ adc_bridge_1
+U5 /ana_phb_in Net-_U5-Pad2_ adc_bridge_1
+U11 Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ Net-_U11-Pad4_ Net-_U11-Pad5_ Net-_U11-Pad6_ Net-_U11-Pad7_ Net-_U11-Pad8_ /ana_pos_count0 /ana_pos_count1 /ana_pos_count2 /ana_pos_count3 /ana_pos_count4 /ana_pos_count5 /ana_pos_count6 /ana_pos_count7 dac_bridge_8
+U13 Net-_U13-Pad1_ /ana_sync_error dac_bridge_1
+U12 Net-_U12-Pad1_ /ana_direction dac_bridge_1
+U9 Net-_U1-Pad2_ Net-_U2-Pad2_ Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_U6-Pad2_ Net-_U7-Pad16_ Net-_U7-Pad15_ Net-_U7-Pad14_ Net-_U7-Pad13_ Net-_U7-Pad12_ Net-_U7-Pad11_ Net-_U7-Pad10_ Net-_U7-Pad9_ Net-_U8-Pad16_ Net-_U8-Pad15_ Net-_U8-Pad14_ Net-_U8-Pad13_ Net-_U8-Pad12_ Net-_U8-Pad11_ Net-_U8-Pad10_ Net-_U8-Pad9_ Net-_U10-Pad8_ Net-_U10-Pad7_ Net-_U10-Pad6_ Net-_U10-Pad5_ Net-_U10-Pad4_ Net-_U10-Pad3_ Net-_U10-Pad2_ Net-_U10-Pad1_ Net-_U11-Pad8_ Net-_U11-Pad7_ Net-_U11-Pad6_ Net-_U11-Pad5_ Net-_U11-Pad4_ Net-_U11-Pad3_ Net-_U11-Pad2_ Net-_U11-Pad1_ Net-_U12-Pad1_ Net-_U13-Pad1_ qei_core
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ Net-_U10-Pad4_ Net-_U10-Pad5_ Net-_U10-Pad6_ Net-_U10-Pad7_ Net-_U10-Pad8_ /ana_pos_count8 /ana_pos_count9 /ana_pos_count10 /ana_pos_count11 /ana_pos_count12 /ana_pos_count13 /ana_pos_count14 /ana_pos_count15 dac_bridge_8
+U7 /ana_max_count8 /ana_max_count9 /ana_max_count10 /ana_max_count11 /ana_max_count12 /ana_max_count13 /ana_max_count14 /ana_max_count15 Net-_U7-Pad9_ Net-_U7-Pad10_ Net-_U7-Pad11_ Net-_U7-Pad12_ Net-_U7-Pad13_ Net-_U7-Pad14_ Net-_U7-Pad15_ Net-_U7-Pad16_ adc_bridge_8
+U6 /ana_idx_in Net-_U6-Pad2_ adc_bridge_1
+U8 /ana_max_count0 /ana_max_count1 /ana_max_count2 /ana_max_count3 /ana_max_count4 /ana_max_count5 /ana_max_count6 /ana_max_count7 Net-_U8-Pad9_ Net-_U8-Pad10_ Net-_U8-Pad11_ Net-_U8-Pad12_ Net-_U8-Pad13_ Net-_U8-Pad14_ Net-_U8-Pad15_ Net-_U8-Pad16_ adc_bridge_8
+.end

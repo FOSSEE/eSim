@@ -1,0 +1,18 @@
+.title kicad schematic
+
+.include qei_subcircuit.sub
+vv4 phb gnd pulse(0 5 15u 1n 1n 20u 40u)
+vv3 pha gnd pulse(0 5 5u 1n 1n 20u 40u)
+vv1 net-_u1-pad1_ gnd pulse(0 5 0 1n 1n 0.5u 1u)
+vv2 net-_u1-pad2_ gnd pulse(0 5 2u 1n 1n 100 100)
+xu1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad19_ pha phb gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd net-_u1-pad19_ gnd net-_u1-pad19_ gnd pos15 pos14 pos13 pos12 pos11 pos10 pos9 pos8 pos7 pos6 pos5 pos4 pos3 pos2 pos1 pos0 direction sync_error qei_subcircuit
+v5 net-_u1-pad19_ gnd 5v
+.tran 0.1e-06 200e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

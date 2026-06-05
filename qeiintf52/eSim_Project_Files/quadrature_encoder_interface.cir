@@ -1,0 +1,9 @@
+.title KiCad schematic
+.include "C:\eSim_Workpace\qei_subcircuit\qei_subcircuit.sub"
+Vv4 phb GND pulse(0 5 15u 1n 1n 20u 40u)
+Vv3 pha GND pulse(0 5 5u 1n 1n 20u 40u)
+Vv1 Net-_U1-Pad1_ GND pulse(0 5 0 1n 1n 0.5u 1u)
+Vv2 Net-_U1-Pad2_ GND pulse(0 5 2u 1n 1n 100 100)
+XU1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad19_ pha phb GND GND GND GND GND GND GND GND GND GND GND GND GND Net-_U1-Pad19_ GND Net-_U1-Pad19_ GND pos15 pos14 pos13 pos12 pos11 pos10 pos9 pos8 pos7 pos6 pos5 pos4 pos3 pos2 pos1 pos0 direction sync_error qei_subcircuit
+v5 Net-_U1-Pad19_ GND 5V
+.end

@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "qei_subcircuit_lib")(type "KiCad")(uri "${KIPRJMOD}/qei_subcircuit_lib.kicad_sym")(options "")(descr ""))
+)

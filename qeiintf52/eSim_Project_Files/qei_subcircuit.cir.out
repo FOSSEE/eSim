@@ -1,0 +1,63 @@
+.title kicad schematic
+
+* u1 /ana_clk net-_u1-pad2_ adc_bridge_1
+* u3 /ana_enable net-_u3-pad2_ adc_bridge_1
+* u2 /ana_rst_n net-_u2-pad2_ adc_bridge_1
+* u4 /ana_pha_in net-_u4-pad2_ adc_bridge_1
+* u5 /ana_phb_in net-_u5-pad2_ adc_bridge_1
+* u11 net-_u11-pad1_ net-_u11-pad2_ net-_u11-pad3_ net-_u11-pad4_ net-_u11-pad5_ net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ /ana_pos_count0 /ana_pos_count1 /ana_pos_count2 /ana_pos_count3 /ana_pos_count4 /ana_pos_count5 /ana_pos_count6 /ana_pos_count7 dac_bridge_8
+* u13 net-_u13-pad1_ /ana_sync_error dac_bridge_1
+* u12 net-_u12-pad1_ /ana_direction dac_bridge_1
+* u9 net-_u1-pad2_ net-_u2-pad2_ net-_u3-pad2_ net-_u4-pad2_ net-_u5-pad2_ net-_u6-pad2_ net-_u7-pad16_ net-_u7-pad15_ net-_u7-pad14_ net-_u7-pad13_ net-_u7-pad12_ net-_u7-pad11_ net-_u7-pad10_ net-_u7-pad9_ net-_u8-pad16_ net-_u8-pad15_ net-_u8-pad14_ net-_u8-pad13_ net-_u8-pad12_ net-_u8-pad11_ net-_u8-pad10_ net-_u8-pad9_ net-_u10-pad8_ net-_u10-pad7_ net-_u10-pad6_ net-_u10-pad5_ net-_u10-pad4_ net-_u10-pad3_ net-_u10-pad2_ net-_u10-pad1_ net-_u11-pad8_ net-_u11-pad7_ net-_u11-pad6_ net-_u11-pad5_ net-_u11-pad4_ net-_u11-pad3_ net-_u11-pad2_ net-_u11-pad1_ net-_u12-pad1_ net-_u13-pad1_ qei_core
+* u10 net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ net-_u10-pad4_ net-_u10-pad5_ net-_u10-pad6_ net-_u10-pad7_ net-_u10-pad8_ /ana_pos_count8 /ana_pos_count9 /ana_pos_count10 /ana_pos_count11 /ana_pos_count12 /ana_pos_count13 /ana_pos_count14 /ana_pos_count15 dac_bridge_8
+* u7 /ana_max_count8 /ana_max_count9 /ana_max_count10 /ana_max_count11 /ana_max_count12 /ana_max_count13 /ana_max_count14 /ana_max_count15 net-_u7-pad9_ net-_u7-pad10_ net-_u7-pad11_ net-_u7-pad12_ net-_u7-pad13_ net-_u7-pad14_ net-_u7-pad15_ net-_u7-pad16_ adc_bridge_8
+* u6 /ana_idx_in net-_u6-pad2_ adc_bridge_1
+* u8 /ana_max_count0 /ana_max_count1 /ana_max_count2 /ana_max_count3 /ana_max_count4 /ana_max_count5 /ana_max_count6 /ana_max_count7 net-_u8-pad9_ net-_u8-pad10_ net-_u8-pad11_ net-_u8-pad12_ net-_u8-pad13_ net-_u8-pad14_ net-_u8-pad15_ net-_u8-pad16_ adc_bridge_8
+a1 [/ana_clk ] [net-_u1-pad2_ ] u1
+a2 [/ana_enable ] [net-_u3-pad2_ ] u3
+a3 [/ana_rst_n ] [net-_u2-pad2_ ] u2
+a4 [/ana_pha_in ] [net-_u4-pad2_ ] u4
+a5 [/ana_phb_in ] [net-_u5-pad2_ ] u5
+a6 [net-_u11-pad1_ net-_u11-pad2_ net-_u11-pad3_ net-_u11-pad4_ net-_u11-pad5_ net-_u11-pad6_ net-_u11-pad7_ net-_u11-pad8_ ] [/ana_pos_count0 /ana_pos_count1 /ana_pos_count2 /ana_pos_count3 /ana_pos_count4 /ana_pos_count5 /ana_pos_count6 /ana_pos_count7 ] u11
+a7 [net-_u13-pad1_ ] [/ana_sync_error ] u13
+a8 [net-_u12-pad1_ ] [/ana_direction ] u12
+a9 [net-_u1-pad2_ ] [net-_u2-pad2_ ] [net-_u3-pad2_ ] [net-_u4-pad2_ ] [net-_u5-pad2_ ] [net-_u6-pad2_ ] [net-_u7-pad16_ net-_u7-pad15_ net-_u7-pad14_ net-_u7-pad13_ net-_u7-pad12_ net-_u7-pad11_ net-_u7-pad10_ net-_u7-pad9_ net-_u8-pad16_ net-_u8-pad15_ net-_u8-pad14_ net-_u8-pad13_ net-_u8-pad12_ net-_u8-pad11_ net-_u8-pad10_ net-_u8-pad9_ ] [net-_u10-pad8_ net-_u10-pad7_ net-_u10-pad6_ net-_u10-pad5_ net-_u10-pad4_ net-_u10-pad3_ net-_u10-pad2_ net-_u10-pad1_ net-_u11-pad8_ net-_u11-pad7_ net-_u11-pad6_ net-_u11-pad5_ net-_u11-pad4_ net-_u11-pad3_ net-_u11-pad2_ net-_u11-pad1_ ] [net-_u12-pad1_ ] [net-_u13-pad1_ ] u9
+a10 [net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ net-_u10-pad4_ net-_u10-pad5_ net-_u10-pad6_ net-_u10-pad7_ net-_u10-pad8_ ] [/ana_pos_count8 /ana_pos_count9 /ana_pos_count10 /ana_pos_count11 /ana_pos_count12 /ana_pos_count13 /ana_pos_count14 /ana_pos_count15 ] u10
+a11 [/ana_max_count8 /ana_max_count9 /ana_max_count10 /ana_max_count11 /ana_max_count12 /ana_max_count13 /ana_max_count14 /ana_max_count15 ] [net-_u7-pad9_ net-_u7-pad10_ net-_u7-pad11_ net-_u7-pad12_ net-_u7-pad13_ net-_u7-pad14_ net-_u7-pad15_ net-_u7-pad16_ ] u7
+a12 [/ana_idx_in ] [net-_u6-pad2_ ] u6
+a13 [/ana_max_count0 /ana_max_count1 /ana_max_count2 /ana_max_count3 /ana_max_count4 /ana_max_count5 /ana_max_count6 /ana_max_count7 ] [net-_u8-pad9_ net-_u8-pad10_ net-_u8-pad11_ net-_u8-pad12_ net-_u8-pad13_ net-_u8-pad14_ net-_u8-pad15_ net-_u8-pad16_ ] u8
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_8, Ngspice Name: dac_bridge
+.model u11 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u13 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u12 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             qei_core, Ngspice Name: qei_core
+.model u9 qei_core(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 ) 
+* Schematic Name:                             dac_bridge_8, Ngspice Name: dac_bridge
+.model u10 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_8, Ngspice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u6 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_8, Ngspice Name: adc_bridge
+.model u8 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-06 100e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
