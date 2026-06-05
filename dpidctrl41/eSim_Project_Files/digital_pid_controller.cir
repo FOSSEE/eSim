@@ -1,0 +1,8 @@
+.title KiCad schematic
+.include "C:\eSim_Workpace\pid_subcircuit\pid_subcircuit.sub"
+XU1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_v4-Pad1_ Net-_v4-Pad1_ GND GND Net-_v4-Pad1_ GND GND GND GND GND GND GND GND GND GND GND GND GND Net-_v4-Pad1_ Net-_v4-Pad1_ Net-_v4-Pad1_ GND GND GND GND Net-_v4-Pad1_ GND Net-_v4-Pad1_ GND Net-_v4-Pad1_ GND Net-_v4-Pad1_ GND Net-_v4-Pad1_ GND Net-_v4-Pad1_ GND Net-_v4-Pad1_ GND Net-_v4-Pad1_ GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND GND OUT15 OUT14 OUT13 OUT12 OUT11 OUT10 OUT9 OUT8 OUT7 OUT6 OUT5 OUT4 OUT3 OUT2 OUT1 OUT0 pid_subcircuit
+Vv1 Net-_U1-Pad1_ GND pulse(0 5 0 1ns 1ns 10us 20us)
+Vv3 Net-_U1-Pad3_ GND pulse(0 5 10us 1ns 1ns 1 2)
+Vv2 Net-_U1-Pad2_ GND pulse(0 5 5us 1ns 1ns 1 2)
+v4 Net-_v4-Pad1_ GND 5V
+.end

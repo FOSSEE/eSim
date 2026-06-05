@@ -1,0 +1,30 @@
+* ==============================================================================
+* pid_subcircuit.sub - MSB-First 
+* ==============================================================================
+
+.subckt pid_subcircuit ana_clk ana_rst_n ana_enable ana_kp7 ana_kp6 ana_kp5 ana_kp4 ana_kp3 ana_kp2 ana_kp1 ana_kp0 ana_ki7 ana_ki6 ana_ki5 ana_ki4 ana_ki3 ana_ki2 ana_ki1 ana_ki0 ana_kd7 ana_kd6 ana_kd5 ana_kd4 ana_kd3 ana_kd2 ana_kd1 ana_kd0 ana_sp15 ana_sp14 ana_sp13 ana_sp12 ana_sp11 ana_sp10 ana_sp9 ana_sp8 ana_sp7 ana_sp6 ana_sp5 ana_sp4 ana_sp3 ana_sp2 ana_sp1 ana_sp0 ana_fb15 ana_fb14 ana_fb13 ana_fb12 ana_fb11 ana_fb10 ana_fb9 ana_fb8 ana_fb7 ana_fb6 ana_fb5 ana_fb4 ana_fb3 ana_fb2 ana_fb1 ana_fb0 ana_out15 ana_out14 ana_out13 ana_out12 ana_out11 ana_out10 ana_out9 ana_out8 ana_out7 ana_out6 ana_out5 ana_out4 ana_out3 ana_out2 ana_out1 ana_out0
+
+a_clk [ana_clk] [dig_clk] adc_1
+a_rst [ana_rst_n] [dig_rst_n] adc_1
+a_en [ana_enable] [dig_enable] adc_1
+
+a_kp [ana_kp7 ana_kp6 ana_kp5 ana_kp4 ana_kp3 ana_kp2 ana_kp1 ana_kp0] [dig_kp7 dig_kp6 dig_kp5 dig_kp4 dig_kp3 dig_kp2 dig_kp1 dig_kp0] adc_8
+a_ki [ana_ki7 ana_ki6 ana_ki5 ana_ki4 ana_ki3 ana_ki2 ana_ki1 ana_ki0] [dig_ki7 dig_ki6 dig_ki5 dig_ki4 dig_ki3 dig_ki2 dig_ki1 dig_ki0] adc_8
+a_kd [ana_kd7 ana_kd6 ana_kd5 ana_kd4 ana_kd3 ana_kd2 ana_kd1 ana_kd0] [dig_kd7 dig_kd6 dig_kd5 dig_kd4 dig_kd3 dig_kd2 dig_kd1 dig_kd0] adc_8
+
+a_sp_hi [ana_sp15 ana_sp14 ana_sp13 ana_sp12 ana_sp11 ana_sp10 ana_sp9 ana_sp8] [dig_sp15 dig_sp14 dig_sp13 dig_sp12 dig_sp11 dig_sp10 dig_sp9 dig_sp8] adc_8
+a_sp_lo [ana_sp7 ana_sp6 ana_sp5 ana_sp4 ana_sp3 ana_sp2 ana_sp1 ana_sp0] [dig_sp7 dig_sp6 dig_sp5 dig_sp4 dig_sp3 dig_sp2 dig_sp1 dig_sp0] adc_8
+a_fb_hi [ana_fb15 ana_fb14 ana_fb13 ana_fb12 ana_fb11 ana_fb10 ana_fb9 ana_fb8] [dig_fb15 dig_fb14 dig_fb13 dig_fb12 dig_fb11 dig_fb10 dig_fb9 dig_fb8] adc_8
+a_fb_lo [ana_fb7 ana_fb6 ana_fb5 ana_fb4 ana_fb3 ana_fb2 ana_fb1 ana_fb0] [dig_fb7 dig_fb6 dig_fb5 dig_fb4 dig_fb3 dig_fb2 dig_fb1 dig_fb0] adc_8
+
+a_pid_core [dig_clk] [dig_rst_n] [dig_enable] [dig_kp7 dig_kp6 dig_kp5 dig_kp4 dig_kp3 dig_kp2 dig_kp1 dig_kp0] [dig_ki7 dig_ki6 dig_ki5 dig_ki4 dig_ki3 dig_ki2 dig_ki1 dig_ki0] [dig_kd7 dig_kd6 dig_kd5 dig_kd4 dig_kd3 dig_kd2 dig_kd1 dig_kd0] [dig_sp15 dig_sp14 dig_sp13 dig_sp12 dig_sp11 dig_sp10 dig_sp9 dig_sp8 dig_sp7 dig_sp6 dig_sp5 dig_sp4 dig_sp3 dig_sp2 dig_sp1 dig_sp0] [dig_fb15 dig_fb14 dig_fb13 dig_fb12 dig_fb11 dig_fb10 dig_fb9 dig_fb8 dig_fb7 dig_fb6 dig_fb5 dig_fb4 dig_fb3 dig_fb2 dig_fb1 dig_fb0] [dig_out15 dig_out14 dig_out13 dig_out12 dig_out11 dig_out10 dig_out9 dig_out8 dig_out7 dig_out6 dig_out5 dig_out4 dig_out3 dig_out2 dig_out1 dig_out0] pid_core
+
+a_out_hi [dig_out15 dig_out14 dig_out13 dig_out12 dig_out11 dig_out10 dig_out9 dig_out8] [ana_out15 ana_out14 ana_out13 ana_out12 ana_out11 ana_out10 ana_out9 ana_out8] dac_8
+a_out_lo [dig_out7 dig_out6 dig_out5 dig_out4 dig_out3 dig_out2 dig_out1 dig_out0] [ana_out7 ana_out6 ana_out5 ana_out4 ana_out3 ana_out2 ana_out1 ana_out0] dac_8
+
+.model adc_1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9)
+.model adc_8 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9)
+.model dac_8 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9)
+.model pid_core pid_core(fall_delay=1e-9 rise_delay=1e-9 input_load=1e-12)
+
+.ends pid_subcircuit

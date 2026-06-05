@@ -1,0 +1,17 @@
+.title kicad schematic
+
+.include pid_subcircuit.sub
+xu1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_v4-pad1_ net-_v4-pad1_ gnd gnd net-_v4-pad1_ gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd net-_v4-pad1_ net-_v4-pad1_ net-_v4-pad1_ gnd gnd gnd gnd net-_v4-pad1_ gnd net-_v4-pad1_ gnd net-_v4-pad1_ gnd net-_v4-pad1_ gnd net-_v4-pad1_ gnd net-_v4-pad1_ gnd net-_v4-pad1_ gnd net-_v4-pad1_ gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd gnd out15 out14 out13 out12 out11 out10 out9 out8 out7 out6 out5 out4 out3 out2 out1 out0 pid_subcircuit
+vv1 net-_u1-pad1_ gnd pulse(0 5 0 1ns 1ns 10us 20us)
+vv3 net-_u1-pad3_ gnd pulse(0 5 10us 1ns 1ns 1 2)
+vv2 net-_u1-pad2_ gnd pulse(0 5 5us 1ns 1ns 1 2)
+v4 net-_v4-pad1_ gnd 5v
+.tran 1e-06 100e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
