@@ -1,0 +1,40 @@
+.title KiCad schematic
+U5 Net-_U14-Pad2_ Net-_U15-Pad2_ Net-_U16-Pad2_ Net-_U17-Pad2_ /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_1 /D_1 /D_0 /D_0 /D_1 /D_0 /D_0 Net-_U9-Pad23_ Net-_U9-Pad24_ Net-_U9-Pad25_ Net-_U9-Pad26_ Net-_U9-Pad27_ Net-_U9-Pad28_ Net-_U9-Pad29_ Net-_U9-Pad30_ Net-_U9-Pad31_ Net-_U9-Pad32_ Net-_U9-Pad33_ Net-_U9-Pad34_ Net-_U9-Pad35_ Net-_U9-Pad36_ Net-_U9-Pad37_ Net-_U9-Pad38_ /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 Net-_U20-Pad4_ Net-_U20-Pad5_ advanced_pwm_b
+U24 /D_0 d_pulldown
+U23 /D_1 d_pullup
+U4 Net-_U20-Pad10_ Net-_PORT10-Pad1_ dac_bridge_1
+U20 Net-_U20-Pad1_ Net-_U20-Pad2_ Net-_U20-Pad3_ Net-_U20-Pad4_ Net-_U20-Pad5_ Net-_U20-Pad6_ Net-_U20-Pad7_ Net-_U2-Pad1_ Net-_U20-Pad9_ Net-_U20-Pad10_ Net-_U20-Pad11_ Net-_U11-Pad1_ Net-_U20-Pad13_ Net-_U19-Pad1_ hbridge_router
+U2 Net-_U2-Pad1_ unconnected-_U2-Pad2_ dac_bridge_1
+U7 Net-_U20-Pad7_ Net-_U1-Pad1_ d_inverter
+PORT13 Net-_PORT13-Pad1_ ana_b_tr
+PORT11 Net-_PORT11-Pad1_ ana_b_tl
+PORT12 Net-_PORT12-Pad1_ ana_b_br
+U10 Net-_U10-Pad1_ Net-_PORT11-Pad1_ dac_bridge_1
+PORT14 Net-_PORT14-Pad1_ ana_b_bl
+U18 Net-_U18-Pad1_ Net-_PORT13-Pad1_ dac_bridge_1
+PORT10 Net-_PORT10-Pad1_ ana_a_bl
+U3 Net-_U3-Pad1_ Net-_PORT9-Pad1_ dac_bridge_1
+PORT7 Net-_PORT7-Pad1_ ana_a_tl
+U1 Net-_U1-Pad1_ Net-_PORT7-Pad1_ dac_bridge_1
+PORT8 unconnected-_PORT8-Pad1_ ana_a_br
+PORT9 Net-_PORT9-Pad1_ ana_a_tr
+U11 Net-_U11-Pad1_ Net-_PORT12-Pad1_ dac_bridge_1
+U19 Net-_U19-Pad1_ Net-_PORT14-Pad1_ dac_bridge_1
+U22 Net-_U20-Pad13_ Net-_U18-Pad1_ d_inverter
+U8 Net-_U20-Pad9_ Net-_U3-Pad1_ d_inverter
+U21 Net-_U20-Pad11_ Net-_U10-Pad1_ d_inverter
+U6 Net-_U14-Pad2_ Net-_U15-Pad2_ Net-_U16-Pad2_ Net-_U17-Pad2_ /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_1 /D_1 /D_0 /D_0 /D_1 /D_0 /D_0 Net-_U6-Pad21_ Net-_U6-Pad22_ Net-_U6-Pad23_ Net-_U6-Pad24_ Net-_U6-Pad25_ Net-_U6-Pad26_ Net-_U6-Pad27_ Net-_U6-Pad28_ Net-_U6-Pad29_ Net-_U6-Pad30_ Net-_U6-Pad31_ Net-_U6-Pad32_ Net-_U6-Pad33_ Net-_U6-Pad34_ Net-_U6-Pad35_ Net-_U6-Pad36_ /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 Net-_U20-Pad1_ Net-_U20-Pad2_ advanced_pwm
+U9 Net-_U14-Pad2_ Net-_U15-Pad2_ Net-_U16-Pad2_ Net-_U12-Pad2_ Net-_U13-Pad2_ Net-_U6-Pad21_ Net-_U6-Pad22_ Net-_U6-Pad23_ Net-_U6-Pad24_ Net-_U6-Pad25_ Net-_U6-Pad26_ Net-_U6-Pad27_ Net-_U6-Pad28_ Net-_U6-Pad29_ Net-_U6-Pad30_ Net-_U6-Pad31_ Net-_U6-Pad32_ Net-_U6-Pad33_ Net-_U6-Pad34_ Net-_U6-Pad35_ Net-_U6-Pad36_ Net-_U20-Pad3_ Net-_U9-Pad23_ Net-_U9-Pad24_ Net-_U9-Pad25_ Net-_U9-Pad26_ Net-_U9-Pad27_ Net-_U9-Pad28_ Net-_U9-Pad29_ Net-_U9-Pad30_ Net-_U9-Pad31_ Net-_U9-Pad32_ Net-_U9-Pad33_ Net-_U9-Pad34_ Net-_U9-Pad35_ Net-_U9-Pad36_ Net-_U9-Pad37_ Net-_U9-Pad38_ Net-_U20-Pad6_ stepper_indexer
+U12 Net-_PORT5-Pad1_ Net-_U12-Pad2_ adc_bridge_1
+U13 Net-_PORT6-Pad1_ Net-_U13-Pad2_ adc_bridge_1
+PORT6 Net-_PORT6-Pad1_ ana_dir
+PORT5 Net-_PORT5-Pad1_ ana_step
+U17 Net-_PORT4-Pad1_ Net-_U17-Pad2_ adc_bridge_1
+U14 Net-_PORT1-Pad1_ Net-_U14-Pad2_ adc_bridge_1
+U16 Net-_PORT3-Pad1_ Net-_U16-Pad2_ adc_bridge_1
+U15 Net-_PORT2-Pad1_ Net-_U15-Pad2_ adc_bridge_1
+PORT1 Net-_PORT1-Pad1_ ana_clk
+PORT2 Net-_PORT2-Pad1_ ana_rst_n
+PORT4 Net-_PORT4-Pad1_ ana_fault_n
+PORT3 Net-_PORT3-Pad1_ ana_enable
+.end

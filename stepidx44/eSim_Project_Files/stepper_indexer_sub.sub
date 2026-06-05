@@ -1,0 +1,77 @@
+* ==========================================
+* XSPICE MODEL DEFINITIONS 
+* ==========================================
+* --- ADC Models ---
+.model adc_bridge_1 adc_bridge(in_low=1.5 in_high=3.5 rise_delay=1e-9 fall_delay=1e-9)
+
+* --- DAC Models (HARDENED SAFE STATES) ---
+.model dac_bridge_pmos dac_bridge(out_low=0.0 out_high=5.0 out_undef=5.0 t_rise=20n t_fall=20n)
+.model dac_bridge_nmos dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.0 t_rise=20n t_fall=20n)
+
+* --- Native Digital Tie-Offs ---
+.model tie_high d_pullup(load=1e-12)
+.model tie_low d_pulldown(load=1e-12)
+
+* --- Native Digital Inverter (For P-Channel High-Side Gates) ---
+.model d_inv d_inverter(rise_delay=1e-9 fall_delay=1e-9)
+
+* --- NgVeri Custom Core Models ---
+.model stepper_indexer stepper_indexer
+.model advanced_pwm advanced_pwm
+.model advanced_pwm_b advanced_pwm_b
+.model hbridge_router hbridge_router
+
+* ==============================================================================
+* stepper_indexer_sub.sub
+* ==============================================================================
+.subckt stepper_indexer_sub ana_clk ana_rst_n ana_enable ana_fault_n ana_step ana_dir ana_a_tl ana_a_br ana_a_tr ana_a_bl ana_b_tl ana_b_br ana_b_tr ana_b_bl
+
+* --- ADC Bridges (Analog to Digital) ---
+A14 [ ana_clk ] [ Net-_U14-Pad2_ ] adc_bridge_1
+A15 [ ana_rst_n ] [ Net-_U15-Pad2_ ] adc_bridge_1
+A16 [ ana_enable ] [ Net-_U16-Pad2_ ] adc_bridge_1
+A17 [ ana_fault_n ] [ Net-_U17-Pad2_ ] adc_bridge_1
+A12 [ ana_step ] [ Net-_U12-Pad2_ ] adc_bridge_1
+A13 [ ana_dir ] [ Net-_U13-Pad2_ ] adc_bridge_1
+
+* --- Native Digital Tie-Offs ---
+A_tie1 /D_1 tie_high
+A_tie0 /D_0 tie_low
+
+* --- stepper_indexer core ---
+A9 [Net-_U14-Pad2_] [Net-_U15-Pad2_] [Net-_U16-Pad2_] [Net-_U12-Pad2_] [Net-_U13-Pad2_] [Net-_U6-Pad21_ Net-_U6-Pad22_ Net-_U6-Pad23_ Net-_U6-Pad24_ Net-_U6-Pad25_ Net-_U6-Pad26_ Net-_U6-Pad27_ Net-_U6-Pad28_ Net-_U6-Pad29_ Net-_U6-Pad30_ Net-_U6-Pad31_ Net-_U6-Pad32_ Net-_U6-Pad33_ Net-_U6-Pad34_ Net-_U6-Pad35_ Net-_U6-Pad36_] [Net-_U20-Pad3_] [Net-_U5-Pad21_ Net-_U5-Pad22_ Net-_U5-Pad23_ Net-_U5-Pad24_ Net-_U5-Pad25_ Net-_U5-Pad26_ Net-_U5-Pad27_ Net-_U5-Pad28_ Net-_U5-Pad29_ Net-_U5-Pad30_ Net-_U5-Pad31_ Net-_U5-Pad32_ Net-_U5-Pad33_ Net-_U5-Pad34_ Net-_U5-Pad35_ Net-_U5-Pad36_] [Net-_U20-Pad6_] stepper_indexer
+
+* --- advanced_pwm Core A ---
+A6 [Net-_U14-Pad2_] [Net-_U15-Pad2_] [Net-_U16-Pad2_] [Net-_U17-Pad2_] [/D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_1 /D_1 /D_0 /D_0 /D_1 /D_0 /D_0] [Net-_U6-Pad21_ Net-_U6-Pad22_ Net-_U6-Pad23_ Net-_U6-Pad24_ Net-_U6-Pad25_ Net-_U6-Pad26_ Net-_U6-Pad27_ Net-_U6-Pad28_ Net-_U6-Pad29_ Net-_U6-Pad30_ Net-_U6-Pad31_ Net-_U6-Pad32_ Net-_U6-Pad33_ Net-_U6-Pad34_ Net-_U6-Pad35_ Net-_U6-Pad36_] [/D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0] [Net-_U20-Pad1_] [Net-_U20-Pad2_] advanced_pwm
+
+* --- advanced_pwm Core B (Using Clone to Isolate Memory) ---
+A5 [Net-_U14-Pad2_] [Net-_U15-Pad2_] [Net-_U16-Pad2_] [Net-_U17-Pad2_] [/D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_1 /D_1 /D_0 /D_0 /D_1 /D_0 /D_0] [Net-_U5-Pad21_ Net-_U5-Pad22_ Net-_U5-Pad23_ Net-_U5-Pad24_ Net-_U5-Pad25_ Net-_U5-Pad26_ Net-_U5-Pad27_ Net-_U5-Pad28_ Net-_U5-Pad29_ Net-_U5-Pad30_ Net-_U5-Pad31_ Net-_U5-Pad32_ Net-_U5-Pad33_ Net-_U5-Pad34_ Net-_U5-Pad35_ Net-_U5-Pad36_] [/D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0 /D_0] [Net-_U20-Pad4_] [Net-_U20-Pad5_] advanced_pwm_b
+
+* --- hbridge_router core ---
+A20 [Net-_U20-Pad1_] [Net-_U20-Pad2_] [Net-_U20-Pad3_] [Net-_U20-Pad4_] [Net-_U20-Pad5_] [Net-_U20-Pad6_] [Net-_U20-Pad7_] [Net-_U2-Pad1_] [Net-_U20-Pad9_] [Net-_U20-Pad10_] [Net-_U20-Pad11_] [Net-_U11-Pad1_] [Net-_U20-Pad13_] [Net-_U19-Pad1_] hbridge_router
+
+* --- Digital Inverters for P-Channel High-Side Gates ---
+A7 Net-_U20-Pad7_ Net-_U1-Pad1_ d_inv
+A8 Net-_U20-Pad9_ Net-_U3-Pad1_ d_inv
+A21 Net-_U20-Pad11_ Net-_U10-Pad1_ d_inv
+A22 Net-_U20-Pad13_ Net-_U18-Pad1_ d_inv
+
+* --- DAC Bridges (Digital to Analog) ---
+* Coil A Top-Left PMOS gate (active LOW) - via inverter
+A1 [ Net-_U1-Pad1_ ] [ ana_a_tl ] dac_bridge_pmos
+* Coil A Bot-Right NMOS gate (active HIGH) - direct
+A2 [ Net-_U2-Pad1_ ] [ ana_a_br ] dac_bridge_nmos
+* Coil A Top-Right PMOS gate (active LOW) - via inverter
+A3 [ Net-_U3-Pad1_ ] [ ana_a_tr ] dac_bridge_pmos
+* Coil A Bot-Left NMOS gate (active HIGH) - direct
+A4 [ Net-_U20-Pad10_ ] [ ana_a_bl ] dac_bridge_nmos
+* Coil B Top-Left PMOS gate (active LOW) - via inverter
+A10 [ Net-_U10-Pad1_ ] [ ana_b_tl ] dac_bridge_pmos
+* Coil B Bot-Right NMOS gate (active HIGH) - direct
+A11 [ Net-_U11-Pad1_ ] [ ana_b_br ] dac_bridge_nmos
+* Coil B Top-Right PMOS gate (active LOW) - via inverter
+A18 [ Net-_U18-Pad1_ ] [ ana_b_tr ] dac_bridge_pmos
+* Coil B Bot-Left NMOS gate (active HIGH) - direct
+A19 [ Net-_U19-Pad1_ ] [ ana_b_bl ] dac_bridge_nmos
+
+.ends stepper_indexer_sub

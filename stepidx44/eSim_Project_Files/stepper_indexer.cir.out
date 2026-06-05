@@ -1,0 +1,74 @@
+.title kicad schematic
+.options method=gear reltol=0.05 vntol=1e-3 abstol=1e-6 itl4=500 cshunt=100e-12
+.include stepper_indexer_sub.sub
+.include MOSFET_2N7002.lib
+.include 1N4148.lib
+.include MOSFET_BSS84.lib
+m4 net-_c3-pad2_ net-_m4-pad2_ gnd gnd 2N7002 W=100m L=1u M=1
+d4 gnd net-_c3-pad2_ 1N4148
+m8 net-_d7-pad1_ net-_m8-pad2_ gnd gnd 2N7002 W=100m L=1u M=1
+v_motor1 net-_d1-pad2_ gnd 5v
+r7 b_br net-_m8-pad2_ 10
+r8 b_bl net-_m4-pad2_ 10
+d3 net-_c3-pad2_ net-_d1-pad2_ 1N4148
+d2 gnd net-_c1-pad2_ 1N4148
+m3 net-_c3-pad2_ net-_m3-pad2_ net-_d1-pad2_ net-_d1-pad2_ BSS84 W=100m L=1u M=1
+d6 gnd net-_d5-pad1_ 1N4148
+m7 net-_d7-pad1_ net-_m7-pad2_ net-_d1-pad2_ net-_d1-pad2_ BSS84 W=100m L=1u M=1
+v_sense_a1 net-_d5-pad1_ net-_r9-pad1_ 0v
+r9 net-_r9-pad1_ net-_c2-pad2_ 5
+c2 gnd net-_c2-pad2_ 100p
+m1 net-_c1-pad2_ net-_m1-pad2_ net-_d1-pad2_ net-_d1-pad2_ BSS84 W=100m L=1u M=1
+d1 net-_c1-pad2_ net-_d1-pad2_ 1N4148
+m2 net-_c1-pad2_ net-_m2-pad2_ gnd gnd 2N7002 W=100m L=1u M=1
+l1 net-_c2-pad2_ net-_c1-pad2_ 1mh
+m6 net-_d5-pad1_ net-_m6-pad2_ gnd gnd 2N7002 W=100m L=1u M=1
+c1 gnd net-_c1-pad2_ 100p
+m5 net-_d5-pad1_ net-_m5-pad2_ net-_d1-pad2_ net-_d1-pad2_ BSS84 W=100m L=1u M=1
+d5 net-_d5-pad1_ net-_d1-pad2_ 1N4148
+vv1 net-_u1-pad1_ gnd pulse(0 5 0 20n 20n 30n 100n)
+vv4 net-_u1-pad2_ gnd pulse(0 5 1u 20n 20n 1 2)
+vv2 net-_u1-pad5_ gnd pulse(0 5 0 20n 20n 5u 10u)
+xu1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad3_ net-_u1-pad5_ net-_u1-pad3_ a_tl a_br a_tr a_bl b_tl b_br b_tr b_bl stepper_indexer_sub
+vv3 net-_u1-pad3_ gnd pulse(0 5 1n 20n 20n 1 2)
+c3 gnd net-_c3-pad2_ 100p
+l2 net-_c4-pad2_ net-_c3-pad2_ 1mh
+d7 net-_d7-pad1_ net-_d1-pad2_ 1N4148
+d8 gnd net-_d7-pad1_ 1N4148
+v_sense_b1 net-_d7-pad1_ net-_r10-pad1_ 0v
+r10 net-_r10-pad1_ net-_c4-pad2_ 5
+c4 gnd net-_c4-pad2_ 100p
+r4 a_bl net-_m2-pad2_ 10
+r3 a_br net-_m6-pad2_ 10
+r6 b_tl net-_m3-pad2_ 10
+r5 b_tr net-_m7-pad2_ 10
+r1 a_tr net-_m5-pad2_ 10
+r2 a_tl net-_m1-pad2_ 10
+
+* ==========================================
+* MEASUREMENT FILTER - Clean Staircase Plot
+* ==========================================
+B_sense_A net_iA_raw 0 V=i(v_sense_A1)
+R_filt_A1 net_iA_raw net_iA_p1 1k
+C_filt_A1 net_iA_p1 0 10n
+R_filt_A2 net_iA_p1 net_iA_filt 1k
+C_filt_A2 net_iA_filt 0 10n
+
+B_sense_B net_iB_raw 0 V=i(v_sense_B1)
+R_filt_B1 net_iB_raw net_iB_p1 1k
+C_filt_B1 net_iB_p1 0 10n
+R_filt_B2 net_iB_p1 net_iB_filt 1k
+C_filt_B2 net_iB_filt 0 10n
+
+.save v(net_iA_filt) v(net_iB_filt)
+.tran 5e-09 3e-03 0e-00
+
+* Control Statements 
+.control
+run
+set color0=white 
+set color1=black 
+set xbrushwidth=2
+plot v(net_iA_filt) v(net_iB_filt)
+.endc
+.end

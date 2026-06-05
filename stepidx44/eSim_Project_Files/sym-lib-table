@@ -1,0 +1,3 @@
+(sym_lib_table
+  (lib (name "stepper_indexer_sub")(type "KiCad")(uri "${KIPRJMOD}/stepper_indexer_sub.kicad_sym")(options "")(descr ""))
+)

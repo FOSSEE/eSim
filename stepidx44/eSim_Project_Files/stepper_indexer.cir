@@ -1,0 +1,43 @@
+.title KiCad schematic
+.include "C:\eSim_Workpace\stepper_indexer_sub\stepper_indexer_sub.sub"
+M4 Net-_C3-Pad2_ Net-_M4-Pad2_ GND GND mosfet_n
+D4 GND Net-_C3-Pad2_ diode
+M8 Net-_D7-Pad1_ Net-_M8-Pad2_ GND GND mosfet_n
+v_motor1 Net-_D1-Pad2_ GND 5V
+R7 b_br Net-_M8-Pad2_ 10
+R8 b_bl Net-_M4-Pad2_ 10
+D3 Net-_C3-Pad2_ Net-_D1-Pad2_ diode
+D2 GND Net-_C1-Pad2_ diode
+M3 Net-_C3-Pad2_ Net-_M3-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_p
+D6 GND Net-_D5-Pad1_ diode
+M7 Net-_D7-Pad1_ Net-_M7-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_p
+v_sense_A1 Net-_D5-Pad1_ Net-_R9-Pad1_ 0V
+R9 Net-_R9-Pad1_ Net-_C2-Pad2_ 5
+C2 GND Net-_C2-Pad2_ 100p
+M1 Net-_C1-Pad2_ Net-_M1-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_p
+D1 Net-_C1-Pad2_ Net-_D1-Pad2_ diode
+M2 Net-_C1-Pad2_ Net-_M2-Pad2_ GND GND mosfet_n
+L1 Net-_C2-Pad2_ Net-_C1-Pad2_ 1mH
+M6 Net-_D5-Pad1_ Net-_M6-Pad2_ GND GND mosfet_n
+C1 GND Net-_C1-Pad2_ 100p
+M5 Net-_D5-Pad1_ Net-_M5-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_p
+D5 Net-_D5-Pad1_ Net-_D1-Pad2_ diode
+Vv1 Net-_U1-Pad1_ GND pulse(0 5 0 20n 20n 30n 100n)
+Vv4 Net-_U1-Pad2_ GND pulse(0 5 1u 20n 20n 1 2)
+Vv2 Net-_U1-Pad5_ GND pulse(0 5 0 20n 20n 5u 10u)
+XU1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad3_ Net-_U1-Pad5_ Net-_U1-Pad3_ a_tl a_br a_tr a_bl b_tl b_br b_tr b_bl stepper_indexer_sub
+Vv3 Net-_U1-Pad3_ GND pulse(0 5 1n 20n 20n 1 2)
+C3 GND Net-_C3-Pad2_ 100p
+L2 Net-_C4-Pad2_ Net-_C3-Pad2_ 1mH
+D7 Net-_D7-Pad1_ Net-_D1-Pad2_ diode
+D8 GND Net-_D7-Pad1_ diode
+v_sense_B1 Net-_D7-Pad1_ Net-_R10-Pad1_ 0V
+R10 Net-_R10-Pad1_ Net-_C4-Pad2_ 5
+C4 GND Net-_C4-Pad2_ 100p
+R4 a_bl Net-_M2-Pad2_ 10
+R3 a_br Net-_M6-Pad2_ 10
+R6 b_tl Net-_M3-Pad2_ 10
+R5 b_tr Net-_M7-Pad2_ 10
+R1 a_tr Net-_M5-Pad2_ 10
+R2 a_tl Net-_M1-Pad2_ 10
+.end
