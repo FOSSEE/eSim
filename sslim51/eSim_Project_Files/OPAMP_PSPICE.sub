@@ -1,0 +1,8 @@
+.subckt OPAMP_PSPICE in_p in_n out 
+
+B1 raw_out 0 V = V(in_p) > V(in_n) ? 12 : 0
+
+R1 raw_out out 100
+C1 out 0 100p
+
+.ends OPAMP_PSPICE

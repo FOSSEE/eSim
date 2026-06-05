@@ -1,0 +1,28 @@
+.title kicad schematic
+
+.include OPAMP_PSPICE.sub
+.include soft_start_limiter_sub.sub
+.include MOSFET_2N7002.lib
+.include 1N4148.lib
+m1 net-_d1-pad1_ net-_m1-pad2_ gnd gnd 2N7002 W=100u L=100u M=1
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r3 net-_d1-pad2_ net-_l1-pad1_ 250
+l1 net-_l1-pad1_ net-_d1-pad1_ 1mh
+vv4 /v_triangle gnd pulse(0 5 0 25.5u 0.1u 1n 25.6u)
+v3 net-_u1-pad13_ gnd 5v
+vv1 net-_u1-pad1_ gnd pulse(0 5 0 1n 1n 50n 100n)
+v5 net-_d1-pad2_ gnd 24v
+c1 /v_ctrl gnd 100nf
+xu2 /v_ctrl /v_triangle net-_m1-pad2_ OPAMP_PSPICE
+vv2 net-_u1-pad2_ gnd pulse(0 5 150n 1n 1n 100 100)
+r1 net-_r1-pad1_ /v_ctrl 1k
+xu1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad13_ gnd gnd gnd gnd gnd gnd gnd gnd gnd net-_u1-pad13_ gnd net-_u1-pad13_ gnd gnd gnd net-_r1-pad1_ soft_start_limiter_sub
+.tran 100e-09 2e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

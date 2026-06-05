@@ -1,0 +1,17 @@
+.title KiCad schematic
+.include "C:\FOSSEE\eSim\library\SubcircuitLibrary\OPAMP_PSPICE\OPAMP_PSPICE.sub"
+.include "C:\eSim_Workpace\soft_start_limiter_sub\soft_start_limiter_sub.sub"
+M1 Net-_D1-Pad1_ Net-_M1-Pad2_ GND GND mosfet_n
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ diode
+R3 Net-_D1-Pad2_ Net-_L1-Pad1_ 250
+L1 Net-_L1-Pad1_ Net-_D1-Pad1_ 1mH
+Vv4 /V_TRIANGLE GND pulse(0 5 0 25.5u 0.1u 1n 25.6u)
+v3 Net-_U1-Pad13_ GND 5V
+Vv1 Net-_U1-Pad1_ GND pulse(0 5 0 1n 1n 50n 100n)
+v5 Net-_D1-Pad2_ GND 24V
+C1 /V_CTRL GND 100nf
+XU2 /V_CTRL /V_TRIANGLE Net-_M1-Pad2_ OPAMP_PSPICE
+Vv2 Net-_U1-Pad2_ GND pulse(0 5 150n 1n 1n 100 100)
+R1 Net-_R1-Pad1_ /V_CTRL 1k
+XU1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad13_ GND GND GND GND GND GND GND GND GND Net-_U1-Pad13_ GND Net-_U1-Pad13_ GND GND GND Net-_R1-Pad1_ soft_start_limiter_sub
+.end

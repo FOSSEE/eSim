@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "soft_start_limiter")(type "KiCad")(uri "${KIPRJMOD}/soft_start_limiter.kicad_sym")(options "")(descr ""))
+  (lib (name "soft_start_limiter_sub")(type "KiCad")(uri "${KIPRJMOD}/soft_start_limiter_sub.kicad_sym")(options "")(descr ""))
+)

@@ -1,0 +1,28 @@
+.title KiCad schematic
+PORT5 Net-_PORT5-Pad1_ ana_target_duty5
+PORT1 Net-_PORT1-Pad1_ ana_clk
+PORT2 Net-_PORT2-Pad1_ ana_rst_n
+PORT4 Net-_PORT4-Pad1_ ana_target_duty6
+PORT3 Net-_PORT3-Pad1_ ana_target_duty7
+U1 Net-_PORT1-Pad1_ Net-_U1-Pad2_ adc_bridge_1
+U2 Net-_PORT2-Pad1_ Net-_U2-Pad2_ adc_bridge_1
+U3 Net-_PORT10-Pad1_ Net-_PORT9-Pad1_ Net-_PORT8-Pad1_ Net-_PORT7-Pad1_ Net-_PORT6-Pad1_ Net-_PORT5-Pad1_ Net-_PORT4-Pad1_ Net-_PORT3-Pad1_ Net-_U3-Pad9_ Net-_U3-Pad10_ Net-_U3-Pad11_ Net-_U3-Pad12_ Net-_U3-Pad13_ Net-_U3-Pad14_ Net-_U3-Pad15_ Net-_U3-Pad16_ adc_bridge_8
+PORT8 Net-_PORT8-Pad1_ ana_target_duty2
+PORT10 Net-_PORT10-Pad1_ ana_target_duty0
+PORT9 Net-_PORT9-Pad1_ ana_target_duty1
+PORT7 Net-_PORT7-Pad1_ ana_target_duty3
+PORT6 Net-_PORT6-Pad1_ ana_target_duty4
+PORT15 Net-_PORT15-Pad1_ ana_ramp_rate_delay3
+PORT11 Net-_PORT11-Pad1_ ana_ramp_rate_delay7
+PORT12 Net-_PORT12-Pad1_ ana_ramp_rate_delay6
+PORT14 Net-_PORT14-Pad1_ ana_ramp_rate_delay4
+PORT13 Net-_PORT13-Pad1_ ana_ramp_rate_delay5
+PORT16 Net-_PORT16-Pad1_ ana_ramp_rate_delay2
+U4 Net-_PORT18-Pad1_ Net-_PORT17-Pad1_ Net-_PORT16-Pad1_ Net-_PORT15-Pad1_ Net-_PORT14-Pad1_ Net-_PORT13-Pad1_ Net-_PORT12-Pad1_ Net-_PORT11-Pad1_ Net-_U4-Pad9_ Net-_U4-Pad10_ Net-_U4-Pad11_ Net-_U4-Pad12_ Net-_U4-Pad13_ Net-_U4-Pad14_ Net-_U4-Pad15_ Net-_U4-Pad16_ adc_bridge_8
+PORT18 Net-_PORT18-Pad1_ ana_ramp_rate_delay0
+PORT17 Net-_PORT17-Pad1_ ana_ramp_rate_delay1
+U5 Net-_U1-Pad2_ Net-_U2-Pad2_ Net-_U3-Pad16_ Net-_U3-Pad15_ Net-_U3-Pad14_ Net-_U3-Pad13_ Net-_U3-Pad12_ Net-_U3-Pad11_ Net-_U3-Pad10_ Net-_U3-Pad9_ Net-_U4-Pad16_ Net-_U4-Pad15_ Net-_U4-Pad14_ Net-_U4-Pad13_ Net-_U4-Pad12_ Net-_U4-Pad11_ Net-_U4-Pad10_ Net-_U4-Pad9_ Net-_U5-Pad19_ Net-_U5-Pad20_ Net-_U5-Pad21_ Net-_U5-Pad22_ Net-_U5-Pad23_ Net-_U5-Pad24_ Net-_U5-Pad25_ Net-_U5-Pad26_ soft_start_limiter
+U7 Net-_U6-Pad11_ Net-_PORT19-Pad1_ dac_bridge_1
+U6 Net-_U1-Pad2_ Net-_U2-Pad2_ Net-_U5-Pad19_ Net-_U5-Pad20_ Net-_U5-Pad21_ Net-_U5-Pad22_ Net-_U5-Pad23_ Net-_U5-Pad24_ Net-_U5-Pad25_ Net-_U5-Pad26_ Net-_U6-Pad11_ sd_modulator
+PORT19 Net-_PORT19-Pad1_ ana_pdm_out
+.end
