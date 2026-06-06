@@ -10,25 +10,21 @@ import re
 import json
 import urllib.request
 import zipfile
-from pathlib import Path
-import sys
+import time
 import io
+from pathlib import Path
 
-# Import shared utilities
-try:
-    from utils import (
-        run_cmd_safe, run_cmd_stream, which, print_status,
-        DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
-        WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, get_msys2_mingw_bin
-    )
-except ImportError:
-    # Fallback for different execution contexts
-    from src.toolManager.utils import (
-        run_cmd_safe, run_cmd_stream, which, print_status,
-        DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
-        WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, get_msys2_mingw_bin
-    )
+# Add local directory to path for backend utility imports
+_local_path = str(Path(__file__).resolve().parent)
+if _local_path not in sys.path:
+    sys.path.insert(0, _local_path)
 
+from utils import (
+    run_cmd_safe, run_cmd_stream, which, print_status,
+    DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
+    WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, 
+    get_msys2_mingw_bin, get_msys2_mingw_root
+)
 
 if sys.platform == "win32":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
@@ -86,6 +82,13 @@ LLVM_VERSIONS = {
     "18": "18.1.8",
     "19": "19.1.5",
     "latest": None
+}
+
+ESIM_VERSIONS = {
+    "2.4":    "https://static.fossee.in/esim/installation-files/eSim-2.4_installer.exe",
+    "2.3":    "https://static.fossee.in/esim/installation-files/eSim-2.3_installer.exe",
+    "2.2":    "https://static.fossee.in/esim/installation-files/eSim-2.2_installer.exe",
+    "latest": "https://static.fossee.in/esim/installation-files/eSim-2.4_installer.exe",
 }
 
 
@@ -478,7 +481,6 @@ def install_kicad(target_version, upgrade=False):
     
     cleanup_kicad()
     
-    import time
     time.sleep(2)  
     
     
@@ -649,7 +651,6 @@ def install_kicad_direct(version):
         
         result = subprocess.run(install_cmd, timeout=900)
         
-        import time
         print("[INFO] Waiting for installation to complete...")
         time.sleep(10)
          
@@ -725,7 +726,6 @@ def install_ngspice(target_version, upgrade=False):
     rc, out = run_cmd_stream(cmd, timeout=300)
     
     if rc == 0:
-        import time
         print("[3/3] Verifying installation...")
         time.sleep(2)
         exe, installed_version = find_ngspice_safe(None)
@@ -777,7 +777,6 @@ def install_llvm(target_version, upgrade=False):
     rc, out = run_cmd_stream(cmd, timeout=300)
     
     if rc == 0:
-        import time
         print("[3/3] Verifying LLVM installation...")
         time.sleep(3)
 
@@ -1022,7 +1021,7 @@ def _install_verilator_from_7z(archive_path, v):
         print_status("install_failed", "extract_error", v)
         return False
 
-    dest_msys = get_msys2_mingw_bin()
+    dest_msys = get_msys2_mingw_root()
     if not dest_msys:
         print("[ERROR] MSYS2 not found. Install MSYS2 at C:\\msys64 first.")
         print_status("install_failed", "msys2_missing", v)
@@ -1052,7 +1051,6 @@ def _install_verilator_from_7z(archive_path, v):
         return False
 
     print("[3/3] Verifying installation...")
-    import time
     time.sleep(2)
     exe, installed_ver = find_verilator(None)
     if exe:
@@ -1102,7 +1100,6 @@ def install_verilator(v, upgrade=False):
         result = run_msys2_command("pacman -S --noconfirm mingw-w64-x86_64-verilator")
 
         if result and result.returncode == 0:
-            import time
             print("[MSYS2] Waiting for installation to settle...")
             time.sleep(5)
             exe, installed_version = find_verilator(None)
@@ -1211,7 +1208,7 @@ def install_esim(target_version, upgrade=False):
     print("[INFO] Silent install in progress (10-20 min). Please wait...")
     try:
         subprocess.run([str(installer), "/S"], timeout=1800)
-        import time; time.sleep(20)
+        time.sleep(20)
         for p in [ESIM_DIR / "eSim.bat", ESIM_DIR / "uninst-eSim.exe"]:
             if p.exists():
                 update_state("esim", display_ver)
@@ -1233,7 +1230,7 @@ def uninstall_esim(target_version="none"):
         print("[1/2] Running eSim uninstaller...")
         try:
             subprocess.run([str(uninst), "/S"], timeout=600)
-            import time; time.sleep(10)
+            time.sleep(10)
         except Exception as e:
             print(f"[WARNING] {e}")
     else:

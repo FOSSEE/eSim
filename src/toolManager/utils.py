@@ -46,6 +46,9 @@ WIN_LLVM_PATHS = [
     r"C:\Program Files (x86)\LLVM\bin\clang.exe",
 ]
 
+# Locations for MSYS2/MinGW64. The FOSSEE fallback supports the bundled
+# MSYS2 environment provided by some eSim installers to ensure 
+# zero-dependency operation.
 FOSSEE_MSYS_CANDIDATES = [
     Path(r"C:\msys64\mingw64"),
     Path(r"C:\FOSSEE\MSYS\mingw64"),
@@ -159,7 +162,16 @@ def get_msys2_bash():
     Returns the path to MSYS2 bash.exe if found, else None.
     """
     bash_path = DEFAULT_MSYS2_PATH / "usr" / "bin" / "bash.exe"
-    return str(bash_path) if bash_path.exists() else None
+    return bash_path if bash_path.exists() else None
+
+def get_msys2_mingw_root():
+    """
+    Returns the path to MSYS2 mingw64 root if found, else None.
+    """
+    for candidate in FOSSEE_MSYS_CANDIDATES:
+        if candidate.exists():
+            return candidate
+    return None
 
 def get_msys2_mingw_bin():
     """
