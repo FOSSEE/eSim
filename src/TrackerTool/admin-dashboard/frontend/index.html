@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>eSim Tool Tracker — Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+</head>
+<script>
+  if (localStorage.getItem("adminLoggedIn") !== "true") {
+    window.location.href = "/admin-login.html";
+  }
+</script>
+<body>
+  <div class="dashboard-shell">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-title">eSim Tracker</div>
+        <div class="brand-sub">Admin Dashboard</div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-btn active" data-view="overview">Overview</button>
+        <button class="nav-btn" data-view="sessions">Sessions</button>
+        <button class="nav-btn" data-view="logs">Logs</button>
+        <button class="nav-btn" data-view="crashes">Crashes</button>
+        <button class="nav-btn" data-view="tasks">Tasks</button>
+        <button class="nav-btn" data-view="releases">Releases</button>
+        <button class="nav-btn" data-view="locations">Locations</button>
+        <button class="nav-btn" data-view="visuals">Visualizations</button>
+      </nav>
+    </aside>
+
+    <div class="main-shell">
+      <header class="header">
+        <div class="container header-inner">
+          <div>
+            <div class="section-title">eSim Tool Tracker</div>
+            <div class="muted">Admin controls, monitoring, and reporting</div>
+          </div>
+
+          <div class="top-actions">
+            <select id="userFilter" class="control">
+              <option value="">All Users</option>
+            </select>
+            <button id="refreshBtn" class="btn">Refresh</button>
+            <button id="logoutBtn" class="btn">Logout</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="container main">
+        <section class="page-head">
+          <div>
+            <div class="h1" id="pageTitle">Overview</div>
+            <div class="muted" id="pageSub">System summary & latest activity.</div>
+          </div>
+        </section>
+
+        <section id="view-overview" class="view active"></section>
+        <section id="view-sessions" class="view"></section>
+        <section id="view-logs" class="view"></section>
+        <section id="view-crashes" class="view"></section>
+        <section id="view-tasks" class="view"></section>
+        <section id="view-releases" class="view"></section>
+        <section id="view-locations" class="view"></section>
+        <section id="view-visuals" class="view"></section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    if (localStorage.getItem("adminLoggedIn") !== "true") {
+      window.location.href = "admin-login.html";
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+  <script src="./app.js"></script>
+
+  <script>
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  logoutBtn?.addEventListener("click", function () {
+    localStorage.removeItem("adminLoggedIn");
+    window.location.href = "/admin-login.html";
+  });
+</script>
+</body>
+</html>

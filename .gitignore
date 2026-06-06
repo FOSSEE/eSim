@@ -16,3 +16,8 @@ nghdl*
 tags
 build/
 dist/
+credentials.json
+token.json
+.env
+*.env
+logs/
