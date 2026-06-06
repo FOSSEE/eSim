@@ -1,0 +1,102 @@
+* Subcircuit MC14521B
+.subckt MC14521B net-_u2-pad2_ net-_u10-pad4_ net-_u10-pad1_ net-_u2-pad5_ net-_u3-pad5_ net-_u4-pad5_ net-_u5-pad5_ net-_u6-pad5_ net-_u7-pad5_ net-_u19-pad5_ net-_u20-pad5_ net-_u21-pad5_ net-_u22-pad5_ net-_u23-pad5_ net-_u24-pad5_ net-_u25-pad5_ 
+.title kicad schematic
+* u18 net-_u10-pad1_ net-_u17-pad5_ unconnected-_u18-pad3_ net-_u10-pad4_ net-_u18-pad5_ unconnected-_u18-pad6_ d_tff
+* u16 net-_u10-pad1_ net-_u15-pad5_ unconnected-_u16-pad3_ net-_u10-pad4_ net-_u16-pad5_ unconnected-_u16-pad6_ d_tff
+* u17 net-_u10-pad1_ net-_u16-pad5_ unconnected-_u17-pad3_ net-_u10-pad4_ net-_u17-pad5_ unconnected-_u17-pad6_ d_tff
+* u23 net-_u10-pad1_ net-_u22-pad5_ unconnected-_u23-pad3_ net-_u10-pad4_ net-_u23-pad5_ unconnected-_u23-pad6_ d_tff
+* u24 net-_u10-pad1_ net-_u23-pad5_ unconnected-_u24-pad3_ net-_u10-pad4_ net-_u24-pad5_ unconnected-_u24-pad6_ d_tff
+* u22 net-_u10-pad1_ net-_u21-pad5_ unconnected-_u22-pad3_ net-_u10-pad4_ net-_u22-pad5_ unconnected-_u22-pad6_ d_tff
+* u20 net-_u10-pad1_ net-_u19-pad5_ unconnected-_u20-pad3_ net-_u10-pad4_ net-_u20-pad5_ unconnected-_u20-pad6_ d_tff
+* u21 net-_u10-pad1_ net-_u20-pad5_ unconnected-_u21-pad3_ net-_u10-pad4_ net-_u21-pad5_ unconnected-_u21-pad6_ d_tff
+* u19 net-_u10-pad1_ net-_u18-pad5_ unconnected-_u19-pad3_ net-_u10-pad4_ net-_u19-pad5_ unconnected-_u19-pad6_ d_tff
+* u25 net-_u10-pad1_ net-_u24-pad5_ unconnected-_u25-pad3_ net-_u10-pad4_ net-_u25-pad5_ unconnected-_u25-pad6_ d_tff
+* u14 net-_u10-pad1_ net-_u13-pad5_ unconnected-_u14-pad3_ net-_u10-pad4_ net-_u14-pad5_ unconnected-_u14-pad6_ d_tff
+* u15 net-_u10-pad1_ net-_u14-pad5_ unconnected-_u15-pad3_ net-_u10-pad4_ net-_u15-pad5_ unconnected-_u15-pad6_ d_tff
+* u10 net-_u10-pad1_ net-_u10-pad2_ unconnected-_u10-pad3_ net-_u10-pad4_ net-_u10-pad5_ unconnected-_u10-pad6_ d_tff
+* u8 net-_u10-pad1_ net-_u7-pad5_ unconnected-_u8-pad3_ net-_u10-pad4_ net-_u8-pad5_ unconnected-_u8-pad6_ d_tff
+* u9 net-_u10-pad1_ net-_u8-pad5_ unconnected-_u9-pad3_ net-_u10-pad4_ net-_u10-pad2_ unconnected-_u9-pad6_ d_tff
+* u11 net-_u10-pad1_ net-_u10-pad5_ unconnected-_u11-pad3_ net-_u10-pad4_ net-_u11-pad5_ unconnected-_u11-pad6_ d_tff
+* u12 net-_u10-pad1_ net-_u11-pad5_ unconnected-_u12-pad3_ net-_u10-pad4_ net-_u12-pad5_ unconnected-_u12-pad6_ d_tff
+* u13 net-_u10-pad1_ net-_u12-pad5_ unconnected-_u13-pad3_ net-_u10-pad4_ net-_u13-pad5_ unconnected-_u13-pad6_ d_tff
+* u7 net-_u10-pad1_ net-_u6-pad5_ unconnected-_u7-pad3_ net-_u10-pad4_ net-_u7-pad5_ unconnected-_u7-pad6_ d_tff
+* u6 net-_u10-pad1_ net-_u5-pad5_ unconnected-_u6-pad3_ net-_u10-pad4_ net-_u6-pad5_ unconnected-_u6-pad6_ d_tff
+* u5 net-_u10-pad1_ net-_u4-pad5_ unconnected-_u5-pad3_ net-_u10-pad4_ net-_u5-pad5_ unconnected-_u5-pad6_ d_tff
+* u4 net-_u10-pad1_ net-_u3-pad5_ unconnected-_u4-pad3_ net-_u10-pad4_ net-_u4-pad5_ unconnected-_u4-pad6_ d_tff
+* u2 net-_u10-pad1_ net-_u2-pad2_ unconnected-_u2-pad3_ net-_u10-pad4_ net-_u2-pad5_ unconnected-_u2-pad6_ d_tff
+* u3 net-_u10-pad1_ net-_u2-pad5_ unconnected-_u3-pad3_ net-_u10-pad4_ net-_u3-pad5_ unconnected-_u3-pad6_ d_tff
+a1 net-_u10-pad1_ net-_u17-pad5_ unconnected-_u18-pad3_ net-_u10-pad4_ net-_u18-pad5_ unconnected-_u18-pad6_ u18
+a2 net-_u10-pad1_ net-_u15-pad5_ unconnected-_u16-pad3_ net-_u10-pad4_ net-_u16-pad5_ unconnected-_u16-pad6_ u16
+a3 net-_u10-pad1_ net-_u16-pad5_ unconnected-_u17-pad3_ net-_u10-pad4_ net-_u17-pad5_ unconnected-_u17-pad6_ u17
+a4 net-_u10-pad1_ net-_u22-pad5_ unconnected-_u23-pad3_ net-_u10-pad4_ net-_u23-pad5_ unconnected-_u23-pad6_ u23
+a5 net-_u10-pad1_ net-_u23-pad5_ unconnected-_u24-pad3_ net-_u10-pad4_ net-_u24-pad5_ unconnected-_u24-pad6_ u24
+a6 net-_u10-pad1_ net-_u21-pad5_ unconnected-_u22-pad3_ net-_u10-pad4_ net-_u22-pad5_ unconnected-_u22-pad6_ u22
+a7 net-_u10-pad1_ net-_u19-pad5_ unconnected-_u20-pad3_ net-_u10-pad4_ net-_u20-pad5_ unconnected-_u20-pad6_ u20
+a8 net-_u10-pad1_ net-_u20-pad5_ unconnected-_u21-pad3_ net-_u10-pad4_ net-_u21-pad5_ unconnected-_u21-pad6_ u21
+a9 net-_u10-pad1_ net-_u18-pad5_ unconnected-_u19-pad3_ net-_u10-pad4_ net-_u19-pad5_ unconnected-_u19-pad6_ u19
+a10 net-_u10-pad1_ net-_u24-pad5_ unconnected-_u25-pad3_ net-_u10-pad4_ net-_u25-pad5_ unconnected-_u25-pad6_ u25
+a11 net-_u10-pad1_ net-_u13-pad5_ unconnected-_u14-pad3_ net-_u10-pad4_ net-_u14-pad5_ unconnected-_u14-pad6_ u14
+a12 net-_u10-pad1_ net-_u14-pad5_ unconnected-_u15-pad3_ net-_u10-pad4_ net-_u15-pad5_ unconnected-_u15-pad6_ u15
+a13 net-_u10-pad1_ net-_u10-pad2_ unconnected-_u10-pad3_ net-_u10-pad4_ net-_u10-pad5_ unconnected-_u10-pad6_ u10
+a14 net-_u10-pad1_ net-_u7-pad5_ unconnected-_u8-pad3_ net-_u10-pad4_ net-_u8-pad5_ unconnected-_u8-pad6_ u8
+a15 net-_u10-pad1_ net-_u8-pad5_ unconnected-_u9-pad3_ net-_u10-pad4_ net-_u10-pad2_ unconnected-_u9-pad6_ u9
+a16 net-_u10-pad1_ net-_u10-pad5_ unconnected-_u11-pad3_ net-_u10-pad4_ net-_u11-pad5_ unconnected-_u11-pad6_ u11
+a17 net-_u10-pad1_ net-_u11-pad5_ unconnected-_u12-pad3_ net-_u10-pad4_ net-_u12-pad5_ unconnected-_u12-pad6_ u12
+a18 net-_u10-pad1_ net-_u12-pad5_ unconnected-_u13-pad3_ net-_u10-pad4_ net-_u13-pad5_ unconnected-_u13-pad6_ u13
+a19 net-_u10-pad1_ net-_u6-pad5_ unconnected-_u7-pad3_ net-_u10-pad4_ net-_u7-pad5_ unconnected-_u7-pad6_ u7
+a20 net-_u10-pad1_ net-_u5-pad5_ unconnected-_u6-pad3_ net-_u10-pad4_ net-_u6-pad5_ unconnected-_u6-pad6_ u6
+a21 net-_u10-pad1_ net-_u4-pad5_ unconnected-_u5-pad3_ net-_u10-pad4_ net-_u5-pad5_ unconnected-_u5-pad6_ u5
+a22 net-_u10-pad1_ net-_u3-pad5_ unconnected-_u4-pad3_ net-_u10-pad4_ net-_u4-pad5_ unconnected-_u4-pad6_ u4
+a23 net-_u10-pad1_ net-_u2-pad2_ unconnected-_u2-pad3_ net-_u10-pad4_ net-_u2-pad5_ unconnected-_u2-pad6_ u2
+a24 net-_u10-pad1_ net-_u2-pad5_ unconnected-_u3-pad3_ net-_u10-pad4_ net-_u3-pad5_ unconnected-_u3-pad6_ u3
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u18 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u16 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u17 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u23 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u24 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u22 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u20 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u21 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u19 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u25 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u14 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u15 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u10 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u8 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u9 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u11 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u12 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u13 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u7 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u6 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u5 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u4 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u2 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u3 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Control Statements
+
+.ends MC14521B

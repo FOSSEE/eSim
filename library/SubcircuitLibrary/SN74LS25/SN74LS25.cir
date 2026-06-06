@@ -1,0 +1,15 @@
+.title KiCad schematic
+U3 Net-_U1-Pad2_ Net-_U1-Pad4_ Net-_U3-Pad3_ d_or
+U2 Net-_U1-Pad1_ Net-_U1-Pad3_ Net-_U2-Pad3_ d_or
+U4 Net-_U2-Pad3_ Net-_U1-Pad5_ Net-_U4-Pad3_ d_or
+U5 Net-_U3-Pad3_ Net-_U1-Pad6_ Net-_U5-Pad3_ d_or
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ PORT
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U1-Pad11_ d_and
+U9 Net-_U1-Pad9_ Net-_U12-Pad2_ d_buffer
+U8 Net-_U6-Pad3_ Net-_U12-Pad1_ d_buffer
+U13 Net-_U10-Pad2_ Net-_U11-Pad2_ Net-_U1-Pad12_ d_and
+U11 Net-_U1-Pad10_ Net-_U11-Pad2_ d_buffer
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ d_buffer
+U6 Net-_U4-Pad3_ Net-_U1-Pad7_ Net-_U6-Pad3_ d_or
+U7 Net-_U5-Pad3_ Net-_U1-Pad8_ Net-_U10-Pad1_ d_or
+.end
