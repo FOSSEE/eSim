@@ -14,6 +14,22 @@ from pathlib import Path
 import sys
 import io
 
+# Import shared utilities
+try:
+    from utils import (
+        run_cmd_safe, run_cmd_stream, which, print_status,
+        DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
+        WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, get_msys2_mingw_bin
+    )
+except ImportError:
+    # Fallback for different execution contexts
+    from src.toolManager.utils import (
+        run_cmd_safe, run_cmd_stream, which, print_status,
+        DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
+        WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, get_msys2_mingw_bin
+    )
+
+
 if sys.platform == "win32":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='ignore')
@@ -22,7 +38,7 @@ BASE_DIR = Path(__file__).resolve().parent
 STATE_FILE = BASE_DIR / "information.json"
 BASE_DIR.mkdir(parents=True, exist_ok=True)
 
-MSYS2_PATH = Path(r"C:\msys64")
+MSYS2_PATH = DEFAULT_MSYS2_PATH
 
 DOWNLOAD_DIR = BASE_DIR / "Download"
 DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -72,34 +88,6 @@ LLVM_VERSIONS = {
     "latest": None
 }
 
-def run_cmd_safe(cmd, timeout=30, cwd=None):
-    try:
-        if platform.system() == "Windows":
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            startupinfo.wShowWindow = subprocess.SW_HIDE
-            creationflags = subprocess.CREATE_NO_WINDOW
-        else:
-            startupinfo = None
-            creationflags = 0
-        
-        result = subprocess.run(
-            cmd,
-            capture_output=True,
-            text=True,
-            shell=False,
-            timeout=timeout,
-            startupinfo=startupinfo,
-            creationflags=creationflags,
-            encoding='utf-8',
-            errors='ignore',
-            cwd=cwd
-        )
-        return result
-    except Exception as e:
-        print(f"Command failed: {e}")
-        return None
-
 
 def _get_package(filename, url, label=""):
     local = DOWNLOAD_DIR / filename
@@ -125,77 +113,9 @@ def _get_package(filename, url, label=""):
         return None
 
 
-def which(exe):
-    return shutil.which(exe)
-
-
-def run_cmd_stream(cmd, timeout=900, cwd=None):
-    try:
-        if platform.system() == "Windows":
-            si = subprocess.STARTUPINFO()
-            si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            si.wShowWindow = subprocess.SW_HIDE
-            cf = subprocess.CREATE_NO_WINDOW
-        else:
-            si = None
-            cf = 0
-
-        proc = subprocess.Popen(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            shell=False,
-            startupinfo=si,
-            creationflags=cf,
-            encoding='utf-8',
-            errors='ignore',
-            cwd=cwd
-        )
-
-        output_lines = []
-        import threading, time
-        
-        def _kill():
-            try:
-                proc.kill()
-            except Exception:
-                pass
-
-        timer = threading.Timer(timeout, _kill)
-        try:
-            timer.start()
-            for line in proc.stdout:
-                line = line.rstrip()
-                if line:
-                    print(line, flush=True)
-                    output_lines.append(line)
-            proc.wait()
-        finally:
-            timer.cancel()
-
-        return proc.returncode, "\n".join(output_lines)
-
-    except Exception as e:
-        print(f"[ERROR] Command failed: {e}", flush=True)
-        return -1, str(e)
-
-def print_status(state, installed, target):
-    if installed:
-        installed = str(installed).strip().replace('\n', '').replace('\r', '')
-    print(f"{state}|{installed}|{target}", flush=True)
 
 def find_kicad_fixed(version=None):
-    versioned = [
-        (r"C:\Program Files\KiCad\9.0\bin\kicad.exe", "9"),
-        (r"C:\Program Files\KiCad\8.0\bin\kicad.exe", "8"),
-        (r"C:\Program Files\KiCad\7.0\bin\kicad.exe", "7"),
-        (r"C:\Program Files\KiCad\6.0\bin\kicad.exe", "6"),
-        (r"C:\Program Files (x86)\KiCad\9.0\bin\kicad.exe", "9"),
-        (r"C:\Program Files (x86)\KiCad\8.0\bin\kicad.exe", "8"),
-        (r"C:\Program Files (x86)\KiCad\7.0\bin\kicad.exe", "7"),
-        (r"C:\Program Files (x86)\KiCad\6.0\bin\kicad.exe", "6"),
-    ]
+    versioned = WIN_KICAD_PATHS
     for path, major in versioned:
         if os.path.exists(path):
             install_dir = os.path.dirname(os.path.dirname(path))
@@ -273,11 +193,7 @@ def find_ngspice_safe(version=None):
 
 
 def _find_ngspice_exe():
-    for p in [
-        r"C:\Program Files\ngspice\bin\ngspice.exe",
-        r"C:\Program Files (x86)\ngspice\bin\ngspice.exe",
-        r"C:\ngspice\bin\ngspice.exe",
-    ]:
+    for p in WIN_NGSPICE_PATHS:
         if os.path.exists(p):
             return p
     return which("ngspice") or which("ngspice.exe")
@@ -297,10 +213,7 @@ def find_llvm_fixed(version=None):
         except:
             pass
     
-    common_paths = [
-        r"C:\Program Files\LLVM\bin\clang.exe",
-        r"C:\Program Files (x86)\LLVM\bin\clang.exe",
-    ]
+    common_paths = WIN_LLVM_PATHS
     
     for path in common_paths:
         if os.path.exists(path):
@@ -386,8 +299,9 @@ def find_ghdl(version=None):
         except:
             pass
     
-    if MSYS2_PATH.exists():
-        msys2_ghdl = MSYS2_PATH / "mingw64" / "bin" / "ghdl.exe"
+    msys_bin = get_msys2_mingw_bin()
+    if msys_bin:
+        msys2_ghdl = msys_bin / "ghdl.exe"
         if msys2_ghdl.exists():
             try:
                 result = run_cmd_safe([str(msys2_ghdl), "--version"])
@@ -416,9 +330,10 @@ def find_ghdl(version=None):
     return None, None
 
 def find_verilator(version=None):
-    if MSYS2_PATH.exists():
+    msys_bin = get_msys2_mingw_bin()
+    if msys_bin:
         for exe_name in ["verilator.exe", "verilator_bin.exe", "verilator"]:
-            msys2_exe = MSYS2_PATH / "mingw64" / "bin" / exe_name
+            msys2_exe = msys_bin / exe_name
             if msys2_exe.exists():
                 try:
                     result = run_cmd_safe([str(msys2_exe), "--version"], timeout=10)
@@ -1043,9 +958,9 @@ def install_ghdl(v, upgrade=False):
         print_status("install_failed", "no_exe", v)
 
 def run_msys2_command(cmd, timeout=300):
-    bash_exe = MSYS2_PATH / "usr" / "bin" / "bash.exe"
+    bash_exe = get_msys2_bash()
     
-    if not bash_exe.exists():
+    if not bash_exe:
         print(f"[ERROR] MSYS2 not found at {MSYS2_PATH}")
         return None
     
@@ -1107,11 +1022,7 @@ def _install_verilator_from_7z(archive_path, v):
         print_status("install_failed", "extract_error", v)
         return False
 
-    dest_msys = None
-    for candidate in [MSYS2_PATH / "mingw64", Path(r"C:\FOSSEE\MSYS\mingw64")]:
-        if candidate.exists():
-            dest_msys = candidate
-            break
+    dest_msys = get_msys2_mingw_bin()
     if not dest_msys:
         print("[ERROR] MSYS2 not found. Install MSYS2 at C:\\msys64 first.")
         print_status("install_failed", "msys2_missing", v)
@@ -1171,8 +1082,8 @@ def install_verilator(v, upgrade=False):
             print(f"[INFO]   2. Place it in: {DOWNLOAD_DIR}")
             print(f"[INFO] Falling back to latest via MSYS2...")
 
-    bash_exe = MSYS2_PATH / "usr" / "bin" / "bash.exe"
-    if not bash_exe.exists():
+    bash_exe = get_msys2_bash()
+    if not bash_exe:
         print(f"[ERROR] MSYS2 not found at {MSYS2_PATH}")
         print_status("install_failed", "msys2_missing", v)
         return
@@ -1253,13 +1164,7 @@ def get_state_version(package_name):
     return None
 
 
-ESIM_VERSIONS = {
-    "2.4":    "https://static.fossee.in/esim/installation-files/eSim-2.4_installer.exe",
-    "2.3":    "https://static.fossee.in/esim/installation-files/eSim-2.3_installer.exe",
-    "2.2":    "https://static.fossee.in/esim/installation-files/eSim-2.2_installer.exe",
-    "latest": "https://static.fossee.in/esim/installation-files/eSim-2.4_installer.exe",
-}
-ESIM_DIR = Path(r"C:\FOSSEE\eSim")
+ESIM_DIR = DEFAULT_ESIM_DIR
 
 
 def check_esim(target_version):
