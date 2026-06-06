@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtGui, QtWidgets, uic
+from PyQt6 import QtCore, QtGui, QtWidgets, uic
 import os
 
 
@@ -24,7 +24,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.iconDir = "../../images"
 
         # Load the ui file
-        uic.loadUi("TerminalUi.ui", self)
+        uic.loadUi(os.path.join(os.path.dirname(__file__), "TerminalUi.ui"), self)
 
         # Define Our Widgets
         self.progressBar = self.findChild(
@@ -74,7 +74,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.cancelSimulationButton.setEnabled(False)
         self.redoSimulationButton.setEnabled(True)
 
-        if (self.qProcess.state() == QtCore.QProcess.NotRunning):
+        if (self.qProcess.state() == QtCore.QProcess.ProcessState.NotRunning):
             return
 
         self.simulationCancelled = True
@@ -94,10 +94,14 @@ class TerminalUi(QtWidgets.QMainWindow):
     def redoSimulation(self):
         """This function reruns the ngspice simulation
         """
+<<<<<<< HEAD
+=======
+        self.Flag = False
+>>>>>>> 18fa5c525245c18516a7fa3472ad5427ec067e24
         self.cancelSimulationButton.setEnabled(True)
         self.redoSimulationButton.setEnabled(False)
 
-        if (self.qProcess.state() != QtCore.QProcess.NotRunning):
+        if (self.qProcess.state() != QtCore.QProcess.ProcessState.NotRunning):
             return
 
         # To make the progressbar running
@@ -107,6 +111,25 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.simulationConsole.setText("")
         self.simulationCancelled = False
 
+<<<<<<< HEAD
+=======
+        msg_box = QtWidgets.QMessageBox(self)
+        msg_box.setWindowTitle("Ngspice Plots")
+        msg_box.setText("Do you want Ngspice plots?")
+        
+        yes_button = msg_box.addButton("Yes", QtWidgets.QMessageBox.ButtonRole.YesRole)
+        no_button = msg_box.addButton("No", QtWidgets.QMessageBox.ButtonRole.NoRole)
+
+        msg_box.exec()
+
+        if msg_box.clickedButton() == yes_button:
+            self.Flag = True 
+        else:
+            self.Flag = False  
+
+        self.qProcess.setProperty("redoPlotFlag", self.Flag)
+
+>>>>>>> 18fa5c525245c18516a7fa3472ad5427ec067e24
         self.qProcess.start('ngspice', self.args)
 
     def changeColor(self):

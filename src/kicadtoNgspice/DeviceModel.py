@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, QtCore
+from PyQt6 import QtWidgets, QtCore
 import os
 from xml.etree import ElementTree as ET
 from . import TrackWidget
@@ -201,7 +201,7 @@ class DeviceModel(QtWidgets.QWidget):
                                "Please edit the schematic and \
                                generate netlist again"
                 self.msg.showMessage(self.content)
-                self.msg.exec_()
+                self.msg.exec()
                 return
 
             elif eachline[0:2] == 'sc' and eachline[0:6] != 'scmode':
@@ -572,7 +572,7 @@ class DeviceModel(QtWidgets.QWidget):
             print("=========================================")
             print(eachline)
             words = eachline.split()
-            if eachline[0] == 'q':
+            if eachline[0] == 'q' and len(words) > 4:
                 # print("Device Model Transistor: ", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 transbox = QtWidgets.QGroupBox()
@@ -637,7 +637,7 @@ class DeviceModel(QtWidgets.QWidget):
                 self.devicemodel_dict_end[words[0]] = self.count
                 self.count = self.count + 1
 
-            elif eachline[0] == 'd':
+            elif eachline[0] == 'd' and len(words) > 3:
                 # print("Device Model Diode:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 diodebox = QtWidgets.QGroupBox()
@@ -701,7 +701,7 @@ class DeviceModel(QtWidgets.QWidget):
                 self.devicemodel_dict_end[words[0]] = self.count
                 self.count = self.count + 1
 
-            elif eachline[0] == 'j':
+            elif eachline[0] == 'j' and len(words) > 4:
                 # print("Device Model JFET:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 jfetbox = QtWidgets.QGroupBox()
@@ -764,7 +764,7 @@ class DeviceModel(QtWidgets.QWidget):
                 self.devicemodel_dict_end[words[0]] = self.count
                 self.count = self.count + 1
 
-            elif eachline[0] == 's':
+            elif eachline[0] == 's' and len(words) > 5:
                 # print("Device Model Switch:", words[0])
                 self.devicemodel_dict_beg[words[0]] = self.count
                 switchbox = QtWidgets.QGroupBox()
@@ -890,7 +890,7 @@ class DeviceModel(QtWidgets.QWidget):
                 self.devicemodel_dict_end[words[0]] = self.count
                 self.count = self.count + 1
 
-            elif eachline[0] == 'm':
+            elif eachline[0] == 'm' and len(words) > 4:
 
                 self.devicemodel_dict_beg[words[0]] = self.count
                 mosfetbox = QtWidgets.QGroupBox()
@@ -1271,5 +1271,5 @@ Converter developed at FOSSEE, IIT Bombay\n")
         self.content = "The Verilog file has been successfully \
              generated from the SPICE netlist"
         self.msg.showMessage(self.content)
-        self.msg.exec_()
+        self.msg.exec()
         return

@@ -1,0 +1,28 @@
+* cir_run.cir  -- NMOS DC Test using IHP SG13G2 TT Corner
+.title NMOS DC Test using IHP SG13G2 TT Corner
+
+* Load the PDK corner (this defines the parameters and pulls in the model file)
+.lib "C:/Users/KEERTHANA/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/models/cornerMOSlv.lib" mos_tt
+
+* Global reference
+.GLOBAL GND
+
+* Bias sources
+Vgs net1 GND 0.4
+Vds net3 GND 1.0
+Vd  net3 net2 0
+
+.param temp=27
+
+* Device under test
+* Drain = net2, Gate = net1, Source = GND, Bulk = GND
+XM1 net2 net1 GND GND sg13_lv_nmos w=1.0u l=0.13u ng=1 m=1
+
+.control
+* save all        ; optional - you can keep or remove
+op
+let Id = @m.xm1[id]
+print Id
+.endc
+
+.end

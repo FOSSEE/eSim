@@ -1,0 +1,289 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:NAND_3-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L sky130_fd_pr__pfet_01v8 SC3
+U 1 1 684AF360
+P 4200 2350
+F 0 "SC3" H 4250 2650 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 4500 2437 50  0000 R CNN
+F 2 "" H 4200 850 50  0001 C CNN
+F 3 "" H 4200 2350 50  0001 C CNN
+	1    4200 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC4
+U 1 1 684AF39D
+P 5250 2350
+F 0 "SC4" H 5300 2650 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 5550 2437 50  0000 R CNN
+F 2 "" H 5250 850 50  0001 C CNN
+F 3 "" H 5250 2350 50  0001 C CNN
+	1    5250 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC5
+U 1 1 684AF420
+P 6100 2350
+F 0 "SC5" H 6150 2650 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 6400 2437 50  0000 R CNN
+F 2 "" H 6100 850 50  0001 C CNN
+F 3 "" H 6100 2350 50  0001 C CNN
+	1    6100 2350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC1
+U 1 1 684AF50C
+P 5250 4000
+F 0 "SC1" H 5300 4300 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 5550 4087 50  0000 R CNN
+F 2 "" H 5250 2500 50  0001 C CNN
+F 3 "" H 5250 4000 50  0001 C CNN
+	1    5250 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC6
+U 1 1 684AF5EC
+P 5650 4700
+F 0 "SC6" H 5700 5000 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 5950 4787 50  0000 R CNN
+F 2 "" H 5650 3200 50  0001 C CNN
+F 3 "" H 5650 4700 50  0001 C CNN
+	1    5650 4700
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 684AF63F
+P 3450 2350
+F 0 "U1" H 3500 2450 30  0000 C CNN
+F 1 "PORT" H 3450 2350 30  0000 C CNN
+F 2 "" H 3450 2350 60  0000 C CNN
+F 3 "" H 3450 2350 60  0000 C CNN
+	1    3450 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 684AF6CC
+P 4500 4000
+F 0 "U1" H 4550 4100 30  0000 C CNN
+F 1 "PORT" H 4500 4000 30  0000 C CNN
+F 2 "" H 4500 4000 60  0000 C CNN
+F 3 "" H 4500 4000 60  0000 C CNN
+	2    4500 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 684AF829
+P 6300 2800
+F 0 "U1" H 6350 2900 30  0000 C CNN
+F 1 "PORT" H 6300 2800 30  0000 C CNN
+F 2 "" H 6300 2800 60  0000 C CNN
+F 3 "" H 6300 2800 60  0000 C CNN
+	5    6300 2800
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 6 1 684AF94D
+P 6850 2350
+F 0 "U1" H 6900 2450 30  0000 C CNN
+F 1 "PORT" H 6850 2350 30  0000 C CNN
+F 2 "" H 6850 2350 60  0000 C CNN
+F 3 "" H 6850 2350 60  0000 C CNN
+	6    6850 2350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 684AF9FE
+P 5100 5200
+F 0 "U1" H 5150 5300 30  0000 C CNN
+F 1 "PORT" H 5100 5200 30  0000 C CNN
+F 2 "" H 5100 5200 60  0000 C CNN
+F 3 "" H 5100 5200 60  0000 C CNN
+	3    5100 5200
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 684AFAE6
+P 5500 1750
+F 0 "U1" H 5550 1850 30  0000 C CNN
+F 1 "PORT" H 5500 1750 30  0000 C CNN
+F 2 "" H 5500 1750 60  0000 C CNN
+F 3 "" H 5500 1750 60  0000 C CNN
+	4    5500 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L SKY130mode scmode1
+U 1 1 684B00C1
+P 8250 2900
+F 0 "scmode1" H 8250 3050 98  0000 C CNB
+F 1 "SKY130mode" H 8250 2800 118 0000 C CNB
+F 2 "" H 8250 3050 60  0001 C CNN
+F 3 "" H 8250 3050 60  0001 C CNN
+	1    8250 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC2
+U 1 1 684AF577
+P 5250 3250
+F 0 "SC2" H 5300 3550 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 5550 3337 50  0000 R CNN
+F 2 "" H 5250 1750 50  0001 C CNN
+F 3 "" H 5250 3250 50  0001 C CNN
+	1    5250 3250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4400 2050 4400 2000
+Wire Wire Line
+	4400 2000 5900 2000
+Wire Wire Line
+	5900 2000 5900 2050
+Wire Wire Line
+	5450 2050 5450 2000
+Connection ~ 5450 2000
+Wire Wire Line
+	5750 1750 5750 2000
+Connection ~ 5750 2000
+Wire Wire Line
+	4300 2350 4450 2350
+Wire Wire Line
+	4450 2350 4450 2000
+Connection ~ 4450 2000
+Wire Wire Line
+	5350 2350 5500 2350
+Wire Wire Line
+	5500 2350 5500 2000
+Connection ~ 5500 2000
+Wire Wire Line
+	6000 2350 5850 2350
+Wire Wire Line
+	5850 2350 5850 2000
+Connection ~ 5850 2000
+Wire Wire Line
+	4400 2650 4400 2700
+Wire Wire Line
+	4400 2700 5900 2700
+Wire Wire Line
+	5900 2700 5900 2650
+Wire Wire Line
+	5450 2650 5450 2950
+Connection ~ 5450 2700
+Wire Wire Line
+	6050 2800 5450 2800
+Connection ~ 5450 2800
+Wire Wire Line
+	3700 2350 3900 2350
+Wire Wire Line
+	3850 2350 3850 3250
+Wire Wire Line
+	3850 3250 4950 3250
+Wire Wire Line
+	4950 2350 4800 2350
+Wire Wire Line
+	4800 2350 4800 4000
+Wire Wire Line
+	4750 4000 4950 4000
+Wire Wire Line
+	5350 3250 5500 3250
+Wire Wire Line
+	5500 3250 5500 3600
+Wire Wire Line
+	5500 3600 5450 3600
+Wire Wire Line
+	5450 3550 5450 3700
+Connection ~ 5450 3600
+Wire Wire Line
+	6400 2350 6600 2350
+Wire Wire Line
+	6450 2350 6450 4700
+Wire Wire Line
+	6450 4700 5950 4700
+Connection ~ 6450 2350
+Wire Wire Line
+	5350 4000 5500 4000
+Wire Wire Line
+	5500 4000 5500 4350
+Wire Wire Line
+	5500 4350 5450 4350
+Wire Wire Line
+	5450 4300 5450 4400
+Connection ~ 5450 4350
+Connection ~ 4800 4000
+Wire Wire Line
+	5450 5000 5450 5200
+Wire Wire Line
+	5450 5200 5350 5200
+Wire Wire Line
+	5550 4700 5400 4700
+Wire Wire Line
+	5400 4700 5400 5050
+Wire Wire Line
+	5400 5050 5450 5050
+Connection ~ 5450 5050
+Connection ~ 3850 2350
+$EndSCHEMATC

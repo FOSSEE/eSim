@@ -1,0 +1,518 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:SN54L99-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L SKY130mode scmode1
+U 1 1 686FB10F
+P 6700 4600
+F 0 "scmode1" H 6700 4750 98  0000 C CNB
+F 1 "SKY130mode" H 6700 4500 118 0000 C CNB
+F 2 "" H 6700 4750 60  0001 C CNN
+F 3 "" H 6700 4750 60  0001 C CNN
+	1    6700 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L SerialParallel_blk X4
+U 1 1 686FB703
+P 4050 2600
+F 0 "X4" H 4050 2600 60  0000 C CNN
+F 1 "SerialParallel_blk" H 4050 2300 60  0000 C CNN
+F 2 "" H 3200 2900 60  0001 C CNN
+F 3 "" H 3200 2900 60  0001 C CNN
+	1    4050 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L DS_blk X6
+U 1 1 686FB752
+P 5450 2600
+F 0 "X6" H 5450 2600 60  0000 C CNN
+F 1 "DS_blk" H 5450 2350 60  0000 C CNN
+F 2 "" H 5450 2600 60  0001 C CNN
+F 3 "" H 5450 2600 60  0001 C CNN
+	1    5450 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L DS_blk X7
+U 1 1 686FB79D
+P 6700 2600
+F 0 "X7" H 6700 2600 60  0000 C CNN
+F 1 "DS_blk" H 6700 2350 60  0000 C CNN
+F 2 "" H 6700 2600 60  0001 C CNN
+F 3 "" H 6700 2600 60  0001 C CNN
+	1    6700 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L DS_blk X8
+U 1 1 686FB8BA
+P 8100 2600
+F 0 "X8" H 8100 2600 60  0000 C CNN
+F 1 "DS_blk" H 8100 2350 60  0000 C CNN
+F 2 "" H 8100 2600 60  0001 C CNN
+F 3 "" H 8100 2600 60  0001 C CNN
+	1    8100 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L 2_in_and X2
+U 1 1 686FB9B6
+P 3750 4350
+F 0 "X2" H 3800 4350 60  0000 C CNN
+F 1 "2_in_and" H 3750 4100 60  0000 C CNN
+F 2 "" H 4500 4200 60  0001 C CNN
+F 3 "" H 4500 4200 60  0001 C CNN
+	1    3750 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L 2_in_and X3
+U 1 1 686FB9F7
+P 3750 5000
+F 0 "X3" H 3800 5000 60  0000 C CNN
+F 1 "2_in_and" H 3750 4750 60  0000 C CNN
+F 2 "" H 4500 4850 60  0001 C CNN
+F 3 "" H 4500 4850 60  0001 C CNN
+	1    3750 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L or_2 X5
+U 1 1 686FBA1C
+P 4800 4700
+F 0 "X5" H 4800 4700 60  0000 C CNN
+F 1 "or_2" H 4800 4450 60  0000 C CNN
+F 2 "" H 4800 4700 60  0001 C CNN
+F 3 "" H 4800 4700 60  0001 C CNN
+	1    4800 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L CMOS_INVTR X1
+U 1 1 686FBA57
+P 2950 4400
+F 0 "X1" H 2950 4400 60  0000 C CNN
+F 1 "CMOS_INVTR" H 3000 4200 60  0000 C CNN
+F 2 "" H 2950 4400 60  0001 C CNN
+F 3 "" H 2950 4400 60  0001 C CNN
+	1    2950 4400
+	0    -1   -1   0   
+$EndComp
+Text Label 2350 4950 0    60   ~ 0
+mode
+Text Label 2450 4400 0    60   ~ 0
+RS
+Text Label 2450 5050 0    60   ~ 0
+LS
+Wire Wire Line
+	4200 4350 4200 4650
+Wire Wire Line
+	4200 4650 4400 4650
+Wire Wire Line
+	4200 5000 4200 4750
+Wire Wire Line
+	4200 4750 4400 4750
+Wire Wire Line
+	3250 4300 3350 4300
+Wire Wire Line
+	3250 2800 3250 4300
+Wire Wire Line
+	2250 4950 3350 4950
+Wire Wire Line
+	2950 4950 2950 4800
+Wire Wire Line
+	2950 3850 7500 3850
+Connection ~ 2950 4950
+Wire Wire Line
+	3350 4400 2250 4400
+Wire Wire Line
+	3350 5050 2250 5050
+Wire Wire Line
+	3500 2800 3250 2800
+Connection ~ 3250 3850
+Wire Wire Line
+	3500 2700 2800 2700
+Wire Wire Line
+	2800 2700 2800 4950
+Connection ~ 2800 4950
+Wire Wire Line
+	8550 2550 8700 2550
+Wire Wire Line
+	8700 2550 8700 3100
+Wire Wire Line
+	8700 3100 3450 3100
+Wire Wire Line
+	3450 3100 3450 2600
+Wire Wire Line
+	3450 2600 3500 2600
+Wire Wire Line
+	5900 2550 5950 2550
+Wire Wire Line
+	5950 2550 5950 4700
+Connection ~ 5950 3100
+Wire Wire Line
+	7150 2550 7200 2550
+Wire Wire Line
+	7200 2550 7200 3100
+Connection ~ 7200 3100
+Wire Wire Line
+	5950 4700 5250 4700
+Wire Wire Line
+	4700 2700 4550 2700
+Wire Wire Line
+	4700 1600 4700 2700
+Wire Wire Line
+	4700 2450 5000 2450
+Wire Wire Line
+	6050 2650 5900 2650
+Wire Wire Line
+	6050 1600 6050 2650
+Wire Wire Line
+	6050 2450 6250 2450
+Wire Wire Line
+	7400 2650 7150 2650
+Wire Wire Line
+	7400 1600 7400 2650
+Wire Wire Line
+	7400 2450 7650 2450
+Wire Wire Line
+	5000 2550 4750 2550
+Wire Wire Line
+	4750 2550 4750 3850
+Wire Wire Line
+	6250 2550 6150 2550
+Wire Wire Line
+	6150 2550 6150 3850
+Connection ~ 4750 3850
+Wire Wire Line
+	7650 2550 7500 2550
+Wire Wire Line
+	7500 2550 7500 3850
+Connection ~ 6150 3850
+Wire Wire Line
+	5000 2650 4800 2650
+Wire Wire Line
+	4800 2650 4800 3650
+Wire Wire Line
+	2800 3650 7550 3650
+Connection ~ 2800 3650
+Wire Wire Line
+	6200 3650 6200 2650
+Wire Wire Line
+	6200 2650 6250 2650
+Connection ~ 4800 3650
+Wire Wire Line
+	7550 3650 7550 2650
+Wire Wire Line
+	7550 2650 7650 2650
+Connection ~ 6200 3650
+Wire Wire Line
+	3500 2400 3500 2300
+Wire Wire Line
+	3500 2300 8800 2300
+Wire Wire Line
+	8800 2300 8800 4050
+Wire Wire Line
+	8800 4050 2750 4050
+Wire Wire Line
+	2750 4050 2750 4800
+Wire Wire Line
+	2750 4800 2850 4800
+Wire Wire Line
+	3350 4200 3350 4050
+Connection ~ 3350 4050
+Wire Wire Line
+	3350 4850 3150 4850
+Wire Wire Line
+	3150 4850 3150 4050
+Connection ~ 3150 4050
+Wire Wire Line
+	4350 4550 4350 4050
+Connection ~ 4350 4050
+Wire Wire Line
+	8550 2450 8550 2300
+Connection ~ 8550 2300
+Wire Wire Line
+	7150 2450 7150 2300
+Connection ~ 7150 2300
+Wire Wire Line
+	5900 2450 5900 2300
+Connection ~ 5900 2300
+Wire Wire Line
+	3050 4800 3050 5350
+Wire Wire Line
+	8550 2900 4550 2900
+Wire Wire Line
+	4550 2900 4550 2800
+Connection ~ 8550 2900
+Wire Wire Line
+	5900 2750 5900 2900
+Connection ~ 5900 2900
+Wire Wire Line
+	7150 2750 7150 2900
+Connection ~ 7150 2900
+Wire Wire Line
+	3350 5150 3350 5350
+Connection ~ 3350 5350
+Wire Wire Line
+	3350 4500 3250 4500
+Wire Wire Line
+	3250 4500 3250 5350
+Connection ~ 3250 5350
+Wire Wire Line
+	4350 4850 4350 5350
+Connection ~ 4350 5350
+Wire Wire Line
+	8550 2750 8550 4200
+Wire Wire Line
+	8550 4200 6050 4200
+Wire Wire Line
+	6050 4200 6050 5350
+Wire Wire Line
+	6050 5350 3050 5350
+Wire Wire Line
+	8550 2650 8950 2650
+Wire Wire Line
+	8950 2650 8950 1600
+Connection ~ 7400 2450
+Connection ~ 6050 2450
+Connection ~ 4700 2450
+Wire Wire Line
+	3500 2500 3350 2500
+Wire Wire Line
+	5000 2750 5000 3050
+Wire Wire Line
+	3350 2500 3350 3050
+Wire Wire Line
+	6250 2750 6250 3050
+Wire Wire Line
+	7650 2750 7650 3050
+Wire Wire Line
+	4550 2550 4600 2550
+Wire Wire Line
+	4600 2550 4600 3050
+Wire Wire Line
+	4550 2450 4650 2450
+Wire Wire Line
+	4650 2450 4650 3050
+$Comp
+L PORT U1
+U 4 1 686FDE79
+P 3350 3300
+F 0 "U1" H 3400 3400 30  0000 C CNN
+F 1 "PORT" H 3350 3300 30  0000 C CNN
+F 2 "" H 3350 3300 60  0000 C CNN
+F 3 "" H 3350 3300 60  0000 C CNN
+	4    3350 3300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 6 1 686FDEC4
+P 4600 3300
+F 0 "U1" H 4650 3400 30  0000 C CNN
+F 1 "PORT" H 4600 3300 30  0000 C CNN
+F 2 "" H 4600 3300 60  0000 C CNN
+F 3 "" H 4600 3300 60  0000 C CNN
+	6    4600 3300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 7 1 686FDF2F
+P 4650 3300
+F 0 "U1" H 4700 3400 30  0000 C CNN
+F 1 "PORT" H 4650 3300 30  0000 C CNN
+F 2 "" H 4650 3300 60  0000 C CNN
+F 3 "" H 4650 3300 60  0000 C CNN
+	7    4650 3300
+	0    1    -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 8 1 686FDFA4
+P 5000 3300
+F 0 "U1" H 5050 3400 30  0000 C CNN
+F 1 "PORT" H 5000 3300 30  0000 C CNN
+F 2 "" H 5000 3300 60  0000 C CNN
+F 3 "" H 5000 3300 60  0000 C CNN
+	8    5000 3300
+	0    -1   -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 10 1 686FE00E
+P 6250 3300
+F 0 "U1" H 6300 3400 30  0000 C CNN
+F 1 "PORT" H 6250 3300 30  0000 C CNN
+F 2 "" H 6250 3300 60  0000 C CNN
+F 3 "" H 6250 3300 60  0000 C CNN
+	10   6250 3300
+	0    1    -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 12 1 686FE067
+P 7650 3300
+F 0 "U1" H 7700 3400 30  0000 C CNN
+F 1 "PORT" H 7650 3300 30  0000 C CNN
+F 2 "" H 7650 3300 60  0000 C CNN
+F 3 "" H 7650 3300 60  0000 C CNN
+	12   7650 3300
+	0    1    -1   0   
+$EndComp
+$Comp
+L PORT U1
+U 15 1 686FE0F5
+P 8800 2900
+F 0 "U1" H 8850 3000 30  0000 C CNN
+F 1 "PORT" H 8800 2900 30  0000 C CNN
+F 2 "" H 8800 2900 60  0000 C CNN
+F 3 "" H 8800 2900 60  0000 C CNN
+	15   8800 2900
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 13 1 686FE22E
+P 8550 2050
+F 0 "U1" H 8600 2150 30  0000 C CNN
+F 1 "PORT" H 8550 2050 30  0000 C CNN
+F 2 "" H 8550 2050 60  0000 C CNN
+F 3 "" H 8550 2050 60  0000 C CNN
+	13   8550 2050
+	0    1    1    0   
+$EndComp
+$Comp
+L PORT U1
+U 14 1 686FE2E8
+P 8700 1600
+F 0 "U1" H 8750 1700 30  0000 C CNN
+F 1 "PORT" H 8700 1600 30  0000 C CNN
+F 2 "" H 8700 1600 60  0000 C CNN
+F 3 "" H 8700 1600 60  0000 C CNN
+	14   8700 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 11 1 686FE34F
+P 7150 1600
+F 0 "U1" H 7200 1700 30  0000 C CNN
+F 1 "PORT" H 7150 1600 30  0000 C CNN
+F 2 "" H 7150 1600 60  0000 C CNN
+F 3 "" H 7150 1600 60  0000 C CNN
+	11   7150 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 9 1 686FE474
+P 5800 1600
+F 0 "U1" H 5850 1700 30  0000 C CNN
+F 1 "PORT" H 5800 1600 30  0000 C CNN
+F 2 "" H 5800 1600 60  0000 C CNN
+F 3 "" H 5800 1600 60  0000 C CNN
+	9    5800 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 686FE4E5
+P 4450 1600
+F 0 "U1" H 4500 1700 30  0000 C CNN
+F 1 "PORT" H 4450 1600 30  0000 C CNN
+F 2 "" H 4450 1600 60  0000 C CNN
+F 3 "" H 4450 1600 60  0000 C CNN
+	5    4450 1600
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 1 1 686FE646
+P 2000 4400
+F 0 "U1" H 2050 4500 30  0000 C CNN
+F 1 "PORT" H 2000 4400 30  0000 C CNN
+F 2 "" H 2000 4400 60  0000 C CNN
+F 3 "" H 2000 4400 60  0000 C CNN
+	1    2000 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 686FE6B7
+P 2000 4950
+F 0 "U1" H 2050 5050 30  0000 C CNN
+F 1 "PORT" H 2000 4950 30  0000 C CNN
+F 2 "" H 2000 4950 60  0000 C CNN
+F 3 "" H 2000 4950 60  0000 C CNN
+	2    2000 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 686FE728
+P 2000 5050
+F 0 "U1" H 2050 5150 30  0000 C CNN
+F 1 "PORT" H 2000 5050 30  0000 C CNN
+F 2 "" H 2000 5050 60  0000 C CNN
+F 3 "" H 2000 5050 60  0000 C CNN
+	3    2000 5050
+	1    0    0    1   
+$EndComp
+$EndSCHEMATC

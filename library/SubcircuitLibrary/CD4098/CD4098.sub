@@ -1,0 +1,83 @@
+* Subcircuit CD4098
+.subckt CD4098 net-_u1-pad1_ net-_u19-pad2_ net-_u19-pad3_ net-_u19-pad4_ net-_u19-pad5_ net-_m2-pad3_ net-_m1-pad3_ ? net-_u11-pad2_ net-_u19-pad10_ 
+* c:\fossee\esim\library\subcircuitlibrary\cd4098\cd4098.cir
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+* u1  net-_u1-pad1_ net-_u1-pad2_ d_inverter
+* u5  net-_u1-pad2_ net-_u5-pad2_ d_inverter
+* u2  net-_u19-pad2_ net-_u2-pad2_ d_inverter
+* u3  net-_u19-pad3_ net-_u11-pad1_ d_inverter
+* u8  net-_u5-pad2_ net-_u2-pad2_ net-_u4-pad2_ d_nand
+* u4  net-_u19-pad10_ net-_u4-pad2_ net-_u11-pad1_ net-_u12-pad2_ net-_u10-pad1_ cd4098_latch
+* u6  net-_u10-pad3_ net-_u6-pad2_ d_inverter
+* u9  net-_u10-pad3_ net-_u19-pad4_ d_inverter
+* u10  net-_u10-pad1_ net-_u10-pad2_ net-_u10-pad3_ d_nor
+* u7  net-_u6-pad2_ net-_u19-pad5_ d_inverter
+* u11  net-_u11-pad1_ net-_u11-pad2_ net-_u10-pad2_ d_nor
+* u12  net-_u11-pad2_ net-_u12-pad2_ d_inverter
+* u13  net-_u13-pad1_ net-_u10-pad1_ net-_u13-pad3_ d_nor
+* u14  net-_u11-pad2_ net-_u13-pad1_ d_inverter
+* u15  net-_u13-pad3_ net-_u11-pad1_ net-_u15-pad3_ d_nor
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSN W=100u L=100u M=1
+m2 net-_m2-pad1_ net-_m2-pad2_ net-_m2-pad3_ net-_m2-pad3_ CMOSP W=100u L=100u M=1
+* u17  net-_u15-pad3_ net-_m2-pad2_ dac_bridge_1
+m3 net-_m1-pad1_ net-_m1-pad2_ net-_m2-pad1_ net-_m2-pad3_ CMOSP W=100u L=100u M=1
+* u18  net-_m1-pad1_ net-_u11-pad2_ adc_bridge_1
+* u16  net-_u10-pad1_ net-_m1-pad2_ dac_bridge_1
+a1 net-_u1-pad1_ net-_u1-pad2_ u1
+a2 net-_u1-pad2_ net-_u5-pad2_ u5
+a3 net-_u19-pad2_ net-_u2-pad2_ u2
+a4 net-_u19-pad3_ net-_u11-pad1_ u3
+a5 [net-_u5-pad2_ net-_u2-pad2_ ] net-_u4-pad2_ u8
+a6 [net-_u19-pad10_ ] [net-_u4-pad2_ ] [net-_u11-pad1_ ] [net-_u12-pad2_ ] [net-_u10-pad1_ ] u4
+a7 net-_u10-pad3_ net-_u6-pad2_ u6
+a8 net-_u10-pad3_ net-_u19-pad4_ u9
+a9 [net-_u10-pad1_ net-_u10-pad2_ ] net-_u10-pad3_ u10
+a10 net-_u6-pad2_ net-_u19-pad5_ u7
+a11 [net-_u11-pad1_ net-_u11-pad2_ ] net-_u10-pad2_ u11
+a12 net-_u11-pad2_ net-_u12-pad2_ u12
+a13 [net-_u13-pad1_ net-_u10-pad1_ ] net-_u13-pad3_ u13
+a14 net-_u11-pad2_ net-_u13-pad1_ u14
+a15 [net-_u13-pad3_ net-_u11-pad1_ ] net-_u15-pad3_ u15
+a16 [net-_u15-pad3_ ] [net-_m2-pad2_ ] u17
+a17 [net-_m1-pad1_ ] [net-_u11-pad2_ ] u18
+a18 [net-_u10-pad1_ ] [net-_m1-pad2_ ] u16
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u1 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u5 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u8 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             cd4098_latch, NgSpice Name: cd4098_latch
+.model u4 cd4098_latch(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 instance_id=1 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u6 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u9 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u10 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u11 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u12 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u13 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u14 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nor, NgSpice Name: d_nor
+.model u15 d_nor(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u17 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 )
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u18 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             dac_bridge_1, NgSpice Name: dac_bridge
+.model u16 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 )
+* Control Statements
+
+.ends CD4098

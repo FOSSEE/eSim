@@ -28,8 +28,8 @@
 
 # importing the files and libraries
 import hdlparse.verilog_parser as vlog
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtCore import QThread
+from PyQt6 import QtCore, QtWidgets
+from PyQt6.QtCore import QThread, pyqtSignal
 from configuration.Appconfig import Appconfig
 import os
 import watchdog.events
@@ -56,10 +56,10 @@ def makerchipTOSAccepted(display=True):
                        https://www.makerchip.com/terms/</a>). \
                        Have you read and do you \
                        accept these Terms of Service?",
-                QtWidgets.QMessageBox.Yes | QtWidgets.QMessageBox.No
+                QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No
             )
 
-            if reply == QtWidgets.QMessageBox.Yes:
+            if reply == QtWidgets.QMessageBox.StandardButton.Yes:
                 f = open(home + "/.makerchip_accepted", "w")
                 f.close()
                 return True
@@ -90,10 +90,27 @@ class Maker(QtWidgets.QWidget):
         self.grid = QtWidgets.QGridLayout()
         self.setLayout(self.grid)
 
-        self.grid.addWidget(self.createoptionsBox(), 0, 0, QtCore.Qt.AlignTop)
+        self.grid.addWidget(self.createoptionsBox(), 0, 0, QtCore.Qt.AlignmentFlag.AlignTop)
         self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         # self.grid.addWidget(self.creategroup(), 1, 0, 5, 0)
         self.show()
+
+    def _stop_current_toggle(self):
+        global toggle_flag
+        if self.refreshoption in toggle_flag:
+            toggle_flag.remove(self.refreshoption)
+        if hasattr(self, 'event_handler') and self.event_handler.toggle.isRunning():
+            self.event_handler.toggle.requestInterruption()
+            self.event_handler.toggle.wait(2000)
+
+    def closeEvent(self, event):
+        self._stop_current_toggle()
+        if hasattr(self, '_rc_toggle') and self._rc_toggle.isRunning():
+            self._rc_toggle.requestInterruption()
+            self._rc_toggle.wait(2000)
+        if hasattr(self, 'observer') and self.observer.is_alive():
+            self.observer.stop()
+        super().closeEvent(event)
 
     # This function is to Add new verilog file
     def addverilog(self):
@@ -116,9 +133,9 @@ class Maker(QtWidgets.QWidget):
                 "Error Message",
                 "<b>No Verilog File Chosen. \
                 Please choose a verilog file.</b>",
-                QtWidgets.QMessageBox.Ok | QtWidgets.QMessageBox.Cancel)
+                QtWidgets.QMessageBox.StandardButton.Ok | QtWidgets.QMessageBox.StandardButton.Cancel)
 
-            if reply == QtWidgets.QMessageBox.Ok:
+            if reply == QtWidgets.QMessageBox.StandardButton.Ok:
                 self.addverilog()
 
                 if self.verilogfile == "":
@@ -126,7 +143,7 @@ class Maker(QtWidgets.QWidget):
 
                 self.obj_Appconfig.print_info('Add Verilog File Called')
 
-            elif reply == QtWidgets.QMessageBox.Cancel:
+            elif reply == QtWidgets.QMessageBox.StandardButton.Cancel:
                 self.obj_Appconfig.print_info('No Verilog File Chosen')
                 return
 
@@ -136,8 +153,7 @@ class Maker(QtWidgets.QWidget):
         global verilogFile
 
         verilogFile[self.filecount] = self.verilogfile
-        if self.refreshoption in toggle_flag:
-            toggle_flag.remove(self.refreshoption)
+        self._stop_current_toggle()
 
         self.observer = watchdog.observers.Observer()
         self.event_handler = Handler(
@@ -159,8 +175,10 @@ class Maker(QtWidgets.QWidget):
     # (as the original one gets destroyed)
     def refresh_change(self):
         if self.refreshoption in toggle_flag:
-            self.toggle = toggle(self.refreshoption)
-            self.toggle.start()
+            if hasattr(self, '_rc_toggle') and self._rc_toggle.isRunning():
+                return
+            self._rc_toggle = toggle(self.refreshoption)
+            self._rc_toggle.start()
 
     # It is used to refresh the file in eSim if its edited anywhere else
     def refresh(self):
@@ -171,6 +189,7 @@ class Maker(QtWidgets.QWidget):
         print("NgVeri File: " + self.verilogfile + " Refreshed")
         self.obj_Appconfig.print_info(
             "NgVeri File: " + self.verilogfile + " Refreshed")
+        self._stop_current_toggle()
         self.observer = watchdog.observers.Observer()
         self.event_handler = Handler(
             self.verilogfile,
@@ -182,10 +201,6 @@ class Maker(QtWidgets.QWidget):
             path=self.verilogfile,
             recursive=True)
         self.observer.start()
-        # self.notify.start()
-        global toggle_flag
-        if self.refreshoption in toggle_flag:
-            toggle_flag.remove(self.refreshoption)
 
     # This function is used to save the edited file in eSim
     def save(self):
@@ -199,7 +214,7 @@ class Maker(QtWidgets.QWidget):
             self.msg.showMessage(
                 "Error in saving verilog file. Please check if it is chosen."
             )
-            self.msg.exec_()
+            self.msg.exec()
             print("Error in saving verilog file: " + str(err))
 
     # This is used to run the makerchip-app
@@ -228,12 +243,12 @@ class Maker(QtWidgets.QWidget):
                     To not open Makerchip IDE, click on CANCEL button. </b>\
                     <br><br> NOTE: Makerchip IDE requires an active \
                     internet connection and a browser.",
-                    QtWidgets.QMessageBox.Yes
-                    | QtWidgets.QMessageBox.No
-                    | QtWidgets.QMessageBox.Cancel)
-                if reply == QtWidgets.QMessageBox.Cancel:
+                    QtWidgets.QMessageBox.StandardButton.Yes
+                    | QtWidgets.QMessageBox.StandardButton.No
+                    | QtWidgets.QMessageBox.StandardButton.Cancel)
+                if reply == QtWidgets.QMessageBox.StandardButton.Cancel:
                     return
-                if reply == QtWidgets.QMessageBox.Yes:
+                if reply == QtWidgets.QMessageBox.StandardButton.Yes:
                     code = open(self.verilogfile).read()
                     text = code
                     filename = '.'.join(
@@ -277,7 +292,7 @@ output logic passed, output logic failed);\n'''
                             "<b>Error: File name and module \
                             name are not same. Please \
                             ensure that they are same.</b>",
-                            QtWidgets.QMessageBox.Ok)
+                            QtWidgets.QMessageBox.StandardButton.Ok)
 
                         self.obj_Appconfig.print_info(
                             'NgVeri stopped due to file \
@@ -321,7 +336,7 @@ Add \\TLV here if desired\
             self.process.start(cmd)
             print(
                 "Makerchip IDE command process pid ---------->",
-                self.process.pid())
+                self.process.processId())
         except BaseException as e:
             print(e)
             self.msg = QtWidgets.QErrorMessage(self)
@@ -330,7 +345,7 @@ Add \\TLV here if desired\
             self.msg.showMessage(
                 "Error in running Makerchip IDE. \
 Please check if verilog file is chosen.")
-            self.msg.exec_()
+            self.msg.exec()
             print("Error in running Makerchip IDE. \
 Please check if verilog file is chosen.")
         #   initial = self.read_file()
@@ -444,6 +459,11 @@ Please check if verilog file is chosen.")
         return self.trbox
 
 
+class _FileModifiedNotifier(QtCore.QObject):
+    """Bridges watchdog background thread to main thread for GUI notifications."""
+    modified = pyqtSignal(str)
+
+
 # The Handler class is used to create a watch on the files using WatchDog
 class Handler(watchdog.events.PatternMatchingEventHandler):
     # this function initialisses the variable and the objects of watchdog
@@ -456,27 +476,28 @@ class Handler(watchdog.events.PatternMatchingEventHandler):
         self.obj_Appconfig = Appconfig()
         self.observer = observer
         self.toggle = toggle(self.refreshoption)
+        self._notifier = _FileModifiedNotifier()
+        self._notifier.modified.connect(self._show_modified_dialog)
+
+    def _show_modified_dialog(self, verilogfile):
+        msg = QtWidgets.QErrorMessage()
+        msg.setWindowTitle("eSim Message")
+        msg.showMessage(
+            "NgVeri File: " + verilogfile + " modified. Please click on Refresh")
+        msg.exec()
 
     # if a file is modified, toggle starts to toggle the refresh button
     def on_modified(self, event):
         print("Watchdog received modified event - % s." % event.src_path)
-        msg = QtWidgets.QErrorMessage()
-        msg.setWindowTitle("eSim Message")
-        msg.showMessage(
-            "NgVeri File: " +
-            self.verilogfile +
-            " modified. Please click on Refresh")
-        msg.exec_()
         print("NgVeri File: " + self.verilogfile +
               " modified. Please click on Refresh")
-        # self.obj_Appconfig.print_info("NgVeri File:\
-        # "+self.verilogfile+" modified. Please click on Refresh")
         global toggle_flag
         if self.refreshoption not in toggle_flag:
             toggle_flag.append(self.refreshoption)
-        # i.rm_watch()
         self.observer.stop()
-        self.toggle.start()
+        if not self.toggle.isRunning():
+            self.toggle.start()
+        self._notifier.modified.emit(self.verilogfile)
 
 
 # class notify(QThread):
@@ -508,7 +529,7 @@ class Handler(watchdog.events.PatternMatchingEventHandler):
 #                         msg.showMessage(
 #                             "NgVeri File: "+self.verilogfile+"\
 # modified. Please click on Refresh")
-#                         msg.exec_()
+#                         msg.exec()
 #                         print("NgVeri File: "+self.verilogfile+"\
 # modified. Please click on Refresh")
 #                         # self.obj_Appconfig.print_info("NgVeri File: \
@@ -522,24 +543,23 @@ class Handler(watchdog.events.PatternMatchingEventHandler):
 
 # This class is used to toggle a button(change colour by toggling)
 class toggle(QThread):
+    changeStyle = pyqtSignal(str)
+
     # initialising the threads
     def __init__(self, option):
         QThread.__init__(self)
         self.option = option
-
-    def __del__(self):
-        self.wait()
+        self.changeStyle.connect(option.setStyleSheet)
 
     # running the thread to toggle
     def run(self):
-
-        while True:
-            self.option.setStyleSheet("background-color: red")
-            self.sleep(1)
-            self.option.setStyleSheet("background-color: none")
-            self.sleep(1)
-            print(toggle_flag)
-            if not self.option.isVisible():
+        while not self.isInterruptionRequested():
+            self.changeStyle.emit("background-color: red")
+            self.msleep(1000)
+            if self.isInterruptionRequested():
                 break
+            self.changeStyle.emit("background-color: none")
+            self.msleep(1000)
             if self.option not in toggle_flag:
                 break
+        self.changeStyle.emit("")

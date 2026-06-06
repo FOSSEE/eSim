@@ -7,6 +7,9 @@ class TrackWidget:
         - References
         - Model Details
         - ... etc
+    - All attributes are class-level (shared across instances by design).
+    - Call TrackWidget.reset() at the start of each conversion to clear
+      accumulated state from previous runs.
     """
     # Track widget list for Source details
     sourcelisttrack = {"ITEMS": "None"}
@@ -35,3 +38,25 @@ class TrackWidget:
     subcircuitTrack = {}
     # Track subcircuits which are specified in .cir file
     subcircuitList = {}
+
+    @classmethod
+    def reset(cls):
+        """Reset all shared class-level state for a fresh conversion run."""
+        cls.sourcelisttrack = {"ITEMS": "None"}
+        cls.source_entry_var = {"ITEMS": "None"}
+        cls.AC_entry_var = {"ITEMS": "None"}
+        cls.AC_Parameter = {"ITEMS": "None"}
+        cls.DC_entry_var = {"ITEMS": "None"}
+        cls.DC_Parameter = {"ITEMS": "None"}
+        cls.TRAN_entry_var = {"ITEMS": "None"}
+        cls.TRAN_Parameter = {"ITEMS": "None"}
+        cls.set_CheckBox = {"ITEMS": "None"}
+        cls.AC_type = {"ITEMS": "None"}
+        cls.op_check = []
+        cls.modelTrack = []
+        cls.microcontrollerTrack = []
+        cls.model_entry_var = {}
+        cls.microcontroller_var = {}
+        cls.deviceModelTrack = {}
+        cls.subcircuitTrack = {}
+        cls.subcircuitList = {}

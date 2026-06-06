@@ -1,6 +1,6 @@
 import os
 import subprocess
-from PyQt5.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox
 
 class LTspiceLibConverter:
     def __init__(self, parent):
@@ -38,7 +38,7 @@ class LTspiceLibConverter:
 
                 # Message box with the conversion success message
                 msg_box = QMessageBox()
-                msg_box.setIcon(QMessageBox.Information)
+                msg_box.setIcon(QMessageBox.Icon.Information)
                 msg_box.setWindowTitle("Conversion Successful")
                 msg_box.setText("The file has been converted successfully.")
                 msg_box.exec()
@@ -50,11 +50,11 @@ class LTspiceLibConverter:
             print("File is empty. Cannot perform conversion.")
             # A message box indicating that the file is empty
             msg_box = QMessageBox()
-            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setIcon(QMessageBox.Icon.Warning)
             msg_box.setWindowTitle("Empty File")
             msg_box.setText("The selected file is empty. Conversion cannot be performed.")
-            msg_box.setStandardButtons(QMessageBox.Ok)
-            msg_box.exec_()
+            msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg_box.exec()
 
     def upload_file_LTspice(self, file_path):
         if file_path:
@@ -62,11 +62,11 @@ class LTspiceLibConverter:
             if ' ' in file_path:
                 # Show a message box indicating that spaces are not allowed
                 msg_box = QMessageBox()
-                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setIcon(QMessageBox.Icon.Warning)
                 msg_box.setWindowTitle("Invalid File Path")
                 msg_box.setText("Spaces are not allowed in the file path.")
-                msg_box.setStandardButtons(QMessageBox.Ok)
-                msg_box.exec_()
+                msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+                msg_box.exec()
                 return
             
             if ".asy" in file_path:
@@ -74,11 +74,11 @@ class LTspiceLibConverter:
                 self.convert(file_path)
             else:
                 msg_box = QMessageBox()
-                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setIcon(QMessageBox.Icon.Warning)
                 msg_box.setWindowTitle("Invalid File Path")
                 msg_box.setText("Only .asy file can be converted.")
-                msg_box.setStandardButtons(QMessageBox.Ok)
-                msg_box.exec_()
+                msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+                msg_box.exec()
                 return
             
         else:
@@ -86,8 +86,8 @@ class LTspiceLibConverter:
 
             # Message box indicating that no file is selected
             msg_box = QMessageBox()
-            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setIcon(QMessageBox.Icon.Warning)
             msg_box.setWindowTitle("No File Selected")
             msg_box.setText("Please select a file before uploading.")
-            msg_box.setStandardButtons(QMessageBox.Ok)
-            msg_box.exec_()
+            msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg_box.exec()
