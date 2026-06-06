@@ -1,0 +1,152 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id               String            @id @default(cuid())
+  email            String            @unique
+  name             String
+  role             Role              @default(INTERN)
+  createdAt        DateTime          @default(now())
+  addRequests      AddRequest[]      @relation("RequestedBy")
+  reviews          AddRequest[]      @relation("ReviewedBy")
+  batchEnrollments BatchEnrollment[]
+}
+
+model Batch {
+  id          String            @id @default(cuid())
+  year        Int
+  season      InternshipSeason
+  label       String
+  startDate   DateTime?
+  endDate     DateTime?
+  enrollments BatchEnrollment[]
+
+  @@unique([year, season])
+}
+
+model BatchEnrollment {
+  id      String   @id @default(cuid())
+  userId  String
+  batchId String
+  batch   Batch    @relation(fields: [batchId], references: [id])
+  user    User     @relation(fields: [userId], references: [id])
+  tasks   ICTask[]
+
+  @@unique([userId, batchId])
+}
+
+model IC {
+  id                 String       @id @default(cuid())
+  canonicalName      String       @unique
+  description        String?
+  category           ICCategory
+  technology         Technology   @default(UNSPECIFIED)
+  datasheetUrl       String?
+  createdAt          DateTime     @default(now())
+  seededFrom         String?
+  createdFromRequest AddRequest?  @relation("CreatedFromRequest")
+  mergeRequests      AddRequest[] @relation("MergeCandidate")
+  aliases            ICAlias[]
+  tasks              ICTask[]
+}
+
+model ICAlias {
+  id   String  @id @default(cuid())
+  name String  @unique
+  icId String
+  note String?
+  ic   IC      @relation(fields: [icId], references: [id])
+}
+
+model ICTask {
+  id           String          @id @default(cuid())
+  icId         String
+  enrollmentId String
+  status       ICStatus        @default(CLAIMED)
+  claimedAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  completedAt  DateTime?
+  mentorNote   String?
+  enrollment   BatchEnrollment @relation(fields: [enrollmentId], references: [id])
+  ic           IC              @relation(fields: [icId], references: [id])
+
+  @@index([enrollmentId])
+  @@index([icId])
+  @@index([status])
+}
+
+model AddRequest {
+  id                 String           @id @default(cuid())
+  rawName            String
+  normalizedName     String?
+  suggestedAliases   String[]         @default([])
+  requesterId        String
+  status             AddRequestStatus @default(PENDING)
+  mergeWithIcId      String?
+  reviewerId         String?
+  reviewNote         String?
+  createdIcId        String?          @unique
+  createdAt          DateTime         @default(now())
+  reviewedAt         DateTime?
+  createdIc          IC?              @relation("CreatedFromRequest", fields: [createdIcId], references: [id])
+  suggestedMergeWith IC?              @relation("MergeCandidate", fields: [mergeWithIcId], references: [id])
+  requester          User             @relation("RequestedBy", fields: [requesterId], references: [id])
+  reviewer           User?            @relation("ReviewedBy", fields: [reviewerId], references: [id])
+
+  @@index([status])
+  @@index([requesterId])
+}
+
+enum Role {
+  INTERN
+  MENTOR
+  ADMIN
+}
+
+enum ICStatus {
+  UNCLAIMED
+  CLAIMED
+  IN_PROGRESS
+  UNDER_REVIEW
+  COMPLETED
+  FAILED
+}
+
+enum ICCategory {
+  DIGITAL_LOGIC
+  OP_AMP
+  COMPARATOR
+  VOLTAGE_REGULATOR
+  MIXED_SIGNAL
+  DEVICE_MODEL
+  IP_BLOCK
+  OTHER
+}
+
+enum Technology {
+  TTL
+  CMOS
+  BICMOS
+  ANALOG
+  MIXED
+  UNSPECIFIED
+}
+
+enum AddRequestStatus {
+  PENDING
+  APPROVED_AS_NEW
+  MERGED
+  REJECTED
+}
+
+enum InternshipSeason {
+  SUMMER
+  WINTER
+  SLI
+  OTHER
+}
