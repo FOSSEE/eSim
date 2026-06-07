@@ -21,3 +21,4 @@ dist/
 
 # Local deploy script (user-specific VM config)
 scripts/deploy_to_vm.ps1
+.venv/
