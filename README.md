@@ -1,61 +1,24 @@
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/fossee/esim?color=blueviolet)
-![GitHub](https://img.shields.io/github/license/fossee/esim?color=blue)
-![Python](https://img.shields.io/badge/python-v3.6+-blue.svg)
-[![PEP8](https://img.shields.io/badge/code%20style-pep8-orange.svg)](https://www.python.org/dev/peps/pep-0008/)
-![Travis (.com)](https://img.shields.io/travis/com/Eyantra698Sumanto/eSim)
-[![Documentation Status](https://readthedocs.org/projects/esim/badge/?version=latest)](https://esim.readthedocs.io/en/latest/?badge=latest)
-[![GitHub forks](https://img.shields.io/github/forks/fossee/esim)](https://github.com/fossee/esim/network)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://github.com/fossee/esim)
-![GitHub contributors](https://img.shields.io/github/contributors/fossee/esim)
+eSim Packaging
+====
 
-## eSim
+It contains all the documentation for packaging eSim for distribution.
 
-[eSim](https://esim.fossee.in/) is an open source EDA tool for circuit design, simulation, analysis and PCB design, developed by [FOSSEE Team](https://www.fossee.in/) at [IIT Bombay](https://www.iitb.ac.in/).
-It is an integrated tool build using open source softwares such as KiCad, Ngspice and GHDL.
 
-## Releases and Installation
-eSim is released for the following distributions (operating systems):
-* **All Linux distributions** (Fedora, Ubuntu, openSUSE, Arch, etc.) via Flatpak
-* Ubuntu 22.04, 23.04, 24.04 LTS versions (native installer)
-* Microsoft Windows 8, 10 and 11
+# Packaging eSim for Distribution:
 
-**For Fedora and other Linux distributions:** Use the Flatpak method for easy installation:
-```bash
-flatpak install flathub org.fossee.eSim
-flatpak run org.fossee.eSim
-```
-Or build from source: `flatpak-builder build flatpak/org.fossee.eSim.yml --install --user`
+1. eSim is currently packaged and distributed for Ubuntu OS (Linux) and MS Windows OS.
 
-**For Ubuntu and Windows:** Please refer to [downloads](https://esim.fossee.in/downloads) for installation guidelines.
+2. Refer the [documentation](Version_Change.md) for the changes to be done when a new release is to be made.
 
-See [INSTALL](INSTALL) for detailed installation instructions for all platforms.
+> Note: These changes have to be made `first` before proceeding with the packaging on either platform.
 
-## Features
-* An open-source EDA tool.
-* Perform Circuit Design.
-* Perform Simulation.
-* Perform Layout Design.
-* Model and Subcircuit builder.
-* Support for Mixed-Signal Simulations including Microcontrollers.
-* eSim has been successfully ported to low cost FOSSEE [laptop](https://laptop.fossee.in/)
+3. Refer the [documentation](Ubuntu/README.md) to package eSim for Ubuntu OS.
 
-## Open-Source Softwares Used
-* [Python](https://www.python.org/)
-* [KiCad](https://www.kicad.org/)
-* [NGHDL](https://github.com/fossee/nghdl/)
-* [Makerchip](https://www.makerchip.com/)
-* [SkyWater SKY130 PDK](https://skywater-pdk.rtfd.io/)
+4. Refer the [documentation](Windows/README.md) to package eSim for Windows OS.
 
-## eSim Manual
-To know everything about eSim, how it works and it's feature please download the manual from [here](https://static.fossee.in/esim/manuals/eSim_Manual_2.5.pdf)
-
-## Contact
-For any queries regarding eSim please write us on at this [email address](mailto:contact-esim@fossee.in).
-
-Other Contact Details are available [here](https://esim.fossee.in/contact-us).
-
-## Contribution
-Please refer [here](https://github.com/FOSSEE/eSim/blob/master/CONTRIBUTION.md) for further details.
-
-## License
-It is developed by FOSSEE Team at IIT Bombay and is released under GNU GPL License.
+## What's New in v3.2.1
+- Added Ubuntu 25.x support
+- Added compatibility for Intel, AMD, and ARM64 systems
+- Fixed LLVM 20+ compatibility for GHDL installer
+- Fixed GCC 15 / C23 build issues in NGHDL simulator
+- Improved package compatibility and removed deprecated dependencies
