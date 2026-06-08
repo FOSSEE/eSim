@@ -1,0 +1,196 @@
+name: Test platform_utils.py
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/toolManager/platform_utils.py'
+      - '.github/workflows/test_platform_utils.yml'
+  pull_request:
+    paths:
+      - 'src/toolManager/platform_utils.py'
+      - '.github/workflows/test_platform_utils.yml'
+
+jobs:
+
+  # ── Ubuntu (apt) ─────────────────────────────────────────────────────────────
+  test-ubuntu:
+    name: Ubuntu (apt)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Smoke test
+        working-directory: src/toolManager
+        run: |
+          python - <<'EOF'
+          from platform_utils import (
+              IS_WINDOWS, IS_LINUX, IS_MAC,
+              detect_package_manager, distro_label, subprocess_flags
+          )
+
+          print(f"IS_LINUX           : {IS_LINUX}")
+          print(f"detect_pkg_manager : {detect_package_manager()}")
+          print(f"distro_label       : {distro_label()}")
+
+          assert IS_LINUX   is True
+          assert IS_WINDOWS is False
+          assert IS_MAC     is False
+          assert detect_package_manager() == "apt",  f"Got: {detect_package_manager()}"
+          assert "Ubuntu" in distro_label(),          f"Got: {distro_label()}"
+          assert subprocess_flags() == {}
+
+          print("\n[PASS] All Ubuntu assertions passed.")
+          EOF
+
+  # ── Fedora (dnf) ─────────────────────────────────────────────────────────────
+  test-fedora:
+    name: Fedora (dnf)
+    runs-on: ubuntu-latest
+    container: fedora:40
+    steps:
+      - name: Install deps
+        run: dnf install -y git python3 polkit
+
+      - uses: actions/checkout@v4
+
+      - name: Smoke test
+        working-directory: src/toolManager
+        run: |
+          python3 - <<'EOF'
+          from platform_utils import (
+              IS_WINDOWS, IS_LINUX, IS_MAC,
+              detect_package_manager, distro_label, subprocess_flags
+          )
+
+          print(f"IS_LINUX           : {IS_LINUX}")
+          print(f"detect_pkg_manager : {detect_package_manager()}")
+          print(f"distro_label       : {distro_label()}")
+
+          assert IS_LINUX   is True
+          assert IS_WINDOWS is False
+          assert IS_MAC     is False
+          assert detect_package_manager() == "dnf", f"Got: {detect_package_manager()}"
+          assert "Fedora" in distro_label(),         f"Got: {distro_label()}"
+          assert subprocess_flags() == {}
+
+          print("\n[PASS] All Fedora assertions passed.")
+          EOF
+
+  # ── Arch Linux (pacman) ───────────────────────────────────────────────────────
+  test-arch:
+    name: Arch Linux (pacman)
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+    steps:
+      - name: Install deps
+        run: pacman -Syu --noconfirm git python polkit
+
+      - uses: actions/checkout@v4
+
+      - name: Smoke test
+        working-directory: src/toolManager
+        run: |
+          python - <<'EOF'
+          from platform_utils import (
+              IS_WINDOWS, IS_LINUX, IS_MAC,
+              detect_package_manager, distro_label, subprocess_flags
+          )
+
+          print(f"IS_LINUX           : {IS_LINUX}")
+          print(f"detect_pkg_manager : {detect_package_manager()}")
+          print(f"distro_label       : {distro_label()}")
+
+          assert IS_LINUX   is True
+          assert IS_WINDOWS is False
+          assert IS_MAC     is False
+          assert detect_package_manager() == "pacman", f"Got: {detect_package_manager()}"
+          assert subprocess_flags() == {}
+
+          print("\n[PASS] All Arch Linux assertions passed.")
+          EOF
+
+  # ── macOS (Homebrew) ──────────────────────────────────────────────────────────
+  test-macos:
+    name: macOS (Homebrew)
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Smoke test
+        working-directory: src/toolManager
+        run: |
+          python - <<'EOF'
+          from platform_utils import (
+              IS_WINDOWS, IS_LINUX, IS_MAC,
+              detect_package_manager, distro_label, subprocess_flags
+          )
+
+          print(f"IS_MAC             : {IS_MAC}")
+          print(f"IS_LINUX           : {IS_LINUX}")
+          print(f"IS_WINDOWS         : {IS_WINDOWS}")
+          print(f"detect_pkg_manager : {detect_package_manager()}")
+          print(f"distro_label       : {distro_label()}")
+
+          assert IS_MAC     is True
+          assert IS_LINUX   is False
+          assert IS_WINDOWS is False
+          # GitHub macOS runners have Homebrew pre-installed
+          assert detect_package_manager() == "brew", f"Got: {detect_package_manager()}"
+          assert "macOS" in distro_label(),           f"Got: {distro_label()}"
+          assert subprocess_flags() == {}
+
+          print("\n[PASS] All macOS assertions passed.")
+          EOF
+
+  # ── Windows ───────────────────────────────────────────────────────────────────
+  test-windows:
+    name: Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Smoke test
+        working-directory: src/toolManager
+        shell: python
+        run: |
+          import sys
+          sys.path.append('.')
+          from platform_utils import (
+              IS_WINDOWS, IS_LINUX, IS_MAC, MSYS2_PATH,
+              detect_package_manager, distro_label, subprocess_flags
+          )
+
+          print(f"IS_WINDOWS         : {IS_WINDOWS}")
+          print(f"IS_LINUX           : {IS_LINUX}")
+          print(f"IS_MAC             : {IS_MAC}")
+          print(f"MSYS2_PATH         : {MSYS2_PATH}")
+          print(f"detect_pkg_manager : {detect_package_manager()}")
+          print(f"distro_label       : {distro_label()}")
+
+          assert IS_WINDOWS is True
+          assert IS_LINUX   is False
+          assert IS_MAC     is False
+          assert detect_package_manager() is None
+          assert "Windows" in distro_label(),       f"Got: {distro_label()}"
+          assert distro_label() in ("Windows 10", "Windows 11"), f"Got: {distro_label()}"
+          flags = subprocess_flags()
+          assert "creationflags" in flags,                 "Expected creationflags key on Windows"
+          assert "startupinfo"   in flags,                 "Expected startupinfo key on Windows"
+
+          print("\n[PASS] All Windows assertions passed.")
