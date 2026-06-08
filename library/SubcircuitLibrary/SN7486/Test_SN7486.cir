@@ -1,0 +1,15 @@
+.title KiCad schematic
+v3 A2 GND pulse
+v2 B1 GND pulse
+v1 A1 GND pulse
+v4 B2 GND pulse
+v5 A3 GND pulse
+v6 B3 GND pulse
+v8 B4 GND pulse
+v7 A4 GND pulse
+U3 Net-_U3-Pad1_ Y2 dac_bridge_1
+U2 Net-_U2-Pad1_ Y1 dac_bridge_1
+X1 A1 B1 A2 B2 A3 B3 A4 B4 Net-_U2-Pad1_ Net-_U3-Pad1_ Net-_U4-Pad1_ Net-_U1-Pad1_ SN7486
+U4 Net-_U4-Pad1_ Y3 dac_bridge_1
+U1 Net-_U1-Pad1_ Y4 dac_bridge_1
+.end
