@@ -1,0 +1,23 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\SDA12\SDA12.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/03/26 18:01:32
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D3  Net-_D3-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D5  Net-_D5-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D7  Net-_D7-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D9  Net-_D10-Pad2_ Net-_D1-Pad2_ eSim_Diode		
+D11  Net-_D11-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+D2  Net-_D10-Pad1_ Net-_D1-Pad1_ eSim_Diode		
+D4  Net-_D10-Pad1_ Net-_D3-Pad1_ eSim_Diode		
+D6  Net-_D10-Pad1_ Net-_D5-Pad1_ eSim_Diode		
+D8  Net-_D10-Pad1_ Net-_D7-Pad1_ eSim_Diode		
+D10  Net-_D10-Pad1_ Net-_D10-Pad2_ eSim_Diode		
+D12  Net-_D10-Pad1_ Net-_D11-Pad1_ eSim_Diode		
+U1  Net-_D1-Pad2_ Net-_D1-Pad1_ Net-_D3-Pad1_ Net-_D5-Pad1_ Net-_D10-Pad1_ Net-_D7-Pad1_ Net-_D10-Pad2_ Net-_D11-Pad1_ PORT		
+
+.end

@@ -1,0 +1,30 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\MIC4422\MIC4422.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/17/26 01:23:35
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+R1  Net-_D1-Pad1_ Net-_D2-Pad2_ 2k		
+M1  Net-_I1-Pad1_ Net-_D2-Pad2_ Net-_D2-Pad1_ Net-_D2-Pad1_ mosfet_n		
+M2  Net-_I1-Pad1_ Net-_M2-Pad2_ Net-_I2-Pad1_ Net-_I2-Pad1_ mosfet_p		
+M4  Net-_D1-Pad2_ Net-_M3-Pad2_ Net-_D3-Pad2_ Net-_D1-Pad2_ mosfet_p		
+M3  Net-_D3-Pad2_ Net-_M3-Pad2_ Net-_M3-Pad3_ Net-_M3-Pad3_ mosfet_n		
+D3  Net-_D2-Pad1_ Net-_D3-Pad2_ eSim_Diode		
+D2  Net-_D2-Pad1_ Net-_D2-Pad2_ eSim_Diode		
+U3  Net-_U2-Pad2_ Net-_U3-Pad2_ d_inverter		
+U4  Net-_U4-Pad1_ Net-_U4-Pad2_ d_inverter		
+I1  Net-_I1-Pad1_ Net-_I1-Pad2_ 0.1mA		
+I2  Net-_I2-Pad1_ Net-_I1-Pad2_ 0.3mA		
+U1  Net-_D1-Pad2_ Net-_D1-Pad1_ ? Net-_M3-Pad3_ Net-_M3-Pad3_ Net-_D3-Pad2_ Net-_D3-Pad2_ Net-_D1-Pad2_ PORT		
+U2  Net-_M2-Pad2_ Net-_U2-Pad2_ adc_bridge_1		
+U6  Net-_U3-Pad2_ Net-_U5-Pad1_ dac_bridge_1		
+U5  Net-_U5-Pad1_ Net-_U4-Pad1_ adc_bridge_1		
+U7  Net-_U4-Pad2_ Net-_M3-Pad2_ dac_bridge_1		
+U9  Net-_U8-Pad2_ Net-_U10-Pad1_ d_inverter		
+U8  Net-_I1-Pad1_ Net-_U8-Pad2_ adc_bridge_1		
+U10  Net-_U10-Pad1_ Net-_M2-Pad2_ dac_bridge_1		
+
+.end
