@@ -1,0 +1,10 @@
+.title KiCad schematic
+v1 Net-_U2-Pad1_ GND DC
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ PORT
+U5 Net-_U3-Pad2_ Net-_U2-Pad2_ Net-_U5-Pad3_ d_and
+U4 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U4-Pad3_ d_and
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ adc_bridge_1
+U3 Net-_U1-Pad1_ Net-_U3-Pad2_ d_inverter
+U7 Net-_U6-Pad3_ Net-_U1-Pad3_ d_buffer
+U6 Net-_U4-Pad3_ Net-_U5-Pad3_ Net-_U6-Pad3_ d_or
+.end
