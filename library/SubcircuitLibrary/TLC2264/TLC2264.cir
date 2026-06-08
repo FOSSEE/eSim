@@ -1,0 +1,59 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\TLC2264\TLC2264.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 05/11/26 14:09:30
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M2  Net-_M1-Pad3_ Net-_M1-Pad3_ Net-_M2-Pad3_ Net-_D1-Pad2_ mosfet_n		
+M1  Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad4_ mosfet_p		
+M5  Net-_M1-Pad1_ Net-_M5-Pad2_ Net-_M12-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M3  Net-_M1-Pad4_ Net-_M14-Pad1_ Net-_M1-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M6  Net-_M1-Pad4_ Net-_M14-Pad1_ Net-_M10-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M4  Net-_M12-Pad1_ Net-_M1-Pad3_ Net-_M4-Pad3_ Net-_D1-Pad2_ mosfet_n		
+R1  Net-_M2-Pad3_ Net-_D1-Pad2_ 21.22k		
+R2  Net-_M4-Pad3_ Net-_D1-Pad2_ 21.22k		
+M9  Net-_M1-Pad4_ Net-_M9-Pad2_ Net-_M9-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M11  Net-_M1-Pad4_ Net-_M10-Pad1_ Net-_C1-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M7  Net-_M10-Pad2_ Net-_M12-Pad1_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M8  Net-_M10-Pad2_ Net-_M10-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M12  Net-_M12-Pad1_ Net-_M12-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M13  Net-_C1-Pad1_ Net-_M12-Pad1_ Net-_M12-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M14  Net-_M14-Pad1_ Net-_M14-Pad2_ Net-_M14-Pad3_ Net-_D1-Pad2_ mosfet_n		
+R4  Net-_M12-Pad2_ Net-_D1-Pad2_ 120		
+R5  Net-_M14-Pad3_ Net-_D1-Pad2_ 120		
+M15  Net-_M1-Pad4_ Net-_M14-Pad1_ Net-_M14-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M16  Net-_M1-Pad4_ Net-_M14-Pad1_ Net-_M14-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M17  Net-_M14-Pad2_ Net-_M14-Pad2_ Net-_D1-Pad1_ Net-_D1-Pad2_ mosfet_n		
+D1  Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+R3  Net-_C1-Pad2_ Net-_M12-Pad1_ 100k		
+M19  Net-_M18-Pad3_ Net-_M18-Pad3_ Net-_M19-Pad3_ Net-_D1-Pad2_ mosfet_n		
+M18  Net-_M18-Pad1_ Net-_M18-Pad2_ Net-_M18-Pad3_ Net-_M1-Pad4_ mosfet_p		
+M22  Net-_M18-Pad1_ Net-_M22-Pad2_ Net-_M21-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M20  Net-_M1-Pad4_ Net-_M20-Pad2_ Net-_M18-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M23  Net-_M1-Pad4_ Net-_M20-Pad2_ Net-_M23-Pad3_ Net-_M1-Pad4_ mosfet_p		
+M21  Net-_M21-Pad1_ Net-_M18-Pad3_ Net-_M21-Pad3_ Net-_D1-Pad2_ mosfet_n		
+R6  Net-_M19-Pad3_ Net-_D1-Pad2_ 21.22k		
+R7  Net-_M21-Pad3_ Net-_D1-Pad2_ 21.22k		
+M26  Net-_M1-Pad4_ Net-_M26-Pad2_ Net-_M26-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M28  Net-_M1-Pad4_ Net-_M27-Pad1_ Net-_C2-Pad1_ Net-_M1-Pad4_ mosfet_p		
+M24  Net-_M23-Pad3_ Net-_M21-Pad1_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M25  Net-_M23-Pad3_ Net-_M23-Pad3_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M27  Net-_M27-Pad1_ Net-_M23-Pad3_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M29  Net-_M21-Pad1_ Net-_M29-Pad2_ Net-_D1-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M30  Net-_C2-Pad1_ Net-_M21-Pad1_ Net-_M29-Pad2_ Net-_D1-Pad2_ mosfet_n		
+M31  Net-_M20-Pad2_ Net-_M31-Pad2_ Net-_M31-Pad3_ Net-_D1-Pad2_ mosfet_n		
+R9  Net-_M29-Pad2_ Net-_D1-Pad2_ 120		
+R10  Net-_M31-Pad3_ Net-_D1-Pad2_ 120		
+M32  Net-_M1-Pad4_ Net-_M20-Pad2_ Net-_M20-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M33  Net-_M1-Pad4_ Net-_M20-Pad2_ Net-_M31-Pad2_ Net-_M1-Pad4_ mosfet_p		
+M34  Net-_M31-Pad2_ Net-_M31-Pad2_ Net-_D2-Pad1_ Net-_D1-Pad2_ mosfet_n		
+D2  Net-_D2-Pad1_ Net-_D1-Pad2_ eSim_Diode		
+R8  Net-_C2-Pad2_ Net-_M21-Pad1_ 100k		
+U1  Net-_C1-Pad1_ Net-_M1-Pad2_ Net-_M5-Pad2_ Net-_D1-Pad2_ Net-_M22-Pad2_ Net-_M18-Pad2_ Net-_C2-Pad1_ Net-_M1-Pad4_ PORT		
+C2  Net-_C2-Pad1_ Net-_C2-Pad2_ 3.56pf		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 3.56pf		
+
+.end
