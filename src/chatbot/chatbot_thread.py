@@ -62,9 +62,29 @@ def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
 
 
 def get_stt_backend() -> str:
-    """Returns 'google' if SpeechRecognition is installed, else 'none'."""
+    """Return the best available speech-to-text backend.
+
+    Priority: faster-whisper (offline, best quality) > vosk (offline, lightweight)
+    > google (online, no install) > none
+    """
+    # Check faster-whisper first: offline, no internet needed
+    try:
+        import faster_whisper  # noqa: F401
+        return "whisper"
+    except ImportError:
+        pass
+
+    # Check vosk: offline, very lightweight
+    try:
+        import vosk  # noqa: F401
+        return "vosk"
+    except ImportError:
+        pass
+
+    # Fall back to Google online STT (requires internet)
     if _SR_AVAILABLE:
         return "google"
+
     return "none"
 
 
@@ -85,13 +105,19 @@ def start_ollama(stop_flag=None):
     The polling loop checks stop_flag() each second and exits early if cancelled.
     """
     if os.name == 'nt':
-        subprocess.Popen('start cmd /k "ollama serve"', shell=True)
+        # Run ollama serve silently in the background without a visible CMD window.
+        # CREATE_NO_WINDOW prevents a terminal from popping up and staying open.
+        subprocess.Popen(
+            ['ollama', 'serve'],
+            creationflags=subprocess.CREATE_NO_WINDOW,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
     else:
         subprocess.Popen(
-            ['bash', '-c',
-             'x-terminal-emulator -e "ollama serve" || '
-             'gnome-terminal -- ollama serve || '
-             'xterm -e "ollama serve"']
+            ['bash', '-c', 'ollama serve'],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
         )
 
     for _ in range(30):
@@ -371,9 +397,10 @@ class OllamaWorker(QThread):
             bot_response = ""
             for chunk in stream:
                 if self._stop_requested:
-                    bot_response += "\n\n⏹ Generation stopped."
+                    bot_response += "\n\n\u23f9 Generation stopped."
                     break
-                bot_response += chunk["message"]["content"]
+                # Use .get() to safely handle malformed/done chunks from Ollama
+                bot_response += chunk.get("message", {}).get("content", "")
 
             bot_response = bot_response.strip()
             if not bot_response:
@@ -537,7 +564,8 @@ class OllamaVisionWorker(QThread):
             if self._stop_requested:
                 response += "\n\n\u23f9 Generation stopped."
                 break
-            piece       = chunk["message"]["content"]
+            # Use .get() to safely handle malformed/done chunks from Ollama
+            piece       = chunk.get("message", {}).get("content", "")
             response   += piece
             token_count += 1
 

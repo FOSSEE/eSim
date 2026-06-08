@@ -2220,8 +2220,23 @@ class ChatbotGUI(QWidget):
         return False
 
     def _switch_to_text_model(self):
-        """Auto-switch to qwen2.5 for text queries."""
-        self._auto_switch_model(["qwen2.5"], [], "text")
+        """Auto-switch away from vision model when sending plain text.
+
+        Only switches if the currently selected model is a vision-only model
+        (llava, moondream, etc.) — vision models work for text but are 3–10x
+        slower than small text models like qwen2.5:3b.
+        If the user already has a text model selected, do nothing.
+        """
+        from chatbot.chatbot_thread import _is_vision_model
+        current = self.model_combo.currentText()
+        # If the current model is already a text model, respect the user's choice.
+        if not _is_vision_model(current):
+            return
+        # Current model is vision-only — try to switch to a faster text model.
+        text_fallbacks = ['qwen2.5:3b', 'qwen2.5:7b', 'qwen2.5-coder', 'qwen2.5',
+                          'mistral', 'gemma3', 'llama3.2', 'llama3', 'phi3', 'phi4']
+        self._auto_switch_model(["qwen2.5", "mistral", "gemma", "llama", "phi"],
+                                text_fallbacks, "text")
 
     # ── Mic ──────────────────────────────────────────────────────────
 
@@ -2380,8 +2395,16 @@ class ChatbotGUI(QWidget):
         self._save_pending = False
         try:
             os.makedirs(os.path.dirname(_HISTORY_FILE), exist_ok=True)
+            # Store the session_id alongside messages so _load_history() knows
+            # this chat was already saved as a proper session file.  Without
+            # this, every restart recreates the session from the history file
+            # even though _save_current_session() already wrote it, producing
+            # a duplicate entry in the sidebar.
             with open(_HISTORY_FILE, 'w', encoding='utf-8') as f:
-                json.dump(self.chat_history[-20:], f, ensure_ascii=False, indent=2)
+                json.dump({
+                    "session_id": self._current_session_id,
+                    "messages":   self.chat_history[-20:],
+                }, f, ensure_ascii=False, indent=2)
             self._save_current_session()
             self._refresh_sidebar_if_open()
         except Exception:
@@ -2416,26 +2439,57 @@ class ChatbotGUI(QWidget):
 
     def _load_history(self):
         """
-        On startup: if a leftover history file exists, archive it into the
-        sidebar sessions directory so the user can access it from the sidebar,
-        then delete the file.  The chat window always opens fresh.
+        On startup: if a leftover chatbot_history.json exists, check whether
+        the session was already written as a proper session file during the
+        previous run (the normal case when the app exits cleanly).  If it was,
+        just delete chatbot_history.json — no duplicate session is created.
+        Only creates a new session file when the session file is genuinely
+        missing (e.g. the app crashed before _save_current_session() ran).
         """
         if not os.path.exists(_HISTORY_FILE):
             return
         try:
             with open(_HISTORY_FILE, 'r', encoding='utf-8') as f:
                 saved = json.load(f)
-            if isinstance(saved, list) and saved:
+
+            # Support both the new dict format {session_id, messages}
+            # and the legacy plain-list format for backwards compatibility.
+            if isinstance(saved, dict):
+                saved_session_id = saved.get("session_id", "")
+                messages = saved.get("messages", [])
+            elif isinstance(saved, list):
+                saved_session_id = ""
+                messages = saved
+            else:
+                saved_session_id = ""
+                messages = []
+
+            # ── Duplicate-prevention guard ──────────────────────────────
+            # _flush_save() already called _save_current_session() which
+            # wrote the session .json file.  If that file still exists,
+            # skip creating another one — it would produce an identical
+            # entry in the sidebar on every restart.
+            if saved_session_id:
+                existing = os.path.join(_SESSIONS_DIR, f"{saved_session_id}.json")
+                if os.path.exists(existing):
+                    # Session already on disk — nothing to do; just clean up.
+                    return  # finally block below still removes _HISTORY_FILE
+
+            # Session file is missing (crash recovery path): recreate it.
+            if isinstance(messages, list) and messages:
                 title = next(
-                    (m[5:].strip()[:50] for m in saved if m.startswith("User:")),
+                    (m[5:].strip()[:50] for m in messages if m.startswith("User:")),
                     "Previous session"
                 )
+                # Use the stored session_id when available so the recovered
+                # file has a stable identity; fall back to a fresh UUID.
+                sid = saved_session_id if saved_session_id else self._current_session_id
                 old_session = {
-                    "id":         self._current_session_id,
+                    "id":         sid,
                     "title":      title,
                     "created_at": self._session_created_at,
                     "updated_at": datetime.now().strftime("%Y-%m-%d %H:%M"),
-                    "messages":   saved[-40:],
+                    "messages":   messages[-40:],
                     "kind":       "text",
                     "settings": {
                         "temperature": self._temperature,
@@ -2443,9 +2497,7 @@ class ChatbotGUI(QWidget):
                     },
                 }
                 os.makedirs(_SESSIONS_DIR, exist_ok=True)
-                sess_path = os.path.join(
-                    _SESSIONS_DIR, f"{self._current_session_id}.json"
-                )
+                sess_path = os.path.join(_SESSIONS_DIR, f"{sid}.json")
                 with open(sess_path, 'w', encoding='utf-8') as f:
                     json.dump(old_session, f, ensure_ascii=False, indent=2)
         except Exception:
@@ -2473,36 +2525,80 @@ class ChatbotGUI(QWidget):
         self.model_combo.clear()
 
         if not model_names:
-            # No models found — Ollama may be offline or has no models pulled.
+            # No models found — Ollama is not installed, not running, or has no models.
             self.model_combo.addItem("No models found")
             self.model_combo.setEnabled(False)
             self.status_label.setText(
-                "⚠️ No Ollama models found. Run 'ollama pull qwen2.5-coder' "
-                "in a terminal to install one."
+                "No Ollama models found. "
+                "Install Ollama from https://ollama.com, run 'ollama serve', "
+                "then 'ollama pull qwen2.5:3b'."
             )
+            # Show a more helpful message in the chat display
+            self.chat_display.append(
+                '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
+                '<td align="center" style="padding:16px 8px;">'
+                '<div style="background:#fff8e1;color:#7a5800;'
+                'border:1px solid #ffc107;border-radius:14px;'
+                'padding:14px 20px;font-size:12px;line-height:1.9;'
+                'max-width:360px;display:inline-block;text-align:left;">'
+                '<b>No AI models installed</b><br>'
+                'To use the chatbot:<br>'
+                '1. Download &amp; install <b>Ollama</b>: '
+                '<a href="https://ollama.com" style="color:#0078d4;">ollama.com</a><br>'
+                '2. Open a terminal and run: <code>ollama serve</code><br>'
+                '3. Pull a model: <code>ollama pull qwen2.5:3b</code><br>'
+                '4. Click <b>&#8635;</b> (refresh) in the model bar above'
+                '</div></td></tr></table>'
+            )
+            self._scroll_to_bottom()
             return
 
         for name in model_names:
             self.model_combo.addItem(name)
 
-        # Try to default to any qwen2.5 variant
+        # Try to default to the best text model in priority order
         chosen_idx = -1
+
+        # Priority 1: any qwen2.5 variant (best for electronics Q&A)
         for i in range(self.model_combo.count()):
             name = self.model_combo.itemText(i)
-            if "qwen2.5" in name.lower():
+            if 'qwen2.5' in name.lower():
                 chosen_idx = i
                 break
-                
-        # If no qwen2.5, try some fallback preferred models
+
+        # Priority 2: prefer common fast text models over vision models
         if chosen_idx == -1:
-            preferred_fallbacks = ['llava:13b', 'llava:7b', 'llava', 'bakllava']
-            for preferred in preferred_fallbacks:
+            text_model_fallbacks = [
+                'qwen2.5:3b', 'qwen2.5:7b', 'qwen2.5-coder',
+                'mistral', 'gemma3', 'gemma2', 'gemma',
+                'llama3.2', 'llama3.1', 'llama3', 'llama2',
+                'phi4', 'phi3', 'phi',
+                'deepseek-coder', 'codellama',
+            ]
+            for preferred in text_model_fallbacks:
                 idx = self.model_combo.findText(preferred)
                 if idx >= 0:
                     chosen_idx = idx
                     break
 
-        # If still nothing matched, just use the first available model
+        # Priority 3: any non-vision model
+        if chosen_idx == -1:
+            from chatbot.chatbot_thread import _is_vision_model
+            for i in range(self.model_combo.count()):
+                if not _is_vision_model(self.model_combo.itemText(i)):
+                    chosen_idx = i
+                    break
+
+        # Priority 4: vision models as last resort (they work for text too, just slower)
+        if chosen_idx == -1:
+            vision_fallbacks = ['llava:7b', 'llava', 'llava:13b', 'bakllava', 'moondream']
+            for preferred in vision_fallbacks:
+                idx = self.model_combo.findText(preferred)
+                if idx >= 0:
+                    chosen_idx = idx
+                    break
+
+        # Final fallback: just pick the first available model
         if chosen_idx == -1 and self.model_combo.count() > 0:
             chosen_idx = 0
 
@@ -2510,6 +2606,7 @@ class ChatbotGUI(QWidget):
             self.model_combo.setCurrentIndex(chosen_idx)
 
         self.model_combo.setEnabled(True)
+        self.status_label.setText('')
 
     # ── Thinking / retry / regenerate ────────────────────────────────
 
@@ -2938,16 +3035,22 @@ class ChatbotGUI(QWidget):
                 filtered_lines = truncated_notice + filtered_lines[-_MAX_ERROR_LOG_LINES:]
 
             combined_text = "".join(filtered_lines)
-            # QLineEdit); display a compact summary label in the status bar instead.
             self.status_label.setText(
-                f"🔍 Analysing error log ({len(filtered_lines)} lines)…"
+                f"Analysing error log ({len(filtered_lines)} lines)..."
             )
 
-            self.obj_appconfig = Appconfig()
-            self.projDir = self.obj_appconfig.current_project["ProjectName"]
-            output_file = os.path.join(self.projDir, "erroroutput.txt")
-            with open(output_file, "w") as f:
-                f.writelines(filtered_lines)
+            # Guard: only write erroroutput.txt if a project is open.
+            # Without this, os.path.join(None, ...) raises TypeError when
+            # no project is selected and a simulation error fires anyway.
+            try:
+                self.obj_appconfig = Appconfig()
+                self.projDir = self.obj_appconfig.current_project.get("ProjectName")
+                if self.projDir:
+                    output_file = os.path.join(self.projDir, "erroroutput.txt")
+                    with open(output_file, "w") as f:
+                        f.writelines(filtered_lines)
+            except Exception:
+                pass  # Non-critical -- analysis still proceeds without writing the file
 
             self.chat_history.append(
                 f"User: I got a simulation error. Here is the log:\n{combined_text}"
