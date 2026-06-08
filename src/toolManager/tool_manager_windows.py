@@ -294,7 +294,7 @@ def find_ghdl(version=None):
         try:
             result = run_cmd_safe([str(custom_exe), "--version"])
             if result and result.returncode == 0:
-                match = re.search(r'GHDL\s+(\d+\.\d+\.\d+)', result.stdout)
+                match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
                 if match:
                     found_ver = match.group(1)
                     if version is None or found_ver.startswith(str(version)):
@@ -309,7 +309,7 @@ def find_ghdl(version=None):
             try:
                 result = run_cmd_safe([str(msys2_ghdl), "--version"])
                 if result and result.returncode == 0:
-                    match = re.search(r'GHDL\s+(\d+\.\d+\.\d+)', result.stdout)
+                    match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
                     if match:
                         found_ver = match.group(1)
                         if version is None or found_ver.startswith(str(version)):
@@ -322,7 +322,7 @@ def find_ghdl(version=None):
         try:
             result = run_cmd_safe([ghdl_exe, "--version"])
             if result and result.returncode == 0:
-                match = re.search(r'GHDL\s+(\d+\.\d+\.\d+)', result.stdout)
+                match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
                 if match:
                     found_ver = match.group(1)
                     if version is None or found_ver.startswith(str(version)):
@@ -945,8 +945,8 @@ def install_ghdl(v, upgrade=False):
         
         result = run_cmd_safe([str(dest_exe), "--version"])
         if result and result.returncode == 0:
-            match = re.search(r'GHDL\s+(\d+\.\d+\.\d+)', result.stdout)
-            version = match.group(1) if match else v
+            match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
+            version = match.group(1) if match else "unknown"
             print(f"[OK] GHDL {version} ready to use")
             print_status("installed", version, v)
         else:
