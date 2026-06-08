@@ -287,6 +287,18 @@ def find_pyqt_fixed(version=None):
         pass
     
     return None, None
+def get_msys2_env():
+    env = os.environ.copy()
+    paths = []
+    msys_bin = get_msys2_mingw_bin()
+    if msys_bin: paths.append(str(msys_bin))
+    msys_root = get_msys2_mingw_root()
+    if msys_root:
+        usr_bin = msys_root.parent / "usr" / "bin"
+        if usr_bin.exists(): paths.append(str(usr_bin))
+    if paths:
+        env["PATH"] = os.pathsep.join(paths) + os.pathsep + env.get("PATH", "")
+    return env
 
 def find_ghdl(version=None):
     custom_exe = BASE_DIR / "bin" / "ghdl.exe"
@@ -307,7 +319,7 @@ def find_ghdl(version=None):
         msys2_ghdl = msys_bin / "ghdl.exe"
         if msys2_ghdl.exists():
             try:
-                result = run_cmd_safe([str(msys2_ghdl), "--version"])
+                result = run_cmd_safe([str(msys2_ghdl), "--version"], env=get_msys2_env())
                 if result and result.returncode == 0:
                     match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
                     if match:
@@ -339,7 +351,7 @@ def find_verilator(version=None):
             msys2_exe = msys_bin / exe_name
             if msys2_exe.exists():
                 try:
-                    result = run_cmd_safe([str(msys2_exe), "--version"], timeout=10)
+                    result = run_cmd_safe([str(msys2_exe), "--version"], timeout=10, env=get_msys2_env())
                     if result and result.returncode == 0:
                         for line in result.stdout.split('\n'):
                             if "Verilator" in line:
@@ -943,7 +955,7 @@ def install_ghdl(v, upgrade=False):
         shutil.copy2(ghdl_exe, dest_exe)
         print(f"[OK] Installed to: {dest_exe}")
         
-        result = run_cmd_safe([str(dest_exe), "--version"])
+        result = run_cmd_safe([str(dest_exe), "--version"], env=get_msys2_env())
         if result and result.returncode == 0:
             match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
             version = match.group(1) if match else "unknown"
