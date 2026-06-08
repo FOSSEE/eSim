@@ -1,0 +1,7 @@
+.title KiCad schematic
+U4 Net-_U3-Pad3_ E Net-_U4-Pad3_ d_and
+U3 C D Net-_U3-Pad3_ d_and
+U1 A B C D E Y PORT
+U5 Net-_U2-Pad3_ Net-_U4-Pad3_ Y d_or
+U2 A B Net-_U2-Pad3_ d_and
+.end
