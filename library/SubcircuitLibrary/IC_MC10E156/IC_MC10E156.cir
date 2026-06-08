@@ -1,0 +1,31 @@
+.title KiCad schematic
+U14 Net-_U14-Pad1_ Net-_U12-Pad2_ unconnected-_U14-Pad3_ Net-_U12-Pad4_ Net-_U1-Pad19_ Net-_U1-Pad18_ d_dlatch
+X15 Net-_X15-Pad1_ Net-_X10-Pad4_ Net-_X11-Pad4_ Net-_X12-Pad4_ Net-_U14-Pad1_ 4_OR
+U13 Net-_U13-Pad1_ Net-_U12-Pad2_ unconnected-_U13-Pad3_ Net-_U12-Pad4_ Net-_U1-Pad21_ Net-_U1-Pad20_ d_dlatch
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ Net-_U1-Pad20_ Net-_U1-Pad21_ Net-_U1-Pad22_ Net-_U1-Pad23_ PORT
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter
+X8 Net-_U1-Pad8_ Net-_U2-Pad2_ Net-_U10-Pad1_ Net-_X14-Pad4_ 3_and
+U9 Net-_U10-Pad1_ Net-_U9-Pad2_ d_inverter
+U6 Net-_U2-Pad2_ Net-_U6-Pad2_ d_inverter
+X5 Net-_U1-Pad5_ Net-_U7-Pad2_ Net-_U10-Pad2_ Net-_X14-Pad1_ 3_and
+X6 Net-_U1-Pad6_ Net-_U2-Pad2_ Net-_U10-Pad2_ Net-_X14-Pad2_ 3_and
+X14 Net-_X14-Pad1_ Net-_X14-Pad2_ Net-_X14-Pad3_ Net-_X14-Pad4_ Net-_U13-Pad1_ 4_OR
+X7 Net-_U1-Pad7_ Net-_U7-Pad2_ Net-_U10-Pad1_ Net-_X14-Pad3_ 3_and
+U3 Net-_U1-Pad15_ Net-_U10-Pad1_ d_buffer
+U2 Net-_U1-Pad14_ Net-_U2-Pad2_ d_buffer
+U5 Net-_U1-Pad13_ Net-_U12-Pad4_ d_buffer
+U4 Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U12-Pad2_ d_or
+X12 Net-_U1-Pad12_ Net-_U2-Pad2_ Net-_U10-Pad1_ Net-_X12-Pad4_ 3_and
+X11 Net-_U1-Pad11_ Net-_U8-Pad2_ Net-_U10-Pad1_ Net-_X11-Pad4_ 3_and
+X9 Net-_U1-Pad9_ Net-_U8-Pad2_ Net-_U11-Pad2_ Net-_X15-Pad1_ 3_and
+X10 Net-_U1-Pad10_ Net-_U2-Pad2_ Net-_U11-Pad2_ Net-_X10-Pad4_ 3_and
+U11 Net-_U10-Pad1_ Net-_U11-Pad2_ d_inverter
+U8 Net-_U2-Pad2_ Net-_U8-Pad2_ d_inverter
+U7 Net-_U2-Pad2_ Net-_U7-Pad2_ d_inverter
+X4 Net-_U1-Pad4_ Net-_U2-Pad2_ Net-_U10-Pad1_ Net-_X13-Pad4_ 3_and
+X3 Net-_U1-Pad3_ Net-_U6-Pad2_ Net-_U10-Pad1_ Net-_X13-Pad3_ 3_and
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ unconnected-_U12-Pad3_ Net-_U12-Pad4_ Net-_U1-Pad23_ Net-_U1-Pad22_ d_dlatch
+X13 Net-_X1-Pad4_ Net-_X13-Pad2_ Net-_X13-Pad3_ Net-_X13-Pad4_ Net-_U12-Pad1_ 4_OR
+X1 Net-_U1-Pad1_ Net-_U6-Pad2_ Net-_U9-Pad2_ Net-_X1-Pad4_ 3_and
+X2 Net-_U1-Pad2_ Net-_U2-Pad2_ Net-_U9-Pad2_ Net-_X13-Pad2_ 3_and
+.end
