@@ -1,0 +1,37 @@
+.title kicad schematic
+
+v1 net-_u2-pad1_ gnd  dc 0
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ port
+* u5 net-_u3-pad2_ net-_u2-pad2_ net-_u5-pad3_ d_and
+* u4 net-_u1-pad1_ net-_u1-pad2_ net-_u4-pad3_ d_and
+* u2 net-_u2-pad1_ net-_u2-pad2_ adc_bridge_1
+* u3 net-_u1-pad1_ net-_u3-pad2_ d_inverter
+* u7 net-_u6-pad3_ net-_u1-pad3_ d_buffer
+* u6 net-_u4-pad3_ net-_u5-pad3_ net-_u6-pad3_ d_or
+a1 [net-_u3-pad2_ net-_u2-pad2_ ] net-_u5-pad3_ u5
+a2 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u4-pad3_ u4
+a3 [net-_u2-pad1_ ] [net-_u2-pad2_ ] u2
+a4 net-_u1-pad1_ net-_u3-pad2_ u3
+a5 net-_u6-pad3_ net-_u1-pad3_ u7
+a6 [net-_u4-pad3_ net-_u5-pad3_ ] net-_u6-pad3_ u6
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u7 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u6 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0.1e-06 100e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
