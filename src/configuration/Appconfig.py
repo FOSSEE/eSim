@@ -45,6 +45,7 @@ class Appconfig(QtWidgets.QWidget):
             user_home, ".esim/workspace.txt"), 'r'
         )
         workspace_check, home = file.readline().split(' ', 1)
+        home = home.strip()
         file.close()
     except (IOError, ValueError):
         # ValueError: workspace.txt was truncated/empty (e.g. an interrupted
