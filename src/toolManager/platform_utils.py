@@ -47,10 +47,9 @@ IS_MAC:     bool = sys.platform == "darwin"
 # Previously hardcoded in tool_manager_windows.py L25 as:
 #     MSYS2_PATH = Path(r"C:\msys64")
 # Centralised here as the single place to change if the path changes.
-def get_mysys32_path() -> Path:
+def get_mysys2_path() -> Path:
     if not IS_WINDOWS:
-        return RuntimeError("MYSYS32 is only valid for Windows")
-    
+        return RuntimeError("get_MSYS2_path() is only valid for Windows")
     import os
     return Path(os.environ.get("MSYS2_PATH", r"C:\msys64"))
 

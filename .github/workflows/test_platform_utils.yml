@@ -172,14 +172,14 @@ jobs:
           import sys
           sys.path.append('.')
           from platform_utils import (
-              IS_WINDOWS, IS_LINUX, IS_MAC, MSYS2_PATH,
+              IS_WINDOWS, IS_LINUX, IS_MAC, get_mysys2_path,
               detect_package_manager, distro_label, subprocess_flags
           )
 
           print(f"IS_WINDOWS         : {IS_WINDOWS}")
           print(f"IS_LINUX           : {IS_LINUX}")
           print(f"IS_MAC             : {IS_MAC}")
-          print(f"MSYS2_PATH         : {MSYS2_PATH}")
+          print(f"MSYS2_PATH         : {get_mysys2_path()}")
           print(f"detect_pkg_manager : {detect_package_manager()}")
           print(f"distro_label       : {distro_label()}")
 
