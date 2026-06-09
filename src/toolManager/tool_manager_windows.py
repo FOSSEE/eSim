@@ -927,6 +927,7 @@ def install_ghdl(v, upgrade=False):
         with zipfile.ZipFile(zip_file, 'r') as zf:
             files = zf.namelist()
             print(f"Archive contains {len(files)} files")
+            print("[INFO] Extracting package... This may take several minutes.", flush=True)
             zf.extractall(install_dir)
             print("[OK] Extraction complete")
     except Exception as e:
@@ -1023,7 +1024,7 @@ def _install_verilator_from_7z(archive_path, v):
         shutil.rmtree(extract_dir, ignore_errors=True)
     extract_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"[1/3] Extracting {archive_path.name}...")
+    print(f"[1/3] Extracting {archive_path.name}... This may take several minutes.", flush=True)
     try:
         with py7zr.SevenZipFile(archive_path, mode='r') as archive:
             archive.extractall(extract_dir)
