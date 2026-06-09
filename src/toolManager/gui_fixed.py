@@ -140,7 +140,8 @@ class UninstallWindow(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("Uninstall Tools")
-        self.setFixedSize(520, 480)
+        self.setFixedSize(600, 550)
+        self.setStyleSheet("background-color: #f8fafc;")
         self.workers  = []
         self._pending = set()
         self._build_ui()
@@ -151,57 +152,76 @@ class UninstallWindow(QWidget):
         font_bold   = QFont("Segoe UI", 11, QFont.Weight.Bold)
 
         layout = QVBoxLayout(self)
-        layout.setSpacing(8)
-        layout.setContentsMargins(16, 14, 16, 14)
+        layout.setSpacing(15)
+        layout.setContentsMargins(30, 30, 30, 30)
 
-        title = QLabel("Uninstall Tools")
-        title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
+        title = QLabel("🗑️ Uninstall Tools")
+        title.setFont(QFont("Segoe UI", 16, QFont.Weight.Bold))
+        title.setStyleSheet("color: #1e293b;")
         title.setAlignment(Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(title)
 
-        warn = QLabel("⚠  Selected tools will be permanently removed.")
-        warn.setFont(font_small)
+        warn = QLabel("⚠️ Selected tools will be permanently removed.")
+        warn.setFont(font_normal)
         warn.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        warn.setStyleSheet("color:#e67e22;")
+        warn.setStyleSheet("color: #d97706; margin-bottom: 10px;")
         layout.addWidget(warn)
 
         self.tool_rows = {}
         for tool in TOOLS:
             row_layout = QHBoxLayout()
-            chk = QCheckBox(tool)
-            chk.setFont(font_normal)
-            chk.setFixedWidth(160)
+            
+            tool_name = f" {tool.upper() if tool in ('esim', 'llvm', 'ghdl') else tool.title()}"
+            chk = QCheckBox(tool_name)
+            chk.setFont(font_bold)
+            chk.setFixedWidth(180)
+            chk.setStyleSheet("color: #334155; spacing: 8px;")
+            
             status_lbl = QLabel("—")
             status_lbl.setFont(font_small)
-            status_lbl.setStyleSheet("color:gray;")
+            status_lbl.setStyleSheet("color: #94a3b8;")
+            
             row_layout.addWidget(chk)
             row_layout.addWidget(status_lbl)
             layout.addLayout(row_layout)
             self.tool_rows[tool] = {"checkbox": chk, "status": status_lbl}
 
+        layout.addSpacing(10)
         btn_row = QHBoxLayout()
-        self.btn_toggle = QPushButton("Select All")
-        self.btn_toggle.setFont(font_normal)
+        self.btn_toggle = QPushButton("☑️ Select All")
+        self.btn_toggle.setFont(font_bold)
+        self.btn_toggle.setFixedHeight(40)
+        self.btn_toggle.setStyleSheet("""
+            QPushButton {
+                background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 15px;
+            }
+            QPushButton:hover { background-color: #e2e8f0; }
+        """)
         self.btn_toggle.clicked.connect(self._toggle_all)
 
-        self.btn_uninstall = QPushButton("Uninstall Selected")
+        self.btn_uninstall = QPushButton("🗑 Uninstall...")
         self.btn_uninstall.setFont(font_bold)
-        self.btn_uninstall.setFixedHeight(38)
-        self.btn_uninstall.setStyleSheet(
-            "QPushButton{background:#e74c3c;color:white;border-radius:5px;padding:6px;}"
-            "QPushButton:hover{background:#c0392b;}"
-            "QPushButton:disabled{background:#aaa;color:#666;}"
-        )
+        self.btn_uninstall.setFixedHeight(40)
+        self.btn_uninstall.setStyleSheet("""
+            QPushButton { background-color: #ef4444; color: white; border-radius: 6px; padding: 5px 15px; }
+            QPushButton:hover { background-color: #dc2626; }
+            QPushButton:disabled { background-color: #fca5a5; color: #fef2f2; }
+        """)
         self.btn_uninstall.clicked.connect(self._uninstall_selected)
+        
         btn_row.addWidget(self.btn_toggle)
         btn_row.addWidget(self.btn_uninstall)
         layout.addLayout(btn_row)
 
         self.console = QTextEdit()
         self.console.setReadOnly(True)
-        self.console.setFont(QFont("Consolas", 9))
-        self.console.setFixedHeight(110)
-        self.console.setStyleSheet("background:#1e1e1e;color:#d4d4d4;")
+        self.console.setFont(QFont("Consolas", 10))
+        self.console.setFixedHeight(120)
+        self.console.setStyleSheet("""
+            QTextEdit {
+                background-color: #1e293b; color: #f8fafc; border: 1px solid #475569; border-radius: 8px; padding: 10px;
+            }
+        """)
         layout.addWidget(self.console)
 
     def log(self, msg):
@@ -233,7 +253,7 @@ class UninstallWindow(QWidget):
 
         for tool in selected:
             self.tool_rows[tool]["status"].setText("Uninstalling...")
-            self.tool_rows[tool]["status"].setStyleSheet("color:#3498db;font-weight:bold;")
+            self.tool_rows[tool]["status"].setStyleSheet("color:#3b82f6;font-weight:bold;")
             self.log(f"> Uninstalling {tool}...")
             worker = CommandWorker(tool, [PYTHON, BACKEND, "uninstall", tool, "none"])
             worker.finished.connect(self._on_done)
@@ -262,14 +282,14 @@ class UninstallWindow(QWidget):
 
         if state == "not_installed":
             r["status"].setText("✓ Uninstalled")
-            r["status"].setStyleSheet("color:#27ae60;font-weight:bold;")
+            r["status"].setStyleSheet("color:#10b981;font-weight:bold;")
             self.log(f"[OK] {tool} removed")
         elif state == "not_supported":
             r["status"].setText("— Not supported")
-            r["status"].setStyleSheet("color:gray;")
+            r["status"].setStyleSheet("color:#94a3b8;")
         else:
             r["status"].setText("✗ Failed")
-            r["status"].setStyleSheet("color:#e74c3c;font-weight:bold;")
+            r["status"].setStyleSheet("color:#ef4444;font-weight:bold;")
             self.log(f"[FAIL] {tool} uninstall failed")
 
         self._pending.discard(tool)
@@ -288,7 +308,17 @@ class ToolManagerGUI(QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("eSim Tool & Package Manager")
-        self.setFixedSize(1150, 600)
+        self.setMinimumSize(1200, 700)
+        self.setStyleSheet("background-color: #f8fafc;")
+        
+        from PyQt6.QtGui import QIcon
+        icon_path = os.path.join(BASE_DIR, "..", "..", "images", "icon.png")
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
+            if IS_WINDOWS:
+                myappid = 'esim.toolmanager.1.0'
+                ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+                
         self.workers       = []
         self.sudo_password = None
         self.active_tools  = set()
@@ -296,26 +326,85 @@ class ToolManagerGUI(QWidget):
         self.check_all()
 
     def build_ui(self):
-        font_header = QFont("Segoe UI", 11, QFont.Weight.Bold)
+        font_header = QFont("Segoe UI", 12, QFont.Weight.Bold)
         font_normal = QFont("Segoe UI", 11)
 
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(30, 30, 30, 30)
+        layout.setSpacing(20)
 
-        title = QLabel("Tool Manager for eSim")
-        title.setFont(QFont("Segoe UI", 15, QFont.Weight.Bold))
-        title.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(title)
+        # Header Section
+        header_layout = QVBoxLayout()
+        header_layout.setSpacing(5)
+        title = QLabel("📦 eSim Tool & Package Manager")
+        title.setFont(QFont("Segoe UI", 22, QFont.Weight.Bold))
+        title.setStyleSheet("color: #1e293b;")
+        
+        subtitle = QLabel("Manage your EDA tools, simulators, and compiler infrastructure seamlessly.")
+        subtitle.setFont(QFont("Segoe UI", 11))
+        subtitle.setStyleSheet("color: #64748b; margin-bottom: 10px;")
+        
+        header_layout.addWidget(title)
+        header_layout.addWidget(subtitle)
+        layout.addLayout(header_layout)
 
+        # Table Section
         self.table = QTableWidget(len(TOOLS), 5)
         self.table.setHorizontalHeaderLabels(
             ["Tool", "Version", "Description", "Installed Version", "Status"]
         )
         self.table.verticalHeader().setVisible(False)
         self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
-        self.table.setColumnWidth(0, 150)
-        self.table.setColumnWidth(1, 150)
-        self.table.setColumnWidth(2, 400)
-        self.table.setColumnWidth(3, 180)
+        
+        # Modern Table Styling
+        self.table.setShowGrid(False)
+        self.table.setAlternatingRowColors(True)
+        self.table.setStyleSheet("""
+            QTableWidget {
+                background-color: #ffffff;
+                alternate-background-color: #f8fafc;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                selection-background-color: #e0f2fe;
+                selection-color: #0f172a;
+                outline: none;
+            }
+            QHeaderView::section {
+                background-color: #f1f5f9;
+                color: #334155;
+                font-weight: bold;
+                font-size: 13px;
+                padding: 12px;
+                border: none;
+                border-bottom: 2px solid #cbd5e1;
+            }
+            QTableWidget::item {
+                padding: 5px 10px;
+                border-bottom: 1px solid #f1f5f9;
+            }
+            QScrollBar:vertical {
+                border: none;
+                background: #f1f5f9;
+                width: 10px;
+                border-radius: 5px;
+            }
+            QScrollBar::handle:vertical {
+                background: #cbd5e1;
+                min-height: 20px;
+                border-radius: 5px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background: #94a3b8;
+            }
+        """)
+        
+        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.ResizeMode.Interactive)
+        self.table.horizontalHeader().setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        self.table.horizontalHeader().setStretchLastSection(True)
+        
+        self.table.setColumnWidth(0, 180)
+        self.table.setColumnWidth(1, 160)
+        self.table.setColumnWidth(3, 220)
         self.table.setColumnWidth(4, 200)
 
         for c in range(5):
@@ -323,25 +412,58 @@ class ToolManagerGUI(QWidget):
 
         self.rows = {}
         for row, tool in enumerate(TOOLS):
-            chk = QCheckBox(tool)
-            chk.setFont(font_normal)
+            # Column 0: Checkbox
+            tool_name = f" {tool.upper() if tool in ('esim', 'llvm', 'ghdl') else tool.title()}"
+            chk = QCheckBox(tool_name)
+            chk.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
+            chk.setStyleSheet("color: #334155; padding-left: 5px; spacing: 10px;")
             self.table.setCellWidget(row, 0, chk)
 
+            # Column 1: Combo Box
+            combo_widget = QWidget()
+            combo_layout = QHBoxLayout(combo_widget)
+            combo_layout.setContentsMargins(5, 5, 5, 5)
             combo = QComboBox()
             combo.addItems(TOOLS[tool]["versions"])
             combo.setEnabled(False)
-            self.table.setCellWidget(row, 1, combo)
+            combo.setFont(font_normal)
+            combo.setStyleSheet("""
+                QComboBox {
+                    border: 1px solid #cbd5e1;
+                    border-radius: 4px;
+                    padding: 4px 8px;
+                    background-color: white;
+                    color: #334155;
+                }
+                QComboBox:disabled {
+                    background-color: #f1f5f9;
+                    color: #94a3b8;
+                }
+                QComboBox::drop-down {
+                    border: none;
+                    width: 20px;
+                }
+            """)
+            combo_layout.addWidget(combo)
+            self.table.setCellWidget(row, 1, combo_widget)
 
+            # Column 2: Description
             desc = QLabel(TOOLS[tool]["desc"])
+            desc.setFont(font_normal)
+            desc.setStyleSheet("color: #475569; padding-left: 5px;")
             desc.setWordWrap(True)
             self.table.setCellWidget(row, 2, desc)
 
+            # Column 3: Installed Version
             installed = QLabel("Checking...")
-            installed.setStyleSheet("color:gray;font-style:italic;")
+            installed.setFont(font_normal)
+            installed.setStyleSheet("color: #94a3b8; font-style: italic; padding-left: 5px;")
             self.table.setCellWidget(row, 3, installed)
 
+            # Column 4: Status
             status = QLabel("Checking...")
-            status.setStyleSheet("color:orange;")
+            status.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
+            status.setStyleSheet("color: #f59e0b; padding-left: 5px;")
             self.table.setCellWidget(row, 4, status)
 
             chk.stateChanged.connect(lambda s, c=combo: c.setEnabled(s == Qt.CheckState.Checked.value))
@@ -350,22 +472,44 @@ class ToolManagerGUI(QWidget):
                 "installed": installed, "status": status
             }
 
+        self.table.verticalHeader().setDefaultSectionSize(60)
         layout.addWidget(self.table)
 
+        # Buttons Section
         btn_layout = QHBoxLayout()
-        btn_check     = QPushButton("Check Selected")
-        btn_install   = QPushButton("Install Selected")
-        btn_update    = QPushButton("Update Selected")
-        btn_refresh   = QPushButton("Refresh All")
-        btn_uninstall = QPushButton("Uninstall...")
-        btn_uninstall.setStyleSheet(
-            "QPushButton{color:#e74c3c;border:1px solid #e74c3c;border-radius:4px;}"
-            "QPushButton:hover{background:#fdecea;}"
-        )
+        btn_layout.setSpacing(12)
+        
+        btn_check     = QPushButton("🔍 Check Selected")
+        btn_install   = QPushButton("⬇ Install Selected")
+        btn_update    = QPushButton("🔄 Update Selected")
+        btn_refresh   = QPushButton("🔁 Refresh All")
+        btn_uninstall = QPushButton("🗑 Uninstall...")
+        
+        primary_btn_style = """
+            QPushButton { background-color: #3b82f6; color: white; border-radius: 6px; padding: 10px 15px; font-weight: bold; }
+            QPushButton:hover { background-color: #2563eb; }
+            QPushButton:disabled { background-color: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+        """
+        secondary_btn_style = """
+            QPushButton { background-color: #ffffff; color: #475569; border: 1px solid #cbd5e1; border-radius: 6px; padding: 10px 15px; font-weight: bold; }
+            QPushButton:hover { background-color: #f1f5f9; }
+            QPushButton:disabled { background-color: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+        """
+        danger_btn_style = """
+            QPushButton { background-color: #ffffff; color: #e11d48; border: 1px solid #fecdd3; border-radius: 6px; padding: 10px 15px; font-weight: bold; }
+            QPushButton:hover { background-color: #fff1f2; }
+            QPushButton:disabled { background-color: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0; }
+        """
+
+        btn_install.setStyleSheet(secondary_btn_style)
+        btn_update.setStyleSheet(secondary_btn_style)
+        btn_check.setStyleSheet(secondary_btn_style)
+        btn_refresh.setStyleSheet(secondary_btn_style)
+        btn_uninstall.setStyleSheet(danger_btn_style)
 
         for b in (btn_check, btn_install, btn_update, btn_refresh, btn_uninstall):
             b.setFont(font_normal)
-            b.setFixedHeight(36)
+            b.setCursor(Qt.CursorShape.PointingHandCursor)
             btn_layout.addWidget(b)
 
         btn_check.clicked.connect(self.check_selected)
@@ -380,10 +524,16 @@ class ToolManagerGUI(QWidget):
 
         layout.addLayout(btn_layout)
 
+        # Console Section
         self.console = QTextEdit()
         self.console.setReadOnly(True)
         self.console.setFont(QFont("Consolas", 10))
-        self.console.setFixedHeight(140)
+        self.console.setFixedHeight(160)
+        self.console.setStyleSheet("""
+            QTextEdit {
+                background-color: #1e293b; color: #f8fafc; border: 1px solid #475569; border-radius: 8px; padding: 12px;
+            }
+        """)
         layout.addWidget(self.console)
 
     def log(self, msg):
@@ -393,8 +543,9 @@ class ToolManagerGUI(QWidget):
         self.log("> Refreshing all tool statuses...")
         for tool in self.rows:
             self.rows[tool]["status"].setText("Refreshing...")
-            self.rows[tool]["status"].setStyleSheet("color:blue")
+            self.rows[tool]["status"].setStyleSheet("color:#3b82f6;font-weight:bold;padding-left:5px;")
             self.rows[tool]["installed"].setText("Checking...")
+            self.rows[tool]["installed"].setStyleSheet("color:#94a3b8;font-style:italic;padding-left:5px;")
         QApplication.processEvents()
         self.check_all()
 
@@ -489,28 +640,28 @@ class ToolManagerGUI(QWidget):
                 installed_lbl.setText("Not installed")
 
             if state == "installed":
-                installed_lbl.setStyleSheet("color:green;font-weight:bold")
+                installed_lbl.setStyleSheet("color:#10b981;font-weight:bold;padding-left:5px;")
                 status_lbl.setText("✓ Installed")
-                status_lbl.setStyleSheet("color:green;font-weight:bold")
+                status_lbl.setStyleSheet("color:#10b981;font-weight:bold;padding-left:5px;")
             elif state == "not_installed":
-                installed_lbl.setStyleSheet("color:red")
+                installed_lbl.setStyleSheet("color:#ef4444;padding-left:5px;")
                 status_lbl.setText("✗ Not Installed")
-                status_lbl.setStyleSheet("color:red")
+                status_lbl.setStyleSheet("color:#ef4444;font-weight:bold;padding-left:5px;")
             elif state == "wrong_version":
-                installed_lbl.setStyleSheet("color:orange;font-weight:bold")
-                status_lbl.setText("⚠ Wrong Version")
-                status_lbl.setStyleSheet("color:orange;font-weight:bold")
+                installed_lbl.setStyleSheet("color:#f59e0b;font-weight:bold;padding-left:5px;")
+                status_lbl.setText("⚠️ Wrong Version")
+                status_lbl.setStyleSheet("color:#f59e0b;font-weight:bold;padding-left:5px;")
             elif state in ("install_failed", "update_failed", "uninstall_failed"):
-                installed_lbl.setStyleSheet("color:red")
+                installed_lbl.setStyleSheet("color:#ef4444;padding-left:5px;")
                 status_lbl.setText("✗ Failed")
-                status_lbl.setStyleSheet("color:red;font-weight:bold")
+                status_lbl.setStyleSheet("color:#ef4444;font-weight:bold;padding-left:5px;")
             elif state == "error":
-                installed_lbl.setStyleSheet("color:red")
+                installed_lbl.setStyleSheet("color:#ef4444;padding-left:5px;")
                 status_lbl.setText("✗ Error")
-                status_lbl.setStyleSheet("color:red;font-weight:bold")
+                status_lbl.setStyleSheet("color:#ef4444;font-weight:bold;padding-left:5px;")
             else:
                 status_lbl.setText(state.replace("_", " ").title())
-                status_lbl.setStyleSheet("color:blue")
+                status_lbl.setStyleSheet("color:#3b82f6;font-weight:bold;padding-left:5px;")
 
             self.table.repaint()
             QApplication.processEvents()
@@ -518,9 +669,9 @@ class ToolManagerGUI(QWidget):
         except (ValueError, IndexError) as e:
             self.log(f"{tool}: Parse error: {e}, Line: {status_line}")
             installed_lbl.setText("Parse Error")
-            installed_lbl.setStyleSheet("color:red")
+            installed_lbl.setStyleSheet("color:#ef4444;padding-left:5px;")
             status_lbl.setText("Parse Error")
-            status_lbl.setStyleSheet("color:red")
+            status_lbl.setStyleSheet("color:#ef4444;font-weight:bold;padding-left:5px;")
 
     def check_all(self):
         for tool in self.rows:
@@ -546,7 +697,7 @@ class ToolManagerGUI(QWidget):
             version = r["combo"].currentText()
             self.log(f"> Installing {tool} version {version}...")
             r["status"].setText("Installing...")
-            r["status"].setStyleSheet("color:blue")
+            r["status"].setStyleSheet("color:#3b82f6;font-weight:bold;padding-left:5px;")
             self.run_cmd(tool, [PYTHON, BACKEND, "install", tool, version], needs_sudo=True)
 
     def update_selected(self):
@@ -562,7 +713,7 @@ class ToolManagerGUI(QWidget):
             version = r["combo"].currentText()
             self.log(f"> Updating {tool} to version {version}...")
             r["status"].setText("Updating...")
-            r["status"].setStyleSheet("color:blue")
+            r["status"].setStyleSheet("color:#3b82f6;font-weight:bold;padding-left:5px;")
             self.run_cmd(tool, [PYTHON, BACKEND, "update", tool, version], needs_sudo=True)
 
     def open_uninstall_window(self):

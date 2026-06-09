@@ -6,12 +6,14 @@ import ctypes
 import subprocess
 from pathlib import Path
 from PyQt6.QtWidgets import (
+    QScrollArea,
     QApplication, QMainWindow, QWidget, QVBoxLayout,
-    QHBoxLayout, QPushButton, QLabel, QTabWidget,
-    QMessageBox, QFrame, QProgressBar
+    QHBoxLayout, QGridLayout, QPushButton, QLabel, QTabWidget,
+    QMessageBox, QFrame, QProgressBar, QStackedWidget,
+    QListWidget, QListWidgetItem, QGraphicsDropShadowEffect
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
-from PyQt6.QtGui import QFont
+from PyQt6.QtGui import QFont, QColor
 
 # ==================== CONFIG ====================
 BASE_DIR = Path(__file__).resolve().parent
@@ -129,114 +131,158 @@ class ToolManagerWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
+        from PyQt6.QtGui import QIcon
         self.setWindowTitle("eSim Tool Manager")
-        self.setGeometry(100, 100, 820, 720)
-        self.setMinimumSize(880, 760)
+        self.setGeometry(100, 100, 1150, 900)
+        self.setMinimumSize(1050, 850)
+
+        icon_path = os.path.join(BASE_DIR, "..", "..", "images", "icon.png")
+        if os.path.exists(icon_path):
+            self.setWindowIcon(QIcon(icon_path))
+            import sys
+            if sys.platform == "win32":
+                import ctypes
+                myappid = 'esim.toolmanager.1.0'
+                ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
         central = QWidget()
+        central.setStyleSheet("background-color: #f8fafc;")
         self.setCentralWidget(central)
         self._main_layout = QVBoxLayout(central)
         self._main_layout.setSpacing(0)
         self._main_layout.setContentsMargins(0, 0, 0, 0)
 
         self._main_layout.addWidget(self._create_header())
-
         self._status_frame = self._create_status_panel()
         self._main_layout.addWidget(self._status_frame)
 
-        tabs = QTabWidget()
-        tabs.setStyleSheet("""
-            QTabWidget::pane { border: none; background: white; }
-            QTabBar::tab {
-                background: #f5f5f5; color: #555;
-                padding: 12px 24px; margin-right: 2px;
-                border: none;
-                border-top-left-radius: 4px;
-                border-top-right-radius: 4px;
-                font-size: 13px; font-weight: 500;
+        content_layout = QHBoxLayout()
+        content_layout.setSpacing(0)
+        content_layout.setContentsMargins(0, 0, 0, 0)
+
+        self.sidebar = QListWidget()
+        self.sidebar.setFixedWidth(240)
+        self.sidebar.setStyleSheet("""
+            QListWidget {
+                background-color: #ffffff;
+                border-right: 1px solid #e2e8f0;
+                border-top: none; border-bottom: none; border-left: none;
+                padding-top: 15px; outline: 0;
             }
-            QTabBar::tab:selected { background: white; color: #4A90E2; }
-            QTabBar::tab:hover    { background: #e8e8e8; }
+            QListWidget::item {
+                padding: 16px 25px;
+                color: #64748b;
+                font-family: 'Segoe UI'; font-size: 15px; font-weight: bold;
+                border-left: 4px solid transparent;
+            }
+            QListWidget::item:hover {
+                background-color: #f1f5f9; color: #1e293b;
+            }
+            QListWidget::item:selected {
+                background-color: #eff6ff; color: #2563eb;
+                border-left: 4px solid #2563eb;
+            }
         """)
-        tabs.addTab(self._create_installation_tab(), "Installation")
-        tabs.addTab(self._create_management_tab(),   "Management")
-        tabs.addTab(self._create_uninstall_tab(),     "Uninstall")
-        tabs.addTab(self._create_about_tab(),         "About")
-        self._main_layout.addWidget(tabs)
+        items = ["🔌   Installation Suite", "⚙   Advanced Manager", "🗑️   Uninstall Tools", "ℹ   About eSim"]
+        for item in items:
+            self.sidebar.addItem(item)
+            
+        self.stacked_widget = QStackedWidget()
+        self.stacked_widget.addWidget(self._create_installation_tab())
+        self.stacked_widget.addWidget(self._create_management_tab())
+        self.stacked_widget.addWidget(self._create_uninstall_tab())
+        self.stacked_widget.addWidget(self._create_about_tab())
+        
+        self.sidebar.currentRowChanged.connect(self.stacked_widget.setCurrentIndex)
+        
+        content_layout.addWidget(self.sidebar)
+        content_layout.addWidget(self.stacked_widget)
+        
+        self._main_layout.addLayout(content_layout)
         self._main_layout.addWidget(self._create_footer())
+        
+        self.sidebar.setCurrentRow(0)
+
+    def _add_shadow(self, widget):
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(25)
+        shadow.setColor(QColor(0, 0, 0, 20))
+        shadow.setOffset(0, 6)
+        widget.setGraphicsEffect(shadow)
 
     def _create_header(self):
         frame = QFrame()
-        frame.setFixedHeight(140)
+        frame.setFixedHeight(150)
         frame.setStyleSheet("""
-            QFrame {
-                background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
-                    stop:0 #5B9BD5, stop:1 #4A90E2);
+            .QFrame {
+                background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0 #0f172a, stop:1 #1e293b);
+                border-bottom: 1px solid #334155;
             }
         """)
         layout = QHBoxLayout(frame)
-        layout.setContentsMargins(30, 20, 30, 20)
+        layout.setContentsMargins(45, 25, 45, 25)
 
-        logo = QLabel("⚙️")
-        logo.setStyleSheet("font-size: 48px; background: transparent;")
+        logo = QLabel("📦")
+        logo.setStyleSheet("font-size: 55px; background: transparent;")
         layout.addWidget(logo)
 
         vbox = QVBoxLayout()
-        vbox.setSpacing(5)
+        vbox.setSpacing(6)
         t1 = QLabel("eSim Tool Manager")
-        t1.setFont(QFont("Arial", 24, QFont.Weight.Bold))
+        t1.setFont(QFont("Segoe UI", 28, QFont.Weight.Bold))
         t1.setStyleSheet("color: white; background: transparent;")
-        t2 = QLabel("Package Management System  •  Windows Edition")
-        t2.setFont(QFont("Arial", 11))
-        t2.setStyleSheet("color: rgba(255,255,255,0.9); background: transparent;")
+        t2 = QLabel("Centralized administration for your EDA toolchains, simulation engines, and compiler infrastructure.")
+        t2.setFont(QFont("Segoe UI", 12))
+        t2.setStyleSheet("color: #94a3b8; background: transparent;")
+        t2.setWordWrap(True)
         vbox.addWidget(t1)
         vbox.addWidget(t2)
         vbox.addStretch()
-        layout.addLayout(vbox)
-        layout.addStretch()
+        layout.addLayout(vbox, stretch=1)
         return frame
+
+    def _refresh_status(self):
+        QMessageBox.information(self, "Refresh", "Please restart the Tool Manager to refresh the status panel.")
 
     def _create_status_panel(self):
         frame = QFrame()
         frame.setStyleSheet("""
-            QFrame {
-                background: #f8f9fa;
-                border-bottom: 1px solid #e0e0e0;
+            .QFrame {
+                background: #ffffff;
+                border-bottom: 1px solid #e2e8f0;
             }
         """)
         layout = QHBoxLayout(frame)
-        layout.setContentsMargins(30, 12, 30, 12)
+        layout.setContentsMargins(45, 15, 45, 15)
 
-        lbl = QLabel("📦 Installed:")
-        lbl.setFont(QFont("Arial", 10, QFont.Weight.Bold))
-        lbl.setStyleSheet("color: #666; background: transparent;")
+        lbl = QLabel("📌 Active Installations:")
+        lbl.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
+        lbl.setStyleSheet("color: #334155; background: transparent;")
         layout.addWidget(lbl)
 
         for key, label in TOOL_LABELS.items():
             ver = self.installed_versions.get(key, "Not installed")
             if ver != "Not installed":
-                text = (f"<span style='color:#28a745;'>●</span> {label} "
-                        f"<span style='color:#666;'>{ver}</span>")
+                text = (f"<span style='color:#10b981;'>●</span> {label} <span style='color:#475569; font-weight:bold;'>{ver}</span>")
             else:
-                text = (f"<span style='color:#dc3545;'>○</span> {label} "
-                        f"<span style='color:#999;'>—</span>")
+                text = (f"<span style='color:#ef4444;'>○</span> {label} <span style='color:#94a3b8;'>—</span>")
             l2 = QLabel(text)
-            l2.setFont(QFont("Arial", 9))
-            l2.setStyleSheet("color: #555; background: transparent; margin-left: 10px;")
+            l2.setFont(QFont("Segoe UI", 10))
+            l2.setStyleSheet("color: #475569; background: transparent; margin-left: 18px;")
             layout.addWidget(l2)
 
         layout.addStretch()
 
         rbtn = QPushButton("↻ Refresh")
-        rbtn.setFont(QFont("Arial", 9))
-        rbtn.setFixedHeight(26)
+        rbtn.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        rbtn.setFixedHeight(34)
         rbtn.setCursor(Qt.CursorShape.PointingHandCursor)
         rbtn.setStyleSheet("""
             QPushButton {
-                background: #e9ecef; border: 1px solid #ced4da;
-                border-radius: 4px; padding: 2px 10px; color: #555;
+                background: #ffffff; border: 1px solid #cbd5e1;
+                border-radius: 6px; padding: 4px 18px; color: #475569;
             }
-            QPushButton:hover { background: #dee2e6; }
+            QPushButton:hover { background: #f1f5f9; color: #0f172a; border-color: #94a3b8; }
         """)
         rbtn.clicked.connect(self._refresh_status)
         layout.addWidget(rbtn)
@@ -244,67 +290,59 @@ class ToolManagerWindow(QMainWindow):
 
     def _create_installation_tab(self):
         tab = QWidget()
+        tab.setStyleSheet("background-color: #f8fafc;")
         layout = QVBoxLayout(tab)
-        layout.setContentsMargins(30, 30, 30, 30)
-        layout.setSpacing(20)
+        layout.setContentsMargins(45, 40, 45, 40)
+        layout.setSpacing(25)
 
         desc = QLabel(
-            "Install eSim with the required simulation tools.\n"
-            "Choose Analog for circuit design and SPICE simulation, "
-            "or Digital to also include HDL simulators."
+            "Welcome to the eSim environment setup. Please select your preferred installation profile below.\n"
+            "The Analog profile provisions the core circuit design and SPICE engines, while the Digital profile extends your workspace with advanced HDL simulation toolchains."
         )
-        desc.setFont(QFont("Arial", 11))
-        desc.setStyleSheet("color: #666;")
+        desc.setFont(QFont("Segoe UI", 12))
+        desc.setStyleSheet("color: #475569; line-height: 1.5;")
         desc.setWordWrap(True)
         layout.addWidget(desc)
 
-        layout.addWidget(self._create_install_card(
-            title       = "🔌  Analog Mode",
-            description = ("Installs eSim, KiCad (latest), and Ngspice (latest) "
-                           "for schematic and analog/mixed-signal simulation."),
-            features    = ["✓ eSim EDA Platform",
-                           "✓ KiCad",
-                           "✓ Ngspice",
-                           "✓ eSim Component Libraries"],
+        card1 = self._create_install_card(
+            title       = "🔌  Analog Simulation Suite",
+            description = ("<div style='line-height: 1.6;'>Deploys the core <b>eSim EDA platform</b> alongside <b>KiCad</b> and <b>Ngspice</b> "
+                           "to provide a comprehensive environment for schematic capture and mixed-signal simulation.</div>"),
+            features    = ["✓ eSim Core Engine", "✓ KiCad Design Suite", "✓ Ngspice Simulator", "✓ Standard Component Libraries"],
             disk_space  = "~1.5 GB",
-            btn_text    = "Install Analog Mode",
-            btn_color   = "#28a745",
+            btn_text    = "Initialize Analog Suite",
+            btn_color   = "#10b981",
             callback    = self._install_analog,
-        ))
+        )
+        layout.addWidget(card1)
 
-        layout.addWidget(self._create_install_card(
-            title       = "💻  Digital Mode",
-            description = ("Installs Analog Mode PLUS GHDL, Verilator, "
-                           "and LLVM for VHDL and Verilog digital simulation."),
-            features    = ["✓ Analog Mode",
-                           "✓ GHDL",
-                           "✓ Verilator",
-                           "✓ LLVM "],
+        card2 = self._create_install_card(
+            title       = "💻  Digital & HDL Toolchain",
+            description = ("<div style='line-height: 1.6;'>Installs the complete <b>Analog Suite</b> and seamlessly integrates <b>GHDL</b>, <b>Verilator</b>, "
+                           "and <b>LLVM</b>, enabling high-performance VHDL and SystemVerilog compilation.</div>"),
+            features    = ["✓ Analog Suite Included", "✓ GHDL Compiler", "✓ Verilator Engine", "✓ LLVM Infrastructure"],
             disk_space  = "~3.0 GB",
-            btn_text    = "Install Digital Mode",
-            btn_color   = "#4A90E2",
+            btn_text    = "Initialize Digital Suite",
+            btn_color   = "#3b82f6",
             callback    = self._install_digital,
-        ))
+        )
+        layout.addWidget(card2)
 
         self.progress_frame = QFrame()
         self.progress_frame.setVisible(False)
-        self.progress_frame.setStyleSheet(
-            "QFrame { background: #1e1e1e; border-radius: 6px; }"
-        )
+        self.progress_frame.setStyleSheet(".QFrame { background: #1e293b; border-radius: 8px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }")
         pf_layout = QVBoxLayout(self.progress_frame)
-        pf_layout.setContentsMargins(12, 10, 12, 10)
-        pf_layout.setSpacing(6)
+        pf_layout.setContentsMargins(20, 16, 20, 16)
+        pf_layout.setSpacing(8)
 
         pf_title = QLabel("Installation Progress")
-        pf_title.setFont(QFont("Arial", 9, QFont.Weight.Bold))
-        pf_title.setStyleSheet("color: #aaa; background: transparent;")
+        pf_title.setFont(QFont("Segoe UI", 10, QFont.Weight.Bold))
+        pf_title.setStyleSheet("color: #94a3b8; background: transparent;")
         pf_layout.addWidget(pf_title)
 
         self.progress_log = QLabel("")
-        self.progress_log.setFont(QFont("Consolas", 9))
-        self.progress_log.setStyleSheet(
-            "color: #d4d4d4; background: transparent;"
-        )
+        self.progress_log.setFont(QFont("Consolas", 10))
+        self.progress_log.setStyleSheet("color: #f8fafc; background: transparent;")
         self.progress_log.setWordWrap(True)
         self.progress_log.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.progress_log.setMinimumHeight(60)
@@ -312,278 +350,315 @@ class ToolManagerWindow(QMainWindow):
 
         self.progress_bar = QProgressBar()
         self.progress_bar.setRange(0, 0)
-        self.progress_bar.setFixedHeight(6)
+        self.progress_bar.setFixedHeight(8)
         self.progress_bar.setStyleSheet("""
-            QProgressBar {
-                background: #333; border-radius: 3px; border: none;
-            }
-            QProgressBar::chunk {
-                background: #4A90E2; border-radius: 3px;
-            }
+            QProgressBar { background: #334155; border-radius: 4px; border: none; }
+            QProgressBar::chunk { background: #3b82f6; border-radius: 4px; }
         """)
         pf_layout.addWidget(self.progress_bar)
         layout.addWidget(self.progress_frame)
-        layout.addStretch()
-        return tab
+        
+        
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setWidget(tab)
+        return scroll
 
-    def _create_install_card(self, title, description, features,
-                              disk_space, btn_text, btn_color, callback):
+    def _create_install_card(self, title, description, features, disk_space, btn_text, btn_color, callback):
+        from PyQt6.QtWidgets import QSizePolicy
         card = QFrame()
+        card.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
         card.setStyleSheet("""
-            QFrame {
-                background: white;
-                border: none;
-                border-radius: 8px;
+            .QFrame {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
             }
+            .QFrame:hover { border: 1px solid #cbd5e1; }
         """)
+        self._add_shadow(card)
         layout = QVBoxLayout(card)
-        layout.setContentsMargins(25, 20, 25, 20)
-        layout.setSpacing(10)
+        layout.setContentsMargins(35, 30, 35, 30)
+        layout.setSpacing(14)
 
+        top_row = QHBoxLayout()
         t = QLabel(title)
-        t.setFont(QFont("Arial", 13, QFont.Weight.Bold))
-        t.setStyleSheet("color: #333; background: transparent;")
-        layout.addWidget(t)
+        t.setFont(QFont("Segoe UI", 20, QFont.Weight.Bold))
+        t.setStyleSheet("color: #0f172a; background: transparent; border: none; letter-spacing: 0.5px;")
+        top_row.addWidget(t)
+
+        top_row.addStretch()
+
+        dl = QLabel(f"💾 {disk_space}")
+        dl.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
+        dl.setStyleSheet("color: #94a3b8; background: transparent; border: none; padding-top: 6px;")
+        dl.setAlignment(Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignRight)
+        top_row.addWidget(dl)
+
+        layout.addLayout(top_row)
 
         d = QLabel(description)
-        d.setFont(QFont("Arial", 10))
-        d.setStyleSheet("color: #666; background: transparent;")
+        d.setFont(QFont("Segoe UI", 12))
+        d.setStyleSheet("color: #334155; background: transparent; border: none;")
         d.setWordWrap(True)
+        d.setTextFormat(Qt.TextFormat.RichText)
         layout.addWidget(d)
 
-        f = QLabel("    ".join(features))
-        f.setFont(QFont("Arial", 9))
-        f.setStyleSheet("color: #555; background: transparent;")
-        f.setWordWrap(True)
-        layout.addWidget(f)
+        features_layout = QGridLayout()
+        features_layout.setSpacing(10)
+        features_layout.setColumnStretch(0, 1)
+        features_layout.setColumnStretch(1, 1)
+        for i, feat in enumerate(features):
+            lbl = QLabel(feat.replace("✓", "<span style='color: #10b981; font-weight: bold;'>✓</span>"))
+            lbl.setFont(QFont("Segoe UI", 11, QFont.Weight.Medium))
+            lbl.setStyleSheet("color: #475569; background: transparent; border: none;")
+            lbl.setTextFormat(Qt.TextFormat.RichText)
+            features_layout.addWidget(lbl, i // 2, i % 2)
+        layout.addLayout(features_layout)
+
+        layout.addSpacing(15)
 
         bottom = QHBoxLayout()
-        dl = QLabel(f"💾 {disk_space}")
-        dl.setFont(QFont("Arial", 9))
-        dl.setStyleSheet("color: #999; background: transparent;")
-        bottom.addWidget(dl)
         bottom.addStretch()
 
         btn = QPushButton(btn_text)
-        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
+        btn.setFont(QFont("Segoe UI", 12, QFont.Weight.Bold))
         btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        btn.setMinimumHeight(40)
+        btn.setMinimumHeight(50)
+        btn.setMinimumWidth(340)
         btn.setStyleSheet(f"""
             QPushButton {{
                 background: {btn_color}; color: white;
-                border: none; border-radius: 4px; padding: 10px 24px;
+                border: none; border-radius: 8px; padding: 12px 24px;
             }}
             QPushButton:hover     {{ background: {darken_color(btn_color)}; }}
             QPushButton:pressed   {{ background: {darken_color(btn_color, 0.3)}; }}
-            QPushButton:disabled  {{ background: #aaa; color: #ddd; }}
+            QPushButton:disabled  {{ background: #cbd5e1; color: #f1f5f9; }}
         """)
         btn.clicked.connect(callback)
         bottom.addWidget(btn)
+        bottom.addStretch()
+
         layout.addLayout(bottom)
         return card
 
     def _create_management_tab(self):
         tab = QWidget()
         layout = QVBoxLayout(tab)
-        layout.setContentsMargins(30, 30, 30, 30)
-        layout.setSpacing(20)
+        layout.setContentsMargins(45, 45, 45, 45)
+        layout.setSpacing(25)
 
-        desc = QLabel("Update individual packages or manage specific tool versions:")
-        desc.setFont(QFont("Arial", 11))
-        desc.setStyleSheet("color: #666;")
+        desc = QLabel("Access the Advanced Package Manager for granular control over individual tool versions and dependencies.")
+        desc.setFont(QFont("Segoe UI", 13))
+        desc.setStyleSheet("color: #475569;")
         layout.addWidget(desc)
 
-        btn = QPushButton("⚙   Open Full Tool Manager")
-        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
+        card = QFrame()
+        card.setStyleSheet("""
+            .QFrame {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+            }
+        """)
+        self._add_shadow(card)
+        card_layout = QVBoxLayout(card)
+        card_layout.setContentsMargins(40, 40, 40, 40)
+        card_layout.setSpacing(20)
+
+        info = QLabel(
+            "<b>Advanced Package Management Capabilities:</b><br><br>"
+            "&nbsp;&nbsp;• <b>Core Platform:</b> Upgrade or configure <b>eSim</b> (v2.2 – v2.5)<br>"
+            "&nbsp;&nbsp;• <b>Schematic Capture:</b> Manage <b>KiCad</b> installations (v6, 7, 8, 9, or latest)<br>"
+            "&nbsp;&nbsp;• <b>Analog Simulation:</b> Control <b>Ngspice</b> versions (v35–42, or latest)<br>"
+            "&nbsp;&nbsp;• <b>Digital Toolchains:</b> Deploy <b>GHDL</b> (v4.0.0 – 5.1.1) and <b>Verilator</b> (v5.006 – 5.032)<br>"
+            "&nbsp;&nbsp;• <b>Compiler Infrastructure:</b> Maintain <b>LLVM</b> frameworks (v13–19)<br>"
+            "&nbsp;&nbsp;• <b>Maintenance:</b> Safely uninstall, repair, or refresh specific packages as needed"
+        )
+        info.setFont(QFont("Segoe UI", 11))
+        info.setStyleSheet("color: #334155; line-height: 1.6; background: transparent; border: none;")
+        info.setWordWrap(True)
+        card_layout.addWidget(info)
+        card_layout.addSpacing(10)
+
+        btn = QPushButton("⚙  Launch Advanced Tool Manager")
+        btn.setFont(QFont("Segoe UI", 12, QFont.Weight.Bold))
         btn.setCursor(Qt.CursorShape.PointingHandCursor)
         btn.setFixedHeight(50)
         btn.setStyleSheet("""
             QPushButton {
-                background: #4A90E2; color: white;
-                border: none; border-radius: 6px; padding: 12px;
+                background: #3b82f6; color: white;
+                border: none; border-radius: 8px; padding: 12px;
             }
-            QPushButton:hover { background: #3a7bc8; }
+            QPushButton:hover { background: #2563eb; }
         """)
         btn.clicked.connect(self._open_full_manager)
-        layout.addWidget(btn)
-
-        info = QLabel("""
-<p style='color:#555; font-size:10pt; line-height:1.7;'>
-<b>The Full Tool Manager allows you to:</b><br>
-&nbsp;&nbsp;• Install or update <b>eSim</b> (v2.2, 2.3, 2.4, 2.5)<br>
-&nbsp;&nbsp;• Install or update <b>KiCad</b> (v6, 7, 8, 9, latest)<br>
-&nbsp;&nbsp;• Install or update <b>Ngspice</b> (v35–42, latest)<br>
-&nbsp;&nbsp;• Install or update <b>GHDL</b> (v4.0.0, 4.1.0, 5.0.0, 5.1.1, latest)<br>
-&nbsp;&nbsp;• Install or update <b>Verilator</b> (v5.006, 5.018, 5.026, 5.032, latest)<br>
-&nbsp;&nbsp;• Install or update <b>LLVM</b> (v13–19, latest)<br>
-&nbsp;&nbsp;• <b>Uninstall</b> any tool individually
-</p>
-        """)
-        info.setWordWrap(True)
-        info.setStyleSheet(
-            "background: #f8f9fa; padding: 16px; border-radius: 6px;"
-            "border: 1px solid #e0e0e0;"
-        )
-        layout.addWidget(info)
+        card_layout.addWidget(btn)
+        
+        layout.addWidget(card)
         layout.addStretch()
-        return tab
+        
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setWidget(tab)
+        return scroll
 
     def _create_uninstall_tab(self):
         tab = QWidget()
         layout = QVBoxLayout(tab)
-        layout.setContentsMargins(30, 30, 30, 30)
-        layout.setSpacing(16)
+        layout.setContentsMargins(45, 45, 45, 45)
+        layout.setSpacing(25)
 
-        # Warning banner
         warn = QFrame()
         warn.setStyleSheet("""
-            QFrame {
-                background: #fff3cd;
-                border-left: 4px solid #ffc107;
-                border-radius: 4px;
+            .QFrame {
+                background: #fffbeb;
+                border-left: 6px solid #f59e0b;
+                border-radius: 8px;
             }
         """)
+        self._add_shadow(warn)
         wl = QVBoxLayout(warn)
-        wl.setContentsMargins(16, 12, 16, 12)
+        wl.setContentsMargins(25, 20, 25, 20)
         wt = QLabel("⚠️  Warning")
-        wt.setFont(QFont("Arial", 12, QFont.Weight.Bold))
-        wt.setStyleSheet("color: #856404; background: transparent;")
+        wt.setFont(QFont("Segoe UI", 13, QFont.Weight.Bold))
+        wt.setStyleSheet("color: #b45309; background: transparent; border: none;")
         wd = QLabel(
-            "Uninstalling packages will remove them permanently. "
-            "This action cannot be undone."
+            "Proceed with caution. Uninstalling packages will permanently remove the associated binaries and configurations from your system. "
+            "This action is irreversible."
         )
-        wd.setFont(QFont("Arial", 10))
-        wd.setStyleSheet("color: #856404; background: transparent;")
+        wd.setFont(QFont("Segoe UI", 12))
+        wd.setStyleSheet("color: #d97706; background: transparent; border: none;")
         wd.setWordWrap(True)
         wl.addWidget(wt)
         wl.addWidget(wd)
         layout.addWidget(warn)
 
-        desc = QLabel("Select what to uninstall:")
-        desc.setFont(QFont("Arial", 11))
-        desc.setStyleSheet("color: #666;")
+        desc = QLabel("Select the component suites you wish to remove:")
+        desc.setFont(QFont("Segoe UI", 13))
+        desc.setStyleSheet("color: #475569;")
         layout.addWidget(desc)
 
         def make_btn(text, color, callback):
             b = QPushButton(text)
-            b.setFont(QFont("Arial", 10))
+            b.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
             b.setCursor(Qt.CursorShape.PointingHandCursor)
-            b.setFixedHeight(46)
+            b.setFixedHeight(54)
             dark = darken_color(color, 0.1)
             b.setStyleSheet(f"""
                 QPushButton {{
                     background: {color}; color: white;
-                    border: none; border-radius: 6px;
-                    text-align: left; padding-left: 16px;
+                    border: none; border-radius: 8px;
+                    text-align: left; padding-left: 25px;
                 }}
-                QPushButton:hover {{ background: {dark}; }}
+                QPushButton:hover {{ background: {dark}; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }}
             """)
             b.clicked.connect(callback)
             return b
 
-        layout.addWidget(make_btn(
-            "🗑️   Uninstall Digital Packages  (GHDL + Verilator + LLVM)",
-            "#dc3545", self._uninstall_digital
-        ))
-        layout.addWidget(make_btn(
-            "🗑️   Uninstall Analog Packages  (KiCad + Ngspice)",
-            "#e67e22", self._uninstall_analog
-        ))
-        layout.addWidget(make_btn(
-            "🗑️   Uninstall Everything  (eSim + All Packages)",
-            "#6c757d", self._uninstall_all
-        ))
+        layout.addWidget(make_btn("🗑️   Remove Digital Toolchains  (GHDL, Verilator, LLVM)", "#ef4444", self._uninstall_digital))
+        layout.addWidget(make_btn("🗑️   Remove Analog Suites  (KiCad, Ngspice)", "#f59e0b", self._uninstall_analog))
+        layout.addWidget(make_btn("🗑️   Completely Uninstall eSim  (Removes Core and All Packages)", "#64748b", self._uninstall_all))
 
-        sep = QLabel("— or uninstall tools individually via Full Tool Manager —")
-        sep.setFont(QFont("Arial", 9))
+        layout.addSpacing(15)
+        sep = QLabel("— Or selectively remove individual tools via the Advanced Manager —")
+        sep.setFont(QFont("Segoe UI", 10))
         sep.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        sep.setStyleSheet("color: #aaa;")
+        sep.setStyleSheet("color: #94a3b8;")
         layout.addWidget(sep)
 
-        indiv = QPushButton("⚙   Open Full Tool Manager (Individual Uninstall)")
-        indiv.setFont(QFont("Arial", 10))
+        indiv = QPushButton("⚙   Launch Advanced Tool Manager")
+        indiv.setFont(QFont("Segoe UI", 11, QFont.Weight.Bold))
         indiv.setCursor(Qt.CursorShape.PointingHandCursor)
-        indiv.setFixedHeight(40)
+        indiv.setFixedHeight(48)
         indiv.setStyleSheet("""
             QPushButton {
-                background: white; color: #4A90E2;
-                border: 1px solid #4A90E2; border-radius: 6px;
+                background: white; color: #3b82f6;
+                border: 2px solid #3b82f6; border-radius: 8px;
             }
-            QPushButton:hover { background: #eaf3fb; }
+            QPushButton:hover { background: #eff6ff; }
         """)
         indiv.clicked.connect(self._open_full_manager)
         layout.addWidget(indiv)
         layout.addStretch()
-        return tab
+        
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setWidget(tab)
+        return scroll
 
     def _create_about_tab(self):
-        """Create about tab optimized for Windows 10/11"""
         tab = QWidget()
-        tab.setStyleSheet("background-color: #ffffff;")
-        
         layout = QVBoxLayout(tab)
-        layout.setContentsMargins(50, 40, 50, 40)
-        layout.setSpacing(15)
+        layout.setContentsMargins(45, 45, 45, 45)
+        layout.setSpacing(25)
         
+        card = QFrame()
+        card.setStyleSheet("""
+            .QFrame {
+                background: #ffffff;
+                border: 1px solid #e2e8f0;
+                border-radius: 12px;
+            }
+        """)
+        self._add_shadow(card)
+        card_layout = QVBoxLayout(card)
+        card_layout.setContentsMargins(40, 40, 40, 40)
+        card_layout.setSpacing(20)
+
         title = QLabel("About eSim Tool Manager")
-        title.setFont(QFont("Segoe UI", 18, QFont.Weight.Bold))
-        title.setStyleSheet("color: #0056b3; margin-bottom: 5px;")
-        layout.addWidget(title)        
+        title.setFont(QFont("Segoe UI", 22, QFont.Weight.Bold))
+        title.setStyleSheet("color: #0f172a; margin-bottom: 10px; background: transparent; border: none;")
+        card_layout.addWidget(title)        
 
         info_text = """
-        <div style='font-family: "Segoe UI", sans-serif; font-size: 10.5pt; color: #333; line-height: 1.5;'>
-            <p><b>Key Features:</b><br>
-            <span style='color: #555;'>• Install analog or digital simulation packages<br>
-            • Update individual package versions<br>
-            • Uninstall packages selectively and Integrated with eSim GUI</span></p>
+        <div style='font-family: "Segoe UI", sans-serif; font-size: 11pt; color: #334155; line-height: 1.8;'>
+            <p><b>Platform Capabilities:</b><br>
+            <span style='color: #64748b;'>• Streamlined deployment of comprehensive analog and digital simulation environments<br>
+            • Granular version control and independent package updating<br>
+            • Deep integration with the primary eSim graphical interface and backend architecture</span></p>
             
-            <p><b>Supported Packages:</b><br>
-            <span style='color: #555;'>• KiCad: 6.0.11, 7.0.11, 8.0.9<br>
-            • Ngspice: 35, 36, 37, 38, 39, 40, 41, 42, 43<br>
-            • GHDL: 3.0.0, 4.0.0, 4.1.0, nightly and Verilator: 4.228, 5.020, 5.026, 5.030</span></p>
+            <p><b>Supported Ecosystem:</b><br>
+            <span style='color: #64748b;'>• <b>KiCad</b>: 6.0.11, 7.0.11, 8.0.9<br>
+            • <b>Ngspice</b>: 35, 36, 37, 38, 39, 40, 41, 42, 43<br>
+            • <b>GHDL</b>: 3.0.0, 4.0.0, 4.1.0, nightly builds<br>
+            • <b>Verilator</b>: 4.228, 5.020, 5.026, 5.030</span></p>
         </div>
         """
-        
         info_label = QLabel(info_text)
         info_label.setWordWrap(True)
-        info_label.setStyleSheet("""
-            background-color: #fcfcfc; 
-            padding: 25px; 
-            border: 1px solid #e0e0e0; 
-            border-radius: 4px;
-        """)
-        layout.addWidget(info_label)
+        info_label.setStyleSheet("background: transparent; border: none;")
+        card_layout.addWidget(info_label)
         
+        layout.addWidget(card)
         layout.addStretch()
-        return tab
+        
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setWidget(tab)
+        return scroll
 
     def _create_footer(self):
         footer = QFrame()
-        footer.setFixedHeight(40)
+        footer.setFixedHeight(45)
         footer.setStyleSheet("""
-            QFrame {
-                background: #f5f5f5;
-                border-top: 1px solid #e0e0e0;
+            .QFrame {
+                background: #f1f5f9;
+                border-top: 1px solid #cbd5e1;
             }
         """)
         layout = QHBoxLayout(footer)
-        layout.setContentsMargins(20, 0, 20, 0)
-        lbl = QLabel(
-            "eSim Tool Manager"
-        )
-        lbl.setFont(QFont("Arial", 9))
-        lbl.setStyleSheet("color: #999; background: transparent;")
+        layout.setContentsMargins(25, 0, 25, 0)
+        lbl = QLabel("eSim Tool Manager - Powered by PyQt6  •  Advanced Implementation")
+        lbl.setFont(QFont("Segoe UI", 9, QFont.Weight.Bold))
+        lbl.setStyleSheet("color: #64748b; background: transparent;")
         layout.addWidget(lbl)
         layout.addStretch()
         return footer
-
-    def _refresh_status(self):
-        self.installed_versions = load_installed_versions()
-        new_panel = self._create_status_panel()
-        self._main_layout.replaceWidget(self._status_frame, new_panel)
-        self._status_frame.deleteLater()
-        self._status_frame = new_panel
-
     def _install_analog(self):
         reply = QMessageBox.question(
             self, "Confirm Analog Mode Installation",
