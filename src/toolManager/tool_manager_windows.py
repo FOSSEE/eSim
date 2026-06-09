@@ -1179,6 +1179,8 @@ ESIM_DIR = DEFAULT_ESIM_DIR
 
 def check_esim(target_version):
     indicators = [
+        BASE_DIR / "eSim.bat",
+        BASE_DIR / "src" / "frontEnd" / "Application.py",
         ESIM_DIR / "eSim.bat",
         ESIM_DIR / "uninst-eSim.exe",
         ESIM_DIR / "src" / "frontEnd" / "Application.py",
@@ -1222,7 +1224,7 @@ def install_esim(target_version, upgrade=False):
     try:
         subprocess.run([str(installer), "/S"], timeout=1800)
         time.sleep(20)
-        for p in [ESIM_DIR / "eSim.bat", ESIM_DIR / "uninst-eSim.exe"]:
+        for p in [BASE_DIR / "eSim.bat", BASE_DIR / "src" / "frontEnd" / "Application.py", ESIM_DIR / "eSim.bat", ESIM_DIR / "uninst-eSim.exe"]:
             if p.exists():
                 update_state("esim", display_ver)
                 print(f"[OK] eSim {display_ver} installed")
