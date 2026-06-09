@@ -10,13 +10,13 @@ checks across other files.
 
 Exports
 -------
-IS_WINDOWS              bool
-IS_LINUX                bool
-IS_MAC                  bool
-MSYS2_PATH              Path   (Windows: default C:\\msys64)
-subprocess_flags()      dict   (suppress console window on Windows)
+IS_WINDOWS               bool
+IS_LINUX                 bool
+IS_MAC                   bool
+get_msys32_path()         Path   (Windows only: default C:\\msys64)
+subprocess_flags()       dict   (suppress console window on Windows)
 detect_package_manager() str | None
-distro_label()          str
+distro_label()           str
 
 Note: privilege elevation (pkexec) is handled in tool_manager_linux.py,
 not here. This module is detection-only.
@@ -32,7 +32,7 @@ __author__  = "Eashan Hasija"
 
 __all__ = [
     "IS_WINDOWS", "IS_LINUX", "IS_MAC",
-    "MSYS2_PATH",
+    "get_mysys32_path",
     "subprocess_flags",
     "detect_package_manager",
     "distro_label",
@@ -47,8 +47,12 @@ IS_MAC:     bool = sys.platform == "darwin"
 # Previously hardcoded in tool_manager_windows.py L25 as:
 #     MSYS2_PATH = Path(r"C:\msys64")
 # Centralised here as the single place to change if the path changes.
-import os
-MSYS2_PATH: Path =  Path(os.environ.get("MSYS2_PATH", r"C:\msys64"))
+def get_mysys32_path() -> Path:
+    if not IS_WINDOWS:
+        return RuntimeError("MYSYS32 is only valid for Windows")
+    
+    import os
+    return Path(os.environ.get("MSYS2_PATH", r"C:\msys64"))
 
 # ── Subprocess flags ───────────────────────────────────────────────────────────
 if IS_WINDOWS:
