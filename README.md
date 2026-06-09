@@ -17,13 +17,13 @@
 </p>
 
 <p align="center">
-  <a href="https://esim.readthedocs.io/en/latest/?badge=latest"><img src="https://img.shields.io/readthedocs/esim?style=flat-square&logo=readthedocs&logoColor=white&label=docs" alt="Docs"/></a>
-  <a href="https://github.com/fossee/esim/network"><img src="https://img.shields.io/github/forks/fossee/esim?style=flat-square&logo=git&logoColor=white" alt="Forks"/></a>
-  <a href="https://github.com/fossee/esim/stargazers"><img src="https://img.shields.io/github/stars/fossee/esim?style=flat-square&logo=github&color=yellow" alt="Stars"/></a>
-  <a href="https://github.com/fossee/esim/issues"><img src="https://img.shields.io/github/issues/fossee/esim?style=flat-square&logo=github" alt="Issues"/></a>
-  <a href="https://github.com/fossee/esim"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs Welcome"/></a>
-  <a href="https://github.com/fossee/esim/graphs/contributors"><img src="https://img.shields.io/github/contributors/fossee/esim?style=flat-square&color=orange" alt="Contributors"/></a>
-  <a href="https://www.python.org/dev/peps/pep-0008/"><img src="https://img.shields.io/badge/code%20style-PEP8-orange?style=flat-square" alt="PEP8"/></a>
+  <a href="https://esim.readthedocs.io/en/latest/?badge=latest"><img src="https://img.shields.io/readthedocs/esim?style=for-the-badge&logo=readthedocs&logoColor=white&label=docs&color=20739a" alt="Docs"/></a>
+  <a href="https://github.com/fossee/esim/network"><img src="https://img.shields.io/github/forks/fossee/esim?style=for-the-badge&logo=git&logoColor=white&color=0984e3" alt="Forks"/></a>
+  <a href="https://github.com/fossee/esim/stargazers"><img src="https://img.shields.io/github/stars/fossee/esim?style=for-the-badge&logo=github&logoColor=white&color=fdcb6e" alt="Stars"/></a>
+  <a href="https://github.com/fossee/esim/issues"><img src="https://img.shields.io/github/issues/fossee/esim?style=for-the-badge&logo=github&logoColor=white&color=ea4aaa" alt="Issues"/></a>
+  <a href="https://github.com/fossee/esim"><img src="https://img.shields.io/badge/PRs-welcome-00b894?style=for-the-badge&logo=github&logoColor=white" alt="PRs Welcome"/></a>
+  <a href="https://github.com/fossee/esim/graphs/contributors"><img src="https://img.shields.io/github/contributors/fossee/esim?style=for-the-badge&logo=github&logoColor=white&color=e17055" alt="Contributors"/></a>
+  <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-pep8-000000?style=for-the-badge&logo=python&logoColor=white" alt="Code Style"/></a>
 </p>
 
 <p align="center">
@@ -44,7 +44,11 @@
 
 eSim is designed for electronics engineers, students, educators, and hobbyists who want a powerful yet cost-free alternative to proprietary EDA tools. It supports analog, digital, and **mixed-signal simulations**, including microcontroller integration.
 
-> 📥 **Download**: [esim.fossee.in/downloads](https://esim.fossee.in/downloads) &nbsp;|&nbsp; 📄 **User Manual**: [eSim Manual v2.5 (PDF)](https://static.fossee.in/esim/manuals/eSim_Manual_2.5.pdf) &nbsp;|&nbsp; 📚 **Developer Docs**: [esim.readthedocs.io](https://esim.readthedocs.io/en/latest/)
+<p align="center">
+  <b>📥 Download:</b> <a href="https://esim.fossee.in/downloads">v2.5 Release</a> &nbsp;&nbsp;|&nbsp;&nbsp; 
+  <b>📄 Manual:</b> <a href="https://static.fossee.in/esim/manuals/eSim_Manual_2.5.pdf">PDF Guide</a> &nbsp;&nbsp;|&nbsp;&nbsp; 
+  <b>📚 Docs:</b> <a href="https://esim.readthedocs.io/en/latest/">ReadTheDocs</a>
+</p>
 
 ---
 
@@ -52,19 +56,19 @@ eSim is designed for electronics engineers, students, educators, and hobbyists w
 
 | Category | Feature | Description |
 |:---------|:--------|:------------|
-| 🎨 **Design** | Schematic Capture | Draw circuit schematics using KiCad's schematic editor with eSim's custom symbol libraries |
-| 🔄 **Conversion** | KiCad to Ngspice | Convert KiCad schematics to Ngspice-compatible netlists for simulation |
-| ⚡ **Simulation** | Ngspice Engine | Run DC, AC, Transient, and other SPICE analyses with real-time interactive plots |
-| 📊 **Analysis** | Waveform Plotting | Visualize simulation results with matplotlib-based Python plots and Ngspice native plots |
-| 🔧 **Model Editor** | Device Models | Create and edit SPICE device models (Diodes, BJTs, MOSFETs, JFETs, IGBTs, etc.) |
-| 🧩 **Subcircuits** | Subcircuit Builder | Build, manage, and upload reusable subcircuit blocks |
-| 🖥️ **Mixed-Signal** | NGHDL Integration | Interface VHDL digital models (via GHDL) with analog Ngspice simulations |
-| 🌐 **Verilog** | Makerchip + NgVeri | Use Makerchip IDE for Verilog/TL-Verilog design and convert to Ngspice models |
-| 🏭 **PCB** | Layout Design | Design PCB layouts using KiCad's PCB editor with eSim's footprint libraries |
-| 🔁 **Converters** | Schematic Import | Convert PSpice and LTSpice schematics/libraries to KiCad-compatible formats |
-| 📐 **Modelica** | Ngspice-to-Modelica | Convert Ngspice netlists to Modelica models for OpenModelica simulation |
-| 🏗️ **SKY130 PDK** | SkyWater 130nm | Support for SkyWater SKY130 open-source Process Design Kit |
-| 🔬 **IHP PDK** | IHP OpenPDK | Integration with IHP SG13G2 open-source PDK for SiGe BiCMOS |
+| • **Design** | Schematic Capture | Draw circuit schematics using KiCad's schematic editor with eSim's custom symbol libraries |
+| • **Conversion** | KiCad to Ngspice | Convert KiCad schematics to Ngspice-compatible netlists for simulation |
+| • **Simulation** | Ngspice Engine | Run DC, AC, Transient, and other SPICE analyses with real-time interactive plots |
+| • **Analysis** | Waveform Plotting | Visualize simulation results with matplotlib-based Python plots and Ngspice native plots |
+| • **Model Editor** | Device Models | Create and edit SPICE device models (Diodes, BJTs, MOSFETs, JFETs, IGBTs, etc.) |
+| • **Subcircuits** | Subcircuit Builder | Build, manage, and upload reusable subcircuit blocks |
+| • **Mixed-Signal** | NGHDL Integration | Interface VHDL digital models (via GHDL) with analog Ngspice simulations |
+| • **Verilog** | Makerchip + NgVeri | Use Makerchip IDE for Verilog/TL-Verilog design and convert to Ngspice models |
+| • **PCB** | Layout Design | Design PCB layouts using KiCad's PCB editor with eSim's footprint libraries |
+| • **Converters** | Schematic Import | Convert PSpice and LTSpice schematics/libraries to KiCad-compatible formats |
+| • **Modelica** | Ngspice-to-Modelica | Convert Ngspice netlists to Modelica models for OpenModelica simulation |
+| • **SKY130 PDK** | SkyWater 130nm | Support for SkyWater SKY130 open-source Process Design Kit |
+| • **IHP PDK** | IHP OpenPDK | Integration with IHP SG13G2 open-source PDK for SiGe BiCMOS |
 
 ---
 
@@ -74,100 +78,72 @@ eSim is designed for electronics engineers, students, educators, and hobbyists w
 
 ```mermaid
 graph TB
-    subgraph USER["👤 User Interface Layer"]
-        APP["Application.py<br/><i>Main Window (PyQt6)</i>"]
-        PE["ProjectExplorer<br/><i>File Browser</i>"]
-        DA["DockArea<br/><i>Tabbed Workspace</i>"]
-        TE["TimeExplorer<br/><i>Snapshot Manager</i>"]
-        CON["Console<br/><i>Log Output</i>"]
+    %% Styling
+    classDef ui fill:#2A3F54,stroke:#1ABB9C,stroke-width:2px,color:#fff
+    classDef core fill:#3E536C,stroke:#3498DB,stroke-width:2px,color:#fff
+    classDef engine fill:#1F2D3D,stroke:#E74C3C,stroke-width:2px,color:#fff
+    classDef data fill:#E9F0F5,stroke:#95A5A6,stroke-width:1px,color:#333
+    
+    subgraph UI ["User Interface (PyQt6)"]
+        A[Application Main Window]:::ui
+        PE[Project Explorer]:::ui
+        DA[Dock Area Workspace]:::ui
+        TE[Time Explorer]:::ui
+        CON[Console Widget]:::ui
+        
+        A --> PE & DA & TE & CON
     end
 
-    subgraph CORE["⚙️ Core Engine Layer"]
-        KNG["KiCad-to-Ngspice<br/>Converter"]
-        SIM["Ngspice Simulation<br/>Engine"]
-        PLT["Plot Window<br/><i>matplotlib</i>"]
-        ME["Model Editor"]
-        SC["Subcircuit<br/>Manager"]
+    subgraph CORE ["Core Python Modules"]
+        K2N[KiCad-to-Ngspice]:::core
+        SIM[Ngspice Simulator]:::core
+        PLT[Matplotlib Plotter]:::core
+        ME[Model Editor]:::core
+        SC[Subcircuit Builder]:::core
+        
+        DA --> K2N & SIM & ME & SC
     end
 
-    subgraph INTEGRATION["🔌 Integration Layer"]
-        NGHDL["NGHDL<br/><i>GHDL Interface</i>"]
-        MKR["Makerchip/NgVeri<br/><i>Verilog Models</i>"]
-        MOD["Modelica Converter<br/><i>OpenModelica</i>"]
-        CONV["Schematic Converters<br/><i>PSpice / LTSpice</i>"]
+    subgraph INTEGRATION ["Mixed-Signal & External APIs"]
+        NGHDL[NGHDL Interface]:::core
+        MKR[Makerchip/NgVeri]:::core
+        MOD[Modelica Converter]:::core
+        CONV[PSpice/LTSpice Converter]:::core
+        
+        DA --> NGHDL & MKR & MOD & CONV
     end
 
-    subgraph EXTERNAL["📦 External Tools"]
-        KICAD["KiCad<br/><i>Schematic + PCB</i>"]
-        NGSPICE["Ngspice<br/><i>SPICE Simulator</i>"]
-        GHDL["GHDL<br/><i>VHDL Simulator</i>"]
-        VERILATOR["Verilator<br/><i>Verilog Simulator</i>"]
-        OMEDIT["OpenModelica<br/><i>Modelica IDE</i>"]
+    subgraph ENGINES ["Simulation & EDA Engines"]
+        KICAD[KiCad Eeschema]:::engine
+        PCB[KiCad Pcbnew]:::engine
+        NGSPICE[Ngspice Backend]:::engine
+        GHDL[GHDL Simulator]:::engine
+        VER[Verilator]:::engine
+        OM[OpenModelica]:::engine
     end
 
-    APP --> PE
-    APP --> DA
-    APP --> TE
-    APP --> CON
-
-    DA --> KNG
-    DA --> SIM
-    DA --> ME
-    DA --> SC
-    DA --> NGHDL
-    DA --> MKR
-    DA --> MOD
-    DA --> CONV
-
-    KNG --> KICAD
-    SIM --> NGSPICE
-    SIM --> PLT
-    NGHDL --> GHDL
-    MKR --> VERILATOR
-    MOD --> OMEDIT
-
-    style USER fill:#1a1a2e,stroke:#e94560,color:#fff
-    style CORE fill:#16213e,stroke:#0f3460,color:#fff
-    style INTEGRATION fill:#0f3460,stroke:#533483,color:#fff
-    style EXTERNAL fill:#533483,stroke:#e94560,color:#fff
+    %% Data Flow
+    XML[(Netlist / XML)]:::data
+    RAW[(Raw Data / txt)]:::data
+    VHDL[(VHDL Files)]:::data
+    
+    K2N -- Generates --> XML
+    XML -- Consumed by --> NGSPICE
+    SIM -- Triggers --> NGSPICE
+    NGSPICE -- Outputs --> RAW
+    RAW -- Parsed by --> PLT
+    
+    NGHDL -- Compiles --> VHDL
+    VHDL -- Simulated by --> GHDL
+    GHDL -- Co-simulates --> NGSPICE
+    
+    MKR -- Verilog/TL-V --> VER
+    
+    KICAD -- Schematic --> K2N
+    KICAD -- Netlist --> PCB
 ```
 
-### Simulation Workflow
-
-```mermaid
-flowchart LR
-    A["📝 Create/Open<br/>Project"] --> B["🎨 Draw<br/>Schematic<br/><i>KiCad</i>"]
-    B --> C["🔄 Convert<br/>KiCad → Ngspice"]
-    C --> D["⚙️ Configure<br/>Analysis &<br/>Parameters"]
-    D --> E["▶️ Run<br/>Simulation<br/><i>Ngspice</i>"]
-    E --> F["📊 Plot &<br/>Analyze<br/>Results"]
-
-    style A fill:#6c5ce7,stroke:#a29bfe,color:#fff
-    style B fill:#00b894,stroke:#55efc4,color:#fff
-    style C fill:#fdcb6e,stroke:#f9ca24,color:#333
-    style D fill:#e17055,stroke:#fab1a0,color:#fff
-    style E fill:#0984e3,stroke:#74b9ff,color:#fff
-    style F fill:#d63031,stroke:#ff7675,color:#fff
-```
-
-### Mixed-Signal Simulation Flow (NGHDL)
-
-```mermaid
-flowchart TB
-    V["📄 Write VHDL Code"] --> U["⬆️ Upload via NGHDL"]
-    U --> G["🔧 GHDL Compiles<br/>VHDL to Shared Lib"]
-    G --> CM["📦 Create Ngspice<br/>Code Model"]
-    CM --> KS["🎨 Create KiCad<br/>Symbol"]
-    KS --> SC["📝 Use in<br/>Schematic"]
-    SC --> SIM["⚡ Mixed-Signal<br/>Simulation"]
-
-    style V fill:#a29bfe,stroke:#6c5ce7,color:#fff
-    style U fill:#74b9ff,stroke:#0984e3,color:#fff
-    style G fill:#55efc4,stroke:#00b894,color:#fff
-    style CM fill:#ffeaa7,stroke:#fdcb6e,color:#333
-    style KS fill:#fab1a0,stroke:#e17055,color:#fff
-    style SIM fill:#fd79a8,stroke:#e84393,color:#fff
-```
+*For detailed simulation workflows, sub-system operations, and system flowcharts, please refer to our [Architecture & Workflows Guide](ARCHITECTURE.md).*
 
 ---
 
@@ -203,7 +179,7 @@ flowchart TB
 
 ```
 src/
-├── frontEnd/               # 🖥️ GUI & Main Application
+├── frontEnd/               # GUI & Main Application
 │   ├── Application.py      # Main window, toolbar setup, menu actions (960 lines)
 │   ├── DockArea.py          # Tabbed dock workspace for editors/simulators (24K)
 │   ├── ProjectExplorer.py   # File tree browser for project navigation (20K)
@@ -211,7 +187,7 @@ src/
 │   ├── TerminalUi.py        # Embedded terminal widget (5K)
 │   └── Workspace.py         # Workspace selection dialog (6K)
 │
-├── kicadtoNgspice/          # 🔄 KiCad-to-Ngspice Conversion Engine
+├── kicadtoNgspice/          # KiCad-to-Ngspice Conversion Engine
 │   ├── KicadtoNgspice.py    # Main conversion controller & UI (41K)
 │   ├── Convert.py           # Netlist parsing and SPICE generation (40K)
 │   ├── Analysis.py          # Analysis type configuration (DC, AC, Transient) (32K)
@@ -223,23 +199,23 @@ src/
 │   ├── Model.py              # Model file handling (6K)
 │   └── TrackWidget.py        # UI tracking widget (1K)
 │
-├── ngspiceSimulation/       # ⚡ Simulation Engine & Plotting
+├── ngspiceSimulation/       # Simulation Engine & Plotting
 │   ├── NgspiceWidget.py     # Ngspice process management & execution (16K)
 │   ├── plot_window.py       # matplotlib-based waveform plotter (66K)
 │   ├── plotting_widgets.py  # Custom plot controls and widgets (8K)
 │   └── data_extraction.py   # Simulation data file parser (11K)
 │
-├── modelEditor/             # 🔧 SPICE Model Editor
+├── modelEditor/             # SPICE Model Editor
 │   └── ModelEditor.py       # GUI for creating/editing device models (33K)
 │
-├── subcircuit/              # 🧩 Subcircuit Management
+├── subcircuit/              # Subcircuit Management
 │   ├── Subcircuit.py        # Subcircuit manager main window (3K)
 │   ├── newSub.py            # Create new subcircuit (3K)
 │   ├── openSub.py           # Open existing subcircuit (1K)
 │   ├── uploadSub.py         # Upload subcircuit to library (4K)
 │   └── convertSub.py        # Subcircuit format conversion (2K)
 │
-├── maker/                   # 🌐 Makerchip & NgVeri Integration
+├── maker/                   # Makerchip & NgVeri Integration
 │   ├── Maker.py             # Makerchip IDE integration (23K)
 │   ├── NgVeri.py            # Verilog-to-Ngspice model generator (17K)
 │   ├── ModelGeneration.py   # Auto model generation pipeline (48K)
@@ -247,7 +223,7 @@ src/
 │   ├── makerchip.py         # Makerchip cloud IDE connector (3K)
 │   └── Appconfig.py         # Maker-specific configuration (2K)
 │
-├── converter/               # 🔁 Schematic Format Converters
+├── converter/               # Schematic Format Converters
 │   ├── pspiceToKicad.py     # PSpice schematic importer (5K)
 │   ├── ltspiceToKicad.py    # LTSpice schematic importer (6K)
 │   ├── libConverter.py      # Library format converter (3K)
@@ -523,31 +499,39 @@ flowchart LR
 > - Follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) code style
 > - Include a commit body describing what you changed and why
 
-For detailed contribution guidelines, see [CONTRIBUTION.md](CONTRIBUTION.md).
+For detailed contribution guidelines, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
-## 👥 Top Contributors
+## 👥 Contributors
 
-A huge thank you to all the amazing people who have contributed to eSim! 🎉
+A huge thank you to all **149+ amazing people** who have contributed to eSim! 🎉
 
-| # | Contributor | Commits | GitHub Profile |
-|:-:|:------------|:-------:|:---------------|
-| 🥇 | **Sumanto Kar** | 280 | [![GitHub](https://img.shields.io/badge/-Eyantra698Sumanto-181717?style=flat-square&logo=github)](https://github.com/Eyantra698Sumanto) |
-| 🥈 | **Rahul Paknikar** | 262 | [![GitHub](https://img.shields.io/badge/-rahulp13-181717?style=flat-square&logo=github)](https://github.com/rahulp13) |
-| 🥉 | **Fahim Khan** | 244 | [![GitHub](https://img.shields.io/badge/-fahim--eSim-181717?style=flat-square&logo=github)](https://github.com/fahim-oscad) |
-| 4 | **Saurabh Bansod** | 46 | [![GitHub](https://img.shields.io/badge/-saurabhb17-181717?style=flat-square&logo=github)](https://github.com/saurabhb17) |
-| 5 | **Athul George** | 37 | [![GitHub](https://img.shields.io/badge/-athulappadan-181717?style=flat-square&logo=github)](https://github.com/athulappadan) |
-| 6 | **Nil Shah** | 36 | [![GitHub](https://img.shields.io/badge/-nilshah98-181717?style=flat-square&logo=github)](https://github.com/nilshah98) |
-| 7 | **Pranav P** | 34 | [![GitHub](https://img.shields.io/badge/-pranavsdreams-181717?style=flat-square&logo=github)](https://github.com/pranavsdreams) |
-| 8 | **Annesha Dey** | 33 | [![GitHub](https://img.shields.io/badge/-AD20047-181717?style=flat-square&logo=github)](https://github.com/AD20047) |
-| 9 | **Sunil Shetye** | 33 | [![GitHub](https://img.shields.io/badge/-sunilshetye-181717?style=flat-square&logo=github)](https://github.com/sunilshetye) |
-| 10 | **Anjali Jaiswal** | 32 | [![GitHub](https://img.shields.io/badge/-anjalijaiswal08-181717?style=flat-square&logo=github)](https://github.com/anjalijaiswal08) |
-| 11 | **Hariom Thakur** | 28 | [![GitHub](https://img.shields.io/badge/-hariom-181717?style=flat-square&logo=github)](https://github.com/hariom) |
-| 12 | **Shanthi Priya** | 24 | [![GitHub](https://img.shields.io/badge/-shanthipriya-181717?style=flat-square&logo=github)](https://github.com/shanthipriya) |
-| 13 | **Aditya Minocha** | 23 | [![GitHub](https://img.shields.io/badge/-adityaminocha-181717?style=flat-square&logo=github)](https://github.com/adityaminocha) |
-| 14 | **Ganderla Chaithanya** | 22 | [![GitHub](https://img.shields.io/badge/-GanderlaChaithanya-181717?style=flat-square&logo=github)](https://github.com/GanderlaChaithanya) |
-| 15 | **Anwesha** | 21 | [![GitHub](https://img.shields.io/badge/-Anwesha06-181717?style=flat-square&logo=github)](https://github.com/Anwesha06) |
+<table align="center" style="border:none;">
+  <tr>
+    <td align="center" width="250" style="border:none;">
+      <a href="https://github.com/Eyantra698Sumanto" style="text-decoration:none;">
+        <img src="https://github.com/Eyantra698Sumanto.png" width="120" height="120" style="border-radius:10%;" alt="Sumanto Kar"/><br/>
+        <b>🥇 Sumanto Kar</b>
+      </a><br/>
+      <sub>Lead Maintainer · 320 commits</sub>
+    </td>
+    <td align="center" width="250" style="border:none;">
+      <a href="https://github.com/rahulp13" style="text-decoration:none;">
+        <img src="https://github.com/rahulp13.png" width="80" height="80" style="border-radius:10%;" alt="Rahul Paknikar"/><br/>
+        <b>🥈 Rahul Paknikar</b>
+      </a><br/>
+      <sub>265 commits</sub>
+    </td>
+    <td align="center" width="250" style="border:none;">
+      <a href="https://github.com/fahim-oscad" style="text-decoration:none;">
+        <img src="https://github.com/fahim-oscad.png" width="80" height="80" style="border-radius:10%;" alt="Fahim Khan"/><br/>
+        <b>🥉 Fahim Khan</b>
+      </a><br/>
+      <sub>244 commits</sub>
+    </td>
+  </tr>
+</table>
 
 <p align="center">
   <a href="https://github.com/fossee/esim/graphs/contributors">
@@ -555,7 +539,7 @@ A huge thank you to all the amazing people who have contributed to eSim! 🎉
   </a>
 </p>
 
-<p align="center"><em>149+ contributors and counting! <a href="https://github.com/fossee/esim/graphs/contributors">View all →</a></em></p>
+<p align="center"><em>149+ contributors and counting! <a href="https://github.com/fossee/esim/graphs/contributors">View all contributors →</a></em></p>
 
 ---
 
@@ -572,26 +556,7 @@ A huge thank you to all the amazing people who have contributed to eSim! 🎉
 
 ---
 
-## 🔒 Security
 
-For information on reporting security vulnerabilities, please see [SECURITY.md](SECURITY.md).
-
----
-
-## 📄 License
-
-eSim is released under the **GNU General Public License v3.0** — see the [LICENSE](LICENSE) file for details.
-
-```
-Copyright (C) FOSSEE, IIT Bombay
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-```
-
----
 
 <p align="center">
   <strong>Built with ❤️ by the <a href="https://www.fossee.in/">FOSSEE Team</a> at <a href="https://www.iitb.ac.in/">IIT Bombay</a></strong>
