@@ -1,6 +1,6 @@
-# IC_74LS31
+# IC_74LS31 Hex Delay Element
 
-It is a Hex Delay Element IC. The 74LS31 contains six independent delay elements designed to introduce controlled propagation delays in digital circuits. It belongs to the Low-Power Schottky TTL logic family.
+IC_74LS31 is a Hex Delay Element belonging to the Low-Power Schottky TTL logic family. It contains six independent delay elements designed to introduce controlled propagation delays in digital circuits.
 
 ## Usage/Examples
 
@@ -8,18 +8,19 @@ It is a Hex Delay Element IC. The 74LS31 contains six independent delay elements
 - Pulse shaping applications
 - Clock synchronization systems
 - Delay generation networks
+- Signal conditioning circuits
 
 ## Documentation
 
-To know the details of IC_74LS31 please go through the documentation : [IC_74LS31_datasheet](https://www.ti.com/lit/gpn/sn74ls31)
+To know the details of IC_74LS31 please go through the documentation: [74LS31 Datasheet](https://www.ti.com/lit/ds/symlink/sn74ls31.pdf)
 
 ## Comments/Notes
 
-Please note this is a complete digital IC. It works fine at the time of simulation.
+Please note this is a digital TTL IC. The subcircuit accurately replicates the timing behavior specified in the datasheet using cascaded inverter delay elements. The propagation delay is modeled using six independent d_inverter stages.
 
-## Contributer
+## Contributor
 
-Name: Santhosh C
-Email: santhoshc.vlsi2024@citchennai.net
-Year: 2026
-Position: FOSSEE ECE Intern 2026
+Name: Santhosh C  
+Email: santhoshc.vlsi2024@citchennai.net 
+Year: 2026  
+Position: FOSSEE eSim Intern 2026
