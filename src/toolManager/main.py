@@ -112,6 +112,8 @@ class InstallWorker(QThread):
                     line = line.rstrip()
                     if line:
                         self.progress.emit(f"  {line}")
+                        if "[ERROR]" in line or "install_failed|" in line:
+                            success = False
                 proc.wait()
                 if proc.returncode != 0:
                     success = False
