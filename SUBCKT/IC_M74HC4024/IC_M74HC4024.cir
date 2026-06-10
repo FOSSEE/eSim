@@ -1,0 +1,35 @@
+.title KiCad schematic
+U27 Net-_U27-Pad1_ Net-_U1-Pad4_ d_inverter
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ PORT
+U28 Net-_U28-Pad1_ Net-_U27-Pad1_ d_inverter
+U29 Net-_U26-Pad1_ Net-_U28-Pad1_ d_inverter
+U33 Net-_U30-Pad1_ Net-_U32-Pad1_ d_inverter
+U32 Net-_U32-Pad1_ Net-_U31-Pad1_ d_inverter
+U30 Net-_U30-Pad1_ Net-_U26-Pad1_ unconnected-_U30-Pad3_ Net-_U10-Pad4_ unconnected-_U30-Pad5_ Net-_U30-Pad1_ d_dff
+U31 Net-_U31-Pad1_ Net-_U1-Pad3_ d_inverter
+U16 Net-_U16-Pad1_ Net-_U15-Pad1_ d_inverter
+U15 Net-_U15-Pad1_ Net-_U1-Pad7_ d_inverter
+U11 Net-_U11-Pad1_ Net-_U1-Pad8_ d_inverter
+U12 Net-_U12-Pad1_ Net-_U11-Pad1_ d_inverter
+U18 Net-_U18-Pad1_ Net-_U14-Pad1_ unconnected-_U18-Pad3_ Net-_U10-Pad4_ unconnected-_U18-Pad5_ Net-_U18-Pad1_ d_dff
+U17 Net-_U14-Pad1_ Net-_U16-Pad1_ d_inverter
+U13 Net-_U10-Pad1_ Net-_U12-Pad1_ d_inverter
+U6 Net-_U10-Pad2_ Net-_U4-Pad2_ unconnected-_U6-Pad3_ Net-_U10-Pad4_ unconnected-_U6-Pad5_ Net-_U10-Pad2_ d_dff
+U2 Net-_U1-Pad2_ Net-_U2-Pad2_ d_inverter
+U3 Net-_U2-Pad2_ Net-_U3-Pad2_ d_inverter
+U4 Net-_U1-Pad1_ Net-_U4-Pad2_ d_inverter
+U5 Net-_U3-Pad2_ Net-_U10-Pad4_ d_buffer
+U21 Net-_U18-Pad1_ Net-_U20-Pad1_ d_inverter
+U26 Net-_U26-Pad1_ Net-_U22-Pad1_ unconnected-_U26-Pad3_ Net-_U10-Pad4_ unconnected-_U26-Pad5_ Net-_U26-Pad1_ d_dff
+U19 Net-_U19-Pad1_ Net-_U1-Pad6_ d_inverter
+U20 Net-_U20-Pad1_ Net-_U19-Pad1_ d_inverter
+U22 Net-_U22-Pad1_ Net-_U18-Pad1_ unconnected-_U22-Pad3_ Net-_U10-Pad4_ unconnected-_U22-Pad5_ Net-_U22-Pad1_ d_dff
+U23 Net-_U23-Pad1_ Net-_U1-Pad5_ d_inverter
+U25 Net-_U22-Pad1_ Net-_U24-Pad1_ d_inverter
+U24 Net-_U24-Pad1_ Net-_U23-Pad1_ d_inverter
+U14 Net-_U14-Pad1_ Net-_U10-Pad1_ unconnected-_U14-Pad3_ Net-_U10-Pad4_ unconnected-_U14-Pad5_ Net-_U14-Pad1_ d_dff
+U7 Net-_U7-Pad1_ Net-_U1-Pad9_ d_inverter
+U8 Net-_U8-Pad1_ Net-_U7-Pad1_ d_inverter
+U9 Net-_U10-Pad2_ Net-_U8-Pad1_ d_inverter
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ unconnected-_U10-Pad3_ Net-_U10-Pad4_ unconnected-_U10-Pad5_ Net-_U10-Pad1_ d_dff
+.end
