@@ -55,6 +55,19 @@ Refer https://esim.fossee.in/ for more information.
 4. Open the desired example under `eSim/Examples/Mixed_Signal/` using the "Open Project" button, double click on the project when the project is loaded in the "Projects" window.
 5. Click on the "Simulation" button on eSim Main window.
 
+## Microwatt Example
+
+A Microwatt OpenPOWER NGHDL co-simulation example is available under:
+
+`nghdl/Example/Microwatt`
+
+This example demonstrates the integration of the OpenPOWER Microwatt core with the NGHDL/XSPICE co-simulation flow in eSim. The example includes:
+
+* `microwatt_cosim.vhdl` - NGHDL-compatible Microwatt wrapper
+* `compile_for_nghdl.sh` - GHDL compilation script for NGHDL
+* `README.md` - Usage and integration instructions
 
 ## Contribution
 Please refer [here](https://github.com/FOSSEE/nghdl/blob/master/CONTRIBUTION.md) for further details.
+
+
