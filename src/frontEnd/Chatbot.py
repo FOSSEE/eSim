@@ -1038,6 +1038,27 @@ class ChatSidebar(QWidget):
         path = os.path.join(_SESSIONS_DIR, f"{session_id}.json")
         try:
             if os.path.exists(path):
+                # Clean up clipboard images associated with this session before deleting it
+                try:
+                    with open(path, 'r', encoding='utf-8') as f:
+                        session_data = json.load(f)
+                    messages = session_data.get('messages', [])
+                    tmp_dir = os.path.join(
+                        os.path.expanduser('~'), '.esim', 'clipboard_images'
+                    )
+                    if os.path.isdir(tmp_dir):
+                        for msg in messages:
+                            matches = re.findall(r'paste_\d+_\d+\.png', msg)
+                            for fname in matches:
+                                img_path = os.path.join(tmp_dir, fname)
+                                if os.path.isfile(img_path):
+                                    try:
+                                        os.remove(img_path)
+                                    except Exception:
+                                        pass
+                except Exception as ex:
+                    print(f"Error cleaning up session clipboard images: {ex}")
+                
                 os.remove(path)
         except Exception:
             pass
@@ -1079,6 +1100,8 @@ class ChatbotGUI(QWidget):
         self._is_generating = False
         self._images_store = {}   # key -> [base64_str, ...] for image replay
         self._last_image_paths = []  # image paths from last vision send (for follow-ups)
+        # Clean up any leftover temp clipboard images from previous runs
+        self._cleanup_unused_clipboard_images()
         # batched rather than firing synchronously after every bot response.
         self._save_pending = False
         self._save_debounce_timer = QTimer(self)
@@ -1517,6 +1540,18 @@ class ChatbotGUI(QWidget):
                 for fname in os.listdir(_SESSIONS_DIR):
                     if fname.endswith(".json"):
                         os.remove(os.path.join(_SESSIONS_DIR, fname))
+            # Clean up all clipboard images
+            tmp_dir = os.path.join(
+                os.path.expanduser('~'), '.esim', 'clipboard_images'
+            )
+            if os.path.isdir(tmp_dir):
+                for fname in os.listdir(tmp_dir):
+                    fpath = os.path.join(tmp_dir, fname)
+                    if os.path.isfile(fpath):
+                        try:
+                            os.remove(fpath)
+                        except Exception:
+                            pass
         except Exception:
             pass
 
@@ -2160,10 +2195,44 @@ class ChatbotGUI(QWidget):
         if path in self._staged_images:
             self._staged_images.remove(path)
         self._refresh_staging_strip()
+        self._cleanup_unused_clipboard_images()
 
     def _clear_staged_images(self):
         self._staged_images.clear()
         self._refresh_staging_strip()
+        self._cleanup_unused_clipboard_images()
+
+    def _cleanup_unused_clipboard_images(self):
+        tmp_dir = os.path.join(
+            os.path.expanduser('~'), '.esim', 'clipboard_images'
+        )
+        if not os.path.isdir(tmp_dir):
+            return
+        try:
+            # Gather paths currently in use
+            in_use = set()
+            for p in getattr(self, '_staged_images', []):
+                in_use.add(os.path.normpath(p))
+            for p in getattr(self, '_last_image_paths', []):
+                in_use.add(os.path.normpath(p))
+            
+            # List files in the directory and delete those not in use
+            for fname in os.listdir(tmp_dir):
+                fpath = os.path.join(tmp_dir, fname)
+                if os.path.isfile(fpath):
+                    if os.path.normpath(fpath) not in in_use:
+                        try:
+                            os.remove(fpath)
+                        except Exception:
+                            pass
+        except Exception:
+            pass
+
+    def closeEvent(self, event):
+        self._last_image_paths.clear()
+        self._staged_images.clear()
+        self._cleanup_unused_clipboard_images()
+        super().closeEvent(event)
 
     def _auto_switch_model(self, keywords, preferred_names, label):
         """
@@ -2797,6 +2866,7 @@ class ChatbotGUI(QWidget):
         # switch to the Qwen model. Since Qwen cannot process images,
         # we must drop any previous image context and use the text worker.
         self._last_image_paths.clear()
+        self._cleanup_unused_clipboard_images()
         
         self._current_session_kind = "text"
         self._switch_to_text_model()

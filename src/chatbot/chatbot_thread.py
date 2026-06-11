@@ -6,7 +6,6 @@ import time
 import threading
 import ollama
 from PyQt5.QtCore import QThread, pyqtSignal
-from chatbot.knowledge_base import search_knowledge
 # ── Optional imports ──────────────────────────────────────────────────────────
 
 try:
@@ -307,21 +306,46 @@ class OllamaWorker(QThread):
             if not _ensure_ollama_running(self):
                 return
             self.status_signal.emit("Ollama is ready! Getting response…")
-            latest_user = ""
 
+            # Query ChromaDB (RAG) in an isolated subprocess to avoid PyQt5 native Rust/ChromaDB crashes.
+            latest_user = ""
             for line in reversed(self.chat_history):
                 if line.startswith("User:"):
                     latest_user = line[5:].strip()
                     break
 
             rag_context = ""
-
             if latest_user:
+                self.status_signal.emit("Searching knowledge base...")
                 try:
-                    rag_context = search_knowledge(latest_user, n_results=5)
+                    import subprocess
+                    import sys
+                    import base64
+                    cmd = [
+                        sys.executable,
+                        "-c",
+                        "import sys, base64; from chatbot.knowledge_base import search_knowledge; "
+                        "query = base64.b64decode(sys.stdin.read().encode('utf-8')).decode('utf-8'); "
+                        "result = search_knowledge(query); "
+                        "print(base64.b64encode(result.encode('utf-8')).decode('utf-8'))"
+                    ]
+                    q_b64 = base64.b64encode(latest_user.encode('utf-8')).decode('utf-8')
+                    proc = subprocess.Popen(
+                        cmd,
+                        stdin=subprocess.PIPE,
+                        stdout=subprocess.PIPE,
+                        stderr=subprocess.PIPE,
+                        text=True,
+                        encoding='utf-8',
+                        creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0
+                    )
+                    stdout, stderr = proc.communicate(input=q_b64, timeout=10)
+                    if proc.returncode == 0:
+                        rag_context = base64.b64decode(stdout.strip().encode('utf-8')).decode('utf-8')
+                    else:
+                        print(f"Subprocess RAG Error: {stderr}")
                 except Exception as e:
-                    print(f"RAG Error: {e}")
-                    rag_context = ""
+                    print(f"RAG Subprocess Exception: {e}")
             # Keep last 10 history lines (5 turns).
             # Sending 20 lines fills most of the context window before the
             # question is even added, forcing the model to load more tokens.

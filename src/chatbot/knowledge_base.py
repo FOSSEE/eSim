@@ -12,9 +12,11 @@ def _default_db_path() -> str:
 
 db_path = os.environ.get("ESIM_COPILOT_DB_PATH", "").strip() or _default_db_path()
 os.makedirs(db_path, exist_ok=True)
-chroma_client = chromadb.PersistentClient(path=db_path)
 
-collection = chroma_client.get_or_create_collection(name="esim_manuals")
+def _get_collection():
+    """Create a thread-local client and collection to avoid SQLite multi-threading crashes."""
+    client = chromadb.PersistentClient(path=db_path)
+    return client.get_or_create_collection(name="esim_manuals")
 
 # ==================== INGESTION ====================
 def ingest_pdfs(manuals_directory: str) -> None:
@@ -29,11 +31,12 @@ def ingest_pdfs(manuals_directory: str) -> None:
     # Clear existing DB to ensure no duplicates from old files
     print("Clearing old database...")
     try:
-        chroma_client.delete_collection("esim_manuals")
-        global collection
-        collection = chroma_client.get_or_create_collection(name="esim_manuals")
+        client = chromadb.PersistentClient(path=db_path)
+        client.delete_collection("esim_manuals")
+        collection = client.get_or_create_collection(name="esim_manuals")
     except Exception as e:
         print(f"Warning clearing DB: {e}")
+        collection = _get_collection()
 
     # Look for .txt files only
     files = [f for f in os.listdir(manuals_directory) if f.lower().endswith(".txt")]
@@ -110,6 +113,7 @@ def search_knowledge(query: str, n_results: int = 4) -> str:
         if not query_embed:
             return ""
 
+        collection = _get_collection()
         results = collection.query(
             query_embeddings=[query_embed],
             n_results=n_results,
