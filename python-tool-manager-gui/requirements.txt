@@ -1,0 +1,6 @@
+PyQt5>=5.15
+<<<<<<< HEAD
+PyYAML>=6.0
+=======
+PyYAML>=6.0
+>>>>>>> 9538b1261ecbfad03466fcfd8e9694a5faac3225
