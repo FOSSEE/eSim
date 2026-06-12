@@ -3,14 +3,14 @@ from chatbot.chatbot_thread import (
     OllamaStatusWorker, ModelFetchWorker,
     detect_topic_switch, get_stt_backend
 )
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QWidget, QHBoxLayout, QTextBrowser, QVBoxLayout,
     QLineEdit, QPushButton, QLabel, QComboBox, QApplication,
     QFileDialog, QDialog, QListWidget, QListWidgetItem, QFrame,
     QScrollArea, QSlider, QInputDialog
 )
-from PyQt5.QtCore import QTimer, Qt, pyqtSignal, QSize
-from PyQt5.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
+from PyQt6.QtCore import QTimer, Qt, pyqtSignal, QSize
+from PyQt6.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
 from configuration.Appconfig import Appconfig
 from datetime import datetime
 import re
@@ -762,7 +762,7 @@ class _SessionItemWidget(QWidget):
 
     def _on_delete_clicked(self):
         dlg = _DeleteConfirmDialog(self.title, self)
-        if dlg.exec_() == QDialog.Accepted:
+        if dlg.exec() == QDialog.Accepted:
             self.delete_requested.emit(self.session_id)
 
 
@@ -1484,7 +1484,7 @@ class ChatbotGUI(QWidget):
 
     def _delete_all_chats(self):
         dlg = _DeleteConfirmDialog("all chats", self)
-        if dlg.exec_() != QDialog.Accepted:
+        if dlg.exec() != QDialog.Accepted:
             return
 
         try:
@@ -1506,7 +1506,7 @@ class ChatbotGUI(QWidget):
         except Exception:
             return
         dlg = ChatHistoryViewer(session, self)
-        dlg.exec_()
+        dlg.exec()
 
     def _rename_current_chat(self):
         title, ok = QInputDialog.getText(
@@ -2092,7 +2092,7 @@ class ChatbotGUI(QWidget):
         self._staging_area.setVisible(bool(self._staged_images))
 
     def _make_thumbnail(self, image_path: str) -> QWidget:
-        from PyQt5.QtGui import QPixmap
+        from PyQt6.QtGui import QPixmap
 
         card = QWidget()
         card.setFixedSize(80, 64)

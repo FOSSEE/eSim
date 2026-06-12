@@ -275,7 +275,7 @@ def _history_to_text(history: List[Dict[str, str]] | None, max_turns: int = 6) -
     return "\n".join(lines).strip()
 
 
-def _is_follow_up_question(user_input: str, history: List[Dict[str, str]] | None) -> bool:
+def _is_follow_up_question(user_input: str, history: List[Dict[str, str]] | None) -> bool:# rule based logic to see if the question is follow up or not
     """
     Detect if this is a follow-up question that needs history context.
     Returns True if question lacks standalone context.
@@ -627,7 +627,7 @@ def handle_netlist_analysis(user_input: str) -> str:
 # ==================== MAIN ROUTER ====================
 
 def handle_input(user_input: str,
-                 history: List[Dict[str, str]] | None = None) -> str:
+                 history: List[Dict[str, str]] | None = None) -> str: #receives user query or classifies query calls appropriate handler and returns response 
     """
     Main router. Accepts optional conversation history for follow-up understanding.
     """

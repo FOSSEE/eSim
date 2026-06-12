@@ -12,9 +12,9 @@ def _default_db_path() -> str:
 
 db_path = os.environ.get("ESIM_COPILOT_DB_PATH", "").strip() or _default_db_path()
 os.makedirs(db_path, exist_ok=True)
-chroma_client = chromadb.PersistentClient(path=db_path)
+chroma_client = chromadb.PersistentClient(path=db_path)# vector survives restarts 
 
-collection = chroma_client.get_or_create_collection(name="esim_manuals")
+collection = chroma_client.get_or_create_collection(name="esim_manuals") #stores all the manuals/chunks
 
 # ==================== INGESTION ====================
 def ingest_pdfs(manuals_directory: str) -> None:
@@ -50,7 +50,7 @@ def ingest_pdfs(manuals_directory: str) -> None:
             with open(path, "r", encoding="utf-8") as f:
                 text = f.read()
 
-            raw_sections = text.split("\n\n")
+            raw_sections = text.split("\n\n")# split into chunks
             
             documents, embeddings, metadatas, ids = [], [], [], []
             
@@ -64,7 +64,7 @@ def ingest_pdfs(manuals_directory: str) -> None:
                 sub_chunks = [c.strip() for c in section.split("\n\n") if len(c) > 50]
                 
                 for chunk in sub_chunks:
-                    embed = get_embedding(chunk)
+                    embed = get_embedding(chunk) # each chunk becomes a vector 
                     if embed:
                         documents.append(chunk)
                         embeddings.append(embed)

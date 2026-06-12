@@ -96,7 +96,7 @@ def analyze_and_extract(image_path: str) -> Dict[str, Any]:
     Analyze schematic with image optimization, PaddleOCR text injection, and timeout handling.
     Rejects images larger than 0.5 MB.
     """
-    if not os.path.exists(image_path):
+    if not os.path.exists(image_path):# condition before handling the file 
         return {
             "error": "Image file not found",
             "vision_summary": "",
@@ -143,10 +143,10 @@ def analyze_and_extract(image_path: str) -> Dict[str, Any]:
 
     # === OPTIMIZE IMAGE BEFORE SENDING ===
     print(f"[VISION] Processing image: {os.path.basename(image_path)}")
-    image_bytes = optimize_image_for_vision(image_path)
+    image_bytes = optimize_image_for_vision(image_path)# reduce image size convert it to rgb format save as png
 
     # === EXTRACT OCR TEXT (CRITICAL STEP) ===
-    ocr_text = extract_text_with_paddle(image_path)
+    ocr_text = extract_text_with_paddle(image_path)# ocr layer returns single string 
 
     if ocr_text:
         clean_ocr = ocr_text.strip()

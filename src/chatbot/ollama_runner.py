@@ -17,7 +17,7 @@ _SETTINGS_DIR = os.path.join(
 )
 _SETTINGS_PATH = os.path.join(_SETTINGS_DIR, "settings.json")
 
-_DEFAULT_TEXT_MODEL = "qwen2.5:3b"
+_DEFAULT_TEXT_MODEL = "qwen2.5:3b"# different from the report?
 _DEFAULT_VISION_MODEL = "minicpm-v:latest"
 EMBED_MODEL = "nomic-embed-text"
 
@@ -41,10 +41,10 @@ def save_model_settings(text_model: str, vision_model: str) -> None:
         print(f"[SETTINGS] Failed to save: {e}")
 
 
-def list_available_models() -> list:
+def list_available_models() -> list:# returns list of models installed using ollama_client.list()
     """Query Ollama for installed models. Returns list of model name strings."""
     try:
-        resp = ollama_client.list()
+        resp = ollama_client.list()#Show all installed Ollama models
         names = [m["name"] for m in resp.get("models", [])]
         return names if names else [_DEFAULT_TEXT_MODEL, _DEFAULT_VISION_MODEL]
     except Exception:
@@ -52,7 +52,7 @@ def list_available_models() -> list:
 
 
 # Load settings and initialise model dicts
-_settings = load_model_settings()
+_settings = load_model_settings()# users can choose their own model if not chosen then default models will be used 
 
 VISION_MODELS = {"primary": _settings.get("vision_model", _DEFAULT_VISION_MODEL)}
 TEXT_MODELS   = {"default": _settings.get("text_model",   _DEFAULT_TEXT_MODEL)}
