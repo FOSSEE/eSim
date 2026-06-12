@@ -5,7 +5,7 @@ import subprocess
 import time
 import threading
 import ollama
-from PyQt5.QtCore import QThread, pyqtSignal
+from PyQt6.QtCore import QThread, pyqtSignal
 from chatbot.knowledge_base import search_knowledge
 # ── Optional imports ──────────────────────────────────────────────────────────
 
