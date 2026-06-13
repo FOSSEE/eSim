@@ -456,25 +456,11 @@ class ToolManagerWindow(QMainWindow):
             "#6c757d", self._uninstall_all
         ))
 
-        sep = QLabel("— or uninstall tools individually via Full Tool Manager —")
+        sep = QLabel("— or uninstall tools individually via the Individual Tools tab —")
         sep.setFont(QFont("Arial", 9))
         sep.setAlignment(Qt.AlignmentFlag.AlignCenter)
         sep.setStyleSheet("color: #aaa;")
         layout.addWidget(sep)
-
-        indiv = QPushButton("⚙   Open Full Tool Manager (Individual Uninstall)")
-        indiv.setFont(QFont("Arial", 10))
-        indiv.setCursor(Qt.CursorShape.PointingHandCursor)
-        indiv.setFixedHeight(40)
-        indiv.setStyleSheet("""
-            QPushButton {
-                background: white; color: #4A90E2;
-                border: 1px solid #4A90E2; border-radius: 6px;
-            }
-            QPushButton:hover { background: #eaf3fb; }
-        """)
-        indiv.clicked.connect(self._open_full_manager)
-        layout.addWidget(indiv)
         layout.addStretch()
         return tab
 
