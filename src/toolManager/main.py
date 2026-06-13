@@ -13,6 +13,11 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
 
+try:
+    from gui_fixed import ToolManagerGUI
+except ImportError:
+    pass # Will handle gracefully later if missing
+
 # ==================== CONFIG ====================
 BASE_DIR = Path(__file__).resolve().parent
 INFO_JSON = BASE_DIR / "information.json"
@@ -161,7 +166,7 @@ class ToolManagerWindow(QMainWindow):
             QTabBar::tab:hover    { background: #e8e8e8; }
         """)
         tabs.addTab(self._create_installation_tab(), "Quick Setup (Modes)")
-        tabs.addTab(self._create_management_tab(),   "Individual Tools")
+        tabs.addTab(ToolManagerGUI(), "Individual Tools")
         tabs.addTab(self._create_uninstall_tab(),    "Bulk Uninstall")
         tabs.addTab(self._create_about_tab(),        "About")
         self._main_layout.addWidget(tabs)
@@ -384,52 +389,6 @@ class ToolManagerWindow(QMainWindow):
         layout.addLayout(bottom)
         return card
 
-    def _create_management_tab(self):
-        tab = QWidget()
-        layout = QVBoxLayout(tab)
-        layout.setContentsMargins(30, 30, 30, 30)
-        layout.setSpacing(20)
-
-        title = QLabel("⚙  Manage Individual Tools")
-        title.setFont(QFont("Arial", 13, QFont.Weight.Bold))
-        title.setStyleSheet("color: #333; background: transparent;")
-        layout.addWidget(title)
-
-        info = QLabel("""
-<p style='color:#555; font-size:10pt; line-height:1.7;'>
-<b>The Individual Tool Manager allows you to:</b><br>
-&nbsp;&nbsp;• Install or update <b>eSim</b> (v2.2, 2.3, 2.4, 2.5)<br>
-&nbsp;&nbsp;• Install or update <b>KiCad</b> (v6, 7, 8, 9, latest)<br>
-&nbsp;&nbsp;• Install or update <b>Ngspice</b> (v35–42, latest)<br>
-&nbsp;&nbsp;• Install or update <b>GHDL</b> (v4.0.0, 4.1.0, 5.0.0, 5.1.1, latest)<br>
-&nbsp;&nbsp;• Install or update <b>Verilator</b> (v5.006, 5.018, 5.026, 5.032, latest)<br>
-&nbsp;&nbsp;• Install or update <b>LLVM</b> (v13–19, latest)<br>
-&nbsp;&nbsp;• <b>Uninstall</b> any tool individually
-</p>
-        """)
-        info.setWordWrap(True)
-        info.setStyleSheet(
-            "background: #f8f9fa; padding: 16px; border-radius: 6px;"
-            "border: 1px solid #e0e0e0;"
-        )
-        layout.addWidget(info)
-        layout.addStretch()
-
-        btn = QPushButton("Launch Individual Tool Manager")
-        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
-        btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        btn.setFixedHeight(50)
-        btn.setStyleSheet("""
-            QPushButton {
-                background: #4A90E2; color: white;
-                border: none; border-radius: 6px; padding: 12px;
-            }
-            QPushButton:hover { background: #3a7bc8; }
-        """)
-        btn.clicked.connect(self._open_full_manager)
-        layout.addWidget(btn)
-
-        return tab
 
     def _create_uninstall_tab(self):
         tab = QWidget()
@@ -659,23 +618,7 @@ class ToolManagerWindow(QMainWindow):
                 "Open the Full Tool Manager to check and fix individual tools."
             )
 
-    def _open_full_manager(self):
-        if not FULL_GUI.exists():
-            QMessageBox.critical(
-                self, "File Not Found",
-                f"gui_fixed.py not found at:\n{FULL_GUI}\n\n"
-                f"Make sure all files are in:\n{BASE_DIR}"
-            )
-            return
-        try:
-            subprocess.Popen(
-                [PYTHON, str(FULL_GUI)],
-                creationflags=(subprocess.CREATE_NO_WINDOW
-                               if sys.platform == "win32" else 0)
-            )
-        except Exception as e:
-            QMessageBox.critical(self, "Error",
-                                 f"Failed to open Tool Manager:\n{e}")
+
 
     def _uninstall_digital(self):
         reply = QMessageBox.warning(

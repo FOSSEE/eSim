@@ -577,6 +577,7 @@ class ToolManagerGUI(QWidget):
 
 
 if __name__ == "__main__":
+
     if IS_WINDOWS and not is_admin():
         app = QApplication(sys.argv)
         msg = QMessageBox()
