@@ -160,10 +160,10 @@ class ToolManagerWindow(QMainWindow):
             QTabBar::tab:selected { background: white; color: #4A90E2; }
             QTabBar::tab:hover    { background: #e8e8e8; }
         """)
-        tabs.addTab(self._create_installation_tab(), "Installation")
-        tabs.addTab(self._create_management_tab(),   "Management")
-        tabs.addTab(self._create_uninstall_tab(),     "Uninstall")
-        tabs.addTab(self._create_about_tab(),         "About")
+        tabs.addTab(self._create_installation_tab(), "Quick Setup (Modes)")
+        tabs.addTab(self._create_management_tab(),   "Individual Tools")
+        tabs.addTab(self._create_uninstall_tab(),    "Bulk Uninstall")
+        tabs.addTab(self._create_about_tab(),        "About")
         self._main_layout.addWidget(tabs)
         self._main_layout.addWidget(self._create_footer())
 
@@ -209,7 +209,7 @@ class ToolManagerWindow(QMainWindow):
         layout = QHBoxLayout(frame)
         layout.setContentsMargins(30, 12, 30, 12)
 
-        lbl = QLabel("📦 Installed:")
+        lbl = QLabel("📦 Available Tools:")
         lbl.setFont(QFont("Arial", 10, QFont.Weight.Bold))
         lbl.setStyleSheet("color: #666; background: transparent;")
         layout.addWidget(lbl)
@@ -390,28 +390,14 @@ class ToolManagerWindow(QMainWindow):
         layout.setContentsMargins(30, 30, 30, 30)
         layout.setSpacing(20)
 
-        desc = QLabel("Update individual packages or manage specific tool versions:")
-        desc.setFont(QFont("Arial", 11))
-        desc.setStyleSheet("color: #666;")
-        layout.addWidget(desc)
-
-        btn = QPushButton("⚙   Open Full Tool Manager")
-        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
-        btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        btn.setFixedHeight(50)
-        btn.setStyleSheet("""
-            QPushButton {
-                background: #4A90E2; color: white;
-                border: none; border-radius: 6px; padding: 12px;
-            }
-            QPushButton:hover { background: #3a7bc8; }
-        """)
-        btn.clicked.connect(self._open_full_manager)
-        layout.addWidget(btn)
+        title = QLabel("⚙  Manage Individual Tools")
+        title.setFont(QFont("Arial", 13, QFont.Weight.Bold))
+        title.setStyleSheet("color: #333; background: transparent;")
+        layout.addWidget(title)
 
         info = QLabel("""
 <p style='color:#555; font-size:10pt; line-height:1.7;'>
-<b>The Full Tool Manager allows you to:</b><br>
+<b>The Individual Tool Manager allows you to:</b><br>
 &nbsp;&nbsp;• Install or update <b>eSim</b> (v2.2, 2.3, 2.4, 2.5)<br>
 &nbsp;&nbsp;• Install or update <b>KiCad</b> (v6, 7, 8, 9, latest)<br>
 &nbsp;&nbsp;• Install or update <b>Ngspice</b> (v35–42, latest)<br>
@@ -428,6 +414,21 @@ class ToolManagerWindow(QMainWindow):
         )
         layout.addWidget(info)
         layout.addStretch()
+
+        btn = QPushButton("Launch Individual Tool Manager")
+        btn.setFont(QFont("Arial", 11, QFont.Weight.Bold))
+        btn.setCursor(Qt.CursorShape.PointingHandCursor)
+        btn.setFixedHeight(50)
+        btn.setStyleSheet("""
+            QPushButton {
+                background: #4A90E2; color: white;
+                border: none; border-radius: 6px; padding: 12px;
+            }
+            QPushButton:hover { background: #3a7bc8; }
+        """)
+        btn.clicked.connect(self._open_full_manager)
+        layout.addWidget(btn)
+
         return tab
 
     def _create_uninstall_tab(self):
