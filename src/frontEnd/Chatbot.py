@@ -795,7 +795,7 @@ class _SessionItemWidget(QWidget):
 
     def _on_delete_clicked(self):
         dlg = _DeleteConfirmDialog(self.title, self)
-        if dlg.exec_() == QDialog.Accepted:
+        if dlg.exec() == QDialog.Accepted:
             self.delete_requested.emit(self.session_id)
 
 
@@ -1509,7 +1509,7 @@ class ChatbotGUI(QWidget):
 
     def _delete_all_chats(self):
         dlg = _DeleteConfirmDialog("all chats", self)
-        if dlg.exec_() != QDialog.Accepted:
+        if dlg.exec() != QDialog.Accepted:
             return
 
         try:
@@ -1531,7 +1531,7 @@ class ChatbotGUI(QWidget):
         except Exception:
             return
         dlg = ChatHistoryViewer(session, self)
-        dlg.exec_()
+        dlg.exec()
 
     def _rename_current_chat(self):
         title, ok = QInputDialog.getText(
