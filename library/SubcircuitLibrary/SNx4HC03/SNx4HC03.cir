@@ -1,0 +1,18 @@
+.title KiCad schematic
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_M3-Pad1_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_M4-Pad1_ Net-_M3-Pad3_ Net-_M2-Pad1_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_M1-Pad1_ Net-_U1-Pad12_ Net-_U1-Pad13_ PORT
+U3 Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U3-Pad3_ d_nand
+U2 Net-_U1-Pad13_ Net-_U1-Pad12_ Net-_U2-Pad3_ d_nand
+U6 Net-_U2-Pad3_ Net-_M1-Pad2_ dac_bridge_1
+U7 Net-_U3-Pad3_ Net-_M2-Pad2_ dac_bridge_1
+U5 Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U5-Pad3_ d_nand
+U4 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U4-Pad3_ d_nand
+U8 Net-_U4-Pad3_ Net-_M3-Pad2_ dac_bridge_1
+U9 Net-_U5-Pad3_ Net-_M4-Pad2_ dac_bridge_1
+M4 Net-_M4-Pad1_ Net-_M4-Pad2_ Net-_M4-Pad3_ Net-_M4-Pad3_ eSim_MOS_N
+M3 Net-_M3-Pad1_ Net-_M3-Pad2_ Net-_M3-Pad3_ Net-_M3-Pad3_ eSim_MOS_N
+U10 Net-_M2-Pad3_ PORT
+U11 Net-_M1-Pad3_ PORT
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_M1-Pad3_ Net-_M1-Pad3_ eSim_MOS_N
+U12 Net-_M4-Pad3_ PORT
+M2 Net-_M2-Pad1_ Net-_M2-Pad2_ Net-_M2-Pad3_ Net-_M2-Pad3_ eSim_MOS_N
+.end
