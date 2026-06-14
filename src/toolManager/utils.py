@@ -56,7 +56,7 @@ FOSSEE_MSYS_CANDIDATES = [
 
 # ==================== HELPERS ====================
 
-def run_cmd_safe(cmd, timeout=30, cwd=None):
+def run_cmd_safe(cmd, timeout=30, cwd=None, env=None):
     """
     Executes a command safely without showing a window on Windows.
     Returns the subprocess.CompletedProcess result or None if failed.
@@ -81,14 +81,15 @@ def run_cmd_safe(cmd, timeout=30, cwd=None):
             creationflags=creationflags,
             encoding='utf-8',
             errors='ignore',
-            cwd=cwd
+            cwd=cwd,
+            env=env
         )
         return result
     except Exception as e:
         print(f"Command failed: {e}")
         return None
 
-def run_cmd_stream(cmd, timeout=900, cwd=None):
+def run_cmd_stream(cmd, timeout=900, cwd=None, env=None):
     """
     Executes a command and streams its output to stdout in real-time.
     Returns a tuple of (returncode, full_output_string).
@@ -113,7 +114,8 @@ def run_cmd_stream(cmd, timeout=900, cwd=None):
             creationflags=cf,
             encoding='utf-8',
             errors='ignore',
-            cwd=cwd
+            cwd=cwd,
+            env=env
         )
 
         output_lines = []

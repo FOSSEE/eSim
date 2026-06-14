@@ -287,6 +287,18 @@ def find_pyqt_fixed(version=None):
         pass
     
     return None, None
+def get_msys2_env():
+    env = os.environ.copy()
+    paths = []
+    msys_bin = get_msys2_mingw_bin()
+    if msys_bin: paths.append(str(msys_bin))
+    msys_root = get_msys2_mingw_root()
+    if msys_root:
+        usr_bin = msys_root.parent / "usr" / "bin"
+        if usr_bin.exists(): paths.append(str(usr_bin))
+    if paths:
+        env["PATH"] = os.pathsep.join(paths) + os.pathsep + env.get("PATH", "")
+    return env
 
 def find_ghdl(version=None):
     custom_exe = BASE_DIR / "bin" / "ghdl.exe"
@@ -294,7 +306,7 @@ def find_ghdl(version=None):
         try:
             result = run_cmd_safe([str(custom_exe), "--version"])
             if result and result.returncode == 0:
-                match = re.search(r'GHDL\s+(\d+\.\d+\.\d+)', result.stdout)
+                match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
                 if match:
                     found_ver = match.group(1)
                     if version is None or found_ver.startswith(str(version)):
@@ -307,9 +319,9 @@ def find_ghdl(version=None):
         msys2_ghdl = msys_bin / "ghdl.exe"
         if msys2_ghdl.exists():
             try:
-                result = run_cmd_safe([str(msys2_ghdl), "--version"])
+                result = run_cmd_safe([str(msys2_ghdl), "--version"], env=get_msys2_env())
                 if result and result.returncode == 0:
-                    match = re.search(r'GHDL\s+(\d+\.\d+\.\d+)', result.stdout)
+                    match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
                     if match:
                         found_ver = match.group(1)
                         if version is None or found_ver.startswith(str(version)):
@@ -322,7 +334,7 @@ def find_ghdl(version=None):
         try:
             result = run_cmd_safe([ghdl_exe, "--version"])
             if result and result.returncode == 0:
-                match = re.search(r'GHDL\s+(\d+\.\d+\.\d+)', result.stdout)
+                match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
                 if match:
                     found_ver = match.group(1)
                     if version is None or found_ver.startswith(str(version)):
@@ -339,7 +351,7 @@ def find_verilator(version=None):
             msys2_exe = msys_bin / exe_name
             if msys2_exe.exists():
                 try:
-                    result = run_cmd_safe([str(msys2_exe), "--version"], timeout=10)
+                    result = run_cmd_safe([str(msys2_exe), "--version"], timeout=10, env=get_msys2_env())
                     if result and result.returncode == 0:
                         for line in result.stdout.split('\n'):
                             if "Verilator" in line:
@@ -915,6 +927,7 @@ def install_ghdl(v, upgrade=False):
         with zipfile.ZipFile(zip_file, 'r') as zf:
             files = zf.namelist()
             print(f"Archive contains {len(files)} files")
+            print("[INFO] Extracting package... This may take several minutes.", flush=True)
             zf.extractall(install_dir)
             print("[OK] Extraction complete")
     except Exception as e:
@@ -943,10 +956,10 @@ def install_ghdl(v, upgrade=False):
         shutil.copy2(ghdl_exe, dest_exe)
         print(f"[OK] Installed to: {dest_exe}")
         
-        result = run_cmd_safe([str(dest_exe), "--version"])
+        result = run_cmd_safe([str(dest_exe), "--version"], env=get_msys2_env())
         if result and result.returncode == 0:
-            match = re.search(r'GHDL\s+(\d+\.\d+\.\d+)', result.stdout)
-            version = match.group(1) if match else v
+            match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
+            version = match.group(1) if match else "unknown"
             print(f"[OK] GHDL {version} ready to use")
             print_status("installed", version, v)
         else:
@@ -1011,7 +1024,7 @@ def _install_verilator_from_7z(archive_path, v):
         shutil.rmtree(extract_dir, ignore_errors=True)
     extract_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"[1/3] Extracting {archive_path.name}...")
+    print(f"[1/3] Extracting {archive_path.name}... This may take several minutes.", flush=True)
     try:
         with py7zr.SevenZipFile(archive_path, mode='r') as archive:
             archive.extractall(extract_dir)
@@ -1166,6 +1179,8 @@ ESIM_DIR = DEFAULT_ESIM_DIR
 
 def check_esim(target_version):
     indicators = [
+        BASE_DIR / "eSim.bat",
+        BASE_DIR / "src" / "frontEnd" / "Application.py",
         ESIM_DIR / "eSim.bat",
         ESIM_DIR / "uninst-eSim.exe",
         ESIM_DIR / "src" / "frontEnd" / "Application.py",
@@ -1209,7 +1224,7 @@ def install_esim(target_version, upgrade=False):
     try:
         subprocess.run([str(installer), "/S"], timeout=1800)
         time.sleep(20)
-        for p in [ESIM_DIR / "eSim.bat", ESIM_DIR / "uninst-eSim.exe"]:
+        for p in [BASE_DIR / "eSim.bat", BASE_DIR / "src" / "frontEnd" / "Application.py", ESIM_DIR / "eSim.bat", ESIM_DIR / "uninst-eSim.exe"]:
             if p.exists():
                 update_state("esim", display_ver)
                 print(f"[OK] eSim {display_ver} installed")
