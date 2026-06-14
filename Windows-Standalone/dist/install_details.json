@@ -1,0 +1,32 @@
+{
+    "important_packages": [
+        {
+            "package_name": "ngspice",
+            "version": "-",
+            "installed": "No",
+            "installed_date": "-",
+            "install_directory": "-"
+        },
+        {
+            "package_name": "kicad",
+            "version": "-",
+            "installed": "Yes",
+            "installed_date": "-",
+            "install_directory": "C:\\Program Files\\KiCad"
+        },
+        {
+            "package_name": "llvm",
+            "version": "-",
+            "installed": "No",
+            "installed_date": "-",
+            "install_directory": "-"
+        },
+        {
+            "package_name": "ghdl",
+            "version": "Detected",
+            "installed": "Yes",
+            "install_directory": "System PATH"
+        }
+    ],
+    "pip_packages": []
+}
