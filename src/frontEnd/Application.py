@@ -27,7 +27,8 @@ if os.name == 'nt':
     init_path = ''
 else:
     import pathmagic    # noqa:F401
-    init_path = '../../'
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    init_path = os.path.abspath(os.path.join(current_dir, "..", "..")) + os.sep
 
 from PyQt5 import QtGui, QtCore, QtWidgets
 from PyQt5.Qt import QSize
@@ -125,7 +126,7 @@ class Application(QtWidgets.QMainWindow):
             }
         """)
         self.addDockWidget(QtCore.Qt.RightDockWidgetArea, self.chatbot_dock)
-        self.chatbot_dock.hide()  # Hidden by default; toggled by the icon button
+        self.chatbot_dock.show()  # <--- Force it to open inside the layout on startup
         # When user closes dock via the X button, reposition the floating icon
         self.chatbot_dock.visibilityChanged.connect(
             lambda _: self._reposition_chatbot_icon()
@@ -851,3 +852,4 @@ if __name__ == '__main__':
         main(sys.argv)
     except Exception as err:
         print("Error: ", err)
+self.openChatbot()

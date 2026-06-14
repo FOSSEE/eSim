@@ -25,14 +25,14 @@ from chatbot.chatbot_thread import (  # type: ignore
     detect_topic_switch, get_stt_backend,
     VISION_MODEL_KEYWORDS,  # EXTRACTED: shared constant, avoids duplicate keyword list
 )
-from PyQt5.QtWidgets import (
+from PyQt6.QtWidgets import (
     QWidget, QHBoxLayout, QTextBrowser, QVBoxLayout,
     QLineEdit, QPushButton, QLabel, QComboBox, QApplication,
     QFileDialog, QDialog, QListWidget, QListWidgetItem, QFrame,
     QScrollArea, QSlider, QInputDialog
 )
-from PyQt5.QtCore import QTimer, Qt, pyqtSignal, QSize
-from PyQt5.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
+from PyQt6.QtCore import QTimer, Qt, pyqtSignal, QSize
+from PyQt6.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
 from configuration.Appconfig import Appconfig
 from datetime import datetime
 import re
@@ -47,12 +47,8 @@ _SESSIONS_DIR = os.path.join(_ESIM_DIR, 'chat_sessions')
 
 _IMG_FILTER = "Images (*.png *.jpg *.jpeg *.bmp *.gif *.tiff)"
 _IMAGE_EXTS = {'.png', '.jpg', '.jpeg', '.bmp', '.gif', '.tiff', '.tif', '.webp'}
-# NgSpice logs can be 10-50 KB; sending all of it blows past num_ctx: 2048.
-# 60 lines is enough for any meaningful error message while staying well inside
-# the context window even with history prepended.
+
 _MAX_ERROR_LOG_LINES = 60
-# _save_history() is called after every bot response; without debouncing this
-# causes synchronous I/O on the main thread on every message.
 _SAVE_DEBOUNCE_MS = 5000
 
 WELCOME_MESSAGE = """
@@ -106,13 +102,8 @@ def _typing_bubble(frame=0):
 # ── Markdown renderer ─────────────────────────────────────────────────────────
 
 def _render_inline(text):
-    """
-    Renders inline markdown: **bold**, *italic*, `code`, # headings, and [links](url).
-    """
-    # Escape HTML special chars first so subsequent substitutions are safe
     text = text.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
-    # Headings (must be processed line-by-line because they are block-level)
     def _render_headings(t):
         lines = t.split('\n')
         out = []
@@ -130,32 +121,23 @@ def _render_inline(text):
             else:
                 out.append(line)
         return '\n'.join(out)
-
     text = _render_headings(text)
 
-    # Bold (**text** or __text__)
     text = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', text)
     text = re.sub(r'__(.*?)__',     r'<b>\1</b>', text)
-
-    # Italic (*text* or _text_) — processed after bold so ** is already gone
     text = re.sub(r'\*(.*?)\*', r'<i>\1</i>', text)
     text = re.sub(r'_(.*?)_',   r'<i>\1</i>', text)
-
-    # Inline code (`code`)
     text = re.sub(
         r'`([^`]+)`',
         r'<span style="font-family:Consolas,monospace;background-color:#e8ecf0;'
         r'padding:1px 4px;border-radius:3px;">\1</span>',
         text
     )
-
-    # Markdown links [text](url)
     text = re.sub(
         r'\[([^\]]+)\]\((https?://[^\)]+)\)',
         r'<a href="\2" style="color:#0078d4;">\1</a>',
         text
     )
-
     text = text.replace('\n', '<br>')
     return text
 
@@ -164,12 +146,10 @@ def _render_markdown(text):
     result = []
     pattern = re.compile(r'```(\w*)\n?(.*?)```', re.DOTALL)
     last_end = 0
-
     for match in pattern.finditer(text):
         before = text[last_end:match.start()]
         if before:
             result.append(_render_inline(before))
-
         lang = match.group(1) or 'code'
         code = (
             match.group(2)
@@ -189,7 +169,6 @@ def _render_markdown(text):
             f'{label}{code}</div></td></tr></table>'
         )
         last_end = match.end()
-
     tail = text[last_end:]
     if tail:
         result.append(_render_inline(tail))
@@ -212,7 +191,6 @@ def _escape_text_preserve_breaks(text: str) -> str:
 
 
 def _image_thumbnail_html(b64_str: str, filename: str) -> str:
-    """Render a saved image as an inline base64 thumbnail in the chat."""
     safe_name = filename.replace('&', '&amp;').replace('<', '&lt;')
     return (
         '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
@@ -377,13 +355,11 @@ def _parse_custom_url(url):
     scheme = url.scheme()
     host = url.host()
     path = url.path().strip('/')
-
     parts = []
     if host:
         parts.append(host)
     if path:
         parts.extend([p for p in path.split('/') if p])
-
     return scheme, parts
 
 
@@ -512,7 +488,7 @@ class ChatHistoryViewer(QDialog):
         )
         top_layout.addWidget(title_lbl, 1)
 
-        meta_lbl = QLabel(f"{n_usr} msg{'s' if n_usr!=1 else ''}  ·  {updated[:10]}  ·  {kind}")
+        meta_lbl = QLabel(f"{n_usr} msg{'s' if n_usr != 1 else ''}  ·  {updated[:10]}  ·  {kind}")
         meta_lbl.setStyleSheet("font-size:10px; color:#aaa; background:transparent;")
         top_layout.addWidget(meta_lbl)
 
@@ -541,7 +517,6 @@ class ChatHistoryViewer(QDialog):
                 font-size:13px;
             }
         """)
-
         html = ""
         for line in msgs:
             if line.startswith("User:"):
@@ -592,7 +567,6 @@ class _DeleteConfirmDialog(QDialog):
         super().__init__(parent, Qt.FramelessWindowHint | Qt.Dialog)
         self.setAttribute(Qt.WA_TranslucentBackground)
         self.setMinimumWidth(320)
-
         outer = QWidget(self)
         outer.setObjectName("card")
         outer.setStyleSheet("""
@@ -602,7 +576,6 @@ class _DeleteConfirmDialog(QDialog):
                 border: 1px solid #e0e0e0;
             }
         """)
-
         card_layout = QVBoxLayout(outer)
         card_layout.setContentsMargins(28, 24, 28, 20)
         card_layout.setSpacing(14)
@@ -674,7 +647,6 @@ class _SessionItemWidget(QWidget):
         self.session_id = session_id
         self.title = title
         self.kind = kind
-
         self.setMinimumHeight(78)
         self.setStyleSheet("QWidget { background: transparent; }")
 
@@ -706,13 +678,11 @@ class _SessionItemWidget(QWidget):
         title_row = QHBoxLayout()
         title_row.setSpacing(4)
         title_row.setContentsMargins(0, 0, 0, 0)
-
         title_lbl = QLabel(title[:22] + ("…" if len(title) > 22 else ""))
         title_lbl.setStyleSheet(
             "font-size:12px; font-weight:700; color:#1a1a2e; background:transparent;"
         )
         title_row.addWidget(title_lbl, 1)
-
         date_lbl = QLabel(date)
         date_lbl.setStyleSheet("font-size:10px; color:#bbb; background:transparent;")
         title_row.addWidget(date_lbl)
@@ -721,13 +691,11 @@ class _SessionItemWidget(QWidget):
         meta_row = QHBoxLayout()
         meta_row.setSpacing(4)
         meta_row.setContentsMargins(0, 0, 0, 0)
-
         kind_lbl = QLabel()
         kind_lbl.setText(_session_kind_badge(kind))
         kind_lbl.setTextFormat(Qt.RichText)
         kind_lbl.setStyleSheet("background:transparent;")
         meta_row.addWidget(kind_lbl)
-
         if msg_count > 0:
             count_lbl = QLabel(str(msg_count))
             count_lbl.setFixedSize(20, 16)
@@ -786,7 +754,6 @@ class _SessionItemWidget(QWidget):
         """)
         self._del_btn.clicked.connect(self._on_delete_clicked)
         btn_col.addWidget(self._del_btn)
-
         btn_col.addStretch()
         outer.addLayout(btn_col)
 
@@ -795,7 +762,7 @@ class _SessionItemWidget(QWidget):
 
     def _on_delete_clicked(self):
         dlg = _DeleteConfirmDialog(self.title, self)
-        if dlg.exec_() == QDialog.Accepted:
+        if dlg.exec() == QDialog.Accepted:
             self.delete_requested.emit(self.session_id)
 
 
@@ -809,7 +776,6 @@ class ChatSidebar(QWidget):
         super().__init__(parent)
         self.setFixedWidth(290)
         self._all_sessions_cache = []
-
         self.setStyleSheet("""
             QWidget {
                 background:#ffffff;
@@ -908,7 +874,6 @@ class ChatSidebar(QWidget):
         """)
         delete_all_btn.clicked.connect(self.delete_all_requested)
         controls_layout.addWidget(delete_all_btn)
-
         root.addWidget(controls)
 
         sep = QFrame()
@@ -952,11 +917,9 @@ class ChatSidebar(QWidget):
     def populate(self):
         self._all_sessions_cache = []
         self.session_list.clear()
-
         if not os.path.exists(_SESSIONS_DIR):
             self._empty_lbl.show()
             return
-
         for fname in os.listdir(_SESSIONS_DIR):
             if not fname.endswith('.json'):
                 continue
@@ -966,14 +929,12 @@ class ChatSidebar(QWidget):
                 self._all_sessions_cache.append(s)
             except Exception:
                 pass
-
         self._all_sessions_cache.sort(key=lambda s: s.get('updated_at', ''), reverse=True)
         self._apply_filter()
 
     def _apply_filter(self):
         self.session_list.clear()
         query = self.search_input.text().strip().lower()
-
         filtered = []
         for s in self._all_sessions_cache:
             title = s.get('title', 'Chat')
@@ -983,13 +944,10 @@ class ChatSidebar(QWidget):
             haystack = f"{title} {preview} {kind}".lower()
             if not query or query in haystack:
                 filtered.append(s)
-
         if not filtered:
             self._empty_lbl.show()
             return
-
         self._empty_lbl.hide()
-
         for s in filtered:
             sid = s['id']
             title = s.get('title', 'Chat')
@@ -998,37 +956,25 @@ class ChatSidebar(QWidget):
             msg_count = sum(1 for m in msgs if m.startswith("User:"))
             preview = next((m[5:].strip() for m in msgs if m.startswith("User:")), "")
             kind = s.get('kind', 'text')
-
             item = QListWidgetItem()
             item.setData(Qt.UserRole, sid)
             widget = _SessionItemWidget(sid, title, date, msg_count, preview, kind, self.session_list)
             widget.delete_requested.connect(self._delete_session)
             widget.rename_requested.connect(self.rename_requested)
-
             item.setSizeHint(widget.sizeHint())
             self.session_list.addItem(item)
             self.session_list.setItemWidget(item, widget)
 
     def upsert_session(self, session: dict):
-        """
-        Insert or update a session entry in the sidebar immediately,
-        without reading from disk. Called as soon as the first bot reply
-        arrives so the chat appears in the sidebar right away instead of
-        waiting for the debounced disk save to complete.
-        """
         sid = session.get('id')
         if not sid:
             return
-
-        # Update existing entry in the cache if present, otherwise prepend it.
         for i, s in enumerate(self._all_sessions_cache):
             if s.get('id') == sid:
                 self._all_sessions_cache[i] = session
                 break
         else:
             self._all_sessions_cache.insert(0, session)
-
-        # Re-sort so the newest session stays at the top.
         self._all_sessions_cache.sort(
             key=lambda s: s.get('updated_at', ''), reverse=True
         )
@@ -1069,9 +1015,12 @@ class ChatSidebar(QWidget):
 # ── Main Chatbot GUI ──────────────────────────────────────────────────────────
 
 class ChatbotGUI(QWidget):
-    # Emitted from _suspend_worker's background callback to safely update
-    # the sidebar from the main thread after a background save completes.
     _background_session_saved = pyqtSignal(dict)
+
+    # Sentinel anchor names — used by find_*_anchor_cursor to locate the
+    # typing/streaming bubble in the document regardless of reflow position.
+    _TYPING_ANCHOR = '<a name="_typing_anchor_"></a>'
+    _STREAM_ANCHOR = '<a name="_stream_anchor_"></a>'
 
     def __init__(self):
         super().__init__()
@@ -1098,11 +1047,14 @@ class ChatbotGUI(QWidget):
         self._current_session_kind = "text"
         self._session_title_override = None
         self._is_generating = False
-        self._images_store = {}   # key -> [base64_str, ...] for image replay
-        self._last_image_paths = []  # image paths from last vision send (for follow-ups)
-        # Clean up any leftover temp clipboard images from previous runs
-        self._cleanup_unused_clipboard_images()
-        # batched rather than firing synchronously after every bot response.
+        self._images_store = {}
+        self._last_image_paths = []
+
+        # Streaming state (per-message; cleared in display_response)
+        self._stream_buf = None
+        self._stream_ts = None
+        self._stream_idx = None
+
         self._save_pending = False
         self._save_debounce_timer = QTimer(self)
         self._save_debounce_timer.setSingleShot(True)
@@ -1139,8 +1091,7 @@ class ChatbotGUI(QWidget):
         self._sidebar.session_list.itemDoubleClicked.connect(self._open_session_viewer)
         self._sidebar.hide()
         root.addWidget(self._sidebar)
-        # Route background-thread session saves through a signal so the
-        # sidebar upsert always runs on the main thread (Qt requirement).
+
         self._background_session_saved.connect(self._sidebar_upsert_from_signal)
 
         chat_container = QWidget()
@@ -1293,7 +1244,6 @@ class ChatbotGUI(QWidget):
         )
         status_layout.addWidget(self.status_label)
         status_layout.addStretch()
-
         chat_layout.addLayout(status_layout)
 
         self._settings_panel = QWidget()
@@ -1306,7 +1256,6 @@ class ChatbotGUI(QWidget):
             }
         """)
         self._settings_btn.toggled.connect(lambda on: self._settings_panel.setVisible(on))
-
         sp_layout = QHBoxLayout(self._settings_panel)
         sp_layout.setContentsMargins(12, 8, 12, 8)
         sp_layout.setSpacing(16)
@@ -1315,7 +1264,6 @@ class ChatbotGUI(QWidget):
         self._temp_label = QLabel(f"Precision  {self._temperature:.2f}")
         self._temp_label.setStyleSheet("font-size:10px; color:#555;")
         temp_col.addWidget(self._temp_label)
-
         self._temp_slider = QSlider(Qt.Horizontal)
         self._temp_slider.setRange(1, 100)
         self._temp_slider.setValue(int(self._temperature * 100))
@@ -1328,7 +1276,6 @@ class ChatbotGUI(QWidget):
         self._tok_label = QLabel(f"Max tokens  {self._num_predict}")
         self._tok_label.setStyleSheet("font-size:10px; color:#555;")
         tok_col.addWidget(self._tok_label)
-
         self._tok_slider = QSlider(Qt.Horizontal)
         self._tok_slider.setRange(1, 40)
         self._tok_slider.setValue(self._num_predict // 128)
@@ -1338,7 +1285,6 @@ class ChatbotGUI(QWidget):
         sp_layout.addLayout(tok_col)
 
         sp_layout.addStretch()
-
         reset_btn = QPushButton("Reset")
         reset_btn.setFixedHeight(26)
         reset_btn.setStyleSheet("""
@@ -1433,14 +1379,11 @@ class ChatbotGUI(QWidget):
         self.stop_button.hide()
         input_layout.addWidget(self.stop_button)
 
-
-
         chat_layout.addLayout(input_layout)
 
         self._staging_area = QWidget()
         self._staging_area.setStyleSheet("QWidget { background:#f5f8ff; border-radius:10px; }")
         self._staging_area.setVisible(False)
-
         staging_outer = QVBoxLayout(self._staging_area)
         staging_outer.setContentsMargins(6, 6, 6, 4)
         staging_outer.setSpacing(4)
@@ -1450,7 +1393,6 @@ class ChatbotGUI(QWidget):
         staged_lbl.setStyleSheet("font-size:11px;color:#555;")
         staging_header.addWidget(staged_lbl)
         staging_header.addStretch()
-
         clear_all_btn = QPushButton("Remove all")
         clear_all_btn.setFixedHeight(20)
         clear_all_btn.setStyleSheet("""
@@ -1470,19 +1412,109 @@ class ChatbotGUI(QWidget):
         scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         scroll.setWidgetResizable(True)
         scroll.setStyleSheet("QScrollArea { border:none; background:transparent; }")
-
         self._thumb_container = QWidget()
         self._thumb_row = QHBoxLayout(self._thumb_container)
         self._thumb_row.setContentsMargins(0, 0, 0, 0)
         self._thumb_row.setSpacing(6)
         self._thumb_row.addStretch()
-
         scroll.setWidget(self._thumb_container)
         staging_outer.addWidget(scroll)
         chat_layout.addWidget(self._staging_area)
 
         self.move_to_bottom_right()
         self._load_history()
+
+    # ── Streaming helpers ─────────────────────────────────────────────
+
+    def _start_worker(self, worker):
+        """Hook a freshly-created worker to all signals and start it."""
+        self.worker = worker
+        self.worker.response_signal.connect(self.display_response)
+        self.worker.status_signal.connect(self._on_status_update)
+        if hasattr(self.worker, "chunk_signal"):
+            self.worker.chunk_signal.connect(self._on_stream_chunk)
+        self.worker.start()
+
+    def _find_anchor_cursor(self, anchor_name: str):
+        """Generic anchor finder, used for both typing and streaming anchors."""
+        doc = self.chat_display.document()
+        block = doc.begin()
+        while block.isValid():
+            it = block.begin()
+            while not it.atEnd():
+                frag = it.fragment()
+                if frag.isValid():
+                    fmt = frag.charFormat()
+                    matched = False
+                    try:
+                        names = fmt.anchorNames()
+                        matched = anchor_name in (names or [])
+                    except AttributeError:
+                        try:
+                            matched = fmt.anchorName() == anchor_name
+                        except AttributeError:
+                            matched = False
+                    if matched:
+                        cursor = QTextCursor(doc)
+                        cursor.setPosition(frag.position())
+                        return cursor
+                it += 1
+            block = block.next()
+        return None
+
+    def _find_typing_anchor_cursor(self):
+        return self._find_anchor_cursor("_typing_anchor_")
+
+    def _find_stream_anchor_cursor(self):
+        return self._find_anchor_cursor("_stream_anchor_")
+
+    def _begin_streaming_bubble(self):
+        """Drop the typing dots and open an empty bot bubble anchored for replacement."""
+        self._remove_typing_bubble()
+        self._stream_buf = ""
+        self._stream_ts = _get_time()
+        self._stream_idx = self._response_counter
+        cursor = QTextCursor(self.chat_display.document())
+        cursor.movePosition(QTextCursor.End)
+        cursor.insertHtml(
+            self._STREAM_ANCHOR
+            + _bot_bubble("…", self._stream_ts, self._stream_idx)
+        )
+        self._scroll_to_bottom()
+
+    def _on_stream_chunk(self, piece: str):
+        """Append a streamed token to the in-progress bot bubble."""
+        if self._stream_buf is None:
+            self._begin_streaming_bubble()
+        self._stream_buf += piece
+
+        anchor_cursor = self._find_stream_anchor_cursor()
+        if anchor_cursor is None:
+            # Sentinel went missing — re-open the bubble with the buffer so far.
+            buf = self._stream_buf
+            self._reset_stream_state()
+            self._begin_streaming_bubble()
+            self._stream_buf = buf
+            anchor_cursor = self._find_stream_anchor_cursor()
+            if anchor_cursor is None:
+                return
+
+        # Select from anchor to end of document and rewrite the bubble in place.
+        anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+        anchor_cursor.removeSelectedText()
+        anchor_cursor.insertHtml(
+            self._STREAM_ANCHOR
+            + _bot_bubble(self._stream_buf, self._stream_ts, self._stream_idx)
+        )
+
+        sb = self.chat_display.verticalScrollBar()
+        if sb.maximum() - sb.value() < 60:
+            sb.setValue(sb.maximum())
+
+    def _reset_stream_state(self):
+        self._stream_buf = None
+        self._stream_ts = None
+        self._stream_idx = None
 
     # ── Drag & drop ───────────────────────────────────────────────────
 
@@ -1500,7 +1532,6 @@ class ChatbotGUI(QWidget):
         if not mime.hasUrls():
             event.ignore()
             return
-
         added = 0
         for url in mime.urls():
             if not url.isLocalFile():
@@ -1509,12 +1540,10 @@ class ChatbotGUI(QWidget):
             if _is_image_file(path) and path not in self._staged_images:
                 self._staged_images.append(path)
                 added += 1
-
         if added:
             self._refresh_staging_strip()
             self.status_label.setText(f"📎 Added {added} image{'s' if added != 1 else ''} by drag-and-drop.")
             QTimer.singleShot(2500, lambda: self.status_label.setText(""))
-
         event.acceptProposedAction()
 
     # ── Sidebar / sessions ────────────────────────────────────────────
@@ -1532,9 +1561,8 @@ class ChatbotGUI(QWidget):
 
     def _delete_all_chats(self):
         dlg = _DeleteConfirmDialog("all chats", self)
-        if dlg.exec_() != QDialog.Accepted:
+        if dlg.exec() != QDialog.Accepted:
             return
-
         try:
             if os.path.exists(_SESSIONS_DIR):
                 for fname in os.listdir(_SESSIONS_DIR):
@@ -1554,7 +1582,6 @@ class ChatbotGUI(QWidget):
                             pass
         except Exception:
             pass
-
         self._sidebar.populate()
 
     def _open_session_viewer(self, item):
@@ -1566,7 +1593,7 @@ class ChatbotGUI(QWidget):
         except Exception:
             return
         dlg = ChatHistoryViewer(session, self)
-        dlg.exec_()
+        dlg.exec()
 
     def _rename_current_chat(self):
         title, ok = QInputDialog.getText(
@@ -1588,7 +1615,6 @@ class ChatbotGUI(QWidget):
                 session = json.load(f)
         except Exception:
             return
-
         current_title = session.get("title", "Chat")
         title, ok = QInputDialog.getText(
             self, "Rename Chat", "New chat title:", text=current_title
@@ -1598,17 +1624,14 @@ class ChatbotGUI(QWidget):
         title = title.strip()
         if not title:
             return
-
         try:
             session["title"] = title
             with open(path, "w", encoding="utf-8") as f:
                 json.dump(session, f, ensure_ascii=False, indent=2)
         except Exception:
             return
-
         if session_id == self._current_session_id:
             self._session_title_override = title
-
         self._sidebar.populate()
 
     def _derive_session_title(self):
@@ -1623,7 +1646,6 @@ class ChatbotGUI(QWidget):
         self.chat_display.setHtml(WELCOME_MESSAGE)
         self._bot_responses = {}
         self._response_counter = 0
-
         for line in self.chat_history:
             if line.startswith("User:"):
                 self.chat_display.append(_user_bubble(line[5:].strip(), ""))
@@ -1637,16 +1659,9 @@ class ChatbotGUI(QWidget):
 
     def _on_session_clicked(self, item):
         session_id = item.data(Qt.UserRole)
-
-        # If this is the session already showing, do nothing.
         if (session_id == self._current_session_id
                 and not self._viewing_past_session):
             return
-
-        # Suspend BEFORE changing self._current_session_id so the worker
-        # snapshot captures the correct (old) session ID and history.
-        # Then flush the current session to disk so the file exists for
-        # _on_background_response to update when the worker finishes.
         if self._is_generating:
             self._suspend_worker(
                 session_id=self._current_session_id,
@@ -1654,13 +1669,10 @@ class ChatbotGUI(QWidget):
                 session_kind=self._current_session_kind,
                 images_store=self._images_store,
             )
-
         self._save_debounce_timer.stop()
         self._save_pending = False
         self._save_current_session()
 
-        # Load the target session — try disk first, fall back to the
-        # in-memory sidebar cache (handles sessions not yet written to disk).
         path = os.path.join(_SESSIONS_DIR, f"{session_id}.json")
         session = None
         try:
@@ -1668,13 +1680,11 @@ class ChatbotGUI(QWidget):
                 session = json.load(f)
         except Exception:
             pass
-
         if session is None:
             for s in self._sidebar._all_sessions_cache:
                 if s.get('id') == session_id:
                     session = s
                     break
-
         if session is None:
             return
 
@@ -1683,8 +1693,6 @@ class ChatbotGUI(QWidget):
         created = session.get('created_at', '')
         kind    = session.get('kind', 'text')
 
-        # Switch the active session context to the one being viewed so that
-        # if the user types a follow-up, it goes to the right session.
         self._current_session_id      = session_id
         self._session_created_at      = created
         self._current_session_kind    = kind
@@ -1695,10 +1703,9 @@ class ChatbotGUI(QWidget):
             (m[5:].strip() for m in reversed(msgs) if m.startswith("User:")), ""
         )
 
-        # Restore image store from session so follow-ups can re-send images
         saved_images = session.get("images", {})
         self._images_store = saved_images
-        self._last_image_paths = []  # original paths are gone; base64 stored instead
+        self._last_image_paths = []
 
         html = WELCOME_MESSAGE
         html += (
@@ -1718,7 +1725,6 @@ class ChatbotGUI(QWidget):
         self._bot_responses = {}
         local_counter = 0
 
-        # Build a flat list of saved image thumbnails in order for replay
         all_saved_imgs = []
         for key in sorted(saved_images.keys()):
             all_saved_imgs.extend(saved_images[key])
@@ -1727,17 +1733,13 @@ class ChatbotGUI(QWidget):
         for line in msgs:
             if line.startswith("User:"):
                 text = line[5:].strip()
-                # If this line is an image-analysis request, show the thumbnail
                 if text.startswith("[Image analysis request:"):
-                    # Show saved thumbnails for this entry
                     while img_replay_idx < len(all_saved_imgs):
                         fname, b64 = all_saved_imgs[img_replay_idx]
                         html += _image_thumbnail_html(b64, fname)
                         img_replay_idx += 1
-                        # Only consume images for this request
                         if img_replay_idx >= len(all_saved_imgs):
                             break
-                    # Also show any user text after the image tag
                     user_text_part = text.split("\n", 1)[-1].strip()
                     if user_text_part and not user_text_part.startswith("[Image"):
                         html += _user_bubble(user_text_part, "")
@@ -1748,16 +1750,13 @@ class ChatbotGUI(QWidget):
                 self._bot_responses[local_counter] = text
                 html += _bot_bubble(text, "", local_counter)
                 local_counter += 1
-        self._response_counter = local_counter
 
+        self._response_counter = local_counter
         self.chat_display.setHtml(html)
         QTimer.singleShot(120, lambda: self.chat_display.verticalScrollBar().setValue(
             self.chat_display.verticalScrollBar().maximum()
         ))
 
-        # Load the session's messages into chat_history so follow-up questions
-        # have full context, and update the session ID so any new messages save
-        # to the correct file rather than the previous live session.
         self.chat_history = list(msgs)
         self._retry_history = list(msgs)
         self._current_session_id = session_id
@@ -1770,61 +1769,42 @@ class ChatbotGUI(QWidget):
         self._viewing_past_session = True
 
     def _abort_worker(self):
-        """
-        Stop the active worker immediately and discard its response.
-        Use _suspend_worker() instead when switching sessions so the
-        generation can finish silently in the background.
-        """
         if hasattr(self, 'worker') and self.worker.isRunning():
             self.worker.stop()
             try:
                 self.worker.response_signal.disconnect()
                 self.worker.status_signal.disconnect()
+                if hasattr(self.worker, "chunk_signal"):
+                    self.worker.chunk_signal.disconnect()
             except Exception:
                 pass
             self.worker.wait(300)
         self._stop_thinking()
+        self._reset_stream_state()
 
     def _sidebar_upsert_from_signal(self, session: dict):
-        """Slot — always called on the main thread via _background_session_saved."""
         self._sidebar.upsert_session(session)
 
     def _suspend_worker(self, session_id: str, history: list,
                         session_kind: str, images_store: dict):
-        """
-        Detach the running worker from the UI and let it finish in the
-        background. When it completes, the bot reply is appended to the
-        session file on disk so the user sees the full conversation the
-        next time they open that chat from the sidebar.
-        """
         if not (hasattr(self, 'worker') and self.worker.isRunning()):
             self._stop_thinking()
             return
-
-        # Snapshot everything the callback needs before self.* moves on.
         _sid     = session_id
         _history = list(history)
         _kind    = session_kind
         _images  = dict(images_store)
         _worker  = self.worker
-        _signal  = self._background_session_saved   # Qt signal, safe to emit from thread
+        _signal  = self._background_session_saved
 
         def _on_background_response(bot_response: str):
-            """
-            Called from the worker thread when generation finishes.
-            Saves the response to disk, then emits a signal so the sidebar
-            update happens on the main thread (direct QWidget calls from
-            worker threads cause crashes on some platforms).
-            """
             try:
                 _history.append(f"Bot: {bot_response}")
                 path = os.path.join(_SESSIONS_DIR, f"{_sid}.json")
-
                 if os.path.exists(path):
                     with open(path, encoding="utf-8") as fp:
                         session = json.load(fp)
                 else:
-                    # Session file doesn't exist yet — build it from the snapshot.
                     session = {
                         "id":         _sid,
                         "title":      next(
@@ -1835,16 +1815,12 @@ class ChatbotGUI(QWidget):
                         "kind":       _kind,
                         "images":     _images,
                     }
-
                 session["messages"]   = _history[-40:]
                 session["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M")
                 session["kind"]       = _kind
-
                 os.makedirs(_SESSIONS_DIR, exist_ok=True)
                 with open(path, "w", encoding="utf-8") as fp:
                     json.dump(session, fp, ensure_ascii=False, indent=2)
-
-                # Emit signal — the connected slot runs on the main thread.
                 _signal.emit(session)
             except Exception:
                 pass
@@ -1852,20 +1828,18 @@ class ChatbotGUI(QWidget):
         try:
             _worker.response_signal.disconnect()
             _worker.status_signal.disconnect()
+            if hasattr(_worker, "chunk_signal"):
+                _worker.chunk_signal.disconnect()
         except Exception:
             pass
-
         _worker.response_signal.connect(_on_background_response)
         self._stop_thinking()
+        self._reset_stream_state()
 
     def _new_chat(self):
-        # Stop the debounce timer and flush the current session to disk NOW,
-        # before anything is reset, so the file is written under the correct ID.
         self._save_debounce_timer.stop()
         self._save_pending = False
         if self._is_generating:
-            # Generation is running — detach it so it finishes silently and
-            # saves its reply into the current session file when it completes.
             self._suspend_worker(
                 session_id=self._current_session_id,
                 history=self.chat_history,
@@ -1873,14 +1847,8 @@ class ChatbotGUI(QWidget):
                 images_store=self._images_store,
             )
         else:
-            # Save current session synchronously so it lands on disk before
-            # we move on.  _save_current_session() is a no-op if chat_history
-            # is empty, so clicking New Chat on a blank window is safe.
             self._save_current_session()
 
-        # Reset UI and state for the new blank session WITHOUT calling
-        # clear_session() — that method deletes the session file, which
-        # would erase the chat we just saved above.
         self.chat_display.setHtml(WELCOME_MESSAGE)
         # MERGED: combined all state resetting into one reusable helper
         self._reset_session_state()
@@ -1896,9 +1864,6 @@ class ChatbotGUI(QWidget):
     def _on_session_deleted(self, deleted_id: str):
         if deleted_id == self._current_session_id or self._viewing_past_session:
             self._abort_worker()
-
-            # Cancel any pending debounced save so the deleted session
-            # file cannot be re-created by a timer that was already running.
             self._save_debounce_timer.stop()
             self._save_pending = False
 
@@ -1918,7 +1883,6 @@ class ChatbotGUI(QWidget):
             self.status_label.setText("Nothing to export.")
             QTimer.singleShot(2500, lambda: self.status_label.setText(""))
             return
-
         path, _ = QFileDialog.getSaveFileName(
             self,
             "Export Chat",
@@ -1927,7 +1891,6 @@ class ChatbotGUI(QWidget):
         )
         if not path:
             return
-
         try:
             with open(path, "w", encoding="utf-8") as f:
                 for line in self.chat_history:
@@ -1969,65 +1932,14 @@ class ChatbotGUI(QWidget):
             """)
             self._was_ollama_offline = True
 
-    # ── Typing bubble (window-switch safe) ──────────────────────────
-    #
-    # (_typing_start_pos) and used it to select-and-replace the animated
-    # dots on every timer tick.  When the user switches away from the
-    # chatbot window Qt reflows the QTextBrowser's HTML document, which
-    # shifts character positions.  On the next timer tick the cursor
-    # landed in the wrong place and deleted real chat content.
-    #
-    # New approach: insert a sentinel <a> anchor tag with a unique id
-    # ("_typing_anchor_") right before the bubble HTML.  To update or
-    # remove the bubble we search the document for that anchor using
-    # QTextDocument.find() — which is position-independent and survives
-    # any reflow — then select from the match to the end of the document.
-    # The sentinel itself is a zero-width invisible link so it never
-    # appears in the rendered output.
-
-    _TYPING_ANCHOR = '<a name="_typing_anchor_"></a>'
-
-    def _find_typing_anchor_cursor(self):
-        """Return a cursor positioned at the typing-bubble sentinel,
-        or None if the sentinel is not in the document.
-
-        PyQt5 exposes anchor names via QTextCharFormat.anchorNames()
-        (returns a list) not .anchorName() -- we handle both spellings
-        defensively so the code works across PyQt5 versions.
-        """
-        doc = self.chat_display.document()
-        block = doc.begin()
-        while block.isValid():
-            it = block.begin()
-            while not it.atEnd():
-                frag = it.fragment()
-                if frag.isValid():
-                    fmt = frag.charFormat()
-                    # PyQt5 uses anchorNames() -> list[str]
-                    # Some builds also have anchorName() -> str
-                    # We try both so it works regardless of version.
-                    try:
-                        names = fmt.anchorNames()  # PyQt5 standard
-                        matched = "_typing_anchor_" in (names or [])
-                    except AttributeError:
-                        try:
-                            matched = fmt.anchorName() == "_typing_anchor_"
-                        except AttributeError:
-                            matched = False
-                    if matched:
-                        cursor = QTextCursor(doc)
-                        cursor.setPosition(frag.position())
-                        return cursor
-                it += 1
-            block = block.next()
-        return None
+    # ── Typing bubble ─────────────────────────────────────────────────
+    # (_TYPING_ANCHOR and _find_typing_anchor_cursor are defined at the
+    # top of the class alongside the streaming helpers.)
 
     def _show_typing_bubble(self):
         self._typing_frame = 0
         cursor = QTextCursor(self.chat_display.document())
         cursor.movePosition(QTextCursor.End)
-        # Insert sentinel anchor + bubble in one operation so they form
-        # a contiguous block that can be fully removed later.
         cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(0))
         self._scroll_to_bottom()
         self._typing_anim_timer.start(400)
@@ -2036,16 +1948,10 @@ class ChatbotGUI(QWidget):
         self._typing_frame = (self._typing_frame + 1) % 3
         anchor_cursor = self._find_typing_anchor_cursor()
         if anchor_cursor is None:
-            # Sentinel gone — stop the timer defensively
             self._typing_anim_timer.stop()
             return
-        # Select from the sentinel to the end of the document and replace.
-        # This is immune to any reflow that happened while the window was
-        # in the background because we locate by anchor name, not position.
         anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
         anchor_cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(self._typing_frame))
-        # Only auto-scroll if the user is already near the bottom so we
-        # don't hijack their scroll position while they read earlier msgs.
         sb = self.chat_display.verticalScrollBar()
         if sb.maximum() - sb.value() < 60:
             self._scroll_to_bottom()
@@ -2056,14 +1962,12 @@ class ChatbotGUI(QWidget):
         if anchor_cursor is not None:
             anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
             anchor_cursor.removeSelectedText()
-        # Legacy guard: if somehow _typing_start_pos path left stale state
         self._typing_start_pos = -1
 
     # ── Links ────────────────────────────────────────────────────────
 
     def _handle_link_click(self, url):
         scheme, parts = _parse_custom_url(url)
-
         if scheme == 'copy':
             if not parts:
                 return
@@ -2075,7 +1979,6 @@ class ChatbotGUI(QWidget):
             if text:
                 QApplication.clipboard().setText(text)
                 self._show_copy_toast()
-
         elif scheme == 'retry':
             if not parts:
                 return
@@ -2132,14 +2035,12 @@ class ChatbotGUI(QWidget):
             item = self._thumb_row.takeAt(0)
             if item.widget():
                 item.widget().deleteLater()
-
         for path in self._staged_images:
             self._thumb_row.insertWidget(self._thumb_row.count() - 1, self._make_thumbnail(path))
-
         self._staging_area.setVisible(bool(self._staged_images))
 
     def _make_thumbnail(self, image_path: str) -> QWidget:
-        from PyQt5.QtGui import QPixmap
+        from PyQt6.QtGui import QPixmap
 
         card = QWidget()
         card.setFixedSize(80, 64)
@@ -2292,7 +2193,7 @@ class ChatbotGUI(QWidget):
         """Auto-switch to qwen2.5 for text queries."""
         self._auto_switch_model(["qwen2.5"], [], "text")
 
-    # ── Mic ──────────────────────────────────────────────────────────
+    # ── Settings ─────────────────────────────────────────────────────
 
     def _on_temp_changed(self, value: int):
         self._temperature = round(value / 100, 2)
@@ -2307,6 +2208,8 @@ class ChatbotGUI(QWidget):
         self._num_predict = 1024
         self._temp_slider.setValue(35)
         self._tok_slider.setValue(8)
+
+    # ── Mic ──────────────────────────────────────────────────────────
 
     def _update_mic_tooltip(self):
         backend = get_stt_backend()
@@ -2357,14 +2260,11 @@ class ChatbotGUI(QWidget):
                 f'❌ Netlist file not found: {_escape_text_preserve_breaks(netlist_path)}</td></tr></table>'
             )
             return
-
         self._current_session_kind = "netlist"
-
         ts = _get_time()
         filename = os.path.basename(netlist_path)
         self.chat_display.append(_netlist_header_bubble(filename, ts))
         self._scroll_to_bottom()
-
         try:
             with open(netlist_path, 'r', errors='replace') as f:
                 raw_lines = f.readlines()
@@ -2374,7 +2274,6 @@ class ChatbotGUI(QWidget):
                 f'❌ Could not read file: {_escape_text_preserve_breaks(str(e))}</td></tr></table>'
             )
             return
-
         components, nodes, directives = [], set(), []
         for line in raw_lines:
             s = line.strip()
@@ -2388,7 +2287,6 @@ class ChatbotGUI(QWidget):
                     nodes.update([parts[1], parts[2]])
             elif first == '.':
                 directives.append(s)
-
         summary = (
             f"Netlist file: {filename}\n"
             f"Total lines: {len(raw_lines)}\n"
@@ -2399,7 +2297,6 @@ class ChatbotGUI(QWidget):
             f"Full netlist:\n{''.join(raw_lines[:80])}"
             f"{'[truncated]' if len(raw_lines) > 80 else ''}"
         )
-
         prompt = (
             f"Analyse this NgSpice netlist for me.\n\n{summary}\n\n"
             "Please: (1) identify all components and their roles, "
@@ -2407,13 +2304,12 @@ class ChatbotGUI(QWidget):
             "(3) highlight any potential simulation issues, "
             "(4) suggest any improvements."
         )
-
         self.chat_history = (self.chat_history + [f"User: {prompt}"])[-20:]
         self._retry_history = list(self.chat_history)
         self._last_user_text = prompt
         self._start_thinking()
 
-        # EXTRACTED: helper method to launch OllamaWorker
+        # EXTRACTED: helper method to launch OllamaWorker (with streaming hookup)
         self._launch_text_worker(self.chat_history)
 
     # ── Topic switch ─────────────────────────────────────────────────
@@ -2424,26 +2320,17 @@ class ChatbotGUI(QWidget):
             self.chat_history = self.chat_history[-2:]
             self.chat_display.append(_topic_reset_banner())
             self._scroll_to_bottom()
-            # Clear image follow-up context when topic changes
             self._last_image_paths = []
         return switched
 
     # ── Persistence ──────────────────────────────────────────────────
 
     def _save_history(self):
-        """
-        Schedules a debounced disk write so saves are batched rather than
-        firing synchronously after every message, preventing UI freezes.
-        """
         self._save_pending = True
-        # Restart the timer so the window slides forward from the last change.
-        # If the user sends multiple messages quickly, only the final state is
-        # written, avoiding redundant I/O.
         if not self._save_debounce_timer.isActive():
             self._save_debounce_timer.start(_SAVE_DEBOUNCE_MS)
 
     def _flush_save(self):
-        """Perform the actual disk write when the debounce timer fires."""
         if not self._save_pending:
             return
         self._save_pending = False
@@ -2477,18 +2364,11 @@ class ChatbotGUI(QWidget):
             path = os.path.join(_SESSIONS_DIR, f"{self._current_session_id}.json")
             with open(path, 'w', encoding='utf-8') as f:
                 json.dump(session, f, ensure_ascii=False, indent=2)
-            # Keep the sidebar in-memory cache in sync so the chat appears
-            # immediately without requiring a full populate() from disk.
             self._sidebar.upsert_session(session)
         except Exception:
             pass
 
     def _load_history(self):
-        """
-        On startup: if a leftover history file exists, archive it into the
-        sidebar sessions directory so the user can access it from the sidebar,
-        then delete the file.  The chat window always opens fresh.
-        """
         if not os.path.exists(_HISTORY_FILE):
             return
         try:
@@ -2524,7 +2404,6 @@ class ChatbotGUI(QWidget):
                 os.remove(_HISTORY_FILE)
             except Exception:
                 pass
-        # New session ID so nothing from the old chat bleeds into the new one
         self._current_session_id  = str(uuid.uuid4())
         self._session_created_at  = datetime.now().strftime("%Y-%m-%d %H:%M")
 
@@ -2561,7 +2440,7 @@ class ChatbotGUI(QWidget):
             if "qwen2.5" in name.lower():
                 chosen_idx = i
                 break
-                
+
         # If no qwen2.5, try some fallback preferred models
         if chosen_idx == -1:
             preferred_fallbacks = ['llava:13b', 'llava:7b', 'llava', 'bakllava']
@@ -2577,7 +2456,6 @@ class ChatbotGUI(QWidget):
 
         if chosen_idx >= 0:
             self.model_combo.setCurrentIndex(chosen_idx)
-
         self.model_combo.setEnabled(True)
 
     # ── Thinking / retry / regenerate ────────────────────────────────
@@ -2590,7 +2468,8 @@ class ChatbotGUI(QWidget):
         self._staging_area.setEnabled(False)
         self.send_button.hide()
         self.stop_button.show()
-
+        # MERGED: preserve streaming-state reset so live token rendering works
+        self._reset_stream_state()
         self._show_typing_bubble()
 
     def _stop_thinking(self):
@@ -2603,7 +2482,6 @@ class ChatbotGUI(QWidget):
         self._staging_area.setEnabled(True)
         self.stop_button.hide()
         self.send_button.show()
-
 
     def _scroll_to_bottom(self):
         self.chat_display.verticalScrollBar().setValue(
@@ -2625,9 +2503,11 @@ class ChatbotGUI(QWidget):
         self._session_title_override = None
         self._current_session_id = str(uuid.uuid4())
         self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+        # MERGED: also reset streaming-related state so the next message starts clean
+        self._reset_stream_state()
 
     def _launch_text_worker(self, chat_history):
-        """EXTRACTED: Launch OllamaWorker with correct configuration and signal mappings."""
+        """EXTRACTED: Launch OllamaWorker with correct configuration and signal mappings (streaming-aware)."""
         self.worker = OllamaWorker(
             chat_history,
             model=self.model_combo.currentText(),
@@ -2636,10 +2516,13 @@ class ChatbotGUI(QWidget):
         )
         self.worker.response_signal.connect(self.display_response)
         self.worker.status_signal.connect(self._on_status_update)
+        # MERGED: connect chunk stream so live token rendering still works.
+        if hasattr(self.worker, "chunk_signal"):
+            self.worker.chunk_signal.connect(self._on_stream_chunk)
         self.worker.start()
 
     def _launch_vision_worker(self, image_paths, extra_prompt):
-        """EXTRACTED: Launch OllamaVisionWorker with correct configuration and signal mappings."""
+        """EXTRACTED: Launch OllamaVisionWorker with correct configuration and signal mappings (streaming-aware)."""
         self.worker = OllamaVisionWorker(
             image_paths=image_paths,
             extra_prompt=extra_prompt,
@@ -2647,6 +2530,9 @@ class ChatbotGUI(QWidget):
         )
         self.worker.response_signal.connect(self.display_response)
         self.worker.status_signal.connect(self._on_status_update)
+        # MERGED: connect chunk stream so live token rendering still works.
+        if hasattr(self.worker, "chunk_signal"):
+            self.worker.chunk_signal.connect(self._on_stream_chunk)
         self.worker.start()
 
     def _stop_generating(self):
@@ -2654,17 +2540,8 @@ class ChatbotGUI(QWidget):
             self.worker.stop()
 
     def _retry_response(self, response_idx: int):
-        """
-        Retry the bot response at response_idx.
-        Trims chat_history back to just before that response,
-        rebuilds the UI cleanly, then re-fires the worker so the
-        new answer replaces the old one with no duplicate bubbles.
-        """
         if self._is_generating:
             return
-
-        # Walk chat_history counting Bot: entries to find the target,
-        # then slice everything from that point forward off.
         bot_count = 0
         trim_to = None
         for i, line in enumerate(self.chat_history):
@@ -2673,29 +2550,21 @@ class ChatbotGUI(QWidget):
                     trim_to = i
                     break
                 bot_count += 1
-
         if trim_to is None:
-            # Fallback: trim the last bot entry
             for i in range(len(self.chat_history) - 1, -1, -1):
                 if self.chat_history[i].startswith("Bot:"):
                     trim_to = i
                     break
-
         if trim_to is None or not any(
             l.startswith("User:") for l in self.chat_history[:trim_to]
         ):
             self.status_label.setText("Nothing to retry.")
             QTimer.singleShot(2000, lambda: self.status_label.setText(""))
             return
-
-        # Trim history then rebuild UI so the stale bubble is gone
-        # before the new response is appended.
         self.chat_history = self.chat_history[:trim_to]
         self._retry_history = list(self.chat_history)
         self._rebuild_chat_html_from_history()
         self._start_thinking()
-
-        # Re-use vision worker if the last user turn included images.
         last_user = next(
             (l for l in reversed(self.chat_history) if l.startswith("User:")), ""
         )
@@ -2713,18 +2582,12 @@ class ChatbotGUI(QWidget):
     def _regenerate_last_response(self):
         if not self.chat_history:
             return
-
-        # Remove trailing bot response if present
         if self.chat_history and self.chat_history[-1].startswith("Bot:"):
             self.chat_history.pop()
-
-        # Find last user prompt
         if not self.chat_history or not self.chat_history[-1].startswith("User:"):
             self.status_label.setText("No previous user prompt to regenerate.")
             QTimer.singleShot(2500, lambda: self.status_label.setText(""))
             return
-
-        # Rebuild UI from trimmed history and retry from same state
         self._retry_history = list(self.chat_history)
         self._rebuild_chat_html_from_history()
         self._start_thinking()
@@ -2734,7 +2597,6 @@ class ChatbotGUI(QWidget):
 
     def _on_status_update(self, msg: str):
         self.status_label.setText(msg)
-        # Only show as chat bubble for major state changes, not every progress tick
         if "Starting Ollama" in msg or "Ollama started" in msg:
             self.chat_display.append(_system_bubble(msg))
             self._scroll_to_bottom()
@@ -2744,10 +2606,8 @@ class ChatbotGUI(QWidget):
     def ask_ollama(self):
         user_text = self.user_input.text().strip()
         staged_paths = list(self._staged_images)
-
         if not user_text and not staged_paths:
             return
-
         if self._is_generating:
             return
 
@@ -2762,8 +2622,6 @@ class ChatbotGUI(QWidget):
             return
 
         if self._viewing_past_session:
-            # chat_history was already synced when the session was loaded,
-            # so no rebuild is needed — just clear the read-only flag.
             self._viewing_past_session = False
 
         editing_text = getattr(self, '_editing_prompt_text', None)
@@ -2782,22 +2640,13 @@ class ChatbotGUI(QWidget):
         if staged_paths:
             self._current_session_kind = "image"
             if not self._warn_or_switch_to_vision_model():
-                # No vision model available — clear staged images and abort.
                 self._clear_staged_images()
                 return
-
             fnames = [os.path.basename(p) for p in staged_paths]
-
             if user_text:
                 self.user_input.add_to_history(user_text)
             self.user_input.clear()
-
-            # Pass the user's text directly to the vision worker.
-            # chatbot_thread._build_schematic_vision_prompt() handles both
-            # cases: if user_text is empty it requests a general analysis;
-            # if it contains a question that question drives the response.
             vision_extra_prompt = user_text
-
             if user_text:
                 user_history_text = (
                     f"[Image analysis request: {', '.join(fnames)}]\n{user_text}"
@@ -2806,20 +2655,16 @@ class ChatbotGUI(QWidget):
                 user_history_text = (
                     f"[Image analysis request: {', '.join(fnames)}]"
                 )
-
             self.chat_history = (self.chat_history + [f"User: {user_history_text}"])[-20:]
             self._retry_history = list(self.chat_history)
             self._last_user_text = user_text if user_text else "image analysis"
 
-            # Read and encode images before displaying so thumbnails appear
-            # in the chat bubble immediately when the user sends.
             img_key = ts + "_" + self._current_session_id
             b64_list = []
             for p in staged_paths:
                 try:
                     with open(p, "rb") as f_img:
                         raw = f_img.read()
-                    # Downscale for storage (reuse PIL if available)
                     try:
                         from PIL import Image as _PI
                         import io as _io2
@@ -2837,22 +2682,15 @@ class ChatbotGUI(QWidget):
                     pass
             if b64_list:
                 self._images_store[img_key] = b64_list
-
-            # Show image thumbnails inline so the user can see what was sent.
             if b64_list:
                 for fname, b64 in b64_list:
                     self.chat_display.append(_image_thumbnail_html(b64, fname))
             else:
-                # Fallback to filename badges if encoding failed for all images
                 self.chat_display.append(_staged_images_bubble(fnames, ts))
-
             if user_text:
                 self.chat_display.append(_user_bubble(user_text, ts))
             self._scroll_to_bottom()
-
-            # Keep paths for follow-up context
             self._last_image_paths = list(staged_paths)
-
             self._clear_staged_images()
             self._start_thinking()
 
@@ -2866,15 +2704,13 @@ class ChatbotGUI(QWidget):
         # switch to the Qwen model. Since Qwen cannot process images,
         # we must drop any previous image context and use the text worker.
         self._last_image_paths.clear()
-        self._cleanup_unused_clipboard_images()
-        
+
         self._current_session_kind = "text"
         self._switch_to_text_model()
 
         self.chat_history = (self.chat_history + [f"User: {user_text}"])[-20:]
         self.chat_display.append(_user_bubble(user_text, ts))
         self._scroll_to_bottom()
-
         self.user_input.add_to_history(user_text)
         self.user_input.clear()
         self._last_user_text = user_text
@@ -2887,28 +2723,43 @@ class ChatbotGUI(QWidget):
     # ── Window / response / clear ────────────────────────────────────
 
     def move_to_bottom_right(self):
-        # in Qt 6.  Use QApplication.primaryScreen().availableGeometry() instead.
         screen = QApplication.primaryScreen().availableGeometry()
         widget = self.geometry()
         x = screen.width() - widget.width() - 10
         y = screen.height() - widget.height() - 50
         self.move(x, y)
 
-    def display_response(self, bot_response: str):
+    def display_response(self, bot_response):
+        """
+        Final-reply slot. If streaming was active, replace the in-progress
+        bubble (located by anchor) with the authoritative final text.
+        Otherwise just append a fresh bubble.
+        """
         self._stop_thinking()
-        ts = _get_time()
-        idx = self._response_counter
-        self._response_counter += 1
-        self._bot_responses[idx] = bot_response
+        ts = self._stream_ts or _get_time()
 
-        self.chat_display.append(_bot_bubble(bot_response, ts, idx))
+        if self._stream_buf is not None:
+            idx = self._stream_idx
+            anchor_cursor = self._find_stream_anchor_cursor()
+            if anchor_cursor is not None:
+                anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+                anchor_cursor.removeSelectedText()
+                anchor_cursor.insertHtml(_bot_bubble(bot_response, ts, idx))
+            else:
+                # Anchor lost (shouldn't happen) — append as a fallback.
+                self.chat_display.append(_bot_bubble(bot_response, ts, idx))
+        else:
+            idx = self._response_counter
+            self.chat_display.append(_bot_bubble(bot_response, ts, idx))
+
+        self._bot_responses[idx] = bot_response
+        self._response_counter = max(self._response_counter, idx + 1)
         self.chat_history.append(f"Bot: {bot_response}")
+        self._reset_stream_state()
+
         self._scroll_to_bottom()
         self._update_ollama_status()
 
-        # Push a lightweight session entry into the sidebar immediately so
-        # the new chat appears at the top as soon as the first reply lands,
-        # without waiting for the debounced disk save (up to 5 seconds).
         self._sidebar.upsert_session({
             "id":         self._current_session_id,
             "title":      self._derive_session_title(),
@@ -2917,26 +2768,17 @@ class ChatbotGUI(QWidget):
             "messages":   self.chat_history[-40:],
             "kind":       self._current_session_kind,
         })
-
         self._save_history()
 
-        # (Retry is now an inline link in every bot bubble;
-        # the old navbar retry_button has been removed.)
-
     def clear_session(self):
-        # Cancel any pending debounced save so _flush_save() can't
-        # resurrect the session file after we delete it below.
         self._save_debounce_timer.stop()
         self._save_pending = False
-
-        # Remove session file so it never reappears in the sidebar.
         session_file = os.path.join(_SESSIONS_DIR, f"{self._current_session_id}.json")
         try:
             if os.path.exists(session_file):
                 os.remove(session_file)
         except Exception:
             pass
-
         self.chat_display.setHtml(WELCOME_MESSAGE)
         # MERGED: combined all state resetting into one reusable helper
         self._reset_session_state()
@@ -2946,8 +2788,6 @@ class ChatbotGUI(QWidget):
                 os.remove(_HISTORY_FILE)
         except Exception:
             pass
-
-        # Refresh sidebar so the cleared session disappears immediately
         self._refresh_sidebar_if_open()
 
     # ── Debug helpers ────────────────────────────────────────────────
@@ -2974,14 +2814,11 @@ class ChatbotGUI(QWidget):
         self.show()
         self.raise_()
         self.activateWindow()
-
         self.chat_history = []
         self._current_session_kind = "simulation_error"
-
         if os.path.exists(log):
             with open(log, "r") as f:
                 lines = [ln for ln in f.readlines() if ln.strip()]
-
             no_compat_index = next(
                 (i for i, ln in enumerate(lines) if "No compatibility mode selected!" in ln), None
             )
@@ -2989,7 +2826,6 @@ class ChatbotGUI(QWidget):
             total_cpu_index = next(
                 (i for i, ln in enumerate(lines) if "Total CPU time (seconds)" in ln), None
             )
-
             before_no_compat = lines[:no_compat_index] if no_compat_index else []
             between = (
                 lines[circuit_index + 1:total_cpu_index]
@@ -2997,28 +2833,21 @@ class ChatbotGUI(QWidget):
                 else []
             )
             filtered_lines = before_no_compat + between
-            # before sending to the model.  NgSpice logs can be 10-50 KB; sending
-            # all of it blows past num_ctx: 2048 and makes the model ignore the
-            # actual error.  The most actionable errors always appear at the end.
             if len(filtered_lines) > _MAX_ERROR_LOG_LINES:
                 truncated_notice = [
                     f"[Log truncated: showing last {_MAX_ERROR_LOG_LINES} "
                     f"of {len(filtered_lines)} lines]\n"
                 ]
                 filtered_lines = truncated_notice + filtered_lines[-_MAX_ERROR_LOG_LINES:]
-
             combined_text = "".join(filtered_lines)
-            # QLineEdit); display a compact summary label in the status bar instead.
             self.status_label.setText(
                 f"🔍 Analysing error log ({len(filtered_lines)} lines)…"
             )
-
             self.obj_appconfig = Appconfig()
             self.projDir = self.obj_appconfig.current_project["ProjectName"]
             output_file = os.path.join(self.projDir, "erroroutput.txt")
             with open(output_file, "w") as f:
                 f.writelines(filtered_lines)
-
             self.chat_history.append(
                 f"User: I got a simulation error. Here is the log:\n{combined_text}"
             )
