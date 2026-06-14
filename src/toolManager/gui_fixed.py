@@ -40,7 +40,7 @@ TOOLS = {
         "desc": "PCB design and schematic capture tool"
     },
     "ngspice": {
-        "versions": ["latest", "35", "36", "37", "38", "39", "41", "42"],
+        "versions": ["latest", "35", "36", "37", "38", "39", "40", "41", "42"],
         "desc": "SPICE-based analog circuit simulator"
     },
     "llvm": {
