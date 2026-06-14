@@ -22,3 +22,16 @@ dist/
 # Local deploy script (user-specific VM config)
 scripts/deploy_to_vm.ps1
 .venv/
+venv/
+
+# User-specific local workspace configuration
+library/config/.esim/workspace.txt
+
+# Local configuration files generated at runtime
+library/config/.esim/config.ini
+library/config/.nghdl/
+
+# Ensure compiled files and caches under nghdl/ are also ignored
+**/__pycache__/
+**/*.pyc
+

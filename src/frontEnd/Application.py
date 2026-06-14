@@ -410,6 +410,10 @@ class Application(QtWidgets.QMainWindow):
                 pass
             if self.chatbot_dock.isVisible():
                 self.chatbot_dock.close()
+            try:
+                self.chatbot_window.close()
+            except BaseException:
+                pass
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
@@ -823,10 +827,10 @@ def main(args):
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
 
     try:
-        # FIX #11: Both branches of the original if/else did exactly the same
-        # thing (os.path.expanduser('~')), making the conditional dead code.
-        # Simplified to a single unconditional assignment.
-        user_home = os.path.expanduser('~')
+        if os.name == 'nt':
+            user_home = os.path.join('library', 'config')
+        else:
+            user_home = os.path.expanduser('~')
         file = open(os.path.join(user_home, ".esim/workspace.txt"), 'r')
         work = int(file.read(1))
         file.close()
