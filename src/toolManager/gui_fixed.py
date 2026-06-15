@@ -3,7 +3,7 @@ import os
 import sys
 import ctypes
 import subprocess
-import platform
+from platform_utils import IS_WINDOWS, IS_LINUX
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QTableWidget, QTableWidgetItem, QHeaderView, QProgressBar,
@@ -14,11 +14,6 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
 import logging
-
-PYTHON     = sys.executable
-SYSTEM     = platform.system()
-IS_WINDOWS = SYSTEM == "Windows"
-IS_LINUX   = SYSTEM == "Linux"
 
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))

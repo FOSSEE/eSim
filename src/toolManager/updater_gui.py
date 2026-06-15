@@ -11,6 +11,7 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
                              QAbstractItemView)
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
+from platform_utils import IS_WINDOWS, distro_label
 
 class InstallerThread(QThread):
     progress = pyqtSignal(str, int)
@@ -22,6 +23,10 @@ class InstallerThread(QThread):
         self.packages = packages_to_install
         
     def run(self):
+        if IS_WINDOWS:
+            self.finished.emit(False, "Package Updater is Linux only.\nOn Windows, use the main Tool Manager.")
+            return
+
         total = len(self.packages)
         for pkg_idx, (package_name, version, script_name) in enumerate(self.packages):
             try:
@@ -368,7 +373,7 @@ class PackageUpdaterWindow(QMainWindow):
         title.setFont(QFont("Segoe UI", 14, QFont.Weight.Bold))
         title.setStyleSheet("color: white; background: transparent;")
         
-        subtitle = QLabel("Real-time progress • Ngspice 35-43 • Ubuntu 22.04")
+        subtitle = QLabel(f"Real-time progress • Ngspice 35-43 • {distro_label()}")
         subtitle.setFont(QFont("Segoe UI", 8))
         subtitle.setStyleSheet("color: rgba(255,255,255,0.9); background: transparent;")
         
