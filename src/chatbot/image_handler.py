@@ -28,7 +28,6 @@ try:
 except Exception as e:
     HAS_PADDLE = False
     print(f"[INIT] PaddleOCR init failed: {e}")
-    print("[INIT] Vision analysis unavailable. Text and netlist analysis still work.")
 
 
 def encode_image(image_path: str) -> str:
