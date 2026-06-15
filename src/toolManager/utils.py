@@ -17,11 +17,11 @@ import platform
 import threading
 import time
 from pathlib import Path
+from platform_utils import IS_WINDOWS, MSYS2_PATH
 
 # ==================== CONSTANTS & DEFAULTS ====================
 
 # Default Windows installation paths
-DEFAULT_MSYS2_PATH = Path(r"C:\msys64")
 DEFAULT_ESIM_DIR = Path(r"C:\FOSSEE\eSim")
 
 WIN_KICAD_PATHS = [
@@ -62,7 +62,7 @@ def run_cmd_safe(cmd, timeout=30, cwd=None):
     Returns the subprocess.CompletedProcess result or None if failed.
     """
     try:
-        if platform.system() == "Windows":
+        if IS_WINDOWS:
             startupinfo = subprocess.STARTUPINFO()
             startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             startupinfo.wShowWindow = subprocess.SW_HIDE
@@ -94,7 +94,7 @@ def run_cmd_stream(cmd, timeout=900, cwd=None):
     Returns a tuple of (returncode, full_output_string).
     """
     try:
-        if platform.system() == "Windows":
+        if IS_WINDOWS:
             si = subprocess.STARTUPINFO()
             si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
             si.wShowWindow = subprocess.SW_HIDE
@@ -161,7 +161,7 @@ def get_msys2_bash():
     """
     Returns the path to MSYS2 bash.exe if found, else None.
     """
-    bash_path = DEFAULT_MSYS2_PATH / "usr" / "bin" / "bash.exe"
+    bash_path = MSYS2_PATH / "usr" / "bin" / "bash.exe"
     return bash_path if bash_path.exists() else None
 
 def get_msys2_mingw_root():

@@ -13,6 +13,7 @@ import zipfile
 import time
 import io
 from pathlib import Path
+from platform_utils import IS_WINDOWS, MSYS2_PATH
 
 # Add local directory to path for backend utility imports
 _local_path = str(Path(__file__).resolve().parent)
@@ -21,20 +22,18 @@ if _local_path not in sys.path:
 
 from utils import (
     run_cmd_safe, run_cmd_stream, which, print_status,
-    DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
+    DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
     WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, 
     get_msys2_mingw_bin, get_msys2_mingw_root
 )
 
-if sys.platform == "win32":
+if IS_WINDOWS:
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='ignore')
 
 BASE_DIR = Path(__file__).resolve().parent
 STATE_FILE = BASE_DIR / "information.json"
 BASE_DIR.mkdir(parents=True, exist_ok=True)
-
-MSYS2_PATH = DEFAULT_MSYS2_PATH
 
 DOWNLOAD_DIR = BASE_DIR / "Download"
 DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -202,7 +201,7 @@ def _find_ngspice_exe():
     return which("ngspice") or which("ngspice.exe")
 
 def find_llvm_fixed(version=None):
-    if platform.system() == "Windows":
+    if IS_WINDOWS:
         import ctypes
         HWND_BROADCAST = 0xFFFF
         WM_SETTINGCHANGE = 0x001A
