@@ -8,6 +8,25 @@ class Appconfig:
     else:
         home = os.path.expanduser('~')
 
+    # Self-healing: Ensure .nghdl folder and config.ini exist
+    try:
+        _nghdl_dir = os.path.join(home, '.nghdl')
+        os.makedirs(_nghdl_dir, exist_ok=True)
+        _config_file = os.path.join(_nghdl_dir, 'config.ini')
+        if not os.path.isfile(_config_file):
+            _file_dir = os.path.dirname(os.path.abspath(__file__))
+            _nghdl_home = os.path.abspath(os.path.join(_file_dir, '..', '..', 'nghdl'))
+            with open(_config_file, 'w') as _f:
+                _f.write("[NGHDL]\n")
+                _f.write(f"NGHDL_HOME = {_nghdl_home}\n")
+                _f.write("DIGITAL_MODEL = %(NGHDL_HOME)s/src/xspice/icm\n")
+                _f.write("RELEASE = %(NGHDL_HOME)s/release\n")
+                _f.write("[SRC]\n")
+                _f.write(f"SRC_HOME = {_nghdl_home}\n")
+                _f.write("LICENSE = %(SRC_HOME)s/LICENSE\n")
+    except Exception as _e:
+        print(f"Error creating nghdl config.ini: {_e}")
+
     # Reading all variables from eSim config.ini
     parser_esim = ConfigParser()
     parser_esim.read(os.path.join(home, os.path.join('.esim', 'config.ini')))

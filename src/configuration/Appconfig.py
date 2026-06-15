@@ -40,6 +40,25 @@ class Appconfig(QtWidgets.QWidget):
     else:
         user_home = os.path.expanduser('~')
 
+    # Self-healing: Ensure .esim folder and config.ini exist
+    try:
+        _esim_dir = os.path.join(user_home, '.esim')
+        os.makedirs(_esim_dir, exist_ok=True)
+        _config_file = os.path.join(_esim_dir, 'config.ini')
+        if not os.path.isfile(_config_file):
+            _file_dir = os.path.dirname(os.path.abspath(__file__))
+            _esim_home = os.path.abspath(os.path.join(_file_dir, '..', '..'))
+            with open(_config_file, 'w') as _f:
+                _f.write("[eSim]\n")
+                _f.write(f"eSim_HOME = {_esim_home}\n")
+                _f.write("LICENSE = %(eSim_HOME)s/LICENSE\n")
+                _f.write("KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz\n")
+                _f.write("IMAGES = %(eSim_HOME)s/images\n")
+                _f.write("VERSION = %(eSim_HOME)s/VERSION\n")
+                _f.write("MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json\n")
+    except Exception as _e:
+        print(f"Error creating config.ini: {_e}")
+
     try:
         file = open(os.path.join(
             user_home, ".esim/workspace.txt"), 'r'
