@@ -15,6 +15,9 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
 import logging
 
+
+PYTHON = sys.executable
+
 import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
