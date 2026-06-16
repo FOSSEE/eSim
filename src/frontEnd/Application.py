@@ -27,7 +27,8 @@ if os.name == 'nt':
     init_path = ''
 else:
     import pathmagic    # noqa:F401
-    init_path = '../../'
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    init_path = os.path.abspath(os.path.join(current_dir, "..", "..")) + os.sep
 
 from PyQt6 import QtGui, QtCore, QtWidgets
 
@@ -125,7 +126,7 @@ class Application(QtWidgets.QMainWindow):
             }
         """)
         self.addDockWidget(QtCore.Qt.RightDockWidgetArea, self.chatbot_dock)
-        self.chatbot_dock.hide()  # Hidden by default; toggled by the icon button
+        self.chatbot_dock.show()  # <--- Force it to open inside the layout on startup
         # When user closes dock via the X button, reposition the floating icon
         self.chatbot_dock.visibilityChanged.connect(
             lambda _: self._reposition_chatbot_icon()
@@ -409,6 +410,10 @@ class Application(QtWidgets.QMainWindow):
                 pass
             if self.chatbot_dock.isVisible():
                 self.chatbot_dock.close()
+            try:
+                self.chatbot_window.close()
+            except BaseException:
+                pass
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
@@ -822,10 +827,10 @@ def main(args):
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
 
     try:
-        # FIX #11: Both branches of the original if/else did exactly the same
-        # thing (os.path.expanduser('~')), making the conditional dead code.
-        # Simplified to a single unconditional assignment.
-        user_home = os.path.expanduser('~')
+        if os.name == 'nt':
+            user_home = os.path.join('library', 'config')
+        else:
+            user_home = os.path.expanduser('~')
         file = open(os.path.join(user_home, ".esim/workspace.txt"), 'r')
         work = int(file.read(1))
         file.close()
@@ -847,3 +852,4 @@ if __name__ == '__main__':
         main(sys.argv)
     except Exception as err:
         print("Error: ", err)
+self.openChatbot()
