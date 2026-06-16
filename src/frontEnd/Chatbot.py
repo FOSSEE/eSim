@@ -1477,7 +1477,7 @@ class ChatbotGUI(QWidget):
         self._stream_ts = _get_time()
         self._stream_idx = self._response_counter
         cursor = QTextCursor(self.chat_display.document())
-        cursor.movePosition(QTextCursor.End)
+        cursor.movePosition(QTextCursor.MoveOperation.End)
         cursor.insertHtml(
             self._STREAM_ANCHOR
             + _bot_bubble("…", self._stream_ts, self._stream_idx)
@@ -1502,7 +1502,7 @@ class ChatbotGUI(QWidget):
                 return
 
         # Select from anchor to end of document and rewrite the bubble in place.
-        anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+        anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
         anchor_cursor.removeSelectedText()
         anchor_cursor.insertHtml(
             self._STREAM_ANCHOR
@@ -1943,7 +1943,7 @@ class ChatbotGUI(QWidget):
     def _show_typing_bubble(self):
         self._typing_frame = 0
         cursor = QTextCursor(self.chat_display.document())
-        cursor.movePosition(QTextCursor.End)
+        cursor.movePosition(QTextCursor.MoveOperation.End)
         # Insert sentinel anchor + bubble in one operation so they form
         # a contiguous block that can be fully removed later.
         cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(0))
@@ -1959,7 +1959,7 @@ class ChatbotGUI(QWidget):
         # Select from the sentinel to the end of the document and replace.
         # This is immune to any reflow that happened while the window was
         # in the background because we locate by anchor name, not position.
-        anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+        anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
         anchor_cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(self._typing_frame))
         sb = self.chat_display.verticalScrollBar()
         if sb.maximum() - sb.value() < 60:
@@ -2751,7 +2751,7 @@ class ChatbotGUI(QWidget):
             idx = self._stream_idx
             anchor_cursor = self._find_stream_anchor_cursor()
             if anchor_cursor is not None:
-                anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+                anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
                 anchor_cursor.removeSelectedText()
                 anchor_cursor.insertHtml(_bot_bubble(bot_response, ts, idx))
             else:
