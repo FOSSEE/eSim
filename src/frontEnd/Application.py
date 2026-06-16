@@ -29,8 +29,8 @@ else:
     import pathmagic    # noqa:F401
     init_path = '../../'
 
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.Qt import QSize
+from PyQt6 import QtGui, QtCore, QtWidgets
+
 from configuration.Appconfig import Appconfig
 from frontEnd import ProjectExplorer
 from frontEnd import Workspace
@@ -41,7 +41,7 @@ from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
 from frontEnd.Chatbot import ChatbotGUI
-from PyQt5.QtCore import QTimer
+from PyQt6.QtCore import QTimer, Qsize 
 # Its our main window of application.
 
 
@@ -271,8 +271,8 @@ class Application(QtWidgets.QMainWindow):
         # corner in the application window.
         self.spacer = QtWidgets.QWidget()
         self.spacer.setSizePolicy(
-            QtWidgets.QSizePolicy.Expanding,
-            QtWidgets.QSizePolicy.Expanding)
+            QtWidgets.QSizePolicy.Policy.Expanding,
+            QtWidgets.QSizePolicy.Policy.Expanding)
         self.topToolbar.addWidget(self.spacer)
         self.logo = QtWidgets.QLabel()
         self.logopic = QtGui.QPixmap(
@@ -358,7 +358,7 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.addAction(self.conToeSim)
-        self.lefttoolbar.setOrientation(QtCore.Qt.Vertical)
+        self.lefttoolbar.setOrientation(QtCore.Qt.Orientation.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
 
     def closeEvent(self, event):
@@ -382,11 +382,11 @@ class Application(QtWidgets.QMainWindow):
         exit_msg = "Are you sure you want to exit the program?"
         exit_msg += " All unsaved data will be lost."
         reply = QtWidgets.QMessageBox.question(
-            self, 'Message', exit_msg, QtWidgets.QMessageBox.Yes,
-            QtWidgets.QMessageBox.No
+            self, 'Message', exit_msg, QtWidgets.QMessageBox.StandardButton.Yes,
+            QtWidgets.QMessageBox.StandardButton.No
         )
 
-        if reply == QtWidgets.QMessageBox.Yes:
+        if reply == QtWidgets.QMessageBox.StandardButton.Yes:
             for proc in self.obj_appconfig.procThread_list:
                 try:
                     proc.terminate()
@@ -412,7 +412,7 @@ class Application(QtWidgets.QMainWindow):
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
-        elif reply == QtWidgets.QMessageBox.No:
+        elif reply == QtWidgets.QMessageBox.StandardButton.No:
             event.ignore()
 
     def new_project(self):
@@ -527,7 +527,7 @@ class Application(QtWidgets.QMainWindow):
                 self.msg.showMessage(
                     'Data could not be plotted. Please try again.'
                 )
-                self.msg.exec_()
+                self.msg.exec()
                 print("Exception Message:", str(e), traceback.format_exc())
                 self.obj_appconfig.print_error('Exception Message : '
                                                + str(e))
@@ -563,7 +563,7 @@ class Application(QtWidgets.QMainWindow):
                 self.msg.showMessage(
                     'Netlist (*.cir.out) not found.'
                 )
-                self.msg.exec_()
+                self.msg.exec()
                 return
 
             self.obj_Mainview.obj_dockarea.ngspiceEditor(
@@ -582,7 +582,7 @@ class Application(QtWidgets.QMainWindow):
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
 
     def open_subcircuit(self):
         """
@@ -623,7 +623,7 @@ class Application(QtWidgets.QMainWindow):
                                  'Please make sure it is installed')
             self.obj_appconfig.print_error('Error while opening NGHDL. ' +
                                            'Please make sure it is installed')
-            self.msg.exec_()
+            self.msg.exec()
 
     def open_makerchip(self):
         """
@@ -679,7 +679,7 @@ class Application(QtWidgets.QMainWindow):
                     'Current project does not contain any Ngspice file. ' +
                     'Please create Ngspice file with extension .cir.out'
                 )
-                self.msg.exec_()
+                self.msg.exec()
         else:
             self.msg = QtWidgets.QErrorMessage()
             self.msg.setModal(True)
@@ -688,7 +688,7 @@ class Application(QtWidgets.QMainWindow):
                 'Please select the project first. You can either ' +
                 'create a new project or open an existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
 
     def open_OMoptim(self):
         """
@@ -721,11 +721,11 @@ class Application(QtWidgets.QMainWindow):
                 "https://www.openmodelica.org/download/download-windows"
                 ">OpenModelica Windows</a> and install latest version.<br/>"
             )
-            self.msg.setTextFormat(QtCore.Qt.RichText)
+            self.msg.setTextFormat(QtCore.Qt.TextFormat.RichText)
             self.msg.setText(self.msgContent)
             self.msg.setWindowTitle("Error Message")
             self.obj_appconfig.print_info(self.msgContent)
-            self.msg.exec_()
+            self.msg.exec()
 
     def open_conToeSim(self):
         print("Function : Schematics converter")
@@ -778,7 +778,7 @@ class MainView(QtWidgets.QWidget):
         self.obj_projectExplorer = ProjectExplorer.ProjectExplorer()
 
         # Adding content to vertical middle Split.
-        self.middleSplit.setOrientation(QtCore.Qt.Vertical)
+        self.middleSplit.setOrientation(QtCore.Qt.Orientation.Vertical)
         self.middleSplit.addWidget(self.obj_dockarea)
         self.middleSplit.addWidget(self.noteArea)
 
@@ -812,7 +812,7 @@ def main(args):
 
     splash_pix = QtGui.QPixmap(init_path + 'images/splash_screen_esim.png')
     splash = QtWidgets.QSplashScreen(
-        appView, splash_pix, QtCore.Qt.WindowStaysOnTopHint
+        appView, splash_pix, QtCore.Qt.WindowType.WindowStaysOnTopHint
     )
     splash.setMask(splash_pix.mask())
     splash.setDisabled(True)
@@ -837,7 +837,7 @@ def main(args):
     else:
         appView.obj_workspace.show()
 
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
 # Call main function

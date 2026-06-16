@@ -1,4 +1,4 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt6 import QtCore, QtWidgets
 from ngspiceSimulation import plotWindow
 from ngspiceSimulation.NgspiceWidget import NgspiceWidget
 from configuration.Appconfig import Appconfig
@@ -9,8 +9,9 @@ from kicadtoNgspice.KicadtoNgspice import MainWindow
 from browser.Welcome import Welcome
 from browser.UserManual import UserManual
 from ngspicetoModelica.ModelicaUI import OpenModelicaEditor
-from PyQt5.QtWidgets import QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout
-from PyQt5.QtCore import Qt
+from PyQt6.QtWidgets import (
+    QLineEdit, QLabel, QPushButton, QVBoxLayout, QHBoxLayout)
+from PyQt6.QtCore import Qt
 import os
 from converter.pspiceToKicad import PspiceConverter
 from converter.ltspiceToKicad import LTspiceConverter
@@ -220,7 +221,7 @@ class DockArea(QtWidgets.QMainWindow):
         file_path_text_box = QLineEdit()
         file_path_text_box.setFixedHeight(30)
         file_path_text_box.setFixedWidth(800)
-        file_path_layout.setAlignment(Qt.AlignCenter)
+        file_path_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         file_path_layout.addWidget(file_path_text_box)
 
         browse_button = QPushButton("Browse")
@@ -264,7 +265,7 @@ class DockArea(QtWidgets.QMainWindow):
         # lib_path_text_box = QLineEdit()
         # lib_path_text_box.setFixedHeight(30)
         # lib_path_text_box.setFixedWidth(800)
-        # lib_path_layout.setAlignment(Qt.AlignCenter)
+        # lib_path_layout.setAlignment(Qt.AlignmentFlag.AlignCenter)
         # lib_path_layout.addWidget(lib_path_text_box)
 
         # browse_button1 = QPushButton("Browse lib")
@@ -316,7 +317,7 @@ class DockArea(QtWidgets.QMainWindow):
         self.description_label = QLabel()
         self.description_label.setFixedHeight(160)
         self.description_label.setFixedWidth(950)
-        self.description_label.setAlignment(Qt.AlignBottom)
+        self.description_label.setAlignment(Qt.AlignmentFlag.AlignBottom)
         self.description_label.setWordWrap(True)
         self.description_label.setText(description_html)
         self.eConLayout.addWidget(self.description_label)  # Add the description label to the layout
@@ -356,7 +357,7 @@ class DockArea(QtWidgets.QMainWindow):
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
             return
         projName = os.path.basename(projDir)
         dockName = f'Model Editor-{projName}-'
@@ -483,7 +484,7 @@ class DockArea(QtWidgets.QMainWindow):
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
 
     def makerchip(self):
         """This function creates a widget for different subcircuit options."""
@@ -500,7 +501,7 @@ class DockArea(QtWidgets.QMainWindow):
                 'Please select the project first.'
                 ' You can either create new project or open existing project'
             )
-            self.msg.exec_()
+            self.msg.exec()
             return
         projName = os.path.basename(projDir)
         dockName = f'Makerchip-{projName}-'

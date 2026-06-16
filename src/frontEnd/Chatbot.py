@@ -430,7 +430,7 @@ class _HistoryLineEdit(QLineEdit):
 
     def keyPressEvent(self, event: QKeyEvent):
         # ── Ctrl+V: check for clipboard image before default paste ────
-        if event.key() == Qt.Key_V and event.modifiers() & Qt.ControlModifier:
+        if event.key() == Qt.Key.Key_V and event.modifiers() & Qt.KeyboardModifier.ControlModifier:
             clipboard = QApplication.clipboard()
             mime = clipboard.mimeData()
             if mime and mime.hasImage():
@@ -452,7 +452,7 @@ class _HistoryLineEdit(QLineEdit):
             super().keyPressEvent(event)
             return
 
-        if event.key() == Qt.Key_Up and self._sent_history:
+        if event.key() == Qt.Key.Key_Up and self._sent_history:
             if self._hist_idx == -1:
                 self._draft = self.text()
                 self._hist_idx = len(self._sent_history) - 1
@@ -460,7 +460,7 @@ class _HistoryLineEdit(QLineEdit):
                 self._hist_idx -= 1
             self.setText(self._sent_history[self._hist_idx])
             self.end(False)
-        elif event.key() == Qt.Key_Down and self._hist_idx >= 0:
+        elif event.key() == Qt.Key.Key_Down and self._hist_idx >= 0:
             self._hist_idx += 1
             if self._hist_idx >= len(self._sent_history):
                 self._hist_idx = -1
@@ -589,8 +589,8 @@ class ChatHistoryViewer(QDialog):
 
 class _DeleteConfirmDialog(QDialog):
     def __init__(self, title: str, parent=None):
-        super().__init__(parent, Qt.FramelessWindowHint | Qt.Dialog)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        super().__init__(parent, Qt.WindowType.FramelessWindowHint | Qt.WindowType.Dialog)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setMinimumWidth(320)
 
         outer = QWidget(self)
@@ -609,7 +609,7 @@ class _DeleteConfirmDialog(QDialog):
 
         title_lbl = QLabel("Delete chat?")
         title_lbl.setStyleSheet("font-size:16px; font-weight:bold; color:#1a1a2e;")
-        title_lbl.setAlignment(Qt.AlignCenter)
+        title_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         card_layout.addWidget(title_lbl)
 
         body_lbl = QLabel(
@@ -618,11 +618,11 @@ class _DeleteConfirmDialog(QDialog):
             f'<span style="color:#999;font-size:11px;">This cannot be undone.</span></span>'
         )
         body_lbl.setWordWrap(True)
-        body_lbl.setAlignment(Qt.AlignCenter)
+        body_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         card_layout.addWidget(body_lbl)
 
         div = QFrame()
-        div.setFrameShape(QFrame.HLine)
+        div.setFrameShape(QFrame.Shape.HLine)
         div.setStyleSheet("color:#f0f0f0;")
         card_layout.addWidget(div)
 
@@ -684,7 +684,7 @@ class _SessionItemWidget(QWidget):
 
         avatar = QLabel(title[0].upper() if title else "C")
         avatar.setFixedSize(38, 38)
-        avatar.setAlignment(Qt.AlignCenter)
+        avatar.setAlignment(Qt.AlignmentFlag.AlignCenter)
         avatar.setStyleSheet("""
             QLabel {
                 background: qlineargradient(
@@ -724,14 +724,14 @@ class _SessionItemWidget(QWidget):
 
         kind_lbl = QLabel()
         kind_lbl.setText(_session_kind_badge(kind))
-        kind_lbl.setTextFormat(Qt.RichText)
+        kind_lbl.setTextFormat(Qt.TextFormat.RichText)
         kind_lbl.setStyleSheet("background:transparent;")
         meta_row.addWidget(kind_lbl)
 
         if msg_count > 0:
             count_lbl = QLabel(str(msg_count))
             count_lbl.setFixedSize(20, 16)
-            count_lbl.setAlignment(Qt.AlignCenter)
+            count_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
             count_lbl.setStyleSheet("""
                 QLabel {
                     background:#0095f6; color:white;
@@ -795,7 +795,7 @@ class _SessionItemWidget(QWidget):
 
     def _on_delete_clicked(self):
         dlg = _DeleteConfirmDialog(self.title, self)
-        if dlg.exec() == QDialog.Accepted:
+        if dlg.exec() == QDialog.DialogCode.Accepted:
             self.delete_requested.emit(self.session_id)
 
 
@@ -912,7 +912,7 @@ class ChatSidebar(QWidget):
         root.addWidget(controls)
 
         sep = QFrame()
-        sep.setFrameShape(QFrame.HLine)
+        sep.setFrameShape(QFrame.Shape.HLine)
         sep.setFixedHeight(1)
         sep.setStyleSheet("QFrame { background:#f0f0f0; border:none; }")
         root.addWidget(sep)
@@ -937,7 +937,7 @@ class ChatSidebar(QWidget):
         root.addWidget(self.session_list)
 
         self._empty_lbl = QLabel("No saved chats yet.\nStart a conversation!")
-        self._empty_lbl.setAlignment(Qt.AlignCenter)
+        self._empty_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._empty_lbl.setStyleSheet("""
             QLabel {
                 color:#ccc; font-size:12px;
@@ -1000,7 +1000,7 @@ class ChatSidebar(QWidget):
             kind = s.get('kind', 'text')
 
             item = QListWidgetItem()
-            item.setData(Qt.UserRole, sid)
+            item.setData(Qt.ItemDataRole.UserRole, sid)
             widget = _SessionItemWidget(sid, title, date, msg_count, preview, kind, self.session_list)
             widget.delete_requested.connect(self._delete_session)
             widget.rename_requested.connect(self.rename_requested)
@@ -1100,7 +1100,7 @@ class ChatbotGUI(QWidget):
                 border-radius:14px; padding:4px 14px;
             }
         """)
-        self._toast.setAlignment(Qt.AlignCenter)
+        self._toast.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._toast.hide()
 
         root = QHBoxLayout(self)
@@ -1231,7 +1231,7 @@ class ChatbotGUI(QWidget):
         self._update_ollama_status()
 
         header_sep = QFrame()
-        header_sep.setFrameShape(QFrame.HLine)
+        header_sep.setFrameShape(QFrame.Shape.HLine)
         header_sep.setStyleSheet("color:#ececec; margin:0;")
         chat_layout.addLayout(header_layout)
         chat_layout.addWidget(header_sep)
@@ -1293,7 +1293,7 @@ class ChatbotGUI(QWidget):
         self._temp_label.setStyleSheet("font-size:10px; color:#555;")
         temp_col.addWidget(self._temp_label)
 
-        self._temp_slider = QSlider(Qt.Horizontal)
+        self._temp_slider = QSlider(Qt.Orientation.Horizontal)
         self._temp_slider.setRange(1, 100)
         self._temp_slider.setValue(int(self._temperature * 100))
         self._temp_slider.setFixedWidth(110)
@@ -1306,7 +1306,7 @@ class ChatbotGUI(QWidget):
         self._tok_label.setStyleSheet("font-size:10px; color:#555;")
         tok_col.addWidget(self._tok_label)
 
-        self._tok_slider = QSlider(Qt.Horizontal)
+        self._tok_slider = QSlider(Qt.Orientation.Horizontal)
         self._tok_slider.setRange(1, 40)
         self._tok_slider.setValue(self._num_predict // 128)
         self._tok_slider.setFixedWidth(110)
@@ -1443,8 +1443,8 @@ class ChatbotGUI(QWidget):
 
         scroll = QScrollArea()
         scroll.setFixedHeight(72)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         scroll.setWidgetResizable(True)
         scroll.setStyleSheet("QScrollArea { border:none; background:transparent; }")
 
@@ -1509,7 +1509,7 @@ class ChatbotGUI(QWidget):
 
     def _delete_all_chats(self):
         dlg = _DeleteConfirmDialog("all chats", self)
-        if dlg.exec() != QDialog.Accepted:
+        if dlg.exec() != QDialog.DialogCode.Accepted:
             return
 
         try:
@@ -1523,7 +1523,7 @@ class ChatbotGUI(QWidget):
         self._sidebar.populate()
 
     def _open_session_viewer(self, item):
-        session_id = item.data(Qt.UserRole)
+        session_id = item.data(Qt.ItemDataRole.UserRole)
         path = os.path.join(_SESSIONS_DIR, f"{session_id}.json")
         try:
             with open(path, encoding='utf-8') as f:
@@ -1601,7 +1601,7 @@ class ChatbotGUI(QWidget):
         self._scroll_to_bottom()
 
     def _on_session_clicked(self, item):
-        session_id = item.data(Qt.UserRole)
+        session_id = item.data(Qt.ItemDataRole.UserRole)
 
         # If this is the session already showing, do nothing.
         if (session_id == self._current_session_id
@@ -1990,7 +1990,7 @@ class ChatbotGUI(QWidget):
     def _show_typing_bubble(self):
         self._typing_frame = 0
         cursor = QTextCursor(self.chat_display.document())
-        cursor.movePosition(QTextCursor.End)
+        cursor.movePosition(QTextCursor.MoveOperation.End)
         # Insert sentinel anchor + bubble in one operation so they form
         # a contiguous block that can be fully removed later.
         cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(0))
@@ -2007,7 +2007,7 @@ class ChatbotGUI(QWidget):
         # Select from the sentinel to the end of the document and replace.
         # This is immune to any reflow that happened while the window was
         # in the background because we locate by anchor name, not position.
-        anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+        anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
         anchor_cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(self._typing_frame))
         # Only auto-scroll if the user is already near the bottom so we
         # don't hijack their scroll position while they read earlier msgs.
@@ -2019,7 +2019,7 @@ class ChatbotGUI(QWidget):
         self._typing_anim_timer.stop()
         anchor_cursor = self._find_typing_anchor_cursor()
         if anchor_cursor is not None:
-            anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+            anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
             anchor_cursor.removeSelectedText()
         # Legacy guard: if somehow _typing_start_pos path left stale state
         self._typing_start_pos = -1
@@ -2120,7 +2120,7 @@ class ChatbotGUI(QWidget):
         card_layout.setSpacing(2)
 
         thumb_lbl = QLabel()
-        thumb_lbl.setAlignment(Qt.AlignCenter)
+        thumb_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         thumb_lbl.setFixedHeight(36)
         pix = QPixmap(image_path)
         if not pix.isNull():
@@ -2137,7 +2137,7 @@ class ChatbotGUI(QWidget):
 
         fname = os.path.basename(image_path)
         name_lbl = QLabel(fname[:10] + ("…" if len(fname) > 10 else ""))
-        name_lbl.setAlignment(Qt.AlignCenter)
+        name_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         name_lbl.setStyleSheet("font-size:9px;color:#555;background:transparent;")
         card_layout.addWidget(name_lbl)
 
