@@ -17,12 +17,17 @@ import platform
 import threading
 import time
 from pathlib import Path
-from platform_utils import IS_WINDOWS, MSYS2_PATH
+from platform_utils import IS_WINDOWS, get_mysys2_path
 
 # ==================== CONSTANTS & DEFAULTS ====================
 
 # Default Windows installation paths
 DEFAULT_ESIM_DIR = Path(r"C:\FOSSEE\eSim")
+
+try:
+    MSYS2_PATH = get_mysys2_path();
+except RuntimeError as e:
+    print(f"[ERROR]: {e}", flush=True)
 
 WIN_KICAD_PATHS = [
     (r"C:\Program Files\KiCad\9.0\bin\kicad.exe", "9"),
@@ -49,10 +54,6 @@ WIN_LLVM_PATHS = [
 # Locations for MSYS2/MinGW64. The FOSSEE fallback supports the bundled
 # MSYS2 environment provided by some eSim installers to ensure 
 # zero-dependency operation.
-FOSSEE_MSYS_CANDIDATES = [
-    Path(r"C:\msys64\mingw64"),
-    Path(r"C:\FOSSEE\MSYS\mingw64"),
-]
 
 # ==================== HELPERS ====================
 
@@ -166,21 +167,11 @@ def get_msys2_bash():
     bash_path = MSYS2_PATH / "usr" / "bin" / "bash.exe"
     return bash_path if bash_path.exists() else None
 
-def get_msys2_mingw_root():
-    """
-    Returns the path to MSYS2 mingw64 root if found, else None.
-    """
-    for candidate in FOSSEE_MSYS_CANDIDATES:
-        if candidate.exists():
-            return candidate
-    return None
-
 def get_msys2_mingw_bin():
     """
     Returns the path to MSYS2 mingw64/bin if found, else None.
     """
-    for candidate in FOSSEE_MSYS_CANDIDATES:
-        bin_dir = candidate / "bin"
-        if bin_dir.exists():
-            return bin_dir
-    return None
+
+    bin_dir = MSYS2_PATH / "bin"
+    if bin_dir.exists():
+        return bin_dir
