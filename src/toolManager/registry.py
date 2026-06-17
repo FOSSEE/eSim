@@ -7,9 +7,9 @@ Consolidates tool definitions, versions, and platform support.
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional, Any
 try:
-    from .constants import get_os_id
+    from .pm_platform import get_os_id
 except (ImportError, ValueError):
-    from constants import get_os_id
+    from pm_platform import get_os_id
 
 
 @dataclass(frozen=True)
