@@ -19,11 +19,12 @@ if os.name == 'nt':
 else:
     init_path = '../../'
 
-from chatbot.chatbot_thread import (  # type: ignore
+from chatbot.chatbot_thread import (
     OllamaWorker, OllamaVisionWorker, MicWorker,
     OllamaStatusWorker, ModelFetchWorker,
+    ModelPullWorker, REQUIRED_MODELS, VISION_MODEL,   
     detect_topic_switch, get_stt_backend,
-    VISION_MODEL_KEYWORDS,  # EXTRACTED: shared constant, avoids duplicate keyword list
+    VISION_MODEL_KEYWORDS,
 )
 from PyQt6.QtWidgets import (
     QWidget, QHBoxLayout, QTextBrowser, QVBoxLayout,
@@ -31,7 +32,7 @@ from PyQt6.QtWidgets import (
     QFileDialog, QDialog, QListWidget, QListWidgetItem, QFrame,
     QScrollArea, QSlider, QInputDialog
 )
-from PyQt6.QtCore import QTimer, Qt, pyqtSignal, QSize
+from PyQt6.QtCore import QTimer, Qt, pyqtSignal, QSize, QThread
 from PyQt6.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
 from configuration.Appconfig import Appconfig
 from datetime import datetime
@@ -1128,7 +1129,6 @@ class ChatbotGUI(QWidget):
             QComboBox:focus { border:1px solid #0095f6; background:#fff; }
             QComboBox::drop-down { border:none; width:18px; }
         """)
-        self._populate_models()
         header_layout.addWidget(self.model_combo)
 
         self._refresh_models_btn = QPushButton("↻")
@@ -1425,6 +1425,103 @@ class ChatbotGUI(QWidget):
 
         self.move_to_bottom_right()
         self._load_history()
+        self._startup_check()
+        # ── Startup: headless server + auto-pull ─────────────────────────────
+
+    def _startup_check(self):
+        """
+        Called once on startup.
+        1. If Ollama is not running, start it headlessly.
+        2. Check which required models are missing.
+        3. Pull each missing model one-by-one with live progress.
+        """
+        from chatbot.chatbot_thread import is_ollama_running, start_ollama
+
+        self.user_input.setEnabled(False)
+        self.send_button.setEnabled(False)
+        self.status_label.setText("🔄 Starting Ollama server…")
+
+        if not is_ollama_running():
+            self.status_label.setText("🔄 Starting Ollama in background…")
+            # start_ollama blocks for up to 30s waiting for the server
+            # Run it in a thread so the UI does not freeze
+            self._ollama_start_worker = OllamaStatusWorker()
+            self._ollama_start_worker.result_signal.connect(self._on_server_ready)
+            # Reuse OllamaStatusWorker just to trigger a background start
+            QTimer.singleShot(0, lambda: self._boot_server_then_check())
+        else:
+            self._check_and_pull_models()
+
+    def _boot_server_then_check(self):
+        """Run start_ollama() in a background thread, then check models."""
+        from chatbot.chatbot_thread import start_ollama
+
+        class _BootWorker(QThread):
+            result_ready = pyqtSignal(bool)
+            def run(self):
+                self.result_ready.emit(start_ollama())
+
+        self._boot_worker = _BootWorker()
+        self._boot_worker.result_ready.connect(self._on_server_ready)
+        self._boot_worker.start()
+
+    def _on_server_ready(self, success: bool):
+        if success:
+            self.status_label.setText("✅ Ollama server is running.")
+            self._check_and_pull_models()
+        else:
+            self.status_label.setText(
+                "❌ Could not start Ollama. "
+                "Please install it from https://ollama.com and restart eSim."
+            )
+            # Leave input disabled
+
+    def _check_and_pull_models(self):
+        """Check installed models and pull anything that is missing."""
+        from chatbot.chatbot_thread import _fetch_model_names
+        try:
+            installed = _fetch_model_names()
+        except Exception:
+            installed = []
+
+        installed_lower = [m.lower() for m in installed]
+        missing = [
+            m for m in REQUIRED_MODELS
+            if not any(m.lower() in i for i in installed_lower)
+        ]
+
+        if not missing:
+            self.status_label.setText("✅ All models ready!")
+            self.user_input.setEnabled(True)
+            self.send_button.setEnabled(True)
+            self._update_ollama_status()
+            return
+
+        # Pull missing models one by one
+        self._pull_queue = missing
+        self._pull_next_model()
+
+    def _pull_next_model(self):
+        if not self._pull_queue:
+            self.status_label.setText("✅ All models downloaded and ready!")
+            self.user_input.setEnabled(True)
+            self.send_button.setEnabled(True)
+            self._populate_models()
+            return
+
+        model = self._pull_queue.pop(0)
+        self.status_label.setText(f"⬇️ Downloading {model}… 0%")
+        self._pull_worker = ModelPullWorker(model)
+        self._pull_worker.progress_signal.connect(self.status_label.setText)
+        self._pull_worker.done_signal.connect(self._on_model_pulled)
+        self._pull_worker.start()
+
+    def _on_model_pulled(self, success: bool):
+        if success:
+            self._pull_next_model()   # pull the next one in the queue
+        else:
+            # Failed but continue trying the rest
+            self._pull_next_model()
 
     # ── Streaming helpers ─────────────────────────────────────────────
 
@@ -2428,15 +2525,18 @@ class ChatbotGUI(QWidget):
 
     def _on_models_fetched(self, model_names: list):
         self.model_combo.clear()
+        from chatbot.chatbot_thread import is_ollama_running
 
         if not model_names:
-            # No models found — Ollama may be offline or has no models pulled.
             self.model_combo.addItem("No models found")
             self.model_combo.setEnabled(False)
-            self.status_label.setText(
-                "⚠️ No Ollama models found. Run 'ollama pull qwen2.5-coder' "
-                "in a terminal to install one."
-            )
+            if is_ollama_running():
+                self.status_label.setText(
+                    "⚠️ No Ollama models found. Run 'ollama pull qwen2.5-coder:3b' "
+                    "in a terminal to install one."
+                )
+            else:
+                self.status_label.setText("🔴 Ollama is offline.")
             return
 
         for name in model_names:
