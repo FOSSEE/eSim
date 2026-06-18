@@ -162,15 +162,41 @@ def is_ollama_running():
 
 
 def start_ollama(stop_flag=None):
+    """Start Ollama server silently in the background (no terminal window)."""
+    cmd = ["ollama", "serve"]
     if os.name == 'nt':
-        subprocess.Popen('start cmd /k "ollama serve"', shell=True)
-    else:
-        subprocess.Popen(
-            ['bash', '-c',
-             'x-terminal-emulator -e "ollama serve" || '
-             'gnome-terminal -- ollama serve || '
-             'xterm -e "ollama serve"']
-        )
+        import shutil
+        # If 'ollama' is not directly callable from PATH, check default install locations
+        if not shutil.which("ollama"):
+            local_appdata = os.environ.get("LOCALAPPDATA", "")
+            possible_paths = [
+                os.path.join(local_appdata, "Programs", "Ollama", "ollama.exe"),
+                r"C:\Program Files\Ollama\ollama.exe",
+                r"C:\Program Files (x86)\Ollama\ollama.exe",
+            ]
+            for path in possible_paths:
+                if os.path.exists(path):
+                    cmd = [path, "serve"]
+                    break
+    try:
+        if os.name == 'nt':
+            # Windows: CREATE_NO_WINDOW flag prevents a cmd popup
+            subprocess.Popen(
+                cmd,
+                creationflags=subprocess.CREATE_NO_WINDOW,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+        else:
+            # Linux/macOS: redirect output to /dev/null, no terminal emulator needed
+            subprocess.Popen(
+                cmd,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+    except FileNotFoundError:
+        # ollama binary not found in PATH or disk
+        return False
     for _ in range(30):
         if stop_flag is not None and stop_flag():
             return False
@@ -178,7 +204,6 @@ def start_ollama(stop_flag=None):
         if is_ollama_running():
             return True
     return False
-
 
 # ── Topic switch detection ───────────────────────────────────────────────────
 
@@ -264,6 +289,46 @@ class ModelFetchWorker(QThread):
             self.result_signal.emit([])
 
 
+# ── Model Pull Worker ─────────────────────────────────────────────────────────
+# Required models for the chatbot to function correctly
+REQUIRED_MODELS = ["qwen2.5-coder:3b", "nomic-embed-text"]
+VISION_MODEL    = "minicpm-v"   # optional — only needed for image analysis
+
+class ModelPullWorker(QThread):
+    """
+    Downloads a single Ollama model in the background.
+    Emits:
+        progress_signal(str)  — human-readable status/percentage string
+        done_signal(bool)     — True on success, False on failure
+    """
+    progress_signal = pyqtSignal(str)
+    done_signal     = pyqtSignal(bool)
+
+    def __init__(self, model_name: str):
+        super().__init__()
+        self.model_name = model_name
+
+    def run(self):
+        try:
+            self.progress_signal.emit(f"⬇️ Downloading {self.model_name}…  0%")
+            for update in ollama.pull(self.model_name, stream=True):
+                # update is a dict with keys: status, completed, total
+                status    = update.get("status", "")
+                completed = update.get("completed", 0)
+                total     = update.get("total", 0)
+                if total and completed:
+                    pct = int((completed / total) * 100)
+                    self.progress_signal.emit(
+                        f"⬇️ Downloading {self.model_name}… {pct}%"
+                    )
+                elif status:
+                    self.progress_signal.emit(
+                        f"⬇️ {self.model_name}: {status}"
+                    )
+            self.done_signal.emit(True)
+        except Exception as e:
+            self.progress_signal.emit(f"❌ Failed to download {self.model_name}: {e}")
+            self.done_signal.emit(False)
 # ── Smart token budget ───────────────────────────────────────────────────────
 
 _COMPLEX_KEYWORDS = {

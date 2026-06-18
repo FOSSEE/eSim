@@ -19,11 +19,12 @@ if os.name == 'nt':
 else:
     init_path = '../../'
 
-from chatbot.chatbot_thread import (  # type: ignore
+from chatbot.chatbot_thread import (
     OllamaWorker, OllamaVisionWorker, MicWorker,
     OllamaStatusWorker, ModelFetchWorker,
+    ModelPullWorker, REQUIRED_MODELS, VISION_MODEL,   
     detect_topic_switch, get_stt_backend,
-    VISION_MODEL_KEYWORDS,  # EXTRACTED: shared constant, avoids duplicate keyword list
+    VISION_MODEL_KEYWORDS,
 )
 from PyQt6.QtWidgets import (
     QWidget, QHBoxLayout, QTextBrowser, QVBoxLayout,
@@ -31,7 +32,7 @@ from PyQt6.QtWidgets import (
     QFileDialog, QDialog, QListWidget, QListWidgetItem, QFrame,
     QScrollArea, QSlider, QInputDialog
 )
-from PyQt6.QtCore import QTimer, Qt, pyqtSignal, QSize
+from PyQt6.QtCore import QTimer, Qt, pyqtSignal, QSize, QThread
 from PyQt6.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
 from configuration.Appconfig import Appconfig
 from datetime import datetime
@@ -406,7 +407,7 @@ class _HistoryLineEdit(QLineEdit):
 
     def keyPressEvent(self, event: QKeyEvent):
         # ── Ctrl+V: check for clipboard image before default paste ────
-        if event.key() == Qt.Key_V and event.modifiers() & Qt.ControlModifier:
+        if event.key() == Qt.Key.Key_V and event.modifiers() & Qt.KeyboardModifier.ControlModifier:
             clipboard = QApplication.clipboard()
             mime = clipboard.mimeData()
             if mime and mime.hasImage():
@@ -428,7 +429,7 @@ class _HistoryLineEdit(QLineEdit):
             super().keyPressEvent(event)
             return
 
-        if event.key() == Qt.Key_Up and self._sent_history:
+        if event.key() == Qt.Key.Key_Up and self._sent_history:
             if self._hist_idx == -1:
                 self._draft = self.text()
                 self._hist_idx = len(self._sent_history) - 1
@@ -436,7 +437,7 @@ class _HistoryLineEdit(QLineEdit):
                 self._hist_idx -= 1
             self.setText(self._sent_history[self._hist_idx])
             self.end(False)
-        elif event.key() == Qt.Key_Down and self._hist_idx >= 0:
+        elif event.key() == Qt.Key.Key_Down and self._hist_idx >= 0:
             self._hist_idx += 1
             if self._hist_idx >= len(self._sent_history):
                 self._hist_idx = -1
@@ -564,8 +565,8 @@ class ChatHistoryViewer(QDialog):
 
 class _DeleteConfirmDialog(QDialog):
     def __init__(self, title: str, parent=None):
-        super().__init__(parent, Qt.FramelessWindowHint | Qt.Dialog)
-        self.setAttribute(Qt.WA_TranslucentBackground)
+        super().__init__(parent, Qt.WindowType.FramelessWindowHint | Qt.WindowType.Dialog)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setMinimumWidth(320)
         outer = QWidget(self)
         outer.setObjectName("card")
@@ -582,7 +583,7 @@ class _DeleteConfirmDialog(QDialog):
 
         title_lbl = QLabel("Delete chat?")
         title_lbl.setStyleSheet("font-size:16px; font-weight:bold; color:#1a1a2e;")
-        title_lbl.setAlignment(Qt.AlignCenter)
+        title_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         card_layout.addWidget(title_lbl)
 
         body_lbl = QLabel(
@@ -591,11 +592,11 @@ class _DeleteConfirmDialog(QDialog):
             f'<span style="color:#999;font-size:11px;">This cannot be undone.</span></span>'
         )
         body_lbl.setWordWrap(True)
-        body_lbl.setAlignment(Qt.AlignCenter)
+        body_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         card_layout.addWidget(body_lbl)
 
         div = QFrame()
-        div.setFrameShape(QFrame.HLine)
+        div.setFrameShape(QFrame.Shape.HLine)
         div.setStyleSheet("color:#f0f0f0;")
         card_layout.addWidget(div)
 
@@ -656,7 +657,7 @@ class _SessionItemWidget(QWidget):
 
         avatar = QLabel(title[0].upper() if title else "C")
         avatar.setFixedSize(38, 38)
-        avatar.setAlignment(Qt.AlignCenter)
+        avatar.setAlignment(Qt.AlignmentFlag.AlignCenter)
         avatar.setStyleSheet("""
             QLabel {
                 background: qlineargradient(
@@ -693,13 +694,13 @@ class _SessionItemWidget(QWidget):
         meta_row.setContentsMargins(0, 0, 0, 0)
         kind_lbl = QLabel()
         kind_lbl.setText(_session_kind_badge(kind))
-        kind_lbl.setTextFormat(Qt.RichText)
+        kind_lbl.setTextFormat(Qt.TextFormat.RichText)
         kind_lbl.setStyleSheet("background:transparent;")
         meta_row.addWidget(kind_lbl)
         if msg_count > 0:
             count_lbl = QLabel(str(msg_count))
             count_lbl.setFixedSize(20, 16)
-            count_lbl.setAlignment(Qt.AlignCenter)
+            count_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
             count_lbl.setStyleSheet("""
                 QLabel {
                     background:#0095f6; color:white;
@@ -762,7 +763,7 @@ class _SessionItemWidget(QWidget):
 
     def _on_delete_clicked(self):
         dlg = _DeleteConfirmDialog(self.title, self)
-        if dlg.exec() == QDialog.Accepted:
+        if dlg.exec() == QDialog.DialogCode.Accepted:
             self.delete_requested.emit(self.session_id)
 
 
@@ -877,7 +878,7 @@ class ChatSidebar(QWidget):
         root.addWidget(controls)
 
         sep = QFrame()
-        sep.setFrameShape(QFrame.HLine)
+        sep.setFrameShape(QFrame.Shape.HLine)
         sep.setFixedHeight(1)
         sep.setStyleSheet("QFrame { background:#f0f0f0; border:none; }")
         root.addWidget(sep)
@@ -902,7 +903,7 @@ class ChatSidebar(QWidget):
         root.addWidget(self.session_list)
 
         self._empty_lbl = QLabel("No saved chats yet.\nStart a conversation!")
-        self._empty_lbl.setAlignment(Qt.AlignCenter)
+        self._empty_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._empty_lbl.setStyleSheet("""
             QLabel {
                 color:#ccc; font-size:12px;
@@ -957,7 +958,7 @@ class ChatSidebar(QWidget):
             preview = next((m[5:].strip() for m in msgs if m.startswith("User:")), "")
             kind = s.get('kind', 'text')
             item = QListWidgetItem()
-            item.setData(Qt.UserRole, sid)
+            item.setData(Qt.ItemDataRole.UserRole, sid)
             widget = _SessionItemWidget(sid, title, date, msg_count, preview, kind, self.session_list)
             widget.delete_requested.connect(self._delete_session)
             widget.rename_requested.connect(self.rename_requested)
@@ -1075,7 +1076,7 @@ class ChatbotGUI(QWidget):
                 border-radius:14px; padding:4px 14px;
             }
         """)
-        self._toast.setAlignment(Qt.AlignCenter)
+        self._toast.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self._toast.hide()
 
         root = QHBoxLayout(self)
@@ -1128,7 +1129,6 @@ class ChatbotGUI(QWidget):
             QComboBox:focus { border:1px solid #0095f6; background:#fff; }
             QComboBox::drop-down { border:none; width:18px; }
         """)
-        self._populate_models()
         header_layout.addWidget(self.model_combo)
 
         self._refresh_models_btn = QPushButton("↻")
@@ -1205,7 +1205,7 @@ class ChatbotGUI(QWidget):
         self._update_ollama_status()
 
         header_sep = QFrame()
-        header_sep.setFrameShape(QFrame.HLine)
+        header_sep.setFrameShape(QFrame.Shape.HLine)
         header_sep.setStyleSheet("color:#ececec; margin:0;")
         chat_layout.addLayout(header_layout)
         chat_layout.addWidget(header_sep)
@@ -1264,7 +1264,8 @@ class ChatbotGUI(QWidget):
         self._temp_label = QLabel(f"Precision  {self._temperature:.2f}")
         self._temp_label.setStyleSheet("font-size:10px; color:#555;")
         temp_col.addWidget(self._temp_label)
-        self._temp_slider = QSlider(Qt.Horizontal)
+
+        self._temp_slider = QSlider(Qt.Orientation.Horizontal)
         self._temp_slider.setRange(1, 100)
         self._temp_slider.setValue(int(self._temperature * 100))
         self._temp_slider.setFixedWidth(110)
@@ -1276,7 +1277,8 @@ class ChatbotGUI(QWidget):
         self._tok_label = QLabel(f"Max tokens  {self._num_predict}")
         self._tok_label.setStyleSheet("font-size:10px; color:#555;")
         tok_col.addWidget(self._tok_label)
-        self._tok_slider = QSlider(Qt.Horizontal)
+
+        self._tok_slider = QSlider(Qt.Orientation.Horizontal)
         self._tok_slider.setRange(1, 40)
         self._tok_slider.setValue(self._num_predict // 128)
         self._tok_slider.setFixedWidth(110)
@@ -1408,8 +1410,8 @@ class ChatbotGUI(QWidget):
 
         scroll = QScrollArea()
         scroll.setFixedHeight(72)
-        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        scroll.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         scroll.setWidgetResizable(True)
         scroll.setStyleSheet("QScrollArea { border:none; background:transparent; }")
         self._thumb_container = QWidget()
@@ -1423,6 +1425,103 @@ class ChatbotGUI(QWidget):
 
         self.move_to_bottom_right()
         self._load_history()
+        self._startup_check()
+        # ── Startup: headless server + auto-pull ─────────────────────────────
+
+    def _startup_check(self):
+        """
+        Called once on startup.
+        1. If Ollama is not running, start it headlessly.
+        2. Check which required models are missing.
+        3. Pull each missing model one-by-one with live progress.
+        """
+        from chatbot.chatbot_thread import is_ollama_running, start_ollama
+
+        self.user_input.setEnabled(False)
+        self.send_button.setEnabled(False)
+        self.status_label.setText("🔄 Starting Ollama server…")
+
+        if not is_ollama_running():
+            self.status_label.setText("🔄 Starting Ollama in background…")
+            # start_ollama blocks for up to 30s waiting for the server
+            # Run it in a thread so the UI does not freeze
+            self._ollama_start_worker = OllamaStatusWorker()
+            self._ollama_start_worker.result_signal.connect(self._on_server_ready)
+            # Reuse OllamaStatusWorker just to trigger a background start
+            QTimer.singleShot(0, lambda: self._boot_server_then_check())
+        else:
+            self._check_and_pull_models()
+
+    def _boot_server_then_check(self):
+        """Run start_ollama() in a background thread, then check models."""
+        from chatbot.chatbot_thread import start_ollama
+
+        class _BootWorker(QThread):
+            result_ready = pyqtSignal(bool)
+            def run(self):
+                self.result_ready.emit(start_ollama())
+
+        self._boot_worker = _BootWorker()
+        self._boot_worker.result_ready.connect(self._on_server_ready)
+        self._boot_worker.start()
+
+    def _on_server_ready(self, success: bool):
+        if success:
+            self.status_label.setText("✅ Ollama server is running.")
+            self._check_and_pull_models()
+        else:
+            self.status_label.setText(
+                "❌ Could not start Ollama. "
+                "Please install it from https://ollama.com and restart eSim."
+            )
+            # Leave input disabled
+
+    def _check_and_pull_models(self):
+        """Check installed models and pull anything that is missing."""
+        from chatbot.chatbot_thread import _fetch_model_names
+        try:
+            installed = _fetch_model_names()
+        except Exception:
+            installed = []
+
+        installed_lower = [m.lower() for m in installed]
+        missing = [
+            m for m in REQUIRED_MODELS
+            if not any(m.lower() in i for i in installed_lower)
+        ]
+
+        if not missing:
+            self.status_label.setText("✅ All models ready!")
+            self.user_input.setEnabled(True)
+            self.send_button.setEnabled(True)
+            self._update_ollama_status()
+            return
+
+        # Pull missing models one by one
+        self._pull_queue = missing
+        self._pull_next_model()
+
+    def _pull_next_model(self):
+        if not self._pull_queue:
+            self.status_label.setText("✅ All models downloaded and ready!")
+            self.user_input.setEnabled(True)
+            self.send_button.setEnabled(True)
+            self._populate_models()
+            return
+
+        model = self._pull_queue.pop(0)
+        self.status_label.setText(f"⬇️ Downloading {model}… 0%")
+        self._pull_worker = ModelPullWorker(model)
+        self._pull_worker.progress_signal.connect(self.status_label.setText)
+        self._pull_worker.done_signal.connect(self._on_model_pulled)
+        self._pull_worker.start()
+
+    def _on_model_pulled(self, success: bool):
+        if success:
+            self._pull_next_model()   # pull the next one in the queue
+        else:
+            # Failed but continue trying the rest
+            self._pull_next_model()
 
     # ── Streaming helpers ─────────────────────────────────────────────
 
@@ -1475,7 +1574,7 @@ class ChatbotGUI(QWidget):
         self._stream_ts = _get_time()
         self._stream_idx = self._response_counter
         cursor = QTextCursor(self.chat_display.document())
-        cursor.movePosition(QTextCursor.End)
+        cursor.movePosition(QTextCursor.MoveOperation.End)
         cursor.insertHtml(
             self._STREAM_ANCHOR
             + _bot_bubble("…", self._stream_ts, self._stream_idx)
@@ -1500,7 +1599,7 @@ class ChatbotGUI(QWidget):
                 return
 
         # Select from anchor to end of document and rewrite the bubble in place.
-        anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+        anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
         anchor_cursor.removeSelectedText()
         anchor_cursor.insertHtml(
             self._STREAM_ANCHOR
@@ -1561,7 +1660,7 @@ class ChatbotGUI(QWidget):
 
     def _delete_all_chats(self):
         dlg = _DeleteConfirmDialog("all chats", self)
-        if dlg.exec() != QDialog.Accepted:
+        if dlg.exec() != QDialog.DialogCode.Accepted:
             return
         try:
             if os.path.exists(_SESSIONS_DIR):
@@ -1585,7 +1684,7 @@ class ChatbotGUI(QWidget):
         self._sidebar.populate()
 
     def _open_session_viewer(self, item):
-        session_id = item.data(Qt.UserRole)
+        session_id = item.data(Qt.ItemDataRole.UserRole)
         path = os.path.join(_SESSIONS_DIR, f"{session_id}.json")
         try:
             with open(path, encoding='utf-8') as f:
@@ -1659,6 +1758,8 @@ class ChatbotGUI(QWidget):
 
     def _on_session_clicked(self, item):
         session_id = item.data(Qt.UserRole)
+
+        # If this is the session already showing, do nothing.
         if (session_id == self._current_session_id
                 and not self._viewing_past_session):
             return
@@ -1939,7 +2040,9 @@ class ChatbotGUI(QWidget):
     def _show_typing_bubble(self):
         self._typing_frame = 0
         cursor = QTextCursor(self.chat_display.document())
-        cursor.movePosition(QTextCursor.End)
+        cursor.movePosition(QTextCursor.MoveOperation.End)
+        # Insert sentinel anchor + bubble in one operation so they form
+        # a contiguous block that can be fully removed later.
         cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(0))
         self._scroll_to_bottom()
         self._typing_anim_timer.start(400)
@@ -1950,7 +2053,10 @@ class ChatbotGUI(QWidget):
         if anchor_cursor is None:
             self._typing_anim_timer.stop()
             return
-        anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+        # Select from the sentinel to the end of the document and replace.
+        # This is immune to any reflow that happened while the window was
+        # in the background because we locate by anchor name, not position.
+        anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
         anchor_cursor.insertHtml(self._TYPING_ANCHOR + _typing_bubble(self._typing_frame))
         sb = self.chat_display.verticalScrollBar()
         if sb.maximum() - sb.value() < 60:
@@ -1960,7 +2066,7 @@ class ChatbotGUI(QWidget):
         self._typing_anim_timer.stop()
         anchor_cursor = self._find_typing_anchor_cursor()
         if anchor_cursor is not None:
-            anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+            anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
             anchor_cursor.removeSelectedText()
         self._typing_start_pos = -1
 
@@ -2056,7 +2162,7 @@ class ChatbotGUI(QWidget):
         card_layout.setSpacing(2)
 
         thumb_lbl = QLabel()
-        thumb_lbl.setAlignment(Qt.AlignCenter)
+        thumb_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         thumb_lbl.setFixedHeight(36)
         pix = QPixmap(image_path)
         if not pix.isNull():
@@ -2073,7 +2179,7 @@ class ChatbotGUI(QWidget):
 
         fname = os.path.basename(image_path)
         name_lbl = QLabel(fname[:10] + ("…" if len(fname) > 10 else ""))
-        name_lbl.setAlignment(Qt.AlignCenter)
+        name_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         name_lbl.setStyleSheet("font-size:9px;color:#555;background:transparent;")
         card_layout.addWidget(name_lbl)
 
@@ -2419,15 +2525,18 @@ class ChatbotGUI(QWidget):
 
     def _on_models_fetched(self, model_names: list):
         self.model_combo.clear()
+        from chatbot.chatbot_thread import is_ollama_running
 
         if not model_names:
-            # No models found — Ollama may be offline or has no models pulled.
             self.model_combo.addItem("No models found")
             self.model_combo.setEnabled(False)
-            self.status_label.setText(
-                "⚠️ No Ollama models found. Run 'ollama pull qwen2.5-coder' "
-                "in a terminal to install one."
-            )
+            if is_ollama_running():
+                self.status_label.setText(
+                    "⚠️ No Ollama models found. Run 'ollama pull qwen2.5-coder:3b' "
+                    "in a terminal to install one."
+                )
+            else:
+                self.status_label.setText("🔴 Ollama is offline.")
             return
 
         for name in model_names:
@@ -2742,7 +2851,7 @@ class ChatbotGUI(QWidget):
             idx = self._stream_idx
             anchor_cursor = self._find_stream_anchor_cursor()
             if anchor_cursor is not None:
-                anchor_cursor.movePosition(QTextCursor.End, QTextCursor.KeepAnchor)
+                anchor_cursor.movePosition(QTextCursor.MoveOperation.End, QTextCursor.MoveMode.KeepAnchor)
                 anchor_cursor.removeSelectedText()
                 anchor_cursor.insertHtml(_bot_bubble(bot_response, ts, idx))
             else:
