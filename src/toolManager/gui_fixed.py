@@ -402,7 +402,7 @@ class ToolManagerGUI(QWidget):
         if IS_LINUX and self.sudo_password is None:
             password, ok = QInputDialog.getText(
                 self, "Authentication Required",
-                "Enter your sudo password:", QLineEdit.Password
+                "Enter your sudo password:", QLineEdit.EchoMode.Password
             )
             if ok and password:
                 self.sudo_password = password
