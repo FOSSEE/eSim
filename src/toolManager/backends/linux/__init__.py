@@ -194,10 +194,12 @@ class LinuxBackend(Backend):
         *args: str,
         cwd: Optional[Path] = None,
     ) -> bool:
-        """Run a bash script (from SCRIPT_MAPPING) and wait for completion.
+        """Run a bash script (from SCRIPT_MAPPING) with real-time output.
 
         The script is resolved relative to ``self._base_dir`` if it is
-        a relative path.  Returns True on success.
+        a relative path.  Output is streamed to stdout so the GUI's
+        CommandWorker can display it in the debug box in real time.
+        Returns True on success.
         """
         script = Path(script_path)
         if not script.is_absolute():
@@ -207,10 +209,10 @@ class LinuxBackend(Backend):
             return False
 
         cmd = ["bash", str(script)] + list(args)
-        result = self.run_cmd(cmd, timeout=900, cwd=cwd or self._base_dir)
-        ok = result is not None and result.returncode == 0
+        rc, _ = self.run_stream(cmd, timeout=900, cwd=cwd or self._base_dir)
+        ok = rc == 0
         if not ok:
-            self.print_status("script_failed", str(result.returncode if result else "?"), script_path)
+            self.print_status("script_failed", str(rc), script_path)
         return ok
 
     # ── Paths (Backend ABC) ─────────────────────────────────────────────
