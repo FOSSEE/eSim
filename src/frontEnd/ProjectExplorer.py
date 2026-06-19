@@ -460,7 +460,7 @@ class ProjectExplorer(QtWidgets.QWidget):
             
             # Find the chatbot dock
             for dock in main_window.findChildren(QDockWidget):
-                if "Copilot" in dock.windowTitle():
+                if "AI Assistant" in dock.windowTitle():
                     chatbot_widget = dock.widget()
                     if hasattr(chatbot_widget, 'analyze_specific_netlist'):
                         chatbot_widget.analyze_specific_netlist(netlist_path)
@@ -472,7 +472,7 @@ class ProjectExplorer(QtWidgets.QWidget):
             QMessageBox.information(
                 self,
                 "Chatbot not open",
-                "Please open the eSim Copilot window first (View → eSim Copilot)."
+                "Please open the eSim AI Assistant window first (View → eSim AI Assistant)."
             )
         except Exception as e:
             print(f"[COPILOT] Failed to trigger analysis: {e}")
