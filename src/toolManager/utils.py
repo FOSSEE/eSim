@@ -144,9 +144,10 @@ def get_msys2_bash():
 
 def get_msys2_mingw_bin():
     """
-    Returns the path to MSYS2 mingw64/bin if found, else None.
+    Returns the path to the MSYS2 MinGW bin directory if found, else None.
+    Checks mingw64/bin first then ucrt64/bin and mingw32/bin.
     """
-
-    bin_dir = MSYS2_PATH / "bin"
-    if bin_dir.exists():
-        return bin_dir
+    for subdir in ["mingw64", "ucrt64", "mingw32"]:
+        bin_dir = MSYS2_PATH / subdir / "bin"
+        if bin_dir.exists():
+            return bin_dir
