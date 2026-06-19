@@ -1,331 +1,149 @@
-"""
-Windows executable search helpers.
-
-Each ``find_<tool>(version, run_cmd, which, ...)`` returns ``(path, version)``
-or ``(None, None)``.  The ``run_cmd`` and ``which`` callbacks are injected so
-tests can provide mocks.
-"""
-
-import os
-import re
+import os, re
 from pathlib import Path
-from typing import Callable, Optional
+from typing import Callable, Optional, List, Tuple
 
+def find_chocolatey(version, which_fn, run_cmd):
+    exe = which_fn("choco")
+    if not exe: return (None, None)
+    result = run_cmd([exe, "--version"])
+    ver = result.stdout.strip() if result and result.returncode == 0 else None
+    return (exe, ver)
 
-# ====================================================================
-# KiCad
-# ====================================================================
-
-def find_kicad(version: Optional[str] = None,
-               which: Callable = None,
-               run_cmd: Callable = None,
-               win_kicad_paths: list = None) -> tuple:
-    """Search standard paths, Windows registry, and PATH for KiCad."""
-    if win_kicad_paths is None:
-        win_kicad_paths = []
-
-    for path, major in win_kicad_paths:
+def find_kicad(version, which_fn, run_cmd, win_kicad_paths=None):
+    win_kicad_paths = win_kicad_paths or []
+    for path, ver in win_kicad_paths:
         if os.path.exists(path):
-            install_dir = os.path.dirname(os.path.dirname(path))
-            full_ver = major + ".x"
-            for fname in ["version.txt", "VERSION"]:
-                vfile = os.path.join(install_dir, fname)
-                if os.path.exists(vfile):
-                    try:
-                        with open(vfile) as f:
-                            m = re.search(r'(\d+\.\d+\.\d+)', f.read())
-                            if m:
-                                full_ver = m.group(1)
-                    except Exception:
-                        pass
-            if version is None or str(version) in ("latest", major):
-                return path, full_ver
-
+            ver_file = Path(path).parent.parent / "version.txt"
+            if ver_file.exists():
+                m = re.search(r'(\d+\.\d+\.\d+)', ver_file.read_text())
+                if m: return (path, m.group(1))
+            return (path, ver)
+    exe = which_fn("kicad") or which_fn("kicad.exe")
+    if exe: return (exe, _get_version(exe, run_cmd))
     try:
         import winreg
         for hive in [winreg.HKEY_LOCAL_MACHINE, winreg.HKEY_CURRENT_USER]:
-            for arch in [winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
-                         winreg.KEY_READ | winreg.KEY_WOW64_32KEY]:
+            for flag in [winreg.KEY_WOW64_64KEY, winreg.KEY_WOW64_32KEY]:
                 try:
-                    reg = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"
-                    with winreg.OpenKey(hive, reg, 0, arch) as key:
+                    with winreg.OpenKey(hive, r"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths\kicad.exe", 0, winreg.KEY_READ | flag) as k:
+                        p = winreg.QueryValue(k, None)
+                        if p and os.path.exists(p): return (p, _get_version(p, run_cmd))
+                except: pass
+        for hive in [winreg.HKEY_LOCAL_MACHINE, winreg.HKEY_CURRENT_USER]:
+            for flag in [winreg.KEY_WOW64_64KEY, winreg.KEY_WOW64_32KEY]:
+                try:
+                    with winreg.OpenKey(hive, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall", 0, winreg.KEY_READ | flag) as key:
                         for i in range(winreg.QueryInfoKey(key)[0]):
                             try:
                                 sub = winreg.EnumKey(key, i)
                                 with winreg.OpenKey(key, sub) as sk:
-                                    name = winreg.QueryValueEx(
-                                        sk, "DisplayName")[0]
+                                    name = winreg.QueryValueEx(sk, "DisplayName")[0]
                                     if "KiCad" in name:
-                                        dv = winreg.QueryValueEx(
-                                            sk, "DisplayVersion")[0]
-                                        loc = winreg.QueryValueEx(
-                                            sk, "InstallLocation")[0]
-                                        exe = os.path.join(
-                                            loc, "bin", "kicad.exe")
-                                        major = dv.split(".")[0] \
-                                            if dv else "unknown"
-                                        if version is None or \
-                                           str(version) in ("latest", major):
-                                            return (exe if os.path.exists(exe)
-                                                    else loc), dv
-                            except OSError:
-                                pass
-                except OSError:
-                    pass
-    except Exception:
-        pass
+                                        dv = winreg.QueryValueEx(sk, "DisplayVersion")[0]
+                                        loc = winreg.QueryValueEx(sk, "InstallLocation")[0]
+                                        exe = os.path.join(loc, "bin", "kicad.exe")
+                                        return (exe if os.path.exists(exe) else loc), dv
+                            except: pass
+                except: pass
+    except: pass
+    return (None, None)
 
-    ep = which("kicad") or which("kicad.exe")
-    return (ep, "unknown") if ep else (None, None)
+def find_ngspice(version, which_fn, run_cmd, win_ngspice_paths=None, choco_list_fn=None):
+    ver = choco_list_fn("ngspice") if choco_list_fn else None
+    if ver: return (which_fn("ngspice") or which_fn("ngspice.exe") or "", ver)
+    for p in (win_ngspice_paths or []):
+        if os.path.exists(p): return (p, _get_version(p, run_cmd))
+    exe = which_fn("ngspice") or which_fn("ngspice.exe")
+    if exe: return (exe, _get_version(exe, run_cmd))
+    return (None, None)
 
-
-# ====================================================================
-# Ngspice
-# ====================================================================
-
-def find_ngspice(version: Optional[str] = None,
-                 which: Callable = None,
-                 run_cmd: Callable = None,
-                 win_ngspice_paths: list = None,
-                 choco_list: Callable = None) -> tuple:
-    """Search Chocolatey, standard paths, and PATH for Ngspice."""
-    if choco_list:
-        found_ver = choco_list("ngspice")
-        if found_ver:
-            exe = _find_ngspice_exe(which, win_ngspice_paths)
-            if version is None or found_ver.startswith(str(version)):
-                return exe or "ngspice", found_ver
-
-    exe = _find_ngspice_exe(which, win_ngspice_paths)
-    if exe:
-        return exe, "unknown"
-
-    return None, None
-
-
-def _find_ngspice_exe(which: Callable = None,
-                      win_ngspice_paths: list = None) -> Optional[str]:
-    if win_ngspice_paths:
-        for p in win_ngspice_paths:
-            if os.path.exists(p):
-                return p
-    return which("ngspice") or which("ngspice.exe")
-
-
-# ====================================================================
-# LLVM / Clang
-# ====================================================================
-
-def find_llvm(version: Optional[str] = None,
-              which: Callable = None,
-              run_cmd: Callable = None,
-              win_llvm_paths: list = None) -> tuple:
-    """Search standard paths and PATH for LLVM/Clang."""
-    import platform as _platform
-
-    if _platform.system() == "Windows":
+def find_llvm(version, which_fn, run_cmd, win_llvm_paths=None):
+    try:
         import ctypes
-        try:
-            ctypes.windll.user32.SendMessageTimeoutW(
-                0xFFFF, 0x001A, 0, "Environment", 0x0002, 5000,
-                ctypes.c_long())
-        except Exception:
-            pass
+        ctypes.windll.user32.SendMessageTimeoutW(0x1A, 0, 0, 0, 2, 5000, None)
+    except: pass
+    for p in (win_llvm_paths or []):
+        if os.path.exists(p):
+            ver = _clang_version(p, run_cmd)
+            if ver: return (p, ver)
+    for exe_name in ["clang.exe", "clang", "clang++", "clang++.exe", "clang-cl.exe"]:
+        exe = which_fn(exe_name)
+        if exe:
+            ver = _clang_version(exe, run_cmd)
+            return (exe, ver)
+    return (None, None)
 
-    paths = win_llvm_paths or []
-    for path in paths:
-        if os.path.exists(path):
-            found_ver = _clang_version_from_output(path, run_cmd)
-            if found_ver:
-                if version is None or found_ver.startswith(str(version)):
-                    return path, found_ver
+def _clang_version(exe_path, run_cmd):
+    result = run_cmd([exe_path, "--version"])
+    if result and result.returncode == 0:
+        m = re.search(r'clang version (\d+)\.', result.stdout) or re.search(r'LLVM version (\d+)', result.stdout)
+        return m.group(1) if m else None
+    return None
 
-    for exe_name in ["clang.exe", "clang", "clang++", "clang++.exe"]:
-        exe_path = which(exe_name)
-        if exe_path:
-            found_ver = _clang_version_from_output(exe_path, run_cmd)
-            if found_ver:
-                if version is None or found_ver.startswith(str(version)):
-                    return exe_path, found_ver
+def find_ghdl(version, which_fn, run_cmd, base_dir, msys2_mingw_bin, msys2_env):
+    candidates = []
+    base_exe = Path(base_dir) / "bin" / "ghdl.exe"
+    if base_exe.exists(): candidates.append(str(base_exe))
+    if msys2_mingw_bin:
+        msys_exe = Path(msys2_mingw_bin) / "ghdl.exe"
+        if msys_exe.exists(): candidates.append(str(msys_exe))
+    path_exe = which_fn("ghdl") or which_fn("ghdl.exe")
+    if path_exe: candidates.append(path_exe)
+    for c in candidates:
+        ver = _ghdl_version(c, run_cmd, msys2_env if msys2_mingw_bin else None)
+        if ver: return (c, ver)
+    return (None, None)
 
-    return None, None
-
-
-def _clang_version_from_output(exe_path: str,
-                               run_cmd: Callable) -> Optional[str]:
+def _ghdl_version(exe_path, run_cmd, env):
     try:
         result = run_cmd([exe_path, "--version"])
         if result and result.returncode == 0:
-            m = re.search(r'clang version (\d+)\.', result.stdout)
-            if m:
-                return m.group(1)
-            m = re.search(r'LLVM version (\d+)', result.stdout)
-            if m:
-                return m.group(1)
-    except Exception:
-        pass
-    return None
-
-
-# ====================================================================
-# GHDL
-# ====================================================================
-
-def find_ghdl(version: Optional[str] = None,
-              which: Callable = None,
-              run_cmd: Callable = None,
-              base_dir: Path = None,
-              msys_bin: Path = None,
-              msys_env: dict = None) -> tuple:
-    """Search custom install dir, MSYS2, and PATH for GHDL."""
-    if base_dir:
-        custom_exe = base_dir / "bin" / "ghdl.exe"
-        if custom_exe.exists():
-            found_ver = _ghdl_version_from_output(str(custom_exe), run_cmd)
-            if found_ver:
-                if version is None or found_ver.startswith(str(version)):
-                    return str(custom_exe), found_ver
-
-    if msys_bin:
-        msys2_ghdl = msys_bin / "ghdl.exe"
-        if msys2_ghdl.exists():
-            found_ver = _ghdl_version_from_output(
-                str(msys2_ghdl), run_cmd, msys_env)
-            if found_ver:
-                if version is None or found_ver.startswith(str(version)):
-                    return str(msys2_ghdl), found_ver
-
-    ghdl_exe = which("ghdl")
-    if ghdl_exe:
-        found_ver = _ghdl_version_from_output(ghdl_exe, run_cmd)
-        if found_ver:
-            if version is None or found_ver.startswith(str(version)):
-                return ghdl_exe, found_ver
-
-    return None, None
-
-
-def _ghdl_version_from_output(exe_path: str, run_cmd: Callable,
-                              env: dict = None) -> Optional[str]:
-    try:
-        kwargs = {}
-        if env is not None:
-            kwargs["env"] = env
-        result = run_cmd([exe_path, "--version"], **kwargs)
-        if result and result.returncode == 0:
             m = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
-            if m:
-                return m.group(1)
-    except Exception:
-        pass
+            return m.group(1) if m else None
+    except: pass
     return None
 
+def find_verilator(version, which_fn, run_cmd, msys2_mingw_bin, msys2_env):
+    candidates = []
+    if msys2_mingw_bin:
+        for name in ["verilator.exe", "verilator_bin.exe", "verilator"]:
+            p = Path(msys2_mingw_bin) / name
+            if p.exists(): candidates.append(str(p))
+    path_exe = which_fn("verilator") or which_fn("verilator.exe")
+    if path_exe: candidates.append(path_exe)
+    for c in candidates:
+        ver = _verilator_version(c, run_cmd, msys2_env)
+        if ver: return (c, ver)
+    return (None, None)
 
-# ====================================================================
-# Verilator
-# ====================================================================
-
-def find_verilator(version: Optional[str] = None,
-                   which: Callable = None,
-                   run_cmd: Callable = None,
-                   msys_bin: Path = None,
-                   msys_env: dict = None) -> tuple:
-    """Search MSYS2 then PATH for Verilator."""
-    if msys_bin:
-        for exe_name in ["verilator.exe", "verilator_bin.exe", "verilator"]:
-            msys2_exe = msys_bin / exe_name
-            if msys2_exe.exists():
-                found_ver = _verilator_version_from_output(
-                    str(msys2_exe), run_cmd, msys_env)
-                if found_ver:
-                    if version is None or version == "latest" or \
-                       found_ver.startswith(str(version)):
-                        return str(msys2_exe), found_ver
-                return str(msys2_exe), "unknown"
-
-    for exe_name in ["verilator.exe", "verilator", "verilator_bin.exe"]:
-        exe_path = which(exe_name)
-        if exe_path:
-            found_ver = _verilator_version_from_output(exe_path, run_cmd)
-            if found_ver:
-                if version is None or version == "latest" or \
-                   found_ver.startswith(str(version)):
-                    return exe_path, found_ver
-            return exe_path, "unknown"
-
-    return None, None
-
-
-def _verilator_version_from_output(exe_path: str, run_cmd: Callable,
-                                   env: dict = None) -> Optional[str]:
+def _verilator_version(exe_path, run_cmd, env):
     try:
-        kwargs = {}
-        if env is not None:
-            kwargs["env"] = env
-        result = run_cmd([exe_path, "--version"], timeout=10, **kwargs)
+        result = run_cmd([exe_path, "--version"])
         if result and result.returncode == 0:
-            for line in result.stdout.split('\n'):
-                if "Verilator" in line:
-                    m = re.search(r'Verilator\s+(\d+\.\d+)', line)
-                    if m:
-                        return m.group(1)
-    except Exception:
-        pass
+            m = re.search(r'Verilator\s+(\d+\.\d+)', result.stdout)
+            return m.group(1) if m else None
+    except: pass
     return None
 
-
-# ====================================================================
-# Chocolatey itself
-# ====================================================================
-
-def find_chocolatey(version: Optional[str] = None,
-                    which: Callable = None,
-                    run_cmd: Callable = None) -> tuple:
-    """Find Chocolatey itself (choco.exe)."""
-    choco_exe = which("choco")
-    if choco_exe:
-        try:
-            result = run_cmd([choco_exe, "--version"])
-            if result and result.returncode == 0:
-                found_ver = result.stdout.strip()
-                if version is None or found_ver.startswith(str(version)):
-                    return choco_exe, found_ver
-        except Exception:
-            pass
-    return None, None
-
-
-# ====================================================================
-# PyQt (special case — not a traditional executable)
-# ====================================================================
-
-def find_pyqt(version: Optional[str] = None,
-              run_cmd: Callable = None) -> tuple:
-    """Find PyQt6 via Python import."""
+def find_pyqt(version, run_cmd):
     import sys
     for _ in range(2):
         try:
-            result = run_cmd(
-                [sys.executable, "-c",
-                 "import PyQt6.QtCore; "
-                 "print(PyQt6.QtCore.PYQT_VERSION_STR)"])
+            result = run_cmd([sys.executable, "-c",
+                "import PyQt6.QtCore; print(PyQt6.QtCore.PYQT_VERSION_STR)"])
             if result and result.returncode == 0:
-                found_ver = result.stdout.strip()
-                if version is None or found_ver.startswith(str(version)):
-                    return "PyQt6", found_ver
-        except Exception:
-            pass
+                ver = result.stdout.strip()
+                return ("PyQt6", ver) if ver else None
+        except: pass
+    result = run_cmd([sys.executable, "-m", "pip", "show", "PyQt6"])
+    if result and result.returncode == 0:
+        m = re.search(r'Version:\s*(\S+)', result.stdout)
+        return ("PyQt6", m.group(1)) if m else None
+    return None
 
-    try:
-        result = run_cmd(
-            [sys.executable, "-m", "pip", "show", "PyQt6"])
-        if result and result.returncode == 0:
-            for line in result.stdout.split('\n'):
-                if line.lower().startswith('version:'):
-                    found_ver = line.split(':')[1].strip()
-                    if version is None or found_ver.startswith(str(version)):
-                        return "PyQt6", found_ver
-    except Exception:
-        pass
-
-    return None, None
+def _get_version(exe_path, run_cmd):
+    result = run_cmd([exe_path, "--version"])
+    if result and result.returncode == 0:
+        parts = result.stdout.split("\n")[0].strip().split()
+        return parts[-1] if parts else None
+    return None
