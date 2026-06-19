@@ -97,7 +97,7 @@ class InstallWorker(QThread):
 
     def run(self):
         success = True
-        backend = str(BASE_DIR / "tool_manager_windows.py")
+        backend = str(BASE_DIR / ("tool_manager_linux.py" if sys.platform.startswith("linux") else "tool_manager_windows.py"))
         for tool, version in self.tools:
             self.progress.emit(
                 f"Installing {TOOL_LABELS.get(tool, tool)} {version}..."
@@ -651,7 +651,7 @@ class ToolManagerWindow(QMainWindow):
 
     def _run_uninstall(self, tools, label):
         try:
-            backend = str(BASE_DIR / "tool_manager_windows.py")
+            backend = str(BASE_DIR / ("tool_manager_linux.py" if sys.platform.startswith("linux") else "tool_manager_windows.py"))
             for tool, _ in tools:
                 subprocess.Popen(
                     [PYTHON, backend, "uninstall", tool, "none"],

@@ -8,6 +8,7 @@ to :mod:`file_ops`.
 import os
 import shutil
 import subprocess
+import threading
 from pathlib import Path
 from typing import Optional
 
@@ -15,6 +16,11 @@ from ..base import Backend
 from . import file_ops as _file_ops
 from . import pm as _pm
 from . import search as _search
+
+
+# Serialise bash-script execution so concurrent install/update operations
+# don't contend for package-manager locks (dpkg, pacman-db, etc.).
+_BASH_LOCK = threading.Lock()
 
 
 class LinuxBackend(Backend):
@@ -30,7 +36,7 @@ class LinuxBackend(Backend):
 
     def __init__(self, base_dir: Optional[Path] = None):
         super().__init__()
-        self._base_dir = base_dir or Path(__file__).resolve().parent.parent
+        self._base_dir = base_dir or Path(__file__).resolve().parent.parent.parent
         self._download_dir = self._base_dir / "Download"
         self._download_dir.mkdir(parents=True, exist_ok=True)
 
@@ -188,30 +194,90 @@ class LinuxBackend(Backend):
 
     # ── Linux-specific helpers ──────────────────────────────────────────
 
+    def sudo_is_cached(self) -> bool:
+        """Check whether a sudo credential is still alive (``sudo -n``).
+
+        Returns ``True`` if the user can run a passwordless sudo command
+        (i.e. the credential was cached by a recent ``sudo -S -v`` call).
+        """
+        result = self.run_cmd(["sudo", "-n", "true"])
+        return result is not None and result.returncode == 0
+
+    def ensure_sudo(self, password: str) -> bool:
+        """Cache a sudo credential via ``sudo -S -v``.
+
+        The password is piped to ``sudo -S -v`` once; if successful the
+        cached credential lasts roughly 15 minutes.  The password string
+        is discarded immediately after the call.
+        Returns ``True`` if the credential was cached.
+        """
+        try:
+            proc = subprocess.Popen(
+                ["sudo", "-S", "-v"],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+            proc.communicate(input=password + "\n", timeout=10)
+            return proc.returncode == 0
+        except Exception:
+            return False
+
+    def clean_package_locks(self) -> None:
+        """Remove stale package-manager lock files.
+
+        On failure the lock is held by a *live* process we skip it.
+        Only locks that refer to a non-existent process are removed.
+        """
+        lock_paths = {
+            "apt": [
+                "/var/lib/dpkg/lock-frontend",
+                "/var/lib/dpkg/lock",
+                "/var/cache/apt/archives/lock",
+            ],
+            "pacman": ["/var/lib/pacman/db.lck"],
+            "dnf":    ["/var/run/yum.pid"],
+            "zypper": ["/var/run/zypp.pid"],
+            "pkg":    [],
+            "xbps":   [],
+        }.get(self._pm_name, [])
+
+        for lock in lock_paths:
+            # Only remove if the lock-file process is gone
+            self.run_cmd(
+                f"sudo lsof {lock} 2>/dev/null || sudo rm -f {lock}".split(),
+                timeout=10,
+            )
+
     def run_bash_script(
         self,
         script_path: str,
         *args: str,
         cwd: Optional[Path] = None,
     ) -> bool:
-        """Run a bash script (from SCRIPT_MAPPING) and wait for completion.
+        """Run a bash script (from SCRIPT_MAPPING) with real-time output.
 
         The script is resolved relative to ``self._base_dir`` if it is
-        a relative path.  Returns True on success.
+        a relative path.  Output is streamed to stdout so the GUI's
+        CommandWorker can display it in the debug box in real time.
+        Returns True on success.
         """
-        script = Path(script_path)
-        if not script.is_absolute():
-            script = self._base_dir / script_path
-        if not script.exists():
-            self.print_status("missing_script", "none", script_path)
-            return False
+        with _BASH_LOCK:
+            self.clean_package_locks()
+            script = Path(script_path)
+            if not script.is_absolute():
+                script = self._base_dir / script_path
+            if not script.exists():
+                self.print_status("missing_script", "none", script_path)
+                return False
 
-        cmd = ["bash", str(script)] + list(args)
-        result = self.run_cmd(cmd, timeout=900, cwd=cwd or self._base_dir)
-        ok = result is not None and result.returncode == 0
-        if not ok:
-            self.print_status("script_failed", str(result.returncode if result else "?"), script_path)
-        return ok
+            cmd = ["bash", str(script)] + list(args)
+            rc, _ = self.run_stream(cmd, timeout=900, cwd=cwd or self._base_dir)
+            ok = rc == 0
+            if not ok:
+                self.print_status("script_failed", str(rc), script_path)
+            return ok
 
     # ── Paths (Backend ABC) ─────────────────────────────────────────────
 
