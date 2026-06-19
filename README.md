@@ -69,6 +69,7 @@ eSim is designed for electronics engineers, students, educators, and hobbyists w
 | • **Modelica** | Ngspice-to-Modelica | Convert Ngspice netlists to Modelica models for OpenModelica simulation |
 | • **SKY130 PDK** | SkyWater 130nm | Support for SkyWater SKY130 open-source Process Design Kit |
 | • **IHP PDK** | IHP OpenPDK | Integration with IHP SG13G2 open-source PDK for SiGe BiCMOS |
+| • **OpenROAD** | Netlist-to-ASIC | Automated digital ASIC design (Synthesis, placement, routing, layout generation) from Verilog RTL to GDSII layout|
 
 ---
 
@@ -166,6 +167,7 @@ graph TB
 | `docker-launcher/` | 📁 Directory | **Docker support** — Dockerfile, launcher script, and CI workflows for containerized builds |
 | `snap/` | 📁 Directory | **Snap packaging** — `snapcraft.yaml` for building Snap packages |
 | `ihp/` | 📁 Directory | **IHP PDK integration** — install script for IHP SG13G2 open-source SiGe BiCMOS PDK |
+| `orfs/` | 📁 Directory | **OpenROAD integration** — install & setup scripts for ORFS (RTL-to-GDSII ASIC design & layout) |
 | `patches/` | 📁 Directory | **Source patches** — patch files for modifying Ngspice/GHDL behavior in sandboxed environments |
 | `.github/` | 📁 Directory | **GitHub config** — issue templates, PR templates, and CI/CD workflow definitions |
 | `setup.py` | 📄 File | Python package configuration for pip installation |
@@ -221,6 +223,8 @@ src/
 │   ├── ModelGeneration.py   # Auto model generation pipeline (48K)
 │   ├── createkicad.py       # KiCad symbol creation for models (14K)
 │   ├── makerchip.py         # Makerchip cloud IDE connector (3K)
+│   ├── netlist2rtl.py       # Netlist-to-Verilog conveter (4K)
+│   ├── orfs.py              # eSim to ORFS connnector (7K)
 │   └── Appconfig.py         # Maker-specific configuration (2K)
 │
 ├── converter/               # Schematic Format Converters
@@ -261,6 +265,7 @@ src/
 | `modelParamXML/` | XML parameter definitions for device model editor forms |
 | `ngspicetoModelica/` | Mapping files for Ngspice-to-Modelica component translation |
 | `browser/` | HTML/resource files for the built-in help browser |
+| `orfs/` | KLayout binaries & libraries (klayout-0.30.7) required for OpenROAD/ASIC layout visualization |
 | `tlv/` | TL-Verilog support files for Makerchip integration |
 
 ### NGHDL Module (`nghdl/`) — Mixed-Signal Interface
