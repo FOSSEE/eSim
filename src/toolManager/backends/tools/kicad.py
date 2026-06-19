@@ -13,7 +13,8 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
-from registry import KICAD_VERSIONS, TOOLS
+from pm_platform import IS_LINUX
+from registry import KICAD_VERSIONS, SCRIPT_MAPPING, TOOLS
 
 
 # ── Internal helpers ─────────────────────────────────────────────────
@@ -181,6 +182,22 @@ def check(version: str, backend) -> None:
 
 def install(version: str, upgrade: bool, backend) -> None:
     """Install KiCad via Chocolatey (or direct download for v6)."""
+    if IS_LINUX:
+        script = SCRIPT_MAPPING.get("KiCad")
+        if script:
+            ok = backend.run_bash_script(script, version)
+            if ok:
+                backend.print_status("installed", version, version)
+            else:
+                backend.print_status("install_failed", "script_failed", version)
+        else:
+            ok = backend.install_package("kicad", version)
+            backend.print_status(
+                "installed" if ok else "install_failed",
+                version if ok else "package_manager_failed",
+                version)
+        return
+
     choco_exe = backend.find_executable("chocolatey", "none")
     if not choco_exe:
         backend.print_status("install_failed", "choco_missing", version)
@@ -307,6 +324,14 @@ def install(version: str, upgrade: bool, backend) -> None:
 
 def uninstall(version: str, backend) -> None:
     """Uninstall KiCad."""
+    if IS_LINUX:
+        ok = backend.uninstall_package("kicad", version)
+        backend.print_status(
+            "not_installed" if ok else "uninstall_failed",
+            "none" if ok else "still_found",
+            "none")
+        return
+
     print("[1/3] Stopping KiCad processes...")
     backend.run_stream(
         ["powershell", "-Command",

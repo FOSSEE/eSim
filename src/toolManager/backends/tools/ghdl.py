@@ -7,7 +7,8 @@ import re
 import shutil
 from pathlib import Path
 
-from registry import TOOLS
+from pm_platform import IS_LINUX
+from registry import SCRIPT_MAPPING, TOOLS
 
 
 def check(version: str, backend) -> None:
@@ -36,6 +37,22 @@ def check(version: str, backend) -> None:
 
 def install(version: str, upgrade: bool, backend) -> None:
     """Download GHDL zip, extract, and copy ghdl.exe to toolManager/bin/."""
+    if IS_LINUX:
+        script = SCRIPT_MAPPING.get("GHDL")
+        if script:
+            ok = backend.run_bash_script(script, version)
+            backend.print_status(
+                "installed" if ok else "install_failed",
+                version if ok else "script_failed",
+                version)
+        else:
+            ok = backend.install_package("ghdl", version)
+            backend.print_status(
+                "installed" if ok else "install_failed",
+                version if ok else "package_manager_failed",
+                version)
+        return
+
     spec = TOOLS.get("ghdl")
     url = spec.get_download_url(version) if spec else None
     if not url:
@@ -120,6 +137,14 @@ def install(version: str, upgrade: bool, backend) -> None:
 
 def uninstall(version: str, backend) -> None:
     """Remove GHDL files."""
+    if IS_LINUX:
+        ok = backend.uninstall_package("ghdl", version)
+        backend.print_status(
+            "not_installed" if ok else "uninstall_failed",
+            "none" if ok else "still_found",
+            "none")
+        return
+
     print("[1/2] Removing GHDL files...")
     for p in [
         backend.base_dir / "bin" / "ghdl.exe",

@@ -6,7 +6,8 @@ import shutil
 import time
 from pathlib import Path
 
-from registry import VERILATOR_VERSIONS
+from pm_platform import IS_LINUX
+from registry import SCRIPT_MAPPING, VERILATOR_VERSIONS
 
 
 def _run_msys2_cmd(backend, cmd, timeout=300):
@@ -130,6 +131,22 @@ def check(version: str, backend) -> None:
 
 def install(version: str, upgrade: bool, backend) -> None:
     """Install Verilator (from 7z archive or via MSYS2 pacman)."""
+    if IS_LINUX:
+        script = SCRIPT_MAPPING.get("Verilator")
+        if script:
+            ok = backend.run_bash_script(script, version)
+            backend.print_status(
+                "installed" if ok else "install_failed",
+                version if ok else "script_failed",
+                version)
+        else:
+            ok = backend.install_package("verilator", version)
+            backend.print_status(
+                "installed" if ok else "install_failed",
+                version if ok else "package_manager_failed",
+                version)
+        return
+
     print(f"[INFO] {'Upgrading' if upgrade else 'Installing'} "
           f"Verilator {version}...")
 
@@ -217,6 +234,14 @@ def install(version: str, upgrade: bool, backend) -> None:
 
 def uninstall(version: str, backend) -> None:
     """Remove Verilator via MSYS2 pacman and delete any leftover files."""
+    if IS_LINUX:
+        ok = backend.uninstall_package("verilator", version)
+        backend.print_status(
+            "not_installed" if ok else "uninstall_failed",
+            "none" if ok else "still_found",
+            "none")
+        return
+
     print("[1/2] Removing Verilator...")
     bash_exe = backend.msys2_bash
     if bash_exe:

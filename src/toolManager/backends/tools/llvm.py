@@ -6,6 +6,7 @@ import os
 import re
 import time
 
+from pm_platform import IS_LINUX
 from registry import LLVM_VERSIONS
 
 
@@ -33,6 +34,14 @@ def check(version: str, backend) -> None:
 
 def install(version: str, upgrade: bool, backend) -> None:
     """Install LLVM via Chocolatey."""
+    if IS_LINUX:
+        ok = backend.install_package("llvm", version)
+        backend.print_status(
+            "installed" if ok else "install_failed",
+            version if ok else "package_manager_failed",
+            version)
+        return
+
     choco_exe = backend.find_executable("chocolatey", "none")
     if not choco_exe:
         backend.print_status("install_failed", "choco_missing", version)
@@ -95,6 +104,14 @@ def install(version: str, upgrade: bool, backend) -> None:
 
 def uninstall(version: str, backend) -> None:
     """Uninstall LLVM via Chocolatey."""
+    if IS_LINUX:
+        ok = backend.uninstall_package("llvm", version)
+        backend.print_status(
+            "not_installed" if ok else "uninstall_failed",
+            "none" if ok else "still_found",
+            "none")
+        return
+
     print("[1/2] Uninstalling LLVM...")
     choco = backend.which("choco") or backend.which("choco.exe")
     if choco:

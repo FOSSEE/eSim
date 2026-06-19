@@ -10,6 +10,7 @@ import time
 from datetime import datetime
 from pathlib import Path
 
+from pm_platform import IS_LINUX
 from registry import TOOLS
 
 
@@ -89,6 +90,14 @@ def check(version: str, backend) -> None:
 
 def install(version: str, upgrade: bool, backend) -> None:
     """Download and run the eSim installer."""
+    if IS_LINUX:
+        ok = backend.run_bash_script("install-eSim.sh", "--install")
+        backend.print_status(
+            "installed" if ok else "install_failed",
+            version if ok else "script_failed",
+            version)
+        return
+
     spec = TOOLS.get("esim")
     ver_key = version if version in (spec.download_urls if spec else {}) \
               else "latest"
@@ -141,6 +150,14 @@ def install(version: str, upgrade: bool, backend) -> None:
 
 def uninstall(version: str, backend) -> None:
     """Uninstall eSim."""
+    if IS_LINUX:
+        ok = backend.run_bash_script("install-eSim.sh", "--uninstall")
+        backend.print_status(
+            "not_installed" if ok else "uninstall_failed",
+            "none" if ok else "still_found",
+            "none")
+        return
+
     uninst = _ESIM_DIR / "uninst-eSim.exe"
     if uninst.exists():
         print("[1/2] Running eSim uninstaller...")

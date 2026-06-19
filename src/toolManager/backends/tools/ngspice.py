@@ -4,7 +4,8 @@ Ngspice — check, install, uninstall (via Chocolatey on Windows).
 
 import time
 
-from registry import NGSPICE_VERSIONS
+from pm_platform import IS_LINUX
+from registry import NGSPICE_VERSIONS, SCRIPT_MAPPING
 
 
 def check(version: str, backend) -> None:
@@ -34,6 +35,22 @@ def check(version: str, backend) -> None:
 
 def install(version: str, upgrade: bool, backend) -> None:
     """Install Ngspice via Chocolatey."""
+    if IS_LINUX:
+        script = SCRIPT_MAPPING.get("Ngspice")
+        if script:
+            ok = backend.run_bash_script(script, version)
+            backend.print_status(
+                "installed" if ok else "install_failed",
+                version if ok else "script_failed",
+                version)
+        else:
+            ok = backend.install_package("ngspice", version)
+            backend.print_status(
+                "installed" if ok else "install_failed",
+                version if ok else "package_manager_failed",
+                version)
+        return
+
     choco_exe = backend.find_executable("chocolatey", "none")
     if not choco_exe:
         backend.print_status("install_failed", "choco_missing", version)
@@ -80,6 +97,14 @@ def install(version: str, upgrade: bool, backend) -> None:
 
 def uninstall(version: str, backend) -> None:
     """Uninstall Ngspice via Chocolatey."""
+    if IS_LINUX:
+        ok = backend.uninstall_package("ngspice", version)
+        backend.print_status(
+            "not_installed" if ok else "uninstall_failed",
+            "none" if ok else "still_found",
+            "none")
+        return
+
     print("[1/2] Uninstalling ngspice...")
     choco = backend.which("choco") or backend.which("choco.exe")
     if choco:
