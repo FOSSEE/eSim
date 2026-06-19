@@ -89,12 +89,7 @@ class CommandWorker(QThread):
     def __init__(self, tool, args):
         super().__init__()
         self.tool = tool
-        # On Linux, use pkexec for privilege elevation instead of
-        # collecting a sudo password and piping it via stdin.
-        if IS_LINUX:
-            self.args = ["pkexec"] + args
-        else:
-            self.args = args
+        self.args = args
 
     def run(self):
         output_lines = []
@@ -275,8 +270,9 @@ class ToolManagerGUI(QWidget):
         super().__init__()
         self.setWindowTitle("eSim Tool & Package Manager")
         self.setFixedSize(1150, 600)
-        self.workers      = []
-        self.active_tools = set()
+        self.workers       = []
+        self.active_tools  = set()
+        self.sudo_password = ""
         self.build_ui()
         self.check_all()
 
@@ -382,6 +378,55 @@ class ToolManagerGUI(QWidget):
             self.rows[tool]["installed"].setText("Checking...")
         QApplication.processEvents()
         self.check_all()
+
+    def _ensure_sudo_cache(self) -> bool:
+        """Prompt for sudo password once and cache it via ``sudo -v``.
+
+        The password is used immediately to call ``sudo -S -v`` which
+        caches the credential in the kernel for ~15 minutes.  The
+        password string is then discarded from memory.
+        Returns True if cached successfully.
+        """
+        if not IS_LINUX:
+            return True
+        if self.sudo_password:
+            # Already collected — just verify cache is still alive
+            import subprocess
+            try:
+                subprocess.run(["sudo", "-n", "true"], capture_output=True, timeout=10)
+                return True
+            except Exception:
+                self.sudo_password = ""
+
+        password, ok = QInputDialog.getText(
+            self, "Authentication Required",
+            "Enter your sudo password to install/update tools:",
+            QLineEdit.EchoMode.Password,
+        )
+        if not ok or not password:
+            return False
+
+        import subprocess
+        try:
+            proc = subprocess.Popen(
+                ["sudo", "-S", "-v"],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+            )
+            proc.communicate(input=password + "\n", timeout=10)
+            if proc.returncode == 0:
+                self.sudo_password = "cached"
+                return True
+            QMessageBox.warning(self, "Auth Failed", "Incorrect password.")
+            return False
+        except Exception as e:
+            QMessageBox.warning(self, "Auth Failed", str(e))
+            return False
+        finally:
+            # Wipe password from memory
+            password = ""
 
     def run_cmd(self, tool, cmd):
         if tool in self.active_tools:
@@ -507,6 +552,8 @@ class ToolManagerGUI(QWidget):
         if not selected:
             QMessageBox.warning(self, "No Selection", "Please select tools to install.")
             return
+        if not self._ensure_sudo_cache():
+            return
         for tool in selected:
             r       = self.rows[tool]
             version = r["combo"].currentText()
@@ -519,6 +566,8 @@ class ToolManagerGUI(QWidget):
         selected = [t for t, r in self.rows.items() if r["checkbox"].isChecked()]
         if not selected:
             QMessageBox.warning(self, "No Selection", "Please select tools to update.")
+            return
+        if not self._ensure_sudo_cache():
             return
         for tool in selected:
             r       = self.rows[tool]
