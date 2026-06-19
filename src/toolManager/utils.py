@@ -8,16 +8,11 @@ promote portability and reuse across different Tool Manager components.
 
 Part of the portability-path-resolution roadmap.
 """
-
-import os
-import sys
 import subprocess
 import shutil
-import platform
 import threading
-import time
 from pathlib import Path
-from platform_utils import IS_WINDOWS, get_mysys2_path
+from platform_utils import get_mysys2_path, subprocess_flags
 
 # ==================== CONSTANTS & DEFAULTS ====================
 
@@ -62,24 +57,14 @@ def run_cmd_safe(cmd, timeout=30, cwd=None, env=None):
     Executes a command safely without showing a window on Windows.
     Returns the subprocess.CompletedProcess result or None if failed.
     """
-    try:
-        if IS_WINDOWS:
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            startupinfo.wShowWindow = subprocess.SW_HIDE
-            creationflags = subprocess.CREATE_NO_WINDOW
-        else:
-            startupinfo = None
-            creationflags = 0
-        
+    try:     
         result = subprocess.run(
             cmd,
             capture_output=True,
             text=True,
             shell=False,
             timeout=timeout,
-            startupinfo=startupinfo,
-            creationflags=creationflags,
+            **subprocess_flags(),
             encoding='utf-8',
             errors='ignore',
             cwd=cwd,
@@ -96,23 +81,13 @@ def run_cmd_stream(cmd, timeout=900, cwd=None, env=None):
     Returns a tuple of (returncode, full_output_string).
     """
     try:
-        if IS_WINDOWS:
-            si = subprocess.STARTUPINFO()
-            si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            si.wShowWindow = subprocess.SW_HIDE
-            cf = subprocess.CREATE_NO_WINDOW
-        else:
-            si = None
-            cf = 0
-
         proc = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
             shell=False,
-            startupinfo=si,
-            creationflags=cf,
+            **subprocess_flags(),
             encoding='utf-8',
             errors='ignore',
             cwd=cwd,
