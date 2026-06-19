@@ -406,27 +406,12 @@ class ToolManagerGUI(QWidget):
         if not ok or not password:
             return False
 
-        import subprocess
-        try:
-            proc = subprocess.Popen(
-                ["sudo", "-S", "-v"],
-                stdin=subprocess.PIPE,
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
-                text=True,
-            )
-            proc.communicate(input=password + "\n", timeout=10)
-            if proc.returncode == 0:
-                self.sudo_password = "cached"
-                return True
-            QMessageBox.warning(self, "Auth Failed", "Incorrect password.")
-            return False
-        except Exception as e:
-            QMessageBox.warning(self, "Auth Failed", str(e))
-            return False
-        finally:
-            # Wipe password from memory
-            password = ""
+        from backends.linux import LinuxBackend
+        if LinuxBackend().ensure_sudo(password):
+            self.sudo_password = "cached"
+            return True
+        QMessageBox.warning(self, "Auth Failed", "Incorrect password.")
+        return False
 
     def run_cmd(self, tool, cmd):
         if tool in self.active_tools:
