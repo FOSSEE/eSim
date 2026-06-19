@@ -30,7 +30,7 @@ class LinuxBackend(Backend):
 
     def __init__(self, base_dir: Optional[Path] = None):
         super().__init__()
-        self._base_dir = base_dir or Path(__file__).resolve().parent.parent
+        self._base_dir = base_dir or Path(__file__).resolve().parent.parent.parent
         self._download_dir = self._base_dir / "Download"
         self._download_dir.mkdir(parents=True, exist_ok=True)
 
