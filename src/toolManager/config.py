@@ -7,18 +7,13 @@ Standardizes access to information.json and other settings.
 import json
 import logging
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, Optional, Any
 from datetime import datetime
 
 # Import local paths helper with robust fallback
-try:
-    from .paths import get_install_state_path
-except (ImportError, ValueError):
-    try:
-        from paths import get_install_state_path
-    except ImportError:
-        def get_install_state_path():
-            return Path(__file__).resolve().parent / "information.json"
+
+def get_install_state_path():
+    return Path(__file__).resolve().parent / "information.json"
 
 logger = logging.getLogger(__name__)
 

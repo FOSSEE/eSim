@@ -12,6 +12,7 @@ from PyQt6.QtWidgets import (
 )
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
+from platform_utils import IS_WINDOWS, IS_LINUX, IS_MAC, distro_label
 
 try:
     from gui_fixed import ToolManagerGUI
@@ -21,7 +22,24 @@ except ImportError:
 # ==================== CONFIG ====================
 BASE_DIR = Path(__file__).resolve().parent
 INFO_JSON = BASE_DIR / "information.json"
-FULL_GUI  = BASE_DIR / "gui_fixed.py"
+
+if IS_WINDOWS:
+    BACKEND  = BASE_DIR / "tool_manager_windows.py"
+    FULL_GUI = BASE_DIR / "gui_fixed.py"
+    OS_LABEL = "Windows Edition"
+elif IS_LINUX:
+    BACKEND  = BASE_DIR / "tool_manager_linux.py"
+    FULL_GUI = BASE_DIR / "updater_gui.py"
+    OS_LABEL = f"{distro_label()} Edition"
+elif IS_MAC:
+    BACKEND  = BASE_DIR / "tool_manager_macos.py"
+    FULL_GUI = BASE_DIR / "updater_gui.py"
+    OS_LABEL = f"{distro_label()} Edition"
+else:
+    BACKEND  = BASE_DIR / "tool_manager_linux.py"
+    FULL_GUI = BASE_DIR / "updater_gui.py"
+    OS_LABEL = "Linux Edition"
+
 PYTHON    = sys.executable
 
 ANALOG_TOOLS  = ["esim", "kicad", "ngspice"]
@@ -46,12 +64,16 @@ TOOL_VERSIONS = {
 }
 
 def is_admin():
+    if not IS_WINDOWS:
+        return True 
     try:
         return ctypes.windll.shell32.IsUserAnAdmin()
     except Exception:
         return False
 
 def relaunch_as_admin():
+    if not IS_WINDOWS:
+        return True 
     script = str(Path(__file__).resolve())
     
     # Swap to pythonw.exe to suppress the black console window
@@ -97,7 +119,7 @@ class InstallWorker(QThread):
 
     def run(self):
         success = True
-        backend = str(BASE_DIR / "tool_manager_windows.py")
+        backend = str(BACKEND)
         for tool, version in self.tools:
             self.progress.emit(
                 f"Installing {TOOL_LABELS.get(tool, tool)} {version}..."
@@ -193,7 +215,7 @@ class ToolManagerWindow(QMainWindow):
         t1 = QLabel("eSim Tool Manager")
         t1.setFont(QFont("Arial", 24, QFont.Weight.Bold))
         t1.setStyleSheet("color: white; background: transparent;")
-        t2 = QLabel("Package Management System  •  Windows Edition")
+        t2 = QLabel(OS_LABEL)
         t2.setFont(QFont("Arial", 11))
         t2.setStyleSheet("color: rgba(255,255,255,0.9); background: transparent;")
         vbox.addWidget(t1)
@@ -651,12 +673,12 @@ class ToolManagerWindow(QMainWindow):
 
     def _run_uninstall(self, tools, label):
         try:
-            backend = str(BASE_DIR / "tool_manager_windows.py")
+            backend = str(BACKEND)
             for tool, _ in tools:
                 subprocess.Popen(
                     [PYTHON, backend, "uninstall", tool, "none"],
                     creationflags=(subprocess.CREATE_NO_WINDOW
-                                   if sys.platform == "win32" else 0)
+                                   if IS_WINDOWS else 0)
                 )
             QMessageBox.information(
                 self, "Uninstall Started",
@@ -669,7 +691,7 @@ class ToolManagerWindow(QMainWindow):
 
 
 def main():
-    if sys.platform == "win32" and not is_admin():
+    if IS_WINDOWS and not is_admin():
         # Note: We deliberately skip a manual PyQt consent dialog here because
         # Windows will natively prompt the user with a UAC shield anyway.
         relaunch_as_admin()
