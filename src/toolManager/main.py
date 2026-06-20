@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
 import sys
-import json
 import ctypes
 import subprocess
 from pathlib import Path
@@ -89,17 +88,30 @@ def relaunch_as_admin():
 
 def load_installed_versions():
     versions = {k: "Not installed" for k in TOOL_LABELS}
-    try:
-        if INFO_JSON.exists():
-            with open(INFO_JSON) as f:
-                data = json.load(f)
-            for pkg in data.get("important_packages", []):
-                name = pkg.get("package_name", "")
-                ver  = pkg.get("version", "Not installed")
-                if name in versions and ver not in ("", "Not installed"):
-                    versions[name] = ver
-    except Exception as e:
-        print(f"Could not load version info: {e}")
+    for tool in TOOL_LABELS:
+        try:
+            result = subprocess.run(
+                [PYTHON, str(BACKEND), "check", tool, "none"],
+                capture_output=True,
+                text=True,
+                encoding="utf-8",
+                errors="ignore",
+                timeout=15,
+            )
+            output = (result.stdout or "") + (result.stderr or "")
+            for line in output.splitlines():
+                line = line.strip()
+                if line.startswith("installed|"):
+                    parts = line.split("|", 2)
+                    path = parts[2] if len(parts) >= 3 else "installed"
+                    versions[tool] = Path(path).name if path != "none" else "installed"
+                    break
+                elif line.startswith("not_installed|"):
+                    versions[tool] = "Not installed"
+                    break
+        except Exception as e:
+            print(f"Check failed for {tool}: {e}")
+
     return versions
 
 def darken_color(hex_color, amount=0.15):
@@ -109,35 +121,37 @@ def darken_color(hex_color, amount=0.15):
     b = max(0, int(int(h[4:6], 16) * (1 - amount)))
     return f"#{r:02x}{g:02x}{b:02x}"
 
-class InstallWorker(QThread):
+class _PackageWorker(QThread):
+    """Base worker that runs backend sub-commands sequentially."""
     progress = pyqtSignal(str)
     finished = pyqtSignal(bool)
 
-    def __init__(self, tools):
+    def __init__(self, tools: list, cmd: str):
         super().__init__()
-        self.tools = tools
+        self.tools = tools   # list of (tool, version)
+        self.cmd   = cmd     # "install", "update", or "uninstall"
 
     def run(self):
         success = True
         backend = str(BACKEND)
         for tool, version in self.tools:
-            self.progress.emit(
-                f"Installing {TOOL_LABELS.get(tool, tool)} {version}..."
-            )
+            label = TOOL_LABELS.get(tool, tool)
+            action = self.cmd.capitalize()
+            self.progress.emit(f"{action}ing {label} {version}...".replace("Uninstalling", "Uninstalling"))
             try:
                 proc = subprocess.Popen(
-                    [PYTHON, backend, "install", tool, version],
+                    [PYTHON, backend, self.cmd, tool, version],
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
                     text=True,
                     encoding="utf-8",
-                    errors="ignore"
+                    errors="ignore",
                 )
                 for line in proc.stdout:
                     line = line.rstrip()
                     if line:
                         self.progress.emit(f"  {line}")
-                        if "[ERROR]" in line or "install_failed|" in line:
+                        if "[ERROR]" in line or "_failed|" in line:
                             success = False
                 proc.wait()
                 if proc.returncode != 0:
@@ -146,6 +160,16 @@ class InstallWorker(QThread):
                 self.progress.emit(f"  [ERROR] {tool}: {e}")
                 success = False
         self.finished.emit(success)
+
+
+class InstallWorker(_PackageWorker):
+    def __init__(self, tools):
+        super().__init__(tools, "install")
+
+
+class UninstallWorker(_PackageWorker):
+    def __init__(self, tools):
+        super().__init__(tools, "uninstall")
 
 
 # ==================== MAIN WINDOW ====================
@@ -672,22 +696,67 @@ class ToolManagerWindow(QMainWindow):
             )
 
     def _run_uninstall(self, tools, label):
-        try:
-            backend = str(BACKEND)
-            for tool, _ in tools:
-                subprocess.Popen(
-                    [PYTHON, backend, "uninstall", tool, "none"],
-                    creationflags=(subprocess.CREATE_NO_WINDOW
-                                   if IS_WINDOWS else 0)
-                )
+        """Run uninstall sequentially in a worker thread."""
+        self.progress_frame.setVisible(True)
+        self.progress_log.setText(f"Starting uninstall of {label}...")
+        self.progress_bar.setRange(0, 0)
+        self._install_worker = UninstallWorker(tools)
+        self._install_worker.progress.connect(self._on_progress)
+        self._install_worker.finished.connect(
+            lambda ok: self._on_uninstall_done(ok, label)
+        )
+        self._install_worker.start()
+
+    def _on_uninstall_done(self, success, label):
+        self.progress_bar.setRange(0, 1)
+        self.progress_bar.setValue(1)
+        self._refresh_status()
+        if success:
+            self.progress_log.setText(f"{label} uninstalled.")
             QMessageBox.information(
-                self, "Uninstall Started",
-                f"Uninstalling {label} in the background.\n\n"
-                "This may take a few minutes.\n"
-                "Click Refresh to update the status display when done."
+                self, "Uninstall Complete",
+                f"{label} removed successfully.\n\n"
+                "Click Refresh to update the status display."
             )
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Failed to uninstall:\n{e}")
+        else:
+            self.progress_log.setText(
+                f"{label} some packages may not have been removed.\n"
+                "Check the log above for details."
+            )
+            QMessageBox.warning(
+                self, "Uninstall Finished with Warnings",
+                f"{label} completed but some tools may not have\n"
+                "been removed correctly.\n\n"
+                "Check the progress log for details."
+            )
+
+def _ensure_x11_platform():
+    if not IS_LINUX:
+        return
+    if os.environ.get("QT_QPA_PLATFORM"): 
+        return
+    has_x11     = bool(os.environ.get("DISPLAY"))
+    has_wayland = bool(os.environ.get("WAYLAND_DISPLAY"))
+    if has_x11:
+        if has_wayland:
+            print(
+                "[INFO] Both DISPLAY and WAYLAND_DISPLAY are set "
+                "forcing QT_QPA_PLATFORM=xcb to avoid the Wayland "
+                "compositor crash",
+                flush=True,
+            )
+        else:
+            print(
+                "[INFO] DISPLAY is set forcing QT_QPA_PLATFORM=xcb.",
+                flush=True,
+            )
+        os.environ["QT_QPA_PLATFORM"] = "xcb"
+    elif has_wayland:
+        print(
+            "[WARN] Only WAYLAND_DISPLAY is set"
+            "letting Qt use its default Wayland platform plugin.",
+            flush=True,
+        )
 
 
 def main():
@@ -697,6 +766,7 @@ def main():
         relaunch_as_admin()
         sys.exit(0)
 
+    _ensure_x11_platform()
     app = QApplication(sys.argv)
     app.setFont(QFont("Arial", 10))
     app.setStyle("Fusion")
