@@ -1,4 +1,4 @@
-from pm_platform import IS_LINUX
+from platform_utils import IS_LINUX
 from registry import SCRIPT_MAPPING, TOOLS as REG_TOOLS
 from registry import KICAD_VERSIONS, NGSPICE_VERSIONS, LLVM_VERSIONS, VERILATOR_VERSIONS
 

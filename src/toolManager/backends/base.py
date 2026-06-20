@@ -2,7 +2,7 @@ import sys as _sys
 from abc import ABC, abstractmethod
 from pathlib import Path
 from typing import Optional, Tuple
-from pm_platform import run_cmd_stream as _run_cmd_stream
+from platform_utils import run_cmd_stream as _run_cmd_stream
 
 class Backend(ABC):
     @property

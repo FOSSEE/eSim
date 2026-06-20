@@ -1,6 +1,6 @@
 from PyQt6.QtCore import QThread, pyqtSignal
 import os, subprocess, threading
-from pm_platform import IS_LINUX
+from platform_utils import IS_LINUX
 
 class BaseWorker(QThread):
     def __init__(self, timeout=None, parent=None):

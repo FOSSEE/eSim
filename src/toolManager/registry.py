@@ -11,9 +11,9 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
 
 try:
-    from .pm_platform import get_os_id
+    from .platform_utils import get_os_id
 except (ImportError, ValueError):
-    from pm_platform import get_os_id
+    from platform_utils import get_os_id
 
 
 @dataclass(frozen=True)

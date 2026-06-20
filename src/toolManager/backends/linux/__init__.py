@@ -3,7 +3,7 @@ from pathlib import Path
 from typing import Optional
 from ..base import Backend
 from . import file_ops as _file_ops, pm as _pm, search as _search
-from pm_platform import detect_package_manager
+from platform_utils import detect_package_manager
 
 _BASH_LOCK = threading.Lock()
 

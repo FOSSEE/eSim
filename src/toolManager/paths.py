@@ -11,13 +11,13 @@ from pathlib import Path
 from typing import Optional
 
 try:
-    from .pm_platform import (
+    from .platform_utils import (
         DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, 
         DEFAULT_INFO_FILE, DEFAULT_DOWNLOAD_DIR,
         IS_WINDOWS
     )
 except (ImportError, ValueError):
-    from pm_platform import (
+    from platform_utils import (
         DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, 
         DEFAULT_INFO_FILE, DEFAULT_DOWNLOAD_DIR,
         IS_WINDOWS
