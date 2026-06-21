@@ -522,6 +522,8 @@ class Application(QtWidgets.QMainWindow):
         self.closeproj.setEnabled(True)
         self.wrkspce.setEnabled(True)
 
+
+
         if exitStatus == QtCore.QProcess.NormalExit and exitCode == 0:
             try:
                 self.obj_Mainview.obj_dockarea.plottingEditor()
@@ -538,6 +540,8 @@ class Application(QtWidgets.QMainWindow):
                                                + str(e))
 
                 self.errorDetectedSignal.emit("Simulation failed.")
+        else:
+            self.errorDetectedSignal.emit("Simulation failed.")
 
     def handleError(self):
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
@@ -548,7 +552,29 @@ class Application(QtWidgets.QMainWindow):
         self.delayed_function_call()
 
     def delayed_function_call(self):
-        QTimer.singleShot(2000, lambda: self.chatbot_window.debug_error(self.output_file))
+        def _trigger_debug():
+            # Save the console output now, giving the Qt event loop 2 seconds 
+            # to finish flushing NgSpice's final error messages to the UI.
+            try:
+                projDir = self.obj_appconfig.current_project["ProjectName"]
+                log_path = os.path.join(projDir, "ngspice_error.log")
+                
+                # Find all simulation consoles and grab the most recently created one.
+                # DO NOT use findChild(QtWidgets.QTextEdit) without a name, because 
+                # it will grab the text from the 'Welcome / About eSim' tab instead!
+                consoles = self.obj_Mainview.obj_dockarea.findChildren(
+                    QtWidgets.QTextEdit, "simulationConsole"
+                )
+                console = consoles[-1] if consoles else None
+                console_text = console.toPlainText() if console else ""
+                
+                with open(log_path, "w") as f:
+                    f.write(console_text)
+            except Exception:
+                pass
+            self.chatbot_window.debug_error(self.output_file)
+            
+        QTimer.singleShot(2000, _trigger_debug)
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""
@@ -572,7 +598,7 @@ class Application(QtWidgets.QMainWindow):
                 return
 
             self.obj_Mainview.obj_dockarea.ngspiceEditor(
-                projName, ngspiceNetlist, self.simulationEndSignal, self.chatbot_window)
+                projName, ngspiceNetlist, self.simulationEndSignal)
 
             self.ngspice.setEnabled(False)
             self.conversion.setEnabled(False)

@@ -25,14 +25,18 @@ from chatbot.chatbot_thread import (  # type: ignore
     detect_topic_switch, get_stt_backend,
     VISION_MODEL_KEYWORDS,  # EXTRACTED: shared constant, avoids duplicate keyword list
 )
-from PyQt6.QtWidgets import (
+from chatbot.netlist_analysis import parse_spice_netlist, build_netlist_summary_prompt, NETLIST_SYSTEM_PROMPT
+from chatbot.error_log_analysis import (
+    build_error_analysis_prompt, ERROR_ANALYSIS_SYSTEM_PROMPT
+)
+from PyQt5.QtWidgets import (
     QWidget, QHBoxLayout, QTextBrowser, QVBoxLayout,
     QLineEdit, QPushButton, QLabel, QComboBox, QApplication,
     QFileDialog, QDialog, QListWidget, QListWidgetItem, QFrame,
     QScrollArea, QSlider, QInputDialog
 )
-from PyQt6.QtCore import QTimer, Qt, pyqtSignal, QSize
-from PyQt6.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
+from PyQt5.QtCore import QTimer, Qt, pyqtSignal, QSize
+from PyQt5.QtGui import QTextCursor, QKeyEvent, QDragEnterEvent, QDropEvent
 from configuration.Appconfig import Appconfig
 from datetime import datetime
 import re
@@ -1019,8 +1023,8 @@ class ChatbotGUI(QWidget):
 
     # Sentinel anchor names — used by find_*_anchor_cursor to locate the
     # typing/streaming bubble in the document regardless of reflow position.
-    _TYPING_ANCHOR = '<a name="_typing_anchor_"></a>'
-    _STREAM_ANCHOR = '<a name="_stream_anchor_"></a>'
+    _TYPING_ANCHOR = '<a name="_typing_anchor_">&#8203;</a>'
+    _STREAM_ANCHOR = '<a name="_stream_anchor_">&#8203;</a>'
 
     def __init__(self):
         super().__init__()
@@ -2040,7 +2044,7 @@ class ChatbotGUI(QWidget):
         self._staging_area.setVisible(bool(self._staged_images))
 
     def _make_thumbnail(self, image_path: str) -> QWidget:
-        from PyQt6.QtGui import QPixmap
+        from PyQt5.QtGui import QPixmap
 
         card = QWidget()
         card.setFixedSize(80, 64)
@@ -2254,6 +2258,16 @@ class ChatbotGUI(QWidget):
     # ── Netlist analysis ─────────────────────────────────────────────
 
     def analyse_netlist(self, netlist_path: str):
+        """Alias kept for backward compatibility."""
+        self.analyze_specific_netlist(netlist_path)
+
+    def analyze_specific_netlist(self, netlist_path: str):
+        """Analyse a .cir.out netlist using structured AI parsing.
+
+        Uses the deterministic fact-extraction pipeline from
+        chatbot.netlist_analysis to ground the LLM response,
+        reducing hallucination on small local models.
+        """
         if not os.path.exists(netlist_path):
             self.chat_display.append(
                 f'<table width="100%"><tr><td style="color:#c00;font-size:12px;padding:6px;">'
@@ -2274,43 +2288,25 @@ class ChatbotGUI(QWidget):
                 f'❌ Could not read file: {_escape_text_preserve_breaks(str(e))}</td></tr></table>'
             )
             return
-        components, nodes, directives = [], set(), []
-        for line in raw_lines:
-            s = line.strip()
-            if not s or s.startswith('*'):
-                continue
-            first = s[0].upper()
-            if first in 'RCLVIDQMEFGHJKTUWXZ':
-                components.append(s)
-                parts = s.split()
-                if len(parts) >= 3:
-                    nodes.update([parts[1], parts[2]])
-            elif first == '.':
-                directives.append(s)
-        summary = (
-            f"Netlist file: {filename}\n"
-            f"Total lines: {len(raw_lines)}\n"
-            f"Components ({len(components)}): "
-            f"{', '.join(components[:15])}{'...' if len(components) > 15 else ''}\n"
-            f"Unique nodes: {', '.join(sorted(nodes)[:20])}\n"
-            f"SPICE directives: {', '.join(directives[:10])}\n\n"
-            f"Full netlist:\n{''.join(raw_lines[:80])}"
-            f"{'[truncated]' if len(raw_lines) > 80 else ''}"
-        )
-        prompt = (
-            f"Analyse this NgSpice netlist for me.\n\n{summary}\n\n"
-            "Please: (1) identify all components and their roles, "
-            "(2) describe what circuit this is and what it does, "
-            "(3) highlight any potential simulation issues, "
-            "(4) suggest any improvements."
-        )
-        self.chat_history = (self.chat_history + [f"User: {prompt}"])[-20:]
+
+        # Use the structured parser to build a grounded prompt
+        try:
+            parsed = parse_spice_netlist(raw_lines, netlist_path)
+            prompt = build_netlist_summary_prompt(parsed, raw_lines)
+        except Exception as e:
+            self.chat_display.append(
+                f'<table width="100%"><tr><td style="color:#c00;font-size:12px;padding:6px;">'
+                f'❌ Failed to parse netlist: {_escape_text_preserve_breaks(str(e))}</td></tr></table>'
+            )
+            return
+
+        self.chat_history = [f"User: {prompt}"][-20:]
         self._retry_history = list(self.chat_history)
         self._last_user_text = prompt
         self._start_thinking()
 
-        # EXTRACTED: helper method to launch OllamaWorker (with streaming hookup)
-        self._launch_text_worker(self.chat_history)
+        # Launch the text worker with the structured prompt and strict low temperature
+        self._launch_text_worker(self.chat_history, system_prompt=NETLIST_SYSTEM_PROMPT, temperature_override=0.1, netlist_formatter_context=parsed)
 
     # ── Topic switch ─────────────────────────────────────────────────
 
@@ -2500,19 +2496,23 @@ class ChatbotGUI(QWidget):
         self._images_store = {}
         self._last_image_paths = []
         self._current_session_kind = "text"
+        self._current_tips = []
         self._session_title_override = None
         self._current_session_id = str(uuid.uuid4())
         self._session_created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
         # MERGED: also reset streaming-related state so the next message starts clean
         self._reset_stream_state()
 
-    def _launch_text_worker(self, chat_history):
+    def _launch_text_worker(self, chat_history, system_prompt=None, temperature_override=None, netlist_formatter_context=None):
         """EXTRACTED: Launch OllamaWorker with correct configuration and signal mappings (streaming-aware)."""
+        temp = temperature_override if temperature_override is not None else self._temperature
         self.worker = OllamaWorker(
             chat_history,
             model=self.model_combo.currentText(),
-            temperature=self._temperature,
+            temperature=temp,
             num_predict=self._num_predict,
+            system_prompt=system_prompt,
+            netlist_formatter_context=netlist_formatter_context
         )
         self.worker.response_signal.connect(self.display_response)
         self.worker.status_signal.connect(self._on_status_update)
@@ -2738,6 +2738,10 @@ class ChatbotGUI(QWidget):
         self._stop_thinking()
         ts = self._stream_ts or _get_time()
 
+        if getattr(self, '_current_session_kind', None) == "simulation_error" and getattr(self, '_current_tips', None):
+            for tip in self._current_tips:
+                bot_response += f"\n\n💡 **eSim Tip:**\n*{tip['fix']}*"
+
         if self._stream_buf is not None:
             idx = self._stream_idx
             anchor_cursor = self._find_stream_anchor_cursor()
@@ -2792,7 +2796,7 @@ class ChatbotGUI(QWidget):
 
     # ── Debug helpers ────────────────────────────────────────────────
 
-    def debug_ollama(self):
+    def debug_ollama(self, system_prompt=None, temperature_override=None):
         self._current_session_kind = "simulation_error"
         self.chat_display.append(
             '<table width="100%" cellpadding="0" cellspacing="0"><tr>'
@@ -2806,10 +2810,16 @@ class ChatbotGUI(QWidget):
         self._retry_history = list(self.chat_history)
         self._start_thinking()
         # EXTRACTED: helper method to launch OllamaWorker
-        self._launch_text_worker(self.chat_history)
+        self._launch_text_worker(self.chat_history, system_prompt=system_prompt, temperature_override=temperature_override)
         self.user_input.clear()
 
     def debug_error(self, log):
+        """Analyse an NgSpice error log using structured AI parsing.
+
+        Uses the deterministic fact-extraction pipeline from
+        chatbot.error_log_analysis to ground the LLM response,
+        reducing hallucination on small local models.
+        """
         self.setWindowFlags(self.windowFlags())
         self.show()
         self.raise_()
@@ -2819,36 +2829,28 @@ class ChatbotGUI(QWidget):
         if os.path.exists(log):
             with open(log, "r") as f:
                 lines = [ln for ln in f.readlines() if ln.strip()]
-            no_compat_index = next(
-                (i for i, ln in enumerate(lines) if "No compatibility mode selected!" in ln), None
-            )
-            circuit_index = next((i for i, ln in enumerate(lines) if "Circuit:" in ln), None)
-            total_cpu_index = next(
-                (i for i, ln in enumerate(lines) if "Total CPU time (seconds)" in ln), None
-            )
-            before_no_compat = lines[:no_compat_index] if no_compat_index else []
-            between = (
-                lines[circuit_index + 1:total_cpu_index]
-                if circuit_index is not None and total_cpu_index is not None
-                else []
-            )
-            filtered_lines = before_no_compat + between
-            if len(filtered_lines) > _MAX_ERROR_LOG_LINES:
-                truncated_notice = [
-                    f"[Log truncated: showing last {_MAX_ERROR_LOG_LINES} "
-                    f"of {len(filtered_lines)} lines]\n"
-                ]
-                filtered_lines = truncated_notice + filtered_lines[-_MAX_ERROR_LOG_LINES:]
-            combined_text = "".join(filtered_lines)
+
+            if not lines:
+                self.chat_display.append(
+                    '<table width="100%"><tr><td style="color:#c00;font-size:12px;padding:6px;">'
+                    '❌ Error log is empty.</td></tr></table>'
+                )
+                return
+
             self.status_label.setText(
-                f"🔍 Analysing error log ({len(filtered_lines)} lines)…"
+                f"🔍 Analysing error log ({len(lines)} lines)…"
             )
-            self.obj_appconfig = Appconfig()
-            self.projDir = self.obj_appconfig.current_project["ProjectName"]
-            output_file = os.path.join(self.projDir, "erroroutput.txt")
-            with open(output_file, "w") as f:
-                f.writelines(filtered_lines)
-            self.chat_history.append(
-                f"User: I got a simulation error. Here is the log:\n{combined_text}"
-            )
-            self.debug_ollama()
+
+            prompt, tips = build_error_analysis_prompt(lines)
+            self._current_tips = tips
+
+            self.chat_history = [f"User: {prompt}"]
+            
+            # DEBUG DUMP
+            try:
+                with open(os.path.join(self.projDir, "debug_prompt.txt"), "w") as df:
+                    df.write(prompt)
+            except Exception:
+                pass
+            
+            self.debug_ollama(system_prompt=ERROR_ANALYSIS_SYSTEM_PROMPT, temperature_override=0.1)
