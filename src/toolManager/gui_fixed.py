@@ -146,6 +146,24 @@ class UninstallWindow(QWidget):
         self._build_ui()
 
     def _build_ui(self):
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #ffffff;
+                color: #333333;
+            }
+            QCheckBox {
+                spacing: 8px;
+            }
+            QPushButton {
+                background-color: #f8f9fa;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+                padding: 6px;
+            }
+            QPushButton:hover {
+                background-color: #e2e6ea;
+            }
+        """)
         font_normal = QFont("Segoe UI", 11)
         font_small  = QFont("Segoe UI", 9)
         font_bold   = QFont("Segoe UI", 11, QFont.Weight.Bold)
@@ -201,7 +219,7 @@ class UninstallWindow(QWidget):
         self.console.setReadOnly(True)
         self.console.setFont(QFont("Consolas", 9))
         self.console.setFixedHeight(110)
-        self.console.setStyleSheet("background:#1e1e1e;color:#d4d4d4;")
+        self.console.setStyleSheet("background:#f8f9fa;color:#333333;border:1px solid #ccc;")
         layout.addWidget(self.console)
 
     def log(self, msg):
@@ -296,6 +314,73 @@ class ToolManagerGUI(QWidget):
         self.check_all()
 
     def build_ui(self):
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #ffffff;
+                color: #333333;
+            }
+            QTableWidget {
+                background-color: #ffffff;
+                alternate-background-color: #fafafa;
+                color: #333333;
+                gridline-color: #f0f0f0;
+                border: 1px solid #e0e0e0;
+                border-radius: 4px;
+            }
+            QTableWidget::item {
+                padding: 5px;
+            }
+            QHeaderView::section {
+                background-color: #f8f9fa;
+                color: #333333;
+                border: none;
+                border-bottom: 2px solid #e0e0e0;
+                border-right: 1px solid #f0f0f0;
+                padding: 8px 12px;
+                font-weight: bold;
+            }
+            QPushButton {
+                background-color: #ffffff;
+                color: #333333;
+                border: 1px solid #ced4da;
+                border-radius: 6px;
+                padding: 8px 16px;
+                font-size: 13px;
+                min-width: 120px;
+            }
+            QPushButton:hover {
+                background-color: #f8f9fa;
+                border-color: #adb5bd;
+            }
+            QPushButton:pressed {
+                background-color: #e9ecef;
+            }
+            QPushButton:disabled {
+                background-color: #f8f9fa;
+                color: #adb5bd;
+                border-color: #e9ecef;
+            }
+            QTextEdit {
+                background-color: #fcfcfc;
+                color: #333333;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+                padding: 8px;
+            }
+            QComboBox {
+                background-color: #ffffff;
+                color: #333333;
+                border: 1px solid #ced4da;
+                border-radius: 4px;
+                padding: 4px 8px;
+                min-height: 28px;
+            }
+            QCheckBox {
+                spacing: 8px;
+                padding: 5px;
+            }
+        """)
+
         font_header = QFont("Segoe UI", 11, QFont.Weight.Bold)
         font_normal = QFont("Segoe UI", 11)
 
@@ -311,6 +396,9 @@ class ToolManagerGUI(QWidget):
             ["Tool", "Version", "Description", "Installed Version", "Status"]
         )
         self.table.verticalHeader().setVisible(False)
+        self.table.verticalHeader().setDefaultSectionSize(50)
+        self.table.setAlternatingRowColors(True)
+        self.table.setShowGrid(False)
         self.table.setEditTriggers(QAbstractItemView.EditTrigger.NoEditTriggers)
         self.table.setColumnWidth(0, 150)
         self.table.setColumnWidth(1, 150)
@@ -353,19 +441,20 @@ class ToolManagerGUI(QWidget):
         layout.addWidget(self.table)
 
         btn_layout = QHBoxLayout()
+        btn_layout.setSpacing(12)
+        btn_layout.setContentsMargins(5, 5, 5, 5)
         btn_check     = QPushButton("Check Selected")
         btn_install   = QPushButton("Install Selected")
         btn_update    = QPushButton("Update Selected")
         btn_refresh   = QPushButton("Refresh All")
         btn_uninstall = QPushButton("Uninstall...")
         btn_uninstall.setStyleSheet(
-            "QPushButton{color:#e74c3c;border:1px solid #e74c3c;border-radius:4px;}"
+            "QPushButton{color:#e74c3c;border:1px solid #e74c3c;border-radius:6px;background:#ffffff;}"
             "QPushButton:hover{background:#fdecea;}"
         )
 
         for b in (btn_check, btn_install, btn_update, btn_refresh, btn_uninstall):
             b.setFont(font_normal)
-            b.setFixedHeight(36)
             btn_layout.addWidget(b)
 
         btn_check.clicked.connect(self.check_selected)
