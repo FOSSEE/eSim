@@ -1,0 +1,60 @@
+* c:\users\arpit\coding\esim_projects\cd_4027\cd_4027.cir
+
+.include cmos_tg.sub
+.include cmos_buffer.sub
+.include CMOS_inverter.sub
+.include cmos__nand.sub
+.include cmos_and.sub
+.include cmos_or.sub
+x4 set vdd gnd net-_x14-pad1_ CMOS_inverter
+x1 j gnd vdd net-_x1-pad4_ cmos_buffer
+x2 k vdd gnd net-_x2-pad4_ CMOS_inverter
+x3 clock vdd gnd net-_x11-pad2_ CMOS_inverter
+r1 clock clock1 1
+r2 reset reset1 1
+x6 net-_x11-pad2_ vdd gnd net-_x11-pad3_ CMOS_inverter
+x7 net-_x17-pad4_ vdd gnd net-_x7-pad4_ CMOS_inverter
+x8 net-_x1-pad4_ net-_x17-pad4_ gnd vdd net-_x10-pad1_ cmos_or
+x9 net-_x7-pad4_ net-_x2-pad4_ gnd vdd net-_x10-pad4_ cmos_or
+x10 net-_x10-pad1_ gnd vdd net-_x10-pad4_ net-_x10-pad5_ cmos_and
+x11 net-_x10-pad5_ net-_x11-pad2_ net-_x11-pad3_ net-_x11-pad4_ cmos_tg
+x12 net-_x11-pad4_ vdd gnd net-_x12-pad4_ net-_x12-pad5_ cmos__nand
+x13 net-_x13-pad1_ net-_x11-pad3_ net-_x11-pad2_ net-_x11-pad4_ cmos_tg
+x14 net-_x14-pad1_ vdd gnd net-_x13-pad1_ net-_x12-pad4_ cmos__nand
+x15 net-_x15-pad1_ net-_x11-pad3_ net-_x11-pad2_ net-_x12-pad4_ cmos_tg
+x17 net-_x14-pad1_ vdd gnd net-_x17-pad4_ net-_x15-pad1_ cmos__nand
+x16 net-_x15-pad1_ net-_x11-pad2_ net-_x11-pad3_ net-_x16-pad4_ cmos_tg
+x18 net-_x17-pad4_ vdd gnd net-_x16-pad4_ net-_x12-pad5_ cmos__nand
+x19 net-_x17-pad4_ gnd vdd q cmos_buffer
+x20 net-_x16-pad4_ gnd vdd qbar cmos_buffer
+x5 reset1 vdd gnd net-_x12-pad5_ CMOS_inverter
+v6 vdd gnd  dc 5
+v3  set gnd pulse(0 5 0.1n 0.1n 0.1n 8n  10000n)
+v2  clock1 gnd pulse(0 5 0.1n 0.1n 0.1n 1n 2n)
+v4  j gnd pulse(0 5 0.1n 0.1n 0.1n 4n 8n)
+v5  k gnd pulse(0 5 0.1n 0.1n 0.1n 16n 32n )
+v1  reset gnd pulse(0 5 0.1n 0.1n 0.1n 8n  10000n )
+
+* u5  set plot_v1
+* u1  j plot_v1
+* u2  k plot_v1
+* u3  gnd plot_v1
+* u4  clock plot_v1
+* u6  q plot_v1
+* u7  qbar plot_v1
+.tran 0.1e-09  60e-09 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(set)
+plot v(j)
+plot v(k)
+plot v(gnd)
+plot v(clock)
+plot v(q)
+plot v(qbar)
+.endc
+.end
