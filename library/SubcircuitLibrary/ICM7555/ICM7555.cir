@@ -1,0 +1,38 @@
+* D:\FOSSEE\eSim\library\SubcircuitLibrary\ICM7555\ICM7555.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/11/25 10:14:45
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+M2  /8 Net-_M2-Pad2_ Net-_M1-Pad1_ /8 eSim_MOS_P		
+M3  /8 Net-_M2-Pad2_ Net-_M2-Pad2_ /8 eSim_MOS_P		
+M1  Net-_M1-Pad1_ /6 Net-_I1-Pad1_ Net-_I1-Pad1_ eSim_MOS_N		
+M4  Net-_M2-Pad2_ /5 Net-_I1-Pad1_ Net-_I1-Pad1_ eSim_MOS_N		
+R1  /8 /5 100k		
+R2  /5 Net-_M5-Pad2_ 100k		
+R3  Net-_M5-Pad2_ /1 100k		
+M5  Net-_I2-Pad2_ Net-_M5-Pad2_ Net-_M5-Pad3_ Net-_I2-Pad2_ eSim_MOS_P		
+M8  Net-_I2-Pad2_ /2 Net-_M10-Pad2_ Net-_I2-Pad2_ eSim_MOS_P		
+M6  Net-_M5-Pad3_ Net-_M5-Pad3_ /1 /1 eSim_MOS_N		
+M7  Net-_M10-Pad2_ Net-_M5-Pad3_ /1 /1 eSim_MOS_N		
+M11  /8 Net-_M1-Pad1_ Net-_M10-Pad1_ /8 eSim_MOS_P		
+M10  Net-_M10-Pad1_ Net-_M10-Pad2_ /1 /1 eSim_MOS_N		
+M9  Net-_M10-Pad2_ Net-_M9-Pad2_ /1 /1 eSim_MOS_N		
+U2  /4 Net-_U2-Pad2_ d_inverter		
+U3  Net-_U11-Pad2_ Net-_U3-Pad2_ Net-_U3-Pad3_ d_nor		
+U5  Net-_U3-Pad3_ Net-_U10-Pad1_ d_inverter		
+U4  Net-_U3-Pad3_ Net-_U4-Pad2_ d_inverter		
+U6  Net-_U10-Pad1_ /3 d_inverter		
+M12  /7 Net-_M12-Pad2_ /1 /1 eSim_MOS_N		
+U1  /1 /2 /3 /4 /5 /6 /7 /8 PORT		
+U8  Net-_U2-Pad2_ Net-_M9-Pad2_ dac_bridge_1		
+U7  Net-_M9-Pad2_ Net-_U3-Pad2_ adc_bridge_1		
+U10  Net-_U10-Pad1_ Net-_M12-Pad2_ dac_bridge_1		
+U9  Net-_U4-Pad2_ Net-_M10-Pad1_ dac_bridge_1		
+U11  Net-_M10-Pad1_ Net-_U11-Pad2_ adc_bridge_1		
+I1  Net-_I1-Pad1_ /1 120u		
+I2  /8 Net-_I2-Pad2_ 120u		
+
+.end
