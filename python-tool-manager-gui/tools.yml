@@ -1,0 +1,183 @@
+tools:
+  ngspice:
+    description: "SPICE-based analog circuit simulator"
+
+    type: executable
+    check: ngspice
+    version_cmd: "ngspice --version"
+
+    versions:
+      - "45.2"
+      - "45.0"
+      - "44"
+      - "43"
+      - "42"
+
+    min_version: "45.0"
+    recommended_version: "45.2"
+
+    install:
+      windows:
+        method: archive
+
+        url_template: "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/{version}/ngspice-{version}_64.7z/download"
+
+        fallback_url_template: "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/old-releases/{version}/ngspice-{version}_64.7z/download"
+
+        archive_name: "ngspice-{version}.7z"
+        extract_folder: "ngspice-{version}"
+
+      linux:
+        method: source
+        url_template: "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/{version}/ngspice-{version}.tar.gz/download"
+        deps:
+          - build-essential
+          - libx11-dev
+          - xorg-dev
+          - libxaw7-dev
+          - libreadline-dev
+          - wget
+
+        build:
+          - "./configure"
+          - "make"
+          - "sudo make install"
+
+      mac:
+        method: brew
+        package: ngspice
+
+  Kicad:
+    description: "PCB design and schematic capture tool"
+    versions: ["8.0", "7.0.10", "7.0", "6.0"]
+    type: executable
+    check: kicad
+    version_cmd: kicad --version
+    install_paths:
+      - auto # means use shutil.which("kicad")
+      - "/Applications/KiCad/KiCad.app"
+      - "/Applications/KiCad.app"
+      - "C:\\Program Files\\KiCad\\bin\\kicad.exe"
+      - "C:\\Program Files\\KiCad\\bin\\kicad-cli.exe"
+    linux:
+      ppas:
+        "8":
+          repo: "ppa:kicad/kicad-8.0-releases"
+          key: "kicad-8.0"
+        "7":
+          repo: "ppa:kicad/kicad-7.0-releases"
+          key: "kicad-7.0"
+        "6":
+          repo: "ppa:kicad/kicad-6.0-releases"
+          key: "kicad-6.0"
+
+  GHDL:
+    description: "VHDL simulator used in digital design"
+    versions: ["6.0.0", "5.0.0", "4.1.0", "3.0.0"]
+    type: executable
+    check: ghdl
+    version_cmd: ghdl --version
+    min_version: "4.1.0"
+    recommended_version: "4.1.0"
+
+    github:
+      latest_api: "https://api.github.com/repos/ghdl/ghdl/releases/latest"
+      tag_api: "https://api.github.com/repos/ghdl/ghdl/releases/tags/{tag}"
+
+    source_tarballs:
+      "4.1.0": "https://github.com/ghdl/ghdl/archive/refs/tags/v4.1.0.tar.gz"
+      "3.0.0": "https://github.com/ghdl/ghdl/archive/refs/tags/v3.0.0.tar.gz"
+
+    linux:
+      deps: ["build-essential", "gcc", "gnat", "zlib1g-dev", "wget", "make"]
+
+    mac:
+      deps: ["gnat", "zlib", "wget", "make"]
+
+  LLVM:
+    description: "Compiler infrastructure used by simulators"
+    versions: ["18.1", "18.0", "17.0", "16.0"]
+    type: executable
+    check: ["llvm-config", "clang"]
+    version_cmd:
+      - llvm-config --version
+      - clang --version
+
+  Verilator:
+    description: "Fast Verilog/SystemVerilog simulator"
+
+    versions: ["5.020", "5.016", "5.008", "4.228"]
+
+    type: executable
+    check: verilator
+    version_cmd: verilator --version
+
+    min_version: "4.210"
+    recommended_version: "4.210"
+
+    install:
+      linux:
+        method: source
+        repo: "https://github.com/verilator/verilator.git"
+        deps:
+          - git
+          - make
+          - autoconf
+          - g++
+          - flex
+          - bison
+          - libfl-dev
+          - zlib1g-dev
+
+        build:
+          - "autoconf"
+          - "./configure"
+          - "make -j{jobs}"
+          - "sudo make install"
+
+      windows:
+        method: choco
+        package: verilator
+
+      mac:
+        method: brew
+        package: verilator
+
+  Python:
+    description: "Python runtime"
+    versions: ["3.13", "3.12", "3.11", "3.10", "3.9"]
+    type: executable
+
+    check:
+      - python3
+      - python
+      - py
+
+    version_cmd:
+      - python3 --version
+      - python --version
+      - py --version
+
+    min_version: "3.9"
+    recommended_version: "3.13.1"
+
+    pip_packages:
+      - watchdog
+      - https://github.com/hdl/pyhdlparser/tarball/master
+      - makerchip-app
+      - sandpiper-saas
+      - psutil
+      - pyqt5
+      - matplotlib
+
+    dependencies:
+      - make
+      - gnat
+      - clang
+      - zlib1g-dev
+      - libcanberra-gtk-module
+      - libcanberra-gtk3-module
+      - libxaw7
+      - libxaw7-dev
+      - llvm-9
+      - llvm9-dev
