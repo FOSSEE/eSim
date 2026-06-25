@@ -1,154 +1,100 @@
-#!/usr/bin/env python3
-"""
-platform_utils.py
-─────────────────
-Central OS and distro detection module for eSim Tool Manager.
-
-All platform-specific branching in the Tool Manager should import
-constants and helpers from this module. Do NOT scatter sys.platform
-checks across other files.
-
-Exports
--------
-IS_WINDOWS               bool
-IS_LINUX                 bool
-IS_MAC                   bool
-get_msys32_path()         Path   (Windows only: default C:\\msys64)
-subprocess_flags()       dict   (suppress console window on Windows)
-detect_package_manager() str | None
-distro_label()           str
-
-Note: privilege elevation (pkexec) is handled in tool_manager_linux.py,
-not here. This module is detection-only.
-"""
-
-import sys
-import platform
-import shutil
+import os, sys, platform as _platform, subprocess, shutil, threading, warnings
 from pathlib import Path
+from typing import Optional
 
-__version__ = "1.0.0"
-__author__  = "Eashan Hasija"
+IS_WINDOWS = sys.platform == "win32"
+IS_LINUX = sys.platform.startswith("linux")
+IS_MAC = sys.platform == "darwin"
 
-__all__ = [
-    "IS_WINDOWS", "IS_LINUX", "IS_MAC",
-    "get_mysys32_path",
-    "subprocess_flags",
-    "detect_package_manager",
-    "distro_label",
-]
+def get_os_id():
+    if IS_WINDOWS: return "win32"
+    if IS_LINUX: return "linux"
+    if IS_MAC: return "darwin"
+    return "unknown"
 
-# ── OS Flags ──────────────────────────────────────────────────────────────────
-IS_WINDOWS: bool = sys.platform == "win32"
-IS_LINUX:   bool = sys.platform.startswith("linux")
-IS_MAC:     bool = sys.platform == "darwin"
+DEFAULT_MSYS2_PATH = Path(r"C:\msys64")
+MSYS2_PATH = DEFAULT_MSYS2_PATH
+DEFAULT_ESIM_DIR = Path(r"C:\FOSSEE\eSim")
+DEFAULT_INFO_FILE = "information.json"
+DEFAULT_DOWNLOAD_DIR = "Download"
 
-# ── Windows: MSYS2 default install path ───────────────────────────────────────
-# Previously hardcoded in tool_manager_windows.py L25 as:
-#     MSYS2_PATH = Path(r"C:\msys64")
-# Centralised here as the single place to change if the path changes.
-def get_mysys2_path() -> Path:
-    if not IS_WINDOWS:
-        return RuntimeError("get_MSYS2_path() is only valid for Windows")
-    import os
-    return Path(os.environ.get("MSYS2_PATH", r"C:\msys64"))
+def get_msys2_path():
+    if not IS_WINDOWS: raise RuntimeError("get_msys2_path() is only valid for Windows")
+    return Path(os.environ.get("MSYS2_PATH", str(DEFAULT_MSYS2_PATH)))
 
-# ── Subprocess flags ───────────────────────────────────────────────────────────
+def get_mysys2_path():
+    warnings.warn("get_mysys2_path is deprecated, use get_msys2_path", DeprecationWarning, stacklevel=2)
+    return get_msys2_path()
+
 if IS_WINDOWS:
-    import subprocess as _sp
-
-    def subprocess_flags() -> dict:
-        """Return Popen kwargs that hide the console window on Windows."""
-        si = _sp.STARTUPINFO()
-        si.dwFlags  |= _sp.STARTF_USESHOWWINDOW
-        si.wShowWindow = _sp.SW_HIDE
-        return {"creationflags": _sp.CREATE_NO_WINDOW, "startupinfo": si}
+    def subprocess_flags():
+        si = subprocess.STARTUPINFO()
+        si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+        si.wShowWindow = subprocess.SW_HIDE
+        return {"creationflags": subprocess.CREATE_NO_WINDOW, "startupinfo": si}
 else:
-    def subprocess_flags() -> dict:
-        """No-op on Linux/macOS — returns empty dict."""
-        return {}
+    def subprocess_flags(): return {}
 
+_LINUX_PM = [("apt-get","apt"),("dnf","dnf"),("yum","yum"),("pacman","pacman"),("zypper","zypper"),("apk","apk")]
+_MAC_PM = [("brew","brew"),("port","port"),("nix","nix")]
 
-# ── Package manager detection (Linux + macOS) ────────────────────────────────
-# Linux candidates — checked in priority order
-_LINUX_PM_CANDIDATES: list[tuple[str, str]] = [
-    ("apt-get", "apt"),      # Ubuntu, Debian, Mint, Pop!_OS
-    ("dnf",     "dnf"),      # Fedora, RHEL 8+, AlmaLinux, Rocky
-    ("yum",     "yum"),      # CentOS 7, RHEL 7
-    ("pacman",  "pacman"),   # Arch, Manjaro, EndeavourOS
-    ("zypper",  "zypper"),   # openSUSE, SLES
-    ("apk",     "apk"),      # Alpine
-]
-
-# macOS candidates — Homebrew is checked before MacPorts
-# Homebrew installs to user space (no sudo needed)
-# MacPorts installs system-wide (sudo needed)
-_MAC_PM_CANDIDATES: list[tuple[str, str]] = [
-    ("brew",    "brew"),     # Homebrew 
-    ("port",    "port"),     # MacPorts
-    ("nix",     "nix"),      # Nix
-]
-
-
-def detect_package_manager() -> str | None:
-    """
-    Detect the active system package manager by checking PATH.
-
-    Supported platforms
-    -------------------
-    Linux   : 'apt', 'dnf', 'yum', 'pacman', 'zypper', 'apk'
-    macOS   : 'brew' (Homebrew), 'port' (MacPorts), 'nix'
-    Windows : always returns None (uses Chocolatey directly)
-
-    Returns None if no supported package manager is found.
-
-    Example
-    -------
-    >>> pm = detect_package_manager()
-    >>> print(pm)   # 'apt' on Ubuntu, 'brew' on macOS, 'pacman' on Arch
-    """
-    if IS_WINDOWS:
-        return None          # Windows uses Chocolatey directly in tool_manager_windows.py
-    if IS_LINUX:
-        for cmd, name in _LINUX_PM_CANDIDATES:
-            if shutil.which(cmd):
-                return name
-    if IS_MAC:
-        for cmd, name in _MAC_PM_CANDIDATES:
-            if shutil.which(cmd):
-                return name
+def detect_package_manager():
+    if IS_WINDOWS: return None
+    for cmd, name in (_LINUX_PM if IS_LINUX else _MAC_PM if IS_MAC else []):
+        if shutil.which(cmd): return name
     return None
 
-# ── Linux: Human-readable distro string for GUI ───────────────────────────────
-def distro_label() -> str:
-    """
-    Return a human-readable distro name read from /etc/os-release.
-
-    Examples
-    --------
-    'Ubuntu 24.04', 'Fedora 40', 'Arch Linux', 'openSUSE Leap 15.5'
-    Returns 'Linux' as fallback if the file cannot be parsed.
-    Returns 'Windows' when called on Windows.
-    """
-    if IS_WINDOWS:
-        return f"Windows {platform.release()}"   
-    if IS_MAC:
-        return f"macOS {platform.mac_ver()[0]}"
-    try:
-        info = platform.freedesktop_os_release()
-    except AttributeError:
+def distro_label():
+    if IS_WINDOWS: return f"Windows {_platform.release()}"
+    if IS_MAC: return f"macOS {_platform.mac_ver()[0]}"
+    try: info = _platform.freedesktop_os_release()
+    except (AttributeError, OSError):
         try:
             info = {}
             with open("/etc/os-release") as f:
                 for line in f:
-                    line = line.strip()
-                    if "=" in line:
-                        k, _, v = line.partition("=")
-                        info[k] = v.strip('"')
-        except (OSError, ValueError):
-            return "Linux"
-    except OSError:
-        return "Linux"
-    name    = info.get("NAME", "Linux")
-    version = info.get("VERSION_ID", "")
-    return f"{name} {version}".strip()
+                    if "=" in line: k, _, v = line.partition("="); info[k] = v.strip('"')
+        except: return "Linux"
+    return f"{info.get('NAME','Linux')} {info.get('VERSION_ID','')}".strip()
+
+def is_admin():
+    if not IS_WINDOWS: return True
+    try: return bool(ctypes.windll.shell32.IsUserAnAdmin())
+    except: return False
+
+def relaunch_as_admin():
+    if not IS_WINDOWS: return
+    import ctypes
+    python_exe = sys.executable
+    if python_exe.lower().endswith("python.exe"):
+        pythonw = python_exe[:-10] + "pythonw.exe"
+        if os.path.exists(pythonw): python_exe = pythonw
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", python_exe, f'"{Path(sys.argv[0]).resolve()}"', None, 1)
+
+def run_cmd_stream(cmd, timeout=900, cwd=None, env=None):
+    try:
+        kwargs = subprocess_flags()
+        proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            text=True, shell=False, encoding="utf-8", errors="ignore", cwd=cwd, env=env, **kwargs)
+        out_lines = []
+        def kill():
+            try: proc.kill()
+            except: pass
+        timer = threading.Timer(timeout, kill)
+        try:
+            timer.start()
+            for line in proc.stdout:
+                line = line.rstrip()
+                if line: print(line, flush=True); out_lines.append(line)
+            proc.wait()
+        finally: timer.cancel()
+        return proc.returncode, "\n".join(out_lines)
+    except Exception as e:
+        print(f"[ERROR] Command failed: {e}", flush=True)
+        return -1, str(e)
+
+which = shutil.which
+
+def print_status(state, installed, target):
+    if installed: installed = str(installed).strip().replace("\n","").replace("\r","")
+    print(f"{state}|{installed}|{target}", flush=True)

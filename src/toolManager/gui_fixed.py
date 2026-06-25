@@ -86,47 +86,28 @@ class CommandWorker(QThread):
     finished = pyqtSignal(str, str)
     progress = pyqtSignal(str, str)
 
-    def __init__(self, tool, args, password=None):
+    def __init__(self, tool, args):
         super().__init__()
-        self.tool     = tool
-        self.args     = args
-        self.password = password
+        self.tool = tool
+        self.args = args
 
     def run(self):
         output_lines = []
         try:
-            if self.password and IS_LINUX:
-                process = subprocess.Popen(
-                    self.args,
-                    stdin=subprocess.PIPE,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.STDOUT,
-                    text=True
-                )
-                process.stdin.write(self.password + "\n")
-                process.stdin.flush()
-                process.stdin.close()
-                for line in process.stdout:
-                    line = line.rstrip()
-                    if line:
-                        output_lines.append(line)
-                        self.progress.emit(self.tool, line)
-                process.wait()
-            else:
-                process = subprocess.Popen(
-                    self.args,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.STDOUT,
-                    text=True,
-                    encoding="utf-8",
-                    errors="ignore"
-                )
-                for line in process.stdout:
-                    line = line.rstrip()
-                    if line:
-                        output_lines.append(line)
-                        self.progress.emit(self.tool, line)
-                process.wait()
+            process = subprocess.Popen(
+                self.args,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                encoding="utf-8",
+                errors="ignore"
+            )
+            for line in process.stdout:
+                line = line.rstrip()
+                if line:
+                    output_lines.append(line)
+                    self.progress.emit(self.tool, line)
+            process.wait()
 
             output = "\n".join(output_lines)
         except subprocess.TimeoutExpired:
@@ -290,8 +271,8 @@ class ToolManagerGUI(QWidget):
         self.setWindowTitle("eSim Tool & Package Manager")
         self.setFixedSize(1150, 600)
         self.workers       = []
-        self.sudo_password = None
         self.active_tools  = set()
+        self.sudo_password = ""
         self.build_ui()
         self.check_all()
 
@@ -398,23 +379,41 @@ class ToolManagerGUI(QWidget):
         QApplication.processEvents()
         self.check_all()
 
-    def get_sudo_password(self):
-        if IS_LINUX and self.sudo_password is None:
-            password, ok = QInputDialog.getText(
-                self, "Authentication Required",
-                "Enter your sudo password:", QLineEdit.Password
-            )
-            if ok and password:
-                self.sudo_password = password
+    def _ensure_sudo_cache(self) -> bool:
+        """Prompt for sudo password once and cache it via ``sudo -v``.
+
+        The password is used immediately to call ``sudo -S -v`` which
+        caches the credential in the kernel for ~15 minutes.  The
+        password string is then discarded from memory.
+        Returns True if cached successfully.
+        """
+        if not IS_LINUX:
+            return True
+        if self.sudo_password:
+            # Already collected — just verify cache is still alive
+            import subprocess
+            try:
+                subprocess.run(["sudo", "-n", "true"], capture_output=True, timeout=10)
                 return True
+            except Exception:
+                self.sudo_password = ""
+
+        password, ok = QInputDialog.getText(
+            self, "Authentication Required",
+            "Enter your sudo password to install/update tools:",
+            QLineEdit.EchoMode.Password,
+        )
+        if not ok or not password:
             return False
-        return True
 
-    def run_cmd(self, tool, cmd, needs_sudo=False):
-        password = None
-        if needs_sudo and IS_LINUX:
-            password = self.sudo_password
+        from backends.linux import LinuxBackend
+        if LinuxBackend().ensure_sudo(password):
+            self.sudo_password = "cached"
+            return True
+        QMessageBox.warning(self, "Auth Failed", "Incorrect password.")
+        return False
 
+    def run_cmd(self, tool, cmd):
         if tool in self.active_tools:
             self.log(f"[BUSY] {tool} is already running - please wait")
             return
@@ -422,7 +421,7 @@ class ToolManagerGUI(QWidget):
         self.active_tools.add(tool)
         self._set_action_buttons(False)
 
-        worker = CommandWorker(tool, cmd, password)
+        worker = CommandWorker(tool, cmd)
         worker.finished.connect(self.update_row)
         worker.finished.connect(lambda t, o, _tool=tool: self._on_worker_done(_tool))
         worker.progress.connect(lambda t, line: self.log(f"  {line}"))
@@ -538,8 +537,7 @@ class ToolManagerGUI(QWidget):
         if not selected:
             QMessageBox.warning(self, "No Selection", "Please select tools to install.")
             return
-        if IS_LINUX and not self.get_sudo_password():
-            QMessageBox.warning(self, "Auth Failed", "Sudo password required.")
+        if not self._ensure_sudo_cache():
             return
         for tool in selected:
             r       = self.rows[tool]
@@ -547,15 +545,14 @@ class ToolManagerGUI(QWidget):
             self.log(f"> Installing {tool} version {version}...")
             r["status"].setText("Installing...")
             r["status"].setStyleSheet("color:blue")
-            self.run_cmd(tool, [PYTHON, BACKEND, "install", tool, version], needs_sudo=True)
+            self.run_cmd(tool, [PYTHON, BACKEND, "install", tool, version])
 
     def update_selected(self):
         selected = [t for t, r in self.rows.items() if r["checkbox"].isChecked()]
         if not selected:
             QMessageBox.warning(self, "No Selection", "Please select tools to update.")
             return
-        if IS_LINUX and not self.get_sudo_password():
-            QMessageBox.warning(self, "Auth Failed", "Sudo password required.")
+        if not self._ensure_sudo_cache():
             return
         for tool in selected:
             r       = self.rows[tool]
@@ -563,7 +560,7 @@ class ToolManagerGUI(QWidget):
             self.log(f"> Updating {tool} to version {version}...")
             r["status"].setText("Updating...")
             r["status"].setStyleSheet("color:blue")
-            self.run_cmd(tool, [PYTHON, BACKEND, "update", tool, version], needs_sudo=True)
+            self.run_cmd(tool, [PYTHON, BACKEND, "update", tool, version])
 
     def open_uninstall_window(self):
         self._uninstall_win = UninstallWindow()
