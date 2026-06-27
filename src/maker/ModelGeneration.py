@@ -34,7 +34,10 @@ from configparser import ConfigParser
 from configuration import Appconfig
 
 from . import createkicad
-import hdlparse.verilog_parser as vlog
+try:
+    import hdlparse.verilog_parser as vlog
+except ImportError:
+    vlog = None
 
 
 class ModelGeneration(QtWidgets.QWidget):

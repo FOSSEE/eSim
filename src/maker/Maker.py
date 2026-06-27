@@ -27,7 +27,10 @@
 # =========================================================================
 
 # importing the files and libraries
-import hdlparse.verilog_parser as vlog
+try:
+    import hdlparse.verilog_parser as vlog
+except ImportError:
+    vlog = None
 from PyQt6 import QtCore, QtWidgets
 from PyQt6.QtCore import QThread, pyqtSignal
 from configuration.Appconfig import Appconfig
