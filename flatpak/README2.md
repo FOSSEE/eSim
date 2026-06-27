@@ -18,7 +18,13 @@ To ensure the eSim Flatpak package builds and installs correctly on modern Linux
 
 3. **Removed `hdlparse` Dependency**:
    - `hdlparse` uses a deprecated `setup.py` option (`use_2to3`) that was removed in newer versions of setuptools. It fundamentally fails to install on **Python 3.12** (which is shipped with the `org.freedesktop.Sdk//24.08` SDK).
-   - Consequently, `hdlparse` was omitted from the build to allow the core application to compile successfully.
+   - Consequently, `hdlparse` was omitted from the build, and the eSim Python codebase (`Maker.py` & `ModelGeneration.py`) was patched with a `try/except` block to gracefully handle its absence without crashing the application.
+
+4. **Upgraded to PyQt6**:
+   - The eSim GUI codebase was updated by upstream to use **PyQt6**. The Flatpak manifest was subsequently updated to download and bundle `PyQt6`, `PyQt6-Qt6`, and `PyQt6-sip` wheels instead of the older `PyQt5`.
+
+5. **KiCad Host Sandbox Escape (`flatpak-spawn`)**:
+   - To launch KiCad from within the eSim sandbox, eSim was updated to use `flatpak-spawn --host flatpak run org.kicad.KiCad`. The Flatpak manifest was granted the necessary D-Bus permission (`--talk-name=org.freedesktop.Flatpak`) to allow this host execution.
 
 ## ⚠️ Known Limitations
 
