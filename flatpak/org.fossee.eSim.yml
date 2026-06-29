@@ -20,12 +20,13 @@ finish-args:
   - --share=network
   - --socket=x11
   - --socket=wayland
+  - --talk-name=org.freedesktop.Flatpak
   - --env=ESIM_FLATPAK=1
 
 command: esim
 
 modules:
-  # Ngspice - circuit simulator (required for eSim simulations)
+  # Ngspice - circuit simulator (required for eSim simulations) - v46
   - name: ngspice
     buildsystem: autotools
     config-opts:
@@ -36,14 +37,101 @@ modules:
       - --with-ngshared
     sources:
       - type: archive
-        url: https://downloads.sourceforge.net/project/ngspice/ng-spice-rework/45.2/ngspice-45.2.tar.gz
-        sha256: ba8345f4c3774714c10f33d7da850d361cec7d14b3a295d0dc9fd96f7423812d
+        url: https://sourceforge.net/projects/ngspice/files/ng-spice-rework/46/ngspice-46.tar.gz/download
+        sha256: a0d1699af1940b06649276dcd6ff5a566c8c0cad01b2f7b5e99dedbb4d64c19b
+        dest-filename: ngspice-46.tar.gz
 
-  # eSim Python application (uses PyQt5)
+  # Python dependencies - all wheels pre-downloaded so pip can install offline.
+  # The flatpak build phase has no network access; network is only available to
+  # the running app via finish-args. All URLs and sha256s are from PyPI.
+  - name: python-deps
+    buildsystem: simple
+    build-commands:
+      - pip3 install --no-index --find-links=wheels --prefix=/app
+          PyQt6-Qt6 PyQt6-sip PyQt6
+          numpy matplotlib contourpy cycler fonttools kiwisolver
+          packaging pillow pyparsing python-dateutil six
+          scipy watchdog psutil
+    sources:
+      # PyQt6 and its deps
+      - type: file
+        url: https://files.pythonhosted.org/packages/a8/07/21f7dc188e35b46631707f3b40ace5643a0e03a8e1e446854826d08a04ae/pyqt6_qt6-6.9.2-py3-none-manylinux_2_28_x86_64.whl
+        sha256: 9abfc0ee4a8293a6442128ae3f87f68e82e2a949d7b9caabd98c86ba5679ab48
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/95/cb/116f9b328636765f3bce97d9e10ec041c54bbe92beb0617edb86c2b615c1/pyqt6_sip-13.11.1-cp312-cp312-manylinux1_x86_64.manylinux_2_5_x86_64.whl
+        sha256: 0df15849946cea969d3ff2b24b76149262b6044aea2c5403e4f70c24c973a4c8
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/d5/78/92f3c46440a83ebe22ae614bd6792e7b052bcb58ff128f677f5662015184/pyqt6-6.9.1-cp39-abi3-manylinux_2_28_x86_64.whl
+        sha256: 37884df27f774e2e1c0c96fa41e817a222329b80ffc6241725b0dc8c110acb35
+        dest: wheels
+      # numpy
+      - type: file
+        url: https://files.pythonhosted.org/packages/8c/3d/1e1db36cfd41f895d266b103df00ca5b3cbe965184df824dec5c08c6b803/numpy-2.2.6-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+        sha256: fd83c01228a688733f1ded5201c678f0c53ecc1006ffbc404db9f7a899ac6249
+        dest: wheels
+      # matplotlib and its deps
+      - type: file
+        url: https://files.pythonhosted.org/packages/94/95/7f522393c88313336b20d70fc849555757b2e5febc22b83b3a3f0fd4bce9/matplotlib-3.11.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+        sha256: be5f93a1d21981bfb802ded0d77a0caa92d4342a47d45754fac77e314a506344
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/a8/32/b8a1c8965e4f72482ff2d1ac2cd670ce0b542f203c8e1d34e7c3e6925da7/contourpy-1.3.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl
+        sha256: f26b383144cf2d2c29f01a1e8170f50dacf0eac02d64139dcd709a8ac4eb3cfe
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/e7/05/c19819d5e3d95294a6f5947fb9b9629efb316b96de511b418c53d245aae6/cycler-0.12.1-py3-none-any.whl
+        sha256: 85cef7cff222d8644161529808465972e51340599459b8ac3ccbac5a854e0d30
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/77/c7/2342da9830e3e9d4870305ca5d2091d2a83284f2953079b7bdd3b5e029d8/fonttools-4.63.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+        sha256: 58dc6bb86a78d782f00f9190ca02c119cf5bbe2807536e361e18d42019f877d8
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/c4/13/680c54afe3e65767bed7ec1a15571e1a2f1257128733851ade24abcefbcc/kiwisolver-1.5.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+        sha256: bb5136fb5352d3f422df33f0c879a1b0c204004324150cc3b5e3c4f310c9049f
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/df/b2/87e62e8c3e2f4b32e5fe99e0b86d576da1312593b39f47d8ceef365e95ed/packaging-26.2-py3-none-any.whl
+        sha256: 5fc45236b9446107ff2415ce77c807cee2862cb6fac22b8a73826d0693b0980e
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/e9/9e/c05e19657fd57841e476be1ab46c4d501bffbadbafdc31a6d665f8b737b6/pillow-12.2.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+        sha256: b86024e52a1b269467a802258c25521e6d742349d760728092e1bc2d135b4d76
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/10/bd/c038d7cc38edc1aa5bf91ab8068b63d4308c66c4c8bb3cbba7dfbc049f9c/pyparsing-3.3.2-py3-none-any.whl
+        sha256: 850ba148bd908d7e2411587e247a1e4f0327839c40e2e5e6d05a007ecc69911d
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl
+        sha256: a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427
+        dest: wheels
+      - type: file
+        url: https://files.pythonhosted.org/packages/b7/ce/149a00dd41f10bc29e5921b496af8b574d8413afcd5e30dfa0ed46c2cc5e/six-1.17.0-py2.py3-none-any.whl
+        sha256: 4721f391ed90541fddacab5acf947aa0d3dc7d27b2e1e8eda2be8970586c3274
+        dest: wheels
+      # scipy
+      - type: file
+        url: https://files.pythonhosted.org/packages/79/2e/415119c9ab3e62249e18c2b082c07aff907a273741b3f8160414b0e9193c/scipy-1.16.3-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.whl
+        sha256: 72d1717fd3b5e6ec747327ce9bda32d5463f472c9dce9f54499e81fbd50245a1
+        dest: wheels
+      # watchdog
+      - type: file
+        url: https://files.pythonhosted.org/packages/b5/e8/dbf020b4d98251a9860752a094d09a65e1b436ad181faf929983f697048f/watchdog-6.0.0-py3-none-manylinux2014_x86_64.whl
+        sha256: 20ffe5b202af80ab4266dcd3e91aae72bf2da48c0d33bdb15c66658e685e94e2
+        dest: wheels
+      # psutil
+      - type: file
+        url: https://files.pythonhosted.org/packages/b5/70/5d8df3b09e25bce090399cf48e452d25c935ab72dad19406c77f4e828045/psutil-7.2.2-cp36-abi3-manylinux2010_x86_64.manylinux_2_12_x86_64.manylinux_2_28_x86_64.whl
+        sha256: 076a2d2f923fd4821644f5ba89f059523da90dc9014e85f8e45a5774ca5bc6f9
+        dest: wheels
+
+  # eSim Python application
   - name: esim
     buildsystem: simple
     build-commands:
-      - pip3 install --no-build-isolation --prefix=/app PyQt5 numpy matplotlib scipy watchdog hdlparse psutil
       - mkdir -p /app/share/esim
       - cp -r src library images /app/share/esim/
       - cp VERSION LICENSE /app/share/esim/ 2>/dev/null || true
