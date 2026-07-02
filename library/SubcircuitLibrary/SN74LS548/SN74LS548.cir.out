@@ -1,0 +1,23 @@
+* h:\esim\esim\library\subcircuitlibrary\sn74ls548\sn74ls548.cir
+
+.include Rnk_Blk.sub
+
+* s c m o d e
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ net-_u1-pad20_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad24_ port
+x1 net-_u1-pad5_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad24_ net-_u1-pad4_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad7_ Rnk_Blk
+x3 net-_u1-pad9_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad24_ net-_u1-pad4_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad11_ Rnk_Blk
+x5 net-_u1-pad13_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad24_ net-_u1-pad4_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad15_ Rnk_Blk
+x7 net-_u1-pad17_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad24_ net-_u1-pad4_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad19_ Rnk_Blk
+x2 net-_u1-pad6_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad24_ net-_u1-pad4_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad8_ Rnk_Blk
+x4 net-_u1-pad10_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad24_ net-_u1-pad4_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad12_ Rnk_Blk
+x6 net-_u1-pad14_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad24_ net-_u1-pad4_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad16_ Rnk_Blk
+x8 net-_u1-pad18_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad1_ net-_u1-pad24_ net-_u1-pad4_ net-_u1-pad21_ net-_u1-pad22_ net-_u1-pad23_ net-_u1-pad20_ Rnk_Blk
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

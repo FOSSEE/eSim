@@ -1,0 +1,9 @@
+.title KiCad schematic
+v2 Net-_U1-Pad2_ GND pulse
+v1 Net-_U1-Pad1_ GND pulse
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ dac_bridge_2
+U3 Net-_U2-Pad3_ plot_v1
+U4 Net-_U2-Pad4_ plot_v1
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2
+X1 Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U2-Pad1_ Net-_U2-Pad2_ CD4046
+.end

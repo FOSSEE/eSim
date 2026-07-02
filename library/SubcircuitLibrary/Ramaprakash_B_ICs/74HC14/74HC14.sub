@@ -1,0 +1,18 @@
+* Subcircuit 74HC14
+.subckt 74HC14 in net-_m1-pad1_ 
+.title kicad schematic
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+m6 vdd net-_m1-pad1_ net-_m1-pad3_ gnd CMOSN W=100u L=100u M=1
+m5 net-_m3-pad3_ net-_m1-pad1_ gnd vdd CMOSP W=100u L=100u M=1
+m2 net-_m1-pad3_ in gnd gnd CMOSN W=100u L=100u M=1
+m1 net-_m1-pad1_ in net-_m1-pad3_ gnd CMOSN W=100u L=100u M=1
+v1 vdd gnd  dc 5
+* u4 vdd plot_v1
+* u3 net-_m1-pad1_ plot_v1
+m4 net-_m3-pad3_ in net-_m1-pad1_ vdd CMOSP W=100u L=100u M=1
+m3 vdd in net-_m3-pad3_ vdd CMOSP W=100u L=100u M=1
+* u2 in plot_v1
+* Control Statements
+
+.ends 74HC14

@@ -45,8 +45,13 @@ class Appconfig(QtWidgets.QWidget):
             user_home, ".esim/workspace.txt"), 'r'
         )
         workspace_check, home = file.readline().split(' ', 1)
+        home = home.strip()
         file.close()
-    except IOError:
+    except (IOError, ValueError):
+        # ValueError: workspace.txt was truncated/empty (e.g. an interrupted
+        # write left it blank), so "<check> <home>".split(' ', 1) cannot unpack
+        # into two names. Fall back to the default workspace instead of letting
+        # the exception escape the class body and abort startup.
         home = os.path.join(os.path.expanduser("~"), "eSim-Workspace")
         workspace_check = 0
 
@@ -110,3 +115,26 @@ class Appconfig(QtWidgets.QWidget):
 
     def print_error(self, error):
         self.noteArea['Note'].append('[ERROR]: ' + error)
+
+    def save_current_project(self):
+        try:
+            path = os.path.join(self.user_home, ".esim", "last_project.json")
+            with open(path, "w") as f:
+                json.dump(self.current_project, f)
+        except Exception as e:
+            print("Failed to save current project:", str(e))
+
+    def load_last_project(self):
+        try:
+            path = os.path.join(self.user_home, ".esim", "last_project.json")
+            with open(path, "r") as f:
+                data = json.load(f)
+                project_path = data.get("ProjectName", None)
+                if project_path and os.path.exists(project_path):
+                    self.current_project["ProjectName"] = project_path
+                    return project_path
+                else:
+                    print("Project path does not exist: ", project_path)
+        except Exception as e:
+            print("Error: ", str(e))
+        return None

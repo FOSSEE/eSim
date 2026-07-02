@@ -1,0 +1,21 @@
+.title kicad schematic
+
+.include TRISTATE.sub
+x1 net-_u2-pad2_ net-_u1-pad2_ net-_u1-pad3_ TRISTATE
+x2 net-_u2-pad2_ net-_u1-pad2_ net-_u1-pad4_ TRISTATE
+x4 net-_u2-pad2_ net-_u1-pad2_ net-_u1-pad6_ TRISTATE
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ port
+x3 net-_u2-pad2_ net-_u1-pad2_ net-_u1-pad5_ TRISTATE
+* u2 net-_u1-pad1_ net-_u2-pad2_ d_buffer
+a1 net-_u1-pad1_ net-_u2-pad2_ u2
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u2 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0.1e-06 100e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

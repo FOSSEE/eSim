@@ -1000,7 +1000,7 @@ and set the load for input ports */
             print("Running Make command in " + path_icm)
             self.process = QtCore.QProcess(self)
             self.process.start('sh', ['-c', self.cmd])
-            print("make command process pid ---------- >", self.process.pid())
+            print("make command process pid ---------- >", self.process.processId())
 
             self.termtitle("MAKE COMMAND")
             self.termtext("Current Directory: " + path_icm)

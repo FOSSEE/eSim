@@ -1,0 +1,59 @@
+* Subcircuit 74HC242
+.subckt 74HC242 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ 
+.title kicad schematic
+.include TRISTATE.sub
+* u12 net-_u12-pad1_ net-_u1-pad10_ d_inverter
+x8 net-_u1-pad10_ net-_u4-pad3_ net-_u8-pad1_ TRISTATE
+x4 net-_u1-pad6_ net-_u4-pad3_ net-_u12-pad1_ TRISTATE
+* u7 net-_u7-pad1_ net-_u1-pad5_ d_inverter
+x7 net-_u1-pad9_ net-_u4-pad3_ net-_u7-pad1_ TRISTATE
+* u8 net-_u8-pad1_ net-_u1-pad6_ d_inverter
+* u5 net-_u5-pad1_ net-_u1-pad3_ d_inverter
+x1 net-_u1-pad3_ net-_u4-pad3_ net-_u9-pad1_ TRISTATE
+* u4 net-_u3-pad2_ net-_u2-pad2_ net-_u4-pad3_ d_and
+* u3 net-_u1-pad1_ net-_u3-pad2_ d_buffer
+* u2 net-_u1-pad2_ net-_u2-pad2_ d_inverter
+x6 net-_u1-pad8_ net-_u4-pad3_ net-_u6-pad1_ TRISTATE
+* u11 net-_u11-pad1_ net-_u1-pad9_ d_inverter
+x3 net-_u1-pad5_ net-_u4-pad3_ net-_u11-pad1_ TRISTATE
+* u6 net-_u6-pad1_ net-_u1-pad4_ d_inverter
+* u9 net-_u9-pad1_ net-_u1-pad7_ d_inverter
+x5 net-_u1-pad7_ net-_u4-pad3_ net-_u5-pad1_ TRISTATE
+x2 net-_u1-pad4_ net-_u4-pad3_ net-_u10-pad1_ TRISTATE
+* u10 net-_u10-pad1_ net-_u1-pad8_ d_inverter
+a1 net-_u12-pad1_ net-_u1-pad10_ u12
+a2 net-_u7-pad1_ net-_u1-pad5_ u7
+a3 net-_u8-pad1_ net-_u1-pad6_ u8
+a4 net-_u5-pad1_ net-_u1-pad3_ u5
+a5 [net-_u3-pad2_ net-_u2-pad2_ ] net-_u4-pad3_ u4
+a6 net-_u1-pad1_ net-_u3-pad2_ u3
+a7 net-_u1-pad2_ net-_u2-pad2_ u2
+a8 net-_u11-pad1_ net-_u1-pad9_ u11
+a9 net-_u6-pad1_ net-_u1-pad4_ u6
+a10 net-_u9-pad1_ net-_u1-pad7_ u9
+a11 net-_u10-pad1_ net-_u1-pad8_ u10
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u12 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u8 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u5 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u3 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u11 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u6 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u9 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u10 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74HC242

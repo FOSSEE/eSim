@@ -1,0 +1,16 @@
+.title KiCad schematic
+U3 C0 Net-_U3-Pad2_ adc_bridge_1
+U5 B2 Net-_U5-Pad2_ adc_bridge_1
+U4 A2 Net-_U4-Pad2_ adc_bridge_1
+v5 B2 GND pulse
+v4 A2 GND pulse
+v3 C0 GND pulse
+v2 B1 GND pulse
+v1 A1 GND pulse
+U2 B1 Net-_U2-Pad2_ adc_bridge_1
+U1 A1 Net-_U1-Pad2_ adc_bridge_1
+X1 Net-_U1-Pad2_ Net-_U2-Pad2_ Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U5-Pad2_ Net-_U6-Pad1_ Net-_U7-Pad1_ Net-_U8-Pad1_ SN7482
+U6 Net-_U6-Pad1_ S1 dac_bridge_1
+U7 Net-_U7-Pad1_ S2 dac_bridge_1
+U8 Net-_U8-Pad1_ C2 dac_bridge_1
+.end

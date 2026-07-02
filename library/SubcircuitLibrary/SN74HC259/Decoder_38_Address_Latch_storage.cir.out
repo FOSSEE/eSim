@@ -1,0 +1,26 @@
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/decoder_38_address_latch_storage/decoder_38_address_latch_storage.cir
+
+.include D_latch.sub
+.include Decoder_38.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ /vdd /gnd net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ /d net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ port
+* s c m o d e
+x2 /d net-_x2-pad2_ net-_u1-pad11_ /gnd /vdd net-_u1-pad3_ ? D_latch
+x1 /d net-_x1-pad2_ net-_u1-pad11_ /gnd /vdd net-_u1-pad1_ ? D_latch
+x3 /d net-_x3-pad2_ net-_u1-pad11_ /gnd /vdd net-_u1-pad2_ ? D_latch
+x4 /d net-_x4-pad2_ net-_u1-pad11_ /gnd /vdd net-_u1-pad4_ ? D_latch
+x8 /d net-_x8-pad2_ net-_u1-pad11_ /gnd /vdd net-_u1-pad10_ ? D_latch
+x7 /d net-_x7-pad2_ net-_u1-pad11_ /gnd /vdd net-_u1-pad9_ ? D_latch
+x6 /d net-_x6-pad2_ net-_u1-pad11_ /gnd /vdd net-_u1-pad8_ ? D_latch
+x5 /d net-_x5-pad2_ net-_u1-pad11_ /gnd /vdd net-_u1-pad7_ ? D_latch
+x9 net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ net-_u1-pad16_ /vdd /vdd net-_x7-pad2_ net-_x5-pad2_ net-_x1-pad2_ net-_x8-pad2_ net-_x6-pad2_ net-_x3-pad2_ net-_x2-pad2_ net-_x4-pad2_ Decoder_38
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
