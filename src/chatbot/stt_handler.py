@@ -17,7 +17,7 @@ _MODEL = None
 
 DEFAULT_VOSK_DIR = os.path.join(
     os.path.expanduser("~"), ".local", "share",
-    "esim-copilot", "vosk-model-small-en-us-0.15",
+    "esim-ai-assistant", "vosk-model-small-en-us-0.15",
 )
 
 def _get_model():

@@ -13,7 +13,7 @@ ollama_client = ollama.Client(
 # ==================== SETTINGS ====================
 
 _SETTINGS_DIR = os.path.join(
-    os.path.expanduser("~"), ".local", "share", "esim-copilot"
+    os.path.expanduser("~"), ".local", "share", "esim-ai-assistant"
 )
 _SETTINGS_PATH = os.path.join(_SETTINGS_DIR, "settings.json")
 

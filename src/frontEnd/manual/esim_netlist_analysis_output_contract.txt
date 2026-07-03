@@ -1,4 +1,4 @@
-ESIM COPILOT NETLIST ANALYSIS OUTPUT CONTRACT
+ESIM AI ASSISTANT NETLIST ANALYSIS OUTPUT CONTRACT
 =============================================
 
 This file defines HOW the chatbot MUST respond.

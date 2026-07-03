@@ -127,7 +127,7 @@ class ProjectExplorer(QtWidgets.QWidget):
 
             project_name = item.text(0)
             netlist_path = os.path.join(file_path, f"{project_name}.cir.out")
-            analyze_action.triggered.connect(lambda: self._analyze_netlist_in_copilot(netlist_path))
+            analyze_action.triggered.connect(lambda: self._analyze_netlist_in_assistant(netlist_path))
             
             rename_action = menu.addAction("Rename Project")
             rename_action.triggered.connect(self.renameProject)
@@ -138,7 +138,7 @@ class ProjectExplorer(QtWidgets.QWidget):
 
             if file_path.endswith((".cir", ".cir.out", ".net")):
                 analyze_file_action = menu.addAction("Analyze this Netlist")
-                analyze_file_action.triggered.connect(lambda: self._analyze_netlist_in_copilot(file_path))
+                analyze_file_action.triggered.connect(lambda: self._analyze_netlist_in_assistant(file_path))
 
         refresh_action = menu.addAction("Refresh")
         refresh_action.triggered.connect(self.refreshInstant)
@@ -450,7 +450,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                     )
                     msg.exec_()
 
-    def _analyze_netlist_in_copilot(self, netlist_path: str):
+    def _analyze_netlist_in_assistant(self, netlist_path: str):
         """Send selected .cir file to chatbot for analysis."""
         try:
             # Get the main Application window (traverse up the widget hierarchy)
@@ -475,7 +475,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                 "Please open the eSim AI Assistant window first (View → eSim AI Assistant)."
             )
         except Exception as e:
-            print(f"[COPILOT] Failed to trigger analysis: {e}")
+            print(f"[AI ASSISTANT] Failed to trigger analysis: {e}")
             QMessageBox.warning(
                 self,
                 "Error",

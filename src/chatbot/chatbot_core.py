@@ -126,7 +126,7 @@ def answer_with_rag_fallback(user_input: str) -> str:
 
     if rag_context.strip():
         prompt = f"""
-You are eSim Copilot.
+You are eSim AI Assistant.
 
 Use ONLY the following official eSim documentation
 to answer the question. Do NOT invent information.
@@ -345,12 +345,12 @@ def is_semantic_topic_switch(
             np.linalg.norm(emb_new) * np.linalg.norm(emb_prev)
         )
 
-        print(f"[COPILOT] Semantic similarity = {similarity:.3f}")
+        print(f"[AI ASSISTANT] Semantic similarity = {similarity:.3f}")
 
         return similarity < threshold
 
     except Exception as e:
-        print(f"[COPILOT] Topic switch check failed: {e}")
+        print(f"[AI ASSISTANT] Topic switch check failed: {e}")
         return False
 
 # ==================== QUESTION CLASSIFICATION ====================
@@ -386,7 +386,7 @@ def classify_question_type(user_input: str, has_image_context: bool,
 
     is_followup = _is_follow_up_question(user_input, history)
     if is_semantic_topic_switch(user_input, history):
-        print("[COPILOT] Topic switch detected (semantic)")
+        print("[AI ASSISTANT] Topic switch detected (semantic)")
         is_followup = False
 
     if not is_followup:
@@ -415,7 +415,7 @@ def classify_question_type(user_input: str, has_image_context: bool,
 
 def handle_greeting() -> str:
     return (
-        "Hello! I'm eSim Copilot. I can help you with:\n"
+        "Hello! I'm eSim AI Assistant. I can help you with:\n"
         "• Circuit analysis and netlist debugging\n"
         "• Electronics concepts and SPICE simulation\n"
         "• Component selection and circuit design\n\n"
@@ -427,7 +427,7 @@ def handle_simple_question(user_input: str) -> str:
     """
     Handles standalone questions.
     Uses RAG first, then falls back to Ollama.
-    keep in mind that your a copilot of eSim an EDA tool
+    keep in mind that you are an AI assistant of eSim an EDA tool
     """
     return answer_with_rag_fallback(user_input)
 
@@ -652,7 +652,7 @@ def handle_input(user_input: str,
     question_type = classify_question_type(
         user_input, bool(LAST_IMAGE_CONTEXT), history
     )
-    print(f"[COPILOT] Question type: {question_type}")
+    print(f"[AI ASSISTANT] Question type: {question_type}")
 
     try:
         if question_type == "netlist":
@@ -680,13 +680,13 @@ def handle_input(user_input: str,
 
     except Exception as e:
         error_msg = f"Error processing question: {str(e)}"
-        print(f"[COPILOT ERROR] {error_msg}")
+        print(f"[AI ASSISTANT ERROR] {error_msg}")
         return error_msg
 
 
 # ==================== WRAPPER ====================
 
-class ESIMCopilotWrapper:
+class ESIMAssistantWrapper:
     def __init__(self) -> None:
         self.history: List[Dict[str, str]] = []
 
@@ -700,7 +700,7 @@ class ESIMCopilotWrapper:
     def analyze_schematic(self, query: str) -> str:
         return self.handle_input(query)
 
-_GLOBAL_WRAPPER = ESIMCopilotWrapper()
+_GLOBAL_WRAPPER = ESIMAssistantWrapper()
 
 
 def analyze_schematic(query: str) -> str:

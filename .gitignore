@@ -25,11 +25,11 @@ scripts/deploy_to_vm.ps1
 venv/
 
 # User-specific local workspace configuration
-library/config/.esim/workspace.txt
+**/library/config/.esim/workspace.txt
 
 # Local configuration files generated at runtime
-library/config/.esim/config.ini
-library/config/.nghdl/
+**/library/config/.esim/config.ini
+**/library/config/.nghdl/
 
 # Ensure compiled files and caches under nghdl/ are also ignored
 **/__pycache__/
@@ -39,10 +39,12 @@ library/config/.nghdl/
 test_ai_features.py
 test_exact_log.py
 test_regex2.py
+test_error_pipeline_regression.py
+test_netlist_pipeline_regression.py
+test_ollama_error.py
+test_ollama_netlist.py
 
-# Multi-Agent Teamwork System artifacts
-.agents/
-code_review.md
+
 
 # Local test projects
 Examples/ErrorTests/

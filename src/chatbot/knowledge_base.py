@@ -8,9 +8,9 @@ def _default_db_path() -> str:
     xdg_data_home = os.environ.get("XDG_DATA_HOME", "").strip()
     if not xdg_data_home:
         xdg_data_home = os.path.join(os.path.expanduser("~"), ".local", "share")
-    return os.path.join(xdg_data_home, "esim-copilot", "chroma")
+    return os.path.join(xdg_data_home, "esim-ai-assistant", "chroma")
 
-db_path = os.environ.get("ESIM_COPILOT_DB_PATH", "").strip() or _default_db_path()
+db_path = os.environ.get("ESIM_AI_ASSISTANT_DB_PATH", "").strip() or _default_db_path()
 os.makedirs(db_path, exist_ok=True)
 
 def _get_collection():
@@ -100,7 +100,6 @@ def ingest_pdfs(manuals_directory: str) -> None:
 RELEVANCE_THRESHOLD = float(
     os.environ.get("ESIM_RAG_RELEVANCE_THRESHOLD", "500")
 )
-RELEVANCE_THRESHOLD = float(os.environ.get("ESIM_RAG_RELEVANCE_THRESHOLD", "500"))
 
 
 def search_knowledge(query: str, n_results: int = 4) -> str:
