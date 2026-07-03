@@ -35,3 +35,15 @@ library/config/.nghdl/
 **/__pycache__/
 **/*.pyc
 
+# Local AI test scripts
+test_ai_features.py
+test_exact_log.py
+test_regex2.py
+
+# Multi-Agent Teamwork System artifacts
+.agents/
+code_review.md
+
+# Local test projects
+Examples/ErrorTests/
+

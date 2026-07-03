@@ -4,7 +4,8 @@ import os
 import re
 import json
 from typing import Dict, Any, Tuple, List
-from .error_solutions import get_error_solution
+from .error_patterns import match_error_patterns
+from .error_solutions import get_solution_for_category
 from .image_handler import analyze_and_extract
 from .ollama_runner import run_ollama
 from .knowledge_base import search_knowledge
@@ -489,18 +490,23 @@ def handle_esim_question(user_input: str,
     """
     user_lower = user_input.lower()
 
-    sol = get_error_solution(user_input)
-    if sol and sol.get("description") != "General schematic error":
+    matches = match_error_patterns(user_input)
+    if matches:
+        root_match = min(matches, key=lambda m: m.causal_priority)
+        sol = get_solution_for_category(root_match.category)
+        
         fixes = "\n".join(f"- {f}" for f in sol.get("fixes", []))
-        cmd = sol.get("eSim_command", "")
+        steps = "\n".join(f"- {s}" for s in sol.get("esim_steps", []))
+        
         answer = (
-            f"**Detected issue:** {sol['description']}\n"
+            f"**Detected issue:** {sol['category']}\n"
             f"**Severity:** {sol.get('severity', 'unknown')}\n\n"
             f"**Recommended fixes:**\n{fixes}\n\n"
         )
-        if cmd:
-            answer += f"**eSim action:** {cmd}\n"
-        return answer_with_rag_fallback(user_input)
+        if steps:
+            answer += f"**eSim Steps:**\n{steps}\n"
+            
+        return answer
 
     history_text = _history_to_text(history, max_turns=6)
 
