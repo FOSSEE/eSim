@@ -164,14 +164,14 @@ class DockArea(QtWidgets.QMainWindow):
             )
         count = count + 1
 
-    def ngspiceEditor(self, projName, netlist, simEndSignal,chatbot):
+    def ngspiceEditor(self, projName, netlist, simEndSignal):
         """ This function creates widget for Ngspice window."""
         global count
         self.ngspiceWidget = QtWidgets.QWidget()
 
         self.ngspiceLayout = QtWidgets.QVBoxLayout()
         self.ngspiceLayout.addWidget(
-            NgspiceWidget(netlist, simEndSignal,chatbot)
+            NgspiceWidget(netlist, simEndSignal)
         )
 
         # Adding to main Layout

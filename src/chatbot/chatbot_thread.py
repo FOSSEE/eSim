@@ -6,7 +6,7 @@ import subprocess
 import time
 import threading
 import ollama
-from PyQt6.QtCore import QThread, pyqtSignal
+from PyQt5.QtCore import QThread, pyqtSignal
 from chatbot.knowledge_base import search_knowledge
 # ── Optional imports ──────────────────────────────────────────────────────────
 
@@ -293,7 +293,7 @@ def _smart_num_predict(user_messages: list, user_override: int = 1024) -> int:
     if is_simple and not is_long:
         budget = 128
     elif is_complex or is_long:
-        budget = 512
+        budget = 1024
     else:
         budget = 256
 
@@ -308,12 +308,14 @@ class OllamaWorker(QThread):
     chunk_signal = pyqtSignal(str)
 
     def __init__(self, chat_history, model="",
-                 temperature=0.25, num_predict=1024):
+                 temperature=0.25, num_predict=1024, system_prompt=None, netlist_formatter_context=None):
         super().__init__()
         self.chat_history = chat_history
         self.model = model
         self.temperature = temperature
         self.num_predict = num_predict
+        self.system_prompt = system_prompt
+        self.netlist_formatter_context = netlist_formatter_context
         self._stop_requested = False
 
     def stop(self):
@@ -327,7 +329,8 @@ class OllamaWorker(QThread):
 
             # config-driven history window + system prompt
             max_lines = int(CONFIG.get("history", {}).get("max_lines", 6))
-            messages = [{"role": "system", "content": _SYSTEM_PROMPT}]
+            active_system_prompt = self.system_prompt if self.system_prompt else _SYSTEM_PROMPT
+            messages = [{"role": "system", "content": active_system_prompt}]
             for line in self.chat_history[-max_lines:]:
                 if line.startswith("User:"):
                     messages.append({"role": "user", "content": line[5:].strip()})
@@ -341,6 +344,9 @@ class OllamaWorker(QThread):
             repeat_pen    = float(CONFIG.get("sampling", {}).get("repeat_penalty", 1.08))
             keep_alive    = CONFIG.get("runtime", {}).get("keep_alive", "-1m")
 
+            if self.netlist_formatter_context:
+                self.chunk_signal.emit("### Circuit Overview\n")
+
             stream = ollama.chat(
                 model=self.model,
                 messages=messages,
@@ -350,8 +356,8 @@ class OllamaWorker(QThread):
                     "num_predict": budget,
                     "num_ctx": num_ctx,
                     "repeat_penalty": repeat_pen,
-                    "keep_alive": keep_alive,
-                }
+                },
+                keep_alive=keep_alive
             )
 
             bot_response = ""
@@ -365,18 +371,24 @@ class OllamaWorker(QThread):
 
             bot_response = bot_response.strip()
             if not bot_response:
-                bot_response = (
-                    "⚠️ Received an empty response. "
-                    "The model may still be loading — please try again."
-                )
+                bot_response = "Circuit analysis unavailable. See components and simulation details below." if self.netlist_formatter_context else "⚠️ Received an empty response. Please verify the AI model is downloaded and try again."
+
+            if self.netlist_formatter_context and not self._stop_requested:
+                from src.chatbot.netlist_analysis import format_netlist_table
+                table_md = format_netlist_table(self.netlist_formatter_context)
+                bot_response += "\n\n" + table_md
+
+            if self.netlist_formatter_context:
+                bot_response = "### Circuit Overview\n" + bot_response
+
+            self.response_signal.emit(bot_response)
 
         except Exception as e:
             bot_response = (
                 f"❌ Error: {str(e)}\n"
                 "Make sure Ollama is installed and 'ollama serve' is running."
             )
-
-        self.response_signal.emit(bot_response)
+            self.response_signal.emit(bot_response)
 
 
 # ── Vision model helpers ──────────────────────────────────────────────────────

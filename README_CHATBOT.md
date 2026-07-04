@@ -1,4 +1,4 @@
-# eSim Copilot – AI-Assisted Electronics Simulation Tool
+# eSim AI Assistant – AI-Assisted Electronics Simulation Tool
 
 eSim Copilot is an AI-powered assistant integrated into **eSim**, designed to help users analyze electronic circuits, debug SPICE netlists, understand simulation errors, and interact using text, voice, and images.
 
