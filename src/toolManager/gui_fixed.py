@@ -3,7 +3,8 @@ import os
 import sys
 import ctypes
 import subprocess
-import platform
+from pathlib import Path
+from platform_utils import IS_WINDOWS, IS_LINUX, IS_MAC
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QTableWidget, QTableWidgetItem, QHeaderView, QProgressBar,
@@ -15,20 +16,20 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
 import logging
 
-PYTHON     = sys.executable
-SYSTEM     = platform.system()
-IS_WINDOWS = SYSTEM == "Windows"
-IS_LINUX   = SYSTEM == "Linux"
 
-import os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PYTHON = sys.executable
+
+BASE_DIR = Path(__file__).resolve().parent
 
 if IS_WINDOWS:
-    BACKEND = os.path.join(BASE_DIR, "tool_manager_windows.py")
+    BACKEND  = BASE_DIR / "tool_manager_windows.py"
 elif IS_LINUX:
-    BACKEND = os.path.join(BASE_DIR, "tool_manager_linux.py")
+    BACKEND  = BASE_DIR / "tool_manager_linux.py"
+elif IS_MAC:
+    BACKEND  = BASE_DIR / "tool_manager_macos.py"
 else:
-    BACKEND = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tool_manager_windows.py")
+    BACKEND  = BASE_DIR / "tool_manager_linux.py"
+
 
 TOOLS = {
     "esim": {
@@ -101,7 +102,9 @@ class CommandWorker(QThread):
                     stdin=subprocess.PIPE,
                     stdout=subprocess.PIPE,
                     stderr=subprocess.STDOUT,
-                    text=True
+                    text=True,
+                    encoding="utf-8",
+                    errors="ignore"
                 )
                 process.stdin.write(self.password + "\n")
                 process.stdin.flush()
@@ -402,7 +405,7 @@ class ToolManagerGUI(QWidget):
         if IS_LINUX and self.sudo_password is None:
             password, ok = QInputDialog.getText(
                 self, "Authentication Required",
-                "Enter your sudo password:", QLineEdit.Password
+                "Enter your sudo password:", QLineEdit.EchoMode.Password
             )
             if ok and password:
                 self.sudo_password = password
