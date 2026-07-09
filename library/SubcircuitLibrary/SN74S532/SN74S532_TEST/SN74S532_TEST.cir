@@ -1,0 +1,11 @@
+.title KiCad schematic
+X1 Net-_X1-Pad1_ Net-_U1-Pad1_ Net-_X1-Pad13_ Net-_X1-Pad14_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_X1-Pad13_ Net-_X1-Pad14_ Net-_U1-Pad4_ unconnected-_X1-Pad10_ Net-_U5-Pad2_ Net-_U1-Pad5_ Net-_X1-Pad13_ Net-_X1-Pad14_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_X1-Pad13_ Net-_X1-Pad14_ Net-_U1-Pad8_ unconnected-_X1-Pad20_ SN74S532
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ 1Q 2Q 3Q 4Q 5Q 6Q 7Q 8Q dac_bridge_8
+U5 clk Net-_U5-Pad2_ adc_bridge_1
+v1 EN GND pwl
+U2 EN Net-_X1-Pad1_ adc_bridge_1
+U3 Net-_v2-Pad1_ Net-_X1-Pad13_ adc_bridge_1
+v2 Net-_v2-Pad1_ GND 5
+U4 GND Net-_X1-Pad14_ adc_bridge_1
+v3 clk GND pulse
+.end
