@@ -1,0 +1,168 @@
+.title kicad schematic
+
+* u7 net-_u16-pad1_ qa_bar set_dig reset_dig qb qb_bar d_tff
+* u6 net-_u16-pad1_ clk_dig set_dig reset_dig qa qa_bar d_tff
+* u2 gnd net-_u2-pad2_ adc_bridge_1
+* u5 net-_u2-pad2_ net-_u16-pad1_ d_inverter
+* u16 net-_u16-pad1_ qc_bar set_dig reset_dig qd qd_bar d_tff
+* u8 net-_u16-pad1_ qb_bar set_dig reset_dig qc qc_bar d_tff
+* u12 cdig qb_bar net-_u12-pad3_ d_and
+* u14 net-_u14-pad1_ qc net-_u14-pad3_ d_and
+* u21 qb net-_u15-pad3_ i_dig d_and
+* u10 qd qa net-_u10-pad3_ d_and
+* u13 ddig qa_bar net-_u13-pad3_ d_and
+* u18 net-_u12-pad3_ qa net-_u18-pad3_ d_and
+* u9 bdig qa net-_u14-pad1_ d_and
+* u1 i_dig cdig ddig set_dig out_bar_dig out_dig inhibit_out_dig unconnected-_u1-pad8_ clk_dig strobe_dig inhibit_in_dig cascade_dig reset_dig adig bdig unconnected-_u1-pad16_ port
+* u38 net-_u34-pad2_ net-_u35-pad3_ net-_u38-pad3_ d_and
+* u34 strobe_dig net-_u34-pad2_ d_inverter
+* u33 cascade_dig net-_u33-pad2_ out_dig d_or
+* u41 net-_u38-pad3_ net-_u39-pad2_ net-_u33-pad2_ d_and
+* u39 inhibit_in_dig net-_u39-pad2_ d_inverter
+* u35 net-_u28-pad2_ net-_u27-pad3_ net-_u35-pad3_ d_and
+* u30 out_dig out dac_bridge_1
+* u32 i_dig 15_out dac_bridge_1
+* u31 out_bar_dig out_bar dac_bridge_1
+* u43 inhibit_out_dig inhibit_out dac_bridge_1
+* u17 net-_u11-pad3_ qc net-_u17-pad3_ d_and
+* u20 qb net-_u14-pad3_ net-_u20-pad3_ d_and
+* u25 net-_u20-pad3_ net-_u23-pad3_ net-_u25-pad3_ d_or
+* u24 net-_u22-pad3_ qa net-_u24-pad3_ d_and
+* u28 clk_dig net-_u28-pad2_ d_inverter
+* u27 net-_u24-pad3_ net-_u25-pad3_ net-_u27-pad3_ d_or
+* u26 qb_bar qc_bar net-_u26-pad3_ d_and
+* u23 net-_u18-pad3_ net-_u13-pad3_ net-_u23-pad3_ d_or
+* u40 net-_u36-pad3_ net-_u37-pad2_ inhibit_out_dig d_or
+* u42 net-_u33-pad2_ out_bar_dig d_inverter
+* u36 inhibit_in_dig qa_bar net-_u36-pad3_ d_or
+* u37 net-_u29-pad3_ net-_u37-pad2_ d_inverter
+* u11 adig qd_bar net-_u11-pad3_ d_and
+* u29 net-_u26-pad3_ qd_bar net-_u29-pad3_ d_and
+* u15 net-_u10-pad3_ qc net-_u15-pad3_ d_and
+* u22 qb net-_u17-pad3_ net-_u22-pad3_ d_and
+a1 net-_u16-pad1_ qa_bar set_dig reset_dig qb qb_bar u7
+a2 net-_u16-pad1_ clk_dig set_dig reset_dig qa qa_bar u6
+a3 [gnd ] [net-_u2-pad2_ ] u2
+a4 net-_u2-pad2_ net-_u16-pad1_ u5
+a5 net-_u16-pad1_ qc_bar set_dig reset_dig qd qd_bar u16
+a6 net-_u16-pad1_ qb_bar set_dig reset_dig qc qc_bar u8
+a7 [cdig qb_bar ] net-_u12-pad3_ u12
+a8 [net-_u14-pad1_ qc ] net-_u14-pad3_ u14
+a9 [qb net-_u15-pad3_ ] i_dig u21
+a10 [qd qa ] net-_u10-pad3_ u10
+a11 [ddig qa_bar ] net-_u13-pad3_ u13
+a12 [net-_u12-pad3_ qa ] net-_u18-pad3_ u18
+a13 [bdig qa ] net-_u14-pad1_ u9
+a14 [net-_u34-pad2_ net-_u35-pad3_ ] net-_u38-pad3_ u38
+a15 strobe_dig net-_u34-pad2_ u34
+a16 [cascade_dig net-_u33-pad2_ ] out_dig u33
+a17 [net-_u38-pad3_ net-_u39-pad2_ ] net-_u33-pad2_ u41
+a18 inhibit_in_dig net-_u39-pad2_ u39
+a19 [net-_u28-pad2_ net-_u27-pad3_ ] net-_u35-pad3_ u35
+a20 [out_dig ] [out ] u30
+a21 [i_dig ] [15_out ] u32
+a22 [out_bar_dig ] [out_bar ] u31
+a23 [inhibit_out_dig ] [inhibit_out ] u43
+a24 [net-_u11-pad3_ qc ] net-_u17-pad3_ u17
+a25 [qb net-_u14-pad3_ ] net-_u20-pad3_ u20
+a26 [net-_u20-pad3_ net-_u23-pad3_ ] net-_u25-pad3_ u25
+a27 [net-_u22-pad3_ qa ] net-_u24-pad3_ u24
+a28 clk_dig net-_u28-pad2_ u28
+a29 [net-_u24-pad3_ net-_u25-pad3_ ] net-_u27-pad3_ u27
+a30 [qb_bar qc_bar ] net-_u26-pad3_ u26
+a31 [net-_u18-pad3_ net-_u13-pad3_ ] net-_u23-pad3_ u23
+a32 [net-_u36-pad3_ net-_u37-pad2_ ] inhibit_out_dig u40
+a33 net-_u33-pad2_ out_bar_dig u42
+a34 [inhibit_in_dig qa_bar ] net-_u36-pad3_ u36
+a35 net-_u29-pad3_ net-_u37-pad2_ u37
+a36 [adig qd_bar ] net-_u11-pad3_ u11
+a37 [net-_u26-pad3_ qd_bar ] net-_u29-pad3_ u29
+a38 [net-_u10-pad3_ qc ] net-_u15-pad3_ u15
+a39 [qb net-_u17-pad3_ ] net-_u22-pad3_ u22
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u7 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u6 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u5 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u16 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u8 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0e-9 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u12 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u14 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u21 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u10 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u13 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u18 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u9 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u38 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u34 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u33 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u41 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u39 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u35 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u30 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u32 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u31 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u43 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u17 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u20 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u25 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u24 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u28 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u27 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u26 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u23 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u40 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u42 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u36 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u37 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u11 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u29 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u15 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u22 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
