@@ -1,0 +1,30 @@
+* Subcircuit IC_LM329
+.subckt IC_LM329 net-_q2-pad1_ net-_q1-pad3_ 
+.title kicad schematic
+.include NPN.lib
+.include PNP.lib
+q3 net-_q1-pad2_ net-_c2-pad1_ net-_c1-pad1_ Q2N2907A
+r1 net-_c1-pad1_ net-_q2-pad1_ 50
+q1 net-_c1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_q2-pad1_ net-_q2-pad1_ net-_c1-pad1_ Q2N2222
+r2 net-_c1-pad2_ net-_q1-pad2_ 2k
+c1 net-_c1-pad1_ net-_c1-pad2_ 15p
+r4 net-_c2-pad2_ b 10k
+c2 net-_c2-pad1_ net-_c2-pad2_ 30p
+r5 net-_q1-pad3_ b 2k
+* u1 b net-_q2-pad1_ zener
+r3 net-_q1-pad3_ net-_q1-pad2_ 30k
+q4 net-_c2-pad1_ net-_c2-pad2_ net-_q1-pad3_ Q2N2222
+* u2 b plot_v1
+q5 net-_c2-pad1_ net-_q5-pad2_ net-_q5-pad3_ Q2N2907A
+r7 net-_q1-pad3_ c 2.6k
+* u3 c plot_v1
+q6 net-_q5-pad2_ b c Q2N2222
+r6 net-_q5-pad3_ net-_q2-pad1_ 1k
+q7 net-_q5-pad2_ net-_q5-pad2_ net-_q2-pad1_ Q2N2907A
+a1 b net-_q2-pad1_ u1
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u1 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Control Statements
+
+.ends IC_LM329

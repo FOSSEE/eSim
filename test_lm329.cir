@@ -1,0 +1,7 @@
+.title KiCad schematic
+v1 in GND DC
+U2 in plot_v1
+R1 out in 6.8k
+U1 out plot_v1
+X1 out GND IC_LM329
+.end
