@@ -1,0 +1,13 @@
+.title KiCad schematic
+R1 out GND 600
+U1 out plot_v1
+R2 Net-_R2-Pad1_ out 600k
+U2 in2 plot_v1
+R3 in2 Net-_R2-Pad1_ 400k
+v3 GND Net-_X1-Pad4_ DC
+v2 in1 GND DC
+X1 out Net-_R2-Pad1_ in1 Net-_X1-Pad4_ unconnected-_X1-Pad5_ unconnected-_X1-Pad6_ unconnected-_X1-Pad7_ Net-_X1-Pad8_ IC_NCV33078
+v1 in2 GND DC
+U3 in1 plot_v1
+v4 Net-_X1-Pad8_ GND DC
+.end

@@ -1,0 +1,26 @@
+.title kicad schematic
+
+.include IC_NCV33078.sub
+r1 out gnd 600
+* u1 out plot_v1
+r2 net-_r2-pad1_ out 600k
+* u2 in2 plot_v1
+r3 in2 net-_r2-pad1_ 400k
+v3 gnd net-_x1-pad4_  dc 15
+v2 in1 gnd  dc 1
+x1 out net-_r2-pad1_ in1 net-_x1-pad4_ unconnected-_x1-pad5_ unconnected-_x1-pad6_ unconnected-_x1-pad7_ net-_x1-pad8_ IC_NCV33078
+v1 in2 gnd  dc -1
+* u3 in1 plot_v1
+v4 net-_x1-pad8_ gnd  dc -15
+.tran 1e-00 5e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+plot v(in2)
+plot v(in1)
+.endc
+.end
