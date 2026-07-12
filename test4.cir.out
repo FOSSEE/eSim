@@ -1,0 +1,31 @@
+.title kicad schematic
+
+.include tba820_5.sub
+v1 gnd input sine(0 0.05 1000 0 0)
+r2 gnd input 10k
+x1 net-_c4-pad1_ net-_r1-pad2_ input gnd net-_c4-pad2_ vs output vs tba820_5
+c3 net-_c3-pad1_ gnd 0.22u
+r3 net-_c3-pad1_ net-_c4-pad2_ 1k
+* u1 input plot_v1
+r1 net-_c1-pad2_ net-_r1-pad2_ 120
+c1 gnd net-_c1-pad2_ 100u
+c6 net-_c4-pad2_ output 220u
+* u3 output plot_v1
+r4 output vs 4k
+c4 net-_c4-pad1_ net-_c4-pad2_ 330p
+c5 vs gnd 0.1u
+c2 vs gnd 100u
+* u2 vs plot_v1
+v2 vs gnd  dc 9
+.tran 100e-06 15e-03 10e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(input)
+plot v(output)
+plot v(vs)
+.endc
+.end

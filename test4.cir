@@ -1,0 +1,18 @@
+.title KiCad schematic
+v1 GND Input sine
+R2 GND Input 10k
+X1 Net-_C4-Pad1_ Net-_R1-Pad2_ Input GND Net-_C4-Pad2_ Vs Output Vs TBA820_5
+C3 Net-_C3-Pad1_ GND 0.22u
+R3 Net-_C3-Pad1_ Net-_C4-Pad2_ 1k
+U1 Input plot_v1
+R1 Net-_C1-Pad2_ Net-_R1-Pad2_ 120
+C1 GND Net-_C1-Pad2_ 100u
+C6 Net-_C4-Pad2_ Output 220u
+U3 Output plot_v1
+R4 Output Vs 4k
+C4 Net-_C4-Pad1_ Net-_C4-Pad2_ 330p
+C5 Vs GND 0.1u
+C2 Vs GND 100u
+U2 Vs plot_v1
+v2 Vs GND DC
+.end
