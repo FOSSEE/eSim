@@ -1,0 +1,48 @@
+.title KiCad schematic
+Q16 Net-_I1-Pad2_ Net-_I1-Pad2_ Net-_Q16-Pad3_ eSim_NPN
+I1 Net-_I1-Pad1_ Net-_I1-Pad2_ 50u
+R13 Net-_Q12-Pad1_ Net-_Q16-Pad3_ 10k
+U1 unconnected-_U1-Pad1_ Net-_I1-Pad1_ e Net-_Q12-Pad1_ Net-_R17-Pad1_ Net-_D1-Pad1_ unconnected-_U1-Pad7_ unconnected-_U1-Pad8_ PORT
+R16 Net-_Q12-Pad1_ q19 10k
+R6 Net-_R4-Pad2_ Net-_Q3-Pad3_ 1k
+R9 Net-_Q12-Pad1_ Net-_Q8-Pad3_ 10k
+Q15 Net-_Q13-Pad2_ Net-_I1-Pad2_ Net-_Q15-Pad3_ eSim_NPN
+R12 Net-_Q12-Pad1_ Net-_Q15-Pad3_ 10k
+R7 Net-_Q12-Pad1_ Net-_R4-Pad2_ 10k
+Q18 Net-_Q17-Pad3_ dv1 Net-_Q18-Pad3_ eSim_NPN
+Q17 Net-_Q13-Pad3_ Net-_I1-Pad1_ Net-_Q17-Pad3_ eSim_NPN
+Q19 Net-_Q17-Pad3_ Net-_Q18-Pad3_ Net-_D1-Pad1_ eSim_NPN
+R14 Net-_Q17-Pad3_ Net-_I1-Pad1_ 1k
+R15 q19 Net-_D1-Pad1_ 73k
+R17 Net-_R17-Pad1_ q19 100k
+Q11 Net-_C1-Pad1_ Net-_Q11-Pad2_ Net-_Q10-Pad1_ eSim_PNP
+Q10 Net-_Q10-Pad1_ Net-_Q10-Pad1_ Net-_Q10-Pad3_ eSim_PNP
+Q6 Net-_Q11-Pad2_ Net-_Q10-Pad1_ Net-_Q6-Pad3_ eSim_PNP
+R8 Net-_Q6-Pad3_ Net-_I1-Pad1_ 10k
+R10 Net-_Q10-Pad3_ Net-_I1-Pad1_ 10k
+Q13 dv1 Net-_Q13-Pad2_ Net-_Q13-Pad3_ eSim_PNP
+R11 Net-_Q13-Pad3_ Net-_I1-Pad1_ 10k
+Q14 Net-_Q13-Pad2_ Net-_Q13-Pad2_ Net-_I1-Pad1_ eSim_PNP
+U4 dv2 plot_v1
+D2 dv1 dv2 eSim_Diode
+U5 dv1 plot_v1
+Q9 Net-_Q7-Pad3_ Net-_C1-Pad2_ Net-_Q5-Pad3_ eSim_NPN
+Q5 Net-_Q4-Pad3_ Net-_Q3-Pad1_ Net-_Q5-Pad3_ eSim_NPN
+R3 Net-_Q1-Pad2_ q19 17k
+U3 q19 plot_v1
+Q3 Net-_Q3-Pad1_ q19 Net-_Q3-Pad3_ eSim_NPN
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode
+R5 Net-_Q3-Pad1_ Net-_D1-Pad2_ 16k
+Q4 Net-_Q11-Pad2_ Net-_D1-Pad2_ Net-_Q4-Pad3_ eSim_NPN
+Q8 Net-_Q5-Pad3_ Net-_I1-Pad2_ Net-_Q8-Pad3_ eSim_NPN
+Q2 Net-_C1-Pad2_ Net-_Q1-Pad2_ e eSim_NPN
+R4 Net-_Q12-Pad1_ Net-_R4-Pad2_ 10k
+R2 Net-_C1-Pad2_ Net-_D1-Pad2_ 51k
+R1 Net-_Q3-Pad3_ e 1.79k
+Q1 Net-_C1-Pad2_ Net-_Q1-Pad2_ e eSim_NPN
+U2 e plot_v1
+Q12 Net-_Q12-Pad1_ Net-_C1-Pad1_ Net-_D3-Pad2_ eSim_PNP
+D3 dv2 Net-_D3-Pad2_ eSim_Diode
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 30p
+Q7 Net-_C1-Pad1_ Net-_D1-Pad2_ Net-_Q7-Pad3_ eSim_NPN
+.end
