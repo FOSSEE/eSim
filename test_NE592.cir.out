@@ -1,0 +1,30 @@
+.title kicad schematic
+
+.include IC_NE592.sub
+r3 net-_r3-pad1_ net-_r3-pad2_ 51
+* u2 out1 plot_v1
+r4 out2 out1 2k
+* u3 out2 plot_v1
+* u4 in1 plot_v1
+r5 net-_r3-pad2_ in1 12k
+v4 gnd in1 sine(0 1 1000 0 0)
+v3 net-_x1-pad10_ gnd  dc 6
+* u1 in2 plot_v1
+v1 in2 gnd sine(0 1 1000 0 0)
+r1 net-_r1-pad1_ in2 12k
+v2 net-_x1-pad5_ gnd  dc -6
+r2 net-_r2-pad1_ net-_r1-pad1_ 51
+x1 net-_r2-pad1_ unconnected-_x1-pad2_ unconnected-_x1-pad3_ unconnected-_x1-pad4_ net-_x1-pad5_ unconnected-_x1-pad6_ out1 out2 unconnected-_x1-pad9_ net-_x1-pad10_ unconnected-_x1-pad11_ unconnected-_x1-pad12_ unconnected-_x1-pad13_ net-_r3-pad1_ IC_NE592
+.dc V1 0e-00 0.01e-00 0.00001e-00 V4 0e-00 0.01e-00 0.00001e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out1)
+plot v(out2)
+plot v(in1)
+plot v(in2)
+.endc
+.end
