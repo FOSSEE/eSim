@@ -1,0 +1,8 @@
+.title KiCad schematic
+C2 output GND 0.1u
+U2 output plot_v1
+U1 input plot_v1
+v1 input GND DC
+X1 Net-_X1-Pad1_ input unconnected-_X1-Pad3_ GND unconnected-_X1-Pad5_ output Net-_X1-Pad7_ Net-_X1-Pad8_ IC_REF02
+C1 input GND 0.1u
+.end

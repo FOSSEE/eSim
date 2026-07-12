@@ -1,0 +1,20 @@
+.title kicad schematic
+
+.include IC_REF02.sub
+c2 output gnd 0.1u
+* u2 output plot_v1
+* u1 input plot_v1
+v1 input gnd  dc 15
+x1 net-_x1-pad1_ input unconnected-_x1-pad3_ gnd unconnected-_x1-pad5_ output net-_x1-pad7_ net-_x1-pad8_ IC_REF02
+c1 input gnd 0.1u
+.tran 10e-03 20e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(output)
+plot v(input)
+.endc
+.end
