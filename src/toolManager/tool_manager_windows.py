@@ -22,22 +22,21 @@ if _local_path not in sys.path:
 from utils import (
     run_cmd_safe, run_cmd_stream, which, print_status,
     DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
-    WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, 
+    WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash,
     get_msys2_mingw_bin, get_msys2_mingw_root
 )
+from constants import IS_WINDOWS
+from paths import get_toolmanager_root, get_install_state_path, get_download_cache_dir
+from config import ConfigManager
 
-if sys.platform == "win32":
+if IS_WINDOWS:
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='ignore')
 
-BASE_DIR = Path(__file__).resolve().parent
-STATE_FILE = BASE_DIR / "information.json"
-BASE_DIR.mkdir(parents=True, exist_ok=True)
-
+BASE_DIR = get_toolmanager_root()
+STATE_FILE = get_install_state_path()
 MSYS2_PATH = DEFAULT_MSYS2_PATH
-
-DOWNLOAD_DIR = BASE_DIR / "Download"
-DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
+DOWNLOAD_DIR = get_download_cache_dir()
 
 VERILATOR_VERSIONS = {
     "5.006": "verilator-5.006.7z",
@@ -202,7 +201,7 @@ def _find_ngspice_exe():
     return which("ngspice") or which("ngspice.exe")
 
 def find_llvm_fixed(version=None):
-    if platform.system() == "Windows":
+    if IS_WINDOWS:
         import ctypes
         HWND_BROADCAST = 0xFFFF
         WM_SETTINGCHANGE = 0x001A
@@ -1137,41 +1136,7 @@ def install_verilator(v, upgrade=False):
     except Exception as e:
         print_status("install_failed", str(e)[:50], v)
 
-def read_state():
-    if STATE_FILE.exists():
-        try:
-            with open(STATE_FILE) as f:
-                return json.load(f)
-        except Exception:
-            pass
-    return {"important_packages": []}
-
-def write_state(data):
-    with open(STATE_FILE, "w") as f:
-        json.dump(data, f, indent=4)
-
-def update_state(package_name, version):
-    from datetime import datetime
-    data = read_state()
-    for pkg in data["important_packages"]:
-        if pkg["package_name"] == package_name:
-            pkg["version"] = version
-            pkg["installed_date"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-            write_state(data)
-            return
-    data["important_packages"].append({
-        "package_name": package_name,
-        "version": version,
-        "installed_date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-    })
-    write_state(data)
-
-def get_state_version(package_name):
-    data = read_state()
-    for pkg in data["important_packages"]:
-        if pkg["package_name"] == package_name:
-            return pkg.get("version")
-    return None
+_config = ConfigManager()
 
 
 ESIM_DIR = DEFAULT_ESIM_DIR
@@ -1187,7 +1152,8 @@ def check_esim(target_version):
     ]
     for p in indicators:
         if p.exists():
-            ver = get_state_version("esim") or "unknown"
+            esim_state = _config.get_tool_state("esim")
+            ver = esim_state.get("version", "unknown") if esim_state else "unknown"
             tv  = target_version if target_version != "none" else "latest"
             if tv in ("latest", "none") or tv == ver:
                 print_status("installed", ver, tv)
@@ -1226,7 +1192,7 @@ def install_esim(target_version, upgrade=False):
         time.sleep(20)
         for p in [BASE_DIR / "eSim.bat", BASE_DIR / "src" / "frontEnd" / "Application.py", ESIM_DIR / "eSim.bat", ESIM_DIR / "uninst-eSim.exe"]:
             if p.exists():
-                update_state("esim", display_ver)
+                _config.update_tool_state("esim", display_ver)
                 print(f"[OK] eSim {display_ver} installed")
                 print_status("installed", display_ver, target_version)
                 return
