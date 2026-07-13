@@ -1,0 +1,15 @@
+.title KiCad schematic
+R1 VTAP OUT 500
+R3 E_B OUT 330k
+U2 OUT plot_v1
+C2 OUT GND 1p
+V2 IN GND 12v
+C1 IN GND 1p
+V1 Net-_V1-Pad1_ VTAP 60mv
+U1 IN plot_v1
+R2 GND VTAP 450
+X2 IN Net-_V1-Pad1_ Net-_V3-Pad1_ E_B GND unconnected-_X2-Pad6_ unconnected-_X2-Pad7_ unconnected-_X2-Pad8_ LM393
+V3 Net-_V3-Pad1_ GND 1.235v
+QP1 OUT Net-_QP1-Pad2_ IN pnp
+X1 VTAP Net-_V3-Pad1_ IN Net-_QP1-Pad2_ GND LM321
+.end
