@@ -37,6 +37,12 @@ def _get_model():
         _MODEL = Model(model_path)
     return _MODEL
 
+def _safe_json_text(json_str: str, key: str = "text") -> str:
+    try:
+        return json.loads(json_str).get(key, "").strip()
+    except (json.JSONDecodeError, TypeError, AttributeError):
+        return ""
+
 def listen_to_mic(should_stop=lambda: False, max_silence_sec=3, samplerate=16000, phrase_limit_sec=8) -> str:
     """
     Offline STT using Vosk.
@@ -44,7 +50,7 @@ def listen_to_mic(should_stop=lambda: False, max_silence_sec=3, samplerate=16000
     """
     if not _HAS_STT:
         raise RuntimeError("Speech-to-text is not installed or failed to load.")
-    q = queue.Queue()
+    q = queue.Queue(maxsize=1000)
     rec = KaldiRecognizer(_get_model(), samplerate)
 
     started = False
@@ -52,41 +58,48 @@ def listen_to_mic(should_stop=lambda: False, max_silence_sec=3, samplerate=16000
     t_speech = None
 
     def callback(indata, frames, time_info, status):
-        q.put(bytes(indata))
+        try:
+            q.put_nowait(bytes(indata))
+        except queue.Full:
+            pass
 
-    with sd.RawInputStream(
-        samplerate=samplerate,
-        channels=1,
-        dtype="int16",
-        blocksize=8000,
-        callback=callback,
-    ):
-        while True:
-            if should_stop():
-                return ""
+    try:
+        with sd.RawInputStream(
+            samplerate=samplerate,
+            channels=1,
+            dtype="int16",
+            blocksize=8000,
+            callback=callback,
+        ):
+            while True:
+                if should_stop():
+                    return ""
 
-            now = time.time()
+                now = time.time()
 
-            # Stop after silence
-            if not started and (now - t0) >= max_silence_sec:
-                return ""
+                # Stop after silence
+                if not started and (now - t0) >= max_silence_sec:
+                    return ""
 
-            if started and t_speech and (now - t_speech) >= phrase_limit_sec:
-                break
+                if started and t_speech and (now - t_speech) >= phrase_limit_sec:
+                    break
 
-            try:
-                data = q.get(timeout=0.2)
-            except queue.Empty:
-                continue
+                try:
+                    data = q.get(timeout=0.2)
+                except queue.Empty:
+                    continue
 
-            if rec.AcceptWaveform(data):
-                text = json.loads(rec.Result()).get("text", "").strip()
-                if text:
-                    return text
-            else:
-                partial = json.loads(rec.PartialResult()).get("partial", "").strip()
-                if partial and not started:
-                    started = True
-                    t_speech = now
+                if rec.AcceptWaveform(data):
+                    text = _safe_json_text(rec.Result(), "text")
+                    if text:
+                        return text
+                else:
+                    partial = _safe_json_text(rec.PartialResult(), "partial")
+                    if partial and not started:
+                        started = True
+                        t_speech = now
 
-        return json.loads(rec.FinalResult()).get("text", "").strip()
+            return _safe_json_text(rec.FinalResult(), "text")
+    except Exception as e:
+        print(f"STT mic input stream error: {e}")
+        return ""

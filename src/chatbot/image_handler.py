@@ -6,6 +6,8 @@ import time
 from typing import Dict, Any
 from PIL import Image
 MAX_IMAGE_BYTES = int(0.5*1024 * 1024)  
+MAX_IMAGE_PIXELS = 10000000
+Image.MAX_IMAGE_PIXELS = MAX_IMAGE_PIXELS
 from .ollama_runner import run_ollama_vision
 
 # === IMPORT PADDLE OCR ===
@@ -45,6 +47,10 @@ def optimize_image_for_vision(image_path: str) -> bytes:
     try:
         img = Image.open(image_path)
 
+        # Validate dimensions to prevent decompression bombs / excessive resource usage
+        if img.width * img.height > MAX_IMAGE_PIXELS:
+            raise ValueError(f"Decompression bomb detected: Image pixels ({img.width * img.height}) exceed maximum allowed ({MAX_IMAGE_PIXELS}).")
+
         if img.mode not in ('RGB', 'L'):
             img = img.convert('RGB')
 
@@ -63,6 +69,8 @@ def optimize_image_for_vision(image_path: str) -> bytes:
         img.save(buffer, format='PNG', optimize=True, quality=85)
         return buffer.getvalue()
 
+    except (Image.DecompressionBombError, ValueError) as e:
+        raise ValueError(f"Image validation failed: {str(e)}")
     except Exception as e:
         print(f"[IMAGE] Optimization failed: {e}, using original")
         with open(image_path, 'rb') as f:
@@ -141,9 +149,23 @@ def analyze_and_extract(image_path: str) -> Dict[str, Any]:
             "values": {}
         }
 
-    # === OPTIMIZE IMAGE BEFORE SENDING ===
-    print(f"[VISION] Processing image: {os.path.basename(image_path)}")
-    image_bytes = optimize_image_for_vision(image_path)
+    try:
+        # === OPTIMIZE IMAGE BEFORE SENDING ===
+        print(f"[VISION] Processing image: {os.path.basename(image_path)}")
+        image_bytes = optimize_image_for_vision(image_path)
+    except ValueError as e:
+        return {
+            "error": str(e),
+            "vision_summary": "",
+            "component_counts": {},
+            "circuit_analysis": {
+                "circuit_type": "Unknown",
+                "design_errors": [str(e)],
+                "design_warnings": []
+            },
+            "components": [],
+            "values": {}
+        }
 
     # === EXTRACT OCR TEXT (CRITICAL STEP) ===
     ocr_text = extract_text_with_paddle(image_path)

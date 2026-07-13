@@ -19,6 +19,21 @@ def _get_collection():
     return client.get_or_create_collection(name="esim_manuals")
 
 # ==================== INGESTION ====================
+def read_paragraphs(file_path: str):
+    """Lazily read a file paragraph-by-paragraph to avoid high memory usage."""
+    with open(file_path, "r", encoding="utf-8") as f:
+        paragraph = []
+        for line in f:
+            if line.strip() == "":
+                if paragraph:
+                    yield "".join(paragraph)
+                    paragraph = []
+            else:
+                paragraph.append(line)
+        if paragraph:
+            yield "".join(paragraph)
+
+# ==================== INGESTION ====================
 def ingest_pdfs(manuals_directory: str) -> None:
     """
     Read the single master text file and index it.
@@ -28,16 +43,6 @@ def ingest_pdfs(manuals_directory: str) -> None:
         print("Directory not found.")
         return
 
-    # Clear existing DB to ensure no duplicates from old files
-    print("Clearing old database...")
-    try:
-        client = chromadb.PersistentClient(path=db_path)
-        client.delete_collection("esim_manuals")
-        collection = client.get_or_create_collection(name="esim_manuals")
-    except Exception as e:
-        print(f"Warning clearing DB: {e}")
-        collection = _get_collection()
-
     # Look for .txt files only
     files = [f for f in os.listdir(manuals_directory) if f.lower().endswith(".txt")]
     
@@ -45,21 +50,16 @@ def ingest_pdfs(manuals_directory: str) -> None:
         print("❌ No .txt files found to ingest!")
         return
 
+    all_documents, all_embeddings, all_metadatas, all_ids = [], [], [], []
+    chunk_counter = 0
+
     for filename in files:
         path = os.path.join(manuals_directory, filename)
         print(f"\n📄 Processing Master File: {filename}")
 
         try:
-            with open(path, "r", encoding="utf-8") as f:
-                text = f.read()
-
-            raw_sections = text.split("\n\n")
-            
-            documents, embeddings, metadatas, ids = [], [], [], []
-            
-            chunk_counter = 0
-            for section in raw_sections:
-                section = section.strip()
+            for paragraph in read_paragraphs(path):
+                section = paragraph.strip()
                 if len(section) < 50:
                     continue
                 
@@ -69,25 +69,35 @@ def ingest_pdfs(manuals_directory: str) -> None:
                 for chunk in sub_chunks:
                     embed = get_embedding(chunk)
                     if embed:
-                        documents.append(chunk)
-                        embeddings.append(embed)
-                        metadatas.append({"source": filename, "type": "master_ref"})
-                        ids.append(f"{filename}_{chunk_counter}")
+                        all_documents.append(chunk)
+                        all_embeddings.append(embed)
+                        all_metadatas.append({"source": filename, "type": "master_ref"})
+                        all_ids.append(f"{filename}_{chunk_counter}")
                         chunk_counter += 1
-
-            if documents:
-                collection.add(
-                    documents=documents,
-                    embeddings=embeddings,
-                    metadatas=metadatas,
-                    ids=ids,
-                )
-                print(f" ✅ Indexed {len(documents)} chunks from {filename}")
-            else:
-                print(f" ⚠️ No valid chunks found in {filename}")
 
         except Exception as e:
             print(f" ❌ Failed to process {filename}: {e}")
+
+    if all_documents:
+        # Clear existing DB only after successfully generating all embeddings
+        print("Clearing old database...")
+        try:
+            client = chromadb.PersistentClient(path=db_path)
+            client.delete_collection("esim_manuals")
+            collection = client.get_or_create_collection(name="esim_manuals")
+        except Exception as e:
+            print(f"Warning clearing DB: {e}")
+            collection = _get_collection()
+
+        collection.add(
+            documents=all_documents,
+            embeddings=all_embeddings,
+            metadatas=all_metadatas,
+            ids=all_ids,
+        )
+        print(f" ✅ Successfully indexed {len(all_documents)} total chunks.")
+    else:
+        print(" ⚠️ No valid chunks found to index. Database was not cleared.")
 
 
 # ==================== SEARCH ====================
