@@ -361,6 +361,7 @@ def classify_question_type(user_input: str, has_image_context: bool,
     Returns: 'greeting', 'simple', 'esim', 'image_query', 'follow_up_image', 
              'follow_up', 'netlist'
     """
+    global LAST_IMAGE_CONTEXT
     user_lower = user_input.lower()
 
     if "[ESIM_NETLIST_START]" in user_input:
@@ -368,6 +369,19 @@ def classify_question_type(user_input: str, has_image_context: bool,
 
     if _is_image_query(user_input):
         return "image_query"
+
+    greetings = ["hello", "hi", "hey", "howdy", "greetings"]
+    user_words = user_lower.strip().split()
+    if len(user_words) <= 3 and any(g in user_words for g in greetings):
+        return "greeting"
+
+    # Topic switch check before checking follow-up phrases
+    if is_semantic_topic_switch(user_input, history):
+        print("[COPILOT] Topic switch detected (semantic)")
+        if history is not None:
+            history.clear()
+        LAST_IMAGE_CONTEXT = {}
+        has_image_context = False
 
     if has_image_context:
         follow_phrases = [
@@ -378,19 +392,13 @@ def classify_question_type(user_input: str, has_image_context: bool,
         if any(p in user_lower for p in follow_phrases):
             return "follow_up_image"
 
-    greetings = ["hello", "hi", "hey", "howdy", "greetings"]
-    user_words = user_lower.strip().split()
-    if len(user_words) <= 3 and any(g in user_words for g in greetings):
-        return "greeting"
-
     is_followup = _is_follow_up_question(user_input, history)
-    if is_semantic_topic_switch(user_input, history):
-        print("[COPILOT] Topic switch detected (semantic)")
-        is_followup = False
-
     if not is_followup:
-        history.clear()
-        LAST_IMAGE_CONTEXT = None
+        if history is not None:
+            history.clear()
+        LAST_IMAGE_CONTEXT = {}
+    else:
+        return "follow_up"
 
     esim_keywords = [
         "esim", "kicad", "ngspice", "spice", "simulation", "netlist",
@@ -638,10 +646,9 @@ def handle_input(user_input: str,
         return "Please enter a query."
 
     if "[ESIM_NETLIST_START]" in user_input:
-        raw_reply = run_ollama(user_input)
-        cleaned = clean_response_raw(raw_reply)
-        LAST_BOT_REPLY = cleaned
-        return cleaned
+        response = handle_netlist_analysis(user_input)
+        LAST_BOT_REPLY = response
+        return response
 
     question_type = classify_question_type(
         user_input, bool(LAST_IMAGE_CONTEXT), history
@@ -660,6 +667,9 @@ def handle_input(user_input: str,
 
         elif question_type == "follow_up_image":
             response = handle_follow_up_image_question(user_input, LAST_IMAGE_CONTEXT)
+
+        elif question_type == "esim":
+            response = handle_esim_question(user_input, LAST_IMAGE_CONTEXT, history)
 
         elif question_type == "simple":
             response = handle_simple_question(user_input)

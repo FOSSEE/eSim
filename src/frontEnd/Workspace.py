@@ -16,7 +16,7 @@
 #      REVISION: Sunday 13 December 2020
 # =========================================================================
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt6 import QtCore, QtGui, QtWidgets
 from configuration.Appconfig import Appconfig
 import time
 import os
@@ -45,7 +45,7 @@ class Workspace(QtWidgets.QWidget):
 
         self.mainwindow = QtWidgets.QVBoxLayout()
         self.split = QtWidgets.QSplitter()
-        self.split.setOrientation(QtCore.Qt.Vertical)
+        self.split.setOrientation(QtCore.Qt.Orientation.Vertical)
 
         self.grid = QtWidgets.QGridLayout()
         self.note = QtWidgets.QTextEdit(self)
@@ -81,7 +81,7 @@ class Workspace(QtWidgets.QWidget):
         self.setGeometry(QtCore.QRect(500, 250, 400, 400))
         self.setMaximumSize(4000, 200)
         self.setWindowTitle("eSim")
-        self.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(QtCore.Qt.WindowType.WindowStaysOnTopHint)
         self.setWindowModality(2)
 
         init_path = '../../'

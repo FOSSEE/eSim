@@ -1,5 +1,5 @@
-from PyQt5 import QtCore, QtWidgets
-from PyQt5.QtWidgets import QDockWidget, QMessageBox,QMenu 
+from PyQt6 import QtCore, QtWidgets
+from PyQt6.QtWidgets import QDockWidget, QMessageBox,QMenu 
 import os
 import json
 from configuration.Appconfig import Appconfig
@@ -70,7 +70,7 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.window.addWidget(self.treewidget)
         self.treewidget.expanded.connect(self.refreshInstant)
         self.treewidget.doubleClicked.connect(self.openProject)
-        self.treewidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.treewidget.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
         self.treewidget.customContextMenuRequested.connect(self.openMenu)
         self.setLayout(self.window)
         self.show()
@@ -143,7 +143,7 @@ class ProjectExplorer(QtWidgets.QWidget):
         refresh_action = menu.addAction("Refresh")
         refresh_action.triggered.connect(self.refreshInstant)
 
-        menu.exec_(self.treewidget.viewport().mapToGlobal(position))
+        menu.exec(self.treewidget.viewport().mapToGlobal(position))
 
     def openProject(self):
         self.indexItem = self.treewidget.currentIndex()
@@ -273,7 +273,7 @@ class ProjectExplorer(QtWidgets.QWidget):
             msg.setModal(True)
             msg.setWindowTitle("Error Message")
             msg.showMessage('Selected project does not exist.')
-            msg.exec_()
+            msg.exec()
             return False
 
     def renameProject(self):
@@ -309,7 +309,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                 msg.setModal(True)
                 msg.setWindowTitle("Error Message")
                 msg.showMessage('The project name cannot be empty')
-                msg.exec_()
+                msg.exec()
 
             elif self.baseFileName == newBaseFileName:
                 print("Project name has to be different")
@@ -318,7 +318,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                 msg.setModal(True)
                 msg.setWindowTitle("Error Message")
                 msg.showMessage('The project name has to be different')
-                msg.exec_()
+                msg.exec()
 
             elif self.refreshProject(filePath):
 
@@ -348,7 +348,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                     msg.setModal(True)
                     msg.setWindowTitle("Error Message")
                     msg.showMessage('Selected project does not exist.')
-                    msg.exec_()
+                    msg.exec()
 
                 elif reply == "VALID":
                     # rename project folder
@@ -367,7 +367,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                         msg.setModal(True)
                         msg.setWindowTitle("Error Message")
                         msg.showMessage(str(e))
-                        msg.exec_()
+                        msg.exec()
                         return
 
                     # rename files matching project name
@@ -406,7 +406,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                         msg.setModal(True)
                         msg.setWindowTitle("Error Message")
                         msg.showMessage(str(e))
-                        msg.exec_()
+                        msg.exec()
                         return
 
                     # update project_explorer dictionary
@@ -436,7 +436,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                         '" already exist. Please select a different name or' +
                         ' delete existing project'
                     )
-                    msg.exec_()
+                    msg.exec()
 
                 elif reply == "CHECKNAME":
                     print("Name can not contain space between them")
@@ -448,7 +448,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                         'The project name should not ' +
                         'contain space between them'
                     )
-                    msg.exec_()
+                    msg.exec()
 
     def _analyze_netlist_in_copilot(self, netlist_path: str):
         """Send selected .cir file to chatbot for analysis."""
