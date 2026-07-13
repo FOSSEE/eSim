@@ -1,0 +1,26 @@
+.title KiCad schematic
+V5 Net-_R1-Pad1_ GND 7
+R2 GND VREF 20k
+D1 GND Net-_D1-Pad2_ 3v
+R1 Net-_R1-Pad1_ Net-_D1-Pad2_ 1k
+X7 C D INVCMOS
+U2 Net-_U2-Pad1_ C dac_bridge_1
+U3 Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U2-Pad1_ d_or
+X4 Net-_D1-Pad2_ VREF Net-_R1-Pad1_ VSTAB GND LM321
+X6 I_A A INVCMOS
+R3 VREF VSTAB 20k
+R7 GND Net-_R4-Pad2_ 10k
+R4 Net-_X1-Pad2_ Net-_R4-Pad2_ 10k
+X8 Net-_R4-Pad2_ Net-_X8-Pad2_ Net-_R1-Pad1_ Net-_X3-Pad6_ GND LM321
+X1 V8 Net-_X1-Pad2_ Net-_R1-Pad1_ Net-_X1-Pad2_ GND LM321
+R6 Net-_X8-Pad2_ Net-_X3-Pad6_ 10k
+R5 Net-_X2-Pad2_ Net-_X8-Pad2_ 10k
+X2 V9 Net-_X2-Pad2_ Net-_R1-Pad1_ Net-_X2-Pad2_ GND LM321
+V2 V8 GND 7
+V1 V9 GND 1
+V3 V6 GND 5
+X5 I_B B INVCMOS
+U1 I_A I_B Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2
+X3 Net-_R1-Pad1_ V7 Net-_X3-Pad6_ I_A GND Net-_X3-Pad6_ V6 I_B LM393
+V4 V7 GND 3
+.end
