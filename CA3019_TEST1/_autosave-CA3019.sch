@@ -1,0 +1,231 @@
+EESchema Schematic File Version 5
+EELAYER 36 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+Comment5 ""
+Comment6 ""
+Comment7 ""
+Comment8 ""
+Comment9 ""
+$EndDescr
+Connection ~ 2625 4100
+Connection ~ 3175 3850
+Connection ~ 3200 4350
+Connection ~ 3775 4100
+NoConn ~ 5700 3950
+Wire Wire Line
+	2275 4100 2625 4100
+Wire Wire Line
+	2625 3850 2625 4100
+Wire Wire Line
+	2625 4100 2625 4350
+Wire Wire Line
+	2625 4350 2800 4350
+Wire Wire Line
+	2725 3850 2625 3850
+Wire Wire Line
+	3025 3850 3175 3850
+Wire Wire Line
+	3100 4350 3200 4350
+Wire Wire Line
+	3175 3475 3175 3850
+Wire Wire Line
+	3175 3850 3325 3850
+Wire Wire Line
+	3200 4350 3200 4600
+Wire Wire Line
+	3200 4350 3300 4350
+Wire Wire Line
+	3600 4350 3775 4350
+Wire Wire Line
+	3625 3850 3775 3850
+Wire Wire Line
+	3775 3850 3775 4100
+Wire Wire Line
+	3775 4100 3775 4350
+Wire Wire Line
+	3775 4100 3950 4100
+Wire Wire Line
+	4825 3075 4825 3150
+Wire Wire Line
+	4825 3450 4825 3550
+Wire Wire Line
+	4875 4550 4875 4650
+Wire Wire Line
+	4875 4950 4875 5025
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 6 1 00000000
+P 2025 4100
+F 0 "U1" H 2050 4300 30  0000 C CNN
+F 1 "PORT" H 2050 4200 30  0000 C CNN
+F 2 "" H 2025 4100 60  0000 C CNN
+F 3 "" H 2025 4100 60  0000 C CNN
+	6    2025 4100
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 5 1 00000000
+P 3175 3225
+F 0 "U1" V 3175 3300 30  0000 L CNN
+F 1 "PORT" V 3275 3300 30  0000 L CNN
+F 2 "" H 3175 3225 60  0000 C CNN
+F 3 "" H 3175 3225 60  0000 C CNN
+	5    3175 3225
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 8 1 00000000
+P 3200 4850
+F 0 "U1" V 3250 4750 30  0000 R CNN
+F 1 "PORT" V 3150 4750 30  0000 R CNN
+F 2 "" H 3200 4850 60  0000 C CNN
+F 3 "" H 3200 4850 60  0000 C CNN
+	8    3200 4850
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 2 1 00000000
+P 4200 4100
+F 0 "U1" H 4050 4075 30  0000 R CNN
+F 1 "PORT" H 4050 4175 30  0000 R CNN
+F 2 "" H 4200 4100 60  0000 C CNN
+F 3 "" H 4200 4100 60  0000 C CNN
+	2    4200 4100
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 4 1 00000000
+P 4825 2825
+F 0 "U1" V 4825 2925 30  0000 L CNN
+F 1 "PORT" V 4925 2925 30  0000 L CNN
+F 2 "" H 4825 2825 60  0000 C CNN
+F 3 "" H 4825 2825 60  0000 C CNN
+	4    4825 2825
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 3 1 00000000
+P 4825 3800
+F 0 "U1" V 4875 3700 30  0000 R CNN
+F 1 "PORT" V 4775 3700 30  0000 R CNN
+F 2 "" H 4825 3800 60  0000 C CNN
+F 3 "" H 4825 3800 60  0000 C CNN
+	3    4825 3800
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 9 1 00000000
+P 4875 4300
+F 0 "U1" V 4875 4400 30  0000 L CNN
+F 1 "PORT" V 4975 4400 30  0000 L CNN
+F 2 "" H 4875 4300 60  0000 C CNN
+F 3 "" H 4875 4300 60  0000 C CNN
+	9    4875 4300
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 1 1 00000000
+P 4875 5275
+F 0 "U1" V 4925 5175 30  0000 R CNN
+F 1 "PORT" V 4825 5175 30  0000 R CNN
+F 2 "" H 4875 5275 60  0000 C CNN
+F 3 "" H 4875 5275 60  0000 C CNN
+	1    4875 5275
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 7 1 00000000
+P 5700 4200
+F 0 "U1" V 5750 4125 30  0000 R CNN
+F 1 "PORT" V 5650 4125 30  0000 R CNN
+F 2 "" H 5700 4200 60  0000 C CNN
+F 3 "" H 5700 4200 60  0000 C CNN
+	7    5700 4200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D1
+U 1 1 00000000
+P 2875 3850
+F 0 "D1" H 2877 3575 50  0000 C CNN
+F 1 "eSim_Diode" H 2877 3675 50  0000 C CNN
+F 2 "" H 2875 3850 60  0000 C CNN
+F 3 "" H 2875 3850 60  0000 C CNN
+	1    2875 3850
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D2
+U 1 1 00000000
+P 2950 4350
+F 0 "D2" H 2952 4675 50  0000 C CNN
+F 1 "eSim_Diode" H 2952 4575 50  0000 C CNN
+F 2 "" H 2950 4350 60  0000 C CNN
+F 3 "" H 2950 4350 60  0000 C CNN
+	1    2950 4350
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D3
+U 1 1 00000000
+P 3450 4350
+F 0 "D3" H 3452 4100 50  0000 C CNN
+F 1 "eSim_Diode" H 3452 4200 50  0000 C CNN
+F 2 "" H 3450 4350 60  0000 C CNN
+F 3 "" H 3450 4350 60  0000 C CNN
+	1    3450 4350
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D4
+U 1 1 00000000
+P 3475 3850
+F 0 "D4" H 3477 4175 50  0000 C CNN
+F 1 "eSim_Diode" H 3477 4075 50  0000 C CNN
+F 2 "" H 3475 3850 60  0000 C CNN
+F 3 "" H 3475 3850 60  0000 C CNN
+	1    3475 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D5
+U 1 1 00000000
+P 4825 3300
+F 0 "D5" V 4777 3450 50  0000 L CNN
+F 1 "eSim_Diode" V 4877 3450 50  0000 L CNN
+F 2 "" H 4825 3300 60  0000 C CNN
+F 3 "" H 4825 3300 60  0000 C CNN
+	1    4825 3300
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_Diode D6
+U 1 1 00000000
+P 4875 4800
+F 0 "D6" V 4827 4950 50  0000 L CNN
+F 1 "eSim_Diode" V 4927 4950 50  0000 L CNN
+F 2 "" H 4875 4800 60  0000 C CNN
+F 3 "" H 4875 4800 60  0000 C CNN
+	1    4875 4800
+	0    1    1    0   
+$EndComp
+$EndSCHEMATC

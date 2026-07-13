@@ -1,0 +1,27 @@
+.title kicad schematic
+
+.include CA3019.sub
+x1 net-_r3-pad2_ net-_r2-pad2_ out net-_r1-pad2_ net-_r8-pad1_ net-_r7-pad1_ net-_r6-pad1_ net-_r5-pad1_ net-_r4-pad1_ CA3019
+r8 net-_r8-pad1_ gnd 1k
+r5 net-_r5-pad1_ gnd 1k
+r6 net-_r6-pad1_ gnd 1k
+r4 net-_r4-pad1_ gnd 1k
+r7 net-_r7-pad1_ gnd 1k
+* u1 out plot_v1
+r3 gnd net-_r3-pad2_ 1k
+r9 gnd out 1k
+v1 inp gnd sine(0 5 50 0 0)
+* u2 inp plot_v1
+r1 inp net-_r1-pad2_ 1k
+r2 gnd net-_r2-pad2_ 1k
+.tran 1e-03 75e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+plot v(inp)
+.endc
+.end
