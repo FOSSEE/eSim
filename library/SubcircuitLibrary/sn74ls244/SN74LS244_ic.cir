@@ -1,0 +1,15 @@
+.title KiCad schematic
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ unconnected-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ unconnected-_U1-Pad20_ PORT
+U5 Net-_U1-Pad4_ Net-_U3-Pad2_ Net-_U1-Pad16_ d_tristate
+U6 Net-_U1-Pad6_ Net-_U3-Pad2_ Net-_U1-Pad14_ d_tristate
+U7 Net-_U1-Pad8_ Net-_U3-Pad2_ Net-_U1-Pad12_ d_tristate
+U2 Net-_U1-Pad1_ Net-_U2-Pad2_ d_inverter
+U3 Net-_U2-Pad2_ Net-_U3-Pad2_ d_buffer
+U4 Net-_U1-Pad2_ Net-_U3-Pad2_ Net-_U1-Pad18_ d_tristate
+U9 Net-_U8-Pad2_ Net-_U10-Pad2_ d_buffer
+U10 Net-_U1-Pad11_ Net-_U10-Pad2_ Net-_U1-Pad9_ d_tristate
+U11 Net-_U1-Pad13_ Net-_U10-Pad2_ Net-_U1-Pad7_ d_tristate
+U8 Net-_U1-Pad19_ Net-_U8-Pad2_ d_inverter
+U13 Net-_U1-Pad17_ Net-_U10-Pad2_ Net-_U1-Pad3_ d_tristate
+U12 Net-_U1-Pad15_ Net-_U10-Pad2_ Net-_U1-Pad5_ d_tristate
+.end

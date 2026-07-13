@@ -1,0 +1,21 @@
+.title KiCad schematic
+U6 q plot_v1
+U5 Net-_U5-Pad1_ q dac_bridge_1
+X1 Net-_U4-Pad2_ Net-_U4-Pad2_ Net-_U4-Pad2_ Net-_U3-Pad2_ Net-_U3-Pad2_ unconnected-_X1-Pad6_ unconnected-_X1-Pad7_ unconnected-_X1-Pad8_ unconnected-_X1-Pad9_ Net-_U5-Pad1_ Net-_U7-Pad2_ Net-_U10-Pad2_ Net-_U9-Pad2_ Net-_U9-Pad2_ Net-_U4-Pad2_ unconnected-_X1-Pad16_ 74LS670
+R1 q GND 1k
+v5 w GND pulse(0 5 0 1n 1n 1m 2m)
+U11 wn plot_v1
+U7 rn Net-_U7-Pad2_ adc_bridge_1
+v3 rn GND pulse(5 0 0 1n 1n 5m 10m)
+v4 wn GND pulse(0 5 0 1n 1n 5m 10m)
+U10 wn Net-_U10-Pad2_ adc_bridge_1
+U9 w Net-_U9-Pad2_ adc_bridge_1
+U8 rn plot_v1
+U12 w plot_v1
+v2 d GND pulse(5 0 0 1n 1n 1.5m 3m)
+U4 d Net-_U4-Pad2_ adc_bridge_1
+U1 d plot_v1
+U2 r plot_v1
+U3 r Net-_U3-Pad2_ adc_bridge_1
+v1 r GND pulse(5 0 0 1n 1n 1m 2m)
+.end
