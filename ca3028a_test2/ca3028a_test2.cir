@@ -1,0 +1,14 @@
+.title KiCad schematic
+C3 Net-_C3-Pad1_ GND 0.01u
+R3 GND Net-_C4-Pad1_ 2k
+v3 Net-_R4-Pad2_ GND DC
+R4 Net-_C4-Pad1_ Net-_R4-Pad2_ 1k
+R2 Net-_C2-Pad1_ Net-_C3-Pad1_ 50
+v2 Net-_C2-Pad1_ GND DC
+C4 Net-_C4-Pad1_ GND 0.01u
+C1 INP Net-_C1-Pad2_ 0.01u
+R1 Net-_C4-Pad1_ Net-_C1-Pad2_ 50
+v1 INP GND sine
+C2 Net-_C2-Pad1_ GND 0.01u
+X1 Net-_C1-Pad2_ GND GND GND Net-_C4-Pad1_ Net-_C3-Pad1_ Net-_C2-Pad1_ Net-_C2-Pad1_ CA3028A
+.end
