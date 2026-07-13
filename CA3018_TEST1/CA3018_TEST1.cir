@@ -1,0 +1,9 @@
+.title KiCad schematic
+X1 unconnected-_X1-Pad1_ unconnected-_X1-Pad2_ unconnected-_X1-Pad3_ unconnected-_X1-Pad4_ unconnected-_X1-Pad5_ inp GND Net-_R2-Pad1_ unconnected-_X1-Pad9_ unconnected-_X1-Pad10_ unconnected-_X1-Pad11_ unconnected-_X1-Pad12_ CA3018
+R2 Net-_R2-Pad1_ Net-_R2-Pad2_ 1k
+v2 Net-_R2-Pad2_ GND DC
+v1 Net-_R3-Pad2_ GND sine
+R3 inp Net-_R3-Pad2_ 100k
+U1 inp plot_v1
+R1 GND inp 100k
+.end
