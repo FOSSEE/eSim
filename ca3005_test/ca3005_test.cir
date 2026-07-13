@@ -1,0 +1,14 @@
+.title KiCad schematic
+C2 Net-_C2-Pad1_ GND 0.1u
+v3 Net-_C2-Pad1_ GND DC
+R2 OUT1 Net-_C3-Pad1_ 1k
+v2 Net-_C3-Pad1_ GND DC
+v4 Net-_R3-Pad2_ GND DC
+R3 OUT2 Net-_R3-Pad2_ 1k
+C3 Net-_C3-Pad1_ GND 0.1u
+R1 GND Net-_C1-Pad2_ 500
+v1 INPUT GND sine
+U1 INPUT plot_v1
+C1 INPUT Net-_C1-Pad2_ 1u
+X2 Net-_C1-Pad2_ unconnected-_X2-Pad2_ unconnected-_X2-Pad3_ unconnected-_X2-Pad4_ unconnected-_X2-Pad5_ unconnected-_X2-Pad6_ Net-_C1-Pad2_ Net-_C2-Pad1_ Net-_C3-Pad1_ OUT1 OUT2 GND CA3005
+.end
