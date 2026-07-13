@@ -1,0 +1,9 @@
+.title KiCad schematic
+v2 Net-_X1-Pad5_ GND DC
+v1 inp GND sine
+U1 inp plot_v1
+C1 Net-_C1-Pad1_ inp 0.1u
+R2 Net-_R2-Pad1_ Net-_R2-Pad2_ 3k
+X1 Net-_C1-Pad1_ GND Net-_R2-Pad1_ GND Net-_X1-Pad5_ GND Net-_R2-Pad2_ Net-_X1-Pad8_ GND GND GND GND CA3022
+R1 GND Net-_X1-Pad8_ 1k
+.end

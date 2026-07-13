@@ -1,0 +1,30 @@
+* Subcircuit CA3022
+.subckt CA3022 net-_q1-pad2_ net-_r13-pad1_ net-_q1-pad1_ net-_d2-pad1_ net-_r4-pad2_ net-_d2-pad2_ net-_q4-pad1_ net-_q6-pad3_ net-_d3-pad1_ net-_q5-pad1_ net-_d1-pad2_ net-_q1-pad3_ 
+.title kicad schematic
+.include NPN.lib
+.include D.lib
+q3 net-_q3-pad1_ net-_q1-pad1_ net-_d3-pad2_ Q2N2222
+q6 net-_q6-pad1_ net-_q4-pad1_ net-_q6-pad3_ Q2N2222
+r10 net-_d1-pad2_ net-_q6-pad3_ 12k
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+q4 net-_q4-pad1_ net-_d3-pad2_ net-_q4-pad3_ Q2N2222
+r11 net-_q2-pad2_ net-_r11-pad2_ 5k
+r13 net-_r13-pad1_ net-_r11-pad2_ 5k
+r5 net-_d1-pad2_ net-_d3-pad2_ 12k
+q5 net-_q5-pad1_ net-_q5-pad2_ net-_d1-pad2_ Q2N2222
+r7 net-_q4-pad3_ net-_q5-pad1_ 2.5k
+r12 net-_r11-pad2_ net-_q5-pad2_ 5k
+r8 net-_q4-pad1_ net-_r4-pad2_ 27k
+r4 net-_q1-pad1_ net-_r4-pad2_ 12k
+r6 net-_q3-pad1_ net-_r4-pad2_ 0.1k
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+r9 net-_q6-pad1_ net-_r4-pad2_ 0.3k
+r1 net-_r1-pad1_ net-_d1-pad1_ 12k
+r3 net-_r1-pad1_ net-_q1-pad2_ 33k
+r2 net-_r1-pad1_ net-_q1-pad1_ 12k
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q2 net-_q1-pad3_ net-_q2-pad2_ net-_d1-pad2_ Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+* Control Statements
+
+.ends CA3022
