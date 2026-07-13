@@ -1,0 +1,200 @@
+EESchema Schematic File Version 5
+EELAYER 36 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+Comment5 ""
+Comment6 ""
+Comment7 ""
+Comment8 ""
+Comment9 ""
+$EndDescr
+Connection ~ 3475 3575
+Connection ~ 3875 2800
+Connection ~ 4250 2800
+Connection ~ 5050 2800
+Connection ~ 5425 2800
+Connection ~ 5850 2800
+Connection ~ 6275 2800
+Connection ~ 6800 4275
+Wire Wire Line
+	2950 3025 3175 3025
+Wire Wire Line
+	3475 2800 3475 2825
+Wire Wire Line
+	3475 3225 3475 3575
+Wire Wire Line
+	3475 3575 3475 3800
+Wire Wire Line
+	3475 3575 3950 3575
+Wire Wire Line
+	3875 2525 3875 2800
+Wire Wire Line
+	3875 2800 3475 2800
+Wire Wire Line
+	4250 2800 3875 2800
+Wire Wire Line
+	4250 2800 4250 3375
+Wire Wire Line
+	4250 3775 4250 3950
+Wire Wire Line
+	5050 2800 4250 2800
+Wire Wire Line
+	5050 2800 5050 4450
+Wire Wire Line
+	5425 2525 5425 2800
+Wire Wire Line
+	5425 2800 5050 2800
+Wire Wire Line
+	5425 2800 5850 2800
+Wire Wire Line
+	5550 3350 5550 4275
+Wire Wire Line
+	5550 4275 6800 4275
+Wire Wire Line
+	5850 2800 5850 3150
+Wire Wire Line
+	5850 2800 6275 2800
+Wire Wire Line
+	5850 3550 5850 3700
+Wire Wire Line
+	6275 2525 6275 2800
+Wire Wire Line
+	6375 3000 6500 3000
+Wire Wire Line
+	6800 2800 6275 2800
+Wire Wire Line
+	6800 3200 6800 4275
+Wire Wire Line
+	6800 4275 6800 4425
+$Comp
+L eSim_Miscellaneous:PORT U?
+U 4 1 00000000
+P 2700 3025
+F 0 "U?" H 2725 3200 30  0000 C CNN
+F 1 "PORT" H 2725 3100 30  0000 C CNN
+F 2 "" H 2700 3025 60  0000 C CNN
+F 3 "" H 2700 3025 60  0000 C CNN
+	4    2700 3025
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U?
+U 3 1 00000000
+P 3475 4050
+F 0 "U?" V 3525 3975 30  0000 R CNN
+F 1 "PORT" V 3425 3975 30  0000 R CNN
+F 2 "" H 3475 4050 60  0000 C CNN
+F 3 "" H 3475 4050 60  0000 C CNN
+	3    3475 4050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U?
+U 5 1 00000000
+P 3875 2275
+F 0 "U?" V 3875 2350 30  0000 L CNN
+F 1 "PORT" V 3975 2350 30  0000 L CNN
+F 2 "" H 3875 2275 60  0000 C CNN
+F 3 "" H 3875 2275 60  0000 C CNN
+	5    3875 2275
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U?
+U 2 1 00000000
+P 4250 4200
+F 0 "U?" V 4300 4100 30  0000 R CNN
+F 1 "PORT" V 4200 4100 30  0000 R CNN
+F 2 "" H 4250 4200 60  0000 C CNN
+F 3 "" H 4250 4200 60  0000 C CNN
+	2    4250 4200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U?
+U 1 1 00000000
+P 5050 4700
+F 0 "U?" V 5100 4600 30  0000 R CNN
+F 1 "PORT" V 5000 4600 30  0000 R CNN
+F 2 "" H 5050 4700 60  0000 C CNN
+F 3 "" H 5050 4700 60  0000 C CNN
+	1    5050 4700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U?
+U 6 1 00000000
+P 5425 2275
+F 0 "U?" V 5425 2350 30  0000 L CNN
+F 1 "PORT" V 5525 2350 30  0000 L CNN
+F 2 "" H 5425 2275 60  0000 C CNN
+F 3 "" H 5425 2275 60  0000 C CNN
+	6    5425 2275
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U?
+U 7 1 00000000
+P 5800 2750
+F 0 "U?" V 5800 2825 30  0000 L CNN
+F 1 "PORT" V 5900 2825 30  0000 L CNN
+F 2 "" H 5800 2750 60  0000 C CNN
+F 3 "" H 5800 2750 60  0000 C CNN
+	7    5800 2750
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q?
+U 1 1 00000000
+P 3375 3025
+F 0 "Q?" H 3600 3075 50  0000 L CNN
+F 1 "eSim_NPN" H 3600 2975 50  0000 L CNN
+F 2 "" H 3575 3125 29  0000 C CNN
+F 3 "" H 3375 3025 60  0000 C CNN
+	1    3375 3025
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q?
+U 1 1 00000000
+P 4150 3575
+F 0 "Q?" H 4350 3625 50  0000 L CNN
+F 1 "eSim_NPN" H 4350 3525 50  0000 L CNN
+F 2 "" H 4350 3675 29  0000 C CNN
+F 3 "" H 4150 3575 60  0000 C CNN
+	1    4150 3575
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q?
+U 1 1 00000000
+P 5750 3350
+F 0 "Q?" H 5975 3400 50  0000 L CNN
+F 1 "eSim_NPN" H 5975 3300 50  0000 L CNN
+F 2 "" H 5950 3450 29  0000 C CNN
+F 3 "" H 5750 3350 60  0000 C CNN
+	1    5750 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:eSim_NPN Q?
+U 1 1 00000000
+P 6700 3000
+F 0 "Q?" H 6900 3050 50  0000 L CNN
+F 1 "eSim_NPN" H 6900 2950 50  0000 L CNN
+F 2 "" H 6900 3100 29  0000 C CNN
+F 3 "" H 6700 3000 60  0000 C CNN
+	1    6700 3000
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC
