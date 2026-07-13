@@ -18,23 +18,21 @@ try:
 except ImportError:
     pass # Will handle gracefully later if missing
 
+from registry import TOOLS, CATEGORIES
+from paths import get_toolmanager_root, get_install_state_path
+from constants import IS_WINDOWS
+from config import ConfigManager
+
 # ==================== CONFIG ====================
-BASE_DIR = Path(__file__).resolve().parent
-INFO_JSON = BASE_DIR / "information.json"
+BASE_DIR = get_toolmanager_root()
+INFO_JSON = get_install_state_path()
 FULL_GUI  = BASE_DIR / "gui_fixed.py"
 PYTHON    = sys.executable
 
-ANALOG_TOOLS  = ["esim", "kicad", "ngspice"]
-DIGITAL_TOOLS = ["esim", "kicad", "ngspice", "ghdl", "verilator", "llvm"]
+ANALOG_TOOLS  = CATEGORIES["analog"]
+DIGITAL_TOOLS = CATEGORIES["digital"]
 
-TOOL_LABELS = {
-    "esim":      "eSim",
-    "kicad":     "KiCad",
-    "ngspice":   "Ngspice",
-    "ghdl":      "GHDL",
-    "verilator": "Verilator",
-    "llvm":      "LLVM",
-}
+TOOL_LABELS = {tid: TOOLS[tid].label for tid in DIGITAL_TOOLS}
 
 TOOL_VERSIONS = {
     "esim":      "2.4",
@@ -68,14 +66,11 @@ def relaunch_as_admin():
 def load_installed_versions():
     versions = {k: "Not installed" for k in TOOL_LABELS}
     try:
-        if INFO_JSON.exists():
-            with open(INFO_JSON) as f:
-                data = json.load(f)
-            for pkg in data.get("important_packages", []):
-                name = pkg.get("package_name", "")
-                ver  = pkg.get("version", "Not installed")
-                if name in versions and ver not in ("", "Not installed"):
-                    versions[name] = ver
+        config = ConfigManager()
+        for tool_id in TOOL_LABELS:
+            state = config.get_tool_state(tool_id)
+            if state and state.get("version", "") not in ("", "Not installed"):
+                versions[tool_id] = state["version"]
     except Exception as e:
         print(f"Could not load version info: {e}")
     return versions
@@ -656,7 +651,7 @@ class ToolManagerWindow(QMainWindow):
                 subprocess.Popen(
                     [PYTHON, backend, "uninstall", tool, "none"],
                     creationflags=(subprocess.CREATE_NO_WINDOW
-                                   if sys.platform == "win32" else 0)
+                                   if IS_WINDOWS else 0)
                 )
             QMessageBox.information(
                 self, "Uninstall Started",
@@ -669,7 +664,7 @@ class ToolManagerWindow(QMainWindow):
 
 
 def main():
-    if sys.platform == "win32" and not is_admin():
+    if IS_WINDOWS and not is_admin():
         # Note: We deliberately skip a manual PyQt consent dialog here because
         # Windows will natively prompt the user with a UAC shield anyway.
         relaunch_as_admin()

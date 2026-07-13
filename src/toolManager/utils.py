@@ -18,11 +18,8 @@ import threading
 import time
 from pathlib import Path
 
-# ==================== CONSTANTS & DEFAULTS ====================
-
-# Default Windows installation paths
-DEFAULT_MSYS2_PATH = Path(r"C:\msys64")
-DEFAULT_ESIM_DIR = Path(r"C:\FOSSEE\eSim")
+from constants import DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR
+from platform_utils import subprocess_flags
 
 WIN_KICAD_PATHS = [
     (r"C:\Program Files\KiCad\9.0\bin\kicad.exe", "9"),
@@ -62,14 +59,7 @@ def run_cmd_safe(cmd, timeout=30, cwd=None, env=None):
     Returns the subprocess.CompletedProcess result or None if failed.
     """
     try:
-        if platform.system() == "Windows":
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            startupinfo.wShowWindow = subprocess.SW_HIDE
-            creationflags = subprocess.CREATE_NO_WINDOW
-        else:
-            startupinfo = None
-            creationflags = 0
+        flags = subprocess_flags()
         
         result = subprocess.run(
             cmd,
@@ -77,8 +67,8 @@ def run_cmd_safe(cmd, timeout=30, cwd=None, env=None):
             text=True,
             shell=False,
             timeout=timeout,
-            startupinfo=startupinfo,
-            creationflags=creationflags,
+            startupinfo=flags.get("startupinfo"),
+            creationflags=flags.get("creationflags", 0),
             encoding='utf-8',
             errors='ignore',
             cwd=cwd,
@@ -95,14 +85,7 @@ def run_cmd_stream(cmd, timeout=900, cwd=None, env=None):
     Returns a tuple of (returncode, full_output_string).
     """
     try:
-        if platform.system() == "Windows":
-            si = subprocess.STARTUPINFO()
-            si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            si.wShowWindow = subprocess.SW_HIDE
-            cf = subprocess.CREATE_NO_WINDOW
-        else:
-            si = None
-            cf = 0
+        flags = subprocess_flags()
 
         proc = subprocess.Popen(
             cmd,
@@ -110,8 +93,8 @@ def run_cmd_stream(cmd, timeout=900, cwd=None, env=None):
             stderr=subprocess.STDOUT,
             text=True,
             shell=False,
-            startupinfo=si,
-            creationflags=cf,
+            startupinfo=flags.get("startupinfo"),
+            creationflags=flags.get("creationflags", 0),
             encoding='utf-8',
             errors='ignore',
             cwd=cwd,
