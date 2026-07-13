@@ -1,0 +1,28 @@
+.title KiCad schematic
+U7 Net-_U7-Pad1_ Q5 dac_bridge_1
+U8 Net-_U8-Pad1_ Q6 dac_bridge_1
+U9 Net-_U9-Pad1_ Q7 dac_bridge_1
+U6 Net-_U6-Pad1_ Q4 dac_bridge_1
+U5 Net-_U5-Pad1_ Q3 dac_bridge_1
+U4 Net-_U4-Pad1_ Q2 dac_bridge_1
+U3 Net-_U3-Pad1_ Q1 dac_bridge_1
+R3 GND Q5 1k
+R4 GND Q4 1k
+R1 GND Q7 1k
+R2 GND Q6 1k
+X1 Net-_U2-Pad3_ Net-_U2-Pad4_ Net-_U9-Pad1_ Net-_U8-Pad1_ Net-_U7-Pad1_ Net-_U6-Pad1_ unconnected-_X1-Pad7_ unconnected-_X1-Pad8_ Net-_U5-Pad1_ unconnected-_X1-Pad10_ Net-_U4-Pad1_ Net-_U3-Pad1_ unconnected-_X1-Pad13_ unconnected-_X1-Pad14_ CD4024BC
+U13 Q4 plot_v1
+U10 Q7 plot_v1
+U12 Q5 plot_v1
+U11 Q6 plot_v1
+U16 Q1 plot_v1
+U15 Q2 plot_v1
+R5 GND Q3 1k
+U14 Q3 plot_v1
+R6 GND Q2 1k
+R7 GND Q1 1k
+U2 CLK Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ adc_bridge_2
+v2 CLK GND pulse(0 5 0 1n 1n 500u 1m)
+U1 CLK plot_v1
+v1 Net-_U2-Pad2_ GND 0
+.end

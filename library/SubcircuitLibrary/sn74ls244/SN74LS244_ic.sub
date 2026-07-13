@@ -1,0 +1,54 @@
+* Subcircuit SN74LS244_ic
+.subckt SN74LS244_ic net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ unconnected-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ unconnected-_u1-pad20_ 
+.title kicad schematic
+* u5 net-_u1-pad4_ net-_u3-pad2_ net-_u1-pad16_ d_tristate
+* u6 net-_u1-pad6_ net-_u3-pad2_ net-_u1-pad14_ d_tristate
+* u7 net-_u1-pad8_ net-_u3-pad2_ net-_u1-pad12_ d_tristate
+* u2 net-_u1-pad1_ net-_u2-pad2_ d_inverter
+* u3 net-_u2-pad2_ net-_u3-pad2_ d_buffer
+* u4 net-_u1-pad2_ net-_u3-pad2_ net-_u1-pad18_ d_tristate
+* u9 net-_u8-pad2_ net-_u10-pad2_ d_buffer
+* u10 net-_u1-pad11_ net-_u10-pad2_ net-_u1-pad9_ d_tristate
+* u11 net-_u1-pad13_ net-_u10-pad2_ net-_u1-pad7_ d_tristate
+* u8 net-_u1-pad19_ net-_u8-pad2_ d_inverter
+* u13 net-_u1-pad17_ net-_u10-pad2_ net-_u1-pad3_ d_tristate
+* u12 net-_u1-pad15_ net-_u10-pad2_ net-_u1-pad5_ d_tristate
+a1 net-_u1-pad4_ net-_u3-pad2_ net-_u1-pad16_ u5
+a2 net-_u1-pad6_ net-_u3-pad2_ net-_u1-pad14_ u6
+a3 net-_u1-pad8_ net-_u3-pad2_ net-_u1-pad12_ u7
+a4 net-_u1-pad1_ net-_u2-pad2_ u2
+a5 net-_u2-pad2_ net-_u3-pad2_ u3
+a6 net-_u1-pad2_ net-_u3-pad2_ net-_u1-pad18_ u4
+a7 net-_u8-pad2_ net-_u10-pad2_ u9
+a8 net-_u1-pad11_ net-_u10-pad2_ net-_u1-pad9_ u10
+a9 net-_u1-pad13_ net-_u10-pad2_ net-_u1-pad7_ u11
+a10 net-_u1-pad19_ net-_u8-pad2_ u8
+a11 net-_u1-pad17_ net-_u10-pad2_ net-_u1-pad3_ u13
+a12 net-_u1-pad15_ net-_u10-pad2_ net-_u1-pad5_ u12
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u5 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u6 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u7 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u3 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u4 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u9 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u10 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u11 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u8 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u13 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u12 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Control Statements
+
+.ends SN74LS244_ic
