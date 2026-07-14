@@ -1,0 +1,49 @@
+.title KiCad schematic
+U18 J2 PE Net-_U18-Pad3_ d_and
+U20 Q1 Net-_U20-Pad2_ Net-_U20-Pad3_ d_and
+U9 J1 PE Net-_U11-Pad3_ d_and
+U2 PE Q4 J4 J1 cin_bar Q1 CO unconnected-_U2-Pad8_ B/D up/d Q2 J2 J3 Q3 clk unconnected-_U2-Pad16_ PORT
+U6 J1 Net-_U10-Pad2_ d_inverter
+U4 Net-_U4-Pad1_ interm dac_bridge_1
+U1 cin_bar Net-_U1-Pad2_ d_inverter
+U3 clk Net-_U1-Pad2_ Net-_U11-Pad2_ d_and
+U5 GND Net-_U5-Pad2_ adc_bridge_1
+U7 Net-_U5-Pad2_ Net-_U11-Pad1_ d_inverter
+U11 Net-_U11-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ Net-_U11-Pad4_ Q1 Net-_U11-Pad6_ d_tff
+U19 PE Net-_U16-Pad2_ Net-_U19-Pad3_ d_and
+U10 PE Net-_U10-Pad2_ Net-_U10-Pad3_ d_and
+U14 Net-_U11-Pad6_ Net-_U13-Pad2_ Net-_U14-Pad3_ d_and
+U13 up/d Net-_U13-Pad2_ d_inverter
+U15 up/d Q1 Net-_U15-Pad3_ d_and
+U17 Net-_U15-Pad3_ Net-_U14-Pad3_ Net-_U17-Pad3_ d_or
+U8 Net-_U20-Pad3_ B/D Net-_U12-Pad2_ d_and
+U12 Net-_U10-Pad3_ Net-_U12-Pad2_ Net-_U11-Pad4_ d_or
+U16 J2 Net-_U16-Pad2_ d_inverter
+U37 Q3 Net-_U36-Pad1_ d_inverter
+U41 J4 PE Net-_U41-Pad3_ d_and
+U34 Net-_U23-Pad3_ Q3 Net-_U34-Pad3_ d_and
+U35 Net-_U33-Pad6_ Net-_U24-Pad3_ Net-_U35-Pad3_ d_and
+U40 Net-_U34-Pad3_ Net-_U35-Pad3_ Net-_U40-Pad3_ d_or
+U38 Net-_U25-Pad3_ Q3 Net-_U38-Pad3_ d_and
+U36 Net-_U36-Pad1_ Q4 Net-_U32-Pad2_ d_and
+U44 Net-_U38-Pad3_ Q4 Net-_U44-Pad3_ d_and
+U42 PE Net-_U39-Pad2_ Net-_U42-Pad3_ d_and
+U39 J4 Net-_U39-Pad2_ d_inverter
+U43 Net-_U42-Pad3_ Net-_U12-Pad2_ Net-_U4-Pad1_ d_or
+U30 J3 PE Net-_U30-Pad3_ d_and
+U23 Net-_U15-Pad3_ Q2 Net-_U23-Pad3_ d_and
+U27 Net-_U23-Pad3_ Net-_U24-Pad3_ Net-_U27-Pad3_ d_or
+U25 Q1 Q2 Net-_U25-Pad3_ d_and
+U28 Q2 Net-_U28-Pad2_ d_inverter
+U32 Net-_U28-Pad2_ Net-_U32-Pad2_ Net-_U20-Pad2_ d_and
+U24 Net-_U21-Pad6_ Net-_U14-Pad3_ Net-_U24-Pad3_ d_and
+U21 Net-_U17-Pad3_ Net-_U11-Pad2_ Net-_U18-Pad3_ Net-_U21-Pad4_ Q2 Net-_U21-Pad6_ d_tff
+U33 Net-_U27-Pad3_ Net-_U11-Pad2_ Net-_U30-Pad3_ Net-_U29-Pad3_ Q3 Net-_U33-Pad6_ d_tff
+U31 PE Net-_U26-Pad2_ Net-_U29-Pad1_ d_and
+U29 Net-_U29-Pad1_ Net-_U12-Pad2_ Net-_U29-Pad3_ d_or
+U22 Net-_U19-Pad3_ Net-_U12-Pad2_ Net-_U21-Pad4_ d_or
+U26 J3 Net-_U26-Pad2_ d_inverter
+U45 Net-_U40-Pad3_ Net-_U11-Pad2_ Net-_U41-Pad3_ Net-_U4-Pad1_ Q4 unconnected-_U45-Pad6_ d_tff
+U46 Net-_U44-Pad3_ Net-_U46-Pad2_ d_inverter
+U47 Net-_U46-Pad2_ clk CO d_or
+.end
