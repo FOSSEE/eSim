@@ -23,12 +23,17 @@ try:
 except (ImportError, ValueError):
     from constants import IS_WINDOWS
 
+try:
+    from toolManager.registry import CATEGORIES
+except (ImportError, ValueError):
+    from registry import CATEGORIES
+
 BASE_DIR = Path(__file__).resolve().parent
 INFO_JSON = BASE_DIR / "information.json"
 PYTHON    = sys.executable
 
-ANALOG_TOOLS  = ["esim", "kicad", "ngspice"]
-DIGITAL_TOOLS = ["esim", "kicad", "ngspice", "ghdl", "verilator", "llvm"]
+ANALOG_TOOLS  = CATEGORIES["analog"]
+DIGITAL_TOOLS = CATEGORIES["digital"]
 
 TOOL_LABELS = {
     "esim":      "eSim",
