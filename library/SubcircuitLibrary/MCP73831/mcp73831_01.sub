@@ -1,0 +1,27 @@
+* MCP73831 Behavioral Model (Corrected for SOT-23-5)
+* Pin mapping: 1=STAT, 2=VSS, 3=VBAT, 4=VDD, 5=PROG
+
+.SUBCKT MCP73831 STAT VSS VBAT VDD PROG
+
+* 1. Internal Pass Transistor (Rdson = 350mOhm)
+M1 VBAT PROG VDD VDD PMOS_REG W=500u L=0.5u
+.MODEL PMOS_REG PMOS (VTO=-1.0 KP=50u)
+
+* 2. Internal Current Sense (Simplified)
+Rsense VDD Node_Source 0.35
+
+* 3. Voltage Regulation Logic (Op-Amp comparing VBAT to 4.2V Reference)
+* Note: Output controls the gate of M1
+E_control PROG 0 VALUE = { IF(V(VBAT) > 4.2, V(VDD), V(PROG_internal)) }
+
+* 4. Current Regulation Logic (PROG pin sets reference)
+* PROG resistor sets the current limit
+R_prog_ext PROG VSS 2k
+V_prog_internal PROG_internal VSS 1.0
+
+* 5. STAT Pin Logic (Open-drain approximation)
+* STAT is Low (VSS) during charging, High-Z when complete
+S_stat STAT VSS VBAT VDD STAT_SWITCH
+.MODEL STAT_SWITCH VSWITCH (RON=10 ROFF=1Meg VON=4.1 VOFF=4.2)
+
+.ENDS MCP73831

@@ -1,0 +1,25 @@
+.subckt L298N 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
+* 1:Sense_A, 2:Out1, 3:Out2, 4:Vs, 5:In1, 6:EnA, 7:In2, 8:GND, 9:Vss, 10:In3, 11:EnB, 12:In4, 13:Out3, 14:Out4, 15:Sense_B
+
+* BRIDGE A Logic (Using Pins: 6=EnA, 5=In1, 7=In2, 4=Vs)
+B_A_FWD Node_AF 0 V = { V(4) * (V(6)/5) * (V(5)/5) * (1 - V(7)/5) }
+B_A_REV Node_AR 0 V = { V(4) * (V(6)/5) * (V(7)/5) * (1 - V(5)/5) }
+
+* Output Stage A (Pins: 2=Out1, 3=Out2)
+B_OUT_A 2 8 V = { V(Node_AF) }
+B_OUT_B 3 8 V = { V(Node_AR) }
+
+* BRIDGE B Logic (Using Pins: 11=EnB, 10=In3, 12=In4, 4=Vs)
+B_B_FWD Node_BF 0 V = { V(4) * (V(11)/5) * (V(10)/5) * (1 - V(12)/5) }
+B_B_REV Node_BR 0 V = { V(4) * (V(11)/5) * (V(12)/5) * (1 - V(10)/5) }
+
+* Output Stage B (Pins: 13=Out3, 14=Out4)
+B_OUT_C 13 8 V = { V(Node_BF) }
+B_OUT_D 14 8 V = { V(Node_BR) }
+
+* Sense Pins and GND (Pins: 1, 15, 8)
+* These are connected to Ground node 8 internally as per your requirement
+R_SENSE_A 1 8 0.001
+R_SENSE_B 15 8 0.001
+
+.ends L298N

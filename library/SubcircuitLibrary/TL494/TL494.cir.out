@@ -1,0 +1,21 @@
+.title kicad schematic
+.include TL494.sub
+v3 net-_r2-pad2_ gnd 12
+r2 vout net-_r2-pad2_ 1k
+r1 gnd net-_r1-pad2_ 10k
+c2 gnd v_ct 0.1u
+r_dummy v_ct gnd 1G
+v1 net-_x1-pad2_ gnd 2.5
+v2 vin gnd sine(2.5 1.5 50)
+x1 vin net-_x1-pad2_ fb_node gnd v_ct net-_r1-pad2_ gnd vout gnd gnd vout net-_r2-pad2_ gnd v_ref gnd gnd TL494
+.tran 1e-06 40e-03 0e-00
+.control
+run
+plot v(vin)
+plot v(vout)
+plot v(v_ct)
+plot v(v_ref) ylimit 0 15
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,10 @@
+.title KiCad schematic
+v3 Net-_R2-Pad2_ GND 12
+R2 /vout Net-_R2-Pad2_ 1k
+R1 GND Net-_R1-Pad2_ 10k
+C2 GND /v_ct 0.1u
+v1 Net-_X1-Pad2_ GND 2.5
+v2 /vin GND SINE(2.5 1.5 50)
+X1 /vin /vout Net-_X1-Pad2_ Net-_C1-Pad1_ GND /v_ct Net-_R1-Pad2_ GND GND GND /vout Net-_R2-Pad2_ GND /v_ref /v_ref GND TL494
+C1 Net-_C1-Pad1_ GND 0.1u
+.end

@@ -1,0 +1,29 @@
+.title kicad schematic
+.include L298N.sub
+
+* Power Supplies
+v4 net-_c1-pad2_ gnd 12
+v5 net-_c2-pad1_ gnd 5
+
+* Decoupling Capacitors
+c1 gnd net-_c1-pad2_ 100n
+c2 net-_c2-pad1_ gnd 100n
+
+* L298N Macro-model (Pin order: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15)
+* 1:Sense_A, 2:Out1, 3:Out2, 4:Vs, 5:In1, 6:EnA, 7:In2, 8:GND, 9:Vss, 10:In3, 11:EnB, 12:In4, 13:Out3, 14:Out4, 15:Sense_B
+x1 gnd net-_out1-pad_ net-_out2-pad_ net-_c1-pad2_ net-_in1-pad_ net-_ena-pad_ net-_in2-pad_ gnd net-_c2-pad1_ gnd gnd gnd net-_out3-pad_ net-_out4-pad_ gnd L298N
+
+* Signals & Load
+v2 net-_ena-pad_ gnd 5
+v1 net-_in1-pad_ gnd pulse(0 5 0 1u 1u 5m 10m)
+v3 net-_in2-pad_ gnd pulse(0 5 5m 1u 1u 5m 10m)
+r5 net-_out1-pad_ net-_out2-pad_ 10
+
+.tran 10u 100m 0
+
+.control
+run
+plot v(net-_out1-pad_)
+plot v(net-_out2-pad_)
+.endc
+.end

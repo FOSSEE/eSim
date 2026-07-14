@@ -1,0 +1,18 @@
+.title kicad schematic
+
+.include LP2950.sub
+v1 vin gnd sine(5 5 1k)
+r1 gnd vout 1k
+x1 vin vout gnd LP2950
+.tran 0.01e-03 2e-03 0e-00
+
+* Control Statements
+.control
+run
+
+plot v(vin) v(vout)
+
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

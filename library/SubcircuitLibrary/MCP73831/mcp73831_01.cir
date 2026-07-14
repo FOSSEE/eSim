@@ -1,0 +1,7 @@
+.title KiCad schematic
+R1 Net-_M1-Pad1_ /VDD 1
+v1 Net-_X2-Pad1_ /GND 4.2v
+X2 Net-_X2-Pad1_ /VBAT /PROG opamp
+M1 Net-_M1-Pad1_ /PROG /VBAT Net-_M1-Pad1_ mosfet_p
+X1 /VDD Net-_M1-Pad1_ /PROG opamp
+.end
