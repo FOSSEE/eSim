@@ -1,0 +1,29 @@
+.title kicad schematic - ir2110 driver
+.include IR2110.sub
+.include MOSFET_2N7002.lib
+.include 1N4148.lib
+
+x1 net-x1-pad1 net-x1-pad2 gnd net-x1-pad4 gnd net-d1-pad1 gnd net-c1-pad1 v_out v_ho v_lo IR2110
+v3 net-x1-pad4 gnd 5
+v1 net-x1-pad1 gnd pulse(0 5 0 1u 1u 0.45m 1m)
+v2 net-x1-pad2 gnd pulse(0 5 0.5m 1u 1u 0.45m 1m)
+v4 net-d1-pad1 gnd 12
+d1 net-d1-pad1 net-c1-pad1 1N4148
+c1 net-c1-pad1 v_out 1u
+v5 net-m1-pad1 gnd 24
+m2 v_out v_lo gnd gnd 2N7002 W=100u L=100u M=1
+m1 net-m1-pad1 v_ho v_out v_out 2N7002 W=100u L=100u M=1
+l1 net-l1-pad1 gnd 5m
+r1 v_out net-l1-pad1 10k
+
+.tran 1u 3m
+
+.control
+run
+plot v(net-x1-pad1) v(net-x1-pad2)
+plot v(v_ho) 
+plot v(v_lo)
+plot v(v_out)
+wrdata ir2110_results.txt v(v_ho) v(v_lo) v(v_out)
+.endc
+.end

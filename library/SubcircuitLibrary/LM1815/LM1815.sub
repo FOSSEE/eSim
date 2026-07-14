@@ -1,0 +1,61 @@
+.subckt LM1815 P2 P3 P5 P7 P8 P9 P10 P11 P12 P14
+* --- Input clamp (pin3) ---
+D_pos     P3 net_clphi 1N4148
+V_clphi   net_clphi P2 DC 0.5
+D_neg     net_clplo P3 1N4148
+V_clplo   P2 net_clplo DC 0.35
+Rgmin1    net_clphi   P2   1G
+Rgmin2    net_clplo   P2   1G
+* --- Mode-select bias (pin5) ---
+Rmid1     P8 net_mid 1Meg
+Rmid2     net_mid P2 1Meg
+Rmodebias net_mid P5 10Meg
+* --- Peak detector (Mode1 use only) ---
+Bpeak     P8 P7 I = 2m*0.5*(1+tanh(200*(V(P3,P2)-V(P7,P2))))
+* --- Mode-dependent arming threshold ---
+Bvfix     net_vfix P2 V = 0.045
++   + 0.255*0.5*(1+tanh(8*(V(P5,P2)/V(P8,P2)-0.75)))
++   - 0.045*0.5*(1+tanh(8*(0.25-V(P5,P2)/V(P8,P2))))
+Bvadapt   net_vadapt P2 V = 0.8*V(P7,P2)
+Bvarm     net_varm   P2 V = (V(net_vfix,P2)+V(net_vadapt,P2)+abs(V(net_vfix,P2)-V(net_vadapt,P2)))/2
+* --- Lockout timer: blocks re-trigger for ~150us after a trigger fires ---
+Clock     net_lock  P2   10n  IC=0
+Rlockdis  net_lock  P2   15k
+Blockchg  P2 net_lock I = 4m*0.5*(1+tanh(20*(V(net_trig,P2)-1)))
+Rgmin_lk  net_lock    P2   10Meg
+Blockgate net_lockgate P2 V = 5*0.5*(1+tanh(3*(V(net_lock,P2)-1)))
+Rgmin_lg  net_lockgate P2   10Meg
+* --- Arm/trigger detection (GATED by lockout) ---
+Bsetc     net_setc P2 V = 2.5*(1+tanh(20*(V(P3,P2)-V(net_varm,P2))))*0.5*(1-tanh(10*(V(net_lockgate,P2)-1)))
+Bresc     net_resc P2 V = 2.5*(1+tanh(20*(V(net_arm,P2)-2.5)))*0.5*(1+tanh(20*(-V(P3,P2))))
+Rgmin3    net_setc    P2   10Meg
+Rgmin4    net_resc    P2   10Meg
+* --- Edge detector: short trigger pulse ---
+Cedge     net_resc  net_edge   1n
+Redge     net_edge  P2         15k
+Bedgepulse net_trig P2 V = 5*0.5*(1+tanh(2*(V(net_edge,P2)-1)))
+Rgmin_e   net_trig    P2   10Meg
+* --- Latch memory ---
+Cmem      net_arm P2 1n IC=0
+Rgmin5    net_arm     P2   10Meg
+Bcharge   P2 net_arm I = 5m*0.5*(1+tanh(20*(V(net_setc,P2)-1)))*0.5*(1-tanh(2*(V(net_arm,P2)-4.5)))
+Bdischg   net_arm P2 I = 2m*0.5*(1+tanh(20*(V(net_resc,P2)-1)))
+* --- One-shot discharge kick into pin14 ---
+Bkick     P14 P2 I = 2m*0.5*(1+tanh(20*(V(net_trig,P2)-1)))
+Rgmin6    P14         P2   10Meg
+Dclamp    P2 P14 1N4148
+Bosout    net_osout P2 V = V(P8,P2)*0.5*(1+tanh(30*(V(P14,P2)-0.49*V(P8,P2))))
+Rgmin7    net_osout   P2   10Meg
+* --- Reference Pulse Out (pin12) ---
+Rb_ref    net_osout net_refbase 10k
+Q_ref     P12 net_refbase P2 QNPN
+* --- Gating logic ---
+Bgate     net_gate P2 V = V(P9,P2)*0.5*(1+tanh(20*(V(P11,P2)-1.1)))
++                        + V(net_osout,P2)*0.5*(1-tanh(20*(V(P11,P2)-1.1)))
+Rgmin8    net_gate    P2   10Meg
+* --- Gated Output (pin10) ---
+Rb_out    net_gate net_outbase 10k
+Q_out10   P10 net_outbase P2 QNPN
+.model 1N4148 D(Is=2.52n Rs=.568 N=1.752 Cjo=4p M=.333 Vj=.75 Fc=.5 Bv=75 Ibv=25u Tt=20n)
+.model QNPN NPN(Is=14.34f Xti=3 Eg=1.11 Vaf=74.03 Bf=255.9 Ne=1.307 Ise=14.34f Ikf=.2847 Xtb=1.5 Br=6.092 Nc=2 Isc=0 Ikr=0 Rc=1 Cjc=7.306p Mjc=.3416 Vjc=.75 Fc=.5 Cje=22.01p Mje=.377 Vje=.75 Tr=46.91n Tf=411.1p Itf=.6 Vtf=1.7 Xtf=3 Rb=10)
+.ends LM1815

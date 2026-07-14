@@ -1,0 +1,19 @@
+.title KiCad schematic
+X1 Net-_C1-Pad2_ Net-_QN1-Pad2_ VIN Net-_X1-Pad4_ GND LM321
+U2 VOUT plot_db
+D1 VOUT VIN eSim_Diode
+MP3 VOUT Net-_X1-Pad4_ VIN VIN pmos4
+C3 VOUT GND 1u
+R1 GND Net-_QN1-Pad3_ 8k
+QN2 Net-_QN2-Pad1_ Net-_QN1-Pad2_ Net-_QN2-Pad3_ npn
+QN1 Net-_QN1-Pad1_ Net-_QN1-Pad2_ Net-_QN1-Pad3_ npn
+R2 Net-_QN1-Pad3_ Net-_QN2-Pad3_ 2k
+MP1 VIN Net-_QN2-Pad1_ Net-_QN1-Pad1_ VIN pmos4
+MP2 VIN Net-_QN2-Pad1_ Net-_QN2-Pad1_ VIN pmos4
+V1 VIN GND 5v
+C2 VIN GND 1u
+U1 VIN plot_db
+C1 VOUT Net-_C1-Pad2_ 22p
+R3 Net-_C1-Pad2_ VOUT 15k
+R4 GND Net-_C1-Pad2_ 10k
+.end

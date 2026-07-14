@@ -1,0 +1,27 @@
+* Corrected Netlist for Stable Plotting
+.title LM1815 Zero Crossing Detector
+.include LM1815.sub
+.options gmin=1e-12 reltol=0.01 abstol=1e-9 vntol=1e-6 itl1=200 itl4=200 gminsteps=25
+.ic v(vcc_node)=5 v(v_out)=5
+v2      vcc_raw   gnd       5
+r_stab  vcc_raw   vcc_node  100
+c2      vcc_node  gnd       0.1u
+v1      vin_src   gnd       sine(0 0.5 1000 0 0)
+r1      vin_src   v_in      18k
+c1      peak_node gnd       0.33u
+r2      peak_node gnd       1.6Meg
+r3      rc_node   vcc_node  150k
+c3      rc_node   gnd       0.001u
+r4      vcc_node  v_out     1k
+r5      vcc_node  ref_out   5.6k
+x1  gnd v_in gnd peak_node vcc_node gnd v_out gnd ref_out rc_node LM1815
+.tran 2e-6 5e-3 0 2e-6 uic
+.meas tran pw_low1 TRIG v(v_out) VAL=2.5 FALL=1 TARG v(v_out) VAL=2.5 RISE=1
+.meas tran period1 TRIG v(v_out) VAL=2.5 FALL=1 TARG v(v_out) VAL=2.5 FALL=2
+.control
+run
+plot v(vin_src)
+plot v(v_out)
+plot v(rc_node) ylimit 0 5
+.endc
+.end
