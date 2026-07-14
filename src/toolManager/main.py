@@ -14,14 +14,17 @@ from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
 
 try:
-    from gui_fixed import ToolManagerGUI
+    from toolManager.gui_fixed import ToolManagerGUI
 except ImportError:
-    pass # Will handle gracefully later if missing
+    from gui_fixed import ToolManagerGUI
 
-# ==================== CONFIG ====================
+try:
+    from toolManager.constants import IS_WINDOWS
+except (ImportError, ValueError):
+    from constants import IS_WINDOWS
+
 BASE_DIR = Path(__file__).resolve().parent
 INFO_JSON = BASE_DIR / "information.json"
-FULL_GUI  = BASE_DIR / "gui_fixed.py"
 PYTHON    = sys.executable
 
 ANALOG_TOOLS  = ["esim", "kicad", "ngspice"]
@@ -54,7 +57,6 @@ def is_admin():
 def relaunch_as_admin():
     script = str(Path(__file__).resolve())
     
-    # Swap to pythonw.exe to suppress the black console window
     python_exe = PYTHON
     if python_exe.lower().endswith("python.exe"):
         pythonw_exe = python_exe[:-10] + "pythonw.exe"
@@ -126,7 +128,6 @@ class InstallWorker(QThread):
         self.finished.emit(success)
 
 
-# ==================== MAIN WINDOW ====================
 class ToolManagerWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -396,7 +397,6 @@ class ToolManagerWindow(QMainWindow):
         layout.setContentsMargins(30, 30, 30, 30)
         layout.setSpacing(16)
 
-        # Warning banner
         warn = QFrame()
         warn.setStyleSheet("""
             QFrame {
@@ -656,7 +656,7 @@ class ToolManagerWindow(QMainWindow):
                 subprocess.Popen(
                     [PYTHON, backend, "uninstall", tool, "none"],
                     creationflags=(subprocess.CREATE_NO_WINDOW
-                                   if sys.platform == "win32" else 0)
+                                   if IS_WINDOWS else 0)
                 )
             QMessageBox.information(
                 self, "Uninstall Started",
@@ -669,9 +669,7 @@ class ToolManagerWindow(QMainWindow):
 
 
 def main():
-    if sys.platform == "win32" and not is_admin():
-        # Note: We deliberately skip a manual PyQt consent dialog here because
-        # Windows will natively prompt the user with a UAC shield anyway.
+    if IS_WINDOWS and not is_admin():
         relaunch_as_admin()
         sys.exit(0)
 
