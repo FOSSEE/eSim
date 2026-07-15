@@ -54,7 +54,8 @@ class NewSub(QtWidgets.QWidget):
                 os.mkdir(self.schematic_path)
                 self.schematic = os.path.join(
                     self.schematic_path, self.create_schematic)
-                self.cmd = "eeschema " + self.schematic + ".sch"
+                # New KiCad v6 file extension
+                self.cmd = "eeschema " + self.schematic + ".kicad_sch"
                 self.obj_workThread = Worker.WorkerThread(self.cmd)
                 self.obj_workThread.start()
                 self.close()
