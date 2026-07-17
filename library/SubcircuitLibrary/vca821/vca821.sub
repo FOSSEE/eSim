@@ -1,0 +1,25 @@
+* Subcircuit VCA821 (710-MHz Variable Gain Amplifier)
+.subckt vca821 IN_PLUS IN_MINUS VCC VEE OUT VG
+
+* 1. High Impedance Inputs & Matrix Stabilizers (Dummy Resistors)
+r1 IN_PLUS IN_MINUS 1meg
+R_dummy1 IN_PLUS gnd 1G
+R_dummy2 IN_MINUS gnd 1G
+R_dummy3 VG gnd 1G
+
+* 2. The Variable Gain Core (Non-Linear B-Source)
+B1 RC_Node gnd I=(v(IN_PLUS)-v(IN_MINUS))*v(VG)*0.2
+
+* 3. 710 MHz High-Speed Filter Core
+R3 RC_Node gnd 100
+C1 RC_Node gnd 2.24p
+
+* 4. 50-Ohm Output Buffer
+E1 e1_out gnd RC_Node gnd 1
+R4 e1_out OUT 50
+
+* 5. Power Pins
+R5 VCC gnd 1g
+R6 VEE gnd 1g
+
+.ends vca821
