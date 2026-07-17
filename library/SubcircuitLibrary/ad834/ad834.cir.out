@@ -1,0 +1,22 @@
+.title kicad schematic
+
+.include 2n3904_NPN.lib
+* u1 /v_plus unconnected-_u1-pad2_ net-_q1-pad3_ net-_q4-pad3_ /x_plus /x_minus /w1 /w2 port
+q2 net-_q1-pad3_ /y_plus net-_i1-pad2_ 2n3904_NPN
+i1 /v_minus net-_i1-pad2_ 1m
+q3 /w1 /x_minus net-_q1-pad3_ 2n3904_NPN
+q1 /w2 /x_plus net-_q1-pad3_ 2n3904_NPN
+r1 /v_plus /w1 1k
+r2 /v_plus /w2 1k
+q5 net-_q4-pad3_ /y_minus net-_i1-pad2_ 2n3904_NPN
+q6 /w1 /x_plus net-_q4-pad3_ 2n3904_NPN
+q4 /w2 /x_minus net-_q4-pad3_ 2n3904_NPN
+.tran 0.1e-06 1e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
