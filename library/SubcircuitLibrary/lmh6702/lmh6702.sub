@@ -1,0 +1,30 @@
+* Subcircuit LMH6702 (1.7-GHz Current Feedback Amplifier)
+* Pinout: 1:IN_PLUS 2:IN_MINUS 3:OUT 4:VCC 5:VEE
+.subckt lmh6702 IN_PLUS IN_MINUS OUT VCC VEE
+
+* 1. High-Impedance Input Buffer
+R1 IN_PLUS 0 1Meg
+E1 buf_internal 0 IN_PLUS 0 1
+
+* 2. CFA Low-Impedance Inverting Pin
+* This 50-ohm resistor physically senses the error current
+R_in_minus buf_internal IN_MINUS 50
+
+* 3. The Transimpedance Engine (Scaled E-Source)
+* Multiplies the error drop by 200,000 to guarantee massive Zt.
+* This matrix is 100% stable and cannot be loaded down.
+E_trans RC_Node_Ideal 0 buf_internal IN_MINUS 200000
+
+* 4. 1.7 GHz High-Speed Filter
+R_filt RC_Node_Ideal RC_Node 1k
+C_filt RC_Node 0 0.09p
+
+* 5. 50-Ohm Output Buffer
+E2 out_internal 0 RC_Node 0 1
+R_out out_internal OUT 50
+
+* 6. Power Rails (Dummy loads to keep matrix happy)
+R_VCC VCC 0 1G
+R_VEE VEE 0 1G
+
+.ends lmh6702
