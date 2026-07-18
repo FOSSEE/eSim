@@ -42,6 +42,7 @@ from projManagement.newProject import NewProjectInfo
 from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
+from frontEnd.icelang_action import open_icelang
 
 # Its our main window of application.
 
@@ -244,6 +245,8 @@ class Application(QtWidgets.QMainWindow):
             '<b>Schematic converter</b>', self
         )
         self.conToeSim.triggered.connect(self.open_conToeSim)
+        self.icelang = QtGui.QAction('<b>ICELang Compiler</b>', self)
+        self.icelang.triggered.connect(lambda: open_icelang(self))
 
         # Adding Action Widget to tool bar
         self.lefttoolbar = QtWidgets.QToolBar('Left ToolBar')
@@ -258,6 +261,7 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.addAction(self.conToeSim)
+        self.lefttoolbar.addAction(self.icelang)
         self.lefttoolbar.setOrientation(QtCore.Qt.Orientation.Vertical)
         self.lefttoolbar.setIconSize(QSize(40, 40))
 

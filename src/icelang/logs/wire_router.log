@@ -1,0 +1,47 @@
+------> Parse Tree
+start
+  ckt_block
+    rc_filter
+    statement
+      port_in_decl	Vin
+    statement
+      port_out_decl
+        Vout
+        mc
+    statement
+      implicit_component
+        res
+        mc
+        10k
+    statement
+      explicit_component
+        mc
+        cap
+        gnd
+        10F
+
+-------> IR Objects
+
+Circuit : rc_filter
+port_in  : PortIn(name='vin')
+port_out : PortOut(name='vout', node='mc')
+component: Component(type='res', node1='vin', node2='mc', value='10k')
+component: Component(type='cap', node1='mc', node2='gnd', value='10F')
+---------> Placed Positions
+  vin        → (-15.24, 5.08)
+  mc         → (15.24, 0.0)
+  gnd        → (0.0, -15.24)
+  routing vin(98, 301) → mc(402, 250)
+  routing mc(402, 250) → gnd(250, 98)
+----------> Wire Segments
+ res_vin_mc
+    vin → mc
+    (-15.2, 5.1) → (-15.2, 0.0)
+    (-15.2, 0.0) → (15.2, 0.0)
+ cap_mc_gnd
+    mc → gnd
+    (15.2, 0.0) → (15.2, -0.1)
+    (15.2, -0.1) → (0.0, -0.1)
+    (0.0, -0.1) → (0.0, -15.2)
+-------->Junctions
+no junctions in this circuit

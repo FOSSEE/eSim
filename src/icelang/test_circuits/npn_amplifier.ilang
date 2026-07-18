@@ -1,0 +1,11 @@
+ckt npn_amplifier:
+    port_in: Vin
+    port_out: Vout collector
+
+    vol Vcc gnd 9V
+    res Vcc base 100k
+    res base gnd 10k
+    bjt_npn base collector gnd BC547
+    res Vcc collector 1k
+    cap Vin base 10uF
+done

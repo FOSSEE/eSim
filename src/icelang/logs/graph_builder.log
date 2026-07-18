@@ -1,0 +1,39 @@
+------> Parse Tree
+start
+  ckt_block
+    rc_filter
+    statement
+      port_in_decl	Vin
+    statement
+      port_out_decl
+        Vout
+        mc
+    statement
+      implicit_component
+        res
+        mc
+        10k
+    statement
+      explicit_component
+        mc
+        cap
+        gnd
+        10F
+
+-------> IR Objects
+
+Circuit : rc_filter
+port_in  : PortIn(name='vin')
+port_out : PortOut(name='vout', node='mc')
+component: Component(type='res', node1='vin', node2='mc', value='10k')
+component: Component(type='cap', node1='mc', node2='gnd', value='10F')
+------> Graph Nodes
+  vin        → {'node_type': 'port_in'}
+  mc         → {'node_type': 'port_out'}
+  gnd        → {'node_type': 'ground'}
+------>Graph Edges
+  vin ── mc  [res 10k]
+  mc ── gnd  [cap 10F]
+ nodes : 3
+  edges : 2
+graph saved → /home/princess/icelang/intelligent_schematic_layer/rc_filter_graph.png

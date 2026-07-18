@@ -1,0 +1,81 @@
+
+──────────────────────────────────────────────────
+Test: RC filter
+──────────────────────────────────────────────────
+  ckt      : rc_filter
+  port_in  : vin
+  port_out : vout @ mc
+  res             nodes=['mc'] value=10k
+  mc              nodes=['cap', 'gnd'] value=100n
+  SEMANTIC: Node 'mc' only appears once — possible floating connection
+  SEMANTIC: Node 'cap' only appears once — possible floating connection
+
+──────────────────────────────────────────────────
+Test: Voltage source
+──────────────────────────────────────────────────
+  ckt      : dc_circuit
+  port_in  : vin
+  port_out : vout @ mc
+  vol             nodes=['vin', 'gnd'] value=5V
+  res             nodes=['mc'] value=10k
+  mc              nodes=['cap', 'gnd'] value=100n
+  SEMANTIC: Node 'mc' only appears once — possible floating connection
+  SEMANTIC: Node 'cap' only appears once — possible floating connection
+
+──────────────────────────────────────────────────
+Test: NPN amplifier
+──────────────────────────────────────────────────
+  ckt      : npn_amplifier
+  port_in  : vin
+  port_out : vout @ out
+  vol             nodes=['vcc', 'gnd'] value=9V
+  res             nodes=['base'] value=100k
+  base            nodes=['res', 'gnd'] value=10k
+  bjt_npn         nodes=['base', 'out', 'gnd'] value=BC547
+  res             nodes=['out'] value=1k
+  cap             nodes=['base', 'vin'] value=10uF
+  SEMANTIC: Node 'res' only appears once — possible floating connection
+
+──────────────────────────────────────────────────
+Test: CMOS inverter
+──────────────────────────────────────────────────
+  ckt      : cmos_inverter
+  port_in  : vin
+  port_out : vout @ out
+  vol             nodes=['vdd', 'gnd'] value=3.3V
+  pmos            nodes=['vin', 'out', 'vdd', 'vdd'] value=PMOS_MODEL
+  nmos            nodes=['vin', 'out', 'gnd', 'gnd'] value=NMOS_MODEL
+  semantic : OK
+
+──────────────────────────────────────────────────
+Test: User defined component
+──────────────────────────────────────────────────
+registered bc547 → Device:Q_NPN_BCE
+  ckt      : custom_circuit
+  port_in  : vin
+  port_out : vout @ out
+  bc547           nodes=['base', 'out', 'gnd'] value=
+  res             nodes=['base', 'vin'] value=100k
+  SEMANTIC: Node 'out' only appears once — possible floating connection
+
+──────────────────────────────────────────────────
+Test: Cascaded subcircuits
+──────────────────────────────────────────────────
+  ckt      : rc_stage
+  port_in  : vin
+  port_out : vout @ mc
+  res             nodes=['mc'] value=10k
+  mc              nodes=['cap', 'gnd'] value=100n
+  SEMANTIC: Node 'mc' only appears once — possible floating connection
+  SEMANTIC: Node 'cap' only appears once — possible floating connection
+  ckt      : dual_rc
+  port_in  : vin
+  port_out : vout @ mid2
+  use             nodes=['rc_stage', 'vin', 'mid1'] value=
+  use             nodes=['rc_stage', 'mid1', 'mid2'] value=
+  SEMANTIC: No GND node found
+  SEMANTIC: Node 'mid2' only appears once — possible floating connection
+
+==================================================
+Results: 6 passed  0 failed
+==================================================

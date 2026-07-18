@@ -1,0 +1,11 @@
+* rc_with_source
+
+V1 vin gnd 5V
+R1 vin mid 10k
+C1 mid gnd 100n
+
+* test source auto-generated for port vin
+V_test vin gnd PULSE(0 5 0 1n 1n 500u 1m)
+
+.tran 1us 10ms
+.end

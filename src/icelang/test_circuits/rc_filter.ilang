@@ -1,0 +1,6 @@
+ckt rc_filter:
+    port_in: Vin
+    port_out: Vout mid
+    res Vin mid 1k
+    cap mid gnd 220n
+done
