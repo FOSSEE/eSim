@@ -1,0 +1,12 @@
+.title KiCad schematic
+U1 /V_PLUS unconnected-_U1-Pad2_ Net-_Q1-Pad3_ Net-_Q4-Pad3_ /X_PLUS /X_MINUS /W1 /W2 PORT
+Q2 Net-_Q1-Pad3_ /Y_PLUS Net-_I1-Pad2_ 2n3904_NPN
+I1 /V_MINUS Net-_I1-Pad2_ 1m
+Q3 /W1 /X_MINUS Net-_Q1-Pad3_ 2n3904_NPN
+Q1 /W2 /X_PLUS Net-_Q1-Pad3_ 2n3904_NPN
+R1 /V_PLUS /W1 1k
+R2 /V_PLUS /W2 1k
+Q5 Net-_Q4-Pad3_ /Y_MINUS Net-_I1-Pad2_ 2n3904_NPN
+Q6 /W1 /X_PLUS Net-_Q4-Pad3_ 2n3904_NPN
+Q4 /W2 /X_MINUS Net-_Q4-Pad3_ 2n3904_NPN
+.end

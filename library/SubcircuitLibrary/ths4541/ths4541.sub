@@ -1,0 +1,28 @@
+* Subcircuit THS4541 (850-MHz Fully Differential Amplifier)
+* Pin Map: 1:IN+ 2:IN- 3:VOCM 4:VCC 5:VEE 6:OUT+ 7:OUT-
+.subckt ths4541 IN_PLUS IN_MINUS VOCM VCC VEE OUT_PLUS OUT_MINUS
+
+* 1. High Impedance Dummy Stabilizers
+R1 IN_PLUS 0 1G
+R2 IN_MINUS 0 1G
+R3 VOCM 0 1G
+R4 VCC 0 1G
+R5 VEE 0 1G
+
+* 2. Massive Open-Loop Gain Core
+E_core RC_in 0 IN_PLUS IN_MINUS 100000
+
+* 3. 850 MHz Filter Core (This wire is now securely connected!)
+R_filt RC_in RC_node 1k
+C_filt RC_node 0 0.187p
+
+* 4. The Fully Differential Output Engine
+* OUT_PLUS = VOCM + (+0.5 * RC_node)
+E_plus out_p_int VOCM RC_node 0 0.5
+R_out_p out_p_int OUT_PLUS 0.1
+
+* OUT_MINUS = VOCM + (-0.5 * RC_node)
+E_minus out_m_int VOCM 0 RC_node 0.5
+R_out_m out_m_int OUT_MINUS 0.1
+
+.ends ths4541

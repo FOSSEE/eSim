@@ -1,0 +1,24 @@
+.title kicad schematic
+
+* u1 net-_e1-pad3_ net-_e1-pad4_ net-_r4-pad2_ net-_r5-pad1_ net-_r6-pad1_ port
+r1 gnd net-_e1-pad3_ 1g
+r2 gnd net-_e1-pad4_ 1g
+e1 /diff_node gnd net-_e1-pad3_ net-_e1-pad4_ 1
+r3 net-_b_rect1-pad1_ net-_c1-pad1_ 1k
+c1 net-_c1-pad1_ gnd 1.59p
+b_rect1 net-_b_rect1-pad1_ gnd v=abs(v(diff_node))
+r4 gnd net-_r4-pad2_ 1g
+r5 net-_r5-pad1_ gnd 1g
+e2 net-_e2-pad1_ gnd net-_b_log1-pad1_ gnd 1
+b_log1 net-_b_log1-pad1_ gnd v=0.5*log10((abs(v(env_node))+1u)/2.24u)
+r6 net-_r6-pad1_ net-_e2-pad1_ 50
+r7 net-_r6-pad1_ gnd 1g
+.tran 0.1e-09 2e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

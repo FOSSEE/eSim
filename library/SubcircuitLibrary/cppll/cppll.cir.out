@@ -1,0 +1,20 @@
+.title kicad schematic
+
+* u1 net-_r1-pad2_ net-_r2-pad1_ net-_r3-pad2_ net-_r5-pad1_ net-_g_cp1-pad1_ port
+r1 gnd net-_r1-pad2_ 1g
+b_pd1 net-_g_cp1-pad3_ gnd v = sgn(v(ref_in)) * sgn(v(vco_fb))
+r2 net-_r2-pad1_ gnd 1g
+r5 net-_r5-pad1_ gnd 1g
+g_cp1 net-_g_cp1-pad1_ gnd net-_g_cp1-pad3_ gnd vccs
+b_vco1 net-_g_cp1-pad1_ gnd v = sin(2*3.14159*1meg*time + 2*3.14159*1meg*sdt(v(vco_in)))
+r4 net-_g_cp1-pad1_ gnd 1g
+r3 gnd net-_r3-pad2_ 1g
+.tran 1e-09 20e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,11 @@
+.title KiCad schematic
+R1 Net-_Gm1-Pad4_ Net-_Gm1-Pad3_ 1Meg
+Gm1 Net-_C1-Pad1_ GND Net-_Gm1-Pad3_ Net-_Gm1-Pad4_ 0.2
+U1 Net-_Gm1-Pad3_ Net-_Gm1-Pad4_ Net-_R5-Pad1_ Net-_R3-Pad2_ Net-_R4-Pad2_ PORT
+C1 Net-_C1-Pad1_ GND 0.884p
+R2 GND Net-_C1-Pad1_ 100
+E1 Net-_E1-Pad1_ GND Net-_C1-Pad1_ GND 1
+R5 Net-_R5-Pad1_ Net-_E1-Pad1_ 50
+R4 GND Net-_R4-Pad2_ 1G
+R3 GND Net-_R3-Pad2_ 1G
+.end

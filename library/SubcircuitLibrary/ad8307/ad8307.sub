@@ -1,0 +1,28 @@
+* Subcircuit AD8307 (500-MHz Logarithmic Amplifier)
+* Pin Map: 1:IN_PLUS 2:IN_MINUS 3:VCC 4:VEE 5:OUT
+.subckt ad8307 IN_PLUS IN_MINUS VCC VEE OUT
+
+* 1. Input Buffer & Matrix Dummies
+R1 IN_PLUS 0 1G
+R2 IN_MINUS 0 1G
+E_in diff_node 0 IN_PLUS IN_MINUS 1
+
+* 2. Full-Wave Rectification Core
+B_rect rect_node 0 V=abs(v(diff_node))
+
+* 3. Envelope Filter (100 MHz smoothing)
+R_filt rect_node env_node 1k
+C_filt env_node 0 159p
+
+* 4. Logarithmic Core (With 1uV Anti-Singularity Offset)
+B_log log_node 0 V=0.25*log10((abs(v(env_node))+1u)/1u)
+
+* 5. Output Buffer
+E_out out_int 0 log_node 0 1
+R_out out_int OUT 50
+
+* 6. Power Rail Dummies
+R_VCC VCC 0 1G
+R_VEE VEE 0 1G
+
+.ends ad8307
