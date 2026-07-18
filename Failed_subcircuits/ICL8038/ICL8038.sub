@@ -1,0 +1,119 @@
+* Subcircuit ICL8038
+.subckt ICL8038 net-_q2-pad1_ net-_r2-pad2_ net-_q3-pad3_ net-_q10-pad1_ net-_q10-pad1_ net-_q16-pad3_ net-_d4-pad2_ net-_q35-pad3_ net-_q49-pad3_ net-_q10-pad1_ net-_q51-pad2_ net-_q52-pad2_ ? ? 
+* c:\fossee\esim\library\subcircuitlibrary\icl8038\icl8038.cir
+.include CBAT54_Schottky.lib
+.include PNP.lib
+.include D.lib
+.include NPN.lib
+q51 net-_q10-pad1_ net-_q51-pad2_ net-_q49-pad2_ Q2N2222
+q49 net-_d4-pad2_ net-_q49-pad2_ net-_q49-pad3_ Q2N2907A
+q47 net-_q10-pad1_ net-_q47-pad2_ net-_q45-pad2_ Q2N2222
+q45 net-_d4-pad2_ net-_q45-pad2_ net-_q45-pad3_ Q2N2907A
+q43 net-_q10-pad1_ net-_q43-pad2_ net-_q41-pad2_ Q2N2222
+q41 net-_d4-pad2_ net-_q41-pad2_ net-_q41-pad3_ Q2N2907A
+q39 net-_q10-pad1_ net-_q39-pad2_ net-_q37-pad2_ Q2N2222
+q37 net-_d4-pad2_ net-_q37-pad2_ net-_q37-pad3_ Q2N2907A
+q38 net-_q10-pad1_ net-_q38-pad2_ net-_q38-pad3_ Q2N2222
+q40 net-_d4-pad2_ net-_q40-pad2_ net-_q38-pad2_ Q2N2907A
+q44 net-_d4-pad2_ net-_q44-pad2_ net-_q42-pad2_ Q2N2907A
+q42 net-_q10-pad1_ net-_q42-pad2_ net-_q42-pad3_ Q2N2222
+q46 net-_q10-pad1_ net-_q46-pad2_ net-_q46-pad3_ Q2N2222
+q48 net-_d4-pad2_ net-_q48-pad2_ net-_q46-pad2_ Q2N2907A
+q52 net-_d4-pad2_ net-_q52-pad2_ net-_q50-pad2_ Q2N2907A
+q50 net-_q10-pad1_ net-_q50-pad2_ net-_q49-pad3_ Q2N2222
+q33 net-_q10-pad1_ net-_q33-pad2_ net-_q31-pad2_ Q2N2222
+q31 net-_q10-pad1_ net-_q31-pad2_ net-_q27-pad3_ Q2N2222
+q24 net-_q22-pad2_ net-_q16-pad3_ net-_q24-pad3_ Q2N2222
+q27 net-_q22-pad2_ net-_q24-pad3_ net-_q27-pad3_ Q2N2222
+q28 net-_d8-pad1_ net-_q25-pad3_ net-_q28-pad3_ Q2N2907A
+q25 net-_d8-pad1_ net-_q16-pad3_ net-_q25-pad3_ Q2N2907A
+q32 net-_d4-pad2_ net-_q32-pad2_ net-_q28-pad3_ Q2N2907A
+q34 net-_d4-pad2_ net-_q34-pad2_ net-_q32-pad2_ Q2N2907A
+q29 net-_q29-pad1_ net-_q29-pad1_ net-_q29-pad3_ Q2N2222
+q35 net-_q10-pad1_ net-_q29-pad1_ net-_q35-pad3_ Q2N2222
+q30 net-_d4-pad2_ net-_q26-pad3_ net-_q29-pad3_ Q2N2907A
+q36 net-_d4-pad2_ net-_q26-pad3_ net-_q35-pad3_ Q2N2907A
+q22 net-_d9-pad1_ net-_q22-pad2_ net-_q10-pad1_ Q2N2907A
+q14 net-_q14-pad1_ net-_q14-pad2_ net-_q10-pad1_ Q2N2907A
+q15 net-_q10-pad1_ net-_q14-pad1_ net-_q15-pad3_ Q2N2222
+q16 net-_q15-pad3_ net-_q15-pad3_ net-_q16-pad3_ Q2N2222
+q8 net-_q10-pad2_ net-_q14-pad2_ net-_q10-pad1_ Q2N2907A
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q11 net-_q10-pad3_ net-_q10-pad3_ net-_d5-pad2_ Q2N2222
+q4 net-_q10-pad1_ net-_q3-pad3_ net-_q14-pad2_ Q2N2222
+q3 net-_q14-pad2_ net-_q14-pad2_ net-_q3-pad3_ Q2N2222
+q6 net-_q14-pad2_ net-_q10-pad3_ net-_q6-pad3_ Q2N2222
+q17 net-_q16-pad3_ net-_d5-pad2_ net-_q12-pad1_ Q2N2222
+q18 net-_q12-pad1_ net-_q12-pad1_ net-_q18-pad3_ Q2N2222
+q12 net-_q12-pad1_ net-_q12-pad1_ net-_q12-pad3_ Q2N2222
+q7 net-_d5-pad2_ net-_q12-pad1_ net-_q7-pad3_ Q2N2222
+q1 net-_q1-pad1_ net-_d1-pad1_ net-_q1-pad3_ Q2N2222
+q5 net-_q1-pad1_ net-_d6-pad2_ net-_q5-pad3_ Q2N2222
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_d4-pad2_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d1-pad2_ net-_d2-pad2_ 1N4148
+d3 net-_d2-pad2_ net-_d3-pad2_ 1N4148
+d4 net-_d3-pad2_ net-_d4-pad2_ 1N4148
+r1  net-_q1-pad1_ net-_d1-pad1_ 30k
+r4  net-_q5-pad3_ net-_q2-pad2_ 270
+r5  net-_q2-pad2_ net-_d4-pad2_ 2.7k
+r10  net-_d6-pad1_ net-_d5-pad1_ 470
+r11  net-_d7-pad1_ net-_d6-pad2_ 27k
+q21 net-_d6-pad1_ net-_d9-pad1_ net-_d4-pad2_ Q2N2222
+r8  net-_q1-pad3_ net-_d6-pad2_ 620
+r13  net-_q1-pad3_ net-_d6-pad1_ 1.8k
+r9  net-_q12-pad3_ net-_d4-pad2_ 100
+r7  net-_q7-pad3_ net-_d4-pad2_ 100
+r12  net-_q18-pad3_ net-_d4-pad2_ 100
+q26 net-_q10-pad1_ net-_q23-pad3_ net-_q26-pad3_ Q2N2222
+q23 net-_q10-pad1_ net-_q15-pad3_ net-_q23-pad3_ Q2N2222
+r16  net-_q23-pad3_ net-_q26-pad3_ 27k
+r18  net-_q26-pad3_ net-_d4-pad2_ 27k
+r20  net-_q10-pad1_ net-_q29-pad1_ 27k
+r14  net-_d4-pad2_ net-_d8-pad1_ 4.7k
+r15  net-_d4-pad2_ net-_d9-pad1_ 4.7k
+r6  net-_q6-pad3_ net-_d5-pad2_ 40k
+r2  net-_q10-pad1_ net-_r2-pad2_ 11k
+r3  net-_r2-pad2_ net-_d4-pad2_ 39k
+r17  net-_q10-pad1_ net-_q22-pad2_ 4k
+r22  net-_q10-pad1_ net-_q33-pad2_ 5k
+r23  net-_q33-pad2_ net-_q34-pad2_ 5k
+r24  net-_q34-pad2_ net-_d4-pad2_ 5k
+r19  net-_q28-pad3_ net-_q10-pad1_ 15k
+r21  net-_d4-pad2_ net-_q27-pad3_ 10k
+r26  net-_q45-pad3_ net-_q49-pad3_ 800
+r27  net-_q41-pad3_ net-_q49-pad3_ 2.7k
+r28  net-_q37-pad3_ net-_q49-pad3_ 10k
+r31  net-_q46-pad3_ net-_q49-pad3_ 800
+r30  net-_q42-pad3_ net-_q49-pad3_ 2.7k
+r29  net-_q38-pad3_ net-_q49-pad3_ 10k
+r35  net-_q10-pad1_ net-_q42-pad2_ 33k
+r37  net-_q10-pad1_ net-_q46-pad2_ 33k
+r39  net-_q10-pad1_ net-_q50-pad2_ 33k
+r32  net-_q37-pad2_ net-_d4-pad2_ 33k
+r34  net-_q41-pad2_ net-_d4-pad2_ 33k
+r36  net-_q45-pad2_ net-_d4-pad2_ 33k
+r38  net-_q49-pad2_ net-_d4-pad2_ 33k
+r44  net-_q39-pad2_ net-_q40-pad2_ 1600
+r45  net-_q40-pad2_ net-_q44-pad2_ 330
+r46  net-_q44-pad2_ net-_q48-pad2_ 375
+r47  net-_q48-pad2_ net-_q52-pad2_ 200
+r48  net-_q52-pad2_ net-_d4-pad2_ 5.6k
+r43  net-_q43-pad2_ net-_q39-pad2_ 330
+r42  net-_q47-pad2_ net-_q43-pad2_ 375
+r41  net-_q51-pad2_ net-_q47-pad2_ 200
+r40  net-_q10-pad1_ net-_q51-pad2_ 5.2k
+r25  net-_q35-pad3_ net-_q49-pad3_ 1k
+r33  net-_q10-pad1_ net-_q38-pad2_ 33k
+q9 net-_d5-pad2_ net-_d5-pad1_ net-_d4-pad2_ Q2N2222
+d5 net-_d5-pad1_ net-_d5-pad2_ CBAT54
+d9 net-_d9-pad1_ net-_d6-pad1_ CBAT54
+q19 net-_d7-pad1_ net-_d8-pad1_ net-_d4-pad2_ Q2N2222
+d8 net-_d8-pad1_ net-_d7-pad1_ CBAT54
+q13 net-_d6-pad2_ net-_d6-pad1_ net-_d4-pad2_ Q2N2222
+d6 net-_d6-pad1_ net-_d6-pad2_ CBAT54
+q20 net-_d6-pad1_ net-_d7-pad1_ net-_d4-pad2_ Q2N2222
+d7 net-_d7-pad1_ net-_d6-pad1_ CBAT54
+* Control Statements
+
+.ends ICL8038
