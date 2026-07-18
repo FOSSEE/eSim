@@ -1,0 +1,11 @@
+* signal_conditioner
+
+R1 vin mid 4k
+C1 mid gnd 220n
+R2 mid gnd 100k
+
+* test source auto-generated for port vin
+V_test vin gnd PULSE(0 5 0 1n 1n 500u 1m)
+
+.tran 1us 10ms
+.end

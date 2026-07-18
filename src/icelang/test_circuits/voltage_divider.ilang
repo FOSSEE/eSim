@@ -1,0 +1,8 @@
+ckt voltage_divider:
+    port_in: Vin
+    port_out: Vout mid
+
+    vol Vin gnd 9V
+    res Vin mid 10k
+    res mid gnd 10k
+done

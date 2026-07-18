@@ -1,0 +1,12 @@
+ckt signal_conditioner:
+    define filter_cap kicad="Device:C" spice=C pins=2
+    define pull_down  kicad="Device:R" spice=R pins=2
+    define series_res kicad="Device:R" spice=R pins=2
+
+    port_in: Vin
+    port_out: Vout mid
+
+    series_res Vin mid 4k7
+    filter_cap mid gnd 220n
+    pull_down mid gnd 100k
+done

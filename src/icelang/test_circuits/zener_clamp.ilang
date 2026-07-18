@@ -1,0 +1,7 @@
+ckt zener_clamp:
+    ncomp zen: D_Zener
+    port_in: Vin
+    port_out: Vout mid
+    res Vin mid 1k
+    zen mid gnd 5V1
+done

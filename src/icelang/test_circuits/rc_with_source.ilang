@@ -1,0 +1,8 @@
+ckt rc_with_source:
+    port_in: Vin
+    port_out: Vout mid
+
+    vol Vin gnd 5V
+    res Vin mid 10k
+    cap mid gnd 100n
+done

@@ -1,0 +1,325 @@
+{
+  "res": {
+    "kicad_symbol": "Device:R",
+    "spice_prefix": "R",
+    "pin_count": 2,
+    "pin_names": [
+      "1",
+      "2"
+    ],
+    "aliases": [
+      "resistor",
+      "r"
+    ]
+  },
+  "cap": {
+    "kicad_symbol": "Device:C",
+    "spice_prefix": "C",
+    "pin_count": 2,
+    "pin_names": [
+      "1",
+      "2"
+    ],
+    "aliases": [
+      "capacitor",
+      "c"
+    ]
+  },
+  "ind": {
+    "kicad_symbol": "Device:L",
+    "spice_prefix": "L",
+    "pin_count": 2,
+    "pin_names": [
+      "1",
+      "2"
+    ],
+    "aliases": [
+      "inductor",
+      "coil"
+    ]
+  },
+  "diode": {
+    "kicad_symbol": "Device:D",
+    "spice_prefix": "D",
+    "pin_count": 2,
+    "pin_names": [
+      "A",
+      "K"
+    ],
+    "aliases": [
+      "d"
+    ]
+  },
+  "vol": {
+    "kicad_symbol": "Device:Battery",
+    "spice_prefix": "V",
+    "pin_count": 2,
+    "pin_names": [
+      "+",
+      "-"
+    ],
+    "aliases": [
+      "voltage",
+      "vsource",
+      "vdc"
+    ]
+  },
+  "curr": {
+    "kicad_symbol": "Device:Battery",
+    "spice_prefix": "I",
+    "pin_count": 2,
+    "pin_names": [
+      "+",
+      "-"
+    ],
+    "aliases": [
+      "current",
+      "isource"
+    ]
+  },
+  "bjt_npn": {
+    "kicad_symbol": "Device:Q_NPN",
+    "spice_prefix": "Q",
+    "pin_count": 3,
+    "pin_names": [
+      "B",
+      "C",
+      "E"
+    ],
+    "aliases": [
+      "npn",
+      "transistor_npn",
+      "BC547",
+      "2N2222"
+    ]
+  },
+  "bjt_pnp": {
+    "kicad_symbol": "Device:Q_PNP",
+    "spice_prefix": "Q",
+    "pin_count": 3,
+    "pin_names": [
+      "B",
+      "C",
+      "E"
+    ],
+    "aliases": [
+      "pnp",
+      "transistor_pnp",
+      "BC557"
+    ]
+  },
+  "nmos": {
+    "kicad_symbol": "Device:Q_NMOS",
+    "spice_prefix": "M",
+    "pin_count": 4,
+    "pin_names": [
+      "G",
+      "D",
+      "S"
+    ],
+    "aliases": [
+      "mosfet_n",
+      "nfet"
+    ]
+  },
+  "pmos": {
+    "kicad_symbol": "Device:Q_PMOS",
+    "spice_prefix": "M",
+    "pin_count": 4,
+    "pin_names": [
+      "G",
+      "D",
+      "S"
+    ],
+    "aliases": [
+      "mosfet_p",
+      "pfet"
+    ]
+  },
+  "opamp": {
+    "kicad_symbol": "Amplifier_Operational:LM741",
+    "spice_prefix": "X",
+    "pin_count": 5,
+    "pin_names": [
+      "IN+",
+      "IN-",
+      "OUT",
+      "V+",
+      "V-"
+    ],
+    "aliases": [
+      "op_amp",
+      "LM741",
+      "LM358",
+      "TL071"
+    ]
+  },
+  "gate_and": {
+    "kicad_symbol": "74xx:74LS08",
+    "spice_prefix": "X",
+    "pin_count": 3,
+    "pin_names": [
+      "A",
+      "B",
+      "Y"
+    ],
+    "aliases": [
+      "and_gate",
+      "AND"
+    ]
+  },
+  "gate_not": {
+    "kicad_symbol": "74xx:74LS04",
+    "spice_prefix": "X",
+    "pin_count": 2,
+    "pin_names": [
+      "A",
+      "Y"
+    ],
+    "aliases": [
+      "inverter",
+      "NOT"
+    ]
+  },
+  "bc547": {
+    "kicad_symbol": "Device:Q_NPN_BCE",
+    "spice_prefix": "Q",
+    "pin_count": 3,
+    "pin_names": [
+      "1",
+      "2",
+      "3"
+    ],
+    "aliases": []
+  },
+  "filter_cap": {
+    "kicad_symbol": "Device:C",
+    "spice_prefix": "C",
+    "pin_count": 2,
+    "pin_names": [
+      "1",
+      "2"
+    ],
+    "aliases": []
+  },
+  "pull_down": {
+    "kicad_symbol": "Device:R",
+    "spice_prefix": "R",
+    "pin_count": 2,
+    "pin_names": [
+      "1",
+      "2"
+    ],
+    "aliases": []
+  },
+  "series_res": {
+    "kicad_symbol": "Device:R",
+    "spice_prefix": "R",
+    "pin_count": 2,
+    "pin_names": [
+      "1",
+      "2"
+    ],
+    "aliases": []
+  },
+  "jfet_n": {
+    "kicad_symbol": "Device:Q_NJFET_GSD",
+    "spice_prefix": "J",
+    "pin_count": 3,
+    "pin_names": [
+      "G",
+      "S",
+      "D"
+    ],
+    "aliases": [
+      "njfet",
+      "2N5457"
+    ]
+  },
+  "led": {
+    "kicad_symbol": "Device:LED",
+    "spice_prefix": "D",
+    "pin_count": 2,
+    "pin_names": [
+      "A",
+      "K"
+    ],
+    "aliases": [
+      "LED"
+    ]
+  },
+  "zener": {
+    "kicad_symbol": "Device:D_Zener",
+    "spice_prefix": "D",
+    "pin_count": 2,
+    "pin_names": [
+      "A",
+      "K"
+    ],
+    "aliases": [
+      "zener_diode"
+    ]
+  },
+  "xtal": {
+    "kicad_symbol": "Device:Crystal",
+    "spice_prefix": "Y",
+    "pin_count": 2,
+    "pin_names": [
+      "1",
+      "2"
+    ],
+    "aliases": [
+      "crystal",
+      "oscillator"
+    ]
+  },
+  "transformer": {
+    "kicad_symbol": "Device:Transformer_1P_1S",
+    "spice_prefix": "T",
+    "pin_count": 4,
+    "pin_names": [
+      "L1.1",
+      "L1.2",
+      "L2.1",
+      "L2.2"
+    ],
+    "aliases": [
+      "xfmr"
+    ]
+  },
+  "gnd": {
+    "kicad_symbol": "power:GND",
+    "spice_prefix": "GND",
+    "pin_count": 1,
+    "pin_names": [
+      "GND"
+    ],
+    "aliases": [
+      "ground",
+      "gnd_ref"
+    ]
+  },
+  "vcc": {
+    "kicad_symbol": "power:VCC",
+    "spice_prefix": "VCC",
+    "pin_count": 1,
+    "pin_names": [
+      "VCC"
+    ],
+    "aliases": [
+      "vdd",
+      "power_rail"
+    ]
+  },
+  "zen": {
+    "kicad_symbol": "Device:D_Zener",
+    "spice_prefix": "Z",
+    "pin_count": 2,
+    "pin_names": [
+      "K",
+      "A"
+    ],
+    "aliases": [],
+    "signal_pin": "K"
+  }
+}

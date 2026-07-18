@@ -1,0 +1,14 @@
+* npn_amplifier
+
+V1 vcc gnd 9V
+R1 vcc base 100k
+R2 base gnd 10k
+Q1 base collector BC547
+R3 vcc collector 1k
+C1 vin base 10uF
+
+* test source auto-generated for port vin
+V_test vin gnd PULSE(0 5 0 1n 1n 500u 1m)
+
+.tran 1us 10ms
+.end
