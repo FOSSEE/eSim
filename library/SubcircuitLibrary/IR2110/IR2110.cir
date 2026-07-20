@@ -1,0 +1,17 @@
+.title KiCad schematic
+U2 /HIN /VSS /VDD Net-_A1-Pad2_ 7414_PSPICE
+A1 unconnected-_A1-Pad1_ Net-_A1-Pad2_ unconnected-_A1-Pad3_ Net-_A1-Pad4_ unconnected-_A1-Pad5_ Net-_M3-Pad2_ unconnected-_A1-Pad7_ unconnected-_A1-Pad8_ and
+U8 Net-_M3-Pad2_ /VSS /VDD Net-_M1-Pad2_ 7414_PSPICE
+U6 Net-_U6-PadA_ /VSS /VDD Net-_U6-PadY_ 7414_PSPICE
+M3 Net-_M3-Pad1_ Net-_M3-Pad2_ /COM /COM mosfet_n
+A2 unconnected-_A2-Pad1_ Net-_A2-Pad2_ unconnected-_A2-Pad3_ Net-_A1-Pad4_ unconnected-_A2-Pad5_ Net-_U6-PadA_ unconnected-_A2-Pad7_ unconnected-_A2-Pad8_ and
+U3 /LIN /VSS /VDD Net-_A2-Pad2_ 7414_PSPICE
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ /COM /COM mosfet_n
+U7 Net-_U6-PadY_ /VSS /VDD Net-_M4-Pad2_ 7414_PSPICE
+U4 /SD /VSS /VDD Net-_A1-Pad4_ 7414_PSPICE
+M4 /VCC Net-_M4-Pad2_ /LO /VCC mosfet_p
+M2 /LO Net-_M4-Pad2_ /COM /COM mosfet_n
+U5 Net-_M3-Pad1_ Net-_M1-Pad1_ /VDD /VSS /VSS Net-_U5-Pad6_ unconnected-_U5-Pad7_ d_srff
+M6 /VB Net-_U5-Pad6_ /HO /VB mosfet_p
+M5 /HO Net-_U5-Pad6_ /VS /VS mosfet_n
+.end

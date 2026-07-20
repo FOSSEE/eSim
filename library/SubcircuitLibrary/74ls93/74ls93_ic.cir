@@ -1,0 +1,23 @@
+.title KiCad schematic
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ unconnected-_U1-Pad4_ unconnected-_U1-Pad5_ unconnected-_U1-Pad6_ unconnected-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ unconnected-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ unconnected-_U1-Pad13_ Net-_U1-Pad14_ PORT
+U2 Net-_U1-Pad14_ Net-_U2-Pad2_ d_inverter
+U4 Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U10-Pad5_ d_and
+U15 Net-_U14-Pad1_ Net-_U13-Pad1_ Net-_U12-Pad2_ Net-_U15-Pad4_ Net-_U10-Pad5_ Net-_U1-Pad8_ unconnected-_U15-Pad7_ d_jkff
+U16 Net-_U15-Pad4_ d_pulldown
+U11 Net-_U10-Pad4_ d_pulldown
+U17 Net-_U1-Pad8_ Net-_U17-Pad2_ d_inverter
+U18 Net-_U18-Pad1_ d_pullup
+U21 Net-_U20-Pad4_ d_pulldown
+U20 Net-_U18-Pad1_ Net-_U19-Pad1_ Net-_U17-Pad2_ Net-_U20-Pad4_ Net-_U10-Pad5_ Net-_U1-Pad11_ unconnected-_U20-Pad7_ d_jkff
+U13 Net-_U13-Pad1_ d_pullup
+U12 Net-_U1-Pad9_ Net-_U12-Pad2_ d_inverter
+U14 Net-_U14-Pad1_ d_pullup
+U19 Net-_U19-Pad1_ d_pullup
+U3 Net-_U3-Pad1_ d_pullup
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ Net-_U10-Pad4_ Net-_U10-Pad5_ Net-_U1-Pad9_ unconnected-_U10-Pad7_ d_jkff
+U9 Net-_U10-Pad1_ d_pullup
+U7 Net-_U1-Pad1_ Net-_U10-Pad3_ d_inverter
+U8 Net-_U10-Pad2_ d_pullup
+U6 Net-_U5-Pad4_ d_pulldown
+U5 Net-_U3-Pad1_ Net-_U3-Pad1_ Net-_U2-Pad2_ Net-_U5-Pad4_ Net-_U10-Pad5_ Net-_U1-Pad12_ unconnected-_U5-Pad7_ d_jkff
+.end

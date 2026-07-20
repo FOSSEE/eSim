@@ -1,0 +1,1 @@
+.MODEL eSim_RedLED D( Is=1e-10 Rs=0.1 N=4.09 tt=4.0e-6 Cjo=3e-12 M=0.5 Vj=0.7 Bv=5 Ibv=10e-6 Fc=0.5 Isr=0.0 Nr=2.0 Kf=0.0 Af=1.0 Ffe=1.0 Xti=3.0 Eg=1.11 Tbv=0.0 Trs=0.0 )

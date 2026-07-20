@@ -1,0 +1,11 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# LP2950
+#
+DEF LP2950 U 0 40 Y Y 1 F N
+DRAW
+ENDDRAW
+ENDDEF
+#
+#End Library

@@ -1,0 +1,87 @@
+* COMPLETE 3-PHASE INVERTER SIMULATION (MANUAL PLOT VER) - FIXED
+* --- 1. DEVICE MODELS ---
+.model mosfet_n NMOS (Level=1 Kp=10)
+.model mosfet_p PMOS (Level=1 Kp=10)
+.model D_mod D (Is=2.52n Rs=0.568)
+
+* --- 2. IR2130 MATH SUBCIRCUIT (NO DIGITAL GATES) ---
+.subckt IR2130 H1 H2 H3 L1 L2 L3 FLT VCC VSS VB1 VS1 HO1 VB2 VS2 HO2 VB3 VS3 HO3 LO1 LO2 LO3 COM
+* Phase 1
+B_H1 n_h1 VSS V = 2.5 - 2.5 * tanh((V(H1,VSS) - 2.5) * 10)
+B_A1 n_a1 VSS V = 2.5 + 2.5 * tanh((2.5 - V(n_h1,VSS)) * 10)
+B_LS1 n_g1 VS1 V = (V(n_a1, VSS) / 5.0) * V(VB1, VS1)
+M_H1 HO1 n_g1 VB1 VB1 mosfet_p
+M_L1 HO1 n_g1 VS1 VS1 mosfet_n
+
+B_L1 n_l1 VSS V = 2.5 - 2.5 * tanh((V(L1,VSS) - 2.5) * 10)
+B_A2 n_a2 VSS V = 2.5 + 2.5 * tanh((2.5 - V(n_l1,VSS)) * 10)
+B_LS_L1 n_lg1 COM V = (V(n_a2, VSS) / 5.0) * V(VCC, COM)
+M_HLO1 LO1 n_lg1 VCC VCC mosfet_p
+M_LLO1 LO1 n_lg1 COM COM mosfet_n
+
+* Phase 2
+B_H2 n_h2 VSS V = 2.5 - 2.5 * tanh((V(H2,VSS) - 2.5) * 10)
+B_A3 n_a3 VSS V = 2.5 + 2.5 * tanh((2.5 - V(n_h2,VSS)) * 10)
+B_LS2 n_g2 VS2 V = (V(n_a3, VSS) / 5.0) * V(VB2, VS2)
+M_H2 HO2 n_g2 VB2 VB2 mosfet_p
+M_L2 HO2 n_g2 VS2 VS2 mosfet_n
+
+B_L2 n_l2 VSS V = 2.5 - 2.5 * tanh((V(L2,VSS) - 2.5) * 10)
+B_A4 n_a4 VSS V = 2.5 + 2.5 * tanh((2.5 - V(n_l2,VSS)) * 10)
+B_LS_L2 n_lg2 COM V = (V(n_a4, VSS) / 5.0) * V(VCC, COM)
+M_HLO2 LO2 n_lg2 VCC VCC mosfet_p
+M_LLO2 LO2 n_lg2 COM COM mosfet_n
+
+* Phase 3
+B_H3 n_h3 VSS V = 2.5 - 2.5 * tanh((V(H3,VSS) - 2.5) * 10)
+B_A5 n_a5 VSS V = 2.5 + 2.5 * tanh((2.5 - V(n_h3,VSS)) * 10)
+B_LS3 n_g3 VS3 V = (V(n_a5, VSS) / 5.0) * V(VB3, VS3)
+M_H3 HO3 n_g3 VB3 VB3 mosfet_p
+M_L3 HO3 n_g3 VS3 VS3 mosfet_n
+
+B_L3 n_l3 VSS V = 2.5 - 2.5 * tanh((V(L3,VSS) - 2.5) * 10)
+B_A6 n_a6 VSS V = 2.5 + 2.5 * tanh((2.5 - V(n_l3,VSS)) * 10)
+B_LS_L3 n_lg3 COM V = (V(n_a6, VSS) / 5.0) * V(VCC, COM)
+M_HLO3 LO3 n_lg3 VCC VCC mosfet_p
+M_LLO3 LO3 n_lg3 COM COM mosfet_n
+.ends IR2130
+
+* --- 3. EXTERNAL POWER & PULSES ---
+V1 vcc 0 15
+V2 vbus 0 24
+V_H1 hin1 0 pulse(0 5 0 1u 1u 10m 20m)
+V_L1 lin1 0 pulse(0 5 10m 1u 1u 10m 20m)
+V_H2 hin2 0 pulse(0 5 6.66m 1u 1u 10m 20m)
+V_L2 lin2 0 pulse(0 5 16.66m 1u 1u 10m 20m)
+V_H3 hin3 0 pulse(0 5 13.33m 1u 1u 10m 20m)
+V_L3 lin3 0 pulse(0 5 3.33m 1u 1u 10m 20m)
+
+* --- 4. CHIP, BOOTSTRAP & INVERTER BRIDGE ---
+X1 hin1 hin2 hin3 lin1 lin2 lin3 0 vcc 0 vb1 v_phase_a ho1 vb2 v_phase_b ho2 vb3 v_phase_c ho3 lo1 lo2 lo3 0 IR2130
+D1 vcc vb1 D_mod
+C1 vb1 v_phase_a 1u
+D2 vcc vb2 D_mod
+C2 vb2 v_phase_b 1u
+D3 vcc vb3 D_mod
+C3 vb3 v_phase_c 1u
+M1 vbus ho1 v_phase_a v_phase_a mosfet_n
+M2 v_phase_a lo1 0 0 mosfet_n
+M3 vbus ho2 v_phase_b v_phase_b mosfet_n
+M4 v_phase_b lo2 0 0 mosfet_n
+M5 vbus ho3 v_phase_c v_phase_c mosfet_n
+M6 v_phase_c lo3 0 0 mosfet_n
+
+R1 v_phase_a star 1k
+R2 v_phase_b star 1k
+R3 v_phase_c star 1k
+R_star star 0 100meg
+
+* --- 5. MANUAL PLOTTING SETTINGS ---
+.tran 100u 50m
+.control
+run
+plot v(v_phase_a) v(v_phase_b) v(v_phase_c)
+plot HO1 HO2 HO3
+plot LO1 LO2 LO3
+.endc
+.end

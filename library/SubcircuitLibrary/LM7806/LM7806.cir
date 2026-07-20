@@ -1,0 +1,45 @@
+.subckt LM7806 Vin GND OUTPUT
+R12 Net-_QN11-Pad2_ Net-_QN11-Pad1_ 2K
+R9 Net-_QN2-Pad3_ Net-_QN6-Pad2_ 6K
+R10 Net-_C1-Pad2_ Net-_QN2-Pad3_ 28K
+QN9 OUTPUT Net-_QN9-Pad2_ Net-_QN6-Pad2_ npn
+R16 OUTPUT Net-_D2-Pad1_ 200
+R17 Net-_D2-Pad1_ Net-_QN15-Pad3_ 240
+QN13 Net-_QN13-Pad1_ Net-_D2-Pad1_ OUTPUT npn
+QN8 Net-_QN13-Pad1_ Net-_QN8-Pad2_ GND npn
+R20 OUTPUT Net-_QN15-Pad3_ 0.2
+R18 Net-_QN9-Pad2_ OUTPUT 0.25K
+U3 OUTPUT plot_db
+R19 GND Net-_QN9-Pad2_ 5K
+QN12 Net-_QN10-Pad1_ Net-_QN10-Pad3_ GND npn
+U1 GND plot_db
+QN1 Net-_QN1-Pad1_ Net-_D1-Pad2_ Net-_QN1-Pad3_ npn
+D1 GND Net-_D1-Pad2_ eSim_Diode
+QP1 Net-_QN2-Pad1_ Net-_QN2-Pad1_ Net-_QP1-Pad3_ pnp
+R7 Net-_QP1-Pad3_ Vin 100
+R1 Net-_D1-Pad2_ Vin 100
+R5 Net-_QN1-Pad1_ Vin 500
+R6 Net-_QN3-Pad1_ Net-_QN2-Pad3_ 1.4K
+R3 Net-_QN8-Pad2_ Net-_QN2-Pad2_ 2.7K
+R2 Net-_QN2-Pad2_ Net-_QN1-Pad3_ 3.3K
+QN4 Net-_QN2-Pad3_ Net-_QN3-Pad1_ Net-_C1-Pad1_ npn
+QN6 Net-_QN5-Pad3_ Net-_QN6-Pad2_ Net-_QN2-Pad3_ npn
+QN5 Net-_QN2-Pad1_ OUTPUT Net-_QN5-Pad3_ npn
+QN2 Net-_QN2-Pad1_ Net-_QN2-Pad2_ Net-_QN2-Pad3_ npn
+QN15 Vin Net-_D2-Pad1_ Net-_QN15-Pad3_ npn
+QP2 Net-_QN11-Pad1_ Net-_QN2-Pad1_ Net-_QP2-Pad3_ pnp
+R13 Net-_QP2-Pad3_ Vin 100
+D2 Net-_D2-Pad1_ Net-_D2-Pad2_ eSim_Diode
+QN14 Vin Net-_QN13-Pad1_ Net-_D2-Pad1_ npn
+R15 Net-_D2-Pad2_ Vin 10K
+U2 Vin plot_db
+R14 GND Net-_QN10-Pad3_ 5K
+R11 GND Net-_QN7-Pad3_ 1K
+QN3 Net-_QN3-Pad1_ Net-_C1-Pad1_ GND npn
+R8 GND Net-_C1-Pad1_ 6K
+QN11 Net-_QN11-Pad1_ Net-_QN11-Pad2_ GND npn
+QN10 Net-_QN10-Pad1_ Net-_C1-Pad2_ Net-_QN10-Pad3_ npn
+R4 GND Net-_QN8-Pad2_ 500
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 30pF
+QN7 Net-_C1-Pad2_ Net-_C1-Pad1_ Net-_QN7-Pad3_ npn
+.ends LM7806

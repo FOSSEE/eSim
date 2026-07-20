@@ -1,0 +1,6 @@
+.title KiCad schematic
+R1 GND /vout 1k
+X1 /vin /vout GND LP2950
+v1 /vin GND SINE(5 5 1k)
+C1 /vout GND 1u
+.end
