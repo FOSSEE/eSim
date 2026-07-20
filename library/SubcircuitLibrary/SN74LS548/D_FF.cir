@@ -1,0 +1,17 @@
+* H:\esim\eSim\library\SubcircuitLibrary\D_FF\D_FF.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 07/16/25 12:03:13
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+scmode1  SKY130mode		
+SC1  Net-_SC1-Pad1_ Net-_SC1-Pad2_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__pfet_01v8		
+SC2  Net-_SC1-Pad1_ Net-_SC2-Pad2_ Net-_SC2-Pad3_ Net-_SC2-Pad3_ sky130_fd_pr__nfet_01v8		
+SC3  Net-_SC2-Pad3_ Net-_SC1-Pad2_ Net-_SC3-Pad3_ Net-_SC3-Pad3_ sky130_fd_pr__nfet_01v8		
+SC4  Net-_SC4-Pad1_ Net-_SC1-Pad1_ Net-_SC1-Pad3_ Net-_SC1-Pad3_ sky130_fd_pr__pfet_01v8		
+SC5  Net-_SC4-Pad1_ Net-_SC2-Pad3_ Net-_SC3-Pad3_ Net-_SC3-Pad3_ sky130_fd_pr__nfet_01v8		
+U1  Net-_SC1-Pad2_ Net-_SC2-Pad2_ Net-_SC1-Pad3_ Net-_SC3-Pad3_ Net-_SC4-Pad1_ PORT		
+
+.end

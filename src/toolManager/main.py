@@ -141,6 +141,8 @@ class ToolManagerWindow(QMainWindow):
         self.setMinimumSize(880, 760)
 
         central = QWidget()
+        central.setObjectName("centralWidget")
+        central.setStyleSheet("#centralWidget { background-color: #ffffff; }")
         self.setCentralWidget(central)
         self._main_layout = QVBoxLayout(central)
         self._main_layout.setSpacing(0)
@@ -153,7 +155,9 @@ class ToolManagerWindow(QMainWindow):
 
         tabs = QTabWidget()
         tabs.setStyleSheet("""
-            QTabWidget::pane { border: none; background: white; }
+            QTabWidget { background: white; }
+            QTabWidget::pane { border: none; border-top: 1px solid #e0e0e0; background: white; }
+            QTabBar { background: white; }
             QTabBar::tab {
                 background: #f5f5f5; color: #555;
                 padding: 12px 24px; margin-right: 2px;
@@ -250,7 +254,13 @@ class ToolManagerWindow(QMainWindow):
         return frame
 
     def _create_installation_tab(self):
+        from PyQt6.QtWidgets import QScrollArea
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setStyleSheet("QScrollArea { border: none; background: transparent; }")
+
         tab = QWidget()
+        tab.setStyleSheet("background: transparent;")
         layout = QVBoxLayout(tab)
         layout.setContentsMargins(30, 30, 30, 30)
         layout.setSpacing(20)
@@ -296,7 +306,7 @@ class ToolManagerWindow(QMainWindow):
         self.progress_frame = QFrame()
         self.progress_frame.setVisible(False)
         self.progress_frame.setStyleSheet(
-            "QFrame { background: #1e1e1e; border-radius: 6px; }"
+            "QFrame { background: #f8f9fa; border: 1px solid #ced4da; border-radius: 6px; }"
         )
         pf_layout = QVBoxLayout(self.progress_frame)
         pf_layout.setContentsMargins(12, 10, 12, 10)
@@ -304,13 +314,13 @@ class ToolManagerWindow(QMainWindow):
 
         pf_title = QLabel("Installation Progress")
         pf_title.setFont(QFont("Arial", 9, QFont.Weight.Bold))
-        pf_title.setStyleSheet("color: #aaa; background: transparent;")
+        pf_title.setStyleSheet("color: #495057; background: transparent;")
         pf_layout.addWidget(pf_title)
 
         self.progress_log = QLabel("")
         self.progress_log.setFont(QFont("Consolas", 9))
         self.progress_log.setStyleSheet(
-            "color: #d4d4d4; background: transparent;"
+            "color: #212529; background: transparent;"
         )
         self.progress_log.setWordWrap(True)
         self.progress_log.setAlignment(Qt.AlignmentFlag.AlignTop)
@@ -322,7 +332,7 @@ class ToolManagerWindow(QMainWindow):
         self.progress_bar.setFixedHeight(6)
         self.progress_bar.setStyleSheet("""
             QProgressBar {
-                background: #333; border-radius: 3px; border: none;
+                background: #e9ecef; border-radius: 3px; border: 1px solid #ced4da;
             }
             QProgressBar::chunk {
                 background: #4A90E2; border-radius: 3px;
@@ -331,7 +341,8 @@ class ToolManagerWindow(QMainWindow):
         pf_layout.addWidget(self.progress_bar)
         layout.addWidget(self.progress_frame)
         layout.addStretch()
-        return tab
+        scroll.setWidget(tab)
+        return scroll
 
     def _create_install_card(self, title, description, features,
                               disk_space, btn_text, btn_color, callback):

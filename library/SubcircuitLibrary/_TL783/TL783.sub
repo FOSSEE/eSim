@@ -1,0 +1,18 @@
+* =================================================================
+* FIXED TL783 INTERNAL SUBCIRCUIT MODEL (ERROR BYPASSED)
+* =================================================================
+.subckt TL783 1 2 3
+
+* 1. Internal Reference Voltage
+Vref 5 3 DC 1.27
+
+* 2. Error Amplifier Model
+E_opamp 6 0 VALUE={V(5,2) * 100000}
+
+* 3. High-Voltage N-Channel MOSFET Pass Transistor
+M1 1 6 2 2 HV_MOSFET
+
+* 4. Corrected Model Parameters (Removed invalid VDS parameter)
+.model HV_MOSFET NMOS (VTO=2.5 KP=20U)
+
+.ends TL783

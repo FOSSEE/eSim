@@ -1,0 +1,60 @@
+.subckt lm7806 vin gnd output
+
+.include D.lib
+.include NPN.lib
+.include PNP.lib
+r12 net-_qn11-pad2_ net-_qn11-pad1_ 2k
+r9 net-_qn2-pad3_ net-_qn6-pad2_ 6k
+r10 net-_c1-pad2_ net-_qn2-pad3_ 28k
+qn9 output net-_qn9-pad2_ net-_qn6-pad2_ Q2N2222
+r16 output net-_d2-pad1_ 200
+r17 net-_d2-pad1_ net-_qn15-pad3_ 240
+qn13 net-_qn13-pad1_ net-_d2-pad1_ output Q2N2222
+qn8 net-_qn13-pad1_ net-_qn8-pad2_ gnd Q2N2222
+r20 output net-_qn15-pad3_ 0.2
+r18 net-_qn9-pad2_ output 0.25k
+* u3 output plot_db
+r19 gnd net-_qn9-pad2_ 5k
+qn12 net-_qn10-pad1_ net-_qn10-pad3_ gnd Q2N2222
+* u1 gnd plot_db
+qn1 net-_qn1-pad1_ net-_d1-pad2_ net-_qn1-pad3_ Q2N2222
+d1 gnd net-_d1-pad2_ 1N4148
+qp1 net-_qn2-pad1_ net-_qn2-pad1_ net-_qp1-pad3_ Q2N2907A
+r7 net-_qp1-pad3_ vin 100
+r1 net-_d1-pad2_ vin 100
+r5 net-_qn1-pad1_ vin 500
+r6 net-_qn3-pad1_ net-_qn2-pad3_ 1.4k
+r3 net-_qn8-pad2_ net-_qn2-pad2_ 2.7k
+r2 net-_qn2-pad2_ net-_qn1-pad3_ 3.3k
+qn4 net-_qn2-pad3_ net-_qn3-pad1_ net-_c1-pad1_ Q2N2222
+qn6 net-_qn5-pad3_ net-_qn6-pad2_ net-_qn2-pad3_ Q2N2222
+qn5 net-_qn2-pad1_ output net-_qn5-pad3_ Q2N2222
+qn2 net-_qn2-pad1_ net-_qn2-pad2_ net-_qn2-pad3_ Q2N2222
+qn15 vin net-_d2-pad1_ net-_qn15-pad3_ Q2N2222
+qp2 net-_qn11-pad1_ net-_qn2-pad1_ net-_qp2-pad3_ Q2N2907A
+r13 net-_qp2-pad3_ vin 100
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+qn14 vin net-_qn13-pad1_ net-_d2-pad1_ Q2N2222
+r15 net-_d2-pad2_ vin 10k
+* u2 vin plot_db
+r14 gnd net-_qn10-pad3_ 5k
+r11 gnd net-_qn7-pad3_ 1k
+qn3 net-_qn3-pad1_ net-_c1-pad1_ gnd Q2N2222
+r8 gnd net-_c1-pad1_ 6k
+qn11 net-_qn11-pad1_ net-_qn11-pad2_ gnd Q2N2222
+qn10 net-_qn10-pad1_ net-_c1-pad2_ net-_qn10-pad3_ Q2N2222
+r4 gnd net-_qn8-pad2_ 500
+c1 net-_c1-pad1_ net-_c1-pad2_ 30pf
+qn7 net-_c1-pad2_ net-_c1-pad1_ net-_qn7-pad3_ Q2N2222
+.tran 10e-09 1e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot db(output)
+plot db(gnd)
+plot db(vin)
+.endc
+.end

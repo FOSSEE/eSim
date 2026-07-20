@@ -1,0 +1,44 @@
+* Subcircuit uA107
+.subckt uA107 unconnected-_u1-pad1_ net-_q8-pad2_ net-_q1-pad2_ net-_q11-pad3_ unconnected-_u1-pad5_ net-_d2-pad1_ net-_q12-pad3_ unconnected-_u1-pad8_ 
+.title kicad schematic
+.include NPN.lib
+.include PNP.lib
+.include D.lib
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d2-pad1_ net-_d1-pad1_ 1N4148
+q20 net-_q11-pad3_ net-_d1-pad2_ net-_q20-pad3_ Q2N2907A
+r12 net-_q20-pad3_ net-_d2-pad1_ 30k
+r10 net-_q11-pad3_ net-_q13-pad2_ 50
+q17 net-_d1-pad2_ net-_q14-pad3_ net-_q13-pad2_ Q2N2222
+q14 net-_d1-pad2_ net-_c1-pad2_ net-_q14-pad3_ Q2N2222
+q11 net-_q10-pad2_ net-_q10-pad2_ net-_q11-pad3_ Q2N2222
+q13 net-_c1-pad2_ net-_q13-pad2_ net-_q11-pad3_ Q2N2222
+r8 net-_q11-pad3_ net-_q14-pad3_ 50k
+r5 net-_c1-pad2_ net-_q6-pad1_ 300
+r6 net-_q10-pad2_ net-_q12-pad1_ 39k
+c1 net-_c1-pad1_ net-_c1-pad2_ 30p
+r1 net-_q11-pad3_ net-_q3-pad3_ 1k
+r3 net-_q11-pad3_ net-_q7-pad3_ 1k
+r4 net-_q11-pad3_ net-_q10-pad3_ 5k
+r2 net-_q11-pad3_ net-_q3-pad2_ 50k
+q7 net-_q6-pad1_ net-_q3-pad2_ net-_q7-pad3_ Q2N2222
+q3 net-_q2-pad1_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+q4 net-_q12-pad3_ net-_q2-pad1_ net-_q3-pad2_ Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_q2-pad1_ net-_q10-pad1_ net-_q1-pad3_ Q2N2907A
+q8 net-_q1-pad1_ net-_q8-pad2_ net-_q6-pad3_ Q2N2222
+q6 net-_q6-pad1_ net-_q10-pad1_ net-_q6-pad3_ Q2N2907A
+q5 net-_q1-pad1_ net-_q1-pad1_ net-_q12-pad3_ Q2N2907A
+q9 net-_q10-pad1_ net-_q1-pad1_ net-_q12-pad3_ Q2N2907A
+q12 net-_q12-pad1_ net-_q12-pad1_ net-_q12-pad3_ Q2N2907A
+r9 net-_d1-pad2_ net-_q16-pad2_ 7.5k
+r7 net-_c1-pad1_ net-_q16-pad2_ 4.5k
+q16 net-_c1-pad1_ net-_q16-pad2_ net-_d1-pad2_ Q2N2222
+q18 net-_c1-pad1_ net-_q18-pad2_ net-_d2-pad1_ Q2N2222
+q15 net-_c1-pad1_ net-_q12-pad1_ net-_q12-pad3_ Q2N2907A
+r11 net-_q18-pad2_ net-_d2-pad1_ 25
+q19 net-_q12-pad3_ net-_c1-pad1_ net-_q18-pad2_ Q2N2222
+* Control Statements
+
+.ends uA107

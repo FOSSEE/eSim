@@ -1,0 +1,21 @@
+.title kicad schematic
+
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+m1 net-_m1-pad1_ input output net-_m1-pad1_ CMOSN W=100u L=100u M=1
+m2 output input gnd gnd CMOSP W=100u L=100u M=1
+* u2 output plot_v1
+v2 net-_m1-pad1_ gnd  dc 5
+* u1 input plot_v1
+v1 input gnd pwl(0 0 10 0 11 5 20 5)
+.tran 0.1e-00 20e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(output)
+plot v(input)
+.endc
+.end

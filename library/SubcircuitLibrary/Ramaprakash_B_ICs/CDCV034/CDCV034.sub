@@ -1,0 +1,11 @@
+* Subcircuit CDCV034
+.subckt CDCV034 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ 
+.title kicad schematic
+.include TRISTATE.sub
+x3 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad5_ TRISTATE
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ TRISTATE
+x2 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad4_ TRISTATE
+x4 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad6_ TRISTATE
+* Control Statements
+
+.ends CDCV034

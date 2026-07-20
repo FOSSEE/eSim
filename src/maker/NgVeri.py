@@ -402,7 +402,7 @@ class NgVeri(QtWidgets.QWidget):
         for item in self.data:
             if item != "\n":
                 self.entry_var[self.count].addItem(item.strip())
-        self.entry_var[self.count].activated[str].connect(self.edit_modlst)
+        self.entry_var[self.count].currentTextChanged.connect(self.edit_modlst)
         self.trgrid.addWidget(self.entry_var[self.count], 1, 4, 1, 2)
         self.count += 1
         self.entry_var[self.count] = QtWidgets.QComboBox()
@@ -418,7 +418,7 @@ class NgVeri(QtWidgets.QWidget):
         for item in self.data:
             if item != "\n":
                 self.entry_var[self.count].addItem(item.strip())
-        self.entry_var[self.count].activated[str].connect(self.lint_off_edit)
+        self.entry_var[self.count].currentTextChanged.connect(self.lint_off_edit)
         self.trgrid.addWidget(self.entry_var[self.count], 2, 4, 1, 2)
         self.count += 1
         self.entry_var[self.count] = QtWidgets.QLineEdit(self)

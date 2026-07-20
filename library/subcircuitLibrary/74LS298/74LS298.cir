@@ -1,0 +1,29 @@
+.title KiCad schematic
+U16 Net-_U16-Pad1_ Net-_U1-Pad5_ Net-_U16-Pad3_ d_and
+U20 Net-_U1-Pad9_ Net-_U11-Pad1_ Net-_U18-Pad1_ d_and
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ unconnected-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ unconnected-_U1-Pad16_ PORT
+U26 Net-_U1-Pad7_ Net-_U11-Pad1_ Net-_U24-Pad1_ d_and
+U23 Net-_U11-Pad1_ Net-_U22-Pad1_ d_inverter
+U22 Net-_U22-Pad1_ Net-_U1-Pad6_ Net-_U22-Pad3_ d_and
+U17 Net-_U11-Pad1_ Net-_U16-Pad1_ d_inverter
+U21 Net-_U18-Pad3_ Net-_U19-Pad2_ Net-_U15-Pad3_ unconnected-_U21-Pad4_ unconnected-_U21-Pad5_ Net-_U1-Pad13_ unconnected-_U21-Pad7_ d_srff
+U19 Net-_U18-Pad3_ Net-_U19-Pad2_ d_inverter
+U24 Net-_U24-Pad1_ Net-_U22-Pad3_ Net-_U24-Pad3_ d_nor
+U18 Net-_U18-Pad1_ Net-_U16-Pad3_ Net-_U18-Pad3_ d_nor
+U27 Net-_U24-Pad3_ Net-_U25-Pad2_ Net-_U15-Pad3_ unconnected-_U27-Pad4_ unconnected-_U27-Pad5_ Net-_U1-Pad12_ unconnected-_U27-Pad7_ d_srff
+U25 Net-_U24-Pad3_ Net-_U25-Pad2_ d_inverter
+U9 Net-_U6-Pad3_ Net-_U7-Pad2_ Net-_U15-Pad3_ unconnected-_U9-Pad4_ unconnected-_U9-Pad5_ Net-_U1-Pad15_ unconnected-_U9-Pad7_ d_srff
+U7 Net-_U6-Pad3_ Net-_U7-Pad2_ d_inverter
+U13 Net-_U12-Pad3_ Net-_U13-Pad2_ d_inverter
+U15 Net-_U12-Pad3_ Net-_U13-Pad2_ Net-_U15-Pad3_ unconnected-_U15-Pad4_ unconnected-_U15-Pad5_ Net-_U1-Pad14_ unconnected-_U15-Pad7_ d_srff
+U14 Net-_U1-Pad4_ Net-_U11-Pad1_ Net-_U12-Pad1_ d_and
+U10 Net-_U10-Pad1_ Net-_U1-Pad1_ Net-_U10-Pad3_ d_and
+U11 Net-_U11-Pad1_ Net-_U10-Pad1_ d_inverter
+U8 Net-_U1-Pad3_ Net-_U11-Pad1_ Net-_U6-Pad1_ d_and
+U4 Net-_U4-Pad1_ Net-_U1-Pad2_ Net-_U4-Pad3_ d_and
+U5 Net-_U11-Pad1_ Net-_U4-Pad1_ d_inverter
+U12 Net-_U12-Pad1_ Net-_U10-Pad3_ Net-_U12-Pad3_ d_nor
+U2 Net-_U1-Pad10_ Net-_U11-Pad1_ d_inverter
+U3 Net-_U1-Pad11_ Net-_U15-Pad3_ d_inverter
+U6 Net-_U6-Pad1_ Net-_U4-Pad3_ Net-_U6-Pad3_ d_nor
+.end

@@ -1,0 +1,110 @@
+* Subcircuit SN74S536
+.subckt SN74S536 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ unconnected-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u1-pad17_ net-_u1-pad18_ net-_u1-pad19_ unconnected-_u1-pad20_ 
+.title kicad schematic
+* u8 net-_u4-pad6_ net-_u10-pad2_ net-_u1-pad2_ d_tristate
+* u4 net-_u1-pad3_ net-_u24-pad2_ unconnected-_u4-pad3_ unconnected-_u4-pad4_ unconnected-_u4-pad5_ net-_u4-pad6_ d_dff
+* u2 net-_u1-pad1_ net-_u10-pad2_ d_inverter
+* u3 net-_u1-pad11_ net-_u24-pad2_ d_buffer
+* u10 net-_u10-pad1_ net-_u10-pad2_ net-_u1-pad6_ d_tristate
+* u9 net-_u5-pad6_ net-_u10-pad2_ net-_u1-pad5_ d_tristate
+* u5 net-_u1-pad4_ net-_u24-pad2_ unconnected-_u5-pad3_ unconnected-_u5-pad4_ unconnected-_u5-pad5_ net-_u5-pad6_ d_dff
+* u22 net-_u1-pad15_ d_pullup
+* u23 net-_u1-pad6_ d_pullup
+* u16 net-_u16-pad1_ net-_u10-pad2_ net-_u1-pad12_ d_tristate
+* u21 net-_u1-pad5_ d_pullup
+* u15 net-_u15-pad1_ net-_u10-pad2_ net-_u1-pad15_ d_tristate
+* u20 net-_u1-pad16_ d_pullup
+* u12 net-_u1-pad9_ d_pullup
+* u7 net-_u1-pad8_ net-_u24-pad2_ unconnected-_u7-pad3_ unconnected-_u7-pad4_ unconnected-_u7-pad5_ net-_u11-pad1_ d_dff
+* u6 net-_u1-pad7_ net-_u24-pad2_ unconnected-_u6-pad3_ unconnected-_u6-pad4_ unconnected-_u6-pad5_ net-_u10-pad1_ d_dff
+* u11 net-_u11-pad1_ net-_u10-pad2_ net-_u1-pad9_ d_tristate
+* u26 net-_u1-pad14_ net-_u24-pad2_ unconnected-_u26-pad3_ unconnected-_u26-pad4_ unconnected-_u26-pad5_ net-_u15-pad1_ d_dff
+* u27 net-_u1-pad13_ net-_u24-pad2_ unconnected-_u27-pad3_ unconnected-_u27-pad4_ unconnected-_u27-pad5_ net-_u16-pad1_ d_dff
+* u17 net-_u1-pad12_ d_pullup
+* u25 net-_u1-pad17_ net-_u24-pad2_ unconnected-_u25-pad3_ unconnected-_u25-pad4_ unconnected-_u25-pad5_ net-_u14-pad1_ d_dff
+* u24 net-_u1-pad18_ net-_u24-pad2_ unconnected-_u24-pad3_ unconnected-_u24-pad4_ unconnected-_u24-pad5_ net-_u13-pad1_ d_dff
+* u18 net-_u1-pad19_ d_pullup
+* u19 net-_u1-pad2_ d_pullup
+* u13 net-_u13-pad1_ net-_u10-pad2_ net-_u1-pad19_ d_tristate
+* u14 net-_u14-pad1_ net-_u10-pad2_ net-_u1-pad16_ d_tristate
+a1 net-_u4-pad6_ net-_u10-pad2_ net-_u1-pad2_ u8
+a2 net-_u1-pad3_ net-_u24-pad2_ unconnected-_u4-pad3_ unconnected-_u4-pad4_ unconnected-_u4-pad5_ net-_u4-pad6_ u4
+a3 net-_u1-pad1_ net-_u10-pad2_ u2
+a4 net-_u1-pad11_ net-_u24-pad2_ u3
+a5 net-_u10-pad1_ net-_u10-pad2_ net-_u1-pad6_ u10
+a6 net-_u5-pad6_ net-_u10-pad2_ net-_u1-pad5_ u9
+a7 net-_u1-pad4_ net-_u24-pad2_ unconnected-_u5-pad3_ unconnected-_u5-pad4_ unconnected-_u5-pad5_ net-_u5-pad6_ u5
+a8 net-_u1-pad15_ u22
+a9 net-_u1-pad6_ u23
+a10 net-_u16-pad1_ net-_u10-pad2_ net-_u1-pad12_ u16
+a11 net-_u1-pad5_ u21
+a12 net-_u15-pad1_ net-_u10-pad2_ net-_u1-pad15_ u15
+a13 net-_u1-pad16_ u20
+a14 net-_u1-pad9_ u12
+a15 net-_u1-pad8_ net-_u24-pad2_ unconnected-_u7-pad3_ unconnected-_u7-pad4_ unconnected-_u7-pad5_ net-_u11-pad1_ u7
+a16 net-_u1-pad7_ net-_u24-pad2_ unconnected-_u6-pad3_ unconnected-_u6-pad4_ unconnected-_u6-pad5_ net-_u10-pad1_ u6
+a17 net-_u11-pad1_ net-_u10-pad2_ net-_u1-pad9_ u11
+a18 net-_u1-pad14_ net-_u24-pad2_ unconnected-_u26-pad3_ unconnected-_u26-pad4_ unconnected-_u26-pad5_ net-_u15-pad1_ u26
+a19 net-_u1-pad13_ net-_u24-pad2_ unconnected-_u27-pad3_ unconnected-_u27-pad4_ unconnected-_u27-pad5_ net-_u16-pad1_ u27
+a20 net-_u1-pad12_ u17
+a21 net-_u1-pad17_ net-_u24-pad2_ unconnected-_u25-pad3_ unconnected-_u25-pad4_ unconnected-_u25-pad5_ net-_u14-pad1_ u25
+a22 net-_u1-pad18_ net-_u24-pad2_ unconnected-_u24-pad3_ unconnected-_u24-pad4_ unconnected-_u24-pad5_ net-_u13-pad1_ u24
+a23 net-_u1-pad19_ u18
+a24 net-_u1-pad2_ u19
+a25 net-_u13-pad1_ net-_u10-pad2_ net-_u1-pad19_ u13
+a26 net-_u14-pad1_ net-_u10-pad2_ net-_u1-pad16_ u14
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u8 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u4 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u3 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u10 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u9 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u5 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u22 d_pullup(load=1.0e-12 )
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u23 d_pullup(load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u16 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u21 d_pullup(load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u15 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u20 d_pullup(load=1.0e-12 )
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u12 d_pullup(load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u7 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u6 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u11 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u26 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u27 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u17 d_pullup(load=1.0e-12 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u25 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u24 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u18 d_pullup(load=1.0e-12 )
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u19 d_pullup(load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u13 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u14 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Control Statements
+
+.ends SN74S536

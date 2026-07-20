@@ -1,0 +1,36 @@
+.title KiCad schematic
+U17 Net-_U17-Pad1_ EQ dac_bridge_1
+X1 Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U9-Pad2_ Net-_U10-Pad2_ Net-_U1-Pad2_ Net-_U2-Pad2_ Net-_U5-Pad2_ Net-_U6-Pad2_ Net-_U7-Pad2_ Net-_U8-Pad2_ Net-_U11-Pad2_ Net-_U12-Pad2_ Net-_U13-Pad2_ Net-_U14-Pad2_ Net-_U15-Pad2_ Net-_U16-Pad2_ Net-_U17-Pad1_ SN74688
+U16 Q7 Net-_U16-Pad2_ adc_bridge_1
+U14 Q6 Net-_U14-Pad2_ adc_bridge_1
+U15 P7 Net-_U15-Pad2_ adc_bridge_1
+U13 P6 Net-_U13-Pad2_ adc_bridge_1
+v15 P7 GND pulse
+v16 Q7 GND pulse
+v14 Q6 GND pulse
+U12 Q5 Net-_U12-Pad2_ adc_bridge_1
+v13 P6 GND pulse
+v12 Q5 GND pulse
+v10 Q1 GND pulse
+v9 P1 GND pulse
+v4 Q0 GND pulse
+U4 Q0 Net-_U4-Pad2_ adc_bridge_1
+v3 P0 GND pulse
+U3 P0 Net-_U3-Pad2_ adc_bridge_1
+U10 Q1 Net-_U10-Pad2_ adc_bridge_1
+U9 P1 Net-_U9-Pad2_ adc_bridge_1
+U1 P2 Net-_U1-Pad2_ adc_bridge_1
+U2 Q2 Net-_U2-Pad2_ adc_bridge_1
+v1 P2 GND pulse
+v2 Q2 GND pulse
+U7 P4 Net-_U7-Pad2_ adc_bridge_1
+U5 P3 Net-_U5-Pad2_ adc_bridge_1
+U6 Q3 Net-_U6-Pad2_ adc_bridge_1
+v5 P3 GND pulse
+v6 Q3 GND pulse
+v7 P4 GND pulse
+v11 P5 GND pulse
+v8 Q4 GND pulse
+U11 P5 Net-_U11-Pad2_ adc_bridge_1
+U8 Q4 Net-_U8-Pad2_ adc_bridge_1
+.end

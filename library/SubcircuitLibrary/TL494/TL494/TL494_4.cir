@@ -1,0 +1,7 @@
+.title KiCad schematic
+X2 unconnected-_X2-Pad1_ /1IN- /1IN+ /GND unconnected-_X2-Pad5_ /FEEDBACK /VCC unconnected-_X2-Pad8_ lm_741
+Q2 /C2 Net-_Q1-Pad2_ /E2 eSim_NPN
+Q1 /C1 Net-_Q1-Pad2_ /E1 eSim_NPN
+X3 unconnected-_X3-Pad1_ /2IN- /2IN+ /GND unconnected-_X3-Pad5_ /FEEDBACK /VCC unconnected-_X3-Pad8_ lm_741
+X1 unconnected-_X1-Pad1_ /RAMP /FEEDBACK /GND unconnected-_X1-Pad5_ Net-_Q1-Pad2_ /VCC unconnected-_X1-Pad8_ lm_741
+.end

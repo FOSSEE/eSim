@@ -1,0 +1,70 @@
+.title kicad schematic
+
+.include D.lib
+.include NPN.lib
+.include PNP.lib
+r2 net-_qp2-pad3_ input 100
+qp2 net-_qn5-pad1_ net-_qn5-pad1_ net-_qp2-pad3_ Q2N2907A
+qp1 net-_qn10-pad1_ net-_qn5-pad1_ net-_qp1-pad3_ Q2N2907A
+r4 net-_qn7-pad1_ input 500
+r5 net-_d6-pad2_ input 100
+r3 net-_d5-pad2_ input 10k
+r1 net-_qp1-pad3_ input 100
+d5 net-_d5-pad1_ net-_d5-pad2_ 1N4148
+qn3 net-_qn1-pad2_ net-_d5-pad1_ gnd Q2N2222
+* u4 input plot_db
+qn2 input net-_d5-pad1_ net-_qn2-pad3_ Q2N2222
+qn1 input net-_qn1-pad2_ net-_d5-pad1_ Q2N2222
+r8 gnd net-_d5-pad1_ 200
+r6 net-_d5-pad1_ net-_qn2-pad3_ 240
+r7 gnd net-_qn2-pad3_ 0.2
+r15 net-_qn4-pad2_ net-_qn9-pad2_ 2.7k
+v1 net-_d2-pad2_ net-_d1-pad2_ 13.3
+* u1 net-_d2-pad2_ plot_db
+d6 gnd net-_d6-pad2_ 1N4148
+r13 net-_qn9-pad2_ net-_qn7-pad3_ 3.3k
+r14 net-_qn11-pad2_ net-_qn11-pad1_ 1.4k
+qn15 net-_qn11-pad2_ net-_c4-pad1_ gnd Q2N2222
+r17 gnd net-_qn4-pad2_ 500
+qn7 net-_qn7-pad1_ net-_d6-pad2_ net-_qn7-pad3_ Q2N2222
+r11 net-_qn10-pad2_ net-_qn10-pad1_ 2k
+r20 gnd net-_qn14-pad3_ 1k
+r18 gnd net-_c4-pad1_ 6k
+qn14 net-_c4-pad2_ net-_c4-pad1_ net-_qn14-pad3_ Q2N2222
+qn12 net-_qn12-pad1_ net-_c4-pad2_ net-_qn12-pad3_ Q2N2222
+qn10 net-_qn10-pad1_ net-_qn10-pad2_ gnd Q2N2222
+r19 gnd net-_qn12-pad3_ 5k
+qn13 net-_qn12-pad1_ net-_qn12-pad3_ gnd Q2N2222
+qn11 net-_qn11-pad1_ net-_qn11-pad2_ net-_c4-pad1_ Q2N2222
+r12 net-_c4-pad2_ net-_qn11-pad1_ 28k
+c4 net-_c4-pad1_ net-_c4-pad2_ 30pf
+r16 gnd net-_qn6-pad2_ 5k
+r9 net-_qn6-pad2_ gnd 0.25k
+* u6 gnd plot_db
+* u5 gnd plot_db
+qn9 net-_qn5-pad1_ net-_qn9-pad2_ net-_qn11-pad1_ Q2N2222
+qn4 net-_qn1-pad2_ net-_qn4-pad2_ gnd Q2N2222
+qn5 net-_qn5-pad1_ gnd net-_qn5-pad3_ Q2N2222
+qn6 gnd net-_qn6-pad2_ net-_qn6-pad3_ Q2N2222
+r10 net-_qn11-pad1_ net-_qn6-pad3_ 6k
+qn8 net-_qn5-pad3_ net-_qn6-pad3_ net-_qn11-pad1_ Q2N2222
+c3 gnd gnd 100n
+d4 net-_d2-pad2_ input 1N4148
+d1 gnd net-_d1-pad2_ 1N4148
+d3 net-_d1-pad2_ input 1N4148
+d2 gnd net-_d2-pad2_ 1N4148
+c2 input gnd 330n
+c1 input gnd 470u
+.tran 10e-09 1e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot db(input)
+plot db(net-_d2-pad2_)
+plot db(gnd)
+plot db(gnd)
+.endc
+.end
