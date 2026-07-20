@@ -19,9 +19,14 @@ except ImportError:
     pass # Will handle gracefully later if missing
 
 # ==================== CONFIG ====================
-BASE_DIR = Path(__file__).resolve().parent
-INFO_JSON = BASE_DIR / "information.json"
-FULL_GUI  = BASE_DIR / "gui_fixed.py"
+from paths import (
+    get_toolmanager_root,
+    get_install_state_path,
+)
+
+BASE_DIR = get_toolmanager_root()
+INFO_JSON = get_install_state_path()
+FULL_GUI = BASE_DIR / "gui_fixed.py"
 PYTHON    = sys.executable
 
 ANALOG_TOOLS  = ["esim", "kicad", "ngspice"]

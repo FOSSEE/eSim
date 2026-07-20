@@ -16,20 +16,20 @@ from PyQt6.QtGui import QFont
 import logging
 
 PYTHON     = sys.executable
-SYSTEM     = platform.system()
-IS_WINDOWS = SYSTEM == "Windows"
-IS_LINUX   = SYSTEM == "Linux"
+from pathlib import Path
+from constants import IS_WINDOWS, IS_LINUX
+from paths import get_toolmanager_root
 
-import os
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = get_toolmanager_root()
 
 if IS_WINDOWS:
-    BACKEND = os.path.join(BASE_DIR, "tool_manager_windows.py")
+    BACKEND = BASE_DIR / "tool_manager_windows.py"
 elif IS_LINUX:
-    BACKEND = os.path.join(BASE_DIR, "tool_manager_linux.py")
+    BACKEND = BASE_DIR / "tool_manager_linux.py"
 else:
-    BACKEND = os.path.join(os.path.dirname(os.path.abspath(__file__)), "tool_manager_windows.py")
+    BACKEND = BASE_DIR / "tool_manager_windows.py"
 
+BACKEND = str(BACKEND)
 TOOLS = {
     "esim": {
         "versions": ["latest", "2.4", "2.3", "2.2"],
