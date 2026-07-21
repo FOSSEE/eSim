@@ -1,9 +1,0 @@
-.title KiCad schematic
-v2 Net-_X1-Pad1_ GND DC
-X1 Net-_X1-Pad1_ OUT unconnected-_X1-Pad3_ Net-_C1-Pad1_ Net-_X1-Pad1_ Net-_X1-Pad1_ Net-_X1-Pad1_ unconnected-_X1-Pad8_ unconnected-_X1-Pad9_ unconnected-_X1-Pad10_ CA3036
-v1 INP GND sine
-U1 OUT plot_db
-R1 GND OUT 1k
-U2 INP plot_db
-C1 Net-_C1-Pad1_ INP 1u
-.end
