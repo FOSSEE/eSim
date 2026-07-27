@@ -1,0 +1,16 @@
+* Subcircuit MC1413a
+.subckt MC1413a net-_d1-pad2_ net-_d2-pad2_ net-_d2-pad1_ net-_d1-pad1_ 
+.title kicad schematic
+.include DI_S2M.lib
+.include NPN.lib
+d2 net-_d2-pad1_ net-_d2-pad2_ DI_S2M
+r3 net-_q1-pad3_ net-_d1-pad1_ 3.0k
+d3 net-_d1-pad1_ net-_d2-pad1_ DI_S2M
+q2 net-_d2-pad1_ net-_q1-pad3_ net-_d1-pad1_ Q2N2222
+q1 net-_d2-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+r1 net-_d1-pad2_ net-_q1-pad2_ 2.7k
+d1 net-_d1-pad1_ net-_d1-pad2_ DI_S2M
+r2 net-_q1-pad2_ net-_q1-pad3_ 5.0k
+* Control Statements
+
+.ends MC1413a
