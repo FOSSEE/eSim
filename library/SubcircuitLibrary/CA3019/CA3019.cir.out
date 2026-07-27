@@ -1,0 +1,19 @@
+.title kicad schematic
+
+.include D.lib
+* u1 net-_d6-pad2_ net-_d3-pad1_ net-_d5-pad2_ net-_d5-pad1_ net-_d1-pad1_ net-_d1-pad2_ unconnected-_u1-pad7_ net-_d2-pad2_ net-_d6-pad1_ port
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d4 net-_d1-pad1_ net-_d3-pad1_ 1N4148
+d3 net-_d3-pad1_ net-_d2-pad2_ 1N4148
+d6 net-_d6-pad1_ net-_d6-pad2_ 1N4148
+d2 net-_d1-pad2_ net-_d2-pad2_ 1N4148
+d5 net-_d5-pad1_ net-_d5-pad2_ 1N4148
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
