@@ -5,7 +5,7 @@
 <h1 align="center">eSim — Electronic Circuit Simulation</h1>
 
 <p align="center">
-  <strong>An Open-Source EDA Tool for Circuit Design, Simulation, Analysis & PCB Design</strong><br/>
+  <strong>An Open-Source EDA Tool for Circuit Design, Simulation, Analysis &amp; PCB Design</strong><br/>
   <em>Developed by <a href="https://www.fossee.in/">FOSSEE Team</a> at <a href="https://www.iitb.ac.in/">IIT Bombay</a></em>
 </p>
 
@@ -61,7 +61,7 @@ eSim is designed for electronics engineers, students, educators, and hobbyists w
 | • **Simulation** | Ngspice Engine | Run DC, AC, Transient, and other SPICE analyses with real-time interactive plots |
 | • **Analysis** | Waveform Plotting | Visualize simulation results with matplotlib-based Python plots and Ngspice native plots |
 | • **Model Editor** | Device Models | Create and edit SPICE device models (Diodes, BJTs, MOSFETs, JFETs, IGBTs, etc.) |
-| • **Subcircuits** | Subcircuit Builder | Build, manage, and upload reusable subcircuit blocks |
+| • **Subcircuits** | Subcircuit Builder | Build, manage, and upload reusable subcircuit blocks — **741+ ICs** in `SubcircuitLibrary` |
 | • **Mixed-Signal** | NGHDL Integration | Interface VHDL digital models (via GHDL) with analog Ngspice simulations |
 | • **Verilog** | Makerchip + NgVeri | Use Makerchip IDE for Verilog/TL-Verilog design and convert to Ngspice models |
 | • **PCB** | Layout Design | Design PCB layouts using KiCad's PCB editor with eSim's footprint libraries |
@@ -165,7 +165,7 @@ graph TB
 | `appimage/` | 📁 Directory | **AppImage packaging** — build scripts for portable Linux AppImage bundles |
 | `docker-launcher/` | 📁 Directory | **Docker support** — Dockerfile, launcher script, and CI workflows for containerized builds |
 | `snap/` | 📁 Directory | **Snap packaging** — `snapcraft.yaml` for building Snap packages |
-| `ihp/` | 📁 Directory | **IHP PDK integration** — install script for IHP SG13G2 open-source SiGe BiCMOS PDK |
+| `ihp/` | 📁 Directory | **IHP PDK integration** — install script, `.spiceinit` config, NMOS example, and ngspice latest installer for IHP SG13G2 SiGe BiCMOS PDK |
 | `patches/` | 📁 Directory | **Source patches** — patch files for modifying Ngspice/GHDL behavior in sandboxed environments |
 | `.github/` | 📁 Directory | **GitHub config** — issue templates, PR templates, and CI/CD workflow definitions |
 | `setup.py` | 📄 File | Python package configuration for pip installation |
@@ -257,7 +257,7 @@ src/
 |:-----|:------------|
 | `deviceModelLibrary/` | SPICE device models organized by type: Diode, BJT (Transistor), MOSFET (MOS), JFET, IGBT, LEDs, Switches, Transmission Lines, and user libraries |
 | `kicadLibrary/` | KiCad schematic symbols (`eSim-symbols/`), footprint libraries (`kicad_eSim-Library/`), and project templates |
-| `SubcircuitLibrary/` | Reusable subcircuit definitions for common circuit blocks |
+| `SubcircuitLibrary/` | **741+ reusable subcircuit ICs** — logic gates, flip-flops, op-amps, regulators, timers, multiplexers, shift registers, comparators, multipliers, PDK-specific IPs, and more (see [Subcircuit Library](#-subcircuit-library) section) |
 | `modelParamXML/` | XML parameter definitions for device model editor forms |
 | `ngspicetoModelica/` | Mapping files for Ngspice-to-Modelica component translation |
 | `browser/` | HTML/resource files for the built-in help browser |
@@ -272,7 +272,16 @@ src/
 | `src/createKicadLibrary.py` | Auto-generates KiCad symbols from VHDL entity definitions |
 | `src/ghdlserver/` | GHDL foreign interface server for inter-process communication with Ngspice |
 | `install-nghdl.sh` | Automated installer for NGHDL dependencies (GHDL, Verilator, Ngspice) |
-| `Example/` | Example VHDL models and mixed-signal simulation projects |
+| `Example/` | Example VHDL models and mixed-signal simulation projects (including **Microwatt NGHDL co-simulation**) |
+
+### IHP PDK Integration (`ihp/`) — SiGe BiCMOS Open PDK
+
+| Path | Description |
+|:-----|:------------|
+| `ihp-install-script.sh` | Automated installer for IHP SG13G2 open-source SiGe BiCMOS PDK |
+| `install-ngspice-latest.sh` | Script to build and install the **latest ngspice** from source (with OSDI support) — requires eSim/NGHDL to be installed first |
+| `.spiceinit` | Pre-configured `.spiceinit` file for IHP-Open-PDK; automatically placed in the home directory after configuration |
+| `example.cir` | NMOS DC test circuit demonstrating IHP PDK SPICE simulation |
 
 ---
 
@@ -290,7 +299,7 @@ src/
 | **Verilog** | ![Verilator](https://img.shields.io/badge/Verilator-527FFF?style=flat-square) | Verilog HDL simulation and model generation |
 | **HDL Cloud IDE** | ![Makerchip](https://img.shields.io/badge/Makerchip-FF6B6B?style=flat-square) | Online Verilog/TL-Verilog IDE integration |
 | **Modelica** | ![OpenModelica](https://img.shields.io/badge/OpenModelica-1B2A49?style=flat-square) | Multi-domain modeling and simulation |
-| **PDK** | ![SkyWater](https://img.shields.io/badge/SKY130_PDK-blue?style=flat-square) | SkyWater 130nm open-source process design kit |
+| **PDK** | ![SkyWater](https://img.shields.io/badge/SKY130_PDK-blue?style=flat-square) ![IHP](https://img.shields.io/badge/IHP_SG13G2-orange?style=flat-square) | SkyWater 130nm & IHP SiGe BiCMOS open-source PDKs |
 | **Packaging** | ![Flatpak](https://img.shields.io/badge/Flatpak-4A86CF?style=flat-square&logo=flatpak&logoColor=white) ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) | Cross-distribution Linux packaging & containers |
 | **Documentation** | ![Sphinx](https://img.shields.io/badge/Sphinx-000000?style=flat-square&logo=sphinx&logoColor=white) ![RTD](https://img.shields.io/badge/ReadTheDocs-8CA1AF?style=flat-square&logo=readthedocs&logoColor=white) | Auto-generated developer documentation |
 | **CI/CD** | ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white) | Automated builds, Docker images, and releases |
@@ -370,6 +379,8 @@ esim
 
 Refer to the [Docker Launcher README](docker-launcher/README.md) for instructions on running eSim in a containerized environment.
 
+> **Note:** The Docker image now includes `libreadline-dev` to fix a build issue on recent Ubuntu base images.
+
 ### 📦 Build from Source (Flatpak)
 
 ```bash
@@ -378,6 +389,16 @@ flatpak-builder build flatpak/org.fossee.eSim.yml --install --user
 ```
 
 > 📖 For comprehensive installation instructions, see the [INSTALL](INSTALL) file.
+
+### ⚗️ IHP PDK — Latest Ngspice from Source
+
+If you need the latest Ngspice with OSDI support for IHP PDK simulations:
+
+```bash
+# Requires eSim/NGHDL to be installed first
+chmod +x ihp/install-ngspice-latest.sh
+./ihp/install-ngspice-latest.sh
+```
 
 ---
 
@@ -451,6 +472,41 @@ eSim ships with **42 ready-to-simulate example projects** in the `Examples/` dir
 | 42 | 🔌 Power | `Transformer` | Transformer circuit analysis |
 
 </details>
+
+---
+
+## 📦 Subcircuit Library
+
+The `library/SubcircuitLibrary/` directory contains **741+ verified subcircuit models** contributed by the community. These can be directly used in eSim simulations as subcircuit blocks.
+
+<details>
+<summary><b>📂 Click to expand subcircuit categories</b></summary>
+
+| Category | Examples |
+|:---------|:---------|
+| **Logic Gates & Buffers** | 74HC08, 74HC32, 74HC86, SN74LS00, IC74HC00, INVCMOS, CMOS_NAND, SNx4HC03 |
+| **Flip-Flops & Latches** | 74LS379, CD4095BMS, JK flip-flops (74LS112, IC74HC107), D flip-flops, SR latches |
+| **Shift Registers** | 74hc589, 74HCT594, 74LS298, 74LS399, SN74LS295B, SN74LS194 |
+| **Multiplexers / Demultiplexers** | 74LS150 (16:1 MUX), 74HC157, CD4051_sub, SN74LS451, 74ls670 |
+| **Counters & Dividers** | CD4017B, CD4026B, CD4029B, 74ls93, 74ls181, SN74LS461, DM74ls173 |
+| **Encoders / Decoders** | SN74LS247, SN74LS353, MM74C923, CD4099B, CD4089B, LM3914 |
+| **Op-Amps & Comparators** | LM358_Sub, LM741, LM311, LM393, LT1010, lmh6702, opa656, ths4303, ths4541 |
+| **Voltage Regulators** | LM7806, LM7812, LP2950, LP2951, LM317_sub, MCP1700, TCA965, MC1569_Sub |
+| **Audio Amplifiers** | MC1306_Sub, MC1554_Sub, LM386, LM833, TDA2003A_sub |
+| **RF / IF Amplifiers** | MC1510_sub, MC1545_Sub, MC1550_Sub, vca821 |
+| **Multipliers & Modulators** | ad834, ad8307, MC1595_Sub, MC1596_Sub, cppll |
+| **Motor Drivers & Power ICs** | L298N, IR2110, IR2130, IP5328P, TP4056, MCP73831, TL494 |
+| **CA-Series ICs** | CA3005, CA3018, CA3019, CA3022, CA3028A, CA3036, CA3054, CA3080, CA3094 |
+| **SN74-Series ICs** | SN74AS303, SN74AS304, SN74AS305, SN74LS247, SN74LS451, SN74S268, SN74S532, SN74S536, SN74278 |
+| **MC-Series ICs** | MC1306_Sub, MC1510_sub, MC1545_Sub, MC1550_Sub, MC1554_Sub, MC1569_Sub, MC1595_Sub, MC1596_Sub |
+| **CD/CMOS Series** | CD4016, CD4026B, CD4029B, CD4089B, CD4095BMS, CD4099B, CD74HC563, CD74HCT241 |
+| **ADC / DAC** | 3bit_flash_adc, DAC0800, 10bitDAC |
+| **Timers** | NE556 (dual 555), lm555n, MC1455B_IC |
+| **Miscellaneous** | SN54170, LM2902, LM2904, LM2917, LM2941, TL783, _TL783 |
+
+</details>
+
+> 💡 **Contributing a Subcircuit?** Follow the guidelines in [CONTRIBUTING.md](CONTRIBUTING.md). Each subcircuit should include a `.sub` SPICE file, a KiCad schematic (`.kicad_sch`), and a test circuit (`.cir`).
 
 ---
 
@@ -555,6 +611,46 @@ A huge thank you to all **149+ amazing people** who have contributed to eSim! �
 | 📚 **Developer Docs** | [esim.readthedocs.io](https://esim.readthedocs.io/en/latest/) |
 
 ---
+
+## 📝 Recent Changes
+
+A summary of notable changes since the last README update (June 2026):
+
+### 🔧 IHP PDK Enhancements (June 2026)
+- Added `ihp/install-ngspice-latest.sh` — a script to build the latest Ngspice from source with OSDI support for IHP PDK users
+- Added `ihp/.spiceinit` — pre-configured Ngspice initialization file for IHP-Open-PDK; the install script now correctly places it in the user's home directory
+- Added `ihp/example.cir` — an NMOS DC test circuit demonstrating IHP PDK simulation
+
+### 🧩 Subcircuit Library Expansion (June–July 2026)
+Over **100 new subcircuit ICs** were contributed and verified, bringing the total to **741+** entries in `library/SubcircuitLibrary/`. Highlights include:
+- **CA-series ICs**: CA3005, CA3018, CA3019, CA3022, CA3028A, CA3036, CA3054 (and moved CA3020, CA3021, etc. from misplaced locations)
+- **MC-series analog ICs**: MC1306_Sub (audio amp), MC1510_sub (RF/IF amp), MC1545_Sub (video amp), MC1550_Sub (RF/IF amp), MC1554_Sub (audio amp), MC1569_Sub (voltage regulator), MC1595_Sub (4-quadrant multiplier), MC1596_Sub (balanced modulator/demodulator)
+- **Analog ICs from PR #604 (Farhana)**: LT1010, vca821, ths4541, ths4303, opa656, lmh6702, cppll, ad834, ad8307, 3bit_flash_adc
+- **Power/control ICs**: L298N (motor driver), IR2110, IR2130 (gate drivers), IP5328P (power bank IC), TP4056 (Li-ion charger), MCP73831 (Li-Po charger), TL494 (PWM controller), TL783, LP2950, LP2951
+- **Voltage regulators**: LM2941, LM7806, MCP1700, TCA965
+- **Op-amps / comparators**: LM2902, LM2904, LM2917, LM1815
+- **SN74-series digital ICs**: SN74AS303/304/305, SN74LS247, SN74LS295B, SN74LS353, SN74LS451, SN74LS461, SN74LS498, SN74S268, SN74S532, SN74S536, SN74278
+- **TTL/CMOS logic**: 74LS112, 74LS150, 74LS298, 74LS379, 74LS399, 74hc589, 74HCT594, CD4095BMS, CD4016, CD4026B, CD4029B, CD4089B, CD4099B, SN54170, MM74C923, LM3914
+- **Additional digital ICs**: 74ls93, 74ls175, 74ls181, 74ls374, 74ls670, 74lv157, DM74ls173, sn74ls244, sn5470, 4024bc
+
+### 🔀 Library Reorganization (July 2026)
+- **PR #591**: Cleaned up misplaced subcircuits — moved `CA3020`, `LM108`, `LM3080`, `MC1496`, `NE556`, `TL03xA`, `UA702M` from a duplicate location into the canonical `library/SubcircuitLibrary/` path
+- **Subcircuit files** from `SUBCKT/` directory moved to `library/SubcircuitLibrary/` (June 2026)
+
+### 🔬 NGHDL — New Microwatt Example (June 2026)
+- Added a **Microwatt NGHDL co-simulation example** in `nghdl/Example/` demonstrating mixed-signal simulation with the open-source Microwatt POWER ISA soft-core processor (via PR #569)
+
+### 🐋 Docker — Build Fix (June 2026)
+- Added `libreadline-dev` to the Dockerfile to resolve a build failure on newer Ubuntu base images
+
+### 🛠️ Bug Fix — Workspace Newline (June 2026)
+- Fixed workspace newline handling issue (PR #469)
+
+---
+
+## 📄 License
+
+eSim is licensed under the **GNU General Public License v3.0**. See [LICENSE](LICENSE) for details.
 
 
 
