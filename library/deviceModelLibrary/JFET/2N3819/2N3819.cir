@@ -1,0 +1,7 @@
+.title KiCad schematic
+.include "C:\FOSSEE\eSim\library\deviceModelLibrary\JFET\2N3819.lib"
+v1 Net-_J1-Pad2_ GND DC 0
+J1 Net-_J1-Pad1_ Net-_J1-Pad2_ GND 2N3819
+v_u1 Net-_U1-Pad1_ Net-_J1-Pad1_ 0
+v2 Net-_U1-Pad1_ GND DC 0
+.end
