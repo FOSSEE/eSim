@@ -1,32 +1,32 @@
-# TBA820 Audio Power Amplifier
+# 74147 Priority Encoder
 
-TBA820 is an 8-pin low-voltage audio power amplifier IC. It is designed to deliver high-quality audio output with a minimum number of external components. The IC is widely used in portable audio equipment and small speaker applications, providing output power of up to 2 W depending on the supply voltage and load impedance.
+74147 is a 16-pin TTL priority encoder IC. It is a 10-line to 4-line Decimal-to-BCD priority encoder that converts active-low decimal inputs into active-low BCD outputs. When multiple inputs are active simultaneously, the highest-priority input is encoded at the output. The IC is widely used in digital encoding and keyboard interface applications. :contentReference[oaicite:0]{index=0}
 
 ## Usage/Examples
 
-Portable Audio Amplifiers
+Keyboard Encoding
 
-Radio Receivers
+Decimal-to-BCD Conversion
 
-Television Audio Circuits
+Priority Interrupt Systems
 
-Intercom Systems
+Digital Control Circuits
 
-Small Speaker Amplifiers
+Code Conversion
 
-Battery Operated Audio Devices
+Microprocessor Interfacing
 
 ## Documentation
 
-To know the details of TBA820 IC please go through the documentation : [TBA820_datasheet](https://www.st.com/resource/en/datasheet/cd00000147.pdf)
+To know the details of 74147 IC please go through the documentation : https://www.ti.com/lit/ds/symlink/sn74147.pdf :contentReference[oaicite:1]{index=1}
 
 ## Comments/Notes
 
-Please note this is a low-voltage audio power amplifier IC intended for audio frequency applications. Proper heat dissipation should be considered when operating at higher output power levels. External capacitors are required for input coupling, output coupling, and frequency compensation to achieve stable operation and optimum audio performance.
+Please note this is a TTL digital logic IC that operates from a 5 V supply. All inputs and outputs are active LOW. If multiple inputs are asserted simultaneously, the highest-numbered input has priority. Unused inputs should be tied HIGH to ensure reliable operation. :contentReference[oaicite:2]{index=2}
 
 ## Contributer
 
-Name: *Sanchi Ashok Ramteke*  
+Name: *Sanchi Ramteke*  
 Email: *sanchiramteke2008@gmail.com*  
 Year: 2026  
 Position: Contributor
