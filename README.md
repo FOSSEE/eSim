@@ -1,32 +1,32 @@
-# LM105 Voltage Regulator
+# LM329 Precision Voltage Reference
 
-LM105 is a 14-pin precision positive voltage regulator IC. It is designed to provide accurate voltage regulation and can be configured as a fixed or adjustable voltage regulator using external components. The IC features excellent line and load regulation, current limiting, thermal shutdown, and short-circuit protection, making it suitable for a wide range of power supply applications.
+LM329 is a 3-pin precision buried Zener voltage reference IC. It provides a highly stable 6.9 V reference voltage with excellent temperature stability, low dynamic impedance, and low long-term drift. The device is widely used in precision analog circuits requiring an accurate and reliable voltage reference.
 
 ## Usage/Examples
 
-Precision Voltage Regulators
+Precision Voltage References
 
-Adjustable Power Supplies
+Analog-to-Digital Converters (ADC)
 
-Laboratory Power Supplies
+Digital-to-Analog Converters (DAC)
 
-Battery Chargers
+Precision Power Supplies
 
-Industrial Power Supply Circuits
+Test and Measurement Equipment
 
-Reference Voltage Sources
+Industrial Control Systems
 
 ## Documentation
 
-To know the details of LM105 IC please go through the documentation : [LM105_datasheet](https://www.ti.com/lit/ds/symlink/lm105.pdf)
+To know the details of LM329 IC please go through the documentation : [LM329_datasheet](https://www.ti.com/lit/ds/symlink/lm329.pdf)
 
 ## Comments/Notes
 
-Please note this is a precision linear voltage regulator IC. Proper heat sinking may be required when operating at high load currents or with large input-to-output voltage differences. External resistors can be used to configure the output voltage, and adequate input/output bypass capacitors are recommended for stable operation.
+Please note this is a precision buried Zener voltage reference IC. The device requires an external bias resistor to establish the operating current. For optimum accuracy and long-term stability, operate the IC within the recommended bias current range and provide proper PCB layout to minimize noise and thermal effects.
 
 ## Contributer
 
-Name: *Sanchi Ashok Ramteke*  
+Name: *Sanchi Ramteke*  
 Email: *sanchiramteke2008@gmail.com*  
 Year: 2026  
 Position: Contributor
