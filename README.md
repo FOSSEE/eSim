@@ -1,32 +1,25 @@
-# 54283 4-Bit Binary Full Adder
+# MC14077B
 
-54283 is a 16-pin TTL 4-bit binary full adder IC with fast carry look-ahead. It is designed to add two 4-bit binary numbers along with a carry input, producing a 4-bit sum and a carry output. The device offers high-speed arithmetic operations and is commonly used in digital computing and arithmetic logic circuits. :contentReference[oaicite:0]{index=0}
+## Description
+MC14077B is a Quad 2-Input XNOR Gate IC from the CMOS 4000 series. This subcircuit model is created for use in eSim/SPICE simulations.
 
-## Usage/Examples
+## Features
+- Quad 2-input XNOR gates
+- CMOS technology
+- Wide operating voltage range
+- Low power consumption
+- High noise immunity
 
-Arithmetic Logic Units (ALU)
+## Files Included
+- MC14077B.lib
+- MC14077B.cir (if applicable)
+- Symbol file (if applicable)
 
-Binary Addition Circuits
+## Usage
+1. Copy the library file to the appropriate eSim library directory.
+2. Include the library in your schematic.
+3. Place the MC14077B component in the circuit.
+4. Run the simulation.
 
-Digital Computers
-
-Microprocessor Systems
-
-Counters and Accumulators
-
-Digital Signal Processing
-
-## Documentation
-
-To know the details of 54283 IC please go through the documentation : https://www.ti.com/lit/gpn/sn74ls283 :contentReference[oaicite:1]{index=1}
-
-## Comments/Notes
-
-Please note this is a TTL digital logic IC that operates from a 5 V supply. The IC features an internal fast carry look-ahead circuit for high-speed addition. For proper operation, all unused inputs should be tied to a valid logic level (HIGH or LOW) to prevent unpredictable behavior. :contentReference[oaicite:2]{index=2}
-
-## Contributer
-
-Name: *Sanchi Ramteke*  
-Email: *sanchiramteke2008@gmail.com*  
-Year: 2026  
-Position: Contributor
+## Testing
+The subcircuit has been tested in eSim and verified for correct XNOR gate functionality.
