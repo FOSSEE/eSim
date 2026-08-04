@@ -1,28 +1,28 @@
-# NCV33078 Low Noise Dual Operational Amplifier
+# TBA820 Audio Power Amplifier
 
-NCV33078 is an 8-pin low-noise dual operational amplifier IC. It is an automotive-grade version of the MC33078, designed for high-performance audio and precision signal processing applications. The IC features low input noise, low distortion, high slew rate, and a wide bandwidth, making it suitable for demanding analog circuit designs. :contentReference[oaicite:0]{index=0}
+TBA820 is an 8-pin low-voltage audio power amplifier IC. It is designed to deliver high-quality audio output with a minimum number of external components. The IC is widely used in portable audio equipment and small speaker applications, providing output power of up to 2 W depending on the supply voltage and load impedance.
 
 ## Usage/Examples
 
-Audio Preamplifiers
+Portable Audio Amplifiers
 
-Active Filters
+Radio Receivers
 
-Signal Conditioning Circuits
+Television Audio Circuits
 
-Data Acquisition Systems
+Intercom Systems
 
-Instrumentation Amplifiers
+Small Speaker Amplifiers
 
-Automotive Audio Systems
+Battery Operated Audio Devices
 
 ## Documentation
 
-To know the details of NCV33078 IC please go through the documentation : https://www.onsemi.com/download/data-sheet/pdf/mc33078-d.pdf :contentReference[oaicite:1]{index=1}
+To know the details of TBA820 IC please go through the documentation : [TBA820_datasheet](https://www.st.com/resource/en/datasheet/cd00000147.pdf)
 
 ## Comments/Notes
 
-Please note this is a low-noise bipolar dual operational amplifier intended for precision analog and audio applications. The IC operates from dual supply voltages of ±5 V to ±18 V and provides a typical gain-bandwidth product of 16 MHz with a slew rate of 7 V/µs. Proper power supply decoupling is recommended for optimum performance in high-frequency applications. :contentReference[oaicite:2]{index=2}
+Please note this is a low-voltage audio power amplifier IC intended for audio frequency applications. Proper heat dissipation should be considered when operating at higher output power levels. External capacitors are required for input coupling, output coupling, and frequency compensation to achieve stable operation and optimum audio performance.
 
 ## Contributer
 
