@@ -1,32 +1,31 @@
-# 74147 Priority Encoder
+# NE592 Video Amplifier
 
-74147 is a 16-pin TTL priority encoder IC. It is a 10-line to 4-line Decimal-to-BCD priority encoder that converts active-low decimal inputs into active-low BCD outputs. When multiple inputs are active simultaneously, the highest-priority input is encoded at the output. The IC is widely used in digital encoding and keyboard interface applications. :contentReference[oaicite:0]{index=0}
+NE592 is an 8-pin/14-pin wideband video amplifier IC. It is a monolithic, two-stage, differential output amplifier designed for high-speed analog signal amplification. The IC provides fixed gains of 100 and 400 without external components, while the gain can also be adjusted from 0 to 400 using a single external resistor. 
 
 ## Usage/Examples
 
-Keyboard Encoding
+Video Amplifiers
 
-Decimal-to-BCD Conversion
+Pulse Amplifiers in Communication Systems
 
-Priority Interrupt Systems
+Floppy Disk Head Amplifiers
 
-Digital Control Circuits
+Magnetic Memory Systems
 
-Code Conversion
+Video Recorder Systems
 
-Microprocessor Interfacing
+Wideband Analog Signal Processing
 
 ## Documentation
 
-To know the details of 74147 IC please go through the documentation : https://www.ti.com/lit/ds/symlink/sn74147.pdf :contentReference[oaicite:1]{index=1}
+To know the details of NE592 IC please go through the documentation : [NE592_datasheet](https://www.onsemi.com/download/data-sheet/pdf/ne592-d.pdf) 
 
 ## Comments/Notes
 
-Please note this is a TTL digital logic IC that operates from a 5 V supply. All inputs and outputs are active LOW. If multiple inputs are asserted simultaneously, the highest-numbered input has priority. Unused inputs should be tied HIGH to ensure reliable operation. :contentReference[oaicite:2]{index=2}
-
+Please note this is a high-speed analog video amplifier IC intended for wideband applications. The gain can be adjusted using a single external resistor, and additional reactive components may be used to configure the IC as a high-pass, low-pass, or band-pass filter. Proper PCB layout and power supply decoupling are recommended for stable high-frequency operation. 
 ## Contributer
 
-Name: *Sanchi Ramteke*  
+Name: *Sanchi Ashok Ramteke*  
 Email: *sanchiramteke2008@gmail.com*  
 Year: 2026  
 Position: Contributor
