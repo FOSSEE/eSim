@@ -1,31 +1,32 @@
-# NE592 Video Amplifier
+# 54283 4-Bit Binary Full Adder
 
-NE592 is an 8-pin/14-pin wideband video amplifier IC. It is a monolithic, two-stage, differential output amplifier designed for high-speed analog signal amplification. The IC provides fixed gains of 100 and 400 without external components, while the gain can also be adjusted from 0 to 400 using a single external resistor. 
+54283 is a 16-pin TTL 4-bit binary full adder IC with fast carry look-ahead. It is designed to add two 4-bit binary numbers along with a carry input, producing a 4-bit sum and a carry output. The device offers high-speed arithmetic operations and is commonly used in digital computing and arithmetic logic circuits. :contentReference[oaicite:0]{index=0}
 
 ## Usage/Examples
 
-Video Amplifiers
+Arithmetic Logic Units (ALU)
 
-Pulse Amplifiers in Communication Systems
+Binary Addition Circuits
 
-Floppy Disk Head Amplifiers
+Digital Computers
 
-Magnetic Memory Systems
+Microprocessor Systems
 
-Video Recorder Systems
+Counters and Accumulators
 
-Wideband Analog Signal Processing
+Digital Signal Processing
 
 ## Documentation
 
-To know the details of NE592 IC please go through the documentation : [NE592_datasheet](https://www.onsemi.com/download/data-sheet/pdf/ne592-d.pdf) 
+To know the details of 54283 IC please go through the documentation : https://www.ti.com/lit/gpn/sn74ls283 :contentReference[oaicite:1]{index=1}
 
 ## Comments/Notes
 
-Please note this is a high-speed analog video amplifier IC intended for wideband applications. The gain can be adjusted using a single external resistor, and additional reactive components may be used to configure the IC as a high-pass, low-pass, or band-pass filter. Proper PCB layout and power supply decoupling are recommended for stable high-frequency operation. 
+Please note this is a TTL digital logic IC that operates from a 5 V supply. The IC features an internal fast carry look-ahead circuit for high-speed addition. For proper operation, all unused inputs should be tied to a valid logic level (HIGH or LOW) to prevent unpredictable behavior. :contentReference[oaicite:2]{index=2}
+
 ## Contributer
 
-Name: *Sanchi Ashok Ramteke*  
+Name: *Sanchi Ramteke*  
 Email: *sanchiramteke2008@gmail.com*  
 Year: 2026  
 Position: Contributor
