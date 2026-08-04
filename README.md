@@ -1,32 +1,32 @@
-# REF01 Precision Voltage Reference
+# LM105 Voltage Regulator
 
-REF01 is an 8-pin precision voltage reference IC. It provides a stable 10.0 V reference output with excellent temperature stability, low noise, and high accuracy. The output voltage can be adjusted by approximately ±3% using an external trim resistor. It is widely used in precision analog and measurement applications. :contentReference[oaicite:0]{index=0}
+LM105 is a 14-pin precision positive voltage regulator IC. It is designed to provide accurate voltage regulation and can be configured as a fixed or adjustable voltage regulator using external components. The IC features excellent line and load regulation, current limiting, thermal shutdown, and short-circuit protection, making it suitable for a wide range of power supply applications.
 
 ## Usage/Examples
 
-Precision Data Acquisition Systems
+Precision Voltage Regulators
 
-Analog-to-Digital Converters (ADC)
+Adjustable Power Supplies
 
-Digital-to-Analog Converters (DAC)
+Laboratory Power Supplies
 
-Industrial Process Control
+Battery Chargers
 
-Precision Test and Measurement Instruments
+Industrial Power Supply Circuits
 
 Reference Voltage Sources
 
 ## Documentation
 
-To know the details of REF01 IC please go through the documentation : https://www.analog.com/media/en/technical-documentation/data-sheets/REF01_02_03.pdf :contentReference[oaicite:1]{index=1}
+To know the details of LM105 IC please go through the documentation : [LM105_datasheet](https://www.ti.com/lit/ds/symlink/lm105.pdf)
 
 ## Comments/Notes
 
-Please note this is a precision voltage reference IC intended for applications requiring a highly stable reference voltage. The device operates from an input supply of 12 V to 36 V and provides a fixed 10 V output with up to 10 mA load current. Proper supply bypassing and PCB layout are recommended to achieve optimum noise performance and stability. :contentReference[oaicite:2]{index=2}
+Please note this is a precision linear voltage regulator IC. Proper heat sinking may be required when operating at high load currents or with large input-to-output voltage differences. External resistors can be used to configure the output voltage, and adequate input/output bypass capacitors are recommended for stable operation.
 
 ## Contributer
 
-Name: *Sanchi Ramteke*  
+Name: *Sanchi Ashok Ramteke*  
 Email: *sanchiramteke2008@gmail.com*  
 Year: 2026  
 Position: Contributor
