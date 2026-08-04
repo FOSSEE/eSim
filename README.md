@@ -1,32 +1,32 @@
-# LM329 Precision Voltage Reference
+# NCV33078 Low Noise Dual Operational Amplifier
 
-LM329 is a 3-pin precision buried Zener voltage reference IC. It provides a highly stable 6.9 V reference voltage with excellent temperature stability, low dynamic impedance, and low long-term drift. The device is widely used in precision analog circuits requiring an accurate and reliable voltage reference.
+NCV33078 is an 8-pin low-noise dual operational amplifier IC. It is an automotive-grade version of the MC33078, designed for high-performance audio and precision signal processing applications. The IC features low input noise, low distortion, high slew rate, and a wide bandwidth, making it suitable for demanding analog circuit designs. :contentReference[oaicite:0]{index=0}
 
 ## Usage/Examples
 
-Precision Voltage References
+Audio Preamplifiers
 
-Analog-to-Digital Converters (ADC)
+Active Filters
 
-Digital-to-Analog Converters (DAC)
+Signal Conditioning Circuits
 
-Precision Power Supplies
+Data Acquisition Systems
 
-Test and Measurement Equipment
+Instrumentation Amplifiers
 
-Industrial Control Systems
+Automotive Audio Systems
 
 ## Documentation
 
-To know the details of LM329 IC please go through the documentation : [LM329_datasheet](https://www.ti.com/lit/ds/symlink/lm329.pdf)
+To know the details of NCV33078 IC please go through the documentation : https://www.onsemi.com/download/data-sheet/pdf/mc33078-d.pdf :contentReference[oaicite:1]{index=1}
 
 ## Comments/Notes
 
-Please note this is a precision buried Zener voltage reference IC. The device requires an external bias resistor to establish the operating current. For optimum accuracy and long-term stability, operate the IC within the recommended bias current range and provide proper PCB layout to minimize noise and thermal effects.
+Please note this is a low-noise bipolar dual operational amplifier intended for precision analog and audio applications. The IC operates from dual supply voltages of ±5 V to ±18 V and provides a typical gain-bandwidth product of 16 MHz with a slew rate of 7 V/µs. Proper power supply decoupling is recommended for optimum performance in high-frequency applications. :contentReference[oaicite:2]{index=2}
 
 ## Contributer
 
-Name: *Sanchi Ramteke*  
+Name: *Sanchi Ashok Ramteke*  
 Email: *sanchiramteke2008@gmail.com*  
 Year: 2026  
 Position: Contributor
