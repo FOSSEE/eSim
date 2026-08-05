@@ -201,6 +201,13 @@ else
         nghdl) installNGHDL ;;
         softlink) createSoftLink ;;
         config) createConfigFile ;;
+        --install|install)
+            echo "Auto-run setup..."
+            installVerilator
+            installNGHDL
+            createSoftLink
+            createConfigFile
+            ;;
         *) echo "Unknown argument. Use one of: verilator, nghdl, softlink, config" ;;
     esac
 fi
