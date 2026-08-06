@@ -1,0 +1,1 @@
+.MODEL MMBT3904 NPN( Is=48.3f Nf=1.00 Bf=410 Vaf=114 Ikf=0.121 Ise=13.1p Ne=2.00 Be=4.00 Br=4.00 Nr=1.00 Var=24.0 Ikr=0.300 Re=2.63 Rb=10.5 Rc=1.05 Xtb=1.5 Cje=9.67p Vje=1.10 Mje=0.500 Cjc=8.70p Vjc=0.300 Mjc=0.300 Tf=440p Tr=74.7n Eg=1.12 )

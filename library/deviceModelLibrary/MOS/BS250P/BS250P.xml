@@ -1,0 +1,1 @@
+<library><model_name>PMOS</model_name><ref_model>BS250P</ref_model><param><Vto>-3.193</Vto><Rs>2.041</Rs><Rd>0.697</Rd><Is>1E-15</Is><Kp>0.277</Kp><CBD>105E-12</CBD><PB>1</PB><Lambda>1.2E-2</Lambda></param></library>
