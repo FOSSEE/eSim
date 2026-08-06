@@ -1,0 +1,36 @@
+* Subcircuit SN55451B
+.subckt SN55451B /1a /1b /2a /2b /1y net-_q12-pad1_ /vcc /2y 
+.title kicad schematic
+.include D.lib
+.include NPN.lib
+d6 net-_d6-pad1_ net-_d6-pad2_ 1N4148
+r6 /2y net-_q10-pad2_ 1k
+q10 net-_d6-pad2_ net-_q10-pad2_ /2y Q2N2222
+q9 net-_q9-pad1_ net-_q6-pad1_ net-_d6-pad1_ Q2N2222
+r5 /vcc net-_q6-pad1_ 1.6k
+r8 net-_q9-pad1_ /vcc 130
+q6 net-_q6-pad1_ net-_q2-pad1_ net-_q10-pad2_ Q2N2222
+r10 /2y net-_d6-pad2_ 500
+q12 net-_q12-pad1_ net-_d6-pad2_ /2y Q2N2222
+r3 /vcc net-_q5-pad1_ 1.6k
+r1 net-_q1-pad2_ /vcc 4k
+q1 net-_q1-pad1_ net-_q1-pad2_ /1a Q2N2222
+r9 /2y net-_d5-pad2_ 500
+q11 /1y net-_d5-pad2_ /2y Q2N2222
+q8 net-_d5-pad2_ net-_q5-pad3_ /2y Q2N2222
+r7 net-_q7-pad1_ /vcc 130
+q7 net-_q7-pad1_ net-_q5-pad1_ net-_d5-pad1_ Q2N2222
+d5 net-_d5-pad1_ net-_d5-pad2_ 1N4148
+d2 /2y /2a 1N4148
+d4 /2y /2b 1N4148
+q4 net-_q2-pad1_ net-_q2-pad2_ /2b Q2N2222
+q2 net-_q2-pad1_ net-_q2-pad2_ /2a Q2N2222
+r2 net-_q2-pad2_ /vcc 4k
+d3 /2y /1b 1N4148
+d1 /2y /1a 1N4148
+q5 net-_q5-pad1_ net-_q1-pad1_ net-_q5-pad3_ Q2N2222
+r4 /2y net-_q5-pad3_ 1k
+q3 net-_q1-pad1_ net-_q1-pad2_ /1b Q2N2222
+* Control Statements
+
+.ends SN55451B

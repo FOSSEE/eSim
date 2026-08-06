@@ -1,0 +1,24 @@
+* Subcircuit LM3909
+.subckt LM3909 /pin_1_fast_rc_ /pin_2_out_ unconnected-_u1-pad3_ /pin_4_v-_ /pin_5_v+_ /pin_6_rl_ unconnected-_u1-pad7_ /pin_8_slow_rc_ 
+.title kicad schematic
+.include PNP.lib
+.include D.lib
+.include NPN.lib
+r4 /pin_4_v-_ net-_q1-pad3_ 20k
+r2 /pin_1_fast_rc_ /pin_8_slow_rc_ 6k
+d1 /pin_4_v-_ /pin_2_out_ 1N4148
+r3 /pin_4_v-_ /pin_1_fast_rc_ 3k
+r6 net-_q1-pad3_ net-_q2-pad2_ 10k
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q5 net-_q3-pad2_ net-_q2-pad1_ /pin_5_v+_ Q2N2907A
+q3 /pin_2_out_ net-_q3-pad2_ /pin_4_v-_ Q2N2222
+r7 /pin_8_slow_rc_ net-_q2-pad3_ 100
+r5 net-_q2-pad2_ net-_q1-pad2_ 20k
+r8 net-_q1-pad2_ /pin_5_v+_ 400
+r9 /pin_2_out_ net-_q1-pad2_ 400
+q4 net-_q2-pad1_ net-_q2-pad1_ /pin_5_v+_ Q2N2907A
+q1 /pin_5_v+_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+r1 /pin_6_rl_ /pin_5_v+_ 12
+* Control Statements
+
+.ends LM3909
