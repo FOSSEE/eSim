@@ -1,0 +1,62 @@
+.title kicad schematic
+
+.include NMOS-5um.lib
+.include NPN.lib
+.include D.lib
+.include PNP.lib
+q3 net-_d1-pad1_ net-_m1-pad2_ net-_q1-pad3_ Q2N2222
+q4 net-_d1-pad2_ net-_m1-pad2_ net-_q1-pad3_ Q2N2222
+* u1 net-_c1-pad2_ net-_m1-pad2_ zener
+m1 net-_d1-pad1_ net-_m1-pad2_ net-_c1-pad2_ net-_c1-pad2_ mos_n W=100u L=100u M=1
+q1 net-_d1-pad1_ net-_m1-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_d1-pad1_ net-_m1-pad2_ net-_q1-pad3_ Q2N2222
+r1 net-_c1-pad2_ net-_q1-pad3_ 10k
+q11 net-_d3-pad1_ net-_d1-pad2_ net-_d1-pad1_ Q2N2907A
+v4 net-_d1-pad1_ gnd  dc 15
+q13 net-_d1-pad1_ net-_d3-pad1_ net-_c2-pad2_ Q2N2222
+r7 net-_c2-pad2_ net-_d3-pad2_ 120
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+q10 net-_d3-pad1_ net-_c2-pad1_ net-_c3-pad1_ Q2N2222
+v2 in2 gnd  dc 1
+c2 net-_c2-pad1_ net-_c2-pad2_ 5p
+q8 net-_c2-pad1_ net-_q8-pad2_ net-_q5-pad3_ Q2N2907A
+q5 net-_d2-pad1_ in1 net-_q5-pad3_ Q2N2907A
+r3 net-_q6-pad3_ net-_d1-pad1_ 5.6k
+q6 net-_q5-pad3_ net-_d1-pad2_ net-_q6-pad3_ Q2N2907A
+r10 in2 net-_q8-pad2_ 400k
+* u3 in2 plot_v1
+r6 net-_c1-pad2_ net-_q12-pad3_ 200
+r4 net-_c1-pad2_ net-_q7-pad3_ 10k
+r2 net-_c1-pad2_ net-_c1-pad1_ 4.7k
+c1 net-_c1-pad1_ net-_c1-pad2_ 10p
+v3 gnd net-_c1-pad2_  dc -15
+q9 net-_c2-pad1_ net-_q12-pad3_ net-_c1-pad2_ Q2N2222
+r5 net-_q12-pad3_ net-_c3-pad1_ 200
+d2 net-_d2-pad1_ net-_c1-pad1_ 1N4148
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+* u2 in1 plot_v1
+v1 in1 gnd  dc -1
+c3 net-_c3-pad1_ net-_c2-pad2_ 10p
+r8 net-_c2-pad2_ out 50
+q14 net-_d3-pad1_ net-_c2-pad2_ out Q2N2222
+r9 out gnd 600
+r11 out net-_q8-pad2_ 600k
+q12 net-_d3-pad2_ net-_c3-pad1_ net-_q12-pad3_ Q2N2222
+d4 out net-_d3-pad2_ 1N4148
+* u4 out plot_v1
+q7 net-_c2-pad1_ net-_d2-pad1_ net-_q7-pad3_ Q2N2222
+a1 net-_c1-pad2_ net-_m1-pad2_ u1
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u1 zener(v_breakdown=6.8 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+.tran 1e-00 5e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(in2)
+plot v(in1)
+plot v(out)
+.endc
+.end

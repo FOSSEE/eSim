@@ -1,0 +1,32 @@
+# REF02 Precision Voltage Reference
+
+REF02 is an 8-pin precision voltage reference IC. It provides a stable 5.0 V reference output with high initial accuracy, low temperature coefficient, and low noise. The output voltage can be adjusted by approximately ±3% using an external trim resistor. It is designed for precision analog systems requiring a reliable voltage reference.
+
+## Usage/Examples
+
+Precision Data Acquisition Systems
+
+Analog-to-Digital Converters (ADC)
+
+Digital-to-Analog Converters (DAC)
+
+Industrial Process Control
+
+Precision Test and Measurement Instruments
+
+Reference Voltage Sources
+
+## Documentation
+
+To know the details of REF02 IC please go through the documentation : [REF02_datasheet](https://www.analog.com/media/en/technical-documentation/data-sheets/REF01_02_03.pdf)
+
+## Comments/Notes
+
+Please note this is a precision voltage reference IC intended for applications requiring a highly stable 5 V reference. The device operates from an input supply of 7 V to 40 V and can source up to 10 mA of output current. Proper supply bypassing and PCB layout are recommended to achieve optimum noise performance and long-term stability.
+
+## Contributer
+
+Name: *Sanchi Ramteke*  
+Email: *sanchiramteke2008@gmail.com*  
+Year: 2026  
+Position: Contributor
