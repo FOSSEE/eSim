@@ -1,0 +1,63 @@
+.title kicad schematic
+
+.include D.lib
+.include PMOS-180nm.lib
+.include NPN.lib
+.include PNP.lib
+q1 net-_q1-pad1_ net-_q1-pad1_ net-_q1-pad3_ Q2N2222
+r3 net-_q18-pad3_ net-_q1-pad3_ 50
+r4 net-_q18-pad3_ net-_q3-pad3_ 1.1k
+q3 net-_q2-pad3_ net-_q1-pad1_ net-_q3-pad3_ Q2N2222
+* u1 net-_q10-pad3_ net-_q2-pad2_ net-_q8-pad2_ net-_q18-pad3_ net-_q14-pad3_ net-_m5-pad1_ net-_m1-pad4_ net-_c1-pad2_ port
+q7 net-_q6-pad2_ net-_q1-pad1_ net-_q7-pad3_ Q2N2222
+r10 net-_q18-pad3_ net-_q7-pad3_ 1.1k
+r6 net-_q5-pad1_ net-_q4-pad3_ 20
+q5 net-_q5-pad1_ net-_q1-pad1_ net-_q5-pad3_ Q2N2222
+r7 net-_q18-pad3_ net-_q5-pad3_ 20
+r9 net-_q5-pad1_ net-_q6-pad3_ 20
+q8 net-_m1-pad4_ net-_q8-pad2_ net-_q6-pad2_ Q2N2222
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_d1-pad1_ net-_m1-pad4_ CMOSP W=100u L=100u M=1
+m2 net-_m2-pad1_ net-_m2-pad2_ net-_m1-pad1_ net-_m1-pad4_ CMOSP W=100u L=100u M=1
+r8 net-_q11-pad2_ net-_m1-pad4_ 750
+r5 net-_q13-pad2_ net-_m1-pad4_ 750
+q6 net-_q11-pad2_ net-_q6-pad2_ net-_q6-pad3_ Q2N2222
+q4 net-_q13-pad2_ net-_q2-pad3_ net-_q4-pad3_ Q2N2222
+r2 net-_q1-pad1_ net-_m1-pad2_ 10k
+q2 net-_m1-pad4_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+r1 net-_m1-pad2_ net-_m1-pad4_ 12k
+q10 net-_d1-pad1_ net-_d1-pad2_ net-_q10-pad3_ Q2N2222
+q9 net-_m2-pad2_ net-_q1-pad1_ net-_q9-pad3_ Q2N2222
+r11 net-_q18-pad3_ net-_q9-pad3_ 150
+q11 net-_q11-pad1_ net-_q11-pad2_ net-_m2-pad1_ Q2N2222
+q17 net-_m1-pad4_ net-_q16-pad3_ net-_q17-pad3_ Q2N2222
+r16 net-_q17-pad3_ net-_q16-pad3_ 2.5k
+r19 net-_m5-pad1_ net-_q17-pad3_ 10
+r17 net-_m5-pad1_ net-_q17-pad3_ 10
+r18 net-_q18-pad1_ net-_m5-pad1_ 200
+q18 net-_q18-pad1_ net-_d4-pad1_ net-_q18-pad3_ Q2N2222
+r14 net-_d4-pad1_ net-_m5-pad3_ 200
+m5 net-_m5-pad1_ net-_c1-pad2_ net-_m5-pad3_ net-_m1-pad4_ CMOSP W=100u L=100u M=1
+q16 net-_m1-pad4_ net-_c1-pad1_ net-_q16-pad3_ Q2N2222
+q15 net-_m2-pad2_ net-_q11-pad1_ net-_m1-pad4_ Q2N2907A
+m3 net-_m3-pad1_ net-_m2-pad2_ net-_c1-pad1_ net-_m1-pad4_ CMOSP W=100u L=100u M=1
+q13 net-_q11-pad1_ net-_q13-pad2_ net-_m3-pad1_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+m4 net-_d3-pad2_ net-_c1-pad2_ net-_c1-pad2_ net-_m1-pad4_ CMOSP W=100u L=100u M=1
+d3 net-_d2-pad2_ net-_d3-pad2_ 1N4148
+d2 net-_c1-pad1_ net-_d2-pad2_ 1N4148
+q12 net-_q11-pad1_ net-_q11-pad1_ net-_m1-pad4_ Q2N2907A
+c1 net-_c1-pad1_ net-_c1-pad2_ 10p
+q14 net-_c1-pad2_ net-_d1-pad2_ net-_q14-pad3_ Q2N2222
+r12 net-_q18-pad3_ net-_q10-pad3_ 600
+r13 net-_q18-pad3_ net-_q14-pad3_ 600
+r15 net-_q18-pad3_ net-_d4-pad2_ 150
+d4 net-_d4-pad1_ net-_d4-pad2_ 1N4148
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

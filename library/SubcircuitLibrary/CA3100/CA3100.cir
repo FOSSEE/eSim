@@ -1,0 +1,50 @@
+.title KiCad schematic
+Q1 Net-_Q1-Pad1_ Net-_Q1-Pad1_ Net-_Q1-Pad3_ eSim_NPN
+R3 Net-_Q18-Pad3_ Net-_Q1-Pad3_ 50
+R4 Net-_Q18-Pad3_ Net-_Q3-Pad3_ 1.1K
+Q3 Net-_Q2-Pad3_ Net-_Q1-Pad1_ Net-_Q3-Pad3_ eSim_NPN
+U1 Net-_Q10-Pad3_ Net-_Q2-Pad2_ Net-_Q8-Pad2_ Net-_Q18-Pad3_ Net-_Q14-Pad3_ Net-_M5-Pad1_ Net-_M1-Pad4_ Net-_C1-Pad2_ PORT
+Q7 Net-_Q6-Pad2_ Net-_Q1-Pad1_ Net-_Q7-Pad3_ eSim_NPN
+R10 Net-_Q18-Pad3_ Net-_Q7-Pad3_ 1.1K
+R6 Net-_Q5-Pad1_ Net-_Q4-Pad3_ 20
+Q5 Net-_Q5-Pad1_ Net-_Q1-Pad1_ Net-_Q5-Pad3_ eSim_NPN
+R7 Net-_Q18-Pad3_ Net-_Q5-Pad3_ 20
+R9 Net-_Q5-Pad1_ Net-_Q6-Pad3_ 20
+Q8 Net-_M1-Pad4_ Net-_Q8-Pad2_ Net-_Q6-Pad2_ eSim_NPN
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ Net-_D1-Pad1_ Net-_M1-Pad4_ mosfet_p
+M2 Net-_M2-Pad1_ Net-_M2-Pad2_ Net-_M1-Pad1_ Net-_M1-Pad4_ mosfet_p
+R8 Net-_Q11-Pad2_ Net-_M1-Pad4_ 750
+R5 Net-_Q13-Pad2_ Net-_M1-Pad4_ 750
+Q6 Net-_Q11-Pad2_ Net-_Q6-Pad2_ Net-_Q6-Pad3_ eSim_NPN
+Q4 Net-_Q13-Pad2_ Net-_Q2-Pad3_ Net-_Q4-Pad3_ eSim_NPN
+R2 Net-_Q1-Pad1_ Net-_M1-Pad2_ 10K
+Q2 Net-_M1-Pad4_ Net-_Q2-Pad2_ Net-_Q2-Pad3_ eSim_NPN
+R1 Net-_M1-Pad2_ Net-_M1-Pad4_ 12K
+Q10 Net-_D1-Pad1_ Net-_D1-Pad2_ Net-_Q10-Pad3_ eSim_NPN
+Q9 Net-_M2-Pad2_ Net-_Q1-Pad1_ Net-_Q9-Pad3_ eSim_NPN
+R11 Net-_Q18-Pad3_ Net-_Q9-Pad3_ 150
+Q11 Net-_Q11-Pad1_ Net-_Q11-Pad2_ Net-_M2-Pad1_ eSim_NPN
+Q17 Net-_M1-Pad4_ Net-_Q16-Pad3_ Net-_Q17-Pad3_ eSim_NPN
+R16 Net-_Q17-Pad3_ Net-_Q16-Pad3_ 2.5K
+R19 Net-_M5-Pad1_ Net-_Q17-Pad3_ 10
+R17 Net-_M5-Pad1_ Net-_Q17-Pad3_ 10
+R18 Net-_Q18-Pad1_ Net-_M5-Pad1_ 200
+Q18 Net-_Q18-Pad1_ Net-_D4-Pad1_ Net-_Q18-Pad3_ eSim_NPN
+R14 Net-_D4-Pad1_ Net-_M5-Pad3_ 200
+M5 Net-_M5-Pad1_ Net-_C1-Pad2_ Net-_M5-Pad3_ Net-_M1-Pad4_ mosfet_p
+Q16 Net-_M1-Pad4_ Net-_C1-Pad1_ Net-_Q16-Pad3_ eSim_NPN
+Q15 Net-_M2-Pad2_ Net-_Q11-Pad1_ Net-_M1-Pad4_ eSim_PNP
+M3 Net-_M3-Pad1_ Net-_M2-Pad2_ Net-_C1-Pad1_ Net-_M1-Pad4_ mosfet_p
+Q13 Net-_Q11-Pad1_ Net-_Q13-Pad2_ Net-_M3-Pad1_ eSim_NPN
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode
+M4 Net-_D3-Pad2_ Net-_C1-Pad2_ Net-_C1-Pad2_ Net-_M1-Pad4_ mosfet_p
+D3 Net-_D2-Pad2_ Net-_D3-Pad2_ eSim_Diode
+D2 Net-_C1-Pad1_ Net-_D2-Pad2_ eSim_Diode
+Q12 Net-_Q11-Pad1_ Net-_Q11-Pad1_ Net-_M1-Pad4_ eSim_PNP
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 10p
+Q14 Net-_C1-Pad2_ Net-_D1-Pad2_ Net-_Q14-Pad3_ eSim_NPN
+R12 Net-_Q18-Pad3_ Net-_Q10-Pad3_ 600
+R13 Net-_Q18-Pad3_ Net-_Q14-Pad3_ 600
+R15 Net-_Q18-Pad3_ Net-_D4-Pad2_ 150
+D4 Net-_D4-Pad1_ Net-_D4-Pad2_ eSim_Diode
+.end
