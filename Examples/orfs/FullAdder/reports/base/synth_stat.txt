@@ -1,0 +1,25 @@
+
+20. Printing statistics.
+
+=== FullAdder ===
+
+        +----------------------------Count including submodules.
+        |        +-------------------Area including submodules.
+        |        |        +----------Local count, excluding submodules.
+        |        |        |        +-Local area, excluding submodules.
+        |        |        |        | 
+        5        -        5        - wires
+        5        -        5        - wire bits
+        5        -        5        - public wires
+        5        -        5        - public wire bits
+        5        -        5        - ports
+        5        -        5        - port bits
+        -        -        -        - memories
+        -        -        -        - memory bits
+        -        -        -        - processes
+        1   20.019        1   20.019 cells
+        1   20.019        1   20.019   sky130_fd_sc_hd__fa_1
+
+   Chip area for module '\FullAdder': 20.019200
+     of which used for sequential elements: 0.000000 (0.00%)
+
