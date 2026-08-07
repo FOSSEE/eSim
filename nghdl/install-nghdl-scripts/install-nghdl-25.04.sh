@@ -75,6 +75,12 @@ function installDependency
     echo "Installing libxaw7-dev...................................."
     sudo apt install -y libxaw7-dev
 
+    echo "Installing libreadline-dev................................" #required for com_history.c header
+    sudo apt install -y libreadline-dev
+
+    echo "Installing libfftw3-dev..................................." #required for cmath4.c header
+    sudo apt install -y libfftw3-dev
+
     echo "Installing dependencies for $verilator...................."
     if [[ -n "$(which apt 2> /dev/null)" ]]
     then
@@ -101,7 +107,7 @@ function installGHDL
     echo "Configuring $ghdl build as per requirements"
     chmod +x configure
     # Other configure flags can be found at - https://github.com/ghdl/ghdl/blob/master/configure
-    ./configure --with-llvm-config=/usr/bin/llvm-config
+    ./configure --with-llvm-config=/usr/bin/llvm-config #path cannot have spaces
     echo "Building the install file for $ghdl LLVM"
     make -j$(nproc)
     sudo make install
