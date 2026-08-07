@@ -1,0 +1,6 @@
+.title KiCad schematic
+v1 /VIN GND 100
+R2 GND Net-_X1-Pad3_ 5.6K
+X1 /VIN /VOUT Net-_X1-Pad3_ TL783
+R1 Net-_X1-Pad3_ /VOUT 82
+.end

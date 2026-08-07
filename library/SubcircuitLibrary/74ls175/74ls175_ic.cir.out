@@ -1,0 +1,48 @@
+.title kicad schematic
+
+* u5 net-_u1-pad12_ net-_u1-pad9_ net-_u5-pad3_ net-_u1-pad1_ net-_u1-pad10_ net-_u1-pad11_ d_dff
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ unconnected-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ unconnected-_u1-pad16_ port
+* u3 net-_u1-pad4_ net-_u1-pad9_ net-_u3-pad3_ net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ d_dff
+* u9 net-_u5-pad3_ d_pulldown
+* u4 net-_u1-pad5_ net-_u1-pad9_ net-_u4-pad3_ net-_u1-pad1_ net-_u1-pad7_ net-_u1-pad6_ d_dff
+* u7 net-_u3-pad3_ d_pulldown
+* u8 net-_u4-pad3_ d_pulldown
+* u2 net-_u1-pad1_ d_pulldown
+* u6 net-_u1-pad13_ net-_u1-pad9_ net-_u10-pad1_ net-_u1-pad1_ net-_u1-pad15_ net-_u1-pad14_ d_dff
+* u10 net-_u10-pad1_ d_pulldown
+a1 net-_u1-pad12_ net-_u1-pad9_ net-_u5-pad3_ net-_u1-pad1_ net-_u1-pad10_ net-_u1-pad11_ u5
+a2 net-_u1-pad4_ net-_u1-pad9_ net-_u3-pad3_ net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ u3
+a3 net-_u5-pad3_ u9
+a4 net-_u1-pad5_ net-_u1-pad9_ net-_u4-pad3_ net-_u1-pad1_ net-_u1-pad7_ net-_u1-pad6_ u4
+a5 net-_u3-pad3_ u7
+a6 net-_u4-pad3_ u8
+a7 net-_u1-pad1_ u2
+a8 net-_u1-pad13_ net-_u1-pad9_ net-_u10-pad1_ net-_u1-pad1_ net-_u1-pad15_ net-_u1-pad14_ u6
+a9 net-_u10-pad1_ u10
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u5 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u3 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u9 d_pulldown(load=1 ) 
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u4 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u7 d_pulldown(load=1 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u8 d_pulldown(load=1 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u2 d_pulldown(load=1 ) 
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u6 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u10 d_pulldown(load=1 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

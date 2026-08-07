@@ -232,7 +232,7 @@ configure_spiceinit() {
         log "⚠️ NGHDL spinit not found at $NGHDL_SPINIT"
         log "   Please install NGHDL first, then re-run IHP installation"
     fi
-    
+    mv $HOME/ihp/IHP-Open-PDK/ihp-sg13g2/libs.tech/ngspice/.spiceinit $HOME/
     log "✅ Spiceinit configuration complete"
 }
 

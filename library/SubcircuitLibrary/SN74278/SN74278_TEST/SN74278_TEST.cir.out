@@ -1,0 +1,27 @@
+.title kicad schematic
+
+.include SN74278.sub
+x1 net-_u1-pad8_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad7_ net-_u2-pad5_ net-_u2-pad4_ unconnected-_x1-pad7_ net-_u2-pad3_ net-_u2-pad2_ net-_u2-pad1_ net-_u1-pad9_ net-_u1-pad10_ unconnected-_x1-pad14_ SN74278
+* u2 net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ net-_u2-pad4_ net-_u2-pad5_ y1 y2 y3 y4 p1 dac_bridge_5
+v5 d3 gnd pwl(0 0 29.99m 0 30m 5 40m 5 40.01m 0 80m 0)
+v6 d4 gnd pwl(0 0 44.99m 0 45m 5 55m 5 55.01m 0 80m 0)
+v4 d2 gnd pwl(0 0 14.99m 0 15m 5 25m 5 25.01m 0 80m 0)
+v3 d1 gnd pwl(0 5 10m 5 10.01m 0 80m 0)
+* u1 p0 g d1 d2 d3 d4 net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ adc_bridge_6
+v1 p0 gnd pwl(0 0 59m 0 60m 5 80m 5)
+v2 g gnd pwl(0 5 60m 5 60.01m 0 80m 0)
+a1 [net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ net-_u2-pad4_ net-_u2-pad5_ ] [y1 y2 y3 y4 p1 ] u2
+a2 [p0 g d1 d2 d3 d4 ] [net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ ] u1
+* Schematic Name:                             dac_bridge_5, Ngspice Name: dac_bridge
+.model u2 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_6, Ngspice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 10e-06 80e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

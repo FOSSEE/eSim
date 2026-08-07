@@ -1,0 +1,39 @@
+.title KiCad schematic
+M2 /HO1 Net-_U3-Pad6_ /VB1 /VB1 mosfet_p
+M1 /HO1 Net-_U3-Pad6_ /VS1 /VS1 mosfet_n
+U5 /HIN2 Net-_A3-Pad2_ d_inverter
+U12 Net-_A3-Pad6_ Net-_U12-Pad2_ unconnected-_U12-Pad3_ unconnected-_U12-Pad4_ unconnected-_U12-Pad5_ Net-_M7-Pad2_ unconnected-_U12-Pad7_ d_srff
+U7 Net-_A3-Pad6_ Net-_U12-Pad2_ d_inverter
+M5 /LO2 Net-_M5-Pad2_ /COM /COM mosfet_n
+U11 Net-_U11-Pad1_ Net-_M5-Pad2_ d_inverter
+U9 Net-_A4-Pad6_ Net-_U11-Pad1_ d_inverter
+U6 /LIN2 Net-_A4-Pad2_ d_inverter
+M6 /LO2 Net-_M5-Pad2_ /VCC /VCC mosfet_p
+A4 unconnected-_A4-Pad1_ Net-_A4-Pad2_ unconnected-_A4-Pad3_ /SD_LOGIC unconnected-_A4-Pad5_ Net-_A4-Pad6_ unconnected-_A4-Pad7_ unconnected-_A4-Pad8_ and
+A3 unconnected-_A3-Pad1_ Net-_A3-Pad2_ unconnected-_A3-Pad3_ /SD_LOGIC unconnected-_A3-Pad5_ Net-_A3-Pad6_ unconnected-_A3-Pad7_ unconnected-_A3-Pad8_ and
+M10 /LO3 Net-_M10-Pad2_ /VCC /VCC mosfet_p
+M12 /HO3 Net-_M11-Pad2_ /VB3 /VB3 mosfet_p
+M11 /HO3 Net-_M11-Pad2_ /VS3 /VS3 mosfet_n
+M9 /LO3 Net-_M10-Pad2_ /COM /COM mosfet_n
+U14 /LIN3 Net-_A6-Pad2_ d_inverter
+U17 /ITRIP /SD_LOGIC d_inverter
+A6 unconnected-_A6-Pad1_ Net-_A6-Pad2_ unconnected-_A6-Pad3_ /SD_LOGIC unconnected-_A6-Pad5_ Net-_A6-Pad6_ unconnected-_A6-Pad7_ unconnected-_A6-Pad8_ and
+U16 Net-_A6-Pad6_ Net-_U16-Pad2_ d_inverter
+U15 Net-_A5-Pad6_ Net-_U15-Pad2_ d_inverter
+A5 unconnected-_A5-Pad1_ Net-_A5-Pad2_ unconnected-_A5-Pad3_ /SD_LOGIC unconnected-_A5-Pad5_ Net-_A5-Pad6_ unconnected-_A5-Pad7_ unconnected-_A5-Pad8_ and
+U19 Net-_A5-Pad6_ Net-_U15-Pad2_ unconnected-_U19-Pad3_ unconnected-_U19-Pad4_ unconnected-_U19-Pad5_ Net-_M11-Pad2_ unconnected-_U19-Pad7_ d_srff
+U18 Net-_U16-Pad2_ Net-_M10-Pad2_ d_inverter
+U13 /HIN3 Net-_A5-Pad2_ d_inverter
+M7 /HO2 Net-_M7-Pad2_ /VS2 /VS2 mosfet_n
+M8 /HO2 Net-_M7-Pad2_ /VB2 /VB2 mosfet_p
+U3 Net-_A2-Pad6_ Net-_U2-Pad2_ unconnected-_U3-Pad3_ unconnected-_U3-Pad4_ unconnected-_U3-Pad5_ Net-_U3-Pad6_ unconnected-_U3-Pad7_ d_srff
+M4 /LO1 Net-_M4-Pad2_ /VCC /VCC mosfet_p
+M3 /LO1 Net-_M4-Pad2_ /COM /COM mosfet_n
+U8 Net-_A1-Pad6_ Net-_U10-Pad1_ d_inverter
+U10 Net-_U10-Pad1_ Net-_M4-Pad2_ d_inverter
+U2 Net-_A2-Pad6_ Net-_U2-Pad2_ d_inverter
+U4 /LIN1 Net-_A1-Pad2_ d_inverter
+A2 unconnected-_A2-Pad1_ Net-_U1-Pad2_ unconnected-_A2-Pad3_ /SD_LOGIC unconnected-_A2-Pad5_ Net-_A2-Pad6_ unconnected-_A2-Pad7_ unconnected-_A2-Pad8_ and
+U1 /HIN1 Net-_U1-Pad2_ d_inverter
+A1 unconnected-_A1-Pad1_ Net-_A1-Pad2_ unconnected-_A1-Pad3_ /SD_LOGIC unconnected-_A1-Pad5_ Net-_A1-Pad6_ unconnected-_A1-Pad7_ unconnected-_A1-Pad8_ and
+.end

@@ -1,0 +1,22 @@
+.title kicad schematic
+
+.include TL783.sub
+v1 vin gnd 100
+r2 gnd net-_x1-pad3_ 5.6k
+x1 vin vout net-_x1-pad3_ TL783
+r1 net-_x1-pad3_ vout 82
+.tran 10e-06 10e-03 0e-00
+
+* Control Statements
+.control
+run
+
+* X-axis (Time axis) ko Logarithmic scale par set karne ke liye
+set xlog
+
+* Dono signals ko ek hi combine window me plot karne ke liye
+plot v(vin) v(vout)
+
+
+.endc
+.end

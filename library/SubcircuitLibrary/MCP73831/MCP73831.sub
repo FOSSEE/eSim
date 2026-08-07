@@ -1,0 +1,29 @@
+
+.subckt MCP73831 VDD VBAT PROG GND
+
+* 1. Internal Current Sense Resistor (R1 = 1 Ohm)
+Rinternal_sense VDD Node_Source 1
+
+* 2. Internal Pass Element (P-Channel MOSFET - M1)
+* Nodes: Drain(VBAT) Gate(PROG) Source(Node_Source) Bulk(Node_Source)
+Minternal_pmos VBAT PROG Node_Source Node_Source PMOS_REG
+.MODEL PMOS_REG PMOS (VTO=-1.5 KP=20u LEVEL=1 LAMBDA=0.02)
+
+* 3. Internal Bandgap Voltage Reference (V1 = 4.2V Constant baseline)
+Vreference Node_VREF GND DC 4.2V
+
+* 4. X1: Constant Voltage Regulation Loop (Op-Amp Comparator)
+Xvoltage_loop Node_VREF VBAT PROG ideal_opamp_macro
+
+* 5. X2: Constant Current Regulation Loop (Op-Amp Sense)
+Xcurrent_loop VDD Node_Source PROG ideal_opamp_macro
+
+* -----------------------------------------------------------------
+* Internal Sub-Macro Model for the Dual Op-Amps (X1 & X2)
+.SUBCKT ideal_opamp_macro IN_MINUS IN_PLUS OUT
+R_in IN_MINUS IN_PLUS 10Meg
+E_gain OUT 0 IN_PLUS IN_MINUS 100k
+R_out OUT 0 50
+.ENDS ideal_opamp_macro
+
+.ends MCP73831

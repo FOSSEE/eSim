@@ -1,0 +1,34 @@
+.subckt TL494 1 2 15 16 3 4 13 14 5 6 9 10 11 8 12 7
+* Sequential Pins Order: 
+* 1:1IN+ 2:1IN- 15:2IN- 16:2IN+ 3:FEEDBACK 4:DTC 13:OUTPUT_CTRL 14:VREF 
+* 5:CT 6:RT 9:E1 10:C1 11:C2 8:E2 12:VCC 7:GND
+
+* Internal 5V Reference Regulator (Pin 14)
+VREF_INT 14 7 DC 5.0V
+
+* Internal Error Amplifier 1 (Upar wala Op-Amp)
+E_ERR1 99 7 VALUE={LIMIT(V(1)-V(2), -2.5V, 2.5V) * 1000}
+R_OUT1 99 3 1k
+
+* Internal Error Amplifier 2 (Neeche wala Op-Amp)
+E_ERR2 98 7 VALUE={LIMIT(V(16)-V(15), -2.5V, 2.5V) * 1000}
+R_OUT2 98 3 1k
+
+* Internal Oscillator (Generates Ramp on Pin 5 based on RT Pin 6)
+G_OSC 7 5 VALUE={V(12)/V(6)}
+C_CT_INT 5 7 10nF
+
+* PWM Comparator (Center wala Op-Amp: Compares Feedback Pin 3 with Ramp Pin 5 & DTC Pin 4)
+E_PWM_COMP 40 7 VALUE={IF(V(3) > V(5) AND V(3) > V(4), 5V, 0V)}
+
+* Steering Flip-Flop & Output Mode Control Logic (Pin 13 Selector)
+E_MOD_A 41 7 VALUE={IF(V(13) > 2.5V, IF(V(5) > 2.5V, 5V, 0V), 5V)}
+E_MOD_B 42 7 VALUE={IF(V(13) > 2.5V, IF(V(5) <= 2.5V, 5V, 0V), 5V)}
+
+* Output Stage - Transistor Q1 (Pin 10: C1, Pin 9: E1)
+G_Q1 10 9 VALUE={IF(V(40) > 2.5V AND V(41) > 2.5V, 100m * V(10,9), 0)}
+
+* Output Stage - Transistor Q2 (Pin 11: C2, Pin 8: E2)
+G_Q2 11 8 VALUE={IF(V(40) > 2.5V AND V(42) > 2.5V, 100m * V(11,8), 0)}
+
+.ends TL494

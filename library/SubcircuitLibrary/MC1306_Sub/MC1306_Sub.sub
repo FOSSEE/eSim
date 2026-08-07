@@ -1,0 +1,37 @@
+* Subcircuit MC1306_Sub
+.subckt MC1306_Sub net-_q14-pad3_ net-_q10-pad3_ net-_d1-pad1_ net-_q4-pad3_ net-_q1-pad2_ net-_q2-pad3_ net-_q7-pad2_ 
+.title kicad schematic
+.include PNP.lib
+.include D.lib
+.include NPN.lib
+r6 net-_q2-pad3_ net-_q6-pad3_ 1.6k
+q6 net-_q6-pad1_ net-_d3-pad1_ net-_q6-pad3_ Q2N2222
+q9 net-_d4-pad1_ net-_q5-pad1_ net-_q9-pad3_ Q2N2907A
+q7 net-_d4-pad1_ net-_q7-pad2_ net-_q7-pad3_ Q2N2222
+q8 net-_d5-pad2_ net-_q7-pad3_ net-_q2-pad3_ Q2N2222
+q4 net-_d1-pad1_ net-_q1-pad1_ net-_q4-pad3_ Q2N2222
+q3 net-_q2-pad1_ net-_d2-pad1_ net-_q3-pad3_ Q2N2907A
+q2 net-_q2-pad1_ net-_q1-pad3_ net-_q2-pad3_ Q2N2222
+r2 net-_q2-pad3_ net-_q4-pad3_ 1.4k
+r5 net-_q2-pad3_ net-_d3-pad2_ 500
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+r4 net-_d3-pad1_ net-_d2-pad2_ 5.4k
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+r1 net-_q3-pad3_ net-_d1-pad1_ 1.4k
+r3 net-_q5-pad1_ net-_d1-pad2_ 250
+q5 net-_q5-pad1_ net-_d1-pad2_ net-_d2-pad1_ Q2N2222
+r7 net-_q9-pad3_ net-_d1-pad1_ 460
+q14 net-_q10-pad3_ net-_q12-pad3_ net-_q14-pad3_ Q2N2222
+q11 net-_d1-pad1_ net-_d4-pad1_ net-_q11-pad3_ Q2N2222
+r8 net-_q10-pad3_ net-_q6-pad1_ 10k
+q10 net-_q10-pad1_ net-_d5-pad2_ net-_q10-pad3_ Q2N2907A
+q13 net-_d1-pad1_ net-_q11-pad3_ net-_q10-pad3_ Q2N2222
+q12 net-_q10-pad3_ net-_q10-pad1_ net-_q12-pad3_ Q2N2222
+r9 net-_q2-pad3_ net-_q10-pad1_ 7.0k
+d5 net-_d4-pad2_ net-_d5-pad2_ 1N4148
+d4 net-_d4-pad1_ net-_d4-pad2_ 1N4148
+* Control Statements
+
+.ends MC1306_Sub

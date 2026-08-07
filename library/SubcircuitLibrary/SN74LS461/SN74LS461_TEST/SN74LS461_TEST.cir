@@ -1,0 +1,29 @@
+.title KiCad schematic
+U2 I0 plot_v1
+U3 I1 plot_v1
+v3 I1 GND pwl
+v1 Net-_U5-Pad1_ GND 5
+v2 I0 GND pwl
+U19 Q4 plot_v1
+U16 Q5 plot_v1
+U14 Q6 plot_v1
+U18 Q3 plot_v1
+U13 Q7 plot_v1
+U15 Q1 plot_v1
+U17 Q2 plot_v1
+U12 Q0 plot_v1
+U8 Net-_U8-Pad1_ Net-_U8-Pad2_ Net-_U8-Pad3_ Net-_U8-Pad4_ Net-_U8-Pad5_ Net-_U8-Pad6_ Net-_U8-Pad7_ Net-_U8-Pad8_ Q0 Q1 Q2 Q3 Q4 Q5 Q6 Q7 dac_bridge_8
+U9 Net-_U9-Pad1_ CARRY_OUT dac_bridge_1
+X1 Net-_U4-Pad2_ Net-_U6-Pad3_ Net-_U5-Pad9_ Net-_U5-Pad10_ Net-_U5-Pad11_ Net-_U5-Pad12_ Net-_U5-Pad13_ Net-_U5-Pad14_ Net-_U5-Pad15_ Net-_U5-Pad16_ Net-_U6-Pad4_ Net-_U10-Pad4_ Net-_U9-Pad1_ Net-_U8-Pad8_ Net-_U8-Pad7_ Net-_U8-Pad6_ Net-_U8-Pad5_ Net-_U8-Pad4_ Net-_U8-Pad3_ Net-_U8-Pad2_ Net-_U8-Pad1_ Net-_U10-Pad3_ SN74LS461
+U20 CARRY_OUT plot_v1
+U1 CLK plot_v1
+U4 CLK Net-_U4-Pad2_ adc_bridge_1
+U6 I0 I1 Net-_U6-Pad3_ Net-_U6-Pad4_ adc_bridge_2
+U5 Net-_U5-Pad1_ GND Net-_U5-Pad1_ GND Net-_U5-Pad1_ GND Net-_U5-Pad1_ GND Net-_U5-Pad9_ Net-_U5-Pad10_ Net-_U5-Pad11_ Net-_U5-Pad12_ Net-_U5-Pad13_ Net-_U5-Pad14_ Net-_U5-Pad15_ Net-_U5-Pad16_ adc_bridge_8
+v4 CLK GND pulse
+v6 OC_B GND pwl
+v5 CI_B GND pwl
+U10 CI_B OC_B Net-_U10-Pad3_ Net-_U10-Pad4_ adc_bridge_2
+U11 CI_B plot_v1
+U7 OC_B plot_v1
+.end

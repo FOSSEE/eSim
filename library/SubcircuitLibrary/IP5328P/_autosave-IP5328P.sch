@@ -1,0 +1,358 @@
+EESchema Schematic File Version 5
+EELAYER 36 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+Comment5 ""
+Comment6 ""
+Comment7 ""
+Comment8 ""
+Comment9 ""
+$EndDescr
+Connection ~ 1750 3800
+Connection ~ 2900 3000
+Connection ~ 2900 3200
+Connection ~ 3900 3650
+Connection ~ 5050 2400
+Connection ~ 5050 2950
+Connection ~ 5050 3150
+Connection ~ 8150 3250
+Connection ~ 8250 4100
+NoConn ~ 9300 3400
+NoConn ~ 9600 3500
+NoConn ~ 9600 3900
+Wire Wire Line
+	1550 2650 1650 2650
+Wire Wire Line
+	1550 2900 1550 2650
+Wire Wire Line
+	1550 3800 1750 3800
+Wire Wire Line
+	1750 3800 1750 3950
+Wire Wire Line
+	1750 3800 2000 3800
+Wire Wire Line
+	1900 2900 1900 3000
+Wire Wire Line
+	1900 3000 2900 3000
+Wire Wire Line
+	2000 3800 2000 2900
+Wire Wire Line
+	2150 3750 2600 3750
+Wire Wire Line
+	2150 3800 2150 3750
+Wire Wire Line
+	2150 4700 2150 5000
+Wire Wire Line
+	2250 2650 2550 2650
+Wire Wire Line
+	2650 3200 2900 3200
+Wire Wire Line
+	2850 2250 2850 2450
+Wire Wire Line
+	2850 2850 2900 2850
+Wire Wire Line
+	2900 2850 2900 3000
+Wire Wire Line
+	2900 3000 2900 3200
+Wire Wire Line
+	2900 3200 2900 3550
+Wire Wire Line
+	2900 3950 2900 4200
+Wire Wire Line
+	3650 2550 3750 2550
+Wire Wire Line
+	3650 2750 3650 2550
+Wire Wire Line
+	3650 3650 3900 3650
+Wire Wire Line
+	3900 3650 3900 3900
+Wire Wire Line
+	3900 3650 4100 3650
+Wire Wire Line
+	4000 2800 4000 2950
+Wire Wire Line
+	4000 2950 5050 2950
+Wire Wire Line
+	4100 3650 4100 2800
+Wire Wire Line
+	4350 2550 4350 2700
+Wire Wire Line
+	4350 2700 4750 2700
+Wire Wire Line
+	4550 3750 4800 3750
+Wire Wire Line
+	4550 4000 4550 3750
+Wire Wire Line
+	4550 4900 4550 5050
+Wire Wire Line
+	5050 2250 5050 2400
+Wire Wire Line
+	5050 2400 5050 2500
+Wire Wire Line
+	5050 2900 5050 2950
+Wire Wire Line
+	5050 2950 5050 3150
+Wire Wire Line
+	5050 3150 5050 3550
+Wire Wire Line
+	5050 3150 5250 3150
+Wire Wire Line
+	5050 3550 5100 3550
+Wire Wire Line
+	5100 3950 5100 4200
+Wire Wire Line
+	5800 2150 5800 2400
+Wire Wire Line
+	5800 2400 5050 2400
+Wire Wire Line
+	6250 4000 6800 4000
+Wire Wire Line
+	6250 4100 6250 4000
+Wire Wire Line
+	6250 5000 6250 5150
+Wire Wire Line
+	6600 3600 6800 3600
+Wire Wire Line
+	7200 3250 8150 3250
+Wire Wire Line
+	7200 3500 7200 3250
+Wire Wire Line
+	7200 4100 8250 4100
+Wire Wire Line
+	7250 2700 7250 3000
+Wire Wire Line
+	7600 3800 7750 3800
+Wire Wire Line
+	8150 2700 8150 3250
+Wire Wire Line
+	8150 3250 9200 3250
+Wire Wire Line
+	8250 4100 8250 4300
+Wire Wire Line
+	8250 4100 9200 4100
+Wire Wire Line
+	8700 3900 8700 4400
+Wire Wire Line
+	8700 5300 8700 5500
+Wire Wire Line
+	8800 2150 5800 2150
+Wire Wire Line
+	8800 3500 8800 2150
+Wire Wire Line
+	8800 3900 8700 3900
+Wire Wire Line
+	9200 3250 9200 3400
+Wire Wire Line
+	9200 4100 9200 4000
+Wire Wire Line
+	9600 3700 9800 3700
+Text Label 7750 3800 0    50   ~ 0
+V_CTRL
+Text Label 9800 3700 0    50   ~ 0
+OVP_FAULT
+Text HLabel 1750 3950 2    50   Input ~ 0
+GND
+Text HLabel 2150 5000 2    50   Input ~ 0
+GND
+Text HLabel 2650 3200 0    50   Input ~ 0
+LX1
+Text HLabel 2850 2250 2    50   Input ~ 0
+VBUS_IN
+Text HLabel 2900 4200 2    50   Input ~ 0
+GND
+Text HLabel 3900 3900 2    50   Input ~ 0
+GND
+Text HLabel 4550 5050 2    50   Input ~ 0
+GND
+Text HLabel 5050 2250 2    50   Input ~ 0
+VBAT_OUT
+Text HLabel 5100 4200 2    50   Input ~ 0
+GND
+Text HLabel 5250 3150 2    50   Input ~ 0
+LX2
+Text HLabel 6250 5150 2    50   Input ~ 0
+GND
+Text HLabel 6600 3600 0    50   Input ~ 0
+FB
+Text HLabel 7250 3000 2    50   Input ~ 0
+GND
+Text HLabel 8250 4300 2    50   Input ~ 0
+GND
+Text HLabel 8700 5500 2    50   Input ~ 0
+GND
+$Comp
+L eSim_Devices:mosfet_n M1
+U 1 1 00000000
+P 2650 2450
+F 0 "M1" H 3000 2300 50  0000 L CNN
+F 1 "mosfet_n" H 3000 2200 50  0000 L CNN
+F 2 "" H 2950 2150 29  0000 C CNN
+F 3 "" H 2750 2250 60  0000 C CNN
+	1    2650 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_n M2
+U 1 1 00000000
+P 2700 3550
+F 0 "M2" H 3050 3400 50  0000 L CNN
+F 1 "mosfet_n" H 3050 3300 50  0000 L CNN
+F 2 "" H 3000 3250 29  0000 C CNN
+F 3 "" H 2800 3350 60  0000 C CNN
+	1    2700 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_n M3
+U 1 1 00000000
+P 4850 2500
+F 0 "M3" H 5200 2350 50  0000 L CNN
+F 1 "mosfet_n" H 5200 2250 50  0000 L CNN
+F 2 "" H 5150 2200 29  0000 C CNN
+F 3 "" H 4950 2300 60  0000 C CNN
+	1    4850 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_n M4
+U 1 1 00000000
+P 4900 3550
+F 0 "M4" H 5250 3400 50  0000 L CNN
+F 1 "mosfet_n" H 5250 3300 50  0000 L CNN
+F 2 "" H 5200 3250 29  0000 C CNN
+F 3 "" H 5000 3350 60  0000 C CNN
+	1    4900 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:VCVS E1
+U 1 1 00000000
+P 1950 2700
+F 0 "E1" H 1950 3000 50  0000 C CNN
+F 1 "1" H 1950 2900 50  0000 C CNN
+F 2 "" H 1950 2700 60  0000 C CNN
+F 3 "" H 1950 2700 60  0000 C CNN
+	1    1950 2700
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:VCVS E2
+U 1 1 00000000
+P 4050 2600
+F 0 "E2" H 4050 2900 50  0000 C CNN
+F 1 "1" H 4050 2800 50  0000 C CNN
+F 2 "" H 4050 2600 60  0000 C CNN
+F 3 "" H 4050 2600 60  0000 C CNN
+	1    4050 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:pulse v2
+U 1 1 00000000
+P 1550 3350
+F 0 "v2" H 1750 3475 60  0000 L CNN
+F 1 "PULSE(0 5 0 1n 1n 1u 2u)" H 1750 3325 60  0000 L CNN
+F 2 "" H 1750 3175 60  0000 L CNN
+F 3 "" H 1550 3350 60  0000 C CNN
+	1    1550 3350
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:pulse v1
+U 1 1 00000000
+P 2150 4250
+F 0 "v1" H 2350 4375 60  0000 L CNN
+F 1 "PULSE(0 5 1u 1n 1n 1u 2u)" H 2350 4225 60  0000 L CNN
+F 2 "" H 2350 4075 60  0000 L CNN
+F 3 "" H 2150 4250 60  0000 C CNN
+	1    2150 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:pulse v3
+U 1 1 00000000
+P 3650 3200
+F 0 "v3" H 3850 3325 60  0000 L CNN
+F 1 "pulse" H 3850 3175 60  0000 L CNN
+F 2 "" H 3850 3025 60  0000 L CNN
+F 3 "" H 3650 3200 60  0000 C CNN
+	1    3650 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:pulse v4
+U 1 1 00000000
+P 4550 4450
+F 0 "v4" H 4750 4575 60  0000 L CNN
+F 1 "pulse" H 4750 4425 60  0000 L CNN
+F 2 "" H 4750 4275 60  0000 L CNN
+F 3 "" H 4550 4450 60  0000 C CNN
+	1    4550 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:DC v5
+U 1 1 00000000
+P 6250 4550
+F 0 "v5" H 6450 4675 60  0000 L CNN
+F 1 "1.2" H 6450 4525 60  0000 L CNN
+F 2 "" H 6450 4375 60  0000 L CNN
+F 3 "" H 6250 4550 60  0000 C CNN
+	1    6250 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Sources:DC v6
+U 1 1 00000000
+P 7700 2700
+F 0 "v6" V 7300 2700 60  0000 C CNN
+F 1 "5" V 7450 2700 60  0000 C CNN
+F 2 "" V 7500 2700 60  0000 C CNN
+F 3 "" H 7700 2700 60  0000 C CNN
+	1    7700 2700
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Sources:DC v7
+U 1 1 00000000
+P 8700 4850
+F 0 "v7" H 8900 4975 60  0000 L CNN
+F 1 "4.2" H 8900 4825 60  0000 L CNN
+F 2 "" H 8900 4675 60  0000 L CNN
+F 3 "" H 8700 4850 60  0000 C CNN
+	1    8700 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:LM324_PSPICE U1
+U 1 1 00000000
+P 6800 3600
+F 0 "U1" H 7650 3600 30  0000 C CNN
+F 1 "LM324_PSPICE" H 7650 3600 30  0000 C CNN
+F 2 "" H 6800 3600 50  0001 C CNN
+F 3 "" H 6800 3600 50  0001 C CNN
+	1    6800 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:LM111_PSPICE U2
+U 1 1 00000000
+P 8800 3500
+F 0 "U2" H 9265 2900 30  0000 L CNN
+F 1 "LM111_PSPICE" H 9265 2800 30  0000 L CNN
+F 2 "" H 8800 3500 50  0001 C CNN
+F 3 "" H 8800 3500 50  0001 C CNN
+	1    8800 3500
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

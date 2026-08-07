@@ -1,0 +1,19 @@
+.title kicad schematic
+
+.include NPN.lib
+r2 net-_r2-pad1_ net-_q2-pad2_ 2.8k
+* u1 net-_q1-pad2_ net-_q2-pad2_ net-_r2-pad1_ net-_q2-pad3_ net-_q3-pad2_ net-_q3-pad1_ net-_r1-pad1_ net-_q1-pad1_ port
+r1 net-_r1-pad1_ net-_q2-pad2_ 5k
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_q1-pad3_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+r3 net-_q2-pad3_ net-_r2-pad1_ 500
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

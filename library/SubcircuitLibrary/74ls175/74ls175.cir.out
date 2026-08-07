@@ -1,0 +1,36 @@
+.title kicad schematic
+
+.include 74ls175_ic.sub
+* u3 d1 plot_v1
+* u2 clk plot_v1
+v3 d1 gnd pulse(0 5 0 1n 1n 750u 1500u)
+v2 clk gnd pulse(0 5 0 1n 1n 1.25m 2.5m)
+* u1 clr plot_v1
+v1 clr gnd 5
+* u4 clr clk d1 net-_u4-pad4_ net-_u4-pad5_ net-_u4-pad6_ adc_bridge_3
+x1 net-_u4-pad4_ net-_u5-pad1_ net-_u5-pad2_ net-_u4-pad6_ unconnected-_x1-pad5_ unconnected-_x1-pad6_ unconnected-_x1-pad7_ unconnected-_x1-pad8_ net-_u4-pad5_ unconnected-_x1-pad10_ unconnected-_x1-pad11_ unconnected-_x1-pad12_ unconnected-_x1-pad13_ unconnected-_x1-pad14_ unconnected-_x1-pad15_ unconnected-_x1-pad16_ 74ls175_ic
+* u5 net-_u5-pad1_ net-_u5-pad2_ q1 q1n dac_bridge_2
+r2 q1n gnd 1k
+* u7 q1n plot_v1
+r1 q1 gnd 1k
+* u6 q1 plot_v1
+a1 [clr clk d1 ] [net-_u4-pad4_ net-_u4-pad5_ net-_u4-pad6_ ] u4
+a2 [net-_u5-pad1_ net-_u5-pad2_ ] [q1 q1n ] u5
+* Schematic Name:                             adc_bridge_3, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_2, Ngspice Name: dac_bridge
+.model u5 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+.tran 50e-06 10e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(d1)
+plot v(clk)
+plot v(clr)
+plot v(q1n)
+plot v(q1)
+.endc
+.end

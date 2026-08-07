@@ -1,0 +1,26 @@
+.title KiCad schematic
+V3 Net-_I1-Pad1_ GND 5v
+R3 GND OUT 1k
+QP6 GND Net-_I3-Pad2_ OUT pnp
+R2 OUT Net-_QN6-Pad2_ 50
+QN7 Net-_I1-Pad1_ Net-_QN5-Pad3_ Net-_QN6-Pad2_ npn
+QP5 GND Net-_C1-Pad2_ Net-_I2-Pad2_ pnp
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 50p
+QN2 Net-_C1-Pad2_ Net-_QN1-Pad1_ GND npn
+QN1 Net-_QN1-Pad1_ Net-_QN1-Pad1_ GND npn
+I4 OUT GND 50u
+QN4 Net-_I3-Pad2_ Net-_QN3-Pad3_ GND npn
+QN6 Net-_I3-Pad2_ Net-_QN6-Pad2_ OUT npn
+QN3 Net-_I1-Pad1_ Net-_I2-Pad2_ Net-_QN3-Pad3_ npn
+I2 Net-_I1-Pad1_ Net-_I2-Pad2_ 4u
+R1 GND Net-_QN3-Pad3_ 10k
+I3 Net-_I1-Pad1_ Net-_I3-Pad2_ 100u
+QN5 Net-_I1-Pad1_ Net-_C1-Pad1_ Net-_QN5-Pad3_ npn
+V1 INV_IN GND 2.8v
+V2 NON_INV_IN GND 2.6v
+QP4 GND NON_INV_IN Net-_QP3-Pad2_ pnp
+I1 Net-_I1-Pad1_ Net-_I1-Pad2_ 6u
+QP1 GND INV_IN Net-_QP1-Pad3_ pnp
+QP3 Net-_C1-Pad2_ Net-_QP3-Pad2_ Net-_I1-Pad2_ pnp
+QP2 Net-_QN1-Pad1_ Net-_QP1-Pad3_ Net-_I1-Pad2_ pnp
+.end

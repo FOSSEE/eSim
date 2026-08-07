@@ -1,0 +1,37 @@
+.title KiCad schematic
+U1 GND out1 out2 vdd INPUT1 EnA INPUT2 GND unconnected-_U1-Pad9_ INPUT3 EnB INPUT4 out3 out4 GND PORT
+Q2 out1 Net-_U13-Pad2_ GND eSim_NPN
+Q5 out2 Net-_U17-Pad2_ vdd eSim_PNP
+Q1 out1 Net-_U12-Pad2_ vdd eSim_PNP
+Q6 out2 Net-_U16-Pad2_ GND eSim_NPN
+U14 Net-_U10-Pad3_ Net-_U14-Pad2_ dac_bridge_1
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_nand
+Q7 out4 Net-_U19-Pad2_ vdd eSim_PNP
+Q3 out3 Net-_U14-Pad2_ vdd eSim_PNP
+U27 INPUT4 Net-_U22-Pad1_ adc_bridge_1
+U25 Net-_U22-Pad1_ Net-_U23-Pad1_ d_inverter
+U26 INPUT2 Net-_U20-Pad1_ adc_bridge_1
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ dac_bridge_1
+U13 Net-_U13-Pad1_ Net-_U13-Pad2_ dac_bridge_1
+U6 Net-_U2-Pad2_ Net-_U6-Pad2_ d_inverter
+U8 Net-_U2-Pad2_ Net-_U20-Pad2_ Net-_U12-Pad1_ d_nand
+U9 Net-_U6-Pad2_ Net-_U20-Pad2_ Net-_U13-Pad1_ d_and
+U4 EnA Net-_U20-Pad2_ adc_bridge_1
+U22 Net-_U22-Pad1_ Net-_U10-Pad2_ Net-_U19-Pad1_ d_nand
+U23 Net-_U23-Pad1_ Net-_U10-Pad2_ Net-_U18-Pad1_ d_and
+U19 Net-_U19-Pad1_ Net-_U19-Pad2_ dac_bridge_1
+U18 Net-_U18-Pad1_ Net-_U18-Pad2_ dac_bridge_1
+U24 Net-_U20-Pad1_ Net-_U21-Pad1_ d_inverter
+U21 Net-_U21-Pad1_ Net-_U20-Pad2_ Net-_U16-Pad1_ d_and
+U16 Net-_U16-Pad1_ Net-_U16-Pad2_ dac_bridge_1
+U20 Net-_U20-Pad1_ Net-_U20-Pad2_ Net-_U17-Pad1_ d_nand
+U17 Net-_U17-Pad1_ Net-_U17-Pad2_ dac_bridge_1
+U5 EnB Net-_U10-Pad2_ adc_bridge_1
+U7 Net-_U10-Pad1_ Net-_U11-Pad1_ d_inverter
+U11 Net-_U11-Pad1_ Net-_U10-Pad2_ Net-_U11-Pad3_ d_and
+U3 INPUT3 Net-_U10-Pad1_ adc_bridge_1
+U2 INPUT1 Net-_U2-Pad2_ adc_bridge_1
+U15 Net-_U11-Pad3_ Net-_U15-Pad2_ dac_bridge_1
+Q4 out3 Net-_U15-Pad2_ GND eSim_NPN
+Q8 out4 Net-_U18-Pad2_ GND eSim_NPN
+.end

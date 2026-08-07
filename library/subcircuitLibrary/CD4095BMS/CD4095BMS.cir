@@ -1,0 +1,6 @@
+.title KiCad schematic
+X1 Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U2-Pad1_ 3_and
+U1 unconnected-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ unconnected-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ unconnected-_U1-Pad14_ PORT
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad2_ Net-_U1-Pad8_ Net-_U1-Pad6_ d_jkff
+X2 Net-_U1-Pad11_ Net-_U1-Pad10_ Net-_U1-Pad9_ Net-_U2-Pad2_ 3_and
+.end

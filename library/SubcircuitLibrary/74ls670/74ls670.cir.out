@@ -1,0 +1,55 @@
+.title kicad schematic
+
+.include 74ls670_ic.sub
+* u6 q plot_v1
+* u5 net-_u5-pad1_ q dac_bridge_1
+x1 net-_u4-pad2_ net-_u4-pad2_ net-_u4-pad2_ net-_u3-pad2_ net-_u3-pad2_ unconnected-_x1-pad6_ unconnected-_x1-pad7_ unconnected-_x1-pad8_ unconnected-_x1-pad9_ net-_u5-pad1_ net-_u7-pad2_ net-_u10-pad2_ net-_u9-pad2_ net-_u9-pad2_ net-_u4-pad2_ unconnected-_x1-pad16_ 74ls670_ic
+r1 q gnd 1k
+v5 w gnd pulse(0 5 0 1n 1n 1m 2m)
+* u11 wn plot_v1
+* u7 rn net-_u7-pad2_ adc_bridge_1
+v3 rn gnd pulse(5 0 0 1n 1n 5m 10m)
+v4 wn gnd pulse(0 5 0 1n 1n 5m 10m)
+* u10 wn net-_u10-pad2_ adc_bridge_1
+* u9 w net-_u9-pad2_ adc_bridge_1
+* u8 rn plot_v1
+* u12 w plot_v1
+v2 d gnd pulse(5 0 0 1n 1n 1.5m 3m)
+* u4 d net-_u4-pad2_ adc_bridge_1
+* u1 d plot_v1
+* u2 r plot_v1
+* u3 r net-_u3-pad2_ adc_bridge_1
+v1 r gnd pulse(5 0 0 1n 1n 1m 2m)
+a1 [net-_u5-pad1_ ] [q ] u5
+a2 [rn ] [net-_u7-pad2_ ] u7
+a3 [wn ] [net-_u10-pad2_ ] u10
+a4 [w ] [net-_u9-pad2_ ] u9
+a5 [d ] [net-_u4-pad2_ ] u4
+a6 [r ] [net-_u3-pad2_ ] u3
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u5 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u10 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u9 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 500e-06 30e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(q)
+plot v(wn)
+plot v(rn)
+plot v(w)
+plot v(d)
+plot v(r)
+.endc
+.end

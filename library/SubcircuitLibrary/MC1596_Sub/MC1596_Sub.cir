@@ -1,0 +1,15 @@
+.title KiCad schematic
+Q8 Net-_Q4-Pad1_ Net-_Q1-Pad2_ Net-_Q5-Pad3_ esim_npn
+U1 Net-_Q6-Pad2_ Net-_Q6-Pad3_ Net-_Q2-Pad3_ Net-_Q2-Pad2_ Net-_D1-Pad1_ Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q4-Pad2_ Net-_Q4-Pad1_ Net-_R1-Pad1_ PORT
+Q7 Net-_Q6-Pad3_ Net-_D1-Pad1_ Net-_Q7-Pad3_ esim_npn
+Q6 Net-_Q5-Pad3_ Net-_Q6-Pad2_ Net-_Q6-Pad3_ esim_npn
+Q1 Net-_Q1-Pad1_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ esim_npn
+Q5 Net-_Q1-Pad1_ Net-_Q4-Pad2_ Net-_Q5-Pad3_ esim_npn
+Q4 Net-_Q4-Pad1_ Net-_Q4-Pad2_ Net-_Q1-Pad3_ esim_npn
+R3 Net-_R1-Pad1_ Net-_Q7-Pad3_ 500
+Q3 Net-_Q2-Pad3_ Net-_D1-Pad1_ Net-_Q3-Pad3_ esim_npn
+Q2 Net-_Q1-Pad3_ Net-_Q2-Pad2_ Net-_Q2-Pad3_ esim_npn
+R2 Net-_R1-Pad1_ Net-_Q3-Pad3_ 500
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ esim_diode
+R1 Net-_R1-Pad1_ Net-_D1-Pad2_ 500
+.end

@@ -1,0 +1,11 @@
+.title KiCad schematic
+.include "C:\FOSSEE\eSim\library\SubcircuitLibrary\SN75468a\SN75468a.sub"
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ PORT
+XU6 Net-_U1-Pad5_ Net-_U1-Pad12_ Net-_U1-Pad8_ Net-_U1-Pad9_ SN75468a
+XU7 Net-_U1-Pad6_ Net-_U1-Pad11_ Net-_U1-Pad8_ Net-_U1-Pad9_ SN75468a
+XU8 Net-_U1-Pad7_ Net-_U1-Pad10_ Net-_U1-Pad8_ Net-_U1-Pad9_ SN75468a
+XU4 Net-_U1-Pad3_ Net-_U1-Pad14_ Net-_U1-Pad8_ Net-_U1-Pad9_ SN75468a
+XU5 Net-_U1-Pad4_ Net-_U1-Pad13_ Net-_U1-Pad8_ Net-_U1-Pad9_ SN75468a
+XU2 Net-_U1-Pad1_ Net-_U1-Pad16_ Net-_U1-Pad8_ Net-_U1-Pad9_ SN75468a
+XU3 Net-_U1-Pad2_ Net-_U1-Pad15_ Net-_U1-Pad8_ Net-_U1-Pad9_ SN75468a
+.end

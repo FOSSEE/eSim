@@ -1,0 +1,26 @@
+.title kicad schematic
+.include IP5328P.sub
+
+v1 vin_src gnd 5
+rsrc vin_src vin 0.2
+
+l1 sw_node net-l1-pad2 2.2u
+x1 vin vout sw_node net-l1-pad2 gnd net-r_top1-pad2 unconnected-x1-pad7 unconnected-x1-pad8 IP5328P
+
+r1 gnd vout 10
+c1 vout gnd 22u
+r_top1 vout net-r_top1-pad2 25k
+r_bot1 net-r_top1-pad2 gnd 10k
+
+.tran 10u 5m uic
+
+.control
+run
+
+plot v(vin) xlimit 0 300u title 'Input Voltage (Startup Transient)' xlabel 'Time (s)' ylabel 'Voltage (V)'
+plot v(vout) title 'Output Voltage (Full Settling)' xlabel 'Time (s)' ylabel 'Voltage (V)'
+plot i(v1) xlimit 0 300u title 'Input Current (Startup Transient)' xlabel 'Time (s)' ylabel 'Current (A)'
+
+wrdata final_results.txt v(vin) v(vout) i(v1)
+.endc
+.end

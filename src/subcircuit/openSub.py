@@ -34,6 +34,12 @@ class openSub(QtWidgets.QWidget):
 
             self.schname = os.path.basename(self.editfile)
             self.editfile = os.path.join(self.editfile, self.schname)
-            self.cmd = "eeschema " + self.editfile + ".sch "
+
+            schematic_file = self.editfile + ".kicad_sch"  # kicad6 file
+            if not os.path.exists(schematic_file) and os.path.exists(
+                    self.editfile + ".sch"):
+                schematic_file = self.editfile + ".sch"    # kicad4 file
+
+            self.cmd = "eeschema " + schematic_file
             self.obj_workThread = WorkerThread(self.cmd)
             self.obj_workThread.start()

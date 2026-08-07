@@ -1,0 +1,29 @@
+.title KiCad schematic
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ unconnected-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ unconnected-_U1-Pad20_ PORT
+U8 Net-_U4-Pad6_ Net-_U10-Pad2_ Net-_U1-Pad2_ d_tristate
+U4 Net-_U1-Pad3_ Net-_U24-Pad2_ unconnected-_U4-Pad3_ unconnected-_U4-Pad4_ unconnected-_U4-Pad5_ Net-_U4-Pad6_ d_dff
+U2 Net-_U1-Pad1_ Net-_U10-Pad2_ d_inverter
+U3 Net-_U1-Pad11_ Net-_U24-Pad2_ d_buffer
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U1-Pad6_ d_tristate
+U9 Net-_U5-Pad6_ Net-_U10-Pad2_ Net-_U1-Pad5_ d_tristate
+U5 Net-_U1-Pad4_ Net-_U24-Pad2_ unconnected-_U5-Pad3_ unconnected-_U5-Pad4_ unconnected-_U5-Pad5_ Net-_U5-Pad6_ d_dff
+U22 Net-_U1-Pad15_ d_pullup
+U23 Net-_U1-Pad6_ d_pullup
+U16 Net-_U16-Pad1_ Net-_U10-Pad2_ Net-_U1-Pad12_ d_tristate
+U21 Net-_U1-Pad5_ d_pullup
+U15 Net-_U15-Pad1_ Net-_U10-Pad2_ Net-_U1-Pad15_ d_tristate
+U20 Net-_U1-Pad16_ d_pullup
+U12 Net-_U1-Pad9_ d_pullup
+U7 Net-_U1-Pad8_ Net-_U24-Pad2_ unconnected-_U7-Pad3_ unconnected-_U7-Pad4_ unconnected-_U7-Pad5_ Net-_U11-Pad1_ d_dff
+U6 Net-_U1-Pad7_ Net-_U24-Pad2_ unconnected-_U6-Pad3_ unconnected-_U6-Pad4_ unconnected-_U6-Pad5_ Net-_U10-Pad1_ d_dff
+U11 Net-_U11-Pad1_ Net-_U10-Pad2_ Net-_U1-Pad9_ d_tristate
+U26 Net-_U1-Pad14_ Net-_U24-Pad2_ unconnected-_U26-Pad3_ unconnected-_U26-Pad4_ unconnected-_U26-Pad5_ Net-_U15-Pad1_ d_dff
+U27 Net-_U1-Pad13_ Net-_U24-Pad2_ unconnected-_U27-Pad3_ unconnected-_U27-Pad4_ unconnected-_U27-Pad5_ Net-_U16-Pad1_ d_dff
+U17 Net-_U1-Pad12_ d_pullup
+U25 Net-_U1-Pad17_ Net-_U24-Pad2_ unconnected-_U25-Pad3_ unconnected-_U25-Pad4_ unconnected-_U25-Pad5_ Net-_U14-Pad1_ d_dff
+U24 Net-_U1-Pad18_ Net-_U24-Pad2_ unconnected-_U24-Pad3_ unconnected-_U24-Pad4_ unconnected-_U24-Pad5_ Net-_U13-Pad1_ d_dff
+U18 Net-_U1-Pad19_ d_pullup
+U19 Net-_U1-Pad2_ d_pullup
+U13 Net-_U13-Pad1_ Net-_U10-Pad2_ Net-_U1-Pad19_ d_tristate
+U14 Net-_U14-Pad1_ Net-_U10-Pad2_ Net-_U1-Pad16_ d_tristate
+.end

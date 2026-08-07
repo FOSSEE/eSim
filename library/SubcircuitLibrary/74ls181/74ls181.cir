@@ -1,0 +1,46 @@
+.title KiCad schematic
+U9 b2 plot_v1
+U3 b0 plot_v1
+U6 b1 plot_v1
+U13 a0 a1 a2 a3 Net-_U13-Pad5_ Net-_U13-Pad6_ Net-_U13-Pad7_ Net-_U13-Pad8_ adc_bridge_4
+U8 a2 plot_v1
+U11 a3 plot_v1
+v7 a2 GND 5
+v4 a1 GND 0
+v10 a3 GND 5
+v1 a0 GND 0
+U5 a1 plot_v1
+U2 a0 plot_v1
+U15 s0 s1 s2 s3 Net-_U15-Pad5_ Net-_U15-Pad6_ Net-_U15-Pad7_ Net-_U15-Pad8_ adc_bridge_4
+v11 b3 GND 0
+U14 b0 b1 b2 b3 Net-_U14-Pad5_ Net-_U14-Pad6_ Net-_U14-Pad7_ Net-_U14-Pad8_ adc_bridge_4
+U10 s3 plot_v1
+U12 b3 plot_v1
+v6 s1 GND 0
+v3 s0 GND 5
+v9 s2 GND 0
+v12 s3 GND 5
+U7 s2 plot_v1
+U4 s1 plot_v1
+U1 s0 plot_v1
+v5 b1 GND 5
+v8 b2 GND 0
+v2 b0 GND 5
+U18 Net-_U18-Pad1_ Net-_U18-Pad2_ Net-_U18-Pad3_ Net-_U18-Pad4_ f0 f1 f2 f3 dac_bridge_4
+R2 unconnected-_R2-Pad1_ ca 1k
+U19 Net-_U19-Pad1_ ca dac_bridge_1
+U22 ca plot_v1
+R4 GND f1 1k
+R5 GND f0 1k
+R1 GND f3 1k
+R3 GND f2 1k
+X1 Net-_U14-Pad5_ Net-_U13-Pad5_ Net-_U15-Pad8_ Net-_U15-Pad7_ Net-_U15-Pad6_ Net-_U15-Pad5_ Net-_U17-Pad2_ Net-_U16-Pad2_ Net-_U18-Pad1_ Net-_U18-Pad2_ Net-_U18-Pad3_ unconnected-_X1-Pad12_ Net-_U18-Pad4_ unconnected-_X1-Pad14_ unconnected-_X1-Pad15_ Net-_U19-Pad1_ unconnected-_X1-Pad17_ Net-_U14-Pad8_ Net-_U13-Pad8_ Net-_U14-Pad7_ Net-_U13-Pad7_ Net-_U14-Pad6_ Net-_U13-Pad6_ unconnected-_X1-Pad24_ sn74ls181
+U16 m Net-_U16-Pad2_ adc_bridge_1
+U17 Net-_U17-Pad1_ Net-_U17-Pad2_ adc_bridge_1
+v14 m GND 0
+v13 Net-_U17-Pad1_ GND 5
+U21 f2 plot_v1
+U24 f0 plot_v1
+U23 f1 plot_v1
+U20 f3 plot_v1
+.end

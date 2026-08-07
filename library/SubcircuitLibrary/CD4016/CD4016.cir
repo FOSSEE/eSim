@@ -1,0 +1,27 @@
+.title KiCad schematic
+R6 Gnd SIGD_IN 1000k
+U1 SIGA_IN SIGA_OUT SIGB_IN SIGB_OUT B C Gnd SIGC_IN SIGC_OUT SIGD_OUT SIGD_IN D A vdd PORT
+R8 Gnd SIGD_OUT 1000k
+M15 SIGD_OUT Net-_M11-Pad1_ SIGD_IN vdd eSim_MOS_P
+M16 SIGD_OUT D SIGD_IN Gnd eSim_MOS_N
+M11 Net-_M11-Pad1_ D Gnd Gnd eSim_MOS_N
+M12 Net-_M11-Pad1_ D vdd vdd eSim_MOS_P
+M9 Net-_M10-Pad1_ B Gnd Gnd eSim_MOS_N
+M10 Net-_M10-Pad1_ B vdd vdd eSim_MOS_P
+R5 Gnd SIGB_IN 1000k
+M13 SIGB_OUT Net-_M10-Pad1_ SIGB_IN vdd eSim_MOS_P
+M14 SIGB_OUT B SIGB_IN Gnd eSim_MOS_N
+R7 Gnd SIGB_OUT 1000k
+R3 Gnd SIGA_OUT 1000k
+M6 SIGC_OUT Net-_M3-Pad1_ SIGC_IN vdd eSim_MOS_P
+R4 Gnd SIGC_OUT 1000k
+R2 Gnd SIGC_IN 1000k
+M8 SIGC_OUT C SIGC_IN Gnd eSim_MOS_N
+M4 Net-_M3-Pad1_ C vdd vdd eSim_MOS_P
+M2 Net-_M1-Pad1_ A vdd vdd eSim_MOS_P
+M7 SIGA_OUT A SIGA_IN Gnd eSim_MOS_N
+M5 SIGA_OUT Net-_M1-Pad1_ SIGA_IN vdd eSim_MOS_P
+M3 Net-_M3-Pad1_ C Gnd Gnd eSim_MOS_N
+M1 Net-_M1-Pad1_ A Gnd Gnd eSim_MOS_N
+R1 Gnd SIGA_IN 1000k
+.end

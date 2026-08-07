@@ -1,0 +1,118 @@
+.title kicad schematic
+
+.include NPN.lib
+.include ZenerD1N750.lib
+.include D.lib
+.include PNP.lib
+i13 net-_d10-pad2_ gnd 200u
+qp20 net-_qn19-pad1_ net-_qp20-pad2_ col Q2N2907A
+d10 col net-_d10-pad2_ 1N4148
+qp18 net-_qn18-pad1_ net-_qp16-pad2_ col Q2N2907A
+qp16 net-_qn11-pad1_ net-_qp16-pad2_ col Q2N2907A
+qp15 net-_qn22-pad2_ cp1 net-_i10-pad2_ net-_qn19-pad2_ Q2N2907A
+i10 col net-_i10-pad2_ 100u
+r16 gnd net-_qn19-pad2_ 30k
+qn18 net-_qn18-pad1_ net-_qn18-pad2_ gnd Q2N2222
+qn19 net-_qn19-pad1_ net-_qn19-pad2_ gnd Q2N2222
+d11 col net-_d11-pad2_ 1N4148
+d12 col net-_d12-pad2_ 1N4148
+d13 net-_d12-pad2_ net-_d13-pad2_ 1N4148
+qn22 gnd net-_qn22-pad2_ gnd Q2N2222
+r17 gnd net-_qn22-pad2_ 60k
+i14 net-_d11-pad2_ gnd 200u
+r13 gnd net-_qn18-pad2_ 60k
+c1 cp1 gnd 0.01u
+qp17 cp1 net-_d13-pad2_ net-_qn11-pad1_ Q2N2907A
+qp19 cp2_in_p net-_d13-pad2_ net-_qn18-pad1_ Q2N2907A
+qn11 net-_qn11-pad1_ net-_qn11-pad2_ gnd Q2N2222
+r11 gnd net-_qn11-pad2_ 30k
+qn21 net-_qn15-pad2_ net-_qn15-pad3_ gnd Q2N2222
+qn16 net-_qn15-pad3_ net-_qn15-pad3_ gnd Q2N2222
+qn15 cp1 net-_qn15-pad2_ net-_qn15-pad3_ Q2N2222
+qp22 gnd net-_qp20-pad2_ col Q2N2907A
+i15 gnd net-_d13-pad2_ 200u
+qp23 cp2_in_p net-_d13-pad2_ gnd Q2N2907A
+qp21 net-_qn15-pad2_ net-_d13-pad2_ net-_qn19-pad1_ Q2N2907A
+* u2 cp2_in_p plot_db
+r19 gnd cp2_in_p 100k
+c3 cp2_in_p gnd 1u
+qn12 col net-_i11-pad2_ net-_qn12-pad3_ Q2N2222
+qp13 gnd cp2_in_p net-_i9-pad2_ Q2N2907A
+c2 net-_c2-pad1_ net-_c2-pad2_ 10p
+qp11 net-_c2-pad2_ net-_i9-pad2_ net-_i8-pad2_ Q2N2907A
+i11 col net-_i11-pad2_ 3u
+i12 col net-_i12-pad2_ 50u
+qn20 col net-_qn20-pad2_ out Q2N2222
+r14 out net-_qn17-pad3_ 15k
+r15 net-_qn20-pad2_ net-_qn17-pad3_ 5k
+qn17 col net-_c2-pad1_ net-_qn17-pad3_ Q2N2222
+i8 col net-_i8-pad2_ 6u
+i9 col net-_i9-pad2_ 3u
+v2 col gnd 15v
+qn13 net-_i11-pad2_ net-_qn12-pad3_ net-_i12-pad2_ Q2N2222
+qn14 net-_i12-pad2_ net-_qn12-pad3_ gnd Q2N2222
+r12 gnd net-_qn12-pad3_ 100k
+r18 gnd out 10k
+* u3 out plot_db
+qp6 gnd net-_qn7-pad1_ col Q2N2907A
+qp7 gnd out net-_i6-pad2_ Q2N2907A
+i6 col net-_i6-pad2_ 3u
+qp8 net-_d9-pad1_ net-_i6-pad2_ net-_i8-pad2_ Q2N2907A
+qp14 gnd net-_c2-pad2_ net-_i11-pad2_ Q2N2907A
+qn10 net-_c2-pad2_ net-_d9-pad1_ gnd Q2N2222
+d9 net-_d9-pad1_ gnd 1N4148
+qp10 gnd net-_d7-pad2_ net-_i7-pad2_ Q2N2907A
+qp12 net-_qn11-pad2_ net-_i7-pad2_ net-_i10-pad2_ net-_qn18-pad2_ Q2N2907A
+i7 col net-_i7-pad2_ 80u
+i5 net-_d8-pad2_ gnd 100u
+d8 net-_d8-pad1_ net-_d8-pad2_ 1N4148
+qp9 gnd net-_d8-pad2_ net-_i7-pad2_ Q2N2907A
+qn9 col net-_qn9-pad2_ net-_d8-pad1_ Q2N2222
+qn4 net-_qn3-pad2_ net-_qn3-pad1_ gnd Q2N2222
+qn3 net-_qn3-pad1_ net-_qn3-pad2_ gnd Q2N2222
+r4 net-_d2-pad1_ net-_qn3-pad2_ 150
+d2 net-_d2-pad1_ gnd 1N4148
+r5 net-_d5-pad1_ net-_qn3-pad1_ 150
+qn8 col net-_qn8-pad2_ net-_d7-pad1_ Q2N2222
+r8 net-_qn9-pad2_ col 5k
+r9 net-_qn8-pad2_ net-_qn9-pad2_ 10k
+qp4 gnd gnd net-_i4-pad2_ Q2N2907A
+d7 net-_d7-pad1_ net-_d7-pad2_ 1N4148
+r10 gnd net-_qn8-pad2_ 5k
+d1 gnd gnd 1N4148
+qp2 net-_qn3-pad2_ net-_i1-pad2_ net-_i2-pad2_ Q2N2907A
+i1 col net-_i1-pad2_ 10u
+i2 col net-_i2-pad2_ 100u
+qp3 net-_qn3-pad1_ net-_i4-pad2_ net-_i2-pad2_ Q2N2907A
+r6 gnd net-_d6-pad1_ 50k
+qp5 net-_qn5-pad1_ net-_qn5-pad1_ col net-_d7-pad2_ Q2N2907A
+i4 col net-_i4-pad2_ 10u
+d6 net-_d6-pad1_ col D1N750
+r7 net-_qn7-pad1_ col 750
+qn7 net-_qn7-pad1_ net-_d6-pad1_ gnd Q2N2222
+i3 col net-_d3-pad1_ 200u
+qn1 col net-_qn1-pad2_ gnd Q2N2222
+r3 gnd net-_qn1-pad2_ 1.6k
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+qn2 col net-_d3-pad1_ net-_qn2-pad3_ Q2N2222
+d4 net-_d3-pad2_ gnd 1N4148
+r2 net-_qn1-pad2_ net-_qn2-pad3_ 1.6k
+* u1 tach_p plot_db
+qp1 gnd gnd net-_i1-pad2_ Q2N2907A
+r1 gnd tach_p 10k
+vv1 tach_p gnd sin(0 1 100k 0 0)
+d5 net-_d5-pad1_ gnd 1N4148
+qn5 net-_qn5-pad1_ net-_d5-pad1_ gnd Q2N2222
+qn6 net-_d7-pad2_ net-_d2-pad1_ gnd Q2N2222
+.tran 10e-06 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot db(cp2_in_p)
+plot db(out)
+plot db(tach_p)
+.endc
+.end

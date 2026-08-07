@@ -1,0 +1,54 @@
+.title KiCad schematic
+R2 Net-_QP2-Pad3_ INPUT 100
+QP2 Net-_QN5-Pad1_ Net-_QN5-Pad1_ Net-_QP2-Pad3_ pnp
+QP1 Net-_QN10-Pad1_ Net-_QN5-Pad1_ Net-_QP1-Pad3_ pnp
+R4 Net-_QN7-Pad1_ INPUT 500
+R5 Net-_D6-Pad2_ INPUT 100
+R3 Net-_D5-Pad2_ INPUT 10K
+R1 Net-_QP1-Pad3_ INPUT 100
+D5 Net-_D5-Pad1_ Net-_D5-Pad2_ eSim_Diode
+QN3 Net-_QN1-Pad2_ Net-_D5-Pad1_ GND npn
+U4 INPUT plot_db
+QN2 INPUT Net-_D5-Pad1_ Net-_QN2-Pad3_ npn
+QN1 INPUT Net-_QN1-Pad2_ Net-_D5-Pad1_ npn
+R8 GND Net-_D5-Pad1_ 200
+R6 Net-_D5-Pad1_ Net-_QN2-Pad3_ 240
+R7 GND Net-_QN2-Pad3_ 0.2
+R15 Net-_QN4-Pad2_ Net-_QN9-Pad2_ 2.7K
+V1 Net-_D2-Pad2_ Net-_D1-Pad2_ 13.3
+U1 Net-_D2-Pad2_ plot_db
+D6 GND Net-_D6-Pad2_ eSim_Diode
+R13 Net-_QN9-Pad2_ Net-_QN7-Pad3_ 3.3K
+R14 Net-_QN11-Pad2_ Net-_QN11-Pad1_ 1.4K
+QN15 Net-_QN11-Pad2_ Net-_C4-Pad1_ GND npn
+R17 GND Net-_QN4-Pad2_ 500
+QN7 Net-_QN7-Pad1_ Net-_D6-Pad2_ Net-_QN7-Pad3_ npn
+R11 Net-_QN10-Pad2_ Net-_QN10-Pad1_ 2K
+R20 GND Net-_QN14-Pad3_ 1K
+R18 GND Net-_C4-Pad1_ 6K
+QN14 Net-_C4-Pad2_ Net-_C4-Pad1_ Net-_QN14-Pad3_ npn
+QN12 Net-_QN12-Pad1_ Net-_C4-Pad2_ Net-_QN12-Pad3_ npn
+QN10 Net-_QN10-Pad1_ Net-_QN10-Pad2_ GND npn
+R19 GND Net-_QN12-Pad3_ 5K
+QN13 Net-_QN12-Pad1_ Net-_QN12-Pad3_ GND npn
+QN11 Net-_QN11-Pad1_ Net-_QN11-Pad2_ Net-_C4-Pad1_ npn
+R12 Net-_C4-Pad2_ Net-_QN11-Pad1_ 28K
+C4 Net-_C4-Pad1_ Net-_C4-Pad2_ 30pF
+R16 GND Net-_QN6-Pad2_ 5K
+R9 Net-_QN6-Pad2_ GND 0.25K
+U6 GND plot_db
+U5 GND plot_db
+QN9 Net-_QN5-Pad1_ Net-_QN9-Pad2_ Net-_QN11-Pad1_ npn
+QN4 Net-_QN1-Pad2_ Net-_QN4-Pad2_ GND npn
+QN5 Net-_QN5-Pad1_ GND Net-_QN5-Pad3_ npn
+QN6 GND Net-_QN6-Pad2_ Net-_QN6-Pad3_ npn
+R10 Net-_QN11-Pad1_ Net-_QN6-Pad3_ 6K
+QN8 Net-_QN5-Pad3_ Net-_QN6-Pad3_ Net-_QN11-Pad1_ npn
+C3 GND GND 100n
+D4 Net-_D2-Pad2_ INPUT diode
+D1 GND Net-_D1-Pad2_ diode
+D3 Net-_D1-Pad2_ INPUT diode
+D2 GND Net-_D2-Pad2_ diode
+C2 INPUT GND 330n
+C1 INPUT GND 470u
+.end

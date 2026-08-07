@@ -1,0 +1,27 @@
+* TP4056 Simplified Behavioral Charging Model
+* Pin Order: TEMP(1) PROG(2) GND(3) VCC(4) BAT(5) STDBY(6) CHRG(7) CE(8)
+.subckt TP4056 TEMP PROG GND VCC BAT STDBY CHRG CE
+
+B_CE CE_GATE GND V = 0.5*(1 + tanh((V(CE)-0.8)*50))
+Buvlo UVLO_GATE GND V = 0.5*(1 + tanh((V(VCC)-3.7)*20))
+Btaper TAPER_GATE GND V = 0.5*(1 - tanh((V(BAT)-4.2)*100))
+
+Eprogreg PROG_INT GND VALUE = {1.0*V(UVLO_GATE)*V(CE_GATE)*V(TAPER_GATE)}
+Vsense PROG PROG_INT DC 0
+
+Bchg GND BAT I = -1200*I(Vsense)
+Rleak BAT GND 1Meg
+
+* --- Termination delay filter (emulates t_TERM ~1.8ms) ---
+Braw TAPER_RAW GND V = V(TAPER_GATE)
+Rterm TAPER_RAW TAPER_FILT 10k
+Cterm TAPER_FILT GND 180n
+.ic v(TAPER_FILT)=1
+
+* --- Sharp digital comparator AFTER the delay (this is the fix) ---
+Bterm_sharp TAPER_SHARP GND V = 0.5*(1 + tanh((V(TAPER_FILT)-0.5)*50))
+
+Bchrg CHRG GND V = V(VCC) * (1 - (V(UVLO_GATE)*V(CE_GATE)*V(TAPER_SHARP)))
+Bst STDBY GND V = V(VCC) * 0.5*(1 + tanh((V(BAT)-4.18)*40)) * V(UVLO_GATE) * V(CE_GATE)
+
+.ends TP4056

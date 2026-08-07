@@ -1,0 +1,70 @@
+* ==========================================
+* MAIN IR2110 SUBCIRCUIT (Top par)
+* ==========================================
+.subckt IR2110 HIN LIN SD VDD VSS VCC COM VB VS HO LO
+
+* Schmitt Triggers for inputs
+X_U2 HIN node_HIN_inv VDD VSS 7414_PSPICE
+X_U3 LIN node_LIN_inv VDD VSS 7414_PSPICE
+X_U4 SD  node_SDD_inv VDD VSS 7414_PSPICE
+
+* AND Gates for Shutdown Logic
+X_A1 node_HIN_inv node_SDD_inv node_A1_out VDD VSS AND_PSPICE
+X_A2 node_LIN_inv node_SDD_inv node_A2_out VDD VSS AND_PSPICE
+
+* LOW-SIDE PATH
+X_U6 node_A2_out node_delay1 VDD VSS 7414_PSPICE
+X_U7 node_delay1 node_LO_logic VDD VSS 7414_PSPICE
+
+B_LS_LO node_LO_gate COM V = (V(node_LO_logic, VSS) / 5.0) * V(VCC, COM)
+
+M4 LO node_LO_gate VCC VCC mosfet_p
+M2 LO node_LO_gate COM COM mosfet_n
+
+* LEVEL SHIFTER & LATCH
+R_pull_S VDD node_S 10k
+R_pull_R VDD node_R 10k
+
+M3 node_S node_A1_out COM COM mosfet_n
+X_U8 node_A1_out node_A1_inv VDD VSS 7414_PSPICE
+M1 node_R node_A1_inv COM COM mosfet_n
+
+* HIGH-SIDE PATH & LATCH
+X_U5 node_S node_R VDD VSS VSS node_HO_logic node_HO_nout VDD VSS d_srff
+
+B_LS_HO node_HO_gate VS V = (V(node_HO_logic, VSS) / 5.0) * V(VB, VS)
+
+M6 HO node_HO_gate VB VB mosfet_p
+M5 HO node_HO_gate VS VS mosfet_n
+
+.ends IR2110
+
+* ==========================================
+* INTERNAL LOGIC GATES (Neeche)
+* ==========================================
+.model mosfet_n NMOS (Level=1 Kp=10)
+.model mosfet_p PMOS (Level=1 Kp=10)
+
+* Smooth Inverter
+.SUBCKT 7414_PSPICE A Y VDD VSS
+B1 Y_int VSS V = 2.5 - 2.5 * tanh((V(A,VSS) - 2.5) * 10)
+R1 Y_int Y 10
+C1 Y VSS 1p
+.ENDS 7414_PSPICE
+
+* Smooth AND Gate
+.SUBCKT AND_PSPICE A B Y VDD VSS
+B1 Y_int VSS V = 2.5 + 2.5 * tanh((V(A,VSS) + V(B,VSS) - 7.5) * 10)
+R1 Y_int Y 10
+C1 Y VSS 1p
+.ENDS AND_PSPICE
+
+* Smooth SR Flip-Flop
+.SUBCKT d_srff S R CLK SET RST Q QBAR VDD VSS
+B_NOR1 Q_int VSS V = 2.5 - 2.5 * tanh((V(R,VSS) + V(QBAR,VSS) - 2.5) * 10)
+R1 Q_int Q 10
+C1 Q VSS 1p
+B_NOR2 QBAR_int VSS V = 2.5 - 2.5 * tanh((V(S,VSS) + V(Q,VSS) - 2.5) * 10)
+R2 QBAR_int QBAR 10
+C2 QBAR VSS 1p
+.ENDS d_srff

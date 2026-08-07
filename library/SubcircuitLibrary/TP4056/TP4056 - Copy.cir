@@ -1,0 +1,10 @@
+.title KiCad schematic
+D2 Net-_D1-Pad1_ Net-_D2-Pad2_ eSim_LED
+R3 Net-_R3-Pad1_ Net-_D2-Pad2_ 1k
+C1 Net-_C1-Pad1_ GND 10u
+X1 GND Net-_R1-Pad2_ GND Net-_D1-Pad1_ Net-_C1-Pad1_ Net-_R2-Pad1_ Net-_R3-Pad1_ Net-_D1-Pad1_ TP4056
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_LED
+R2 Net-_R2-Pad1_ Net-_D1-Pad2_ 1k
+v1 Net-_D1-Pad1_ GND 5
+R1 GND Net-_R1-Pad2_ 1.2k
+.end

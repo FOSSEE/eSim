@@ -1,0 +1,43 @@
+* ==========================================
+* IP5328P POWER BANK SOC - MASTER MACROMODEL
+* FOSSEE Summer Fellowship Project
+* ==========================================
+
+* --- 1. MOSFET Model ---
+.model mosfet_n NMOS (Level=1 VTO=1.5 KP=20)
+
+* --- 2. IP5328P MACROMODEL (Lowercase to fix eSim bug) ---
+.subckt IP5328P VBUS_IN VBAT_OUT LX1 LX2 GND FB V_CTRL OVP_FAULT
+M1 VBUS_IN Gate_M1 LX1 LX1 mosfet_n
+M2 LX1 Gate_M2 GND GND mosfet_n
+M3 VBAT_OUT Gate_M3 LX2 LX2 mosfet_n
+M4 LX2 Gate_M4 GND GND mosfet_n
+E1 Gate_M1 LX1 Ctrl_M1 GND 1
+E2 Gate_M3 LX2 Ctrl_M3 GND 1
+v2 Ctrl_M1 GND PULSE(0 5 0 10n 10n 1u 2u)
+v1 Gate_M2 GND PULSE(0 5 1u 10n 10n 1u 2u)
+v3 Ctrl_M3 GND DC 5
+v4 Gate_M4 GND DC 0
+v6 VCC_INT GND DC 5
+v5 Ref_1_2V GND DC 1.2
+v7 Ref_4_2V GND DC 4.2
+E_ErrorAmp V_CTRL GND FB Ref_1_2V 1000
+E_OVP OVP_FAULT GND VBAT_OUT Ref_4_2V 1000
+R_FB FB GND 1Meg
+R_VCTRL V_CTRL GND 1Meg
+R_OVP OVP_FAULT GND 1Meg
+R_snub1 LX1 GND 100k
+C_snub1 LX1 GND 10p
+R_snub2 LX2 GND 100k
+C_snub2 LX2 GND 10p
+.ends IP5328P
+
+* --- 3. DUMMY LM324 (5 PINS - Lowercase Backup) ---
+.subckt lm324_pspice p1 p2 p3 p4 p5
+R_dummy1 p1 0 1Meg
+.ends lm324_pspice
+
+* --- 4. DUMMY LM111 (8 PINS - Lowercase Backup) ---
+.subckt lm111_pspice p1 p2 p3 p4 p5 p6 p7 p8
+R_dummy2 p1 0 1Meg
+.ends lm111_pspice

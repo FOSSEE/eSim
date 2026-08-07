@@ -1,0 +1,13 @@
+* Subcircuit CA3028A
+.subckt CA3028A net-_q1-pad2_ net-_q2-pad2_ net-_r2-pad1_ net-_q2-pad3_ net-_q3-pad2_ net-_q3-pad1_ net-_r1-pad1_ net-_q1-pad1_ 
+.title kicad schematic
+.include NPN.lib
+r2 net-_r2-pad1_ net-_q2-pad2_ 2.8k
+r1 net-_r1-pad1_ net-_q2-pad2_ 5k
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_q1-pad3_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+r3 net-_q2-pad3_ net-_r2-pad1_ 500
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+* Control Statements
+
+.ends CA3028A

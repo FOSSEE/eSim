@@ -1,0 +1,78 @@
+.title KiCad schematic
+QN9 VCC Net-_QN8-Pad3_ Net-_QN10-Pad2_ npn
+QN8 VCC Net-_C2-Pad1_ Net-_QN8-Pad3_ npn
+R2 OUT2 Net-_QN10-Pad2_ resistor
+QN10 Net-_C2-Pad1_ Net-_QN10-Pad2_ OUT2 npn
+I5 VCC Net-_C2-Pad1_ current
+QP11 GND Net-_C2-Pad1_ OUT2 pnp
+I8 GND OUT2 current
+QN12 Net-_C2-Pad1_ Net-_QN11-Pad3_ GND npn
+QN1 VCC Net-_C1-Pad1_ Net-_QN1-Pad3_ npn
+QN2 VCC Net-_QN1-Pad3_ Net-_QN2-Pad3_ npn
+I1 VCC Net-_C1-Pad1_ current
+QN3 Net-_C1-Pad1_ Net-_QN2-Pad3_ OUT1 npn
+I2 VCC Net-_I2-Pad2_ current
+QN4 VCC Net-_I2-Pad2_ Net-_QN4-Pad3_ npn
+R1 OUT1 Net-_QN2-Pad3_ resistor
+QN5 Net-_C1-Pad1_ Net-_QN4-Pad3_ GND npn
+I4 GND OUT1 current
+QP5 GND Net-_C1-Pad1_ OUT1 pnp
+R3 OUT3 Net-_QN16-Pad3_ resistor
+QN16 VCC Net-_QN15-Pad3_ Net-_QN16-Pad3_ npn
+QN15 VCC Net-_C3-Pad1_ Net-_QN15-Pad3_ npn
+I12 GND OUT3 current
+QP17 GND Net-_C3-Pad1_ OUT3 pnp
+QN22 VCC Net-_C4-Pad1_ Net-_QN22-Pad3_ npn
+I13 VCC Net-_C4-Pad1_ current
+I9 VCC Net-_C3-Pad1_ current
+I10 VCC Net-_I10-Pad2_ current
+QP23 GND Net-_C4-Pad1_ OUT4 pnp
+QN23 VCC Net-_QN22-Pad3_ Net-_QN23-Pad3_ npn
+R4 OUT4 Net-_QN23-Pad3_ resistor
+QN24 Net-_C4-Pad1_ Net-_QN23-Pad3_ OUT4 npn
+I16 GND OUT4 current
+QN26 Net-_C4-Pad1_ Net-_QN25-Pad3_ GND npn
+I14 VCC Net-_I14-Pad2_ current
+QN25 VCC Net-_I14-Pad2_ Net-_QN25-Pad3_ npn
+QP21 GND IN4_P Net-_QP19-Pad2_ pnp
+QN17 Net-_C3-Pad1_ Net-_QN16-Pad3_ OUT3 npn
+QN18 VCC Net-_I10-Pad2_ Net-_QN18-Pad3_ npn
+C3 Net-_C3-Pad1_ Net-_C3-Pad2_ polcap
+QP15 GND IN3_P Net-_QP13-Pad2_ pnp
+QN19 Net-_C3-Pad1_ Net-_QN18-Pad3_ GND npn
+QP18 GND Net-_C3-Pad2_ Net-_I10-Pad2_ pnp
+QP8 Net-_QN13-Pad2_ Net-_QP10-Pad3_ Net-_I7-Pad2_ pnp
+QP7 Net-_C2-Pad2_ Net-_QP7-Pad2_ Net-_I7-Pad2_ pnp
+QN14 Net-_QN13-Pad2_ Net-_QN13-Pad2_ GND npn
+I6 VCC Net-_I6-Pad2_ current
+QN13 Net-_C2-Pad2_ Net-_QN13-Pad2_ GND npn
+QP12 GND Net-_C2-Pad2_ Net-_I6-Pad2_ pnp
+C2 Net-_C2-Pad1_ Net-_C2-Pad2_ polcap
+QP9 GND IN2_P Net-_QP7-Pad2_ pnp
+QN11 VCC Net-_I6-Pad2_ Net-_QN11-Pad3_ npn
+I7 VCC Net-_I7-Pad2_ current
+QP10 GND IN2_N Net-_QP10-Pad3_ pnp
+QP2 Net-_QN6-Pad2_ Net-_QP2-Pad2_ Net-_I3-Pad2_ pnp
+QP4 GND IN1_N Net-_QP2-Pad2_ pnp
+QP1 Net-_C1-Pad2_ Net-_QP1-Pad2_ Net-_I3-Pad2_ pnp
+QN7 Net-_QN6-Pad2_ Net-_QN6-Pad2_ GND npn
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ polcap
+QP6 GND Net-_C1-Pad2_ Net-_I2-Pad2_ pnp
+QN6 Net-_C1-Pad2_ Net-_QN6-Pad2_ GND npn
+QP3 GND IN1_P Net-_QP1-Pad2_ pnp
+I3 VCC Net-_I3-Pad2_ current
+QP22 GND IN4_N Net-_QP20-Pad2_ pnp
+QP20 Net-_QN27-Pad2_ Net-_QP20-Pad2_ Net-_I15-Pad2_ pnp
+QN28 Net-_QN27-Pad2_ Net-_QN27-Pad2_ GND npn
+QP19 Net-_C4-Pad2_ Net-_QP19-Pad2_ Net-_I15-Pad2_ pnp
+QN27 Net-_C4-Pad2_ Net-_QN27-Pad2_ GND npn
+QP24 GND Net-_C4-Pad2_ Net-_I14-Pad2_ pnp
+C4 Net-_C4-Pad1_ Net-_C4-Pad2_ polcap
+I15 VCC Net-_I15-Pad2_ current
+QP13 Net-_C3-Pad2_ Net-_QP13-Pad2_ Net-_I11-Pad2_ pnp
+QP14 Net-_QN20-Pad2_ Net-_QP14-Pad2_ Net-_I11-Pad2_ pnp
+I11 VCC Net-_I11-Pad2_ current
+QN21 Net-_QN20-Pad2_ Net-_QN20-Pad2_ GND npn
+QP16 GND IN3_N Net-_QP14-Pad2_ pnp
+QN20 Net-_C3-Pad2_ Net-_QN20-Pad2_ GND npn
+.end

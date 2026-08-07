@@ -1,0 +1,1 @@
+.MODEL DI_S2M D( Is=1.30u Rs=8.92m N=2.58 tt=4.32u Cjo=37.0p M=0.333 Vj=0.538 Bv=1.00k Ibv=5.00u )

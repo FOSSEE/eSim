@@ -1,0 +1,443 @@
+EESchema Schematic File Version 5
+EELAYER 36 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+Comment5 ""
+Comment6 ""
+Comment7 ""
+Comment8 ""
+Comment9 ""
+$EndDescr
+Connection ~ 2200 2800
+Connection ~ 2500 3700
+Connection ~ 2600 1150
+Connection ~ 2600 1950
+Connection ~ 2850 2250
+Connection ~ 4600 4050
+Connection ~ 5750 2750
+Connection ~ 6050 2200
+Connection ~ 6050 2700
+Connection ~ 6050 3200
+Connection ~ 6350 4900
+Connection ~ 6650 4950
+Connection ~ 6650 5600
+Connection ~ 6900 4150
+Wire Wire Line
+	1050 1550 1200 1550
+Wire Wire Line
+	1450 1150 2600 1150
+Wire Wire Line
+	1450 1350 1450 1150
+Wire Wire Line
+	1450 1750 1450 1950
+Wire Wire Line
+	1450 1950 2600 1950
+Wire Wire Line
+	1650 1800 1650 2250
+Wire Wire Line
+	1650 1800 1750 1800
+Wire Wire Line
+	1650 2250 2850 2250
+Wire Wire Line
+	1700 1550 1700 1700
+Wire Wire Line
+	1700 1700 1750 1700
+Wire Wire Line
+	1750 2800 1750 3800
+Wire Wire Line
+	1750 3800 3350 3800
+Wire Wire Line
+	1950 1800 2200 1800
+Wire Wire Line
+	2200 1550 2350 1550
+Wire Wire Line
+	2200 1800 2200 2800
+Wire Wire Line
+	2200 2800 1750 2800
+Wire Wire Line
+	2200 2800 2200 3400
+Wire Wire Line
+	2500 3200 3150 3200
+Wire Wire Line
+	2500 3600 2500 3700
+Wire Wire Line
+	2500 3700 2500 4000
+Wire Wire Line
+	2500 4000 2550 4000
+Wire Wire Line
+	2600 1150 2600 1350
+Wire Wire Line
+	2600 1150 3900 1150
+Wire Wire Line
+	2600 1750 2600 1950
+Wire Wire Line
+	2600 1950 3900 1950
+Wire Wire Line
+	2600 3550 2600 3700
+Wire Wire Line
+	2600 3700 2500 3700
+Wire Wire Line
+	2850 1550 2850 1700
+Wire Wire Line
+	2850 1700 2950 1700
+Wire Wire Line
+	2850 1800 2950 1800
+Wire Wire Line
+	2850 2250 2850 1800
+Wire Wire Line
+	2900 4500 2900 5950
+Wire Wire Line
+	2900 5950 3500 5950
+Wire Wire Line
+	3150 1800 3300 1800
+Wire Wire Line
+	3150 3200 3150 5100
+Wire Wire Line
+	3150 5100 3500 5100
+Wire Wire Line
+	3300 1800 3300 2750
+Wire Wire Line
+	3450 1550 3650 1550
+Wire Wire Line
+	3500 5400 3500 5500
+Wire Wire Line
+	3550 2450 4550 2450
+Wire Wire Line
+	3550 2550 3550 2450
+Wire Wire Line
+	3550 2950 3550 3100
+Wire Wire Line
+	3550 3100 4550 3100
+Wire Wire Line
+	3600 3500 3600 3600
+Wire Wire Line
+	3600 4000 3600 4200
+Wire Wire Line
+	3800 2750 4300 2750
+Wire Wire Line
+	3850 3800 4300 3800
+Wire Wire Line
+	3900 1150 3900 1350
+Wire Wire Line
+	3900 1950 3900 1750
+Wire Wire Line
+	4150 1550 4150 2250
+Wire Wire Line
+	4150 2250 2850 2250
+Wire Wire Line
+	4300 4650 4300 4750
+Wire Wire Line
+	4300 6300 4300 6400
+Wire Wire Line
+	4550 2450 4550 2550
+Wire Wire Line
+	4550 3100 4550 2950
+Wire Wire Line
+	4600 3600 5300 3600
+Wire Wire Line
+	4600 4000 4600 4050
+Wire Wire Line
+	4600 4050 4600 4250
+Wire Wire Line
+	4600 4250 4650 4250
+Wire Wire Line
+	4700 3950 4700 4050
+Wire Wire Line
+	4700 4050 4600 4050
+Wire Wire Line
+	4800 2750 5750 2750
+Wire Wire Line
+	5100 4900 6350 4900
+Wire Wire Line
+	5100 5100 5100 4900
+Wire Wire Line
+	5300 3600 5300 4500
+Wire Wire Line
+	5300 4500 2900 4500
+Wire Wire Line
+	5750 2400 5750 2750
+Wire Wire Line
+	5750 2750 5750 3000
+Wire Wire Line
+	6050 1950 6250 1950
+Wire Wire Line
+	6050 2200 6050 1950
+Wire Wire Line
+	6050 2600 6050 2700
+Wire Wire Line
+	6050 2700 6050 2800
+Wire Wire Line
+	6050 2700 6150 2700
+Wire Wire Line
+	6050 3200 6050 3450
+Wire Wire Line
+	6150 2550 6700 2550
+Wire Wire Line
+	6150 3150 6150 3200
+Wire Wire Line
+	6150 3200 6050 3200
+Wire Wire Line
+	6350 4450 6350 4900
+Wire Wire Line
+	6350 4900 6350 5350
+Wire Wire Line
+	6650 4150 6900 4150
+Wire Wire Line
+	6650 4250 6650 4150
+Wire Wire Line
+	6650 4650 6650 4950
+Wire Wire Line
+	6650 4950 6650 5150
+Wire Wire Line
+	6650 4950 6800 4950
+Wire Wire Line
+	6650 5550 6650 5600
+Wire Wire Line
+	6650 5600 6650 5750
+Wire Wire Line
+	6650 5750 6700 5750
+Wire Wire Line
+	6700 2200 6050 2200
+Wire Wire Line
+	6700 2550 6700 2200
+Wire Wire Line
+	6750 4700 6750 4600
+Wire Wire Line
+	6750 5500 6750 5600
+Wire Wire Line
+	6750 5600 6650 5600
+Wire Wire Line
+	6900 3950 6900 4150
+Wire Wire Line
+	6900 4150 7200 4150
+Wire Wire Line
+	7200 4150 7200 4700
+Wire Wire Line
+	7200 4700 6750 4700
+Text HLabel 1050 1550 0    50   Input ~ 0
+HIN
+Text HLabel 2200 1550 0    50   Input ~ 0
+LIN
+Text HLabel 2550 4000 2    50   Input ~ 0
+COM
+Text HLabel 2600 1150 1    50   Input ~ 0
+VDD
+Text HLabel 2600 1950 3    50   Input ~ 0
+VSS
+Text HLabel 3450 1550 0    50   Input ~ 0
+SD
+Text HLabel 3500 5400 1    50   Input ~ 0
+VDD
+Text HLabel 3600 3500 2    50   Input ~ 0
+VDD
+Text HLabel 3600 4200 2    50   Input ~ 0
+VSS
+Text HLabel 4050 2450 1    50   Input ~ 0
+VDD
+Text HLabel 4100 3100 3    50   Input ~ 0
+VSS
+Text HLabel 4300 4650 2    50   Input ~ 0
+VSS
+Text HLabel 4300 6400 2    50   Input ~ 0
+VCC
+Text HLabel 4650 4250 2    50   Input ~ 0
+COM
+Text HLabel 6050 3450 2    50   Input ~ 0
+COM
+Text HLabel 6150 2700 2    50   Input ~ 0
+LO
+Text HLabel 6250 1950 2    50   Input ~ 0
+VCC
+Text HLabel 6700 5750 2    50   Input ~ 0
+VS
+Text HLabel 6800 4950 2    50   Input ~ 0
+HO
+Text HLabel 6900 3950 2    50   Input ~ 0
+VB
+$Comp
+L LTspice_Digital:and A1
+U 1 1 00000000
+P 1850 1550
+F 0 "A1" H 2000 1400 50  0000 L CNN
+F 1 "and" H 2000 1300 50  0000 L CNN
+F 2 "" H 1850 1550 50  0001 C CNN
+F 3 "" H 1850 1550 50  0001 C CNN
+	1    1850 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L LTspice_Digital:and A2
+U 1 1 00000000
+P 3050 1550
+F 0 "A2" H 3200 1400 50  0000 L CNN
+F 1 "and" H 3200 1300 50  0000 L CNN
+F 2 "" H 3050 1550 50  0001 C CNN
+F 3 "" H 3050 1550 50  0001 C CNN
+	1    3050 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_n M3
+U 1 1 00000000
+P 2300 3200
+F 0 "M3" H 2650 3050 50  0000 L CNN
+F 1 "mosfet_n" H 2650 2950 50  0000 L CNN
+F 2 "" H 2600 2900 29  0000 C CNN
+F 3 "" H 2400 3000 60  0000 C CNN
+	1    2300 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_n M1
+U 1 1 00000000
+P 4400 3600
+F 0 "M1" H 4750 3450 50  0000 L CNN
+F 1 "mosfet_n" H 4750 3350 50  0000 L CNN
+F 2 "" H 4700 3300 29  0000 C CNN
+F 3 "" H 4500 3400 60  0000 C CNN
+	1    4400 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_n M2
+U 1 1 00000000
+P 5850 2800
+F 0 "M2" H 6200 2650 50  0000 L CNN
+F 1 "mosfet_n" H 6200 2550 50  0000 L CNN
+F 2 "" H 6150 2500 29  0000 C CNN
+F 3 "" H 5950 2600 60  0000 C CNN
+	1    5850 2800
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_p M4
+U 1 1 00000000
+P 5900 2400
+F 0 "M4" H 6200 2450 50  0000 L CNN
+F 1 "mosfet_p" H 6200 2350 50  0000 L CNN
+F 2 "" H 6150 2500 29  0000 C CNN
+F 3 "" H 5950 2400 60  0000 C CNN
+	1    5900 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_n M5
+U 1 1 00000000
+P 6450 5150
+F 0 "M5" H 6800 5000 50  0000 L CNN
+F 1 "mosfet_n" H 6800 4900 50  0000 L CNN
+F 2 "" H 6750 4850 29  0000 C CNN
+F 3 "" H 6550 4950 60  0000 C CNN
+	1    6450 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Devices:mosfet_p M6
+U 1 1 00000000
+P 6500 4450
+F 0 "M6" H 6800 4500 50  0000 L CNN
+F 1 "mosfet_p" H 6800 4400 50  0000 L CNN
+F 2 "" H 6750 4550 29  0000 C CNN
+F 3 "" H 6550 4450 60  0000 C CNN
+	1    6500 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:7414_PSPICE U2
+U 1 1 00000000
+P 1200 1550
+F 0 "U2" H 1800 1685 30  0000 C CNN
+F 1 "7414_PSPICE" H 1800 1585 30  0000 C CNN
+F 2 "" H 1200 1550 50  0001 C CNN
+F 3 "" H 1200 1550 50  0001 C CNN
+	1    1200 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:7414_PSPICE U3
+U 1 1 00000000
+P 2350 1550
+F 0 "U3" H 2950 1685 30  0000 C CNN
+F 1 "7414_PSPICE" H 2950 1585 30  0000 C CNN
+F 2 "" H 2350 1550 50  0001 C CNN
+F 3 "" H 2350 1550 50  0001 C CNN
+	1    2350 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:7414_PSPICE U6
+U 1 1 00000000
+P 3300 2750
+F 0 "U6" H 3900 2885 30  0000 C CNN
+F 1 "7414_PSPICE" H 3900 2785 30  0000 C CNN
+F 2 "" H 3300 2750 50  0001 C CNN
+F 3 "" H 3300 2750 50  0001 C CNN
+	1    3300 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:7414_PSPICE U8
+U 1 1 00000000
+P 3350 3800
+F 0 "U8" H 3950 3935 30  0000 C CNN
+F 1 "7414_PSPICE" H 3950 3835 30  0000 C CNN
+F 2 "" H 3350 3800 50  0001 C CNN
+F 3 "" H 3350 3800 50  0001 C CNN
+	1    3350 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:7414_PSPICE U4
+U 1 1 00000000
+P 3650 1550
+F 0 "U4" H 4250 1685 30  0000 C CNN
+F 1 "7414_PSPICE" H 4250 1585 30  0000 C CNN
+F 2 "" H 3650 1550 50  0001 C CNN
+F 3 "" H 3650 1550 50  0001 C CNN
+	1    3650 1550
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:7414_PSPICE U7
+U 1 1 00000000
+P 4300 2750
+F 0 "U7" H 4900 2885 30  0000 C CNN
+F 1 "7414_PSPICE" H 4900 2785 30  0000 C CNN
+F 2 "" H 4300 2750 50  0001 C CNN
+F 3 "" H 4300 2750 50  0001 C CNN
+	1    4300 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_PSpice:LM111_PSPICE U1
+U 1 1 00000000
+P 9800 1300
+F 0 "U1" H 10265 700 30  0000 L CNN
+F 1 "LM111_PSPICE" H 10265 600 30  0000 L CNN
+F 2 "" H 9800 1300 50  0001 C CNN
+F 3 "" H 9800 1300 50  0001 C CNN
+	1    9800 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_srff U5
+U 1 1 00000000
+P 4300 5500
+F 0 "U5" H 4380 6250 60  0000 L CNN
+F 1 "d_srff" H 4380 6100 60  0000 L CNN
+F 2 "" H 4300 5500 60  0000 C CNN
+F 3 "" H 4300 5500 60  0000 C CNN
+	1    4300 5500
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

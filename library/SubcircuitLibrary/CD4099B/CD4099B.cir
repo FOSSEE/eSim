@@ -1,0 +1,40 @@
+.title KiCad schematic
+U3 Data Net-_U15-Pad3_ Net-_U2-Pad3_ Net-_U14-Pad3_ Q3 unconnected-_U3-Pad6_ d_dlatch
+U7 Data Net-_U12-Pad3_ Net-_U2-Pad3_ Net-_U14-Pad3_ Q2 unconnected-_U7-Pad6_ d_dlatch
+U6 Data Net-_U10-Pad3_ Net-_U2-Pad3_ Net-_U14-Pad3_ Q0 unconnected-_U6-Pad6_ d_dlatch
+U8 Data Net-_U13-Pad3_ Net-_U2-Pad3_ Net-_U14-Pad3_ Q6 unconnected-_U8-Pad6_ d_dlatch
+U9 Data Net-_U17-Pad3_ Net-_U2-Pad3_ Net-_U14-Pad3_ Q4 unconnected-_U9-Pad6_ d_dlatch
+U1 Q7 Reset Data Write_Disable A0 A1 A2 unconnected-_U1-Pad8_ Q0 Q1 Q2 Q3 Q4 Q5 Q6 unconnected-_U1-Pad16_ PORT
+U2 Data Net-_U11-Pad3_ Net-_U2-Pad3_ Net-_U14-Pad3_ Q1 unconnected-_U2-Pad6_ d_dlatch
+U5 Data Net-_U16-Pad3_ Net-_U2-Pad3_ Net-_U14-Pad3_ Q7 unconnected-_U5-Pad6_ d_dlatch
+U4 Data Net-_U18-Pad3_ Net-_U2-Pad3_ Net-_U14-Pad3_ Q5 unconnected-_U4-Pad6_ d_dlatch
+U11 Net-_U10-Pad1_ Net-_U11-Pad2_ Net-_U11-Pad3_ d_and
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_and
+U14 Reset Write_Disable Net-_U14-Pad3_ d_and
+U19 Write_Disable Net-_U10-Pad1_ d_inverter
+U25 Net-_U25-Pad1_ A0 Net-_U18-Pad2_ d_and
+U24 Net-_U24-Pad1_ Net-_U24-Pad2_ Net-_U17-Pad2_ d_and
+U26 Net-_U26-Pad1_ Net-_U24-Pad2_ Net-_U13-Pad2_ d_and
+U27 Net-_U27-Pad1_ A0 Net-_U16-Pad2_ d_and
+U35 A2 A1 Net-_U27-Pad1_ d_and
+U33 A2 Net-_U20-Pad2_ Net-_U25-Pad1_ d_and
+U34 A2 A1 Net-_U26-Pad1_ d_and
+U36 A2 Net-_U21-Pad2_ d_inverter
+U38 A0 Net-_U24-Pad2_ d_inverter
+U37 A1 Net-_U20-Pad2_ d_inverter
+U32 A2 Net-_U20-Pad2_ Net-_U24-Pad1_ d_and
+U29 A1 Net-_U24-Pad2_ Net-_U21-Pad1_ d_and
+U30 A1 A0 Net-_U22-Pad1_ d_and
+U31 Net-_U24-Pad2_ Net-_U20-Pad2_ Net-_U23-Pad1_ d_and
+U28 A0 Net-_U21-Pad2_ Net-_U20-Pad1_ d_and
+U23 Net-_U23-Pad1_ Net-_U21-Pad2_ Net-_U10-Pad2_ d_and
+U20 Net-_U20-Pad1_ Net-_U20-Pad2_ Net-_U11-Pad2_ d_and
+U22 Net-_U22-Pad1_ Net-_U21-Pad2_ Net-_U15-Pad2_ d_and
+U21 Net-_U21-Pad1_ Net-_U21-Pad2_ Net-_U12-Pad2_ d_and
+U12 Net-_U10-Pad1_ Net-_U12-Pad2_ Net-_U12-Pad3_ d_and
+U15 Net-_U10-Pad1_ Net-_U15-Pad2_ Net-_U15-Pad3_ d_and
+U18 Net-_U10-Pad1_ Net-_U18-Pad2_ Net-_U18-Pad3_ d_and
+U13 Net-_U10-Pad1_ Net-_U13-Pad2_ Net-_U13-Pad3_ d_and
+U16 Net-_U10-Pad1_ Net-_U16-Pad2_ Net-_U16-Pad3_ d_and
+U17 Net-_U10-Pad1_ Net-_U17-Pad2_ Net-_U17-Pad3_ d_and
+.end

@@ -1,0 +1,48 @@
+.title kicad schematic
+
+.include LM321.sub
+.include LM393.sub
+.include INVCMOS.sub
+.include D.lib
+v5 net-_r1-pad1_ gnd 7
+r2 gnd vref 20k
+d1 gnd net-_d1-pad2_ 1N4148
+r1 net-_r1-pad1_ net-_d1-pad2_ 1k
+x7 c d INVCMOS
+* u2 net-_u2-pad1_ c dac_bridge_1
+* u3 net-_u1-pad3_ net-_u1-pad4_ net-_u2-pad1_ d_or
+x4 net-_d1-pad2_ vref net-_r1-pad1_ vstab gnd LM321
+x6 i_a a INVCMOS
+r3 vref vstab 20k
+r7 gnd net-_r4-pad2_ 10k
+r4 net-_x1-pad2_ net-_r4-pad2_ 10k
+x8 net-_r4-pad2_ net-_x8-pad2_ net-_r1-pad1_ net-_x3-pad6_ gnd LM321
+x1 v8 net-_x1-pad2_ net-_r1-pad1_ net-_x1-pad2_ gnd LM321
+r6 net-_x8-pad2_ net-_x3-pad6_ 10k
+r5 net-_x2-pad2_ net-_x8-pad2_ 10k
+x2 v9 net-_x2-pad2_ net-_r1-pad1_ net-_x2-pad2_ gnd LM321
+v2 v8 gnd 7
+v1 v9 gnd 1
+v3 v6 gnd 5
+x5 i_b b INVCMOS
+* u1 i_a i_b net-_u1-pad3_ net-_u1-pad4_ adc_bridge_2
+x3 net-_r1-pad1_ v7 net-_x3-pad6_ i_a gnd net-_x3-pad6_ v6 i_b LM393
+v4 v7 gnd 3
+a1 [net-_u2-pad1_ ] [c ] u2
+a2 [net-_u1-pad3_ net-_u1-pad4_ ] net-_u2-pad1_ u3
+a3 [i_a i_b ] [net-_u1-pad3_ net-_u1-pad4_ ] u1
+* Schematic Name:                             dac_bridge_1, Ngspice Name: dac_bridge
+.model u2 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u3 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             adc_bridge_2, Ngspice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 10e-09 1e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

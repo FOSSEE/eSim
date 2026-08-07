@@ -1,0 +1,5 @@
+.subckt l298n 1 2 3 4 5 6 7 8 9 10 11 12
+* Custom Simulation Model for L298N
+B1 7 12 V=V(11)*(V(1)/5)*(V(2)/5)
+B2 8 12 V=V(11)*(V(1)/5)*(V(3)/5)
+.ends l298n
