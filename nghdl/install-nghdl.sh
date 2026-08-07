@@ -15,6 +15,7 @@ verilator="verilator-4.210"
 config_dir="$HOME/.nghdl"
 config_file="config.ini"
 src_dir="$(pwd)"
+VERSION_ID=$(grep "^VERSION_ID" /etc/os-release | cut -d '"' -f 2)
 
 # Will be used to take backup of any file
 # sysdate="$(date)"
@@ -33,6 +34,41 @@ error_exit()
 # =================================
 # Function to install Dependencies
 # =================================
+
+# =================================
+# Function to run os-specific script
+# =================================
+
+function nghdl_version_script() 
+{
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/install-nghdl-scripts"
+    
+    # Decide script based on full version
+    case $VERSION_ID in
+        "22.04")
+            SCRIPT="$SCRIPT_DIR/install-nghdl-22.04.sh"
+            ;;
+        "23.04")
+            SCRIPT="$SCRIPT_DIR/install-eSim-23.04.sh"
+            ;;
+        "24.04")
+            SCRIPT="$SCRIPT_DIR/install-nghdl-24.04.sh"
+            ;;
+        "25.04")
+            SCRIPT="$SCRIPT_DIR/install-nghdl-25.04.sh"
+            ;;
+        *)
+            echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
+            exit 1
+            ;;
+    esac
+
+    # Run the script if found
+    if [[ -f "$SCRIPT" ]]; then
+        echo "Running script: $SCRIPT $option"
+        bash "$SCRIPT" "$option"
+    fi
+}
 
 # =========================
 # Function to install GHDL
@@ -54,7 +90,7 @@ function installVerilator
     echo "Configuring $verilator build as per requirements"
     chmod +x configure
     ./configure
-    make -j$(sysctl -n hw.ncpu) # macOS cpu cores
+    make -j5   #$(sysctl -n hw.ncpu) macOS cpu cores
     sudo make install
     echo "Removing the unessential verilator files........"
     rm -r docs
@@ -95,7 +131,7 @@ function installNGHDL
     sleep 2
     
     chmod +x ../configure
-    ../confi.gure --enable-xspice --disable-debug  --prefix=$HOME/$nghdl/install_dir/ --exec-prefix=$HOME/$nghdl/install_dir/
+    ../configure --enable-xspice --disable-debug  --prefix=$HOME/$nghdl/install_dir/ --exec-prefix=$HOME/$nghdl/install_dir/
             
     # Adding patch to Ngspice base code
     # cp $src_dir/src/outitf.c $HOME/$nghdl/src/frontend
@@ -196,18 +232,15 @@ function show_menu {
 if [ $# -eq 0 ]; then
     show_menu
 else
+    option=$1
     case $1 in
         verilator) installVerilator ;;
         nghdl) installNGHDL ;;
         softlink) createSoftLink ;;
         config) createConfigFile ;;
-        --install|install)
-            echo "Auto-run setup..."
-            installVerilator
-            installNGHDL
-            createSoftLink
-            createConfigFile
-            ;;
+        --install|--uninstall)
+            echo "Running NGHDL OS Script..."
+            nghdl_version_script ;;
         *) echo "Unknown argument. Use one of: verilator, nghdl, softlink, config" ;;
     esac
 fi
