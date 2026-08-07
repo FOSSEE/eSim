@@ -1,0 +1,43 @@
+.title kicad schematic
+
+.include PNP.lib
+.include NPN.lib
+r5 gnd b 2k
+r4 net-_c2-pad2_ b 10k
+c2 net-_c2-pad1_ net-_c2-pad2_ 30p
+q4 net-_c2-pad1_ net-_c2-pad2_ gnd Q2N2222
+r6 net-_q5-pad3_ out 1k
+* u1 b out zener
+q2 out out net-_c1-pad1_ Q2N2222
+r2 net-_c1-pad2_ net-_q1-pad2_ 2k
+q3 net-_q1-pad2_ net-_c2-pad1_ net-_c1-pad1_ Q2N2907A
+q1 net-_c1-pad1_ net-_q1-pad2_ gnd Q2N2222
+c1 net-_c1-pad1_ net-_c1-pad2_ 15p
+r1 net-_c1-pad1_ out 50
+r3 gnd net-_q1-pad2_ 30k
+q6 net-_q5-pad2_ b c Q2N2222
+* u5 c plot_v1
+* u4 b plot_v1
+q5 net-_c2-pad1_ net-_q5-pad2_ net-_q5-pad3_ Q2N2907A
+q7 net-_q5-pad2_ net-_q5-pad2_ out Q2N2907A
+* u2 in plot_v1
+r8 out in 6.8k
+* u3 out plot_v1
+r7 gnd c 2.6k
+v1 in gnd  dc 9
+a1 b out u1
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u1 zener(v_breakdown=6.5 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+.tran 10e-03 100e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(c)
+plot v(b)
+plot v(in)
+plot v(out)
+.endc
+.end
