@@ -1,0 +1,31 @@
+.title KiCad schematic
+U1 Net-_Q2-Pad3_ Net-_M5-Pad2_ Net-_M2-Pad2_ Net-_M8-Pad3_ Net-_Q1-Pad3_ Net-_M8-Pad1_ Net-_M1-Pad1_ Net-_M7-Pad3_ PORT
+Q3 Net-_M7-Pad3_ Net-_C1-Pad2_ Net-_M8-Pad3_ eSim_NPN
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 30p
+R7 Net-_C1-Pad1_ Net-_M7-Pad3_ 2K
+M9 Net-_M1-Pad1_ Net-_M7-Pad3_ Net-_M8-Pad1_ Net-_M1-Pad1_ mosfet_p
+M8 Net-_M8-Pad1_ Net-_M7-Pad3_ Net-_M8-Pad3_ Net-_M8-Pad3_ mosfet_n
+M4 Net-_M3-Pad3_ Net-_D4-Pad2_ Net-_M2-Pad1_ Net-_M1-Pad1_ mosfet_p
+M3 Net-_M1-Pad1_ Net-_D1-Pad1_ Net-_M3-Pad3_ Net-_M1-Pad1_ mosfet_p
+U5 Net-_U3-PadIN_ Net-_M5-Pad2_ zener
+R2 Net-_R1-Pad1_ Net-_M8-Pad3_ 5k
+U2 Net-_R1-Pad1_ Net-_M1-Pad1_ zener
+D2 Net-_D1-Pad2_ Net-_D2-Pad2_ eSim_Diode
+D3 Net-_D2-Pad2_ Net-_D3-Pad2_ eSim_Diode
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ eSim_Diode
+D4 Net-_D3-Pad2_ Net-_D4-Pad2_ eSim_Diode
+R1 Net-_R1-Pad1_ Net-_D4-Pad2_ 40k
+M1 Net-_M1-Pad1_ Net-_D1-Pad1_ Net-_D1-Pad1_ Net-_M1-Pad1_ mosfet_p
+Q2 Net-_C1-Pad2_ Net-_M2-Pad3_ Net-_Q2-Pad3_ eSim_NPN
+R5 Net-_C1-Pad2_ Net-_M5-Pad3_ 1K
+M5 Net-_M2-Pad1_ Net-_M5-Pad2_ Net-_M5-Pad3_ Net-_M1-Pad1_ mosfet_p
+U4 Net-_U3-PadIN_ Net-_M2-Pad1_ zener
+R3 Net-_Q1-Pad1_ Net-_M2-Pad3_ 1K
+Q1 Net-_Q1-Pad1_ Net-_M2-Pad3_ Net-_Q1-Pad3_ eSim_NPN
+M2 Net-_M2-Pad1_ Net-_M2-Pad2_ Net-_M2-Pad3_ Net-_M1-Pad1_ mosfet_p
+U3 Net-_U3-PadIN_ Net-_M2-Pad2_ zener
+R6 Net-_M8-Pad3_ Net-_Q2-Pad3_ 1K
+R4 Net-_M8-Pad3_ Net-_Q1-Pad3_ 1K
+M6 Net-_M1-Pad1_ Net-_D1-Pad1_ Net-_M6-Pad3_ Net-_M1-Pad1_ mosfet_p
+M7 Net-_M6-Pad3_ Net-_D4-Pad2_ Net-_M7-Pad3_ Net-_M1-Pad1_ mosfet_p
+.end
