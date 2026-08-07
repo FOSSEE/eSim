@@ -1,0 +1,38 @@
+* Subcircuit 74HC367
+.subckt 74HC367 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ unconnected-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ unconnected-_u1-pad16_ 
+.title kicad schematic
+* u9 net-_u1-pad6_ net-_u3-pad2_ net-_u1-pad7_ d_tristate
+* u5 net-_u1-pad10_ net-_u3-pad2_ net-_u1-pad9_ d_tristate
+* u8 net-_u1-pad4_ net-_u3-pad2_ net-_u1-pad5_ d_tristate
+* u7 net-_u1-pad2_ net-_u3-pad2_ net-_u1-pad3_ d_tristate
+* u3 net-_u1-pad1_ net-_u3-pad2_ d_inverter
+* u6 net-_u1-pad12_ net-_u2-pad2_ net-_u1-pad11_ d_tristate
+* u2 net-_u1-pad15_ net-_u2-pad2_ d_inverter
+* u4 net-_u1-pad14_ net-_u2-pad2_ net-_u1-pad13_ d_tristate
+a1 net-_u1-pad6_ net-_u3-pad2_ net-_u1-pad7_ u9
+a2 net-_u1-pad10_ net-_u3-pad2_ net-_u1-pad9_ u5
+a3 net-_u1-pad4_ net-_u3-pad2_ net-_u1-pad5_ u8
+a4 net-_u1-pad2_ net-_u3-pad2_ net-_u1-pad3_ u7
+a5 net-_u1-pad1_ net-_u3-pad2_ u3
+a6 net-_u1-pad12_ net-_u2-pad2_ net-_u1-pad11_ u6
+a7 net-_u1-pad15_ net-_u2-pad2_ u2
+a8 net-_u1-pad14_ net-_u2-pad2_ net-_u1-pad13_ u4
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u9 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u5 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u8 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u7 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u6 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_tristate, Ngspice Name: d_tristate
+.model u4 d_tristate(delay=1.0e-9 input_load=1.0e-12 enable_load=1.0e-12 )
+* Control Statements
+
+.ends 74HC367
