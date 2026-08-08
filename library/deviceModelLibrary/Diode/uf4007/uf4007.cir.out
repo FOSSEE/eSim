@@ -1,0 +1,19 @@
+.title kicad schematic
+
+.include uf4007.lib
+r1 out gnd 1k
+* u1 out plot_v1
+v1 in gnd sine(0 5 1k 0 0)
+d1 in out uf4007
+* u2 in plot_v1
+.tran 10e-06 10e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+plot v(in)
+.endc
+.end

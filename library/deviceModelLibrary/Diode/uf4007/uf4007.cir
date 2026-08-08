@@ -1,0 +1,7 @@
+.title KiCad schematic
+R1 out GND 1k
+U1 out plot_v1
+v1 in GND sine
+D1 in out eSim_Diode
+U2 in plot_v1
+.end
