@@ -110,6 +110,24 @@ def get_supported_tools() -> List[str]:
     return list(TOOLS.keys())
 
 
+def get_tool_label(tool_id: str) -> str:
+    """Return the display label for a tool."""
+    tool = get_tool_metadata(tool_id)
+    return tool.label if tool else tool_id
+
+
+def get_tool_versions(tool_id: str) -> List[str]:
+    """Return supported versions for a tool."""
+    tool = get_tool_metadata(tool_id)
+    return tool.versions if tool else []
+
+
+def get_default_version(tool_id: str) -> str:
+    """Return the default version for a tool."""
+    tool = get_tool_metadata(tool_id)
+    return tool.default_version if tool else "latest"
+
+
 def is_tool_supported(tool_id: str) -> bool:
     """Checks if a tool is supported by the registry."""
     return tool_id in TOOLS

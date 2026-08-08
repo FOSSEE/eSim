@@ -18,6 +18,21 @@ try:
 except ImportError:
     pass # Will handle gracefully later if missing
 
+try:
+    from registry import (
+        get_tool_label,
+        get_tool_versions,
+        get_default_version,
+        get_supported_tools,
+    )
+except ImportError:
+    from .registry import (
+        get_tool_label,
+        get_tool_versions,
+        get_default_version,
+        get_supported_tools,
+    )
+
 # ==================== CONFIG ====================
 from paths import (
     get_toolmanager_root,
@@ -31,24 +46,7 @@ PYTHON    = sys.executable
 
 ANALOG_TOOLS  = ["esim", "kicad", "ngspice"]
 DIGITAL_TOOLS = ["esim", "kicad", "ngspice", "ghdl", "verilator", "llvm"]
-
-TOOL_LABELS = {
-    "esim":      "eSim",
-    "kicad":     "KiCad",
-    "ngspice":   "Ngspice",
-    "ghdl":      "GHDL",
-    "verilator": "Verilator",
-    "llvm":      "LLVM",
-}
-
-TOOL_VERSIONS = {
-    "esim":      "2.4",
-    "kicad":     "latest",
-    "ngspice":   "latest",
-    "ghdl":      "latest",
-    "verilator": "latest",
-    "llvm":      "latest",
-}
+VISIBLE_TOOLS = [tool for tool in get_supported_tools() if tool in DIGITAL_TOOLS]
 
 def is_admin():
     try:
@@ -71,7 +69,7 @@ def relaunch_as_admin():
     )
 
 def load_installed_versions():
-    versions = {k: "Not installed" for k in TOOL_LABELS}
+    versions = {k: "Not installed" for k in VISIBLE_TOOLS}
     try:
         if INFO_JSON.exists():
             with open(INFO_JSON) as f:
@@ -105,7 +103,7 @@ class InstallWorker(QThread):
         backend = str(BASE_DIR / "tool_manager_windows.py")
         for tool, version in self.tools:
             self.progress.emit(
-                f"Installing {TOOL_LABELS.get(tool, tool)} {version}..."
+                f"Installing {get_tool_label(tool)} {version}..."
             )
             try:
                 proc = subprocess.Popen(
@@ -224,7 +222,8 @@ class ToolManagerWindow(QMainWindow):
         lbl.setStyleSheet("color: #666; background: transparent;")
         layout.addWidget(lbl)
 
-        for key, label in TOOL_LABELS.items():
+        for key in VISIBLE_TOOLS:
+            label = get_tool_label(key)
             ver = self.installed_versions.get(key, "Not installed")
             if ver != "Not installed":
                 text = (f"<span style='color:#28a745;'>●</span> {label} "
@@ -483,7 +482,7 @@ class ToolManagerWindow(QMainWindow):
         title.setStyleSheet("color: #0056b3; margin-bottom: 5px;")
         layout.addWidget(title)        
 
-        info_text = """
+        info_text = f"""
         <div style='font-family: "Segoe UI", sans-serif; font-size: 10.5pt; color: #333; line-height: 1.5;'>
             <p><b>Key Features:</b><br>
             <span style='color: #555;'>• Install analog or digital simulation packages<br>
@@ -491,9 +490,10 @@ class ToolManagerWindow(QMainWindow):
             • Uninstall packages selectively and Integrated with eSim GUI</span></p>
             
             <p><b>Supported Packages:</b><br>
-            <span style='color: #555;'>• KiCad: 6.0.11, 7.0.11, 8.0.9<br>
-            • Ngspice: 35, 36, 37, 38, 39, 40, 41, 42, 43<br>
-            • GHDL: 3.0.0, 4.0.0, 4.1.0, nightly and Verilator: 4.228, 5.020, 5.026, 5.030</span></p>
+            <span style='color: #555;'>• KiCad: {", ".join(get_tool_versions("kicad"))}<br>
+            • Ngspice: {", ".join(get_tool_versions("ngspice"))}<br>
+            • GHDL: {", ".join(get_tool_versions("ghdl"))}<br>
+            • Verilator: {", ".join(get_tool_versions("verilator"))}</span></p>
         </div>
         """
         
@@ -549,7 +549,7 @@ class ToolManagerWindow(QMainWindow):
         )
         if reply == QMessageBox.StandardButton.Yes:
             self._run_install(
-                [(t, TOOL_VERSIONS[t]) for t in ANALOG_TOOLS],
+                [(t, get_default_version(t)) for t in ANALOG_TOOLS],
                 "Analog Mode"
             )
 
@@ -566,7 +566,7 @@ class ToolManagerWindow(QMainWindow):
         )
         if reply == QMessageBox.StandardButton.Yes:
             self._run_install(
-                [(t, TOOL_VERSIONS[t]) for t in DIGITAL_TOOLS],
+                [(t, get_default_version(t)) for t in DIGITAL_TOOLS],
                 "Digital Mode"
             )
 

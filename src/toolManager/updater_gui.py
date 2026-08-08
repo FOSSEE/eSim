@@ -12,6 +12,11 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
 from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtGui import QFont
 
+try:
+    from registry import get_tool_metadata, get_tool_versions
+except ImportError:
+    from .registry import get_tool_metadata, get_tool_versions
+
 class InstallerThread(QThread):
     progress = pyqtSignal(str, int)
     log_output = pyqtSignal(str)  # NEW: For terminal output
@@ -97,13 +102,11 @@ class PackageUpdaterWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.installed_versions = {}
-        
-        self.available_versions = {
-            'KiCad': ['6.0.11', '7.0.11', '8.0.9'],
-            'Ngspice': ['35', '36', '37', '38', '39', '40', '41', '42', '43'],  # ALL VERSIONS!
-            'GHDL': ['3.0.0', '4.0.0', '4.1.0', 'nightly'],
-            'Verilator': ['4.228', '5.020', '5.026', '5.030']
-        }
+        self.available_versions = {}
+        for tool_id in ('kicad', 'ngspice', 'ghdl', 'verilator'):
+            metadata = get_tool_metadata(tool_id)
+            if metadata:
+                self.available_versions[metadata.label] = get_tool_versions(tool_id)
         self.script_mapping = {
             'KiCad': 'update-kicad-final.sh',
             'Ngspice': 'nghdl/update-ngspice-final.sh',  # Correct path!
