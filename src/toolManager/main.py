@@ -34,10 +34,16 @@ except ImportError:
     )
 
 # ==================== CONFIG ====================
-from paths import (
-    get_toolmanager_root,
-    get_install_state_path,
-)
+try:
+    from paths import (
+        get_toolmanager_root,
+        get_install_state_path,
+    )
+except ImportError:
+    from .paths import (
+        get_toolmanager_root,
+        get_install_state_path,
+    )
 
 BASE_DIR = get_toolmanager_root()
 INFO_JSON = get_install_state_path()
