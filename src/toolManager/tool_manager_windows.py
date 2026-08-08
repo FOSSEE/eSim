@@ -25,7 +25,7 @@ from utils import (
     WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, 
     get_msys2_mingw_bin, get_msys2_mingw_root
 )
-
+MSYS2_PATH = DEFAULT_MSYS2_PATH
 if sys.platform == "win32":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='ignore')
@@ -34,7 +34,7 @@ BASE_DIR = Path(__file__).resolve().parent
 STATE_FILE = BASE_DIR / "information.json"
 BASE_DIR.mkdir(parents=True, exist_ok=True)
 
-MSYS2_PATH = DEFAULT_MSYS2_PATH
+
 
 DOWNLOAD_DIR = BASE_DIR / "Download"
 DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
