@@ -1,0 +1,56 @@
+.title kicad schematic
+
+.include NMOS-180nm.lib
+.include D.lib
+.include PMOS-180nm.lib
+.include NPN.lib
+* u1 net-_q2-pad3_ net-_m5-pad2_ net-_m2-pad2_ net-_m8-pad3_ net-_q1-pad3_ net-_m8-pad1_ net-_m1-pad1_ net-_m7-pad3_ port
+q3 net-_m7-pad3_ net-_c1-pad2_ net-_m8-pad3_ Q2N2222
+c1 net-_c1-pad1_ net-_c1-pad2_ 30p
+r7 net-_c1-pad1_ net-_m7-pad3_ 2k
+m9 net-_m1-pad1_ net-_m7-pad3_ net-_m8-pad1_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+m8 net-_m8-pad1_ net-_m7-pad3_ net-_m8-pad3_ net-_m8-pad3_ CMOSN W=100u L=100u M=1
+m4 net-_m3-pad3_ net-_d4-pad2_ net-_m2-pad1_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+m3 net-_m1-pad1_ net-_d1-pad1_ net-_m3-pad3_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+* u5 net-_u3-padin_ net-_m5-pad2_ zener
+r2 net-_r1-pad1_ net-_m8-pad3_ 5k
+* u2 net-_r1-pad1_ net-_m1-pad1_ zener
+d2 net-_d1-pad2_ net-_d2-pad2_ 1N4148
+d3 net-_d2-pad2_ net-_d3-pad2_ 1N4148
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d4 net-_d3-pad2_ net-_d4-pad2_ 1N4148
+r1 net-_r1-pad1_ net-_d4-pad2_ 40k
+m1 net-_m1-pad1_ net-_d1-pad1_ net-_d1-pad1_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+q2 net-_c1-pad2_ net-_m2-pad3_ net-_q2-pad3_ Q2N2222
+r5 net-_c1-pad2_ net-_m5-pad3_ 1k
+m5 net-_m2-pad1_ net-_m5-pad2_ net-_m5-pad3_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+* u4 net-_u3-padin_ net-_m2-pad1_ zener
+r3 net-_q1-pad1_ net-_m2-pad3_ 1k
+q1 net-_q1-pad1_ net-_m2-pad3_ net-_q1-pad3_ Q2N2222
+m2 net-_m2-pad1_ net-_m2-pad2_ net-_m2-pad3_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+* u3 net-_u3-padin_ net-_m2-pad2_ zener
+r6 net-_m8-pad3_ net-_q2-pad3_ 1k
+r4 net-_m8-pad3_ net-_q1-pad3_ 1k
+m6 net-_m1-pad1_ net-_d1-pad1_ net-_m6-pad3_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+m7 net-_m6-pad3_ net-_d4-pad2_ net-_m7-pad3_ net-_m1-pad1_ CMOSP W=100u L=100u M=1
+a1 net-_u3-padin_ net-_m5-pad2_ u5
+a2 net-_r1-pad1_ net-_m1-pad1_ u2
+a3 net-_u3-padin_ net-_m2-pad1_ u4
+a4 net-_u3-padin_ net-_m2-pad2_ u3
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u5 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u2 zener(v_breakdown=8.3 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u4 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u3 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
