@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<library>
+    <model_name>D</model_name>
+    <ref_model>1N4007</ref_model>
+
+    <param>
+        <Is>76.9p</Is>
+        <Rs>42.0m</Rs>
+        <Bv>1000</Bv>
+        <Ibv>5u</Ibv>
+        <Cjo>26.5p</Cjo>
+        <M>0.333</M>
+        <N>1.45</N>
+        <Tt>4.32u</Tt>
+    </param>
+</library>
