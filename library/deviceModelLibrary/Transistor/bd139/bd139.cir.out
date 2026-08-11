@@ -1,0 +1,25 @@
+.title kicad schematic
+
+.include bd139.lib
+q2 out2 net-_c1-pad1_ gnd bd139
+v1 net-_r1-pad1_ gnd  dc 6
+r3 net-_r1-pad1_ net-_c1-pad1_ 10.5k
+c2 out2 net-_c2-pad2_ 9.9u
+r4 net-_r1-pad1_ out2 1k
+* u2 out2 plot_v1
+* u1 out1 plot_v1
+r1 net-_r1-pad1_ out1 1k
+r2 net-_r1-pad1_ net-_c2-pad2_ 10k
+c1 net-_c1-pad1_ out1 10u
+q1 out1 net-_c2-pad2_ gnd bd139
+.tran 10e-06 500e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out2)
+plot v(out1)
+.endc
+.end

@@ -1,0 +1,13 @@
+.title KiCad schematic
+Q2 out2 Net-_C1-Pad1_ GND eSim_NPN
+v1 Net-_R1-Pad1_ GND DC
+R3 Net-_R1-Pad1_ Net-_C1-Pad1_ 10.5k
+C2 out2 Net-_C2-Pad2_ 9.9u
+R4 Net-_R1-Pad1_ out2 1k
+U2 out2 plot_v1
+U1 out1 plot_v1
+R1 Net-_R1-Pad1_ out1 1k
+R2 Net-_R1-Pad1_ Net-_C2-Pad2_ 10K
+C1 Net-_C1-Pad1_ out1 10u
+Q1 out1 Net-_C2-Pad2_ GND eSim_NPN
+.end
