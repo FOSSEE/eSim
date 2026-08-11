@@ -1,0 +1,31 @@
+.title KiCad schematic
+X2 Net-_U7-Pad5_ Net-_U5-Pad3_ Net-_U1-Pad2_ Net-_U12-Pad1_ 3_and
+U1 unconnected-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ unconnected-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ unconnected-_U1-Pad16_ PORT
+X1 Net-_U20-Pad6_ Net-_U5-Pad3_ Net-_U1-Pad3_ Net-_U12-Pad2_ 3_and
+X4 Net-_U10-Pad5_ Net-_U7-Pad6_ Net-_U5-Pad3_ Net-_U1-Pad15_ Net-_U13-Pad1_ 4_and
+X5 Net-_U23-Pad6_ Net-_U15-Pad2_ Net-_U5-Pad3_ Net-_U1-Pad14_ Net-_U14-Pad1_ 4_and
+U10 Net-_U10-Pad1_ Net-_U1-Pad9_ unconnected-_U10-Pad3_ Net-_U10-Pad4_ Net-_U10-Pad5_ unconnected-_U10-Pad6_ d_tff
+U9 Net-_U15-Pad1_ Net-_U7-Pad5_ Net-_U10-Pad1_ d_and
+U11 Net-_U1-Pad13_ Net-_U1-Pad4_ Net-_U10-Pad4_ d_or
+U8 Net-_U1-Pad13_ Net-_U1-Pad4_ Net-_U7-Pad4_ d_or
+U2 Net-_U1-Pad11_ Net-_U15-Pad1_ d_inverter
+U5 Net-_U3-Pad2_ Net-_U4-Pad2_ Net-_U5-Pad3_ d_and
+U7 Net-_U6-Pad3_ Net-_U1-Pad9_ unconnected-_U7-Pad3_ Net-_U7-Pad4_ Net-_U7-Pad5_ Net-_U7-Pad6_ d_tff
+U6 Net-_U15-Pad1_ Net-_U20-Pad6_ Net-_U6-Pad3_ d_and
+U3 Net-_U1-Pad9_ Net-_U3-Pad2_ d_inverter
+U4 Net-_U1-Pad10_ Net-_U4-Pad2_ d_inverter
+U15 Net-_U15-Pad1_ Net-_U15-Pad2_ Net-_U15-Pad3_ d_and
+X3 Net-_U15-Pad1_ Net-_U10-Pad5_ Net-_U7-Pad5_ Net-_U18-Pad1_ 3_and
+U18 Net-_U18-Pad1_ Net-_U15-Pad3_ Net-_U18-Pad3_ d_or
+U20 Net-_U18-Pad3_ Net-_U1-Pad9_ Net-_U1-Pad4_ Net-_U1-Pad13_ Net-_U15-Pad2_ Net-_U20-Pad6_ d_tff
+U22 Net-_U15-Pad1_ Net-_U15-Pad2_ Net-_U22-Pad3_ d_and
+U23 Net-_U22-Pad3_ Net-_U1-Pad9_ Net-_U1-Pad4_ Net-_U1-Pad13_ Net-_U23-Pad5_ Net-_U23-Pad6_ d_tff
+X6 Net-_U15-Pad1_ Net-_U15-Pad2_ Net-_U23-Pad5_ Net-_U1-Pad7_ 3_and
+U19 Net-_U16-Pad2_ Net-_U17-Pad2_ Net-_U19-Pad3_ d_nor
+U21 Net-_U19-Pad3_ Net-_U1-Pad6_ d_inverter
+U17 Net-_U1-Pad12_ Net-_U17-Pad2_ d_inverter
+U16 Net-_U1-Pad5_ Net-_U16-Pad2_ d_inverter
+U14 Net-_U14-Pad1_ Net-_U13-Pad3_ Net-_U1-Pad5_ d_nor
+U13 Net-_U13-Pad1_ Net-_U12-Pad3_ Net-_U13-Pad3_ d_nor
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U12-Pad3_ d_nor
+.end
