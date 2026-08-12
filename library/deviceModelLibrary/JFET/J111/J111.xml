@@ -1,0 +1,13 @@
+<library>
+    <model_name>NJF</model_name>
+    <ref_model>J111</ref_model>
+    <param>
+        <Beta>2.92m</Beta>
+        <Vto>-4.19</Vto>
+        <Lambda>15.1m</Lambda>
+        <Cgd>10.9p</Cgd>
+        <Cgs>10.9p</Cgs>
+        <Pb>1.68</Pb>
+        <Is>22.1f</Is>
+    </param>
+</library>
