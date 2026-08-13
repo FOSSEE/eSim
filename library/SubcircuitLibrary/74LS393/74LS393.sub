@@ -1,0 +1,36 @@
+.subckt 74LS393 mr_a cp_a q0a q1a q2a q3a q3b q2b q1b q0b cp_b mr_b vhigh
+
+* Internal hi/lo
+Vhi_a vhi_a 0 DC 5
+Vlo_a vlo_a 0 DC 0
+A_hi_a [vhi_a] [hi] adclo
+A_lo_a [vlo_a] [lo] adclo
+.model adclo adc_bridge(in_low=0.8 in_high=2.0)
+
+* Inverters for falling edge trigger
+Ainva cp_a cp_ai uinv
+Ainvb cp_b cp_bi uinv
+.model uinv d_inverter(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+
+* J K CLK SET RESET Q Qbar
+* SET=lo(0), RESET=mr (active HIGH)
+Aff0a hi hi cp_ai lo mr_a q0a q0ab u2
+Aff1a hi hi q0ab  lo mr_a q1a q1ab u3
+Aff2a hi hi q1ab  lo mr_a q2a q2ab u4
+Aff3a hi hi q2ab  lo mr_a q3a q3ab u5
+
+Aff0b hi hi cp_bi lo mr_b q0b q0bb u7
+Aff1b hi hi q0bb  lo mr_b q1b q1bb u8
+Aff2b hi hi q1bb  lo mr_b q2b q2bb u9
+Aff3b hi hi q2bb  lo mr_b q3b q3bb u10
+
+.model u2  d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model u3  d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model u4  d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model u5  d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model u7  d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model u8  d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model u9  d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model u10 d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+
+.ends 74LS393

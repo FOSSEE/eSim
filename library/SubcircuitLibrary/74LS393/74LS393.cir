@@ -1,0 +1,13 @@
+.title KiCad schematic
+U11 Net-_U2-Pad3_ Net-_U1-Pad1_ Net-_U2-Pad6_ Net-_U3-Pad6_ Net-_U4-Pad6_ Net-_U5-Pad6_ Net-_U10-Pad6_ Net-_U9-Pad6_ Net-_U8-Pad6_ Net-_U7-Pad6_ Net-_U6-Pad1_ Net-_U7-Pad3_ PORT
+U9 unconnected-_U9-Pad1_ unconnected-_U9-Pad2_ Net-_U8-Pad6_ unconnected-_U9-Pad4_ Net-_U6-Pad2_ Net-_U9-Pad6_ unconnected-_U9-Pad7_ d_jkff
+U5 unconnected-_U5-Pad1_ unconnected-_U5-Pad2_ Net-_U4-Pad6_ unconnected-_U5-Pad4_ Net-_U1-Pad2_ Net-_U5-Pad6_ unconnected-_U5-Pad7_ d_jkff
+U10 unconnected-_U10-Pad1_ unconnected-_U10-Pad2_ Net-_U9-Pad6_ unconnected-_U10-Pad4_ Net-_U6-Pad2_ Net-_U10-Pad6_ unconnected-_U10-Pad7_ d_jkff
+U4 unconnected-_U4-Pad1_ unconnected-_U4-Pad2_ Net-_U3-Pad6_ unconnected-_U4-Pad4_ Net-_U1-Pad2_ Net-_U4-Pad6_ unconnected-_U4-Pad7_ d_jkff
+U3 unconnected-_U3-Pad1_ unconnected-_U3-Pad2_ Net-_U2-Pad6_ unconnected-_U3-Pad4_ Net-_U1-Pad2_ Net-_U3-Pad6_ unconnected-_U3-Pad7_ d_jkff
+U8 unconnected-_U8-Pad1_ unconnected-_U8-Pad2_ Net-_U7-Pad6_ unconnected-_U8-Pad4_ Net-_U6-Pad2_ Net-_U8-Pad6_ unconnected-_U8-Pad7_ d_jkff
+U6 Net-_U6-Pad1_ Net-_U6-Pad2_ d_inverter
+U7 unconnected-_U7-Pad1_ unconnected-_U7-Pad2_ Net-_U7-Pad3_ unconnected-_U7-Pad4_ Net-_U6-Pad2_ Net-_U7-Pad6_ unconnected-_U7-Pad7_ d_jkff
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ d_inverter
+U2 unconnected-_U2-Pad1_ unconnected-_U2-Pad2_ Net-_U2-Pad3_ unconnected-_U2-Pad4_ Net-_U1-Pad2_ Net-_U2-Pad6_ unconnected-_U2-Pad7_ d_jkff
+.end
