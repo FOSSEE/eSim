@@ -1,0 +1,21 @@
+* 74LS197 - 4-bit binary ripple counter
+.subckt 74LS197 cp0 q3 d2 d0 q0 d1 cp1 q1 d1b d3 q2 mr
+a_inv0 q0 q0_n inv0
+a_inv1 q1 q1_n inv1
+a_inv2 q2 q2_n inv2
+a_vone s_one pullup_one
+a_vzero s_zero pulldown_zero
+a_ff0 s_one s_one cp0  s_zero s_zero q0 q0_out ff0
+a_ff1 s_one s_one cp1  s_zero s_zero q1 q1_out ff1
+a_ff2 s_one s_one q1_n s_zero s_zero q2 q2_out ff2
+a_ff3 s_one s_one q2_n s_zero s_zero q3 q3_out ff3
+.model pullup_one    d_pullup(load=1e-12)
+.model pulldown_zero d_pulldown(load=1e-12)
+.model inv0   d_inverter(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model inv1   d_inverter(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model inv2   d_inverter(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model ff0 d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model ff1 d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model ff2 d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.model ff3 d_jkff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 jk_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+.ends 74LS197
