@@ -1,0 +1,29 @@
+.title KiCad schematic
+U19 Net-_U5-Pad1_ Net-_U4-Pad1_ Net-_U3-Pad1_ Net-_U2-Pad1_ Net-_U1-Pad1_ Net-_U6-Pad2_ Net-_SC1-Pad5_ Net-_SC2-Pad5_ Net-_SC3-Pad5_ Net-_SC4-Pad5_ Net-_SC5-Pad5_ Net-_SC6-Pad5_ Net-_SC7-Pad5_ Net-_SC8-Pad5_ PORT
+SC1 Net-_U17-Pad1_ Net-_U15-Pad1_ Net-_U13-Pad1_ Net-_U6-Pad3_ Net-_SC1-Pad5_ sky130_stdcells__nand4_1
+U14 Net-_U8-Pad3_ Net-_U13-Pad3_ Net-_U13-Pad1_ d_nor
+SC2 Net-_U17-Pad3_ Net-_U15-Pad1_ Net-_U13-Pad1_ Net-_U6-Pad3_ Net-_SC2-Pad5_ sky130_stdcells__nand4_1
+U11 Net-_U5-Pad1_ Net-_U2-Pad2_ Net-_U11-Pad3_ d_and
+U12 Net-_U5-Pad2_ Net-_U2-Pad2_ Net-_U12-Pad3_ d_and
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ d_inverter
+U10 Net-_U4-Pad2_ Net-_U2-Pad2_ Net-_U10-Pad3_ d_and
+U5 Net-_U5-Pad1_ Net-_U5-Pad2_ d_inverter
+U9 Net-_U4-Pad1_ Net-_U2-Pad2_ Net-_U9-Pad3_ d_and
+U8 Net-_U3-Pad2_ Net-_U2-Pad2_ Net-_U8-Pad3_ d_and
+U3 Net-_U3-Pad1_ Net-_U3-Pad2_ d_inverter
+U15 Net-_U15-Pad1_ Net-_U9-Pad3_ Net-_U15-Pad3_ d_nor
+U16 Net-_U10-Pad3_ Net-_U15-Pad3_ Net-_U15-Pad1_ d_nor
+U17 Net-_U17-Pad1_ Net-_U11-Pad3_ Net-_U17-Pad3_ d_nor
+U18 Net-_U12-Pad3_ Net-_U17-Pad3_ Net-_U17-Pad1_ d_nor
+SC7 Net-_U17-Pad1_ Net-_U15-Pad3_ Net-_U13-Pad3_ Net-_U6-Pad3_ Net-_SC7-Pad5_ sky130_stdcells__nand4_1
+SC8 Net-_U17-Pad3_ Net-_U15-Pad3_ Net-_U13-Pad3_ Net-_U6-Pad3_ Net-_SC8-Pad5_ sky130_stdcells__nand4_1
+SC6 Net-_U17-Pad3_ Net-_U15-Pad1_ Net-_U13-Pad3_ Net-_U6-Pad3_ Net-_SC6-Pad5_ sky130_stdcells__nand4_1
+SC5 Net-_U17-Pad1_ Net-_U15-Pad1_ Net-_U13-Pad3_ Net-_U6-Pad3_ Net-_SC5-Pad5_ sky130_stdcells__nand4_1
+SC3 Net-_U17-Pad1_ Net-_U15-Pad3_ Net-_U13-Pad1_ Net-_U6-Pad3_ Net-_SC3-Pad5_ sky130_stdcells__nand4_1
+SC4 Net-_U17-Pad3_ Net-_U15-Pad3_ Net-_U13-Pad1_ Net-_U6-Pad3_ Net-_SC4-Pad5_ sky130_stdcells__nand4_1
+U6 Net-_U1-Pad2_ Net-_U6-Pad2_ Net-_U6-Pad3_ d_and
+U7 Net-_U3-Pad1_ Net-_U2-Pad2_ Net-_U7-Pad3_ d_and
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ d_inverter
+U13 Net-_U13-Pad1_ Net-_U7-Pad3_ Net-_U13-Pad3_ d_nor
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ d_inverter
+.end
