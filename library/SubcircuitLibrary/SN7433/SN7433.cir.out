@@ -1,0 +1,58 @@
+.title kicad schematic
+
+.include NPN.lib
+.include D.lib
+q4 net-_q4-pad1_ net-_q3-pad1_ net-_r4-pad2_ Q2N2222
+q2 net-_q4-pad1_ net-_q1-pad1_ net-_r4-pad2_ Q2N2222
+r3 net-_q4-pad1_ net-_r1-pad1_ 660
+* u1 net-_d1-pad2_ net-_d2-pad2_ net-_q5-pad1_ net-_q6-pad1_ net-_d4-pad2_ net-_d3-pad2_ net-_d5-pad2_ net-_d6-pad2_ net-_q15-pad1_ net-_q16-pad1_ net-_d8-pad2_ net-_d7-pad2_ net-_r1-pad1_ net-_d5-pad1_ port
+r1 net-_r1-pad1_ net-_r1-pad2_ 4k
+r2 net-_r2-pad1_ net-_r1-pad1_ 4k
+q14 net-_q14-pad1_ net-_q12-pad1_ net-_r12-pad2_ Q2N2222
+q12 net-_q12-pad1_ net-_r10-pad1_ net-_d6-pad2_ Q2N2222
+r10 net-_r10-pad1_ net-_r9-pad1_ 4k
+q13 net-_q14-pad1_ net-_q11-pad1_ net-_r12-pad2_ Q2N2222
+q11 net-_q11-pad1_ net-_r9-pad2_ net-_d5-pad2_ Q2N2222
+d5 net-_d5-pad1_ net-_d5-pad2_ 1N4148
+d6 net-_d5-pad1_ net-_d6-pad2_ 1N4148
+r9 net-_r9-pad1_ net-_r9-pad2_ 4k
+q15 net-_q15-pad1_ net-_r12-pad2_ net-_d5-pad1_ Q2N2222
+q5 net-_q5-pad1_ net-_r4-pad2_ net-_d5-pad1_ Q2N2222
+r4 net-_d5-pad1_ net-_r4-pad2_ 250
+r11 net-_q14-pad1_ net-_r9-pad1_ 660
+r12 net-_d5-pad1_ net-_r12-pad2_ 250
+q3 net-_q3-pad1_ net-_r2-pad1_ net-_d2-pad2_ Q2N2222
+q1 net-_q1-pad1_ net-_r1-pad2_ net-_d1-pad2_ Q2N2222
+d2 net-_d5-pad1_ net-_d2-pad2_ 1N4148
+d1 net-_d5-pad1_ net-_d1-pad2_ 1N4148
+q6 net-_q6-pad1_ net-_r8-pad2_ net-_d5-pad1_ Q2N2222
+r15 net-_r9-pad1_ net-_r15-pad2_ 4k
+q19 net-_q18-pad2_ net-_r15-pad2_ net-_d8-pad2_ Q2N2222
+r14 net-_r14-pad1_ net-_r9-pad1_ 4k
+d7 net-_d5-pad1_ net-_d7-pad2_ 1N4148
+d8 net-_d5-pad1_ net-_d8-pad2_ 1N4148
+q18 net-_q17-pad1_ net-_q18-pad2_ net-_r16-pad2_ Q2N2222
+r13 net-_q17-pad1_ net-_r9-pad1_ 660
+q20 net-_q17-pad2_ net-_r14-pad1_ net-_d7-pad2_ Q2N2222
+q17 net-_q17-pad1_ net-_q17-pad2_ net-_r16-pad2_ Q2N2222
+q9 net-_q7-pad2_ net-_r7-pad2_ net-_d4-pad2_ Q2N2222
+q10 net-_q8-pad2_ net-_r6-pad1_ net-_d3-pad2_ Q2N2222
+q7 net-_q8-pad1_ net-_q7-pad2_ net-_r8-pad2_ Q2N2222
+r5 net-_q8-pad1_ net-_r1-pad1_ 660
+r6 net-_r6-pad1_ net-_r1-pad1_ 4k
+r7 net-_r1-pad1_ net-_r7-pad2_ 4k
+q8 net-_q8-pad1_ net-_q8-pad2_ net-_r8-pad2_ Q2N2222
+r8 net-_d5-pad1_ net-_r8-pad2_ 250
+d4 net-_d5-pad1_ net-_d4-pad2_ 1N4148
+d3 net-_d5-pad1_ net-_d3-pad2_ 1N4148
+r16 net-_d5-pad1_ net-_r16-pad2_ 250
+q16 net-_q16-pad1_ net-_r16-pad2_ net-_d5-pad1_ Q2N2222
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end
