@@ -1,0 +1,7 @@
+.subckt SCHOTTKY_NPN 1 2 3
+* 1=collector 2=base 3=emitter
+Q1 1 2 3 QNPN_INT
+D1 2 1 DCLAMP
+.model QNPN_INT NPN(BF=100 IS=1e-14 VAF=100)
+.model DCLAMP D(IS=1e-9 N=1.05 RS=0.5 CJO=1e-11 VJ=0.4 TT=1e-10)
+.ends SCHOTTKY_NPN

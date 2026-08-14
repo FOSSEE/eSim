@@ -1,0 +1,34 @@
+* 8212 behavioral subcircuit
+* Ports: DS1 DS2 DI1 DO1 DI2 DO2 DI3 DO3 DI4 DO4 STB GND DO5 DI5 DO6 DI6 DO7 DI7 DO8 DI8 INT NC
+.subckt 8212 net-_sc2-pad1_ net-_sc4-pad1_ net-_u5-pad1_ net-_u6-pad3_ net-_u7-pad1_ net-_u8-pad3_ net-_u9-pad1_ net-_u10-pad3_ net-_u11-pad1_ net-_u12-pad3_ net-_sc4-pad2_ net-_sc2-pad2_ net-_u14-pad3_ net-_u13-pad1_ net-_u16-pad3_ net-_u15-pad1_ net-_u18-pad3_ net-_u17-pad1_ net-_u20-pad3_ net-_u19-pad1_ net-_sc3-pad3_ net-_u22-pad1_
+
+* Device select: EN = DS1 AND (NOT DS2)
+* net-_sc2-pad1_ = DS1, net-_sc4-pad1_ = DS2
+Ainv_ds2 net-_sc4-pad1_ net-_ds2inv_ uinv_ds2
+Aen [net-_sc2-pad1_ net-_ds2inv_] net-_en_ uand2
+
+* STB = net-_sc4-pad2_
+* Clock to DFFs = EN AND STB
+Aclk [net-_en_ net-_sc4-pad2_] net-_clk_ uand2b
+
+* 8 D flip-flops
+* data input, clk, set(nc), reset(nc), Q, QN
+Adff1 net-_u5-pad1_  net-_clk_ net-_nc1_  net-_nc2_  net-_u6-pad3_  net-_nc3_  udff
+Adff2 net-_u7-pad1_  net-_clk_ net-_nc4_  net-_nc5_  net-_u8-pad3_  net-_nc6_  udff
+Adff3 net-_u9-pad1_  net-_clk_ net-_nc7_  net-_nc8_  net-_u10-pad3_ net-_nc9_  udff
+Adff4 net-_u11-pad1_ net-_clk_ net-_nc10_ net-_nc11_ net-_u12-pad3_ net-_nc12_ udff
+Adff5 net-_u13-pad1_ net-_clk_ net-_nc13_ net-_nc14_ net-_u14-pad3_ net-_nc15_ udff
+Adff6 net-_u15-pad1_ net-_clk_ net-_nc16_ net-_nc17_ net-_u16-pad3_ net-_nc18_ udff
+Adff7 net-_u17-pad1_ net-_clk_ net-_nc19_ net-_nc20_ net-_u18-pad3_ net-_nc21_ udff
+Adff8 net-_u19-pad1_ net-_clk_ net-_nc22_ net-_nc23_ net-_u20-pad3_ net-_nc24_ udff
+
+* INT = NAND(EN, STB) inverted = fires on strobe when enabled
+Anand [net-_en_ net-_sc4-pad2_] net-_sc3-pad3_ unand
+
+.model uinv_ds2 d_inverter(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model uand2    d_and(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model uand2b   d_and(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model unand    d_nand(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model udff     d_dff(clk_delay=1e-9 set_delay=1e-9 reset_delay=1e-9 ic=0 data_load=1e-12 clk_load=1e-12 set_load=1e-12 reset_load=1e-12 rise_delay=1e-9 fall_delay=1e-9)
+
+.ends 8212

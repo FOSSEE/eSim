@@ -1,0 +1,31 @@
+.subckt 74hc158 S E_bar 1I0 1I1 2I0 2I1 3I0 3I1 4I0 4I1 1Y_bar 2Y_bar 3Y_bar 4Y_bar
+U14 Net-_U14-Pad1_ 1I0 Net-_U14-Pad3_ d_and
+U15 Net-_U15-Pad1_ 1I1 Net-_U15-Pad3_ d_and
+U16 Net-_U14-Pad1_ 2I0 Net-_U16-Pad3_ d_and
+U21 Net-_U15-Pad1_ 4I1 Net-_U21-Pad3_ d_and
+U20 Net-_U14-Pad1_ 4I0 Net-_U20-Pad3_ d_and
+U24 Net-_U18-Pad3_ Net-_U19-Pad3_ Net-_U24-Pad3_ d_nor
+U25 Net-_U20-Pad3_ Net-_U21-Pad3_ Net-_U25-Pad3_ d_nor
+U23 Net-_U16-Pad3_ Net-_U17-Pad3_ Net-_U23-Pad3_ d_nor
+U27 Net-_U23-Pad3_ 2Y_bar d_buffer
+U26 Net-_U22-Pad3_ 1Y_bar d_buffer
+U22 Net-_U14-Pad3_ Net-_U15-Pad3_ Net-_U22-Pad3_ d_nor
+U18 Net-_U14-Pad1_ 3I0 Net-_U18-Pad3_ d_and
+U19 Net-_U15-Pad1_ 3I1 Net-_U19-Pad3_ d_and
+U17 Net-_U15-Pad1_ 2I1 Net-_U17-Pad3_ d_and
+U29 Net-_U25-Pad3_ 4Y_bar d_buffer
+U28 Net-_U24-Pad3_ 3Y_bar d_buffer
+U13 4I1 Net-_U13-Pad2_ d_buffer
+U11 3I1 Net-_U11-Pad2_ d_buffer
+U12 4I0 Net-_U12-Pad2_ d_buffer
+U9 2I1 Net-_U17-Pad2_ d_buffer
+U10 3I0 Net-_U10-Pad2_ d_buffer
+U3 Net-_U2-Pad2_ Net-_U3-Pad2_ Net-_U14-Pad1_ d_nor
+U4 Net-_U1-Pad2_ Net-_U3-Pad2_ Net-_U15-Pad1_ d_nor
+U2 Net-_U1-Pad2_ Net-_U2-Pad2_ d_inverter
+U1 S Net-_U1-Pad2_ d_inverter
+U6 1I0 Net-_U14-Pad2_ d_buffer
+U5 E_bar Net-_U3-Pad2_ d_buffer
+U7 1I1 Net-_U15-Pad2_ d_buffer
+U8 2I0 Net-_U16-Pad2_ d_buffer
+.ends 74hc158

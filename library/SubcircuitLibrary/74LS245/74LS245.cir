@@ -1,0 +1,24 @@
+.title KiCad schematic
+U2 Net-_U2-Pad1_ Net-_U1-Pad2_ Net-_U2-Pad3_ d_and
+U3 Net-_U3-Pad1_ Net-_U3-Pad2_ Net-_U3-Pad3_ d_and
+U5 Net-_U1-Pad1_ Net-_U3-Pad1_ d_inverter
+U22 Net-_U2-Pad1_ Net-_U6-Pad1_ Net-_U8-Pad1_ Net-_U10-Pad1_ Net-_U12-Pad1_ Net-_U14-Pad1_ Net-_U16-Pad1_ Net-_U18-Pad1_ Net-_U20-Pad1_ Net-_U20-Pad3_ Net-_U18-Pad3_ Net-_U16-Pad3_ Net-_U14-Pad3_ Net-_U12-Pad3_ Net-_U10-Pad3_ Net-_U8-Pad3_ Net-_U6-Pad3_ Net-_U1-Pad1_ PORT
+U4 Net-_U2-Pad1_ Net-_U3-Pad2_ d_inverter
+U7 Net-_U6-Pad3_ Net-_U3-Pad3_ Net-_U6-Pad1_ d_tristate
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ d_inverter
+U6 Net-_U6-Pad1_ Net-_U2-Pad3_ Net-_U6-Pad3_ d_tristate
+U8 Net-_U8-Pad1_ Net-_U2-Pad3_ Net-_U8-Pad3_ d_tristate
+U20 Net-_U20-Pad1_ Net-_U2-Pad3_ Net-_U20-Pad3_ d_tristate
+U18 Net-_U18-Pad1_ Net-_U2-Pad3_ Net-_U18-Pad3_ d_tristate
+U21 Net-_U20-Pad3_ Net-_U3-Pad3_ Net-_U20-Pad1_ d_tristate
+U16 Net-_U16-Pad1_ Net-_U2-Pad3_ Net-_U16-Pad3_ d_tristate
+U17 Net-_U16-Pad3_ Net-_U3-Pad3_ Net-_U16-Pad1_ d_tristate
+U19 Net-_U18-Pad3_ Net-_U3-Pad3_ Net-_U18-Pad1_ d_tristate
+U13 Net-_U12-Pad3_ Net-_U3-Pad3_ Net-_U12-Pad1_ d_tristate
+U15 Net-_U14-Pad3_ Net-_U3-Pad3_ Net-_U14-Pad1_ d_tristate
+U11 Net-_U10-Pad3_ Net-_U3-Pad3_ Net-_U10-Pad1_ d_tristate
+U14 Net-_U14-Pad1_ Net-_U2-Pad3_ Net-_U14-Pad3_ d_tristate
+U9 Net-_U8-Pad3_ Net-_U3-Pad3_ Net-_U8-Pad1_ d_tristate
+U12 Net-_U12-Pad1_ Net-_U2-Pad3_ Net-_U12-Pad3_ d_tristate
+U10 Net-_U10-Pad1_ Net-_U2-Pad3_ Net-_U10-Pad3_ d_tristate
+.end

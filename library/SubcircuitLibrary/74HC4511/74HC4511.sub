@@ -1,0 +1,37 @@
+* 74HC4511 BCD to 7-segment decoder (behavioral)
+* Port order: B C LT BI LE D A | e d c b a g f
+.subckt 74HC4511 pb pc plt pbi ple pd pa pe pd2 pc2 pb2 pa2 pg pf
+
+* Convert to logic levels
+Ela nla 0 VALUE {ternary_fcn(V(pa)>2.5,1,0)}
+Elb nlb 0 VALUE {ternary_fcn(V(pb)>2.5,1,0)}
+Elc nlc 0 VALUE {ternary_fcn(V(pc)>2.5,1,0)}
+Eld nld 0 VALUE {ternary_fcn(V(pd)>2.5,1,0)}
+Elbi nlbi 0 VALUE {ternary_fcn(V(pbi)>2.5,1,0)}
+Ellt nllt 0 VALUE {ternary_fcn(V(plt)>2.5,1,0)}
+
+* BCD value
+Ebcd nbcd 0 VALUE {V(nla)+2*V(nlb)+4*V(nlc)+8*V(nld)}
+
+* Segment a: ON for 0,2,3,5,6,7,8,9 OFF for 1,4
+Esa pa2 0 VALUE {ternary_fcn(V(nlbi)<0.5,0,ternary_fcn(V(nllt)<0.5,5,ternary_fcn(V(nbcd)==1||V(nbcd)==4,0,5)))}
+
+* Segment b: OFF for 5,6
+Esb pb2 0 VALUE {ternary_fcn(V(nlbi)<0.5,0,ternary_fcn(V(nllt)<0.5,5,ternary_fcn(V(nbcd)==5||V(nbcd)==6,0,5)))}
+
+* Segment c: OFF for 2
+Esc pc2 0 VALUE {ternary_fcn(V(nlbi)<0.5,0,ternary_fcn(V(nllt)<0.5,5,ternary_fcn(V(nbcd)==2,0,5)))}
+
+* Segment d: OFF for 1,4,7,9
+Esd pd2 0 VALUE {ternary_fcn(V(nlbi)<0.5,0,ternary_fcn(V(nllt)<0.5,5,ternary_fcn(V(nbcd)==1||V(nbcd)==4||V(nbcd)==7||V(nbcd)==9,0,5)))}
+
+* Segment e: OFF for 1,3,4,5,7,9
+Ese pe 0 VALUE {ternary_fcn(V(nlbi)<0.5,0,ternary_fcn(V(nllt)<0.5,5,ternary_fcn(V(nbcd)==1||V(nbcd)==3||V(nbcd)==4||V(nbcd)==5||V(nbcd)==7||V(nbcd)==9,0,5)))}
+
+* Segment f: OFF for 1,2,3,7
+Esf pf 0 VALUE {ternary_fcn(V(nlbi)<0.5,0,ternary_fcn(V(nllt)<0.5,5,ternary_fcn(V(nbcd)==1||V(nbcd)==2||V(nbcd)==3||V(nbcd)==7,0,5)))}
+
+* Segment g: OFF for 0,1,7
+Esg pg 0 VALUE {ternary_fcn(V(nlbi)<0.5,0,ternary_fcn(V(nllt)<0.5,5,ternary_fcn(V(nbcd)==0||V(nbcd)==1||V(nbcd)==7,0,5)))}
+
+.ends 74HC4511

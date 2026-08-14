@@ -1,0 +1,47 @@
+.title KiCad schematic
+SC19 Net-_U5-Pad6_ Net-_U7-Pad6_ Net-_U11-Pad2_ sky130_stdcells__nand2_1
+SC18 Net-_U3-Pad5_ Net-_U9-Pad6_ Net-_U7-Pad6_ Net-_U5-Pad6_ Net-_SC1-Pad1_ sky130_stdcells__nand4_1
+SC4 Net-_SC4-Pad1_ Net-_SC3-Pad2_ Net-_SC1-Pad3_ Net-_U12-Pad3_ Net-_SC4-Pad5_ sky130_stdcells__nand4_1
+SC3 Net-_U12-Pad3_ Net-_SC3-Pad2_ Net-_U3-Pad6_ Net-_SC3-Pad4_ sky130_stdcells__nand3_1
+SC20 Net-_U7-Pad6_ Net-_U5-Pad6_ Net-_U3-Pad5_ Net-_SC4-Pad1_ sky130_stdcells__nand3_1
+U11 Net-_U9-Pad6_ Net-_U11-Pad2_ Net-_U11-Pad3_ d_nor
+U12 Net-_U10-Pad2_ Net-_U11-Pad3_ Net-_U12-Pad3_ d_nor
+U21 Net-_U4-Pad1_ Net-_U6-Pad1_ Net-_U13-Pad1_ Net-_U10-Pad1_ Net-_U1-Pad1_ Net-_U8-Pad1_ Net-_U2-Pad1_ Net-_U16-Pad2_ Net-_U17-Pad2_ Net-_U18-Pad2_ Net-_U19-Pad2_ Net-_U20-Pad2_ Net-_U14-Pad2_ Net-_U15-Pad2_ PORT
+U7 Net-_U6-Pad2_ Net-_U1-Pad2_ unconnected-_U7-Pad3_ unconnected-_U7-Pad4_ Net-_U7-Pad5_ Net-_U7-Pad6_ d_dff
+U6 Net-_U6-Pad1_ Net-_U6-Pad2_ d_buffer
+U5 Net-_U4-Pad2_ Net-_U1-Pad2_ unconnected-_U5-Pad3_ unconnected-_U5-Pad4_ Net-_U5-Pad5_ Net-_U5-Pad6_ d_dff
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ d_buffer
+SC21 Net-_U7-Pad6_ Net-_U5-Pad5_ Net-_U3-Pad6_ Net-_SC5-Pad1_ sky130_stdcells__nand3_1
+SC6 Net-_SC6-Pad1_ Net-_SC6-Pad2_ Net-_U12-Pad3_ Net-_SC6-Pad4_ sky130_stdcells__nand3_1
+SC7 Net-_SC3-Pad2_ Net-_SC6-Pad1_ Net-_U12-Pad3_ Net-_SC1-Pad1_ Net-_SC7-Pad5_ sky130_stdcells__nand4_1
+SC23 Net-_U7-Pad5_ Net-_U3-Pad5_ Net-_U5-Pad6_ Net-_SC6-Pad2_ sky130_stdcells__nand3_1
+SC22 Net-_U7-Pad5_ Net-_U5-Pad6_ Net-_U3-Pad6_ Net-_SC3-Pad2_ sky130_stdcells__nand3_1
+SC24 Net-_U7-Pad5_ Net-_U5-Pad5_ Net-_U3-Pad6_ Net-_SC6-Pad1_ sky130_stdcells__nand3_1
+U8 Net-_U8-Pad1_ Net-_U8-Pad2_ d_buffer
+U9 Net-_U8-Pad2_ Net-_U1-Pad2_ unconnected-_U9-Pad3_ unconnected-_U9-Pad4_ unconnected-_U9-Pad5_ Net-_U9-Pad6_ d_dff
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter
+SC5 Net-_SC5-Pad1_ Net-_U12-Pad3_ Net-_SC5-Pad3_ sky130_stdcells__nand2_1
+SC13 Net-_SC6-Pad4_ Net-_U13-Pad2_ Net-_U19-Pad1_ sky130_stdcells__nand2_1
+SC11 Net-_SC4-Pad5_ Net-_U13-Pad2_ Net-_U17-Pad1_ sky130_stdcells__nand2_1
+U15 Net-_U15-Pad1_ Net-_U15-Pad2_ d_buffer
+U16 Net-_U16-Pad1_ Net-_U16-Pad2_ d_buffer
+SC10 Net-_SC3-Pad4_ Net-_U13-Pad2_ Net-_U16-Pad1_ sky130_stdcells__nand2_1
+SC12 Net-_SC5-Pad3_ Net-_U13-Pad2_ Net-_U18-Pad1_ sky130_stdcells__nand2_1
+U18 Net-_U18-Pad1_ Net-_U18-Pad2_ d_buffer
+U17 Net-_U17-Pad1_ Net-_U17-Pad2_ d_buffer
+SC14 Net-_SC7-Pad5_ Net-_U13-Pad2_ Net-_U20-Pad1_ sky130_stdcells__nand2_1
+U19 Net-_U19-Pad1_ Net-_U19-Pad2_ d_buffer
+U20 Net-_U20-Pad1_ Net-_U20-Pad2_ d_buffer
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ d_buffer
+U3 Net-_U2-Pad2_ Net-_U1-Pad2_ unconnected-_U3-Pad3_ unconnected-_U3-Pad4_ Net-_U3-Pad5_ Net-_U3-Pad6_ d_dff
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ d_inverter
+SC16 Net-_U3-Pad5_ Net-_U5-Pad5_ Net-_U7-Pad5_ Net-_SC1-Pad3_ sky130_stdcells__nand3_1
+SC17 Net-_U5-Pad5_ Net-_U7-Pad6_ Net-_SC2-Pad4_ sky130_stdcells__nand2_1
+SC15 Net-_U3-Pad6_ Net-_U5-Pad6_ Net-_U7-Pad6_ Net-_U9-Pad6_ Net-_SC1-Pad4_ sky130_stdcells__nand4_1
+SC2 Net-_SC1-Pad1_ Net-_U12-Pad3_ Net-_SC1-Pad3_ Net-_SC2-Pad4_ Net-_SC2-Pad5_ sky130_stdcells__nand4_1
+SC9 Net-_SC2-Pad5_ Net-_U13-Pad2_ Net-_U15-Pad1_ sky130_stdcells__nand2_1
+SC1 Net-_SC1-Pad1_ Net-_U12-Pad3_ Net-_SC1-Pad3_ Net-_SC1-Pad4_ Net-_SC1-Pad5_ sky130_stdcells__nand4_1
+U13 Net-_U13-Pad1_ Net-_U13-Pad2_ d_buffer
+U14 Net-_U14-Pad1_ Net-_U14-Pad2_ d_buffer
+SC8 Net-_SC1-Pad5_ Net-_U13-Pad2_ Net-_U14-Pad1_ sky130_stdcells__nand2_1
+.end

@@ -1,0 +1,59 @@
+* Subcircuit 74S137
+.subckt 74S137 net-_u5-pad1_ net-_u4-pad1_ net-_u3-pad1_ net-_u2-pad1_ net-_u1-pad1_ net-_u6-pad2_ net-_sc1-pad5_ net-_sc2-pad5_ net-_sc3-pad5_ net-_sc4-pad5_ net-_sc5-pad5_ net-_sc6-pad5_ net-_sc7-pad5_ net-_sc8-pad5_
+
+* inverters
+a4  net-_u4-pad1_ net-_u4-pad2_ u4
+a6  net-_u5-pad1_ net-_u5-pad2_ u5
+a9  net-_u3-pad1_ net-_u3-pad2_ u3
+a16 net-_u2-pad1_ net-_u2-pad2_ u2
+a18 net-_u1-pad1_ net-_u1-pad2_ u1
+
+* and gates
+a2  [net-_u5-pad1_ net-_u2-pad2_ ] net-_u11-pad3_ u11
+a3  [net-_u5-pad2_ net-_u2-pad2_ ] net-_u12-pad3_ u12
+a5  [net-_u4-pad2_ net-_u2-pad2_ ] net-_u10-pad3_ u10
+a7  [net-_u4-pad1_ net-_u2-pad2_ ] net-_u9-pad3_  u9
+a8  [net-_u3-pad2_ net-_u2-pad2_ ] net-_u8-pad3_  u8
+a14 [net-_u1-pad2_ net-_u6-pad2_ ] net-_u6-pad3_  u6
+a15 [net-_u3-pad1_ net-_u2-pad2_ ] net-_u7-pad3_  u7
+
+* nor gates (latch/feedback)
+a1  [net-_u8-pad3_  net-_u13-pad3_ ] net-_u13-pad1_ u14
+a10 [net-_u15-pad1_ net-_u9-pad3_  ] net-_u15-pad3_ u15
+a11 [net-_u10-pad3_ net-_u15-pad3_ ] net-_u15-pad1_ u16
+a12 [net-_u17-pad1_ net-_u11-pad3_ ] net-_u17-pad3_ u17
+a13 [net-_u12-pad3_ net-_u17-pad3_ ] net-_u17-pad1_ u18
+a17 [net-_u13-pad1_ net-_u7-pad3_  ] net-_u13-pad3_ u13
+
+* nand4 output gates (replacing sky130)
+asc1 [net-_u17-pad1_ net-_u15-pad1_ net-_u13-pad1_ net-_u6-pad3_] net-_sc1-pad5_ usc
+asc2 [net-_u17-pad3_ net-_u15-pad1_ net-_u13-pad1_ net-_u6-pad3_] net-_sc2-pad5_ usc
+asc3 [net-_u17-pad1_ net-_u15-pad3_ net-_u13-pad1_ net-_u6-pad3_] net-_sc3-pad5_ usc
+asc4 [net-_u17-pad3_ net-_u15-pad3_ net-_u13-pad1_ net-_u6-pad3_] net-_sc4-pad5_ usc
+asc5 [net-_u17-pad1_ net-_u15-pad1_ net-_u13-pad3_ net-_u6-pad3_] net-_sc5-pad5_ usc
+asc6 [net-_u17-pad3_ net-_u15-pad1_ net-_u13-pad3_ net-_u6-pad3_] net-_sc6-pad5_ usc
+asc7 [net-_u17-pad1_ net-_u15-pad3_ net-_u13-pad3_ net-_u6-pad3_] net-_sc7-pad5_ usc
+asc8 [net-_u17-pad3_ net-_u15-pad3_ net-_u13-pad3_ net-_u6-pad3_] net-_sc8-pad5_ usc
+
+* models
+.model usc  d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12)
+.model u14  d_nor(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u11  d_and(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u12  d_and(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u4   d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12)
+.model u10  d_and(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u5   d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12)
+.model u9   d_and(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u8   d_and(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u3   d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12)
+.model u15  d_nor(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u16  d_nor(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u17  d_nor(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u18  d_nor(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u6   d_and(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u7   d_and(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u2   d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12)
+.model u13  d_nor(rise_delay=1.0e-9  fall_delay=1.0e-9 input_load=1.0e-12)
+.model u1   d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12)
+
+.ends 74S137
