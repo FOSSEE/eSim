@@ -22,8 +22,9 @@
 
 # Function to detect Ubuntu version and full version string
 get_ubuntu_version() {
-    VERSION_ID=$(grep "^VERSION_ID" /etc/os-release | cut -d '"' -f 2)
-    FULL_VERSION=$(lsb_release -d | grep -oP '\d+\.\d+\.\d+')
+    source /etc/os-release
+    VERSION_ID="$VERSION_ID"
+FULL_VERSION="$VERSION_ID"
     echo "Detected Ubuntu Version: $FULL_VERSION"
 }
 
@@ -67,6 +68,7 @@ run_version_script() {
     echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
     echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
    
+fi
 }
 
 

@@ -111,6 +111,7 @@ function installKicad
     # Detect Ubuntu version
     ubuntu_version=$(lsb_release -rs)
 
+
     # Define KiCad PPAs based on Ubuntu version
     if [[ "$ubuntu_version" == "24.04" || "$ubuntu_version" == "25.04" ]]; then
         echo "Ubuntu $ubuntu_version detected."
@@ -133,8 +134,7 @@ function installKicad
                 fi
             else
                 echo "KiCad 8.0 is already installed."
-                exit 0
-            fi
+                return 0
         fi
 
     else
@@ -151,9 +151,10 @@ function installKicad
     fi
 
     # Install KiCad packages
-    sudo apt-get install -y --no-install-recommends kicad=8.0.8+dfsg-1 kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
 
     echo "KiCad installation completed successfully!"
+   fi
 }
 
 
@@ -166,6 +167,7 @@ function installDependency
     # Update apt repository
     echo "Updating apt index files..................."
     sudo apt-get update
+
     
     set -e      # Re-enable exit on error
     trap error_exit ERR
