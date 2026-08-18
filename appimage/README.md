@@ -139,10 +139,15 @@ If OMEdit fails to launch, it's usually a missing Qt5 library. The builder autom
 
 To manually check: run `ldd eSim.AppDir/usr/bin/OMEdit.bin | grep "not found"` inside the build directory.
 
-### Python Import Errors
-If you see `ModuleNotFoundError` for PyQt5 or other Python packages:
-- On **Arch**: Ensure `python-pyqt5` is installed (`sudo pacman -S python-pyqt5`)
-- On **Fedora**: Ensure `python3-PyQt5` is installed (`sudo dnf install python3-PyQt5`)
+### Qt / Wayland Display Issues
+The AppImage automatically detects Wayland and X11 sessions and handles setting `QT_QPA_PLATFORM` and prioritizing bundled PyQt5 libraries. However, if you experience display initialization errors, you can force a platform by prepending the environment variable:
+```bash
+# Force X11 compatibility mode
+QT_QPA_PLATFORM=xcb ./eSim-2.5.AppImage
+
+# Force Wayland native mode
+QT_QPA_PLATFORM=wayland ./eSim-2.5.AppImage
+```
 
 ### Build Failures
 Common causes:
@@ -150,24 +155,31 @@ Common causes:
 - **Missing disk space** (at least 5 GB required)
 - **Unsupported architecture** (only x86_64 is currently supported)
 
+For details on past issues faced and how they were resolved, see:
+- [appimage_issues.md](file:///home/ashu/Downloads/eSim_packagemanager/appimage/appimage_issues.md) — Documentation of error logs and root causes.
+- [appimage_fix_implementation.md](file:///home/ashu/Downloads/eSim_packagemanager/appimage/appimage_fix_implementation.md) — Technical details of the python bundling and library isolation fixes.
+
 ---
 
 ## 📁 Project Structure
 
 ```
 eSim_Universal_packagemanager_linux/
-├── build-appimage.sh         # Main build script (~7800 lines)
-├── README.md                 # This file
-└── build-eSim-AppImage/      # Created during build
-    ├── downloads/            # Downloaded tools & dependencies
-    ├── eSim.AppDir/          # AppImage filesystem
-    │   ├── AppRun            # Entry point launcher
+├── build-appimage.sh            # Main build script (~7800 lines)
+├── README.md                    # This file
+├── appimage_issues.md           # Documentation of errors and issues faced
+├── appimage_fix_implementation.md # Technical details of the fixes implemented
+└── build-eSim-AppImage/         # Created during build
+    ├── downloads/               # Downloaded tools & dependencies
+    ├── eSim.AppDir/             # AppImage filesystem
+    │   ├── AppRun               # Entry point launcher (Wayland/X11 & Python wrapper)
     │   ├── usr/
-    │   │   ├── bin/          # eSim, KiCad, OMEdit, NgSpice binaries
-    │   │   ├── lib/          # Bundled shared libraries
-    │   │   └── share/        # eSim source, resources, models
+    │   │   ├── bin/             # eSim, KiCad, OMEdit, NgSpice binaries
+    │   │   ├── lib/             # Bundled shared libraries
+    │   │   ├── python/          # Standalone bundled CPython 3.12 environment
+    │   │   └── share/           # eSim source, resources, models
     │   └── ...
-    └── eSim-2.5.AppImage     # Final portable AppImage
+    └── eSim-2.5.AppImage        # Final portable AppImage
 ```
 
 ---

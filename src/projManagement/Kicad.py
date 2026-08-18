@@ -95,7 +95,7 @@ class Kicad:
             # (install: flatpak install flathub org.kicad.KiCad)
             if os.environ.get('ESIM_FLATPAK') == '1':
                 self.cmd = (
-                    "flatpak run --command=eeschema org.kicad.KiCad " +
+                    "flatpak-spawn --host flatpak run --command=eeschema org.kicad.KiCad " +
                     schematic_file
                 )
             else:

@@ -10,7 +10,6 @@ BLUE='\033[0;34m'; CYAN='\033[0;36m'; MAGENTA='\033[0;35m'
 BOLD='\033[1m'; NC='\033[0m'
 
 print_header() {
-    clear
     echo -e "\n${BOLD}${CYAN}╔════════════════════════════════════════════════════════════╗${NC}"
     echo -e "${BOLD}${CYAN}║${NC}  ${BOLD}eSim AppImage ${NC}    ${BOLD}${CYAN}║${NC}"
     echo -e "${BOLD}${CYAN}╚════════════════════════════════════════════════════════════╝${NC}\n"
@@ -290,7 +289,12 @@ install_deps_apt() {
     export TZ=UTC
     
     $SUDO apt-get update -qq 2>&1 | tail -3 || true
-    
+
+    local pixbuf_pkg="libgdk-pixbuf2.0-0"
+    if ! apt-cache policy "$pixbuf_pkg" 2>/dev/null | grep -q "Candidate: [^(]"; then
+        pixbuf_pkg="libgdk-pixbuf-2.0-0"
+    fi
+
     # Core dependencies - use DEBIAN_FRONTEND to prevent prompts
     DEBIAN_FRONTEND=noninteractive $SUDO apt-get install -y -qq \
         ngspice verilator xterm \
@@ -298,7 +302,7 @@ install_deps_apt() {
         python3-numpy python3-scipy python3-lxml python3-matplotlib \
         python3-pip python3-venv git build-essential \
         libqt5gui5 libqt5widgets5 libqt5svg5 libqt5webenginewidgets5 \
-        librsvg2-common libgdk-pixbuf2.0-0 gdk-pixbuf2.0-bin \
+        librsvg2-common "$pixbuf_pkg" gdk-pixbuf2.0-bin \
         adwaita-icon-theme hicolor-icon-theme file patchelf \
         libfuse2 libglu1-mesa mesa-utils \
         libboost-all-dev libglew2.2 libglm-dev \
@@ -668,6 +672,13 @@ download_tools() {
         wget -q --show-progress \
             https://static.fossee.in/esim/installation-files/eSim-${ESIM_VERSION}.zip \
             -O eSim.zip 2>&1 | tail -2
+    fi
+    
+    if [ ! -f python-3.12.tar.gz ]; then
+        progress "Downloading portable Python 3.12..."
+        wget -q --show-progress \
+            "https://github.com/astral-sh/python-build-standalone/releases/download/20240107/cpython-3.12.1+20240107-x86_64-unknown-linux-gnu-install_only.tar.gz" \
+            -O python-3.12.tar.gz 2>&1 | tail -2
     fi
     
     # ═══ DOWNLOAD KICAD 6 APPIMAGE ═══
@@ -2165,70 +2176,56 @@ NGHDLWRAPPER
 prepare_esim() {
     step 5 "Preparing eSim"
     cd "$DL"
-    progress "Extracting..."
+    progress "Extracting eSim..."
     unzip -qo eSim.zip
     
-    # Detect Python version dynamically
-    PYVER=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
-    PYVER_MAJOR=$(python3 -c 'import sys; print(sys.version_info.major)')
-    progress "Using Python $PYVER for virtual environment"
+    # ═══ EXTRACT PORTABLE PYTHON 3.12 ═══
+    progress "Extracting portable Python 3.12..."
+    rm -rf "$BUILD/python" 2>/dev/null || true
+    tar -xzf "$DL/python-3.12.tar.gz" -C "$BUILD"
     
-    # Create virtual environment
-    python3 -m venv "$BUILD/venv" || {
-        # Try alternative venv creation for some distros
-        progress "Trying alternative venv creation..."
-        python3 -m virtualenv "$BUILD/venv" 2>/dev/null || \
-        virtualenv -p python3 "$BUILD/venv" 2>/dev/null || \
-        die "Failed to create Python virtual environment"
-    }
-    source "$BUILD/venv/bin/activate"
+    # Check if extraction was successful
+    if [ ! -d "$BUILD/python" ] || [ ! -x "$BUILD/python/bin/python3" ]; then
+        die "Failed to extract portable Python 3.12"
+    fi
+    
+    PYVER="3.12"
     
     # Upgrade pip and install dependencies
-    pip install -q --upgrade pip setuptools wheel 2>&1 | tail -2
+    progress "Upgrading pip/setuptools/wheel in bundled Python..."
+    "$BUILD/python/bin/python3" -m pip install -q --upgrade pip setuptools wheel 2>&1 | tail -2
     
     # Install Python dependencies - these will be bundled in AppImage
-    # Using --no-cache-dir to ensure clean install
-    progress "Installing Python dependencies..."
-    pip install -q --no-cache-dir numpy scipy matplotlib lxml watchdog 2>&1 | tail -2
-    
-    # makerchip-app and sandpiper-saas are optional (for Makerchip integration)
-    pip install -q --no-cache-dir makerchip-app sandpiper-saas 2>&1 | tail -2 || \
-        warn "makerchip-app/sandpiper-saas installation failed (optional)"
-    
+    progress "Installing eSim Python dependencies..."
+    "$BUILD/python/bin/python3" -m pip install -q --no-cache-dir \
+        numpy scipy matplotlib lxml watchdog PyQt5 PyQt5-sip PyQtWebEngine \
+        makerchip-app sandpiper-saas 2>&1 | tail -2
+        
     # Clone and install hdlparse
     if [ ! -d hdlparse ]; then
         git clone --quiet https://github.com/kevinpt/hdlparse.git
     fi
     
     # Find the correct site-packages directory
-    SITE_PACKAGES=$(python3 -c "import site; print(site.getsitepackages()[0])" 2>/dev/null || \
-                   echo "$BUILD/venv/lib/python${PYVER}/site-packages")
+    SITE_PACKAGES="$BUILD/python/lib/python3.12/site-packages"
     
-    cp -r hdlparse/hdlparse "$SITE_PACKAGES/" 2>/dev/null || \
-    cp -r hdlparse/hdlparse "$BUILD/venv/lib/python${PYVER}/site-packages/"
+    cp -r hdlparse/hdlparse "$SITE_PACKAGES/" 2>/dev/null || true
     
     # Fix hdlparse for Python 3 compatibility
     MINILEXER="$SITE_PACKAGES/hdlparse/minilexer.py"
-    [ ! -f "$MINILEXER" ] && MINILEXER="$BUILD/venv/lib/python${PYVER}/site-packages/hdlparse/minilexer.py"
-    
     if [ -f "$MINILEXER" ]; then
-        # Fix Python 2 to Python 3 syntax
         sed -i 's/except \([A-Za-z_][A-Za-z0-9_]*\), \([A-Za-z_][A-Za-z0-9_]*\):/except (\1, \2):/' "$MINILEXER"
         sed -i 's/\.iteritems()/.items()/g; s/\.iterkeys()/.keys()/g; s/\.itervalues()/.values()/g' "$MINILEXER"
     fi
     
     # Create minilexer compatibility module
-    mkdir -p "$SITE_PACKAGES/minilexer" 2>/dev/null || \
-    mkdir -p "$BUILD/venv/lib/python${PYVER}/site-packages/minilexer"
+    mkdir -p "$SITE_PACKAGES/minilexer" 2>/dev/null
     
     MINILEXER_INIT="$SITE_PACKAGES/minilexer/__init__.py"
-    [ ! -d "$(dirname "$MINILEXER_INIT")" ] && MINILEXER_INIT="$BUILD/venv/lib/python${PYVER}/site-packages/minilexer/__init__.py"
-    
     echo 'from hdlparse.minilexer import MiniLexer
 __all__ = ["MiniLexer"]' > "$MINILEXER_INIT"
     
-    deactivate
-    ok "eSim prepared with Python $PYVER"
+    ok "eSim prepared with portable Python $PYVER"
 }
 
 bundle_gtk_resources() {
@@ -2690,7 +2687,7 @@ install_esim() {
 
     cd "$DL"
     
-    PYVER=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")')
+    PYVER="3.12"
     mkdir -p "$APPDIR/usr/share/eSim" "$APPDIR/usr/bin" "$APPDIR/usr/lib/python${PYVER}/site-packages"
     
     cp -r eSim-${ESIM_VERSION}/* "$APPDIR/usr/share/eSim/"
@@ -6049,63 +6046,9 @@ PYCODE
         ok "eSim icons installed at multiple sizes"
     }
     
-    cp -r "$BUILD/venv/lib/python${PYVER}/site-packages/"* "$APPDIR/usr/lib/python${PYVER}/site-packages/"
-    
-    # ═══ REMOVE C-EXTENSION PACKAGES ═══
-    # These packages contain compiled .so files that are Python-version-specific.
-    # They WILL NOT work on systems with different Python versions (e.g. 3.11 vs 3.12).
-    # Instead, we install them via pip at runtime to ~/.esim/python-packages/
-    # This ensures the correct version is used for the host's Python interpreter.
-    progress "Removing Python-version-specific packages (will be installed at runtime)..."
-    
-    # Packages with C extensions that must match Python version
-    # NOTE: PIL is the actual package directory for Pillow
-    C_EXT_PACKAGES="numpy scipy matplotlib lxml contourpy kiwisolver pillow PIL fontTools"
-    
-    for pkg in $C_EXT_PACKAGES; do
-        # Remove from primary Python version
-        rm -rf "$APPDIR/usr/lib/python${PYVER}/site-packages/${pkg}" \
-               "$APPDIR/usr/lib/python${PYVER}/site-packages/${pkg}-"*.dist-info \
-               "$APPDIR/usr/lib/python${PYVER}/site-packages/${pkg,,}" \
-               "$APPDIR/usr/lib/python${PYVER}/site-packages/${pkg,,}-"*.dist-info \
-               2>/dev/null || true
-        # Also remove from ALL Python version directories
-        for pyv in 3.8 3.9 3.10 3.11 3.12 3.13; do
-            rm -rf "$APPDIR/usr/lib/python${pyv}/site-packages/${pkg}" \
-                   "$APPDIR/usr/lib/python${pyv}/site-packages/${pkg}-"*.dist-info \
-                   "$APPDIR/usr/lib/python${pyv}/site-packages/${pkg,,}" \
-                   "$APPDIR/usr/lib/python${pyv}/site-packages/${pkg,,}-"*.dist-info \
-                   2>/dev/null || true
-        done
-    done
-    
-    # Also remove the compiled .so files from any remaining packages
-    find "$APPDIR/usr/lib/python${PYVER}/site-packages" -name "*.cpython-*.so" -delete 2>/dev/null || true
-    
-    ok "Removed C-extension packages (will be installed via pip at first run)"
-    
-    # ═══ MULTI-DISTRO PYTHON: Bundle pure-Python packages for other versions ═══
-    # Compiled .so extensions are ABI-specific and won't work across Python versions.
-    # Copy ONLY pure-Python packages (no .so files) to a fallback directory for
-    # distros with different Python versions (e.g. Ubuntu 22.04 has 3.10, 24.04 has 3.12)
-    for alt_py in 3.8 3.9 3.10 3.11 3.12 3.13; do
-        [ "$alt_py" = "$PYVER" ] && continue
-        alt_dir="$APPDIR/usr/lib/python${alt_py}/site-packages"
-        mkdir -p "$alt_dir"
-        # Copy only pure-Python packages (dirs without .so files)
-        for pkg_dir in "$APPDIR/usr/lib/python${PYVER}/site-packages/"*/; do
-            pkg_name=$(basename "$pkg_dir")
-            # Skip dist-info, __pycache__, and packages with compiled extensions
-            case "$pkg_name" in *.dist-info|*.egg-info|__pycache__) continue ;; esac
-            if ! find "$pkg_dir" -name '*.so' -print -quit 2>/dev/null | grep -q .; then
-                cp -r "$pkg_dir" "$alt_dir/" 2>/dev/null || true
-            fi
-        done
-        # Copy standalone .py files (argparse.py, etc)
-        cp "$APPDIR/usr/lib/python${PYVER}/site-packages/"*.py "$alt_dir/" 2>/dev/null || true
-        cp "$APPDIR/usr/lib/python${PYVER}/site-packages/"*.pth "$alt_dir/" 2>/dev/null || true
-    done
-    ok "Pure-Python packages replicated for multi-distro support"
+    progress "Bundling portable Python 3.12..."
+    cp -r "$BUILD/python" "$APPDIR/usr/"
+    ok "Portable Python 3.12 bundled successfully"
     mkdir -p "$APPDIR/usr/share/eSim/library/ngspicetoModelica"
     # Copy actual Mapping.json content (contains Sources, Devices, Components mappings)
     if [ -f "$APPDIR/usr/share/eSim/library/ngspicetoModelica/Mapping.json" ]; then
@@ -6926,101 +6869,9 @@ _setup_compat_libs
 # we install them at first run to ~/.esim/python-packages/
 # Pure-Python packages (hdlparse, minilexer) are bundled in the AppImage.
 
-_ESIM_PYDIR="$HOME/.esim/python-packages"
-
 _ensure_python_packages() {
-    # Check if critical packages are available (either system or our installed)
-    if python3 -c "import numpy, matplotlib, lxml" 2>/dev/null; then
-        # Already installed (system or ~/.esim), just add our dir to path
-        export PYTHONPATH="${_ESIM_PYDIR}:${PYTHONPATH}"
-        return 0
-    fi
-    
-    # Need to install packages
-    echo "[eSim] Installing Python dependencies for $(python3 --version 2>&1)..."
-    echo "[eSim] This only happens once. Please wait..."
-    
-    mkdir -p "$_ESIM_PYDIR"
-    
-    # On Fedora, install matplotlib with Qt5 support from system first
-    if command -v dnf >/dev/null 2>&1; then
-        echo "[eSim] Installing system packages for Fedora..."
-        dnf install -y python3-matplotlib-qt5 python3-pyqt5 2>&1 | tail -1 || true
-    fi
-    
-    # Install required packages to user directory
-    # These are the packages with C extensions that must match Python version
-    local _pip_cmd="python3 -m pip install --target $_ESIM_PYDIR --upgrade --quiet"
-    
-    # Core scientific packages (do NOT include PyQt5 or matplotlib here on systems
-    # where system packages provide them with proper Qt5 support)
-    if command -v dnf >/dev/null 2>&1; then
-        # Fedora: skip matplotlib, use system python3-matplotlib-qt5 instead
-        $_pip_cmd numpy scipy lxml watchdog pillow pyqt5-sip 2>&1 | grep -v "already satisfied" | tail -3
-    else
-        # Other distros: try to install matplotlib via pip
-        $_pip_cmd numpy scipy matplotlib lxml watchdog pillow pyqt5-sip 2>&1 | grep -v "already satisfied" | tail -3
-    fi
-    
-    # Try pip-installing PyQt5 only if system doesn't have it
-    # (PyPI wheels only exist up to ~Python 3.12)
-    if ! python3 -c "import PyQt5" 2>/dev/null; then
-        # Try pip first (works on older Python versions)
-        if ! $_pip_cmd PyQt5 2>/dev/null; then
-            # pip failed — try installing system package automatically
-            echo "[eSim] PyQt5 not available via pip, trying system package..."
-            if command -v dnf >/dev/null 2>&1; then
-                dnf install -y python3-qt5 python3-qt5-base python3-matplotlib-qt5 2>&1 | tail -2 || true
-            elif command -v apt-get >/dev/null 2>&1; then
-                apt-get install -y -qq python3-pyqt5 python3-matplotlib 2>&1 | tail -2 || true
-            elif command -v pacman >/dev/null 2>&1; then
-                pacman -S --noconfirm python-pyqt5 python-matplotlib 2>&1 | tail -2 || true
-            elif command -v zypper >/dev/null 2>&1; then
-                zypper --non-interactive install python3-qt5 python3-matplotlib-qt5 2>&1 | tail -2 || true
-            fi
-            # Final check
-            if ! python3 -c "import PyQt5" 2>/dev/null; then
-                echo "[eSim] Warning: PyQt5 not found. Install system package:"
-                echo "[eSim]   Debian/Ubuntu: sudo apt install python3-pyqt5 python3-matplotlib"
-                echo "[eSim]   Fedora:        sudo dnf install python3-qt5 python3-matplotlib-qt5"
-                echo "[eSim]   Arch:          sudo pacman -S python-pyqt5"
-            fi
-        fi
-    fi
-    
-    # Check installation success
-    if ! python3 -c "import sys; sys.path.insert(0, '$_ESIM_PYDIR'); import numpy" 2>/dev/null; then
-        echo "[eSim] Warning: Some Python packages failed to install."
-        echo "[eSim] Try: pip install --user numpy scipy matplotlib lxml watchdog"
-    else
-        echo "[eSim] ✓ Python packages installed successfully"
-    fi
-    
-    # Verify matplotlib has Qt5 backend support
-    if ! python3 -c "from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg" 2>/dev/null; then
-        echo "[eSim] Note: matplotlib Qt5 backend not available. Installing system packages..."
-        if command -v dnf >/dev/null 2>&1; then
-            # Fedora: must use system package, not pip
-            dnf install -y python3-matplotlib-qt5 2>&1 | tail -1 || true
-            # Verify again
-            if ! python3 -c "from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg" 2>/dev/null; then
-                echo "[eSim] ✓ Matplotlib Qt5 backend installed from system"
-            fi
-        elif command -v apt-get >/dev/null 2>&1; then
-            apt-get install -y -qq python3-matplotlib 2>&1 | tail -1 || true
-        elif command -v pacman >/dev/null 2>&1; then
-            pacman -S --noconfirm python-matplotlib 2>&1 | tail -1 || true
-        fi
-        
-        # Final verification
-        if ! python3 -c "from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg" 2>/dev/null; then
-            echo "[eSim] ⚠ Warning: matplotlib Qt5 backend still not available"
-            echo "[eSim] Try: sudo dnf install python3-matplotlib-qt5 (Fedora)"
-            echo "[eSim] Or:   sudo apt install python3-matplotlib (Debian/Ubuntu)"
-        fi
-    fi
-    
-    export PYTHONPATH="${_ESIM_PYDIR}:${PYTHONPATH}"
+    # All packages are pre-bundled in the AppImage (using portable Python 3.12)
+    return 0
 }
 
 _ensure_python_packages
@@ -7476,7 +7327,7 @@ detect_lib_paths() {
 SYS_LIB_PATHS=$(detect_lib_paths)
 
 # Include ~/.local/bin for pipx-installed tools like makerchip
-export PATH="${HERE}/usr/bin:${HOME}/.local/bin:${PATH}"
+export PATH="${HERE}/usr/python/bin:${HERE}/usr/bin:${HOME}/.local/bin:${PATH}"
 
 # ═══ CHECK AND SETUP MAKERCHIP ═══
 # Makerchip IDE is an external tool that must be installed via pipx
@@ -7527,35 +7378,18 @@ else
     export LIBRARY_PATH="${SYS_LIB_PATHS}${LIBRARY_PATH}"
 fi
 
-# PYTHONPATH with dynamic Python version detection
-# Priority: 1. Runtime-installed packages (correct Python version)
-#           2. eSim source code
-#           3. Bundled pure-Python packages (hdlparse, etc.)
-#           4. System site-packages (for PyQt5, etc. installed by distro package manager)
-BUNDLED_SITE_PACKAGES=""
-for pyver in "$PYTHON_VERSION" 3.14 3.13 3.12 3.11 3.10 3.9 3.8; do
-    if [ -d "${HERE}/usr/lib/python${pyver}/site-packages" ]; then
-        BUNDLED_SITE_PACKAGES="${HERE}/usr/lib/python${pyver}/site-packages"
-        break
-    fi
-done
+# Bundled Python Configuration
+export PYTHONHOME="${HERE}/usr/python"
+export PYTHONPATH="${HERE}/usr/share/eSim/src"
 
-# Detect system Python site-packages (needed for distro-installed PyQt5, etc.)
-# Fedora/RHEL use /usr/lib64/pythonX.Y, Debian/Ubuntu use /usr/lib/python3/dist-packages
-SYSTEM_SITE_PACKAGES=""
-PYTHON_VERSION_DETECTED=$(python3 -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' 2>/dev/null || echo "")
-if [ -n "$PYTHON_VERSION_DETECTED" ]; then
-    for sp in "/usr/lib64/python${PYTHON_VERSION_DETECTED}/site-packages" \
-              "/usr/lib/python${PYTHON_VERSION_DETECTED}/site-packages" \
-              "/usr/lib/python3/dist-packages" \
-              "/usr/lib/python${PYTHON_VERSION_DETECTED}/dist-packages"; do
-        if [ -d "$sp" ]; then
-            SYSTEM_SITE_PACKAGES="${SYSTEM_SITE_PACKAGES:+${SYSTEM_SITE_PACKAGES}:}${sp}"
-        fi
-    done
+# ═══ PREPEND PyQt5 Qt5 LIBS TO LD_LIBRARY_PATH ═══
+# The bundled PyQt5 ships its own Qt5 libraries. These MUST appear before any
+# system Qt5 libs in LD_LIBRARY_PATH to prevent "Cannot mix incompatible Qt
+# library" version conflicts (e.g. 5.15.19 bundled vs 5.15.18 system).
+_PYQT5_QT_LIB="${HERE}/usr/python/lib/python3.12/site-packages/PyQt5/Qt5/lib"
+if [ -d "${_PYQT5_QT_LIB}" ]; then
+    export LD_LIBRARY_PATH="${_PYQT5_QT_LIB}:${LD_LIBRARY_PATH}"
 fi
-
-export PYTHONPATH="${_ESIM_PYDIR}:${HERE}/usr/share/eSim/src:${BUNDLED_SITE_PACKAGES}${SYSTEM_SITE_PACKAGES:+:${SYSTEM_SITE_PACKAGES}}"
 
 # Generate loaders.cache at runtime - only for loaders that exist
 LOADER_DIR="${HERE}/lib/x86_64-linux-gnu/gdk-pixbuf-2.0/2.10.0/loaders"
@@ -7588,6 +7422,32 @@ export GTK_THEME=Adwaita
 export GTK_MODULES=""
 export GTK3_MODULES=""
 export GTK_PATH="${HERE}/usr/lib/gtk-3.0"
+# ═══ QT PLATFORM AUTO-DETECTION ═══
+# Auto-detect display server and set the correct Qt platform plugin.
+# On Wayland sessions, Qt5 defaults to 'xcb' which requires X11/XCB libraries
+# that may not be available in the AppImage container. Setting the correct
+# platform plugin prevents the "Could not load the Qt platform plugin" crash.
+if [ -z "${QT_QPA_PLATFORM}" ]; then
+    if [ -n "${WAYLAND_DISPLAY}" ] && [ "${XDG_SESSION_TYPE}" = "wayland" ]; then
+        export QT_QPA_PLATFORM=wayland
+    elif [ -n "${DISPLAY}" ]; then
+        export QT_QPA_PLATFORM=xcb
+    else
+        # No display server detected; try xcb as last resort
+        export QT_QPA_PLATFORM=xcb
+    fi
+fi
+
+# ═══ QT PLUGIN PATH ═══
+# Point Qt to the bundled PyQt5 plugins so that the platform plugin (wayland
+# or xcb) is always found from within the AppImage, regardless of what the
+# host system has installed in its Qt directories.
+PYQT5_QT_PLUGINS="${HERE}/usr/python/lib/python3.12/site-packages/PyQt5/Qt5/plugins"
+if [ -d "${PYQT5_QT_PLUGINS}" ]; then
+    export QT_PLUGIN_PATH="${PYQT5_QT_PLUGINS}:${HERE}/usr/lib/qt5/plugins:${QT_PLUGIN_PATH}"
+else
+    export QT_PLUGIN_PATH="${HERE}/usr/lib/qt5/plugins:${QT_PLUGIN_PATH}"
+fi
 export QT_QPA_PLATFORMTHEME=gtk3
 
 # ═══ NGSPICE AND NGHDL ENVIRONMENT VARIABLES ═══

@@ -18,13 +18,14 @@ flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.f
 From the eSim project root:
 
 ```bash
-flatpak-builder build flatpak/org.fossee.eSim.yml --install --user
+flatpak-builder build flatpak/org.fossee.eSim.yml --install --user --force-clean
 ```
+*(The `--force-clean` flag is recommended to ensure a fresh build and correct offline download of dependencies).*
 
 Or from the flatpak directory:
 
 ```bash
-flatpak-builder build org.fossee.eSim.yml --install --user
+flatpak-builder build org.fossee.eSim.yml --install --user --force-clean
 ```
 
 ## Running
@@ -35,7 +36,7 @@ flatpak run org.fossee.eSim
 
 ## KiCad Integration
 
-For schematic editing, install KiCad from Flathub (eSim will automatically use it when running as Flatpak):
+For schematic editing, install KiCad from Flathub (eSim will automatically use `flatpak-spawn` to launch it from your host system when running as Flatpak):
 
 ```bash
 flatpak install flathub org.kicad.KiCad
@@ -47,8 +48,8 @@ The Flatpak build focuses on core eSim functionality (schematic design with KiCa
 
 | Feature | Status |
 |---------|--------|
-| NGHDL | Not included – use Ubuntu installer for Verilog/Modelica workflows |
-| Makerchip | Not included |
+| NGHDL | Not included – `hdlparse` dependency is incompatible with Python 3.12. Use Ubuntu installer for Verilog/Modelica workflows |
+| Makerchip | Not included – Gracefully degrades via try/except for missing hdlparse dependency |
 | SKY130 PDK | Not bundled – use Ubuntu installer for mixed-signal with SKY130 |
 | xterm / gaw | Not included – external waveform viewer may need xterm on host |
 | NGHDL KiCad symbol creation | Limited – sandbox restricts writing to KiCad symbol directories |
