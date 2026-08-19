@@ -89,3 +89,12 @@ The following sequence of screenshots documents the step-by-step diagnostic and 
 | **Figure 9** | ![NumPy Missing](images/Screenshot%202026-08-20%20023035.png) | **Issue 2 Secondary Dependency:** Sub-system execution revealing missing `numpy` requirement. |
 | **Figure 10** | ![NumPy Installed](images/Screenshot%202026-08-20%20023145.png) | **Issue 2 Final Verification:** Successful installation of `numpy-2.5.2`. |
 
+
+---
+
+## 📸 Visual Verification & Evidence (Screenshots)
+
+The following sequence of screenshots documents the step-by-step diagnostic and resolution process for Task 4 issues:
+
+| Figure | Evidence Screenshot | Diagnostic & Resolution Context |
+| :---: | :--- | :--- |
