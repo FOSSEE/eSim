@@ -56,3 +56,40 @@ No errors were raised, confirming the fix works.
 - File affected: scripts/setup-esim.sh
 - Severity: High - blocks eSim library setup when installed from source
 - Status: Fixed and verified
+
+---
+
+# Issue 2 - install-eSim.sh Referenced in Documentation Does Not Exist in Repository
+
+## Problem
+The INSTALL file instructs Ubuntu users to run:
+chmod +x install-eSim.sh
+./install-eSim.sh --install
+
+However, this file does not exist anywhere in the cloned GitHub repository.
+
+## Verification
+Ran the following command from the repository root:
+find . -iname "install-eSim.sh"
+
+This returned no output, confirming the file is genuinely absent from the
+source repository.
+
+## Root Cause (Suspected)
+install-eSim.sh appears to only be bundled inside the downloadable release
+archive (eSim-2.5.zip from esim.fossee.in), not in the GitHub source
+repository itself. Anyone who clones the repository directly from GitHub
+(instead of downloading the release zip) and follows the INSTALL file will
+immediately hit a "No such file or directory" error, since the actual
+installer script in this repository is scripts/setup-esim.sh, not
+install-eSim.sh.
+
+## Status
+Reported, not fixed. This is a documentation-code mismatch rather than a
+script bug. A proper fix would require either:
+1. Adding install-eSim.sh to the repository root, or
+2. Updating the INSTALL file to reference scripts/setup-esim.sh instead
+
+This was not fixed as it requires a decision from the maintainers on which
+installation path (Flatpak, zip release, or direct source) should be the
+documented standard for GitHub-based installs.
