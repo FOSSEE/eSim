@@ -93,3 +93,7 @@ script bug. A proper fix would require either:
 This was not fixed as it requires a decision from the maintainers on which
 installation path (Flatpak, zip release, or direct source) should be the
 documented standard for GitHub-based installs.
+
+
+### Issue 3: Invalid Snap Path in Launcher Script (launcher-esim.sh)- Status: FIXED- Affected File: scripts/launcher-esim.sh- Symptom: Executing launcher-esim.sh fails with missing setup-esim.sh and frontEnd directory errors.- Root Cause: Script relied on empty $SNAP variable in source installs.</code><br/>
+<code>- **Fix:** Commented out setup-esim call and updated path to cd "$(dirname "$(pwd)")/src/frontEnd".### Issue 4: Python Dependency Chain for eSim GUI Launch- Status: FIXED- Affected Files: Front-End GUI Launchers (Application.py, DockArea.py, Maker.py)- Symptom: eSim GUI fails to launch on Ubuntu 25.04+ with multiple ModuleNotFoundError exceptions.- Root Cause & Fixes:  1. PyQt6: Missing GUI library. Fixed via pip3 install PyQt6 --break-system-packages  2. numpy & matplotlib: Missing computing/plotting packages. Fixed via pip3 install numpy matplotlib --break-system-packages  3. hdlparse (Critical Finding): Original PyPI package (v1.0.1) failed with "use_2to3 is invalid" error due to modern setuptools (v58+). Fixed by installing maintained fork pyHDLParser (v1.0.7) via git tarball.  4. watchdog: Missing file watcher library. Fixed via pip3 install watchdog --break-system-packages- Verification: Verified eSim GUI launching and workspace setup dialog appearing without crashes.

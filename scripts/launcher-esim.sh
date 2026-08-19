@@ -7,7 +7,7 @@ export QT_LOGGING_RULES="qt5.*=false"  # Suppress Qt debug output (optional, rem
 # export QT_FILE_DIALOG_NON_NATIVE: "1"  # Force non-native dialogs
 # export QT_QPA_MENUBAR_NO_NATIVE: "1"  # Disable native menu bar
 # export QT_SYSTEM_TRAY_DISABLED: "1"  # Disable system tray integration
-$SNAP/usr/bin/setup-esim.sh
-cd $SNAP/eSim/src/frontEnd
+#$SNAP/usr/bin/setup-esim.sh
+cd "$(dirname "$(pwd)")/src/frontEnd"
 # Run the Python application
 exec python3 ./Application.py "$@"
