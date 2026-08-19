@@ -3,7 +3,7 @@ config_dir_esim="$HOME/.esim"
 config_dir_nghdl="$HOME/.nghdl"
 
 config_file="config.ini"
-eSim_HOME="$SNAP/eSim"
+eSim_HOME="$(dirname "$(pwd)")"
 NGHDL_HOME="$SNAP/nghdl-simulator"
 
 # Setup KiCad 6.0 eSim libraries
@@ -46,17 +46,16 @@ if [ ! -d $config_dir_nghdl/.setup_done ]; then
 
 fi
 
-if [ ! -f "$FLAG" ]; then
-    echo "Setting up eSim libraries for the first time..."
+#if [ ! -f "$FLAG" ]; then
+ #   echo "Setting up eSim libraries for the first time..."
 
 #    install -d "$TARGET/symbols"
     install -d "$TARGET/template"
 
 #    cp -r "$SNAP/3rdparty/symbols/." "$TARGET/symbols/"
-    cp "$SNAP/3rdparty/template/sym-lib-table" "$TARGET/template/"
-
+cp "$eSim_HOME/library/kicadLibrary/template/sym-lib-table" "$TARGET/template/"
     touch "$FLAG"
     echo "eSim libraries setup completed."
-else
-    echo "eSim libraries already set up."
-fi
+#else
+ #   echo "eSim libraries already set up."
+#fi
