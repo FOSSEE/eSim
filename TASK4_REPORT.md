@@ -25,7 +25,7 @@ To install eSim-2.5 from source on a modern Ubuntu system (Ubuntu 26.04 LTS), id
 3. Every failure was reproduced, the exact error message was recorded, and the responsible script/line or missing package was traced using `find`, direct execution, and Python tracebacks.
 4. Each root cause was diagnosed **before** attempting a fix (not just patched blindly).
 5. Fixes were implemented, re-tested to confirm resolution, and committed/pushed individually to keep history traceable.
-6. Progress was verified at each step via terminal output (screenshots retained in `images/` for reference).
+6. Progress was verified at each step and captured with terminal screenshots (see `images/` folder), culminating in a full, successful launch of the eSim GUI.
 
 ---
 
@@ -37,9 +37,11 @@ To install eSim-2.5 from source on a modern Ubuntu system (Ubuntu 26.04 LTS), id
 | 2 | `install-eSim.sh` referenced in `INSTALL` does not exist in source repo | No (blocks first-time users following docs) | ⚠️ Reported | Low–Medium |
 | 3 | `launcher-esim.sh` — broken `$SNAP`-based path, GUI launcher fails | **Yes — directly blocks GUI launch** | ✅ Fixed | Medium |
 | 4 | Python dependency chain missing (PyQt6 → numpy → matplotlib → hdlparse) | **Yes — directly blocks GUI launch** | ✅ Fixed (4/4 resolved) | **High** |
+| 5 | `.esim` config directory not auto-created, workspace selection crashes | **Yes — directly blocks GUI launch** | ✅ Fixed | Medium |
 
-**Total issues reported: 4 (across 7 distinct root causes, since Issue 4 bundles 4 sub-dependencies)**
-**Total issues fixed: 3 of 4 top-level issues (Issue 2 intentionally left to maintainers — see below)**
+**Total issues reported: 5 (across 8 distinct root causes, since Issue 4 bundles 4 sub-dependencies)**
+**Total issues fixed: 4 of 5 top-level issues (Issue 2 intentionally left to maintainers — see below)**
+**Final result: eSim-2.5 GUI launches successfully end-to-end — see final proof screenshot at the bottom of this report.**
 
 ---
 
@@ -81,7 +83,10 @@ cp "$eSim_HOME/library/kicadLibrary/template/sym-lib-table" "$TARGET/template/"
 **Symptom:**
 `INSTALL` instructs Ubuntu users to run `install-eSim.sh`. This file does not exist anywhere in the source repository.
 
-**Verification:**
+**Proof — searching the entire repo for the file `INSTALL` tells users to run, and finding nothing:**
+
+![install-eSim.sh not found in repository](images/issue2-install-esim-sh-missing.png)
+
 ```
 find . -iname "install-eSim.sh"
 ```
@@ -100,7 +105,14 @@ returns no output — confirmed absent from the cloned source tree.
 
 **Severity: High — this directly prevents the main eSim GUI from starting.**
 
-**Symptom:**
+**The original, unmodified script relied entirely on Snap-only variables:**
+
+![Original launcher-esim.sh using $SNAP paths](images/issue3-original-launcher-script.png)
+
+**Symptom when run as-is:**
+
+![launcher-esim.sh fails with path errors](images/issue3-launcher-error.png)
+
 ```
 launcher-esim.sh: line 10: /usr/bin/setup-esim.sh: No such file or directory
 launcher-esim.sh: line 11: cd: /eSim/src/frontEnd: No such file or directory
@@ -108,10 +120,14 @@ python3: can't open file '.../Application.py': No such file or directory
 ```
 
 **Root cause:**
-Identical `$SNAP` pattern as Issue 1, but here it breaks the **actual GUI entry point**. `cd "$SNAP/eSim/src/frontEnd"` collapses to `cd /eSim/src/frontEnd` on a source install, which does not exist. The real entry point is at `<repo-root>/src/frontEnd/Application.py`.
+Identical `$SNAP` pattern as Issue 1, but here it breaks the **actual GUI entry point**. `cd "$SNAP/eSim/src/frontEnd"` collapses to `cd /eSim/src/frontEnd` on a source install, which does not exist. The real entry point had to be located manually:
+
+![Locating the real Application.py path with find](images/issue3-finding-real-path.png)
+
+The actual entry point is at `<repo-root>/src/frontEnd/Application.py`.
 
 **Fix:**
-Rather than bypassing the launcher script, it was edited to resolve the path correctly at runtime, so the official launcher itself works for source installs:
+Rather than bypassing the launcher script, it was edited directly so the official launcher itself works for source installs:
 
 - Commented out the Snap-only line `$SNAP/usr/bin/setup-esim.sh` (not applicable outside Snap).
 - Changed `cd $SNAP/eSim/src/frontEnd` to:
@@ -119,7 +135,9 @@ Rather than bypassing the launcher script, it was edited to resolve the path cor
   cd "$(dirname "$(pwd)")/src/frontEnd"
   ```
 
-**Verification:** After the fix, `bash launcher-esim.sh` correctly reaches and executes `Application.py` (confirmed by a new, unrelated error appearing — i.e., the path-resolution problem was fully eliminated, and execution moved on to the next real issue, documented as Issue 4).
+**Verification:** After the fix, `bash launcher-esim.sh` correctly reaches and executes `Application.py`. Confirmation of this is that the *exact* `$SNAP`-path errors above disappear completely, and execution proceeds to a new, unrelated error (missing Python module `PyQt6`) — proving the path-resolution problem was fully eliminated:
+
+![Path fix confirmed — script now reaches Application.py and hits the next real issue](images/issue3-fixed-pyqt6-error-appears.png)
 
 **Status:** ✅ Fixed, committed, and pushed to `scripts/launcher-esim.sh`.
 
@@ -129,37 +147,55 @@ Rather than bypassing the launcher script, it was edited to resolve the path cor
 
 **Severity: Highest — per the evaluation criteria, this is a dependency chain that interrupts installation of the *main GUI* of eSim, not a smaller sub-block like NgVeri.**
 
-Once Issue 3 was resolved, `Application.py` began executing but failed repeatedly as it hit successive missing Python modules. Each was diagnosed and resolved in sequence:
+Once Issue 3 was resolved, `Application.py` began executing but failed repeatedly as it hit successive missing Python modules. Each was diagnosed and resolved in sequence.
 
 ### 4.1 — `PyQt6` missing
+
 ```
 ModuleNotFoundError: No module named 'PyQt6'
 ```
-Root cause: Qt6 Python bindings (the GUI toolkit eSim's frontend is built on) and `pip3` itself were not present on a clean system.
-Fix:
+
+Root cause: Qt6 Python bindings (the GUI toolkit eSim's frontend is built on) and `pip3` itself were not present on a clean system. Initial attempts to install `pip3`/`python-pip` via `apt` failed with "no installation candidate":
+
+![pip/pip3 not available via apt directly](images/issue4-1-pip-troubleshooting.png)
+
+Fix — installed `python3-pip` correctly, then installed PyQt6 with the required flag for externally-managed environments:
 ```bash
 sudo apt install python3-pip -y
 pip3 install PyQt6 --break-system-packages
 ```
 
+![PyQt6 installing](images/issue4-1-pyqt6-installing.png)
+
+![PyQt6 successfully installed](images/issue4-1-pyqt6-installed.png)
+
 ### 4.2 — `numpy` missing
+
 ```
 ModuleNotFoundError: No module named 'numpy'
 ```
+
+![numpy missing error](images/issue4-2-numpy-missing.png)
+
 Fix:
 ```bash
 pip3 install numpy --break-system-packages
 ```
 
+![numpy successfully installed](images/issue4-2-numpy-installed.png)
+
 ### 4.3 — `matplotlib` missing
+
 ```
 ModuleNotFoundError: No module named 'matplotlib'
 ```
 (raised from `src/ngspiceSimulation/plot_window.py`, which imports `matplotlib.pyplot`)
+
 Fix:
 ```bash
 pip3 install matplotlib --break-system-packages
 ```
+Successfully installed: `contourpy-1.3.3 cycler-0.12.1 fonttools-4.63.0 kiwisolver-1.5.0 matplotlib-3.11.1 python-dateutil-2.9.0.post0 six-1.17.0`
 
 ### 4.4 — `hdlparse` missing *and* incompatible with modern Python (deepest root cause found)
 
@@ -194,17 +230,50 @@ Result: `Successfully installed hdlparse-1.0.7` (fork version; the abandoned PyP
 
 ---
 
+## Issue 5 — `.esim` config directory not created, workspace selection crashes
+
+**Severity: High — this also directly blocks the GUI on first launch.**
+
+**Symptom:**
+After all Python dependencies were resolved and the launcher reached the workspace-selection dialog, clicking "OK" produced:
+```
+FileNotFoundError: [Errno 2] No such file or directory: '/home/lutfullah/.esim/workspace.txt'
+```
+
+**Root cause:**
+`src/frontEnd/Workspace.py` (`createWorkspace`, line 133) attempts to write directly to `~/.esim/workspace.txt` without first checking whether the parent directory `~/.esim` exists. On a first-time install, this directory has never been created, so the `open(..., 'w')` call fails outright.
+
+**Fix:**
+```bash
+mkdir -p ~/.esim
+```
+This should ideally be handled inside `Workspace.py` itself (e.g. `os.makedirs(os.path.dirname(path), exist_ok=True)` before opening the file) rather than requiring the user to pre-create it — noting this as a recommended code-level fix for maintainers.
+
+**Verification:** After creating the directory, `bash launcher-esim.sh` → workspace dialog → "OK" completed without error, and the full eSim-2.5 GUI loaded successfully.
+
+**Status:** ✅ Fixed (workaround applied; root cause and a suggested proper code fix documented above for maintainers).
+
+---
+
+## Final Result — eSim GUI Successfully Launched
+
+After resolving Issues 1, 3, 4, and 5, running `bash launcher-esim.sh` from a completely clean Ubuntu 26.04 VM completes the entire chain — Snap-path resolution, all four Python dependencies, and workspace initialization — and launches the full eSim-2.5 main window with no errors:
+
+![eSim-2.5 GUI launched successfully — final proof](images/final-esim-gui-launched.png)
+
+Terminal output confirms:
+```
+eSim Started......
+Project Selected : None
+[INFO]: Workspace : /home/lutfullah/eSim-Workspace
+```
+
 ## Impact
 
-Before these fixes, a first-time contributor following the official `INSTALL` + `setup-esim.sh` + `launcher-esim.sh` flow on a current Ubuntu system would fail at **five separate points** before ever seeing the eSim GUI. After these fixes:
-
-- Library setup (`setup-esim.sh`) completes cleanly.
-- The GUI launcher correctly resolves paths on a source install.
-- All four blocking Python dependencies are installed and resolved with documented, verified fixes.
-- One remaining issue (`install-eSim.sh` doc mismatch) is clearly reported with a concrete recommendation for maintainers.
+Before these fixes, a first-time contributor following the official `INSTALL` + `setup-esim.sh` + `launcher-esim.sh` flow on a current Ubuntu system would fail at **five separate points** before ever seeing the eSim GUI. After these fixes, all five issues are either resolved or clearly reported with a concrete recommendation, and the main eSim GUI launches end-to-end and is verified working.
 
 ## Links
 
 - Forked repository: https://github.com/Lutfullah07/eSim
-- Pull Request: *(https://github.com/FOSSEE/eSim/pull/635)*
-- Modified files: `scripts/setup-esim.sh`, `scripts/launcher-esim.sh`, `TASK4_REPORT.md`
+- Pull Request: https://github.com/FOSSEE/eSim/pull/635
+- Report: https://github.com/Lutfullah07/eSim/blob/master/TASK4_REPORT.md
