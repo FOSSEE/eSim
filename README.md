@@ -598,6 +598,35 @@ A huge thank you to all **149+ amazing people** who have contributed to eSim! �
 <p align="center"><em>149+ contributors and counting! <a href="https://github.com/fossee/esim/graphs/contributors">View all contributors →</a></em></p>
 
 ---
+## 🛠️ Automated Tool Manager
+
+The eSim repository includes an Automated Tool Manager for managing external EDA tools required by eSim on Ubuntu Linux systems.
+
+The Tool Manager supports:
+
+- **Ngspice** — Circuit Simulation
+- **Verilator** — Digital Verification
+- **GHDL** — VHDL Simulation
+- **KiCad** — PCB Design
+
+### Features
+
+- Detect installed tools
+- Install missing tools using APT
+- Check dependencies
+- Detect installed and available package versions
+- Check for updates
+- Upgrade installed tools
+- Manage Tool Manager configuration
+- Record tool-management operations
+- Run automated unit tests
+
+### Running the Tool Manager
+
+From the eSim repository root:
+
+```bash
+python3 -m tools.esim_tool_manager
 
 ## 📞 Contact & Support
 
