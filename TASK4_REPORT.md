@@ -15,7 +15,7 @@
 | Guest OS | Ubuntu 26.04 LTS |
 | Branch | `installers` |
 
-![Branch checkout proof](screenshots/01-branch-checkout.png)
+![Branch checkout proof](screenshots/Screenshot%202026-08-21%20105246.png)
 *Switched to the `installers` branch and tracked `upstream/installers` before running the script.*
 
 ---
@@ -43,7 +43,7 @@ E: The repository 'https://ppa.launchpadcontent.net/kicad/kicad-6.0-releases/ubu
 Aborting Installation...
 ```
 
-![Issue 1 error](screenshots/02-issue1-error.png)
+![Issue 1 error](screenshots/Screenshot%202026-08-21%20105933.png)
 *Script aborts because it tries to add a KiCad PPA that doesn't support Ubuntu 26.04 ("resolute").*
 
 **Root Cause:**
@@ -55,13 +55,13 @@ The `installKicad()` function's version check only tested for `"24.04"` and `"25
 + if [[ "$ubuntu_version" == "24.04" || "$ubuntu_version" == "25.04" || "$ubuntu_version" == "26.04" ]]; then
 ```
 
-![Issue 1 code fix](screenshots/03-issue1-code-fix.png)
+![Issue 1 code fix](screenshots/Screenshot%202026-08-21%20110626.png)
 *Updated version check in `install-eSim-25.04.sh`, adding the `26.04` case so it maps to the correct `kicad-8.0-releases` PPA.*
 
 **Verification:**
 After the fix, the script correctly detected Ubuntu 26.04 and proceeded with the appropriate KiCad PPA instead of aborting.
 
-![Issue 1 fixed](screenshots/04-issue1-fixed.png)
+![Issue 1 fixed](screenshots/Screenshot%202026-08-21%20111036.png)
 *Script now prints "Ubuntu 26.04 detected." and continues installation instead of crashing.*
 
 ---
@@ -80,7 +80,7 @@ error in hdlparse setup command: use_2to3 is invalid
 ```
 Since the script runs with `set -e`, this single failure aborted the entire installation — even though the correct hdlparse fork had already been installed successfully moments earlier.
 
-![First hdlparse install](screenshots/05-hdlparse-first-install.png)
+![First hdlparse install](screenshots/Screenshot%202026-08-21%20112921.png)
 *The correct maintained fork installing successfully from GitHub.*
 
 **Root Cause:**
@@ -92,13 +92,13 @@ The original PyPI `hdlparse` package (v1.0.1, last updated 2016) uses `use_2to3=
 + #pip3 install hdlparse
 ```
 
-![Issue 2 code fix](screenshots/12-issue2-code-fix.png)
+![Issue 2 code fix](screenshots/Screenshot%202026-08-21%20115200.png)
 *Redundant, broken `pip3 install hdlparse` line commented out in `install-eSim-25.04.sh`.*
 
 **Verification:**
 After the fix, the installer no longer attempts the broken install. Since the correct fork was already installed in the earlier step, `pip3` simply reports the requirement is already satisfied and the script proceeds.
 
-![Issue 2 after fix](screenshots/08-hdlparse-skip.png)
+![Issue 2 after fix](screenshots/Screenshot%202026-08-21%20114057.png)
 *"Installing Hdlparse" step now shows "Requirement already satisfied" instead of crashing.*
 
 ---
@@ -111,7 +111,7 @@ tar (child): library/kicadLibrary.tar.xz: Cannot open: No such file or directory
 Aborting Installation...
 ```
 
-![Issue 3 error](screenshots/06-issue3-error.png)
+![Issue 3 error](screenshots/Screenshot%202026-08-21%20112938.png)
 *`copyKicadLibrary` step fails because the archive doesn't exist in this branch.*
 
 **Root Cause:**
@@ -129,7 +129,7 @@ unzip: cannot find or open nghdl.zip, nghdl.zip.zip or nghdl.zip.ZIP.
 Aborting Installation...
 ```
 
-![Issue 4 error](screenshots/07-issue4-error.png)
+![Issue 4 error](screenshots/Screenshot%202026-08-21%20113536.png)
 *`installNghdl` step fails for the same reason as Issue 3 — the binary is not present on `installers`.*
 
 **Root Cause:** Same pattern as Issue 3 — `nghdl.zip` is a binary resource not tracked on the `installers` branch.
@@ -146,7 +146,7 @@ tar (child): library/sky130_fd_pr.tar.xz: Cannot open: No such file or directory
 Aborting Installation...
 ```
 
-![Issue 5 error](screenshots/09-issue5-error.png)
+![Issue 5 error](screenshots/Screenshot%202026-08-21%20114108.png)
 *`installSky130Pdk` step fails — same missing-binary pattern.*
 
 **Root Cause:** Same pattern as Issues 3 & 4 — `sky130_fd_pr.tar.xz` is not present on the `installers` branch.
@@ -163,7 +163,7 @@ cp: cannot stat 'images/logo.png': No such file or directory
 Aborting Installation...
 ```
 
-![Issue 6 error](screenshots/11-issue6-error.png)
+![Issue 6 error](screenshots/Screenshot%202026-08-21%20114705.png)
 *Desktop shortcut creation succeeds, but copying the logo image fails.*
 
 **Root Cause:** Same pattern — `images/logo.png` is a resource file not present on the `installers` branch.
@@ -181,14 +181,14 @@ With the two fixes applied and the four missing-resource steps temporarily worke
 Type esim in Terminal to launch it
 ```
 
-![Final success](screenshots/13-final-success.png)
+![Final success](screenshots/Screenshot%202026-08-21%20120939.png)
 *Full installation completes without errors after applying both fixes.*
 
 ---
 
 ## Git Push Proof
 
-![Git push success](screenshots/14-git-push-success.png)
+![Git push success](screenshots/Screenshot%202026-08-21%20121345.png)
 *Fixes to `install-eSim-25.04.sh` committed and pushed to the `installers` branch of the fork.*
 
 ---
