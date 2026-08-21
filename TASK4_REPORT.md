@@ -2,13 +2,13 @@
 
 **Intern:** Lutfullah07
 **Repository:** [FOSSEE/eSim](https://github.com/FOSSEE/eSim) (forked at [Lutfullah07/eSim](https://github.com/Lutfullah07/eSim))
-**Pull Request:** [#635](https://github.com/FOSSEE/eSim/pull/635)
+**Pull Request:** [#638](https://github.com/FOSSEE/eSim/pull/638)
 
 ## Overview
 
 Testing for Task 4 was carried out across two branches, giving broader coverage of eSim's installation paths on a modern Ubuntu system (26.04 LTS):
 
-- **Part A — `installers` branch** (the primary branch for this task, backing PR #635): testing of `Ubuntu/install-eSim-scripts/install-eSim-25.04.sh`, the dedicated installer script.
+- **Part A — `installers` branch** (the primary branch for this task, backing PR #638): testing of `Ubuntu/install-eSim-scripts/install-eSim-25.04.sh`, the dedicated installer script.
 - **Part B — `master` branch** (supplementary testing): a full from-source installation and GUI launch, following the official `INSTALL` instructions, `scripts/setup-esim.sh`, and `scripts/launcher-esim.sh`.
 
 Both stages surfaced genuine, independent issues, so both are documented here for completeness. Part A is the primary deliverable for this task; Part B is included as supplementary due-diligence since it uncovered separate installation-blocking bugs in the full source-build flow that are still relevant to any contributor setting up eSim from scratch.
