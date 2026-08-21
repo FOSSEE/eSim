@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.pyo
+
+# Runtime-generated state - not meant to be committed, README documents
+# that these are auto-created on first run
+config/tool_registry.json
+config/installed_state.json
+config/user_config.json
+config/esim_config.json
+logs/*.log
+
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.DS_Store

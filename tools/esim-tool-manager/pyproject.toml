@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "esim-tool-manager"
+version = "0.1.0"
+description = "Automated Tool Manager prototype for eSim external tools (Ngspice, KiCad, GHDL)"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { file = "LICENSE" }
+dependencies = []
+
+[project.scripts]
+esim-tool-manager = "esim_tool_manager.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["esim_tool_manager*"]
