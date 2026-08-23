@@ -22,8 +22,19 @@
 
 # Function to detect Ubuntu version and full version string
 get_ubuntu_version() {
-    VERSION_ID=$(grep "^VERSION_ID" /etc/os-release | cut -d '"' -f 2)
-    FULL_VERSION=$(lsb_release -d | grep -oP '\d+\.\d+\.\d+')
+    if [ ! -f /etc/os-release ]; then
+        echo "Error: /etc/os-release not found."
+        exit 1
+    fi
+
+    VERSION_ID=$(grep '^VERSION_ID=' /etc/os-release | cut -d '"' -f 2)
+
+    if [ -z "$VERSION_ID" ]; then
+        echo "Error: Unable to determine Ubuntu version."
+        exit 1
+    fi
+
+    FULL_VERSION="$VERSION_ID"
     echo "Detected Ubuntu Version: $FULL_VERSION"
 }
 
