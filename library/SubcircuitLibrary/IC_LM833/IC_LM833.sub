@@ -1,0 +1,74 @@
+* Subcircuit IC_LM833
+.subckt IC_LM833 net-_q2-pad2_ net-_q5-pad2_ net-_d4-pad1_ net-_q14-pad2_ net-_q17-pad2_ net-_c1-pad2_ net-_d1-pad1_ net-_d8-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\ic_lm833\ic_lm833.cir
+.include PMOS-180nm.lib
+.include D.lib
+.include NPN.lib
+.include PNP.lib
+c3  net-_c3-pad1_ net-_c2-pad2_ 1n
+c2  net-_c2-pad1_ net-_c2-pad2_ 1n
+r3  net-_d1-pad1_ net-_q3-pad3_ 5k
+c1  net-_c1-pad1_ net-_c1-pad2_ 1n
+r6  net-_q11-pad3_ net-_c1-pad2_ 2k
+q12 net-_d3-pad1_ net-_q10-pad3_ net-_d4-pad1_ Q2N2222
+r8  net-_d4-pad1_ net-_q10-pad3_ 2k
+q11 net-_d4-pad1_ net-_c3-pad1_ net-_q11-pad3_ Q2N2222
+q10 net-_d1-pad1_ net-_d3-pad1_ net-_q10-pad3_ Q2N2222
+r7  net-_d3-pad2_ net-_q10-pad3_ 1k
+d4 net-_d4-pad1_ net-_d3-pad2_ 1N4148
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+q9 net-_d3-pad2_ net-_c3-pad1_ net-_q11-pad3_ Q2N2222
+q8 net-_d3-pad1_ net-_d1-pad2_ net-_d1-pad1_ Q2N2907A
+q6 net-_c2-pad1_ net-_q11-pad3_ net-_c1-pad2_ Q2N2222
+r5  net-_c3-pad1_ net-_q11-pad3_ 2k
+r4  net-_q4-pad3_ net-_c1-pad2_ 5k
+r2  net-_c1-pad1_ net-_c1-pad2_ 2k
+r1  net-_q1-pad3_ net-_c1-pad2_ 5k
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+q3 net-_q2-pad3_ net-_d1-pad2_ net-_q3-pad3_ Q2N2907A
+d2 net-_d2-pad1_ net-_c1-pad1_ 1N4148
+q7 net-_d3-pad1_ net-_c2-pad1_ net-_c3-pad1_ Q2N2222
+q4 net-_c2-pad1_ net-_d2-pad1_ net-_q4-pad3_ Q2N2222
+q5 net-_c2-pad1_ net-_q5-pad2_ net-_q2-pad3_ Q2N2907A
+q2 net-_d2-pad1_ net-_q2-pad2_ net-_q2-pad3_ Q2N2907A
+q1 net-_d1-pad2_ net-_m1-pad3_ net-_q1-pad3_ Q2N2222
+* u1  net-_c1-pad2_ net-_m1-pad3_ zener
+m1 net-_d1-pad1_ net-_c1-pad2_ net-_m1-pad3_ net-_d1-pad1_ CMOSP W=100u L=100u M=1
+c6  net-_c6-pad1_ net-_c5-pad2_ 1n
+c5  net-_c5-pad1_ net-_c5-pad2_ 1n
+r11  net-_d1-pad1_ net-_q15-pad3_ 5k
+c4  net-_c4-pad1_ net-_c1-pad2_ 1n
+r14  net-_q18-pad2_ net-_c1-pad2_ 2k
+q24 net-_d7-pad1_ net-_q22-pad3_ net-_d8-pad1_ Q2N2222
+r16  net-_d8-pad1_ net-_q22-pad3_ 2k
+q23 net-_d8-pad1_ net-_c6-pad1_ net-_q18-pad2_ Q2N2222
+q22 net-_d1-pad1_ net-_d7-pad1_ net-_q22-pad3_ Q2N2222
+r15  net-_d7-pad2_ net-_q22-pad3_ 1k
+d8 net-_d8-pad1_ net-_d7-pad2_ 1N4148
+d7 net-_d7-pad1_ net-_d7-pad2_ 1N4148
+q21 net-_d7-pad2_ net-_c6-pad1_ net-_q18-pad2_ Q2N2222
+q20 net-_d7-pad1_ net-_d5-pad2_ net-_d1-pad1_ Q2N2907A
+q18 net-_c5-pad1_ net-_q18-pad2_ net-_c1-pad2_ Q2N2222
+r13  net-_c6-pad1_ net-_q18-pad2_ 2k
+r12  net-_q16-pad3_ net-_c1-pad2_ 5k
+r10  net-_c4-pad1_ net-_c1-pad2_ 2k
+r9  net-_q13-pad3_ net-_c1-pad2_ 5k
+d5 net-_d1-pad1_ net-_d5-pad2_ 1N4148
+q15 net-_q14-pad3_ net-_d5-pad2_ net-_q15-pad3_ Q2N2907A
+d6 net-_d6-pad1_ net-_c4-pad1_ 1N4148
+q19 net-_d7-pad1_ net-_c5-pad1_ net-_c6-pad1_ Q2N2222
+q16 net-_c5-pad1_ net-_d6-pad1_ net-_q16-pad3_ Q2N2222
+q17 net-_c5-pad1_ net-_q17-pad2_ net-_q14-pad3_ Q2N2907A
+q14 net-_d6-pad1_ net-_q14-pad2_ net-_q14-pad3_ Q2N2907A
+q13 net-_d5-pad2_ net-_m2-pad3_ net-_q13-pad3_ Q2N2222
+* u3  net-_c1-pad2_ net-_m2-pad3_ zener
+m2 net-_d1-pad1_ net-_c1-pad2_ net-_m2-pad3_ net-_d1-pad1_ CMOSP W=100u L=100u M=1
+a1 net-_c1-pad2_ net-_m1-pad3_ u1
+a2 net-_c1-pad2_ net-_m2-pad3_ u3
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u1 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Schematic Name:                             zener, NgSpice Name: zener
+.model u3 zener(v_breakdown=5.6 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=FALSE )
+* Control Statements
+
+.ends IC_LM833
