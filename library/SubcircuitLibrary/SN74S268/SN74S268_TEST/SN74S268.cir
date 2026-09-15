@@ -1,0 +1,35 @@
+.title KiCad schematic
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ PORT
+U5 Net-_U28-Pad2_ Net-_U12-Pad2_ d_inverter
+U12 Net-_U1-Pad6_ Net-_U12-Pad2_ unconnected-_U12-Pad3_ unconnected-_U12-Pad4_ unconnected-_U12-Pad5_ Net-_U12-Pad6_ d_dlatch
+U10 Net-_U1-Pad3_ Net-_U10-Pad2_ unconnected-_U10-Pad3_ unconnected-_U10-Pad4_ unconnected-_U10-Pad5_ Net-_U10-Pad6_ d_dlatch
+U11 Net-_U1-Pad4_ Net-_U11-Pad2_ unconnected-_U11-Pad3_ unconnected-_U11-Pad4_ unconnected-_U11-Pad5_ Net-_U11-Pad6_ d_dlatch
+U4 Net-_U28-Pad2_ Net-_U11-Pad2_ d_inverter
+U3 Net-_U28-Pad2_ Net-_U10-Pad2_ d_inverter
+U2 Net-_U1-Pad1_ Net-_U2-Pad2_ d_inverter
+U28 Net-_U1-Pad8_ Net-_U28-Pad2_ d_inverter
+U6 Net-_U28-Pad2_ Net-_U13-Pad2_ d_inverter
+U7 Net-_U28-Pad2_ Net-_U14-Pad2_ d_inverter
+U14 Net-_U1-Pad12_ Net-_U14-Pad2_ unconnected-_U14-Pad3_ unconnected-_U14-Pad4_ unconnected-_U14-Pad5_ Net-_U14-Pad6_ d_dlatch
+U13 Net-_U1-Pad10_ Net-_U13-Pad2_ unconnected-_U13-Pad3_ unconnected-_U13-Pad4_ unconnected-_U13-Pad5_ Net-_U13-Pad6_ d_dlatch
+U15 Net-_U1-Pad13_ Net-_U15-Pad2_ unconnected-_U15-Pad3_ unconnected-_U15-Pad4_ unconnected-_U15-Pad5_ Net-_U15-Pad6_ d_dlatch
+U8 Net-_U28-Pad2_ Net-_U15-Pad2_ d_inverter
+U19 Net-_U13-Pad6_ Net-_U19-Pad2_ d_inverter
+U25 Net-_U19-Pad2_ Net-_U2-Pad2_ Net-_U1-Pad9_ d_tristate
+U24 Net-_U18-Pad2_ Net-_U2-Pad2_ Net-_U1-Pad7_ d_tristate
+U18 Net-_U12-Pad6_ Net-_U18-Pad2_ d_inverter
+U20 Net-_U14-Pad6_ Net-_U20-Pad2_ d_inverter
+U27 Net-_U21-Pad2_ Net-_U2-Pad2_ Net-_U1-Pad14_ d_tristate
+U21 Net-_U15-Pad6_ Net-_U21-Pad2_ d_inverter
+U26 Net-_U20-Pad2_ Net-_U2-Pad2_ Net-_U1-Pad11_ d_tristate
+U33 Net-_U1-Pad14_ d_pullup
+U32 Net-_U1-Pad11_ d_pullup
+U31 Net-_U1-Pad9_ d_pullup
+U9 Net-_U1-Pad2_ d_pullup
+U22 Net-_U16-Pad2_ Net-_U2-Pad2_ Net-_U1-Pad2_ d_tristate
+U16 Net-_U10-Pad6_ Net-_U16-Pad2_ d_inverter
+U17 Net-_U11-Pad6_ Net-_U17-Pad2_ d_inverter
+U23 Net-_U17-Pad2_ Net-_U2-Pad2_ Net-_U1-Pad5_ d_tristate
+U30 Net-_U1-Pad7_ d_pullup
+U29 Net-_U1-Pad5_ d_pullup
+.end

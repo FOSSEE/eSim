@@ -1,0 +1,17 @@
+.title KiCad schematic
+U13 Net-_U13-Pad1_ /Q4 d_buffer
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ /Q6 /Q5 /Q4 /Q3 /Q2 /Q1 PORT
+U6 Net-_U1-Pad3_ /CLK unconnected-_U6-Pad3_ /CLR Net-_U12-Pad1_ unconnected-_U6-Pad6_ d_dff
+U15 Net-_U15-Pad1_ /Q6 d_buffer
+U12 Net-_U12-Pad1_ /Q3 d_buffer
+U14 Net-_U14-Pad1_ /Q5 d_buffer
+U9 Net-_U1-Pad6_ /CLK unconnected-_U9-Pad3_ /CLR Net-_U15-Pad1_ unconnected-_U9-Pad6_ d_dff
+U8 Net-_U1-Pad5_ /CLK unconnected-_U8-Pad3_ /CLR Net-_U14-Pad1_ unconnected-_U8-Pad6_ d_dff
+U7 Net-_U1-Pad4_ /CLK unconnected-_U7-Pad3_ /CLR Net-_U13-Pad1_ unconnected-_U7-Pad6_ d_dff
+U3 Net-_U1-Pad7_ /CLK d_buffer
+U10 Net-_U10-Pad1_ /Q1 d_buffer
+U11 Net-_U11-Pad1_ /Q2 d_buffer
+U4 Net-_U1-Pad1_ /CLK unconnected-_U4-Pad3_ /CLR Net-_U10-Pad1_ unconnected-_U4-Pad6_ d_dff
+U5 Net-_U1-Pad2_ /CLK unconnected-_U5-Pad3_ /CLR Net-_U11-Pad1_ unconnected-_U5-Pad6_ d_dff
+U2 Net-_U1-Pad8_ /CLR d_inverter
+.end

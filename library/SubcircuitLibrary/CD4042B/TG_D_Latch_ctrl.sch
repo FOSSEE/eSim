@@ -1,0 +1,700 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:TG_D_Latch_ctrl-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L PORT U1
+U 1 1 6858317A
+P 3300 2750
+F 0 "U1" H 3350 2850 30  0000 C CNN
+F 1 "PORT" H 3300 2750 30  0000 C CNN
+F 2 "" H 3300 2750 60  0000 C CNN
+F 3 "" H 3300 2750 60  0000 C CNN
+	1    3300 2750
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 685831F1
+P 1150 2200
+F 0 "U1" H 1200 2300 30  0000 C CNN
+F 1 "PORT" H 1150 2200 30  0000 C CNN
+F 2 "" H 1150 2200 60  0000 C CNN
+F 3 "" H 1150 2200 60  0000 C CNN
+	2    1150 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 68583299
+P 8250 3550
+F 0 "U1" H 8300 3650 30  0000 C CNN
+F 1 "PORT" H 8250 3550 30  0000 C CNN
+F 2 "" H 8250 3550 60  0000 C CNN
+F 3 "" H 8250 3550 60  0000 C CNN
+	5    8250 3550
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 4 1 68583330
+P 4800 3900
+F 0 "U1" H 4850 4000 30  0000 C CNN
+F 1 "PORT" H 4800 3900 30  0000 C CNN
+F 2 "" H 4800 3900 60  0000 C CNN
+F 3 "" H 4800 3900 60  0000 C CNN
+	4    4800 3900
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 685833C1
+P 3650 1000
+F 0 "U1" H 3700 1100 30  0000 C CNN
+F 1 "PORT" H 3650 1000 30  0000 C CNN
+F 2 "" H 3650 1000 60  0000 C CNN
+F 3 "" H 3650 1000 60  0000 C CNN
+	3    3650 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L SKY130mode scmode1
+U 1 1 68583B39
+P 10650 2400
+F 0 "scmode1" H 10650 2550 98  0000 C CNB
+F 1 "SKY130mode" H 10650 2300 118 0000 C CNB
+F 2 "" H 10650 2550 60  0001 C CNN
+F 3 "" H 10650 2550 60  0001 C CNN
+	1    10650 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC5
+U 1 1 6858F184
+P 2700 1750
+F 0 "SC5" H 2750 2050 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 3000 1837 50  0000 R CNN
+F 2 "" H 2700 250 50  0001 C CNN
+F 3 "" H 2700 1750 50  0001 C CNN
+	1    2700 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC10
+U 1 1 6858F1CD
+P 3350 1750
+F 0 "SC10" H 3400 2050 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 3650 1837 50  0000 R CNN
+F 2 "" H 3350 250 50  0001 C CNN
+F 3 "" H 3350 1750 50  0001 C CNN
+	1    3350 1750
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC1
+U 1 1 6858F56C
+P 1950 1750
+F 0 "SC1" H 2000 2050 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 2250 1837 50  0000 R CNN
+F 2 "" H 1950 250 50  0001 C CNN
+F 3 "" H 1950 1750 50  0001 C CNN
+	1    1950 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC13
+U 1 1 6858F728
+P 4300 1750
+F 0 "SC13" H 4350 2050 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 4600 1837 50  0000 R CNN
+F 2 "" H 4300 250 50  0001 C CNN
+F 3 "" H 4300 1750 50  0001 C CNN
+	1    4300 1750
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC2
+U 1 1 6858F78D
+P 1950 2600
+F 0 "SC2" H 2000 2900 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 2250 2687 50  0000 R CNN
+F 2 "" H 1950 1100 50  0001 C CNN
+F 3 "" H 1950 2600 50  0001 C CNN
+	1    1950 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC7
+U 1 1 6858F7FC
+P 2850 2600
+F 0 "SC7" H 2900 2900 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 3150 2687 50  0000 R CNN
+F 2 "" H 2850 1100 50  0001 C CNN
+F 3 "" H 2850 2600 50  0001 C CNN
+	1    2850 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC9
+U 1 1 6858F96B
+P 3250 3350
+F 0 "SC9" H 3300 3650 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 3550 3437 50  0000 R CNN
+F 2 "" H 3250 1850 50  0001 C CNN
+F 3 "" H 3250 3350 50  0001 C CNN
+	1    3250 3350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC14
+U 1 1 6858FADD
+P 4300 2550
+F 0 "SC14" H 4350 2850 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 4600 2637 50  0000 R CNN
+F 2 "" H 4300 1050 50  0001 C CNN
+F 3 "" H 4300 2550 50  0001 C CNN
+	1    4300 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC6
+U 1 1 68590EC2
+P 2800 5000
+F 0 "SC6" H 2850 5300 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 3100 5087 50  0000 R CNN
+F 2 "" H 2800 3500 50  0001 C CNN
+F 3 "" H 2800 5000 50  0001 C CNN
+	1    2800 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC12
+U 1 1 68590EC9
+P 3450 5000
+F 0 "SC12" H 3500 5300 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 3750 5087 50  0000 R CNN
+F 2 "" H 3450 3500 50  0001 C CNN
+F 3 "" H 3450 5000 50  0001 C CNN
+	1    3450 5000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC3
+U 1 1 68590ED0
+P 2050 5000
+F 0 "SC3" H 2100 5300 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 2350 5087 50  0000 R CNN
+F 2 "" H 2050 3500 50  0001 C CNN
+F 3 "" H 2050 5000 50  0001 C CNN
+	1    2050 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC15
+U 1 1 68590ED7
+P 4400 5000
+F 0 "SC15" H 4450 5300 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 4700 5087 50  0000 R CNN
+F 2 "" H 4400 3500 50  0001 C CNN
+F 3 "" H 4400 5000 50  0001 C CNN
+	1    4400 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC4
+U 1 1 68590EDE
+P 2050 5850
+F 0 "SC4" H 2100 6150 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 2350 5937 50  0000 R CNN
+F 2 "" H 2050 4350 50  0001 C CNN
+F 3 "" H 2050 5850 50  0001 C CNN
+	1    2050 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC8
+U 1 1 68590EE5
+P 2950 5850
+F 0 "SC8" H 3000 6150 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 3250 5937 50  0000 R CNN
+F 2 "" H 2950 4350 50  0001 C CNN
+F 3 "" H 2950 5850 50  0001 C CNN
+	1    2950 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC11
+U 1 1 68590EEC
+P 3350 6600
+F 0 "SC11" H 3400 6900 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 3650 6687 50  0000 R CNN
+F 2 "" H 3350 5100 50  0001 C CNN
+F 3 "" H 3350 6600 50  0001 C CNN
+	1    3350 6600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC16
+U 1 1 68590EF3
+P 4400 5800
+F 0 "SC16" H 4450 6100 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 4700 5887 50  0000 R CNN
+F 2 "" H 4400 4300 50  0001 C CNN
+F 3 "" H 4400 5800 50  0001 C CNN
+	1    4400 5800
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC18
+U 1 1 6859119B
+P 6150 2500
+F 0 "SC18" H 6200 2800 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 6450 2587 50  0000 R CNN
+F 2 "" H 6150 1000 50  0001 C CNN
+F 3 "" H 6150 2500 50  0001 C CNN
+	1    6150 2500
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC19
+U 1 1 68591314
+P 6550 3200
+F 0 "SC19" H 6600 3500 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 6850 3287 50  0000 R CNN
+F 2 "" H 6550 1700 50  0001 C CNN
+F 3 "" H 6550 3200 50  0001 C CNN
+	1    6550 3200
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__pfet_01v8 SC21
+U 1 1 68591481
+P 7700 3200
+F 0 "SC21" H 7750 3500 50  0000 C CNN
+F 1 "sky130_fd_pr__pfet_01v8" H 8000 3287 50  0000 R CNN
+F 2 "" H 7700 1700 50  0001 C CNN
+F 3 "" H 7700 3200 50  0001 C CNN
+	1    7700 3200
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC17
+U 1 1 6859153C
+P 6000 3950
+F 0 "SC17" H 6050 4250 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 6300 4037 50  0000 R CNN
+F 2 "" H 6000 2450 50  0001 C CNN
+F 3 "" H 6000 3950 50  0001 C CNN
+	1    6000 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC20
+U 1 1 685918B6
+P 6700 3950
+F 0 "SC20" H 6750 4250 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 7000 4037 50  0000 R CNN
+F 2 "" H 6700 2450 50  0001 C CNN
+F 3 "" H 6700 3950 50  0001 C CNN
+	1    6700 3950
+	-1   0    0    -1  
+$EndComp
+$Comp
+L sky130_fd_pr__nfet_01v8 SC22
+U 1 1 6859198A
+P 7700 3950
+F 0 "SC22" H 7750 4250 50  0000 C CNN
+F 1 "sky130_fd_pr__nfet_01v8" H 8000 4037 50  0000 R CNN
+F 2 "" H 7700 2450 50  0001 C CNN
+F 3 "" H 7700 3950 50  0001 C CNN
+	1    7700 3950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2150 1450 2150 1350
+Wire Wire Line
+	2150 1350 5550 1350
+Wire Wire Line
+	4500 1350 4500 1450
+Wire Wire Line
+	2900 1450 2900 1350
+Connection ~ 2900 1350
+Wire Wire Line
+	3150 1450 3150 1350
+Connection ~ 3150 1350
+Wire Wire Line
+	2800 1750 2950 1750
+Wire Wire Line
+	2950 1750 2950 1350
+Connection ~ 2950 1350
+Wire Wire Line
+	3250 1750 3100 1750
+Wire Wire Line
+	3100 1750 3100 1350
+Connection ~ 3100 1350
+Wire Wire Line
+	2050 1750 2200 1750
+Wire Wire Line
+	2200 1750 2200 1350
+Connection ~ 2200 1350
+Wire Wire Line
+	4400 1750 4550 1750
+Wire Wire Line
+	4550 1750 4550 1350
+Connection ~ 4500 1350
+Wire Wire Line
+	2900 2050 3150 2050
+Wire Wire Line
+	3050 2300 3050 2050
+Connection ~ 3050 2050
+Wire Wire Line
+	2150 2050 2150 2300
+Wire Wire Line
+	2400 1750 2400 2600
+Wire Wire Line
+	2400 2600 2550 2600
+Wire Wire Line
+	2150 2200 2400 2200
+Connection ~ 2400 2200
+Connection ~ 2150 2200
+Wire Wire Line
+	3650 1750 3650 3350
+Wire Wire Line
+	3650 3350 3550 3350
+Wire Wire Line
+	3050 2900 3050 3050
+Wire Wire Line
+	2950 2600 3100 2600
+Wire Wire Line
+	3100 2600 3100 2950
+Wire Wire Line
+	3100 2950 3050 2950
+Connection ~ 3050 2950
+Wire Wire Line
+	3150 3350 3000 3350
+Wire Wire Line
+	3000 3350 3000 3700
+Wire Wire Line
+	2200 3700 5500 3700
+Wire Wire Line
+	3050 3700 3050 3650
+Wire Wire Line
+	4000 1750 4000 2550
+Wire Wire Line
+	3050 2150 4000 2150
+Connection ~ 4000 2150
+Connection ~ 3050 2150
+Wire Wire Line
+	4500 2050 4500 2250
+Wire Wire Line
+	1650 1750 1650 2600
+Wire Wire Line
+	4400 2550 4550 2550
+Wire Wire Line
+	4550 2550 4550 3900
+Wire Wire Line
+	4550 2850 4500 2850
+Wire Wire Line
+	2050 2600 2200 2600
+Wire Wire Line
+	2200 2600 2200 3700
+Wire Wire Line
+	2200 2900 2150 2900
+Wire Wire Line
+	2250 4700 2250 4600
+Wire Wire Line
+	2250 4600 4650 4600
+Wire Wire Line
+	4600 4600 4600 4700
+Wire Wire Line
+	3000 4700 3000 4600
+Connection ~ 3000 4600
+Wire Wire Line
+	3250 4700 3250 4600
+Connection ~ 3250 4600
+Wire Wire Line
+	2900 5000 3050 5000
+Wire Wire Line
+	3050 5000 3050 4600
+Connection ~ 3050 4600
+Wire Wire Line
+	3350 5000 3200 5000
+Wire Wire Line
+	3200 5000 3200 4600
+Connection ~ 3200 4600
+Wire Wire Line
+	2150 5000 2300 5000
+Wire Wire Line
+	2300 5000 2300 4600
+Connection ~ 2300 4600
+Wire Wire Line
+	4500 5000 4650 5000
+Wire Wire Line
+	4650 5000 4650 4600
+Connection ~ 4600 4600
+Wire Wire Line
+	3000 5300 3250 5300
+Wire Wire Line
+	3150 5550 3150 5300
+Connection ~ 3150 5300
+Wire Wire Line
+	2250 5300 2250 5550
+Wire Wire Line
+	2500 5000 2500 5850
+Wire Wire Line
+	2500 5850 2650 5850
+Wire Wire Line
+	2250 5450 2500 5450
+Connection ~ 2500 5450
+Connection ~ 2250 5450
+Wire Wire Line
+	3750 5000 3750 6600
+Wire Wire Line
+	3750 6600 3650 6600
+Wire Wire Line
+	3150 6150 3150 6300
+Wire Wire Line
+	3050 5850 3200 5850
+Wire Wire Line
+	3200 5850 3200 6200
+Wire Wire Line
+	3200 6200 3150 6200
+Connection ~ 3150 6200
+Wire Wire Line
+	3250 6600 3100 6600
+Wire Wire Line
+	3100 6600 3100 6950
+Wire Wire Line
+	4650 6950 2300 6950
+Wire Wire Line
+	3150 6950 3150 6900
+Wire Wire Line
+	4100 5000 4100 5800
+Wire Wire Line
+	3150 5400 4100 5400
+Connection ~ 4100 5400
+Connection ~ 3150 5400
+Wire Wire Line
+	4600 5300 4600 5500
+Wire Wire Line
+	1750 5000 1750 5850
+Wire Wire Line
+	4500 5800 4650 5800
+Wire Wire Line
+	4650 5800 4650 6950
+Wire Wire Line
+	4650 6100 4600 6100
+Wire Wire Line
+	2150 5850 2300 5850
+Wire Wire Line
+	2300 5850 2300 6950
+Wire Wire Line
+	2300 6150 2250 6150
+Wire Wire Line
+	6350 2800 6350 2900
+Wire Wire Line
+	6350 2200 7900 2200
+Wire Wire Line
+	7900 2200 7900 2900
+Wire Wire Line
+	6250 2500 6400 2500
+Wire Wire Line
+	6400 2500 6400 2200
+Connection ~ 6400 2200
+Wire Wire Line
+	7800 3200 7950 3200
+Wire Wire Line
+	7950 3200 7950 2800
+Wire Wire Line
+	7950 2800 7900 2800
+Connection ~ 7900 2800
+Wire Wire Line
+	6200 3650 6500 3650
+Wire Wire Line
+	6350 3500 6350 3650
+Connection ~ 6350 3650
+Wire Wire Line
+	7400 3200 7400 3950
+Wire Wire Line
+	6350 3600 7400 3600
+Connection ~ 7400 3600
+Connection ~ 6350 3600
+Wire Wire Line
+	7900 3500 7900 3650
+Wire Wire Line
+	6200 4250 6200 4300
+Wire Wire Line
+	5500 4300 8000 4300
+Wire Wire Line
+	7900 4300 7900 4250
+Wire Wire Line
+	6500 4250 6500 4300
+Connection ~ 6500 4300
+Wire Wire Line
+	6600 3950 6450 3950
+Wire Wire Line
+	6450 3950 6450 4300
+Connection ~ 6450 4300
+Wire Wire Line
+	6100 3950 6250 3950
+Wire Wire Line
+	6250 3950 6250 4300
+Connection ~ 6250 4300
+Wire Wire Line
+	6850 3200 7000 3200
+Wire Wire Line
+	7000 3200 7000 3950
+Wire Wire Line
+	5850 2500 5700 2500
+Wire Wire Line
+	5700 2500 5700 3950
+Wire Wire Line
+	6450 3200 6300 3200
+Wire Wire Line
+	6300 3200 6300 2850
+Wire Wire Line
+	6300 2850 6350 2850
+Connection ~ 6350 2850
+Wire Wire Line
+	3550 2750 3900 2750
+Connection ~ 3650 2750
+Wire Wire Line
+	3900 2750 3900 4350
+Wire Wire Line
+	3900 4350 1650 4350
+Wire Wire Line
+	1650 4350 1650 5450
+Wire Wire Line
+	1650 5450 1750 5450
+Connection ~ 1750 5450
+Wire Wire Line
+	1400 2200 1650 2200
+Connection ~ 1650 2200
+Wire Wire Line
+	1500 2200 1500 4250
+Wire Wire Line
+	1500 4250 3850 4250
+Wire Wire Line
+	3850 4250 3850 5700
+Wire Wire Line
+	3850 5700 3750 5700
+Connection ~ 3750 5700
+Connection ~ 1500 2200
+Wire Wire Line
+	4500 2150 5700 2150
+Wire Wire Line
+	5700 2150 5700 2550
+Connection ~ 5700 2550
+Connection ~ 4500 2150
+Wire Wire Line
+	4600 5400 7100 5400
+Wire Wire Line
+	7100 5400 7100 3700
+Wire Wire Line
+	7100 3700 7000 3700
+Connection ~ 7000 3700
+Connection ~ 4600 5400
+Wire Wire Line
+	4350 4600 4350 3450
+Wire Wire Line
+	4350 3450 5550 3450
+Wire Wire Line
+	5550 3450 5550 1350
+Wire Wire Line
+	5550 1950 7050 1950
+Wire Wire Line
+	7050 1950 7050 2200
+Connection ~ 7050 2200
+Connection ~ 4350 4600
+Connection ~ 5550 1950
+Connection ~ 4550 1350
+Wire Wire Line
+	3900 1000 3900 1350
+Connection ~ 3900 1350
+Connection ~ 3000 3700
+Connection ~ 2200 2900
+Connection ~ 3050 3700
+Connection ~ 4550 2850
+Wire Wire Line
+	5500 3700 5500 6200
+Connection ~ 6200 4300
+Connection ~ 4550 3700
+Connection ~ 3100 6950
+Connection ~ 2300 6150
+Connection ~ 3150 6950
+Connection ~ 4650 6100
+Wire Wire Line
+	5500 6200 4650 6200
+Connection ~ 4650 6200
+Connection ~ 5500 4300
+Wire Wire Line
+	8000 3550 7900 3550
+Connection ~ 7900 3550
+Text Label 3650 2750 0    60   ~ 0
+clock
+Text Label 1500 2200 0    60   ~ 0
+polarity
+Text Label 3900 1350 0    60   ~ 0
+Vdd
+Text Label 4550 3700 0    60   ~ 0
+Gnd
+Text Label 7900 3550 2    60   ~ 0
+Out
+Wire Wire Line
+	7800 3950 8000 3950
+Wire Wire Line
+	8000 3950 8000 4300
+Connection ~ 7900 4300
+$EndSCHEMATC

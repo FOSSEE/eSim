@@ -1,0 +1,70 @@
+.title KiCad schematic
+U1 Net-_U4-Pad1_ Net-_U5-Pad1_ Net-_X2-Pad3_ Net-_X6-Pad3_ Net-_X10-Pad3_ Net-_X14-Pad3_ Net-_X18-Pad3_ Net-_X22-Pad3_ Net-_X26-Pad3_ Net-_X30-Pad3_ Net-_U6-Pad1_ Net-_U30-Pad1_ Net-_U28-Pad3_ Net-_U27-Pad3_ Net-_U26-Pad3_ Net-_U25-Pad3_ Net-_U24-Pad3_ Net-_U23-Pad3_ Net-_U22-Pad3_ Net-_U21-Pad3_ Net-_U20-Pad3_ Net-_U19-Pad3_ PORT
+X4 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U12-Pad5_ Net-_X33-Pad4_ 3_and
+U20 Net-_U11-Pad5_ Net-_U20-Pad2_ Net-_U20-Pad3_ d_tristate
+U11 Net-_U11-Pad1_ Net-_U11-Pad2_ unconnected-_U11-Pad3_ unconnected-_U11-Pad4_ Net-_U11-Pad5_ unconnected-_U11-Pad6_ d_dff
+U19 Net-_U11-Pad5_ Net-_U19-Pad2_ Net-_U19-Pad3_ d_tristate
+X3 Net-_U10-Pad1_ Net-_U8-Pad2_ Net-_U11-Pad5_ Net-_X3-Pad4_ 3_and
+X2 Net-_U5-Pad2_ Net-_U10-Pad2_ Net-_X2-Pad3_ Net-_X2-Pad4_ 3_and
+X1 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U19-Pad3_ Net-_X1-Pad4_ 3_and
+U5 Net-_U5-Pad1_ Net-_U5-Pad2_ d_buffer
+U4 Net-_U4-Pad1_ Net-_U11-Pad2_ d_buffer
+X33 Net-_X1-Pad4_ Net-_X2-Pad4_ Net-_X3-Pad4_ Net-_X33-Pad4_ Net-_U11-Pad1_ 4_OR
+U7 Net-_U5-Pad2_ Net-_U10-Pad1_ d_inverter
+U9 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U19-Pad2_ d_and
+U22 Net-_U13-Pad5_ Net-_U20-Pad2_ Net-_U22-Pad3_ d_tristate
+U21 Net-_U12-Pad5_ Net-_U20-Pad2_ Net-_U21-Pad3_ d_tristate
+U23 Net-_U14-Pad5_ Net-_U20-Pad2_ Net-_U23-Pad3_ d_tristate
+U16 Net-_U16-Pad1_ Net-_U11-Pad2_ unconnected-_U16-Pad3_ unconnected-_U16-Pad4_ Net-_U16-Pad5_ unconnected-_U16-Pad6_ d_dff
+X38 Net-_X21-Pad4_ Net-_X22-Pad4_ Net-_X23-Pad4_ Net-_X24-Pad4_ Net-_U16-Pad1_ 4_OR
+X23 Net-_U10-Pad1_ Net-_U8-Pad2_ Net-_U16-Pad5_ Net-_X23-Pad4_ 3_and
+X24 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U17-Pad5_ Net-_X24-Pad4_ 3_and
+X25 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U16-Pad5_ Net-_X25-Pad4_ 3_and
+X22 Net-_U5-Pad2_ Net-_U10-Pad2_ Net-_X22-Pad3_ Net-_X22-Pad4_ 3_and
+U26 Net-_U17-Pad5_ Net-_U20-Pad2_ Net-_U26-Pad3_ d_tristate
+U25 Net-_U16-Pad5_ Net-_U20-Pad2_ Net-_U25-Pad3_ d_tristate
+U30 Net-_U30-Pad1_ Net-_U29-Pad1_ d_inverter
+U29 Net-_U29-Pad1_ Net-_U20-Pad2_ d_buffer
+U28 Net-_U18-Pad5_ Net-_U10-Pad3_ Net-_U28-Pad3_ d_tristate
+U18 Net-_U18-Pad1_ Net-_U11-Pad2_ unconnected-_U18-Pad3_ unconnected-_U18-Pad4_ Net-_U18-Pad5_ unconnected-_U18-Pad6_ d_dff
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_and
+X32 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U28-Pad3_ Net-_X32-Pad4_ 3_and
+X31 Net-_U10-Pad1_ Net-_U8-Pad2_ Net-_U18-Pad5_ Net-_X31-Pad4_ 3_and
+X30 Net-_U5-Pad2_ Net-_U10-Pad2_ Net-_X30-Pad3_ Net-_X30-Pad4_ 3_and
+X29 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U17-Pad5_ Net-_X29-Pad4_ 3_and
+X40 Net-_X29-Pad4_ Net-_X30-Pad4_ Net-_X31-Pad4_ Net-_X32-Pad4_ Net-_U18-Pad1_ 4_OR
+X27 Net-_U10-Pad1_ Net-_U8-Pad2_ Net-_U17-Pad5_ Net-_X27-Pad4_ 3_and
+X26 Net-_U5-Pad2_ Net-_U10-Pad2_ Net-_X26-Pad3_ Net-_X26-Pad4_ 3_and
+X39 Net-_X25-Pad4_ Net-_X26-Pad4_ Net-_X27-Pad4_ Net-_X28-Pad4_ Net-_U17-Pad1_ 4_OR
+X28 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U18-Pad5_ Net-_X28-Pad4_ 3_and
+U17 Net-_U17-Pad1_ Net-_U11-Pad2_ unconnected-_U17-Pad3_ unconnected-_U17-Pad4_ Net-_U17-Pad5_ unconnected-_U17-Pad6_ d_dff
+U27 Net-_U18-Pad5_ Net-_U20-Pad2_ Net-_U27-Pad3_ d_tristate
+U24 Net-_U15-Pad5_ Net-_U20-Pad2_ Net-_U24-Pad3_ d_tristate
+U8 Net-_U10-Pad2_ Net-_U8-Pad2_ d_inverter
+U6 Net-_U6-Pad1_ Net-_U10-Pad2_ d_buffer
+X13 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U13-Pad5_ Net-_X13-Pad4_ 3_and
+X21 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U15-Pad5_ Net-_X21-Pad4_ 3_and
+X6 Net-_U5-Pad2_ Net-_U10-Pad2_ Net-_X6-Pad3_ Net-_X34-Pad2_ 3_and
+X5 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U11-Pad5_ Net-_X34-Pad1_ 3_and
+X34 Net-_X34-Pad1_ Net-_X34-Pad2_ Net-_X34-Pad3_ Net-_X34-Pad4_ Net-_U12-Pad1_ 4_OR
+U12 Net-_U12-Pad1_ Net-_U11-Pad2_ unconnected-_U12-Pad3_ unconnected-_U12-Pad4_ Net-_U12-Pad5_ unconnected-_U12-Pad6_ d_dff
+X10 Net-_U5-Pad2_ Net-_U10-Pad2_ Net-_X10-Pad3_ Net-_X10-Pad4_ 3_and
+U13 Net-_U13-Pad1_ Net-_U11-Pad2_ unconnected-_U13-Pad3_ unconnected-_U13-Pad4_ Net-_U13-Pad5_ unconnected-_U13-Pad6_ d_dff
+X35 Net-_X35-Pad1_ Net-_X10-Pad4_ Net-_X11-Pad4_ Net-_X12-Pad4_ Net-_U13-Pad1_ 4_OR
+X12 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U14-Pad5_ Net-_X12-Pad4_ 3_and
+X11 Net-_U10-Pad1_ Net-_U8-Pad2_ Net-_U13-Pad5_ Net-_X11-Pad4_ 3_and
+X9 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U12-Pad5_ Net-_X35-Pad1_ 3_and
+X8 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U13-Pad5_ Net-_X34-Pad4_ 3_and
+X7 Net-_U10-Pad1_ Net-_U8-Pad2_ Net-_U12-Pad5_ Net-_X34-Pad3_ 3_and
+X37 Net-_X17-Pad4_ Net-_X18-Pad4_ Net-_X19-Pad4_ Net-_X20-Pad4_ Net-_U15-Pad1_ 4_OR
+U15 Net-_U15-Pad1_ Net-_U11-Pad2_ unconnected-_U15-Pad3_ unconnected-_U15-Pad4_ Net-_U15-Pad5_ unconnected-_U15-Pad6_ d_dff
+X20 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U16-Pad5_ Net-_X20-Pad4_ 3_and
+X16 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U15-Pad5_ Net-_X16-Pad4_ 3_and
+X14 Net-_U5-Pad2_ Net-_U10-Pad2_ Net-_X14-Pad3_ Net-_X14-Pad4_ 3_and
+X15 Net-_U10-Pad1_ Net-_U8-Pad2_ Net-_U14-Pad5_ Net-_X15-Pad4_ 3_and
+X17 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U14-Pad5_ Net-_X17-Pad4_ 3_and
+X19 Net-_U10-Pad1_ Net-_U8-Pad2_ Net-_U15-Pad5_ Net-_X19-Pad4_ 3_and
+X18 Net-_U5-Pad2_ Net-_U10-Pad2_ Net-_X18-Pad3_ Net-_X18-Pad4_ 3_and
+X36 Net-_X13-Pad4_ Net-_X14-Pad4_ Net-_X15-Pad4_ Net-_X16-Pad4_ Net-_U14-Pad1_ 4_OR
+U14 Net-_U14-Pad1_ Net-_U11-Pad2_ unconnected-_U14-Pad3_ unconnected-_U14-Pad4_ Net-_U14-Pad5_ unconnected-_U14-Pad6_ d_dff
+.end

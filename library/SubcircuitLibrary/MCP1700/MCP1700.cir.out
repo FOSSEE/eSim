@@ -1,0 +1,34 @@
+.title kicad schematic
+
+.include LM321.sub
+.include D.lib
+.include NPN.lib
+.include PMOS-180nm.lib
+x1 net-_c1-pad2_ net-_qn1-pad2_ vin net-_x1-pad4_ gnd LM321
+* u2 vout plot_db
+d1 vout vin 1N4148
+mp3 vout net-_x1-pad4_ vin vin CMOSP W=100u L=100u M=1
+c3 vout gnd 1u
+r1 gnd net-_qn1-pad3_ 8k
+qn2 net-_qn2-pad1_ net-_qn1-pad2_ net-_qn2-pad3_ Q2N2222
+qn1 net-_qn1-pad1_ net-_qn1-pad2_ net-_qn1-pad3_ Q2N2222
+r2 net-_qn1-pad3_ net-_qn2-pad3_ 2k
+mp1 vin net-_qn2-pad1_ net-_qn1-pad1_ vin CMOSP W=100u L=100u M=1
+mp2 vin net-_qn2-pad1_ net-_qn2-pad1_ vin CMOSP W=100u L=100u M=1
+v1 vin gnd 5v
+c2 vin gnd 1u
+* u1 vin plot_db
+c1 vout net-_c1-pad2_ 22p
+r3 net-_c1-pad2_ vout 15k
+r4 gnd net-_c1-pad2_ 10k
+.tran 10e-09 1e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot db(vout)
+plot db(vin)
+.endc
+.end

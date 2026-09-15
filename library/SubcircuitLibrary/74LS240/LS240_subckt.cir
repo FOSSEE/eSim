@@ -1,0 +1,27 @@
+.title KiCad schematic
+U16 OE2 Net-_U16-Pad2_ d_inverter
+U15 OE2 Net-_U15-Pad2_ d_inverter
+U1 OE1 A1 A2 A3 A4 Y1 Y2 Y3 Y4 A5 A6 A7 A8 Y5 Y6 Y7 Y8 OE2 PORT
+U17 OE2 Net-_U17-Pad2_ d_inverter
+U5 OE1 Net-_U5-Pad2_ d_inverter
+U11 Net-_U11-Pad1_ Y2 d_inverter
+U4 OE1 Net-_U4-Pad2_ d_inverter
+U9 Net-_U5-Pad2_ A4 Net-_U13-Pad1_ d_and
+U13 Net-_U13-Pad1_ Y4 d_inverter
+U8 Net-_U4-Pad2_ A3 Net-_U12-Pad1_ d_and
+U12 Net-_U12-Pad1_ Y3 d_inverter
+U2 OE1 Net-_U2-Pad2_ d_inverter
+U3 OE1 Net-_U3-Pad2_ d_inverter
+U7 Net-_U3-Pad2_ A2 Net-_U11-Pad1_ d_and
+U6 Net-_U2-Pad2_ A1 Net-_U10-Pad1_ d_and
+U10 Net-_U10-Pad1_ Y1 d_inverter
+U25 Net-_U21-Pad3_ Y7 d_inverter
+U21 Net-_U17-Pad2_ A7 Net-_U21-Pad3_ d_and
+U26 Net-_U22-Pad3_ Y8 d_inverter
+U22 Net-_U18-Pad2_ A8 Net-_U22-Pad3_ d_and
+U18 OE2 Net-_U18-Pad2_ d_inverter
+U24 Net-_U20-Pad3_ Y6 d_inverter
+U20 Net-_U16-Pad2_ A6 Net-_U20-Pad3_ d_and
+U23 Net-_U19-Pad3_ Y5 d_inverter
+U19 Net-_U15-Pad2_ A5 Net-_U19-Pad3_ d_and
+.end

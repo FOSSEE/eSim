@@ -1,0 +1,19 @@
+* Subcircuit SRFF
+.subckt SRFF net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad6_ net-_u1-pad8_ net-_u1-pad9_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/srff/srff.cir
+.include NAND_2.sub
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pd2nw_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__r+c.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__linear.model.spice"
+.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pw2nd_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__inductors.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__pnp.model.spice"
+* s c m o d e
+x1 net-_u1-pad1_ net-_u1-pad6_ net-_u1-pad4_ net-_x1-pad4_ net-_u1-pad2_ NAND_2
+x2 net-_u1-pad2_ net-_u1-pad6_ net-_u1-pad4_ net-_x2-pad4_ net-_u1-pad3_ NAND_2
+x4 net-_u1-pad8_ net-_u1-pad6_ net-_u1-pad4_ net-_u1-pad9_ net-_x2-pad4_ NAND_2
+x3 net-_x1-pad4_ net-_u1-pad6_ net-_u1-pad4_ net-_u1-pad8_ net-_u1-pad9_ NAND_2
+* Control Statements
+
+.ends SRFF

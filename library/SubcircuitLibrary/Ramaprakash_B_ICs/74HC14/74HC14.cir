@@ -1,0 +1,13 @@
+.title KiCad schematic
+M6 VDD Net-_M1-Pad1_ Net-_M1-Pad3_ GND eSim_MOS_N
+M5 Net-_M3-Pad3_ Net-_M1-Pad1_ GND VDD eSim_MOS_P
+M2 Net-_M1-Pad3_ IN GND GND eSim_MOS_N
+M1 Net-_M1-Pad1_ IN Net-_M1-Pad3_ GND eSim_MOS_N
+v1 VDD GND DC
+U4 VDD plot_v1
+U3 Net-_M1-Pad1_ plot_v1
+U1 IN Net-_M1-Pad1_ PORT
+M4 Net-_M3-Pad3_ IN Net-_M1-Pad1_ VDD eSim_MOS_P
+M3 VDD IN Net-_M3-Pad3_ VDD eSim_MOS_P
+U2 IN plot_v1
+.end

@@ -1,0 +1,10 @@
+* Subcircuit DFF_CE
+.subckt DFF_CE net-_sc1-pad3_ net-_sc1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ 
+* h:\esim\esim\library\subcircuitlibrary\dff_ce\dff_ce.cir
+.include D_FF.sub
+xsc1 net-_sc1-pad1_ net-_sc1-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+* s c m o d e
+x1 net-_u1-pad3_ net-_sc1-pad1_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ D_FF
+* Control Statements
+
+.ends DFF_CE

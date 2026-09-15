@@ -95,6 +95,7 @@ class NewProjectInfo(QtWidgets.QWidget):
                     'write permission on ' + self.workspace
                 )
                 self.msg.exec()
+                return None, None
 
             # New KiCad v6 file extension
             f.write("schematicFile " + self.projName + ".kicad_sch\n")

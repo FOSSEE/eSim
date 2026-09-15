@@ -1,0 +1,102 @@
+.title KiCad schematic
+U36 O_8 Net-_U35-Pad1_ adc_bridge_1
+U35 Net-_U35-Pad1_ Net-_U35-Pad2_ d_inverter
+U32 mode Net-_U25-Pad1_ Net-_U32-Pad3_ d_or
+X7 v+ Net-_R18-Pad1_ vin O_7 IC_LM397MFX
+U42 Net-_U40-Pad2_ Net-_U42-Pad2_ Net-_U42-Pad3_ d_and
+U47 Net-_U45-Pad2_ Net-_U47-Pad2_ Net-_U47-Pad3_ d_and
+U49 Net-_U47-Pad3_ Net-_Q10-Pad2_ dac_bridge_1
+U1 out_1 LowEnd v+ LowEnd vin Highend unconnected-_U1-Pad7_ unconnected-_U1-Pad8_ mode out_10 out_9 out_8 out_7 out_6 out_5 out_4 out_3 out_2 PORT
+Q10 out_10 Net-_Q10-Pad2_ GND eSim_NPN
+R31 v+ out_10 1000
+Q9 out_9 Net-_Q9-Pad2_ GND eSim_NPN
+U44 Net-_U42-Pad3_ Net-_Q9-Pad2_ dac_bridge_1
+R29 v+ out_9 1000
+X8 v+ Net-_R22-Pad1_ vin O_8 IC_LM397MFX
+R21 O_8 v+ 1000
+X9 v+ Net-_R24-Pad1_ vin O_9 IC_LM397MFX
+R24 Net-_R24-Pad1_ Net-_R22-Pad1_ 1000
+R27 O_10 v+ 1000
+R28 Net-_R28-Pad1_ Net-_R24-Pad1_ 1000
+R25 O_9 v+ 1000
+R22 Net-_R22-Pad1_ Net-_R18-Pad1_ 1000
+U46 O_10 Net-_U45-Pad1_ adc_bridge_1
+U40 Net-_U40-Pad1_ Net-_U40-Pad2_ d_inverter
+U41 O_9 Net-_U40-Pad1_ adc_bridge_1
+U45 Net-_U45-Pad1_ Net-_U45-Pad2_ d_inverter
+U48 mode Net-_U40-Pad1_ Net-_U47-Pad2_ d_or
+X10 v+ Net-_R28-Pad1_ vin O_10 IC_LM397MFX
+R30 LowEnd Net-_R28-Pad1_ 1000
+U37 mode Net-_U30-Pad1_ Net-_U37-Pad3_ d_or
+U43 mode Net-_U35-Pad1_ Net-_U42-Pad2_ d_or
+U39 Net-_U35-Pad2_ Net-_U37-Pad3_ Net-_U38-Pad1_ d_and
+U38 Net-_U38-Pad1_ Net-_Q8-Pad2_ dac_bridge_1
+R23 v+ out_7 1000
+Q7 out_7 Net-_Q7-Pad2_ GND eSim_NPN
+R26 v+ out_8 1000
+Q8 out_8 Net-_Q8-Pad2_ GND eSim_NPN
+U33 Net-_U30-Pad2_ Net-_U32-Pad3_ Net-_U33-Pad3_ d_and
+U34 Net-_U33-Pad3_ Net-_Q7-Pad2_ dac_bridge_1
+R18 Net-_R18-Pad1_ Net-_R15-Pad1_ 1000
+U21 O_5 Net-_U20-Pad1_ adc_bridge_1
+U16 O_4 Net-_U15-Pad1_ adc_bridge_1
+R14 O_5 v+ 1000
+R11 O_4 v+ 1000
+X2 v+ Net-_R4-Pad1_ vin O_2 IC_LM397MFX
+X1 v+ Net-_R2-Pad1_ vin O_1 IC_LM397MFX
+U4 O_1 Net-_U3-Pad1_ adc_bridge_1
+R1 O_1 v+ 1000
+U6 O_2 Net-_U13-Pad2_ adc_bridge_1
+R8 O_3 v+ 1000
+U11 O_3 Net-_U10-Pad1_ adc_bridge_1
+R5 O_2 v+ 1000
+R15 Net-_R15-Pad1_ Net-_R12-Pad1_ 1000
+R12 Net-_R12-Pad1_ Net-_R10-Pad1_ 1000
+R7 Net-_R10-Pad2_ Net-_R4-Pad1_ 1000
+X3 v+ Net-_R10-Pad2_ vin O_3 IC_LM397MFX
+R10 Net-_R10-Pad1_ Net-_R10-Pad2_ 1000
+X4 v+ Net-_R10-Pad1_ vin O_4 IC_LM397MFX
+X5 v+ Net-_R12-Pad1_ vin O_5 IC_LM397MFX
+X6 v+ Net-_R15-Pad1_ vin O_6 IC_LM397MFX
+U31 O_7 Net-_U30-Pad1_ adc_bridge_1
+U26 O_6 Net-_U25-Pad1_ adc_bridge_1
+R17 O_6 v+ 1000
+R19 O_7 v+ 1000
+R2 Net-_R2-Pad1_ Highend 1000
+R4 Net-_R4-Pad1_ Net-_R2-Pad1_ 1000
+U20 Net-_U20-Pad1_ Net-_U20-Pad2_ d_inverter
+U23 mode Net-_U15-Pad1_ Net-_U23-Pad3_ d_or
+U24 Net-_U20-Pad2_ Net-_U23-Pad3_ Net-_U22-Pad1_ d_and
+U22 Net-_U22-Pad1_ Net-_Q5-Pad2_ dac_bridge_1
+R13 v+ out_4 1000
+Q4 out_4 Net-_Q4-Pad2_ GND eSim_NPN
+R20 v+ out_6 1000
+U28 Net-_U28-Pad1_ Net-_Q6-Pad2_ dac_bridge_1
+Q6 out_6 Net-_Q6-Pad2_ GND eSim_NPN
+Q5 out_5 Net-_Q5-Pad2_ GND eSim_NPN
+R16 v+ out_5 1000
+U29 Net-_U25-Pad2_ Net-_U27-Pad3_ Net-_U28-Pad1_ d_and
+U17 Net-_U17-Pad1_ Net-_Q4-Pad2_ dac_bridge_1
+U30 Net-_U30-Pad1_ Net-_U30-Pad2_ d_inverter
+U19 Net-_U15-Pad2_ Net-_U18-Pad3_ Net-_U17-Pad1_ d_and
+U3 Net-_U3-Pad1_ Net-_U2-Pad1_ d_inverter
+U8 Net-_U5-Pad2_ Net-_U8-Pad2_ Net-_U7-Pad1_ d_and
+U14 Net-_U10-Pad2_ Net-_U13-Pad3_ Net-_U12-Pad1_ d_and
+U12 Net-_U12-Pad1_ Net-_Q3-Pad2_ dac_bridge_1
+Q3 out_3 Net-_Q3-Pad2_ GND eSim_NPN
+R6 v+ out_2 1000
+R9 v+ out_3 1000
+Q2 out_2 Net-_Q2-Pad2_ GND eSim_NPN
+U25 Net-_U25-Pad1_ Net-_U25-Pad2_ d_inverter
+U27 mode Net-_U20-Pad1_ Net-_U27-Pad3_ d_or
+U15 Net-_U15-Pad1_ Net-_U15-Pad2_ d_inverter
+U13 mode Net-_U13-Pad2_ Net-_U13-Pad3_ d_or
+U9 mode Net-_U3-Pad1_ Net-_U8-Pad2_ d_or
+U5 Net-_U13-Pad2_ Net-_U5-Pad2_ d_inverter
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter
+U18 mode Net-_U10-Pad1_ Net-_U18-Pad3_ d_or
+Q1 out_1 Net-_Q1-Pad2_ GND eSim_NPN
+U7 Net-_U7-Pad1_ Net-_Q2-Pad2_ dac_bridge_1
+R3 v+ out_1 1000
+U2 Net-_U2-Pad1_ Net-_Q1-Pad2_ dac_bridge_1
+.end

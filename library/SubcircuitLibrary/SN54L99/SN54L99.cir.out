@@ -1,0 +1,33 @@
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/sn54l99/sn54l99.cir
+
+.include SerialParallel_blk.sub
+.include or_2.sub
+.include DS_blk.sub
+.include CMOS_INVTR.sub
+.include 2_in_and.sub
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pd2nw_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__r+c.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__linear.model.spice"
+.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pw2nd_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__inductors.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__pnp.model.spice"
+* s c m o d e
+x4 net-_u1-pad7_ net-_u1-pad6_ net-_x4-pad3_ net-_u1-pad4_ /mode net-_x1-pad4_ net-_u1-pad13_ net-_u1-pad15_ net-_u1-pad5_ SerialParallel_blk
+x6 net-_u1-pad5_ net-_x1-pad4_ /mode net-_u1-pad8_ net-_x4-pad3_ net-_u1-pad13_ net-_u1-pad15_ net-_u1-pad9_ DS_blk
+x7 net-_u1-pad9_ net-_x1-pad4_ /mode net-_u1-pad10_ net-_x4-pad3_ net-_u1-pad13_ net-_u1-pad15_ net-_u1-pad11_ DS_blk
+x8 net-_u1-pad11_ net-_x1-pad4_ /mode net-_u1-pad12_ net-_x4-pad3_ net-_u1-pad13_ net-_u1-pad15_ net-_u1-pad14_ DS_blk
+x2 net-_u1-pad13_ net-_x1-pad4_ /rs net-_u1-pad15_ net-_x2-pad5_ 2_in_and
+x3 net-_u1-pad13_ /mode /ls net-_u1-pad15_ net-_x3-pad5_ 2_in_and
+x5 net-_x2-pad5_ net-_x3-pad5_ net-_u1-pad13_ net-_u1-pad15_ net-_x4-pad3_ or_2
+x1 /mode net-_u1-pad13_ net-_u1-pad15_ net-_x1-pad4_ CMOS_INVTR
+* u1  /rs /mode /ls net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

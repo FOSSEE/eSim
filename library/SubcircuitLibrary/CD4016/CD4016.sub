@@ -1,0 +1,32 @@
+* Subcircuit CD4016
+.subckt CD4016 siga_in siga_out sigb_in sigb_out b c gnd sigc_in sigc_out sigd_out sigd_in d a vdd 
+.title kicad schematic
+.include PMOS-180nm.lib
+.include NMOS-180nm.lib
+r6 gnd sigd_in 1000k
+r8 gnd sigd_out 1000k
+m15 sigd_out net-_m11-pad1_ sigd_in vdd CMOSP W=100u L=0.18u M=1
+m16 sigd_out d sigd_in gnd CMOSN W=100u L=0.18u M=1
+m11 net-_m11-pad1_ d gnd gnd CMOSN W=0.36u L=0.18u M=1
+m12 net-_m11-pad1_ d vdd vdd CMOSP W=0.72u L=0.18u M=1
+m9 net-_m10-pad1_ b gnd gnd CMOSN W=0.36u L=0.18u M=1
+m10 net-_m10-pad1_ b vdd vdd CMOSP W=0.72u L=0.18u M=1
+r5 gnd sigb_in 1000k
+m13 sigb_out net-_m10-pad1_ sigb_in vdd CMOSP W=100u L=0.18u M=1
+m14 sigb_out b sigb_in gnd CMOSN W=100u L=0.18u M=1
+r7 gnd sigb_out 1000k
+r3 gnd siga_out 1000k
+m6 sigc_out net-_m3-pad1_ sigc_in vdd CMOSP W=100u L=0.18u M=1
+r4 gnd sigc_out 1000k
+r2 gnd sigc_in 1000k
+m8 sigc_out c sigc_in gnd CMOSN W=100u L=0.18u M=1
+m4 net-_m3-pad1_ c vdd vdd CMOSP W=100u L=0.18u M=1
+m2 net-_m1-pad1_ a vdd vdd CMOSP W=0.72u L=0.18u M=1
+m7 siga_out a siga_in gnd CMOSN W=100u L=0.18u M=1
+m5 siga_out net-_m1-pad1_ siga_in vdd CMOSP W=100u L=0.18u M=1
+m3 net-_m3-pad1_ c gnd gnd CMOSN W=100u L=0.18u M=1
+m1 net-_m1-pad1_ a gnd gnd CMOSN W=0.36u L=0.18u M=1
+r1 gnd siga_in 1000k
+* Control Statements
+
+.ends CD4016

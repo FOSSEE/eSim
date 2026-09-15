@@ -1,0 +1,26 @@
+.title kicad schematic
+.include TP4056.sub
+.include eSim_RedLED.lib
+.include eSim_BlueLED.lib
+
+d2 V_IN net-_d2-pad2_ eSim_BlueLED
+r3 CHRG net-_d2-pad2_ 1k
+c1 V_BAT gnd 10u
+x1 gnd net-_r1-pad2_ gnd V_IN V_BAT net-_r2-pad1_ CHRG V_IN TP4056
+d1 V_IN net-_d1-pad2_ eSim_RedLED
+r2 net-_r2-pad1_ net-_d1-pad2_ 1k
+v1 V_IN gnd 5
+r1 gnd net-_r1-pad2_ 1.2k
+
+.ic v(V_BAT)=0
+.tran 1e-06 5e-3 0 uic
+
+.control
+run
+plot v(v_bat)
+plot v(v_in)
+plot v(chrg)
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

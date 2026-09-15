@@ -1,0 +1,74 @@
+* Subcircuit 74lvc157_ic
+.subckt 74lvc157_ic net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ unconnected-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ unconnected-_u1-pad16_ 
+.title kicad schematic
+* u3 net-_u1-pad15_ net-_u3-pad2_ d_inverter
+* u2 net-_u1-pad1_ net-_u2-pad2_ d_inverter
+* u4 net-_u1-pad15_ net-_u4-pad2_ d_inverter
+* u6 net-_u3-pad2_ net-_u1-pad1_ net-_u10-pad1_ d_and
+* u5 net-_u4-pad2_ net-_u2-pad2_ net-_u11-pad2_ d_and
+* u8 net-_u1-pad3_ net-_u10-pad1_ net-_u15-pad2_ d_and
+* u7 net-_u1-pad2_ net-_u11-pad2_ net-_u15-pad1_ d_and
+* u9 net-_u1-pad5_ net-_u11-pad2_ net-_u17-pad1_ d_and
+* u10 net-_u10-pad1_ net-_u1-pad6_ net-_u10-pad3_ d_and
+* u12 net-_u1-pad10_ net-_u10-pad1_ net-_u12-pad3_ d_and
+* u11 net-_u1-pad11_ net-_u11-pad2_ net-_u11-pad3_ d_and
+* u14 net-_u1-pad13_ net-_u10-pad1_ net-_u14-pad3_ d_and
+* u13 net-_u1-pad14_ net-_u11-pad2_ net-_u13-pad3_ d_and
+* u15 net-_u15-pad1_ net-_u15-pad2_ net-_u1-pad4_ d_or
+* u17 net-_u17-pad1_ net-_u10-pad3_ net-_u1-pad7_ d_or
+* u18 net-_u11-pad3_ net-_u12-pad3_ net-_u1-pad9_ d_or
+* u16 net-_u13-pad3_ net-_u14-pad3_ net-_u1-pad12_ d_or
+a1 net-_u1-pad15_ net-_u3-pad2_ u3
+a2 net-_u1-pad1_ net-_u2-pad2_ u2
+a3 net-_u1-pad15_ net-_u4-pad2_ u4
+a4 [net-_u3-pad2_ net-_u1-pad1_ ] net-_u10-pad1_ u6
+a5 [net-_u4-pad2_ net-_u2-pad2_ ] net-_u11-pad2_ u5
+a6 [net-_u1-pad3_ net-_u10-pad1_ ] net-_u15-pad2_ u8
+a7 [net-_u1-pad2_ net-_u11-pad2_ ] net-_u15-pad1_ u7
+a8 [net-_u1-pad5_ net-_u11-pad2_ ] net-_u17-pad1_ u9
+a9 [net-_u10-pad1_ net-_u1-pad6_ ] net-_u10-pad3_ u10
+a10 [net-_u1-pad10_ net-_u10-pad1_ ] net-_u12-pad3_ u12
+a11 [net-_u1-pad11_ net-_u11-pad2_ ] net-_u11-pad3_ u11
+a12 [net-_u1-pad13_ net-_u10-pad1_ ] net-_u14-pad3_ u14
+a13 [net-_u1-pad14_ net-_u11-pad2_ ] net-_u13-pad3_ u13
+a14 [net-_u15-pad1_ net-_u15-pad2_ ] net-_u1-pad4_ u15
+a15 [net-_u17-pad1_ net-_u10-pad3_ ] net-_u1-pad7_ u17
+a16 [net-_u11-pad3_ net-_u12-pad3_ ] net-_u1-pad9_ u18
+a17 [net-_u13-pad3_ net-_u14-pad3_ ] net-_u1-pad12_ u16
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u6 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u8 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u7 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u9 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u10 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u12 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u11 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u14 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u13 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u15 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u17 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u18 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_or, Ngspice Name: d_or
+.model u16 d_or(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74lvc157_ic

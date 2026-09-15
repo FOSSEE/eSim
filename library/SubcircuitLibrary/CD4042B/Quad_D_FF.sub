@@ -1,0 +1,19 @@
+* Subcircuit Quad_D_FF
+.subckt Quad_D_FF net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/quad_d_ff/quad_d_ff.cir
+.include D_FF.sub
+.include CMOS_INVTR.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad8_ D_FF
+x2 net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad9_ D_FF
+x3 net-_u1-pad4_ net-_u1-pad2_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad10_ D_FF
+x4 net-_u1-pad5_ net-_u1-pad2_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad11_ D_FF
+x5 net-_u1-pad8_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad12_ CMOS_INVTR
+x6 net-_u1-pad9_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad13_ CMOS_INVTR
+x7 net-_u1-pad10_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad14_ CMOS_INVTR
+x8 net-_u1-pad11_ net-_u1-pad7_ net-_u1-pad6_ net-_u1-pad15_ CMOS_INVTR
+* s c m o d e
+* Control Statements
+
+.ends Quad_D_FF

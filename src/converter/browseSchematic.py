@@ -2,7 +2,7 @@ from PyQt6.QtWidgets import QFileDialog
 
 def browse_path(self, text_box):
     file_dialog = QFileDialog()  # a dialog that allows the user to select files or directories
-    file_dialog.setFileMode(QFileDialog.AnyFile)
+    file_dialog.setFileMode(QFileDialog.FileMode.AnyFile)
     file_dialog.setNameFilter("Supported Files (*.sch *.asc *.slb *.asy);;ASY Files (*.asy)")  # Include all supported extensions
     file_dialog.exec()  # Execute the dialog
 

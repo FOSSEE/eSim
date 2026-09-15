@@ -1,0 +1,59 @@
+* c:\fossee\esim\library\subcircuitlibrary\ic_lm3411\ic_lm3411.cir
+
+.include NPN.lib
+.include PNP.lib
+.include D.lib
+q1 net-_c3-pad2_ net-_c3-pad2_ net-_q1-pad3_ Q2N2222
+q2 net-_c3-pad2_ net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q4 net-_c1-pad2_ net-_q4-pad2_ net-_q10-pad2_ Q2N2222
+r3  net-_q1-pad3_ net-_q2-pad3_ 130k
+r4  net-_q2-pad3_ net-_q3-pad3_ 69k
+r1  net-_c3-pad2_ net-_q3-pad2_ 30.75k
+r8  net-_q7-pad2_ net-_q3-pad3_ 45k
+q7 net-_c2-pad2_ net-_q7-pad2_ net-_q10-pad2_ Q2N2222
+r7  net-_q4-pad2_ net-_q7-pad2_ 10k
+q9 net-_q10-pad2_ net-_q10-pad1_ net-_q9-pad3_ Q2N2222
+r9  net-_q9-pad3_ net-_q11-pad3_ 6k
+q11 net-_q11-pad1_ net-_q10-pad1_ net-_q11-pad3_ Q2N2222
+r11  net-_q10-pad1_ net-_q11-pad1_ 40k
+q12 net-_q12-pad1_ net-_q10-pad1_ net-_q12-pad3_ Q2N2222
+r13  net-_q12-pad3_ net-_q11-pad3_ 3.3k
+r6  net-_q2-pad2_ net-_q4-pad2_ 20k
+r5  net-_c3-pad2_ net-_q2-pad2_ 25.5k
+r14  net-_q16-pad2_ net-_q10-pad1_ 66k
+q16 net-_c1-pad1_ net-_q16-pad2_ net-_q11-pad3_ Q2N2222
+d1 net-_d1-pad1_ net-_c1-pad1_ 1N4148
+r16  net-_q20-pad3_ net-_d1-pad1_ 1k
+q20 net-_q20-pad1_ net-_c1-pad1_ net-_q20-pad3_ Q2N2222
+q22 net-_q22-pad1_ net-_q22-pad1_ net-_q20-pad3_ Q2N2222
+q24 net-_c3-pad2_ net-_q22-pad1_ net-_d1-pad1_ Q2N2222
+r12  net-_q13-pad1_ net-_q12-pad1_ 60k
+r10  net-_c3-pad2_ net-_q10-pad3_ 51k
+q14 net-_q14-pad1_ net-_c1-pad2_ net-_q12-pad1_ Q2N2222
+r15  net-_c2-pad1_ net-_q14-pad1_ 110k
+c1  net-_c1-pad1_ net-_c1-pad2_ 8p
+c2  net-_c2-pad1_ net-_c2-pad2_ 5p
+q18 net-_c2-pad1_ net-_c2-pad2_ net-_q12-pad1_ Q2N2222
+c3  net-_c1-pad1_ net-_c3-pad2_ 3p
+r2  net-_q3-pad2_ net-_q11-pad3_ 110k
+* u1  net-_c3-pad2_ net-_q11-pad3_ net-_c3-pad2_ net-_q3-pad2_ net-_d1-pad1_ port
+q5 net-_c1-pad2_ net-_q13-pad1_ net-_c3-pad2_ Q2N2907A
+q8 net-_c2-pad2_ net-_q13-pad1_ net-_c3-pad2_ Q2N2907A
+q13 net-_q13-pad1_ net-_q13-pad1_ net-_c3-pad2_ Q2N2907A
+q15 net-_q14-pad1_ net-_q14-pad1_ net-_c3-pad2_ Q2N2907A
+q17 net-_c2-pad1_ net-_q14-pad1_ net-_c3-pad2_ Q2N2907A
+q19 net-_c1-pad1_ net-_c2-pad1_ net-_c3-pad2_ Q2N2907A
+q21 net-_q20-pad1_ net-_q20-pad1_ net-_c3-pad2_ Q2N2907A
+q23 net-_q22-pad1_ net-_q20-pad1_ net-_c3-pad2_ Q2N2907A
+q6 net-_q11-pad1_ net-_q3-pad2_ net-_q3-pad3_ Q2N2907A
+q3 net-_q11-pad3_ net-_q3-pad2_ net-_q3-pad3_ Q2N2907A
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2907A
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

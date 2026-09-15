@@ -1,0 +1,23 @@
+.title kicad schematic
+
+.include LM321.sub
+.include PNP.lib
+i1 in on_off 1ma
+v2 on_off gnd 1.275v
+x1 adj on_off in net-_qp1-pad2_ gnd LM321
+qp1 vout net-_qp1-pad2_ in Q2N2907A
+v1 in gnd 10v
+c1 in gnd 470n
+r2 gnd adj 3k
+c2 vout gnd 22u
+r3 vout gnd 1300
+r1 adj vout 1k
+.tran 10e-09 1e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

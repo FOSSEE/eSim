@@ -331,6 +331,8 @@ class Convert:
         This function is used for scientific conversion.
         """
         self.string_obj = string_obj
+        if not self.string_obj:
+            return "e-00"
         if self.string_obj[0] == 'm':
             return "e-03"
         elif self.string_obj[0] == 'u':

@@ -1,0 +1,17 @@
+.title KiCad schematic
+U2 /VBAT_OUT Net-_v7-Pad1_ unconnected-_U2-PadB_ unconnected-_U2-PadB/S_ unconnected-_U2-PadG_ /OVP_FAULT Net-_v6-Pad1_ /GND LM111_PSPICE
+U1 /FB Net-_v5-Pad1_ /V_CTRL Net-_v6-Pad1_ /GND LM324_PSPICE
+v5 Net-_v5-Pad1_ /GND 1.2
+v7 Net-_v7-Pad1_ /GND 4.2
+v6 Net-_v6-Pad1_ /GND 5
+M1 /VBUS_IN Net-_E1-Pad2_ /LX1 unconnected-_M1-Pad4_ mosfet_n
+E1 Net-_E1-Pad1_ Net-_E1-Pad2_ /LX1 /GND 1
+v2 Net-_E1-Pad1_ /GND PULSE(0 5 0 10n 10n 1u 2u)
+v1 Net-_M2-Pad2_ /GND PULSE(0 5 1u 10n 10n 1u 2u)
+M2 /LX1 Net-_M2-Pad2_ /GND unconnected-_M2-Pad4_ mosfet_n
+v3 Net-_E2-Pad1_ /GND DC 5
+E2 Net-_E2-Pad1_ Net-_E2-Pad2_ /LX2 /GND 1
+M3 /VBAT_OUT Net-_E2-Pad2_ /LX2 unconnected-_M3-Pad4_ mosfet_n
+M4 /LX2 Net-_M4-Pad2_ /GND unconnected-_M4-Pad4_ mosfet_n
+v4 Net-_M4-Pad2_ /GND DC 0
+.end

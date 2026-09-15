@@ -1,0 +1,20 @@
+* C:\Users\pavithra\eSim-Workspace\TA7642_test\TA7642_test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/03/25 13:07:35
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+C1  Net-_C1-Pad1_ in 0.01u		
+R1  in GND 75		
+C2  GND Vout 1u		
+R2  Net-_C1-Pad1_ Vout 100k		
+R3  Vout VCC 1.5k		
+U1  Vout plot_v1		
+v1  in GND sine		
+U2  in plot_v1		
+X1  GND Net-_C1-Pad1_ Vout TA7642		
+R4  Vout GND 100k		
+
+.end

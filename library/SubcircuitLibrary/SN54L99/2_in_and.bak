@@ -1,0 +1,151 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L NAND_2 X1
+U 1 1 686CC211
+P 5400 3000
+F 0 "X1" H 5500 3000 60  0000 C CNN
+F 1 "NAND_2" H 5450 2750 60  0000 C CNN
+F 2 "" H 5400 3000 60  0001 C CNN
+F 3 "" H 5400 3000 60  0001 C CNN
+	1    5400 3000
+	1    0    0    -1  
+$EndComp
+$Comp
+L CMOS_INVTR X2
+U 1 1 686CC23B
+P 6400 3000
+F 0 "X2" H 6400 3000 60  0000 C CNN
+F 1 "CMOS_INVTR" H 6450 2800 60  0000 C CNN
+F 2 "" H 6400 3000 60  0001 C CNN
+F 3 "" H 6400 3000 60  0001 C CNN
+	1    6400 3000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4950 2900 6000 2900
+Wire Wire Line
+	5000 2900 5000 2850
+Wire Wire Line
+	4950 3100 6000 3100
+Wire Wire Line
+	5000 3100 5000 3150
+$Comp
+L PORT U1
+U 1 1 686CC270
+P 4600 2850
+F 0 "U1" H 4650 2950 30  0000 C CNN
+F 1 "PORT" H 4600 2850 30  0000 C CNN
+F 2 "" H 4600 2850 60  0000 C CNN
+F 3 "" H 4600 2850 60  0000 C CNN
+	1    4600 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 3 1 686CC2D9
+P 4750 2950
+F 0 "U1" H 4800 3050 30  0000 C CNN
+F 1 "PORT" H 4750 2950 30  0000 C CNN
+F 2 "" H 4750 2950 60  0000 C CNN
+F 3 "" H 4750 2950 60  0000 C CNN
+	3    4750 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 686CC2FC
+P 4750 3050
+F 0 "U1" H 4800 3150 30  0000 C CNN
+F 1 "PORT" H 4750 3050 30  0000 C CNN
+F 2 "" H 4750 3050 60  0000 C CNN
+F 3 "" H 4750 3050 60  0000 C CNN
+	4    4750 3050
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 686CC31D
+P 4600 3150
+F 0 "U1" H 4650 3250 30  0000 C CNN
+F 1 "PORT" H 4600 3150 30  0000 C CNN
+F 2 "" H 4600 3150 60  0000 C CNN
+F 3 "" H 4600 3150 60  0000 C CNN
+	2    4600 3150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 5 1 686CC342
+P 7200 3000
+F 0 "U1" H 7250 3100 30  0000 C CNN
+F 1 "PORT" H 7200 3000 30  0000 C CNN
+F 2 "" H 7200 3000 60  0000 C CNN
+F 3 "" H 7200 3000 60  0000 C CNN
+	5    7200 3000
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	4850 2850 4950 2850
+Wire Wire Line
+	4950 2850 4950 2900
+Connection ~ 5000 2900
+Wire Wire Line
+	4850 3150 4950 3150
+Wire Wire Line
+	4950 3150 4950 3100
+Connection ~ 5000 3100
+$EndSCHEMATC

@@ -1,0 +1,29 @@
+.title kicad schematic
+
+.include LM393.sub
+.include LM321.sub
+.include PNP.lib
+r1 vtap out 500
+r3 e_b out 330k
+* u2 out plot_v1
+c2 out gnd 1p
+v2 in gnd 12v
+c1 in gnd 1p
+v1 net-_v1-pad1_ vtap 60mv
+* u1 in plot_v1
+r2 gnd vtap 450
+x2 in net-_v1-pad1_ net-_v3-pad1_ e_b gnd unconnected-_x2-pad6_ unconnected-_x2-pad7_ unconnected-_x2-pad8_ LM393
+v3 net-_v3-pad1_ gnd 1.235v
+qp1 out net-_qp1-pad2_ in Q2N2907A
+x1 vtap net-_v3-pad1_ in net-_qp1-pad2_ gnd LM321
+.tran 10e-09 1e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out)
+plot v(in)
+.endc
+.end

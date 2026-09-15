@@ -1,0 +1,320 @@
+EESchema Schematic File Version 5
+EELAYER 36 0
+EELAYER END
+$Descr User 17000 14937
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+Comment5 ""
+Comment6 ""
+Comment7 ""
+Comment8 ""
+Comment9 ""
+$EndDescr
+Connection ~ 5050 3500
+Connection ~ 5050 5500
+Connection ~ 5050 7400
+Connection ~ 5300 8000
+Connection ~ 7050 2000
+Connection ~ 7050 4000
+Connection ~ 7050 6000
+Connection ~ 7050 8000
+Wire Wire Line
+	2200 1350 3050 1350
+Wire Wire Line
+	3050 1350 3050 1600
+Wire Wire Line
+	3050 1700 3050 1950
+Wire Wire Line
+	3050 1950 1650 1950
+Wire Wire Line
+	3300 18600 5550 18600
+Wire Wire Line
+	3950 1650 5050 1650
+Wire Wire Line
+	4000 2000 5500 2000
+Wire Wire Line
+	4000 4000 5500 4000
+Wire Wire Line
+	4000 6000 5500 6000
+Wire Wire Line
+	4000 8000 5300 8000
+Wire Wire Line
+	5050 1650 5050 3500
+Wire Wire Line
+	5050 3500 5050 5500
+Wire Wire Line
+	5050 5500 5050 7400
+Wire Wire Line
+	5050 5500 6550 5500
+Wire Wire Line
+	5050 7400 5050 9350
+Wire Wire Line
+	5300 8000 5500 8000
+Wire Wire Line
+	5300 8950 5300 8000
+Wire Wire Line
+	5500 8950 5300 8950
+Wire Wire Line
+	6550 3200 6550 3500
+Wire Wire Line
+	6550 3500 5050 3500
+Wire Wire Line
+	6550 5200 6550 5500
+Wire Wire Line
+	6550 7200 6550 7400
+Wire Wire Line
+	6550 7400 5050 7400
+Wire Wire Line
+	6550 9150 6550 9350
+Wire Wire Line
+	6550 9350 5050 9350
+Wire Wire Line
+	6850 2000 7050 2000
+Wire Wire Line
+	6850 4000 7050 4000
+Wire Wire Line
+	6850 6000 7050 6000
+Wire Wire Line
+	6850 8000 7050 8000
+Wire Wire Line
+	7050 2000 8000 2000
+Wire Wire Line
+	7050 3000 6850 3000
+Wire Wire Line
+	7050 3000 7050 2000
+Wire Wire Line
+	7050 4000 7050 5000
+Wire Wire Line
+	7050 4000 8000 4000
+Wire Wire Line
+	7050 5000 6850 5000
+Wire Wire Line
+	7050 6000 8000 6000
+Wire Wire Line
+	7050 7000 6850 7000
+Wire Wire Line
+	7050 7000 7050 6000
+Wire Wire Line
+	7050 8000 7050 8950
+Wire Wire Line
+	7050 8000 8000 8000
+Wire Wire Line
+	7050 8950 6850 8950
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 1350 1950
+F 0 "U?" H 1350 2200 60  0000 C CNN
+F 1 "d_inverter" H 1350 2050 60  0000 C CNN
+F 2 "" H 1400 1900 60  0000 C CNN
+F 3 "" H 1400 1900 60  0000 C CNN
+	1    1350 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 5800 3000
+F 0 "U?" H 5800 3250 60  0000 C CNN
+F 1 "d_inverter" H 5800 3100 60  0000 C CNN
+F 2 "" H 5850 2950 60  0000 C CNN
+F 3 "" H 5850 2950 60  0000 C CNN
+	1    5800 3000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 5800 5000
+F 0 "U?" H 5800 5250 60  0000 C CNN
+F 1 "d_inverter" H 5800 5100 60  0000 C CNN
+F 2 "" H 5850 4950 60  0000 C CNN
+F 3 "" H 5850 4950 60  0000 C CNN
+	1    5800 5000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 5800 7000
+F 0 "U?" H 5800 7250 60  0000 C CNN
+F 1 "d_inverter" H 5800 7100 60  0000 C CNN
+F 2 "" H 5850 6950 60  0000 C CNN
+F 3 "" H 5850 6950 60  0000 C CNN
+	1    5800 7000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 5800 8950
+F 0 "U?" H 5800 9200 60  0000 C CNN
+F 1 "d_inverter" H 5800 9050 60  0000 C CNN
+F 2 "" H 5850 8900 60  0000 C CNN
+F 3 "" H 5850 8900 60  0000 C CNN
+	1    5800 8950
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 6550 2000
+F 0 "U?" H 6550 2250 60  0000 C CNN
+F 1 "d_inverter" H 6550 2100 60  0000 C CNN
+F 2 "" H 6600 1950 60  0000 C CNN
+F 3 "" H 6600 1950 60  0000 C CNN
+	1    6550 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 6550 4000
+F 0 "U?" H 6550 4250 60  0000 C CNN
+F 1 "d_inverter" H 6550 4100 60  0000 C CNN
+F 2 "" H 6600 3950 60  0000 C CNN
+F 3 "" H 6600 3950 60  0000 C CNN
+	1    6550 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 6550 6000
+F 0 "U?" H 6550 6250 60  0000 C CNN
+F 1 "d_inverter" H 6550 6100 60  0000 C CNN
+F 2 "" H 6600 5950 60  0000 C CNN
+F 3 "" H 6600 5950 60  0000 C CNN
+	1    6550 6000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U?
+U 1 1 00000000
+P 6550 8000
+F 0 "U?" H 6550 8250 60  0000 C CNN
+F 1 "d_inverter" H 6550 8100 60  0000 C CNN
+F 2 "" H 6600 7950 60  0000 C CNN
+F 3 "" H 6600 7950 60  0000 C CNN
+	1    6550 8000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_and U?
+U 1 1 00000000
+P 3500 1700
+F 0 "U?" H 3500 2050 60  0000 C CNN
+F 1 "d_and" H 3500 1900 60  0000 C CNN
+F 2 "" H 3500 1700 60  0000 C CNN
+F 3 "" H 3500 1700 60  0000 C CNN
+	1    3500 1700
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Subckt:TRISTATE X?
+U 1 1 00000000
+P 5800 2000
+F 0 "X?" H 5875 2350 50  0000 C CNN
+F 1 "TRISTATE" H 5875 2250 50  0000 C CNN
+F 2 "" H 5800 2000 50  0001 C CNN
+F 3 "" H 5800 2000 50  0001 C CNN
+	1    5800 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Subckt:TRISTATE X?
+U 1 1 00000000
+P 5800 4000
+F 0 "X?" H 5875 4350 50  0000 C CNN
+F 1 "TRISTATE" H 5875 4250 50  0000 C CNN
+F 2 "" H 5800 4000 50  0001 C CNN
+F 3 "" H 5800 4000 50  0001 C CNN
+	1    5800 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Subckt:TRISTATE X?
+U 1 1 00000000
+P 5800 6000
+F 0 "X?" H 5875 6350 50  0000 C CNN
+F 1 "TRISTATE" H 5875 6250 50  0000 C CNN
+F 2 "" H 5800 6000 50  0001 C CNN
+F 3 "" H 5800 6000 50  0001 C CNN
+	1    5800 6000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Subckt:TRISTATE X?
+U 1 1 00000000
+P 5800 8000
+F 0 "X?" H 5875 8350 50  0000 C CNN
+F 1 "TRISTATE" H 5875 8250 50  0000 C CNN
+F 2 "" H 5800 8000 50  0001 C CNN
+F 3 "" H 5800 8000 50  0001 C CNN
+	1    5800 8000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Subckt:TRISTATE X?
+U 1 1 00000000
+P 6550 3000
+F 0 "X?" H 6625 3350 50  0000 C CNN
+F 1 "TRISTATE" H 6625 3250 50  0000 C CNN
+F 2 "" H 6550 3000 50  0001 C CNN
+F 3 "" H 6550 3000 50  0001 C CNN
+	1    6550 3000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Subckt:TRISTATE X?
+U 1 1 00000000
+P 6550 5000
+F 0 "X?" H 6625 5350 50  0000 C CNN
+F 1 "TRISTATE" H 6625 5250 50  0000 C CNN
+F 2 "" H 6550 5000 50  0001 C CNN
+F 3 "" H 6550 5000 50  0001 C CNN
+	1    6550 5000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Subckt:TRISTATE X?
+U 1 1 00000000
+P 6550 7000
+F 0 "X?" H 6625 7350 50  0000 C CNN
+F 1 "TRISTATE" H 6625 7250 50  0000 C CNN
+F 2 "" H 6550 7000 50  0001 C CNN
+F 3 "" H 6550 7000 50  0001 C CNN
+	1    6550 7000
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Subckt:TRISTATE X?
+U 1 1 00000000
+P 6550 8950
+F 0 "X?" H 6625 9300 50  0000 C CNN
+F 1 "TRISTATE" H 6625 9200 50  0000 C CNN
+F 2 "" H 6550 8950 50  0001 C CNN
+F 3 "" H 6550 8950 50  0001 C CNN
+	1    6550 8950
+	-1   0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U?
+U 1 1 00000000
+P 1550 1350
+F 0 "U?" H 1625 1750 60  0000 C CNN
+F 1 "d_buffer" H 1625 1600 60  0000 C CNN
+F 2 "" H 1550 1350 60  0000 C CNN
+F 3 "" H 1550 1350 60  0000 C CNN
+	1    1550 1350
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

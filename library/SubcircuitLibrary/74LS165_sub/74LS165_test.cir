@@ -1,0 +1,33 @@
+.title 74LS165 Testbench
+
+.include C:\eSim_Kaviya\LS165_sub\LS165_sub.cir
+
+v1 n_clk GND DC 0 pulse(0 5 0 1e-9 1e-9 0.00005 0.0001)
+v2 n_shld GND DC 0 pulse(0 5 0 1e-9 1e-9 0.004 0.008)
+v3 n_zero GND DC 0
+v4 n_high GND DC 5
+
+.model adcm adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1e-9 fall_delay=1e-9)
+.model dacm dac_bridge(out_low=0 out_high=5 out_undef=2.5 t_rise=1e-9 t_fall=1e-9)
+
+a_adc1 [n_clk n_shld n_zero n_zero] [dCLK dSHLD dlow dlow2] adcm
+a_adc2 [n_high n_high n_high n_high] [dA dB dC dD] adcm
+a_adc3 [n_high n_high n_high n_zero] [dE dF dG dH] adcm
+
+XSUB dA dB dC dD dE dF dG dH dCLK dSHLD dlow dQH dQHbar LS165
+
+a_dac1 [dQH] [n_qh] dacm
+a_dac2 [dQHbar] [n_qhbar] dacm
+
+r1 n_qh GND 1k
+r2 n_qhbar GND 1k
+
+.options trtol=1 evmax=10000
+.tran 0.00001 0.008
+
+.control
+run
+plot v(n_clk)+10 v(n_shld)+5 v(n_qh) v(n_qhbar)
+.endc
+
+.end

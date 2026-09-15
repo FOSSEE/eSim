@@ -1,0 +1,19 @@
+.title KiCad schematic
+X1 Net-_U2-Pad9_ Net-_U2-Pad10_ Net-_U2-Pad11_ Net-_U2-Pad12_ Net-_U2-Pad13_ Net-_U2-Pad14_ Net-_U2-Pad15_ Net-_U2-Pad16_ Net-_U4-Pad5_ Net-_U4-Pad6_ Net-_U4-Pad7_ Net-_U1-Pad1_ CD4051
+U4 Net-_U4-Pad1_ Net-_U4-Pad2_ Net-_U4-Pad3_ Net-_U4-Pad4_ Net-_U4-Pad5_ Net-_U4-Pad6_ Net-_U4-Pad7_ unconnected-_U4-Pad8_ adc_bridge_4
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ Net-_U2-Pad5_ Net-_U2-Pad6_ Net-_U2-Pad7_ Net-_U2-Pad8_ Net-_U2-Pad9_ Net-_U2-Pad10_ Net-_U2-Pad11_ Net-_U2-Pad12_ Net-_U2-Pad13_ Net-_U2-Pad14_ Net-_U2-Pad15_ Net-_U2-Pad16_ adc_bridge_8
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ dac_bridge_1
+U3 Net-_U1-Pad2_ plot_v1
+v3 Net-_U2-Pad3_ GND pulse
+v4 Net-_U2-Pad4_ GND pulse
+v1 Net-_U2-Pad1_ GND pulse
+v2 Net-_U2-Pad2_ GND pulse
+v9 Net-_U4-Pad1_ GND pulse
+v12 Net-_U4-Pad4_ GND pulse
+v10 Net-_U4-Pad2_ GND pulse
+v11 Net-_U4-Pad3_ GND pulse
+v5 Net-_U2-Pad5_ GND pulse
+v8 Net-_U2-Pad8_ GND pulse
+v6 Net-_U2-Pad6_ GND pulse
+v7 Net-_U2-Pad7_ GND pulse
+.end

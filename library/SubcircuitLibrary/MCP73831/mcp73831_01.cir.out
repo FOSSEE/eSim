@@ -1,0 +1,38 @@
+* --- 1. IC LOGIC (Keep this as it is) ---
+* Pin order: STAT VSS VBAT VDD PROG
+.subckt MCP73831 STAT VSS VBAT VDD PROG
+* Internal logic
+R_d1 VDD VSS 10Meg
+R_d2 VBAT VSS 10Meg
+V_prog PROG VSS DC 1.0
+* B_charge current source connected between VDD and VBAT
+B_charge VDD VBAT I = 1000 * abs(v(PROG)/2000) * (0.5 * (sgn(4.2 - V(VBAT)) + 1))
+.ends MCP73831
+
+* --- 2. EXTERNAL CIRCUIT ---
+V1 V_IN 0 5V
+C1 V_IN 0 4.7u
+
+* Charging element (Battery model)
+C_bat V_BAT 0 1000u
+.ic v(V_BAT)=3.7
+
+C2 V_BAT 0 4.7u
+R1 V_PROG 0 2k
+
+* Main Block (Mapping: STAT=Dummy, VSS=0, VBAT=V_BAT, VDD=V_IN, PROG=V_PROG)
+X1 DUMMY_STAT 0 V_BAT V_IN V_PROG MCP73831
+
+* --- 3. ANALYSIS ---
+* 0.05m time step hai aur 20ms total time (2 cycle ke liye)
+.tran 0.5m 5m
+.control
+run
+
+* Plots
+plot v(V_IN) title 'Input Voltage (Vin)'
+plot v(V_BAT) title 'Battery Charging Voltage (Vbat)'
+plot v(V_PROG) title 'Programming Voltage (Vprog)'
+
+.endc
+.end

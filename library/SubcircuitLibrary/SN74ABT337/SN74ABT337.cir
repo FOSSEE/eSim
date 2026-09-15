@@ -1,0 +1,24 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/SN74ABT337/SN74ABT337.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Wed Jul  9 20:43:25 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X4  Net-_U1-Pad2_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad5_ ? Net-_U1-Pad4_ Net-_X12-Pad1_ ? TFF_SR		
+X3  Net-_U1-Pad2_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad5_ ? Net-_U1-Pad4_ Net-_X11-Pad1_ ? TFF_SR		
+X2  Net-_U1-Pad2_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad5_ ? Net-_U1-Pad4_ Net-_X10-Pad1_ ? TFF_SR		
+X1  Net-_U1-Pad2_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad5_ ? Net-_U1-Pad4_ Net-_X1-Pad7_ ? TFF_SR		
+scmode1  SKY130mode		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ PORT		
+X5  Net-_U1-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad1_ Net-_U1-Pad6_ tri_state		
+X6  Net-_U1-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad1_ Net-_U1-Pad7_ tri_state		
+X7  Net-_U1-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad1_ Net-_U1-Pad8_ tri_state		
+X8  Net-_U1-Pad3_ Net-_U1-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad1_ Net-_U1-Pad9_ tri_state		
+X9  Net-_X1-Pad7_ Net-_U1-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad1_ Net-_U1-Pad10_ tri_state		
+X10  Net-_X10-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad1_ Net-_U1-Pad11_ tri_state		
+X11  Net-_X11-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad1_ Net-_U1-Pad12_ tri_state		
+X12  Net-_X12-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad5_ Net-_U1-Pad1_ Net-_U1-Pad13_ tri_state		
+
+.end

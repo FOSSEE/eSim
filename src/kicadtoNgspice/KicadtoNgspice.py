@@ -59,13 +59,8 @@ class MainWindow(QtWidgets.QWidget):
         # Track the dynamically created widget of KicadtoNgspice Window
         self.obj_track = TrackWidget.TrackWidget()
 
-        # Clear Dictionary/List item of sub circuit and Ngspice model
-        # Dictionary
-        self.obj_track.subcircuitList.clear()
-        self.obj_track.subcircuitTrack.clear()
-        self.obj_track.model_entry_var.clear()
-        # List
-        self.obj_track.modelTrack[:] = []
+        # Reset all shared class-level state for this conversion run
+        TrackWidget.TrackWidget.reset()
 
         # Object of Processing
         obj_proc = PrcocessNetlist()

@@ -1,0 +1,111 @@
+* Subcircuit 74HC132
+.subckt 74HC132 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ 
+.title kicad schematic
+.include 74HC14.sub
+* u23 net-_u19-pad3_ net-_u1-pad10_ d_inverter
+* u22 net-_u18-pad3_ net-_u1-pad9_ d_inverter
+x2 net-_u1-pad2_ net-_u3-pad1_ 74HC14
+x1 net-_u1-pad1_ net-_u2-pad1_ 74HC14
+* u18 net-_u10-pad2_ net-_u14-pad2_ net-_u18-pad3_ d_and
+x3 net-_u1-pad3_ net-_u4-pad1_ 74HC14
+x4 net-_u1-pad4_ net-_u5-pad1_ 74HC14
+* u19 net-_u11-pad2_ net-_u15-pad2_ net-_u19-pad3_ d_and
+* u4 net-_u4-pad1_ net-_u11-pad1_ adc_bridge_1
+* u5 net-_u5-pad1_ net-_u15-pad1_ adc_bridge_1
+* u11 net-_u11-pad1_ net-_u11-pad2_ d_inverter
+* u15 net-_u15-pad1_ net-_u15-pad2_ d_inverter
+* u3 net-_u3-pad1_ net-_u14-pad1_ adc_bridge_1
+* u14 net-_u14-pad1_ net-_u14-pad2_ d_inverter
+* u10 net-_u10-pad1_ net-_u10-pad2_ d_inverter
+* u2 net-_u2-pad1_ net-_u10-pad1_ adc_bridge_1
+* u12 net-_u12-pad1_ net-_u12-pad2_ d_inverter
+* u16 net-_u16-pad1_ net-_u16-pad2_ d_inverter
+x7 net-_u1-pad7_ net-_u8-pad1_ 74HC14
+x8 net-_u1-pad8_ net-_u9-pad1_ 74HC14
+* u7 net-_u7-pad1_ net-_u16-pad1_ adc_bridge_1
+* u6 net-_u6-pad1_ net-_u12-pad1_ adc_bridge_1
+x5 net-_u1-pad5_ net-_u6-pad1_ 74HC14
+x6 net-_u1-pad6_ net-_u7-pad1_ 74HC14
+* u25 net-_u21-pad3_ net-_u1-pad12_ d_inverter
+* u21 net-_u13-pad2_ net-_u17-pad2_ net-_u21-pad3_ d_and
+* u20 net-_u12-pad2_ net-_u16-pad2_ net-_u20-pad3_ d_and
+* u24 net-_u20-pad3_ net-_u1-pad11_ d_inverter
+* u17 net-_u17-pad1_ net-_u17-pad2_ d_inverter
+* u9 net-_u9-pad1_ net-_u17-pad1_ adc_bridge_1
+* u8 net-_u8-pad1_ net-_u13-pad1_ adc_bridge_1
+* u13 net-_u13-pad1_ net-_u13-pad2_ d_inverter
+a1 net-_u19-pad3_ net-_u1-pad10_ u23
+a2 net-_u18-pad3_ net-_u1-pad9_ u22
+a3 [net-_u10-pad2_ net-_u14-pad2_ ] net-_u18-pad3_ u18
+a4 [net-_u11-pad2_ net-_u15-pad2_ ] net-_u19-pad3_ u19
+a5 [net-_u4-pad1_ ] [net-_u11-pad1_ ] u4
+a6 [net-_u5-pad1_ ] [net-_u15-pad1_ ] u5
+a7 net-_u11-pad1_ net-_u11-pad2_ u11
+a8 net-_u15-pad1_ net-_u15-pad2_ u15
+a9 [net-_u3-pad1_ ] [net-_u14-pad1_ ] u3
+a10 net-_u14-pad1_ net-_u14-pad2_ u14
+a11 net-_u10-pad1_ net-_u10-pad2_ u10
+a12 [net-_u2-pad1_ ] [net-_u10-pad1_ ] u2
+a13 net-_u12-pad1_ net-_u12-pad2_ u12
+a14 net-_u16-pad1_ net-_u16-pad2_ u16
+a15 [net-_u7-pad1_ ] [net-_u16-pad1_ ] u7
+a16 [net-_u6-pad1_ ] [net-_u12-pad1_ ] u6
+a17 net-_u21-pad3_ net-_u1-pad12_ u25
+a18 [net-_u13-pad2_ net-_u17-pad2_ ] net-_u21-pad3_ u21
+a19 [net-_u12-pad2_ net-_u16-pad2_ ] net-_u20-pad3_ u20
+a20 net-_u20-pad3_ net-_u1-pad11_ u24
+a21 net-_u17-pad1_ net-_u17-pad2_ u17
+a22 [net-_u9-pad1_ ] [net-_u17-pad1_ ] u9
+a23 [net-_u8-pad1_ ] [net-_u13-pad1_ ] u8
+a24 net-_u13-pad1_ net-_u13-pad2_ u13
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u23 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u22 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u18 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u19 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u11 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u15 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u14 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u10 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u12 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u16 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u7 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u6 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u25 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u21 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, Ngspice Name: d_and
+.model u20 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u24 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u17 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u9 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u8 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 )
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u13 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends 74HC132

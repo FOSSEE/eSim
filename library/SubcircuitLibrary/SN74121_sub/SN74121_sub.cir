@@ -1,0 +1,25 @@
+.title SN74121 Subcircuit
+
+.subckt SN74121 TRIG FCLK Q QBAR
+
+.model invm d_inverter(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model andm d_and(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+.model dffm d_dff(rise_delay=1e-9 fall_delay=1e-9 input_load=1e-12)
+
+* Invert Q for feedback
+a_invq Q QBAR invm
+
+* Trigger gating - only trigger when Q=0
+a_andset [TRIG QBAR] net_set andm
+
+* Output FF
+a_ffout net_set FCLK net_low net_low Q QBAR dffm
+
+* Delay chain for pulse width
+a_ffd1 Q FCLK net_low net_low net_d1 net_d1b dffm
+a_ffd2 net_d1 FCLK net_low net_low net_d2 net_d2b dffm
+a_ffd3 net_d2 FCLK net_low net_low net_d3 net_d3b dffm
+a_ffd4 net_d3 FCLK net_low net_low net_d4 net_d4b dffm
+a_ffd5 net_d4 FCLK net_low net_low net_d5 net_d5b dffm
+
+.ends SN74121

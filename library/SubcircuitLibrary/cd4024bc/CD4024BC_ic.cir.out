@@ -1,0 +1,132 @@
+.title kicad schematic
+
+* u31 net-_u29-pad6_ net-_u1-pad3_ d_inverter
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ unconnected-_u1-pad7_ unconnected-_u1-pad8_ net-_u1-pad9_ unconnected-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ unconnected-_u1-pad13_ unconnected-_u1-pad14_ port
+* u25 net-_u24-pad1_ net-_u21-pad6_ net-_u25-pad3_ net-_u13-pad4_ unconnected-_u25-pad5_ net-_u25-pad6_ d_tff
+* u26 net-_u25-pad3_ d_pulldown
+* u27 net-_u25-pad6_ net-_u1-pad4_ d_inverter
+* u24 net-_u24-pad1_ d_pullup
+* u23 net-_u21-pad6_ net-_u1-pad5_ d_inverter
+* u30 net-_u29-pad3_ d_pulldown
+* u29 net-_u28-pad1_ net-_u25-pad6_ net-_u29-pad3_ net-_u13-pad4_ unconnected-_u29-pad5_ net-_u29-pad6_ d_tff
+* u28 net-_u28-pad1_ d_pullup
+* u16 net-_u16-pad1_ d_pullup
+* u17 net-_u16-pad1_ net-_u13-pad6_ net-_u17-pad3_ net-_u13-pad4_ unconnected-_u17-pad5_ net-_u17-pad6_ d_tff
+* u18 net-_u17-pad3_ d_pulldown
+* u21 net-_u20-pad1_ net-_u17-pad6_ net-_u21-pad3_ net-_u13-pad4_ unconnected-_u21-pad5_ net-_u21-pad6_ d_tff
+* u22 net-_u21-pad3_ d_pulldown
+* u20 net-_u20-pad1_ d_pullup
+* u19 net-_u17-pad6_ net-_u1-pad6_ d_inverter
+* u15 net-_u13-pad6_ net-_u1-pad9_ d_inverter
+* u6 net-_u5-pad3_ d_pulldown
+* u3 net-_u3-pad1_ d_pullup
+* u2 net-_u1-pad2_ net-_u2-pad2_ d_inverter
+* u4 net-_u2-pad2_ net-_u13-pad4_ d_inverter
+* u5 net-_u3-pad1_ net-_u1-pad1_ net-_u5-pad3_ net-_u13-pad4_ unconnected-_u5-pad5_ net-_u5-pad6_ d_tff
+* u7 net-_u5-pad6_ net-_u1-pad12_ d_inverter
+* u13 net-_u12-pad1_ net-_u11-pad1_ net-_u13-pad3_ net-_u13-pad4_ unconnected-_u13-pad5_ net-_u13-pad6_ d_tff
+* u14 net-_u13-pad3_ d_pulldown
+* u9 net-_u8-pad1_ net-_u5-pad6_ net-_u10-pad1_ net-_u13-pad4_ unconnected-_u9-pad5_ net-_u11-pad1_ d_tff
+* u10 net-_u10-pad1_ d_pulldown
+* u8 net-_u8-pad1_ d_pullup
+* u12 net-_u12-pad1_ d_pullup
+* u11 net-_u11-pad1_ net-_u1-pad11_ d_inverter
+a1 net-_u29-pad6_ net-_u1-pad3_ u31
+a2 net-_u24-pad1_ net-_u21-pad6_ net-_u25-pad3_ net-_u13-pad4_ unconnected-_u25-pad5_ net-_u25-pad6_ u25
+a3 net-_u25-pad3_ u26
+a4 net-_u25-pad6_ net-_u1-pad4_ u27
+a5 net-_u24-pad1_ u24
+a6 net-_u21-pad6_ net-_u1-pad5_ u23
+a7 net-_u29-pad3_ u30
+a8 net-_u28-pad1_ net-_u25-pad6_ net-_u29-pad3_ net-_u13-pad4_ unconnected-_u29-pad5_ net-_u29-pad6_ u29
+a9 net-_u28-pad1_ u28
+a10 net-_u16-pad1_ u16
+a11 net-_u16-pad1_ net-_u13-pad6_ net-_u17-pad3_ net-_u13-pad4_ unconnected-_u17-pad5_ net-_u17-pad6_ u17
+a12 net-_u17-pad3_ u18
+a13 net-_u20-pad1_ net-_u17-pad6_ net-_u21-pad3_ net-_u13-pad4_ unconnected-_u21-pad5_ net-_u21-pad6_ u21
+a14 net-_u21-pad3_ u22
+a15 net-_u20-pad1_ u20
+a16 net-_u17-pad6_ net-_u1-pad6_ u19
+a17 net-_u13-pad6_ net-_u1-pad9_ u15
+a18 net-_u5-pad3_ u6
+a19 net-_u3-pad1_ u3
+a20 net-_u1-pad2_ net-_u2-pad2_ u2
+a21 net-_u2-pad2_ net-_u13-pad4_ u4
+a22 net-_u3-pad1_ net-_u1-pad1_ net-_u5-pad3_ net-_u13-pad4_ unconnected-_u5-pad5_ net-_u5-pad6_ u5
+a23 net-_u5-pad6_ net-_u1-pad12_ u7
+a24 net-_u12-pad1_ net-_u11-pad1_ net-_u13-pad3_ net-_u13-pad4_ unconnected-_u13-pad5_ net-_u13-pad6_ u13
+a25 net-_u13-pad3_ u14
+a26 net-_u8-pad1_ net-_u5-pad6_ net-_u10-pad1_ net-_u13-pad4_ unconnected-_u9-pad5_ net-_u11-pad1_ u9
+a27 net-_u10-pad1_ u10
+a28 net-_u8-pad1_ u8
+a29 net-_u12-pad1_ u12
+a30 net-_u11-pad1_ net-_u1-pad11_ u11
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u31 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u25 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u26 d_pulldown(load=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u27 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u24 d_pullup(load=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u23 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u30 d_pulldown(load=1 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u29 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u28 d_pullup(load=1 ) 
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u16 d_pullup(load=1 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u17 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u18 d_pulldown(load=1 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u21 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u22 d_pulldown(load=1 ) 
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u20 d_pullup(load=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u19 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u15 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u6 d_pulldown(load=1 ) 
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u3 d_pullup(load=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u4 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u5 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u13 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u14 d_pulldown(load=1 ) 
+* Schematic Name:                             d_tff, Ngspice Name: d_tff
+.model u9 d_tff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 t_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_pulldown, Ngspice Name: d_pulldown
+.model u10 d_pulldown(load=1 ) 
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u8 d_pullup(load=1 ) 
+* Schematic Name:                             d_pullup, Ngspice Name: d_pullup
+.model u12 d_pullup(load=1 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u11 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

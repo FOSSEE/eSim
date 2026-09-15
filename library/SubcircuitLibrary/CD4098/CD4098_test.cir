@@ -1,0 +1,26 @@
+* C:\Users\pavithra\eSim-Workspace\CD4098_test\CD4098_test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/26/25 15:32:18
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  trig rst Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2		
+v1  trig GND pulse		
+v2  rst GND pulse		
+C1  Net-_C1-Pad1_ Net-_C1-Pad2_ 1u		
+R1  Net-_R1-Pad1_ Net-_C1-Pad2_ 5k		
+U4  Net-_U4-Pad1_ Net-_U4-Pad2_ Q Q_bar dac_bridge_2		
+U5  Q plot_v1		
+U6  Q_bar plot_v1		
+U2  rst plot_v1		
+U3  trig plot_v1		
+x1  Net-_U1-Pad3_ Net-_U7-Pad2_ Net-_U1-Pad4_ Net-_U4-Pad1_ Net-_U4-Pad2_ Net-_R1-Pad1_ GND Net-_C1-Pad1_ Net-_U8-Pad2_ Net-_U7-Pad2_ mono		
+U7  Net-_U7-Pad1_ Net-_U7-Pad2_ adc_bridge_1		
+v3  Net-_U7-Pad1_ GND DC		
+U8  Net-_C1-Pad2_ Net-_U8-Pad2_ adc_bridge_1		
+R2  Net-_C1-Pad2_ Net-_C1-Pad1_ 1k		
+v4  Net-_R1-Pad1_ GND DC		
+
+.end

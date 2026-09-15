@@ -185,6 +185,8 @@ RUN wget https://github.com/verilator/verilator/archive/refs/tags/v4.210.tar.gz 
 
 WORKDIR /tmp
 
+RUN apt-get update && apt-get install -y libreadline-dev
+
 RUN apt-get update && apt-get install -y \
     make gnat clang \
     zlib1g-dev autoconf g++ flex bison \

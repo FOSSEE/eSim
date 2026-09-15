@@ -24,7 +24,7 @@ class TerminalUi(QtWidgets.QMainWindow):
         self.iconDir = "../../images"
 
         # Load the ui file
-        uic.loadUi("TerminalUi.ui", self)
+        uic.loadUi(os.path.join(os.path.dirname(__file__), "TerminalUi.ui"), self)
 
         # Define Our Widgets
         self.progressBar = self.findChild(
@@ -94,7 +94,7 @@ class TerminalUi(QtWidgets.QMainWindow):
     def redoSimulation(self):
         """This function reruns the ngspice simulation
         """
-        self.Flag = "Flase"
+        self.Flag = False
         self.cancelSimulationButton.setEnabled(True)
         self.redoSimulationButton.setEnabled(False)
 

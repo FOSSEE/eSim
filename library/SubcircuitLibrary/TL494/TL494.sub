@@ -1,0 +1,18 @@
+.subckt TL494 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+* Pin order matches TL494 datasheet standard sequence
+VREF_INT 14 7 DC 5.0
+B_ERR1 99 7 V=(V(1)-V(2)) + 1.5
+R_OUT1 99 3 1k
+B_ERR2 98 7 V=0
+R_OUT2 98 3 1k
+R_DUMMY_1 99 7 10MEG
+R_DUMMY_2 98 7 10MEG
+R_DUMMY_3 3 7 10MEG
+V_SAW 50 7 PULSE(0 3.0 0 3.9m 0.1m 1u 4m)
+R_FORCE_SAW 50 5 10
+B_PWM_COMP 40 7 V=((V(3)>V(5))*(V(3)>V(4)))*5.0
+B_MOD_A 41 7 V=V(13)>2.5 ? ((V(5)>2.5)*5.0) : 5.0
+B_MOD_B 42 7 V=V(13)>2.5 ? ((V(5)<=2.5)*5.0) : 5.0
+B_Q1 8 9 I=((V(40)>2.5)*(V(41)>2.5))*(0.1*V(8,9))
+B_Q2 11 10 I=((V(40)>2.5)*(V(42)>2.5))*(0.1*V(11,10))
+.ends TL494

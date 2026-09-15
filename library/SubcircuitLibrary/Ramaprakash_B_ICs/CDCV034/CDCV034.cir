@@ -1,0 +1,7 @@
+.title KiCad schematic
+X3 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad5_ TRISTATE
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ PORT
+X1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ TRISTATE
+X2 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad4_ TRISTATE
+X4 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad6_ TRISTATE
+.end
