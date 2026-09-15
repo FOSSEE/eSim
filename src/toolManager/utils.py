@@ -8,21 +8,21 @@ promote portability and reuse across different Tool Manager components.
 
 Part of the portability-path-resolution roadmap.
 """
-
-import os
-import sys
 import subprocess
 import shutil
-import platform
 import threading
-import time
 from pathlib import Path
+from platform_utils import get_mysys2_path, subprocess_flags
 
 # ==================== CONSTANTS & DEFAULTS ====================
 
 # Default Windows installation paths
-DEFAULT_MSYS2_PATH = Path(r"C:\msys64")
 DEFAULT_ESIM_DIR = Path(r"C:\FOSSEE\eSim")
+
+try:
+    MSYS2_PATH = get_mysys2_path();
+except RuntimeError as e:
+    print(f"[ERROR]: {e}", flush=True)
 
 WIN_KICAD_PATHS = [
     (r"C:\Program Files\KiCad\9.0\bin\kicad.exe", "9"),
@@ -49,10 +49,6 @@ WIN_LLVM_PATHS = [
 # Locations for MSYS2/MinGW64. The FOSSEE fallback supports the bundled
 # MSYS2 environment provided by some eSim installers to ensure 
 # zero-dependency operation.
-FOSSEE_MSYS_CANDIDATES = [
-    Path(r"C:\msys64\mingw64"),
-    Path(r"C:\FOSSEE\MSYS\mingw64"),
-]
 
 # ==================== HELPERS ====================
 
@@ -61,24 +57,14 @@ def run_cmd_safe(cmd, timeout=30, cwd=None, env=None):
     Executes a command safely without showing a window on Windows.
     Returns the subprocess.CompletedProcess result or None if failed.
     """
-    try:
-        if platform.system() == "Windows":
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            startupinfo.wShowWindow = subprocess.SW_HIDE
-            creationflags = subprocess.CREATE_NO_WINDOW
-        else:
-            startupinfo = None
-            creationflags = 0
-        
+    try:     
         result = subprocess.run(
             cmd,
             capture_output=True,
             text=True,
             shell=False,
             timeout=timeout,
-            startupinfo=startupinfo,
-            creationflags=creationflags,
+            **subprocess_flags(),
             encoding='utf-8',
             errors='ignore',
             cwd=cwd,
@@ -95,23 +81,13 @@ def run_cmd_stream(cmd, timeout=900, cwd=None, env=None):
     Returns a tuple of (returncode, full_output_string).
     """
     try:
-        if platform.system() == "Windows":
-            si = subprocess.STARTUPINFO()
-            si.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            si.wShowWindow = subprocess.SW_HIDE
-            cf = subprocess.CREATE_NO_WINDOW
-        else:
-            si = None
-            cf = 0
-
         proc = subprocess.Popen(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             text=True,
             shell=False,
-            startupinfo=si,
-            creationflags=cf,
+            **subprocess_flags(),
             encoding='utf-8',
             errors='ignore',
             cwd=cwd,
@@ -163,24 +139,15 @@ def get_msys2_bash():
     """
     Returns the path to MSYS2 bash.exe if found, else None.
     """
-    bash_path = DEFAULT_MSYS2_PATH / "usr" / "bin" / "bash.exe"
+    bash_path = MSYS2_PATH / "usr" / "bin" / "bash.exe"
     return bash_path if bash_path.exists() else None
-
-def get_msys2_mingw_root():
-    """
-    Returns the path to MSYS2 mingw64 root if found, else None.
-    """
-    for candidate in FOSSEE_MSYS_CANDIDATES:
-        if candidate.exists():
-            return candidate
-    return None
 
 def get_msys2_mingw_bin():
     """
-    Returns the path to MSYS2 mingw64/bin if found, else None.
+    Returns the path to the MSYS2 MinGW bin directory if found, else None.
+    Checks mingw64/bin first then ucrt64/bin and mingw32/bin.
     """
-    for candidate in FOSSEE_MSYS_CANDIDATES:
-        bin_dir = candidate / "bin"
+    for subdir in ["mingw64", "ucrt64", "mingw32"]:
+        bin_dir = MSYS2_PATH / subdir / "bin"
         if bin_dir.exists():
             return bin_dir
-    return None

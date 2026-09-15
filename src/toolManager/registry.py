@@ -6,10 +6,7 @@ Consolidates tool definitions, versions, and platform support.
 
 from dataclasses import dataclass, field
 from typing import List, Dict, Optional, Any
-try:
-    from .constants import get_os_id
-except (ImportError, ValueError):
-    from constants import get_os_id
+from platform_utils import get_os_id
 
 
 @dataclass(frozen=True)

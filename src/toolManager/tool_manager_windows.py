@@ -13,28 +13,32 @@ import zipfile
 import time
 import io
 from pathlib import Path
+from platform_utils import IS_WINDOWS, get_mysys2_path
 
 # Add local directory to path for backend utility imports
 _local_path = str(Path(__file__).resolve().parent)
 if _local_path not in sys.path:
     sys.path.insert(0, _local_path)
 
+try:
+    MSYS2_PATH = get_mysys2_path();
+except RuntimeError as e:
+    print(e)
+
 from utils import (
     run_cmd_safe, run_cmd_stream, which, print_status,
-    DEFAULT_MSYS2_PATH, DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
+    DEFAULT_ESIM_DIR, WIN_KICAD_PATHS,
     WIN_NGSPICE_PATHS, WIN_LLVM_PATHS, get_msys2_bash, 
-    get_msys2_mingw_bin, get_msys2_mingw_root
+    get_msys2_mingw_bin
 )
 
-if sys.platform == "win32":
+if IS_WINDOWS:
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='ignore')
     sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='ignore')
 
 BASE_DIR = Path(__file__).resolve().parent
 STATE_FILE = BASE_DIR / "information.json"
 BASE_DIR.mkdir(parents=True, exist_ok=True)
-
-MSYS2_PATH = DEFAULT_MSYS2_PATH
 
 DOWNLOAD_DIR = BASE_DIR / "Download"
 DOWNLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -202,7 +206,7 @@ def _find_ngspice_exe():
     return which("ngspice") or which("ngspice.exe")
 
 def find_llvm_fixed(version=None):
-    if platform.system() == "Windows":
+    if IS_WINDOWS:
         import ctypes
         HWND_BROADCAST = 0xFFFF
         WM_SETTINGCHANGE = 0x001A
@@ -292,7 +296,7 @@ def get_msys2_env():
     paths = []
     msys_bin = get_msys2_mingw_bin()
     if msys_bin: paths.append(str(msys_bin))
-    msys_root = get_msys2_mingw_root()
+    msys_root = MSYS2_PATH
     if msys_root:
         usr_bin = msys_root.parent / "usr" / "bin"
         if usr_bin.exists(): paths.append(str(usr_bin))
@@ -304,7 +308,7 @@ def find_ghdl(version=None):
     custom_exe = BASE_DIR / "bin" / "ghdl.exe"
     if custom_exe.exists():
         try:
-            result = run_cmd_safe([str(custom_exe), "--version"])
+            result = run_cmd_safe([str(custom_exe), "--version"], env=get_msys2_env())
             if result and result.returncode == 0:
                 match = re.search(r'GHDL\s+(\d+\.\d+(?:\.\d+)?)', result.stdout)
                 if match:
@@ -1034,7 +1038,7 @@ def _install_verilator_from_7z(archive_path, v):
         print_status("install_failed", "extract_error", v)
         return False
 
-    dest_msys = get_msys2_mingw_root()
+    dest_msys = MSYS2_PATH
     if not dest_msys:
         print("[ERROR] MSYS2 not found. Install MSYS2 at C:\\msys64 first.")
         print_status("install_failed", "msys2_missing", v)

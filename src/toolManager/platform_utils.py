@@ -17,6 +17,7 @@ get_msys32_path()         Path   (Windows only: default C:\\msys64)
 subprocess_flags()       dict   (suppress console window on Windows)
 detect_package_manager() str | None
 distro_label()           str
+get_os_id()              str
 
 Note: privilege elevation (pkexec) is handled in tool_manager_linux.py,
 not here. This module is detection-only.
@@ -36,6 +37,7 @@ __all__ = [
     "subprocess_flags",
     "detect_package_manager",
     "distro_label",
+    "get_os_id"
 ]
 
 # ── OS Flags ──────────────────────────────────────────────────────────────────
@@ -118,6 +120,15 @@ def detect_package_manager() -> str | None:
             if shutil.which(cmd):
                 return name
     return None
+
+def get_os_id() -> str:
+    if IS_WINDOWS:
+        return "win32"
+    if IS_LINUX:
+        return "linux"
+    if IS_MAC:
+        return "darwin"
+    return "unknown"
 
 # ── Linux: Human-readable distro string for GUI ───────────────────────────────
 def distro_label() -> str:
