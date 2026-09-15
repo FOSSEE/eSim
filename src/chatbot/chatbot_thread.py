@@ -147,8 +147,29 @@ def _downscale_image_bytes(raw_bytes: bytes) -> bytes:
 
 
 def get_stt_backend() -> str:
+    """Return the best available speech-to-text backend.
+
+    Priority: faster-whisper (offline, best quality) > vosk (offline, lightweight)
+    > google (online, no install) > none
+    """
+    # Check faster-whisper first: offline, no internet needed
+    try:
+        import faster_whisper  # noqa: F401
+        return "whisper"
+    except ImportError:
+        pass
+
+    # Check vosk: offline, very lightweight
+    try:
+        import vosk  # noqa: F401
+        return "vosk"
+    except ImportError:
+        pass
+
+    # Fall back to Google online STT (requires internet)
     if _SR_AVAILABLE:
         return "google"
+
     return "none"
 
 
@@ -422,7 +443,7 @@ class OllamaWorker(QThread):
             bot_response = ""
             for chunk in stream:
                 if self._stop_requested:
-                    bot_response += "\n\n⏹ Generation stopped."
+                    bot_response += "\n\n\u23f9 Generation stopped."
                     break
                 piece = chunk["message"]["content"]
                 bot_response += piece
@@ -582,7 +603,8 @@ class OllamaVisionWorker(QThread):
             if self._stop_requested:
                 response += "\n\n⏹ Generation stopped."
                 break
-            piece       = chunk["message"]["content"]
+            # Use .get() to safely handle malformed/done chunks from Ollama
+            piece       = chunk.get("message", {}).get("content", "")
             response   += piece
             token_count += 1
             self.chunk_signal.emit(piece)
