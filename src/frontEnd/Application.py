@@ -1,7 +1,7 @@
 # =========================================================================
-#          FILE: Application.py
+#      FILE: Application.py
 #
-#         USAGE: ---
+#     USAGE: ---
 #
 #   DESCRIPTION: This main file use to start the Application
 #
@@ -151,23 +151,6 @@ class Application(QtWidgets.QMainWindow):
         self.topToolbar.addAction(self.helpfile)
         self.topToolbar.addAction(self.devdocs)
 
-        # ## This part is meant for SoC Generation which is currently  ##
-        # ## under development and will be will be required in future. ##
-        # self.soc = QtWidgets.QToolButton(self)
-        # self.soc.setText('Generate SoC')
-        # self.soc.setToolTip(
-        #     '<b>SPICE to Verilog Conversion</b><br>' + \
-        #     '<br>The feature is under development.' + \
-        #     '<br>It will be released soon.' + \
-        #     '<br><br>Thank you for your patience!!!'
-        # )
-        # self.soc.setStyleSheet(" \
-        # QWidget { border-radius: 15px; border: 1px \
-        #     solid gray; padding: 10px; margin-left: 20px; } \
-        # ")
-        # self.soc.clicked.connect(self.showSoCRelease)
-        # self.topToolbar.addWidget(self.soc)
-
         # This part is setting fossee logo to the right
         # corner in the application window.
         self.spacer = QtWidgets.QWidget()
@@ -228,18 +211,16 @@ class Application(QtWidgets.QMainWindow):
         )
         self.makerchip.triggered.connect(self.open_makerchip)
 
-        # --- ORFS ---
-
-        self.orfs = QtGui.QAction(
-            QtGui.QIcon(init_path + 'images/OpenROAD.png'),
+        # --- NEW OPENROAD ACTION ADDED HERE ---
+        self.openroad = QtWidgets.QAction(
+            QtGui.QIcon(init_path + 'images/icon.png'),
             '<b>OpenROAD-GDSII</b>', self
         )
-        self.orfs.setToolTip('<b>OpenROAD (RTL to GDSII)</b>')
-        self.orfs.triggered.connect(self.run_orfs)
-
+        self.openroad.setToolTip('Synthesize and Route design to GDSII using OpenROAD')
+        self.openroad.triggered.connect(self.run_openroad_flow)
         # ---------------------------------------
 
-        self.omedit = QtGui.QAction(
+        self.omedit = QtWidgets.QAction(
             QtGui.QIcon(init_path + 'images/omedit.png'),
             '<b>Modelica Converter</b>', self
         )
@@ -268,6 +249,7 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.addAction(self.makerchip)
         self.lefttoolbar.addAction(self.orfs)
         self.lefttoolbar.addAction(self.nghdl)
+        self.lefttoolbar.addAction(self.openroad)
         self.lefttoolbar.addAction(self.omedit)
         self.lefttoolbar.addAction(self.omoptim)
         self.lefttoolbar.addAction(self.conToeSim)
@@ -275,9 +257,7 @@ class Application(QtWidgets.QMainWindow):
         self.lefttoolbar.setIconSize(QSize(40, 40))
 
     def plotFlagPopBox(self):
-        """This function displays a pop-up box with message- Do you want Ngspice plots? and oprions Yes and NO.
-        
-        If the user clicks on Yes, both the NgSpice and python plots are displayed and if No is clicked then only the python plots."""
+        """Displays a pop-up box for Ngspice plots."""
 
         msg_box = QtWidgets.QMessageBox(self)
         msg_box.setWindowTitle("Ngspice Plots")
@@ -296,23 +276,7 @@ class Application(QtWidgets.QMainWindow):
         self.open_ngspice()
 
     def closeEvent(self, event):
-        '''
-        This function closes the ongoing program (process).
-        When exit button is pressed a Message box pops out with \
-        exit message and buttons 'Yes', 'No'.
-
-            1. If 'Yes' is pressed:
-                - check that program (process) in procThread_list \
-                  (a list made in Appconfig.py):
-
-                    - if available it terminates that program.
-                    - if the program (process) is not available, \
-                      then check it in process_obj (a list made in \
-                      Appconfig.py) and if found, it closes the program.
-
-            2. If 'No' is pressed:
-                - the program just continues as it was doing earlier.
-        '''
+        '''Closes the ongoing program.'''
         exit_msg = "Are you sure you want to exit the program?"
         exit_msg += " All unsaved data will be lost."
         reply = QtWidgets.QMessageBox.question(
@@ -335,8 +299,6 @@ class Application(QtWidgets.QMainWindow):
             except BaseException:
                 pass
 
-            # Check if "Open project" and "New project" window is open.
-            # If yes, just close it when application is closed.
             try:
                 self.project.close()
             except BaseException:
@@ -348,7 +310,7 @@ class Application(QtWidgets.QMainWindow):
             event.ignore()
 
     def new_project(self):
-        """This function call New Project Info class."""
+        """Calls New Project Info class."""
         text, ok = QtWidgets.QInputDialog.getText(
             self, 'New Project Info', 'Enter Project Name:'
         )
@@ -382,7 +344,7 @@ class Application(QtWidgets.QMainWindow):
                 pass
 
     def open_project(self):
-        """This project call Open Project Info class."""
+        """Calls Open Project Info class."""
         print("Function : Open Project")
         self.project = OpenProjectInfo()
         try:
@@ -398,17 +360,7 @@ class Application(QtWidgets.QMainWindow):
             pass
 
     def close_project(self):
-        """
-        This function closes the saved project.
-        It first checks whether project (file) is present in list.
-
-            - If present:
-                - it first kills that process-id.
-                - closes that file.
-                - Shows message "Current project <path_to_file> is closed"
-
-            - If not present: pass
-        """
+        """Closes the saved project."""
         print("Function : Close Project")
         current_project = self.obj_appconfig.current_project['ProjectName']
         if current_project is None:
@@ -429,31 +381,21 @@ class Application(QtWidgets.QMainWindow):
             )
 
     def change_workspace(self):
-        """
-        This function call changes Workspace
-        """
+        """Changes Workspace"""
         print("Function : Change Workspace")
         self.obj_workspace.returnWhetherClickedOrNot(self)
         self.hide()
         self.obj_workspace.show()
 
     def help_project(self):
-        """
-        This function opens usermanual in dockarea.
-            - It prints the message ""Function : Help""
-            - Uses print_info() method of class Appconfig
-              from Configuration/Appconfig.py file.
-            - Call method usermanual() from ./DockArea.py.
-        """
+        """Opens usermanual in dockarea."""
         print("Function : Help")
         self.obj_appconfig.print_info('Help is called')
         print("Current Project is : ", self.obj_appconfig.current_project)
         self.obj_Mainview.obj_dockarea.usermanual()
 
     def dev_docs(self):
-        """
-        This function guides the user to readthedocs website for the developer docs
-        """
+        """Guides user to readthedocs"""
         print("Function : DevDocs")
         self.obj_appconfig.print_info('DevDocs is called')
         print("Current Project is : ", self.obj_appconfig.current_project)
@@ -485,7 +427,7 @@ class Application(QtWidgets.QMainWindow):
                                                + str(e))
 
     def open_ngspice(self):
-        """This Function execute ngspice on current project."""
+        """Executes ngspice on current project."""
         projDir = self.obj_appconfig.current_project["ProjectName"]
 
         if projDir is not None:
@@ -493,9 +435,7 @@ class Application(QtWidgets.QMainWindow):
             ngspiceNetlist = os.path.join(projDir, projName + ".cir.out")
 
             if not os.path.isfile(ngspiceNetlist):
-                print(
-                    "Netlist file (*.cir.out) not found."
-                )
+                print("Netlist file (*.cir.out) not found.")
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
                 self.msg.setWindowTitle("Error Message")
@@ -519,34 +459,17 @@ class Application(QtWidgets.QMainWindow):
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 'Please select the project first.'
-                ' You can either create new project or open existing project'
             )
             self.msg.exec()
 
     def open_subcircuit(self):
-        """
-        This function opens 'subcircuit' option in left-tool-bar.
-        When 'subcircuit' icon is clicked wich is present in
-        left-tool-bar of main page:
-
-            - Meassge shown on screen "Subcircuit editor is called".
-            - 'subcircuiteditor()' function is called using object
-              'obj_dockarea' of class 'Mainview'.
-        """
+        """Opens 'subcircuit' option."""
         print("Function : Subcircuit editor")
         self.obj_appconfig.print_info('Subcircuit editor is called')
         self.obj_Mainview.obj_dockarea.subcircuiteditor()
 
     def open_nghdl(self):
-        """
-        This function calls NGHDL option in left-tool-bar.
-        It uses validateTool() method from Validation.py:
-
-            - If 'nghdl' is present in executables list then
-              it passes command 'nghdl -e' to WorkerThread class of
-              Worker.py.
-            - If 'nghdl' is not present, then it shows error message.
-        """
+        """Calls NGHDL option."""
         print("Function : NGHDL")
         self.obj_appconfig.print_info('NGHDL is called')
 
@@ -565,15 +488,7 @@ class Application(QtWidgets.QMainWindow):
             self.msg.exec()
 
     def open_makerchip(self):
-        """
-        This function opens 'subcircuit' option in left-tool-bar.
-        When 'subcircuit' icon is clicked wich is present in
-        left-tool-bar of main page:
-
-            - Meassge shown on screen "Subcircuit editor is called".
-            - 'subcircuiteditor()' function is called using object
-              'obj_dockarea' of class 'Mainview'.
-        """
+        """Opens makerchip option."""
         print("Function : Makerchip and Verilator to Ngspice Converter")
         self.obj_appconfig.print_info('Makerchip is called')
         self.obj_Mainview.obj_dockarea.makerchip()
@@ -751,22 +666,41 @@ class Application(QtWidgets.QMainWindow):
 
     def open_modelEditor(self):
         """
-        This function opens model editor option in left-tool-bar.
-        When model editor icon is clicked which is present in
-        left-tool-bar of main page:
-
-            - Meassge shown on screen "Model editor is called".
-            - 'modeleditor()' function is called using object
-              'obj_dockarea' of class 'Mainview'.
+        Triggers the eSim to OpenROAD translation and synthesis flow.
         """
+        try:
+            from maker import OpenROAD
+            projDir = self.obj_appconfig.current_project["ProjectName"]
+
+            if projDir is not None:
+                print(f"Function : OpenROAD Flow for {projDir}")
+                self.obj_appconfig.print_info(f'OpenROAD flow initiated for: {os.path.basename(projDir)}')
+                
+                # Instantiate logic from OpenROAD.py
+                self.or_logic = OpenROAD.OpenROADLogic(projDir)
+                self.or_logic.run()
+            else:
+                QtWidgets.QMessageBox.warning(
+                    self, "No Project", 
+                    "Please open or create an eSim project first!"
+                )
+        except ImportError as e:
+            print(f"Error: {e}")
+            QtWidgets.QMessageBox.critical(
+                self, "Module Error", 
+                "Could not find 'src/maker/OpenROAD.py'.\n"
+                "Please ensure the file exists."
+            )
+    # ----------------------------------------
+
+    def open_modelEditor(self):
+        """Opens model editor."""
         print("Function : Model editor")
         self.obj_appconfig.print_info('Model editor is called')
         self.obj_Mainview.obj_dockarea.modelEditor()
 
     def open_OMedit(self):
-        """
-        This function calls ngspice to OMEdit converter and then launch OMEdit.
-        """
+        """Calls ngspice to OMEdit converter."""
         self.obj_appconfig.print_info('OMEdit is called')
         self.projDir = self.obj_appconfig.current_project["ProjectName"]
 
@@ -825,7 +759,6 @@ class Application(QtWidgets.QMainWindow):
                 """
 
                 self.obj_Mainview.obj_dockarea.modelicaEditor(self.projDir)
-
             else:
                 self.msg = QtWidgets.QErrorMessage()
                 self.msg.setModal(True)
@@ -846,19 +779,10 @@ class Application(QtWidgets.QMainWindow):
             self.msg.exec()
 
     def open_OMoptim(self):
-        """
-        This function uses validateTool() method from Validation.py:
-
-            - If 'OMOptim' is present in executables list then
-              it passes command 'OMOptim' to WorkerThread class of Worker.py
-            - If 'OMOptim' is not present, then it shows error message with
-              link to download it on Linux and Windows.
-        """
+        """Opens OMOptim."""
         print("Function : OMOptim")
         self.obj_appconfig.print_info('OMOptim is called')
-        # Check if OMOptim is installed
         if self.obj_validation.validateTool("OMOptim"):
-            # Creating a command to run
             self.cmd = "OMOptim"
             self.obj_workThread = Worker.WorkerThread(self.cmd)
             self.obj_workThread.start()
@@ -887,34 +811,17 @@ class Application(QtWidgets.QMainWindow):
         self.obj_appconfig.print_info('Schematic converter is called')
         self.obj_Mainview.obj_dockarea.eSimConverter()
 
+
 # This class initialize the Main View of Application
 class MainView(QtWidgets.QWidget):
-    """
-    This class defines whole view and style of main page:
-
-        - Position of tool bars:
-            - Top tool bar.
-            - Left tool bar.
-        - Project explorer Area.
-        - Dock area.
-        - Console area.
-    """
-
     def __init__(self, *args):
-        # call init method of superclass
         QtWidgets.QWidget.__init__(self, *args)
-
         self.obj_appconfig = Appconfig()
-
         self.leftSplit = QtWidgets.QSplitter()
         self.middleSplit = QtWidgets.QSplitter()
-
         self.mainLayout = QtWidgets.QVBoxLayout()
-        # Intermediate Widget
         self.middleContainer = QtWidgets.QWidget()
         self.middleContainerLayout = QtWidgets.QVBoxLayout()
-
-        # Area to be included in MainView
         self.noteArea = QtWidgets.QTextEdit()
         self.noteArea.setReadOnly(True)
 
@@ -923,113 +830,11 @@ class MainView(QtWidgets.QWidget):
         self.noteArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarPolicy.ScrollBarAsNeeded)
 
         self.obj_appconfig.noteArea['Note'] = self.noteArea
-        self.obj_appconfig.noteArea['Note'].append(
-            '        eSim Started......')
-        self.obj_appconfig.noteArea['Note'].append('Project Selected : None')
-        self.obj_appconfig.noteArea['Note'].append('\n')
+        self.obj_appconfig.noteArea['Note'].append('        eSim Started......')
+        self.obj_appconfig.noteArea['Note'].append('Project Selected : None\n')
 
-        # Enhanced CSS with proper scrollbar styling
         self.noteArea.setStyleSheet("""
-        QTextEdit {
-            border-radius: 15px;
-            border: 1px solid gray;
-            padding: 5px;
-            background-color: white;
-        }
-    
-        QScrollBar:vertical {
-            border: 1px solid #999999;
-            background: #f0f0f0;
-            width: 16px;
-            margin: 16px 0 16px 0;
-            border-radius: 3px;
-        }
-    
-        QScrollBar::handle:vertical {
-            background: #606060;
-            min-height: 20px;
-            border-radius: 3px;
-            margin: 1px;
-        }
-    
-        QScrollBar::handle:vertical:hover {
-            background: #505050;
-        }
-    
-        QScrollBar::add-line:vertical {
-            border: 1px solid #999999;
-            background: #d0d0d0;
-            height: 15px;
-            width: 16px;
-            subcontrol-position: bottom;
-            subcontrol-origin: margin;
-            border-radius: 2px;
-        }
-    
-        QScrollBar::sub-line:vertical {
-            border: 1px solid #999999;
-            background: #d0d0d0;
-            height: 15px;
-            width: 16px;
-            subcontrol-position: top;
-            subcontrol-origin: margin;
-            border-radius: 2px;
-        }
-    
-        QScrollBar::add-line:vertical:hover,
-        QScrollBar::sub-line:vertical:hover {
-            background: #c0c0c0;
-        }
-    
-        QScrollBar::add-page:vertical,
-        QScrollBar::sub-page:vertical {
-            background: none;
-        }
-    
-        QScrollBar::up-arrow:vertical {
-            width: 8px;
-            height: 8px;
-            background-color: #606060;
-        }
-    
-        QScrollBar::down-arrow:vertical {
-            width: 8px;
-            height: 8px;
-            background-color: #606060;
-        }
-    
-        QScrollBar:horizontal {
-            border: 1px solid #999999;
-            background: #f0f0f0;
-            height: 16px;
-            margin: 0 16px 0 16px;
-            border-radius: 3px;
-        }
-    
-        QScrollBar::handle:horizontal {
-            background: #606060;
-            min-width: 20px;
-            border-radius: 3px;
-            margin: 1px;
-        }
-    
-        QScrollBar::handle:horizontal:hover {
-            background: #505050;
-        }
-    
-        QScrollBar::add-line:horizontal,
-        QScrollBar::sub-line:horizontal {
-            border: 1px solid #999999;
-            background: #d0d0d0;
-            width: 15px;
-            height: 16px;
-                border-radius: 2px;
-        }
-    
-        QScrollBar::add-line:horizontal:hover,
-            QScrollBar::sub-line:horizontal:hover {
-                background: #c0c0c0;
-            }
+        QTextEdit { border-radius: 15px; border: 1px solid gray; padding: 5px; background-color: white; }
         """)
 
         self.obj_dockarea = DockArea.DockArea()
@@ -1041,8 +846,6 @@ class MainView(QtWidgets.QWidget):
         self.middleSplit.setOrientation(QtCore.Qt.Orientation.Vertical)
         self.middleSplit.addWidget(self.obj_dockarea)
         self.middleSplit.addWidget(self.noteArea)
-
-        # Adding middle split to Middle Container Widget
         self.middleContainerLayout.addWidget(self.middleSplit)
         self.middleContainer.setLayout(self.middleContainerLayout)
 
@@ -1054,42 +857,18 @@ class MainView(QtWidgets.QWidget):
         self.leftPanelWidget.setLayout(self.leftPanel)
         self.leftSplit.addWidget(self.leftPanelWidget)
         self.leftSplit.addWidget(self.middleContainer)
-
-        # Adding to main Layout
         self.mainLayout.addWidget(self.leftSplit)
         self.leftSplit.setSizes([int(self.width() / 4.5), self.height()])
         self.middleSplit.setSizes([self.width(), int(self.height() / 2)])
         self.setLayout(self.mainLayout)
 
-    def collapse_console_area(self):
-        """Collapse the console area to minimal height."""
-        current_sizes = self.middleSplit.sizes()
-        total_height = sum(current_sizes)
-        minimal_console_height = 0
-        dock_area_height = total_height - minimal_console_height
-        self.middleSplit.setSizes([dock_area_height, minimal_console_height])
 
-    def restore_console_area(self):
-        """Restore the console area to normal height."""
-        total_height = sum(self.middleSplit.sizes())
-        dock_area_height = int(total_height * 0.7)  # 70% for dock area
-        console_height = total_height - dock_area_height  # 30% for console
-        self.middleSplit.setSizes([dock_area_height, console_height])
-
-
-# It is main function of the module and starts the application
 def main(args):
-    """
-    The splash screen opened at the starting of screen is performed
-    by this function.
-    """
     print("Starting eSim......")
     # Set non-native dialogs globally
     # NOTE: AA_DontUseNativeDialogs removed in Qt6.
     # Native dialog behavior is now controlled per-dialog via QFileDialog.Option.
     app = QtWidgets.QApplication(args)
-    app.setApplicationName("eSim")
-
     appView = Application()
     last_project_path = appView.obj_appconfig.load_last_project()
     if last_project_path:
@@ -1101,7 +880,6 @@ def main(args):
             print("Could not restore last project:", str(e))
     appView.obj_Mainview.obj_timeExplorer.load_last_snapshots()
     appView.hide()
-
     splash_pix = QtGui.QPixmap(init_path + 'images/splash_screen_esim.png')
     splash = QtWidgets.QSplashScreen(
         splash_pix, QtCore.Qt.WindowType.WindowStaysOnTopHint
@@ -1109,16 +887,11 @@ def main(args):
     splash.setMask(splash_pix.mask())
     splash.setDisabled(True)
     splash.show()
-
     appView.splash = splash
     appView.obj_workspace.returnWhetherClickedOrNot(appView)
 
     try:
-        if os.name == 'nt':
-            user_home = os.path.join('library', 'config')
-        else:
-            user_home = os.path.expanduser('~')
-
+        user_home = os.path.join('library', 'config') if os.name == 'nt' else os.path.expanduser('~')
         file = open(os.path.join(user_home, ".esim/workspace.txt"), 'r')
         work = int(file.read(1))
         file.close()
@@ -1133,9 +906,7 @@ def main(args):
     sys.exit(app.exec())
 
 
-# Call main function
 if __name__ == '__main__':
-    # Create and display the splash screen
     try:
         main(sys.argv)
     except Exception as err:
