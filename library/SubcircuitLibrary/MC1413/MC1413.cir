@@ -1,0 +1,11 @@
+.title KiCad schematic
+.include "C:\FOSSEE\eSim\library\SubcircuitLibrary\MC1413a\MC1413a.sub"
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ PORT
+XU7 Net-_U1-Pad6_ Net-_U1-Pad9_ Net-_U1-Pad11_ Net-_U1-Pad8_ MC1413a
+XU8 Net-_U1-Pad7_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad8_ MC1413a
+XU6 Net-_U1-Pad5_ Net-_U1-Pad9_ Net-_U1-Pad12_ Net-_U1-Pad8_ MC1413a
+XU5 Net-_U1-Pad4_ Net-_U1-Pad9_ Net-_U1-Pad13_ Net-_U1-Pad8_ MC1413a
+XU3 Net-_U1-Pad2_ Net-_U1-Pad9_ Net-_U1-Pad15_ Net-_U1-Pad8_ MC1413a
+XU4 Net-_U1-Pad3_ Net-_U1-Pad9_ Net-_U1-Pad14_ Net-_U1-Pad8_ MC1413a
+XU2 Net-_U1-Pad1_ Net-_U1-Pad9_ Net-_U1-Pad16_ Net-_U1-Pad8_ MC1413a
+.end

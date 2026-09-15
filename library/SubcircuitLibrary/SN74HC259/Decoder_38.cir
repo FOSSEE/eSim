@@ -1,0 +1,28 @@
+* /home/vsduser/Downloads/eSim-2.3/library/SubcircuitLibrary/Decoder_38/Decoder_38.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Sat Jun 14 09:39:18 2025
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+U1  /S0_Bar /S1_Bar /S2_Bar /S0 /S1 /S2 /G_Bar /Vdd /Gnd /d6 /d4 /d0 /d7 /d5 /d2 /d1 /d3 PORT		
+scmode1  SKY130mode		
+X4  /S0_Bar /S1_Bar /Gnd /Vdd Net-_X14-Pad1_ /S2_Bar NAND_3		
+X5  /S0_Bar /S1_Bar /Gnd /Vdd Net-_X5-Pad5_ /S2 NAND_3		
+X1  /S0_Bar /S1 /Gnd /Vdd Net-_X1-Pad5_ /S2_Bar NAND_3		
+X6  /S0_Bar /S1 /Gnd /Vdd Net-_X10-Pad1_ /S2 NAND_3		
+X2  /S0 /S1_Bar /Gnd /Vdd Net-_X16-Pad1_ /S2_Bar NAND_3		
+X7  /S0 /S1_Bar /Gnd /Vdd Net-_X12-Pad1_ /S2 NAND_3		
+X3  /S0 /S1 /Gnd /Vdd Net-_X13-Pad1_ /S2_Bar NAND_3		
+X8  /S0 /S1 /Gnd /Vdd Net-_X11-Pad1_ /S2 NAND_3		
+X11  Net-_X11-Pad1_ /Gnd /Vdd /d0 /G_Bar NAND_2		
+X13  Net-_X13-Pad1_ /Gnd /Vdd /d1 /G_Bar NAND_2		
+X12  Net-_X12-Pad1_ /Gnd /Vdd /d2 /G_Bar NAND_2		
+X16  Net-_X16-Pad1_ /Gnd /Vdd /d3 /G_Bar NAND_2		
+X10  Net-_X10-Pad1_ /Gnd /Vdd /d4 /G_Bar NAND_2		
+X15  Net-_X1-Pad5_ /Gnd /Vdd /d5 /G_Bar NAND_2		
+X9  Net-_X5-Pad5_ /Gnd /Vdd /d6 /G_Bar NAND_2		
+X14  Net-_X14-Pad1_ /Gnd /Vdd /d7 /G_Bar NAND_2		
+
+.end

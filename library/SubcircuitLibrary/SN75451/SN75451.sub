@@ -1,0 +1,36 @@
+* Subcircuit SN75451
+.subckt SN75451 net-_d1-pad2_ net-_d2-pad2_ net-_q6-pad1_ net-_d1-pad1_ net-_q12-pad1_ net-_d4-pad2_ net-_d5-pad2_ net-_r1-pad1_ 
+* c:\fossee\esim\library\subcircuitlibrary\sn75451\sn75451.cir
+.include D.lib
+.include NPN.lib
+q3 net-_q3-pad1_ net-_q1-pad1_ net-_q3-pad3_ Q2N2222
+q4 net-_q4-pad1_ net-_q3-pad1_ net-_d3-pad1_ Q2N2222
+d3 net-_d3-pad1_ net-_d3-pad2_ 1N4148
+q5 net-_d3-pad2_ net-_q3-pad3_ net-_d1-pad1_ Q2N2222
+r3  net-_q3-pad3_ net-_d1-pad1_ 1k
+r5  net-_d3-pad2_ net-_d1-pad1_ 500
+q6 net-_q6-pad1_ net-_d3-pad2_ net-_d1-pad1_ Q2N2222
+q2 net-_q1-pad1_ net-_q1-pad2_ net-_d2-pad2_ Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_d1-pad2_ Q2N2222
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+d2 net-_d1-pad1_ net-_d2-pad2_ 1N4148
+r1  net-_r1-pad1_ net-_q1-pad2_ 4k
+r2  net-_r1-pad1_ net-_q3-pad1_ 1.6k
+r4  net-_r1-pad1_ net-_q4-pad1_ 130
+q9 net-_q10-pad2_ net-_q7-pad1_ net-_q11-pad2_ Q2N2222
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_d6-pad1_ Q2N2222
+d6 net-_d6-pad1_ net-_d6-pad2_ 1N4148
+q11 net-_d6-pad2_ net-_q11-pad2_ net-_d1-pad1_ Q2N2222
+r8  net-_q11-pad2_ net-_d1-pad1_ 1k
+r10  net-_d6-pad2_ net-_d1-pad1_ 500
+q12 net-_q12-pad1_ net-_d6-pad2_ net-_d1-pad1_ Q2N2222
+q8 net-_q7-pad1_ net-_q7-pad2_ net-_d5-pad2_ Q2N2222
+q7 net-_q7-pad1_ net-_q7-pad2_ net-_d4-pad2_ Q2N2222
+d4 net-_d1-pad1_ net-_d4-pad2_ 1N4148
+d5 net-_d1-pad1_ net-_d5-pad2_ 1N4148
+r6  net-_r1-pad1_ net-_q7-pad2_ 4k
+r7  net-_r1-pad1_ net-_q10-pad2_ 1.6k
+r9  net-_r1-pad1_ net-_q10-pad1_ 130
+* Control Statements
+
+.ends SN75451

@@ -1,0 +1,37 @@
+.title KiCad schematic
+U5 Net-_U4-Pad2_ Net-_U13-Pad2_ Net-_U1-Pad20_ unconnected-_U5-Pad4_ Net-_U5-Pad5_ unconnected-_U5-Pad6_ d_dff
+U2 Net-_U1-Pad11_ Net-_U10-Pad2_ d_inverter
+U3 Net-_U1-Pad1_ Net-_U13-Pad2_ d_buffer
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ unconnected-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U1-Pad17_ Net-_U1-Pad18_ Net-_U1-Pad19_ Net-_U1-Pad20_ PORT
+U21 Net-_U20-Pad2_ Net-_U13-Pad2_ Net-_U1-Pad20_ unconnected-_U21-Pad4_ Net-_U21-Pad5_ unconnected-_U21-Pad6_ d_dff
+U14 Net-_U13-Pad5_ Net-_U10-Pad2_ Net-_U14-Pad3_ d_tristate
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_tristate
+U6 Net-_U5-Pad5_ Net-_U10-Pad2_ Net-_U6-Pad3_ d_tristate
+U9 Net-_U8-Pad2_ Net-_U13-Pad2_ Net-_U1-Pad20_ unconnected-_U9-Pad4_ Net-_U10-Pad1_ unconnected-_U9-Pad6_ d_dff
+U13 Net-_U12-Pad2_ Net-_U13-Pad2_ Net-_U1-Pad20_ unconnected-_U13-Pad4_ Net-_U13-Pad5_ unconnected-_U13-Pad6_ d_dff
+U8 Net-_U1-Pad3_ Net-_U8-Pad2_ d_buffer
+U4 Net-_U1-Pad2_ Net-_U4-Pad2_ d_buffer
+U29 Net-_U28-Pad2_ Net-_U13-Pad2_ Net-_U1-Pad20_ unconnected-_U29-Pad4_ Net-_U29-Pad5_ unconnected-_U29-Pad6_ d_dff
+U25 Net-_U24-Pad2_ Net-_U13-Pad2_ Net-_U1-Pad20_ unconnected-_U25-Pad4_ Net-_U25-Pad5_ unconnected-_U25-Pad6_ d_dff
+U26 Net-_U25-Pad5_ Net-_U10-Pad2_ Net-_U26-Pad3_ d_tristate
+U22 Net-_U21-Pad5_ Net-_U10-Pad2_ Net-_U22-Pad3_ d_tristate
+U23 Net-_U22-Pad3_ Net-_U1-Pad15_ d_inverter
+U30 Net-_U29-Pad5_ Net-_U10-Pad2_ Net-_U30-Pad3_ d_tristate
+U34 Net-_U33-Pad5_ Net-_U10-Pad2_ Net-_U34-Pad3_ d_tristate
+U27 Net-_U26-Pad3_ Net-_U1-Pad14_ d_inverter
+U31 Net-_U30-Pad3_ Net-_U1-Pad13_ d_inverter
+U35 Net-_U34-Pad3_ Net-_U1-Pad12_ d_inverter
+U17 Net-_U16-Pad2_ Net-_U13-Pad2_ Net-_U1-Pad20_ unconnected-_U17-Pad4_ Net-_U17-Pad5_ unconnected-_U17-Pad6_ d_dff
+U16 Net-_U1-Pad5_ Net-_U16-Pad2_ d_buffer
+U12 Net-_U1-Pad4_ Net-_U12-Pad2_ d_buffer
+U20 Net-_U1-Pad6_ Net-_U20-Pad2_ d_buffer
+U24 Net-_U1-Pad7_ Net-_U24-Pad2_ d_buffer
+U32 Net-_U1-Pad9_ Net-_U32-Pad2_ d_buffer
+U33 Net-_U32-Pad2_ Net-_U13-Pad2_ Net-_U1-Pad20_ unconnected-_U33-Pad4_ Net-_U33-Pad5_ unconnected-_U33-Pad6_ d_dff
+U28 Net-_U1-Pad8_ Net-_U28-Pad2_ d_buffer
+U18 Net-_U17-Pad5_ Net-_U10-Pad2_ Net-_U18-Pad3_ d_tristate
+U19 Net-_U18-Pad3_ Net-_U1-Pad16_ d_inverter
+U15 Net-_U14-Pad3_ Net-_U1-Pad17_ d_inverter
+U11 Net-_U10-Pad3_ Net-_U1-Pad18_ d_inverter
+U7 Net-_U6-Pad3_ Net-_U1-Pad19_ d_inverter
+.end

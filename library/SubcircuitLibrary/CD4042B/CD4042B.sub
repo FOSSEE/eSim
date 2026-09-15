@@ -1,0 +1,13 @@
+* Subcircuit CD4042B
+.subckt CD4042B net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/cd4042b/cd4042b.cir
+.include Quad_D_FF.sub
+.include TG_D_Latch_ctrl.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+* s c m o d e
+x2 net-_u1-pad3_ net-_x1-pad5_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad8_ net-_u1-pad7_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ Quad_D_FF
+x1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad7_ net-_u1-pad8_ net-_x1-pad5_ TG_D_Latch_ctrl
+* Control Statements
+
+.ends CD4042B

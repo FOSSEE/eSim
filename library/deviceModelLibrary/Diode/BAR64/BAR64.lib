@@ -1,0 +1,1 @@
+.MODEL BAR64 D( Is=4E-15 Rs=0.856 N=1.1 tt=1.55E-06 Cjo=5.6E-13 M=0.5 Vj=0.5 Bv=150 Ibv=5E-06 )

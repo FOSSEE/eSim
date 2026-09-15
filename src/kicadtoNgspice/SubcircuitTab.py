@@ -1,4 +1,4 @@
-from PyQt5 import QtWidgets, QtCore
+from PyQt6 import QtWidgets, QtCore
 from . import TrackWidget
 from projManagement import Validation
 import os
@@ -181,7 +181,7 @@ class SubcircuitTab(QtWidgets.QWidget):
             self.msg.showMessage(
                 "Please select a Subcircuit with correct number of ports."
             )
-            self.msg.exec_()
+            self.msg.exec()
         elif self.reply == "DIREC":
             self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
@@ -190,7 +190,7 @@ class SubcircuitTab(QtWidgets.QWidget):
                 "Please select a valid Subcircuit directory "
                 "(Containing '.sub' file)."
             )
-            self.msg.exec_()
+            self.msg.exec()
 
     def trackSubcircuitWithoutButton(self, iter_value, path_value):
         """
@@ -217,7 +217,7 @@ class SubcircuitTab(QtWidgets.QWidget):
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Please select a Subcircuit with correct number of ports.")
-            self.msg.exec_()
+            self.msg.exec()
         elif self.reply == "DIREC":
             self.msg = QtWidgets.QErrorMessage(self)
             self.msg.setModal(True)
@@ -225,4 +225,4 @@ class SubcircuitTab(QtWidgets.QWidget):
             self.msg.showMessage(
                 "Please select a valid Subcircuit directory "
                 "(Containing '.sub' file).")
-            self.msg.exec_()
+            self.msg.exec()

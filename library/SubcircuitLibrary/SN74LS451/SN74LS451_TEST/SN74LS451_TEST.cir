@@ -1,0 +1,12 @@
+.title KiCad schematic
+X1 Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ Net-_U2-Pad9_ Net-_U2-Pad10_ Net-_U2-Pad11_ Net-_U2-Pad12_ Net-_U2-Pad13_ Net-_U2-Pad14_ Net-_U2-Pad15_ Net-_U2-Pad16_ Net-_U3-Pad2_ Net-_U3-Pad1_ Net-_U4-Pad5_ Net-_U4-Pad6_ Net-_U4-Pad7_ Net-_U4-Pad8_ SN74LS451
+U3 Net-_U3-Pad1_ Net-_U3-Pad2_ Y1 Y2 dac_bridge_2
+v4 B GND pulse
+v5 A GND pulse
+v2 S GND pwl
+v3 C GND pulse
+U4 S C B A Net-_U4-Pad5_ Net-_U4-Pad6_ Net-_U4-Pad7_ Net-_U4-Pad8_ adc_bridge_4
+U1 Net-_U1-Pad1_ GND Net-_U1-Pad1_ GND Net-_U1-Pad1_ GND Net-_U1-Pad1_ GND Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ Net-_U1-Pad15_ Net-_U1-Pad16_ adc_bridge_8
+U2 GND Net-_U1-Pad1_ GND Net-_U1-Pad1_ GND Net-_U1-Pad1_ GND Net-_U1-Pad1_ Net-_U2-Pad9_ Net-_U2-Pad10_ Net-_U2-Pad11_ Net-_U2-Pad12_ Net-_U2-Pad13_ Net-_U2-Pad14_ Net-_U2-Pad15_ Net-_U2-Pad16_ adc_bridge_8
+v1 Net-_U1-Pad1_ GND 5
+.end

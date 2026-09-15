@@ -1,0 +1,65 @@
+* Subcircuit MC7800
+.subckt MC7800 vin vout net-_d1-pad1_ 
+.title kicad schematic
+.include ZenerD1N750.lib
+.include NPN.lib
+.include PNP.lib
+.include D.lib
+r5 net-_d1-pad1_ net-_c1-pad1_ 1k
+q2 net-_q10-pad1_ net-_q2-pad2_ net-_d1-pad1_ Q2N2222
+q6 net-_q5-pad3_ net-_q18-pad3_ net-_q10-pad1_ Q2N2222
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_q10-pad1_ Q2N2222
+q5 net-_q3-pad1_ net-_q1-pad3_ net-_q5-pad3_ Q2N2222
+c1 net-_c1-pad1_ net-_c1-pad2_ 3p
+q7 net-_q10-pad1_ net-_c1-pad2_ net-_c1-pad1_ Q2N2222
+r3 net-_q2-pad2_ net-_q3-pad2_ 10.66k
+r4 net-_d1-pad1_ net-_q2-pad2_ 1.56k
+d1 net-_d1-pad1_ net-_d1-pad2_ D1N750
+r1 net-_d1-pad2_ vin 100k
+q1 vin net-_d1-pad2_ net-_q1-pad3_ Q2N2222
+r2 net-_q3-pad2_ net-_q1-pad3_ 9k
+r6 net-_q10-pad1_ net-_q18-pad3_ 15k
+r7 net-_c1-pad2_ net-_q10-pad1_ 4.5k
+q8 net-_c2-pad1_ net-_q3-pad1_ net-_q8-pad3_ Q2N2907A
+q4 net-_q3-pad1_ net-_q3-pad1_ unconnected-_q4-pad3_ Q2N2907A
+r8 net-_q8-pad3_ vin 50
+q14 net-_c2-pad1_ net-_c2-pad2_ net-_q14-pad3_ Q2N2222
+r12 vout net-_q14-pad3_ 100
+q10 net-_q10-pad1_ net-_c1-pad2_ net-_q10-pad3_ Q2N2222
+q11 net-_q10-pad1_ net-_c1-pad2_ net-_c3-pad1_ Q2N2222
+q9 net-_c1-pad2_ net-_c1-pad1_ net-_d1-pad1_ Q2N2222
+q13 net-_q13-pad1_ net-_q13-pad2_ net-_q13-pad3_ Q2N2222
+r11 net-_c3-pad1_ net-_q13-pad3_ 17.5k
+q12 net-_c3-pad1_ net-_q10-pad3_ net-_q12-pad3_ Q2N2222
+r9 net-_d1-pad1_ net-_q10-pad3_ 14k
+r19 vout net-_q13-pad1_ 600
+r25 vout net-_q20-pad3_ 0.2
+r29 net-_q18-pad2_ sense 18k
+q20 vin net-_q13-pad1_ net-_q20-pad3_ Q2N2222
+r10 net-_d1-pad1_ net-_q12-pad3_ 1.8k
+r13 net-_d1-pad1_ net-_d2-pad2_ 5k
+q15 net-_c3-pad2_ net-_c3-pad1_ net-_d2-pad1_ Q2N2222
+r28 net-_q18-pad2_ net-_q18-pad2_ 9k
+r27 net-_q18-pad2_ net-_q18-pad2_ 9k
+r26 net-_q18-pad2_ net-_q18-pad2_ 9k
+c2 net-_c2-pad1_ net-_c2-pad2_ 1p
+q17 vin net-_c2-pad1_ net-_q13-pad1_ Q2N2222
+q18 net-_q13-pad1_ net-_q18-pad2_ net-_q18-pad3_ Q2N2222
+r23 net-_q13-pad1_ net-_c2-pad2_ 1k
+r24 net-_c2-pad2_ net-_q20-pad3_ 680
+r16 net-_c2-pad2_ net-_d3-pad1_ 27.5k
+d3 net-_d3-pad1_ vin D1N750
+c3 net-_c3-pad1_ net-_c3-pad2_ 30p
+r21 net-_q18-pad2_ net-_q18-pad2_ 6k
+r20 net-_q18-pad2_ net-_q18-pad2_ 3k
+r18 net-_d1-pad1_ net-_q13-pad2_ 11.66k
+r22 net-_q18-pad2_ net-_q18-pad2_ 3k
+r14 net-_q19-pad3_ net-_c2-pad1_ 600
+r17 net-_q13-pad2_ net-_q18-pad2_ 3.34k
+r15 net-_c3-pad2_ net-_q19-pad3_ 3k
+q16 net-_c3-pad2_ net-_d2-pad1_ net-_d1-pad1_ Q2N2222
+q19 net-_d1-pad1_ net-_c3-pad2_ net-_q19-pad3_ Q2N2907A
+d2 net-_d2-pad1_ net-_d2-pad2_ 1N4148
+* Control Statements
+
+.ends MC7800

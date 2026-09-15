@@ -1,0 +1,21 @@
+* Subcircuit SN7406a
+.subckt SN7406a net-_d1-pad2_ net-_q5-pad1_ net-_r1-pad1_ net-_d1-pad1_ 
+.title kicad schematic
+.include NPN.lib
+.include DI_S2M.lib
+r3 net-_q3-pad2_ net-_d1-pad1_ 1k
+d2 net-_d2-pad1_ net-_d2-pad2_ DI_S2M
+r4 net-_r1-pad1_ net-_d2-pad1_ 1.4k
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_d1-pad2_ Q2N2222
+r1 net-_r1-pad1_ net-_q1-pad2_ 6k
+d1 net-_d1-pad1_ net-_d1-pad2_ DI_S2M
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_d1-pad1_ Q2N2222
+r5 net-_d2-pad1_ net-_q3-pad1_ 2k
+q2 net-_d2-pad2_ net-_q1-pad1_ net-_q2-pad3_ Q2N2222
+r2 net-_q2-pad3_ net-_q3-pad2_ 100
+r6 net-_r1-pad1_ net-_q4-pad1_ 1.6k
+q5 net-_q5-pad1_ net-_q4-pad1_ net-_d1-pad1_ Q2N2222
+q4 net-_q4-pad1_ net-_q3-pad1_ net-_d1-pad1_ Q2N2222
+* Control Statements
+
+.ends SN7406a

@@ -1,0 +1,44 @@
+* c:\fossee\esim\library\subcircuitlibrary\sn74h60\sn74h60.cir
+
+* u1  net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ d_and
+* u2  net-_u2-pad1_ net-_u2-pad2_ net-_u2-pad3_ d_and
+* u5  net-_u1-pad3_ net-_u2-pad3_ net-_u5-pad3_ d_and
+* u3  net-_u3-pad1_ net-_u3-pad2_ net-_u3-pad3_ d_and
+* u4  net-_u4-pad1_ net-_u4-pad2_ net-_u4-pad3_ d_and
+* u6  net-_u3-pad3_ net-_u4-pad3_ net-_u6-pad3_ d_and
+* u7  net-_u5-pad3_ net-_u7-pad2_ d_inverter
+* u8  net-_u6-pad3_ net-_u8-pad2_ d_inverter
+* u9  net-_u1-pad1_ net-_u1-pad2_ net-_u2-pad1_ net-_u3-pad1_ net-_u3-pad2_ net-_u4-pad1_ ? net-_u4-pad2_ net-_u8-pad2_ net-_u6-pad3_ net-_u5-pad3_ net-_u7-pad2_ net-_u2-pad2_ ? port
+a1 [net-_u1-pad1_ net-_u1-pad2_ ] net-_u1-pad3_ u1
+a2 [net-_u2-pad1_ net-_u2-pad2_ ] net-_u2-pad3_ u2
+a3 [net-_u1-pad3_ net-_u2-pad3_ ] net-_u5-pad3_ u5
+a4 [net-_u3-pad1_ net-_u3-pad2_ ] net-_u3-pad3_ u3
+a5 [net-_u4-pad1_ net-_u4-pad2_ ] net-_u4-pad3_ u4
+a6 [net-_u3-pad3_ net-_u4-pad3_ ] net-_u6-pad3_ u6
+a7 net-_u5-pad3_ net-_u7-pad2_ u7
+a8 net-_u6-pad3_ net-_u8-pad2_ u8
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u1 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u2 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u3 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u6 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u7 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_inverter, NgSpice Name: d_inverter
+.model u8 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

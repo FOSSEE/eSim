@@ -1,0 +1,12 @@
+.title KiCad schematic
+R2 Net-_B1-Pad1_ GND 100
+R1 Net-_R1-Pad1_ Net-_R1-Pad2_ 1Meg
+U1 Net-_R1-Pad2_ Net-_R1-Pad1_ Net-_R3-Pad2_ Net-_R4-Pad1_ Net-_R6-Pad1_ Net-_R5-Pad2_ PORT
+C1 Net-_B1-Pad1_ GND 2.24p
+R3 GND Net-_R3-Pad2_ 1G
+B1 Net-_B1-Pad1_ GND I=(v(IN_PLUS)-v(IN_MINUS))*v(VG)*0.2
+R4 Net-_R4-Pad1_ GND 1G
+R5 GND Net-_R5-Pad2_ 1Meg
+E1 Net-_E1-Pad1_ GND Net-_B1-Pad1_ GND 1
+R6 Net-_R6-Pad1_ Net-_E1-Pad1_ 50
+.end

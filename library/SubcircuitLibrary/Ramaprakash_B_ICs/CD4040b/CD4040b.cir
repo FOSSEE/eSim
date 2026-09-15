@@ -1,0 +1,17 @@
+.title KiCad schematic
+U4 Net-_U1-Pad2_ Net-_U13-Pad5_ unconnected-_U4-Pad3_ Net-_U10-Pad4_ Net-_U2-Pad10_ unconnected-_U4-Pad6_ d_tff
+U2 Net-_U2-Pad2_ Net-_U10-Pad4_ Net-_U2-Pad4_ Net-_U2-Pad5_ Net-_U2-Pad6_ Net-_U11-Pad2_ Net-_U11-Pad5_ Net-_U13-Pad5_ Net-_U2-Pad10_ Net-_U2-Pad11_ Net-_U10-Pad2_ Net-_U10-Pad5_ Net-_U12-Pad5_ Net-_U14-Pad5_ PORT
+U6 Net-_U1-Pad2_ Net-_U2-Pad10_ unconnected-_U6-Pad3_ Net-_U10-Pad4_ Net-_U2-Pad11_ unconnected-_U6-Pad6_ d_tff
+v1 Net-_U1-Pad1_ GND DC
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ adc_bridge_1
+U14 Net-_U1-Pad2_ Net-_U12-Pad5_ unconnected-_U14-Pad3_ Net-_U10-Pad4_ Net-_U14-Pad5_ unconnected-_U14-Pad6_ d_tff
+U12 Net-_U1-Pad2_ Net-_U10-Pad5_ unconnected-_U12-Pad3_ Net-_U10-Pad4_ Net-_U12-Pad5_ unconnected-_U12-Pad6_ d_tff
+U11 Net-_U1-Pad2_ Net-_U11-Pad2_ unconnected-_U11-Pad3_ Net-_U10-Pad4_ Net-_U11-Pad5_ unconnected-_U11-Pad6_ d_tff
+U13 Net-_U1-Pad2_ Net-_U11-Pad5_ unconnected-_U13-Pad3_ Net-_U10-Pad4_ Net-_U13-Pad5_ unconnected-_U13-Pad6_ d_tff
+U5 Net-_U1-Pad2_ Net-_U2-Pad4_ unconnected-_U5-Pad3_ Net-_U10-Pad4_ Net-_U2-Pad5_ unconnected-_U5-Pad6_ d_tff
+U3 Net-_U1-Pad2_ Net-_U2-Pad2_ unconnected-_U3-Pad3_ Net-_U10-Pad4_ Net-_U2-Pad4_ unconnected-_U3-Pad6_ d_tff
+U9 Net-_U1-Pad2_ Net-_U2-Pad6_ unconnected-_U9-Pad3_ Net-_U10-Pad4_ Net-_U11-Pad2_ unconnected-_U9-Pad6_ d_tff
+U7 Net-_U1-Pad2_ Net-_U2-Pad5_ unconnected-_U7-Pad3_ Net-_U10-Pad4_ Net-_U2-Pad6_ unconnected-_U7-Pad6_ d_tff
+U10 Net-_U1-Pad2_ Net-_U10-Pad2_ unconnected-_U10-Pad3_ Net-_U10-Pad4_ Net-_U10-Pad5_ unconnected-_U10-Pad6_ d_tff
+U8 Net-_U1-Pad2_ Net-_U2-Pad11_ unconnected-_U8-Pad3_ Net-_U10-Pad4_ Net-_U10-Pad2_ unconnected-_U8-Pad6_ d_tff
+.end

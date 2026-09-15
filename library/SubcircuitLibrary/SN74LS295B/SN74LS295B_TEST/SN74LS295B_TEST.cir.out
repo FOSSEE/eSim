@@ -1,0 +1,30 @@
+.title kicad schematic
+
+.include SN74LS295B.sub
+* u3 net-_u3-pad1_ net-_u3-pad2_ net-_u3-pad3_ net-_u3-pad4_ qa qb qc qd dac_bridge_4
+x1 net-_u1-pad5_ net-_u2-pad5_ net-_u2-pad6_ net-_u2-pad7_ net-_u2-pad8_ net-_u1-pad8_ unconnected-_x1-pad7_ net-_x1-pad8_ net-_u1-pad7_ net-_u3-pad4_ net-_u3-pad3_ net-_u3-pad2_ net-_u3-pad1_ unconnected-_x1-pad14_ SN74LS295B
+* u1 ser oc clk ld/sh_bar net-_u1-pad5_ net-_x1-pad8_ net-_u1-pad7_ net-_u1-pad8_ adc_bridge_4
+* u2 net-_u2-pad1_ gnd net-_u2-pad1_ gnd net-_u2-pad5_ net-_u2-pad6_ net-_u2-pad7_ net-_u2-pad8_ adc_bridge_4
+v4 net-_u2-pad1_ gnd 5
+v6 oc gnd 5
+v1 ser gnd pwl(0 5 49.99m 5 50m 0 60m 0)
+v2 clk gnd pulse(0 5 0 0 0 5m 10m)
+v3 ld/sh_bar gnd pwl(0 5 29.99m 5 30m 0 60m 0)
+a1 [net-_u3-pad1_ net-_u3-pad2_ net-_u3-pad3_ net-_u3-pad4_ ] [qa qb qc qd ] u3
+a2 [ser oc clk ld/sh_bar ] [net-_u1-pad5_ net-_x1-pad8_ net-_u1-pad7_ net-_u1-pad8_ ] u1
+a3 [net-_u2-pad1_ gnd net-_u2-pad1_ gnd ] [net-_u2-pad5_ net-_u2-pad6_ net-_u2-pad7_ net-_u2-pad8_ ] u2
+* Schematic Name:                             dac_bridge_4, Ngspice Name: dac_bridge
+.model u3 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_4, Ngspice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_4, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 10e-06 60e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

@@ -1,0 +1,15 @@
+.title KiCad schematic
+U1 Net-_E1-Pad3_ Net-_E1-Pad4_ Net-_R4-Pad2_ Net-_R5-Pad1_ Net-_R6-Pad1_ PORT
+R1 GND Net-_E1-Pad3_ 1G
+R2 GND Net-_E1-Pad4_ 1G
+E1 /diff_node GND Net-_E1-Pad3_ Net-_E1-Pad4_ 1
+R3 Net-_B_rect1-Pad1_ Net-_C1-Pad1_ 1k
+C1 Net-_C1-Pad1_ GND 1.59p
+B_rect1 Net-_B_rect1-Pad1_ GND V=abs(v(diff_node))
+R4 GND Net-_R4-Pad2_ 1G
+R5 Net-_R5-Pad1_ GND 1G
+E2 Net-_E2-Pad1_ GND Net-_B_log1-Pad1_ GND 1
+B_log1 Net-_B_log1-Pad1_ GND V=0.5*log10((abs(v(env_node))+1u)/2.24u)
+R6 Net-_R6-Pad1_ Net-_E2-Pad1_ 50
+R7 Net-_R6-Pad1_ GND 1G
+.end

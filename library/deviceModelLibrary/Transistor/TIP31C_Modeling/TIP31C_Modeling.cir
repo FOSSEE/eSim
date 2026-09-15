@@ -1,0 +1,7 @@
+.title KiCad schematic
+.include "TIP31C.lib"
+Q1 /vce /ib GND TIP31C
+U1 /vce Net-_v2-Pad1_ plot_i2
+v2 Net-_v2-Pad1_ GND DC
+I1 GND /ib dc
+.end

@@ -1,0 +1,14 @@
+.title KiCad schematic
+Q1 Net-_C1-Pad1_ GND GND LM7806
+C3 GND GND 100n
+C2 Net-_C1-Pad1_ GND 330n
+U3 GND plot_db
+D4 Net-_D2-Pad2_ Net-_C1-Pad1_ diode
+D1 GND Net-_D1-Pad2_ diode
+D2 GND Net-_D2-Pad2_ diode
+D3 Net-_D1-Pad2_ Net-_C1-Pad1_ diode
+C1 Net-_C1-Pad1_ GND 470u
+U1 Net-_U1-Pad~_ plot_db
+v1 Net-_U1-Pad~_ Net-_U2-Pad2_ 230
+U2 Net-_U1-Pad~_ Net-_U2-Pad2_ Net-_D1-Pad2_ Net-_D2-Pad2_ TRANSFO
+.end

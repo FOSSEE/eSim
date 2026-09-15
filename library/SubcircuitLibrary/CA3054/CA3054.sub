@@ -1,0 +1,13 @@
+* Subcircuit CA3054
+.subckt CA3054 net-_q2-pad1_ net-_q2-pad2_ net-_q3-pad2_ net-_q3-pad3_ unconnected-_u1-pad5_ net-_q5-pad2_ net-_q5-pad1_ net-_q6-pad1_ net-_q6-pad2_ unconnected-_u1-pad10_ net-_q4-pad2_ net-_q4-pad3_ net-_q1-pad2_ net-_q1-pad1_ 
+.title kicad schematic
+.include NPN.lib
+q4 net-_q4-pad1_ net-_q4-pad2_ net-_q4-pad3_ Q2N2222
+q6 net-_q6-pad1_ net-_q6-pad2_ net-_q4-pad1_ Q2N2222
+q5 net-_q5-pad1_ net-_q5-pad2_ net-_q4-pad1_ Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q3 net-_q1-pad3_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+q2 net-_q2-pad1_ net-_q2-pad2_ net-_q1-pad3_ Q2N2222
+* Control Statements
+
+.ends CA3054

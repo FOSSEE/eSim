@@ -1,0 +1,7 @@
+.title KiCad schematic
+.include "C:\FOSSEE\eSim\library\deviceModelLibrary\MOS\IRF540N.lib"
+v1 Net-_M1-Pad2_ GND DC
+v2 Net-_U1-Pad2_ GND DC
+U1 Net-_M1-Pad1_ Net-_U1-Pad2_ plot_i2
+M1 Net-_M1-Pad1_ Net-_M1-Pad2_ GND GND IRF540N
+.end

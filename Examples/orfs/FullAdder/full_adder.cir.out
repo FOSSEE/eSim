@@ -1,0 +1,19 @@
+* eeschema netlist version 1.1 (spice format) creation date: wed jun 24 12:24:33 2015
+
+.include half_adder.sub
+x1 8 7 6 2 half_adder
+x2 5 6 4 3 half_adder
+* u1  8 7 5 4 1 port
+* u2  3 2 1 d_or
+a1 [3 2 ] 1 u2
+* Schematic Name: d_or, NgSpice Name: d_or
+.model u2 d_or(fall_delay=1.0e-9 input_load=1.0e-12 rise_delay=1.0e-9 ) 
+.ac lin 0 0Hz 0Hz
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

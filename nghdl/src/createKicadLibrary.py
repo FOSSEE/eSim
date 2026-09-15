@@ -2,7 +2,7 @@ from Appconfig import Appconfig
 import re
 import os
 import xml.etree.cElementTree as ET
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 class AutoSchematic(QtWidgets.QWidget):
 
@@ -20,7 +20,7 @@ class AutoSchematic(QtWidgets.QWidget):
                 inst_dir + '/KiCad/share/kicad/symbols/eSim_Nghdl.kicad_sym'
         else:
             self.kicad_nghdl_sym = \
-                '/Users/thethtarshwesin/Documents/KiCad/6.0/symbols/eSim_Nghdl.kicad_sym'
+                '/usr/share/kicad/symbols/eSim_Nghdl.kicad_sym'
         self.parser = Appconfig.parser_nghdl
 
     def createKicadSymbol(self):
@@ -40,9 +40,9 @@ class AutoSchematic(QtWidgets.QWidget):
                 ''' already exist. Do you want to overwrite it?</b><br/>
                 If yes press ok, else cancel it and ''' +
                 '''change the name of your vhdl file.''',
-                QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Cancel
+                QtWidgets.QMessageBox.StandardButton.Ok | QtWidgets.QMessageBox.StandardButton.Cancel
             )
-            if ret == QtWidgets.QMessageBox.Ok:
+            if ret == QtWidgets.QMessageBox.StandardButton.Ok:
                 print("Overwriting existing libraries")
                 self.getPortInformation()
                 self.createXML()
@@ -57,7 +57,7 @@ class AutoSchematic(QtWidgets.QWidget):
                 self.parent, "Error", '''<b>A standard library already ''' +
                 '''exists with this name.</b><br/><b>Please change the ''' +
                 '''name of your vhdl file and upload it again.</b>''',
-                QtWidgets.QMessageBox.Ok
+                QtWidgets.QMessageBox.StandardButton.Ok
             )
 
             # quit()
@@ -433,7 +433,7 @@ class AutoSchematic(QtWidgets.QWidget):
                 "Symbol details for this model were added to "
                 "<b>eSim_Nghdl.kicad_sym</b> successfully."
             ),
-            QtWidgets.QMessageBox.Ok
+            QtWidgets.QMessageBox.StandardButton.Ok
         )
 
 

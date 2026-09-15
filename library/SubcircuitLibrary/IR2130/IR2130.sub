@@ -1,0 +1,115 @@
+* ==========================================
+* SMOOTH ANALOG MODELS & POWER BOOST (Bypass eSim Parser)
+* ==========================================
+.model mosfet_n NMOS (Level=1 Kp=10)
+.model mosfet_p PMOS (Level=1 Kp=10)
+
+* Smooth Inverter (Renamed)
+.SUBCKT MY_INV A Y VDD VSS
+B1 Y_int VSS V = 2.5 - 2.5 * tanh((V(A,VSS) - 2.5) * 10)
+R1 Y_int Y 10
+C1 Y VSS 1p
+.ENDS MY_INV
+
+* Smooth AND Gate (Renamed)
+.SUBCKT MY_AND A B Y VDD VSS
+B1 Y_int VSS V = 2.5 + 2.5 * tanh((V(A,VSS) + V(B,VSS) - 7.5) * 10)
+R1 Y_int Y 10
+C1 Y VSS 1p
+.ENDS MY_AND
+
+* Smooth SR Flip-Flop (Renamed)
+.SUBCKT MY_SRFF S R CLK SET RST Q QBAR VDD VSS
+B_NOR1 Q_int VSS V = 2.5 - 2.5 * tanh((V(R,VSS) + V(QBAR,VSS) - 2.5) * 10)
+R1 Q_int Q 10
+C1 Q VSS 1p
+B_NOR2 QBAR_int VSS V = 2.5 - 2.5 * tanh((V(S,VSS) + V(Q,VSS) - 2.5) * 10)
+R2 QBAR_int QBAR 10
+C2 QBAR VSS 1p
+.ENDS MY_SRFF
+
+
+* ==========================================
+* MAIN IR2130 3-PHASE SUBCIRCUIT 
+* ==========================================
+.subckt IR2130 HIN1 HIN2 HIN3 LIN1 LIN2 LIN3 ITRIP VCC VSS VB1 VS1 HO1 VB2 VS2 HO2 VB3 VS3 HO3 LO1 LO2 LO3 COM
+
+* Internal 5V Logic Supply Generator
+V_logic VDD VSS DC 5
+
+* --- GLOBAL FAULT PROTECTION (ITRIP) ---
+X_U17 ITRIP SD_LOGIC VDD VSS MY_INV
+
+
+* ==========================================
+* CHANNEL 1 (LEG 1)
+* ==========================================
+* High Side 1
+X_U1 HIN1 node_hin1_inv VDD VSS MY_INV
+X_A2 node_hin1_inv SD_LOGIC node_hs1_and VDD VSS MY_AND
+X_U2 node_hs1_and node_hs1_reset VDD VSS MY_INV
+X_U3 node_hs1_and node_hs1_reset VSS VSS VSS node_hs1_q node_hs1_qbar VDD VSS MY_SRFF
+* Level shifter 1 (5V to Floating VB1-VS1)
+B_LS_HO1 node_HO1_gate VS1 V = (V(node_hs1_q, VSS) / 5.0) * V(VB1, VS1)
+M2 HO1 node_HO1_gate VB1 VB1 mosfet_p
+M1 HO1 node_HO1_gate VS1 VS1 mosfet_n
+
+* Low Side 1
+X_U4 LIN1 node_lin1_inv VDD VSS MY_INV
+X_A1 node_lin1_inv SD_LOGIC node_ls1_and VDD VSS MY_AND
+X_U8 node_ls1_and node_ls1_d1 VDD VSS MY_INV
+X_U10 node_ls1_d1 node_ls1_out VDD VSS MY_INV
+* Level shifter 1 Low (5V to VCC-COM)
+B_LS_LO1 node_LO1_gate COM V = (V(node_ls1_out, VSS) / 5.0) * V(VCC, COM)
+M4 LO1 node_LO1_gate VCC VCC mosfet_p
+M3 LO1 node_LO1_gate COM COM mosfet_n
+
+
+* ==========================================
+* CHANNEL 2 (LEG 2)
+* ==========================================
+* High Side 2
+X_U5 HIN2 node_hin2_inv VDD VSS MY_INV
+X_A3 node_hin2_inv SD_LOGIC node_hs2_and VDD VSS MY_AND
+X_U7 node_hs2_and node_hs2_reset VDD VSS MY_INV
+X_U12 node_hs2_and node_hs2_reset VSS VSS VSS node_hs2_q node_hs2_qbar VDD VSS MY_SRFF
+* Level shifter 2
+B_LS_HO2 node_HO2_gate VS2 V = (V(node_hs2_q, VSS) / 5.0) * V(VB2, VS2)
+M8 HO2 node_HO2_gate VB2 VB2 mosfet_p
+M7 HO2 node_HO2_gate VS2 VS2 mosfet_n
+
+* Low Side 2
+X_U6 LIN2 node_lin2_inv VDD VSS MY_INV
+X_A4 node_lin2_inv SD_LOGIC node_ls2_and VDD VSS MY_AND
+X_U9 node_ls2_and node_ls2_d1 VDD VSS MY_INV
+X_U11 node_ls2_d1 node_ls2_out VDD VSS MY_INV
+* Level shifter 2 Low
+B_LS_LO2 node_LO2_gate COM V = (V(node_ls2_out, VSS) / 5.0) * V(VCC, COM)
+M6 LO2 node_LO2_gate VCC VCC mosfet_p
+M5 LO2 node_LO2_gate COM COM mosfet_n
+
+
+* ==========================================
+* CHANNEL 3 (LEG 3)
+* ==========================================
+* High Side 3
+X_U13 HIN3 node_hin3_inv VDD VSS MY_INV
+X_A5 node_hin3_inv SD_LOGIC node_hs3_and VDD VSS MY_AND
+X_U15 node_hs3_and node_hs3_reset VDD VSS MY_INV
+X_U19 node_hs3_and node_hs3_reset VSS VSS VSS node_hs3_q node_hs3_qbar VDD VSS MY_SRFF
+* Level shifter 3
+B_LS_HO3 node_HO3_gate VS3 V = (V(node_hs3_q, VSS) / 5.0) * V(VB3, VS3)
+M12 HO3 node_HO3_gate VB3 VB3 mosfet_p
+M11 HO3 node_HO3_gate VS3 VS3 mosfet_n
+
+* Low Side 3
+X_U14 LIN3 node_lin3_inv VDD VSS MY_INV
+X_A6 node_lin3_inv SD_LOGIC node_ls3_and VDD VSS MY_AND
+X_U16 node_ls3_and node_ls3_d1 VDD VSS MY_INV
+X_U18 node_ls3_d1 node_ls3_out VDD VSS MY_INV
+* Level shifter 3 Low
+B_LS_LO3 node_LO3_gate COM V = (V(node_ls3_out, VSS) / 5.0) * V(VCC, COM)
+M10 LO3 node_LO3_gate VCC VCC mosfet_p
+M9 LO3 node_LO3_gate COM COM mosfet_n
+
+.ends IR2130

@@ -1,0 +1,10 @@
+.title KiCad schematic
+.include "C:\FOSSEE\eSim\library\SubcircuitLibrary\SN7406a\SN7406a.sub"
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ Net-_U1-Pad11_ Net-_U1-Pad12_ Net-_U1-Pad13_ Net-_U1-Pad14_ PORT
+XU2 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad14_ Net-_U1-Pad7_ SN7406a
+XU3 Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad14_ Net-_U1-Pad7_ SN7406a
+XU4 Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad14_ Net-_U1-Pad7_ SN7406a
+XU7 Net-_U1-Pad13_ Net-_U1-Pad12_ Net-_U1-Pad14_ Net-_U1-Pad7_ SN7406a
+XU6 Net-_U1-Pad11_ Net-_U1-Pad10_ Net-_U1-Pad14_ Net-_U1-Pad7_ SN7406a
+XU5 Net-_U1-Pad9_ Net-_U1-Pad8_ Net-_U1-Pad14_ Net-_U1-Pad7_ SN7406a
+.end

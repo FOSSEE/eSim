@@ -1,0 +1,102 @@
+.title KiCad schematic
+U50 Net-_U50-Pad1_ RB Net-_U34-Pad1_ d_and
+U54 RA Net-_U50-Pad1_ d_inverter
+U77 Net-_U61-Pad1_ Net-_U61-Pad2_ Net-_U73-Pad2_ d_and
+U78 Net-_U62-Pad1_ Net-_U62-Pad2_ Net-_U74-Pad2_ d_and
+U58 D1 Net-_U58-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U45-Pad2_ unconnected-_U58-Pad6_ d_dlatch
+U74 D3 Net-_U74-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U41-Pad2_ unconnected-_U74-Pad6_ d_dlatch
+U66 D2 Net-_U66-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U44-Pad2_ unconnected-_U66-Pad6_ d_dlatch
+U69 Net-_U61-Pad1_ Net-_U61-Pad2_ Net-_U65-Pad2_ d_and
+U61 Net-_U61-Pad1_ Net-_U61-Pad2_ Net-_U57-Pad2_ d_and
+U57 D1 Net-_U57-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U39-Pad2_ unconnected-_U57-Pad6_ d_dlatch
+U60 Net-_U60-Pad1_ Net-_U60-Pad2_ Net-_U56-Pad2_ d_and
+U56 D1 Net-_U56-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U33-Pad2_ unconnected-_U56-Pad6_ d_dlatch
+U49 RA RB Net-_U30-Pad1_ d_and
+U68 Net-_U60-Pad1_ Net-_U60-Pad2_ Net-_U64-Pad2_ d_and
+U65 D2 Net-_U65-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U38-Pad2_ unconnected-_U65-Pad6_ d_dlatch
+U73 D3 Net-_U73-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U35-Pad2_ unconnected-_U73-Pad6_ d_dlatch
+U76 Net-_U60-Pad1_ Net-_U60-Pad2_ Net-_U72-Pad2_ d_and
+U64 D2 Net-_U64-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U32-Pad2_ unconnected-_U64-Pad6_ d_dlatch
+U72 D3 Net-_U72-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U31-Pad2_ unconnected-_U72-Pad6_ d_dlatch
+U1 D2 D3 D4 RB RA Q4 Q3 GND Q2 Q1 Gr_bar Gw_bar WB WA D1 unconnected-_U1-Pad16_ PORT
+U46 Gr_bar Net-_U14-Pad1_ d_inverter
+U55 GND Net-_U55-Pad2_ adc_bridge_1
+U52 RB Net-_U47-Pad2_ d_inverter
+U51 RA Net-_U47-Pad1_ d_inverter
+U63 Net-_U63-Pad1_ Net-_U63-Pad2_ Net-_U59-Pad2_ d_and
+U67 D2 Net-_U67-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U42-Pad2_ unconnected-_U67-Pad6_ d_dlatch
+U71 Net-_U63-Pad1_ Net-_U63-Pad2_ Net-_U67-Pad2_ d_and
+U70 Net-_U62-Pad1_ Net-_U62-Pad2_ Net-_U66-Pad2_ d_and
+U59 D1 Net-_U59-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U43-Pad2_ unconnected-_U59-Pad6_ d_dlatch
+U62 Net-_U62-Pad1_ Net-_U62-Pad2_ Net-_U58-Pad2_ d_and
+U53 RB Net-_U48-Pad2_ d_inverter
+U48 RA Net-_U48-Pad2_ Net-_U40-Pad1_ d_and
+U47 Net-_U47-Pad1_ Net-_U47-Pad2_ Net-_U36-Pad1_ d_and
+U22 Net-_U14-Pad1_ Net-_U22-Pad2_ Net-_U22-Pad3_ d_and
+U35 Net-_U34-Pad1_ Net-_U35-Pad2_ Net-_U19-Pad2_ d_and
+U34 Net-_U34-Pad1_ Net-_U34-Pad2_ Net-_U18-Pad2_ d_and
+U18 Net-_U14-Pad1_ Net-_U18-Pad2_ Net-_U13-Pad1_ d_and
+U19 Net-_U14-Pad1_ Net-_U19-Pad2_ Net-_U10-Pad1_ d_and
+U39 Net-_U34-Pad1_ Net-_U39-Pad2_ Net-_U23-Pad2_ d_and
+U38 Net-_U34-Pad1_ Net-_U38-Pad2_ Net-_U22-Pad2_ d_and
+U33 Net-_U30-Pad1_ Net-_U33-Pad2_ Net-_U17-Pad2_ d_and
+U30 Net-_U30-Pad1_ Net-_U30-Pad2_ Net-_U14-Pad2_ d_and
+U15 Net-_U14-Pad1_ Net-_U15-Pad2_ Net-_U10-Pad2_ d_and
+U14 Net-_U14-Pad1_ Net-_U14-Pad2_ Net-_U13-Pad2_ d_and
+U31 Net-_U30-Pad1_ Net-_U31-Pad2_ Net-_U15-Pad2_ d_and
+U32 Net-_U30-Pad1_ Net-_U32-Pad2_ Net-_U16-Pad2_ d_and
+U17 Net-_U14-Pad1_ Net-_U17-Pad2_ Net-_U17-Pad3_ d_and
+U16 Net-_U14-Pad1_ Net-_U16-Pad2_ Net-_U16-Pad3_ d_and
+U45 Net-_U40-Pad1_ Net-_U45-Pad2_ Net-_U29-Pad2_ d_and
+U24 Net-_U14-Pad1_ Net-_U24-Pad2_ Net-_U12-Pad2_ d_and
+U41 Net-_U40-Pad1_ Net-_U41-Pad2_ Net-_U25-Pad2_ d_and
+U44 Net-_U40-Pad1_ Net-_U44-Pad2_ Net-_U28-Pad2_ d_and
+U98 WA Net-_U95-Pad1_ d_inverter
+U99 WB Net-_U95-Pad2_ d_inverter
+U95 Net-_U95-Pad1_ Net-_U95-Pad2_ Net-_U63-Pad2_ d_and
+U88 Gw_bar Net-_U63-Pad1_ d_inverter
+U100 GND Net-_U100-Pad2_ adc_bridge_1
+U79 Net-_U63-Pad1_ Net-_U63-Pad2_ Net-_U75-Pad2_ d_and
+U75 D3 Net-_U75-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U37-Pad2_ unconnected-_U75-Pad6_ d_dlatch
+U87 Net-_U63-Pad1_ Net-_U63-Pad2_ Net-_U83-Pad2_ d_and
+U80 D4 Net-_U80-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U30-Pad2_ unconnected-_U80-Pad6_ d_dlatch
+U84 Net-_U60-Pad1_ Net-_U60-Pad2_ Net-_U80-Pad2_ d_and
+U81 D4 Net-_U81-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U34-Pad2_ unconnected-_U81-Pad6_ d_dlatch
+U82 D4 Net-_U82-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U40-Pad2_ unconnected-_U82-Pad6_ d_dlatch
+U86 Net-_U62-Pad1_ Net-_U62-Pad2_ Net-_U82-Pad2_ d_and
+U83 D4 Net-_U83-Pad2_ Net-_U55-Pad2_ Net-_U100-Pad2_ Net-_U36-Pad2_ unconnected-_U83-Pad6_ d_dlatch
+U97 WB Net-_U94-Pad2_ d_inverter
+U93 Gw_bar Net-_U62-Pad1_ d_inverter
+U94 WA Net-_U94-Pad2_ Net-_U62-Pad2_ d_and
+U96 WA Net-_U92-Pad1_ d_inverter
+U92 Net-_U92-Pad1_ WB Net-_U61-Pad2_ d_and
+U85 Net-_U61-Pad1_ Net-_U61-Pad2_ Net-_U81-Pad2_ d_and
+U90 WA WB Net-_U60-Pad2_ d_and
+U89 Gw_bar Net-_U60-Pad1_ d_inverter
+U91 Gw_bar Net-_U61-Pad1_ d_inverter
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ Net-_U10-Pad3_ d_xor
+U6 Net-_U6-Pad1_ Net-_U10-Pad3_ Q3 d_xor
+U8 Net-_U21-Pad3_ Net-_U25-Pad3_ Net-_U6-Pad1_ d_xor
+U9 Net-_U22-Pad3_ Net-_U16-Pad3_ Net-_U5-Pad2_ d_xor
+U7 Net-_U26-Pad3_ Net-_U28-Pad3_ Net-_U5-Pad1_ d_xor
+U5 Net-_U5-Pad1_ Net-_U5-Pad2_ Q2 d_xor
+U40 Net-_U40-Pad1_ Net-_U40-Pad2_ Net-_U24-Pad2_ d_and
+U23 Net-_U14-Pad1_ Net-_U23-Pad2_ Net-_U23-Pad3_ d_and
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Q1 d_xor
+U4 Net-_U23-Pad3_ Net-_U17-Pad3_ Net-_U2-Pad2_ d_xor
+U3 Net-_U27-Pad3_ Net-_U29-Pad3_ Net-_U2-Pad1_ d_xor
+U29 Net-_U14-Pad1_ Net-_U29-Pad2_ Net-_U29-Pad3_ d_and
+U25 Net-_U14-Pad1_ Net-_U25-Pad2_ Net-_U25-Pad3_ d_and
+U28 Net-_U14-Pad1_ Net-_U28-Pad2_ Net-_U28-Pad3_ d_and
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ Net-_U11-Pad1_ d_xor
+U11 Net-_U11-Pad1_ Net-_U11-Pad2_ Q4 d_xor
+U13 Net-_U13-Pad1_ Net-_U13-Pad2_ Net-_U11-Pad2_ d_xor
+U27 Net-_U14-Pad1_ Net-_U27-Pad2_ Net-_U27-Pad3_ d_and
+U42 Net-_U36-Pad1_ Net-_U42-Pad2_ Net-_U26-Pad2_ d_and
+U36 Net-_U36-Pad1_ Net-_U36-Pad2_ Net-_U20-Pad2_ d_and
+U37 Net-_U36-Pad1_ Net-_U37-Pad2_ Net-_U21-Pad2_ d_and
+U43 Net-_U36-Pad1_ Net-_U43-Pad2_ Net-_U27-Pad2_ d_and
+U26 Net-_U14-Pad1_ Net-_U26-Pad2_ Net-_U26-Pad3_ d_and
+U21 Net-_U14-Pad1_ Net-_U21-Pad2_ Net-_U21-Pad3_ d_and
+U20 Net-_U14-Pad1_ Net-_U20-Pad2_ Net-_U12-Pad1_ d_and
+.end

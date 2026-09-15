@@ -2,7 +2,7 @@ import os
 import shutil
 from xml.etree import ElementTree as ET
 
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 from . import TrackWidget
 
@@ -331,6 +331,8 @@ class Convert:
         This function is used for scientific conversion.
         """
         self.string_obj = string_obj
+        if not self.string_obj:
+            return "e-00"
         if self.string_obj[0] == 'm':
             return "e-03"
         elif self.string_obj[0] == 'u':
@@ -791,7 +793,7 @@ sky130_fd_pr__model__r+c.model.spice
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage(
                 "Conversion failed. Please add all Subcircuits.")
-            self.msg.exec_()
+            self.msg.exec()
             raise Exception('All subcircuit directories need to be specified.')
         elif not subList:
             print("No Subcircuit Added in the schematic")

@@ -1,0 +1,24 @@
+* Subcircuit CPPLL (Mixed-Signal Charge-Pump Phase-Locked Loop)
+* Pin Map: 1:REF_IN 2:VCO_FB 3:VCO_IN 4:VCO_OUT 5:CP_OUT
+.subckt cppll REF_IN VCO_FB VCO_IN VCO_OUT CP_OUT
+
+* 1. High-Impedance Input Stabilizers
+R1 REF_IN 0 1G
+R2 VCO_FB 0 1G
+R3 VCO_IN 0 1G
+
+* 2. Phase Detector Core (Signum Phase Mixing)
+B_PD pd_node 0 V=sgn(v(REF_IN))*sgn(v(VCO_FB))
+
+* 3. Charge Pump Current Steering Engine (+/- 100uA)
+G_CP 0 CP_OUT pd_node 0 100u
+
+* 4. The Physical Calculus Engine (Hardware Integrator)
+G_int 0 int_node VCO_IN 0 1
+C_int int_node 0 1
+R_int int_node 0 1T
+
+* 5. Voltage-Controlled Oscillator Core (1MHz Center, 1MHz/V Sensitivity)
+B_VCO VCO_OUT 0 V=sin(2*3.14159*1Meg*time + 2*3.14159*1Meg*v(int_node))
+
+.ends cppll

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import os
 from xml.etree import ElementTree as ET
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 from . import TrackWidget
 

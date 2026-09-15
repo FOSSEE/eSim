@@ -1,0 +1,16 @@
+.title KiCad schematic
+.include "C:\FOSSEE\eSim\library\SubcircuitLibrary\LM321\LM321.sub"
+C3 Net-_C3-Pad1_ Net-_C3-Pad2_ 100p
+U1 Net-_U1-Pad2_ Net-_C1-Pad2_ Net-_R1-Pad2_ Net-_C4-Pad1_ Net-_C3-Pad2_ PORT
+R4 Net-_R4-Pad1_ Net-_C3-Pad1_ 7k
+U2 Net-_C1-Pad2_ Net-_R4-Pad1_ zener
+R1 Net-_C1-Pad1_ Net-_R1-Pad2_ 95k
+C1 Net-_C1-Pad1_ Net-_C1-Pad2_ 100p
+R2 Net-_C1-Pad2_ Net-_C1-Pad1_ 14k
+C2 Net-_C1-Pad1_ Net-_C2-Pad2_ 100p
+R3 Net-_C1-Pad1_ Net-_C2-Pad2_ 1k
+C4 Net-_C4-Pad1_ Net-_C2-Pad2_ 100p
+R5 Net-_C2-Pad2_ Net-_C4-Pad1_ 8k
+R6 Net-_R4-Pad1_ Net-_C4-Pad1_ 4k
+X1 Net-_C3-Pad1_ Net-_C2-Pad2_ Net-_U1-Pad2_ Net-_C4-Pad1_ Net-_C1-Pad2_ LM321
+.end

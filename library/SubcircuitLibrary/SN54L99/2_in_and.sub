@@ -1,0 +1,12 @@
+* Subcircuit 2_in_and
+.subckt 2_in_and net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/2_in_and/2_in_and.cir
+.include CMOS_INVTR.sub
+.include NAND_2.sub
+
+x1 net-_u1-pad3_ net-_u1-pad2_ net-_u1-pad1_ net-_x1-pad4_ net-_u1-pad4_ NAND_2
+x2 net-_x1-pad4_ net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad5_ CMOS_INVTR
+* s c m o d e
+* Control Statements
+
+.ends 2_in_and

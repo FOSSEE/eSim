@@ -1,0 +1,102 @@
+.title KiCad schematic
+I13 Net-_D10-Pad2_ GND 200u
+QP20 Net-_QN19-Pad1_ Net-_QP20-Pad2_ COL pnp
+D10 COL Net-_D10-Pad2_ eSim_Diode
+QP18 Net-_QN18-Pad1_ Net-_QP16-Pad2_ COL pnp
+QP16 Net-_QN11-Pad1_ Net-_QP16-Pad2_ COL pnp
+QP15 Net-_QN22-Pad2_ CP1 Net-_I10-Pad2_ Net-_QN19-Pad2_ lpnp
+I10 COL Net-_I10-Pad2_ 100u
+R16 GND Net-_QN19-Pad2_ 30k
+QN18 Net-_QN18-Pad1_ Net-_QN18-Pad2_ GND npn
+QN19 Net-_QN19-Pad1_ Net-_QN19-Pad2_ GND npn
+D11 COL Net-_D11-Pad2_ eSim_Diode
+D12 COL Net-_D12-Pad2_ eSim_Diode
+D13 Net-_D12-Pad2_ Net-_D13-Pad2_ eSim_Diode
+QN22 GND Net-_QN22-Pad2_ GND npn
+R17 GND Net-_QN22-Pad2_ 60k
+I14 Net-_D11-Pad2_ GND 200u
+R13 GND Net-_QN18-Pad2_ 60k
+C1 CP1 GND 0.01u
+QP17 CP1 Net-_D13-Pad2_ Net-_QN11-Pad1_ pnp
+QP19 CP2_IN_P Net-_D13-Pad2_ Net-_QN18-Pad1_ pnp
+QN11 Net-_QN11-Pad1_ Net-_QN11-Pad2_ GND npn
+R11 GND Net-_QN11-Pad2_ 30k
+QN21 Net-_QN15-Pad2_ Net-_QN15-Pad3_ GND npn
+QN16 Net-_QN15-Pad3_ Net-_QN15-Pad3_ GND npn
+QN15 CP1 Net-_QN15-Pad2_ Net-_QN15-Pad3_ npn
+QP22 GND Net-_QP20-Pad2_ COL pnp
+I15 GND Net-_D13-Pad2_ 200u
+QP23 CP2_IN_P Net-_D13-Pad2_ GND pnp
+QP21 Net-_QN15-Pad2_ Net-_D13-Pad2_ Net-_QN19-Pad1_ pnp
+U2 CP2_IN_P plot_db
+R19 GND CP2_IN_P 100k
+C3 CP2_IN_P GND 1u
+QN12 COL Net-_I11-Pad2_ Net-_QN12-Pad3_ npn
+QP13 GND CP2_IN_P Net-_I9-Pad2_ pnp
+C2 Net-_C2-Pad1_ Net-_C2-Pad2_ 10p
+QP11 Net-_C2-Pad2_ Net-_I9-Pad2_ Net-_I8-Pad2_ pnp
+I11 COL Net-_I11-Pad2_ 3u
+I12 COL Net-_I12-Pad2_ 50u
+QN20 COL Net-_QN20-Pad2_ out npn
+R14 out Net-_QN17-Pad3_ 15k
+R15 Net-_QN20-Pad2_ Net-_QN17-Pad3_ 5k
+QN17 COL Net-_C2-Pad1_ Net-_QN17-Pad3_ npn
+I8 COL Net-_I8-Pad2_ 6u
+I9 COL Net-_I9-Pad2_ 3u
+V2 COL GND 15v
+QN13 Net-_I11-Pad2_ Net-_QN12-Pad3_ Net-_I12-Pad2_ npn
+QN14 Net-_I12-Pad2_ Net-_QN12-Pad3_ GND npn
+R12 GND Net-_QN12-Pad3_ 100k
+R18 GND out 10k
+U3 out plot_db
+QP6 GND Net-_QN7-Pad1_ COL pnp
+QP7 GND out Net-_I6-Pad2_ pnp
+I6 COL Net-_I6-Pad2_ 3u
+QP8 Net-_D9-Pad1_ Net-_I6-Pad2_ Net-_I8-Pad2_ pnp
+QP14 GND Net-_C2-Pad2_ Net-_I11-Pad2_ pnp
+QN10 Net-_C2-Pad2_ Net-_D9-Pad1_ GND npn
+D9 Net-_D9-Pad1_ GND eSim_Diode
+QP10 GND Net-_D7-Pad2_ Net-_I7-Pad2_ pnp
+QP12 Net-_QN11-Pad2_ Net-_I7-Pad2_ Net-_I10-Pad2_ Net-_QN18-Pad2_ lpnp
+I7 COL Net-_I7-Pad2_ 80u
+I5 Net-_D8-Pad2_ GND 100u
+D8 Net-_D8-Pad1_ Net-_D8-Pad2_ eSim_Diode
+QP9 GND Net-_D8-Pad2_ Net-_I7-Pad2_ pnp
+QN9 COL Net-_QN9-Pad2_ Net-_D8-Pad1_ npn
+QN4 Net-_QN3-Pad2_ Net-_QN3-Pad1_ GND npn
+QN3 Net-_QN3-Pad1_ Net-_QN3-Pad2_ GND npn
+R4 Net-_D2-Pad1_ Net-_QN3-Pad2_ 150
+D2 Net-_D2-Pad1_ GND eSim_Diode
+R5 Net-_D5-Pad1_ Net-_QN3-Pad1_ 150
+QN8 COL Net-_QN8-Pad2_ Net-_D7-Pad1_ npn
+R8 Net-_QN9-Pad2_ COL 5k
+R9 Net-_QN8-Pad2_ Net-_QN9-Pad2_ 10k
+QP4 GND GND Net-_I4-Pad2_ pnp
+D7 Net-_D7-Pad1_ Net-_D7-Pad2_ eSim_Diode
+R10 GND Net-_QN8-Pad2_ 5k
+D1 GND GND eSim_Diode
+QP2 Net-_QN3-Pad2_ Net-_I1-Pad2_ Net-_I2-Pad2_ pnp
+I1 COL Net-_I1-Pad2_ 10u
+I2 COL Net-_I2-Pad2_ 100u
+QP3 Net-_QN3-Pad1_ Net-_I4-Pad2_ Net-_I2-Pad2_ pnp
+R6 GND Net-_D6-Pad1_ 50k
+QP5 Net-_QN5-Pad1_ Net-_QN5-Pad1_ COL Net-_D7-Pad2_ lpnp
+I4 COL Net-_I4-Pad2_ 10u
+D6 Net-_D6-Pad1_ COL zener
+R7 Net-_QN7-Pad1_ COL 750
+QN7 Net-_QN7-Pad1_ Net-_D6-Pad1_ GND npn
+I3 COL Net-_D3-Pad1_ 200u
+QN1 COL Net-_QN1-Pad2_ GND npn
+R3 GND Net-_QN1-Pad2_ 1.6k
+D3 Net-_D3-Pad1_ Net-_D3-Pad2_ eSim_Diode
+QN2 COL Net-_D3-Pad1_ Net-_QN2-Pad3_ npn
+D4 Net-_D3-Pad2_ GND eSim_Diode
+R2 Net-_QN1-Pad2_ Net-_QN2-Pad3_ 1.6k
+U1 TACH_P plot_db
+QP1 GND GND Net-_I1-Pad2_ pnp
+R1 GND TACH_P 10k
+Vv1 TACH_P GND sin(0 1 100k 0 0)
+D5 Net-_D5-Pad1_ GND eSim_Diode
+QN5 Net-_QN5-Pad1_ Net-_D5-Pad1_ GND npn
+QN6 Net-_D7-Pad2_ Net-_D2-Pad1_ GND npn
+.end

@@ -1,0 +1,21 @@
+* /home/fossee/UpdatedExamples/Half_Adder/Half_Adder.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: Thu Mar  3 21:35:33 2016
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U2-Pad1_ Net-_U2-Pad2_ half_adder		
+U1  IN1 IN2 Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2		
+U2  Net-_U2-Pad1_ Net-_U2-Pad2_ sum cout dac_bridge_2		
+v1  IN1 GND DC		
+v2  IN2 GND DC		
+R1  sum GND 1k		
+R2  cout GND 1k		
+U3  IN1 plot_v1		
+U4  IN2 plot_v1		
+U5  sum plot_v1		
+U6  cout plot_v1		
+
+.end

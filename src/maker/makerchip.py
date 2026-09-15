@@ -27,7 +27,7 @@
 # =========================================================================
 
 # importing the files and libraries
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 from . import Maker
 from . import NgVeri
 
@@ -44,7 +44,7 @@ class makerchip(QtWidgets.QWidget):
 
         # filecount=int(open("a.txt",'r').read())
         print(filecount)
-        # self.splitter.setOrientation(QtCore.Qt.Vertical)
+        # self.splitter.setOrientation(QtCore.Qt.Orientation.Vertical)
         print("==================================")
         print("Makerchip and Verilog to Ngspice Converter")
         print("==================================")

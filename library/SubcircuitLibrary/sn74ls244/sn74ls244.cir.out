@@ -1,0 +1,43 @@
+.title kicad schematic
+
+.include SN74LS244_ic.sub
+r2 gnd y1 1k
+r1 y2 gnd 1k
+* u8 y2 plot_v1
+* u9 y1 plot_v1
+* u7 net-_u7-pad1_ net-_u7-pad2_ y1 y2 dac_bridge_2
+v1 a2 gnd pulse(0 5 0 1n 1n 3m 6m)
+* u1 a2 plot_v1
+* u3 g2 plot_v1
+x1 net-_u5-pad3_ net-_u5-pad4_ unconnected-_x1-pad3_ unconnected-_x1-pad4_ unconnected-_x1-pad5_ unconnected-_x1-pad6_ unconnected-_x1-pad7_ unconnected-_x1-pad8_ net-_u7-pad2_ unconnected-_x1-pad10_ net-_u6-pad4_ unconnected-_x1-pad12_ unconnected-_x1-pad13_ unconnected-_x1-pad14_ unconnected-_x1-pad15_ unconnected-_x1-pad16_ unconnected-_x1-pad17_ net-_u7-pad1_ net-_u6-pad3_ unconnected-_x1-pad20_ SN74LS244_ic
+* u6 g2 a2 net-_u6-pad3_ net-_u6-pad4_ adc_bridge_2
+* u5 g1 a1 net-_u5-pad3_ net-_u5-pad4_ adc_bridge_2
+v2 a1 gnd pulse(0 5 0 1n 1n 2m 4m)
+* u2 a1 plot_v1
+* u4 g1 plot_v1
+v4 g1 gnd pulse(0 5 0 1n 1n 4m 8m)
+v3 g2 gnd pulse(0 5 0 1n 1n 6m 12m)
+a1 [net-_u7-pad1_ net-_u7-pad2_ ] [y1 y2 ] u7
+a2 [g2 a2 ] [net-_u6-pad3_ net-_u6-pad4_ ] u6
+a3 [g1 a1 ] [net-_u5-pad3_ net-_u5-pad4_ ] u5
+* Schematic Name:                             dac_bridge_2, Ngspice Name: dac_bridge
+.model u7 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, Ngspice Name: adc_bridge
+.model u6 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_2, Ngspice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 100e-06 50e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(y2)
+plot v(y1)
+plot v(a2)
+plot v(g2)
+plot v(a1)
+plot v(g1)
+.endc
+.end

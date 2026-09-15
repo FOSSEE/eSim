@@ -1,0 +1,56 @@
+.title kicad schematic
+
+* u1 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ port
+* u2 net-_u1-pad7_ net-_u2-pad2_ d_inverter
+* u7 net-_u10-pad1_ net-_u1-pad1_ d_buffer
+* u4 net-_u4-pad1_ net-_u1-pad8_ net-_u2-pad2_ net-_u3-pad2_ net-_u10-pad1_ net-_u4-pad1_ d_dff
+* u3 net-_u1-pad9_ net-_u3-pad2_ d_inverter
+* u6 net-_u10-pad1_ net-_u1-pad11_ d_buffer
+* u5 net-_u10-pad1_ net-_u1-pad10_ d_buffer
+* u9 net-_u10-pad1_ net-_u1-pad3_ d_buffer
+* u8 net-_u10-pad1_ net-_u1-pad2_ d_buffer
+* u12 net-_u10-pad1_ net-_u1-pad6_ d_buffer
+* u11 net-_u10-pad1_ net-_u1-pad5_ d_buffer
+* u10 net-_u10-pad1_ net-_u1-pad4_ d_buffer
+a1 net-_u1-pad7_ net-_u2-pad2_ u2
+a2 net-_u10-pad1_ net-_u1-pad1_ u7
+a3 net-_u4-pad1_ net-_u1-pad8_ net-_u2-pad2_ net-_u3-pad2_ net-_u10-pad1_ net-_u4-pad1_ u4
+a4 net-_u1-pad9_ net-_u3-pad2_ u3
+a5 net-_u10-pad1_ net-_u1-pad11_ u6
+a6 net-_u10-pad1_ net-_u1-pad10_ u5
+a7 net-_u10-pad1_ net-_u1-pad3_ u9
+a8 net-_u10-pad1_ net-_u1-pad2_ u8
+a9 net-_u10-pad1_ net-_u1-pad6_ u12
+a10 net-_u10-pad1_ net-_u1-pad5_ u11
+a11 net-_u10-pad1_ net-_u1-pad4_ u10
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u2 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u7 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_dff, Ngspice Name: d_dff
+.model u4 d_dff(clk_delay=1.0e-9 set_delay=1.0e-9 reset_delay=1.0 ic=0 data_load=1.0e-12 clk_load=1.0e-12 set_load=1.0e-12 reset_load=1.0e-12 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             d_inverter, Ngspice Name: d_inverter
+.model u3 d_inverter(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u6 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u5 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u9 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u8 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u12 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u11 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+* Schematic Name:                             d_buffer, Ngspice Name: d_buffer
+.model u10 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 ) 
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

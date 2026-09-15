@@ -1,0 +1,159 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:or_2-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L PORT U1
+U 1 1 685C28CA
+P 5400 2300
+F 0 "U1" H 5450 2400 30  0000 C CNN
+F 1 "PORT" H 5400 2300 30  0000 C CNN
+F 2 "" H 5400 2300 60  0000 C CNN
+F 3 "" H 5400 2300 60  0000 C CNN
+	1    5400 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 2 1 685C2911
+P 5400 2400
+F 0 "U1" H 5450 2500 30  0000 C CNN
+F 1 "PORT" H 5400 2400 30  0000 C CNN
+F 2 "" H 5400 2400 60  0000 C CNN
+F 3 "" H 5400 2400 60  0000 C CNN
+	2    5400 2400
+	1    0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 5 1 685C2946
+P 7650 2350
+F 0 "U1" H 7700 2450 30  0000 C CNN
+F 1 "PORT" H 7650 2350 30  0000 C CNN
+F 2 "" H 7650 2350 60  0000 C CNN
+F 3 "" H 7650 2350 60  0000 C CNN
+	5    7650 2350
+	-1   0    0    1   
+$EndComp
+$Comp
+L PORT U1
+U 3 1 685C2985
+P 6200 1800
+F 0 "U1" H 6250 1900 30  0000 C CNN
+F 1 "PORT" H 6200 1800 30  0000 C CNN
+F 2 "" H 6200 1800 60  0000 C CNN
+F 3 "" H 6200 1800 60  0000 C CNN
+	3    6200 1800
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U1
+U 4 1 685C2A3C
+P 6200 2900
+F 0 "U1" H 6250 3000 30  0000 C CNN
+F 1 "PORT" H 6200 2900 30  0000 C CNN
+F 2 "" H 6200 2900 60  0000 C CNN
+F 3 "" H 6200 2900 60  0000 C CNN
+	4    6200 2900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5600 1900 6450 1900
+Wire Wire Line
+	6450 1800 6450 2250
+Wire Wire Line
+	5600 2800 6450 2800
+Wire Wire Line
+	6450 2450 6450 2900
+Connection ~ 6450 1900
+Connection ~ 6450 2800
+$Comp
+L SKY130mode scmode1
+U 1 1 685C2B66
+P 9500 1400
+F 0 "scmode1" H 9500 1550 98  0000 C CNB
+F 1 "SKY130mode" H 9500 1300 118 0000 C CNB
+F 2 "" H 9500 1550 60  0001 C CNN
+F 3 "" H 9500 1550 60  0001 C CNN
+	1    9500 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L NOR_2 X1
+U 1 1 686FB89E
+P 6000 2350
+F 0 "X1" H 6050 2350 60  0000 C CNN
+F 1 "NOR_2" H 6000 2100 60  0000 C CNN
+F 2 "" H 5900 2350 60  0001 C CNN
+F 3 "" H 5900 2350 60  0001 C CNN
+	1    6000 2350
+	1    0    0    -1  
+$EndComp
+$Comp
+L CMOS_INVTR X2
+U 1 1 686FB8DF
+P 6850 2350
+F 0 "X2" H 6850 2350 60  0000 C CNN
+F 1 "CMOS_INVTR" H 6900 2150 60  0000 C CNN
+F 2 "" H 6850 2350 60  0001 C CNN
+F 3 "" H 6850 2350 60  0001 C CNN
+	1    6850 2350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5600 1900 5600 2200
+Wire Wire Line
+	5600 2800 5600 2500
+$EndSCHEMATC

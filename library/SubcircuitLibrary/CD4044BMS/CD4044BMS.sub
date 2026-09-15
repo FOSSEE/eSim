@@ -1,0 +1,14 @@
+* Subcircuit CD4044BMS
+.subckt CD4044BMS net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/cd4044bms/cd4044bms.cir
+.include SR_Latch_with_Enable.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+x1 net-_u1-pad11_ net-_u1-pad2_ net-_u1-pad10_ net-_u1-pad1_ net-_u1-pad3_ net-_u1-pad12_ SR_Latch_with_Enable
+x3 net-_u1-pad11_ net-_u1-pad2_ net-_u1-pad10_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad14_ SR_Latch_with_Enable
+x2 net-_u1-pad11_ net-_u1-pad2_ net-_u1-pad10_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad13_ SR_Latch_with_Enable
+x4 net-_u1-pad11_ net-_u1-pad2_ net-_u1-pad10_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad15_ SR_Latch_with_Enable
+* s c m o d e
+* Control Statements
+
+.ends CD4044BMS

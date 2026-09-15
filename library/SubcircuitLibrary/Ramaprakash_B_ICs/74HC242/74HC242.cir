@@ -1,0 +1,22 @@
+.title KiCad schematic
+U12 Net-_U12-Pad1_ Net-_U1-Pad10_ d_inverter
+X8 Net-_U1-Pad10_ Net-_U4-Pad3_ Net-_U8-Pad1_ TRISTATE
+X4 Net-_U1-Pad6_ Net-_U4-Pad3_ Net-_U12-Pad1_ TRISTATE
+U7 Net-_U7-Pad1_ Net-_U1-Pad5_ d_inverter
+X7 Net-_U1-Pad9_ Net-_U4-Pad3_ Net-_U7-Pad1_ TRISTATE
+U8 Net-_U8-Pad1_ Net-_U1-Pad6_ d_inverter
+U5 Net-_U5-Pad1_ Net-_U1-Pad3_ d_inverter
+X1 Net-_U1-Pad3_ Net-_U4-Pad3_ Net-_U9-Pad1_ TRISTATE
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ Net-_U1-Pad9_ Net-_U1-Pad10_ PORT
+U4 Net-_U3-Pad2_ Net-_U2-Pad2_ Net-_U4-Pad3_ d_and
+U3 Net-_U1-Pad1_ Net-_U3-Pad2_ d_buffer
+U2 Net-_U1-Pad2_ Net-_U2-Pad2_ d_inverter
+X6 Net-_U1-Pad8_ Net-_U4-Pad3_ Net-_U6-Pad1_ TRISTATE
+U11 Net-_U11-Pad1_ Net-_U1-Pad9_ d_inverter
+X3 Net-_U1-Pad5_ Net-_U4-Pad3_ Net-_U11-Pad1_ TRISTATE
+U6 Net-_U6-Pad1_ Net-_U1-Pad4_ d_inverter
+U9 Net-_U9-Pad1_ Net-_U1-Pad7_ d_inverter
+X5 Net-_U1-Pad7_ Net-_U4-Pad3_ Net-_U5-Pad1_ TRISTATE
+X2 Net-_U1-Pad4_ Net-_U4-Pad3_ Net-_U10-Pad1_ TRISTATE
+U10 Net-_U10-Pad1_ Net-_U1-Pad8_ d_inverter
+.end

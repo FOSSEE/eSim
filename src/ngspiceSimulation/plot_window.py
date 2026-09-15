@@ -8,136 +8,52 @@ with support for AC, DC, and Transient analysis visualization.
 
 from __future__ import division
 import os
+import re
 import sys
 import json
 import traceback
 import logging
 from pathlib import Path
-from decimal import Decimal, getcontext
-from typing import Dict, List, Optional, Tuple, Any, Union
+from typing import Dict, List, Optional, Tuple, Any
 
-from PyQt5 import QtGui, QtCore, QtWidgets
-from PyQt5.QtCore import Qt, QSettings, pyqtSignal
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
+from PyQt6 import QtGui, QtCore, QtWidgets
+from PyQt6.QtCore import Qt, QSettings, pyqtSignal
+from PyQt6.QtWidgets import (QWidget, QVBoxLayout,
                              QHBoxLayout, QListWidget, QListWidgetItem, QPushButton,
-                             QCheckBox, QRadioButton, QButtonGroup, QGroupBox,
+                             QCheckBox, QGroupBox, QRadioButton, QButtonGroup,
                              QLabel, QLineEdit, QSlider, QDoubleSpinBox, QMenu,
-                             QAction, QFileDialog, QColorDialog, QInputDialog,
-                             QMessageBox, QErrorMessage, QStatusBar, QStyle,
+                             QFileDialog, QColorDialog, QInputDialog,
+                             QMessageBox, QStatusBar,
                              QSplitter, QToolButton, QWidgetAction, QGridLayout,
-                             QSpacerItem, QSizePolicy,QScrollArea)
-from PyQt5.QtGui import (QColor, QBrush, QPalette, QKeySequence,
-                         QPainter, QPixmap, QFont)
+                             QSizePolicy, QScrollArea)
+from PyQt6.QtGui import (QColor, QBrush, QPalette, QKeySequence, QShortcut,
+                         QPainter, QPixmap, QFont, QAction, QIcon, QPen)
 
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
+from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qtagg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.backend_bases import NavigationToolbar2
 from matplotlib.figure import Figure
-from matplotlib.widgets import Cursor
 from matplotlib.lines import Line2D
 from matplotlib.text import Text
+from matplotlib.ticker import FuncFormatter, ScalarFormatter
 
 from configuration.Appconfig import Appconfig
-from .plotting_widgets import CollapsibleBox, MultimeterWidgetClass
+from .plotting_widgets import CollapsibleBox
 from .data_extraction import DataExtraction
 
-# Set up logging
 logger = logging.getLogger(__name__)
 
-# Constants
-DEFAULT_WINDOW_WIDTH = 1400
-DEFAULT_WINDOW_HEIGHT = 800
-DEFAULT_DPI = 100
-DEFAULT_FIGURE_SIZE = (10, 8)
-DEFAULT_LINE_THICKNESS = 1.5
-DEFAULT_VERTICAL_SPACING = 1.2 # <-- UI Change: Reverted to original value
-DEFAULT_ZOOM_FACTOR = 0.9
-CURSOR_ALPHA = 0.7
-THRESHOLD_ALPHA = 0.5
-LEGEND_FONT_SIZE = 9
-DEFAULT_EXPORT_DPI = 300
+from .constants import *
+from .trace import Trace, CustomListWidget
+from ._pane_mixin import _PaneMixin
+from ._cursor_mixin import _CursorMixin
+from ._func_trace_mixin import _FuncTraceMixin
+from ._render_mixin import _RenderMixin
+from ._list_mixin import _ListMixin
 
-# Color Constants
-VIBRANT_COLOR_PALETTE = [
-    '#E53935',  # Vivid Red
-    '#1E88E5',  # Strong Blue
-    '#43A047',  # Rich Green
-    '#FB8C00',  # Bright Orange
-    '#8E24AA',  # Deep Purple
-    '#00ACC1',  # Vibrant Teal
-    '#D81B60',  # Strong Pink
-    '#6D4C41',  # Earthy Brown
-    '#FDD835',  # Visible Amber
-    '#039BE5',  # Sky Blue
-    '#C0CA33',  # Lime Green
-    '#37474F'   # Dark Grey
-]
-
-# Time unit conversion thresholds (more precise)
-TIME_UNIT_THRESHOLD_PS = 1e-9
-TIME_UNIT_THRESHOLD_NS = 1e-6
-TIME_UNIT_THRESHOLD_US = 1e-3
-TIME_UNIT_THRESHOLD_MS = 1
-
-# Line style options
-LINE_STYLES = [
-    ('-', "Solid"),
-    ('--', "Dashed"),
-    (':', "Dotted"),
-    ('steps-post', "Step (Post)")
-]
-
-# Thickness options
-THICKNESS_OPTIONS = [
-    (1.0, "1 px"),
-    (1.5, "1.5 px"),
-    (2.0, "2 px"),
-    (3.0, "3 px")
-]
-
-
-class Trace:
-    """Single class to manage all trace properties."""
-
-    def __init__(self, index: int, name: str, color: str = None,
-                 thickness: float = DEFAULT_LINE_THICKNESS, style: str = '-',
-                 visible: bool = False) -> None:
-        self.index = index
-        self.name = name
-        self.color = color or VIBRANT_COLOR_PALETTE[0]
-        self.thickness = thickness
-        self.style = style
-        self.visible = visible
-        self.line_object: Optional[Line2D] = None
-
-    def update_line(self, **kwargs) -> None:
-        if self.line_object:
-            if 'color' in kwargs:
-                self.color = kwargs['color']
-                self.line_object.set_color(self.color)
-            if 'thickness' in kwargs:
-                self.thickness = kwargs['thickness']
-                self.line_object.set_linewidth(self.thickness)
-            if 'style' in kwargs:
-                self.style = kwargs['style']
-                if self.style != 'steps-post':
-                    self.line_object.set_linestyle(self.style)
-
-
-class CustomListWidget(QListWidget):
-    """Custom QListWidget that handles selection without default styling."""
-
-    def __init__(self, parent: Optional[QWidget] = None) -> None:
-        super().__init__(parent)
-        self.setSelectionMode(QListWidget.MultiSelection)
-
-    def paintEvent(self, event: QtGui.QPaintEvent) -> None:
-        super().paintEvent(event)
-
-
-class plotWindow(QWidget):
+class plotWindow(QWidget, _PaneMixin, _CursorMixin, _FuncTraceMixin, _RenderMixin, _ListMixin):
     """Main plotting widget for NGSpice simulation results."""
 
     def __init__(self, file_path: str, project_name: str, parent=None) -> None:
@@ -145,7 +61,7 @@ class plotWindow(QWidget):
 
         self.file_path = file_path
         self.project_name = project_name
-        self.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         self.setMinimumSize(400, 300)
         self.obj_appconfig = Appconfig()
         logger.info(f"Complete Project Path: {self.file_path}")
@@ -158,22 +74,78 @@ class plotWindow(QWidget):
         self.create_main_frame()
         self.load_simulation_data()
         self.apply_theme()
+        self._setup_matplotlib_style()
 
     def _initialize_data_structures(self) -> None:
-        self.active_traces: Dict[int, Line2D] = {}
-        self.trace_visibility: Dict[int, bool] = {}
-        self.trace_colors: Dict[int, str] = {}
-        self.trace_thickness: Dict[int, float] = {}
-        self.trace_style: Dict[int, str] = {}
-        self.trace_names: Dict[int, str] = {}
-        self.cursor_lines: List[Optional[Line2D]] = []
+        self._em_cache: Optional[int] = None  # invalidated by changeEvent on FontChange
+        self._resize_timer: QtCore.QTimer = QtCore.QTimer(self)
+        self._resize_timer.setSingleShot(True)
+        self._resize_timer.setInterval(120)
+        self._resize_timer.timeout.connect(self._do_deferred_resize)
+        self._controls_timer: QtCore.QTimer = QtCore.QTimer(self)
+        self._controls_timer.setSingleShot(True)
+        self._controls_timer.setInterval(150)
+        self._controls_timer.timeout.connect(self.refresh_plot)
+        # debounce: coalesces rapid toggles so stacked rebuild runs once after burst settles
+        self._refresh_timer: QtCore.QTimer = QtCore.QTimer(self)
+        self._refresh_timer.setSingleShot(True)
+        self._refresh_timer.setInterval(REFRESH_DEBOUNCE_MS)
+        self._refresh_timer.timeout.connect(self.refresh_plot)
+        self.traces: Dict[int, Trace] = {}
+        # cursor_lines[i]: axvlines per pane; empty inner list = cursor not yet rendered
+        self.cursor_lines: List[List[Optional[Line2D]]] = []
         self.cursor_positions: List[Optional[float]] = []
+        self._current_analysis_type: str = ''
         self.timing_annotations: Dict[int, Any] = {}
         self.color_palette = VIBRANT_COLOR_PALETTE.copy()
-        self.color: List[str] = []
-        self.color_index = 0
-        self.logic_threshold: Optional[float] = None
+        self.logic_thresholds: Dict[int, float] = {}
         self.vertical_spacing = DEFAULT_VERTICAL_SPACING
+        self._func_line: Optional[Line2D] = None
+        self._drag_cursor_idx: Optional[int] = None
+        self._current_view_mode: str = 'normal'  # 'normal' | 'timing' | 'stacked'
+        self.panes: List[Any] = []
+        # incremental-refresh: skip full rebuild when composition unchanged; _force_full_refresh overrides
+        self._drawn_signature: Optional[tuple] = None
+        self._force_full_refresh: bool = False
+        # layout freeze: stacked rebuild sets _pending_freeze; draw callback snapshots geometry and drops solver
+        self._pending_freeze: bool = False
+        # display-only scale: line data stays in raw SI; ticks formatted as raw * _x_scale
+        self._x_scale: float = 1.0
+        self._x_unit: str = 's'
+        # view state: one-shot ylim snapshots + persistent locks, both keyed by anchor trace name
+        self._saved_xlim: Optional[Tuple[float, float]] = None
+        self._saved_pane_ylims: Dict[str, Tuple[float, float]] = {}   # one-shot
+        self._locked_ylims: Dict[str, Tuple[float, float]] = {}        # persistent
+        # pane groups: outer = pane order, inner = trace indices; empty = one trace per pane
+        self._pane_groups: List[List[int]] = []
+        # pane_lock_y keyed by anchor trace name; actual ylim in _locked_ylims
+        self._pane_lock_y: Dict[str, bool] = {}
+        self._global_stats_visible: bool = True
+        # func traces: (label, x, y, color, thickness, style)
+        self._func_traces: List[Tuple[str, "np.ndarray", "np.ndarray", str, float, str]] = []
+        # canonical expr per func trace for O(1) dup-check
+        self._func_canonical: List[str] = []
+        # visibility parallel to _func_traces
+        self._func_visible: List[bool] = []
+        # sorted longest-first so longer names match before their substrings
+        self._nb_sorted: List[Tuple[int, str]] = []
+        # pending layout from config, resolved after populate_waveform_list sets up NBList
+        self._pending_layout: Optional[Dict[str, Any]] = None
+        # pane height ratios; empty = equal heights
+        self._pane_heights: List[float] = []
+        # transient drag state for divider resize and pane reorder
+        self._divider_drag: Optional[Dict[str, Any]] = None
+        self._pane_drag: Optional[Dict[str, Any]] = None
+        # Mouse-move dedup: skip setText/anchor lookup when state unchanged.
+        self._last_hover_axes: Any = None
+        self._last_hover_anchor: Optional[str] = None
+        self._last_coord_text: str = ''
+        self._last_cursor_shape_was_resize: bool = False
+        self._blit_background: Optional[Any] = None
+        # interp cache per cursor; invalidated by new data or x_pos/visible change
+        self._cursor_interp_cache: List[Optional[Dict]] = []
+        # .tran start offset parsed once; 0.0 if not a tran sim
+        self._tran_start_time: float = 0.0
 
     def _initialize_configuration(self) -> None:
         self.config_dir = Path.home() / '.pythonPlotting'
@@ -197,9 +169,29 @@ class plotWindow(QWidget):
     def save_config(self) -> None:
         try:
             self.config_dir.mkdir(exist_ok=True)
-            self.config['trace_colours'] = {self.trace_names.get(idx, self.obj_dataext.NBList[idx]): color for idx, color in self.trace_colors.items()}
-            self.config['trace_thickness'] = {self.trace_names.get(idx, self.obj_dataext.NBList[idx]): thickness for idx, thickness in self.trace_thickness.items()}
-            self.config['trace_style'] = {self.trace_names.get(idx, self.obj_dataext.NBList[idx]): style for idx, style in self.trace_style.items()}
+            self.config['trace_colours'] = {t.name: t.color for t in self.traces.values()}
+            self.config['trace_thickness'] = {t.name: t.thickness for t in self.traces.values()}
+            self.config['trace_style'] = {t.name: t.style for t in self.traces.values()}
+            # Stacked-view layout, keyed by trace NAME so it survives schematic
+            # changes that renumber NBList. Lists of names per pane preserve
+            # both pane order and intra-pane signal order.
+            self.config['stacked_pane_groups'] = [
+                [self.traces[i].name for i in g
+                 if i in self.traces]
+                for g in self._pane_groups
+            ]
+            self.config['stacked_lock_y'] = dict(self._pane_lock_y)
+            self.config['stacked_locked_ylims'] = {
+                name: list(lims) for name, lims in self._locked_ylims.items()
+            }
+            self.config['stacked_stats_visible'] = self.stats_check.isChecked()
+            # Persist per-pane height ratios alongside their anchor name so a
+            # schematic edit that drops a signal also drops its custom height.
+            self.config['stacked_pane_heights'] = {
+                self.traces[g[0]].name: float(self._pane_heights[i])
+                for i, g in enumerate(self._pane_groups)
+                if g and g[0] in self.traces and i < len(self._pane_heights)
+            }
             temp_file = self.config_file.with_suffix('.tmp')
             with open(temp_file, 'w', encoding='utf-8') as config_file:
                 json.dump(self.config, config_file, indent=2)
@@ -209,6 +201,11 @@ class plotWindow(QWidget):
 
     def closeEvent(self, event: QtGui.QCloseEvent) -> None:
         self.save_config()
+        # Cancel deferred timers so no queued tick fires refresh_plot after the
+        # figure/canvas below are torn down (would touch a closed figure).
+        self._refresh_timer.stop()
+        self._controls_timer.stop()
+        self._resize_timer.stop()
         if hasattr(self, 'canvas'):
             self.canvas.close()
         if hasattr(self, 'fig'):
@@ -216,32 +213,47 @@ class plotWindow(QWidget):
         super().closeEvent(event)
 
     def apply_theme(self) -> None:
-        theme_stylesheet = """
-        QMenuBar { border-radius: 8px; background-color: #FFFFFF; border: 1px solid #E0E0E0; padding: 2px; }
-        QStatusBar { border-radius: 8px; background-color: #FFFFFF; border: 1px solid #E0E0E0; padding: 2px; }
-        QWidget { background-color: #FFFFFF; color: #212121; }
-        QListWidget { background-color: #FFFFFF; border: 1px solid #E0E0E0; padding: 2px; outline: none; selection-background-color: transparent; selection-color: inherit; }
-        QListWidget::item { min-height: 32px; padding: 6px 8px; margin: 2px 4px; background-color: transparent; border: none; }
-        QListWidget::item:selected { background-color: transparent; border: none; }
-        QListWidget::item:hover { background-color: rgba(0, 0, 0, 0.04); }
-        QListWidget::item:focus { outline: none; }
-        QGroupBox { border: 1px solid #E0E0E0; margin-top: 0.5em; padding-top: 0.5em; }
-        QGroupBox::title { subcontrol-origin: margin; left: 10px; padding: 0 5px 0 5px; }
-        QPushButton { background-color: #FFFFFF; border: 1px solid #E0E0E0; padding: 6px 12px; font-weight: 500; }
-        QPushButton:hover { background-color: #F2F2F2; border-color: #1976D2; }
-        QPushButton:pressed { background-color: #E0E0E0; }
-        QCheckBox::indicator { width: 16px; height: 16px; }
-        QMenu { background-color: #FFFFFF; border: 1px solid #E0E0E0; }
-        QMenu::item:selected { background-color: #E3F2FD; }
-        QLineEdit { border: 1px solid #E0E0E0; padding: 6px 12px; background-color: #FAFAFA; }
-        QLineEdit:focus { border-color: #1976D2; background-color: #FFFFFF; }
-        QSlider::groove:horizontal { border: 1px solid #E0E0E0; height: 4px; background: #E0E0E0; }
-        QSlider::handle:horizontal { background: #1976D2; border: 1px solid #1976D2; width: 16px; height: 16px; margin: -6px 0; }
-        QScrollBar:vertical { background-color: #F5F5F5; width: 8px; border: none; border-radius: 4px; }
-        QScrollBar::handle:vertical { background-color: #BDBDBD; border-radius: 4px; min-height: 20px; margin: 2px; }
-        QScrollBar::handle:vertical:hover { background-color: #9E9E9E; }
-        QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical { height: 0px; }
-        QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical { background: transparent; }
+        em      = self._em
+        sb_w    = max(6,  em // 2)
+        ind     = max(12, em - 2)
+        sldr    = max(10, em - 4)
+        sldr_m  = -(sldr // 2)
+        item_h  = max(28, em + 12)
+        item_pv = max(4,  em // 4)
+        item_ph = max(6,  em // 2)
+        btn_pv  = max(3,  em // 4)
+        btn_ph  = max(6,  em // 2)
+        btn_h   = max(24, em + 8)
+        le_p    = max(4,  em // 3)
+
+        theme_stylesheet = f"""
+        QMenuBar {{ border-radius: 8px; background-color: #FFFFFF; border: 1px solid #E0E0E0; padding: 2px; }}
+        QStatusBar {{ border-radius: 8px; background-color: #FFFFFF; border: 1px solid #E0E0E0; padding: 2px; }}
+        QWidget {{ background-color: #FFFFFF; color: #212121; }}
+        QListWidget {{ background-color: #FFFFFF; border: 1px solid #E0E0E0; padding: 2px; outline: none; selection-background-color: transparent; selection-color: inherit; }}
+        QListWidget::item {{ min-height: {item_h}px; padding: {item_pv}px {item_ph}px; margin: 1px 2px; background-color: transparent; border: none; }}
+        QListWidget::item:selected {{ background-color: transparent; border: none; }}
+        QListWidget::item:hover {{ background-color: rgba(0, 0, 0, 0.04); }}
+        QListWidget::item:focus {{ outline: none; }}
+        QGroupBox {{ border: 1px solid #E0E0E0; margin-top: 0.5em; padding-top: 0.5em; }}
+        QGroupBox::title {{ subcontrol-origin: margin; left: 10px; padding: 0 5px 0 5px; }}
+        QPushButton {{ background-color: #FFFFFF; border: 1px solid #E0E0E0; padding: {btn_pv}px {btn_ph}px; min-height: {btn_h}px; font-weight: 500; }}
+        QPushButton:hover {{ background-color: #F2F2F2; border-color: #1976D2; }}
+        QPushButton:pressed {{ background-color: #E0E0E0; }}
+        QCheckBox::indicator {{ width: {ind}px; height: {ind}px; }}
+        QMenu {{ background-color: #FFFFFF; border: 1px solid #E0E0E0; }}
+        QMenu::item:selected {{ background-color: #E3F2FD; }}
+        QLineEdit {{ border: 1px solid #E0E0E0; padding: {le_p}px {btn_ph}px; background-color: #FAFAFA; }}
+        QLineEdit:focus {{ border-color: #1976D2; background-color: #FFFFFF; }}
+        QSlider::groove:horizontal {{ border: 1px solid #E0E0E0; height: 4px; background: #E0E0E0; }}
+        QSlider::handle:horizontal {{ background: #1976D2; border: 1px solid #1976D2; width: {sldr}px; height: {sldr}px; margin: {sldr_m}px 0; }}
+        QScrollBar:vertical {{ background-color: #F5F5F5; width: {sb_w}px; border: none; border-radius: {sb_w // 2}px; }}
+        QScrollBar::handle:vertical {{ background-color: #BDBDBD; border-radius: {sb_w // 2}px; min-height: 20px; margin: 2px; }}
+        QScrollBar::handle:vertical:hover {{ background-color: #9E9E9E; }}
+        QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{ height: 0px; }}
+        QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {{ background: transparent; }}
+        QSplitter::handle:horizontal {{ background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0.49 transparent, stop:0.5 #D0D0D0, stop:0.51 transparent); }}
+        QSplitter::handle:horizontal:hover {{ background: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop:0.45 transparent, stop:0.5 #1976D2, stop:0.55 transparent); }}
         """
         self.setStyleSheet(theme_stylesheet)
 
@@ -251,25 +263,30 @@ class plotWindow(QWidget):
         self.menu_bar = QtWidgets.QMenuBar(self)
         main_widget_layout.addWidget(self.menu_bar)
         content_widget = QWidget()
-        content_widget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        content_widget.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
         main_layout = QHBoxLayout(content_widget)
-        self.splitter = QSplitter(Qt.Horizontal)
-        self.splitter.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        left_widget = self.create_waveform_list()
-        self.splitter.addWidget(left_widget)
-        center_widget = self.create_plot_area()
-        self.splitter.addWidget(center_widget)
+        self.splitter = QSplitter(Qt.Orientation.Horizontal)
+        self.splitter.setSizePolicy(QtWidgets.QSizePolicy.Policy.Expanding, QtWidgets.QSizePolicy.Policy.Expanding)
+        self.splitter.setHandleWidth(5)
+        em = self._em
+        self.left_panel = self.create_waveform_list()
+        self.left_panel.setMinimumWidth(em * 10)
+        self.splitter.addWidget(self.left_panel)
+        self.center_widget = self.create_plot_area()
+        self.center_widget.setMinimumWidth(em * 18)
+        self.splitter.addWidget(self.center_widget)
         right_widget = self.create_control_panel()
-        scroll_area = QScrollArea()
-        scroll_area.setWidget(right_widget)
-        scroll_area.setWidgetResizable(True)
-        scroll_area.setFrameShape(QtWidgets.QFrame.NoFrame)
-        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        scroll_area.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        scrollbar_style = "QScrollBar:vertical{background-color:#F5F5F5;width:8px;border:none;border-radius:4px;}QScrollBar::handle:vertical{background-color:#BDBDBD;border-radius:4px;min-height:20px;margin:2px;}QScrollBar::handle:vertical:hover{background-color:#9E9E9E;}QScrollBar::add-line:vertical,QScrollBar::sub-line:vertical{height:0px;}QScrollBar::add-page:vertical,QScrollBar::sub-page:vertical{background:transparent;}"
-        scroll_area.verticalScrollBar().setStyleSheet(scrollbar_style)
-        self.splitter.addWidget(scroll_area)
-        self.splitter.setSizes([280, 840, 280])
+        self.right_panel = QScrollArea()
+        self.right_panel.setWidget(right_widget)
+        self.right_panel.setWidgetResizable(True)
+        self.right_panel.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        self.right_panel.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.right_panel.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.right_panel.setMinimumWidth(em * 9)
+        self.splitter.addWidget(self.right_panel)
+        self.splitter.setStretchFactor(0, 20)
+        self.splitter.setStretchFactor(1, 63)
+        self.splitter.setStretchFactor(2, 17)
         main_layout.addWidget(self.splitter)
         main_widget_layout.addWidget(content_widget)
         self.status_bar = QStatusBar()
@@ -284,8 +301,11 @@ class plotWindow(QWidget):
     def create_waveform_list(self) -> QWidget:
         left_widget = QWidget()
         left_layout = QVBoxLayout(left_widget)
+        em = self._em
         self.analysis_label = QLabel()
-        self.analysis_label.setStyleSheet("font-weight: bold; font-size: 14px; padding: 5px;")
+        self.analysis_label.setStyleSheet(
+            f"font-weight: bold; font-size: {max(11, em - 4)}px; padding: {max(3, em // 5)}px;"
+        )
         left_layout.addWidget(self.analysis_label)
         self.search_box = QLineEdit()
         self.search_box.setPlaceholderText("Search waveforms...")
@@ -293,50 +313,126 @@ class plotWindow(QWidget):
         left_layout.addWidget(self.search_box)
         self.waveform_list = CustomListWidget()
         self.waveform_list.itemClicked.connect(self.on_waveform_toggle)
-        self.waveform_list.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.waveform_list.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.waveform_list.customContextMenuRequested.connect(self.show_list_context_menu)
-        self.waveform_list.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.waveform_list.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.waveform_list.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.waveform_list.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         left_layout.addWidget(self.waveform_list)
-        button_layout = QHBoxLayout()
-        self.select_all_btn = QPushButton("Select All")
-        self.select_all_btn.clicked.connect(self.select_all_waveforms)
-        self.deselect_all_btn = QPushButton("Deselect All")
-        self.deselect_all_btn.clicked.connect(self.deselect_all_waveforms)
-        button_layout.addWidget(self.select_all_btn)
-        button_layout.addWidget(self.deselect_all_btn)
-        left_layout.addLayout(button_layout)
+        QShortcut(QKeySequence.StandardKey.SelectAll, self.waveform_list,
+                  activated=self.select_all_waveforms)
         return left_widget
 
     def create_plot_area(self) -> QWidget:
         center_widget = QWidget()
         center_layout = QVBoxLayout(center_widget)
-        self.fig = Figure(figsize=DEFAULT_FIGURE_SIZE, dpi=DEFAULT_DPI)
+        # constrained_layout handles multi-pane spacing automatically (no manual
+        # tight_layout calls needed). Required for the stacked-view feature
+        # where N subplots share an X axis and hspace must stay consistent.
+        self.fig = Figure(figsize=DEFAULT_FIGURE_SIZE, dpi=DEFAULT_DPI,
+                          constrained_layout=True)
         self.canvas = FigureCanvas(self.fig)
         self.nav_toolbar = NavigationToolbar(self.canvas, self)
-        self.nav_toolbar.addSeparator()
-        fig_options_action = QAction('⚙', self.nav_toolbar)
-        fig_options_action.triggered.connect(self.open_figure_options)
-        fig_options_action.setToolTip('Figure Options (P)')
-        self.nav_toolbar.addAction(fig_options_action)
-        center_layout.addWidget(self.nav_toolbar)
-        center_layout.addWidget(self.canvas)
+        for _a in self.nav_toolbar.actions():
+            if _a.text() in ('Subplots', 'Customize'):
+                self.nav_toolbar.removeAction(_a)
+        _icon_sz = self.nav_toolbar.iconSize()
+        _tb_h    = self.nav_toolbar.sizeHint().height()
+        _btn_style = (
+            "QToolButton { border: none; background: transparent; border-radius: 3px; }"
+            "QToolButton:hover { background: rgba(0,0,0,0.06); }"
+            "QToolButton:checked { background: rgba(25,118,210,0.12); }"
+        )
+        _fig_btn = QToolButton()
+        _fig_btn.setIcon(self.nav_toolbar._icon('qt4_editor_options'))
+        _fig_btn.setIconSize(_icon_sz)
+        _fig_btn.setFixedSize(_tb_h, _tb_h)
+        _fig_btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
+        _fig_btn.setToolTip('Figure Options (P)')
+        _fig_btn.setStyleSheet(_btn_style)
+        _fig_btn.clicked.connect(self.open_figure_options)
+        self._focus_btn = QToolButton()
+        self._focus_btn.setIcon(self._make_focus_icon(_icon_sz.width()))
+        self._focus_btn.setIconSize(_icon_sz)
+        self._focus_btn.setFixedSize(_tb_h, _tb_h)
+        self._focus_btn.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonIconOnly)
+        self._focus_btn.setCheckable(True)
+        self._focus_btn.setToolTip('Focus plot — hide panels (F)')
+        self._focus_btn.setStyleSheet(_btn_style)
+        self._focus_btn.toggled.connect(self._toggle_focus_mode)
+        QShortcut(QKeySequence('F'), self, activated=self._focus_btn.toggle)
+        toolbar_row = QHBoxLayout()
+        toolbar_row.setContentsMargins(0, 0, 0, 0)
+        toolbar_row.setSpacing(0)
+        toolbar_row.addWidget(self.nav_toolbar)
+        toolbar_row.addWidget(_fig_btn)
+        toolbar_row.addWidget(self._focus_btn)
+        center_layout.addLayout(toolbar_row)
+        # Wrap canvas in QScrollArea so stacked-view with many panes scrolls
+        # vertically instead of squashing every signal to ~30 pixels. Canvas
+        # min-height is bumped per refresh from _set_canvas_height_for_panes.
+        self.canvas_scroll = QScrollArea()
+        self.canvas_scroll.setWidget(self.canvas)
+        self.canvas_scroll.setWidgetResizable(True)
+        self.canvas_scroll.setFrameShape(QtWidgets.QFrame.Shape.NoFrame)
+        self.canvas_scroll.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.canvas_scroll.setVerticalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        center_layout.addWidget(self.canvas_scroll)
+        self.canvas.mpl_connect('resize_event', self._on_canvas_resize)
         self.canvas.mpl_connect('button_press_event', self.on_canvas_click)
+        self.canvas.mpl_connect('button_release_event', self.on_canvas_release)
         self.canvas.mpl_connect('motion_notify_event', self.on_mouse_move)
         self.canvas.mpl_connect('key_press_event', self.on_key_press)
         self.canvas.mpl_connect('scroll_event', self.on_scroll)
-        self.canvas.setContextMenuPolicy(Qt.CustomContextMenu)
-        self.canvas.customContextMenuRequested.connect(self.show_canvas_context_menu)
+        # Freeze the constrained_layout solver right after a stacked rebuild's
+        # draw has solved it — see _pending_freeze / _on_draw_event.
+        self.canvas.mpl_connect('draw_event', self._on_draw_event)
+        self.canvas.setContextMenuPolicy(Qt.ContextMenuPolicy.NoContextMenu)
+        self.canvas.installEventFilter(self)
         return center_widget
 
     def create_control_panel(self) -> QWidget:
+        em = self._em
+        iv = max(2, em // 6)
+        ih = max(4, em // 4)
+        sp = max(1, em // 8)
+
         right_widget = QWidget()
         right_layout = QVBoxLayout(right_widget)
+        right_layout.setContentsMargins(4, 4, 4, 4)
+        right_layout.setSpacing(0)
+
+        # View Mode
+        mode_box = CollapsibleBox("View Mode")
+        mode_group = QWidget()
+        mode_layout = QVBoxLayout(mode_group)
+        mode_layout.setContentsMargins(ih, iv, ih, iv)
+        mode_layout.setSpacing(sp)
+        self._view_mode_group = QButtonGroup(self)
+        self.radio_standard = QRadioButton("Standard")
+        self.radio_standard.setChecked(True)
+        self.radio_stacked = QRadioButton("Stacked")
+        self.radio_stacked.setToolTip(
+            "Each signal in its own pane with shared X axis. "
+            "Preserves real amplitude and per-signal Y autoscale.")
+        self.radio_timing = QRadioButton("Digital Timing (Simplified)")
+        self.radio_timing.setToolTip(
+            "Square-wave view for digital/logic signals. "
+            "Only available for transient analysis.")
+        for btn in (self.radio_standard, self.radio_stacked, self.radio_timing):
+            self._view_mode_group.addButton(btn)
+            mode_layout.addWidget(btn)
+        self._view_mode_group.buttonToggled.connect(self.on_view_mode_changed)
+        mode_box.addWidget(mode_group)
+        right_layout.addWidget(mode_box)
 
         # Display Options
         display_box = CollapsibleBox("Display Options")
         display_group = QWidget()
         display_layout = QVBoxLayout(display_group)
+        display_layout.setContentsMargins(ih, iv, ih, iv)
+        display_layout.setSpacing(sp)
         self.grid_check = QCheckBox("Show Grid")
         self.grid_check.setChecked(True)
         self.grid_check.stateChanged.connect(self.toggle_grid)
@@ -347,31 +443,40 @@ class plotWindow(QWidget):
         display_layout.addWidget(self.legend_check)
         self.autoscale_check = QCheckBox("Autoscale")
         self.autoscale_check.setChecked(True)
+        self.autoscale_check.stateChanged.connect(self.refresh_plot)
         display_layout.addWidget(self.autoscale_check)
-        self.timing_check = QCheckBox("Digital Timing View")
-        self.timing_check.stateChanged.connect(self.on_timing_view_changed)
-        display_layout.addWidget(self.timing_check)
+        self.stats_check = QCheckBox("Show Stats")
+        self.stats_check.setToolTip("Show min/max/RMS/frequency stats on each stacked pane")
+        self.stats_check.setChecked(True)
+        self.stats_check.setVisible(False)
+        self.stats_check.stateChanged.connect(self.refresh_plot)
+        display_layout.addWidget(self.stats_check)
         display_box.addWidget(display_group)
         right_layout.addWidget(display_box)
 
-        # Digital Timing Controls (UI Reverted to Original)
+        # Digital Timing Controls
         self.timing_box = CollapsibleBox("Digital Timing Controls")
         timing_group = QWidget()
         timing_layout = QVBoxLayout(timing_group)
+        timing_layout.setContentsMargins(ih, iv, ih, iv)
+        timing_layout.setSpacing(sp)
         threshold_layout = QHBoxLayout()
         threshold_layout.addWidget(QLabel("Threshold:"))
         self.threshold_spinbox = QDoubleSpinBox()
         self.threshold_spinbox.setRange(-100, 100)
         self.threshold_spinbox.setDecimals(3)
         self.threshold_spinbox.setSingleStep(0.1)
-        self.threshold_spinbox.setSuffix(" V")
+        self.threshold_spinbox.setSuffix("")
         self.threshold_spinbox.setSpecialValueText("Auto")
+        self.threshold_spinbox.setValue(self.threshold_spinbox.minimum())
+        self.threshold_spinbox.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
         self.threshold_spinbox.valueChanged.connect(self.on_threshold_changed)
         threshold_layout.addWidget(self.threshold_spinbox)
         timing_layout.addLayout(threshold_layout)
         spacing_layout = QHBoxLayout()
         spacing_layout.addWidget(QLabel("Spacing:"))
-        self.spacing_slider = QSlider(Qt.Horizontal)
+        self.spacing_slider = QSlider(Qt.Orientation.Horizontal)
         self.spacing_slider.setRange(100, 200)
         self.spacing_slider.setValue(120)
         self.spacing_slider.valueChanged.connect(self.on_spacing_changed)
@@ -381,18 +486,43 @@ class plotWindow(QWidget):
         timing_layout.addLayout(spacing_layout)
         self.timing_box.addWidget(timing_group)
         self.timing_box.content_area.setEnabled(False)
+        self.timing_box.setVisible(False)
         right_layout.addWidget(self.timing_box)
 
         # Cursor Measurements
         cursor_box = CollapsibleBox("Cursor Measurements")
         cursor_group = QWidget()
         cursor_layout = QVBoxLayout(cursor_group)
-        self.cursor1_label = QLabel("Cursor 1: Not set")
-        self.cursor2_label = QLabel("Cursor 2: Not set")
-        self.delta_label = QLabel("Delta: --")
+        cursor_layout.setContentsMargins(ih, iv, ih, iv)
+        cursor_layout.setSpacing(sp)
+
+        self.cursor1_label = QLabel('<b style="color:#e53935">C1</b>  <span style="color:#aaa">not set</span>')
+        self.cursor1_label.setWordWrap(True)
+        self.cursor1_label.setStyleSheet("font-size: 13px; padding: 3px 0;")
+        self.cursor2_label = QLabel('<b style="color:#1976d2">C2</b>  <span style="color:#aaa">not set</span>')
+        self.cursor2_label.setWordWrap(True)
+        self.cursor2_label.setStyleSheet("font-size: 13px; padding: 3px 0;")
+        self.delta_label = QLabel('<b style="color:#e65100">ΔX</b>  <span style="color:#aaa">—</span>')
+        self.delta_label.setStyleSheet("font-size: 13px; padding: 3px 0;")
+
+        def _cursor_sep() -> QLabel:
+            s = QLabel()
+            s.setFixedHeight(1)
+            s.setStyleSheet("background-color: #d0d0d0; margin: 2px 0;")
+            return s
+
+        cursor_layout.setSpacing(8)
         cursor_layout.addWidget(self.cursor1_label)
+        cursor_layout.addWidget(_cursor_sep())
         cursor_layout.addWidget(self.cursor2_label)
+        cursor_layout.addWidget(_cursor_sep())
         cursor_layout.addWidget(self.delta_label)
+        cursor_help = QLabel(
+            "L-click = Cursor 1   ·   Middle / R-click = Cursor 2\n"
+            "R-click in stacked view = pane menu")
+        cursor_help.setStyleSheet("color: #757575; font-size: 11px;")
+        cursor_help.setWordWrap(True)
+        cursor_layout.addWidget(cursor_help)
         self.clear_cursors_btn = QPushButton("Clear Cursors")
         self.clear_cursors_btn.clicked.connect(self.clear_cursors)
         cursor_layout.addWidget(self.clear_cursors_btn)
@@ -403,18 +533,18 @@ class plotWindow(QWidget):
         export_box = CollapsibleBox("Export Tools")
         export_group = QWidget()
         export_layout = QVBoxLayout(export_group)
+        export_layout.setContentsMargins(ih, iv, ih, iv)
+        export_layout.setSpacing(sp)
         self.export_btn = QPushButton("Export Image")
         self.export_btn.clicked.connect(self.export_image)
         export_layout.addWidget(self.export_btn)
         self.func_input = QLineEdit()
-        self.func_input.setPlaceholderText("e.g., v(in) + v(out)")
+        self.func_input.setPlaceholderText("e.g., v(net1) + v(net2)  or  abs(v(net1))")
+        self.func_input.returnPressed.connect(self.plot_function)
         export_layout.addWidget(self.func_input)
         self.plot_func_btn = QPushButton("Plot Function")
         self.plot_func_btn.clicked.connect(self.plot_function)
         export_layout.addWidget(self.plot_func_btn)
-        self.multimeter_btn = QPushButton("Multimeter")
-        self.multimeter_btn.clicked.connect(self.multi_meter)
-        export_layout.addWidget(self.multimeter_btn)
         export_box.addWidget(export_group)
         right_layout.addWidget(export_box)
 
@@ -440,14 +570,33 @@ class plotWindow(QWidget):
         reset_view_action.triggered.connect(self.reset_view)
         view_menu.addAction(reset_view_action)
 
+    def _rebuild_nb_sorted(self) -> None:
+        """Cache NBList sorted longest-first for use in _resolve_expr."""
+        self._nb_sorted = sorted(
+            enumerate(self.obj_dataext.NBList),
+            key=lambda t: len(t[1]), reverse=True
+        )
+
+    def _parse_tran_start_time(self) -> float:
+        try:
+            with open(os.path.join(self.file_path, "analysis"), 'r') as f:
+                parts = f.read().strip().split()
+            if len(parts) >= 4 and parts[0] == '.tran':
+                return float(parts[3])
+        except Exception:
+            pass
+        return 0.0
+
     def load_simulation_data(self) -> None:
+        self._cursor_interp_cache.clear()
+        # new data → force full rebuild on next refresh
+        self._drawn_signature = None
+        self._tran_start_time = self._parse_tran_start_time()
         self.obj_dataext = DataExtraction()
         self.plot_type = self.obj_dataext.openFile(self.file_path)
         self.obj_dataext.computeAxes()
+        self._rebuild_nb_sorted()
         self.data_info = self.obj_dataext.numVals()
-        for i in range(0, self.data_info[0] - 1):
-            color_idx = i % len(self.color_palette)
-            self.color.append(self.color_palette[color_idx])
         self.volts_length = self.data_info[1]
         if self.plot_type[0] == DataExtraction.AC_ANALYSIS:
             self.analysis_label.setText("AC Analysis")
@@ -455,622 +604,237 @@ class plotWindow(QWidget):
             self.analysis_label.setText("Transient Analysis")
         else:
             self.analysis_label.setText("DC Analysis")
-        for i, name in enumerate(self.obj_dataext.NBList):
-            self.trace_names[i] = name
         self.populate_waveform_list()
-
-    def create_colored_icon(self, color: QColor, is_selected: bool) -> QtGui.QIcon:
-        pixmap = QPixmap(18, 18)
-        pixmap.fill(Qt.transparent)
-        painter = QPainter(pixmap)
-        painter.setRenderHint(QPainter.Antialiasing)
-        if is_selected:
-            painter.setBrush(QBrush(color))
-            painter.setPen(Qt.NoPen)
-            painter.drawEllipse(1, 1, 16, 16)
+        # NBList ready; resolve persisted stacked-view layout
+        self._apply_persisted_layout()
+        is_transient = self.plot_type[0] == DataExtraction.TRANSIENT_ANALYSIS
+        self.radio_timing.setEnabled(is_transient)
+        if not is_transient:
+            if self.radio_timing.isChecked():
+                self.radio_standard.setChecked(True)
+            self.radio_timing.setToolTip("Only available for transient analysis")
         else:
-            painter.setBrush(Qt.NoBrush)
-            pen = QtGui.QPen(QColor("#9E9E9E"))
-            pen.setWidth(1)
-            painter.setPen(pen)
-            painter.drawEllipse(2, 2, 14, 14)
-        painter.end()
-        return QtGui.QIcon(pixmap)
-
-    def populate_waveform_list(self) -> None:
-        self.waveform_list.clear()
-        saved_colors = self.config.get('trace_colours', {})
-        saved_thickness = self.config.get('trace_thickness', {})
-        saved_style = self.config.get('trace_style', {})
-        for i, node_name in enumerate(self.obj_dataext.NBList):
-            item = QListWidgetItem()
-            item.setData(Qt.UserRole, i)
-            if node_name in saved_colors:
-                self.trace_colors[i] = saved_colors[node_name]
-            elif i < len(self.color):
-                self.trace_colors[i] = self.color[i]
-            else:
-                color_idx = i % len(self.color_palette)
-                self.trace_colors[i] = self.color_palette[color_idx]
-            if node_name in saved_thickness:
-                self.trace_thickness[i] = saved_thickness[node_name]
-            else:
-                self.trace_thickness[i] = DEFAULT_LINE_THICKNESS
-            if node_name in saved_style:
-                self.trace_style[i] = saved_style[node_name]
-            else:
-                self.trace_style[i] = '-'
-            item.setToolTip("Voltage signal" if i < self.obj_dataext.volts_length else "Current signal")
-            self.trace_visibility[i] = False
-            self.waveform_list.addItem(item)
-            self.update_list_item_appearance(item, i)
-
-    def filter_waveforms(self, text: str) -> None:
-        for i in range(self.waveform_list.count()):
-            item = self.waveform_list.item(i)
-            if item:
-                item.setHidden(text.lower() not in item.text().lower())
-
-    def on_waveform_toggle(self, item: QListWidgetItem) -> None:
-        index = item.data(Qt.UserRole)
-        self.trace_visibility[index] = item.isSelected()
-        if item.isSelected() and index not in self.trace_colors:
-            self.assign_trace_color(index)
-        self.update_list_item_appearance(item, index)
-        self.refresh_plot()
-
-    def assign_trace_color(self, index: int) -> None:
-        used_colors = set(self.trace_colors.values())
-        available_colors = [color for color in self.color_palette if color not in used_colors]
-        if available_colors:
-            self.trace_colors[index] = available_colors[0]
-        else:
-            hue = (0.618033988749895 * len(self.trace_colors)) % 1.0
-            color = QtGui.QColor.fromHsvF(hue, 0.7, 0.8)
-            self.trace_colors[index] = color.name()
-        self.save_config()
-
-    def update_list_item_appearance(self, item: QListWidgetItem, index: int) -> None:
-        node_name = self.trace_names.get(index, self.obj_dataext.NBList[index])
-        is_selected = self.trace_visibility.get(index, False)
-        widget = QWidget()
-        layout = QHBoxLayout(widget)
-        layout.setContentsMargins(6, 4, 6, 4)
-        layout.setSpacing(10)
-        icon_label = QLabel()
-        color = QColor(self.trace_colors[index]) if is_selected and index in self.trace_colors else QColor("#9E9E9E")
-        icon = self.create_colored_icon(color, is_selected)
-        icon_label.setPixmap(icon.pixmap(18, 18))
-        text_label = QLabel(node_name)
-        text_label.setStyleSheet("color: #212121; font-weight: 500;" if is_selected and index in self.trace_colors else "color: #757575; font-weight: normal;")
-        layout.addWidget(icon_label)
-        layout.addWidget(text_label)
-        layout.addStretch()
-        self.waveform_list.setItemWidget(item, widget)
-        item.setText(node_name)
-
-    def select_all_waveforms(self) -> None:
-        for i in range(self.waveform_list.count()):
-            item = self.waveform_list.item(i)
-            if item and not item.isHidden():
-                item.setSelected(True)
-                index = item.data(Qt.UserRole)
-                self.trace_visibility[index] = True
-                if index not in self.trace_colors:
-                    self.assign_trace_color(index)
-                self.update_list_item_appearance(item, index)
-        self.refresh_plot()
-
-    def deselect_all_waveforms(self) -> None:
-        self.waveform_list.clearSelection()
-        for index in self.trace_visibility:
-            self.trace_visibility[index] = False
-        for i in range(self.waveform_list.count()):
-            item = self.waveform_list.item(i)
-            if item:
-                index = item.data(Qt.UserRole)
-                self.update_list_item_appearance(item, index)
-        self.refresh_plot()
-
-    def show_list_context_menu(self, position: QtCore.QPoint) -> None:
-        item = self.waveform_list.itemAt(position)
-        if not item:
-            return
-        
-        # Always work with just the right-clicked item
-        menu = QMenu()
-        
-        # All menus apply only to the right-clicked item
-        color_menu = menu.addMenu("Change colour ▶")
-        self.populate_color_menu(color_menu, [item])
-        
-        thickness_menu = menu.addMenu("Thickness ▶")
-        for thickness, label in THICKNESS_OPTIONS:
-            action = thickness_menu.addAction(label)
-            action.triggered.connect(lambda checked, t=thickness: self.change_thickness([item], t))
-        
-        style_menu = menu.addMenu("Style ▶")
-        for style, label in LINE_STYLES:
-            action = style_menu.addAction(label)
-            action.triggered.connect(lambda checked, s=style: self.change_style([item], s))
-        
-        menu.addSeparator()
-        
-        rename_action = menu.addAction("Rename...")
-        rename_action.triggered.connect(lambda: self.rename_trace(item))
-        
-        index = item.data(Qt.UserRole)
-        visible = False
-        if index in self.active_traces and self.active_traces[index]:
-            visible = self.active_traces[index].get_visible()
-        
-        hide_show_action = menu.addAction("Show" if not visible else "Hide")
-        if visible:
-            hide_show_action.setCheckable(True)
-            hide_show_action.setChecked(True)
-        hide_show_action.triggered.connect(lambda: self.toggle_trace_visibility([item]))
-        
-        menu.addSeparator()
-        
-        properties_action = menu.addAction("Figure Options...")
-        properties_action.triggered.connect(self.open_figure_options)
-        
-        menu.exec_(self.waveform_list.mapToGlobal(position))
-
-    def show_canvas_context_menu(self, position: QtCore.QPoint) -> None:
-        menu = QMenu()
-        export_action = menu.addAction("Export Image...")
-        export_action.triggered.connect(self.export_image)
-        menu.addSeparator()
-        clear_action = menu.addAction("Clear Plot")
-        clear_action.triggered.connect(self.clear_plot)
-        menu.exec_(self.canvas.mapToGlobal(position))
-
-    def populate_color_menu(self, menu: QMenu, selected_items: List[QListWidgetItem]) -> None:
-        color_widget = QWidget()
-        color_widget.setStyleSheet("background-color: #FFFFFF;")
-        grid_layout = QGridLayout(color_widget)
-        grid_layout.setSpacing(2)
-        for i, color in enumerate(self.color_palette):
-            btn = QPushButton()
-            btn.setFixedSize(24, 24)
-            btn.setStyleSheet(f"QPushButton{{background-color:{color};border:1px solid #E0E0E0;border-radius:2px;}}QPushButton:hover{{border:2px solid #212121;}}")
-            btn.setCursor(Qt.PointingHandCursor)
-            btn.clicked.connect(lambda checked, c=color: self.change_color_and_close(selected_items, c, menu))
-            grid_layout.addWidget(btn, i // 4, i % 4)
-        widget_action = QWidgetAction(menu)
-        widget_action.setDefaultWidget(color_widget)
-        menu.addAction(widget_action)
-        menu.addSeparator()
-        more_action = menu.addAction("More...")
-        more_action.triggered.connect(lambda: self.change_color_dialog(selected_items))
-
-    def change_color_and_close(self, items: List[QListWidgetItem], color: str, menu: QMenu) -> None:
-        self.change_color(items, color)
-        parent = menu.parent()
-        while isinstance(parent, QMenu):
-            parent.close()
-            parent = parent.parent()
-
-    def change_color(self, items: List[QListWidgetItem], color: str) -> None:
-        for item in items:
-            index = item.data(Qt.UserRole)
-            self.trace_colors[index] = color
-            self.update_list_item_appearance(item, index)
-            if index in self.active_traces and self.active_traces[index]:
-                self.active_traces[index].set_color(color)
-            if self.timing_check.isChecked() and hasattr(self, 'axes'):
-                self.update_timing_tick_colors()
-                if hasattr(self, 'timing_annotations') and index in self.timing_annotations:
-                    self.timing_annotations[index].set_color(color)
-        self.save_config()
-        self.canvas.draw()
-
-    def update_timing_tick_colors(self) -> None:
-        if not hasattr(self, 'axes'):
-            return
-        visible_indices = [i for i, v in self.trace_visibility.items() if v]
-        ytick_labels = self.axes.get_yticklabels()
-        for i, label in enumerate(ytick_labels):
-            if i < len(visible_indices):
-                idx = visible_indices[::-1][i]
-                if idx in self.trace_colors:
-                    label.set_color(self.trace_colors[idx])
-
-    def change_color_dialog(self, items: List[QListWidgetItem]) -> None:
-        color = QColorDialog.getColor()
-        if color.isValid():
-            self.change_color(items, color.name())
-
-    def change_thickness(self, items: List[QListWidgetItem], thickness: float) -> None:
-        for item in items:
-            index = item.data(Qt.UserRole)
-            self.trace_thickness[index] = thickness
-            if index in self.active_traces and self.active_traces[index]:
-                self.active_traces[index].set_linewidth(thickness)
-        self.save_config()
-        self.canvas.draw()
-
-    def change_style(self, items: List[QListWidgetItem], style: str) -> None:
-        for item in items:
-            index = item.data(Qt.UserRole)
-            self.trace_style[index] = style
-            if index in self.active_traces and self.active_traces[index]:
-                if style == 'steps-post':
-                    self.refresh_plot()
-                    return
-                else:
-                    self.active_traces[index].set_linestyle(style)
-        self.save_config()
-        self.canvas.draw()
-
-    def rename_trace(self, item: QListWidgetItem) -> None:
-        index = item.data(Qt.UserRole)
-        current_name = self.trace_names.get(index, self.obj_dataext.NBList[index])
-        new_name, ok = QInputDialog.getText(self, "Rename Trace", "New name:", text=current_name)
-        if ok and new_name and new_name != current_name:
-            self.trace_names[index] = new_name
-            self.update_list_item_appearance(item, index)
-            self.obj_dataext.NBList[index] = new_name
-            if self.legend_check.isChecked():
-                self.refresh_plot()
-
-    def toggle_trace_visibility(self, items: List[QListWidgetItem]) -> None:
-        any_visible = any(item.data(Qt.UserRole) in self.active_traces and self.active_traces[item.data(Qt.UserRole)].get_visible() for item in items)
-        for item in items:
-            index = item.data(Qt.UserRole)
-            if index in self.active_traces and self.active_traces[index]:
-                self.active_traces[index].set_visible(not any_visible)
-        self.canvas.draw()
+            self.radio_timing.setToolTip(
+                "Square-wave view for digital/logic signals. "
+                "Only available for transient analysis.")
 
     def open_figure_options(self) -> None:
         try:
             if hasattr(self.fig.canvas, 'toolbar') and hasattr(self.fig.canvas.toolbar, 'edit_parameters'):
+                # matplotlib's built-in editor already handles multi-axes —
+                # it shows a per-axes selector so each pane can be edited.
                 self.fig.canvas.toolbar.edit_parameters()
                 return
             from matplotlib.backends.qt_compat import QtWidgets
             from matplotlib.backends.qt_editor import _formlayout
             if hasattr(_formlayout, 'FormDialog'):
-                options = [('Title', self.fig.suptitle('').get_text())]
-                if hasattr(self, 'axes'):
-                    options.extend([('X Label', self.axes.get_xlabel()), ('Y Label', self.axes.get_ylabel()), ('X Min', self.axes.get_xlim()[0]), ('X Max', self.axes.get_xlim()[1]), ('Y Min', self.axes.get_ylim()[0]), ('Y Max', self.axes.get_ylim()[1])])
+                current_title = self.fig._suptitle.get_text() if self.fig._suptitle is not None else ''
+                options: List[Tuple[str, Any]] = [('Title', current_title)]
+                # Multi-pane: only X (shared via sharex) + suptitle are global.
+                # Per-pane Y limits and labels are skipped to avoid a 7-field
+                # dialog that can only touch one pane meaningfully.
+                multi = len(self.panes) > 1
+                if self.panes:
+                    options.append(('X Label', self.panes[-1].get_xlabel()))
+                    options.append(('X Min', self.axes.get_xlim()[0]))
+                    options.append(('X Max', self.axes.get_xlim()[1]))
+                    if not multi:
+                        options.append(('Y Label', self.axes.get_ylabel()))
+                        options.append(('Y Min', self.axes.get_ylim()[0]))
+                        options.append(('Y Max', self.axes.get_ylim()[1]))
                 dialog = _formlayout.FormDialog(options, parent=self, title='Figure Options')
-                if dialog.exec_():
+                if dialog.exec():
                     results = dialog.get_results()
-                    if results:
-                        self.fig.suptitle(results[0])
-                        if hasattr(self, 'axes') and len(results) > 1:
-                            self.axes.set_xlabel(results[1])
-                            self.axes.set_ylabel(results[2])
-                            self.axes.set_xlim(results[3], results[4])
+                    if not results:
+                        return
+                    self.fig.suptitle(results[0])
+                    if self.panes and len(results) > 1:
+                        self.panes[-1].set_xlabel(results[1])
+                        self.axes.set_xlim(results[2], results[3])
+                        if not multi and len(results) > 4:
+                            self.axes.set_ylabel(results[4])
                             self.axes.set_ylim(results[5], results[6])
-                        self.canvas.draw()
+                    self.canvas.draw()
             else:
                 QMessageBox.information(self, "Figure Options", "Figure options are limited in this environment.\nYou can use the zoom and pan tools in the toolbar.")
         except Exception as e:
             logger.error(f"Error opening figure options: {e}")
             QMessageBox.information(self, "Figure Options", "Basic figure editing is available through the toolbar.")
 
-    def on_timing_view_changed(self, state: int) -> None:
-        timing_enabled = state == Qt.Checked
-        self.timing_box.content_area.setEnabled(timing_enabled)
-        self.autoscale_check.setEnabled(not timing_enabled)
+    def _update_mode_controls(self) -> None:
+        stacked = self.radio_stacked.isChecked()
+        normal  = self.radio_standard.isChecked()
+        self.autoscale_check.setVisible(normal)
+        self.stats_check.setVisible(stacked)
+        self.legend_check.setVisible(not stacked)
+
+    def on_view_mode_changed(self, button, checked: bool) -> None:
+        if not checked:
+            return
+        timing = self.radio_timing.isChecked()
+        self.timing_box.setVisible(timing)
+        self.timing_box.content_area.setEnabled(timing)
+        self._update_mode_controls()
         self.refresh_plot()
 
-    def refresh_plot(self) -> None:
-        self.fig.clear()
-        self.active_traces.clear()
-        if self.timing_check.isChecked():
-            self.axes = self.fig.add_subplot(111)
-            self.plot_timing_diagram()
-        else:
-            if self.plot_type[0] == DataExtraction.AC_ANALYSIS:
-                if self.plot_type[1] == 1:
-                    self.on_push_decade()
-                else:
-                    self.on_push_ac()
-            elif self.plot_type[0] == DataExtraction.TRANSIENT_ANALYSIS:
-                self.on_push_trans()
-            else:
-                self.on_push_dc()
-        if hasattr(self, 'axes'):
-            self.axes.grid(self.grid_check.isChecked())
-            if self.legend_check.isChecked():
-                plt.subplots_adjust(top=0.85, bottom=0.1)
-                self.position_legend()
-            else:
-                plt.subplots_adjust(top=0.95, bottom=0.1)
-        self.canvas.draw()
+    @staticmethod
+    def _make_focus_icon(size: int) -> QIcon:
+        px = QPixmap(size, size)
+        px.fill(Qt.GlobalColor.transparent)
+        p = QPainter(px)
+        p.setRenderHint(QPainter.RenderHint.Antialiasing)
+        p.setPen(QPen(QColor('#444444'), max(1, size // 12), Qt.PenStyle.SolidLine,
+                      Qt.PenCapStyle.RoundCap, Qt.PenJoinStyle.RoundJoin))
+        m = max(2, size // 6)
+        a = max(3, size // 4)
+        for cx, cy in ((m, m), (size-m, m), (m, size-m), (size-m, size-m)):
+            dx = a if cx == m else -a
+            dy = a if cy == m else -a
+            p.drawLine(cx, cy + dy, cx, cy)
+            p.drawLine(cx, cy, cx + dx, cy)
+        p.end()
+        return QIcon(px)
 
-    def position_legend(self) -> None:
-        if hasattr(self, 'axes') and self.legend_check.isChecked():
-            handles, labels = [], []
-            for idx in sorted(self.trace_visibility.keys()):
-                if self.trace_visibility.get(idx) and idx in self.active_traces and self.active_traces[idx]:
-                    handles.append(self.active_traces[idx])
-                    labels.append(self.trace_names.get(idx, self.obj_dataext.NBList[idx]))
-            if handles:
-                ncol = min(6, len(handles)) if len(handles) > 6 else min(4, len(handles))
-                legend = self.axes.legend(handles, labels, bbox_to_anchor=(0.5, 1.02), loc='lower center', ncol=ncol, frameon=True, fancybox=False, shadow=False, fontsize=LEGEND_FONT_SIZE, borderaxespad=0, columnspacing=1.5)
-                frame = legend.get_frame()
-                frame.set_facecolor('white')
-                frame.set_edgecolor('#E0E0E0')
-                frame.set_linewidth(1)
-                frame.set_alpha(0.95)
-
-    def plot_timing_diagram(self) -> None:
-        """
-        Plot digital timing diagram with proper time offset handling.
-        
-        This method now correctly handles transient analysis with non-zero start times
-        by detecting and applying the appropriate time offset.
-        """
-        # Clear any existing timing annotations
-        self.timing_annotations.clear()
-
-        visible_indices = [i for i, v in self.trace_visibility.items() if v]
-        if not visible_indices:
-            self.axes.text(0.5, 0.5, 'Select a waveform to display', 
-                           ha='center', va='center', transform=self.axes.transAxes)
-            self.axes.set_yticks([])
-            self.axes.set_yticklabels([])
-            return
-
-        # Collect all voltage data for threshold calculation
-        all_voltage_data = []
-        for idx in visible_indices:
-            if idx < self.obj_dataext.volts_length:
-                all_voltage_data.extend(self.obj_dataext.y[idx])
-        
-        # If no voltage data, use current data
-        if not all_voltage_data:
-            for idx in visible_indices:
-                all_voltage_data.extend(self.obj_dataext.y[idx])
-        
-        if not all_voltage_data:
-            return
-
-        all_voltage_data = np.array(all_voltage_data, dtype=float)
-        vmin = np.min(all_voltage_data)
-        vmax = np.max(all_voltage_data)
-
-        # Handle threshold setting
-        if self.threshold_spinbox.value() == self.threshold_spinbox.minimum():
-            self.logic_threshold = vmin + 0.7 * (vmax - vmin)
-            self.threshold_spinbox.setSpecialValueText(f"Auto ({self.logic_threshold:.3f} V)")
-        else:
-            self.logic_threshold = self.threshold_spinbox.value()
-
-        # Get time data
-        time_data = np.asarray(self.obj_dataext.x, dtype=float)
-        
-        # CRITICAL FIX: Detect and handle transient analysis time offset
-        # For transient analysis with .tran step stop start, we need to find
-        # where the actual analysis begins
-        
-        # Check if this is a transient analysis
-        if self.plot_type[0] == DataExtraction.TRANSIENT_ANALYSIS:
-            # Read the analysis file to get the actual start time
-            try:
-                with open(os.path.join(self.file_path, "analysis"), 'r') as f:
-                    analysis_content = f.read().strip()
-                    
-                # Parse .tran command: .tran step stop start
-                if analysis_content.startswith('.tran'):
-                    parts = analysis_content.split()
-                    if len(parts) >= 4:
-                        try:
-                            # Convert scientific notation to float
-                            start_time = float(parts[3])
-                            
-                            # If start_time is not 0, we need to offset our data
-                            if start_time > 0:
-                                # Find the index where time >= start_time
-                                start_idx = np.searchsorted(time_data, start_time)
-                                
-                                # Adjust time_data to start from the correct point
-                                if start_idx > 0 and start_idx < len(time_data):
-                                    time_data = time_data[start_idx:]
-                                    
-                                    # Also adjust all data arrays
-                                    for idx in list(self.obj_dataext.y.keys()):
-                                        if idx < len(self.obj_dataext.y):
-                                            self.obj_dataext.y[idx] = self.obj_dataext.y[idx][start_idx:]
-                        except (ValueError, IndexError):
-                            pass  # If parsing fails, use full data
-            except Exception as e:
-                logger.debug(f"Could not parse analysis file for time offset: {e}")
-        
-        # Prepare spacing for multiple traces
-        spacing_ref = max(1.0, vmax)
-        spacing = self.vertical_spacing * spacing_ref
-        yticks, ylabels = [], []
-        
-        # Calculate annotation offset based on time range
-        annotation_offset_base = 0.01 * (time_data[-1] - time_data[0]) if len(time_data) > 1 else 0.01
-
-        # Plot each visible trace as a digital signal
-        for rank, idx in enumerate(visible_indices[::-1]):
-            # Get the raw data for this trace
-            raw_data = np.asarray(self.obj_dataext.y[idx], dtype=float)
-            
-            # Make sure raw_data matches time_data length after offset adjustment
-            if len(raw_data) > len(time_data):
-                raw_data = raw_data[:len(time_data)]
-            elif len(raw_data) < len(time_data):
-                # This shouldn't happen, but handle it gracefully
-                time_data = time_data[:len(raw_data)]
-            
-            trace_vmin, trace_vmax = np.min(raw_data), np.max(raw_data)
-            
-            # Convert to digital logic levels
-            logic_data = np.where(raw_data > self.logic_threshold, trace_vmax, trace_vmin)
-            
-            # Apply vertical offset for stacking
-            logic_offset = logic_data + rank * spacing
-            
-            # Get trace properties
-            color = self.trace_colors.get(idx, 'blue')
-            thickness = self.trace_thickness.get(idx, DEFAULT_LINE_THICKNESS)
-            label = self.trace_names.get(idx, self.obj_dataext.NBList[idx])
-            
-            # Plot the digital waveform
-            line, = self.axes.step(time_data, logic_offset, where="post", 
-                                   linewidth=thickness, color=color, label=label)
-            self.active_traces[idx] = line
-            
-            # Add y-axis tick for this trace
-            y_center = rank * spacing + (trace_vmax + trace_vmin) / 2.0
-            yticks.append(y_center)
-            ylabels.append(label)
-            
-            # Add voltage annotation at the end
-            # Add voltage annotation at the right edge of the graph
-            # Add voltage annotation at the right edge of the graph
-            if len(raw_data) > 0:
-                final_voltage = f"{float(raw_data[-1]):.3f} V"
-                # Position the text at the right edge of the plot area
-                # Using transform coordinates: 1.01 means just outside the right edge
-                text_obj = self.axes.text(1.01, y_center, final_voltage, 
-                                          transform=self.axes.get_yaxis_transform(),
-                                          va='center', ha='left',
-                                          fontsize=8, color=color,
-                                          clip_on=False)  # This allows text to appear outside axes
-                self.timing_annotations[idx] = text_obj
-
-        # Set y-axis limits and labels
-        total_height = (len(visible_indices) - 1) * spacing + vmax
-        self.axes.set_ylim(vmin - 0.1 * spacing_ref, total_height + 0.1 * spacing_ref)
-        self.axes.set_yticks(yticks)
-        self.axes.set_yticklabels(ylabels, fontsize=8)
-        
-        # Update tick colors to match trace colors
-        self.update_timing_tick_colors()
-        
-        # Set time axis with proper units
-        self.set_time_axis_label()
-        
-        # Add threshold line
-        self.axes.axhline(y=self.logic_threshold, color='red', linestyle=':', 
-                          alpha=THRESHOLD_ALPHA, linewidth=1)
-        
-        # Add title if legend is not shown
-        if not self.legend_check.isChecked():
-            self.axes.set_title(f'Digital Timing Diagram (Threshold: {self.logic_threshold:.3f} V)', 
-                                fontsize=10, pad=10)
-    def set_time_axis_label(self) -> None:
-        if not hasattr(self, 'axes') or not hasattr(self.obj_dataext, 'x'):
-            return
-        time_data = np.array(self.obj_dataext.x, dtype=float)
-        if len(time_data) < 2:
-            self.axes.set_xlabel('Time (s)', fontsize=10)
-            return
-        time_span = abs(time_data[-1] - time_data[0])
-        if time_span == 0:
-            scale, unit = 1, 's'
-        elif time_span < TIME_UNIT_THRESHOLD_PS:
-            scale, unit = 1e12, 'ps'
-        elif time_span < TIME_UNIT_THRESHOLD_NS:
-            scale, unit = 1e9, 'ns'
-        elif time_span < TIME_UNIT_THRESHOLD_US:
-            scale, unit = 1e6, 'µs'
-        elif time_span < TIME_UNIT_THRESHOLD_MS:
-            scale, unit = 1e3, 'ms'
-        else:
-            scale, unit = 1, 's'
-        scaled_time = time_data * scale
-        for line in self.active_traces.values():
-            if line:
-                y_data = line.get_ydata()
-                # Step plots have one more y-value than x-value
-                if len(y_data) == len(scaled_time) + 1:
-                     x_step_data = np.append(scaled_time, scaled_time[-1])
-                     line.set_data(x_step_data, y_data)
-                elif len(y_data) == len(scaled_time):
-                    line.set_xdata(scaled_time)
-
-        self.axes.set_xlim(scaled_time[0], scaled_time[-1])
-        if hasattr(self, 'cursor_lines'):
-            for i, line in enumerate(self.cursor_lines):
-                if line and i < len(self.cursor_positions) and self.cursor_positions[i] is not None:
-                    line.set_xdata([self.cursor_positions[i] * scale, self.cursor_positions[i] * scale])
-        self.axes.set_xlabel(f'Time ({unit})', fontsize=10)
-
-    def on_threshold_changed(self, value: float) -> None:
-        if self.timing_check.isChecked():
-            self.refresh_plot()
-
-    def on_spacing_changed(self, value: int) -> None:
-        self.vertical_spacing = value / 100.0
-        self.spacing_label.setText(f"{self.vertical_spacing:.1f}x")
-        if self.timing_check.isChecked():
-            self.refresh_plot()
+    def _toggle_focus_mode(self, focused: bool) -> None:
+        self.left_panel.setVisible(not focused)
+        self.right_panel.setVisible(not focused)
+        self._focus_btn.setToolTip('Restore panels (F)' if focused else 'Focus plot — hide panels (F)')
 
     def on_canvas_click(self, event) -> None:
-        if hasattr(self, 'axes') and event.inaxes == self.axes:
-            if event.button == 1:
-                self.set_cursor(0, event.xdata)
-            elif event.button == 3:
-                self.set_cursor(1, event.xdata)
+        if not self.panes:
+            return
+        if self.nav_toolbar.mode:
+            return
 
-    def set_cursor(self, cursor_num: int, x_pos_scaled: float) -> None:
-        time_data = np.array(self.obj_dataext.x, dtype=float)
-        time_span = abs(time_data[-1] - time_data[0]) if len(time_data) > 1 else 0
-        if time_span < TIME_UNIT_THRESHOLD_PS: scale = 1e12
-        elif time_span < TIME_UNIT_THRESHOLD_NS: scale = 1e9
-        elif time_span < TIME_UNIT_THRESHOLD_US: scale = 1e6
-        elif time_span < TIME_UNIT_THRESHOLD_MS: scale = 1e3
-        else: scale = 1
-        x_pos_original = x_pos_scaled / scale
+        # Divider drag — pressed in the gap between two panes (event.inaxes
+        # is None there, so handle it before the inaxes guard below).
+        if (self._current_view_mode == 'stacked'
+                and event.button == 1
+                and event.inaxes is None):
+            div = self._divider_under_mouse(event)
+            if div is not None:
+                self._start_divider_drag(div, event)
+                return
 
-        if cursor_num < len(self.cursor_lines) and self.cursor_lines[cursor_num]:
-            self.cursor_lines[cursor_num].remove()
-        
-        color = 'red' if cursor_num == 0 else 'blue'
-        line = self.axes.axvline(x=x_pos_scaled, color=color, linestyle='--', alpha=CURSOR_ALPHA)
+        if event.inaxes not in self.panes:
+            return
 
-        if cursor_num >= len(self.cursor_lines):
-            self.cursor_lines.append(line)
-            self.cursor_positions.append(x_pos_original)
-        else:
-            self.cursor_lines[cursor_num] = line
-            self.cursor_positions[cursor_num] = x_pos_original
+        modifier = (event.key or '').lower()
 
-        label_widget = self.cursor1_label if cursor_num == 0 else self.cursor2_label
-        label_widget.setText(f"Cursor {cursor_num + 1}: {x_pos_scaled:.6g}")
+        # Alt + left-click in stacked: start a pane reorder drag. Finish on
+        # release over the destination pane.
+        if (self._current_view_mode == 'stacked'
+                and event.button == 1
+                and 'alt' in modifier):
+            idx = self._pane_index_of(event.inaxes)
+            if idx is not None:
+                self._start_pane_drag(idx)
+                return
 
-        if len(self.cursor_positions) >= 2 and all(p is not None for p in self.cursor_positions[:2]):
-            delta_original = abs(self.cursor_positions[1] - self.cursor_positions[0])
-            delta_scaled = delta_original * scale
-            self.delta_label.setText(f"Delta: {delta_scaled:.6g}")
-            if delta_original > 0:
-                freq_delta = 1.0 / delta_original
-                self.measure_label.setText(f"Freq: {freq_delta:.6g} Hz")
-        self.canvas.draw()
+        # Right-click in stacked mode opens the per-pane context menu. The
+        # menu's "Set Cursor N here" items keep cursor placement available
+        # to laptop users who don't have a middle mouse button.
+        if event.button == 3 and self._current_view_mode == 'stacked':
+            self._show_pane_context_menu(event)
+            return
 
-    def clear_cursors(self) -> None:
-        for line in self.cursor_lines:
-            if line:
-                line.remove()
-        self.cursor_lines.clear()
-        self.cursor_positions.clear()
-        self.cursor1_label.setText("Cursor 1: Not set")
-        self.cursor2_label.setText("Cursor 2: Not set")
-        self.delta_label.setText("Delta: --")
-        self.measure_label.setText("")
-        self.canvas.draw()
+        x_target = event.xdata
+
+        near = self._find_nearest_cursor(event)
+        if event.button == 1:
+            if near is not None:
+                self._drag_cursor_idx = near
+                self._begin_cursor_blit()
+            else:
+                self._drag_cursor_idx = None
+                self.set_cursor(0, x_target)
+        elif event.button == 2:  # middle-click: cursor 2
+            self._drag_cursor_idx = None
+            self.set_cursor(1, x_target)
+        elif event.button == 3:  # right-click (non-stacked): cursor 2
+            self._drag_cursor_idx = None
+            self.set_cursor(1, x_target)
+
+    def on_canvas_release(self, event) -> None:
+        # If a cursor was being dragged, recompute the full per-signal
+        # readout now (skipped during motion for performance).
+        had_cursor_drag = self._drag_cursor_idx is not None
+        last_cursor_idx = self._drag_cursor_idx
+        self._drag_cursor_idx = None
+        if had_cursor_drag:
+            self._end_cursor_blit()
+        if had_cursor_drag and last_cursor_idx is not None:
+            if last_cursor_idx < len(self.cursor_positions):
+                x_pos = self.cursor_positions[last_cursor_idx]
+                if x_pos is not None:
+                    # Full per-signal Y readout now that drag is done.
+                    self._update_cursor_panel(last_cursor_idx, x_pos)
+                    two = (len(self.cursor_positions) >= 2
+                           and all(p is not None for p in self.cursor_positions[:2]))
+                    if not two:
+                        self.measure_label.setText(
+                            self._format_cursor_readout(x_pos))
+        if self._divider_drag is not None:
+            self._finish_divider_drag()
+        if self._pane_drag is not None:
+            self._finish_pane_drag(event)
 
     def on_mouse_move(self, event) -> None:
+        # Active drags get priority — fast path, no allocations.
+        if self._divider_drag is not None:
+            self._update_divider_drag(event)
+            return
+        if self._drag_cursor_idx is not None and event.xdata is not None:
+            # Cursor drag — only needs the X update; skip coord-label work.
+            self._update_cursor_position(self._drag_cursor_idx, event.xdata)
+            return
+
         if event.inaxes:
-            self.coord_label.setText(f"X: {event.xdata:.6g}, Y: {event.ydata:.6g}")
+            base = f"X: {event.xdata:.6g}, Y: {event.ydata:.6g}"
+            if self._current_view_mode == 'stacked':
+                # Anchor lookup is O(N traces); only walk when the hovered
+                # pane actually changes between move events.
+                if event.inaxes is not self._last_hover_axes:
+                    self._last_hover_axes = event.inaxes
+                    self._last_hover_anchor = self._pane_anchor_name(event.inaxes)
+                if self._last_hover_anchor:
+                    base = f"{base}  |  Pane: {self._last_hover_anchor}"
+            if base != self._last_coord_text:
+                self.coord_label.setText(base)
+                self._last_coord_text = base
+            # Reset resize-cursor state when we re-enter an axes
+            if self._last_cursor_shape_was_resize:
+                self.canvas.unsetCursor()
+                self._last_cursor_shape_was_resize = False
         else:
-            self.coord_label.setText("X: --, Y: --")
+            # Show resize cursor when hovering a divider gap in stacked mode
+            want_resize = (self._current_view_mode == 'stacked'
+                           and self._divider_under_mouse(event) is not None)
+            if want_resize and not self._last_cursor_shape_was_resize:
+                self.canvas.setCursor(Qt.CursorShape.SizeVerCursor)
+                self._last_cursor_shape_was_resize = True
+            elif not want_resize and self._last_cursor_shape_was_resize:
+                self.canvas.unsetCursor()
+                self._last_cursor_shape_was_resize = False
+            if self._last_coord_text != "X: --, Y: --":
+                self.coord_label.setText("X: --, Y: --")
+                self._last_coord_text = "X: --, Y: --"
+            self._last_hover_axes = None
+            self._last_hover_anchor = None
 
     def on_key_press(self, event) -> None:
         if event.key == 'g': self.grid_check.toggle()
         elif event.key == 'l': self.legend_check.toggle()
+        elif event.key == 'f': self._focus_btn.toggle()
         elif event.key == 'p': self.open_figure_options()
-        elif event.key == 'escape': self.clear_cursors()
+        elif event.key == 'escape':
+            mode = str(self.nav_toolbar.mode).lower()
+            if 'zoom' in mode:
+                self.nav_toolbar.zoom()
+            elif 'pan' in mode:
+                self.nav_toolbar.pan()
+            else:
+                self.clear_cursors()
 
     def on_scroll(self, event) -> None:
         if not event.inaxes: return
@@ -1087,13 +851,26 @@ class plotWindow(QWidget):
             event.inaxes.set_xlim(xlim[0] + pan_distance, xlim[1] + pan_distance)
         self.canvas.draw()
 
+    def eventFilter(self, obj, event) -> bool:
+        if (obj is self.canvas and
+                event.type() == QtCore.QEvent.Type.Wheel and
+                self._current_view_mode == 'stacked'):
+            mods = event.modifiers()
+            ctrl = Qt.KeyboardModifier.ControlModifier
+            shift = Qt.KeyboardModifier.ShiftModifier
+            if not (mods & ctrl) and not (mods & shift):
+                QtWidgets.QApplication.sendEvent(
+                    self.canvas_scroll.verticalScrollBar(), event)
+                return True
+        return super().eventFilter(obj, event)
+
     def export_image(self) -> None:
         file_name, file_filter = QFileDialog.getSaveFileName(self, "Export Image", "", "PNG Files (*.png);;SVG Files (*.svg);;All Files (*)")
         if file_name:
             try:
-                format = 'svg' if "svg" in file_filter else 'png'
-                if '.' not in os.path.basename(file_name): file_name += f'.{format}'
-                self.fig.savefig(file_name, format=format, dpi=DEFAULT_EXPORT_DPI, bbox_inches='tight')
+                fmt = 'svg' if "svg" in file_filter else 'png'
+                if '.' not in os.path.basename(file_name): file_name += f'.{fmt}'
+                self.fig.savefig(file_name, format=fmt, dpi=DEFAULT_EXPORT_DPI, bbox_inches='tight')
                 self.status_bar.showMessage(f"Image exported to {file_name}", 3000)
             except Exception as e:
                 logger.error(f"Error exporting image: {e}")
@@ -1103,169 +880,118 @@ class plotWindow(QWidget):
         self.timing_annotations.clear()
         self.deselect_all_waveforms()
 
+    def _zoom_panes(self, factor: float) -> None:
+        """Apply a symmetric zoom around the centre of each pane.
+
+        factor < 1 zooms in (narrower range); factor > 1 zooms out.
+        X is set on self.axes only — sharex propagates to all panes when
+        stacked. Y is set per-pane so each retains its own scale.
+        """
+        if not self.panes:
+            return
+        xlim = self.axes.get_xlim()
+        x_center = (xlim[0] + xlim[1]) / 2
+        x_half = (xlim[1] - xlim[0]) * factor / 2
+        self.axes.set_xlim(x_center - x_half, x_center + x_half)
+        for ax in self.panes:
+            ylim = ax.get_ylim()
+            y_center = (ylim[0] + ylim[1]) / 2
+            y_half = (ylim[1] - ylim[0]) * factor / 2
+            ax.set_ylim(y_center - y_half, y_center + y_half)
+        self.canvas.draw()
+
     def zoom_in(self) -> None:
-        if hasattr(self, 'axes'): self.nav_toolbar.zoom()
+        self._zoom_panes(DEFAULT_ZOOM_FACTOR)
 
     def zoom_out(self) -> None:
-        if hasattr(self, 'axes'): self.nav_toolbar.back()
+        self._zoom_panes(1 / DEFAULT_ZOOM_FACTOR)
 
     def reset_view(self) -> None:
-        if hasattr(self, 'axes'): self.nav_toolbar.home()
+        if self.panes:
+            self.nav_toolbar.home()
 
     def toggle_grid(self) -> None:
-        if hasattr(self, 'axes'):
-            self.axes.grid(self.grid_check.isChecked())
+        if self.panes:
+            for ax in self.panes:
+                ax.grid(self.grid_check.isChecked())
             self.canvas.draw()
 
     def toggle_legend(self) -> None:
         self.refresh_plot()
 
-    def plot_function(self) -> None:
-        # This function remains complex, will copy simplified logic if possible
-        # For now, keeping the original logic
-        function_text = self.func_input.text()
-        if not function_text:
-            QMessageBox.warning(self, "Input Error", "Function input cannot be empty.")
+    def _setup_matplotlib_style(self) -> None:
+        dpi = max(72, self.logicalDpiY())
+        base_pt = max(6.5, round(8.0 * 96.0 / dpi, 1))
+        plt.rcParams.update({
+            'font.size':         base_pt,
+            'axes.labelsize':    base_pt + 1,
+            'axes.titlesize':    base_pt + 1,
+            'xtick.labelsize':   base_pt,
+            'ytick.labelsize':   base_pt,
+            'legend.fontsize':   base_pt,
+            'keymap.fullscreen': [],
+        })
+
+    def _on_canvas_resize(self, event) -> None:
+        self._resize_timer.start()  # restart on every event; fires 120ms after last one
+
+    def _do_deferred_resize(self) -> None:
+        if hasattr(self, 'canvas'):
+            self.canvas.draw_idle()
+
+    @property
+    def _em(self) -> int:
+        """Font height in pixels — base unit for all adaptive sizing."""
+        if self._em_cache is None:
+            self._em_cache = max(12, QtGui.QFontMetrics(self.font()).height())
+        return self._em_cache
+
+    @property
+    def visible_traces(self) -> List[Trace]:
+        """Ordered list of visible traces (waveform-list insertion order).
+
+        Single source of truth for "what gets plotted". All plot paths
+        (normal/timing/stacked) and multi-pane logic key off this ordering
+        so panes, legend, cursor readouts, and exports stay consistent.
+        """
+        return [self.traces[i] for i in sorted(self.traces.keys())
+                if self.traces[i].visible]
+
+    def showEvent(self, event: QtGui.QShowEvent) -> None:
+        super().showEvent(event)
+        if not getattr(self, '_splitter_initialized', False):
+            QtCore.QTimer.singleShot(0, self._init_splitter_sizes)
+
+    def _init_splitter_sizes(self) -> None:
+        if getattr(self, '_splitter_initialized', False):
             return
-
-        # Basic parsing (this is a simplified example, not a full math parser)
-        # It expects "trace1 vs trace2" or a simple expression with +, -, *, /
-        # For security, avoid using eval() directly on user input in production.
-        # This implementation is for a controlled environment.
-
-        if 'vs' in function_text:
-            parts = [p.strip() for p in function_text.split('vs')]
-            if len(parts) != 2:
-                QMessageBox.warning(self, "Syntax Error", "Use format 'trace1 vs trace2'.")
-                return
-            y_name, x_name = parts[0], parts[1]
-            try:
-                x_idx = self.obj_dataext.NBList.index(x_name)
-                y_idx = self.obj_dataext.NBList.index(y_name)
-                x_data = np.array(self.obj_dataext.y[x_idx], dtype=float)
-                y_data = np.array(self.obj_dataext.y[y_idx], dtype=float)
-
-                is_voltage_x = x_idx < self.volts_length
-                is_voltage_y = y_idx < self.volts_length
-
-                self.axes.plot(x_data, y_data, label=function_text)
-                self.axes.set_xlabel(f"{x_name} ({'V' if is_voltage_x else 'A'})")
-                self.axes.set_ylabel(f"{y_name} ({'V' if is_voltage_y else 'A'})")
-
-            except ValueError:
-                QMessageBox.warning(self, "Trace Not Found", f"Could not find one of the traces: {x_name}, {y_name}")
-                return
+        total = self.splitter.width()
+        if total > 100:
+            left_w  = int(total * 0.20)
+            right_w = max(
+                self.right_panel.minimumWidth(),
+                self.right_panel.widget().sizeHint().width() + 8,
+            )
+            center_w = max(self.center_widget.minimumWidth(), total - left_w - right_w)
+            self.splitter.setSizes([left_w, center_w, right_w])
+            self._splitter_initialized = True
         else:
-            # Simple expression evaluation (use with caution)
-            try:
-                # Replace trace names with data arrays
-                result_expr = function_text
-                for i, name in enumerate(self.obj_dataext.NBList):
-                    if name in result_expr:
-                        result_expr = result_expr.replace(name, f"np.array(self.obj_dataext.y[{i}], dtype=float)")
-
-                # Evaluate the expression
-                y_data = eval(result_expr, {"np": np, "self": self})
-                x_data = np.array(self.obj_dataext.x, dtype=float)
-                self.axes.plot(x_data, y_data, label=function_text)
-
-            except Exception as e:
-                QMessageBox.warning(self, "Evaluation Error", f"Could not plot function: {e}")
-                return
-
-        if self.legend_check.isChecked():
-            self.position_legend()
-        self.canvas.draw()
-
-
-    def multi_meter(self) -> None:
-        visible_indices = [i for i, v in self.trace_visibility.items() if v]
-        if not visible_indices:
-            QMessageBox.warning(self, "Warning", "Please select at least one waveform")
-            return
-        location_x, location_y = 300, 300
-        for idx in visible_indices:
-            is_voltage = idx < self.obj_dataext.volts_length
-            rms_value = self.get_rms_value(self.obj_dataext.y[idx])
-            meter = MultimeterWidgetClass(self.trace_names.get(idx, self.obj_dataext.NBList[idx]), rms_value, location_x, location_y, is_voltage)
-            if hasattr(self.obj_appconfig, 'dock_dict') and self.obj_appconfig.current_project['ProjectName'] in self.obj_appconfig.dock_dict:
-                self.obj_appconfig.dock_dict[self.obj_appconfig.current_project['ProjectName']].append(meter)
-            location_x += 50
-            location_y += 50
-
-    def get_rms_value(self, data_points: List) -> Decimal:
-        getcontext().prec = 5
-        return Decimal(str(np.sqrt(np.mean(np.square([float(x) for x in data_points])))))
-
-    def redraw_cursors(self) -> None:
-        # This function might be redundant if set_time_axis_label handles cursor redraws
-        pass
-
-    def _plot_analysis_data(self, analysis_type: str) -> None:
-        self.axes = self.fig.add_subplot(111)
-        traces_plotted = 0
-        for trace_index, is_visible in self.trace_visibility.items():
-            if not is_visible:
-                continue
-            traces_plotted += 1
-            color = self.trace_colors.get(trace_index, '#000000')
-            label = self.trace_names.get(trace_index, self.obj_dataext.NBList[trace_index])
-            thickness = self.trace_thickness.get(trace_index, DEFAULT_LINE_THICKNESS)
-            style = self.trace_style.get(trace_index, '-')
-            x_data = np.asarray(self.obj_dataext.x, dtype=float)
-            y_data = np.asarray(self.obj_dataext.y[trace_index], dtype=float)
-            
-            plot_style = '-' if style == 'steps-post' else style
-            plot_func = self.axes.plot
-            if style == 'steps-post' and analysis_type in ['transient', 'dc']:
-                plot_func = self.axes.step
-            elif analysis_type == 'ac_log':
-                plot_func = self.axes.semilogx
-
-            line, = plot_func(x_data, y_data, c=color, label=label, linewidth=thickness, linestyle=plot_style)
-            self.active_traces[trace_index] = line
-
-        if analysis_type in ['ac_linear', 'ac_log']:
-            self.axes.set_xlabel('Frequency (Hz)')
-        elif analysis_type == 'transient':
-            # set_time_axis_label is now called from refresh_plot
-            pass
-        elif analysis_type == 'dc':
-            self.axes.set_xlabel('Voltage Sweep (V)')
-        
-        # Set Y label based on the first plotted trace
-        first_visible = next((i for i, v in self.trace_visibility.items() if v), None)
-        if first_visible is not None:
-             self.axes.set_ylabel('Voltage (V)' if first_visible < self.volts_length else 'Current (A)')
-
-        if traces_plotted == 0:
-            self.axes.text(0.5, 0.5, 'Please select a waveform to plot', ha='center', va='center', transform=self.axes.transAxes)
-        
-        if analysis_type == 'transient':
-            self.set_time_axis_label()
-
-
-    def on_push_decade(self) -> None:
-        self._plot_analysis_data('ac_log')
-
-    def on_push_ac(self) -> None:
-        self._plot_analysis_data('ac_linear')
-
-    def on_push_trans(self) -> None:
-        self._plot_analysis_data('transient')
-
-    def on_push_dc(self) -> None:
-        self._plot_analysis_data('dc')
+            QtCore.QTimer.singleShot(50, self._init_splitter_sizes)
 
     def resizeEvent(self, event: QtGui.QResizeEvent) -> None:
         super().resizeEvent(event)
         if self.parent():
             self.parent().updateGeometry()
-        if hasattr(self, 'canvas') and self.canvas:
-            self.canvas.draw_idle()
+
+    def changeEvent(self, event: QtCore.QEvent) -> None:
+        super().changeEvent(event)
+        if event.type() == QtCore.QEvent.Type.FontChange:
+            self._em_cache = None
 
     def sizeHint(self) -> QtCore.QSize:
-        return QtCore.QSize(1200, 800)
+        em = self._em
+        return QtCore.QSize(em * 80, em * 50)
 
     def minimumSizeHint(self) -> QtCore.QSize:
-        return QtCore.QSize(400, 300)
+        em = self._em
+        return QtCore.QSize(em * 25, em * 20)

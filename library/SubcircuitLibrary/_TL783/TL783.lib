@@ -1,0 +1,16 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# TL783
+#
+DEF TL783_internal U 0 40 Y Y 1 F N
+F0 "U" 0 400 50 H V C CNN
+F1 "TL783_internal" 0 -400 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+S -300 300 300 -300 0 1 0 N
+ENDDRAW
+ENDDEF
+#
+#End Library

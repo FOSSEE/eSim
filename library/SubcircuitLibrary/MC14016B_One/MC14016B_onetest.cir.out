@@ -1,0 +1,29 @@
+* c:\users\pavithra\esim-workspace\mc14016b_onetest\mc14016b_onetest.cir
+
+.include MC14016B.sub
+.include D.lib
+* u2  cont net-_u2-pad2_ adc_bridge_1
+v1  cont gnd pulse(0 5 0 0.1n 0.1n 1m 2m)
+* u3  cont plot_v1
+x1 in net-_u2-pad2_ out net-_d1-pad2_ gnd MC14016B
+d3 in net-_d1-pad2_ 1N4148
+d4 gnd in 1N4148
+v3 net-_d1-pad2_ gnd  dc 5
+v2  in gnd sine(0 5 1k 0 0)
+* u4  in plot_v1
+d1 out net-_d1-pad2_ 1N4148
+d2 gnd out 1N4148
+* u1  out plot_v1
+a1 [cont ] [net-_u2-pad2_ ] u2
+* Schematic Name:                             adc_bridge_1, NgSpice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-06 10e-03 0e-03
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+plot v(out) +6v(in)+12v(cont)
+.endc
+.end

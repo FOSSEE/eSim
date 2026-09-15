@@ -1,0 +1,55 @@
+* c:\fossee\esim\library\subcircuitlibrary\mct7800\mct7800.cir
+
+.include BC547B.lib
+.include PNP.lib
+.include ZenerD1N750.lib
+r1  net-_q16-pad1_ net-_d1-pad2_ 100
+r2  net-_q16-pad1_ net-_q1-pad1_ 500
+q1 net-_q1-pad1_ net-_d1-pad2_ net-_q1-pad3_ BC547B
+r3  net-_q1-pad3_ net-_q2-pad2_ 3.3k
+r4  net-_q2-pad2_ net-_q10-pad2_ 2.7k
+r5  net-_q10-pad2_ net-_d1-pad1_ 500
+d1 net-_d1-pad1_ net-_d1-pad2_ D1N750
+q8 net-_q12-pad2_ net-_q12-pad2_ net-_q8-pad3_ Q2N2907A
+q12 net-_q10-pad1_ net-_q12-pad2_ net-_q12-pad3_ Q2N2907A
+r13  net-_q16-pad1_ net-_q12-pad3_ 100k
+r8  net-_q16-pad1_ net-_q8-pad3_ 100
+q2 net-_q12-pad2_ net-_q2-pad2_ net-_q2-pad3_ BC547B
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_d1-pad1_ BC547B
+q3 net-_q3-pad1_ net-_q3-pad2_ net-_d1-pad1_ BC547B
+r6  net-_q2-pad3_ net-_q3-pad1_ 1.4k
+q7 net-_c1-pad1_ net-_q3-pad2_ net-_q7-pad3_ BC547B
+r7  net-_q3-pad2_ net-_d1-pad1_ 6.0k
+r11  net-_q7-pad3_ net-_d1-pad1_ 1.0k
+q4 net-_q2-pad3_ net-_q3-pad1_ net-_q3-pad2_ BC547B
+r10  net-_q2-pad3_ net-_c1-pad1_ 28k
+r9  net-_q6-pad2_ net-_q2-pad3_ 6.0k
+q6 net-_q5-pad3_ net-_q6-pad2_ net-_q2-pad3_ BC547B
+q5 net-_q12-pad2_ net-_q15-pad3_ net-_q5-pad3_ BC547B
+q9 net-_q15-pad3_ net-_q9-pad2_ net-_q6-pad2_ BC547B
+c1  net-_c1-pad1_ net-_c1-pad2_ 30p
+q11 net-_c1-pad2_ net-_c1-pad1_ net-_q11-pad3_ BC547B
+q14 net-_d1-pad1_ net-_c1-pad2_ net-_q10-pad1_ Q2N2907A
+r14  net-_q10-pad1_ net-_c1-pad2_ 2.0k
+r12  net-_q11-pad3_ net-_d1-pad1_ 5.0k
+q13 net-_c1-pad2_ net-_q11-pad3_ net-_d1-pad1_ BC547B
+q16 net-_q16-pad1_ net-_q10-pad1_ net-_q16-pad3_ BC547B
+q17 net-_q16-pad1_ net-_q16-pad3_ net-_q17-pad3_ BC547B
+d2 net-_d2-pad1_ net-_d2-pad2_ D1N750
+r15  net-_q16-pad1_ net-_d2-pad2_ 10k
+q15 net-_q10-pad1_ net-_d2-pad1_ net-_q15-pad3_ BC547B
+r16  net-_q16-pad3_ net-_q15-pad3_ 200
+r20  net-_q15-pad3_ net-_q17-pad3_ 0.3
+r19  net-_d2-pad1_ net-_q17-pad3_ 240
+r17  net-_q15-pad3_ net-_q9-pad2_ 0.25k
+r18  net-_q9-pad2_ net-_d1-pad1_ 5.0k
+* u1  net-_q16-pad1_ net-_d1-pad1_ net-_q15-pad3_ port
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

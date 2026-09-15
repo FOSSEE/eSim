@@ -1,0 +1,25 @@
+
+20. Printing statistics.
+
+=== Half_Adder ===
+
+        +----------------------------Count including submodules.
+        |        +-------------------Area including submodules.
+        |        |        +----------Local count, excluding submodules.
+        |        |        |        +-Local area, excluding submodules.
+        |        |        |        | 
+        4        -        4        - wires
+        4        -        4        - wire bits
+        4        -        4        - public wires
+        4        -        4        - public wire bits
+        4        -        4        - ports
+        4        -        4        - port bits
+        -        -        -        - memories
+        -        -        -        - memory bits
+        -        -        -        - processes
+        1   12.512        1   12.512 cells
+        1   12.512        1   12.512   sky130_fd_sc_hd__ha_1
+
+   Chip area for module '\Half_Adder': 12.512000
+     of which used for sequential elements: 0.000000 (0.00%)
+

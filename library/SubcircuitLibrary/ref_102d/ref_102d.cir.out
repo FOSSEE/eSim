@@ -1,0 +1,28 @@
+.title kicad schematic
+
+.include LM321.sub
+c3 net-_c3-pad1_ net-_c3-pad2_ 100p
+* u1 net-_u1-pad2_ net-_c1-pad2_ net-_r1-pad2_ net-_c4-pad1_ net-_c3-pad2_ port
+r4 net-_r4-pad1_ net-_c3-pad1_ 7k
+* u2 net-_c1-pad2_ net-_r4-pad1_ zener
+r1 net-_c1-pad1_ net-_r1-pad2_ 95k
+c1 net-_c1-pad1_ net-_c1-pad2_ 100p
+r2 net-_c1-pad2_ net-_c1-pad1_ 14k
+c2 net-_c1-pad1_ net-_c2-pad2_ 100p
+r3 net-_c1-pad1_ net-_c2-pad2_ 1k
+c4 net-_c4-pad1_ net-_c2-pad2_ 100p
+r5 net-_c2-pad2_ net-_c4-pad1_ 8k
+r6 net-_r4-pad1_ net-_c4-pad1_ 4k
+x1 net-_c3-pad1_ net-_c2-pad2_ net-_u1-pad2_ net-_c4-pad1_ net-_c1-pad2_ LM321
+a1 net-_c1-pad2_ net-_r4-pad1_ u2
+* Schematic Name:                             zener, Ngspice Name: zener
+.model u2 zener(v_breakdown=6.3 i_breakdown=2.0e-2 i_sat=1.0e-12 n_forward=1.0 limit_switch=TRUE ) 
+.tran 1e-06 1e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

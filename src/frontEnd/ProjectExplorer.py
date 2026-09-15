@@ -1,6 +1,9 @@
-from PyQt5 import QtCore, QtWidgets
+from PyQt6 import QtCore, QtWidgets
 import os
 import json
+import shutil
+from datetime import datetime
+from pathlib import Path
 from configuration.Appconfig import Appconfig
 from projManagement.Validation import Validation
 
@@ -28,6 +31,7 @@ class ProjectExplorer(QtWidgets.QWidget):
         self.obj_validation = Validation()
         self.treewidget = QtWidgets.QTreeWidget()
         self.window = QtWidgets.QVBoxLayout()
+        self.fs_watcher = QtCore.QFileSystemWatcher()
         header = QtWidgets.QTreeWidgetItem(["Projects", "path"])
         self.treewidget.setHeaderItem(header)
         self.treewidget.setColumnHidden(1, True)
@@ -68,13 +72,22 @@ class ProjectExplorer(QtWidgets.QWidget):
                     QtWidgets.QTreeWidgetItem(
                         parentnode, [files, os.path.join(parents, files)]
                     )
+                self.fs_watcher.addPath(parents)
         self.window.addWidget(self.treewidget)
+        self.fs_watcher.directoryChanged.connect(self.handleDirectoryChanged)
         self.treewidget.expanded.connect(self.refreshInstant)
         self.treewidget.doubleClicked.connect(self.openProject)
-        self.treewidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
+        self.treewidget.setContextMenuPolicy(QtCore.Qt.ContextMenuPolicy.CustomContextMenu)
         self.treewidget.customContextMenuRequested.connect(self.openMenu)
         self.setLayout(self.window)
         self.show()
+    
+    def handleDirectoryChanged(self, path):
+        for i in range(self.treewidget.topLevelItemCount()):
+            item = self.treewidget.topLevelItem(i)
+            if item.text(1) == path and item.isExpanded():
+                index = self.treewidget.indexFromItem(item)
+                self.refreshProject(indexItem=index)
 
     def refreshInstant(self):
         for i in range(self.treewidget.topLevelItemCount()):
@@ -105,12 +118,14 @@ class ProjectExplorer(QtWidgets.QWidget):
 
     def openMenu(self, position):
         indexes = self.treewidget.selectedIndexes()
-        if len(indexes) > 0:
-            level = 0
-            index = indexes[0]
-            while index.parent().isValid():
-                index = index.parent()
-                level += 1
+        if not indexes:
+            return
+
+        level = 0
+        index = indexes[0]
+        while index.parent().isValid():
+            index = index.parent()
+            level += 1
 
         menu = QtWidgets.QMenu()
         if level == 0:
@@ -123,8 +138,10 @@ class ProjectExplorer(QtWidgets.QWidget):
         elif level == 1:
             openfile = menu.addAction(self.tr("Open"))
             openfile.triggered.connect(self.openProject)
+            snapshot = menu.addAction(self.tr("Snapshot"))
+            snapshot.triggered.connect(self.takeSnapshot)
 
-        menu.exec_(self.treewidget.viewport().mapToGlobal(position))
+        menu.exec(self.treewidget.viewport().mapToGlobal(position))
 
     def openProject(self):
         self.indexItem = self.treewidget.currentIndex()
@@ -254,7 +271,7 @@ class ProjectExplorer(QtWidgets.QWidget):
             msg.setModal(True)
             msg.setWindowTitle("Error Message")
             msg.showMessage('Selected project does not exist.')
-            msg.exec_()
+            msg.exec()
             return False
 
     def renameProject(self):
@@ -277,7 +294,7 @@ class ProjectExplorer(QtWidgets.QWidget):
 
         newBaseFileName, ok = QtWidgets.QInputDialog.getText(
             self, 'Rename Project', 'Project Name:',
-            QtWidgets.QLineEdit.Normal, self.baseFileName
+            QtWidgets.QLineEdit.EchoMode.Normal, self.baseFileName
         )
 
         if ok and newBaseFileName:
@@ -290,7 +307,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                 msg.setModal(True)
                 msg.setWindowTitle("Error Message")
                 msg.showMessage('The project name cannot be empty')
-                msg.exec_()
+                msg.exec()
 
             elif self.baseFileName == newBaseFileName:
                 print("Project name has to be different")
@@ -299,7 +316,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                 msg.setModal(True)
                 msg.setWindowTitle("Error Message")
                 msg.showMessage('The project name has to be different')
-                msg.exec_()
+                msg.exec()
 
             elif self.refreshProject(filePath):
 
@@ -329,7 +346,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                     msg.setModal(True)
                     msg.setWindowTitle("Error Message")
                     msg.showMessage('Selected project does not exist.')
-                    msg.exec_()
+                    msg.exec()
 
                 elif reply == "VALID":
                     # rename project folder
@@ -348,7 +365,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                         msg.setModal(True)
                         msg.setWindowTitle("Error Message")
                         msg.showMessage(str(e))
-                        msg.exec_()
+                        msg.exec()
                         return
 
                     # rename files matching project name
@@ -387,7 +404,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                         msg.setModal(True)
                         msg.setWindowTitle("Error Message")
                         msg.showMessage(str(e))
-                        msg.exec_()
+                        msg.exec()
                         return
 
                     # update project_explorer dictionary
@@ -417,7 +434,7 @@ class ProjectExplorer(QtWidgets.QWidget):
                         '" already exist. Please select a different name or' +
                         ' delete existing project'
                     )
-                    msg.exec_()
+                    msg.exec()
 
                 elif reply == "CHECKNAME":
                     print("Name can not contain space between them")
@@ -430,3 +447,32 @@ class ProjectExplorer(QtWidgets.QWidget):
                         'contain space between them'
                     )
                     msg.exec_()
+
+    def set_time_explorer(self, time_explorer_widget):
+        self.time_explorer = time_explorer_widget
+
+    def takeSnapshot(self):
+        index = self.treewidget.currentIndex()
+        file_path = str(index.sibling(index.row(), 1).data()) 
+        file_name = os.path.basename(file_path)
+
+        if not os.path.isfile(file_path):
+            QtWidgets.QMessageBox.warning(self, "Snapshot Failed", "Selected item is not a file.")
+            return
+
+        project_path = self.obj_appconfig.current_project["ProjectName"]
+        project_name = os.path.basename(project_path)
+
+        snapshot_dir = os.path.join(Path.home(), ".esim", "history", project_name)
+        os.makedirs(snapshot_dir, exist_ok=True)
+
+        formatted_time = datetime.now().strftime("%I.%M %p %d-%m-%Y")
+        snapshot_name = f"{file_name}({formatted_time})"
+        snapshot_path = os.path.join(snapshot_dir, snapshot_name)
+
+        shutil.copy2(file_path, snapshot_path)
+
+        if hasattr(self, 'time_explorer'):
+            self.time_explorer.add_snapshot(file_name, formatted_time)
+        else:
+            print(f"Snapshot taken: {snapshot_path}")

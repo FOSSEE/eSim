@@ -1,0 +1,20 @@
+.title kicad schematic
+
+r1 net-_gm1-pad4_ net-_gm1-pad3_ 1meg
+gm1 net-_c1-pad1_ gnd net-_gm1-pad3_ net-_gm1-pad4_ 0.2
+* u1 net-_gm1-pad3_ net-_gm1-pad4_ net-_r5-pad1_ net-_r3-pad2_ net-_r4-pad2_ port
+c1 net-_c1-pad1_ gnd 0.884p
+r2 gnd net-_c1-pad1_ 100
+e1 net-_e1-pad1_ gnd net-_c1-pad1_ gnd 1
+r5 net-_r5-pad1_ net-_e1-pad1_ 50
+r4 gnd net-_r4-pad2_ 1g
+r3 gnd net-_r3-pad2_ 1g
+.tran 1e-09 0.1e-06 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

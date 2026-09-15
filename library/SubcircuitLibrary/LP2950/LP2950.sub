@@ -1,0 +1,20 @@
+.subckt LP2950 VIN VOUT eSim_GND
+
+* 1. Pass Element (P-Channel MOSFET)
+M1 VOUT Gate VIN VIN mosfet_p
+
+* 2. Error Amplifier (Ideal E-source instead of lm_741)
+* Ngspice ideal comparator: Output Gate goes UP when Feedback > Ref
+E1 Gate eSim_GND Feedback Ref_1.23V 100k
+
+* 3. Internal Voltage Reference (1.23V Bandgap)
+V1 Ref_1.23V eSim_GND DC 1.23
+
+* 4. Internal Feedback Resistor Network (Sets output to ~5V)
+R1 VOUT Feedback 300k
+R2 Feedback eSim_GND 100k
+
+* 5. Missing PMOS Model added here
+.model mosfet_p PMOS(VTO=-1.5 KP=20m)
+
+.ends LP2950

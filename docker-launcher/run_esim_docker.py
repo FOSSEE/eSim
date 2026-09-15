@@ -18,7 +18,7 @@ import urllib.request
 from pathlib import Path
 
 # Docker image (GitHub Container Registry)
-DOCKER_IMAGE = "docker pull ghcr.io/fossee/esim-docker-launcher:latest"
+DOCKER_IMAGE = "ghcr.io/fossee/esim-docker-launcher:latest"
 LOCAL_IMAGE = "esim:latest"
 CONTAINER_NAME = "esim-container"
 DOCKERFILE_DIR = Path(__file__).parent.resolve()

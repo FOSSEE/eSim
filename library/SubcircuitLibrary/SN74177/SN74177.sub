@@ -1,0 +1,67 @@
+* Subcircuit SN74177
+.subckt SN74177 /1 /2 /3 /4 /5 /6 ? /8 /9 /10 /11 /12 /13 ? 
+* d:\fossee\esim\library\subcircuitlibrary\sn74177\sn74177.cir
+.include tff_1.sub
+* u6  net-_u16-pad3_ net-_u14-pad2_ net-_u6-pad3_ d_nand
+* u7  net-_u17-pad3_ net-_u14-pad2_ net-_u7-pad3_ d_nand
+* u8  net-_u19-pad3_ net-_u14-pad2_ net-_u8-pad3_ d_nand
+* u9  net-_u18-pad3_ net-_u14-pad2_ net-_u9-pad3_ d_nand
+* u2  /13 net-_u16-pad2_ d_buffer
+* u3  /1 /13 net-_u14-pad2_ d_nand
+* u4  /4 net-_u14-pad2_ net-_u16-pad1_ d_and
+* u16  net-_u16-pad1_ net-_u16-pad2_ net-_u16-pad3_ d_nand
+* u5  /10 net-_u14-pad2_ net-_u17-pad1_ d_and
+* u17  net-_u17-pad1_ net-_u16-pad2_ net-_u17-pad3_ d_nand
+* u15  /3 net-_u14-pad2_ net-_u15-pad3_ d_and
+* u19  net-_u15-pad3_ net-_u16-pad2_ net-_u19-pad3_ d_nand
+* u14  /11 net-_u14-pad2_ net-_u14-pad3_ d_and
+* u18  net-_u14-pad3_ net-_u16-pad2_ net-_u18-pad3_ d_nand
+x1 ? /8 net-_u6-pad3_ ? /5 net-_u16-pad3_ tff_1
+x4 ? /2 net-_u9-pad3_ ? /12 net-_u18-pad3_ tff_1
+x3 ? /9 net-_u8-pad3_ ? /2 net-_u19-pad3_ tff_1
+x2 ? /6 net-_u7-pad3_ ? /9 net-_u17-pad3_ tff_1
+a1 [net-_u16-pad3_ net-_u14-pad2_ ] net-_u6-pad3_ u6
+a2 [net-_u17-pad3_ net-_u14-pad2_ ] net-_u7-pad3_ u7
+a3 [net-_u19-pad3_ net-_u14-pad2_ ] net-_u8-pad3_ u8
+a4 [net-_u18-pad3_ net-_u14-pad2_ ] net-_u9-pad3_ u9
+a5 /13 net-_u16-pad2_ u2
+a6 [/1 /13 ] net-_u14-pad2_ u3
+a7 [/4 net-_u14-pad2_ ] net-_u16-pad1_ u4
+a8 [net-_u16-pad1_ net-_u16-pad2_ ] net-_u16-pad3_ u16
+a9 [/10 net-_u14-pad2_ ] net-_u17-pad1_ u5
+a10 [net-_u17-pad1_ net-_u16-pad2_ ] net-_u17-pad3_ u17
+a11 [/3 net-_u14-pad2_ ] net-_u15-pad3_ u15
+a12 [net-_u15-pad3_ net-_u16-pad2_ ] net-_u19-pad3_ u19
+a13 [/11 net-_u14-pad2_ ] net-_u14-pad3_ u14
+a14 [net-_u14-pad3_ net-_u16-pad2_ ] net-_u18-pad3_ u18
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u6 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u7 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u8 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u9 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_buffer, NgSpice Name: d_buffer
+.model u2 d_buffer(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u3 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u4 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u16 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u5 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u17 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u15 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u19 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_and, NgSpice Name: d_and
+.model u14 d_and(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Schematic Name:                             d_nand, NgSpice Name: d_nand
+.model u18 d_nand(rise_delay=1.0e-9 fall_delay=1.0e-9 input_load=1.0e-12 )
+* Control Statements
+
+.ends SN74177

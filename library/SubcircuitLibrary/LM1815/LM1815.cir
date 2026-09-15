@@ -1,0 +1,13 @@
+.title KiCad schematic
+v2 Net-_C2-Pad2_ GND 5V
+C2 GND Net-_C2-Pad2_ 0.1u
+v1 Net-_R1-Pad1_ GND sine
+R1 Net-_R1-Pad1_ /V_IN 18k
+C1 Net-_C1-Pad1_ GND 0.33u
+R2 GND Net-_C1-Pad1_ 1.6M
+C3 GND Net-_C3-Pad2_ 0.001u
+R3 Net-_C3-Pad2_ Net-_R3-Pad2_ 150K
+R5 Net-_C2-Pad2_ /REF_OUT 5.6k
+X1 GND /V_IN unconnected-_X1-Pad5_ Net-_C1-Pad1_ Net-_C2-Pad2_ GND /V_OUT GND /REF_OUT Net-_R3-Pad2_ LM1815
+R4 Net-_C2-Pad2_ /V_OUT 1k
+.end

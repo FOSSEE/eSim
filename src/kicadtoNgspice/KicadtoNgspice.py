@@ -20,7 +20,7 @@ import os
 import sys
 from xml.etree import ElementTree as ET
 
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 from . import Analysis
 from . import Convert
@@ -59,13 +59,8 @@ class MainWindow(QtWidgets.QWidget):
         # Track the dynamically created widget of KicadtoNgspice Window
         self.obj_track = TrackWidget.TrackWidget()
 
-        # Clear Dictionary/List item of sub circuit and Ngspice model
-        # Dictionary
-        self.obj_track.subcircuitList.clear()
-        self.obj_track.subcircuitTrack.clear()
-        self.obj_track.model_entry_var.clear()
-        # List
-        self.obj_track.modelTrack[:] = []
+        # Reset all shared class-level state for this conversion run
+        TrackWidget.TrackWidget.reset()
 
         # Object of Processing
         obj_proc = PrcocessNetlist()
@@ -132,7 +127,7 @@ class MainWindow(QtWidgets.QWidget):
             self.content = "Your schematic contain unknown model " + \
                            ', '.join(unknownModelList)
             self.msg.showMessage(self.content)
-            self.msg.exec_()
+            self.msg.exec()
 
         elif multipleModelList:
             self.msg = QtWidgets.QErrorMessage()
@@ -142,7 +137,7 @@ class MainWindow(QtWidgets.QWidget):
             modelParamXML directory " + \
                             ', '.join(multipleModelList[0])
             self.msg.showMessage(self.mcontent)
-            self.msg.exec_()
+            self.msg.exec()
 
         else:
             self.createMainWindow()
@@ -777,7 +772,7 @@ class MainWindow(QtWidgets.QWidget):
             self.msg = "The KiCad to Ngspice conversion completed "
             self.msg += "successfully!"
             QtWidgets.QMessageBox.information(
-                self, "Information", self.msg, QtWidgets.QMessageBox.Ok
+                self, "Information", self.msg, QtWidgets.QMessageBox.StandardButton.Ok
             )
         except Exception as e:
             print("Exception Message: ", e)

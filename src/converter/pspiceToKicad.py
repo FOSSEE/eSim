@@ -1,7 +1,7 @@
 import os
 import subprocess
 import shutil
-from PyQt5.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox
 from frontEnd import ProjectExplorer
 
 class PspiceConverter:
@@ -44,7 +44,7 @@ class PspiceConverter:
                 subprocess.run(command, shell=True, check=True)
                 # Message box with the conversion success message
                 msg_box = QMessageBox()
-                msg_box.setIcon(QMessageBox.Information)
+                msg_box.setIcon(QMessageBox.Icon.Information)
                 msg_box.setWindowTitle("Conversion Successful")
                 newFile = str(conPath + "/" + filename)
                 workspace_directory = self.get_workspace_directory()
@@ -57,7 +57,7 @@ class PspiceConverter:
                         print("File added under the project explorer.")
                 else:
                         print("Workspace directory not found.")
-                result = msg_box.exec_()
+                result = msg_box.exec()
                 print("Conversion of Pspice to eSim schematic Successful")
 
             except subprocess.CalledProcessError as e:
@@ -66,11 +66,11 @@ class PspiceConverter:
             print("File is empty. Cannot perform conversion.")
             # A message box indicating that the file is empty
             msg_box = QMessageBox()
-            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setIcon(QMessageBox.Icon.Warning)
             msg_box.setWindowTitle("Empty File")
             msg_box.setText("The selected file is empty. Conversion cannot be performed.")
-            msg_box.setStandardButtons(QMessageBox.Ok)
-            msg_box.exec_()
+            msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg_box.exec()
 
     def upload_file_Pspice(self, file_path):
         if file_path:
@@ -78,11 +78,11 @@ class PspiceConverter:
             if ' ' in file_path:
                 # Show a message box indicating that spaces are not allowed
                 msg_box = QMessageBox()
-                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setIcon(QMessageBox.Icon.Warning)
                 msg_box.setWindowTitle("Invalid File Path")
                 msg_box.setText("Spaces are not allowed in the file path.")
-                msg_box.setStandardButtons(QMessageBox.Ok)
-                msg_box.exec_()
+                msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+                msg_box.exec()
                 return
             
             if ".sch" in file_path:
@@ -90,11 +90,11 @@ class PspiceConverter:
                 self.convert(file_path)
             else:
                 msg_box = QMessageBox()
-                msg_box.setIcon(QMessageBox.Warning)
+                msg_box.setIcon(QMessageBox.Icon.Warning)
                 msg_box.setWindowTitle("Invalid File Path")
                 msg_box.setText("Only .sch file can be converted.")
-                msg_box.setStandardButtons(QMessageBox.Ok)
-                msg_box.exec_()
+                msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+                msg_box.exec()
                 return
             
         else:
@@ -102,11 +102,11 @@ class PspiceConverter:
 
             # Message box indicating that no file is selected
             msg_box = QMessageBox()
-            msg_box.setIcon(QMessageBox.Warning)
+            msg_box.setIcon(QMessageBox.Icon.Warning)
             msg_box.setWindowTitle("No File Selected")
             msg_box.setText("Please select a file before uploading.")
-            msg_box.setStandardButtons(QMessageBox.Ok)
-            msg_box.exec_()
+            msg_box.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg_box.exec()
 
 def merge_copytree(src, dst, filename):
     if not os.path.exists(dst):

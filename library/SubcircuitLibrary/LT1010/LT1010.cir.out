@@ -1,0 +1,17 @@
+.title kicad schematic
+
+.include LT1010.sub
+v2 gnd /vee 15
+x1 /vcc /vee /vin /vout LT1010
+v3 /vin gnd sine(0 5 1k 0 0)
+v1 /vcc gnd 15
+r1 /vout gnd 1k
+.tran 10e-06 5e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

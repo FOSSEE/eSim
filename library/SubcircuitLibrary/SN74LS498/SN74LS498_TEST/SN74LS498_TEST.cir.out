@@ -1,0 +1,54 @@
+.title kicad schematic
+
+.include SN74LS498.sub
+x1 net-_u1-pad2_ net-_u2-pad3_ net-_u3-pad9_ net-_u3-pad10_ net-_u3-pad11_ net-_u3-pad12_ net-_u3-pad13_ net-_u3-pad14_ net-_u3-pad15_ net-_u3-pad16_ net-_u2-pad4_ net-_u5-pad2_ net-_u6-pad2_ net-_u4-pad8_ net-_u4-pad7_ net-_u4-pad6_ net-_u4-pad5_ net-_u4-pad4_ net-_u4-pad3_ net-_u4-pad2_ net-_u4-pad1_ net-_u6-pad1_ SN74LS498
+* u2 i0 i1 net-_u2-pad3_ net-_u2-pad4_ adc_bridge_2
+* u3 gnd net-_u3-pad2_ net-_u3-pad2_ net-_u3-pad2_ net-_u3-pad2_ net-_u3-pad2_ gnd net-_u3-pad2_ net-_u3-pad9_ net-_u3-pad10_ net-_u3-pad11_ net-_u3-pad12_ net-_u3-pad13_ net-_u3-pad14_ net-_u3-pad15_ net-_u3-pad16_ adc_bridge_8
+v2 i0 gnd pwl(0 5 19 5 20 0 39 0 40 5 59 5 60 0 100 0)
+* u1 clk net-_u1-pad2_ adc_bridge_1
+v1 net-_u3-pad2_ gnd 5
+v4 clk gnd pulse(0 5 0 0 0 5 10)
+v3 i1 gnd pwl(0 5 39 5 40 0 100 0)
+* u6 net-_u6-pad1_ net-_u6-pad2_ liro rilo dac_bridge_2
+* u4 net-_u4-pad1_ net-_u4-pad2_ net-_u4-pad3_ net-_u4-pad4_ net-_u4-pad5_ net-_u4-pad6_ net-_u4-pad7_ net-_u4-pad8_ q0 q1 q2 q3 q4 q5 q6 q7 dac_bridge_8
+* u5 oc_b net-_u5-pad2_ adc_bridge_1
+v5 oc_b gnd pwl(0 0 79 0 80 5 100 5)
+a1 [i0 i1 ] [net-_u2-pad3_ net-_u2-pad4_ ] u2
+a2 [gnd net-_u3-pad2_ net-_u3-pad2_ net-_u3-pad2_ net-_u3-pad2_ net-_u3-pad2_ gnd net-_u3-pad2_ ] [net-_u3-pad9_ net-_u3-pad10_ net-_u3-pad11_ net-_u3-pad12_ net-_u3-pad13_ net-_u3-pad14_ net-_u3-pad15_ net-_u3-pad16_ ] u3
+a3 [clk ] [net-_u1-pad2_ ] u1
+a4 [net-_u6-pad1_ net-_u6-pad2_ ] [liro rilo ] u6
+a5 [net-_u4-pad1_ net-_u4-pad2_ net-_u4-pad3_ net-_u4-pad4_ net-_u4-pad5_ net-_u4-pad6_ net-_u4-pad7_ net-_u4-pad8_ ] [q0 q1 q2 q3 q4 q5 q6 q7 ] u4
+a6 [oc_b ] [net-_u5-pad2_ ] u5
+* Schematic Name:                             adc_bridge_2, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_8, Ngspice Name: adc_bridge
+.model u3 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_2, Ngspice Name: dac_bridge
+.model u6 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             dac_bridge_8, Ngspice Name: dac_bridge
+.model u4 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_1, Ngspice Name: adc_bridge
+.model u5 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-03 100e-00 0e-00
+
+* Control Statements 
+.control
+run
+let clk_s = v(CLK)
+let i1_s = v(I1) + 6.0
+let i0_s = v(I0) + 12.0
+let liro_s = v(LIRO) + 18.0
+let rilo_s = v(RILO) + 24.0
+let q0_s = v(Q0) + 30.0
+let q1_s = v(Q1) + 36.0
+let q2_s = v(Q2) + 42.0
+let q3_s = v(Q3) + 48.0
+let q4_s = v(Q4) + 54.0
+let q5_s = v(Q5) + 60.0
+let q6_s = v(Q6) + 66.0
+let q7_s = v(Q7) + 72.0
+plot q0_s q1_s q2_s q3_s q4_s q5_s q6_s q7_s
+.endc
+.end

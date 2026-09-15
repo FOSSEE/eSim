@@ -1,0 +1,13 @@
+* Subcircuit SN7406
+.subckt SN7406 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad7_ net-_u1-pad8_ net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ 
+.title kicad schematic
+.include SN7406a.sub
+xu2 net-_u1-pad1_ net-_u1-pad2_ net-_u1-pad14_ net-_u1-pad7_ SN7406a
+xu3 net-_u1-pad3_ net-_u1-pad4_ net-_u1-pad14_ net-_u1-pad7_ SN7406a
+xu4 net-_u1-pad5_ net-_u1-pad6_ net-_u1-pad14_ net-_u1-pad7_ SN7406a
+xu7 net-_u1-pad13_ net-_u1-pad12_ net-_u1-pad14_ net-_u1-pad7_ SN7406a
+xu6 net-_u1-pad11_ net-_u1-pad10_ net-_u1-pad14_ net-_u1-pad7_ SN7406a
+xu5 net-_u1-pad9_ net-_u1-pad8_ net-_u1-pad14_ net-_u1-pad7_ SN7406a
+* Control Statements
+
+.ends SN7406

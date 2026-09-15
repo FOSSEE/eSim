@@ -1,0 +1,11 @@
+.title KiCad schematic
+U2 Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ Net-_U2-Pad5_ Net-_U2-Pad6_ Net-_U2-Pad7_ Net-_U2-Pad8_ dac_bridge_4
+U5 Net-_U2-Pad7_ plot_v1
+U6 Net-_U2-Pad8_ plot_v1
+v2 Net-_U1-Pad2_ GND pulse
+v1 Net-_U1-Pad1_ GND pulse
+U1 Net-_U1-Pad1_ Net-_U1-Pad2_ unconnected-_U1-Pad3_ unconnected-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ unconnected-_U1-Pad7_ unconnected-_U1-Pad8_ adc_bridge_4
+X1 Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U2-Pad1_ Net-_U2-Pad2_ Net-_U2-Pad3_ Net-_U2-Pad4_ CD4520B
+U3 Net-_U2-Pad5_ plot_v1
+U4 Net-_U2-Pad6_ plot_v1
+.end

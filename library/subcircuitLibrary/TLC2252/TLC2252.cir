@@ -1,0 +1,28 @@
+.title KiCad schematic
+M3 Net-_M1-Pad3_ Net-_M14-Pad1_ VDD VDD mosfet_p
+U1 in1 in2 out VDD GND PORT
+M6 Net-_M11-Pad1_ in1 Net-_M1-Pad3_ VDD mosfet_p
+M1 Net-_M1-Pad1_ in2 Net-_M1-Pad3_ VDD mosfet_p
+R3 Net-_M12-Pad2_ Net-_M10-Pad1_ 84
+M8 Net-_M5-Pad1_ Net-_M5-Pad1_ GND GND mosfet_n
+M7 Net-_M5-Pad1_ Net-_M11-Pad1_ GND GND mosfet_n
+M9 Net-_M12-Pad2_ Net-_M5-Pad1_ GND GND mosfet_n
+R4 Net-_M11-Pad1_ Net-_C1-Pad1_ 84
+M11 Net-_M11-Pad1_ Net-_M11-Pad2_ GND GND mosfet_n
+M4 Net-_M11-Pad1_ Net-_M1-Pad1_ Net-_M4-Pad3_ GND mosfet_n
+R2 GND Net-_M4-Pad3_ 37.23
+M2 Net-_M1-Pad1_ Net-_M1-Pad1_ Net-_M2-Pad3_ GND mosfet_n
+R1 GND Net-_M2-Pad3_ 37.23
+C1 Net-_C1-Pad1_ out 100p
+M12 out Net-_M12-Pad2_ VDD VDD mosfet_p
+M14 Net-_M14-Pad1_ Net-_M14-Pad1_ VDD VDD mosfet_p
+M16 Net-_M15-Pad2_ Net-_M15-Pad2_ Net-_D1-Pad1_ GND mosfet_n
+D1 Net-_D1-Pad1_ GND eSim_Diode
+M17 Net-_M15-Pad2_ Net-_M14-Pad1_ VDD VDD mosfet_p
+M5 Net-_M5-Pad1_ Net-_M14-Pad1_ VDD VDD mosfet_p
+M10 Net-_M10-Pad1_ Net-_M10-Pad1_ VDD VDD mosfet_p
+R6 GND Net-_M15-Pad3_ 100k
+R5 GND Net-_M11-Pad2_ 64.52
+M15 Net-_M14-Pad1_ Net-_M15-Pad2_ Net-_M15-Pad3_ GND mosfet_n
+M13 out Net-_M11-Pad1_ Net-_M11-Pad2_ GND mosfet_n
+.end

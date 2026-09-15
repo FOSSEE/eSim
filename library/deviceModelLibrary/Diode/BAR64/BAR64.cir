@@ -1,0 +1,7 @@
+.title KiCad schematic
+.include "C:\FOSSEE\eSim\library\deviceModelLibrary\Diode\BAR64.lib"
+v1 Net-_D1-Pad1_ GND DC
+D1 Net-_D1-Pad1_ Net-_D1-Pad2_ BAR64
+v_u1 Net-_D1-Pad2_ Net-_R1-Pad2_ 0
+R1 GND Net-_R1-Pad2_ 0.1
+.end

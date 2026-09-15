@@ -1,0 +1,10 @@
+.title KiCad schematic
+Q2 Net-_Q2-Pad1_ /VIN /VEE 2N2907A
+Q4 /VOUT Net-_Q1-Pad1_ /VEE 2N2907A
+Q3 /VOUT Net-_Q2-Pad1_ /VCC 2N2222
+R2 Net-_Q1-Pad1_ /VEE 1k
+Q1 Net-_Q1-Pad1_ /VIN /VCC 2N2222
+R1 Net-_Q2-Pad1_ /VCC 1k
+.model 2N2222 NPN (IS=1E-14 BF=200 VAF=100)
+.model 2N2907A PNP (IS=1E-14 BF=200 VAF=100)
+.end

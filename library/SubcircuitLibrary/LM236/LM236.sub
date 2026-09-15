@@ -1,0 +1,32 @@
+* Subcircuit LM236
+.subckt LM236 net-_c1-pad1_ net-_r8-pad1_ net-_q1-pad3_ 
+.title kicad schematic
+.include NPN.lib
+.include PNP.lib
+q9 net-_q6-pad3_ net-_q6-pad3_ net-_c1-pad1_ Q2N2907A
+r4 net-_q6-pad3_ net-_c2-pad2_ 24k
+r2 net-_q6-pad3_ net-_q10-pad1_ 24k
+r5 net-_q13-pad3_ net-_q12-pad2_ 11.2k
+q13 net-_c1-pad1_ net-_c1-pad1_ net-_q13-pad3_ Q2N2222
+c2 net-_c2-pad1_ net-_c2-pad2_ 30p
+q8 net-_q4-pad2_ net-_q4-pad2_ net-_q3-pad2_ Q2N2222
+q6 net-_c2-pad1_ net-_c2-pad2_ net-_q6-pad3_ Q2N2907A
+q7 net-_q4-pad2_ net-_q10-pad1_ net-_q6-pad3_ Q2N2907A
+c1 net-_c1-pad1_ net-_c1-pad2_ 20p
+r1 net-_c1-pad2_ net-_c2-pad1_ 10k
+q2 net-_c1-pad1_ net-_c2-pad1_ net-_q1-pad2_ Q2N2222
+q5 net-_q3-pad2_ net-_q3-pad2_ net-_q1-pad3_ Q2N2222
+q1 net-_c1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q4 net-_c2-pad1_ net-_q4-pad2_ net-_q3-pad2_ Q2N2222
+q3 net-_q1-pad2_ net-_q3-pad2_ net-_q1-pad3_ Q2N2222
+q11 net-_q10-pad3_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+q10 net-_q10-pad1_ net-_q10-pad2_ net-_q10-pad3_ Q2N2222
+r3 net-_q11-pad3_ net-_q1-pad3_ 720
+q14 net-_q11-pad2_ net-_q11-pad2_ net-_q1-pad3_ Q2N2222
+r7 net-_q10-pad2_ net-_q11-pad2_ 6.6k
+r8 net-_r8-pad1_ net-_q10-pad2_ 30k
+r6 net-_q12-pad2_ net-_q10-pad2_ 500
+q12 net-_c2-pad2_ net-_q12-pad2_ net-_q10-pad3_ Q2N2222
+* Control Statements
+
+.ends LM236

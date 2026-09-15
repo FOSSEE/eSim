@@ -20,7 +20,7 @@ import os
 from . import Validation
 from configuration.Appconfig import Appconfig
 from . import Worker
-from PyQt5 import QtWidgets
+from PyQt6 import QtWidgets
 
 
 class Kicad:
@@ -111,7 +111,7 @@ class Kicad:
             self.msg.showMessage(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')
-            self.msg.exec_()
+            self.msg.exec()
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')
@@ -148,7 +148,7 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
             + 'either create new project or open an existing project')
-            self.msg.exec_()
+            self.msg.exec()
             self.obj_appconfig.print_warning('Please select the project'
             + 'first. You can either create new project or open an existing'
             + 'project')
@@ -181,7 +181,7 @@ class Kicad:
             self.msg.setWindowTitle("Error Message")
             self.msg.showMessage('Please select the project first. You can'
             + 'either create new project or open an existing project')
-            self.msg.exec_()
+            self.msg.exec()
             self.obj_appconfig.print_warning('Please select the project'
             + 'first. You can either create new project or open an existing'
             + 'project')
@@ -232,7 +232,7 @@ class Kicad:
                 self.obj_appconfig.print_error(
                     'The project does not contain any Kicad netlist file ' +
                     'for conversion.')
-                self.msg.exec_()
+                self.msg.exec()
 
         else:
             self.msg = QtWidgets.QErrorMessage()
@@ -241,7 +241,7 @@ class Kicad:
             self.msg.showMessage(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')
-            self.msg.exec_()
+            self.msg.exec()
             self.obj_appconfig.print_warning(
                 'Please select the project first. You can either ' +
                 'create new project or open an existing project')

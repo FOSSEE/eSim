@@ -1,0 +1,41 @@
+.title KiCad schematic
+Q9 Net-_Q11-Pad2_ Net-_D5-Pad2_ Net-_Q12-Pad2_ eSim_NPN
+D5 Net-_D5-Pad1_ Net-_D5-Pad2_ eSim_Diode
+R3 VCC Net-_D5-Pad1_ 1.6k
+R7 Net-_Q11-Pad2_ VCC 1.6k
+Q7 Net-_D5-Pad2_ Net-_Q5-Pad3_ GND eSim_NPN
+R8 GND Net-_Q12-Pad2_ 1k
+Q12 Net-_D7-Pad2_ Net-_Q12-Pad2_ GND eSim_NPN
+Q13 Net-_Q13-Pad1_ Net-_Q10-Pad1_ Net-_D8-Pad1_ eSim_NPN
+R12 Net-_Q13-Pad1_ VCC 130
+Q15 Out1 Net-_D7-Pad2_ GND eSim_NPN
+U1 In1A In1B In2A In2B Out1 Out2 VCC GND PORT
+Q16 Out2 Net-_D8-Pad2_ GND eSim_NPN
+R14 GND Net-_D8-Pad2_ 500
+Q11 Net-_Q11-Pad1_ Net-_Q11-Pad2_ Net-_D7-Pad1_ eSim_NPN
+D7 Net-_D7-Pad1_ Net-_D7-Pad2_ eSim_Diode
+R11 Net-_Q11-Pad1_ VCC 130
+R13 GND Net-_D7-Pad2_ 500
+D8 Net-_D8-Pad1_ Net-_D8-Pad2_ eSim_Diode
+Q8 Net-_D6-Pad2_ Net-_Q6-Pad3_ GND eSim_NPN
+R10 GND Net-_Q10-Pad3_ 1k
+Q6 Net-_D6-Pad1_ Net-_Q2-Pad1_ Net-_Q6-Pad3_ eSim_NPN
+Q14 Net-_D8-Pad2_ Net-_Q10-Pad3_ GND eSim_NPN
+D2 GND In2A eSim_Diode
+Q4 Net-_Q2-Pad1_ Net-_Q2-Pad2_ In2B eSim_NPN
+D4 GND In2B eSim_Diode
+R6 GND Net-_Q6-Pad3_ 1k
+Q2 Net-_Q2-Pad1_ Net-_Q2-Pad2_ In2A eSim_NPN
+R2 Net-_Q2-Pad2_ VCC 4k
+D3 GND In1B eSim_Diode
+R5 GND Net-_Q5-Pad3_ 1k
+Q5 Net-_D5-Pad1_ Net-_Q1-Pad1_ Net-_Q5-Pad3_ eSim_NPN
+Q3 Net-_Q1-Pad1_ Net-_Q1-Pad2_ In1B eSim_NPN
+Q10 Net-_Q10-Pad1_ Net-_D6-Pad2_ Net-_Q10-Pad3_ eSim_NPN
+D6 Net-_D6-Pad1_ Net-_D6-Pad2_ eSim_Diode
+R9 Net-_Q10-Pad1_ VCC 1.6k
+R4 VCC Net-_D6-Pad1_ 1.6k
+R1 Net-_Q1-Pad2_ VCC 4k
+Q1 Net-_Q1-Pad1_ Net-_Q1-Pad2_ In1A eSim_NPN
+D1 GND In1A eSim_Diode
+.end

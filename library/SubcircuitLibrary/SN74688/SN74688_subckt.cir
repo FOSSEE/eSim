@@ -1,0 +1,58 @@
+.title KiCad schematic
+U27 P1 Net-_U11-Pad2_ Net-_U27-Pad3_ d_and
+U26 Net-_U10-Pad2_ Q1 Net-_U26-Pad3_ d_and
+U10 P1 Net-_U10-Pad2_ d_inverter
+U11 Q1 Net-_U11-Pad2_ d_inverter
+U35 Net-_U20-Pad3_ Net-_U21-Pad3_ Net-_U35-Pad3_ d_or
+U38 Net-_U26-Pad3_ Net-_U27-Pad3_ Net-_U38-Pad3_ d_or
+U43 Net-_U35-Pad3_ Net-_U43-Pad2_ d_inverter
+U42 Net-_U34-Pad3_ Net-_U42-Pad2_ d_inverter
+U34 Net-_U18-Pad3_ Net-_U19-Pad3_ Net-_U34-Pad3_ d_or
+U20 Net-_U20-Pad1_ Q0 Net-_U20-Pad3_ d_and
+U21 P0 Net-_U21-Pad2_ Net-_U21-Pad3_ d_and
+U5 Q0 Net-_U21-Pad2_ d_inverter
+U4 P0 Net-_U20-Pad1_ d_inverter
+U1 P0 Q0 P1 Q1 P2 Q2 P3 Q3 P4 Q4 P5 Q5 P6 Q6 P7 Q7 Net-_U1-Pad17_ PORT
+U19 P2 Net-_U19-Pad2_ Net-_U19-Pad3_ d_and
+U18 Net-_U18-Pad1_ Q2 Net-_U18-Pad3_ d_and
+U22 Net-_U22-Pad1_ Q3 Net-_U22-Pad3_ d_and
+U36 Net-_U22-Pad3_ Net-_U23-Pad3_ Net-_U36-Pad3_ d_or
+U3 Q2 Net-_U19-Pad2_ d_inverter
+U2 P2 Net-_U18-Pad1_ d_inverter
+U6 P3 Net-_U22-Pad1_ d_inverter
+U46 Net-_U38-Pad3_ Net-_U46-Pad2_ d_inverter
+U44 Net-_U36-Pad3_ Net-_U44-Pad2_ d_inverter
+U56 Net-_U54-Pad3_ Net-_U55-Pad3_ Net-_U1-Pad17_ d_and
+U55 Net-_U52-Pad3_ Net-_U53-Pad3_ Net-_U55-Pad3_ d_and
+U50 Net-_U42-Pad2_ Net-_U44-Pad2_ Net-_U50-Pad3_ d_and
+U54 Net-_U51-Pad3_ Net-_U50-Pad3_ Net-_U54-Pad3_ d_and
+U51 Net-_U43-Pad2_ Net-_U46-Pad2_ Net-_U51-Pad3_ d_and
+U16 P7 Net-_U16-Pad2_ d_inverter
+U17 Q7 Net-_U17-Pad2_ d_inverter
+U15 Q6 Net-_U15-Pad2_ d_inverter
+U14 P6 Net-_U14-Pad2_ d_inverter
+U13 Q5 Net-_U13-Pad2_ d_inverter
+U25 P4 Net-_U25-Pad2_ Net-_U25-Pad3_ d_and
+U24 Net-_U24-Pad1_ Q4 Net-_U24-Pad3_ d_and
+U9 Q4 Net-_U25-Pad2_ d_inverter
+U8 P4 Net-_U24-Pad1_ d_inverter
+U29 P5 Net-_U13-Pad2_ Net-_U29-Pad3_ d_and
+U28 Net-_U12-Pad2_ Q5 Net-_U28-Pad3_ d_and
+U12 P5 Net-_U12-Pad2_ d_inverter
+U7 Q3 Net-_U23-Pad2_ d_inverter
+U23 P3 Net-_U23-Pad2_ Net-_U23-Pad3_ d_and
+U30 Net-_U14-Pad2_ Q6 Net-_U30-Pad3_ d_and
+U45 Net-_U37-Pad3_ Net-_U45-Pad2_ d_inverter
+U39 Net-_U28-Pad3_ Net-_U29-Pad3_ Net-_U39-Pad3_ d_or
+U37 Net-_U24-Pad3_ Net-_U25-Pad3_ Net-_U37-Pad3_ d_or
+U32 Net-_U16-Pad2_ Q7 Net-_U32-Pad3_ d_and
+U33 P7 Net-_U17-Pad2_ Net-_U33-Pad3_ d_and
+U31 P6 Net-_U15-Pad2_ Net-_U31-Pad3_ d_and
+U48 Net-_U40-Pad3_ Net-_U48-Pad2_ d_inverter
+U49 Net-_U41-Pad3_ Net-_U49-Pad2_ d_inverter
+U40 Net-_U30-Pad3_ Net-_U31-Pad3_ Net-_U40-Pad3_ d_or
+U41 Net-_U32-Pad3_ Net-_U33-Pad3_ Net-_U41-Pad3_ d_or
+U47 Net-_U39-Pad3_ Net-_U47-Pad2_ d_inverter
+U52 Net-_U45-Pad2_ Net-_U47-Pad2_ Net-_U52-Pad3_ d_and
+U53 Net-_U48-Pad2_ Net-_U49-Pad2_ Net-_U53-Pad3_ d_and
+.end

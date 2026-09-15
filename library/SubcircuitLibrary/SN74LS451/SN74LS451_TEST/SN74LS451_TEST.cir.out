@@ -1,0 +1,39 @@
+.title kicad schematic
+
+.include SN74LS451.sub
+x1 net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ net-_u2-pad9_ net-_u2-pad10_ net-_u2-pad11_ net-_u2-pad12_ net-_u2-pad13_ net-_u2-pad14_ net-_u2-pad15_ net-_u2-pad16_ net-_u3-pad2_ net-_u3-pad1_ net-_u4-pad5_ net-_u4-pad6_ net-_u4-pad7_ net-_u4-pad8_ SN74LS451
+* u3 net-_u3-pad1_ net-_u3-pad2_ y1 y2 dac_bridge_2
+v4 b gnd pulse(0 5 0 0 0 4 8)
+v5 a gnd pulse(0 5 0 0 0 2 4)
+v2 s gnd pwl(0 0 16 0 17 5 32 5)
+v3 c gnd pulse(0 5 0 0 0 8 16)
+* u4 s c b a net-_u4-pad5_ net-_u4-pad6_ net-_u4-pad7_ net-_u4-pad8_ adc_bridge_4
+* u1 net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ adc_bridge_8
+* u2 gnd net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad1_ net-_u2-pad9_ net-_u2-pad10_ net-_u2-pad11_ net-_u2-pad12_ net-_u2-pad13_ net-_u2-pad14_ net-_u2-pad15_ net-_u2-pad16_ adc_bridge_8
+v1 net-_u1-pad1_ gnd 5
+a1 [net-_u3-pad1_ net-_u3-pad2_ ] [y1 y2 ] u3
+a2 [s c b a ] [net-_u4-pad5_ net-_u4-pad6_ net-_u4-pad7_ net-_u4-pad8_ ] u4
+a3 [net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad1_ gnd ] [net-_u1-pad9_ net-_u1-pad10_ net-_u1-pad11_ net-_u1-pad12_ net-_u1-pad13_ net-_u1-pad14_ net-_u1-pad15_ net-_u1-pad16_ ] u1
+a4 [gnd net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad1_ gnd net-_u1-pad1_ ] [net-_u2-pad9_ net-_u2-pad10_ net-_u2-pad11_ net-_u2-pad12_ net-_u2-pad13_ net-_u2-pad14_ net-_u2-pad15_ net-_u2-pad16_ ] u2
+* Schematic Name:                             dac_bridge_2, Ngspice Name: dac_bridge
+.model u3 dac_bridge(out_low=0.0 out_high=5.0 out_undef=0.5 input_load=1.0e-12 t_rise=1.0e-9 t_fall=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_4, Ngspice Name: adc_bridge
+.model u4 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_8, Ngspice Name: adc_bridge
+.model u1 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+* Schematic Name:                             adc_bridge_8, Ngspice Name: adc_bridge
+.model u2 adc_bridge(in_low=1.0 in_high=2.0 rise_delay=1.0e-9 fall_delay=1.0e-9 ) 
+.tran 1e-03 32e-00 0e-00
+
+* Control Statements 
+.control
+run
+let a = v(a)
+let b = v(b) + 6
+let c = v(c) + 12
+let s = v(s) + 18
+let y1 = v(y1) + 24
+let y2 = v(y2) + 30
+plot y1 y2
+.endc
+.end

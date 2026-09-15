@@ -1,0 +1,1 @@
+.MODEL J112 NJF( Beta=5.695m Betatce=-.5 Rd=1 Rs=1 Lambda=13m Vto=-2.057 Vtotc=-2.5m Is=205.2f Isr=1.988p N=1 Nr=2 Xti=3 Alpha=20.98u Vk=123.7 Cgd=6.46p M=0.4069 Pb=1 Fc=0.5 Cgs=5.74p Kf=75.98E-18 Af=1 )

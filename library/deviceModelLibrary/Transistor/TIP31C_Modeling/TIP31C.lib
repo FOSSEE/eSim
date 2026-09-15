@@ -1,0 +1,1 @@
+.MODEL TIP31C NPN( Is=1E-13 Xti=3  Eg=1.11  Vaf=100 Bf=50 Ne=1.5 Ise=2E-13 Ikf=3 Xtb=1.5  Br=5 Nc=2  Isc=0  Ikr=0  Rc=0.4 Cjc=80p Mjc=.3416  Vjc=.75  Fc=.5  Cje=200p Mje=.377  Vje=.75  Tr=100n Tf=0.5n Itf=.6  Vtf=1.7  Xtf=3  Rb=1.0 )

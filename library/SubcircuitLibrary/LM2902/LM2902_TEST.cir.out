@@ -1,0 +1,37 @@
+.title kicad schematic
+
+.include NPN.lib
+.include PNP.lib
+r3 out1 net-_qn5-pad2_ 10k
+v2 vcc gnd 15v
+qn7 vcc net-_qn6-pad3_ net-_qn5-pad2_ Q2N2222
+qn2 net-_c1-pad2_ net-_qn1-pad1_ gnd Q2N2222
+qn1 net-_qn1-pad1_ net-_qn1-pad1_ gnd Q2N2222
+r2 in1_n out1 10k
+qp4 gnd gnd net-_qp3-pad2_ Q2N2907A
+i2 vcc net-_qn3-pad2_ 6u
+qn3 vcc net-_qn3-pad2_ net-_qn3-pad3_ Q2N2222
+qn4 net-_c1-pad1_ net-_qn3-pad3_ gnd Q2N2222
+qp5 gnd net-_c1-pad2_ net-_qn3-pad2_ Q2N2907A
+c1 net-_c1-pad1_ net-_c1-pad2_ 100n
+qn5 net-_c1-pad1_ net-_qn5-pad2_ out1 Q2N2222
+qn6 vcc net-_c1-pad1_ net-_qn6-pad3_ Q2N2222
+i3 vcc net-_c1-pad1_ 100u
+qp3 net-_c1-pad2_ net-_qp3-pad2_ net-_qp2-pad3_ Q2N2907A
+qp1 gnd in1_n net-_qp1-pad3_ Q2N2907A
+r1 net-_r1-pad1_ in1_n 10k
+qp2 net-_qn1-pad1_ net-_qp1-pad3_ net-_qp2-pad3_ Q2N2907A
+i1 vcc net-_qp2-pad3_ 6u
+vv1 net-_r1-pad1_ gnd sin(0 1 1k)
+qp6 gnd net-_c1-pad1_ out1 Q2N2907A
+r4 gnd out1 10k
+i4 out1 gnd 50u
+.tran 10e-09 1e-03 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

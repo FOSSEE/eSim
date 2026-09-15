@@ -1,0 +1,26 @@
+* C:\Users\pavithra\eSim-Workspace\MC14016B_test\MC14016B_test.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 06/24/25 11:45:58
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+v3  in GND sine		
+v4  Net-_X1-Pad4_ GND sine		
+U1  Net-_U1-Pad1_ Net-_U1-Pad2_ Net-_U1-Pad3_ Net-_U1-Pad4_ adc_bridge_2		
+v1  Net-_U1-Pad1_ GND pulse		
+v2  Net-_U1-Pad2_ GND pulse		
+U3  out plot_v1		
+v5  Net-_X1-Pad14_ GND DC		
+U6  cont Net-_U6-Pad2_ Net-_U6-Pad3_ Net-_U6-Pad4_ adc_bridge_2		
+v9  cont GND pulse		
+v8  Net-_U6-Pad2_ GND pulse		
+U2  Net-_U2-Pad~_ plot_v1		
+U4  Net-_U4-Pad~_ plot_v1		
+U5  Net-_U5-Pad~_ plot_v1		
+v6  Net-_X1-Pad8_ GND sine		
+v7  Net-_X1-Pad11_ GND sine		
+X1  in out Net-_U2-Pad~_ Net-_X1-Pad4_ Net-_U1-Pad3_ Net-_U1-Pad4_ GND Net-_X1-Pad8_ Net-_U5-Pad~_ Net-_U4-Pad~_ Net-_X1-Pad11_ Net-_U6-Pad4_ Net-_U6-Pad3_ Net-_X1-Pad14_ MC14016B		
+
+.end

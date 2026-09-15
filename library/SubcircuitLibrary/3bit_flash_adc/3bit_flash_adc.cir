@@ -1,0 +1,39 @@
+.title KiCad schematic
+U17 Net-_U10-Pad1_ Net-_U14-Pad3_ /Bit1_Dig d_or
+U12 /Bit2_Dig Net-_U12-Pad2_ d_inverter
+U15 Net-_U12-Pad2_ Net-_U15-Pad2_ Net-_U15-Pad3_ d_and
+U14 Net-_U12-Pad2_ Net-_U11-Pad1_ Net-_U14-Pad3_ d_and
+U13 Net-_U10-Pad2_ Net-_U13-Pad2_ Net-_U13-Pad3_ d_and
+U9 /Bit2_Dig Net-_U1-Pad4_ dac_bridge_1
+U1 Net-_U1-Pad1_ Net-_R1-Pad2_ Net-_R8-Pad1_ Net-_U1-Pad4_ Net-_U1-Pad5_ Net-_U1-Pad6_ Net-_U1-Pad7_ Net-_U1-Pad8_ PORT
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter
+U16 Net-_U11-Pad2_ Net-_U16-Pad2_ Net-_U16-Pad3_ d_and
+U19 /Bit1_Dig Net-_U1-Pad5_ dac_bridge_1
+U22 /Bit0_Dig Net-_U1-Pad6_ dac_bridge_1
+U21 Net-_U18-Pad3_ Net-_U20-Pad3_ /Bit0_Dig d_or
+U20 Net-_U15-Pad3_ Net-_U16-Pad3_ Net-_U20-Pad3_ d_or
+U18 Net-_U18-Pad1_ Net-_U13-Pad3_ Net-_U18-Pad3_ d_or
+U11 Net-_U11-Pad1_ Net-_U11-Pad2_ d_inverter
+X7 unconnected-_X7-Pad1_ /V1 Net-_U1-Pad1_ Net-_U1-Pad8_ unconnected-_X7-Pad5_ /C1 Net-_U1-Pad7_ unconnected-_X7-Pad8_ lm_741
+U8 /C1 Net-_U16-Pad2_ adc_bridge_1
+X2 unconnected-_X2-Pad1_ /V2 Net-_U1-Pad1_ Net-_U1-Pad8_ unconnected-_X2-Pad5_ /C2 Net-_U1-Pad7_ unconnected-_X2-Pad8_ lm_741
+X1 unconnected-_X1-Pad1_ /V5 Net-_U1-Pad1_ Net-_U1-Pad8_ unconnected-_X1-Pad5_ /C5 Net-_U1-Pad7_ unconnected-_X1-Pad8_ lm_741
+X5 unconnected-_X5-Pad1_ /V4 Net-_U1-Pad1_ Net-_U1-Pad8_ unconnected-_X5-Pad5_ /C4 Net-_U1-Pad7_ unconnected-_X5-Pad8_ lm_741
+X6 unconnected-_X6-Pad1_ /V3 Net-_U1-Pad1_ Net-_U1-Pad8_ unconnected-_X6-Pad5_ /C3 Net-_U1-Pad7_ unconnected-_X6-Pad8_ lm_741
+U4 /C5 Net-_U13-Pad2_ adc_bridge_1
+U7 /C2 Net-_U11-Pad1_ adc_bridge_1
+U6 /C3 Net-_U15-Pad2_ adc_bridge_1
+U5 /C4 /Bit2_Dig adc_bridge_1
+R1 /V7 Net-_R1-Pad2_ 1k
+R4 /V4 /V5 1k
+R3 /V5 /V6 1k
+R2 /V6 /V7 1k
+R6 /V2 /V3 1k
+R7 /V1 /V2 1k
+R5 /V3 /V4 1k
+R8 Net-_R8-Pad1_ /V1 1k
+X3 unconnected-_X3-Pad1_ /V7 Net-_U1-Pad1_ Net-_U1-Pad8_ unconnected-_X3-Pad5_ /C7 Net-_U1-Pad7_ unconnected-_X3-Pad8_ lm_741
+U3 /C6 Net-_U10-Pad1_ adc_bridge_1
+U2 /C7 Net-_U18-Pad1_ adc_bridge_1
+X4 unconnected-_X4-Pad1_ /V6 Net-_U1-Pad1_ Net-_U1-Pad8_ unconnected-_X4-Pad5_ /C6 Net-_U1-Pad7_ unconnected-_X4-Pad8_ lm_741
+.end

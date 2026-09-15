@@ -1,0 +1,67 @@
+.title KiCad schematic
+U43 Net-_U38-Pad3_ Net-_U12-Pad2_ T3 d_and
+U44 Net-_U39-Pad3_ Net-_U10-Pad2_ T4 d_and
+U46 Net-_U45-Pad3_ EQ2 Net-_U46-Pad3_ d_and
+U45 EQ0 EQ1 Net-_U45-Pad3_ d_and
+U52 Net-_U49-Pad3_ AeqB dac_bridge_1
+U49 Net-_U46-Pad3_ EQ3 Net-_U49-Pad3_ d_and
+U54 Net-_U51-Pad3_ T4 Net-_U54-Pad3_ d_or
+U56 Net-_U54-Pad3_ AgtB dac_bridge_1
+U51 Net-_U48-Pad3_ T3 Net-_U51-Pad3_ d_or
+U48 T1 T2 Net-_U48-Pad3_ d_or
+U53 Net-_U50-Pad3_ U4 Net-_U53-Pad3_ d_or
+U55 Net-_U53-Pad3_ AltB dac_bridge_1
+U47 U1 U2 Net-_U47-Pad3_ d_or
+U50 Net-_U47-Pad3_ U3 Net-_U50-Pad3_ d_or
+U5 A2 Net-_U13-Pad1_ adc_bridge_1
+U6 B2 Net-_U14-Pad1_ adc_bridge_1
+U14 Net-_U14-Pad1_ Net-_U14-Pad2_ d_inverter
+U13 Net-_U13-Pad1_ Net-_U13-Pad2_ d_inverter
+v6 B2 GND pulse(0 5 0 1n 1n 40m 80m)
+v5 A2 GND pulse(0 5 0 1n 1n 40m 80m)
+U11 Net-_U11-Pad1_ Net-_U11-Pad2_ d_inverter
+U12 Net-_U12-Pad1_ Net-_U12-Pad2_ d_inverter
+U10 Net-_U10-Pad1_ Net-_U10-Pad2_ d_inverter
+U3 A1 Net-_U11-Pad1_ adc_bridge_1
+U2 B0 Net-_U10-Pad1_ adc_bridge_1
+v1 A0 GND pulse(0 5 0 1n 1n 10m 20m)
+v2 B0 GND pulse(0 5 0 1n 1n 10m 20m)
+U1 A0 Net-_U1-Pad2_ adc_bridge_1
+U9 Net-_U1-Pad2_ Net-_U17-Pad1_ d_inverter
+v4 B1 GND pulse(0 5 0 1n 1n 20m 40m)
+U4 B1 Net-_U12-Pad1_ adc_bridge_1
+v3 A1 GND pulse(0 5 0 1n 1n 20m 40m)
+U33 Net-_U21-Pad3_ Net-_U22-Pad3_ EQ2 d_or
+U34 Net-_U23-Pad3_ Net-_U24-Pad3_ EQ3 d_or
+U15 Net-_U15-Pad1_ Net-_U15-Pad2_ d_inverter
+U16 Net-_U16-Pad1_ Net-_U16-Pad2_ d_inverter
+U24 Net-_U15-Pad1_ Net-_U16-Pad1_ Net-_U24-Pad3_ d_and
+U21 Net-_U13-Pad2_ Net-_U14-Pad2_ Net-_U21-Pad3_ d_and
+U23 Net-_U15-Pad2_ Net-_U16-Pad2_ Net-_U23-Pad3_ d_and
+U22 Net-_U13-Pad1_ Net-_U14-Pad1_ Net-_U22-Pad3_ d_and
+U8 B3 Net-_U16-Pad1_ adc_bridge_1
+v7 A3 GND pulse(0 5 0 1n 1n 80m 160m)
+U7 A3 Net-_U15-Pad1_ adc_bridge_1
+v8 B3 GND pulse(0 5 0 1n 1n 80m 160m)
+U38 Net-_U27-Pad3_ Net-_U11-Pad1_ Net-_U38-Pad3_ d_and
+U27 EQ3 EQ2 Net-_U27-Pad3_ d_and
+U37 Net-_U26-Pad3_ Net-_U14-Pad2_ T2 d_and
+U26 EQ3 Net-_U13-Pad1_ Net-_U26-Pad3_ d_and
+U25 Net-_U15-Pad1_ Net-_U16-Pad2_ T1 d_and
+U28 Net-_U27-Pad3_ EQ1 Net-_U28-Pad3_ d_and
+U42 Net-_U36-Pad3_ Net-_U10-Pad1_ U4 d_and
+U41 Net-_U35-Pad3_ Net-_U12-Pad1_ U3 d_and
+U36 Net-_U17-Pad1_ Net-_U28-Pad3_ Net-_U36-Pad3_ d_and
+U35 Net-_U27-Pad3_ Net-_U11-Pad2_ Net-_U35-Pad3_ d_and
+U29 Net-_U15-Pad2_ Net-_U16-Pad1_ U1 d_and
+U30 EQ3 Net-_U13-Pad2_ Net-_U30-Pad3_ d_and
+U40 Net-_U30-Pad3_ Net-_U14-Pad1_ U2 d_and
+U39 Net-_U28-Pad3_ Net-_U1-Pad2_ Net-_U39-Pad3_ d_and
+U31 Net-_U17-Pad3_ Net-_U18-Pad3_ EQ0 d_or
+U32 Net-_U19-Pad3_ Net-_U20-Pad3_ EQ1 d_or
+U19 Net-_U11-Pad2_ Net-_U12-Pad2_ Net-_U19-Pad3_ d_and
+U20 Net-_U11-Pad1_ Net-_U12-Pad1_ Net-_U20-Pad3_ d_and
+U18 Net-_U1-Pad2_ Net-_U10-Pad1_ Net-_U18-Pad3_ d_and
+U17 Net-_U17-Pad1_ Net-_U10-Pad2_ Net-_U17-Pad3_ d_and
+.tran 0.1ms 320ms
+.end

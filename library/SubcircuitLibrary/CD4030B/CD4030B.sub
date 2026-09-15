@@ -1,0 +1,52 @@
+* Subcircuit CD4030B
+.subckt CD4030B net-_m1-pad2_ net-_m11-pad2_ net-_m19-pad1_ net-_m41-pad1_ net-_m23-pad2_ net-_m24-pad2_ net-_m1-pad3_ net-_m5-pad2_ net-_m12-pad2_ net-_m21-pad1_ net-_m43-pad1_ net-_m27-pad2_ net-_m28-pad2_ net-_m11-pad4_ 
+* c:\fossee\esim\library\subcircuitlibrary\cd4030b\cd4030b.cir
+.include PMOS-5um.lib
+.include NMOS-5um.lib
+m3 net-_m1-pad1_ net-_m1-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m1 net-_m1-pad1_ net-_m1-pad2_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m4 net-_m13-pad3_ net-_m11-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m2 net-_m13-pad3_ net-_m11-pad2_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m9 net-_m1-pad1_ net-_m13-pad3_ net-_m11-pad1_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m11 net-_m11-pad1_ net-_m11-pad2_ net-_m1-pad1_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m14 net-_m14-pad1_ net-_m13-pad3_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m15 net-_m11-pad1_ net-_m1-pad1_ net-_m14-pad1_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m13 net-_m11-pad1_ net-_m1-pad1_ net-_m13-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m20 net-_m19-pad1_ net-_m11-pad1_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m19 net-_m19-pad1_ net-_m11-pad1_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m25 net-_m23-pad1_ net-_m23-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m23 net-_m23-pad1_ net-_m23-pad2_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m26 net-_m24-pad1_ net-_m24-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m24 net-_m24-pad1_ net-_m24-pad2_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m31 net-_m23-pad1_ net-_m24-pad1_ net-_m31-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m33 net-_m31-pad3_ net-_m24-pad2_ net-_m23-pad1_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m36 net-_m36-pad1_ net-_m24-pad1_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m37 net-_m31-pad3_ net-_m23-pad1_ net-_m36-pad1_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m35 net-_m31-pad3_ net-_m23-pad1_ net-_m24-pad1_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m42 net-_m41-pad1_ net-_m31-pad3_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m41 net-_m41-pad1_ net-_m31-pad3_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m7 net-_m10-pad1_ net-_m5-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m5 net-_m10-pad1_ net-_m5-pad2_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m8 net-_m10-pad2_ net-_m12-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m6 net-_m10-pad2_ net-_m12-pad2_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m10 net-_m10-pad1_ net-_m10-pad2_ net-_m10-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m12 net-_m10-pad3_ net-_m12-pad2_ net-_m10-pad1_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m17 net-_m17-pad1_ net-_m10-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m18 net-_m10-pad3_ net-_m10-pad1_ net-_m17-pad1_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m16 net-_m10-pad3_ net-_m10-pad1_ net-_m10-pad2_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m22 net-_m21-pad1_ net-_m10-pad3_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m21 net-_m21-pad1_ net-_m10-pad3_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m29 net-_m27-pad1_ net-_m27-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m27 net-_m27-pad1_ net-_m27-pad2_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m30 net-_m28-pad1_ net-_m28-pad2_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m28 net-_m28-pad1_ net-_m28-pad2_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m32 net-_m27-pad1_ net-_m28-pad1_ net-_m32-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m34 net-_m32-pad3_ net-_m28-pad2_ net-_m27-pad1_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m39 net-_m39-pad1_ net-_m28-pad1_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m40 net-_m32-pad3_ net-_m27-pad1_ net-_m39-pad1_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m38 net-_m32-pad3_ net-_m27-pad1_ net-_m28-pad1_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+m44 net-_m43-pad1_ net-_m32-pad3_ net-_m11-pad4_ net-_m11-pad4_ mos_p W=40u L=5u M=8
+m43 net-_m43-pad1_ net-_m32-pad3_ net-_m1-pad3_ net-_m1-pad3_ mos_n W=20u L=5u M=4
+* Control Statements
+
+.ends CD4030B

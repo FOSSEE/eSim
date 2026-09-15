@@ -15,8 +15,7 @@ class ModelGeneration:
         if os.name == 'nt':
             self.home = os.path.join('library', 'config')
         else:
-            # self.home = os.expanduser('~')
-            self.home = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")) # direcotory: Resources/
+            self.home = os.path.expanduser('~')
 
         self.parser = ConfigParser()
         self.parser.read(os.path.join(

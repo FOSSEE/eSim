@@ -1,0 +1,11 @@
+.title KiCad schematic
+.include "mcp73831.sub"
+U1 vin vbat Net-_R1-Pad2_ GND mcp73831
+v1 vin GND 5v
+R1 GND Net-_R1-Pad2_ 2k
+.tran 10u 10m
+.control
+run
+plot v(vin) v(vbat)
+.endc
+.end

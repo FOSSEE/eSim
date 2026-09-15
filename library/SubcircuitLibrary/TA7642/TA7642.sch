@@ -1,0 +1,553 @@
+EESchema Schematic File Version 2
+LIBS:adc-dac
+LIBS:memory
+LIBS:xilinx
+LIBS:microcontrollers
+LIBS:dsp
+LIBS:microchip
+LIBS:analog_switches
+LIBS:motorola
+LIBS:texas
+LIBS:intel
+LIBS:audio
+LIBS:interface
+LIBS:digital-audio
+LIBS:philips
+LIBS:display
+LIBS:cypress
+LIBS:siliconi
+LIBS:opto
+LIBS:atmel
+LIBS:contrib
+LIBS:power
+LIBS:eSim_Plot
+LIBS:transistors
+LIBS:conn
+LIBS:eSim_User
+LIBS:regul
+LIBS:74xx
+LIBS:cmos4000
+LIBS:eSim_Analog
+LIBS:eSim_Devices
+LIBS:eSim_Digital
+LIBS:eSim_Hybrid
+LIBS:eSim_Miscellaneous
+LIBS:eSim_Power
+LIBS:eSim_Sources
+LIBS:eSim_Subckt
+LIBS:eSim_Nghdl
+LIBS:eSim_Ngveri
+LIBS:eSim_SKY130
+LIBS:eSim_SKY130_Subckts
+LIBS:TA7642-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L eSim_NPN Q?
+U 1 1 683E8F68
+P 1950 4400
+F 0 "Q?" H 1850 4450 50  0000 R CNN
+F 1 "eSim_NPN" H 1900 4550 50  0000 R CNN
+F 2 "" H 2150 4500 29  0000 C CNN
+F 3 "" H 1950 4400 60  0000 C CNN
+	1    1950 4400
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q?
+U 1 1 683E8F97
+P 2150 5600
+F 0 "Q?" H 2050 5650 50  0000 R CNN
+F 1 "eSim_NPN" H 2100 5750 50  0000 R CNN
+F 2 "" H 2350 5700 29  0000 C CNN
+F 3 "" H 2150 5600 60  0000 C CNN
+	1    2150 5600
+	-1   0    0    -1  
+$EndComp
+$Comp
+L capacitor C?
+U 1 1 683E8FD6
+P 2350 4800
+F 0 "C?" H 2375 4900 50  0000 L CNN
+F 1 "12p" H 2375 4700 50  0000 L CNN
+F 2 "" H 2388 4650 30  0000 C CNN
+F 3 "" H 2350 4800 60  0000 C CNN
+	1    2350 4800
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683E9008
+P 2800 4850
+F 0 "R?" H 2850 4980 50  0000 C CNN
+F 1 "3.3k" H 2850 4800 50  0000 C CNN
+F 2 "" H 2850 4830 30  0000 C CNN
+F 3 "" V 2850 4900 30  0000 C CNN
+	1    2800 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683E903F
+P 2950 3750
+F 0 "R?" H 3000 3880 50  0000 C CNN
+F 1 "12k" H 3000 3700 50  0000 C CNN
+F 2 "" H 3000 3730 30  0000 C CNN
+F 3 "" V 3000 3800 30  0000 C CNN
+	1    2950 3750
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683E908F
+P 2950 4250
+F 0 "R?" H 3000 4380 50  0000 C CNN
+F 1 "12k" H 3000 4200 50  0000 C CNN
+F 2 "" H 3000 4230 30  0000 C CNN
+F 3 "" V 3000 4300 30  0000 C CNN
+	1    2950 4250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_NPN Q?
+U 1 1 683E92CD
+P 2600 5600
+F 0 "Q?" H 2500 5650 50  0000 R CNN
+F 1 "eSim_NPN" H 2550 5400 50  0000 R CNN
+F 2 "" H 2800 5700 29  0000 C CNN
+F 3 "" H 2600 5600 60  0000 C CNN
+	1    2600 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683E946E
+P 2350 5250
+F 0 "R?" H 2400 5380 50  0000 C CNN
+F 1 "5.6k" H 2400 5200 50  0000 C CNN
+F 2 "" H 2400 5230 30  0000 C CNN
+F 3 "" V 2400 5300 30  0000 C CNN
+	1    2350 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683E9744
+P 3300 4150
+F 0 "R?" H 3350 4280 50  0000 C CNN
+F 1 "12k" H 3350 4100 50  0000 C CNN
+F 2 "" H 3350 4130 30  0000 C CNN
+F 3 "" V 3350 4200 30  0000 C CNN
+	1    3300 4150
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_NPN Q?
+U 1 1 683E979C
+P 3250 4800
+F 0 "Q?" H 3150 4850 50  0000 R CNN
+F 1 "eSim_NPN" H 3200 4950 50  0000 R CNN
+F 2 "" H 3450 4900 29  0000 C CNN
+F 3 "" H 3250 4800 60  0000 C CNN
+	1    3250 4800
+	1    0    0    -1  
+$EndComp
+$Comp
+L capacitor C?
+U 1 1 683E9F5A
+P 3750 4450
+F 0 "C?" H 3775 4550 50  0000 L CNN
+F 1 "12p" H 3775 4350 50  0000 L CNN
+F 2 "" H 3788 4300 30  0000 C CNN
+F 3 "" H 3750 4450 60  0000 C CNN
+	1    3750 4450
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683EA32D
+P 4150 4050
+F 0 "R?" H 4200 4180 50  0000 C CNN
+F 1 "12k" H 4200 4000 50  0000 C CNN
+F 2 "" H 4200 4030 30  0000 C CNN
+F 3 "" V 4200 4100 30  0000 C CNN
+	1    4150 4050
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_NPN Q?
+U 1 1 683EA39C
+P 4100 4850
+F 0 "Q?" H 4000 4900 50  0000 R CNN
+F 1 "eSim_NPN" H 4050 5000 50  0000 R CNN
+F 2 "" H 4300 4950 29  0000 C CNN
+F 3 "" H 4100 4850 60  0000 C CNN
+	1    4100 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683EA79E
+P 4800 4050
+F 0 "R?" H 4850 4180 50  0000 C CNN
+F 1 "12k" H 4850 4000 50  0000 C CNN
+F 2 "" H 4850 4030 30  0000 C CNN
+F 3 "" V 4850 4100 30  0000 C CNN
+	1    4800 4050
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683EA821
+P 4450 4500
+F 0 "R?" H 4500 4630 50  0000 C CNN
+F 1 "12k" H 4500 4450 50  0000 C CNN
+F 2 "" H 4500 4480 30  0000 C CNN
+F 3 "" V 4500 4550 30  0000 C CNN
+	1    4450 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_NPN Q?
+U 1 1 683EAA10
+P 4750 5050
+F 0 "Q?" H 4650 5100 50  0000 R CNN
+F 1 "eSim_NPN" H 4700 5200 50  0000 R CNN
+F 2 "" H 4950 5150 29  0000 C CNN
+F 3 "" H 4750 5050 60  0000 C CNN
+	1    4750 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683EABAB
+P 4500 4700
+F 0 "R?" H 4550 4830 50  0000 C CNN
+F 1 "12k" H 4550 4650 50  0000 C CNN
+F 2 "" H 4550 4680 30  0000 C CNN
+F 3 "" V 4550 4750 30  0000 C CNN
+	1    4500 4700
+	0    1    1    0   
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683EAEC8
+P 5100 4500
+F 0 "R?" H 5150 4630 50  0000 C CNN
+F 1 "12k" H 5150 4450 50  0000 C CNN
+F 2 "" H 5150 4480 30  0000 C CNN
+F 3 "" V 5150 4550 30  0000 C CNN
+	1    5100 4500
+	1    0    0    -1  
+$EndComp
+$Comp
+L capacitor C?
+U 1 1 683EAF58
+P 5200 4250
+F 0 "C?" H 5225 4350 50  0000 L CNN
+F 1 "12p" H 5225 4150 50  0000 L CNN
+F 2 "" H 5238 4100 30  0000 C CNN
+F 3 "" H 5200 4250 60  0000 C CNN
+	1    5200 4250
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	2050 4600 2050 5400
+Wire Wire Line
+	2200 4800 2050 4800
+Connection ~ 2050 4800
+Wire Wire Line
+	2350 5600 2400 5600
+Wire Wire Line
+	2500 4800 2700 4800
+Wire Wire Line
+	3000 3950 3000 4150
+Wire Wire Line
+	2050 4200 2050 3500
+Wire Wire Line
+	2050 3500 7300 3500
+Wire Wire Line
+	3000 3500 3000 3650
+Wire Wire Line
+	2700 4050 2700 5400
+Wire Wire Line
+	2700 4050 3000 4050
+Connection ~ 3000 4050
+Wire Wire Line
+	2400 5600 2400 5450
+Wire Wire Line
+	2400 5150 2400 5100
+Wire Wire Line
+	2400 5100 2700 5100
+Connection ~ 2700 5100
+Wire Wire Line
+	3000 4800 3050 4800
+Wire Wire Line
+	3350 3500 3350 4050
+Connection ~ 3000 3500
+Wire Wire Line
+	3350 4350 3350 4600
+Wire Wire Line
+	2050 5800 7300 5800
+Wire Wire Line
+	3350 5800 3350 5000
+Connection ~ 2700 5800
+Wire Wire Line
+	3000 4450 3000 4800
+Wire Wire Line
+	3600 4450 3350 4450
+Connection ~ 3350 4450
+Wire Wire Line
+	4200 3500 4200 3950
+Connection ~ 3350 3500
+Wire Wire Line
+	4200 4250 4200 4650
+Wire Wire Line
+	3900 4850 3900 4450
+Wire Wire Line
+	4200 5800 4200 5050
+Connection ~ 3350 5800
+Wire Wire Line
+	4850 3500 4850 3950
+Connection ~ 4200 3500
+Wire Wire Line
+	3900 4450 4350 4450
+Wire Wire Line
+	4550 4900 4550 5050
+Wire Wire Line
+	4550 4600 4700 4600
+Wire Wire Line
+	4700 4600 4700 4450
+Wire Wire Line
+	4650 4450 5000 4450
+Connection ~ 4850 4450
+Connection ~ 4700 4450
+Wire Wire Line
+	4850 5800 4850 5250
+Connection ~ 4200 5800
+Wire Wire Line
+	4850 4250 4850 4850
+Wire Wire Line
+	5050 4250 4300 4250
+Wire Wire Line
+	4300 4250 4300 4350
+Wire Wire Line
+	4300 4350 4200 4350
+Connection ~ 4200 4350
+Wire Wire Line
+	5300 4450 5400 4450
+Wire Wire Line
+	5400 4250 5400 4650
+Wire Wire Line
+	5400 4250 5350 4250
+$Comp
+L resistor R?
+U 1 1 683EB199
+P 5500 3950
+F 0 "R?" H 5550 4080 50  0000 C CNN
+F 1 "12k" H 5550 3900 50  0000 C CNN
+F 2 "" H 5550 3930 30  0000 C CNN
+F 3 "" V 5550 4000 30  0000 C CNN
+	1    5500 3950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5550 3500 5550 3850
+Connection ~ 4850 3500
+$Comp
+L eSim_NPN Q?
+U 1 1 683EB23D
+P 5450 5050
+F 0 "Q?" H 5350 5100 50  0000 R CNN
+F 1 "eSim_NPN" H 5400 5200 50  0000 R CNN
+F 2 "" H 5650 5150 29  0000 C CNN
+F 3 "" H 5450 5050 60  0000 C CNN
+	1    5450 5050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5250 5050 5250 4650
+Wire Wire Line
+	5250 4650 5400 4650
+Connection ~ 5400 4450
+Wire Wire Line
+	5550 4150 5550 4850
+Wire Wire Line
+	5550 5800 5550 5250
+Connection ~ 4850 5800
+$Comp
+L resistor R?
+U 1 1 683EC33E
+P 6100 3950
+F 0 "R?" H 6150 4080 50  0000 C CNN
+F 1 "12k" H 6150 3900 50  0000 C CNN
+F 2 "" H 6150 3930 30  0000 C CNN
+F 3 "" V 6150 4000 30  0000 C CNN
+	1    6100 3950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6150 3500 6150 3850
+Connection ~ 5550 3500
+$Comp
+L eSim_NPN Q?
+U 1 1 683EC87C
+P 6050 5000
+F 0 "Q?" H 5950 5050 50  0000 R CNN
+F 1 "eSim_NPN" H 6000 5150 50  0000 R CNN
+F 2 "" H 6250 5100 29  0000 C CNN
+F 3 "" H 6050 5000 60  0000 C CNN
+	1    6050 5000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6150 4150 6150 4800
+Wire Wire Line
+	6150 5800 6150 5200
+Connection ~ 5550 5800
+$Comp
+L resistor R?
+U 1 1 683ED134
+P 5800 4550
+F 0 "R?" H 5850 4680 50  0000 C CNN
+F 1 "12k" H 5850 4500 50  0000 C CNN
+F 2 "" H 5850 4530 30  0000 C CNN
+F 3 "" V 5850 4600 30  0000 C CNN
+	1    5800 4550
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5850 4750 5850 5000
+Wire Wire Line
+	5850 4450 5850 4400
+Wire Wire Line
+	5850 4400 6300 4400
+Connection ~ 6150 4400
+$Comp
+L capacitor C?
+U 1 1 683EDB50
+P 6450 4200
+F 0 "C?" H 6475 4300 50  0000 L CNN
+F 1 "23p" H 6050 4100 50  0000 L CNN
+F 2 "" H 6488 4050 30  0000 C CNN
+F 3 "" H 6450 4200 60  0000 C CNN
+	1    6450 4200
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6300 4200 5550 4200
+Connection ~ 5550 4200
+$Comp
+L resistor R?
+U 1 1 683EDC19
+P 6400 4450
+F 0 "R?" H 6450 4580 50  0000 C CNN
+F 1 "74k" H 6450 4400 50  0000 C CNN
+F 2 "" H 6450 4430 30  0000 C CNN
+F 3 "" V 6450 4500 30  0000 C CNN
+	1    6400 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L resistor R?
+U 1 1 683EDD49
+P 6750 3950
+F 0 "R?" H 6800 4080 50  0000 C CNN
+F 1 "12k" H 6800 3900 50  0000 C CNN
+F 2 "" H 6800 3930 30  0000 C CNN
+F 3 "" V 6800 4000 30  0000 C CNN
+	1    6750 3950
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_NPN Q?
+U 1 1 683EE23F
+P 6700 5000
+F 0 "Q?" H 6600 5050 50  0000 R CNN
+F 1 "eSim_NPN" H 6650 5150 50  0000 R CNN
+F 2 "" H 6900 5100 29  0000 C CNN
+F 3 "" H 6700 5000 60  0000 C CNN
+	1    6700 5000
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6800 4150 6800 4800
+Wire Wire Line
+	6600 4200 6600 4600
+Wire Wire Line
+	6500 5000 6500 4600
+Wire Wire Line
+	6500 4600 6600 4600
+Connection ~ 6600 4400
+Wire Wire Line
+	6800 5800 6800 5200
+Connection ~ 6150 5800
+Wire Wire Line
+	6800 3500 6800 3850
+Connection ~ 6150 3500
+$Comp
+L eSim_NPN Q?
+U 1 1 683EF5C6
+P 7200 4400
+F 0 "Q?" H 7100 4450 50  0000 R CNN
+F 1 "eSim_NPN" H 7150 4550 50  0000 R CNN
+F 2 "" H 7400 4500 29  0000 C CNN
+F 3 "" H 7200 4400 60  0000 C CNN
+	1    7200 4400
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7000 4400 6800 4400
+Connection ~ 6800 4400
+Wire Wire Line
+	7300 3500 7300 4200
+Connection ~ 6800 3500
+Wire Wire Line
+	7300 5800 7300 4600
+Connection ~ 6800 5800
+$Comp
+L PORT U?
+U 1 1 683F01D4
+P 8000 4850
+F 0 "U?" H 8050 4950 30  0000 C CNN
+F 1 "PORT" H 8000 4850 30  0000 C CNN
+F 2 "" H 8000 4850 60  0000 C CNN
+F 3 "" H 8000 4850 60  0000 C CNN
+	1    8000 4850
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U?
+U 2 1 683F022F
+P 8000 5150
+F 0 "U?" H 8050 5250 30  0000 C CNN
+F 1 "PORT" H 8000 5150 30  0000 C CNN
+F 2 "" H 8000 5150 60  0000 C CNN
+F 3 "" H 8000 5150 60  0000 C CNN
+	2    8000 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L PORT U?
+U 3 1 683F0296
+P 7950 5400
+F 0 "U?" H 8000 5500 30  0000 C CNN
+F 1 "PORT" H 7950 5400 30  0000 C CNN
+F 2 "" H 7950 5400 60  0000 C CNN
+F 3 "" H 7950 5400 60  0000 C CNN
+	3    7950 5400
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

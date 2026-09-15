@@ -1,0 +1,11 @@
+* Subcircuit CA3036
+.subckt CA3036 net-_q1-pad1_ net-_q2-pad3_ net-_q1-pad3_ net-_q1-pad2_ net-_q1-pad1_ net-_q1-pad1_ net-_q1-pad1_ net-_q4-pad2_ net-_q3-pad2_ net-_q3-pad3_ 
+.title kicad schematic
+.include NPN.lib
+q2 net-_q1-pad1_ net-_q1-pad3_ net-_q2-pad3_ Q2N2222
+q1 net-_q1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q3 net-_q1-pad1_ net-_q3-pad2_ net-_q3-pad3_ Q2N2222
+q4 net-_q1-pad1_ net-_q4-pad2_ net-_q3-pad2_ Q2N2222
+* Control Statements
+
+.ends CA3036

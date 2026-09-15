@@ -1,0 +1,27 @@
+* Subcircuit L702
+.subckt L702 /b4 /b3 ? /c4 /c3 /gnd /c2 /c1 ? /b2 /b1 
+* c:\fossee\esim\library\subcircuitlibrary\l702\l702.cir
+.include NPN.lib
+r2  /b1 net-_q2-pad2_ 340
+r4  net-_q2-pad2_ net-_q2-pad3_ 7k
+r6  net-_q2-pad3_ /gnd 500
+q2 /c1 net-_q2-pad2_ net-_q2-pad3_ Q2N2222
+q4 /c1 net-_q2-pad3_ /gnd Q2N2222
+r8  /b4 net-_q6-pad2_ 340
+r10  net-_q6-pad2_ net-_q6-pad3_ 7k
+r12  net-_q6-pad3_ /gnd 500
+q6 /c4 net-_q6-pad2_ net-_q6-pad3_ Q2N2222
+q8 /c4 net-_q6-pad3_ /gnd Q2N2222
+r1  /b2 net-_q1-pad2_ 340
+r3  net-_q1-pad2_ net-_q1-pad3_ 7k
+r5  net-_q1-pad3_ /gnd 500
+q1 /c2 net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q3 /c2 net-_q1-pad3_ /gnd Q2N2222
+r7  /b3 net-_q5-pad2_ 340
+r9  net-_q5-pad2_ net-_q5-pad3_ 7k
+r11  net-_q5-pad3_ /gnd 500
+q5 /c3 net-_q5-pad2_ net-_q5-pad3_ Q2N2222
+q7 /c3 net-_q5-pad3_ /gnd Q2N2222
+* Control Statements
+
+.ends L702

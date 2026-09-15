@@ -1,0 +1,18 @@
+.title KiCad schematic
+R4 /Pin_4_V-_ Net-_Q1-Pad3_ 20k
+R2 /Pin_1_fast_RC_ /Pin_8_slow_RC_ 6k
+D1 /Pin_4_V-_ /Pin_2_out_ eSim_Diode
+R3 /Pin_4_V-_ /Pin_1_fast_RC_ 3k
+U1 /Pin_1_fast_RC_ /Pin_2_out_ unconnected-_U1-Pad3_ /Pin_4_V-_ /Pin_5_V+_ /Pin_6_RL_ unconnected-_U1-Pad7_ /Pin_8_slow_RC_ PORT
+R6 Net-_Q1-Pad3_ Net-_Q2-Pad2_ 10k
+Q2 Net-_Q2-Pad1_ Net-_Q2-Pad2_ Net-_Q2-Pad3_ eSim_NPN
+Q5 Net-_Q3-Pad2_ Net-_Q2-Pad1_ /Pin_5_V+_ eSim_PNP
+Q3 /Pin_2_out_ Net-_Q3-Pad2_ /Pin_4_V-_ eSim_NPN
+R7 /Pin_8_slow_RC_ Net-_Q2-Pad3_ 100
+R5 Net-_Q2-Pad2_ Net-_Q1-Pad2_ 20k
+R8 Net-_Q1-Pad2_ /Pin_5_V+_ 400
+R9 /Pin_2_out_ Net-_Q1-Pad2_ 400
+Q4 Net-_Q2-Pad1_ Net-_Q2-Pad1_ /Pin_5_V+_ eSim_PNP
+Q1 /Pin_5_V+_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ eSim_NPN
+R1 /Pin_6_RL_ /Pin_5_V+_ 12
+.end

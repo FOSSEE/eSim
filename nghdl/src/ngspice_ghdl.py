@@ -1,4 +1,4 @@
-#! /Users/thethtarshwesin/Desktop/eSim-2.5/esim-venv/bin/python3
+#!/usr/bin/env python3
 
 # This file create the GUI to install code model in the Ngspice.
 
@@ -6,7 +6,7 @@ import os
 import sys
 import shutil
 import subprocess
-from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt6 import QtGui, QtCore, QtWidgets
 from configparser import ConfigParser
 from Appconfig import Appconfig
 from createKicadLibrary import AutoSchematic
@@ -39,6 +39,7 @@ class Mainwindow(QtWidgets.QWidget):
         print(fileopen.read())
         fileopen.close()
         self.file_list = []       # to keep the supporting files
+        self.filename = ''
         self.errorFlag = False    # to keep the check of "make install" errors
         self.initUI()
 
@@ -60,7 +61,7 @@ class Mainwindow(QtWidgets.QWidget):
         self.termedit.setReadOnly(1)
         pal = QtGui.QPalette()
         bgc = QtGui.QColor(0, 0, 0)
-        pal.setColor(QtGui.QPalette.Base, bgc)
+        pal.setColor(QtGui.QPalette.ColorRole.Base, bgc)
         self.termedit.setPalette(pal)
         self.termedit.setStyleSheet("QTextEdit {color:white}")
 
@@ -139,9 +140,9 @@ class Mainwindow(QtWidgets.QWidget):
                 "<b>This model already exist. Do you want to " +
                 "overwrite it?</b><br/> If yes press ok, else cancel it and " +
                 "change the name of your vhdl file.",
-                QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Cancel
+                QtWidgets.QMessageBox.StandardButton.Ok | QtWidgets.QMessageBox.StandardButton.Cancel
             )
-            if ret == QtWidgets.QMessageBox.Ok:
+            if ret == QtWidgets.QMessageBox.StandardButton.Ok:
                 print("Overwriting existing model " + self.modelname)
                 if os.name == 'nt':
                     cmd = "rmdir " + self.modelname + "/s /q"
@@ -234,7 +235,7 @@ class Mainwindow(QtWidgets.QWidget):
             self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
             subprocess.call(self.msys_home + "/usr/bin/bash.exe " +
                             path + "/DUTghdl/compile.sh", shell=True)
-            subprocess.call(self.msys_hoscme + "/usr/bin/bash.exe -c " +
+            subprocess.call(self.msys_home + "/usr/bin/bash.exe -c " +
                             "'chmod a+x start_server.sh'", shell=True)
             subprocess.call(self.msys_home + "/usr/bin/bash.exe -c " +
                             "'chmod a+x sock_pkg_create.sh'", shell=True)
@@ -249,11 +250,14 @@ class Mainwindow(QtWidgets.QWidget):
     # Slot to redirect stdout and stderr to window console
     @QtCore.pyqtSlot()
     def readAllStandard(self):
+        proc = self.sender()
+        if not isinstance(proc, QtCore.QProcess):
+            return
         self.termedit.append(
-            str(self.process.readAllStandardOutput().data(), encoding='utf-8')
+            str(proc.readAllStandardOutput().data(), encoding='utf-8')
         )
-        stderror = self.process.readAllStandardError()
-        if stderror.toUpper().contains(b"ERROR"):
+        stderror = proc.readAllStandardError()
+        if stderror.toUpper().contains(QtCore.QByteArray(b"ERROR")):
             self.errorFlag = True
         self.termedit.append(str(stderror.data(), encoding='utf-8'))
 
@@ -265,22 +269,21 @@ class Mainwindow(QtWidgets.QWidget):
 
         try:
             if os.name == 'nt':
-                # path to msys bin directory where make is located
                 self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
                 cmd = self.msys_home + "/mingw64/bin/mingw32-make.exe"
             else:
-                cmd = " make"
+                cmd = "make"
 
             print("Running Make command in " + path_icm)
-            path = os.getcwd()  # noqa
             self.process = QtCore.QProcess(self)
-            self.process.start(cmd)
-            print("make command process pid ---------- >", self.process.pid())
-
+            self.process.readyReadStandardOutput.connect(self.readAllStandard)
+            self.process.readyReadStandardError.connect(self.readAllStandard)
             if os.name == "nt":
                 self.process.finished.connect(self.createSchematicLib)
-                self.process \
-                    .readyReadStandardOutput.connect(self.readAllStandard)
+            else:
+                self.process.finished.connect(self.runMakeInstall)
+            self.process.start(cmd)
+            print("make command process pid ---------- >", self.process.processId())
 
         except BaseException:
             print("There is error in 'make' ")
@@ -291,20 +294,18 @@ class Mainwindow(QtWidgets.QWidget):
         try:
             if os.name == 'nt':
                 self.msys_home = self.parser.get('COMPILER', 'MSYS_HOME')
-                cmd = self.msys_home + "/mingw64/bin/mingw32-make.exe install"
+                prog = self.msys_home + "/mingw64/bin/mingw32-make.exe"
+                args = ["install"]
             else:
-                cmd = " make install"
+                prog = "make"
+                args = ["install"]
             print("Running Make Install")
-            path = os.getcwd()  # noqa
-            try:
-                self.process.close()
-            except BaseException:
-                pass
 
             self.process = QtCore.QProcess(self)
-            self.process.start(cmd)
-            self.process.finished.connect(self.createSchematicLib)
             self.process.readyReadStandardOutput.connect(self.readAllStandard)
+            self.process.readyReadStandardError.connect(self.readAllStandard)
+            self.process.finished.connect(self.createSchematicLib)
+            self.process.start(prog, args)
             os.chdir(self.cur_dir)
 
         except BaseException:
@@ -312,6 +313,19 @@ class Mainwindow(QtWidgets.QWidget):
             sys.exit()
 
     def createSchematicLib(self):
+        try:
+            self._createSchematicLib()
+        except Exception as e:
+            print("createSchematicLib exception:", e)
+            import traceback
+            traceback.print_exc()
+            QtWidgets.QMessageBox.critical(
+                self, 'Error', 'Library creation failed: ' + str(e)
+            )
+            self.uploadbtn.setEnabled(True)
+            self.exitbtn.setEnabled(True)
+
+    def _createSchematicLib(self):
         if os.name == "nt":
             shutil.copy("ghdl/ghdl.cm", "../../../../lib/ngspice/")
 
@@ -333,6 +347,8 @@ class Mainwindow(QtWidgets.QWidget):
                 '''To create Schematic Library of your model, ''' +
                 '''use NGHDL through <b>eSim</b> '''
             )
+        self.uploadbtn.setEnabled(True)
+        self.exitbtn.setEnabled(True)
 
     def uploadModel(self):
         print("Upload button clicked")
@@ -340,6 +356,10 @@ class Mainwindow(QtWidgets.QWidget):
             self.process.close()
         except BaseException:
             pass
+        if not self.filename:
+            QtWidgets.QMessageBox.warning(
+                self, 'No File', 'Use Browse to select a .vhdl file first.')
+            return
         try:
             self.file_extension = os.path.splitext(str(self.filename))[1]
             print("Uploaded File extension :" + self.file_extension)
@@ -348,12 +368,13 @@ class Mainwindow(QtWidgets.QWidget):
             self.checkSupportFiles()
             if self.file_extension == ".vhdl":
                 self.errorFlag = False
+                self.uploadbtn.setEnabled(False)
+                self.exitbtn.setEnabled(False)
+                self.termedit.append('<b style="color:yellow">Processing... do not close until Symbol Added dialog appears.</b>')
                 self.createModelDirectory()
                 self.addingModelInModpath()
                 self.createModelFiles()
                 self.runMake()
-                if os.name != 'nt':
-                    self.runMakeInstall()
             else:
                 QtWidgets.QMessageBox.information(
                     self, 'Message', '''<b>Important Message.</b><br/>''' +
@@ -439,7 +460,7 @@ def main():
     # Mainwindow() object must be assigned to a variable.
     # Otherwise, it is destroyed as soon as it gets created.
     w = Mainwindow()    # noqa
-    sys.exit(app.exec_())
+    sys.exit(app.exec())
 
 
 if __name__ == '__main__':

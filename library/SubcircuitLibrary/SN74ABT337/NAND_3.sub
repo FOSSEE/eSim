@@ -1,0 +1,20 @@
+* Subcircuit NAND_3
+.subckt NAND_3 net-_sc2-pad2_ net-_sc1-pad2_ net-_sc6-pad3_ net-_sc3-pad3_ net-_sc2-pad1_ net-_sc5-pad2_ 
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/nand_3/nand_3.cir
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__linear.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pw2nd_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__diode_pd2nw_11v0.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__inductors.model.spice"
+.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__r+c.model.spice"
+.include "/usr/share/local/sky130_fd_pr/models/sky130_fd_pr__model__pnp.model.spice"
+xsc3 net-_sc2-pad1_ net-_sc2-pad2_ net-_sc3-pad3_ net-_sc3-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc4 net-_sc2-pad1_ net-_sc1-pad2_ net-_sc3-pad3_ net-_sc3-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc5 net-_sc2-pad1_ net-_sc5-pad2_ net-_sc3-pad3_ net-_sc3-pad3_ sky130_fd_pr__pfet_01v8 w=3 l=0.15
+xsc1 net-_sc1-pad1_ net-_sc1-pad2_ net-_sc1-pad3_ net-_sc1-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+xsc6 net-_sc1-pad3_ net-_sc5-pad2_ net-_sc6-pad3_ net-_sc6-pad3_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+* s c m o d e
+xsc2 net-_sc2-pad1_ net-_sc2-pad2_ net-_sc1-pad1_ net-_sc1-pad1_ sky130_fd_pr__nfet_01v8 w=1 l=0.15
+* Control Statements
+
+.ends NAND_3

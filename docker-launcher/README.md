@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <a href="../../releases/latest">Download Launcher</a> •
+  <a href="https://github.com/FOSSEE/eSim/releases/tag/docker-launcher-v1.0.0">Download Launcher</a> •
   <a href="#quick-start">Quick Start</a> •
   <a href="#troubleshooting">Troubleshooting</a>
 </p>
@@ -57,6 +57,38 @@ chmod +x eSim-Launcher-Linux
 chmod +x eSim-Launcher-macOS
 ./eSim-Launcher-macOS
 ```
+### OR
+### Step 1: Get Docker
+
+Download [Docker Desktop](https://www.docker.com/products/docker-desktop) and make sure it's running.
+
+### Step 2: Get Python3
+
+Download and install[Python3](https://www.python.org/downloads/).
+
+### Step 3: Download the files
+
+- Download ```Dockerfile```. Note that the ```Dockerfile``` should be without extension. If the ```Dockerfile``` downloads with extension rename the file and remove the extension.
+- Download ```run_esim_docker.py```.
+
+### Step 3: Run it
+Make sure docker is already running in the background.
+**Windows:** Open terminal and run:
+```
+python3 run_esim_docker.py
+```
+
+**Linux:** Open terminal and run:
+```bash
+chmod +x run_esim_docker.py
+python3 run_esim_docker.py
+```
+
+**macOS:** Open terminal and run:
+```bash
+chmod +x run_esim_docker.py
+python3 run_esim_docker.py
+```
 
 ---
 
@@ -76,6 +108,18 @@ The launcher offers two display modes:
 - **macOS** → Use VNC mode (X11 requires XQuartz)
 
 Both modes work on all platforms - the launcher will guide you through any required setup.
+
+**Note for MAC to be run in X11 mode:**</br>
+- **Install XQuartz on the Mac** if you haven't already. You can download it from the [XQuartz](https://www.xquartz.org/) website.</br>
+- **Enable network connections in XQuartz:** Go to XQuartz > Preferences > Security tab, and check "Allow connections from network clients".</br>
+- **Restart XQuartz** and then restart your Docker application after making changes to the security settings.</br>
+- **Run xhost +localhost** in your Mac's terminal before running the Docker container. This allows local connections to your X server. </br>
+Run the following command in a terminal:
+```
+xhost +localhost
+docker run --platform linux/amd64 -it --env="DISPLAY=host.docker.internal:0" -v /tmp/.X11-unix/:/tmp/.X11-unix/:rw   esim:latest
+```
+
 
 ---
 

@@ -1,0 +1,550 @@
+EESchema Schematic File Version 5
+EELAYER 36 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+Comment5 ""
+Comment6 ""
+Comment7 ""
+Comment8 ""
+Comment9 ""
+$EndDescr
+Connection ~ 950  3700
+Connection ~ 1500 4250
+Connection ~ 2200 950 
+Connection ~ 2350 3700
+Connection ~ 2900 4250
+Connection ~ 3600 950 
+Connection ~ 3800 3700
+Connection ~ 4350 4250
+Connection ~ 5050 950 
+Connection ~ 5200 3700
+Connection ~ 5750 4250
+Connection ~ 6450 950 
+Connection ~ 6650 3700
+Connection ~ 7200 4250
+Connection ~ 7900 950 
+Connection ~ 8050 3700
+Connection ~ 8600 4250
+Connection ~ 9350 950 
+Connection ~ 9550 3700
+Connection ~ 10100 4250
+Connection ~ 10800 950 
+NoConn ~ 1500 650 
+NoConn ~ 2050 1600
+NoConn ~ 2900 650 
+NoConn ~ 3450 1600
+NoConn ~ 4350 650 
+NoConn ~ 4900 1600
+NoConn ~ 5750 650 
+NoConn ~ 5800 6600
+NoConn ~ 5800 6850
+NoConn ~ 6300 1600
+NoConn ~ 7200 650 
+NoConn ~ 7750 1600
+NoConn ~ 8600 650 
+NoConn ~ 9150 1600
+NoConn ~ 10100 650 
+NoConn ~ 10650 1600
+NoConn ~ 11600 650 
+NoConn ~ 12150 1600
+Wire Wire Line
+	450  3700 950  3700
+Wire Wire Line
+	800  950  950  950 
+Wire Wire Line
+	950  3700 950  1600
+Wire Wire Line
+	950  3700 2350 3700
+Wire Wire Line
+	1050 4250 1500 4250
+Wire Wire Line
+	1500 1900 1500 4250
+Wire Wire Line
+	1500 4250 2900 4250
+Wire Wire Line
+	2050 950  2200 950 
+Wire Wire Line
+	2200 950  2200 4750
+Wire Wire Line
+	2200 950  2350 950 
+Wire Wire Line
+	2350 3700 2350 1600
+Wire Wire Line
+	2350 3700 3800 3700
+Wire Wire Line
+	2900 1900 2900 4250
+Wire Wire Line
+	2900 4250 4350 4250
+Wire Wire Line
+	3450 950  3600 950 
+Wire Wire Line
+	3600 950  3600 4750
+Wire Wire Line
+	3600 950  3800 950 
+Wire Wire Line
+	3800 3700 3800 1600
+Wire Wire Line
+	3800 3700 5200 3700
+Wire Wire Line
+	4350 1900 4350 4250
+Wire Wire Line
+	4350 4250 5750 4250
+Wire Wire Line
+	4900 950  5050 950 
+Wire Wire Line
+	5050 950  5050 4750
+Wire Wire Line
+	5050 950  5200 950 
+Wire Wire Line
+	5200 3700 5200 1600
+Wire Wire Line
+	5200 3700 6650 3700
+Wire Wire Line
+	5750 1900 5750 4250
+Wire Wire Line
+	5750 4250 7200 4250
+Wire Wire Line
+	5800 6600 6200 6600
+Wire Wire Line
+	5800 6850 6200 6850
+Wire Wire Line
+	6300 950  6450 950 
+Wire Wire Line
+	6450 950  6450 4750
+Wire Wire Line
+	6450 950  6650 950 
+Wire Wire Line
+	6650 3700 6650 1600
+Wire Wire Line
+	6650 3700 8050 3700
+Wire Wire Line
+	7200 1900 7200 4250
+Wire Wire Line
+	7200 4250 8600 4250
+Wire Wire Line
+	7750 950  7900 950 
+Wire Wire Line
+	7900 950  7900 4750
+Wire Wire Line
+	7900 950  8050 950 
+Wire Wire Line
+	8050 3700 8050 1600
+Wire Wire Line
+	8050 3700 9550 3700
+Wire Wire Line
+	8600 1900 8600 4250
+Wire Wire Line
+	8600 4250 10100 4250
+Wire Wire Line
+	9150 950  9350 950 
+Wire Wire Line
+	9350 950  9350 4750
+Wire Wire Line
+	9350 950  9550 950 
+Wire Wire Line
+	9550 3700 9550 1600
+Wire Wire Line
+	9550 3700 11050 3700
+Wire Wire Line
+	10100 1900 10100 4250
+Wire Wire Line
+	10100 4250 11600 4250
+Wire Wire Line
+	10650 950  10800 950 
+Wire Wire Line
+	10800 950  10800 4750
+Wire Wire Line
+	10800 950  11050 950 
+Wire Wire Line
+	11050 3700 11050 1600
+Wire Wire Line
+	11600 4250 11600 1900
+Wire Wire Line
+	12150 950  12500 950 
+Wire Wire Line
+	12500 950  12500 4750
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 8 1 00000000
+P -400 3700
+F 0 "U1" H -375 3900 30  0000 C CNN
+F 1 "PORT" H -375 3800 30  0000 C CNN
+F 2 "" H -400 3700 60  0000 C CNN
+F 3 "" H -400 3700 60  0000 C CNN
+	8    -400 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 9 1 00000000
+P -400 4250
+F 0 "U1" H -375 4450 30  0000 C CNN
+F 1 "PORT" H -375 4350 30  0000 C CNN
+F 2 "" H -400 4250 60  0000 C CNN
+F 3 "" H -400 4250 60  0000 C CNN
+	9    -400 4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 1 1 00000000
+P -350 900
+F 0 "U1" H -325 1100 30  0000 C CNN
+F 1 "PORT" H -325 1000 30  0000 C CNN
+F 2 "" H -350 900 60  0000 C CNN
+F 3 "" H -350 900 60  0000 C CNN
+	1    -350 900 
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 2 1 00000000
+P -350 1000
+F 0 "U1" H -325 1200 30  0000 C CNN
+F 1 "PORT" H -325 1100 30  0000 C CNN
+F 2 "" H -350 1000 60  0000 C CNN
+F 3 "" H -350 1000 60  0000 C CNN
+	2    -350 1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 3 1 00000000
+P 2200 6150
+F 0 "U1" V 2250 6050 30  0000 R CNN
+F 1 "PORT" V 2150 6050 30  0000 R CNN
+F 2 "" H 2200 6150 60  0000 C CNN
+F 3 "" H 2200 6150 60  0000 C CNN
+	3    2200 6150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 4 1 00000000
+P 3600 6150
+F 0 "U1" V 3650 6050 30  0000 R CNN
+F 1 "PORT" V 3550 6050 30  0000 R CNN
+F 2 "" H 3600 6150 60  0000 C CNN
+F 3 "" H 3600 6150 60  0000 C CNN
+	4    3600 6150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 5 1 00000000
+P 5050 6150
+F 0 "U1" V 5100 6050 30  0000 R CNN
+F 1 "PORT" V 5000 6050 30  0000 R CNN
+F 2 "" H 5050 6150 60  0000 C CNN
+F 3 "" H 5050 6150 60  0000 C CNN
+	5    5050 6150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 6 1 00000000
+P 6450 6150
+F 0 "U1" V 6500 6050 30  0000 R CNN
+F 1 "PORT" V 6400 6050 30  0000 R CNN
+F 2 "" H 6450 6150 60  0000 C CNN
+F 3 "" H 6450 6150 60  0000 C CNN
+	6    6450 6150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 7 1 00000000
+P 6450 6600
+F 0 "U1" H 6300 6575 30  0000 R CNN
+F 1 "PORT" H 6300 6675 30  0000 R CNN
+F 2 "" H 6450 6600 60  0000 C CNN
+F 3 "" H 6450 6600 60  0000 C CNN
+	7    6450 6600
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 14 1 00000000
+P 6450 6850
+F 0 "U1" H 6300 6825 30  0000 R CNN
+F 1 "PORT" H 6300 6925 30  0000 R CNN
+F 2 "" H 6450 6850 60  0000 C CNN
+F 3 "" H 6450 6850 60  0000 C CNN
+	14   6450 6850
+	-1   0    0    1   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 10 1 00000000
+P 7900 6150
+F 0 "U1" V 7950 6050 30  0000 R CNN
+F 1 "PORT" V 7850 6050 30  0000 R CNN
+F 2 "" H 7900 6150 60  0000 C CNN
+F 3 "" H 7900 6150 60  0000 C CNN
+	10   7900 6150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 11 1 00000000
+P 9350 6150
+F 0 "U1" V 9400 6050 30  0000 R CNN
+F 1 "PORT" V 9300 6050 30  0000 R CNN
+F 2 "" H 9350 6150 60  0000 C CNN
+F 3 "" H 9350 6150 60  0000 C CNN
+	11   9350 6150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 12 1 00000000
+P 10800 6150
+F 0 "U1" V 10850 6050 30  0000 R CNN
+F 1 "PORT" V 10750 6050 30  0000 R CNN
+F 2 "" H 10800 6150 60  0000 C CNN
+F 3 "" H 10800 6150 60  0000 C CNN
+	12   10800 6150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Miscellaneous:PORT U1
+U 13 1 00000000
+P 12500 6150
+F 0 "U1" V 12550 6050 30  0000 R CNN
+F 1 "PORT" V 12450 6050 30  0000 R CNN
+F 2 "" H 12500 6150 60  0000 C CNN
+F 3 "" H 12500 6150 60  0000 C CNN
+	13   12500 6150
+	0    -1   -1   0   
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U2
+U 1 1 00000000
+P 150 3700
+F 0 "U2" H 150 3950 60  0000 C CNN
+F 1 "d_inverter" H 150 3800 60  0000 C CNN
+F 2 "" H 200 3650 60  0000 C CNN
+F 3 "" H 200 3650 60  0000 C CNN
+	1    150  3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U3
+U 1 1 00000000
+P 150 4250
+F 0 "U3" H 150 4500 60  0000 C CNN
+F 1 "d_inverter" H 150 4350 60  0000 C CNN
+F 2 "" H 200 4200 60  0000 C CNN
+F 3 "" H 200 4200 60  0000 C CNN
+	1    150  4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_inverter U5
+U 1 1 00000000
+P 750 4250
+F 0 "U5" H 750 4500 60  0000 C CNN
+F 1 "d_inverter" H 750 4350 60  0000 C CNN
+F 2 "" H 800 4200 60  0000 C CNN
+F 3 "" H 800 4200 60  0000 C CNN
+	1    750  4250
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_and U4
+U 1 1 00000000
+P 350 1000
+F 0 "U4" H 350 1350 60  0000 C CNN
+F 1 "d_and" H 350 1200 60  0000 C CNN
+F 2 "" H 350 1000 60  0000 C CNN
+F 3 "" H 350 1000 60  0000 C CNN
+	1    350  1000
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U7
+U 1 1 00000000
+P 2200 5250
+F 0 "U7" V 2225 5500 60  0000 L CNN
+F 1 "d_buffer" V 2375 5500 60  0000 L CNN
+F 2 "" H 2200 5250 60  0000 C CNN
+F 3 "" H 2200 5250 60  0000 C CNN
+	1    2200 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U9
+U 1 1 00000000
+P 3600 5250
+F 0 "U9" V 3625 5500 60  0000 L CNN
+F 1 "d_buffer" V 3775 5500 60  0000 L CNN
+F 2 "" H 3600 5250 60  0000 C CNN
+F 3 "" H 3600 5250 60  0000 C CNN
+	1    3600 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U11
+U 1 1 00000000
+P 5050 5250
+F 0 "U11" V 5075 5500 60  0000 L CNN
+F 1 "d_buffer" V 5225 5500 60  0000 L CNN
+F 2 "" H 5050 5250 60  0000 C CNN
+F 3 "" H 5050 5250 60  0000 C CNN
+	1    5050 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U13
+U 1 1 00000000
+P 6450 5250
+F 0 "U13" V 6475 5500 60  0000 L CNN
+F 1 "d_buffer" V 6625 5500 60  0000 L CNN
+F 2 "" H 6450 5250 60  0000 C CNN
+F 3 "" H 6450 5250 60  0000 C CNN
+	1    6450 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U15
+U 1 1 00000000
+P 7900 5250
+F 0 "U15" V 7925 5500 60  0000 L CNN
+F 1 "d_buffer" V 8075 5500 60  0000 L CNN
+F 2 "" H 7900 5250 60  0000 C CNN
+F 3 "" H 7900 5250 60  0000 C CNN
+	1    7900 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U17
+U 1 1 00000000
+P 9350 5250
+F 0 "U17" V 9375 5500 60  0000 L CNN
+F 1 "d_buffer" V 9525 5500 60  0000 L CNN
+F 2 "" H 9350 5250 60  0000 C CNN
+F 3 "" H 9350 5250 60  0000 C CNN
+	1    9350 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U19
+U 1 1 00000000
+P 10800 5250
+F 0 "U19" V 10825 5500 60  0000 L CNN
+F 1 "d_buffer" V 10975 5500 60  0000 L CNN
+F 2 "" H 10800 5250 60  0000 C CNN
+F 3 "" H 10800 5250 60  0000 C CNN
+	1    10800 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Digital:d_buffer U21
+U 1 1 00000000
+P 12500 5250
+F 0 "U21" V 12525 5500 60  0000 L CNN
+F 1 "d_buffer" V 12675 5500 60  0000 L CNN
+F 2 "" H 12500 5250 60  0000 C CNN
+F 3 "" H 12500 5250 60  0000 C CNN
+	1    12500 5250
+	0    1    1    0   
+$EndComp
+$Comp
+L eSim_Digital:d_dff U6
+U 1 1 00000000
+P 1500 1300
+F 0 "U6" H 1580 1950 60  0000 L CNN
+F 1 "d_dff" H 1580 1800 60  0000 L CNN
+F 2 "" H 1500 1300 60  0000 C CNN
+F 3 "" H 1500 1300 60  0000 C CNN
+	1    1500 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_dff U8
+U 1 1 00000000
+P 2900 1300
+F 0 "U8" H 2980 1950 60  0000 L CNN
+F 1 "d_dff" H 2980 1800 60  0000 L CNN
+F 2 "" H 2900 1300 60  0000 C CNN
+F 3 "" H 2900 1300 60  0000 C CNN
+	1    2900 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_dff U10
+U 1 1 00000000
+P 4350 1300
+F 0 "U10" H 4430 1950 60  0000 L CNN
+F 1 "d_dff" H 4430 1800 60  0000 L CNN
+F 2 "" H 4350 1300 60  0000 C CNN
+F 3 "" H 4350 1300 60  0000 C CNN
+	1    4350 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_dff U12
+U 1 1 00000000
+P 5750 1300
+F 0 "U12" H 5830 1950 60  0000 L CNN
+F 1 "d_dff" H 5830 1800 60  0000 L CNN
+F 2 "" H 5750 1300 60  0000 C CNN
+F 3 "" H 5750 1300 60  0000 C CNN
+	1    5750 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_dff U14
+U 1 1 00000000
+P 7200 1300
+F 0 "U14" H 7180 2100 60  0000 L CNN
+F 1 "d_dff" H 7180 1950 60  0000 L CNN
+F 2 "" H 7200 1300 60  0000 C CNN
+F 3 "" H 7200 1300 60  0000 C CNN
+	1    7200 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_dff U16
+U 1 1 00000000
+P 8600 1300
+F 0 "U16" H 8680 1950 60  0000 L CNN
+F 1 "d_dff" H 8680 1800 60  0000 L CNN
+F 2 "" H 8600 1300 60  0000 C CNN
+F 3 "" H 8600 1300 60  0000 C CNN
+	1    8600 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_dff U18
+U 1 1 00000000
+P 10100 1300
+F 0 "U18" H 10180 1950 60  0000 L CNN
+F 1 "d_dff" H 10180 1800 60  0000 L CNN
+F 2 "" H 10100 1300 60  0000 C CNN
+F 3 "" H 10100 1300 60  0000 C CNN
+	1    10100 1300
+	1    0    0    -1  
+$EndComp
+$Comp
+L eSim_Digital:d_dff U20
+U 1 1 00000000
+P 11600 1300
+F 0 "U20" H 11680 1950 60  0000 L CNN
+F 1 "d_dff" H 11680 1800 60  0000 L CNN
+F 2 "" H 11600 1300 60  0000 C CNN
+F 3 "" H 11600 1300 60  0000 C CNN
+	1    11600 1300
+	1    0    0    -1  
+$EndComp
+$EndSCHEMATC

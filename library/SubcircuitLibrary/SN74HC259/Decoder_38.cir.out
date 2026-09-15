@@ -1,0 +1,33 @@
+* /home/vsduser/downloads/esim-2.3/library/subcircuitlibrary/decoder_38/decoder_38.cir
+
+.include NAND_2.sub
+.include NAND_3.sub
+*.lib "/usr/share/local/sky130_fd_pr/models/sky130.lib.spice" tt
+
+* u1  /s0_bar /s1_bar /s2_bar /s0 /s1 /s2 /g_bar /vdd /gnd /d6 /d4 /d0 /d7 /d5 /d2 /d1 /d3 port
+* s c m o d e
+x4 /s0_bar /s1_bar /gnd /vdd net-_x14-pad1_ /s2_bar NAND_3
+x5 /s0_bar /s1_bar /gnd /vdd net-_x5-pad5_ /s2 NAND_3
+x1 /s0_bar /s1 /gnd /vdd net-_x1-pad5_ /s2_bar NAND_3
+x6 /s0_bar /s1 /gnd /vdd net-_x10-pad1_ /s2 NAND_3
+x2 /s0 /s1_bar /gnd /vdd net-_x16-pad1_ /s2_bar NAND_3
+x7 /s0 /s1_bar /gnd /vdd net-_x12-pad1_ /s2 NAND_3
+x3 /s0 /s1 /gnd /vdd net-_x13-pad1_ /s2_bar NAND_3
+x8 /s0 /s1 /gnd /vdd net-_x11-pad1_ /s2 NAND_3
+x11 net-_x11-pad1_ /gnd /vdd /d0 /g_bar NAND_2
+x13 net-_x13-pad1_ /gnd /vdd /d1 /g_bar NAND_2
+x12 net-_x12-pad1_ /gnd /vdd /d2 /g_bar NAND_2
+x16 net-_x16-pad1_ /gnd /vdd /d3 /g_bar NAND_2
+x10 net-_x10-pad1_ /gnd /vdd /d4 /g_bar NAND_2
+x15 net-_x1-pad5_ /gnd /vdd /d5 /g_bar NAND_2
+x9 net-_x5-pad5_ /gnd /vdd /d6 /g_bar NAND_2
+x14 net-_x14-pad1_ /gnd /vdd /d7 /g_bar NAND_2
+.tran 0e-00 0e-00 0e-00
+
+* Control Statements 
+.control
+run
+print allv > plot_data_v.txt
+print alli > plot_data_i.txt
+.endc
+.end

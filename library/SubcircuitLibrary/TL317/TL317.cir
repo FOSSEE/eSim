@@ -1,0 +1,10 @@
+.title KiCad schematic
+.include "C:\Users\hardi\OneDrive\Desktop\411_opamp\TL_317\2nn.sub"
+U1 Net-_I1-Pad2_ Net-_U1-Pad2_ Net-_R1-Pad1_ PORT
+R1 Net-_R1-Pad1_ Net-_Q2-Pad3_ 0.1
+Q2 Net-_I1-Pad2_ Net-_Q1-Pad3_ Net-_Q2-Pad3_ QBC547BP
+Q1 Net-_I1-Pad2_ Net-_Q1-Pad2_ Net-_Q1-Pad3_ QBC547BP
+X1 Net-_I1-Pad1_ Net-_R1-Pad1_ Net-_I1-Pad2_ Net-_Q1-Pad2_ GND LM321
+v1 Net-_I1-Pad1_ Net-_U1-Pad2_ 1.25
+I1 Net-_I1-Pad1_ Net-_I1-Pad2_ 50u
+.end
