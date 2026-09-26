@@ -1,0 +1,14 @@
+* Hierarchical subcircuit test
+.subckt half_adder A B Sum Cout VDD GND
+Xxor1 A B Sum VDD GND sky130_fd_sc_hd__xor2_1
+Xand1 A B Cout VDD GND sky130_fd_sc_hd__and2_2
+.ends half_adder
+
+.subckt full_adder A B Cin Sum Cout VDD GND
+Xha1 A B s1 c1 VDD GND half_adder
+Xha2 s1 Cin Sum c2 VDD GND half_adder
+Xor1 c1 c2 Cout VDD GND sky130_fd_sc_hd__or2_2
+.ends full_adder
+Vvdd VDD GND 1.8
+Vgnd GND 0 0
+.end
