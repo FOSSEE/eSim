@@ -360,3 +360,56 @@ def test_both_installers_use_the_same_sky130_repair_helper():
     assert 'unknown PDK revision' in helper
     assert 'Sky130Prepare.py' in _read(BUILD_PS1)
     assert 'Sky130Prepare.py' in _read(INSTALL_SH)
+
+
+# ── Windows build: files and tools a real build needs ───────────────────────
+
+def _ps1_function(name):
+    return _read(BUILD_PS1).split('function %s' % name, 1)[1].split('\nfunction ', 1)[0]
+
+
+def _manifest_json():
+    with open(MANIFEST, encoding='utf-8') as fh:
+        return json.load(fh)
+
+
+def test_every_windows_script_the_installer_runs_is_staged():
+    # Stage-App drops the repo windows/ dir and copies runtime files back one
+    # by one. installer.iss only runs a script if it exists, so a missing one
+    # fails silently (the uninstall cleanup was skipped on every uninstall).
+    scripts = sorted(set(re.findall(r"windows\\([A-Za-z0-9_]+\.py)", _read(ISS))))
+    assert 'uninstall_cleanup.py' in scripts
+    copies = [l for l in _ps1_function('Stage-App').splitlines()
+              if l.strip().startswith('Copy-Item') and '$stageWin' in l]
+    missing = [s for s in scripts if not any("'%s'" % s in l for l in copies)]
+    assert missing == []
+
+
+def test_skipsimbuild_ngspice_shim_is_the_console_build():
+    # The official zip's ngspice.exe is the GUI build and prints nothing on
+    # stdout, so the SKY130 smoke test (and eSim's batch runs) read no output.
+    shim = _ps1_function('Stage-Ngspice').split('if ($SkipSimBuild)', 1)[1]
+    assert re.search(r"ngspice_con\.exe.*ngspice\.exe", shim)
+
+
+def test_bleyer_iverilog_setup_is_run_not_7z_extracted():
+    # Bleyer's setup is an Inno Setup 6.1 installer, which 7-Zip cannot open
+    # ("Cannot open the file as archive").
+    body = _ps1_function('Stage-Iverilog')
+    assert '$7z' not in body
+    assert '/VERYSILENT' in body and '/DIR=' in body
+    assert 'unins000.exe' in body, 'the temporary install must be removed again'
+
+
+def test_kicad_installer_comes_from_kicads_github_release():
+    # downloads.kicad.org ended the 1.1 GB download early on every attempt;
+    # KiCad publishes the identical file (same sha256) on its GitHub release.
+    url = _manifest_json()['kicad_installer']['url']
+    assert url.startswith('https://github.com/KiCad/kicad-source-mirror/releases/download/')
+
+
+def test_launcher_gets_a_pinned_gcc_when_msys2_is_skipped():
+    gcc = _manifest_json()['mingw_gcc']
+    assert gcc['url'].startswith('https://github.com/brechtsanders/winlibs_mingw/releases/download/')
+    assert re.fullmatch(r'[0-9a-f]{64}', gcc['sha256'])
+    assert "Get-Dep 'mingw_gcc'" in _ps1_function('Stage-Launcher')

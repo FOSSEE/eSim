@@ -34,7 +34,7 @@
     "url": "https://bleyer.org/icarus/iverilog-v12-20220611-x64_setup.exe",
     "filename": "iverilog-v12-20220611-x64_setup.exe",
     "sha256": "a614057374dfaed5da0fe454cdeb410e54981fd85dbd28bd472f4ccb765deb84",
-    "notes": "Bleyer's Windows Icarus build. FALLBACK ONLY (-SkipSimBuild): it ships without libvvp, so d_cosim cannot run with it - only the Verilog Verifier. The Full build compiles iverilog_source instead. Extracted (7z), NOT run, staged under library/bin/iverilog/. HASH PROVENANCE: bleyer.org publishes no checksum alongside the download, so unlike every other entry here this sha256 could NOT be cross-checked against an upstream-published value - it was recorded from the download (19165730 bytes, Last-Modified 2022-06-12) and is trust-on-first-use. The artifact is immutable (a dated v12 build), so a future mismatch means the upstream file changed and must be re-verified from a second network before -AcceptNewHashes is used on it."
+    "notes": "Bleyer's Windows Icarus build. FALLBACK ONLY (-SkipSimBuild): it ships without libvvp, so d_cosim cannot run with it - only the Verilog Verifier. The Full build compiles iverilog_source instead. It is an Inno Setup 6.1 installer, which 7-Zip cannot open: installed silently into a build dir, copied to library/bin/iverilog/, then uninstalled again. HASH PROVENANCE: bleyer.org publishes no checksum alongside the download, so unlike every other entry here this sha256 could NOT be cross-checked against an upstream-published value - it was recorded from the download (19165730 bytes, Last-Modified 2022-06-12) and is trust-on-first-use. The artifact is immutable (a dated v12 build), so a future mismatch means the upstream file changed and must be re-verified from a second network before -AcceptNewHashes is used on it."
   },
   "iverilog_source": {
     "version": "de415b2f (post-v12, pinned)",
@@ -52,10 +52,10 @@
   },
   "kicad_installer": {
     "version": "9.0.3",
-    "url": "https://downloads.kicad.org/kicad/windows/explore/stable/download/kicad-9.0.3-x86_64.exe",
+    "url": "https://github.com/KiCad/kicad-source-mirror/releases/download/9.0.3/kicad-9.0.3-x86_64.exe",
     "filename": "kicad-9.0.3-x86_64.exe",
     "sha256": "582635ced8552c07e043ce9f2eba01dc0c42c96dcb87ce12ba85db1530da593f",
-    "notes": "Source payload for Stage-Kicad: extracted (7z -tNsis), pruned per $KicadPrune, staged at tools/kicad inside the ONE eSim installer. The installer exe itself never ships or runs."
+    "notes": "Source payload for Stage-Kicad: extracted (7z -tNsis), pruned per $KicadPrune, staged at tools/kicad inside the ONE eSim installer. The installer exe itself never ships or runs. Fetched from KiCad's GitHub release (the identical file, same sha256): downloads.kicad.org ended this 1.1 GB download early on every attempt (2026-09-30)."
   },
   "innosetup": {
     "version": "6.3.3",
@@ -63,5 +63,12 @@
     "filename": "innosetup-6.3.3.exe",
     "sha256": "0bcb2a409dea17e305a27a6b09555cabe600e984f88570ab72575cd7e93c95e6",
     "notes": "Build-machine tool only (provides ISCC.exe); nothing from it ships inside the eSim installer. Hosted on GitHub releases -- jrsoftware pruned files.jrsoftware.org/is/6/ (older point releases 404 there)."
+  },
+  "mingw_gcc": {
+    "version": "gcc 16.2.0 + mingw-w64 14.0.0 (UCRT) r2",
+    "url": "https://github.com/brechtsanders/winlibs_mingw/releases/download/16.2.0posix-14.0.0-ucrt-r2/winlibs-x86_64-posix-seh-gcc-16.2.0-mingw-w64ucrt-14.0.0-r2.zip",
+    "filename": "winlibs-x86_64-posix-seh-gcc-16.2.0-mingw-w64ucrt-14.0.0-r2.zip",
+    "sha256": "d5dbafc4a170e762ca6143151ec918fb9e2c72736fb14cd704abebc6bdd5276a",
+    "notes": "Build-machine tool only: compiles the eSim.exe launcher (gcc + windres) when MSYS2 is skipped (-SkipMsys); with MSYS2 staged its own mingw64 gcc is used instead. Nothing from it ships. sha256 matches the digest GitHub publishes for the release asset."
   }
 }

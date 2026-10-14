@@ -222,6 +222,9 @@ installer  : Inno Setup (windows/installer.iss)
     $stageWin = Join-Path $Stage 'windows'
     New-Item -ItemType Directory -Force -Path $stageWin | Out-Null
     Copy-Item (Join-Path $WinDir 'windows_bootstrap.py') (Join-Path $stageWin 'windows_bootstrap.py') -Force
+    # installer.iss runs it on uninstall (only if present) to remove the
+    # per-user config and KiCad library entries eSim added.
+    Copy-Item (Join-Path $WinDir 'uninstall_cleanup.py') (Join-Path $stageWin 'uninstall_cleanup.py') -Force
 }
 
 function Stage-Python {
@@ -312,6 +315,10 @@ function Stage-Ngspice {
             New-Item -ItemType Directory -Force -Path (Split-Path $shim) | Out-Null
             Copy-Item $dst $shim -Recurse
         }
+        # The zip's ngspice.exe is the GUI build and prints nothing on
+        # stdout; eSim's batch runs and the SKY130 smoke test need the
+        # console build, which the zip ships as ngspice_con.exe.
+        Copy-Item "$shim\bin\ngspice_con.exe" "$shim\bin\ngspice.exe" -Force
     }
 }
 
@@ -383,12 +390,18 @@ function Stage-Iverilog {
     $dst = Join-Path $Stage 'library\bin\iverilog'
     if (-not (Test-Path $dst)) {
         $tmp = Join-Path $Build 'iverilog-x'
-        # Bleyer's setup is Inno-based; 7z extracts its {app} payload.
-        & $7z x $setup "-o$tmp" -y | Out-Null
+        # Bleyer's setup is Inno Setup 6.1, which 7-Zip cannot open. Install
+        # it silently into a build dir (no tasks: no PATH change), copy the
+        # tree, then run its uninstaller so the build machine keeps no trace.
+        $p = Start-Process $setup -PassThru -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES',
+            '/NORESTART', '/NOICONS', '/TASKS=""', "/DIR=`"$tmp`""
+        $p.WaitForExit()
+        if (-not (Test-Path "$tmp\bin\iverilog.exe")) { Die "Icarus Verilog setup failed (exit $($p.ExitCode))" }
         New-Item -ItemType Directory -Force -Path $dst | Out-Null
-        $payload = if (Test-Path "$tmp\{app}") { "$tmp\{app}" } else { $tmp }
-        Copy-Item "$payload\*" $dst -Recurse -Force
-        Remove-Item $tmp -Recurse -Force
+        Copy-Item "$tmp\*" $dst -Recurse -Force -Exclude 'unins000.*'
+        $u = Start-Process "$tmp\unins000.exe" -PassThru -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART'
+        $u.WaitForExit()
+        Remove-Item $tmp -Recurse -Force -ErrorAction SilentlyContinue
     }
     if (-not (Test-Path "$dst\bin\iverilog.exe")) { Die 'iverilog.exe not staged' }
 }
@@ -986,7 +999,14 @@ function Stage-Launcher {
         $gcc = (Get-Command gcc -ErrorAction SilentlyContinue).Source
     }
     if (-not $gcc) {
-        Die 'no gcc found for the eSim.exe launcher (stage MSYS2 first, or put a mingw-w64 gcc on PATH)'
+        # -SkipMsys: no MSYS2 gcc. Use the pinned standalone mingw-w64 gcc
+        # (build-machine tool only, nothing from it ships).
+        $gccDir = Join-Path $Build 'mingw64'
+        if (-not (Test-Path "$gccDir\bin\gcc.exe")) {
+            & $7z x (Get-Dep 'mingw_gcc') "-o$Build" -y | Out-Null
+        }
+        $gcc = "$gccDir\bin\gcc.exe"
+        if (-not (Test-Path $gcc)) { Die 'pinned mingw-w64 gcc did not unpack' }
     }
     $bindir = Split-Path $gcc
     $res = Join-Path $Build 'esim_launcher.res.o'
