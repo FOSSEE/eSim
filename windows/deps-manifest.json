@@ -63,5 +63,12 @@
     "filename": "innosetup-6.3.3.exe",
     "sha256": "0bcb2a409dea17e305a27a6b09555cabe600e984f88570ab72575cd7e93c95e6",
     "notes": "Build-machine tool only (provides ISCC.exe); nothing from it ships inside the eSim installer. Hosted on GitHub releases -- jrsoftware pruned files.jrsoftware.org/is/6/ (older point releases 404 there)."
+  },
+  "ollama_setup": {
+    "version": "0.34.4",
+    "url": "https://github.com/ollama/ollama/releases/download/v0.34.4/OllamaSetup.exe",
+    "filename": "OllamaSetup.exe",
+    "sha256": "4a6514323eb8c131f6c8bb651b4fe2edf5f1525f4fd8b84315ba20f1af3e210f",
+    "notes": "NOT used by the build and never bundled (1.5 GB). Downloaded at INSTALL time by windows/install_ai_assistant.py when the user ticks the optional 'eSim AI Assistant' task, which refuses to run it unless this sha256 matches. Hash cross-checked against the release's own sha256sum.txt and GitHub's asset digest (2026-09-29)."
   }
 }

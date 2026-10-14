@@ -1,0 +1,10 @@
+# eSim AI Assistant -- optional. The installers' AI Assistant step installs
+# these into eSim's own Python environment; the Ollama runtime and its models
+# are installed separately (https://ollama.com).
+#
+# The chat window uses only these two. The retrieval, OCR and offline-speech
+# modules in src/chatbot (knowledge_base, image_handler, stt_handler) are not
+# called by the window and need chromadb, paddleocr and vosk, which do not
+# install on the Python versions eSim 2.6 supports; they are not listed here.
+ollama>=0.3
+SpeechRecognition>=3.10

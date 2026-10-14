@@ -134,6 +134,11 @@ flowchart LR
   browser-plugin bridge behind **Edit in Makerchip IDE**, including file sync,
   conflict handling, loopback security and the boundary between Makerchip and
   eSim Verify/Convert.
+- [`docs/AI_ASSISTANT.md`](docs/AI_ASSISTANT.md) — the optional local AI
+  Assistant (Ollama): installing, using and troubleshooting it. Developer
+  notes — how it hooks into the main window, Project Explorer and simulation
+  errors, the theme gotcha, models and packaging — are in
+  [`src/chatbot/README_CHATBOT.md`](src/chatbot/README_CHATBOT.md).
 - [`docs/UPSTREAM_DECISIONS.md`](docs/UPSTREAM_DECISIONS.md) — the defects in
   eSim's core converter and the NgVeri backend that are **measured, fixed, and
   deliberately switched off**, because turning them on would change results
