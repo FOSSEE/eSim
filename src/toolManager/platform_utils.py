@@ -13,7 +13,7 @@ Exports
 IS_WINDOWS               bool
 IS_LINUX                 bool
 IS_MAC                   bool
-get_msys32_path()         Path   (Windows only: default C:\\msys64)
+get_mysys2_path()         Path   (Windows only: default C:\\msys64)
 subprocess_flags()       dict   (suppress console window on Windows)
 detect_package_manager() str | None
 distro_label()           str
@@ -33,7 +33,7 @@ __author__  = "Eashan Hasija"
 
 __all__ = [
     "IS_WINDOWS", "IS_LINUX", "IS_MAC",
-    "get_mysys32_path",
+    "get_mysys2_path",
     "subprocess_flags",
     "detect_package_manager",
     "distro_label",
@@ -51,7 +51,7 @@ IS_MAC:     bool = sys.platform == "darwin"
 # Centralised here as the single place to change if the path changes.
 def get_mysys2_path() -> Path:
     if not IS_WINDOWS:
-        return RuntimeError("get_MSYS2_path() is only valid for Windows")
+        raise RuntimeError("get_MSYS2_path() is only valid for Windows")
     import os
     return Path(os.environ.get("MSYS2_PATH", r"C:\msys64"))
 
