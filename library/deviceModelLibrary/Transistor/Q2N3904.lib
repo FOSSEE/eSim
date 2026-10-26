@@ -1,0 +1,1 @@
+.MODEL Q2N3904 NPN( Is=14.34f  Xti=3  Eg=1.11  Vaf=120 Bf=350 Ne=1.307  Ise=14.34f  Ikf=0.07 Xtb=1.5  Br=6.092  Nc=2  Isc=0  Ikr=0  Rc=1  Cjc=7.306p  Mjc=.3416  Vjc=.75  Fc=.5  Cje=9.5 Mje=.377  Vje=.75  Tr=120n Tf=411.1p  Itf=.6  Vtf=1.7  Xtf=3  Rb=10  Re=0.5 )

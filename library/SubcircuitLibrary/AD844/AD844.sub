@@ -1,0 +1,30 @@
+* Subcircuit AD844
+.subckt AD844 unconnected-_u1-pad1_ net-_qn4-pad3_ net-_qn3-pad3_ net-_qn1-pad3_ net-_qn7-pad1_ net-_qn11-pad3_ net-_qn11-pad1_ unconnected-_u1-pad8_ 
+.title kicad schematic
+qn9 net-_qn11-pad1_ net-_qn7-pad1_ net-_qn10-pad1_ npn
+qn10 net-_qn10-pad1_ net-_qn10-pad2_ net-_qn1-pad3_ npn
+qp11 net-_qn1-pad3_ net-_qn10-pad1_ net-_qn11-pad3_ pnp
+r2 gnd net-_qn7-pad1_ 1k
+qp9 net-_qn11-pad2_ net-_qp5-pad2_ net-_qn11-pad1_ pnp
+qp10 net-_qn1-pad3_ net-_qn7-pad1_ net-_qn11-pad2_ pnp
+qn11 net-_qn11-pad1_ net-_qn11-pad2_ net-_qn11-pad3_ npn
+qn1 net-_qn1-pad1_ net-_qn1-pad1_ net-_qn1-pad3_ npn
+qp1 net-_qp1-pad1_ net-_qp1-pad1_ net-_qn11-pad1_ pnp
+qp2 net-_qn3-pad1_ net-_qp1-pad1_ net-_qn11-pad1_ pnp
+r1 net-_qp1-pad1_ net-_qn1-pad1_ 28.6k
+qp8 net-_qn7-pad1_ net-_qn4-pad1_ net-_qp5-pad2_ pnp
+qp7 net-_qp5-pad2_ net-_qp5-pad2_ net-_qn11-pad1_ pnp
+qn4 net-_qn4-pad1_ net-_qn3-pad1_ net-_qn4-pad3_ npn
+qn3 net-_qn3-pad1_ net-_qn3-pad1_ net-_qn3-pad3_ npn
+qp6 net-_qn4-pad1_ net-_qn4-pad1_ net-_qp5-pad1_ pnp
+qp5 net-_qp5-pad1_ net-_qp5-pad2_ net-_qn11-pad1_ pnp
+qp4 net-_qn5-pad1_ net-_qn2-pad1_ net-_qn4-pad3_ pnp
+qn2 net-_qn2-pad1_ net-_qn1-pad1_ net-_qn1-pad3_ npn
+qp3 net-_qn2-pad1_ net-_qn2-pad1_ net-_qn3-pad3_ pnp
+qn5 net-_qn5-pad1_ net-_qn5-pad1_ net-_qn5-pad3_ npn
+qn7 net-_qn7-pad1_ net-_qn5-pad1_ net-_qn10-pad2_ npn
+qn8 net-_qn10-pad2_ net-_qn10-pad2_ net-_qn1-pad3_ npn
+qn6 net-_qn5-pad3_ net-_qn10-pad2_ net-_qn1-pad3_ npn
+* Control Statements
+
+.ends AD844

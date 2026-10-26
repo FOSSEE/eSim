@@ -1,0 +1,62 @@
+* Subcircuit CA3260
+.subckt CA3260 net-_m7-pad1_ net-_d4-pad2_ net-_d1-pad2_ net-_m10-pad3_ net-_d8-pad2_ net-_d5-pad2_ net-_m10-pad1_ net-_m1-pad3_ 
+.title kicad schematic
+.include D.lib
+.include PMOS-180nm.lib
+.include NPN.lib
+.include NMOS-180nm.lib
+m4 net-_d2-pad2_ net-_m1-pad1_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+d4 net-_d3-pad1_ net-_d4-pad2_ 1N4148
+r7 net-_c1-pad1_ net-_m6-pad1_ 2k
+d3 net-_d3-pad1_ net-_d2-pad2_ 1N4148
+m6 net-_m6-pad1_ net-_m1-pad1_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+r5 net-_c1-pad2_ net-_m5-pad1_ 1k
+q5 net-_c1-pad2_ net-_m3-pad1_ net-_q5-pad3_ Q2N2222
+m5 net-_m5-pad1_ net-_d4-pad2_ net-_d2-pad2_ net-_d2-pad2_ CMOSP W=100u L=100u M=1
+c1 net-_c1-pad1_ net-_c1-pad2_ 30p
+r3 net-_q4-pad1_ net-_m3-pad1_ 1k
+m3 net-_m3-pad1_ net-_d1-pad2_ net-_d2-pad2_ net-_d2-pad2_ CMOSP W=100u L=100u M=1
+r6 net-_m7-pad3_ net-_q5-pad3_ 1k
+d2 net-_d1-pad1_ net-_d2-pad2_ 1N4148
+m2 net-_m2-pad1_ net-_m1-pad1_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+d1 net-_d1-pad1_ net-_d1-pad2_ 1N4148
+m1 net-_m1-pad1_ net-_m1-pad1_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+q1 net-_m1-pad3_ net-_m1-pad1_ net-_q1-pad3_ Q2N2222
+q3 net-_m2-pad1_ net-_m2-pad1_ net-_m7-pad3_ Q2N2222
+q2 net-_m1-pad1_ net-_m2-pad1_ net-_q2-pad3_ Q2N2222
+r1 net-_m7-pad3_ net-_q1-pad3_ 200k
+r2 net-_m7-pad3_ net-_q2-pad3_ 300k
+q4 net-_q4-pad1_ net-_m3-pad1_ net-_q4-pad3_ Q2N2222
+r4 net-_m7-pad3_ net-_q4-pad3_ 1k
+q6 net-_m6-pad1_ net-_c1-pad2_ net-_m7-pad3_ Q2N2222
+m7 net-_m7-pad1_ net-_m6-pad1_ net-_m7-pad3_ net-_m7-pad3_ CMOSN W=100u L=100u M=1
+m10 net-_m10-pad1_ net-_m10-pad2_ net-_m10-pad3_ net-_m10-pad3_ CMOSN W=100u L=100u M=1
+m9 net-_m10-pad1_ net-_m10-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+m8 net-_m7-pad1_ net-_m6-pad1_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+m11 net-_m10-pad2_ net-_m11-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+r8 net-_c2-pad1_ net-_m10-pad2_ 2k
+d5 net-_d5-pad1_ net-_d5-pad2_ 1N4148
+c2 net-_c2-pad1_ net-_c2-pad2_ 30p
+q7 net-_m10-pad2_ net-_c2-pad2_ net-_m10-pad3_ Q2N2222
+m13 net-_d6-pad2_ net-_m11-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+d6 net-_d5-pad1_ net-_d6-pad2_ 1N4148
+q8 net-_c2-pad2_ net-_m14-pad1_ net-_q8-pad3_ Q2N2222
+r10 net-_m10-pad3_ net-_q8-pad3_ 1k
+r11 net-_q9-pad1_ net-_m14-pad1_ 1k
+q9 net-_q9-pad1_ net-_m14-pad1_ net-_q9-pad3_ Q2N2222
+m12 net-_m12-pad1_ net-_d5-pad2_ net-_d6-pad2_ net-_d6-pad2_ CMOSP W=100u L=100u M=1
+r9 net-_c2-pad2_ net-_m12-pad1_ 1k
+m14 net-_m14-pad1_ net-_d8-pad2_ net-_d6-pad2_ net-_d6-pad2_ CMOSP W=100u L=100u M=1
+r13 net-_m10-pad3_ net-_q11-pad3_ 300k
+r14 net-_m10-pad3_ net-_q12-pad3_ 200k
+r12 net-_m10-pad3_ net-_q9-pad3_ 1k
+m16 net-_m11-pad2_ net-_m11-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+d7 net-_d7-pad1_ net-_d6-pad2_ 1N4148
+m15 net-_m15-pad1_ net-_m11-pad2_ net-_m1-pad3_ net-_m1-pad3_ CMOSP W=100u L=100u M=1
+d8 net-_d7-pad1_ net-_d8-pad2_ 1N4148
+q10 net-_m15-pad1_ net-_m15-pad1_ net-_m10-pad3_ CMOSP
+q12 net-_m1-pad3_ net-_m11-pad2_ net-_q12-pad3_ CMOSP
+q11 net-_m11-pad2_ net-_m15-pad1_ net-_q11-pad3_ Q2N2222
+* Control Statements
+
+.ends CA3260
