@@ -1,0 +1,10 @@
+* Parameterized components edge case test
+.subckt param_test IN OUT VDD GND
+Xinv1 IN net1 VDD GND sky130_fd_sc_hd__inv_1
+Xbuf1 net1 OUT VDD GND sky130_fd_sc_hd__buf_4
+R1 IN net1 R=1k
+C1 net1 GND C=10f
+M1 OUT IN GND GND nmos W=0.5u L=0.18u
+.ends param_test
+Vvdd VDD GND 1.8
+.end

@@ -1,0 +1,11 @@
+* Basic logic gates test
+.subckt basic_gates A B C OUT VDD GND
+Xinv1 A net1 VDD GND sky130_fd_sc_hd__inv_1
+Xnand1 A B net2 VDD GND sky130_fd_sc_hd__nand2_1
+Xnor1 A B net3 VDD GND sky130_fd_sc_hd__nor2_1
+Xand1 net1 net2 net4 VDD GND sky130_fd_sc_hd__and2_2
+Xor1 net3 net4 OUT VDD GND sky130_fd_sc_hd__or2_2
+.ends basic_gates
+Vvdd VDD GND 1.8
+Vgnd GND 0 0
+.end
