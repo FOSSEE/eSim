@@ -1,0 +1,50 @@
+* Subcircuit LM307
+.subckt LM307 net-_q1-pad2_ net-_q9-pad2_ net-_j1-pad1_ net-_j1-pad2_ net-_c2-pad1_ ? ? ? 
+* c:\fossee\esim\library\subcircuitlibrary\lm307\lm307.cir
+.include NPN.lib
+.include PNP.lib
+.include NJF.lib
+q1 net-_j1-pad1_ net-_q1-pad2_ net-_q1-pad3_ Q2N2222
+q9 net-_j1-pad1_ net-_q9-pad2_ net-_q10-pad3_ Q2N2222
+q2 net-_q2-pad1_ net-_q10-pad2_ net-_q1-pad3_ Q2N2907A
+q5 net-_q10-pad2_ net-_q10-pad2_ net-_q1-pad3_ Q2N2907A
+q10 net-_c1-pad2_ net-_q10-pad2_ net-_q10-pad3_ Q2N2907A
+q7 net-_q10-pad2_ net-_q10-pad2_ net-_q10-pad3_ Q2N2907A
+q18 net-_q18-pad1_ net-_q13-pad1_ net-_j1-pad1_ Q2N2907A
+q17 net-_q13-pad1_ net-_q13-pad1_ net-_j1-pad1_ Q2N2907A
+q4 net-_q13-pad1_ net-_q2-pad1_ net-_q11-pad2_ Q2N2222
+q3 net-_q2-pad1_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+r1  net-_q11-pad2_ net-_q11-pad3_ 40k
+q11 net-_c1-pad2_ net-_q11-pad2_ net-_q11-pad3_ Q2N2222
+q6 net-_q10-pad2_ net-_q6-pad2_ net-_q6-pad3_ Q2N2222
+q8 net-_q13-pad1_ net-_q12-pad1_ net-_q6-pad2_ Q2N2222
+r2  net-_q6-pad3_ net-_r2-pad2_ 5k
+r3  net-_q6-pad2_ net-_r2-pad2_ 20k
+r4  net-_r2-pad2_ net-_j1-pad2_ 250
+r7  net-_q14-pad1_ net-_c1-pad2_ 120
+j1 net-_j1-pad1_ net-_j1-pad2_ net-_j1-pad3_ J2N3819
+r5  net-_j1-pad3_ net-_q12-pad1_ 450
+q12 net-_q12-pad1_ net-_q12-pad2_ net-_j1-pad2_ Q2N2222
+q13 net-_q13-pad1_ net-_j1-pad3_ net-_q12-pad2_ Q2N2222
+r6  net-_q12-pad2_ net-_j1-pad2_ 10k
+c1  net-_c1-pad1_ net-_c1-pad2_ 30p
+q14 net-_q14-pad1_ net-_q11-pad3_ net-_j1-pad2_ Q2N2222
+q15 net-_q13-pad1_ net-_q14-pad1_ net-_q15-pad3_ Q2N2222
+r8  net-_q11-pad3_ net-_q15-pad3_ 40k
+q16 net-_q16-pad1_ net-_q15-pad3_ net-_q11-pad3_ Q2N2222
+q19 net-_q18-pad1_ net-_q18-pad1_ net-_q19-pad3_ Q2N2222
+q21 net-_q18-pad1_ net-_q21-pad2_ net-_c2-pad1_ Q2N2222
+q23 net-_j1-pad1_ net-_q18-pad1_ net-_q21-pad2_ Q2N2222
+r13  net-_c2-pad1_ net-_q21-pad2_ 25
+c2  net-_c2-pad1_ net-_c1-pad1_ 2p
+r14  net-_q22-pad3_ net-_q21-pad2_ 65
+r12  net-_c1-pad1_ net-_q22-pad3_ 7.5k
+r9  net-_c1-pad1_ net-_q16-pad1_ 620
+q20 net-_j1-pad2_ net-_q16-pad1_ net-_q19-pad3_ Q2N2907A
+q22 net-_q22-pad1_ net-_q16-pad1_ net-_q22-pad3_ Q2N2907A
+q24 net-_q22-pad3_ net-_q22-pad1_ net-_j1-pad2_ Q2N2222
+r10  net-_q22-pad1_ net-_q11-pad3_ 80k
+r11  net-_q11-pad3_ net-_j1-pad2_ 650
+* Control Statements
+
+.ends LM307
