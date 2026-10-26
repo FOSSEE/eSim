@@ -1,0 +1,15 @@
+* C:\FOSSEE\eSim\library\SubcircuitLibrary\UAF42\UAF42.cir
+
+* EESchema Netlist Version 1.1 (Spice format) creation date: 8/9/2022 8:56:37 PM
+
+* To exclude a component from the Spice Netlist add [Spice_Netlist_Enabled] user FIELD set to: N
+* To reorder the component spice node sequence add [Spice_Node_Sequence] user FIELD and define sequence: 2,1,0
+
+* Sheet Name: /
+X1  ? ? ? ? ? ? ? ? lm_741		
+X2  ? ? ? ? ? ? ? ? lm_741		
+X3  ? ? ? ? ? ? ? ? lm_741		
+R2  ? ? resistor		
+R1  ? ? resistor		
+
+.end
