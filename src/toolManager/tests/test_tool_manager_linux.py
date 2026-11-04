@@ -24,22 +24,24 @@ def tml(fresh_import, monkeypatch):
 class FakeSystem:
     """Stands in for the package manager, elevation and installed-tool lookup."""
 
-    def __init__(self, mod, monkeypatch, pm="apt", rc=0):
+    def __init__(self, mod, monkeypatch, pm="apt", rc=0, fake_lock=True):
         self.pm = pm
         self.rc = rc                  # exit code of the elevated command
         self.installed = {}           # tool -> location
         self.commands = []            # every elevated command, in order
         self.streamed = []            # every non-elevated command (_stream)
-        self.locks = []               # pm passed to _apt_lock
+        self.events = []              # "run" and lock events, in order
 
         monkeypatch.setattr(mod, "detect_package_manager", lambda: self.pm)
         monkeypatch.setattr(mod, "_run_elevated", self._run_elevated)
         monkeypatch.setattr(mod, "_stream", self._stream)
         monkeypatch.setattr(mod, "_find_installed", self.installed.get)
-        monkeypatch.setattr(mod, "_apt_lock", self._apt_lock)
+        if fake_lock:
+            monkeypatch.setattr(mod, "_apt_lock", self._apt_lock)
 
     def _run_elevated(self, args):
         self.commands.append(list(args))
+        self.events.append("run")
         return self.rc
 
     def _stream(self, args):
@@ -48,7 +50,6 @@ class FakeSystem:
 
     @contextlib.contextmanager
     def _apt_lock(self, pm="apt"):
-        self.locks.append(pm)
         yield
 
 
@@ -60,34 +61,67 @@ def status_lines(out):
 # --------------------------------------------------------------------------- #
 #  Package selection and command construction
 # --------------------------------------------------------------------------- #
+# Expected commands are written out by hand (not read from PACKAGE_MAP /
+# INSTALL_CMD), so a wrong package name or flag in the module is caught.
+INSTALL_CASES = [
+    ("apt", "kicad", ["apt-get", "install", "-y", "kicad", "kicad-footprints",
+                      "kicad-libraries", "kicad-symbols", "kicad-templates"]),
+    ("apt", "llvm", ["apt-get", "install", "-y", "clang", "llvm"]),
+    ("dnf", "llvm", ["dnf", "install", "-y", "clang", "llvm-devel"]),
+    ("yum", "ngspice", ["yum", "install", "-y", "ngspice"]),
+    ("pacman", "kicad", ["pacman", "-S", "--noconfirm", "kicad",
+                         "kicad-library", "kicad-library-3d"]),
+    ("zypper", "verilator", ["zypper", "install", "--non-interactive",
+                             "verilator"]),
+]
+
+UNINSTALL_CASES = [
+    ("apt", "kicad", ["apt-get", "remove", "-y", "--autoremove", "kicad",
+                      "kicad-footprints", "kicad-libraries", "kicad-symbols",
+                      "kicad-templates"]),
+    ("dnf", "llvm", ["dnf", "remove", "-y", "clang", "llvm-devel"]),
+    ("yum", "kicad", ["yum", "remove", "-y", "kicad"]),
+    ("pacman", "ghdl", ["pacman", "-Rs", "--noconfirm", "ghdl"]),
+    ("zypper", "ngspice", ["zypper", "remove", "--non-interactive",
+                           "--clean-deps", "ngspice"]),
+]
+
+PM_BINARY = {"apt": "apt-get", "dnf": "dnf", "yum": "yum",
+             "pacman": "pacman", "zypper": "zypper"}
 SUPPORTED = [(pm, tool) for pm in ("apt", "dnf", "pacman", "zypper")
              for tool in ("kicad", "ngspice", "ghdl", "verilator", "llvm")]
 
 
-@pytest.mark.parametrize("pm,tool", SUPPORTED)
-def test_install_builds_command_from_package_map(tml, monkeypatch, capsys,
-                                                 pm, tool):
+@pytest.mark.parametrize("pm,tool,expected", INSTALL_CASES)
+def test_install_command(tml, monkeypatch, capsys, pm, tool, expected):
     fs = FakeSystem(tml, monkeypatch, pm=pm)
     fs.installed[tool] = f"/usr/bin/{tool}"
 
-    rc = tml.install_tool(tool, "latest")
-
-    assert rc == tml.EXIT_OK
-    assert fs.commands == [tml.INSTALL_CMD[pm] + tml.PACKAGE_MAP[pm][tool]]
+    assert tml.install_tool(tool, "latest") == tml.EXIT_OK
+    assert fs.commands == [expected]
     assert status_lines(capsys.readouterr().out) == [
         f"installed|{tool}|/usr/bin/{tool}"]
 
 
-@pytest.mark.parametrize("pm,tool", SUPPORTED)
-def test_uninstall_builds_command_from_package_map(tml, monkeypatch, capsys,
-                                                   pm, tool):
+@pytest.mark.parametrize("pm,tool,expected", UNINSTALL_CASES)
+def test_uninstall_command(tml, monkeypatch, capsys, pm, tool, expected):
     fs = FakeSystem(tml, monkeypatch, pm=pm)   # tool absent after removal
 
-    rc = tml.uninstall_tool(tool, "none")
-
-    assert rc == tml.EXIT_OK
-    assert fs.commands == [tml.UNINSTALL_CMD[pm] + tml.PACKAGE_MAP[pm][tool]]
+    assert tml.uninstall_tool(tool, "none") == tml.EXIT_OK
+    assert fs.commands == [expected]
     assert status_lines(capsys.readouterr().out) == [f"not_installed|{tool}|none"]
+
+
+@pytest.mark.parametrize("pm,tool", SUPPORTED)
+def test_every_supported_tool_installs_and_uninstalls(tml, monkeypatch, pm, tool):
+    """Breadth check: each tool these managers support runs exactly one
+    command with that manager and reports success."""
+    fs = FakeSystem(tml, monkeypatch, pm=pm)
+    fs.installed[tool] = f"/usr/bin/{tool}"
+    assert tml.install_tool(tool, "latest") == tml.EXIT_OK
+    fs.installed.clear()
+    assert tml.uninstall_tool(tool, "none") == tml.EXIT_OK
+    assert [c[0] for c in fs.commands] == [PM_BINARY[pm]] * 2
 
 
 def test_package_map_and_commands_cover_the_same_managers(tml):
@@ -101,14 +135,40 @@ def test_update_uses_the_install_command(tml, monkeypatch):
     assert fs.commands == [["dnf", "install", "-y", "ngspice"]]
 
 
-def test_package_manager_command_runs_inside_the_apt_lock(tml, monkeypatch):
-    fs = FakeSystem(tml, monkeypatch, pm="pacman")
-    fs.installed["ghdl"] = "/usr/bin/ghdl"
-    tml.install_tool("ghdl", "latest")
-    fs.installed.clear()
-    tml.uninstall_tool("ghdl", "none")
-    # _apt_lock itself decides to no-op for non-apt managers (tested below).
-    assert fs.locks == ["pacman", "pacman"]
+class TestCommandsRunInsideAptLock:
+    """Uses the REAL _apt_lock with a fake fcntl, and checks the package
+    command runs after the lock is taken and before it is released."""
+
+    @pytest.fixture
+    def fs(self, tml, monkeypatch, tmp_path):
+        fs = FakeSystem(tml, monkeypatch, fake_lock=False)
+        fake_fcntl = types.SimpleNamespace(
+            LOCK_EX="lock", LOCK_UN="unlock",
+            flock=lambda f, op: fs.events.append(op))
+        monkeypatch.setitem(sys.modules, "fcntl", fake_fcntl)
+        monkeypatch.setattr(tml, "_APT_LOCK_FILE", str(tmp_path / "apt.lock"))
+        return fs
+
+    def test_apt_install(self, tml, fs):
+        fs.installed["ghdl"] = "/usr/bin/ghdl"
+        tml.install_tool("ghdl", "latest")
+        assert fs.events == ["lock", "run", "unlock"]
+
+    def test_apt_uninstall(self, tml, fs):
+        tml.uninstall_tool("ghdl", "none")
+        assert fs.events == ["lock", "run", "unlock"]
+
+    def test_lock_released_when_command_fails(self, tml, fs):
+        fs.rc = 100
+        tml.install_tool("ghdl", "latest")
+        assert fs.events == ["lock", "run", "unlock"]
+
+    @pytest.mark.parametrize("pm", ["dnf", "pacman", "zypper", "yum"])
+    def test_other_managers_are_not_locked(self, tml, fs, pm):
+        fs.pm = pm
+        fs.installed["ngspice"] = "/usr/bin/ngspice"
+        tml.install_tool("ngspice", "latest")
+        assert fs.events == ["run"]
 
 
 # --------------------------------------------------------------------------- #
