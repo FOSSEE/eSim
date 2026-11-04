@@ -111,6 +111,7 @@ def run_cmd_stream(cmd, timeout=900, cwd=None, env=None):
             proc.wait()
         finally:
             timer.cancel()
+            proc.stdout.close()
 
         return proc.returncode, "\n".join(output_lines)
 

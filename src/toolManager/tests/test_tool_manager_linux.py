@@ -436,6 +436,33 @@ class TestElevation:
         assert tml._which_native("ghdl") == "/usr/bin/ghdl"
 
 
+class TestStream:
+    """_stream runs a real (harmless) Python subprocess."""
+
+    def test_streams_output_and_returns_exit_code(self, tml, capsys):
+        rc = tml._stream([sys.executable, "-c",
+                          "print('hello'); print(); raise SystemExit(4)"])
+        assert rc == 4
+        assert capsys.readouterr().out.splitlines() == ["hello"]
+
+    def test_closes_its_output_pipe(self, tml, monkeypatch):
+        """Regression: the pipe was left open (ResourceWarning on cleanup)."""
+        procs = []
+        real_popen = subprocess.Popen
+
+        def recording_popen(*args, **kwargs):
+            procs.append(real_popen(*args, **kwargs))
+            return procs[-1]
+
+        monkeypatch.setattr(tml.subprocess, "Popen", recording_popen)
+        tml._stream([sys.executable, "-c", "print('x')"])
+        assert procs[0].stdout.closed
+
+    def test_missing_command(self, tml, capsys):
+        assert tml._stream(["definitely-not-a-real-command-xyz"]) == 1
+        assert "[ERROR] Command not found" in capsys.readouterr().out
+
+
 class TestAptLock:
     def test_non_apt_managers_do_not_lock(self, tml, monkeypatch):
         # Would fail if it tried to import fcntl or open the lock file.

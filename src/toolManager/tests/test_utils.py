@@ -122,3 +122,18 @@ def test_run_cmd_stream_streams_and_collects_output(utils_linux, capsys):
 def test_run_cmd_stream_missing_command(utils_linux):
     rc, out = utils_linux.run_cmd_stream(["definitely-not-a-real-command-xyz"])
     assert rc == -1 and out
+
+
+def test_run_cmd_stream_closes_its_output_pipe(utils_linux, monkeypatch):
+    """Regression: the pipe was left open, which surfaced as a
+    ResourceWarning (and a failure under -W error) when it was collected."""
+    procs = []
+    real_popen = subprocess.Popen
+
+    def recording_popen(*args, **kwargs):
+        procs.append(real_popen(*args, **kwargs))
+        return procs[-1]
+
+    monkeypatch.setattr(utils_linux.subprocess, "Popen", recording_popen)
+    utils_linux.run_cmd_stream([sys.executable, "-c", "print('x')"], timeout=60)
+    assert procs[0].stdout.closed

@@ -161,10 +161,11 @@ def _stream(args: list) -> int:
             encoding="utf-8",
             errors="ignore",
         )
-        for line in proc.stdout:
-            line = line.rstrip()
-            if line:
-                print(line, flush=True)
+        with proc.stdout:
+            for line in proc.stdout:
+                line = line.rstrip()
+                if line:
+                    print(line, flush=True)
         proc.wait()
         return proc.returncode
     except FileNotFoundError:
