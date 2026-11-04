@@ -20,10 +20,8 @@ _local_path = str(Path(__file__).resolve().parent)
 if _local_path not in sys.path:
     sys.path.insert(0, _local_path)
 
-try:
-    MSYS2_PATH = get_mysys2_path();
-except RuntimeError as e:
-    print(e)
+# MSYS2 only exists on Windows; this backend is only run there.
+MSYS2_PATH = get_mysys2_path() if IS_WINDOWS else None
 
 from utils import (
     run_cmd_safe, run_cmd_stream, which, print_status,
