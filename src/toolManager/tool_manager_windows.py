@@ -155,9 +155,11 @@ def find_kicad_fixed(version=None):
                                         dv  = winreg.QueryValueEx(sk, "DisplayVersion")[0]
                                         loc = winreg.QueryValueEx(sk, "InstallLocation")[0]
                                         exe = os.path.join(loc, "bin", "kicad.exe")
+                                        if not os.path.isfile(exe):
+                                            continue    # stale entry: KiCad was removed or moved
                                         major = dv.split(".")[0] if dv else "unknown"
                                         if version is None or str(version) in ("latest", major):
-                                            return (exe if os.path.exists(exe) else loc), dv
+                                            return exe, dv
                             except OSError:
                                 pass
                 except OSError:
@@ -168,33 +170,42 @@ def find_kicad_fixed(version=None):
     ep = which("kicad") or which("kicad.exe")
     return (ep, "unknown") if ep else (None, None)
 
+def _choco_installed_version(package):
+    """Version of *package* that Chocolatey installed on THIS machine, or None.
+
+    Chocolatey 2.x "choco list" only lists local packages. On 1.x the same
+    command searches the online feed, and local packages need --local-only.
+    When the Chocolatey version is unclear or the query fails, return None
+    instead of guessing.
+    """
+    choco_exe, choco_version = find_chocolatey(None)
+    major = re.match(r"(\d+)\.", choco_version or "")
+    if not choco_exe or not major:
+        return None
+    cmd = [choco_exe, "list", "--exact", package, "--limit-output"]
+    if int(major.group(1)) < 2:
+        cmd.insert(2, "--local-only")
+    result = run_cmd_safe(cmd, timeout=15)
+    if not result or result.returncode != 0:
+        return None
+    for line in result.stdout.splitlines():
+        name, sep, found = line.strip().partition("|")
+        if sep and found and name.lower() == package.lower():
+            return found
+    return None
+
+
 def find_ngspice_safe(version=None):
-    choco = which("choco") or which("choco.exe")
-    if choco:
-        try:
-            for choco_cmd in [
-                [choco, "list", "--exact", "ngspice"],
-                [choco, "list", "--local-only", "--exact", "ngspice"],
-            ]:
-                result = run_cmd_safe(choco_cmd, timeout=15)
-                if result and result.returncode == 0:
-                    for line in result.stdout.splitlines():
-                        m = re.match(r'ngspice\s+(\S+)', line, re.IGNORECASE)
-                        if m:
-                            found_ver = m.group(1)
-                            exe = _find_ngspice_exe()
-                            if version is None or found_ver.startswith(str(version)):
-                                return exe or "ngspice", found_ver
-                            return exe or "ngspice", found_ver
-                    break 
-        except Exception:
-            pass
+    """Return (exe, version) of the ngspice executable on this machine.
 
+    A Chocolatey record alone is not proof of an installation: without an
+    executable this returns (None, None). The version is Chocolatey's local
+    record, or "unknown" (ngspice.exe itself is not run to ask).
+    """
     exe = _find_ngspice_exe()
-    if exe:
-        return exe, "unknown"
-
-    return None, None
+    if not exe:
+        return None, None
+    return exe, _choco_installed_version("ngspice") or "unknown"
 
 
 def _find_ngspice_exe():
@@ -296,7 +307,7 @@ def get_msys2_env():
     if msys_bin: paths.append(str(msys_bin))
     msys_root = MSYS2_PATH
     if msys_root:
-        usr_bin = msys_root.parent / "usr" / "bin"
+        usr_bin = msys_root / "usr" / "bin"
         if usr_bin.exists(): paths.append(str(usr_bin))
     if paths:
         env["PATH"] = os.pathsep.join(paths) + os.pathsep + env.get("PATH", "")
@@ -464,11 +475,10 @@ def check_kicad(target_version):
 def install_kicad(target_version, upgrade=False):
     # The install paths below start with cleanup_kicad(), which removes the
     # existing KiCad. Never do that just to reinstall the version already there.
-    # find_kicad_fixed() can return a registry InstallLocation whose folder no
-    # longer exists, so only skip when an actual kicad.exe file is present.
+    # (find_kicad_fixed() only reports a kicad.exe that exists.)
     if not upgrade:
         exe, current = find_kicad_fixed(None)
-        if exe and os.path.isfile(exe) and _version_satisfies(current, target_version):
+        if exe and _version_satisfies(current, target_version):
             print(f"[OK] KiCad {current} is already installed")
             print_status("installed", current, target_version)
             return
@@ -554,14 +564,7 @@ def install_kicad(target_version, upgrade=False):
             installation_success = True
             break
         
-        check_paths = [
-            (r"C:\Program Files\KiCad\9.0\bin\kicad.exe", "9"),
-            (r"C:\Program Files\KiCad\8.0\bin\kicad.exe", "8"),
-            (r"C:\Program Files\KiCad\7.0\bin\kicad.exe", "7"),
-            (r"C:\Program Files\KiCad\6.0\bin\kicad.exe", "6"),
-        ]
-        
-        for path, ver in check_paths:
+        for path, ver in WIN_KICAD_PATHS:
             if os.path.exists(path):
                 print(f"[SUCCESS] Found KiCad at: {path}")
                 print_status("installed", f"{ver}.x", target_version)
@@ -737,14 +740,28 @@ def _version_satisfies(installed, target_version):
     return installed == target_version or installed.startswith(f"{target_version}.")
 
 
+def _report_install_result(tool, exe, found, target_version, missing="not_found"):
+    """Print the final status once the install command itself succeeded.
+
+    Success needs an executable on disk, and a known version that differs
+    from the one requested counts as a failure. An unknown version is
+    reported as "unknown", never as the requested one.
+    """
+    if not exe:
+        print(f"[ERROR] {tool} not found after installation")
+        print_status("install_failed", missing, target_version)
+    elif found not in (None, "unknown") and not _version_satisfies(found, target_version):
+        print(f"[ERROR] {tool} {found} is installed, not {target_version}")
+        print_status("install_failed", f"version_{found}", target_version)
+    else:
+        print(f"[OK] {tool} {found or 'unknown'} installed successfully")
+        print_status("installed", found or "unknown", target_version)
+
+
 def install_ngspice(target_version, upgrade=False):
     if not upgrade:
-        # find_ngspice_safe() also reports a version when "choco list" prints
-        # a matching line, even if no ngspice.exe exists (on Chocolatey 1.x
-        # that command lists the online feed). Only skip when the executable
-        # itself is present.
-        _, current = find_ngspice_safe(None)
-        if _find_ngspice_exe() and _version_satisfies(current, target_version):
+        exe, current = find_ngspice_safe(None)
+        if exe and _version_satisfies(current, target_version):
             print(f"[OK] ngspice {current or 'unknown'} is already installed")
             print_status("installed", current or "unknown", target_version)
             return
@@ -774,11 +791,7 @@ def install_ngspice(target_version, upgrade=False):
         print("[2/2] Verifying installation...")
         time.sleep(2)
         exe, installed_version = find_ngspice_safe(None)
-        if exe:
-            print(f"[OK] ngspice {installed_version or 'unknown'} installed successfully")
-            print_status("installed", installed_version or "unknown", target_version)
-        else:
-            print_status("install_failed", "not_found", target_version)
+        _report_install_result("ngspice", exe, installed_version, target_version)
     else:
         print_status("install_failed", out[-50:].replace('\n',' ').replace('|','_') or "unknown_error", target_version)
 
@@ -802,49 +815,39 @@ def check_llvm(target_version):
         print_status("not_installed", "none", target_version)
 
 def install_llvm(target_version, upgrade=False):
+    if not upgrade:
+        exe, current = find_llvm_fixed(None)
+        if exe and _version_satisfies(current, target_version):
+            print(f"[OK] LLVM {current} is already installed")
+            print_status("installed", current, target_version)
+            return
+
     choco_exe, _ = find_chocolatey(None)
     if not choco_exe:
         print_status("install_failed", "choco_missing", target_version)
         return
-    
+
     exact_version = LLVM_VERSIONS.get(target_version, target_version)
-    
-    print(f"[1/3] Removing existing LLVM...")
-    run_cmd_stream(["choco", "uninstall", "llvm", "-y", "--no-progress"], timeout=180)
-    
-    print(f"[2/3] Installing LLVM {target_version} ({exact_version}) via Chocolatey...")
-    
+
+    # As for ngspice: install over the existing LLVM instead of uninstalling
+    # it first. Not yet verified against real Chocolatey that the
+    # version-specific command switches versions in place.
+    print(f"[1/2] Installing LLVM {target_version} ({exact_version}) via Chocolatey...")
+
     if target_version == "latest":
-        cmd = ["choco", "install", "llvm", "-y", "--no-progress"]
+        cmd = ["choco", "upgrade" if upgrade else "install", "llvm", "-y", "--no-progress"]
     else:
         cmd = ["choco", "install", "llvm", "--version", exact_version, "-y", "--no-progress", "--allow-downgrade", "--force"]
-    
+
     rc, out = run_cmd_stream(cmd, timeout=300)
-    
+
     if rc == 0:
-        print("[3/3] Verifying LLVM installation...")
+        print("[2/2] Verifying LLVM installation...")
         time.sleep(3)
-
-        common_paths = [
-            r"C:\Program Files\LLVM\bin\clang.exe",
-            r"C:\Program Files (x86)\LLVM\bin\clang.exe",
-        ]
-        for path in common_paths:
-            if os.path.exists(path):
-                result = run_cmd_safe([path, "--version"], timeout=10)
-                if result and result.returncode == 0:
-                    match = re.search(r'clang version (\d+)\.', result.stdout)
-                    if match:
-                        found_ver = match.group(1)
-                        print(f"[SUCCESS] LLVM {found_ver} installed at {path}")
-                        print_status("installed", found_ver, target_version)
-                        return
-                print(f"[SUCCESS] LLVM installed at {path}")
-                print_status("installed", exact_version or target_version, target_version)
-                return
-
-        print("[ERROR] LLVM verification failed - exe not found after install")
-        print_status("install_failed", "verification_failed", target_version)
+        # find_llvm_fixed() only reports a clang whose --version it can read.
+        exe, found_ver = find_llvm_fixed(None)
+        _report_install_result("LLVM", exe, found_ver, target_version,
+                               missing="verification_failed")
     else:
         print_status("install_failed", out[-50:].replace('\n',' ').replace('|','_') or "choco_error", target_version)
 
@@ -996,8 +999,8 @@ def install_ghdl(v, upgrade=False):
             print(f"[OK] GHDL {version} ready to use")
             print_status("installed", version, v)
         else:
-            print(f"[WARNING] Version check failed")
-            print_status("installed", v, v)
+            print(f"[ERROR] {dest_exe} was copied but does not run (--version failed)")
+            print_status("install_failed", "version_check_failed", v)
     else:
         print(f"[ERROR] No ghdl.exe found in archive")
         print_status("install_failed", "no_exe", v)
@@ -1100,11 +1103,11 @@ def _install_verilator_from_7z(archive_path, v):
     time.sleep(2)
     exe, installed_ver = find_verilator(None)
     if exe:
-        print(f"[OK] Verilator {installed_ver or v} is ready")
+        print(f"[OK] Verilator {installed_ver or 'unknown'} is ready")
         return True
-    else:
-        print("[WARNING] Files copied but could not verify version")
-        return True
+    print("[ERROR] Files copied but no Verilator executable was found")
+    print_status("install_failed", "not_found_after_install", v)
+    return False
 
 
 def install_verilator(v, upgrade=False):
@@ -1117,7 +1120,7 @@ def install_verilator(v, upgrade=False):
             print(f"[INFO] Using local archive: {fname}")
             if _install_verilator_from_7z(archive, v):
                 exe, installed_ver = find_verilator(None)
-                print_status("installed", installed_ver or v, v)
+                print_status("installed", installed_ver or "unknown", v)
             return
         else:
             print(f"[INFO] Archive not found: {archive}")
@@ -1136,11 +1139,9 @@ def install_verilator(v, upgrade=False):
         print("[MSYS2] Step 1/3: Updating package database...")
         run_msys2_command("pacman -Syu --noconfirm 2>&1 || true")
 
-        if upgrade:
-            print("[MSYS2] Step 2/3: Removing existing Verilator...")
-            run_msys2_command("pacman -R --noconfirm mingw-w64-x86_64-verilator 2>/dev/null || true")
-        else:
-            print("[MSYS2] Step 2/3: Preparing...")
+        # "pacman -S" upgrades or reinstalls an installed package in place, so
+        # an update no longer removes the working Verilator first.
+        print("[MSYS2] Step 2/3: Preparing...")
 
         print("[MSYS2] Step 3/3: Installing Verilator (may take a few minutes)...")
         result = run_msys2_command("pacman -S --noconfirm mingw-w64-x86_64-verilator")
@@ -1255,7 +1256,13 @@ def install_esim(target_version, upgrade=False):
     print(f"[INFO] Running installer: {installer.name}")
     print("[INFO] Silent install in progress (10-20 min). Please wait...")
     try:
-        subprocess.run([str(installer), "/S"], timeout=1800)
+        result = subprocess.run([str(installer), "/S"], timeout=1800)
+        if result.returncode != 0:
+            # An older eSim may still be present, so the file checks below
+            # cannot tell whether this installer actually worked.
+            print(f"[ERROR] eSim installer exited with code {result.returncode}")
+            print_status("install_failed", f"installer_exit_{result.returncode}", target_version)
+            return
         time.sleep(20)
         for p in [BASE_DIR / "eSim.bat", BASE_DIR / "src" / "frontEnd" / "Application.py", ESIM_DIR / "eSim.bat", ESIM_DIR / "uninst-eSim.exe"]:
             if p.exists():
