@@ -464,9 +464,11 @@ def check_kicad(target_version):
 def install_kicad(target_version, upgrade=False):
     # The install paths below start with cleanup_kicad(), which removes the
     # existing KiCad. Never do that just to reinstall the version already there.
+    # find_kicad_fixed() can return a registry InstallLocation whose folder no
+    # longer exists, so only skip when an actual kicad.exe file is present.
     if not upgrade:
         exe, current = find_kicad_fixed(None)
-        if exe and _version_satisfies(current, target_version):
+        if exe and os.path.isfile(exe) and _version_satisfies(current, target_version):
             print(f"[OK] KiCad {current} is already installed")
             print_status("installed", current, target_version)
             return
@@ -737,8 +739,12 @@ def _version_satisfies(installed, target_version):
 
 def install_ngspice(target_version, upgrade=False):
     if not upgrade:
-        exe, current = find_ngspice_safe(None)
-        if exe and _version_satisfies(current, target_version):
+        # find_ngspice_safe() also reports a version when "choco list" prints
+        # a matching line, even if no ngspice.exe exists (on Chocolatey 1.x
+        # that command lists the online feed). Only skip when the executable
+        # itself is present.
+        _, current = find_ngspice_safe(None)
+        if _find_ngspice_exe() and _version_satisfies(current, target_version):
             print(f"[OK] ngspice {current or 'unknown'} is already installed")
             print_status("installed", current or "unknown", target_version)
             return
