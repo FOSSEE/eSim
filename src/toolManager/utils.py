@@ -12,17 +12,15 @@ import subprocess
 import shutil
 import threading
 from pathlib import Path
-from platform_utils import get_mysys2_path, subprocess_flags
+from platform_utils import IS_WINDOWS, get_mysys2_path, subprocess_flags
 
 # ==================== CONSTANTS & DEFAULTS ====================
 
 # Default Windows installation paths
 DEFAULT_ESIM_DIR = Path(r"C:\FOSSEE\eSim")
 
-try:
-    MSYS2_PATH = get_mysys2_path();
-except RuntimeError as e:
-    print(f"[ERROR]: {e}", flush=True)
+# MSYS2 only exists on Windows; elsewhere the MSYS2 helpers below return None.
+MSYS2_PATH = get_mysys2_path() if IS_WINDOWS else None
 
 WIN_KICAD_PATHS = [
     (r"C:\Program Files\KiCad\9.0\bin\kicad.exe", "9"),
@@ -113,6 +111,7 @@ def run_cmd_stream(cmd, timeout=900, cwd=None, env=None):
             proc.wait()
         finally:
             timer.cancel()
+            proc.stdout.close()
 
         return proc.returncode, "\n".join(output_lines)
 
@@ -139,6 +138,8 @@ def get_msys2_bash():
     """
     Returns the path to MSYS2 bash.exe if found, else None.
     """
+    if MSYS2_PATH is None:
+        return None
     bash_path = MSYS2_PATH / "usr" / "bin" / "bash.exe"
     return bash_path if bash_path.exists() else None
 
@@ -147,7 +148,10 @@ def get_msys2_mingw_bin():
     Returns the path to the MSYS2 MinGW bin directory if found, else None.
     Checks mingw64/bin first then ucrt64/bin and mingw32/bin.
     """
+    if MSYS2_PATH is None:
+        return None
     for subdir in ["mingw64", "ucrt64", "mingw32"]:
         bin_dir = MSYS2_PATH / subdir / "bin"
         if bin_dir.exists():
             return bin_dir
+    return None

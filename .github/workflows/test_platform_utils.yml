@@ -5,13 +5,39 @@ on:
   push:
     paths:
       - 'src/toolManager/platform_utils.py'
+      - 'src/toolManager/utils.py'
+      - 'src/toolManager/tool_manager_linux.py'
+      - 'src/toolManager/tool_manager_windows.py'
+      - 'src/toolManager/tests/**'
       - '.github/workflows/test_platform_utils.yml'
   pull_request:
     paths:
       - 'src/toolManager/platform_utils.py'
+      - 'src/toolManager/utils.py'
+      - 'src/toolManager/tool_manager_linux.py'
+      - 'src/toolManager/tool_manager_windows.py'
+      - 'src/toolManager/tests/**'
       - '.github/workflows/test_platform_utils.yml'
 
 jobs:
+
+  # ── Unit tests (platform-independent, sys.platform is mocked) ────────────────
+  unit-tests:
+    name: Unit tests (pytest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install pytest
+        run: python -m pip install pytest
+
+      - name: Run unit tests
+        run: python -m pytest src/toolManager/tests -v
 
   # ── Ubuntu (apt) ─────────────────────────────────────────────────────────────
   test-ubuntu:

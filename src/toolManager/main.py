@@ -41,6 +41,9 @@ else:
 
 PYTHON    = sys.executable
 
+# Backend exit code for "not supported on this system" (see tool_manager_linux.py)
+_EXIT_UNSUPPORTED = 3
+
 ANALOG_TOOLS  = ["esim", "kicad", "ngspice"]
 DIGITAL_TOOLS = ["esim", "kicad", "ngspice", "ghdl", "verilator", "llvm"]
 
@@ -154,6 +157,8 @@ class _PackageWorker(QThread):
                         if "[ERROR]" in line or "_failed|" in line:
                             success = False
                 proc.wait()
+                if proc.returncode == _EXIT_UNSUPPORTED:
+                    self.progress.emit(f"  [WARN] {label} is not supported on this system - skipped.")
                 if proc.returncode != 0:
                     success = False
             except Exception as e:
