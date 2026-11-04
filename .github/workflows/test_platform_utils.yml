@@ -5,11 +5,17 @@ on:
   push:
     paths:
       - 'src/toolManager/platform_utils.py'
+      - 'src/toolManager/utils.py'
+      - 'src/toolManager/tool_manager_linux.py'
+      - 'src/toolManager/tool_manager_windows.py'
       - 'src/toolManager/tests/**'
       - '.github/workflows/test_platform_utils.yml'
   pull_request:
     paths:
       - 'src/toolManager/platform_utils.py'
+      - 'src/toolManager/utils.py'
+      - 'src/toolManager/tool_manager_linux.py'
+      - 'src/toolManager/tool_manager_windows.py'
       - 'src/toolManager/tests/**'
       - '.github/workflows/test_platform_utils.yml'
 
