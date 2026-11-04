@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 """
 tool_manager_linux.py — Linux backend for eSim Tool Manager.
+
+Exit codes for install / update / uninstall
+-------------------------------------------
+0  success                         (status line: installed|... or not_installed|...)
+1  attempted, but failed           (install_failed|...  or uninstall_failed|...)
+3  not supported on this system    (not_supported|...)
+
+``check`` keeps its own convention: 0 = installed, 1 = not installed.
+(2 is left to argparse, which uses it for command-line errors.)
 """
 
 import sys
@@ -19,6 +28,10 @@ from platform_utils import detect_package_manager
 
 BASE_DIR   = Path(__file__).resolve().parent
 INSTALL_SH = BASE_DIR / "install-eSim.sh"
+
+EXIT_OK          = 0
+EXIT_FAILED      = 1
+EXIT_UNSUPPORTED = 3
 
 # ── Package names per package manager ────────────────────────────────────────
 PACKAGE_MAP = {
@@ -196,28 +209,42 @@ def _apt_lock(pm: str = "apt"):
 
 
 # ── check ─────────────────────────────────────────────────────────────────────
-def check_tool(tool: str, version: str) -> int:
-    """Check if a tool binary exists in PATH. Returns 0 if found, 1 if not."""
+def _find_installed(tool: str):
+    """Return where *tool* is installed (a binary path or "dpkg"), or None."""
     binaries = _BINARY_CHECK.get(tool, [tool])
     for binary in binaries:
         path = _which_native(binary)
         if path:
-            print(f"installed|{tool}|{path}", flush=True)
-            return 0
+            return path
 
     # Fallback: dpkg status check on apt distros
-    pm = detect_package_manager()
-    if pm == "apt":
-        r = subprocess.run(
-            ["dpkg", "-s", tool],
-            capture_output=True, text=True
-        )
+    if detect_package_manager() == "apt":
+        try:
+            r = subprocess.run(
+                ["dpkg", "-s", tool],
+                capture_output=True, text=True
+            )
+        except OSError:
+            return None
         if r.returncode == 0 and "Status: install ok installed" in r.stdout:
-            print(f"installed|{tool}|dpkg", flush=True)
-            return 0
+            return "dpkg"
+    return None
 
+
+def check_tool(tool: str, version: str) -> int:
+    """Check if a tool binary exists in PATH. Returns 0 if found, 1 if not."""
+    where = _find_installed(tool)
+    if where:
+        print(f"installed|{tool}|{where}", flush=True)
+        return 0
     print(f"not_installed|{tool}|none", flush=True)
     return 1
+
+
+def _unsupported(tool: str, pm, reason: str) -> int:
+    print(f"[INFO] {reason}", flush=True)
+    print(f"not_supported|{tool}|{pm or 'none'}", flush=True)
+    return EXIT_UNSUPPORTED
 
 
 # ── install ───────────────────────────────────────────────────────────────────
@@ -225,43 +252,53 @@ def install_tool(tool: str, version: str, upgrade: bool = False) -> int:
     pm = detect_package_manager()
     if not pm:
         print("[ERROR] No supported package manager found.", flush=True)
-        return 1
+        print(f"not_supported|{tool}|none", flush=True)
+        return EXIT_UNSUPPORTED
 
     # Ubuntu/Debian + esim → delegate to the maintained shell script
     if pm == "apt" and tool == "esim":
-        if INSTALL_SH.exists():
-            flag = "--upgrade" if upgrade else "--install"
-            return _stream(["bash", str(INSTALL_SH), flag])
-        else:
+        if not INSTALL_SH.exists():
             print(f"[ERROR] install-eSim.sh not found at {INSTALL_SH}", flush=True)
-            return 1
+            print("install_failed|esim|script_missing", flush=True)
+            return EXIT_FAILED
+        flag = "--upgrade" if upgrade else "--install"
+        rc = _stream(["bash", str(INSTALL_SH), flag])
+        if rc != 0:
+            print(f"install_failed|esim|exit_{rc}", flush=True)
+            return EXIT_FAILED
+        return EXIT_OK
 
     if tool == "esim":
-        print("[INFO] eSim has no native package for this distro.", flush=True)
-        print("[INFO] Please visit https://esim.fossee.in for installation options.", flush=True)
-        return 0
+        print(f"[INFO] eSim has no native package for {pm}.", flush=True)
+        return _unsupported(tool, pm, "Please visit https://esim.fossee.in "
+                                      "for installation options.")
 
     packages = PACKAGE_MAP.get(pm, {}).get(tool)
     if packages is None:
-        print(f"not_supported|{tool}|{pm}", flush=True)
-        return 0
+        return _unsupported(tool, pm, f"'{tool}' is not supported with {pm}.")
     if not packages:
-        print(f"[INFO] '{tool}' has no individual package on {pm}.", flush=True)
-        return 0
+        return _unsupported(tool, pm, f"'{tool}' has no individual package on {pm}.")
 
     cmd_base = INSTALL_CMD.get(pm)
     if not cmd_base:
         print(f"[ERROR] No install command defined for '{pm}'.", flush=True)
-        return 1
+        print(f"install_failed|{tool}|no_command", flush=True)
+        return EXIT_FAILED
 
     action = "Upgrading" if upgrade else "Installing"
     print(f"[Linux/{pm}] {action} {tool}: {' '.join(packages)} ...", flush=True)
     with _apt_lock(pm):
         rc = _run_elevated(cmd_base + packages)
 
-    if check_tool(tool, version) != 0:
-        print(f"install_failed|{tool}|none", flush=True)
-    return rc
+    if rc != 0:
+        print(f"install_failed|{tool}|exit_{rc}", flush=True)
+        return EXIT_FAILED
+    where = _find_installed(tool)
+    if not where:
+        print(f"install_failed|{tool}|not_found", flush=True)
+        return EXIT_FAILED
+    print(f"installed|{tool}|{where}", flush=True)
+    return EXIT_OK
 
 
 # ── uninstall ─────────────────────────────────────────────────────────────────
@@ -269,26 +306,51 @@ def uninstall_tool(tool: str, version: str) -> int:
     pm = detect_package_manager()
     if not pm:
         print("[ERROR] No supported package manager found.", flush=True)
-        return 1
+        print(f"not_supported|{tool}|none", flush=True)
+        return EXIT_UNSUPPORTED
 
+    if pm == "apt" and tool == "esim":
+        if not INSTALL_SH.exists():
+            print(f"[ERROR] install-eSim.sh not found at {INSTALL_SH}", flush=True)
+            print("uninstall_failed|esim|script_missing", flush=True)
+            return EXIT_FAILED
+        rc = _stream(["bash", str(INSTALL_SH), "--uninstall"])
+        if rc != 0:
+            print(f"uninstall_failed|esim|exit_{rc}", flush=True)
+            return EXIT_FAILED
+        return EXIT_OK
 
-    if pm == "apt" and tool == "esim" and INSTALL_SH.exists():
-        return _stream(["bash", str(INSTALL_SH), "--uninstall"])
-
-    packages = PACKAGE_MAP.get(pm, {}).get(tool, [])
+    packages = PACKAGE_MAP.get(pm, {}).get(tool)
     if not packages:
-        print(f"[INFO] Nothing to uninstall for '{tool}' on {pm}.", flush=True)
-        print(f"not_installed|{tool}|none", flush=True)
-        return 0
+        # Nothing this backend could have installed. That is only a success
+        # if the tool really is absent; otherwise we cannot remove it.
+        where = _find_installed(tool)
+        if not where:
+            print(f"[INFO] '{tool}' is not installed.", flush=True)
+            print(f"not_installed|{tool}|none", flush=True)
+            return EXIT_OK
+        return _unsupported(tool, pm,
+                            f"'{tool}' ({where}) was not installed by {pm}; "
+                            "remove it manually.")
 
-    cmd_base = UNINSTALL_CMD.get(pm, [])
+    cmd_base = UNINSTALL_CMD.get(pm)
+    if not cmd_base:
+        print(f"[ERROR] No uninstall command defined for '{pm}'.", flush=True)
+        print(f"uninstall_failed|{tool}|no_command", flush=True)
+        return EXIT_FAILED
+
     print(f"[Linux/{pm}] Uninstalling {tool}: {' '.join(packages)} ...", flush=True)
     with _apt_lock(pm):
         rc = _run_elevated(cmd_base + packages)
-        
-    if check_tool(tool, version) == 0:
-        print(f"uninstall_failed|{tool}|none", flush=True)
-    return rc
+
+    if rc != 0:
+        print(f"uninstall_failed|{tool}|exit_{rc}", flush=True)
+        return EXIT_FAILED
+    if _find_installed(tool):
+        print(f"uninstall_failed|{tool}|still_found", flush=True)
+        return EXIT_FAILED
+    print(f"not_installed|{tool}|none", flush=True)
+    return EXIT_OK
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="eSim Tool Manager — Linux Backend")
