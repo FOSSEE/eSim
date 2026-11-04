@@ -462,6 +462,15 @@ def check_kicad(target_version):
         print_status("not_installed", "none", target_version)
 
 def install_kicad(target_version, upgrade=False):
+    # The install paths below start with cleanup_kicad(), which removes the
+    # existing KiCad. Never do that just to reinstall the version already there.
+    if not upgrade:
+        exe, current = find_kicad_fixed(None)
+        if exe and _version_satisfies(current, target_version):
+            print(f"[OK] KiCad {current} is already installed")
+            print_status("installed", current, target_version)
+            return
+
     choco_exe, _ = find_chocolatey(None)
     if not choco_exe:
         print_status("install_failed", "choco_missing", target_version)
@@ -717,30 +726,46 @@ def check_ngspice(target_version):
     else:
         print_status("not_installed", "none", target_version)
 
+def _version_satisfies(installed, target_version):
+    """True only when an installed version is known to match the request."""
+    if target_version == "latest":
+        return True
+    if not installed or installed == "unknown":
+        return False
+    return installed == target_version or installed.startswith(f"{target_version}.")
+
+
 def install_ngspice(target_version, upgrade=False):
+    if not upgrade:
+        exe, current = find_ngspice_safe(None)
+        if exe and _version_satisfies(current, target_version):
+            print(f"[OK] ngspice {current or 'unknown'} is already installed")
+            print_status("installed", current or "unknown", target_version)
+            return
+
     choco_exe, _ = find_chocolatey(None)
     if not choco_exe:
         print_status("install_failed", "choco_missing", target_version)
         return
-    
+
     exact_version = NGSPICE_VERSIONS.get(target_version, target_version)
-    
-    print("Uninstalling existing ngspice...")
-    uninstall_cmd = ["choco", "uninstall", "ngspice", "-y", "--force-dependencies", "--no-progress"]
-    run_cmd_safe(uninstall_cmd, timeout=180)
-    
-    print(f"[1/3] Removing existing ngspice...")
-    print(f"[2/3] Installing ngspice {target_version} via Chocolatey...")
-    
+
+    # Install over the existing copy instead of uninstalling it first, so a
+    # failed install no longer starts by removing a working ngspice. The
+    # version-specific command is unchanged (--force / --allow-downgrade).
+    # Not yet verified against real Chocolatey: that it switches versions in
+    # place, and what it leaves behind if the install fails part-way.
+    print(f"[1/2] Installing ngspice {target_version} via Chocolatey...")
+
     if target_version == "latest":
-        cmd = ["choco", "install", "ngspice", "-y", "--no-progress"]
+        cmd = ["choco", "upgrade" if upgrade else "install", "ngspice", "-y", "--no-progress"]
     else:
         cmd = ["choco", "install", "ngspice", "--version", exact_version, "-y", "--no-progress", "--allow-downgrade", "--force"]
-    
+
     rc, out = run_cmd_stream(cmd, timeout=300)
-    
+
     if rc == 0:
-        print("[3/3] Verifying installation...")
+        print("[2/2] Verifying installation...")
         time.sleep(2)
         exe, installed_version = find_ngspice_safe(None)
         if exe:
