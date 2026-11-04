@@ -163,6 +163,18 @@ class TestCommandsRunInsideAptLock:
         tml.install_tool("ghdl", "latest")
         assert fs.events == ["lock", "run", "unlock"]
 
+    def test_unopenable_lock_file_does_not_abort(self, tml, fs, monkeypatch,
+                                                 tmp_path, capsys):
+        """Regression: if the lock file could not be opened (e.g. created by
+        another user) the backend crashed with a traceback and no status."""
+        monkeypatch.setattr(tml, "_APT_LOCK_FILE", str(tmp_path))  # a directory
+        fs.installed["ghdl"] = "/usr/bin/ghdl"
+        assert tml.install_tool("ghdl", "latest") == tml.EXIT_OK
+        assert fs.events == ["run"]
+        out = capsys.readouterr().out
+        assert "[WARN] Cannot open" in out
+        assert status_lines(out) == ["installed|ghdl|/usr/bin/ghdl"]
+
     @pytest.mark.parametrize("pm", ["dnf", "pacman", "zypper", "yum"])
     def test_other_managers_are_not_locked(self, tml, fs, pm):
         fs.pm = pm
@@ -248,14 +260,39 @@ class TestEsimOnApt:
         monkeypatch.setattr(tml, "INSTALL_SH", path)
         return path
 
-    @pytest.mark.parametrize("upgrade,flag", [(False, "--install"),
-                                              (True, "--upgrade")])
-    def test_install_runs_the_script(self, tml, monkeypatch, script,
-                                     upgrade, flag):
+    def test_install_runs_the_script_and_finds_the_launcher(self, tml, monkeypatch,
+                                                            capsys, script):
         fs = FakeSystem(tml, monkeypatch, pm="apt")
-        assert tml.install_tool("esim", "2.4", upgrade=upgrade) == tml.EXIT_OK
-        assert fs.streamed == [["bash", str(script), flag]]
+        fs.installed["esim"] = "/usr/bin/esim"
+        assert tml.install_tool("esim", "2.4") == tml.EXIT_OK
+        assert fs.streamed == [["bash", str(script), "--install"]]
         assert fs.commands == []
+        assert status_lines(capsys.readouterr().out) == ["installed|esim|/usr/bin/esim"]
+
+    def test_script_success_without_launcher_is_a_failure(self, tml, monkeypatch,
+                                                          capsys, script):
+        """Regression: install-eSim-24.04.sh exits 0 without installing eSim
+        when KiCad 8 is already installed; that was reported as success."""
+        FakeSystem(tml, monkeypatch, pm="apt", rc=0)       # no /usr/bin/esim
+        assert tml.install_tool("esim", "2.4") == tml.EXIT_FAILED
+        assert status_lines(capsys.readouterr().out) == ["install_failed|esim|not_found"]
+
+    def test_update_is_unsupported(self, tml, monkeypatch, capsys, script):
+        """Regression: update passed --upgrade, which install-eSim.sh rejects
+        (it only accepts --install*/--uninstall), so every update failed."""
+        fs = FakeSystem(tml, monkeypatch, pm="apt")
+        fs.installed["esim"] = "/usr/bin/esim"
+        assert tml.install_tool("esim", "2.4", upgrade=True) == tml.EXIT_UNSUPPORTED
+        assert fs.streamed == []
+        assert status_lines(capsys.readouterr().out) == ["not_supported|esim|apt"]
+
+    def test_script_accepts_the_flags_the_backend_uses(self, tml):
+        """The flags the backend passes must be ones install-eSim.sh accepts."""
+        text = tml.INSTALL_SH.read_text(encoding="utf-8")
+        accepted = text.split('if [[ "$ARGUMENT" != ', 1)[1].split("]]; then", 1)[0]
+        for flag in ("--install", "--uninstall"):
+            assert f'"{flag}"' in accepted
+        assert "--upgrade" not in accepted
 
     def test_script_failure_is_reported(self, tml, monkeypatch, capsys, script):
         FakeSystem(tml, monkeypatch, pm="apt", rc=2)
@@ -269,10 +306,18 @@ class TestEsimOnApt:
         assert fs.streamed == []
         assert "install_failed|esim|script_missing" in capsys.readouterr().out
 
-    def test_uninstall_runs_the_script(self, tml, monkeypatch, script):
+    def test_uninstall_runs_the_script(self, tml, monkeypatch, capsys, script):
         fs = FakeSystem(tml, monkeypatch, pm="apt")
         assert tml.uninstall_tool("esim", "none") == tml.EXIT_OK
         assert fs.streamed == [["bash", str(script), "--uninstall"]]
+        assert status_lines(capsys.readouterr().out) == ["not_installed|esim|none"]
+
+    def test_uninstall_leaving_the_launcher_is_a_failure(self, tml, monkeypatch,
+                                                         capsys, script):
+        fs = FakeSystem(tml, monkeypatch, pm="apt", rc=0)
+        fs.installed["esim"] = "/usr/bin/esim"
+        assert tml.uninstall_tool("esim", "none") == tml.EXIT_FAILED
+        assert status_lines(capsys.readouterr().out) == ["uninstall_failed|esim|still_found"]
 
     def test_uninstall_script_failure_is_reported(self, tml, monkeypatch,
                                                   capsys, script):

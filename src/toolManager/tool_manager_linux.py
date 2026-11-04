@@ -200,7 +200,17 @@ def _apt_lock(pm: str = "apt"):
 
     import fcntl as _fcntl
 
-    with open(_APT_LOCK_FILE, "w") as _lf:
+    try:
+        _lf = open(_APT_LOCK_FILE, "w")
+    except OSError as e:
+        # e.g. the file was created by another user. This lock only serialises
+        # the Tool Manager's own apt runs; apt still takes its own dpkg lock.
+        print(f"[WARN] Cannot open {_APT_LOCK_FILE} ({e}); "
+              "continuing without the serial lock.", flush=True)
+        yield
+        return
+
+    with _lf:
         print("[INFO] Waiting for apt serial lock ...", flush=True)
         _fcntl.flock(_lf, _fcntl.LOCK_EX)
         try:
@@ -258,15 +268,26 @@ def install_tool(tool: str, version: str, upgrade: bool = False) -> int:
 
     # Ubuntu/Debian + esim → delegate to the maintained shell script
     if pm == "apt" and tool == "esim":
+        if upgrade:
+            # install-eSim.sh only accepts --install, --install-analog,
+            # --install-digital and --uninstall; it has no upgrade mode.
+            return _unsupported(tool, pm, "install-eSim.sh cannot update eSim; "
+                                          "uninstall it and install it again.")
         if not INSTALL_SH.exists():
             print(f"[ERROR] install-eSim.sh not found at {INSTALL_SH}", flush=True)
             print("install_failed|esim|script_missing", flush=True)
             return EXIT_FAILED
-        flag = "--upgrade" if upgrade else "--install"
-        rc = _stream(["bash", str(INSTALL_SH), flag])
+        rc = _stream(["bash", str(INSTALL_SH), "--install"])
         if rc != 0:
             print(f"install_failed|esim|exit_{rc}", flush=True)
             return EXIT_FAILED
+        # The script can exit 0 without installing eSim (e.g. when KiCad 8 is
+        # already installed), so check for the /usr/bin/esim launcher it creates.
+        where = _find_installed("esim")
+        if not where:
+            print("install_failed|esim|not_found", flush=True)
+            return EXIT_FAILED
+        print(f"installed|esim|{where}", flush=True)
         return EXIT_OK
 
     if tool == "esim":
@@ -319,6 +340,10 @@ def uninstall_tool(tool: str, version: str) -> int:
         if rc != 0:
             print(f"uninstall_failed|esim|exit_{rc}", flush=True)
             return EXIT_FAILED
+        if _find_installed("esim"):
+            print("uninstall_failed|esim|still_found", flush=True)
+            return EXIT_FAILED
+        print("not_installed|esim|none", flush=True)
         return EXIT_OK
 
     packages = PACKAGE_MAP.get(pm, {}).get(tool)
