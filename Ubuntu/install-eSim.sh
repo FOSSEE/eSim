@@ -59,6 +59,7 @@ INSTALL_STEPS=(
     "installNghdl:Building NGHDL and ngspice"
     "installSky130Pdk:Installing the SKY130 PDK"
     "installIhpPdk:Installing the IHP Open PDK"
+    "installChatbot:Installing the eSim AI Assistant"
     "createDesktopStartScript:Creating the launcher and desktop entry"
     "runToolchainDoctor:Verifying the simulation toolchain"
 )
@@ -91,6 +92,12 @@ PIP_PINS=(
     "sandpiper-saas>=1.1.0,<2"
     "volare>=0.20.6,<0.21"      # 0.x: the MINOR is the breaking unit
 )
+
+# Local models the optional eSim AI Assistant uses. Keep IN SYNC with
+# REQUIRED_MODELS in src/chatbot/chatbot_thread.py -- the chat window downloads
+# any missing one on its first start, which is the surprise installChatbot
+# avoids; Ubuntu/tests/test_chatbot_step.py fails if the two lists drift.
+CHATBOT_MODELS=("qwen2.5:3b" "nomic-embed-text")
 
 #-----------------------------------------------------------------------------
 # Terminal UI
@@ -1087,6 +1094,65 @@ installIhpPdk() {
     set -e; trap error_exit ERR
 }
 
+installChatbot() {
+    read -rp "Install the eSim AI Assistant (downloads Ollama and ~2.2 GB of local AI models)? (y/n): " ans
+    if [[ ! "$ans" =~ ^[Yy] ]]; then
+        log "Skipping the eSim AI Assistant"
+        return 0
+    fi
+    # Best-effort throughout: the assistant is optional, so a failed download
+    # warns and eSim's own install carries on. eSim starts without it and
+    # simply hides the assistant.
+    set +e; trap "" ERR
+
+    log "Installing the AI Assistant's Python packages"
+    # shellcheck disable=SC1091
+    source "$config_dir/env/bin/activate"
+    # One guarded install per requirements-copilot.txt entry, like PIP_PINS:
+    # a failure names its package and never stops the rest.
+    local spec
+    while read -r spec; do
+        pip install "$spec" \
+            || warn "pip install '$spec' failed -- eSim hides the assistant without it"
+    done < <(grep -vE '^[[:space:]]*(#|$)' "$eSim_Home/requirements-copilot.txt")
+    # Microphone input; the venv sees apt packages (--system-site-packages).
+    sudo apt-get install -y python3-pyaudio \
+        || warn "python3-pyaudio unavailable -- voice input will be disabled"
+
+    if ! command -v ollama >/dev/null 2>&1; then
+        log "Installing Ollama (official installer from ollama.com)"
+        # zstd: Ollama ships a .tar.zst and its installer aborts without it.
+        sudo apt-get install -y curl zstd
+        curl -fsSL https://ollama.com/install.sh | sh
+    fi
+    if ! command -v ollama >/dev/null 2>&1; then
+        warn "Ollama could not be installed -- get it from https://ollama.com; the assistant starts once it is present"
+        set -e; trap error_exit ERR
+        return 0
+    fi
+
+    # Ollama's installer starts a systemd service. Without systemd
+    # (containers, WSL) nothing is serving yet, so run a temporary server just
+    # for the downloads; the assistant starts its own when eSim needs one.
+    local server="" model
+    if ! ollama list >/dev/null 2>&1; then
+        ollama serve >/dev/null 2>&1 &
+        server=$!
+        for _ in 1 2 3 4 5 6 7 8 9 10; do
+            ollama list >/dev/null 2>&1 && break
+            sleep 1
+        done
+    fi
+    for model in "${CHATBOT_MODELS[@]}"; do
+        log "Downloading AI model $model"
+        ollama pull "$model" \
+            || warn "Could not download $model -- the assistant fetches it on first start"
+    done
+    [ -n "$server" ] && kill "$server" 2>/dev/null
+    set -e; trap error_exit ERR
+    return 0
+}
+
 createDesktopStartScript() {
     log "Creating launcher (esim) + desktop entry"
 
@@ -1200,6 +1266,8 @@ uninstall_eSim() {
            "$eSim_Home"/library/modelParamXML/Ngveri/* 2>/dev/null || true
 
     log "eSim uninstalled."
+    log "Ollama and its models are kept (other applications may use them);"
+    log "remove them with Ollama's own uninstall steps if no longer needed."
 }
 
 #-----------------------------------------------------------------------------
@@ -1258,6 +1326,7 @@ print_plan() {
         "nghdl"      "$nghdl" \
         "kicadLib"   "$kicadlib" \
         "sky130 PDK" "$sky130" \
+        "AI Assistant" "optional prompt: Ollama + ${CHATBOT_MODELS[*]}" \
         "Symbols"    "14 static -> /usr/share/kicad/symbols (root)" \
         ""           "3 generated -> $config_dir/kicad_symbols (user)" \
         "Log"        "$HOME/eSim-install.log"

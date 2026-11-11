@@ -28,7 +28,7 @@ src, out, failstep = sys.argv[1], sys.argv[2], sys.argv[3]
 s = open(src, encoding='utf-8').read()
 steps = ["preflightDisk","setupProxy","cleanLegacyEsim","createConfigFile",
          "installDependency","installQt","installKicad","copyKicadLibrary",
-         "installNghdl","installSky130Pdk","installIhpPdk",
+         "installNghdl","installSky130Pdk","installIhpPdk","installChatbot",
          "createDesktopStartScript","runToolchainDoctor"]
 body = ["\n# ---- injected test stubs ----"]
 for f in steps:
@@ -77,7 +77,7 @@ echo "  --- exit $rc ---"
 [ "$rc" -eq 0 ] && ok "exit 0" || bad "exit $rc"
 case "$trace" in *"installed successfully"*) ok "summary box printed" ;; *) bad "no summary box" ;; esac
 case "$trace" in *$'\033[?25h'*) ok "cursor restored" ;; *) bad "CURSOR LEFT HIDDEN" ;; esac
-case "$trace" in *"11/11"*) ok "bar reached 11/11" ;; *) bad "bar never reached 11/11" ;; esac
+case "$trace" in *"12/12"*) ok "bar reached 12/12" ;; *) bad "bar never reached 12/12" ;; esac
 
 echo
 echo "== B. the log file =="
@@ -94,14 +94,14 @@ done
 echo "  --- log tail ---"; tail -6 "$HOME/eSim-install.log" | sed 's/^/  | /'
 
 echo
-echo "== C. failure path (installKicad dies at step 5/11) =="
+echo "== C. failure path (installKicad dies at step 5/12) =="
 mkstub "$ROOT/Ubuntu/install-eSim.sh" "installKicad"
 trace=$(pty "cd $ROOT && ./Ubuntu/install-eSim.sh --install"); rc=$?
 printf '%s' "$trace" | tr -d '\r' | sed 's/\x1B\[[0-9;?]*[a-zA-Z]//g' | grep -vE '^\s*$' | tail -14
 echo "  --- exit $rc ---"
 [ "$rc" -ne 0 ] && ok "non-zero exit on failure" || bad "failure exited 0"
 case "$trace" in *"Installation failed"*) ok "failure box printed" ;; *) bad "no failure box" ;; esac
-case "$trace" in *"step 5/11"*) ok "failure box names the step" ;; *) bad "step not named" ;; esac
+case "$trace" in *"step 5/12"*) ok "failure box names the step" ;; *) bad "step not named" ;; esac
 case "$trace" in *$'\033[?25h'*) ok "cursor restored after failure" ;; *) bad "CURSOR LEFT HIDDEN ON FAILURE" ;; esac
 last=$(printf '%s' "$trace" | grep -oE $'\033\\[1;[0-9]+r' | tail -1 | grep -oE '[0-9]+;[0-9]+r')
 [ "$last" = "1;40r" ] && ok "scroll region restored after failure" || bad "scroll region left at [$last]"
@@ -112,7 +112,7 @@ mkstub "$ROOT/Ubuntu/install-eSim.sh" ""
 trace=$(pty "cd $ROOT && ESIM_NO_FANCY=1 ./Ubuntu/install-eSim.sh --install"); rc=$?
 [ "$rc" -eq 0 ] && ok "plain-mode exit 0" || bad "plain-mode exit $rc"
 if printf '%s' "$trace" | grep -q $'\033'; then bad "plain mode emitted escapes"; else ok "plain mode emitted no escapes"; fi
-case "$trace" in *">>> [5/11]"*) ok "plain mode keeps >>> step format" ;; *) bad "plain step format missing" ;; esac
+case "$trace" in *">>> [5/12]"*) ok "plain mode keeps >>> step format" ;; *) bad "plain step format missing" ;; esac
 
 echo
 echo "== E. banner survives the sticky bar intact =="

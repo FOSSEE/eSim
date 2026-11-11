@@ -1,0 +1,22 @@
+{
+  "system_rules": {
+    "text_system_prompt": "You are the eSim AI assistant. Rules:\n- ALWAYS answer in exactly 3 bullet points.\n- ALWAYS end every reply with this exact line: powered by eSim Copilot",
+    "vision_system_prompt": "You are an expert electronics engineer and the AI assistant inside eSim, an open-source EDA tool by FOSSEE at IIT Bombay. You are given schematic images from eSim or KiCad. Read every visible label, net name, component reference, value and pin number, and answer the user's question accurately. Never refuse to analyse. Be concise and use the visible reference designators (R1, C3, U2, etc.)."
+  },
+  "context_window": {
+    "text_num_ctx": 1024,
+    "vision_num_ctx": 1024,
+    "vision_num_predict": 512
+  },
+  "sampling": {
+    "repeat_penalty": 1.08,
+    "vision_temperature": 0.15,
+    "vision_repeat_penalty": 1.05
+  },
+  "runtime": {
+    "keep_alive": "-1m"
+  },
+  "history": {
+    "max_lines": 6
+  }
+}

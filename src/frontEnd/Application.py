@@ -45,6 +45,12 @@ from projManagement.Kicad import Kicad
 from projManagement.Validation import Validation
 from projManagement import Worker
 
+# The AI assistant is an optional install; eSim must still start without it.
+try:
+    from frontEnd.Chatbot import ChatbotGUI
+except ImportError:
+    ChatbotGUI = None
+
 # Its our main window of application.
 
 
@@ -100,6 +106,7 @@ class _SnapshotWindow(QtWidgets.QWidget):
 class Application(QtWidgets.QMainWindow):
     """This class initializes all objects used in this file."""
     simulationEndSignal = QtCore.pyqtSignal(QtCore.QProcess.ExitStatus, int)
+    chatbot_dock = None
 
     def __init__(self, *args):
         """Initialize main Application window."""
@@ -129,6 +136,7 @@ class Application(QtWidgets.QMainWindow):
         self.obj_validation = Validation()
         # Initialize all widget
         self.setCentralWidget(self.obj_Mainview)
+        self.initchatbot()   # before initToolBar: it builds the View menu
         self.initToolBar()
         self.initMenuAndStatus()
 
@@ -161,6 +169,111 @@ class Application(QtWidgets.QMainWindow):
         self.systemTrayIcon = QtWidgets.QSystemTrayIcon(self)
         self.systemTrayIcon.setIcon(QtGui.QIcon(paths.image_path('logo.png')))
         self.systemTrayIcon.setVisible(True)
+
+    def initchatbot(self):
+        """
+        This function initializes the ChatbotIcon and embeds the ChatbotGUI
+        as a dockable panel on the right side of the main window.
+        Clicking the icon toggles the panel open/closed.
+        """
+        self.chatbot_dock = None
+        if ChatbotGUI is None:
+            return
+        self.chatbot_window = ChatbotGUI()
+
+        # ── Dock widget (embedded in main window) ──────────────────────
+        self.chatbot_dock = QtWidgets.QDockWidget("🤖 eSim AI Assistant", self)
+        self.chatbot_dock.setObjectName("chatbotDock")
+        self.chatbot_dock.setWidget(self.chatbot_window)
+        self.chatbot_dock.setMinimumWidth(360)
+        self.chatbot_dock.setFeatures(
+            QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetClosable |
+            QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetMovable |
+            QtWidgets.QDockWidget.DockWidgetFeature.DockWidgetFloatable
+        )
+        self.addDockWidget(
+            QtCore.Qt.DockWidgetArea.RightDockWidgetArea, self.chatbot_dock)
+        self.chatbot_dock.show()
+        # When user closes dock via the X button, reposition the floating icon.
+        # A bound slot (not a lambda) is disconnected by PyQt when the window
+        # is destroyed, so the dock hiding during teardown cannot call into it.
+        self.chatbot_dock.visibilityChanged.connect(self._on_chatbot_visibility)
+        self.chatbot_dock.installEventFilter(self)
+
+        # ── Floating icon button (bottom-right corner) ──────────────────
+        self.chatboticon = QtWidgets.QPushButton(
+            self, icon=QtGui.QIcon(paths.image_path('chatbot.png'))
+        )
+        self.chatboticon.setIconSize(QtCore.QSize(30, 30))
+        self.chatboticon.setToolTip("Toggle AI Assistant")
+        self.chatboticon.setStyleSheet("""
+            QPushButton {
+                border-radius: 26px;
+                background-color: transparent;
+                border: none;
+            }
+            QPushButton:hover {
+                background-color: rgba(0, 120, 212, 0.12);
+                border: 2px solid #0078d4;
+            }
+            QPushButton:pressed {
+                background-color: rgba(0, 63, 110, 0.18);
+                border: 2px solid #003f6e;
+            }
+        """)
+        self.chatboticon.setFixedSize(52, 52)
+        self.chatboticon.clicked.connect(self.openChatbot)
+
+    def openChatbot(self):
+        """Toggle the chatbot dock panel open or closed."""
+        if self.chatbot_dock.isVisible():
+            self.chatbot_dock.hide()
+        else:
+            self.chatbot_dock.show()
+            self.chatbot_dock.raise_()
+            self.obj_appconfig.print_info('Chat Bot function is called')
+        self._reposition_chatbot_icon()
+
+    def _on_chatbot_visibility(self, _visible):
+        self._reposition_chatbot_icon()
+
+    def _reposition_chatbot_icon(self):
+        """
+        Keep the icon in the bottom-right corner of the visible area.
+        When the dock is open, shift the icon left so it sits just
+        outside the dock panel instead of on top of it.
+        """
+        margin = 12
+        btn_w = self.chatboticon.width()
+        btn_h = self.chatboticon.height()
+        bottom_y = self.height() - btn_h - margin
+
+        if self.chatbot_dock.isVisible():
+            dock_w = self.chatbot_dock.width()
+            # Clamp so a very wide dock cannot push the icon off-screen
+            x = max(0, self.width() - dock_w - btn_w - margin)
+        else:
+            x = self.width() - btn_w - margin
+
+        self.chatboticon.move(x, bottom_y)
+        self.chatboticon.raise_()
+
+    def eventFilter(self, obj, event):
+        """
+        Detect resize events on the dock widget so the icon stays aligned.
+        """
+        if (obj is self.chatbot_dock
+                and event.type() == QtCore.QEvent.Type.Resize):
+            self._reposition_chatbot_icon()
+        return super().eventFilter(obj, event)
+
+    def resizeEvent(self, event):
+        """
+        Adjust chatbot icon button position during window resize.
+        """
+        super().resizeEvent(event)
+        if self.chatbot_dock is not None:
+            self._reposition_chatbot_icon()
 
     def initToolBar(self):
         """
@@ -602,6 +715,10 @@ class Application(QtWidgets.QMainWindow):
             lambda: self.btn_log.setChecked(console_action.isChecked())
         )
         view_menu.addAction(console_action)
+        if self.chatbot_dock is not None:
+            assistant_action = self.chatbot_dock.toggleViewAction()
+            assistant_action.setText('AI Assistant')
+            view_menu.addAction(assistant_action)
 
         # ----- Tools -----
         tools_menu = bar.addMenu('&Tools')
@@ -1021,6 +1138,9 @@ class Application(QtWidgets.QMainWindow):
                 self.project.close()
             except BaseException:
                 pass
+            if self.chatbot_dock is not None:
+                self.chatbot_dock.close()
+                self.chatbot_window.close()
             event.accept()
             self.systemTrayIcon.showMessage('Exit', 'eSim is Closed.')
 
@@ -1201,6 +1321,23 @@ class Application(QtWidgets.QMainWindow):
                                                + str(e))
         else:
             self._set_sim_status("failed")
+            self._explain_simulation_error()
+
+    def _explain_simulation_error(self):
+        """Hand a failed run's ngspice log to the AI assistant, if installed.
+
+        NgspiceWidget saves the log only for a real failure and removes it
+        when a run starts, so a cancelled or abandoned run finds none.
+        """
+        project = self.obj_appconfig.current_project["ProjectName"]
+        if self.chatbot_dock is None or project is None:
+            return
+        log = os.path.join(project, "ngspice_error.log")
+        if not os.path.isfile(log):
+            return
+        self.chatbot_dock.show()
+        self.chatbot_dock.raise_()
+        self.chatbot_window.debug_error(log)
 
     def open_ngspice(self):
         """This Function execute ngspice on current project."""

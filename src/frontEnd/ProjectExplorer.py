@@ -514,7 +514,33 @@ class ProjectExplorer(QtWidgets.QWidget):
             snapshot = menu.addAction(self.tr("Snapshot"))
             snapshot.triggered.connect(self.takeSnapshot)
 
+        path = str(index.sibling(index.row(), 1).data()) if level == 0 \
+            else str(indexes[0].sibling(indexes[0].row(), 1).data())
+        self._add_chatbot_actions(menu, level, path)
+
         menu.exec(self.treewidget.viewport().mapToGlobal(position))
+
+    def _add_chatbot_actions(self, menu, level, path):
+        """Offer AI-assistant netlist analysis when the assistant is installed."""
+        if getattr(self.window(), "chatbot_dock", None) is None:
+            return
+        if level == 0:
+            netlist = os.path.join(path, self._projectLabel(path) + ".cir.out")
+            action = menu.addAction(self.tr("Analyze Project Netlist"))
+        elif level == 1 and path.endswith((".cir", ".cir.out", ".net")):
+            netlist = path
+            action = menu.addAction(self.tr("Analyze this Netlist"))
+        else:
+            return
+        action.triggered.connect(
+            lambda: self._analyze_netlist_in_chatbot(netlist))
+
+    def _analyze_netlist_in_chatbot(self, netlist_path):
+        """Send a netlist to the AI assistant and bring its panel forward."""
+        main_window = self.window()
+        main_window.chatbot_dock.show()
+        main_window.chatbot_dock.raise_()
+        main_window.chatbot_window.analyse_netlist(netlist_path)
 
     def openProject(self):
         self.indexItem = self.treewidget.currentIndex()

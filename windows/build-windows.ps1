@@ -222,6 +222,11 @@ installer  : Inno Setup (windows/installer.iss)
     $stageWin = Join-Path $Stage 'windows'
     New-Item -ItemType Directory -Force -Path $stageWin | Out-Null
     Copy-Item (Join-Path $WinDir 'windows_bootstrap.py') (Join-Path $stageWin 'windows_bootstrap.py') -Force
+    # The installer's AI Assistant task runs install_ai_assistant.py from
+    # {app}\windows, and it reads the pinned Ollama download from the
+    # manifest next to it.
+    Copy-Item (Join-Path $WinDir 'install_ai_assistant.py') (Join-Path $stageWin 'install_ai_assistant.py') -Force
+    Copy-Item (Join-Path $WinDir 'deps-manifest.json') (Join-Path $stageWin 'deps-manifest.json') -Force
 }
 
 function Stage-Python {
@@ -237,7 +242,8 @@ function Stage-Python {
     }
     & "$pydir\python.exe" -m pip install --upgrade pip --quiet
     & "$pydir\python.exe" -m pip install --quiet `
-        -r (Join-Path $WinDir 'requirements-windows.txt')
+        -r (Join-Path $WinDir 'requirements-windows.txt') `
+        -r (Join-Path $RepoRoot 'requirements-copilot.txt')
     if ($LASTEXITCODE -ne 0) { Die 'pip install failed' }
     # Record the exact resolved set for the release notes / reproducibility.
     & "$pydir\python.exe" -m pip freeze |
@@ -245,6 +251,10 @@ function Stage-Python {
     # Sanity: the GUI toolkit must import.
     & "$pydir\python.exe" -c 'import PyQt6.QtWidgets, PyQt6.Qsci'
     if ($LASTEXITCODE -ne 0) { Die 'PyQt6/Qsci import check failed' }
+    # The AI Assistant's packages (the Ollama runtime itself is fetched at
+    # install time by windows\install_ai_assistant.py, if the user opts in).
+    & "$pydir\python.exe" -c 'import ollama, speech_recognition, pyaudio'
+    if ($LASTEXITCODE -ne 0) { Die 'AI Assistant package import check failed' }
 }
 
 function Stage-Sky130 {

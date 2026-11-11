@@ -77,6 +77,15 @@ Name: "core"; Description: "eSim application, ngspice, Icarus Verilog"; \
 Name: "hdl";  Description: "HDL toolchain: MSYS2 mingw gcc/make/verilator/GHDL (NgVeri code-model builds + NGHDL VHDL co-simulation)"; \
     Types: full
 
+[Tasks]
+; The AI Assistant's Python packages ship in the bundled interpreter; what
+; this task adds is too big to bundle: the Ollama runtime (pinned in
+; deps-manifest.json, sha256-checked) and ~2.2 GB of local models. Opt-in,
+; since it is a multi-GB download; without it eSim shows the assistant with a
+; prompt to install Ollama.
+Name: "aiassistant"; Description: "Install the eSim AI Assistant (downloads Ollama, 1.5 GB, and ~2.2 GB of local AI models)"; \
+    Flags: unchecked
+
 [Dirs]
 ; eSim's HDL model builds WRITE inside the install tree by design -- exactly
 ; like the Ubuntu install owns $HOME/nghdl-simulator. Setup runs as admin but
@@ -243,6 +252,13 @@ Filename: "{app}\python\python.exe"; \
 ; malware behaviour and erodes user trust, whatever the cold-start win.
 ; Cold-start cost is addressed the legitimate ways instead: precompiled
 ; bytecode (above) and background import prewarm in the app.
+; AI Assistant runtime (task above). runasoriginaluser: Ollama installs per
+; user, so an elevated run would install it into the admin's profile, not the
+; user's. Visible console: the download takes minutes and prints progress.
+Filename: "{app}\python\python.exe"; \
+    Parameters: """{app}\windows\install_ai_assistant.py"""; \
+    WorkingDir: "{app}"; StatusMsg: "Installing the eSim AI Assistant (large download)..."; \
+    Tasks: aiassistant; Flags: runasoriginaluser waituntilterminated
 ; runasoriginaluser: the installer is elevated but eSim must run as the real
 ; user -- an elevated first run would write root-owned files into ~/.esim and
 ; the workspace that later non-elevated launches cannot touch.

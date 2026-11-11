@@ -17,6 +17,9 @@ matplotlib>=3.8
 numpy>=1.26
 psutil>=5.9
 watchdog>=3.0
+# AI Assistant microphone input (Ubuntu gets it from apt python3-pyaudio);
+# the assistant's other packages come from requirements-copilot.txt.
+PyAudio>=0.2.13
 # HDL / Makerchip flow (same set install-eSim.sh installs; each is optional at
 # runtime -- eSim degrades gracefully when absent). THIS BLOCK IS PINNED, and
 # the loose-(>=)-pins rationale above does NOT apply to it: the block above is

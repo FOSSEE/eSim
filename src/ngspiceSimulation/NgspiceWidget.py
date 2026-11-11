@@ -252,6 +252,35 @@ class NgspiceWidget(QtWidgets.QWidget):
         # reported: re-arm the one-shot so this one can report too.
         self._run_state['finished'] = False
         self._register_process(self.process)
+        self._clear_error_log()
+
+    def _error_log_path(self) -> str:
+        return os.path.join(self.project_dir, "ngspice_error.log")
+
+    def _write_error_log(self) -> None:
+        """Keep a failed run's ngspice output for the AI assistant to explain.
+
+        The console also carries eSim's own "[eSim] ..." status lines (the
+        command line, the PID); they are not ngspice output and only distract
+        the model from the error, so they are left out.
+        """
+        console = self.terminal_ui.simulationConsole.toPlainText()
+        output = "".join(line for line in console.splitlines(keepends=True)
+                         if not line.startswith("[eSim]"))
+        try:
+            with open(self._error_log_path(), "w", encoding="utf-8") as log:
+                log.write(output)
+        except OSError as e:
+            logger.error(f"Could not write ngspice error log: {e}")
+
+    def _clear_error_log(self) -> None:
+        """Drop the previous failure's log so it is never mistaken for this run's."""
+        try:
+            os.remove(self._error_log_path())
+        except FileNotFoundError:
+            pass
+        except OSError as e:
+            logger.error(f"Could not remove old ngspice error log: {e}")
 
     def _start_process(self) -> None:
         # NGHDL ghdl models spawn mintty/bash from inside ngspice on Windows.
@@ -615,6 +644,7 @@ class NgspiceWidget(QtWidgets.QWidget):
                 if self.plotFlag:
                     self.open_ngspice_plots()
             else:
+                self._write_error_log()
                 self._show_failure_message(error_type)
 
             self._scroll_terminal_to_bottom()
