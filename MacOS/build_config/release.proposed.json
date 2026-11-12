@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "status": "proposed",
+  "product_version": null,
+  "build_number": null,
+  "application_identifier": null,
+  "package_identifier": null,
+  "minimum_macos": "26.0",
+  "architecture": "arm64",
+  "source_snapshot_sha256": null
+}
