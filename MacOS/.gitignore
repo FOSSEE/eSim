@@ -15,3 +15,6 @@ __pycache__/
 
 # Private inputs for local configuration review
 /.local-review/
+
+# Disposable source staging and synthetic staging fixtures
+/.migration-work/
