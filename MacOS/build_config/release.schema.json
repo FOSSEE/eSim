@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "release configuration v1",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "status": {
+      "const": "proposed"
+    },
+    "product_version": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "build_number": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[1-9][0-9]{0,3}$"
+    },
+    "application_identifier": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z][A-Za-z0-9-]*(\\.[A-Za-z][A-Za-z0-9-]*)+$"
+    },
+    "package_identifier": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z][A-Za-z0-9-]*(\\.[A-Za-z][A-Za-z0-9-]*)+$"
+    },
+    "minimum_macos": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(\\.(0|[1-9][0-9]*))?$"
+    },
+    "architecture": {
+      "const": "arm64"
+    },
+    "source_snapshot_sha256": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "status",
+    "product_version",
+    "build_number",
+    "application_identifier",
+    "package_identifier",
+    "minimum_macos",
+    "architecture",
+    "source_snapshot_sha256"
+  ],
+  "additionalProperties": false
+}

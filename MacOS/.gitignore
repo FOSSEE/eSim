@@ -1,0 +1,20 @@
+# Local build and Python output
+/build/
+/dist/
+/esim-env/
+/.venv/
+/.venv-*/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local package output and macOS metadata
+*.pkg
+*.dmg
+.DS_Store
+
+# Private inputs for local configuration review
+/.local-review/
+
+# Disposable source staging and synthetic staging fixtures
+/.migration-work/

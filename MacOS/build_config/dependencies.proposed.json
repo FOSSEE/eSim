@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "status": "proposed",
+  "source_snapshot_sha256": null,
+  "architecture": "arm64",
+  "deployment_target": "26.0",
+  "compiler_target": "arm64-apple-macos26.0",
+  "environment": {
+    "MACOSX_DEPLOYMENT_TARGET": "26.0",
+    "ARCHFLAGS": "-arch arm64",
+    "SDKROOT": "@locked-sdk@"
+  },
+  "toolchain": {
+    "sdk": null,
+    "clang": null,
+    "clangxx": null,
+    "linker": null,
+    "ar": null,
+    "ranlib": null,
+    "python": null,
+    "pyinstaller": null
+  },
+  "dependencies": []
+}
