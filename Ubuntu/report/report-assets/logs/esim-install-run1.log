@@ -1,0 +1,2 @@
+./install-eSim.sh: line 70: syntax error near unexpected token `}'
+./install-eSim.sh: line 70: `}'
