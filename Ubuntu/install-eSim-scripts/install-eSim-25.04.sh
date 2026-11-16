@@ -296,16 +296,17 @@ function createDesktopStartScript
     sudo chmod 755 esim.desktop
     # Copy desktop icon file to share applications
     sudo cp -vp esim.desktop /usr/share/applications/
-    # Copy desktop icon file to Desktop
-    cp -vp esim.desktop $HOME/Desktop/
 
-    set +e      # Temporary disable exit on error
-    trap "" ERR # Do not trap on error of any command
+    # Copy desktop icon file to Desktop if the directory exists
+    if [ -d "$HOME/Desktop" ]; then
+        cp -vp esim.desktop "$HOME/Desktop/"
 
-    # Make esim.desktop file as trusted application
-    gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
-    # Set Permission and Execution bit
-    chmod a+x $HOME/Desktop/esim.desktop
+        # Make esim.desktop file as trusted application
+        gio set "$HOME/Desktop/esim.desktop" "metadata::trusted" true
+
+        # Set Permission and Execution bit
+        chmod a+x "$HOME/Desktop/esim.desktop"
+    fi
 
     # Remove local copy of esim.desktop file
     rm esim.desktop
@@ -314,7 +315,7 @@ function createDesktopStartScript
     trap error_exit ERR
 
     # Copying logo.png to .esim directory to access as icon
-    cp -vp images/logo.png $config_dir
+    cp -vp images/logo.png "$config_dir"
 
 }
 
