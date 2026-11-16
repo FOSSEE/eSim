@@ -1,37 +1,18 @@
-eSim Installer (Ubuntu OS)
-====
+# eSim 2.5 on Ubuntu 25.04: installation fixes
 
-It contains the documentation to package eSim for Ubuntu OS.
+| # | Issue | Fix |
+|---|-------|-----|
+| 1 | Syntax error in install-eSim.sh | Removed stray code, closed the `if` |
+| 2-3 | No 25.04 support; empty version | Use 25.04 script; version via lsb_release -rs |
+| 4 | `exit 0` in installKicad | `return 0` |
+| 5 | NGHDL has no 25.04 case | Added case + script |
+| 6 | libcanberra-gtk-module missing | libcanberra-gtk3-module |
+| 7 | GHDL 4.1.0 rejects LLVM 20 | Use LLVM 18 |
 
-> Note: If planning to freeze the eSim source code for a target platform (Ubuntu OS), then refer this [documentation](executable.md). Remember to update the installer script to work with this executable!
+## How to reproduce
+1. Download and unzip eSim 2.5 from https://esim.fossee.in/downloads
+2. Copy `install-eSim.sh` and `install-eSim-scripts/` from this folder into it
+3. Replace `nghdl/install-nghdl.sh` and add `install-nghdl-25.04.sh` inside nghdl.zip
+4. Run `./install-eSim.sh --install`
 
-
-## How to package eSim for Ubuntu OS?
-
-1. Take the `master` branch containing the source code. Rename the folder to `eSim-<version>`.
-
-2. Add the installer script `install-eSim.sh` from `installers` branch to `eSim-<version>` folder.
-
-3. Add the eSim executable (if available) in `eSim-<version>` folder. Also, remove following files from this folder:
-	- `.git` folder
-	- `.github` folder
-	- `code` folder
-	- `src` folder (Applicable only if eSim executable is used)
-	- conf.py
-	- setup.py
-	- index.rst
-	- requirement.txt
-	- .gitignore
-	- .travis.yml
-    - `library/browser/User-Manual/figures` folder
-    - library/browser/User-Manual/eSim.html
-
-4. Add eSim user manual `eSim_Manual_<version>.pdf` at location `library/browser/User-Manual`.
-
-5. Add the zip file of `NGHDL` (`nghdl.zip`) in the eSim folder.
-
-> Note: Refer this [documentation](https://github.com/fossee/nghdl/tree/installers/Ubuntu/README.md) on packaging of NGHDL for Ubuntu OS.
-
-6. Compress `kicadLibrary` folder to a `tar.xz` format and then remove that folder.
-
-7. Compress `eSim-<version>` to a zip format for distribution.
+Full report: report/esim_report.pdf

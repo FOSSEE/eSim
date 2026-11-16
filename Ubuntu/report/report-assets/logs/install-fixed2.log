@@ -1,0 +1,189 @@
+Detected Ubuntu Version: 25.04
+Running script: /home/somesh/Downloads/eSim-2.5/install-eSim-scripts/install-eSim-25.04.sh --install
+Enter proxy details if you are connected to internet thorugh proxy
+Is your internet connection behind proxy? (y/n): Install without proxy
+Updating apt index files...................
+Hit:1 https://archive.ubuntu.com/ubuntu plucky InRelease
+Hit:2 https://ppa.launchpadcontent.net/kicad/kicad-8.0-releases/ubuntu plucky InRelease
+Hit:3 https://security.ubuntu.com/ubuntu plucky-security InRelease
+Hit:4 https://archive.ubuntu.com/ubuntu plucky-updates InRelease
+Hit:5 https://archive.ubuntu.com/ubuntu plucky-backports InRelease
+Reading package lists...
+Instaling virtualenv.......................
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-virtualenv is already the newest version (20.29.1+ds-1).
+Solving dependencies...
+Summary:
+  Upgrading: 0, Installing: 0, Removing: 0, Not Upgrading: 138
+Creating virtual environment to isolate packages 
+created virtual environment CPython3.13.3.final.0-64 in 540ms
+  creator CPython3Posix(dest=/home/somesh/.esim/env, clear=False, no_vcs_ignore=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, via=copy, app_data_dir=/home/somesh/.local/share/virtualenv)
+    added seed packages: PyQt5==5.15.11, argparse==1.4.0, certifi==2026.10.23, charset_normalizer==3.5.2, click==8.5.1, contourpy==1.4.0, cycler==0.12.1, fonttools==4.68.0, hdlparse==1.0.7, idna==3.20, kiwisolver==1.5.1, makerchip_app==1.1.6, matplotlib==3.11.2, numpy==2.5.4, packaging==26.3, path==17.1.1, pillow==13.0.0, pip==25.0, pyparsing==3.3.3, pyqt5_qt5==5.15.19, pyqt5_sip==12.20.1, python_dateutil==4.0.0, requests==2.34.2, sandpiper_saas==1.1.0, sseclient_py==1.9.0, tzdata==2026.6, urllib3==2.8.0, watchdog==7.1.0
+  activators BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+Starting the virtual env...................
+Upgrading Pip..............................
+Requirement already satisfied: pip in /home/somesh/.esim/env/lib/python3.13/site-packages (25.0)
+Collecting pip
+  Using cached pip-26.3-py3-none-any.whl.metadata (4.6 kB)
+Using cached pip-26.3-py3-none-any.whl (2.0 MB)
+Installing collected packages: pip
+  Attempting uninstall: pip
+    Found existing installation: pip 25.0
+    Uninstalling pip-25.0:
+      Successfully uninstalled pip-25.0
+Successfully installed pip-26.3
+Installing Xterm...........................
+Reading package lists...
+Building dependency tree...
+Reading state information...
+xterm is already the newest version (397-1ubuntu1).
+Solving dependencies...
+0 upgraded, 0 newly installed, 0 to remove and 138 not upgraded.
+Installing Psutil..........................
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-psutil is already the newest version (5.9.8-2build3).
+Solving dependencies...
+0 upgraded, 0 newly installed, 0 to remove and 138 not upgraded.
+Installing PyQt5...........................
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-pyqt5 is already the newest version (5.15.11+dfsg-2).
+Solving dependencies...
+0 upgraded, 0 newly installed, 0 to remove and 138 not upgraded.
+Installing Matplotlib......................
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-matplotlib is already the newest version (3.8.3-7build1).
+Solving dependencies...
+0 upgraded, 0 newly installed, 0 to remove and 138 not upgraded.
+Installing Setuptools...................
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-setuptools is already the newest version (75.8.0-1ubuntu1).
+Solving dependencies...
+0 upgraded, 0 newly installed, 0 to remove and 138 not upgraded.
+Installing Pip3............................
+
+WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
+
+Reading package lists...
+Building dependency tree...
+Reading state information...
+python3-pip is already the newest version (25.0+dfsg-1ubuntu0.2).
+Solving dependencies...
+Summary:
+  Upgrading: 0, Installing: 0, Removing: 0, Not Upgrading: 138
+Installing Watchdog........................
+Requirement already satisfied: watchdog in /home/somesh/.esim/env/lib/python3.13/site-packages (7.1.0)
+Installing Hdlparse........................
+Collecting https://github.com/hdl/pyhdlparser/tarball/master
+  Using cached master
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'done'
+  Preparing metadata (pyproject.toml): started
+  Preparing metadata (pyproject.toml): finished with status 'done'
+Installing Makerchip.......................
+Requirement already satisfied: makerchip-app in /home/somesh/.esim/env/lib/python3.13/site-packages (1.1.6)
+Requirement already satisfied: click in /home/somesh/.esim/env/lib/python3.13/site-packages (from makerchip-app) (8.5.1)
+Requirement already satisfied: requests in /home/somesh/.esim/env/lib/python3.13/site-packages (from makerchip-app) (2.34.2)
+Requirement already satisfied: sseclient-py in /home/somesh/.esim/env/lib/python3.13/site-packages (from makerchip-app) (1.9.0)
+Requirement already satisfied: charset_normalizer<4,>=2 in /home/somesh/.esim/env/lib/python3.13/site-packages (from requests->makerchip-app) (3.5.2)
+Requirement already satisfied: idna<4,>=2.5 in /home/somesh/.esim/env/lib/python3.13/site-packages (from requests->makerchip-app) (3.20)
+Requirement already satisfied: urllib3<3,>=1.26 in /home/somesh/.esim/env/lib/python3.13/site-packages (from requests->makerchip-app) (2.8.0)
+Requirement already satisfied: certifi>=2023.5.7 in /home/somesh/.esim/env/lib/python3.13/site-packages (from requests->makerchip-app) (2026.10.23)
+Installing SandPiper Saas..................
+Requirement already satisfied: sandpiper-saas in /home/somesh/.esim/env/lib/python3.13/site-packages (1.1.0)
+Requirement already satisfied: Path in /home/somesh/.esim/env/lib/python3.13/site-packages (from sandpiper-saas) (17.1.1)
+Collecting argparse (from sandpiper-saas)
+  Using cached argparse-1.4.0-py2.py3-none-any.whl.metadata (2.8 kB)
+Requirement already satisfied: click in /home/somesh/.esim/env/lib/python3.13/site-packages (from sandpiper-saas) (8.5.1)
+Requirement already satisfied: requests in /home/somesh/.esim/env/lib/python3.13/site-packages (from sandpiper-saas) (2.34.2)
+Requirement already satisfied: charset_normalizer<4,>=2 in /home/somesh/.esim/env/lib/python3.13/site-packages (from requests->sandpiper-saas) (3.5.2)
+Requirement already satisfied: idna<4,>=2.5 in /home/somesh/.esim/env/lib/python3.13/site-packages (from requests->sandpiper-saas) (3.20)
+Requirement already satisfied: urllib3<3,>=1.26 in /home/somesh/.esim/env/lib/python3.13/site-packages (from requests->sandpiper-saas) (2.8.0)
+Requirement already satisfied: certifi>=2023.5.7 in /home/somesh/.esim/env/lib/python3.13/site-packages (from requests->sandpiper-saas) (2026.10.23)
+Using cached argparse-1.4.0-py2.py3-none-any.whl (23 kB)
+Installing collected packages: argparse
+Successfully installed argparse-1.4.0
+Installing Hdlparse......................
+Requirement already satisfied: hdlparse in /home/somesh/.esim/env/lib/python3.13/site-packages (1.0.7)
+Installing matplotlib................
+Requirement already satisfied: matplotlib in /home/somesh/.esim/env/lib/python3.13/site-packages (3.11.2)
+Requirement already satisfied: contourpy>=1.0.1 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (1.4.0)
+Requirement already satisfied: cycler>=0.10 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (0.12.1)
+Requirement already satisfied: fonttools>=4.28.2 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (4.68.0)
+Requirement already satisfied: kiwisolver>=1.3.1 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (1.5.1)
+Requirement already satisfied: numpy>=1.25 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (2.5.4)
+Requirement already satisfied: packaging>=20.0 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (26.3)
+Requirement already satisfied: pillow>=9 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (13.0.0)
+Requirement already satisfied: pyparsing>=3 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (3.3.3)
+Requirement already satisfied: python-dateutil>=2.7 in /home/somesh/.esim/env/lib/python3.13/site-packages (from matplotlib) (4.0.0)
+Requirement already satisfied: tzdata in /home/somesh/.esim/env/lib/python3.13/site-packages (from python-dateutil>=2.7->matplotlib) (2026.6)
+Installing PyQt5.............
+Requirement already satisfied: PyQt5 in /home/somesh/.esim/env/lib/python3.13/site-packages (5.15.11)
+Requirement already satisfied: PyQt5-sip<13,>=12.15 in /home/somesh/.esim/env/lib/python3.13/site-packages (from PyQt5) (12.20.1)
+Requirement already satisfied: PyQt5-Qt5<5.16.0,>=5.15.2 in /home/somesh/.esim/env/lib/python3.13/site-packages (from PyQt5) (5.15.19)
+Installing KiCad...........................
+Ubuntu 25.04 detected.
+KiCad 8.0 is already installed.
+kicad config folder already exists
+symbol table copied in the directory
+Installing NGHDL...........................
+Archive:  nghdl.zip
+  inflating: nghdl/CONTRIBUTION.md   
+  inflating: nghdl/ghdl-4.1.0.tar.gz  
+  inflating: nghdl/install-nghdl.sh  
+  inflating: nghdl/LICENSE           
+  inflating: nghdl/nghdl-simulator-source.tar.xz  
+  inflating: nghdl/README.md         
+  inflating: nghdl/verilator-4.210.tar.xz  
+  inflating: nghdl/Example/combinational_logic/bin_to_gray/bin_to_gray.vhdl  
+  inflating: nghdl/Example/combinational_logic/counter/decadecounter.vhdl  
+  inflating: nghdl/Example/combinational_logic/counter/updown_counter.vhdl  
+  inflating: nghdl/Example/combinational_logic/counter/up_counter.vhdl  
+  inflating: nghdl/Example/combinational_logic/counter/up_counter_slv.vhdl  
+  inflating: nghdl/Example/combinational_logic/decoder/decoder.vhdl  
+  inflating: nghdl/Example/combinational_logic/full_adder/full_adder_sl.vhdl  
+  inflating: nghdl/Example/combinational_logic/full_adder/full_adder_slv.vhdl  
+  inflating: nghdl/Example/combinational_logic/full_adder/full_adder_sl_slv.vhdl  
+  inflating: nghdl/Example/combinational_logic/full_adder/full_adder_structural.vhdl  
+  inflating: nghdl/Example/combinational_logic/half_adder/half_adder.vhdl  
+  inflating: nghdl/Example/combinational_logic/mux-demux/demux.vhdl  
+  inflating: nghdl/Example/combinational_logic/mux-demux/mux.vhdl  
+  inflating: nghdl/Example/logic_gates/and_gate.vhdl  
+  inflating: nghdl/Example/logic_gates/inverter.vhdl  
+  inflating: nghdl/Example/logic_gates/nand_gate.vhdl  
+  inflating: nghdl/Example/logic_gates/nor_gate.vhdl  
+  inflating: nghdl/Example/logic_gates/or_gate.vhdl  
+  inflating: nghdl/Example/logic_gates/xor_gate.vhdl  
+  inflating: nghdl/Example/PWM/pwmdecrement.vhdl  
+  inflating: nghdl/Example/PWM/pwmincrement.vhdl  
+  inflating: nghdl/install-nghdl-scripts/install-nghdl-22.04.sh  
+  inflating: nghdl/install-nghdl-scripts/install-nghdl-23.04.sh  
+  inflating: nghdl/install-nghdl-scripts/install-nghdl-24.04.sh  
+  inflating: nghdl/src/Appconfig.py  
+  inflating: nghdl/src/createKicadLibrary.py  
+  inflating: nghdl/src/model_generation.py  
+  inflating: nghdl/src/ngspice_ghdl.py  
+  inflating: nghdl/src/ghdlserver/compile.sh  
+  inflating: nghdl/src/ghdlserver/ghdlserver.c  
+  inflating: nghdl/src/ghdlserver/ghdlserver.h  
+  inflating: nghdl/src/ghdlserver/uthash.h  
+  inflating: nghdl/src/ghdlserver/Utility_Package.vhdl  
+  inflating: nghdl/src/ghdlserver/Vhpi_Package.vhdl  
+  inflating: nghdl/install-nghdl-scripts/install-nghdl-25.04.sh  
+Detected Ubuntu Version: 
+Unsupported Ubuntu version: 25.04 ()
