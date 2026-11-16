@@ -42,20 +42,19 @@ function createConfigFile
 
     # Creating config.ini file and adding configuration information
     # Check if config file is present
-    if [ -d $config_dir ];then
-        rm $config_dir/$config_file && touch $config_dir/$config_file
-    else
-        mkdir $config_dir && touch $config_dir/$config_file
-    fi
-    
-    echo "[eSim]" >> $config_dir/$config_file
-    echo "eSim_HOME = $eSim_Home" >> $config_dir/$config_file
-    echo "LICENSE = %(eSim_HOME)s/LICENSE" >> $config_dir/$config_file
-    echo "KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz" >> $config_dir/$config_file
-    echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
-    echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
-    echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-   
+    mkdir -p "$config_dir"
+    rm -f "$config_dir/$config_file"
+
+    {
+        echo "[eSim]"
+        echo "eSim_HOME = $eSim_Home"
+        echo "LICENSE = %(eSim_HOME)s/LICENSE"
+        echo "KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz"
+        echo "IMAGES = %(eSim_HOME)s/images"
+        echo "VERSION = %(eSim_HOME)s/VERSION"
+        echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json"
+    } > "$config_dir/$config_file"
+
 }
 
 
@@ -346,7 +345,7 @@ if [ $option == "--install" ];then
     trap error_exit ERR
 
 
-    echo "Enter proxy details if you are connected to internet thorugh proxy"
+    echo "Enter proxy details if you are connected to internet through proxy"
     
     echo -n "Is your internet connection behind proxy? (y/n): "
     read getProxy
