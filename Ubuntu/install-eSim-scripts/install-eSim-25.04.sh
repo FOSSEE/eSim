@@ -165,22 +165,13 @@ function installDependency
     # Update apt repository
     echo "Updating apt index files..................."
     sudo apt-get update
-    
+
     set -e      # Re-enable exit on error
     trap error_exit ERR
-    
+
     echo "Instaling virtualenv......................."
     sudo apt install python3-virtualenv
-   
-    echo "Creating virtual environment to isolate packages "
-    virtualenv $config_dir/env
-    
-    echo "Starting the virtual env..................."
-    source $config_dir/env/bin/activate
 
-    echo "Upgrading Pip.............................."
-    pip install --upgrade pip
-    
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
     
@@ -193,10 +184,19 @@ function installDependency
     echo "Installing Setuptools..................."
     sudo apt-get install -y python3-setuptools
 
-    # Install NgVeri Depedencies
-    echo "Installing Pip3............................"
-    sudo apt install -y python3-pip
+    echo "Creating virtual environment to isolate packages "
+    virtualenv "$config_dir/env"
 
+    echo "Starting the virtual env..................."
+    source "$config_dir/env/bin/activate"
+
+    echo "Upgrading Pip.............................."
+    pip3 install --upgrade pip
+
+    echo "Installing compatible Setuptools..........."
+    pip3 install "setuptools<81"
+
+    # Install NgVeri Depedencies
     echo "Installing Watchdog........................"
     pip3 install watchdog
 
@@ -209,7 +209,6 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
-   
     echo "Installing Hdlparse......................"
     pip3 install hdlparse
 
