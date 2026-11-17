@@ -226,15 +226,15 @@ function copyKicadLibrary
     #Extract custom KiCad Library
     tar -xJf library/kicadLibrary.tar.xz
 
-    if [ -d ~/.config/kicad/6.0 ];then
+    if [ -d ~/.config/kicad/8.0 ];then
         echo "kicad config folder already exists"
     else 
-        echo ".config/kicad/6.0 does not exist"
-        mkdir -p ~/.config/kicad/6.0
+        echo ".config/kicad/8.0 does not exist"
+        mkdir -p ~/.config/kicad/8.0
     fi
 
     # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
+    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/8.0/
     echo "symbol table copied in the directory"
 
     # Copy KiCad symbols made for eSim
@@ -413,7 +413,7 @@ elif [ $option == "--uninstall" ];then
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
 	sudo rm /etc/apt/sources.list.d/kicad*
-        rm -rf $HOME/.config/kicad/6.0
+        rm -rf $HOME/.config/kicad/8.0
 
         echo "Removing Virtual env......................."
         sudo rm -r $config_dir/env
