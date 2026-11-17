@@ -184,9 +184,6 @@ function installDependency
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
     
-    echo "Installing Psutil.........................."
-    sudo apt-get install -y python3-psutil
-    
     echo "Installing PyQt5..........................."
     sudo apt-get install -y python3-pyqt5
 
