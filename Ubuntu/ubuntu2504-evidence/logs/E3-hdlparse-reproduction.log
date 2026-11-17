@@ -1,0 +1,30 @@
+=== python in venv:
+Python 3.13.3
+
+=== REPRODUCING E3: pip install hdlparse
+  Installing build dependencies: started
+  Installing build dependencies: finished with status 'done'
+  Getting requirements to build wheel: started
+  Getting requirements to build wheel: finished with status 'error'
+  error: subprocess-exited-with-error
+  
+  × Getting requirements to build wheel did not run successfully.
+  │ exit code: 1
+  ╰─> [1 lines of output]
+      error in hdlparse setup command: use_2to3 is invalid.
+      [end of output]
+  
+  note: This error originates from a subprocess, and is likely not a problem with pip.
+error: subprocess-exited-with-error
+
+× Getting requirements to build wheel did not run successfully.
+│ exit code: 1
+╰─> See above for output.
+
+note: This error originates from a subprocess, and is likely not a problem with pip.
+=== VERIFYING THE FIX: pinned pyhdlparser commit
+bash: line 3: /tmp/e3/bin/pip: No such file or directory
+
+=== Installing declared deps of eSim 2.5 that the installer also needs:
+bash: line 6: /tmp/e3/bin/pip: No such file or directory
+deps-exit=0

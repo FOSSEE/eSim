@@ -1,0 +1,15 @@
+==================================================================
+ FIXED dispatcher on Ubuntu 25.04
+==================================================================
+
+############ ORIGINAL (shipped) dispatcher, same machine ############
+  Detected Ubuntu Version: 
+  Unsupported Ubuntu version: 25.04 ()
+  original-exit=1
+
+############ FIXED dispatcher, same machine ############
+  Detected Ubuntu Version: 25.04
+  Running script: /mnt/e/fossee/Evidence_Ubuntu2504/work/fixed-pkg/install-eSim-scripts/install-eSim-25.04.sh --install
+    >>> ROUTED to install-eSim-25.04.sh, argument=--install
+    >>> version gate passed - the installation would proceed here
+  fixed-exit=0

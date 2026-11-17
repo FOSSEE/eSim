@@ -1,0 +1,25 @@
+=== ghdl --version
+GHDL 4.1.0 (tarball) [Dunoon edition]
+ Compiled with GNAT Version: 14.2.0
+ llvm 18.1.8 code generator
+Written by Tristan Gingold.
+
+=== analysing with the LLVM 18 backend
+analyse OK
+
+=== elaborating
+elaborate OK
+
+=== running the simulation
+counter_tb.vhdl:22:13:@15ns:(report note): count = 0
+counter_tb.vhdl:22:13:@25ns:(report note): count = 1
+counter_tb.vhdl:22:13:@35ns:(report note): count = 2
+counter_tb.vhdl:22:13:@45ns:(report note): count = 3
+counter_tb.vhdl:22:13:@55ns:(report note): count = 4
+counter_tb.vhdl:22:13:@65ns:(report note): count = 5
+counter_tb.vhdl:22:13:@75ns:(report note): count = 6
+counter_tb.vhdl:22:13:@85ns:(report note): count = 7
+counter_tb.vhdl:22:13:@95ns:(report note): count = 8
+counter_tb.vhdl:27:9:@95ns:(report note): PASS: counter reached 8 with the LLVM 18 backend
+simulation stopped @95ns
+sim-exit=0

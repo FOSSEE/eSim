@@ -1,0 +1,25 @@
+=== installing the packages the ORIGINAL script pulled in system-wide
+Processing triggers for man-db (2.13.0-1) ...
+Processing triggers for udev (257.4-1ubuntu3) ...
+Processing triggers for fontconfig (2.15.0-2.2ubuntu1) ...
+system-install-exit=0
+
+=== system python can see them:
+  system python3: PyQt5 + matplotlib + psutil OK
+
+=== creating the venv exactly as installDependency() does (no --system-site-packages)
+
+=== can the venv see those system packages?
+    import PyQt5
+ModuleNotFoundError: No module named 'PyQt5'
+    import matplotlib
+ModuleNotFoundError: No module named 'matplotlib'
+    import psutil
+ModuleNotFoundError: No module named 'psutil'
+
+=== venv site-packages vs system site-packages:
+  /mnt/e/fossee/Evidence_Ubuntu2504/work/e4/env/lib/python3.13/site-packages
+
+  -> E4 confirmed: the system-wide apt packages are invisible inside the
+     venv, so those installs were dead weight. The venv needs its own pip
+     installs (which the patched script keeps).

@@ -1,0 +1,18 @@
+=== E6/installKicad: does the pinned install resolve on 25.04?
+Conf libtk8.6 (8.6.16-1 Ubuntu:25.04/plucky [amd64])
+Conf libocct-draw-7.8 (7.8.1+dfsg1-3 Ubuntu:25.04/plucky [amd64])
+Conf occt-misc (7.8.1+dfsg1-3 Ubuntu:25.04/plucky [all])
+Conf libocct-visualization-7.8 (7.8.1+dfsg1-3 Ubuntu:25.04/plucky [amd64])
+Conf libocct-ocaf-7.8 (7.8.1+dfsg1-3 Ubuntu:25.04/plucky [amd64])
+Conf libocct-data-exchange-7.8 (7.8.1+dfsg1-3 Ubuntu:25.04/plucky [amd64])
+Conf libodbc2 (2.3.12-2ubuntu1 Ubuntu:25.04/plucky [amd64])
+Conf kicad (8.0.8+dfsg-1 Ubuntu:25.04/plucky [amd64])
+simulate-exit=0
+
+=== and the fallback (unpinned) install path:
+Inst libpcre2-8-0 [10.45-1] (10.45-1ubuntu0.1 Ubuntu:25.04/plucky-updates, Ubuntu:25.04/plucky-security [amd64])
+Inst libngspice0 (44.2+ds-1 Ubuntu:25.04/plucky [amd64])
+Inst libimagequant0 (2.18.0-1build1 Ubuntu:25.04/plucky [amd64])
+
+=== confirming pkg version string matches the pin exactly:
+Version: 8.0.8+dfsg-1

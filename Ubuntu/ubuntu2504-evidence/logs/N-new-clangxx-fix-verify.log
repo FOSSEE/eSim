@@ -1,0 +1,27 @@
+=== copy source (from the evidence tree)
+=== toolchain actually installed:
+  llvm-18-dev  1:18.1.8-17
+  clang-18     1:18.1.8-17
+  clang++-18: Ubuntu clang version 18.1.8 (17)
+  unversioned clang++ -> /usr/lib/llvm-20/bin/clang
+
+=== configure with the patched line
+Debugging is enabled with llvm 18.1.8
+
+=== CONTROL: plain make (no CXX) - which compiler does it pick?
+clang++
+clang++"
+  (a plain 'make' would invoke the unversioned clang++ = LLVM 20)
+
+=== FIX: make CXX=clang++-18 ghdl1-llvm
+make-exit=0
+
+=== the backend binary:
+-rwxr-xr-x 1 root root 12554648 Nov 17 22:54 ghdl1-llvm
+=== LLVM it links:
+	libLLVM-18.so.18.1 => /lib/x86_64-linux-gnu/libLLVM-18.so.18.1 (0x0000731c04600000)
+
+=== embedded version string:
+llvm-18
+
+RESULT: ghdl1-llvm built with clang++-18 links LLVM 18.

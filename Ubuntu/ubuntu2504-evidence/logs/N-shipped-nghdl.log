@@ -1,0 +1,38 @@
+==================================================================
+ SHIPPED nghdl.zip (from eSim 2.5) on Ubuntu 25.04
+==================================================================
+
+=== 1) the dispatcher as shipped, on 25.04:
+  Detected Ubuntu Version: 
+  Unsupported Ubuntu version: 25.04 ()
+  dispatcher-exit=0
+
+  -> same wall as eSim itself: the NGHDL package only ships 22.04/23.04/24.04.
+
+=== 2) the bugs the 24.04 script WOULD hit, executed on 25.04 directly ===
+
+--- N1: libcanberra-gtk-module (line 68 of install-nghdl-24.04.sh):
+$ apt-get install -y libcanberra-gtk-module libcanberra-gtk3-module
+  This may mean that the package is missing, has been obsoleted, or
+  is only available from another source
+  
+  E: Package 'libcanberra-gtk-module' has no installation candidate
+
+--- N2: unversioned llvm (line 55/58) resolves to LLVM 20 on 25.04:
+$ apt-cache policy llvm | grep Candidate
+    Candidate: 1:20.0-63ubuntu1
+  (GHDL 4.1.0 cannot use LLVM >= 19 - ghdl/ghdl#2711)
+
+--- N3: configure line (105) points at the system default llvm-config:
+  ./configure --with-llvm-config=/usr/bin/llvm-config
+  /usr/bin/llvm-config -> LLVM 20.1.2
+
+--- N4: uninstall purge line (305) with llvm_version undefined:
+  apt-get purge -y llvm-${llvm_version} llvm-${llvm_version}-dev
+  expands to: apt-get purge -y llvm- llvm--dev   (empty package names)
+
+=== 3) the FIXED script's dependency set, installed for real above:
+  llvm-18                    1:18.1.8-17
+  llvm-18-dev                1:18.1.8-17
+  clang-18                   1:18.1.8-17
+  libcanberra-gtk3-module    0.30-17ubuntu2

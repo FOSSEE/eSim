@@ -1,0 +1,21 @@
+=== the leftover lines, verbatim from the original install-eSim.sh:
+    echo "[eSim]" >> $config_dir/$config_file
+    echo "eSim_HOME = $eSim_Home" >> $config_dir/$config_file
+    echo "LICENSE = %(eSim_HOME)s/LICENSE" >> $config_dir/$config_file
+    echo "KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz" >> $config_dir/$config_file
+    echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
+    echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
+    echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
+
+=== with config_dir/config_file undefined, the path expands to:
+  >> /
+
+=== executing it as a normal user (id: nobody) is how the installer runs:
+$ su nobody -s /bin/bash -c "bash /tmp/e5.sh"
+/tmp/e5.sh: line 3: /: Is a directory
+run-exit=1
+
+=== the same lines after the patch (run_version_script closes the if):
+  the block is deleted, so nothing executes after the child installer.
+
+E5: reproduced - a permission error is printed after a successful install.
