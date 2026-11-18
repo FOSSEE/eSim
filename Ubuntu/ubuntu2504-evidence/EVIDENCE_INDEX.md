@@ -25,6 +25,20 @@ build. Nothing is mocked. `LIVE_VERIFICATION.md` tells the story;
 | `N-finding-clangxx.log` | new finding | 497 | `bfd350966722b3fd` | `clang-18` ships `/usr/bin/clang++-18` (`dpkg -L`); the unversioned `/usr/bin/clang++` belongs to LLVM 20. |
 | `N-new-clangxx-fix-verify.log` | new finding + fix | 784 | `53177d85843edcb6` | Clean-room build. **Control:** plain `make` invokes the unversioned `clang++` (LLVM 20). **Fix:** `make CXX=clang++-18` builds exit 0 and links `libLLVM-18.so.18.1`. |
 | `N-shipped-nghdl.log` | N1-N4 on shipped package | 1586 | `931f36c6cbd24b63` | The `nghdl.zip` dispatcher also refuses 25.04; its 24.04 dependency step's four bugs are executed directly on 25.04. |
+| `E-ngspice-simulation.log` | installed-result check | 943 | `9201ed66c2dfa6cb` | ngspice 44.2 runs a real transient simulation; the shipped Astable555 example's probe wiring is also shown. |
+
+## Screenshots (eSim GUI and simulation)
+
+See `GUI_VERIFICATION.md` for method and caveats. These are rendered by Qt from
+eSim's own widget tree because WSLg's Weston refuses `X_GetImage`; the
+application runs for real.
+
+| File | Bytes | SHA-256 (first 16) | What it shows |
+|---|---:|---|---|
+| `screenshots/01-esim-gui-project-loaded.png` | 51830 | `11107c74e014ff53` | eSim 2.5 main window with the Astable555 example in the project tree, full toolbar, FOSSEE banner. |
+| `screenshots/02-esim-about.png` | 22558 | `1039c88ea24f8e86` | Version dialog: eSim 2.5, Ubuntu 25.04 (Plucky Puffin), Python 3.13.3, PyQt5 5.15.14. |
+| `screenshots/03-ngspice-transient.png` | 46747 | `87e549969bc820cb` | ngspice 44.2 RC transient plotted from its own 108 samples. |
+| `screenshots/04-esim-project-tree.png` | 7303 | `fa14aeec2545e6ea` | The project explorer pane at native scale. |
 
 ## Headline result
 
