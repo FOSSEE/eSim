@@ -1,0 +1,12 @@
+/usr/bin/clang++-18
+---
+Processing triggers for man-db (2.13.0-1) ...
+Processing triggers for fontconfig (2.15.0-2.2ubuntu1) ...
+--- after:
+/usr/bin/clang++
+/usr/bin/clang++-18
+lrwxrwxrwx 1 root root 26 Feb 20  2025 /usr/bin/clang++ -> ../lib/llvm-20/bin/clang++
+lrwxrwxrwx 1 root root 26 Feb 12  2025 /usr/bin/clang++-18 -> ../lib/llvm-18/bin/clang++
+lrwxrwxrwx 1 root root 26 Apr  3  2025 /usr/bin/clang++-20 -> ../lib/llvm-20/bin/clang++
+---
+dpkg-query: no packages found matching clang++-18

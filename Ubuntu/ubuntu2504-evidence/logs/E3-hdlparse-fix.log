@@ -1,0 +1,15 @@
+mkdir: missing operand
+Try 'mkdir --help' for more information.
+=== recreating venv in persistent location
+Python 3.13.3
+
+=== REPRODUCING E3 (for the record, from persistent venv)
+      error in hdlparse setup command: use_2to3 is invalid.
+
+=== VERIFYING THE FIX: pinned pyhdlparser commit
+Successfully built hdlparse
+Successfully installed hdlparse-1.0.7
+
+=== eSim 2.5 import shape actually works?
+VerilogExtractor OK
+distribution name/version: 1.0.7

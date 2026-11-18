@@ -1,0 +1,36 @@
+=== ngspice version:
+******
+** ngspice-44.2 : Circuit level simulation program
+** Compiled with KLU Direct Linear Solver
+
+=== running RC transient:
+94	1.507109e-02	2.943823e-02	
+95	1.547109e-02	1.962548e-02	
+96	1.587109e-02	1.308366e-02	
+97	1.627109e-02	8.722437e-03	
+98	1.667109e-02	5.814958e-03	
+99	1.707109e-02	3.876639e-03	
+100	1.747109e-02	2.584426e-03	
+101	1.787109e-02	1.722951e-03	
+102	1.827109e-02	1.148634e-03	
+103	1.867109e-02	7.657558e-04	
+104	1.907109e-02	5.105039e-04	
+105	1.947109e-02	3.403359e-04	
+106	1.987109e-02	2.268906e-04	
+107	2.000000e-02	1.994133e-04	
+
+
+Total analysis time (seconds) = 0.000464148
+
+Total elapsed time (seconds) = 0.006 
+
+Total DRAM available = 7791.129 MB.
+DRAM currently available = 6849.496 MB.
+Maximum ngspice program size =   23.293 MB.
+Current ngspice program size =   12.688 MB.
+
+Shared ngspice pages =   10.938 MB.
+Text (code) pages =    7.578 MB.
+Stack = 0 bytes.
+Library pages =    2.059 MB.
+

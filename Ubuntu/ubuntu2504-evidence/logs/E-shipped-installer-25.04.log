@@ -1,0 +1,19 @@
+==================================================================
+ SHIPPED eSim 2.5 installer, unmodified, on Ubuntu 25.04
+ package: /mnt/e/fossee/Evidence_Ubuntu2504/esim-pkg/eSim-2.5
+ VERSION file: 2.5
+==================================================================
+
+=== the dispatcher as shipped:
+  case $VERSION_ID in 22.04|23.04|24.04 ... *) Unsupported ... exit 1
+
+=== running: ./install-eSim.sh --install  (with 'n' to the proxy prompt)
+------------------------------------------------------------------
+Detected Ubuntu Version: 
+Unsupported Ubuntu version: 25.04 ()
+------------------------------------------------------------------
+installer-exit=1
+
+=== CONCLUSION: on a stock Ubuntu 25.04 machine the shipped
+    installer refuses to run at all. There is no 25.04 script in the
+    package - it only knows 22.04, 23.04 and 24.04.

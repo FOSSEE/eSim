@@ -1,0 +1,83 @@
+=== C++ compilers present:
+  clang++      -> /usr/lib/llvm-20/bin/clang
+  clang++-18   -> /usr/lib/llvm-18/bin/clang
+  clang++-20   -> /usr/lib/llvm-20/bin/clang
+
+=== rebuilding with CXX=clang++-18 (the versioned C++ compiler)
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-sem_upwards.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-sem_upwards.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/grt-astdio.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/grt/grt-astdio.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/name_maps.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/name_maps.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-executions.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-executions.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-simulation.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-simulation.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-sv_strings.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-sv_strings.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/synth-environment.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/synth/synth-environment.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/synth-environment-debug.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/synth/synth-environment-debug.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/netlists-butils.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/synth/netlists-butils.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/synth-ieee-utils.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/synth/synth-ieee-utils.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/grt-readline_none.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/grt/grt-readline_none.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/grt-table.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/grt/grt-table.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/synth-verilog_errors.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/synth/synth-verilog_errors.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-abi.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-abi.ads
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-sv_arrays.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-sv_arrays.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-sv_classes.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-sv_classes.ads
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-sv_maps.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-sv_maps.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-sv_queues.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-sv_queues.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-disp_tree.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-disp_tree.adb
+x86_64-linux-gnu-gcc-14 -c -I. -gnat12 -gnat12 -gnaty3befhkmr -g -gnatwa -gnatwC -gnatf -gnata -fPIC -I./src -I./src/vhdl -I./src/verilog -I./src/synth -I./src/grt -I./src/psl -I./src/vhdl/translate -I./src/synth -I./src/vhdl/libghdl -I./src/ghdldrv -I- -o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/verilog-debugger.o /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/src/verilog/verilog-debugger.adb
+x86_64-linux-gnu-gnatbind-14 -aI. -aO/mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic -aI./src -aI./src/vhdl -aI./src/verilog -aI./src/synth -aI./src/grt -aI./src/psl -aI./src/vhdl/translate -aI./src/synth -aI./src/vhdl/libghdl -aI./src/ghdldrv -shared -Llibghdl_ -z -x /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/libghdl.ali
+x86_64-linux-gnu-gnatlink-14 /mnt/e/fossee/Evidence_Ubuntu2504/work/src/ghdl-4.1.0/pic/libghdl.ali -shared-libgcc -o lib/libghdl-4_1_0.so -g -fPIC -g -shared -Wl,-soname,libghdl-4_1_0.so pic/grt-cstdio.o pic/grt-cdynload.o
+sed -e '1,/--  BEGIN/d' -e '/--  END/,$d' -e 's/^   --   //' < b~libghdl.adb > libghdl.bind
+rm -f -f libghdl.a
+ar rc libghdl.a b~libghdl.o pic/grt-cstdio.o pic/grt-cdynload.o `sed -e /^-/d < libghdl.bind`
+grep adalib libghdl.bind | sed -e 's/^-L//' -e 's@adalib/@adalib/libgnat.a@' > libghdl.link
+gcc -c -o ghwdump.o ghw/ghwdump.c  -g -Wall -g
+gcc -fPIC -c -o libghw.o ghw/libghw.c  -g -Wall -g
+gcc  -o ghwdump ghwdump.o libghw.o
+gcc -fPIC  -shared -o lib/libghw.so libghw.o
+make-exit=0  elapsed=1156s
+
+=== built binary:
+ls: cannot access 'bin/ghdl': No such file or directory
+
+=== version reported by the freshly built compiler:
+/mnt/e/fossee/Evidence_Ubuntu2504/scripts/03-ghdl-build.sh: line 37: ./bin/ghdl: No such file or directory
+
+=== LLVM linkage of the built binary:
+  (ghdl1-llvm is the backend; checking it too)
+=== built executables:
+./b~ghdl_llvm.adb
+./b~ghdl_llvm.ads
+./b~ghdl_llvm.ali
+./b~ghdl_llvm.o
+./doc/ghdl.1
+./doc/ghdl.texi
+./ghdl.gpr
+./ghdl.gpr.in
+./ghdl1-llvm
+./ghdlcomp.ali
+
+=== the backend binary and its LLVM linkage:
+=== ghdl1-llvm exists:
+-rwxrwxrwx 1 root root 12562984 Nov 17 22:07 ghdl1-llvm
+
+=== shared-library dependencies mentioning LLVM:
+	libLLVM-18.so.18.1 => /lib/x86_64-linux-gnu/libLLVM-18.so.18.1 (0x00007d1b43a00000)
+
+=== embedded LLVM version string in the binary:
+llvm-18
+
+=== installing (make install) to get a driver:
+install -m 755 -p lib/libghw.so "/usr/local/lib/"
+install -m 644 -p ./ghw/libghw.h "/usr/local/include/ghdl/"
+"/usr/local/bin/ghdl" --disp-standard --std=87 > "/usr/local/lib/ghdl/src/std/v87/standard.vhdl"
+"/usr/local/bin/ghdl" --disp-standard --std=93 > "/usr/local/lib/ghdl/src/std/v93/standard.vhdl"
+"/usr/local/bin/ghdl" --disp-standard --std=08 > "/usr/local/lib/ghdl/src/std/v08/standard.vhdl"
+make-install-exit=0
+
+=== ghdl driver now available:
+/usr/local/bin/ghdl
+GHDL 4.1.0 (tarball) [Dunoon edition]
+ Compiled with GNAT Version: 14.2.0
+ llvm 18.1.8 code generator
+Written by Tristan Gingold.
+

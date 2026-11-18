@@ -1,0 +1,17 @@
+=== what does the UNVERSIONED llvm resolve to on 25.04? (root of N2)
+llvm:
+  Candidate: 1:20.0-63ubuntu1
+llvm-dev:
+  Candidate: 1:20.0-63ubuntu1
+
+=== installing the fixed dependency set from the patched install-nghdl.sh
+Processing triggers for install-info (7.1.1-1) ...
+Processing triggers for base-files (13.6ubuntu2) ...
+Processing triggers for libc-bin (2.41-6ubuntu1.2) ...
+install-exit=0
+
+=== llvm-config binaries present:
+lrwxrwxrwx 1 root root 30 Feb 12  2025 /usr/bin/llvm-config-18 -> ../lib/llvm-18/bin/llvm-config
+
+=== LLVM 18 version:
+18.1.8

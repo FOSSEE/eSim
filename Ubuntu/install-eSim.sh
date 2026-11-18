@@ -23,8 +23,11 @@
 # Function to detect Ubuntu version and full version string
 get_ubuntu_version() {
     VERSION_ID=$(grep "^VERSION_ID" /etc/os-release | cut -d '"' -f 2)
-    FULL_VERSION=$(lsb_release -d | grep -oP '\d+\.\d+\.\d+')
-    echo "Detected Ubuntu Version: $FULL_VERSION"
+    # FIX: lsb_release may be missing on minimal systems and -d prints
+    # only "x.y" on some series - degrade gracefully instead of
+    # leaving FULL_VERSION empty via a failing pipeline.
+    FULL_VERSION=$(lsb_release -d 2>/dev/null | grep -oP '\d+\.\d+(\.\d+)?' || true)
+    echo "Detected Ubuntu Version: ${FULL_VERSION:-$VERSION_ID}"
 }
 
 # Function to choose and run the appropriate script
@@ -49,6 +52,15 @@ run_version_script() {
         "25.04")
             SCRIPT="$SCRIPT_DIR/install-eSim-25.04.sh"
             ;;
+        # FIX: eSim 2.5 targets "Ubuntu 25 and above", but 25.10/26.04
+        # fell through to "Unsupported" and exited. Route them to the
+        # 25.04 installer in compatibility mode - its installKicad()
+        # now falls back to the newest KiCad 8.x when the exact plucky
+        # pin is unavailable on the newer series.
+        "25.10"|"26.04")
+            echo "Ubuntu $VERSION_ID detected - running the 25.04 installer in compatibility mode."
+            SCRIPT="$SCRIPT_DIR/install-eSim-25.04.sh"
+            ;;
         *)
             echo "Unsupported Ubuntu version: $VERSION_ID ($FULL_VERSION)"
             exit 1
@@ -59,16 +71,8 @@ run_version_script() {
     if [[ -f "$SCRIPT" ]]; then
         echo "Running script: $SCRIPT $ARGUMENT"
         bash "$SCRIPT" "$ARGUMENT"
-    echo "[eSim]" >> $config_dir/$config_file
-    echo "eSim_HOME = $eSim_Home" >> $config_dir/$config_file
-    echo "LICENSE = %(eSim_HOME)s/LICENSE" >> $config_dir/$config_file
-    echo "KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz" >> $config_dir/$config_file
-    echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
-    echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
-    echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-   
+    fi
 }
-
 
 function installNghdl
 {

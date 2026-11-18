@@ -112,7 +112,10 @@ function installKicad
     ubuntu_version=$(lsb_release -rs)
 
     # Define KiCad PPAs based on Ubuntu version
-    if [[ "$ubuntu_version" == "24.04" || "$ubuntu_version" == "25.04" ]]; then
+    # FIX: accept any series >= 24.04 (Ubuntu 25.10/26.04 are routed here
+    # in compatibility mode by install-eSim.sh) instead of a hard-coded
+    # equality test that silently sent newer series to the KiCad 6 PPA.
+    if [[ "$(printf '%s\n' "24.04" "$ubuntu_version" | sort -V | head -n1)" == "24.04" ]]; then
         echo "Ubuntu $ubuntu_version detected."
         kicadppa="kicad/kicad-8.0-releases"
 
@@ -133,7 +136,11 @@ function installKicad
                 fi
             else
                 echo "KiCad 8.0 is already installed."
-                exit 0
+                # FIX: 'exit 0' terminated the WHOLE installer and skipped
+                # copyKicadLibrary, installNghdl, installSky130Pdk and
+                # createDesktopStartScript, leaving eSim un-launchable on
+                # any re-run with KiCad 8 already present.
+                return 0
             fi
         fi
 
@@ -151,7 +158,17 @@ function installKicad
     fi
 
     # Install KiCad packages
-    sudo apt-get install -y --no-install-recommends kicad=8.0.8+dfsg-1 kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    # Ubuntu 25.04 (plucky) universe ships exactly kicad 8.0.8+dfsg-1,
+    # so the pin resolves there. On newer series (25.10+) that exact
+    # version does not exist; fall back to the newest KiCad 8.x from
+    # the configured repositories instead of aborting with "Version
+    # ... was not found". (Commands inside 'if !' are exempt from
+    # set -e / ERR trap, so the failed pin attempt is safe.)
+    if ! sudo apt-get install -y --no-install-recommends kicad=8.0.8+dfsg-1 kicad-footprints kicad-libraries kicad-symbols kicad-templates; then
+        echo "kicad=8.0.8+dfsg-1 is not available on this Ubuntu series."
+        echo "Falling back to the newest KiCad 8.x from the configured repositories..."
+        sudo apt-get install -y --no-install-recommends kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    fi
 
     echo "KiCad installation completed successfully!"
 }
@@ -184,15 +201,14 @@ function installDependency
     
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
-    
-    echo "Installing Psutil.........................."
-    sudo apt-get install -y python3-psutil
-    
-    echo "Installing PyQt5..........................."
-    sudo apt-get install -y python3-pyqt5
 
-    echo "Installing Matplotlib......................"
-    sudo apt-get install -y python3-matplotlib
+    # FIX: installNghdl() needs 'unzip' (nghdl.zip) and
+    # copyKicadLibrary()/installSky130Pdk() need 'xz-utils' (tar -xJf).
+    # Neither was installed before, which aborted the install on fresh
+    # Ubuntu 25.04 systems - minimal/server and most VirtualBox images
+    # ship without unzip.
+    echo "Installing unzip and xz-utils..............."
+    sudo apt-get install -y unzip xz-utils
 
     echo "Installing Setuptools..................."
     sudo apt-get install -y python3-setuptools
@@ -204,8 +220,22 @@ function installDependency
     echo "Installing Watchdog........................"
     pip3 install watchdog
 
-    echo "Installing Hdlparse........................"
-    pip3 install --upgrade https://github.com/hdl/pyhdlparser/tarball/master
+    # FIX (Ubuntu 25.04 / Python 3.13): PyPI 'hdlparse' (1.0.4) cannot
+    # be built any more - 'error in hdlparse setup command: use_2to3 is
+    # invalid' (setuptools >= 58 removed use_2to3, and pip's build
+    # isolation always pulls the latest setuptools into the build
+    # environment). eSim 2.5 imports
+    # 'hdlparse.verilog_parser.VerilogExtractor' (src/maker/Maker.py,
+    # src/maker/ModelGeneration.py). The maintained successor
+    # 'pyhdlparser' installs a distribution literally named 'hdlparse'
+    # (1.0.7) that still provides that exact API, so pin it to an
+    # exact commit for a reproducible install. The previous pair of
+    # lines (unpinned /tarball/master URL + 'pip3 install hdlparse')
+    # only worked by accident: if the tarball line failed, the second
+    # line built PyPI hdlparse 1.0.4, failed, and aborted the whole
+    # installation under 'set -e'.
+    echo "Installing Hdlparse (pyhdlparser, pinned)..."
+    pip3 install --upgrade "git+https://github.com/hdl/pyhdlparser.git@e1153ace8ca1e25f9fb53350c41058ef8eb8dacf"
 
     echo "Installing Makerchip......................."
     pip3 install makerchip-app
@@ -213,15 +243,18 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
-   
-    echo "Installing Hdlparse......................"
-    pip3 install hdlparse
-
     echo "Installing matplotlib................"
     pip3 install matplotlib
 
     echo "Installing PyQt5............."
-    pip3 install PyQt5  
+    pip3 install PyQt5
+    # NOTE: the earlier 'apt-get install python3-psutil / python3-pyqt5 /
+    # python3-matplotlib' calls were removed: they installed into the
+    # system Python 3.13, which this isolated virtualenv cannot see
+    # (no --system-site-packages), while the 'pip3 install' lines above
+    # already provide PyQt5 and matplotlib inside the venv. eSim 2.5
+    # sources contain no psutil reference, so python3-psutil was dead
+    # weight as well.
 }
 
 
@@ -416,7 +449,7 @@ elif [ $option == "--uninstall" ];then
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
-	sudo rm /etc/apt/sources.list.d/kicad*
+        sudo rm /etc/apt/sources.list.d/kicad*
         rm -rf $HOME/.config/kicad/6.0
 
         echo "Removing Virtual env......................."
@@ -430,10 +463,10 @@ elif [ $option == "--uninstall" ];then
         rm -rf library/modelParamXML/Ngveri/*
         cd nghdl/
         if [ $? -eq 0 ];then
-        	chmod +x install-nghdl.sh
-    	    ./install-nghdl.sh --uninstall
-    	    cd ../
-    	    rm -rf nghdl
+                chmod +x install-nghdl.sh
+            ./install-nghdl.sh --uninstall
+            cd ../
+            rm -rf nghdl
             if [ $? -eq 0 ];then
                 echo -e "----------------eSim Uninstalled Successfully----------------"
             else

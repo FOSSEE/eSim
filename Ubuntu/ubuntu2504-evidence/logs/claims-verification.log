@@ -1,0 +1,45 @@
+==================================================================
+ Ubuntu 25.04 (Plucky Puffin) - installer claim verification
+ host: Ubuntu 25.04
+ kernel: 6.6.87.2-microsoft-standard-WSL2
+ python: Python 3.13.3
+ apt: apt 3.0.0 (amd64)
+ date: 2026-11-17 22:07:55 UTC
+==================================================================
+
+--- E2: the installer never installs unzip; NGHDL needs it ---------
+$ which unzip
+  NOT FOUND (this is the failure the fix addresses)
+
+--- installing it the way the patched installDependency() does -------
+$ apt-get install -y unzip xz-utils
+Unpacking unzip (6.0-28ubuntu6) ...
+Setting up unzip (6.0-28ubuntu6) ...
+Processing triggers for man-db (2.13.0-1) ...
+$ which unzip
+/usr/bin/unzip
+
+--- E1: the exit 0 vs return 0 bug -------------------------------
+  installKicad() in install-eSim-25.04.sh ends the already-installed
+  branch with 'exit 0'. Demonstration that exit terminates the whole
+  script while return only leaves the function:
+$ bash e1-demo.sh   (original: exit 0 inside the function)
+  [kicad] already installed -> exit 0
+  -> steps after the KiCad check never ran (E1 reproduced)
+
+--- N4: the uninstall path purges an undefined variable ----------
+  Original line: apt-get purge -y llvm-${llvm_version} llvm-${llvm_version}-dev
+  With llvm_version unset this expands to:
+    apt-get purge -y llvm- llvm--dev
+  (empty package names - apt errors out, LLVM is left installed)
+  Patched script defines llvm_version="18" at the top, so the same
+  line purges llvm-18 llvm-18-dev clang-18.
+
+--- installed-state summary for the report -----------------------
+  unzip                      6.0-28ubuntu6
+  xz-utils                   5.6.4-1ubuntu1
+  llvm-18                    1:18.1.8-17
+  llvm-18-dev                1:18.1.8-17
+  clang-18                   1:18.1.8-17
+  clang++-18                 (not installed)
+  libcanberra-gtk3-module    0.30-17ubuntu2

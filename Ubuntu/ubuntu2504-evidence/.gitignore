@@ -1,0 +1,6 @@
+# Large binaries and build trees are not committed; the scripts recreate them.
+rootfs/
+vm/
+work/
+esim-pkg/eSim-2.5/
+esim-pkg/eSim-2.5.zip
