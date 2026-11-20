@@ -114,10 +114,10 @@ detect_profile() {
     NGHDL_CFLAGS=""
 
     case "$UBUNTU_VER" in
-        26.04)
-            GTK_CANBERRA="libcanberra-gtk3-module"   # gtk2 variant gone in 26.04
+        25.04|26.04)
+            GTK_CANBERRA="libcanberra-gtk3-module"   # gtk2 variant gone in 25.04+
             ;;
-        23.04|24.04|25.04)
+        23.04|24.04)
             GTK_CANBERRA="libcanberra-gtk-module libcanberra-gtk3-module"
             ;;
         *)
