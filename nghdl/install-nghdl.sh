@@ -86,7 +86,7 @@ src_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Profile vars
 UBUNTU_VER=""
 NGHDL_CFLAGS=""     # extra CFLAGS for the ngspice build
-GTK_CANBERRA=""     # gtk2+gtk3 vs gtk3-only (libcanberra-gtk-module dropped in 26.04)
+GTK_CANBERRA=""     # gtk2+gtk3 vs gtk3-only (libcanberra-gtk-module dropped in 25.04+)
 
 # Icarus Verilog (d_cosim substrate). Built into an eSim-owned prefix UNDER the
 # nghdl tree so --uninstall (which removes $HOME/$nghdl) cleans it up too.
@@ -114,10 +114,10 @@ detect_profile() {
     NGHDL_CFLAGS=""
 
     case "$UBUNTU_VER" in
-        26.04)
+        25.04|26.04)
             GTK_CANBERRA="libcanberra-gtk3-module"   # gtk2 variant gone in 26.04
             ;;
-        23.04|24.04|25.04)
+        23.04|24.04)
             GTK_CANBERRA="libcanberra-gtk-module libcanberra-gtk3-module"
             ;;
         *)
