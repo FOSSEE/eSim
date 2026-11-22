@@ -45,6 +45,7 @@ SolidCompression=yes
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 PrivilegesRequired=admin
+PrivilegesRequiredOverridesAllowed=commandline
 WizardStyle=modern
 
 ; License agreement page. eSim is GPLv3; the repo's root LICENSE is the same
