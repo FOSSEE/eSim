@@ -184,7 +184,8 @@ function Stage-App {
         /XF '.git' '*.pyc' '*.pyo' '*.raw' 'plot_data_*.txt' '.DS_Store' `
             'fp-info-cache' `
             'nghdl-simulator-source.tar.xz' `
-            'install-nghdl.sh' | Out-Null
+            'install-nghdl.sh' `
+            'eSim.exe' | Out-Null
     if ($LASTEXITCODE -ge 8) { Die "robocopy failed ($LASTEXITCODE)" }
 
     # Stage-side leftovers no pipeline stage owns (so /MIR never purges them:
@@ -311,6 +312,17 @@ function Stage-Ngspice {
         if (-not (Test-Path $shim)) {
             New-Item -ItemType Directory -Force -Path (Split-Path $shim) | Out-Null
             Copy-Item $dst $shim -Recurse
+        }
+        # The official archive ships a console build (ngspice_con.exe) and a
+        # windowed build (ngspice.exe). eSim drives ngspice.exe as a console
+        # child and expects the windowed twin at ngspice_gui.exe. Map from $dst\bin
+        # so repeated packaging re-runs are idempotent and never overwrite
+        # the GUI twin with a console binary.
+        $shimBin = Join-Path $shim 'bin'
+        $dstBin = Join-Path $dst 'bin'
+        if ((Test-Path "$dstBin\ngspice.exe") -and (Test-Path "$dstBin\ngspice_con.exe")) {
+            Copy-Item "$dstBin\ngspice.exe"     (Join-Path $shimBin 'ngspice_gui.exe') -Force
+            Copy-Item "$dstBin\ngspice_con.exe" (Join-Path $shimBin 'ngspice.exe')     -Force
         }
     }
 }
@@ -981,28 +993,49 @@ function Stage-Launcher {
     Log 'Compiling eSim.exe launcher'
     $src = Join-Path $WinDir 'launcher'
     $out = Join-Path $Stage 'eSim.exe'
+    if (Test-Path $out) {
+        Log 'eSim.exe already staged'
+        return
+    }
     $gcc = Join-Path $Stage 'tools\msys64\mingw64\bin\gcc.exe'
     if (-not (Test-Path $gcc)) {
         $gcc = (Get-Command gcc -ErrorAction SilentlyContinue).Source
     }
-    if (-not $gcc) {
-        Die 'no gcc found for the eSim.exe launcher (stage MSYS2 first, or put a mingw-w64 gcc on PATH)'
+    if ($gcc) {
+        $bindir = Split-Path $gcc
+        $res = Join-Path $Build 'esim_launcher.res.o'
+        # windres shells out to the C preprocessor; it must be able to find cpp.
+        $oldPath = $env:PATH
+        $env:PATH = "$bindir;$env:PATH"
+        try {
+            & (Join-Path $bindir 'windres.exe') `
+                -I $src -I (Join-Path $RepoRoot 'images') `
+                (Join-Path $src 'esim_launcher.rc') -O coff -o $res
+            if ($LASTEXITCODE -ne 0) { Die 'windres failed on esim_launcher.rc' }
+            & $gcc -municode -mwindows -O2 -Wall -Wextra `
+                (Join-Path $src 'esim_launcher.c') $res -o $out
+            if ($LASTEXITCODE -ne 0) { Die 'gcc failed on esim_launcher.c' }
+        }
+        finally { $env:PATH = $oldPath }
     }
-    $bindir = Split-Path $gcc
-    $res = Join-Path $Build 'esim_launcher.res.o'
-    # windres shells out to the C preprocessor; it must be able to find cpp.
-    $oldPath = $env:PATH
-    $env:PATH = "$bindir;$env:PATH"
-    try {
-        & (Join-Path $bindir 'windres.exe') `
-            -I $src -I (Join-Path $RepoRoot 'images') `
-            (Join-Path $src 'esim_launcher.rc') -O coff -o $res
-        if ($LASTEXITCODE -ne 0) { Die 'windres failed on esim_launcher.rc' }
-        & $gcc -municode -mwindows -O2 -Wall -Wextra `
-            (Join-Path $src 'esim_launcher.c') $res -o $out
-        if ($LASTEXITCODE -ne 0) { Die 'gcc failed on esim_launcher.c' }
+    else {
+        # Fallback for builds without MSYS2/gcc (-SkipMsys): compile the companion
+        # esim_launcher.cs using the standard Windows .NET C# compiler (csc.exe).
+        $csc = "${env:SystemRoot}\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
+        if (-not (Test-Path $csc)) {
+            $csc = (Get-Command csc.exe -ErrorAction SilentlyContinue).Source
+        }
+        $csSrc = Join-Path $src 'esim_launcher.cs'
+        if ((Test-Path $csc) -and (Test-Path $csSrc)) {
+            Log 'Compiling eSim.exe launcher using Windows .NET C# compiler (csc.exe)'
+            $ico = Join-Path $RepoRoot 'images\esim.ico'
+            & $csc /nologo /target:winexe "/win32icon:$ico" "/out:$out" $csSrc
+            if ($LASTEXITCODE -ne 0) { Die 'csc.exe failed on esim_launcher.cs' }
+        }
+        else {
+            Die 'no C or C# compiler found for eSim.exe launcher (stage MSYS2 first, put mingw gcc on PATH, or install .NET Framework)'
+        }
     }
-    finally { $env:PATH = $oldPath }
     if (-not (Test-Path $out)) { Die 'eSim.exe was not produced' }
 }
 
@@ -1332,6 +1365,10 @@ Assert-CleanStage    # ...and refuse to package if anything local survived
 
 Log 'Compiling installer (Inno Setup)'
 $Iscc = Resolve-Iscc
+$targetExe = Join-Path $Dist "eSim-$Version-installer.exe"
+if (Test-Path $targetExe) {
+    Remove-Item $targetExe -Force -ErrorAction SilentlyContinue
+}
 & $Iscc /Qp "/DAppVersion=$Version" "/DStageDir=$Stage" "/DOutDir=$Dist" `
     (Join-Path $WinDir 'installer.iss')
 if ($LASTEXITCODE -ne 0) { Die 'ISCC failed' }
