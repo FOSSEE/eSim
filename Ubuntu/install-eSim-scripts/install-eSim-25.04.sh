@@ -231,15 +231,17 @@ function copyKicadLibrary
     #Extract custom KiCad Library
     tar -xJf library/kicadLibrary.tar.xz
 
-    if [ -d ~/.config/kicad/6.0 ];then
+    kicad_config_dir="$HOME/.config/kicad/8.0"
+
+    if [ -d "$kicad_config_dir" ];then
         echo "kicad config folder already exists"
     else 
-        echo ".config/kicad/6.0 does not exist"
-        mkdir -p ~/.config/kicad/6.0
+        echo "$kicad_config_dir does not exist"
+        mkdir -p "$kicad_config_dir"
     fi
 
     # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
+    cp "kicadLibrary/template/sym-lib-table" "$kicad_config_dir/"
     echo "symbol table copied in the directory"
 
     # Copy KiCad symbols made for eSim
