@@ -10,7 +10,7 @@
 | # | Issue | Severity | Status |
 |---|-------|----------|--------|
 | 1 | Install fails at "Installing volare" with `E: Invalid operation xz-utils` (22.04, 23.04, 24.04 scripts) | High, blocks the whole install | Fixed |
-| 2 | `install-eSim-25.04.sh` is not executable in the repo (mode 644) | Low | Fixed |
+| 2 | `install-eSim-25.04.sh` is not executable in the repo (mode 644) | Low | Reported |
 | 3 | 25.04 script has no volare step (no match found) | Observation | Reported |
 | 4 | Typo in the proxy prompt: "thorugh" | Cosmetic | Reported |
 
@@ -59,15 +59,14 @@ The `-y` flag was added so the script does not wait for a confirmation prompt.
 Running `grep -rn "xz-utils" Ubuntu/` after the change shows `sudo apt-get install -y xz-utils` at lines 219, 282 and 252.
 
 **Git steps**
-1. `git checkout -b installer`
-2. `git add Ubuntu/install-eSim-scripts/*.sh`
-3. First commit failed with "Author identity unknown", so I set `git config --global user.name` and `user.email`
-4. `git commit` created commit `7c683187`: 4 files changed, 3 insertions, 3 deletions
-5. `git push origin installer`
-6. Opened pull request #661 into `FOSSEE:installers`: 3 commits, 3 files changed (22.04, 23.04, 24.04 scripts)
+1. `git add Ubuntu/install-eSim-scripts/*.sh`
+2. First commit failed with "Author identity unknown", so I set `git config --global user.name` and `user.email`
+3. `git commit` with the message "Fixed xz-utils invalid operation error - added missing install in apt-get command"
+4. Pushed the commit to my fork on GitHub
+5. Opened pull request #661 into `FOSSEE:installers`: 3 commits, 3 files changed (22.04, 23.04, 24.04 scripts)
 
-## 4. Issue 2: 25.04 script is not executable (FIXED)
-The commit output shows `mode change 100644 => 100755` for `install-eSim-25.04.sh`. The file was stored without the execute permission, and it is now executable.
+## 4. Issue 2: 25.04 script is not executable (REPORTED)
+The commit output shows `mode change 100644 => 100755` for `install-eSim-25.04.sh`. The file was stored without the execute permission.
 
 ## 5. Observation: running the 25.04 script
 After the fix I ran `bash Ubuntu/install-eSim-scripts/install-eSim-25.04.sh --install` on Ubuntu 25.04. It ran through apt index update, virtual environment creation, pip upgrade (25.0 to 26.3), Xterm check, Python packages, PyQt5, and the KiCad check ("Ubuntu 25.04 detected. KiCad 8.0 is already installed.") without errors.
