@@ -141,7 +141,7 @@ function installKicad
     sudo apt-get update
 
     # Install KiCad packages
-    sudo apt-get install -y --no-install-recommends kicad=8.0.8+dfsg-1 kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    sudo apt-get install -y --allow-downgrades --no-install-recommends kicad=8.0.8+dfsg-1 kicad-footprints kicad-libraries kicad-symbols kicad-templates
 
     echo "KiCad installation completed successfully!"
 }
@@ -359,7 +359,6 @@ if [[ "$option" == "--install" ]];then
 
         export http_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
         export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-        export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
         export HTTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
         export HTTPS_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
         export ftp_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
@@ -400,9 +399,6 @@ elif [[ "$option" == "--uninstall" ]];then
         sudo rm -rf /usr/share/kicad
 	sudo rm /etc/apt/sources.list.d/kicad*
         rm -rf $HOME/.config/kicad/8.0
-
-        echo "Removing Virtual env......................."
-        sudo rm -r $config_dir/env
 
         echo "Removing SKY130 PDK......................"
         sudo rm -R /usr/share/local/sky130_fd_pr
