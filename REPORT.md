@@ -81,29 +81,29 @@ The prompt reads "Enter proxy details if you are connected to internet **thorugh
 ## 8. Screenshots (evidence)
 
 **Error at volare (24.04 script)**
-![error](screenshots/1000140077.jpg)
+![error](screenshots/IMG20261123024507.jpg)
 
 **OS confirmation and available scripts**
-![os](screenshots/1000140073.jpg)
+![os](screenshots/IMG-20261123-WA0191.jpeg)
 
 **xz-utils is already installed (so the problem is the command)**
-![xz](screenshots/1000140059.jpg)
+![xz](screenshots/IMG20261123023451.jpg)
 
 **Faulty lines found with grep**
-![grep](screenshots/1000140086.jpg)
+![grep](screenshots/IMG-20261123-WA0198.jpeg)
 
 **Fixed lines after sed**
-![fixed](screenshots/1000140088.jpg)
+![fixed](screenshots/IMG-20261123-WA0200.jpeg)
 
 **25.04 script run**
-![run1](screenshots/1000140078.jpg)
-![run2](screenshots/1000140080.jpg)
-![run3](screenshots/1000140081.jpg)
+![run1](screenshots/IMG20261123025131.jpg)
+![run2](screenshots/IMG20261123025141.jpg)
+![run3](screenshots/IMG20261123025150.jpg)
 
 **Commit and push**
-![commit](screenshots/1000140092.jpg)
+![commit](screenshots/IMG-20261123-WA0204.jpeg)
 
 **Fork and pull request #661**
-![fork](screenshots/1000140160.jpg)
-![pr](screenshots/1000140164.jpg)
-![diff](screenshots/1000140171.jpg)
+![fork](screenshots/IMG-20261123-WA0272.jpeg)
+![pr](screenshots/IMG-20261123-WA0274.jpeg)
+![diff](screenshots/IMG-20261123-WA0276.jpeg)
