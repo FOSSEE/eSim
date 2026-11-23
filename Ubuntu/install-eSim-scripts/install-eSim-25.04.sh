@@ -17,11 +17,12 @@
 #                Jayanth Tatineni, Anshul Verma
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Sunday 25 May 2025 17:40
+#      REVISION: Monday 23 November 2026 11:21
 #=============================================================================
 
 # All variables goes here
 config_dir="$HOME/.esim"
+
 config_file="config.ini"
 eSim_Home=`pwd`
 ngspiceFlag=0
@@ -42,20 +43,19 @@ function createConfigFile
 
     # Creating config.ini file and adding configuration information
     # Check if config file is present
-    if [ -d $config_dir ];then
-        rm $config_dir/$config_file && touch $config_dir/$config_file
-    else
-        mkdir $config_dir && touch $config_dir/$config_file
-    fi
-    
-    echo "[eSim]" >> $config_dir/$config_file
-    echo "eSim_HOME = $eSim_Home" >> $config_dir/$config_file
-    echo "LICENSE = %(eSim_HOME)s/LICENSE" >> $config_dir/$config_file
-    echo "KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz" >> $config_dir/$config_file
-    echo "IMAGES = %(eSim_HOME)s/images" >> $config_dir/$config_file
-    echo "VERSION = %(eSim_HOME)s/VERSION" >> $config_dir/$config_file
-    echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json" >> $config_dir/$config_file
-   
+    mkdir -p "$config_dir"
+    rm -f "$config_dir/$config_file"
+
+    {
+        echo "[eSim]"
+        echo "eSim_HOME = $eSim_Home"
+        echo "LICENSE = %(eSim_HOME)s/LICENSE"
+        echo "KicadLib = %(eSim_HOME)s/library/kicadLibrary.tar.xz"
+        echo "IMAGES = %(eSim_HOME)s/images"
+        echo "VERSION = %(eSim_HOME)s/VERSION"
+        echo "MODELICA_MAP_JSON = %(eSim_HOME)s/library/ngspicetoModelica/Mapping.json"
+    } > "$config_dir/$config_file"
+
 }
 
 
@@ -108,50 +108,40 @@ function installKicad
 {
     echo "Installing KiCad..........................."
 
-    # Detect Ubuntu version
-    ubuntu_version=$(lsb_release -rs)
+    kicadppa="kicad/kicad-8.0-releases"
 
-    # Define KiCad PPAs based on Ubuntu version
-    if [[ "$ubuntu_version" == "24.04" || "$ubuntu_version" == "25.04" ]]; then
-        echo "Ubuntu $ubuntu_version detected."
-        kicadppa="kicad/kicad-8.0-releases"
+    # Check if KiCad is installed using dpkg-query for the main package
+    if dpkg -s kicad &>/dev/null; then
+        installed_version=$(dpkg-query -W -f='${Version}' kicad)
+        installed_version=${installed_version#*:}
 
-        # Check if KiCad is installed using dpkg-query for the main package
-        if dpkg -s kicad &>/dev/null; then
-            installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
-            if [[ "$installed_version" != "8" ]]; then
-                echo "A different version of KiCad ($installed_version) is installed."
-                read -p "Do you want to remove it and install KiCad 8.0? (yes/no): " response
+        if [[ "$installed_version" != "8.0.8+dfsg-1" ]]; then
+            echo "A different version of KiCad ($installed_version) is installed."
+            read -p "Do you want to replace it with KiCad 8.0.8? (yes/no): " response
 
-                if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
-                    echo "Removing KiCad $installed_version..."
-                    sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-                    sudo apt-get autoremove -y
-                else
-                    echo "Exiting installation. KiCad $installed_version remains installed."
-                    exit 1
-                fi
+            if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
+                echo "APT will install the required KiCad 8.0.8 version."
             else
-                echo "KiCad 8.0 is already installed."
-                exit 0
+                echo "Exiting installation. KiCad $installed_version remains installed."
+                exit 1
             fi
+        else
+            echo "KiCad 8.0.8 is already installed."
         fi
-
-    else
-        kicadppa="kicad/kicad-6.0-releases"
     fi
 
     # Check if the PPA is already added
-    if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+    if ! grep -rqF "ppa.launchpadcontent.net/${kicadppa}/ubuntu" /etc/apt/sources.list /etc/apt/sources.list.d/ 2>/dev/null; then
         echo "Adding KiCad PPA to local apt repository: $kicadppa"
         sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt-get update
     else
         echo "KiCad PPA is already present in sources."
     fi
 
+    sudo apt-get update
+
     # Install KiCad packages
-    sudo apt-get install -y --no-install-recommends kicad=8.0.8+dfsg-1 kicad-footprints kicad-libraries kicad-symbols kicad-templates
+    sudo apt-get install -y --allow-downgrades --no-install-recommends kicad=8.0.8+dfsg-1 kicad-footprints kicad-libraries kicad-symbols kicad-templates
 
     echo "KiCad installation completed successfully!"
 }
@@ -166,27 +156,15 @@ function installDependency
     # Update apt repository
     echo "Updating apt index files..................."
     sudo apt-get update
-    
+
     set -e      # Re-enable exit on error
     trap error_exit ERR
-    
+
     echo "Instaling virtualenv......................."
     sudo apt install python3-virtualenv
-   
-    echo "Creating virtual environment to isolate packages "
-    virtualenv $config_dir/env
-    
-    echo "Starting the virtual env..................."
-    source $config_dir/env/bin/activate
 
-    echo "Upgrading Pip.............................."
-    pip install --upgrade pip
-    
     echo "Installing Xterm..........................."
     sudo apt-get install -y xterm
-    
-    echo "Installing Psutil.........................."
-    sudo apt-get install -y python3-psutil
     
     echo "Installing PyQt5..........................."
     sudo apt-get install -y python3-pyqt5
@@ -197,10 +175,19 @@ function installDependency
     echo "Installing Setuptools..................."
     sudo apt-get install -y python3-setuptools
 
-    # Install NgVeri Depedencies
-    echo "Installing Pip3............................"
-    sudo apt install -y python3-pip
+    echo "Creating virtual environment to isolate packages "
+    virtualenv "$config_dir/env"
 
+    echo "Starting the virtual env..................."
+    source "$config_dir/env/bin/activate"
+
+    echo "Upgrading Pip.............................."
+    pip3 install --upgrade pip
+
+    echo "Installing compatible Setuptools..........."
+    pip3 install "setuptools<81"
+
+    # Install NgVeri Depedencies
     echo "Installing Watchdog........................"
     pip3 install watchdog
 
@@ -213,7 +200,6 @@ function installDependency
     echo "Installing SandPiper Saas.................."
     pip3 install sandpiper-saas
 
-   
     echo "Installing Hdlparse......................"
     pip3 install hdlparse
 
@@ -231,15 +217,15 @@ function copyKicadLibrary
     #Extract custom KiCad Library
     tar -xJf library/kicadLibrary.tar.xz
 
-    if [ -d ~/.config/kicad/6.0 ];then
+    if [ -d ~/.config/kicad/8.0 ];then
         echo "kicad config folder already exists"
     else 
-        echo ".config/kicad/6.0 does not exist"
-        mkdir -p ~/.config/kicad/6.0
+        echo ".config/kicad/8.0 does not exist"
+        mkdir -p ~/.config/kicad/8.0
     fi
 
     # Copy symbol table for eSim custom symbols 
-    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/6.0/
+    cp kicadLibrary/template/sym-lib-table ~/.config/kicad/8.0/
     echo "symbol table copied in the directory"
 
     # Copy KiCad symbols made for eSim
@@ -297,16 +283,17 @@ function createDesktopStartScript
     sudo chmod 755 esim.desktop
     # Copy desktop icon file to share applications
     sudo cp -vp esim.desktop /usr/share/applications/
-    # Copy desktop icon file to Desktop
-    cp -vp esim.desktop $HOME/Desktop/
 
-    set +e      # Temporary disable exit on error
-    trap "" ERR # Do not trap on error of any command
+    # Copy desktop icon file to Desktop if the directory exists
+    if [ -d "$HOME/Desktop" ]; then
+        cp -vp esim.desktop "$HOME/Desktop/"
 
-    # Make esim.desktop file as trusted application
-    gio set $HOME/Desktop/esim.desktop "metadata::trusted" true
-    # Set Permission and Execution bit
-    chmod a+x $HOME/Desktop/esim.desktop
+        # Make esim.desktop file as trusted application
+        gio set "$HOME/Desktop/esim.desktop" "metadata::trusted" true
+
+        # Set Permission and Execution bit
+        chmod a+x "$HOME/Desktop/esim.desktop"
+    fi
 
     # Remove local copy of esim.desktop file
     rm esim.desktop
@@ -315,7 +302,7 @@ function createDesktopStartScript
     trap error_exit ERR
 
     # Copying logo.png to .esim directory to access as icon
-    cp -vp images/logo.png $config_dir
+    cp -vp images/logo.png "$config_dir"
 
 }
 
@@ -337,7 +324,7 @@ fi
 
 ## Checking flags
 
-if [ $option == "--install" ];then
+if [[ "$option" == "--install" ]];then
 
     set -e  # Set exit option immediately on error
     set -E  # inherit ERR trap by shell functions
@@ -346,11 +333,11 @@ if [ $option == "--install" ];then
     trap error_exit ERR
 
 
-    echo "Enter proxy details if you are connected to internet thorugh proxy"
+    echo "Enter proxy details if you are connected to internet through proxy"
     
     echo -n "Is your internet connection behind proxy? (y/n): "
     read getProxy
-    if [ $getProxy == "y" -o $getProxy == "Y" ];then
+    if [[ "$getProxy" == "y" || "$getProxy" == "Y" ]];then
         echo -n 'Proxy Hostname :'
         read proxyHostname
 
@@ -372,7 +359,6 @@ if [ $option == "--install" ];then
 
         export http_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
         export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
-        export https_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
         export HTTP_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
         export HTTPS_PROXY=http://$username:$passwd@$proxyHostname:$proxyPort
         export ftp_proxy=http://$username:$passwd@$proxyHostname:$proxyPort
@@ -380,12 +366,12 @@ if [ $option == "--install" ];then
 
         echo "Install with proxy"
 
-    elif [ $getProxy == "n" -o $getProxy == "N" ];then
+    elif [[ "$getProxy" == "n" || "$getProxy" == "N" ]];then
         echo "Install without proxy"
     
     else
         echo "Please select the right option"
-        exit 0    
+        exit 1
     fi
 
     # Calling functions
@@ -397,30 +383,22 @@ if [ $option == "--install" ];then
     installSky130Pdk
     createDesktopStartScript
 
-    if [ $? -ne 0 ];then
-        echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
-        exit 0
-    fi
-
     echo "-----------------eSim Installed Successfully-----------------"
     echo "Type \"esim\" in Terminal to launch it"
     echo "or double click on \"eSim\" icon placed on Desktop"
 
 
-elif [ $option == "--uninstall" ];then
+elif [[ "$option" == "--uninstall" ]];then
     echo -n "Are you sure? It will remove eSim completely including KiCad, Makerchip, NGHDL and SKY130 PDK along with their models and libraries (y/n):"
     read getConfirmation
-    if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
+    if [[ "$getConfirmation" == "y" || "$getConfirmation" == "Y" ]];then
         echo "Removing eSim............................"
         sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim /usr/share/applications/esim.desktop
         echo "Removing KiCad..........................."
         sudo apt purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
         sudo rm -rf /usr/share/kicad
 	sudo rm /etc/apt/sources.list.d/kicad*
-        rm -rf $HOME/.config/kicad/6.0
-
-        echo "Removing Virtual env......................."
-        sudo rm -r $config_dir/env
+        rm -rf $HOME/.config/kicad/8.0
 
         echo "Removing SKY130 PDK......................"
         sudo rm -R /usr/share/local/sky130_fd_pr
@@ -442,15 +420,16 @@ elif [ $option == "--uninstall" ];then
         else
             echo -e "\nCannot find \"nghdl\" directory. Please remove it manually"
         fi
-    elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
+    elif [[ "$getConfirmation" == "n" || "$getConfirmation" == "N" ]];then
         exit 0
     else 
         echo "Please select the right option."
-        exit 0
+        exit 1
     fi
 
 else 
     echo "Please select the proper operation."
     echo "--install"
     echo "--uninstall"
+    exit 1
 fi
