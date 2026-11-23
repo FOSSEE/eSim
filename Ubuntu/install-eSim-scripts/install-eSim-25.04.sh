@@ -17,11 +17,12 @@
 #                Jayanth Tatineni, Anshul Verma
 #  ORGANIZATION: eSim Team, FOSSEE, IIT Bombay
 #       CREATED: Wednesday 15 July 2015 15:26
-#      REVISION: Sunday 25 May 2025 17:40
+#      REVISION: Monday 23 November 2026 11:21
 #=============================================================================
 
 # All variables goes here
 config_dir="$HOME/.esim"
+
 config_file="config.ini"
 eSim_Home=`pwd`
 ngspiceFlag=0
@@ -107,47 +108,37 @@ function installKicad
 {
     echo "Installing KiCad..........................."
 
-    # Detect Ubuntu version
-    ubuntu_version=$(lsb_release -rs)
+    kicadppa="kicad/kicad-8.0-releases"
 
-    # Define KiCad PPAs based on Ubuntu version
-    if [[ "$ubuntu_version" == "24.04" || "$ubuntu_version" == "25.04" ]]; then
-        echo "Ubuntu $ubuntu_version detected."
-        kicadppa="kicad/kicad-8.0-releases"
+    # Check if KiCad is installed using dpkg-query for the main package
+    if dpkg -s kicad &>/dev/null; then
+        installed_version=$(dpkg-query -W -f='${Version}' kicad)
+        installed_version=${installed_version#*:}
 
-        # Check if KiCad is installed using dpkg-query for the main package
-        if dpkg -s kicad &>/dev/null; then
-            installed_version=$(dpkg-query -W -f='${Version}' kicad | cut -d'.' -f1)
-            if [[ "$installed_version" != "8" ]]; then
-                echo "A different version of KiCad ($installed_version) is installed."
-                read -p "Do you want to remove it and install KiCad 8.0? (yes/no): " response
+        if [[ "$installed_version" != "8.0.8+dfsg-1" ]]; then
+            echo "A different version of KiCad ($installed_version) is installed."
+            read -p "Do you want to replace it with KiCad 8.0.8? (yes/no): " response
 
-                if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
-                    echo "Removing KiCad $installed_version..."
-                    sudo apt-get remove --purge -y kicad kicad-footprints kicad-libraries kicad-symbols kicad-templates
-                    sudo apt-get autoremove -y
-                else
-                    echo "Exiting installation. KiCad $installed_version remains installed."
-                    exit 1
-                fi
+            if [[ "$response" =~ ^([Yy][Ee][Ss]|[Yy])$ ]]; then
+                echo "APT will install the required KiCad 8.0.8 version."
             else
-                echo "KiCad 8.0 is already installed."
-                return 0
+                echo "Exiting installation. KiCad $installed_version remains installed."
+                exit 1
             fi
+        else
+            echo "KiCad 8.0.8 is already installed."
         fi
-
-    else
-        kicadppa="kicad/kicad-6.0-releases"
     fi
 
     # Check if the PPA is already added
-    if ! grep -q "^deb .*${kicadppa}" /etc/apt/sources.list /etc/apt/sources.list.d/* 2>/dev/null; then
+    if ! grep -rqF "ppa.launchpadcontent.net/${kicadppa}/ubuntu" /etc/apt/sources.list /etc/apt/sources.list.d/ 2>/dev/null; then
         echo "Adding KiCad PPA to local apt repository: $kicadppa"
         sudo add-apt-repository -y "ppa:$kicadppa"
-        sudo apt-get update
     else
         echo "KiCad PPA is already present in sources."
     fi
+
+    sudo apt-get update
 
     # Install KiCad packages
     sudo apt-get install -y --no-install-recommends kicad=8.0.8+dfsg-1 kicad-footprints kicad-libraries kicad-symbols kicad-templates
@@ -333,7 +324,7 @@ fi
 
 ## Checking flags
 
-if [ $option == "--install" ];then
+if [[ "$option" == "--install" ]];then
 
     set -e  # Set exit option immediately on error
     set -E  # inherit ERR trap by shell functions
@@ -346,7 +337,7 @@ if [ $option == "--install" ];then
     
     echo -n "Is your internet connection behind proxy? (y/n): "
     read getProxy
-    if [ $getProxy == "y" -o $getProxy == "Y" ];then
+    if [[ "$getProxy" == "y" || "$getProxy" == "Y" ]];then
         echo -n 'Proxy Hostname :'
         read proxyHostname
 
@@ -376,12 +367,12 @@ if [ $option == "--install" ];then
 
         echo "Install with proxy"
 
-    elif [ $getProxy == "n" -o $getProxy == "N" ];then
+    elif [[ "$getProxy" == "n" || "$getProxy" == "N" ]];then
         echo "Install without proxy"
     
     else
         echo "Please select the right option"
-        exit 0    
+        exit 1
     fi
 
     # Calling functions
@@ -393,20 +384,15 @@ if [ $option == "--install" ];then
     installSky130Pdk
     createDesktopStartScript
 
-    if [ $? -ne 0 ];then
-        echo -e "\n\n\nERROR: Unable to install required packages. Please check your internet connection.\n\n"
-        exit 0
-    fi
-
     echo "-----------------eSim Installed Successfully-----------------"
     echo "Type \"esim\" in Terminal to launch it"
     echo "or double click on \"eSim\" icon placed on Desktop"
 
 
-elif [ $option == "--uninstall" ];then
+elif [[ "$option" == "--uninstall" ]];then
     echo -n "Are you sure? It will remove eSim completely including KiCad, Makerchip, NGHDL and SKY130 PDK along with their models and libraries (y/n):"
     read getConfirmation
-    if [ $getConfirmation == "y" -o $getConfirmation == "Y" ];then
+    if [[ "$getConfirmation" == "y" || "$getConfirmation" == "Y" ]];then
         echo "Removing eSim............................"
         sudo rm -rf $HOME/.esim $HOME/Desktop/esim.desktop /usr/bin/esim /usr/share/applications/esim.desktop
         echo "Removing KiCad..........................."
@@ -438,15 +424,16 @@ elif [ $option == "--uninstall" ];then
         else
             echo -e "\nCannot find \"nghdl\" directory. Please remove it manually"
         fi
-    elif [ $getConfirmation == "n" -o $getConfirmation == "N" ];then
+    elif [[ "$getConfirmation" == "n" || "$getConfirmation" == "N" ]];then
         exit 0
     else 
         echo "Please select the right option."
-        exit 0
+        exit 1
     fi
 
 else 
     echo "Please select the proper operation."
     echo "--install"
     echo "--uninstall"
+    exit 1
 fi
